@@ -6,9 +6,9 @@ set(KATIE_NAME "Katie")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 set(KATIE_STRING "qt4 ${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 set(KATIE_BUGREPORT "xakepa10@gmail.com")
-set(KATIE_URL "http://github.com/fluxer/qt-opensource")
+set(KATIE_URL "http://github.com/fluxer/katie")
 set(KATIE_COMPONENTS "Core Gui DBus Declarative Designer Help Multimedia Network OpenGL Phonon Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
-# TODO: designer, linguist? make dbus tools optional
+# TODO: make dbus tools optional
 set(KATIE_TOOLS "moc uic rcc qdbusxml2cpp qdbuscpp2xml qhelpgenerator qcollectiongenerator lupdate lrelease lconvert")
 set(QT_LICENSE "Open Source")
 set(QT_PRODUCT "OpenSauce") # it's not a bug, it's a feature!
@@ -99,8 +99,6 @@ endif()
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     katie_definition(-DQT_NO_DEBUG -DNDEBUG)
 endif()
-
-katie_definition(-DQT_OPENSOURCE)
 
 include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 
