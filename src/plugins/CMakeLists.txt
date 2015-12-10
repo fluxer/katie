@@ -133,6 +133,5 @@ if(WITH_DBUS AND DBUS_FOUND)
 endif()
 
 
-# FIXME: requires some desginer definitions
-# include(designer/qdeclarativeview/qdeclarativeview.cmake)
+include(designer/qdeclarativeview/qdeclarativeview.cmake)
 include(designer/phonon/phonon.cmake)

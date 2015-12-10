@@ -41,7 +41,7 @@
 
 #include "qdeclarativeview_plugin.h"
 
-#include <QtDesigner/QExtensionFactory>
+#include <QtDesigner/default_extensionfactory.h>
 #include <QtDesigner/QExtensionManager>
 
 #include <QtCore/qplugin.h>
@@ -130,4 +130,5 @@ QString QDeclarativeViewPlugin::domXml() const
 Q_EXPORT_PLUGIN2(customwidgetplugin, QDeclarativeViewPlugin)
 
 QT_END_NAMESPACE
+
 #include <moc_qdeclarativeview_plugin.h>

@@ -42,7 +42,7 @@
 #ifndef QDECLARATIVEVIEW_PLUGIN_H
 #define QDECLARATIVEVIEW_PLUGIN_H
 
-#include <QtDesigner/customwidget.h>
+#include <QtUiTools/customwidget.h>
 
 QT_BEGIN_NAMESPACE
 
