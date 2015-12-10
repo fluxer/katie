@@ -37,8 +37,12 @@ set(SHAREDDEVICESKIN_HEADERS
 
 katie_resources(${SHAREDDEVICESKIN_SOURCES})
 katie_resources(${SHAREDDEVICESKIN_HEADERS})
-katie_resource("${SHAREDDEVICESKIN_RESOURCES}" deviceskin)
+katie_resource(
+    ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/deviceskin.cpp
+    "${SHAREDDEVICESKIN_RESOURCES}"
+    deviceskin
+)
 
-add_library(shareddeviceskin OBJECT ${SHAREDDEVICESKIN_SOURCES} ${SHAREDDEVICESKIN_HEADERS} ${SHAREDDEVICESKIN_RESOURCES})
+add_library(shareddeviceskin OBJECT ${SHAREDDEVICESKIN_SOURCES} ${SHAREDDEVICESKIN_HEADERS})
 target_compile_definitions(shareddeviceskin PRIVATE ${SHAREDDEVICESKIN_DEFINITIONS})
 target_include_directories(shareddeviceskin PRIVATE ${SHAREDDEVICESKIN_INCLUDES})

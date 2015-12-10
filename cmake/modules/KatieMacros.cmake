@@ -5,89 +5,80 @@ macro(KATIE_RESOURCES RESOURCES)
     foreach(tmpres ${RESOURCES} ${ARGN})
         get_filename_component(resource ${tmpres} ABSOLUTE)
         get_source_file_property(skip ${resource} SKIP_RESOURCE)
-        if(skip)
-            continue()
-        endif()
-        get_filename_component(rscext ${resource} EXT)
-        get_filename_component(rscname ${resource} NAME_WE)
-        get_filename_component(rscpath ${resource} PATH)
-        string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
-        make_directory(${rscpath})
-        if("${rscext}" STREQUAL ".ui")
-            set(rscout ${rscpath}/ui_${rscname}.h)
-            add_custom_command(
-                OUTPUT ${rscout}
-                COMMAND ${KATIE_UIC} "${resource}" -o "${rscout}"
-                MAIN_DEPENDENCY ${resource}
-            )
-        elseif("${rscext}" STREQUAL ".qrc")
-            set(rscout ${rscpath}/qrc_${rscname}.cpp)
-            add_custom_command(
-                OUTPUT ${rscout}
-                COMMAND ${KATIE_RCC} "${resource}" -o "${rscout}" -name "${rscname}"
-                MAIN_DEPENDENCY ${resource}
-            )
-            set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-        elseif("${rscext}" MATCHES "(.h|.cpp)")
-            set(rscout ${rscpath}/moc_${rscname}${rscext})
-            get_directory_property(dirdefs COMPILE_DEFINITIONS)
-            get_directory_property(dirincs INCLUDE_DIRECTORIES)
-            set(mocargs)
-            foreach(ddef ${dirdefs})
-                # TODO: filter non -D, support -U too
-                set(mocargs ${mocargs} -D${ddef})
-            endforeach()
-            foreach(incdir ${dirincs})
-                set(mocargs ${mocargs} -I${incdir})
-            endforeach()
-            add_custom_command(
-                OUTPUT "${rscout}"
-                COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
-            )
-            set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-            # XXX: this can be troublesome but common sources can cause multiple rules on the same file
-            set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+            if(NOT skip)
+            get_filename_component(rscext ${resource} EXT)
+            get_filename_component(rscname ${resource} NAME_WE)
+            get_filename_component(rscpath ${resource} PATH)
+            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
+            make_directory(${rscpath})
+            if("${rscext}" STREQUAL ".ui")
+                set(rscout ${rscpath}/ui_${rscname}.h)
+                add_custom_command(
+                    OUTPUT ${rscout}
+                    COMMAND ${KATIE_UIC} "${resource}" -o "${rscout}"
+                    MAIN_DEPENDENCY ${resource}
+                )
+            elseif("${rscext}" STREQUAL ".qrc")
+                set(rscout ${rscpath}/qrc_${rscname}.cpp)
+                add_custom_command(
+                    OUTPUT ${rscout}
+                    COMMAND ${KATIE_RCC} "${resource}" -o "${rscout}" -name "${rscname}"
+                    MAIN_DEPENDENCY ${resource}
+                )
+                set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
+            elseif("${rscext}" MATCHES "(.h|.cpp)")
+                set(rscout ${rscpath}/moc_${rscname}${rscext})
+                get_directory_property(dirdefs COMPILE_DEFINITIONS)
+                get_directory_property(dirincs INCLUDE_DIRECTORIES)
+                set(mocargs)
+                foreach(ddef ${dirdefs})
+                    # TODO: filter non -D, support -U too
+                    set(mocargs ${mocargs} -D${ddef})
+                endforeach()
+                foreach(incdir ${dirincs})
+                    set(mocargs ${mocargs} -I${incdir})
+                endforeach()
+                add_custom_command(
+                    OUTPUT "${rscout}"
+                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                )
+                set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
+                # XXX: this can be troublesome but common sources can cause multiple rules on the same file
+                set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+            endif()
         endif()
     endforeach()
 endmacro()
 
-macro(KATIE_RESOURCE RESOURCES OUTNAME)
+macro(KATIE_RESOURCE SRCDEP RESOURCES OUTNAME)
     set(rscout ${CMAKE_CURRENT_BINARY_DIR}/qrc_${OUTNAME}.cpp)
     add_custom_command(
         OUTPUT "${rscout}"
         COMMAND "${KATIE_RCC}" ${RESOURCES} -o "${rscout}" -name "${OUTNAME}"
         # MAIN_DEPENDENCY ${resource}
     )
-    foreach(tmpres ${RESOURCES})
-        set_property(SOURCE ${tmpres} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-    endforeach()
+    set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()
 
 macro(KATIE_DBUS_ADAPTOR SRCDEP SRCIN SRCOUT)
-    if(${ARG4})
-        set(dbusxmlargs ${ARG4})
-    endif()
     get_filename_component(resource ${SRCIN} ABSOLUTE)
     set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${SRCOUT}.h)
     set(mocout ${CMAKE_CURRENT_BINARY_DIR}/${SRCOUT}.moc)
     add_custom_command(
         OUTPUT "${rscout}"
-        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${resource}" -a "${rscout}" -p "${SRCOUT}" ${dbusxmlargs}
+        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${resource}" -a "${rscout}" -p "${SRCOUT}" ${ARGN}
         COMMAND "${KATIE_MOC}" -nw "${rscout}" -o "${mocout}" -i
     )
     set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()
 
 macro(KATIE_DBUS_INTERFACE SRCIN)
-    if(${ARG2})
-        set(dbusxmlargs ${ARG2})
-    endif()
     string(REGEX MATCH ".*\\.(.*)\\.xml" ${SRCIN} SRCOUT)
     string(TOLOWER ${SRCIN} SRCIN)
     set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${SRCOUT}ineterface.h)
     add_custom_command(
         OUTPUT "${rscout}"
-        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${SRCIN}" -a "${rscout}" -p "${SRCOUT}ineterface" ${dbusxmlargs}
+        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${SRCIN}" -a "${rscout}" -p "${SRCOUT}ineterface" ${ARGN}
     )
     set_property(SOURCE ${SRCIN} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()
