@@ -1,0 +1,51 @@
+# $Id:
+# Maintainer: Ivailo Monev <xakepa10@gmail.com>
+
+pkgname=katie-git
+pkgver=4.8.7.8e7f2a8
+pkgrel=1
+pkgdesc='C++ library derived from the existing Qt 4.8 framework'
+arch=('i686' 'x86_64')
+url='http://fluxer.github.io/katana'
+license=('LGPL' 'FDL' 'custom')
+depends=('openssl' 'zlib' 'cups' 'alsa-lib' 'gtk2' 'nas' 'libgl' 'libice'
+        'libsm' 'libxcursor' 'libxext' 'libxfixes' 'libxi' 'libxinerama'
+        'libxrandr' 'libxrender' 'libx11' 'fontconfig' 'freetype2' 'glib2'
+        'gst-plugins-base' 'libxml2')
+makedepends=('cmake' 'git' 'python' 'postgresql' 'mariadb' 'unixodbc' 'mesa' 'vlc')
+optdepends=('postgresql-libs: PostgreSQL driver'
+        'libmariadbclient: MariaDB driver'
+        'unixodbc: ODBC driver'
+        'vlc: Phonon VLC backend')
+source=("git+https://bitbucket.org/smil3y/katie")
+sha1sums=('SKIP')
+conflicts=('katie')
+# options=('debug')
+
+pkgver() {
+    cd katie
+    printf "4.8.7.%s" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+    mkdir -p build
+}
+
+build() {
+    cd build
+    cmake ../katie \
+        -Wno-dev \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_SKIP_RPATH=OFF \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        # -DTOOLS_SUFFIX=-kt
+    make
+}
+
+package() {
+    cd build
+    make DESTDIR="${pkgdir}" install
+
+    install -vDm644 ../katie/LGPL_EXCEPTION.txt \
+        "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
+}

@@ -1,0 +1,71 @@
+set(CORE_HEADERS
+    ${CORE_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qisciicodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qlatincodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qsimplecodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtsciicodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qutfcodec_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodecplugin.h
+)
+
+set(CORE_SOURCES
+    ${CORE_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qisciicodec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qlatincodec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qsimplecodec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtsciicodec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qutfcodec.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qtextcodecplugin.cpp
+)
+
+if(UNIX)
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qfontlaocodec.cpp
+    )
+    if(WITH_ICONV AND ICONV_FOUND)
+        set(CORE_HEADERS
+            ${CORE_HEADERS}
+            ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qiconvcodec_p.h
+        )
+        set(CORE_SOURCES
+            ${CORE_SOURCES}
+            ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qiconvcodec.cpp
+        )
+        add_definitions(-DGNU_LIBICONV)
+        if(NOT ${KATIE_PLATFORM} STREQUAL "mac")
+            set(EXTRA_CORE_LIBS
+                ${EXTRA_CORE_LIBS}
+                ${ICONV_LIBRARIES}
+            )
+        endif()
+        include_directories(${ICONV_INCLUDE_DIR})
+    else()
+        # no iconv, so we put all plugins in the library
+        set(CORE_HEADERS
+            ${CORE_HEADERS}
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/cn/qgb18030codec.h
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qeucjpcodec.h
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qjiscodec.h
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qsjiscodec.h 
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/kr/qeuckrcodec.h
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/tw/qbig5codec.h
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qfontjpcodec.h
+        )
+        set(CORE_SOURCES
+            ${CORE_SOURCES}
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/cn/qgb18030codec.cpp
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qjpunicode.cpp
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qeucjpcodec.cpp
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qjiscodec.cpp
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qsjiscodec.cpp 
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/kr/qeuckrcodec.cpp
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/tw/qbig5codec.cpp
+            ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qfontjpcodec.cpp
+        )
+        add_definitions(-DQT_NO_ICONV)
+    endif()
+endif(UNIX)

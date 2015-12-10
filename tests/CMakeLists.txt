@@ -1,0 +1,44 @@
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
+
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtGui
+    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
+    ${CMAKE_BINARY_DIR}/include/QtDBus
+    ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
+    ${CMAKE_BINARY_DIR}/include/QtDeclarative
+    ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
+    ${CMAKE_BINARY_DIR}/include/QtDesigner
+    ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
+    ${CMAKE_BINARY_DIR}/include/QtHelp
+    ${CMAKE_BINARY_DIR}/privateinclude/QtHelp
+    ${CMAKE_BINARY_DIR}/include/QtMultimedia
+    ${CMAKE_BINARY_DIR}/privateinclude/QtMultimedia
+    ${CMAKE_BINARY_DIR}/include/QtNetwork
+    ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
+    ${CMAKE_BINARY_DIR}/include/QtOpenGL
+    ${CMAKE_BINARY_DIR}/privateinclude/QtOpenGL
+    ${CMAKE_BINARY_DIR}/include/Phonon
+    ${CMAKE_BINARY_DIR}/privateinclude/Phonon
+    ${CMAKE_BINARY_DIR}/include/QtSql
+    ${CMAKE_BINARY_DIR}/privateinclude/QtSql
+    ${CMAKE_BINARY_DIR}/include/QtSvg
+    ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
+    ${CMAKE_BINARY_DIR}/include/QtXmlPatterns
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXmlPatterns
+    ${CMAKE_BINARY_DIR}/include/QtScript
+    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
+    ${CMAKE_BINARY_DIR}/include/QtScriptTools
+    ${CMAKE_BINARY_DIR}/privateinclude/QtScriptTools
+    ${CMAKE_BINARY_DIR}/include/QtTest
+    ${CMAKE_BINARY_DIR}/privateinclude/QtTest
+    ${CMAKE_BINARY_DIR}/include/QtUiTools
+    ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
+)

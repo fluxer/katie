@@ -1,0 +1,159 @@
+set(CORE_HEADERS
+    ${CORE_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qbasictimer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventloop.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcorecmdlineargs_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreevent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetaobject.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetatype.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmimedata.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobject.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobjectdefs.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsignalmapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsocketnotifier.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtimer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobjectcleanuphandler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetaobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobject_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreglobaldata_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror_p.h
+)
+
+set(CORE_SOURCES
+    ${CORE_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstracteventdispatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qabstractitemmodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qbasictimer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventloop.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreevent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetaobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetatype.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmimedata.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobjectcleanuphandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsignalmapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsocketnotifier.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtimer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreglobaldata.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror.cpp
+)
+
+if(UNIX)
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
+    )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
+    )
+    if(WITH_GLIB2 AND GLIB2_FOUND)
+        set(CORE_SOURCES
+            ${CORE_SOURCES}
+            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib.cpp
+        )
+        set(CORE_HEADERS
+            ${CORE_HEADERS}
+            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_p.h
+        )
+        include_directories(${GLIB2_INCLUDE_DIR})
+        set(EXTRA_CORE_LIBS
+            ${EXTRA_CORE_LIBS}
+            ${GLIB2_LIBRARIES}
+        )
+    endif()
+endif()
+
+if(KATIE_PLATFORM STREQUAL "win32")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwineventnotifier_p.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_win.cpp
+    )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_win_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwineventnotifier_p.h
+    )
+elseif(KATIE_PLATFORM STREQUAL "wince")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_wince.cpp
+    )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_wince.h
+    )
+elseif(KATIE_PLATFORM STREQUAL "mac")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_mac.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_mac.cpp
+    )
+elseif(KATIE_PLATFORM STREQUAL "vxworks")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_vxworks.cpp
+    )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_vxworks.h
+    )
+elseif(KATIE_PLATFORM STREQUAL "integrity")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
+    )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
+    )
+elseif(KATIE_PLATFORM STREQUAL "blackberry")
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry.cpp
+    )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry_p.h
+    )
+endif()

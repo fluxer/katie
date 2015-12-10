@@ -1,0 +1,162 @@
+add_definitions(
+    -DQT_NO_CAST_TO_ASCII
+    -DQT_NO_CAST_FROM_ASCII
+    -DQTESTLIB_MAKEDLL
+    -DQT_NO_DATASTREAM
+)
+set(EXTRA_TEST_LIBS KtCore)
+
+set(TEST_PUBLIC_HEADERS
+    ${TEST_PUBLIC_HEADERS}
+    QSignalSpy
+    QTest
+    QTestBasicStreamer
+    QTestCoreElement
+    QTestCoreList
+    QTestData
+    QTestElement
+    QTestElementAttribute
+    QTestEvent
+    QTestEventLoop
+    QTestFileLogger
+    QTestLightXmlStreamer
+    QTestXmlStreamer
+    QTestXunitStreamer
+)
+
+set(TEST_HEADERS
+    ${TEST_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsignalspy.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestaccessible.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestassert.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestbasicstreamer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestcase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestcoreelement.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestcorelist.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestdata.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestelementattribute.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestelement.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestevent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtesteventloop.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestfilelogger.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtest_global.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtest_gui.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtest.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestkeyboard.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestlightxmlstreamer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestmouse.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestspontaneevent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestsystem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtesttouch.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestxmlstreamer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestxunitstreamer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestlog_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtesttable_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestresult_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsignaldumper_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmeasurement_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkvalgrind_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkevent_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qplaintestlogger_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qxmltestlogger_p.h
+)
+
+set(TEST_SOURCES
+    ${TEST_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestcase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestlog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtesttable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestdata.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestresult.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qasciikey.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qplaintestlogger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qxmltestlogger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsignaldumper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmark.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmeasurement.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkvalgrind.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkevent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qbenchmarkmetric.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestelement.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestelementattribute.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestbasicstreamer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestxunitstreamer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestxmlstreamer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestlightxmlstreamer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestlogger.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestfilelogger.cpp
+)
+
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtTest
+    ${CMAKE_BINARY_DIR}/privateinclude/QtTest
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+if(${KATIE_PLATFORM} STREQUAL "qws")
+    set(KATIE_CXXFLAGS
+        ${KATIE_CXXFLAGS}
+        -fno-rtti
+    )
+elseif(${KATIE_PLATFORM} STREQUAL "wince")
+    set(EXTRA_TEST_LIBS
+        ${EXTRA_TEST_LIBS}
+        libcmt.lib
+        corelibc.lib
+        ole32.lib
+        oleaut32.lib
+        uuid.lib
+        commctrl.lib
+        coredll.lib
+        winsock.lib
+    )
+elseif(${KATIE_PLATFORM} STREQUAL "qws")
+    set(KATIE_LDFLAGS
+        ${KATIE_LDFLAGS}
+        -framework IOKit
+        -framework Security
+        -framework ApplicationServices
+        -framework CoreFoundation
+    )
+endif()
+
+katie_generate_misc("${TEST_HEADERS}" QtTest)
+katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
+katie_generate_map(QtTest Q_TESTLIB_EXPORT)
+katie_resources("${TEST_SOURCES}")
+katie_resources("${TEST_HEADERS}")
+katie_setup_flags()
+
+add_library(KtTest ${KATIE_TYPE} ${TEST_SOURCES} ${TEST_HEADERS})
+target_link_libraries(KtTest ${EXTRA_TEST_LIBS})
+set_target_properties(KtTest PROPERTIES
+    VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
+    SOVERSION ${KATIE_VERSION}
+    EXPORT_NAME Test
+)
+
+katie_generate_package(KtTest "" "${EXTRA_TEST_LIBS}" "KtCore")
+
+install(
+    TARGETS KtTest
+    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    DESTINATION ${QT_LIBRARIES_PATH_INST}
+)
+
+install(
+    DIRECTORY ${CMAKE_BINARY_DIR}/include/QtTest
+    DESTINATION ${QT_HEADERS_PATH_INST}
+    COMPONENT Devel
+)
+
+katie_optimize_headers(${QT_HEADERS_PATH}/QtTest)

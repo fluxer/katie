@@ -1,0 +1,166 @@
+add_definitions(-D_BUILD_FOR_QT_ -DLUCENE_DISABLE_MEMTRACKING)
+if(${KATIE_PLATFORM} STREQUAL "win32")
+    add_definitions(-D_CRT_SECURE_NO_DEPRECATE _MT)
+endif()
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/debug
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/document
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util
+)
+
+set(HELP_SOURCES
+    ${HELP_SOURCES}
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/StdHeader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/AnalysisHeader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/Analyzers.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/gunichartables.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/repl_lltot.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/repl_tcscasecmp.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/repl_tcslwr.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/repl_tcstod.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/repl_tcstoll.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/repl_tprintf.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/threads.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/config/utf8.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/debug/condition.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/debug/error.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/debug/memtracking.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/document/DateField.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/document/Document.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/document/Field.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/CompoundFile.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/DocumentWriter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/FieldInfos.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/FieldsReader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/FieldsWriter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/IndexModifier.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/IndexReader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/IndexWriter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/MultiReader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentInfos.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentMergeInfo.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentMergeQueue.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentMerger.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentReader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentTermDocs.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentTermEnum.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentTermPositions.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/SegmentTermVector.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/Term.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/TermInfo.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/TermInfosReader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/TermInfosWriter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/TermVectorReader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/index/TermVectorWriter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser/Lexer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser/MultiFieldQueryParser.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser/QueryParser.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser/QueryParserBase.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser/QueryToken.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/queryParser/TokenList.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/BooleanQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/BooleanScorer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/CachingWrapperFilter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/ChainedFilter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/ConjunctionScorer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/DateFilter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/ExactPhraseScorer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/Explanation.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/FieldCache.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/FieldCacheImpl.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/FieldDocSortedHitQueue.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/FieldSortedHitQueue.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/FilteredTermEnum.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/FuzzyQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/HitQueue.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/Hits.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/IndexSearcher.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/MultiSearcher.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/MultiTermQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/PhrasePositions.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/PhraseQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/PhraseScorer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/PrefixQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/QueryFilter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/RangeFilter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/RangeQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/SearchHeader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/Similarity.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/SloppyPhraseScorer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/Sort.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/TermQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/TermScorer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/WildcardQuery.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/search/WildcardTermEnum.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/FSDirectory.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/IndexInput.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/IndexOutput.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/Lock.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/MMapInput.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/RAMDirectory.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/store/TransactionalRAMDirectory.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/BitSet.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/Equators.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/FastCharStream.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/fileinputstream.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/Misc.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/Reader.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/StringBuffer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/StringIntern.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util/ThreadLocal.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard/StandardAnalyzer.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard/StandardFilter.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard/StandardTokenizer.cpp
+)
+
+set(HELP_HEADERS
+    ${HELP_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qclucene_global_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qclucene-config_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qanalyzer_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenizer_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtoken_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenstream_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qdocument_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qfield_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qindexreader_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qindexwriter_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qterm_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qqueryparser_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qfilter_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qhits_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsearchable_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsort_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qquery_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qreader_p.h
+)
+
+set(HELP_SOURCES
+    ${HELP_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qanalyzer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenizer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtoken.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenstream.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qdocument.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qfield.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qindexreader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qindexwriter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qterm.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qqueryparser.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qfilter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qhits.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsearchable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsort.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qquery.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qreader.cpp
+)

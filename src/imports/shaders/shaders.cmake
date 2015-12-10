@@ -1,0 +1,37 @@
+# add_definitions()
+set(EXTRA_SHADERS_LIBS KtOpenGL KtDeclarative)
+
+set(SHADERS_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/qmlshadersplugin_plugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffect.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectitem.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectsource.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/scenegraph/qsggeometry.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectbuffer.cpp
+)
+
+set(SHADERS_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/qmlshadersplugin_plugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/glfunctions.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffect.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectitem.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectsource.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/scenegraph/qsggeometry.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectbuffer.h
+)
+
+katie_resources("${SHADERS_SOURCES}")
+katie_resources("${SHADERS_HEADERS}")
+katie_setup_flags()
+
+add_library(qmlshadersplugin ${KATIE_TYPE} ${SHADERS_SOURCES} ${SHADERS_HEADERS})
+target_link_libraries(qmlshadersplugin ${EXTRA_SHADERS_LIBS})
+
+install(
+    TARGETS qmlshadersplugin
+    DESTINATION ${QT_IMPORTS_PATH_INST}/Qt/labs/shaders
+)
+install(
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/shaders/qmldir
+    DESTINATION ${QT_IMPORTS_PATH_INST}/Qt/labs/shaders
+)

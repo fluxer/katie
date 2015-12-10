@@ -1,0 +1,71 @@
+set(NETWORK_HEADERS
+    ${NETWORK_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhttpsocketengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qsocks5socketengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpserver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_p.h
+)
+
+set(NETWORK_SOURCES
+    ${NETWORK_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocketengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qhttpsocketengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qsocks5socketengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpserver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine.cpp
+)
+
+if(UNIX)
+    set(NETWORK_HEADERS
+        ${NETWORK_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
+    )
+    set(NETWORK_SOURCES
+        ${NETWORK_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
+    )
+elseif(KATIE_PLATFORM STREQUAL "win32")
+    set(NETWORK_SOURCES
+        ${NETWORK_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_win.cpp
+    )
+elseif(KATIE_PLATFORM STREQUAL "wince")
+    set(NETWORK_SOURCES
+        ${NETWORK_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_win.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_tcp.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_tcp.cpp
+    )
+    add_definitions(-DQT_LOCALSOCKET_TCP)
+elseif(KATIE_PLATFORM STREQUAL "integrity")
+    set(NETWORK_SOURCES
+        ${NETWORK_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_tcp.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_tcp.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
+    )
+    add_definitions(-DQT_LOCALSOCKET_TCP)
+endif()
+
+add_definitions(-DQT_USE_SYSTEM_PROXIES)

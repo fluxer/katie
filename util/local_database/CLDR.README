@@ -1,0 +1,14 @@
+How To update CLDR Data in Qt4.8
+================================
+
+Please follow the steps below if you want to update CLDR data in Qt4.8
+
+- Generate new qlocale data:
+
+wget -c http://unicode.org/Public/cldr/2.0.1/core.zip
+bsdtar -xf core.zip
+./cldr2qlocalexml.py common/main > data.xml
+./qlocalexml2cpp.py data.xml ../..
+rm -rf common data.xml core.zip
+
+- Add autotests if needed

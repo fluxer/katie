@@ -1,0 +1,492 @@
+add_definitions(-DQT_BUILD_GUI_LIB)
+set(EXTRA_GUI_LIBS KtCore)
+
+set(GUI_PUBLIC_HEADERS
+    ${GUI_PUBLIC_HEADERS}
+    QAbstractButton
+    QAbstractItemDelegate
+    QAbstractItemView
+    QAbstractPageSetupDialog
+    QAbstractPrintDialog
+    QAbstractProxyModel
+    QAbstractScrollArea
+    QAbstractSlider
+    QAbstractSpinBox
+    QAbstractTextDocumentLayout
+    QAccessible
+    QAccessibleBridge
+    QAccessibleObject
+    QAccessiblePlugin
+    QAccessibleTextInterface
+    QAccessibleValueInterface
+    QAccessibleWidget
+    QAccessibleWidgetEx
+    QAction
+    QActionGroup
+    QApplication
+    QAuthDevice
+    QBitmap
+    QBoxLayout
+    QBrush
+    QBrushData
+    QButtonGroup
+    QCalendarWidget
+    QCDEStyle
+    QCheckBox
+    QCleanlooksStyle
+    QClipboard
+    QClipboardEvent
+    QColor
+    QColorDialog
+    QColormap
+    QColumnView
+    QComboBox
+    QCommandLinkButton
+    QCommonStyle
+    QCompleter
+    QConicalGradient
+    QCursor
+    QDataWidgetMapper
+    QDateTimeEdit
+    QDesktopServices
+    QDesktopWidget
+    QDial
+    QDialog
+    QDialogButtonBox
+    QDirModel
+    QDockWidget
+    QDoubleSpinBox
+    QDrag
+    QDragResponseEvent
+    QErrorMessage
+    QFileDialog
+    QFileIconProvider
+    QFileOpenEvent
+    QFileSystemModel
+    QFocusFrame
+    QFont
+    QFontComboBox
+    QFontDatabase
+    QFontDialog
+    QFontInfo
+    QFontMetrics
+    QFormLayout
+    QFrame
+    QGenericMatrix
+    QGesture
+    QGestureRecognizer
+    QGlyphRun
+    QGradientStop
+    QGradientStops
+    QGraphicsAnchor
+    QGraphicsAnchorLayout
+    QGraphicsBlurEffect
+    QGraphicsColorizeEffect
+    QGraphicsDropShadowEffect
+    QGraphicsEffect
+    QGraphicsEllipseItem
+    QGraphicsGridLayout
+    QGraphicsItem
+    QGraphicsItemAnimation
+    QGraphicsItemGroup
+    QGraphicsLayout
+    QGraphicsLayoutItem
+    QGraphicsLinearLayout
+    QGraphicsLineItem
+    QGraphicsOpacityEffect
+    QGraphicsPathItem
+    QGraphicsPixmapItem
+    QGraphicsPolygonItem
+    QGraphicsProxyWidget
+    QGraphicsRectItem
+    QGraphicsRotation
+    QGraphicsScale
+    QGraphicsScene
+    QGraphicsSceneEvent
+    QGraphicsSceneHelpEvent
+    QGraphicsSceneMoveEvent
+    QGraphicsSimpleTextItem
+    QGraphicsView
+    QGraphicsWidget
+    QGridLayout
+    QGroupBox
+    QGtkStyle
+    QHBoxLayout
+    QHeaderView
+    QIcon
+    QIconDragEvent
+    QIconEngine
+    QIconEngineFactoryInterface
+    QIconEngineFactoryInterfaceV2
+    QIconEnginePlugin
+    QIconEnginePluginV2
+    QIdentityProxyModel
+    QImage
+    QImageIOHandler
+    QImageIOHandlerFactoryInterface
+    QImageReader
+    QImageTextKeyLang
+    QImageWriter
+    QInputContext
+    QInputContextFactory
+    QInputContextFactoryInterface
+    QInputContextPlugin
+    QInputDialog
+    QInputMethodEvent
+    QItemDelegate
+    QItemEditorCreator
+    QItemEditorCreatorBase
+    QItemEditorFactory
+    QItemSelectionModel
+    QKeyEventTransition
+    QKeySequence
+    QLabel
+    QLayout
+    QLayoutItem
+    QLCDNumber
+    QLineEdit
+    QListView
+    QListWidget
+    QMacCocoaViewContainer
+    QMacMime
+    QMacNativeWidget
+    QMacPasteboardMime
+    QMainWindow
+    QMatrix
+    QMatrix2x2
+    QMatrix2x3
+    QMatrix2x4
+    QMatrix3x2
+    QMatrix3x3
+    QMatrix3x4
+    QMatrix4x2
+    QMatrix4x3
+    QMatrix4x4
+    QMdiArea
+    QMdiSubWindow
+    QMenu
+    QMenuBar
+    QMotifStyle
+    QMouseDriverFactory
+    QMouseDriverPlugin
+    QMouseEventTransition
+    QMovie
+    QPageSetupDialog
+    QPaintDevice
+    QPaintEngine
+    QPaintEngineState
+    QPainter
+    QPainterPath
+    QPainterPathPrivate
+    QPainterPathStroker
+    QPalette
+    QPanGesture
+    QPen
+    QPicture
+    QPictureFormatInterface
+    QPictureFormatPlugin
+    QPictureIO
+    QPixmap
+    QPixmapCache
+    QPlainTextDocumentLayout
+    QPlainTextEdit
+    QPlastiqueStyle
+    QPlatformClipboard
+    QPlatformCursor
+    QPlatformCursorImage
+    QPlatformCursorPrivate
+    QPlatformEventLoopIntegration
+    QPlatformFontDatabase
+    QPlatformGLContext
+    QPlatformIntegration
+    QPlatformIntegrationFactoryInterface
+    QPlatformIntegrationPlugin
+    QPlatformNativeInterface
+    QPlatformScreen
+    QPlatformWindow
+    QPlatformWindowFormat
+    QPolygon
+    QPoolEntry
+    QPrintDialog
+    QPrintEngine
+    QPrinter
+    QPrinterInfo
+    QPrintPreviewDialog
+    QPrintPreviewWidget
+    QProgressBar
+    QProgressDialog
+    QProxyModel
+    QProxyScreen
+    QProxyScreenCursor
+    QProxyStyle
+    QPushButton
+    QQnxMouseHandler
+    QQnxScreen
+    QQuaternion
+    QRadialGradient
+    QRadioButton
+    QRawFont
+    QRegion
+    QRgb
+    QRubberBand
+    QScreen
+    QScreenCursor
+    QScreenDriverFactory
+    QScreenDriverFactoryInterface
+    QScreenDriverPlugin
+    QScrollArea
+    QScrollBar
+    QSessionManager
+    QShortcut
+    QSizeGrip
+    QSizePolicy
+    QSlider
+    QSortFilterProxyModel
+    QSound
+    QSpacerItem
+    QSpinBox
+    QSplashScreen
+    QSplitter
+    QSplitterHandle
+    QStackedLayout
+    QStackedWidget
+    QStandardItemEditorCreator
+    QStandardItemModel
+    QStaticText
+    QStatusBar
+    QStatusTipEvent
+    QStringListModel
+    QStyle
+    QStyledItemDelegate
+    QStyleFactory
+    QStyleFactoryInterface
+    QStyleHintReturn
+    QStyleHintReturnMask
+    QStyleHintReturnVariant
+    QStyleOption
+    QStyleOptionComboBox
+    QStyleOptionDockWidget
+    QStyleOptionDockWidgetV2
+    QStyleOptionGroupBox
+    QStyleOptionProgressBar
+    QStyleOptionQ3DockWindow
+    QStyleOptionQ3ListView
+    QStyleOptionQ3ListViewItem
+    QStyleOptionSizeGrip
+    QStyleOptionTab
+    QStyleOptionTabBarBase
+    QStyleOptionTabBarBaseV2
+    QStyleOptionTabV2
+    QStyleOptionTabV3
+    QStyleOptionTabWidgetFrame
+    QStyleOptionTabWidgetFrameV2
+    QStyleOptionToolBar
+    QStyleOptionToolBox
+    QStyleOptionToolBoxV2
+    QStylePainter
+    QStylePlugin
+    QSupportedWritingSystems
+    QSwipeGesture
+    QSymbianEvent
+    QSymbianGraphicsSystemHelper
+    QSyntaxHighlighter
+    QSystemTrayIcon
+    QTabBar
+    QTabletEvent
+    QTableView
+    QTableWidget
+    QTableWidgetItem
+    QTableWidgetSelectionRange
+    QTabWidget
+    QTapAndHoldGesture
+    QTapGesture
+    QtEvents
+    QTextBlockFormat
+    QTextBlockGroup
+    QTextBlockUserData
+    QTextBrowser
+    QTextCursor
+    QTextDocument
+    QTextDocumentFragment
+    QTextDocumentWriter
+    QTextEdit
+    QTextFormat
+    QTextFragment
+    QTextFrame
+    QTextFrameFormat
+    QTextFrameLayoutData
+    QTextImageFormat
+    QTextInlineObject
+    QTextItem
+    QTextLayout
+    QTextLength
+    QTextList
+    QTextObject
+    QTextObjectInterface
+    QTextOption
+    QTextTable
+    QTextTableCell
+    QTextTableCellFormat
+    QTileRules
+    QToolBar
+    QToolBarChangeEvent
+    QToolBox
+    QToolButton
+    QToolTip
+    QTransform
+    QTransformedScreen
+    QTransportAuth
+    QTreeView
+    QTreeWidget
+    QTreeWidgetItemIterator
+    QUndoGroup
+    QUndoStack
+    QUndoView
+    QUnixPrintWidget
+    QUpdateLaterEvent
+    QValidator
+    QVBoxLayout
+    QVector2D
+    QVector3D
+    QVector4D
+    QVFbHeader
+    QVFbKeyboardHandler
+    QVFbKeyData
+    QVFbMouseHandler
+    QVFbScreen
+    QWhatsThis
+    QWhatsThisClickedEvent
+    QWidget
+    QMessageBox
+    QWidgetAction
+    QWidgetData
+    QWidgetItemV2
+    QWidgetMapper
+    QWidgetSet
+    QWindowsCEStyle
+    QWindowsMime
+    QWindowsMobileStyle
+    QWindowsStyle
+    QWindowStateChangeEvent
+    QWindowsVistaStyle
+    QWindowsXPStyle
+    QWindowSystemInterface
+    QWizard
+    QWizardPage
+    QWorkspace
+    # those are aliases
+    QX11Info
+    QX11EmbedContainer
+    QX11EmbedWidget
+    # pure aliases, but required by UI generator
+    QTimeEdit
+    QDateEdit
+)
+
+include(accessible/accessible.cmake)
+include(animation/animation.cmake)
+include(dialogs/dialogs.cmake)
+include(effects/effects.cmake)
+include(egl/egl.cmake)
+include(graphicsview/graphicsview.cmake)
+include(image/image.cmake)
+include(inputmethod/inputmethod.cmake)
+include(itemviews/itemviews.cmake)
+include(kernel/kernel.cmake)
+include(math3d/math3d.cmake)
+include(painting/painting.cmake)
+include(statemachine/statemachine.cmake)
+include(styles/styles.cmake)
+include(text/text.cmake)
+include(util/util.cmake)
+include(widgets/widgets.cmake)
+
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtGui
+    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
+    ${CMAKE_CURRENT_SOURCE_DIR}/accessible
+    ${CMAKE_CURRENT_SOURCE_DIR}/animation
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
+    ${CMAKE_CURRENT_SOURCE_DIR}/effects
+    ${CMAKE_CURRENT_SOURCE_DIR}/egl
+    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview
+    ${CMAKE_CURRENT_SOURCE_DIR}/image
+    ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod
+    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel
+    ${CMAKE_CURRENT_SOURCE_DIR}/math3d
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting
+    ${CMAKE_CURRENT_SOURCE_DIR}/statemachine
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles
+    ${CMAKE_CURRENT_SOURCE_DIR}/text
+    ${CMAKE_CURRENT_SOURCE_DIR}/util
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+    ${CMAKE_CURRENT_BINARY_DIR}/accessible
+    ${CMAKE_CURRENT_BINARY_DIR}/animation
+    ${CMAKE_CURRENT_BINARY_DIR}/dialogs
+    ${CMAKE_CURRENT_BINARY_DIR}/effects
+    ${CMAKE_CURRENT_BINARY_DIR}/egl
+    ${CMAKE_CURRENT_BINARY_DIR}/graphicsview
+    ${CMAKE_CURRENT_BINARY_DIR}/image
+    ${CMAKE_CURRENT_BINARY_DIR}/inputmethod
+    ${CMAKE_CURRENT_BINARY_DIR}/itemviews
+    ${CMAKE_CURRENT_BINARY_DIR}/kernel
+    ${CMAKE_CURRENT_BINARY_DIR}/math3d
+    ${CMAKE_CURRENT_BINARY_DIR}/painting
+    ${CMAKE_CURRENT_BINARY_DIR}/statemachine
+    ${CMAKE_CURRENT_BINARY_DIR}/styles
+    ${CMAKE_CURRENT_BINARY_DIR}/text
+    ${CMAKE_CURRENT_BINARY_DIR}/util
+    ${CMAKE_CURRENT_BINARY_DIR}/widgets
+    ${CMAKE_SOURCE_DIR}/src/core/tools
+)
+
+if(WITH_X11 AND X11_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${X11_LIBRARIES}
+        ${X11_X11_LIB}
+        ${X11_Xrender_LIB}
+        ${X11_Xt_LIB}
+        ${X11_Xfixes_LIB}
+        ${X11_Xcursor_LIB}
+        ${X11_Xinerama_LIB}
+        ${X11_Xi_LIB}
+        ${X11_Xrandr_LIB}
+    )
+    include_directories(${X11_INCLUDE_DIR})
+endif()
+
+katie_generate_misc("${GUI_HEADERS}" QtGui)
+katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
+katie_generate_map(QtGui Q_GUI_EXPORT)
+katie_resources(${GUI_SOURCES} ${GUI_HEADERS})
+katie_setup_flags()
+
+add_library(KtGui ${KATIE_TYPE} ${GUI_SOURCES} ${GUI_HEADERS})
+target_link_libraries(KtGui ${EXTRA_GUI_LIBS})
+set_target_properties(KtGui PROPERTIES
+    VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
+    SOVERSION ${KATIE_VERSION}
+    EXPORT_NAME Gui
+)
+
+katie_generate_package(KtGui "" "${EXTRA_GUI_LIBS}" "KtCore")
+
+install(
+    TARGETS KtGui
+    EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
+    DESTINATION ${QT_LIBRARIES_PATH_INST}
+)
+
+install(
+    DIRECTORY ${CMAKE_BINARY_DIR}/include/QtGui
+    DESTINATION ${QT_HEADERS_PATH_INST}
+    COMPONENT Devel
+)
+
+katie_optimize_headers(${QT_HEADERS_PATH}/QtGui)

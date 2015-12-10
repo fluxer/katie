@@ -1,0 +1,17 @@
+# bootstraped
+if(KATIE_PLATFORM MATCHES "(win32|wince)")
+    add_subdirectory(idc)
+endif()
+add_subdirectory(moc)
+add_subdirectory(rcc)
+add_subdirectory(uic)
+
+# non-bootstraped
+if(WITH_DBUS AND DBUS_FOUND)
+    add_subdirectory(qdbus)
+endif()
+add_subdirectory(qhelpgenerator)
+add_subdirectory(qcollectiongenerator)
+add_subdirectory(lrelease)
+add_subdirectory(lupdate)
+add_subdirectory(lconvert)
