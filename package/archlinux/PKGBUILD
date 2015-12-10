@@ -2,11 +2,11 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.8.7.8e7f2a8
+pkgver=4.8.7.bfbc380
 pkgrel=1
-pkgdesc='C++ library derived from the existing Qt 4.8 framework'
+pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
-url='http://fluxer.github.io/katana'
+url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
 depends=('openssl' 'zlib' 'cups' 'alsa-lib' 'gtk2' 'nas' 'libgl' 'libice'
         'libsm' 'libxcursor' 'libxext' 'libxfixes' 'libxi' 'libxinerama'
@@ -17,7 +17,7 @@ optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'
         'unixodbc: ODBC driver'
         'vlc: Phonon VLC backend')
-source=("git+https://bitbucket.org/smil3y/katie")
+source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')
 # options=('debug')
@@ -36,9 +36,8 @@ build() {
     cmake ../katie \
         -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_SKIP_RPATH=OFF \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        # -DTOOLS_SUFFIX=-kt
+        -DCMAKE_SKIP_RPATH=OFF
     make
 }
 

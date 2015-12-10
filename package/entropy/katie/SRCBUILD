@@ -1,16 +1,13 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
-# http://www.linuxfromscratch.org/blfs/view/svn/x/qt4.html
-# http://qt-project.org/doc/qt-4.8/configure-options.html
-
 version=4.8.7
-description='Cross-platform application and UI framework'
+description='C++ toolkit derived from the Qt 4.8 framework'
 depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'
         'mesalib' 'cups')
 makedepends=('python')
 optdepends=('gtk2' 'mariadb' 'unixodbc' 'vlc')
-sources=("https://smil3y@bitbucket.com/smil3y/katie.git")
+sources=("https://github.com/fluxer/katie.git")
 
 src_compile() {
     mkdir -p build && cd build
@@ -22,6 +19,7 @@ src_compile() {
     cmake ../katie.git \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_SKIP_RPATH=OFF \
         $_options -Wno-dev
     make
 }
