@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
         printf("       wget https://publicsuffix.org/list/effective_tld_names.dat -O effective_tld_names.dat\n");
         printf("       grep '^[^\\/\\/]' effective_tld_names.dat > effective_tld_names.dat.trimmed\n");
         printf("       %s effective_tld_names.dat.trimmed effective_tld_names.dat.qt\n\n", argv[0]);
-        printf("Now copy the data from effective_tld_names.dat.qt to the file src/corelib/io/qurltlds_p.h in your Qt repo\n\n");
+        printf("Now copy the data from effective_tld_names.dat.qt to the file src/core/io/qurltlds_p.h in your Qt repo\n\n");
         exit(1);
     }
     QFile file(argv[1]);
