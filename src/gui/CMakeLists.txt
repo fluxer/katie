@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_GUI_LIB)
+add_definitions(-DQT_BUILD_GUI_LIB -DQ_INTERNAL_QAPP_SRC)
 set(EXTRA_GUI_LIBS KtCore)
 
 set(GUI_PUBLIC_HEADERS
