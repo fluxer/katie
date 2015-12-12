@@ -3,3 +3,4 @@ deal with obsolete headers, besides those mentioned in the CMake files
 use system harfbuzz and clucene (optionally) and unbundle
 make use of qstandarddirs and qcommandlineparser trought the codebase, e.g. moc
 move phonon sources to 3rdparty, still, generate docs for it
+do not rebuild phonon on prefix change
