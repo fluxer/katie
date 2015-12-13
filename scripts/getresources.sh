@@ -8,7 +8,9 @@ for d in $(find $(pwd) $builddir/include $builddir/privateinclude -type d);do
     autoinc+=" -I$d"
 done
 
-for i in $(find -iname '*.cpp' -o -iname '*.h' -printf '%P\n');do
+allfiles="$(find -iname '*.cpp' -printf '%P\n')"
+allfiles+="$(find -iname '*.h' -printf '%P\n')"
+for i in $allfiles;do
     if [ -n "$(moc -nw $i $autoinc)" ];then
         echo '    ${CMAKE_CURRENT_SOURCE_DIR}/'$i
     fi

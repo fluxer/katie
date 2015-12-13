@@ -15,7 +15,8 @@ for d in $(find $(pwd) $builddir/include $builddir/privateinclude -type d);do
     autoinc+=" -I$d"
 done
 
-allfiles="$(find -iname '*.cpp' -o -iname '*.h' -printf '%P\n')"
+allfiles="$(find -iname '*.cpp' -printf '%P\n')"
+allfiles+="$(find -iname '*.h' -printf '%P\n')"
 for i in $allfiles;do
     if [ -n "$(moc -nw $i $autoinc)" ];then
         found="no"
