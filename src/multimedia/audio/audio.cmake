@@ -86,6 +86,7 @@ elseif(UNIX AND WITH_ALSA AND ALSA_FOUND)
         ${ALSA_LIBRARIES}
     )
     include_directories(${ALSA_INCLUDE_DIRS})
+    add_definitions(-DHAS_ALSA)
 else()
     katie_definition(-DQT_NO_AUDIO_BACKEND)
 endif()
