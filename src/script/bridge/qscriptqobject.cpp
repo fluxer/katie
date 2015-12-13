@@ -147,8 +147,9 @@ private:
 
 static bool hasMethodAccess(const QMetaMethod &method, int index, const QScriptEngine::QObjectWrapOptions &opt)
 {
+    static const int deleteLaterIndex = QObject::staticMetaObject.indexOfMethod("deleteLater()");
     return (method.access() != QMetaMethod::Private)
-        && ((index != 2) || !(opt & QScriptEngine::ExcludeDeleteLater))
+        && ((index != deleteLaterIndex) || !(opt & QScriptEngine::ExcludeDeleteLater))
         && (!(opt & QScriptEngine::ExcludeSlots) || (method.methodType() != QMetaMethod::Slot));
 }
 
