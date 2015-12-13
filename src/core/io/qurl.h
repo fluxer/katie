@@ -42,10 +42,6 @@
 #ifndef QURL_H
 #define QURL_H
 
-#include <QtCore/qbytearray.h>
-#include <QtCore/qobjectdefs.h>
-#include <QtCore/qpair.h>
-#include <QtCore/qstring.h>
 #include <QtCore/qhash.h>
 
 QT_BEGIN_HEADER

@@ -43,7 +43,6 @@
 #define QFILEINFO_H
 
 #include <QtCore/qfile.h>
-#include <QtCore/qlist.h>
 #include <QtCore/qshareddata.h>
 
 QT_BEGIN_HEADER

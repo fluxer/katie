@@ -42,10 +42,7 @@
 #ifndef QHASH_H
 #define QHASH_H
 
-#include <QtCore/qatomic.h>
-#include <QtCore/qchar.h>
 #include <QtCore/qiterator.h>
-#include <QtCore/qlist.h>
 #include <QtCore/qpair.h>
 
 QT_BEGIN_HEADER

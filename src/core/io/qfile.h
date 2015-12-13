@@ -43,7 +43,6 @@
 #define QFILE_H
 
 #include <QtCore/qiodevice.h>
-#include <QtCore/qstring.h>
 #include <stdio.h>
 
 #ifdef open

@@ -42,9 +42,6 @@
 #ifndef QVECTOR_H
 #define QVECTOR_H
 
-#include <QtCore/qiterator.h>
-#include <QtCore/qatomic.h>
-#include <QtCore/qalgorithms.h>
 #include <QtCore/qlist.h>
 
 #ifndef QT_NO_STL

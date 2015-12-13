@@ -46,9 +46,7 @@
 
 #ifndef QT_NO_XMLSTREAM
 
-#include <QtCore/qstring.h>
 #include <QtCore/qvector.h>
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 

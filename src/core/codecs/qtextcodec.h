@@ -43,7 +43,6 @@
 #define QTEXTCODEC_H
 
 #include <QtCore/qstring.h>
-#include <QtCore/qlist.h>
 
 QT_BEGIN_HEADER
 

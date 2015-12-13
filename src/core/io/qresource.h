@@ -42,10 +42,8 @@
 #ifndef QRESOURCE_H
 #define QRESOURCE_H
 
-#include <QtCore/qstring.h>
 #include <QtCore/qlocale.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qlist.h>
 
 QT_BEGIN_HEADER
 

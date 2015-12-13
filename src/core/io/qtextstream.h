@@ -42,14 +42,7 @@
 #ifndef QTEXTSTREAM_H
 #define QTEXTSTREAM_H
 
-#include <QtCore/qiodevice.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qchar.h>
 #include <QtCore/qlocale.h>
-#include <QtCore/qscopedpointer.h>
-
-#ifndef QT_NO_TEXTCODEC
-#endif
 
 #include <stdio.h>
 

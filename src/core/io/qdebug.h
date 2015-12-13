@@ -42,13 +42,7 @@
 #ifndef QDEBUG_H
 #define QDEBUG_H
 
-#include <QtCore/qalgorithms.h>
-#include <QtCore/qhash.h>
-#include <QtCore/qlist.h>
-#include <QtCore/qmap.h>
-#include <QtCore/qpair.h>
 #include <QtCore/qtextstream.h>
-#include <QtCore/qstring.h>
 #include <QtCore/qvector.h>
 #include <QtCore/qset.h>
 #include <QtCore/qcontiguouscache.h>

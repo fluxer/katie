@@ -42,13 +42,10 @@
 #ifndef QVARIANT_H
 #define QVARIANT_H
 
-#include <QtCore/qatomic.h>
-#include <QtCore/qbytearray.h>
-#include <QtCore/qlist.h>
 #include <QtCore/qmetatype.h>
-#include <QtCore/qmap.h>
 #include <QtCore/qhash.h>
 #include <QtCore/qstring.h>
+#include <QtCore/qmap.h>
 
 QT_BEGIN_HEADER
 

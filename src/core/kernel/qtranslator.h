@@ -43,7 +43,6 @@
 #define QTRANSLATOR_H
 
 #include <QtCore/qobject.h>
-#include <QtCore/qbytearray.h>
 
 QT_BEGIN_HEADER
 
