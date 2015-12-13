@@ -133,8 +133,7 @@ else()
     )
 endif()
 
-# TODO: look for ICU package
-if(ICU_FOUND)
+if(WITH_ICU AND ICU_FOUND)
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_icu.cpp

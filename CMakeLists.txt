@@ -82,6 +82,9 @@ add_feature_info(fontconfig WITH_FONTCONFIG "an open source something")
 option(WITH_FREETYPE "Build freetype2 support" ON)
 add_feature_info(freetype2 WITH_FREETYPE "an open source something")
 
+option(WITH_ICU "Build icu support" ON)
+add_feature_info(icu WITH_ICU "an open source something")
+
 # TODO: enable when building against external harfbuzz works
 option(WITH_HARFBUZZ "Build harfbuzz support" OFF)
 add_feature_info(harfbuzz WITH_HARFBUZZ "an open source something")
@@ -294,6 +297,14 @@ set_package_properties(Freetype PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Freely available software library to render fonts"
     URL "http://www.freetype.org"
+    TYPE RECOMMENDED
+)
+
+find_package(ICU)
+set_package_properties(ICU PROPERTIES
+    PURPOSE "ICU locales support"
+    DESCRIPTION "Mature, widely used libraries providing Unicode and Globalization support"
+    URL "http://site.icu-project.org/"
     TYPE RECOMMENDED
 )
 
