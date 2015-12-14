@@ -137,6 +137,8 @@
 #define W_OK	2
 #define R_OK	4
 
+#ifndef __MINGW32__
 typedef int mode_t;
+#endif
 
 #endif // QPLATFORMDEFS_H
