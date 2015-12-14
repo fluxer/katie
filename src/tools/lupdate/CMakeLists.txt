@@ -1,5 +1,5 @@
 add_definitions(${SHAREDLINGUIST_DEFINITIONS})
-set(EXTRA_LUPDATE_LIBS KtCore KtXml KtDeclarative)
+set(EXTRA_LUPDATE_LIBS KtCore KtXml)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -8,8 +8,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
-    ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
     ${SHAREDLINGUIST_INCLUDES}
 )
 
