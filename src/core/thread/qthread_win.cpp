@@ -660,4 +660,7 @@ void QThread::setPriority(Priority priority)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qthread.h"
+
 #endif // QT_NO_THREAD

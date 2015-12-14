@@ -804,8 +804,6 @@ QThread::QThread(QThreadPrivate &dd, QObject *parent)
     d->data->thread = this;
 }
 
-#include "moc_qthread.h"
-
 #endif // QT_NO_THREAD
 
 QT_END_NAMESPACE
