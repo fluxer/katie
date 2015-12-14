@@ -29,28 +29,26 @@ elseif(${KATIE_PLATFORM} STREQUAL "integrity")
     )
 endif()
 
-if(NOT ${KATIE_PLATFORM} MATCHES "(wince|win32|mac)")
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_avr32.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_ia64.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_parisc.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sparc.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_arch.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_generic.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_powerpc.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_arm.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_armv5.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_armv6.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_armv7.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_i386.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_mips.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_s390.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_x86_64.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sh.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sh4a.h
-    )
-endif()
+set(CORE_HEADERS
+    ${CORE_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_avr32.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_ia64.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_parisc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sparc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_arch.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_generic.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_powerpc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_arm.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_armv5.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_armv6.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_armv7.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_i386.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_mips.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_s390.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_x86_64.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sh.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sh4a.h
+)
 
 # TODO: inline assembly check
 set(CORE_SOURCES
