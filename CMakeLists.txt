@@ -109,7 +109,7 @@ add_feature_info(x11 WITH_X11 "an open source something")
 
 # katie features
 option(KATIE_BOOTSTRAP "Build only core tools" OFF)
-add_feature_info(bootstrap KATIE_BOOTSTRAP "")
+add_feature_info(bootstrap KATIE_BOOTSTRAP "internal build option")
 
 option(WITH_OPENGLES1 "Build opengles1 support" OFF)
 add_feature_info(opengles1 WITH_OPENGLES1 "an open source something")
@@ -442,13 +442,15 @@ endif()
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 # semi-shared
-include(src/shared/deviceskin/deviceskin.cmake)
-include(src/shared/help/help.cmake)
 include(src/shared/linguist/linguist.cmake)
-include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
-include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
-include(src/shared/findwidget/findwidget.cmake)
 include(src/shared/bootstrap.cmake)
+if(NOT KATIE_BOOTSTRAP)
+    include(src/shared/deviceskin/deviceskin.cmake)
+    include(src/shared/help/help.cmake)
+    include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
+    include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
+    include(src/shared/findwidget/findwidget.cmake)
+endif()
 
 if(ENABLE_TESTING)
     message(WARNING "Unless it is intentionally you should not enable testing")
