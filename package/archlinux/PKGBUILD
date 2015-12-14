@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.8.7.bfbc380
+pkgver=4.8.7.8e624df
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
@@ -12,7 +12,8 @@ depends=('openssl' 'zlib' 'cups' 'alsa-lib' 'gtk2' 'nas' 'libgl' 'libice'
         'libsm' 'libxcursor' 'libxext' 'libxfixes' 'libxi' 'libxinerama'
         'libxrandr' 'libxrender' 'libx11' 'fontconfig' 'freetype2' 'glib2'
         'gst-plugins-base' 'libxml2')
-makedepends=('cmake' 'git' 'python' 'postgresql' 'mariadb' 'unixodbc' 'mesa' 'vlc')
+makedepends=('cmake' 'git' 'python' 'postgresql' 'mariadb' 'unixodbc' 'mesa'
+        'vlc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'
         'unixodbc: ODBC driver'
