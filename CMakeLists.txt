@@ -462,6 +462,10 @@ if(NOT WTIH_EGL OR NOT EGL_FOUND)
     katie_definition(-DQT_NO_EGL)
 endif()
 
+if(NOT WITH_OPENSSL OR NOT OPENSSL_FOUND)
+    katie_definition(-DQT_NO_OPENSSL)
+endif()
+
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)

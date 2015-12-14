@@ -51,11 +51,7 @@ include(access/access.cmake)
 include(bearer/bearer.cmake)
 include(kernel/kernel.cmake)
 include(socket/socket.cmake)
-if(WITH_OPENSSL AND OPENSSL_FOUND)
-    include(ssl/ssl.cmake)
-else()
-    katie_definition(-DQT_NO_OPENSSL)
-endif()
+include(ssl/ssl.cmake)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
