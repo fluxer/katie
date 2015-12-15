@@ -76,11 +76,11 @@ add_feature_info(egl WITH_EGL "an open source something")
 option(WITH_OPENGL "Build opengl support" ON)
 add_feature_info(opengl WITH_OPENGL "an open source something")
 
-option(WITH_FONTCONFIG "Build fontconfig support" ON)
-add_feature_info(fontconfig WITH_FONTCONFIG "an open source something")
-
 option(WITH_FREETYPE "Build freetype2 support" ON)
 add_feature_info(freetype2 WITH_FREETYPE "an open source something")
+
+option(WITH_FONTCONFIG "Build fontconfig support" ON)
+add_feature_info(fontconfig WITH_FONTCONFIG "an open source something")
 
 option(WITH_ICU "Build icu support" ON)
 add_feature_info(icu WITH_ICU "an open source something")
@@ -286,20 +286,19 @@ set_package_properties(PulseAudio PROPERTIES
     TYPE OPTIONAL
 )
 
+find_package(Freetype)
+set_package_properties(Freetype PROPERTIES
+    PURPOSE "Required for fonts configuration support"
+    DESCRIPTION "Freely available software library to render fonts"
+    URL "http://www.freetype.org"
+    TYPE RECOMMENDED
+)
 
 find_package(Fontconfig)
 set_package_properties(Fontconfig PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Library for configuring and customizing font access"
     URL "http://www.freedesktop.org/wiki/Software/fontconfig"
-    TYPE RECOMMENDED
-)
-
-find_package(Freetype)
-set_package_properties(Freetype PROPERTIES
-    PURPOSE "Required for fonts configuration support"
-    DESCRIPTION "Freely available software library to render fonts"
-    URL "http://www.freetype.org"
     TYPE RECOMMENDED
 )
 

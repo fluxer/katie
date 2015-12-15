@@ -17,3 +17,6 @@ set(QT_SETTINGS_PATH "${QT_DATA_PATH}/settings")
 
 set(WITH_FREETYPE OFF)
 set(WITH_FONTCONFIG OFF)
+# set(WITH_ICD ON)
+# TODO: enable directwrite on Vista+
+# set(WITH_DIRECTWRITE ON)
