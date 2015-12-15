@@ -620,4 +620,6 @@ bool QNativeWifiEngine::requiresPolling() const
 QT_END_NAMESPACE
 
 #endif // QT_NO_BEARERMANAGEMENT
+
 #include "moc_qnativewifiengine.h"
+#include "moc_qbearerengine_impl.h"
