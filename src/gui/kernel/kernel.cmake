@@ -162,6 +162,10 @@ elseif(KATIE_PLATFORM STREQUAL "win32")
     )
     add_definitions(-DQT_NO_DIRECTDRAW)
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/wintab)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        winmm
+    )
 elseif(KATIE_PLATFORM STREQUAL "wince")
     set(GUI_HEADERS
         ${GUI_HEADERS}

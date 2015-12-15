@@ -45,5 +45,5 @@ if(WITH_ACCESSIBILITY)
     endif()
 else()
     # FIXME: move to global scope
-    add_definitions(-DQT_NO_ACCESSIBILITY)
+    katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()

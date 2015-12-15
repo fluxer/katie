@@ -882,7 +882,6 @@ bool QXIMInputContext::x11FilterEvent(QWidget *, XEvent *) { return true; }
 
 QT_END_NAMESPACE
 
-
 #include "moc_qximinputcontext_p.h"
 
 #endif //QT_NO_IM

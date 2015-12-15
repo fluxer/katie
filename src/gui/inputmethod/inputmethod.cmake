@@ -31,6 +31,10 @@ elseif(KATIE_PLATFORM STREQUAL "win32")
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qwininputcontext_win.cpp
     )
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        imm32
+    )
 elseif(KATIE_PLATFORM STREQUAL "qws")
     set(GUI_HEADERS
         ${GUI_HEADERS}

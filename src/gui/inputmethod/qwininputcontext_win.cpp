@@ -846,4 +846,7 @@ int QWinInputContext::reconvertString(RECONVERTSTRING *reconv)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qwininputcontext_p.h"
+
 #endif // QT_NO_IM

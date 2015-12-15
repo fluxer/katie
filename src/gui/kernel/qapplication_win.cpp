@@ -4279,4 +4279,6 @@ bool QApplicationPrivate::translateTouchEvent(const MSG &msg)
     return true;
 }
 
+#include "moc_qsessionmanager.h"
+
 QT_END_NAMESPACE
