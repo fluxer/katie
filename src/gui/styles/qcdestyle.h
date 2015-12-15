@@ -43,14 +43,13 @@
 #ifndef QCDESTYLE_H
 #define QCDESTYLE_H
 
+#if !defined(QT_NO_STYLE_CDE)
+
 #include <QtGui/qmotifstyle.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
-
-#if !defined(QT_NO_STYLE_CDE)
 
 class Q_GUI_EXPORT QCDEStyle : public QMotifStyle
 {
@@ -72,10 +71,10 @@ protected Q_SLOTS:
                                      const QWidget *widget = 0) const;
 };
 
-#endif // QT_NO_STYLE_CDE
-
 QT_END_NAMESPACE
 
 QT_END_HEADER
+
+#endif // QT_NO_STYLE_CDE
 
 #endif // QCDESTYLE_H
