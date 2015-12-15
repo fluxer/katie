@@ -2,11 +2,23 @@
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 if(CMAKE_CROSSCOMPILING)
-    # TODO: do not require native tools, build them
-    set(KATIE_UIC "uic")
-    set(KATIE_RCC "rcc")
-    set(KATIE_MOC "moc")
-    set(KATIE_LRELEASE "lrelease")
+    # TODO: switch to release tarball
+    include(ExternalProject)
+    ExternalProject_Add(
+        external_katie
+        GIT_REPOSITORY https://github.com/fluxer/katie
+        SOURCE_DIR ${CMAKE_BINARY_DIR}/external_katie
+        INSTALL_DIR ${CMAKE_BINARY_DIR}/external_katie_install
+        BUILD_IN_SOURCE 1
+        UPDATE_DISCONNECTED 1 # it always fails
+        CMAKE_ARGS -DKATIE_BOOTSTRAP=TRUE -Wno-dev
+        CMAKE_CACHE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/external_katie_install
+    )
+    # TODO: native executable suffix
+    set(KATIE_UIC "${CMAKE_BINARY_DIR}/external_katie/bin/uic")
+    set(KATIE_RCC "${CMAKE_BINARY_DIR}/external_katie/bin/rcc")
+    set(KATIE_MOC "${CMAKE_BINARY_DIR}/external_katie/bin/moc")
+    set(KATIE_LRELEASE "${CMAKE_BINARY_DIR}/external_katie/bin/lrelease")
 else()
     set(KATIE_UIC "bootstrap_uic")
     set(KATIE_RCC "bootstrap_rcc")
