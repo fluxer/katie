@@ -486,6 +486,10 @@ if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
 endif()
 
+if(NOT WITH_DIRECTWRITE)
+    katie_definition(-DQT_NO_DIRECTWRITE)
+endif()
+
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
