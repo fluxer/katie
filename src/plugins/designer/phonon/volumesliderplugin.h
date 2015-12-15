@@ -42,7 +42,7 @@
 #ifndef VOLUMESLIDER_PLUGIN_H
 #define VOLUMESLIDER_PLUGIN_H
 
-#include <QtDesigner/QDesignerCustomWidgetInterface>
+#include <QtUiTools/customwidget.h>
 
 class VolumeSliderPlugin: public QObject, public QDesignerCustomWidgetInterface
 {

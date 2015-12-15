@@ -23,6 +23,7 @@
 #define PHONON_GLSLPAINTER_H
 
 #include <QtCore/qdatetime.h>
+#include <QtOpenGL/qglfunctions.h>
 
 #include "glpainter.h"
 
@@ -30,7 +31,7 @@ class QGLShaderProgram;
 
 namespace Phonon {
 
-class GlslPainter : public GlPainter
+class GlslPainter : public GlPainter, protected QGLFunctions
 {
 public:
     GlslPainter();

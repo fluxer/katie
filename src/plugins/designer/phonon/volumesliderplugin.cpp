@@ -111,3 +111,4 @@ QString VolumeSliderPlugin::domXml() const
         <widget class=\"Phonon::VolumeSlider\" name=\"volumeSlider\"/>\
     </ui>");
 }
+#include "moc_volumesliderplugin.h"

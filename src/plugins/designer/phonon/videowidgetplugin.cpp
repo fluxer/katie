@@ -21,9 +21,9 @@
 
 #include "videowidgetplugin.h"
 
-#include <QtDesigner/QExtensionFactory>
+#include <QtDesigner/default_extensionfactory.h>
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/QDesignerFormEditorInterface>
+#include <QtDesigner/abstractformeditor.h>
 
 #include <QtCore/qplugin.h>
 
@@ -108,3 +108,4 @@ QString VideoWidgetPlugin::domXml() const
         </widget>\
     </ui>");
 }
+#include "moc_videowidgetplugin.h"

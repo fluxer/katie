@@ -21,10 +21,9 @@
 */
 
 #include "glslpainter.h"
+#include "videoframe.h"
 
 #include <QtOpenGL/QGLShaderProgram>
-
-#include "videoframe.h"
 
 namespace Phonon {
 

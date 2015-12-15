@@ -62,9 +62,9 @@
 
 #include "videoplayertaskmenu.h"
 
-#include <QtDesigner/QDesignerFormWindowInterface>
-#include <QtDesigner/QDesignerFormWindowCursorInterface>
-#include <QtDesigner/QDesignerFormEditorInterface>
+#include <QtDesigner/abstractformwindow.h>
+#include <QtDesigner/abstractformwindowcursor.h>
+#include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/QExtensionManager>
 
 #include <phonon/backendcapabilities.h>
@@ -188,3 +188,4 @@ QObject *VideoPlayerTaskMenuFactory::createExtension(QObject *object,
 
     return 0;
 }
+#include "moc_videoplayertaskmenu.h"

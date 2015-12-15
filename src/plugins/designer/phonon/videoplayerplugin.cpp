@@ -63,9 +63,9 @@
 #include "videoplayerplugin.h"
 #include "videoplayertaskmenu.h"
 
-#include <QtDesigner/QExtensionFactory>
+#include <QtDesigner/default_extensionfactory.h>
 #include <QtDesigner/QExtensionManager>
-#include <QtDesigner/QDesignerFormEditorInterface>
+#include <QtDesigner/abstractformeditor.h>
 
 #include <QtCore/qplugin.h>
 #include <phonon/videoplayer.h>
@@ -154,3 +154,4 @@ QString VideoPlayerPlugin::domXml() const
         </widget>\
     </ui>");
 }
+#include "moc_videoplayerplugin.h"

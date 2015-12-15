@@ -111,3 +111,4 @@ QString SeekSliderPlugin::domXml() const
         <widget class=\"Phonon::SeekSlider\" name=\"seekSlider\"/>\
     </ui>");
 }
+#include "moc_seeksliderplugin.h"

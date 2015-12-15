@@ -21,6 +21,8 @@
 
 #include "glpainter.h"
 
+#include <QtOpenGL/qglfunctions.h>
+
 namespace Phonon {
 
 GlPainter::GlPainter() :

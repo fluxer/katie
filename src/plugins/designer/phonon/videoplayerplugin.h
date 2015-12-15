@@ -42,7 +42,7 @@
 #ifndef VIDEOPLAYER_PLUGIN_H
 #define VIDEOPLAYER_PLUGIN_H
 
-#include <QtDesigner/QDesignerCustomWidgetInterface>
+#include <QtUiTools/customwidget.h>
 
 class VideoPlayerPlugin: public QObject, public QDesignerCustomWidgetInterface
 {

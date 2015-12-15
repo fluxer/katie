@@ -64,8 +64,8 @@
 #define VIDEOPLAYERTASKMENU_H
 
 #include <QtCore/QObject>
-#include <QtDesigner/QDesignerTaskMenuExtension>
-#include <QtDesigner/QExtensionFactory>
+#include <QtDesigner/taskmenu.h>
+#include <QtDesigner/default_extensionfactory.h>
 
 #include <phonon/phononnamespace.h>
 
