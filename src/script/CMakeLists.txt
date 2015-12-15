@@ -276,20 +276,26 @@ elseif(KATIE_PLATFORM STREQUAL "qpa")
         -framework CoreFoundation
     )
     add_definitions(-DENABLE_JSC_MULTIPLE_THREADS=0)
-elseif(KATIE_PLATFORM STREQUAL "wince")
+elseif(KATIE_PLATFORM MATCHES "(win32|wince)" AND KATIE_COMPILER STREQUAL "msvc")
     include_directories(
         ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/os-wince
         ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/os-win32
     )
-    set(EXTRA_SCRIPT_LIBS
-        ${EXTRA_SCRIPT_LIBS}
-        mmtimer
-    )
-    add_definitions(-DWINCEBASIC)
 elseif(KATIE_PLATFORM STREQUAL "integrity")
     set(KATIE_CXXFLAGS
         ${KATIE_CXXFLAGS}
         --diag_remark=236,82
+    )
+endif()
+
+if(KATIE_PLATFORM STREQUAL "wince")
+    add_definitions(-DWINCEBASIC)
+endif()
+
+if(KATIE_PLATFORM MATCHES "(win32|wince)")
+    set(EXTRA_SCRIPT_LIBS
+        ${EXTRA_SCRIPT_LIBS}
+        winmm
     )
 endif()
 
