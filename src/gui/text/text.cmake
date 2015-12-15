@@ -88,8 +88,6 @@ if(WITH_FREETYPE AND FREETYPE_FOUND)
         ${EXTRA_GUI_LIBS}
         ${FREETYPE_LIBRARIES}
     )
-else()
-    add_definitions(-DQT_NO_FREETYPE)
 endif()
 
 if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
@@ -99,8 +97,6 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
         ${FONTCONFIG_LIBRARIES}
     )
     add_definitions(${FONTCONFIG_DEFINITIONS})
-else()
-    add_definitions(-DQT_NO_FONTCONFIG)
 endif()
 
 if(WITH_DIRECTWRITE)

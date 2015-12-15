@@ -304,8 +304,6 @@ if(WITH_GLIB2 AND GLIB2_FOUND)
         ${GLIB2_LIBRARIES}
     )
     include_directories(${GLIB2_INCLUDE_DIR})
-else()
-    katie_definition(-DQT_NO_GLIB)
 endif()
 
 

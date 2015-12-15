@@ -466,14 +466,33 @@ if(NOT WITH_OPENSSL OR NOT OPENSSL_FOUND)
     katie_definition(-DQT_NO_OPENSSL)
 endif()
 
+if(NOT WITH_FREETYPE OR NOT FREETYPE_FOUND)
+    set(WITH_FONTCONFIG OFF)
+    katie_definition(-DQT_NO_FREETYPE)
+endif()
+
+if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)
+    katie_definition(-DQT_NO_FONTCONFIG)
+endif()
+
+if(NOT WITH_DBUS OR NOT DBUS_FOUND)
+    katie_definition(-DQT_NO_DBUS)
+endif()
+
+if(NOT WITH_GLIB2 OR NOT GLIB2_FOUND)
+    katie_definition(-DQT_NO_GLIB)
+endif()
+
+if(NOT WITH_CUPS OR NOT CUPS_FOUND)
+    katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
+endif()
+
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
 if(NOT KATIE_BOOTSTRAP)
     if(WITH_DBUS AND DBUS_FOUND)
         add_subdirectory(src/dbus)
-    else()
-        katie_definition(-DQT_NO_DBUS)
     endif()
     add_subdirectory(src/declarative)
     add_subdirectory(src/designer)

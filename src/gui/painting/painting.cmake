@@ -254,7 +254,7 @@ if((UNIX OR KATIE_PLATFORM MATCHES "(qws|qpa)") AND WITH_CUPS AND CUPS_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
     )
     if(WITH_QTOPIA)
-        add_definitions(-DQT_NO_CUPS -DQT_NO_LPR)
+        katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
     else()
         set(GUI_HEADERS
             ${GUI_HEADERS}
@@ -265,6 +265,4 @@ if((UNIX OR KATIE_PLATFORM MATCHES "(qws|qpa)") AND WITH_CUPS AND CUPS_FOUND)
             ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
         )
     endif()
-else()
-    add_definitions(-DQT_NO_CUPS -DQT_NO_LPR -DQT_NO_PRINTER)
 endif()
