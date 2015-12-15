@@ -14,3 +14,6 @@ set(QT_EXAMPLES_PATH "${QT_DATA_PATH}/examples")
 set(QT_DEMOS_PATH "${QT_DATA_PATH}/demos")
 # FIXME: that's incorrect
 set(QT_SETTINGS_PATH "${QT_DATA_PATH}/settings")
+
+set(WITH_FREETYPE OFF)
+set(WITH_FONTCONFIG OFF)
