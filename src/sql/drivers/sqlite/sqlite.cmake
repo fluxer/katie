@@ -9,13 +9,25 @@ set(SQLDRIVER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/sqlite/qsql_sqlite.cpp
 )
 
-include_directories(${SQLITE_INCLUDE_DIRS})
+if(SQLITE_FOUND)
+    include_directories(${SQLITE_INCLUDE_DIRS})
+else()
+    set(SQLDRIVER_SOURCES
+        ${SQLDRIVER_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite3/sqlite3.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite3)
+endif()
 
 katie_resources("${SQLDRIVER_SOURCES}")
 katie_resources("${SQLDRIVER_HEADERS}")
 
 add_library(qsqlite ${KATIE_TYPE} ${SQLDRIVER_SOURCES} ${SQLDRIVER_HEADERS})
-target_link_libraries(qsqlite KtSql ${SQLITE_LIBRARIES})
+if(SQLITE_FOUND)
+    target_link_libraries(qsqlite KtSql ${SQLITE_LIBRARIES})
+else()
+    target_link_libraries(qsqlite KtSql)
+endif()
 
 install(
     TARGETS qsqlite
