@@ -24,6 +24,22 @@ find_path(DBUS_INCLUDES
     ${INCLUDE_INSTALL_DIR}
 )
 
+find_path(DBUS_ARCH_INCLUDES
+    NAMES
+    dbus/dbus-arch-deps.h
+    PATH_SUFFIXES dbus-1.0
+    HINTS
+    $ENV{DBUSDIR}/include
+    /usr/include
+    /usr/local/include
+    /usr/lib/dbus-1.0/include
+    ${INCLUDE_INSTALL_DIR}
+)
+
+if(DBUS_INCLUDES AND DBUS_ARCH_INCLUDES)
+    set(DBUS_INCLUDES ${DBUS_INCLUDES} ${DBUS_ARCH_INCLUDES})
+endif()
+
 find_library(DBUS_LIBRARIES
     dbus-1
     HINTS
