@@ -60,8 +60,6 @@ if(WITH_ZLIB AND ZLIB_FOUND)
         ${ZLIB_LIBRARIES}
     )
     include_directories(${ZLIB_INCLUDE_DIRS})
-else()
-    katie_definition(-DQT_NO_COMPRESS)
 endif()
 
 katie_generate_misc("${SVG_HEADERS}" QtSvg)

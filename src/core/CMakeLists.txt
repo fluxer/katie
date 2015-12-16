@@ -1,5 +1,5 @@
 add_definitions(-DQT_BUILD_CORE_LIB)
-set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES})
+set(EXTRA_CORE_LIBS)
 
 set(CORE_PUBLIC_HEADERS
     ${CORE_PUBLIC_HEADERS}
@@ -306,6 +306,13 @@ if(WITH_GLIB2 AND GLIB2_FOUND)
     include_directories(${GLIB2_INCLUDE_DIR})
 endif()
 
+if(WITH_ZLIB AND ZLIB_FOUND)
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${ZLIB_LIBRARIES}
+    )
+    include_directories(${ZLIB_INCLUDE_DIRS})
+endif()
 
 if(${KATIE_PLATFORM} STREQUAL "linux")
     set(EXTRA_CORE_LIBS
