@@ -72,6 +72,7 @@ qrc_*.cpp
 
 apidocs
 build
+mingw
 include/*
 privateinclude/*
 plugins/*/*
