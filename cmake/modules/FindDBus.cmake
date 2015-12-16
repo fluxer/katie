@@ -1,111 +1,39 @@
-# FROM: https://gist.github.com/ajmontag/4043875
+# - Try to find D-Bus message bus system
+# Once done this will define
 #
-# - try to find the dbus library
+#  DBUS_FOUND - system has D-Bus message bus system
+#  DBUS_INCLUDES - the D-Bus message bus system include directory
+#  DBUS_LIBRARIES - The libraries needed to use D-Bus message bus system
 #
-# Finddbus.cmake
+# Copyright (c) 2015, Ivailo Monev, <xakepa10@gmail.com>
 #
-# Cache Variables: (probably not for direct use in CMakeLists.txt)
-#  DBUS_ROOT_DIR
-#  DBUS_LIBRARY
-#  DBUS_INCLUDE_DIR
-#
-# Non-cache variables you might use in your CMakeLists.txt:
-#  DBUS_FOUND
-#
-#  DBUS_LIBRARIES
-#  DBUS_INCLUDE_DIRS
-#
-# Use this module this way:
-#  find_package(dbus)
-#  include_directories(DBUS_INCLUDE_DIRS)
-#  add_executable(myapp ${SOURCES})
-#  target_link_libraries(myapp ${DBUS_LIBRARIES})
-#
-# Requires these CMake modules:
-#  FindPackageHandleStandardArgs (CMake standard module)
-#  FindPkgConfig (CMake standard module)
-#
-# Dependencies:
-#  none
-#
-# BEGIN_DOT_FILE
-#  dbus [ label = "dbus" ];
-# END_DOT_FILE
-#
-# Author:
-#   Kevin M. Godby <kevin@godby.org>
-#
-# License:
-#   Boost 1.0 <http://www.boost.org/users/license.html>
+# Redistribution and use is allowed according to the terms of the BSD license.
 
-set(DBUS_ROOT_DIR
-    "${DBUS_ROOT_DIR}"
-    CACHE
-    PATH
-    "Prefix directory for libdbus")
-
-# Now let's find the dbus library
-find_package(PkgConfig QUIET)
-if(PKG_CONFIG_FOUND)
-    pkg_check_modules(_dbus_hint QUIET dbus-1)
+if(DBUS_INCLUDES AND DBUS_LIBRARIES)
+    set(DBUS_FIND_QUIETLY TRUE)
 endif()
 
-set(dbus_vars DBUS_INCLUDE_DIR)
-##find_library(DBUS_LIBRARY
-##    NAMES
-##    dbus
-##    HINTS
-##    ${DBUS_ROOT_DIR}
-##    ${_dbus_hint_LIBRARY_DIRS}
-##    PATH_SUFFIXES
-##    lib
-##    lib32
-##    lib64
-##)
-##list(APPEND dbus_vars DBUS_LIBRARY)
-
-find_path(DBUS_INCLUDE_DIR
+find_path(DBUS_INCLUDES
     NAMES
     dbus/dbus.h
+    PATH_SUFFIXES dbus-1.0
     HINTS
-    ${DBUS_ROOT_DIR}
-    ${_dbus_hint_INCLUDE_DIRS}
-    PATH_SUFFIXES
-    include/
-    include/dbus-1.0/
-    dbus-1.0/
+    $ENV{DBUSDIR}/include
+    /usr/include
+    /usr/local/include
+    ${INCLUDE_INSTALL_DIR}
 )
 
-find_path(DBUS_ARCH_INCLUDE_DIR
-    NAMES
-    dbus/dbus-arch-deps.h
+find_library(DBUS_LIBRARIES
+    dbus-1
     HINTS
-    ${DBUS_ROOT_DIR}
-    ${_dbus_hint_INCLUDE_DIRS}
-    ${_dbus_hint_LIBRARY_DIRS}
-    PATH_SUFFIXES
-    include/
-    include/dbus-1.0/
-    dbus-1.0/
+    $ENV{DBUSDIR}/lib
+    /usr/lib
+    /usr/local/lib
+    ${LIB_INSTALL_DIR}
 )
-list(APPEND dbus_vars DBUS_ARCH_INCLUDE_DIR)
 
-# handle the QUIETLY and REQUIRED arguments and set DBUS_FOUND to TRUE if
-# all listed variables are TRUE
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(dbus
-    DEFAULT_MSG
-    ${dbus_vars})
+find_package_handle_standard_args(DBUS DEFAULT_MSG DBUS_INCLUDES DBUS_LIBRARIES)
 
-if(DBUS_FOUND)
-    # Set variables containing libraries and their dependencies
-    # Always use the plural form for the variables defined by other find modules:
-    # they might have dependencies too!
-    ##list(APPEND DBUS_LIBRARIES ${DBUS_LIBRARY})
-    set(DBUS_INCLUDE_DIRS ${DBUS_INCLUDE_DIR} ${DBUS_ARCH_INCLUDE_DIR})
-    mark_as_advanced(DBUS_ROOT_DIR)
-endif()
-
-mark_as_advanced(${dbus_vars})
-
-# End of Finddbus.cmake
+mark_as_advanced(DBUS_INCLUDES DBUS_LIBRARIES)

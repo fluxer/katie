@@ -5,7 +5,7 @@ macro(KATIE_RESOURCES RESOURCES)
     foreach(tmpres ${RESOURCES} ${ARGN})
         get_filename_component(resource ${tmpres} ABSOLUTE)
         get_source_file_property(skip ${resource} SKIP_RESOURCE)
-            if(NOT skip)
+        if(NOT skip)
             get_filename_component(rscext ${resource} EXT)
             get_filename_component(rscname ${resource} NAME_WE)
             get_filename_component(rscpath ${resource} PATH)
@@ -39,8 +39,8 @@ macro(KATIE_RESOURCES RESOURCES)
                     set(mocargs ${mocargs} -I${incdir})
                 endforeach()
                 add_custom_command(
-                    OUTPUT "${rscout}"
-                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    OUTPUT ${rscout}
+                    COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
                 )
                 set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
                 # XXX: this can be troublesome but common sources can cause multiple rules on the same file
@@ -55,7 +55,6 @@ macro(KATIE_RESOURCE SRCDEP RESOURCES OUTNAME)
     add_custom_command(
         OUTPUT "${rscout}"
         COMMAND "${KATIE_RCC}" ${RESOURCES} -o "${rscout}" -name "${OUTNAME}"
-        # MAIN_DEPENDENCY ${resource}
     )
     set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()

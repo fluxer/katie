@@ -11,7 +11,7 @@
 
 if (MNG_INCLUDES AND MNG_LIBRARIES)
     set(MNG_FIND_QUIETLY TRUE)
-endif (MNG_INCLUDES AND MNG_LIBRARIES)
+endif()
 
 if (NOT WIN32)
     # use pkg-config to get the directories and then use these values

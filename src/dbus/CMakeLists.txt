@@ -45,8 +45,6 @@ set(DBUS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingreply.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscontext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusvirtualobject.h
-
-    # FIXME: private?
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusconnection_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmessage_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusinterface_p.h
@@ -107,7 +105,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${DBUS_INCLUDE_DIRS}
+    ${DBUS_INCLUDES}
 )
 
 if(KATIE_PLATFORM STREQUAL "win32")
