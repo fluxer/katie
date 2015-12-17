@@ -34,6 +34,9 @@ add_feature_info(openssl WITH_OPENSSL "an open source something")
 option(WITH_ZLIB "Build zlib support" ON)
 add_feature_info(zlib WITH_ZLIB "an open source something")
 
+option(WITH_NIS "Build nis support" ON)
+add_feature_info(nis WITH_NIS "an open source something")
+
 option(WITH_CUPS "Build cups support" ON)
 add_feature_info(cups WITH_CUPS "an open source something")
 
@@ -216,6 +219,13 @@ set_package_properties(ZLIB PROPERTIES
     PURPOSE "Required for compression support"
     DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
     URL "http://zlib.net"
+    TYPE RECOMMENDED
+)
+
+find_package(NIS)
+set_package_properties(NIS PROPERTIES
+    PURPOSE "Required for Network Information Service support"
+    DESCRIPTION "Standard C library specific NIS implementation"
     TYPE RECOMMENDED
 )
 
@@ -493,6 +503,10 @@ endif()
 
 if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
+endif()
+
+if(NOT WITH_NIS OR NOT NIS_FOUND)
+    katie_definition(-DQT_NO_NIS)
 endif()
 
 if(NOT WITH_DIRECTWRITE)

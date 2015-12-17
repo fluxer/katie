@@ -461,6 +461,14 @@ if(WITH_X11 AND X11_FOUND)
     include_directories(${X11_INCLUDE_DIR})
 endif()
 
+if(WITH_NIS AND NIS_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${NIS_LIBRARIES}
+    )
+    include_directories(${NIS_INCLUDES})
+endif()
+
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_map(QtGui Q_GUI_EXPORT)
