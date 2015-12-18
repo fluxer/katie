@@ -42,7 +42,7 @@
 
 me=$(dirname $0)
 mkdir -p $me/out
-(cd $me/out && ../../../../util/qlalr/qlalr --qt --no-lines ../qscript.g)
+(cd $me/out && ../../../../build/bin/qlalr --qt --no-lines ../qscript.g)
 
 for f in $me/out/*.h $me/out/*.cpp; do
     n=$(basename $f)
