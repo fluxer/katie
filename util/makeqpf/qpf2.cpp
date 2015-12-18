@@ -42,7 +42,7 @@
 #include "qpf2.h"
 
 #include <math.h>
-#include <private/qfontengine_p.h>
+#include <qfontengine_p.h>
 #include <QFile>
 #include <qendian.h>
 

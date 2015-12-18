@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QtCore/QtDebug>
+#include <QtCore/QDebug>
 #include <QtCore/QString>
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>

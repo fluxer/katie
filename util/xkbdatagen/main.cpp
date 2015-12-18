@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 #include <QtCore>
-#include <QtXml>
+#include <QtXml/qdom.h>
 
 class XKBLayout
 {

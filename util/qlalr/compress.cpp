@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 
-#include <QtCore/QtDebug>
+#include <QtCore/QDebug>
 #include <QtCore/QList>
 
 #include <algorithm>

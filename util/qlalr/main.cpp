@@ -42,7 +42,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QFile>
 #include <QtCore/QStringList>
-#include <QtCore/QtDebug>
+#include <QtCore/QDebug>
 
 #include <cstdlib>
 

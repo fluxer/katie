@@ -320,3 +320,5 @@ void MainWindow::addCustomFont(const QString &fontFile)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_mainwindow.h"

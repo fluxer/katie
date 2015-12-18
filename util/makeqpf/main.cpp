@@ -44,7 +44,7 @@
 #include "qpf2.h"
 #include "mainwindow.h"
 
-#include <private/qfontengine_p.h>
+#include <qfontengine_p.h>
 
 QT_BEGIN_NAMESPACE
 

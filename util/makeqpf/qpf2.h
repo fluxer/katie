@@ -42,7 +42,7 @@
 #ifndef QPF2_H
 #define QPF2_H
 
-#include <private/qfontengine_qpf_p.h>
+#include <qfontengine_qpf_p.h>
 #include <qmetatype.h>
 
 QT_BEGIN_NAMESPACE

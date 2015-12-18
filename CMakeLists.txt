@@ -550,6 +550,19 @@ if(ENABLE_TESTING)
     add_subdirectory(tests)
 endif()
 
+# utilities needed for Katie maintainance
+add_subdirectory(util/fixnonlatin1)
+add_subdirectory(util/gencmap)
+add_subdirectory(util/lexgen)
+add_subdirectory(util/makeqpf)
+# FIXME: needs deprecated argc and argv, port to qcommandlineparser?
+# add_subdirectory(util/normalize)
+# TODO: add_subdirectory(util/plugintest)
+add_subdirectory(util/qlalr)
+add_subdirectory(util/qurl-generateTLDs)
+# TODO: add_subdirectory(util/unicode)
+add_subdirectory(util/xkbdatagen)
+
 # obsolete but still widely required headers
 katie_generate_obsolete(qtglobal.h QtCore qglobal.h)
 katie_generate_obsolete(qwizardpage.h QtGui qwizard.h)
