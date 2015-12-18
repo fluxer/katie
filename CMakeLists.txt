@@ -559,7 +559,7 @@ add_subdirectory(util/normalize)
 # TODO: add_subdirectory(util/plugintest)
 add_subdirectory(util/qlalr)
 add_subdirectory(util/qurl-generateTLDs)
-# TODO: add_subdirectory(util/unicode)
+add_subdirectory(util/unicode)
 add_subdirectory(util/xkbdatagen)
 
 # obsolete but still widely required headers
