@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
 
-    if (app.argc() < 2 || (app.argc() == 2 && (app.argv()[1][0] == '-'))) {
+    if (argc < 2 || (argc== 2 && (argv[1][0] == '-'))) {
         printf("usage: normalize [--modify] <path>\n");
         printf("  <path> can be a single file or a directory (default: look for *.cpp recursively)");
         printf("  Outputs all filenames that contain non-normalized SIGNALs and SLOTs\n");
@@ -164,12 +164,12 @@ int main(int argc, char *argv[])
     }
 
     QString path;
-    if (qstrcmp(app.argv()[1], "--modify") == 0) {
+    if (qstrcmp(argv[1], "--modify") == 0) {
         printFilename = false;
         modify = true;
-        path = app.argv()[2];
+        path = argv[2];
     } else {
-        path = app.argv()[1];
+        path = argv[1];
     }
 
     if (path.startsWith("-")) {
