@@ -295,7 +295,7 @@ int findapple(Col c)
 #define SQ(x) ((x)*(x))
 #define D(c1,c2) (SQ(R(c1)-R(c2))+SQ(G(c1)-G(c2))+SQ(B(c1)-B(c2)))
 
-main()
+int main()
 {
     Col c[256] = {
 	{ 0,0,0 },
@@ -341,4 +341,5 @@ main()
     for (int i=0; i<256; i++) {
 	printf("0x%06x,%c", qRgb(c[i].r, c[i].g, c[i].b), i%4==3 ? '\n' : ' ');
     }
+    return 0;
 }
