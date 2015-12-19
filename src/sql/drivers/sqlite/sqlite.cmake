@@ -10,7 +10,7 @@ set(SQLDRIVER_SOURCES
 )
 
 if(SQLITE_FOUND)
-    include_directories(${SQLITE_INCLUDE_DIRS})
+    include_directories(${SQLITE_INCLUDES})
 else()
     set(SQLDRIVER_SOURCES
         ${SQLDRIVER_SOURCES}
