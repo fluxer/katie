@@ -29,4 +29,7 @@ mapdata += '\n#endif\n'
 
 sys.stderr.write('-- Writing: %s\n' % os.path.basename(mapoutput))
 with open(mapoutput, 'wb') as f:
-    f.write(mapdata)
+    if sys.version_info[0] == 3:
+        f.write(bytes(mapdata, 'utf-8'))
+    else:
+        f.write(mapdata)

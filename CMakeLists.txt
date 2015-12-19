@@ -206,6 +206,14 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/qtglobal.h
 )
 
+find_package(PythonInterp)
+set_package_properties(PythonInterp PROPERTIES
+    PURPOSE "UI class maps generator script"
+    DESCRIPTION "Programming language that lets you work quickly"
+    URL "https://www.python.org/"
+    TYPE REQUIRED
+)
+
 find_package(OpenSSL)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"

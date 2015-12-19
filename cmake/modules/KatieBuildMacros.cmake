@@ -29,7 +29,7 @@ set(KATIE_QDBUSXML2CPP "qdbusxml2cpp")
 
 macro(KATIE_GENERATE_MAP SUBDIR KEYWORD)
     execute_process(
-        COMMAND ${CMAKE_SOURCE_DIR}/scripts/genmap.py ${SUBDIR} ${KEYWORD}
+        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/genmap.py ${SUBDIR} ${KEYWORD}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         RESULT_VARIABLE genmap_result
         ERROR_VARIABLE genmap_error
