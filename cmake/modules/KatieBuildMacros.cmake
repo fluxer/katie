@@ -31,7 +31,12 @@ macro(KATIE_GENERATE_MAP SUBDIR KEYWORD)
     execute_process(
         COMMAND ${CMAKE_SOURCE_DIR}/scripts/genmap.py ${SUBDIR} ${KEYWORD}
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        RESULT_VARIABLE genmap_result
+        ERROR_VARIABLE genmap_error
     )
+    if(NOT genmap_result EQUAL 0)
+        message(SEND_ERROR "${genmap_error}")
+    endif()
 endmacro()
 
 set(CLASSMAPOUT ${CMAKE_BINARY_DIR}/include/qclass_lib_map.h)
