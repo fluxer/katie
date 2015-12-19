@@ -33,6 +33,7 @@ find_path(DBUS_ARCH_INCLUDES
     /usr/include
     /usr/local/include
     /usr/lib/dbus-1.0/include
+    /usr/local/lib/dbus-1.0/include
     ${INCLUDE_INSTALL_DIR}
 )
 
