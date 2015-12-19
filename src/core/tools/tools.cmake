@@ -139,6 +139,7 @@ if(WITH_ICU AND ICU_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_icu.cpp
     )
     add_definitions(-DQT_USE_ICU)
+    include_directories(${ICU_INCLUDES})
 endif()
 
 if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
