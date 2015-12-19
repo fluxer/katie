@@ -15,8 +15,7 @@ endif()
 
 find_path(ICU_INCLUDES
     NAMES
-    unistr.h
-    PATH_SUFFIXES unicode
+    unicode/unistr.h
     HINTS
     $ENV{ICUDIR}/include
     /usr/include
