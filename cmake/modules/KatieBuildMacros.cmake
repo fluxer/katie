@@ -180,6 +180,7 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
     find_program(unifdef NAMES unifdef)
     if(unifdef)
         install(
+            CODE "set(UNIFDEF_EXECUTABLE \"${unifdef}\")"
             CODE "set(HEADERS_DIRECTORY \"${DIR}\")"
             CODE "set(HEADERS_DEFINITIONS \"${ARGN}\")"
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
