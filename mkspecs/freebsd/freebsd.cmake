@@ -1,3 +1,7 @@
+if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
+    set(QT_VISIBILITY_AVAILABLE TRUE)
+endif()
+
 set(KATIE_CXXFLAGS
     ${KATIE_CXXFLAGS}
     -pthread
