@@ -250,7 +250,7 @@ static int qt_tokenize(const char *s, ulong s_len, ulong *advance,
 /*
   returns true if the string s was correctly parsed, false otherwise.
 */
-static bool qt_parse_pattern(const char *s, uint *version, bool *debug, QByteArray *key)
+static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
 {
     bool ret = true;
 
@@ -282,10 +282,6 @@ static bool qt_parse_pattern(const char *s, uint *version, bool *debug, QByteArr
             }
         } else if (qstrncmp("debug", pinfo.results[0], pinfo.lengths[0]) == 0) {
             *debug = qstrncmp("true", pinfo.results[1], pinfo.lengths[1]) == 0;
-        } else if (qstrncmp("buildkey", pinfo.results[0],
-                              pinfo.lengths[0]) == 0){
-            // save buildkey
-            *key = QByteArray(pinfo.results[1], pinfo.lengths[1]);
         }
     } while (parse == 1 && parselen > 0);
 
@@ -337,11 +333,11 @@ static long qt_find_pattern(const char *s, ulong s_len,
   we can get the verification data without have to actually load the library.
   This lets us detect mismatches more safely.
 
-  Returns false if version/key information is not present, or if the
+  Returns false if version information is not present, or if the
                 information could not be read.
-  Returns  true if version/key information is present and successfully read.
+  Returns  true if version information is present and successfully read.
 */
-static bool qt_unix_query(const QString &library, uint *version, bool *debug, QByteArray *key, QLibraryPrivate *lib = 0)
+static bool qt_unix_query(const QString &library, uint *version, bool *debug, QLibraryPrivate *lib = 0)
 {
     QFile file(library);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -396,7 +392,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QB
 #endif // defined(Q_OF_ELF) && defined(Q_CC_GNU)
     bool ret = false;
     if (pos >= 0)
-        ret = qt_parse_pattern(filedata + pos, version, debug, key);
+        ret = qt_parse_pattern(filedata + pos, version, debug);
 
     if (!ret && lib)
         lib->errorString = QLibrary::tr("Plugin verification data mismatch in '%1'").arg(library);
@@ -623,7 +619,7 @@ typedef const char * __stdcall (*QtPluginQueryVerificationDataFunction)();
 typedef const char * (*QtPluginQueryVerificationDataFunction)();
 #endif
 
-bool qt_get_verificationdata(QtPluginQueryVerificationDataFunction pfn, uint *qt_version, bool *debug, QByteArray *key, bool *exceptionThrown)
+bool qt_get_verificationdata(QtPluginQueryVerificationDataFunction pfn, uint *qt_version, bool *debug, bool *exceptionThrown)
 {
     *exceptionThrown = false;
     const char *szData = 0;
@@ -640,7 +636,7 @@ bool qt_get_verificationdata(QtPluginQueryVerificationDataFunction pfn, uint *qt
 #ifdef QT_NO_PLUGIN_CHECK
 	return true;
 #else
-	return qt_parse_pattern(szData, qt_version, debug, key);
+	return qt_parse_pattern(szData, qt_version, debug);
 #endif
 }
 
@@ -652,7 +648,6 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
 
 #ifndef QT_NO_PLUGIN_CHECK
     bool debug = !QLIBRARY_AS_DEBUG;
-    QByteArray key;
     bool success = false;
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
@@ -705,13 +700,12 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
     if (reg.count() == 4 && lastModified == reg.at(3)) {
         qt_version = reg.at(0).toUInt(0, 16);
         debug = bool(reg.at(1).toInt());
-        key = reg.at(2).toLatin1();
         success = qt_version != 0;
     } else {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         if (!pHnd) {
             // use unix shortcut to avoid loading the library
-            success = qt_unix_query(fileName, &qt_version, &debug, &key, this);
+            success = qt_unix_query(fileName, &qt_version, &debug, this);
         } else
 #endif
         {
@@ -746,11 +740,10 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
 #endif
                 bool exceptionThrown = false;
                 bool ret = qt_get_verificationdata(qtPluginQueryVerificationDataFunction,
-                                                   &qt_version, &debug, &key, &exceptionThrown);
+                                                   &qt_version, &debug, &exceptionThrown);
                 if (!exceptionThrown) {
                     if (!ret) {
                         qt_version = 0;
-                        key = "unknown";
                         if (temporary_load)
                             unload_sys();
                     } else {
@@ -784,7 +777,6 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
         QStringList queried;
         queried << QString::number(qt_version,16)
                 << QString::number((int)debug)
-                << QLatin1String(key)
                 << lastModified;
         settings->setValue(regkey, queried);
 #endif
