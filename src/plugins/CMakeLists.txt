@@ -39,7 +39,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
 
-if(NOT ${KATIE_TYPE} EQUAL SHARED)
+if(NOT ${KATIE_TYPE} STREQUAL SHARED)
     add_definitions(-DQT_STATICPLUGIN)
 endif()
 
