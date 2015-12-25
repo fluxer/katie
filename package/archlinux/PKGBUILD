@@ -37,8 +37,7 @@ build() {
     cmake ../katie \
         -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_SKIP_RPATH=OFF
+        -DCMAKE_INSTALL_PREFIX=/usr
     make
 }
 

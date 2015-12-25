@@ -6,21 +6,25 @@ depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'
         'mesalib' 'cups')
 makedepends=('python')
-optdepends=('gtk2' 'mariadb' 'unixodbc' 'vlc')
+optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'vlc')
 sources=("https://github.com/fluxer/katie.git")
 
 src_compile() {
     mkdir -p build && cd build
 
-    _options="-DWITH_GTK2=FALSE -DWITH_VLC=FALSE"
+    _options="-DWITH_GTK2=FALSE -DWITH_MYSQL=FALSE -DWITH_ODBC=FALSE"
+    _options+=" -DWITH_PSQL=FALSE -DWITH_VLC=FALSE"
     [ "$OPTIONAL_GTK2" = "yes" ] && _options+=" -DWITH_GTK2=TRUE"
+    [ "$OPTIONAL_MARIADB" = "yes" ] && _options+=" -DWITH_MYSQL=TRUE"
+    [ "$OPTIONAL_UNIXODBC" = "yes" ] && _options+=" -DWITH_ODBC=TRUE"
+    [ "$OPTIONAL_POSTGRESQL" = "yes" ] && _options+=" -DWITH_PSQL=TRUE"
     [ "$OPTIONAL_VLC" = "yes" ] && _options+=" -DWITH_VLC=TRUE"
 
     cmake ../katie.git \
+         -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_SKIP_RPATH=OFF \
-        $_options -Wno-dev
+        $_options
     make
 }
 
