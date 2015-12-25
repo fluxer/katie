@@ -342,7 +342,6 @@ void QDeclarativeTextLayout::draw(QPainter *painter, const QPointF &p)
 
     bool paintEngineSupportsTransformations = priv->extended &&
                                               (priv->extended->type() == QPaintEngine::OpenGL2 ||
-                                               priv->extended->type() == QPaintEngine::OpenVG ||
                                                priv->extended->type() == QPaintEngine::OpenGL);
 
     if (!paintEngineSupportsTransformations || !priv->state->matrix.isAffine()) {

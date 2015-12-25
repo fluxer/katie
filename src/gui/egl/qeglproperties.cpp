@@ -226,10 +226,6 @@ void QEglProperties::setRenderableType(QEgl::API api)
     if (api == QEgl::OpenGL)
         setValue(EGL_RENDERABLE_TYPE, EGL_OPENGL_BIT);
 #endif
-#ifdef EGL_OPENVG_BIT
-    if (api == QEgl::OpenVG)
-        setValue(EGL_RENDERABLE_TYPE, EGL_OPENVG_BIT);
-#endif
 #else
     Q_UNUSED(api);
 #endif
@@ -246,16 +242,6 @@ bool QEglProperties::reduceConfiguration()
         removeValue(EGL_SWAP_BEHAVIOR);
 #endif
 
-#ifdef EGL_VG_ALPHA_FORMAT_PRE_BIT
-    // For OpenVG, we sometimes try to create a surface using a pre-multiplied format. If we can't
-    // find a config which supports pre-multiplied formats, remove the flag on the surface type:
-    EGLint surfaceType = value(EGL_SURFACE_TYPE);
-    if (surfaceType & EGL_VG_ALPHA_FORMAT_PRE_BIT) {
-        surfaceType ^= EGL_VG_ALPHA_FORMAT_PRE_BIT;
-        setValue(EGL_SURFACE_TYPE, surfaceType);
-        return true;
-    }
-#endif
     // EGL chooses configs with the highest color depth over
     // those with smaller (but faster) lower color depths. One
     // way around this is to set EGL_BUFFER_SIZE to 16, which
@@ -325,8 +311,6 @@ QString QEglProperties::toString() const
         if ((val & EGL_OPENGL_BIT) != 0)
             types += QLatin1String("gl");
 #endif
-        if ((val & EGL_OPENVG_BIT) != 0)
-            types += QLatin1String("vg");
         if ((val & ~7) != 0)
             types += QString::number(val);
         str += types.join(QLatin1String(","));
@@ -390,22 +374,7 @@ QString QEglProperties::toString() const
             types += QLatin1String("pixmap");
         if ((val & EGL_PBUFFER_BIT) != 0)
             types += QLatin1String("pbuffer");
-#ifdef EGL_VG_COLORSPACE_LINEAR_BIT
-        if ((val & EGL_VG_COLORSPACE_LINEAR_BIT) != 0)
-            types += QLatin1String("vg-colorspace-linear");
-#endif
-#ifdef EGL_VG_ALPHA_FORMAT_PRE_BIT
-        if ((val & EGL_VG_ALPHA_FORMAT_PRE_BIT) != 0)
-            types += QLatin1String("vg-alpha-format-pre");
-#endif
-        if ((val & ~(EGL_WINDOW_BIT | EGL_PIXMAP_BIT | EGL_PBUFFER_BIT
-#ifdef EGL_VG_COLORSPACE_LINEAR_BIT
-                     | EGL_VG_COLORSPACE_LINEAR_BIT
-#endif
-#ifdef EGL_VG_ALPHA_FORMAT_PRE_BIT
-                     | EGL_VG_ALPHA_FORMAT_PRE_BIT
-#endif
-                     )) != 0) {
+        if ((val & ~(EGL_WINDOW_BIT | EGL_PIXMAP_BIT | EGL_PBUFFER_BIT)) != 0) {
             types += QString::number(val);
         }
         str += types.join(QLatin1String(","));

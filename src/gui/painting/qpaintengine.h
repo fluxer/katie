@@ -209,7 +209,6 @@ public:
         Raster,
         Direct3D,
         Pdf,
-        OpenVG,
         OpenGL2,
         PaintBuffer,
         Blitter,

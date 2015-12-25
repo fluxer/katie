@@ -84,8 +84,7 @@ public:
 
     enum WindowApi {
         Raster,
-        OpenGL,
-        OpenVG
+        OpenGL
     };
 
     QPlatformWindowFormat();

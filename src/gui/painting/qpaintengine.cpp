@@ -382,7 +382,6 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     \value Raster
     \value Direct3D Windows only, Direct3D based engine
     \value Pdf Portable Document Format
-    \value OpenVG
     \value User First user type ID
     \value MaxUser Last user type ID
     \value OpenGL2

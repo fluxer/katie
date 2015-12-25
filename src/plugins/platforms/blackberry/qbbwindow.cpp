@@ -145,7 +145,7 @@ QBBWindow::~QBBWindow()
     removeFromParent();
     mScreen->updateHierarchy();
 
-    // cleanup OpenGL/OpenVG context if it exists
+    // cleanup OpenGL context if it exists
     if (mPlatformGlContext != NULL) {
         delete mPlatformGlContext;
     }
