@@ -87,7 +87,7 @@
 #include "Threading.h"
 
 #include "MainThread.h"
-#if !USE(PTHREADS) && OS(WINDOWS)
+#if OS(WINDOWS)
 #include "ThreadSpecific.h"
 #endif
 #if !OS(WINCE)
@@ -205,7 +205,7 @@ static unsigned __stdcall wtfThreadEntryPoint(void* param)
 
     void* result = invocation.function(invocation.data);
 
-#if !USE(PTHREADS) && OS(WINDOWS)
+#if OS(WINDOWS)
     // Do the TLS cleanup.
     ThreadSpecificThreadExit();
 #endif

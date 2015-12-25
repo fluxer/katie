@@ -79,10 +79,6 @@
 #include <atomic.h>
 #endif
 
-#if USE(PTHREADS)
-#include <pthread.h>
-#endif
-
 #include <qglobal.h>
 QT_BEGIN_NAMESPACE
 class QMutex;
@@ -118,23 +114,9 @@ bool isMainThread();
 int waitForThreadCompletion(ThreadIdentifier, void**);
 void detachThread(ThreadIdentifier);
 
-#if USE(PTHREADS)
-typedef pthread_mutex_t PlatformMutex;
-#if HAVE(PTHREAD_RWLOCK)
-typedef pthread_rwlock_t PlatformReadWriteLock;
-#else
-typedef void* PlatformReadWriteLock;
-#endif
-typedef pthread_cond_t PlatformCondition;
-#elif PLATFORM(QT)
 typedef QT_PREPEND_NAMESPACE(QMutex)* PlatformMutex;
 typedef void* PlatformReadWriteLock; // FIXME: Implement.
 typedef QT_PREPEND_NAMESPACE(QWaitCondition)* PlatformCondition;
-#else
-typedef void* PlatformMutex;
-typedef void* PlatformReadWriteLock;
-typedef void* PlatformCondition;
-#endif
     
 class Mutex : public Noncopyable {
 public:

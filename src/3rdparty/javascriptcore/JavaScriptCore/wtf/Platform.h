@@ -489,17 +489,7 @@
 /* PLATFORM(HAIKU) */
 /* PLATFORM(MAC) */
 /* PLATFORM(WIN) */
-#if defined(BUILDING_CHROMIUM__)
-#define WTF_PLATFORM_CHROMIUM 1
-#elif defined(BUILDING_QT__)
 #define WTF_PLATFORM_QT 1
-#elif defined(BUILDING_HAIKU__)
-#define WTF_PLATFORM_HAIKU 1
-#elif OS(DARWIN)
-#define WTF_PLATFORM_MAC 1
-#elif OS(WINDOWS)
-#define WTF_PLATFORM_WIN 1
-#endif
 
 /* PLATFORM(IPHONE) */
 /* FIXME: this is sometimes used as an OS switch and sometimes for higher-level things */
@@ -526,29 +516,6 @@
 #define WTF_PLATFORM_ANDROID 1
 #endif
 
-/* Graphics engines */
-
-/* PLATFORM(CG) and PLATFORM(CI) */
-#if PLATFORM(MAC) || PLATFORM(IPHONE)
-#define WTF_PLATFORM_CG 1
-#endif
-#if PLATFORM(MAC) && !PLATFORM(IPHONE)
-#define WTF_PLATFORM_CI 1
-#endif
-
-/* PLATFORM(SKIA) for Win/Linux, CG/CI for Mac */
-#if PLATFORM(CHROMIUM)
-#define ENABLE_HISTORY_ALWAYS_ASYNC 1
-#if OS(DARWIN)
-#define WTF_PLATFORM_CG 1
-#define WTF_PLATFORM_CI 1
-#define WTF_USE_ATSUI 1
-#define WTF_USE_CORE_TEXT 1
-#else
-#define WTF_PLATFORM_SKIA 1
-#endif
-#endif
-
 /* OS(WINCE) && PLATFORM(QT)
    We can not determine the endianess at compile time. For
    Qt for Windows CE the endianess is specified in the
@@ -565,7 +532,7 @@
 #   include <ce_time.h>
 #endif
 
-#if (PLATFORM(QT) && OS(DARWIN) && !ENABLE(SINGLE_THREADED)) && !defined(ENABLE_JSC_MULTIPLE_THREADS)
+#if (OS(DARWIN) && !ENABLE(SINGLE_THREADED)) && !defined(ENABLE_JSC_MULTIPLE_THREADS)
 #define ENABLE_JSC_MULTIPLE_THREADS 1
 #endif
 
@@ -573,55 +540,6 @@
 #if OS(WINDOWS)
 #define WTF_USE_QUERY_PERFORMANCE_COUNTER  1
 #endif
-
-#if OS(WINCE) && !PLATFORM(QT)
-#undef ENABLE_JSC_MULTIPLE_THREADS
-#define ENABLE_JSC_MULTIPLE_THREADS        0
-#define USE_SYSTEM_MALLOC                  0
-#define ENABLE_ICONDATABASE                0
-#define ENABLE_JAVASCRIPT_DEBUGGER         0
-#define ENABLE_PAN_SCROLLING               0
-#define ENABLE_WML                         1
-#define HAVE_ACCESSIBILITY                 0
-
-#define NOMINMAX       /* Windows min and max conflict with standard macros */
-#define NOSHLWAPI      /* shlwapi.h not available on WinCe */
-
-/* MSDN documentation says these functions are provided with uspce.lib.  But we cannot find this file. */
-#define __usp10__      /* disable "usp10.h" */
-
-#define _INC_ASSERT    /* disable "assert.h" */
-#define assert(x)
-
-/* _countof is only included in CE6; for CE5 we need to define it ourself */
-#ifndef _countof
-#define _countof(x) (sizeof(x) / sizeof((x)[0]))
-#endif
-
-#endif  /* OS(WINCE) && !PLATFORM(QT) */
-
-#if PLATFORM(MAC)
-#define WTF_PLATFORM_CF 1
-#define WTF_USE_PTHREADS 1
-#define HAVE_PTHREAD_RWLOCK 1
-#if !defined(BUILDING_ON_LEOPARD) && !defined(BUILDING_ON_TIGER) && CPU(X86_64)
-#define WTF_USE_PLUGIN_HOST_PROCESS 1
-#endif
-#if !defined(ENABLE_MAC_JAVA_BRIDGE)
-#define ENABLE_MAC_JAVA_BRIDGE 1
-#endif
-#if !defined(ENABLE_DASHBOARD_SUPPORT)
-#define ENABLE_DASHBOARD_SUPPORT 1
-#endif
-#define HAVE_READLINE 1
-#define HAVE_RUNLOOP_TIMER 1
-#endif /* PLATFORM(MAC) */
-
-#if !defined(HAVE_ACCESSIBILITY)
-#if PLATFORM(IPHONE) || PLATFORM(MAC) || PLATFORM(WIN) || PLATFORM(GTK) || PLATFORM(CHROMIUM)
-#define HAVE_ACCESSIBILITY 1
-#endif
-#endif /* !defined(HAVE_ACCESSIBILITY) */
 
 #if OS(UNIX)
 #define HAVE_SIGNAL_H 1
@@ -716,36 +634,16 @@
 #define ENABLE_FAST_MALLOC_MATCH_VALIDATION 0
 #endif
 
-#if !defined(ENABLE_ICONDATABASE)
-#define ENABLE_ICONDATABASE 1
-#endif
-
-#if !defined(ENABLE_DATABASE)
-#define ENABLE_DATABASE 1
-#endif
-
 #if !defined(ENABLE_JAVASCRIPT_DEBUGGER)
 #define ENABLE_JAVASCRIPT_DEBUGGER 1
-#endif
-
-#if !defined(ENABLE_DASHBOARD_SUPPORT)
-#define ENABLE_DASHBOARD_SUPPORT 0
 #endif
 
 #if !defined(ENABLE_MAC_JAVA_BRIDGE)
 #define ENABLE_MAC_JAVA_BRIDGE 0
 #endif
 
-#if !defined(ENABLE_NETSCAPE_PLUGIN_API)
-#define ENABLE_NETSCAPE_PLUGIN_API 1
-#endif
-
 #if !defined(WTF_USE_PLUGIN_HOST_PROCESS)
 #define WTF_USE_PLUGIN_HOST_PROCESS 0
-#endif
-
-#if !defined(ENABLE_ORIENTATION_EVENTS)
-#define ENABLE_ORIENTATION_EVENTS 0
 #endif
 
 #if !defined(ENABLE_OPCODE_STATS)
@@ -763,10 +661,6 @@
 #define ENABLE_SAMPLING_THREAD 1
 #endif
 
-#if !defined(ENABLE_ON_FIRST_TEXTAREA_FOCUS_SELECT_ALL)
-#define ENABLE_ON_FIRST_TEXTAREA_FOCUS_SELECT_ALL 0
-#endif
-
 #if !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64)
 #if (CPU(X86_64) && (OS(UNIX) || OS(WINDOWS) || OS(SOLARIS) || OS(HPUX))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(AIX64) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
 #define WTF_USE_JSVALUE64 1
@@ -780,10 +674,6 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #define WTF_USE_JSVALUE32_64 1
 #endif
 #endif /* !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64) */
-
-#if !defined(ENABLE_REPAINT_THROTTLING)
-#define ENABLE_REPAINT_THROTTLING 0
-#endif
 
 #if !defined(ENABLE_JIT)
 
@@ -859,15 +749,7 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 /* Yet Another Regex Runtime. */
 #if !defined(ENABLE_YARR_JIT)
 
-/* YARR supports x86 & x86-64, and has been tested on Mac and Windows. */
-#if (CPU(X86) && PLATFORM(MAC)) \
-    || (CPU(X86_64) && PLATFORM(MAC)) \
-    || (CPU(ARM_THUMB2) && PLATFORM(IPHONE)) \
-    || (CPU(X86) && PLATFORM(WIN))
-#define ENABLE_YARR 1
-#define ENABLE_YARR_JIT 1
-#endif
-
+/* YARR supports x86 & x86-64, and has been tested on Mac, Windows and Linux. */
 #if (CPU(X86) && OS(WINDOWS) && COMPILER(MINGW) && GCC_VERSION >= 40100) \
     || (CPU(X86_64) && OS(WINDOWS) && COMPILER(MINGW64) && GCC_VERSION >= 40100) \
     || (CPU(X86) && OS(WINDOWS) && COMPILER(MSVC)) \
@@ -906,18 +788,11 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #endif
 #endif
 
-#if !defined(ENABLE_PAN_SCROLLING) && OS(WINDOWS)
-#define ENABLE_PAN_SCROLLING 1
-#endif
-
 #if COMPILER(GCC)
 #define WARN_UNUSED_RETURN __attribute__ ((warn_unused_result))
 #else
 #define WARN_UNUSED_RETURN
 #endif
-
-/* Set up a define for a common error that is intended to cause a build error -- thus the space after Error. */
-#define WTF_PLATFORM_CFNETWORK Error USE_macro_should_be_used_with_CFNETWORK
 
 #define ENABLE_JSC_ZOMBIES 0
 
