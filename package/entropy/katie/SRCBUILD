@@ -6,25 +6,22 @@ depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'
         'mesalib' 'cups')
 makedepends=('python')
-optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'vlc')
+optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'vlc' 'nas')
 sources=("https://github.com/fluxer/katie.git")
 
 src_compile() {
     mkdir -p build && cd build
 
-    _options="-DWITH_GTK2=FALSE -DWITH_MYSQL=FALSE -DWITH_ODBC=FALSE"
-    _options+=" -DWITH_PSQL=FALSE -DWITH_VLC=FALSE"
-    [ "$OPTIONAL_GTK2" = "yes" ] && _options+=" -DWITH_GTK2=TRUE"
-    [ "$OPTIONAL_MARIADB" = "yes" ] && _options+=" -DWITH_MYSQL=TRUE"
-    [ "$OPTIONAL_UNIXODBC" = "yes" ] && _options+=" -DWITH_ODBC=TRUE"
-    [ "$OPTIONAL_POSTGRESQL" = "yes" ] && _options+=" -DWITH_PSQL=TRUE"
-    [ "$OPTIONAL_VLC" = "yes" ] && _options+=" -DWITH_VLC=TRUE"
-
     cmake ../katie.git \
          -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        $_options
+        -DWITH_GTK2=$OPTIONAL_GTK2_BOOL \
+        -DWITH_MYSQL=$OPTIONAL_MARIADB_BOOL \
+        -DWITH_ODBC=$OPTIONAL_UNIXODBC_BOOL \
+        -DWITH_PSQL=$OPTIONAL_POSTGRESQL_BOOL \
+        -DWITH_VLC=$OPTIONAL_VLC_BOOL \
+        -DWITH_NAS=$OPTIONAL_NAS_BOOL
     make
 }
 
@@ -37,7 +34,7 @@ src_install() {
     cd "$SOURCE_DIR/build"
     make DESTDIR="$INSTALL_DIR" install
 
-    # create symlinks
+    # create convenience symlinks
     install -vdm755 "$INSTALL_DIR/usr/bin"
     for file in "$INSTALL_DIR/usr/lib/katie/bin/"*;do
         # ln -sfv ../lib/katie/bin/$(basename "$file") "$INSTALL_DIR/usr/bin/$(basename $file)"
