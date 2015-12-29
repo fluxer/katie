@@ -366,15 +366,12 @@ int main(int argc, char *argv[])
 #ifndef Q_OS_WIN32
     QTranslator translator;
     QTranslator qtTranslator;
-    QTranslator qt_helpTranslator;
     QString sysLocale = QLocale::system().name();
     QString resourceDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
-    if (translator.load(QLatin1String("assistant_") + sysLocale, resourceDir)
-        && qtTranslator.load(QLatin1String("qt_") + sysLocale, resourceDir)
-        && qt_helpTranslator.load(QLatin1String("qt_help_") + sysLocale, resourceDir)) {
+    if (translator.load(QLatin1String("qt_tools_") + sysLocale, resourceDir)
+        && qtTranslator.load(QLatin1String("qt_") + sysLocale, resourceDir))) {
         app.installTranslator(&translator);
         app.installTranslator(&qtTranslator);
-        app.installTranslator(&qt_helpTranslator);
     }
 #endif // Q_OS_WIN32
 

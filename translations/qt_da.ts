@@ -2,9 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="da_DK">
 <context>
+    <name>CloseButton</name>
+    <message>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <source>Close Tab</source>
+        <translation>Luk fane</translation>
+    </message>
+</context>
+<context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2316"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
         <source>Services</source>
         <translation>Tjenester</translation>
     </message>
@@ -40,832 +48,11 @@
     </message>
 </context>
 <context>
-    <name>AudioOutput</name>
-    <message>
-        <location filename="../src/3rdparty/phonon/phonon/audiooutput.cpp" line="+375"/>
-        <source>&lt;html&gt;The audio playback device &lt;b&gt;%1&lt;/b&gt; does not work.&lt;br/&gt;Falling back to &lt;b&gt;%2&lt;/b&gt;.&lt;/html&gt;</source>
-        <translation>&lt;html&gt;Audio-playback-enheden&lt;b&gt;%1&lt;/b&gt; virker ikke.&lt;br/&gt;Falder tilbage til &lt;b&gt;%2&lt;/b&gt;.&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>&lt;html&gt;Switching to the audio playback device &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;which just became available and has higher preference.&lt;/html&gt;</source>
-        <translation>&lt;html&gt;Skifter til audio-playback-enheden, &lt;b&gt;%1&lt;/b&gt;&lt;br/&gt;der lige er blevet tilgængelig og har en højere præference.&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Revert back to device &apos;%1&apos;</source>
-        <translation>Gå tilbage til enheden &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>CloseButton</name>
-    <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2252"/>
-        <source>Close Tab</source>
-        <translation>Luk fane</translation>
-    </message>
-</context>
-<context>
-    <name>Phonon::</name>
-    <message>
-        <location filename="../src/3rdparty/phonon/phonon/phononnamespace.cpp" line="+55"/>
-        <source>Notifications</source>
-        <translation>Meddelelser</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Music</source>
-        <translation>Musik</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Video</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Communication</source>
-        <translation>Kommunikation</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Games</source>
-        <translation>Spil</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Accessibility</source>
-        <translation>Tilgængelighed</translation>
-    </message>
-</context>
-<context>
-    <name>Phonon::Gstreamer::Backend</name>
-    <message>
-        <location filename="../src/3rdparty/phonon/gstreamer/backend.cpp" line="+171"/>
-        <source>Warning: You do not seem to have the package gstreamer0.10-plugins-good installed.
-          Some video features have been disabled.</source>
-        <translation>Advarsel: Det ser ikke ud til, at gstreamer0.10-plugins-good pakken er installeret.
-	Nogle videofunktioner er deaktiveret.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Warning: You do not seem to have the base GStreamer plugins installed.
-          All audio and video support has been disabled</source>
-        <translation>Advarsel: Det ser ikke ud til, at base GStreamer plugins er installeret.
-	Al audio- og videosupport er deaktiveret</translation>
-    </message>
-</context>
-<context>
-    <name>Phonon::Gstreamer::MediaObject</name>
-    <message>
-        <location filename="../src/3rdparty/phonon/gstreamer/mediaobject.cpp" line="+90"/>
-        <source>Cannot start playback. 
-
-Check your Gstreamer installation and make sure you 
-have libgstreamer-plugins-base installed.</source>
-        <translation>Kan ikke starte playback.
-
-Tjek Gstreamer-installationen og kontrollér, at 
-libgstreamer-plugins-base er installeret.</translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>A required codec is missing. You need to install the following codec(s) to play this content: %0</source>
-        <translation>Der mangler et codec. Følgende codecs skal installeres for at afspille dette indhold: %0</translation>
-    </message>
-    <message>
-        <location line="+676"/>
-        <location line="+8"/>
-        <location line="+15"/>
-        <location line="+9"/>
-        <location line="+6"/>
-        <location line="+19"/>
-        <location line="+335"/>
-        <location line="+24"/>
-        <source>Could not open media source.</source>
-        <translation>Kunne ikke åbne mediekilden.</translation>
-    </message>
-    <message>
-        <location line="-403"/>
-        <source>Invalid source type.</source>
-        <translation>Ugyldig kilde.</translation>
-    </message>
-    <message>
-        <location line="+377"/>
-        <source>Could not locate media source.</source>
-        <translation>Kunne ikke lokalisere mediekilden.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Could not open audio device. The device is already in use.</source>
-        <translation>Kunne ikke åbne lydenheden. Enheden er allerede i brug.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Could not decode media source.</source>
-        <translation>Kunne ikke afkode mediekilden.</translation>
-    </message>
-</context>
-<context>
-    <name>Phonon::VolumeSlider</name>
-    <message>
-        <location filename="../src/3rdparty/phonon/phonon/volumeslider.cpp" line="+42"/>
-        <location line="+18"/>
-        <source>Volume: %1%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="-15"/>
-        <location line="+18"/>
-        <location line="+54"/>
-        <source>Use this slider to adjust the volume. The leftmost position is 0%, the rightmost is %1%</source>
-        <translation>Anvend denne skyder til at indstille lydstyrken. Længst til venstre er 0% og længst til højre er %1%</translation>
-    </message>
-</context>
-<context>
-    <name>Q3Accel</name>
-    <message>
-        <location filename="../src/qt3support/other/q3accel.cpp" line="+481"/>
-        <source>%1, %2 not defined</source>
-        <translation>%1, %2 ikke definerede</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Ambiguous %1 not handled</source>
-        <translation>Tvetydig %1 ikke behandlet</translation>
-    </message>
-</context>
-<context>
-    <name>Q3DataTable</name>
-    <message>
-        <location filename="../src/qt3support/sql/q3datatable.cpp" line="+285"/>
-        <source>True</source>
-        <translation>Sandt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>False</source>
-        <translation>Falsk</translation>
-    </message>
-    <message>
-        <location line="+505"/>
-        <source>Insert</source>
-        <translation>Indsæt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Update</source>
-        <translation>Opdater</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Delete</source>
-        <translation>Slet</translation>
-    </message>
-</context>
-<context>
-    <name>Q3FileDialog</name>
-    <message>
-        <location filename="../src/qt3support/dialogs/q3filedialog.cpp" line="+865"/>
-        <source>Copy or Move a File</source>
-        <translation>Kopiér eller flyt en fil</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Read: %1</source>
-        <translation>Læs: %1</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+30"/>
-        <source>Write: %1</source>
-        <translation>Skriv: %1</translation>
-    </message>
-    <message>
-        <location line="-22"/>
-        <location line="+1579"/>
-        <source>Cancel</source>
-        <translation>Annuller</translation>
-    </message>
-    <message>
-        <location line="-157"/>
-        <location line="+49"/>
-        <location line="+2153"/>
-        <location filename="../src/qt3support/dialogs/q3filedialog_mac.cpp" line="+110"/>
-        <source>All Files (*)</source>
-        <translation>Alle filer (*)</translation>
-    </message>
-    <message>
-        <location line="-2089"/>
-        <source>Name</source>
-        <translation>Navn</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Size</source>
-        <translation>Størrelse</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Type</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Date</source>
-        <translation>Dato</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Attributes</source>
-        <translation>Attributter</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <location line="+2031"/>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
-    </message>
-    <message>
-        <location line="-1991"/>
-        <source>Look &amp;in:</source>
-        <translation>Kig &amp;i:</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+1981"/>
-        <location line="+16"/>
-        <source>File &amp;name:</source>
-        <translation>Fil&amp;navn:</translation>
-    </message>
-    <message>
-        <location line="-1996"/>
-        <source>File &amp;type:</source>
-        <translation>Fil&amp;type:</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Back</source>
-        <translation>Tilbage</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>One directory up</source>
-        <translation>En mappe op</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Create New Folder</source>
-        <translation>Opret ny folder</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List View</source>
-        <translation>Listevisning</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Detail View</source>
-        <translation>Detaljevisning</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Preview File Info</source>
-        <translation>Vis filinformation</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Preview File Contents</source>
-        <translation>Vis filindhold</translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Read-write</source>
-        <translation>Læs-skriv</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Read-only</source>
-        <translation>Skrivebeskyttet</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Write-only</source>
-        <translation>Write-only</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Inaccessible</source>
-        <translation>Utilgængelig</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Symlink to File</source>
-        <translation>Symlink til Fil</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Symlink to Directory</source>
-        <translation>Symlink til katalog</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Symlink to Special</source>
-        <translation>Symlink til Speciel</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>File</source>
-        <translation>Fil</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Dir</source>
-        <translation>Katalog</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Special</source>
-        <translation>Speciel</translation>
-    </message>
-    <message>
-        <location line="+704"/>
-        <location line="+2100"/>
-        <location filename="../src/qt3support/dialogs/q3filedialog_win.cpp" line="+337"/>
-        <source>Open</source>
-        <translation>Åbn</translation>
-    </message>
-    <message>
-        <location line="-1990"/>
-        <location filename="../src/qt3support/dialogs/q3filedialog_win.cpp" line="+84"/>
-        <source>Save As</source>
-        <translation>Gem som</translation>
-    </message>
-    <message>
-        <location line="+642"/>
-        <location line="+5"/>
-        <location line="+355"/>
-        <source>&amp;Open</source>
-        <translation>&amp;Åbn</translation>
-    </message>
-    <message>
-        <location line="-357"/>
-        <location line="+341"/>
-        <source>&amp;Save</source>
-        <translation>&amp;Gem</translation>
-    </message>
-    <message>
-        <location line="-334"/>
-        <source>&amp;Rename</source>
-        <translation>&amp;Omdøb</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Delete</source>
-        <translation>&amp;Slet</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>R&amp;eload</source>
-        <translation>Gen&amp;indlæs</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Sort by &amp;Name</source>
-        <translation>Sortér efter n&amp;avn</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Sort by &amp;Size</source>
-        <translation>Sortér efter s&amp;tørrelse</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Sort by &amp;Date</source>
-        <translation>Sortér efter &amp;dato</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Unsorted</source>
-        <translation>&amp;Usorteret</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Sort</source>
-        <translation>Sortér</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Show &amp;hidden files</source>
-        <translation>Vis s&amp;kjulte filer</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>the file</source>
-        <translation>filen</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>the directory</source>
-        <translation>kataloget</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>the symlink</source>
-        <translation>symlinket</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Delete %1</source>
-        <translation>Slet %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;qt&gt;Are you sure you wish to delete %1 &quot;%2&quot;?&lt;/qt&gt;</source>
-        <translation>&lt;qt&gt;Er du sikker på, at du vil slette %1 &quot;%2&quot;?&lt;/qt&gt;</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Yes</source>
-        <translation>&amp;Ja</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>&amp;No</source>
-        <translation>&amp;Nej</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>New Folder 1</source>
-        <translation>Ny folder 1</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>New Folder</source>
-        <translation>Ny folder</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>New Folder %1</source>
-        <translation>Ny folder %1</translation>
-    </message>
-    <message>
-        <location line="+98"/>
-        <source>Find Directory</source>
-        <translation>Find katalog</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+108"/>
-        <source>Directories</source>
-        <translation>Kataloger</translation>
-    </message>
-    <message>
-        <location line="-2"/>
-        <source>Directory:</source>
-        <translation>Katalog:</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+1110"/>
-        <source>Error</source>
-        <translation>Fejl</translation>
-    </message>
-    <message>
-        <location line="-1109"/>
-        <source>%1
-File not found.
-Check path and filename.</source>
-        <translation>%1
-Filen blev ikke fundet.
-Kontrollér sti og filnavn.</translation>
-    </message>
-    <message>
-        <location filename="../src/qt3support/dialogs/q3filedialog_win.cpp" line="-289"/>
-        <source>All Files (*.*)</source>
-        <translation>Alle filer (*.*)</translation>
-    </message>
-    <message>
-        <location line="+375"/>
-        <source>Open </source>
-        <translation>Åbn</translation>
-    </message>
-    <message>
-        <location line="+155"/>
-        <source>Select a Directory</source>
-        <translation>Vælg et katalog</translation>
-    </message>
-</context>
-<context>
-    <name>Q3LocalFs</name>
-    <message>
-        <location filename="../src/qt3support/network/q3localfs.cpp" line="+130"/>
-        <location line="+10"/>
-        <source>Could not read directory
-%1</source>
-        <translation>Kunne ikke læse katalog
-%1</translation>
-    </message>
-    <message>
-        <location line="+45"/>
-        <source>Could not create directory
-%1</source>
-        <translation>Kunne ikke oprette katalog
-%1</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>Could not remove file or directory
-%1</source>
-        <translation>Kunne ikke fjerne fil eller katalog
-%1</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Could not rename
-%1
-to
-%2</source>
-        <translation>Kunne ikke omdøbe
-%1
-to
-%2</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Could not open
-%1</source>
-        <translation>Kunne ikke åbne
-%1</translation>
-    </message>
-    <message>
-        <location line="+68"/>
-        <source>Could not write
-%1</source>
-        <translation>Kunne ikke skrive
-%1</translation>
-    </message>
-</context>
-<context>
-    <name>Q3MainWindow</name>
-    <message>
-        <location filename="../src/qt3support/widgets/q3mainwindow.cpp" line="+2051"/>
-        <source>Line up</source>
-        <translation>Linie op</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Customize...</source>
-        <translation>Tilpas...</translation>
-    </message>
-</context>
-<context>
-    <name>Q3NetworkProtocol</name>
-    <message>
-        <location filename="../src/qt3support/network/q3networkprotocol.cpp" line="+854"/>
-        <source>Operation stopped by the user</source>
-        <translation>Brugeren stoppede handlingen</translation>
-    </message>
-</context>
-<context>
-    <name>Q3ProgressDialog</name>
-    <message>
-        <location filename="../src/qt3support/dialogs/q3progressdialog.cpp" line="+224"/>
-        <location line="+61"/>
-        <source>Cancel</source>
-        <translation>Annuller</translation>
-    </message>
-</context>
-<context>
-    <name>Q3TabDialog</name>
-    <message>
-        <location filename="../src/qt3support/dialogs/q3tabdialog.cpp" line="+189"/>
-        <location line="+814"/>
-        <source>OK</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="-356"/>
-        <source>Apply</source>
-        <translation>Udfør</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Help</source>
-        <translation>Hjælp</translation>
-    </message>
-    <message>
-        <location line="+45"/>
-        <source>Defaults</source>
-        <translation>Standarder</translation>
-    </message>
-    <message>
-        <location line="+50"/>
-        <source>Cancel</source>
-        <translation>Annuller</translation>
-    </message>
-</context>
-<context>
-    <name>Q3TextEdit</name>
-    <message>
-        <location filename="../src/qt3support/text/q3textedit.cpp" line="+5429"/>
-        <source>&amp;Undo</source>
-        <translation>&amp;Fortryd</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Redo</source>
-        <translation>&amp;Gendan</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Cu&amp;t</source>
-        <translation>&amp;Klip</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Copy</source>
-        <translation>K&amp;opiér</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>&amp;Paste</source>
-        <translation>&amp;Sæt ind</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Clear</source>
-        <translation>Ryd</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <location line="+2"/>
-        <source>Select All</source>
-        <translation>Markér alt</translation>
-    </message>
-</context>
-<context>
-    <name>Q3TitleBar</name>
-    <message>
-        <location filename="../src/plugins/accessible/compat/q3complexwidgets.cpp" line="+246"/>
-        <source>System</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Restore up</source>
-        <translation>Gendan op</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Minimize</source>
-        <translation>Minimer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Restore down</source>
-        <translation>Gendan ned</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Maximize</source>
-        <translation>Maksimér</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Close</source>
-        <translation>Luk</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Contains commands to manipulate the window</source>
-        <translation>Indeholder kommandoer til indstilling af vinduet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Puts a minimized back to normal</source>
-        <translation>Sætter et minimeret vindue til normal størrelse</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Moves the window out of the way</source>
-        <translation>Flytter vinduet væk</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Puts a maximized window back to normal</source>
-        <translation>Sætter et maksimeret vindue til normal størrelse</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Makes the window full screen</source>
-        <translation>Gør vinduet til fuld skærm</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Closes the window</source>
-        <translation>Lukker vinduet</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Displays the name of the window and contains controls to manipulate it</source>
-        <translation>Viser vinduets navn og indeholder kontroller til indstilling af vinduet</translation>
-    </message>
-</context>
-<context>
-    <name>Q3ToolBar</name>
-    <message>
-        <location filename="../src/qt3support/widgets/q3toolbar.cpp" line="+692"/>
-        <source>More...</source>
-        <translation>Mere...</translation>
-    </message>
-</context>
-<context>
-    <name>Q3UrlOperator</name>
-    <message>
-        <location filename="../src/qt3support/network/q3urloperator.cpp" line="+386"/>
-        <location line="+260"/>
-        <location line="+4"/>
-        <source>The protocol `%1&apos; is not supported</source>
-        <translation>Protokollen &apos;%1&apos; understøttes ikke</translation>
-    </message>
-    <message>
-        <location line="-260"/>
-        <source>The protocol `%1&apos; does not support listing directories</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke opremsning af kataloger</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>The protocol `%1&apos; does not support creating new directories</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke oprettelse af nye kataloger</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>The protocol `%1&apos; does not support removing files or directories</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke, at filer eller kataloger fjernes</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>The protocol `%1&apos; does not support renaming files or directories</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke, at filer eller kataloger omdøbes</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>The protocol `%1&apos; does not support getting files</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke hentning af filer</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>The protocol `%1&apos; does not support putting files</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke upload af filer</translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <location line="+4"/>
-        <source>The protocol `%1&apos; does not support copying or moving files or directories</source>
-        <translation>Protokollen &apos;%1&apos; understøtter ikke kopiering eller flytning af filer eller kataloger</translation>
-    </message>
-    <message>
-        <location line="+237"/>
-        <location line="+1"/>
-        <source>(unknown)</source>
-        <translation>(ukendt)</translation>
-    </message>
-</context>
-<context>
-    <name>Q3Wizard</name>
-    <message>
-        <location filename="../src/qt3support/dialogs/q3wizard.cpp" line="+177"/>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Annuller</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt; &amp;Back</source>
-        <translation>&lt; &amp;Tilbage</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Next &gt;</source>
-        <translation>&amp;Næste &gt;</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Finish</source>
-        <translation>&amp;Udfør</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&amp;Help</source>
-        <translation>&amp;Hjælp</translation>
-    </message>
-</context>
-<context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+868"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+615"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+657"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+918"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+689"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+664"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>Host blev ikke fundet</translation>
@@ -878,24 +65,25 @@ to
         <translation>Forbindelse afvist</translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+142"/>
         <source>Connection timed out</source>
         <translation>Forbindelsen timed out</translation>
     </message>
     <message>
-        <location line="-547"/>
-        <location line="+787"/>
-        <location line="+208"/>
+        <location line="-555"/>
+        <location line="+827"/>
+        <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>Socket-operation ikke understøttet</translation>
     </message>
     <message>
-        <location line="+137"/>
+        <location line="+219"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
         <source>Socket operation timed out</source>
         <translation>Socket-operation timed out</translation>
     </message>
     <message>
-        <location line="+380"/>
+        <location line="+437"/>
         <source>Socket is not connected</source>
         <translation>Socket ikke forbundet</translation>
     </message>
@@ -908,7 +96,7 @@ to
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1199"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1254"/>
         <source>&amp;Step up</source>
         <translation>&amp;Trin op</translation>
     </message>
@@ -924,14 +112,32 @@ to
     </message>
 </context>
 <context>
+    <name>QAccessibleButton</name>
+    <message>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+269"/>
+        <source>Uncheck</source>
+        <translation type="unfinished">Fjern markering</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Check</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Press</source>
+        <translation type="unfinished">Tryk på</translation>
+    </message>
+</context>
+<context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+376"/>
+        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+374"/>
         <source>Activate</source>
         <translation>Aktivér</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+352"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Eksekverbar &apos;%1&apos; kræver Qt %2, ikke fundet Qt %3.</translation>
     </message>
@@ -941,7 +147,7 @@ to
         <translation>Inkompatibel Qt Library fejl</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2247"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation></translation>
@@ -953,32 +159,17 @@ to
     </message>
 </context>
 <context>
-    <name>QAxSelect</name>
+    <name>QBBInputContext</name>
     <message>
-        <location filename="../src/activeqt/container/qaxselect.ui"/>
-        <source>Select ActiveX Control</source>
-        <translation>Vælg ActiveX-kontrol</translation>
-    </message>
-    <message>
-        <location/>
-        <source>OK</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location/>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Annuller</translation>
-    </message>
-    <message>
-        <location/>
-        <source>COM &amp;Object:</source>
-        <translation>COM &amp;Objekt:</translation>
+        <location filename="../src/plugins/platforms/blackberry/qbbinputcontext_imf.cpp" line="+893"/>
+        <source>PlayBook IMF</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QCheckBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+114"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-150"/>
         <source>Uncheck</source>
         <translation>Fjern markering</translation>
     </message>
@@ -996,7 +187,7 @@ to
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1253"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1373"/>
         <source>Hu&amp;e:</source>
         <translation>Ton&amp;e:</translation>
     </message>
@@ -1036,7 +227,7 @@ to
         <translation>Vælg farve</translation>
     </message>
     <message>
-        <location line="+137"/>
+        <location line="+181"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Basisfarver</translation>
     </message>
@@ -1054,13 +245,13 @@ to
 <context>
     <name>QComboBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1771"/>
-        <location line="+65"/>
+        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="+1849"/>
+        <location line="+66"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+544"/>
+        <location filename="../src/gui/itemviews/qitemeditorfactory.cpp" line="+556"/>
         <source>False</source>
         <translation>Falsk</translation>
     </message>
@@ -1076,15 +267,69 @@ to
     </message>
 </context>
 <context>
+    <name>QCommandLineParser</name>
+    <message>
+        <location filename="../src/core/tools/qcommandlineparser.cpp" line="+273"/>
+        <source>Displays version information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Displays this help.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+95"/>
+        <source>Unknown option &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Unknown options: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <source>Missing value after &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Unexpected value after &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+394"/>
+        <source>[options]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Usage: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Options:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Arguments:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QCoreApplication</name>
     <message>
-        <location filename="../src/corelib/kernel/qsystemsemaphore_unix.cpp" line="+119"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+133"/>
+        <location line="+62"/>
         <source>%1: key is empty</source>
         <comment>QSystemSemaphore</comment>
         <translation>%1: nøgle er tom</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="-54"/>
         <source>%1: unable to make key</source>
         <comment>QSystemSemaphore</comment>
         <translation>%1: kunne ikke lave nøgle</translation>
@@ -1097,66 +342,9 @@ to
     </message>
 </context>
 <context>
-    <name>QDB2Driver</name>
-    <message>
-        <location filename="../src/sql/drivers/db2/qsql_db2.cpp" line="+1276"/>
-        <source>Unable to connect</source>
-        <translation>Kunne ikke skabe forbindelse</translation>
-    </message>
-    <message>
-        <location line="+303"/>
-        <source>Unable to commit transaction</source>
-        <translation>Kunne ikke gennemføre transaktion</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unable to rollback transaction</source>
-        <translation>Kunne ikke tilbagetrække transaktion</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unable to set autocommit</source>
-        <translation>Kunne ikke aktivere autocommit</translation>
-    </message>
-</context>
-<context>
-    <name>QDB2Result</name>
-    <message>
-        <location line="-1043"/>
-        <location line="+243"/>
-        <source>Unable to execute statement</source>
-        <translation>Kunne ikke udføre statement</translation>
-    </message>
-    <message>
-        <location line="-206"/>
-        <source>Unable to prepare statement</source>
-        <translation>Kunne ikke forberede udsagn</translation>
-    </message>
-    <message>
-        <location line="+196"/>
-        <source>Unable to bind variable</source>
-        <translation>Kunne ikke binde variabel</translation>
-    </message>
-    <message>
-        <location line="+92"/>
-        <source>Unable to fetch record %1</source>
-        <translation>Kunne ikke hente post %1</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unable to fetch next</source>
-        <translation>Kunne ikke hente næste</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Unable to fetch first</source>
-        <translation>Kunne ikke hente første</translation>
-    </message>
-</context>
-<context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2295"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
         <source>AM</source>
         <translation></translation>
     </message>
@@ -1177,9 +365,1179 @@ to
     </message>
 </context>
 <context>
+    <name>QDeclarativeAbstractAnimation</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+172"/>
+        <source>Cannot animate non-existent property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cannot animate read-only property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+108"/>
+        <location line="+50"/>
+        <source>Animation is an abstract class</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeAnchorAnimation</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+2692"/>
+        <source>Cannot set a duration of &lt; 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeAnchors</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeanchors.cpp" line="+198"/>
+        <source>Possible anchor loop detected on fill.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Possible anchor loop detected on centerIn.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+208"/>
+        <location line="+34"/>
+        <location line="+646"/>
+        <location line="+37"/>
+        <source>Cannot anchor to an item that isn&apos;t a parent or sibling.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-570"/>
+        <source>Possible anchor loop detected on vertical anchor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+95"/>
+        <source>Possible anchor loop detected on horizontal anchor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+422"/>
+        <source>Cannot specify left, right, and hcenter anchors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+37"/>
+        <source>Cannot anchor to a null item.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-34"/>
+        <source>Cannot anchor a horizontal edge to a vertical edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+37"/>
+        <source>Cannot anchor item to self.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <source>Cannot specify top, bottom, and vcenter anchors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Baseline anchor cannot be used in conjunction with top, bottom, or vcenter anchors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Cannot anchor a vertical edge to a horizontal edge.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeAnimatedImage</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+106"/>
+        <location line="+108"/>
+        <source>Qt was built without support for QMovie</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeApplication</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="-78"/>
+        <source>Application is an abstract class</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeBehavior</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativebehavior.cpp" line="+127"/>
+        <source>Cannot change the animation assigned to a Behavior.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeBinding</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativebinding.cpp" line="+444"/>
+        <source>Binding loop detected for property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeCompiledBindings</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+408"/>
+        <source>Binding loop detected for property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeCompiler</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativecompiler.cpp" line="+185"/>
+        <location line="+1672"/>
+        <location line="+205"/>
+        <location line="+81"/>
+        <location line="+81"/>
+        <location line="+594"/>
+        <source>Invalid property assignment: &quot;%1&quot; is a read-only property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2624"/>
+        <source>Invalid property assignment: unknown enumeration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Invalid property assignment: string expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invalid property assignment: url expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Invalid property assignment: unsigned int expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Invalid property assignment: int expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+3"/>
+        <source>Invalid property assignment: number expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Invalid property assignment: color expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Invalid property assignment: date expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invalid property assignment: time expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invalid property assignment: datetime expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Invalid property assignment: point expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Invalid property assignment: size expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Invalid property assignment: rect expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Invalid property assignment: boolean expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invalid property assignment: 3D vector expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Invalid property assignment: unsupported type &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+286"/>
+        <source>Element is not creatable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+650"/>
+        <source>Component elements may not contain properties other than id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invalid component id specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+515"/>
+        <source>id is not unique</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-505"/>
+        <source>Invalid component body specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Component objects cannot declare new properties.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Component objects cannot declare new signals.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Component objects cannot declare new functions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Cannot create empty component specification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+88"/>
+        <location line="+121"/>
+        <source>&quot;%1.%2&quot; is not available in %3 %4.%5.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-119"/>
+        <location line="+121"/>
+        <source>&quot;%1.%2&quot; is not available due to component versioning.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-110"/>
+        <source>Incorrectly specified signal assignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Cannot assign a value to a signal (expecting a script to be run)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Empty signal assignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Empty property assignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Attached properties cannot be used here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+128"/>
+        <source>Non-existent attached object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-124"/>
+        <location line="+127"/>
+        <source>Invalid attached object assignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-48"/>
+        <source>Cannot assign to non-existent default property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+356"/>
+        <location line="+3"/>
+        <source>Cannot assign to non-existent property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-329"/>
+        <source>Invalid use of namespace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Not an attached property name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+182"/>
+        <source>Invalid use of id property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+87"/>
+        <location line="+2"/>
+        <source>Property has already been assigned a value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location line="+7"/>
+        <source>Invalid grouped property access</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cannot assign a value directly to a grouped property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Invalid property use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Property assignment expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Single property assignment expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Unexpected object assignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>Cannot assign object to list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Can only assign one binding to lists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Cannot assign primitives to lists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Cannot assign multiple values to a script property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invalid property assignment: script expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Cannot assign multiple values to a singular property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+93"/>
+        <source>Cannot assign object to property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>&quot;%1&quot; cannot operate on &quot;%2&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+182"/>
+        <source>Duplicate default property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Duplicate property name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Property names cannot begin with an upper case letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Illegal property name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Duplicate signal name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Signal names cannot begin with an upper case letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Illegal signal name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Duplicate method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Method names cannot begin with an upper case letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Illegal method name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Property value set multiple times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invalid property nesting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Cannot override FINAL property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Invalid property type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+177"/>
+        <source>Invalid empty ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>IDs cannot start with an uppercase letter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>IDs must start with a letter or underscore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>IDs must contain only letters, numbers, and underscores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>ID illegally masks global JavaScript property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <location line="+9"/>
+        <source>No property alias location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-4"/>
+        <location line="+25"/>
+        <location line="+7"/>
+        <location line="+7"/>
+        <location line="+6"/>
+        <source>Invalid alias location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-36"/>
+        <source>Invalid alias reference. An alias reference must be specified as &lt;id&gt;, &lt;id&gt;.&lt;property&gt; or &lt;id&gt;.&lt;value property&gt;.&lt;property&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invalid alias reference. Unable to find id &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Alias property exceeds alias bounds</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeComponent</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <source>Invalid empty URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+148"/>
+        <source>createObject: value is not an object</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeConnections</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeconnections.cpp" line="+207"/>
+        <location line="+64"/>
+        <source>Cannot assign to non-existent property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-54"/>
+        <source>Connections: nested objects not allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Connections: syntax error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Connections: script expected</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeEngine</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativesqldatabase.cpp" line="+211"/>
+        <source>executeSql called outside transaction()</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+58"/>
+        <source>Read-only Transaction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Version mismatch: expected %1, found %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>SQL transaction failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>transaction: missing callback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <location line="+15"/>
+        <source>SQL: database version mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeFlipable</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+138"/>
+        <source>front is a write-once property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>back is a write-once property</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeImportDatabase</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativeimport.cpp" line="+380"/>
+        <source>plugin cannot be loaded for module &quot;%1&quot;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>module &quot;%1&quot; plugin &quot;%2&quot; not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+144"/>
+        <location line="+68"/>
+        <source>module &quot;%1&quot; version %2.%3 is not installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-66"/>
+        <source>module &quot;%1&quot; is not installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+20"/>
+        <source>&quot;%1&quot;: no such directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>import &quot;%1&quot; has no qmldir and no namespace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>- %1 is not a namespace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>- nested namespaces not allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <location line="+4"/>
+        <source>local directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>is ambiguous. Found in %1 and in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>is ambiguous. Found in %1 in version %2.%3 and %4.%5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>is instantiated recursively</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>is not a type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+301"/>
+        <source>File name case mismatch for &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeKeyNavigationAttached</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="-36"/>
+        <location line="+88"/>
+        <source>KeyNavigation is only available via attached properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeKeysAttached</name>
+    <message>
+        <location line="-87"/>
+        <location line="+88"/>
+        <source>Keys is only available via attached properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeLayoutMirroringAttached</name>
+    <message>
+        <location line="-63"/>
+        <source>LayoutMirroring is only available via attached properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+814"/>
+        <source>LayoutDirection attached property only works with Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeListModel</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+392"/>
+        <source>remove: index %1 out of range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>insert: value is not an object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>insert: index %1 out of range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>move: out of range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>append: value is not an object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+71"/>
+        <source>set: value is not an object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <location line="+38"/>
+        <source>set: index %1 out of range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <location line="+17"/>
+        <source>ListElement: cannot contain nested elements</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>ListElement: cannot use reserved &quot;id&quot; property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>ListElement: cannot use script for property value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>ListModel: undefined property &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeLoader</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeloader.cpp" line="+407"/>
+        <source>Loader does not support loading non-visual elements.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeParentAnimation</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="-168"/>
+        <source>Unable to preserve appearance under complex transform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location line="+7"/>
+        <source>Unable to preserve appearance under non-uniform scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Unable to preserve appearance under scale of 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeParentChange</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativestateoperations.cpp" line="+110"/>
+        <source>Unable to preserve appearance under complex transform</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <location line="+7"/>
+        <source>Unable to preserve appearance under non-uniform scale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Unable to preserve appearance under scale of 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeParser</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativescriptparser.cpp" line="+254"/>
+        <location line="+429"/>
+        <location line="+59"/>
+        <source>Property value set multiple times</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-477"/>
+        <source>Expected type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+134"/>
+        <source>Invalid import qualifier ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Reserved name &quot;Qt&quot; cannot be used as an qualifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Script import qualifiers must be unique.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Script import requires a qualifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Library import requires a version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Expected parameter type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Invalid property type modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Unexpected property type modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Expected property type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Readonly not yet supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+218"/>
+        <source>JavaScript declaration outside Script element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+544"/>
+        <location line="+123"/>
+        <location line="+54"/>
+        <source>Illegal unicode escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-140"/>
+        <source>Illegal character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Unclosed string at end of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Illegal escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
+        <source>Unclosed comment at end of file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+102"/>
+        <source>Illegal syntax for exponential number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Identifier cannot start with numeric literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+338"/>
+        <source>Unterminated regular expression literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Invalid regular expression flag &apos;%0&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <location line="+22"/>
+        <source>Unterminated regular expression backslash sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Unterminated regular expression class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location line="+67"/>
+        <source>Syntax error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-65"/>
+        <source>Unexpected token `%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <location line="+24"/>
+        <source>Expected token `%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativePauseAnimation</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="-2115"/>
+        <source>Cannot set a duration of &lt; 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativePixmap</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+310"/>
+        <source>Error decoding: %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+167"/>
+        <location line="+360"/>
+        <source>Failed to get image from provider: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-342"/>
+        <location line="+360"/>
+        <source>Cannot open: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativePropertyAnimation</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeanimation.cpp" line="+1238"/>
+        <source>Cannot set a duration of &lt; 0</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativePropertyChanges</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativepropertychanges.cpp" line="+256"/>
+        <source>PropertyChanges does not support creating state-specific objects.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+168"/>
+        <source>Cannot assign to non-existent property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cannot assign to read-only property &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeTextInput</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+961"/>
+        <location line="+8"/>
+        <source>Could not load cursor delegate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Could not instantiate cursor delegate</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeTypeLoader</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativetypeloader.cpp" line="+936"/>
+        <source>Script %1 unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Type %1 unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+186"/>
+        <source>Namespace %1 cannot be used as a type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>%1 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeVME</name>
+    <message>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+231"/>
+        <source>Unable to create object of type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+441"/>
+        <source>Cannot assign value %1 to property %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Cannot assign object type %1 with no default method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cannot connect mismatched signal/slot %1 %vs. %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Cannot assign an object to signal property %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+154"/>
+        <source>Cannot assign object to list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Cannot assign object to interface property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Unable to create attached object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Cannot set properties on %1 as it is null</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeVisualDataModel</name>
+    <message>
+        <location filename="../src/declarative/graphicsitems/qdeclarativevisualitemmodel.cpp" line="+1101"/>
+        <source>Delegate component must be Item type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeXmlListModel</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+40"/>
+        <location line="+2"/>
+        <location line="+49"/>
+        <location line="+2"/>
+        <source>Qt was built without support for xmlpatterns</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeXmlListModelRole</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativexmllistmodel_p.h" line="+173"/>
+        <source>An XmlRole query must not start with &apos;/&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDeclarativeXmlRoleList</name>
+    <message>
+        <location filename="../src/declarative/util/qdeclarativexmllistmodel.cpp" line="+826"/>
+        <source>An XmlListModel query must start with &apos;/&apos; or &quot;//&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QDial</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+951"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+933"/>
         <source>QDial</source>
         <translation></translation>
     </message>
@@ -1197,12 +1555,12 @@ to
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+597"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+607"/>
         <source>What&apos;s This?</source>
         <translation>Hvad er dette?</translation>
     </message>
     <message>
-        <location line="-115"/>
+        <location line="-127"/>
         <source>Done</source>
         <translation>Udført</translation>
     </message>
@@ -1210,14 +1568,14 @@ to
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1869"/>
-        <location line="+464"/>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+561"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
+        <location line="+446"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+0"/>
+        <location line="+0"/>
         <source>&amp;OK</source>
         <translation></translation>
     </message>
@@ -1335,7 +1693,7 @@ to
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+453"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+438"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -1365,7 +1723,7 @@ to
 <context>
     <name>QDockWidget</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1239"/>
+        <location filename="../src/plugins/accessible/widgets/qaccessiblewidgets.cpp" line="+1329"/>
         <source>Close</source>
         <translation>Luk</translation>
     </message>
@@ -1383,7 +1741,7 @@ to
 <context>
     <name>QDoubleSpinBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-537"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-525"/>
         <source>More</source>
         <translation>Mere</translation>
     </message>
@@ -1396,7 +1754,7 @@ to
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+192"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+199"/>
         <source>Debug Message:</source>
         <translation>Debug-besked:</translation>
     </message>
@@ -1411,7 +1769,7 @@ to
         <translation>Fatal fejl:</translation>
     </message>
     <message>
-        <location line="+193"/>
+        <location line="+202"/>
         <source>&amp;Show this message again</source>
         <translation>&amp;Vis denne besked igen</translation>
     </message>
@@ -1424,71 +1782,80 @@ to
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/corelib/io/qfile.cpp" line="+708"/>
-        <location line="+141"/>
+        <location filename="../src/core/io/qfile.cpp" line="+699"/>
+        <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Destinationsfil findes</translation>
     </message>
     <message>
-        <location line="-108"/>
+        <location line="-139"/>
+        <source>Will not rename sequential file using block copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
         <source>Cannot remove source file</source>
         <translation>Kan ikke fjerne kildefil</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+129"/>
         <source>Cannot open %1 for input</source>
         <translation>Kan ikke åbne %1 til input</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Cannot open for output</source>
         <translation>Kan ikke åbne til output</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Failure to write block</source>
         <translation>Kunne ikke skrive blok</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Cannot create %1 for output</source>
         <translation>Kunne ikke oprette %1 til output</translation>
+    </message>
+    <message>
+        <location line="+333"/>
+        <source>No file engine available or engine does not support UnMapExtension</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+514"/>
-        <location line="+447"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+576"/>
+        <location line="+540"/>
         <source>All Files (*)</source>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+177"/>
         <source>Directories</source>
         <translation>Kataloger</translation>
     </message>
     <message>
         <location line="-3"/>
-        <location line="+50"/>
-        <location line="+1467"/>
-        <location line="+75"/>
+        <location line="+55"/>
+        <location line="+1551"/>
         <source>&amp;Open</source>
         <translation>&amp;Åbn</translation>
     </message>
     <message>
-        <location line="-1592"/>
-        <location line="+50"/>
+        <location line="-1606"/>
+        <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Gem</translation>
     </message>
     <message>
-        <location line="-733"/>
+        <location line="-786"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location line="+1515"/>
+        <location line="+1576"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 findes allerede.
@@ -1509,7 +1876,7 @@ Kontrollér, at det rigtige filnavn er indtastet.</translation>
         <translation>Min computer</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1504"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1565"/>
         <source>&amp;Rename</source>
         <translation>&amp;Omdøb</translation>
     </message>
@@ -1524,44 +1891,14 @@ Kontrollér, at det rigtige filnavn er indtastet.</translation>
         <translation>Vis s&amp;kjulte filer</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Back</source>
-        <translation>Tilbage</translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Parent Directory</source>
-        <translation>Ovenliggende katalog</translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>List View</source>
-        <translation>Listevisning</translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Detail View</source>
-        <translation>Detaljevisning</translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Files of type:</source>
-        <translation>Filer af typen:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+6"/>
-        <location line="+651"/>
+        <location line="+6"/>
+        <location line="+699"/>
         <source>Directory:</source>
         <translation>Katalog:</translation>
     </message>
     <message>
-        <location line="+791"/>
-        <location line="+861"/>
+        <location line="+804"/>
+        <location line="+866"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1570,7 +1907,7 @@ Katalog kunne ikke findes.
 Kontrollér, at det rigtige katalognavn er indtastet.</translation>
     </message>
     <message>
-        <location line="-218"/>
+        <location line="-222"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; er skrivebeskyttet.
@@ -1587,22 +1924,22 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke slette kataloget.</translation>
     </message>
     <message>
-        <location line="+407"/>
+        <location line="+409"/>
         <source>Recent Places</source>
         <translation>Aktuelle steder</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+160"/>
+        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
         <source>All Files (*.*)</source>
         <translation>Alle filer (*.*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2549"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2613"/>
         <source>Save As</source>
         <translation>Gem som</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+411"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+483"/>
         <source>Drive</source>
         <translation>Drev</translation>
     </message>
@@ -1613,7 +1950,31 @@ Do you want to delete it anyway?</source>
         <translation>Fil</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+5"/>
+        <source>File Folder</source>
+        <comment>Match Windows Explorer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Folder</source>
+        <comment>All other platforms</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Alias</source>
+        <comment>Mac OS X Finder</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shortcut</source>
+        <comment>All other platforms</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Unknown</source>
         <translation>Ukendt</translation>
     </message>
@@ -1628,55 +1989,37 @@ Do you want to delete it anyway?</source>
         <translation>Vis</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Forward</source>
-        <translation>Frem</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+1969"/>
+        <location line="+2031"/>
         <source>New Folder</source>
         <translation>Ny folder</translation>
     </message>
     <message>
-        <location line="-1962"/>
+        <location line="-2024"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Ny folder</translation>
     </message>
     <message>
-        <location line="+659"/>
-        <location line="+38"/>
+        <location line="+707"/>
+        <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>&amp;Vælg</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+437"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
         <source>Remove</source>
         <translation>Fjern</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-690"/>
-        <location line="+655"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-743"/>
+        <location line="+703"/>
         <source>File &amp;name:</source>
         <translation>&amp;Filnavn:</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Look in:</source>
-        <translation>Søg i:</translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_wince.ui"/>
-        <source>Create New Folder</source>
-        <translation>Opret ny folder</translation>
     </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+828"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+860"/>
         <source>Invalid filename</source>
         <translation>Ugyldigt filnavn</translation>
     </message>
@@ -1686,7 +2029,7 @@ Do you want to delete it anyway?</source>
         <translation>&lt;b&gt;Navnet, %1, kan ikke benyttes.&lt;/b&gt;&lt;p&gt;Brug et andet navn med færre tegn og ingen kommatering.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+64"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -1713,7 +2056,7 @@ Do you want to delete it anyway?</source>
         <translation>Ændringsdato</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+242"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
         <source>My Computer</source>
         <translation>Min computer</translation>
     </message>
@@ -1723,27 +2066,36 @@ Do you want to delete it anyway?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-163"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-177"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
     <message>
         <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
     <message>
         <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
         <source>%1 MB</source>
         <translation>%1 MB</translation>
     </message>
     <message>
         <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+2"/>
         <source>%1 KB</source>
         <translation>%1 KB&apos;</translation>
     </message>
     <message>
         <location line="+1"/>
+        <source>%1 byte(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+1"/>
         <source>%1 bytes</source>
         <translation>%1 bytes</translation>
     </message>
@@ -1751,56 +2103,56 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+90"/>
-        <location line="+1176"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+109"/>
+        <location line="+1387"/>
         <source>Normal</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-1173"/>
+        <location line="-1384"/>
         <location line="+12"/>
-        <location line="+1149"/>
+        <location line="+1360"/>
         <source>Bold</source>
         <translation>Fed</translation>
     </message>
     <message>
-        <location line="-1158"/>
-        <location line="+1160"/>
+        <location line="-1369"/>
+        <location line="+1371"/>
         <source>Demi Bold</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-1157"/>
+        <location line="-1368"/>
         <location line="+18"/>
-        <location line="+1135"/>
+        <location line="+1346"/>
         <source>Black</source>
         <translation>Sort</translation>
     </message>
     <message>
-        <location line="-1145"/>
+        <location line="-1356"/>
         <source>Demi</source>
         <translation></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1145"/>
+        <location line="+1356"/>
         <source>Light</source>
         <translation>Lys</translation>
     </message>
     <message>
-        <location line="-1004"/>
-        <location line="+1007"/>
+        <location line="-1186"/>
+        <location line="+1189"/>
         <source>Italic</source>
         <translation>Kursiv</translation>
     </message>
     <message>
-        <location line="-1004"/>
-        <location line="+1006"/>
+        <location line="-1186"/>
+        <location line="+1188"/>
         <source>Oblique</source>
         <translation>Skråt</translation>
     </message>
     <message>
-        <location line="+705"/>
+        <location line="+729"/>
         <source>Any</source>
         <translation>Alle</translation>
     </message>
@@ -1964,11 +2316,16 @@ Do you want to delete it anyway?</source>
         <source>Runic</source>
         <translation></translation>
     </message>
+    <message>
+        <location line="+3"/>
+        <source>N&apos;Ko</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+772"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+746"/>
         <source>&amp;Font</source>
         <translation>S&amp;krifttype</translation>
     </message>
@@ -1983,7 +2340,7 @@ Do you want to delete it anyway?</source>
         <translation>&amp;Størrelse</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+3"/>
         <source>Effects</source>
         <translation>Effekter</translation>
     </message>
@@ -2008,8 +2365,7 @@ Do you want to delete it anyway?</source>
         <translation>Skr&amp;ivesystem</translation>
     </message>
     <message>
-        <location line="-604"/>
-        <location line="+247"/>
+        <location line="-575"/>
         <source>Select Font</source>
         <translation>Vælg skrifttype</translation>
     </message>
@@ -2017,20 +2373,17 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFtp</name>
     <message>
-        <location filename="../src/network/access/qftp.cpp" line="+826"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+683"/>
+        <location filename="../src/network/access/qftp.cpp" line="+874"/>
         <source>Not connected</source>
         <translation>Ingen forbindelse</translation>
     </message>
     <message>
-        <location line="+65"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+65"/>
+        <location line="+79"/>
         <source>Host %1 not found</source>
         <translation>Vært %1 ikke fundet</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+4"/>
         <source>Connection refused to host %1</source>
         <translation>Forbindelse til vært %1 afvist</translation>
     </message>
@@ -2041,28 +2394,21 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+104"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+102"/>
-        <location line="+1451"/>
         <source>Connected to host %1</source>
         <translation>Tilsluttet vært %1</translation>
     </message>
     <message>
         <location line="+219"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="-1290"/>
         <source>Connection refused for data connection</source>
         <translation>Dataforbindelse afvist</translation>
     </message>
     <message>
         <location line="+178"/>
-        <location line="+29"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+195"/>
-        <location line="+728"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
     </message>
     <message>
-        <location line="+889"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+77"/>
+        <location line="+901"/>
         <source>Connecting to host failed:
 %1</source>
         <translation>Forbindelse til vært mislykkedes:
@@ -2070,7 +2416,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Login failed:
 %1</source>
         <translation>Login mislykkedes:
@@ -2078,7 +2423,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Listing directory failed:
 %1</source>
         <translation>Opremsning af katalogindhold mislykkedes:
@@ -2086,7 +2430,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Changing directory failed:
 %1</source>
         <translation>Ændring af katalog mislykkedes:
@@ -2094,7 +2437,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Downloading file failed:
 %1</source>
         <translation>Downloading af fil mislykkedes:
@@ -2102,7 +2444,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Uploading file failed:
 %1</source>
         <translation>Uploading af fil mislykkedes:
@@ -2110,7 +2451,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Removing file failed:
 %1</source>
         <translation>Det mislykkedes at fjerne fil:
@@ -2118,7 +2458,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Creating directory failed:
 %1</source>
         <translation>Oprettelse af katalog mislykkedes:
@@ -2126,7 +2465,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+3"/>
         <source>Removing directory failed:
 %1</source>
         <translation>Det mislykkedes at fjerne katalog:
@@ -2134,66 +2472,67 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+28"/>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="+25"/>
-        <location line="+250"/>
         <source>Connection closed</source>
         <translation>Forbindelse lukket</translation>
     </message>
+</context>
+<context>
+    <name>QGroupBox</name>
     <message>
-        <location filename="../src/qt3support/network/q3ftp.cpp" line="-11"/>
-        <source>Host %1 found</source>
-        <translation>Vært %1 fundet</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Connection to %1 closed</source>
-        <translation>Forbindelse til %1 lukket</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Host found</source>
-        <translation>Vært fundet</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Connected to host</source>
-        <translation>Tilsluttet vært</translation>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+634"/>
+        <source>Toggle</source>
+        <translation type="unfinished">Slå til/fra</translation>
     </message>
 </context>
 <context>
     <name>QHostInfo</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+183"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+110"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
+    </message>
+    <message>
+        <location filename="../src/network/kernel/qhostinfo.cpp" line="+172"/>
+        <source>No host name given</source>
+        <translation type="unfinished">Hostnavn mangler</translation>
     </message>
 </context>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+178"/>
-        <location line="+9"/>
-        <location line="+64"/>
-        <location line="+31"/>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+180"/>
-        <location line="+9"/>
-        <location line="+40"/>
-        <location line="+27"/>
+        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+265"/>
+        <location line="+32"/>
         <source>Host not found</source>
         <translation>Vært ikke fundet</translation>
     </message>
     <message>
-        <location line="-44"/>
+        <location line="+4"/>
+        <source>Unknown error (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+66"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-100"/>
+        <source>No host name given</source>
+        <translation type="unfinished">Hostnavn mangler</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <source>Invalid hostname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <location line="+25"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+54"/>
         <location line="+39"/>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="-34"/>
-        <location line="+29"/>
         <source>Unknown address type</source>
         <translation>Ukendt adressetype</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="-19"/>
-        <location line="+27"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+10"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
     </message>
@@ -2201,39 +2540,33 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1574"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1582"/>
         <location line="+820"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+1160"/>
-        <location line="+567"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
     </message>
     <message>
         <location line="-568"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="-370"/>
         <source>Request aborted</source>
         <translation>Forespørgsel blev annulleret</translation>
     </message>
     <message>
         <location line="+579"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+381"/>
         <source>No server set to connect to</source>
         <translation>Ingen server at forbinde til</translation>
     </message>
     <message>
         <location line="+164"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+56"/>
         <source>Wrong content length</source>
         <translation>Forkert indholdslængde</translation>
     </message>
     <message>
         <location line="+4"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+4"/>
         <source>Server closed connection unexpectedly</source>
         <translation>Serveren afsluttede uventet forbindelsen</translation>
     </message>
     <message>
-        <location line="+179"/>
+        <location line="+200"/>
         <source>Unknown authentication method</source>
         <translation>Ukendt autentifikationsmetode</translation>
     </message>
@@ -2243,68 +2576,34 @@ Do you want to delete it anyway?</source>
         <translation>Skrivefejl mens der blev skrevet til enheden</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+901"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+38"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-6"/>
         <source>Connection refused</source>
         <translation>Forbindelse afvist</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-304"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-4"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+3"/>
+        <location line="-3"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-325"/>
         <source>Host %1 not found</source>
         <translation>Vært %1 ikke fundet</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+10"/>
-        <location line="+19"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+3"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+20"/>
         <source>HTTP request failed</source>
         <translation>HTTP anmodning mislykkedes</translation>
     </message>
     <message>
-        <location line="+73"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+69"/>
+        <location line="+94"/>
         <source>Invalid HTTP response header</source>
         <translation>Ugyldig HTTP-svar-header</translation>
     </message>
     <message>
         <location line="+125"/>
         <location line="+48"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+40"/>
-        <location line="+47"/>
         <source>Invalid HTTP chunked body</source>
         <translation>Ugyldig HTTP chunked body</translation>
     </message>
     <message>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+294"/>
-        <source>Host %1 found</source>
-        <translation>Vært %1 fundet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connected to host %1</source>
-        <translation>Tilsluttet vært %1</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connection to %1 closed</source>
-        <translation>Forbindelse til %1 lukket</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Host found</source>
-        <translation>Vært fundet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Connected to host</source>
-        <translation>Tilsluttet vært</translation>
-    </message>
-    <message>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-22"/>
-        <location filename="../src/qt3support/network/q3http.cpp" line="+3"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+6"/>
         <source>Connection closed</source>
         <translation>Forbindelse lukket</translation>
     </message>
@@ -2319,7 +2618,7 @@ Do you want to delete it anyway?</source>
         <translation>Autentificering påkrævet</translation>
     </message>
     <message>
-        <location line="-138"/>
+        <location line="-159"/>
         <source>Connection refused (or timed out)</source>
         <translation>Forbindelse blev afvist (eller tid udløb)</translation>
     </message>
@@ -2349,7 +2648,7 @@ Do you want to delete it anyway?</source>
         <translation>SSL handshake mislykkedes</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-2263"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-2266"/>
         <source>HTTPS connection requested but SSL support not compiled in</source>
         <translation>Der blevet anmodet om en HTTPS-forbindelse, men SSL understøttelse er ikke kompileret ind</translation>
     </message>
@@ -2357,17 +2656,17 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHttpSocketEngine</name>
     <message>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="-89"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="-103"/>
         <source>Did not receive HTTP response from proxy</source>
         <translation>Modtog ikke HTTP-svar fra proxy</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+36"/>
         <source>Error parsing authentication request from proxy</source>
         <translation>Fejl under fortolking af autentificeringsanmodning fra proxy</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+34"/>
         <source>Authentication required</source>
         <translation>Autentificering påkrævet</translation>
     </message>
@@ -2405,7 +2704,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIBaseDriver</name>
     <message>
-        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1435"/>
+        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1486"/>
         <source>Error opening database</source>
         <translation>Der opstod fejl ved åbning af database</translation>
     </message>
@@ -2428,7 +2727,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIBaseResult</name>
     <message>
-        <location line="-1097"/>
+        <location line="-1144"/>
         <source>Unable to create BLOB</source>
         <translation>Kunne ikke oprette BLOB</translation>
     </message>
@@ -2449,17 +2748,17 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+125"/>
-        <location line="+189"/>
+        <location line="+187"/>
         <source>Could not find array</source>
         <translation>Kunne ikke finde array</translation>
     </message>
     <message>
-        <location line="-157"/>
+        <location line="-155"/>
         <source>Could not get array data</source>
         <translation>Kunne ikke hente arraydata</translation>
     </message>
     <message>
-        <location line="+212"/>
+        <location line="+210"/>
         <source>Could not get query info</source>
         <translation>Kunne ikke hente forespørgselsinfo</translation>
     </message>
@@ -2474,7 +2773,7 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke gennemføre transaktionen</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+42"/>
         <source>Could not allocate statement</source>
         <translation>Kunne ikke allokere statement</translation>
     </message>
@@ -2485,12 +2784,12 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Could not describe input statement</source>
         <translation>Kunne ikke beskrive input-statement</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+14"/>
         <source>Could not describe statement</source>
         <translation>Kunne ikke beskrive statement</translation>
     </message>
@@ -2510,7 +2809,7 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke hente næste element</translation>
     </message>
     <message>
-        <location line="+160"/>
+        <location line="+197"/>
         <source>Could not get statement info</source>
         <translation>Kunne ikke hente udsagnsinformation</translation>
     </message>
@@ -2518,27 +2817,31 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/corelib/global/qglobal.cpp" line="+1869"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2138"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Tilladelse nægtet</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
         <source>Too many open files</source>
         <translation>Der er for mange åbne filer</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
         <source>No such file or directory</source>
         <translation>Fil eller katalog findes ikke</translation>
     </message>
     <message>
         <location line="+3"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+3"/>
         <source>No space left on device</source>
         <translation>Ingen plads tilbage på enheden</translation>
     </message>
     <message>
-        <location filename="../src/corelib/io/qiodevice.cpp" line="+1536"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
     </message>
@@ -2575,40 +2878,99 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
-    <name>QLibrary</name>
+    <name>QJsonParseError</name>
     <message>
-        <location filename="../src/corelib/plugin/qlibrary.cpp" line="+378"/>
-        <source>Could not mmap &apos;%1&apos;: %2</source>
-        <translation></translation>
+        <location filename="../src/core/json/qjsonparser.cpp" line="+48"/>
+        <source>no error occurred</source>
+        <translation type="unfinished">der opstod ingen fejl</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+1"/>
+        <source>unterminated object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>missing name separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>unterminated array</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>missing value separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>illegal value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>invalid termination by number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>illegal number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>invalid escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>invalid UTF8 string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>unterminated string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>object is missing after a comma</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>too deeply nested document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>too large document</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QLibrary</name>
+    <message>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Plugin-verifikationsdata er sat forkert sammen i &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Could not unmap &apos;%1&apos;: %2</source>
-        <translation>Der var ikke muligt at lave unmap på &apos;%1&apos;: %2 </translation>
-    </message>
-    <message>
-        <location line="+302"/>
+        <location line="+407"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+20"/>
-        <source>The plugin &apos;%1&apos; uses incompatible Qt library. Expected build key &quot;%2&quot;, got &quot;%3&quot;</source>
-        <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. Forventet build key &quot;%2&quot;, hentede &quot;%3&quot;&apos;</translation>
-    </message>
-    <message>
-        <location line="+340"/>
+        <location line="+343"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl&apos;</translation>
     </message>
     <message>
-        <location line="-377"/>
-        <location filename="../src/corelib/plugin/qpluginloader.cpp" line="+280"/>
+        <location line="-487"/>
+        <location line="+127"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+298"/>
         <source>The shared library was not found.</source>
         <translation>DSO blev ikke fundet.</translation>
     </message>
@@ -2618,33 +2980,58 @@ Do you want to delete it anyway?</source>
         <translation>Filen &apos;%1&apos; er ikke et gyldigt Qt-plugin.</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+24"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
         <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. (Ikke muligt at mikse debug og release-biblioteker)</translation>
     </message>
     <message>
-        <location filename="../src/corelib/plugin/qlibrary_unix.cpp" line="+209"/>
-        <location filename="../src/corelib/plugin/qlibrary_win.cpp" line="+99"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+240"/>
+        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>Kan ikke indlæse bibliotek %1: %2</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <location filename="../src/corelib/plugin/qlibrary_win.cpp" line="+26"/>
+        <location line="+17"/>
+        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Kan ikke afregistrere bibliotek %1: %2</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <location filename="../src/corelib/plugin/qlibrary_win.cpp" line="+15"/>
+        <location line="+34"/>
+        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Kan ikke løse symbol &quot;%1&quot; i %2: %3</translation>
+    </message>
+    <message>
+        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
+        <source>&apos;%1&apos; is not an ELF object (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&apos;%1&apos; is not an ELF object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+10"/>
+        <location line="+6"/>
+        <location line="+20"/>
+        <location line="+12"/>
+        <location line="+11"/>
+        <location line="+15"/>
+        <location line="+11"/>
+        <location line="+22"/>
+        <location line="+14"/>
+        <location line="+13"/>
+        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+2680"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1984"/>
         <source>&amp;Undo</source>
         <translation>&amp;Fortryd</translation>
     </message>
@@ -2654,27 +3041,27 @@ Do you want to delete it anyway?</source>
         <translation>&amp;Gendan</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+9"/>
         <source>Cu&amp;t</source>
         <translation>K&amp;lip</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>&amp;Copy</source>
         <translation>&amp;Kopiér</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+6"/>
         <source>&amp;Paste</source>
         <translation>&amp;Sæt ind</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <source>Delete</source>
         <translation>Slet</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+8"/>
         <source>Select All</source>
         <translation>Markér alt</translation>
     </message>
@@ -2682,13 +3069,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+226"/>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+233"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+229"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+224"/>
         <source>%1: Name error</source>
         <translation>%1: Navnefejl</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="-8"/>
+        <location line="-8"/>
         <source>%1: Permission denied</source>
         <translation>%1: Tilladelse nægtet</translation>
     </message>
@@ -2699,7 +3086,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+5"/>
-        <location filename="../src/network/socket/qlocalserver_win.cpp" line="+158"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Ukendt fejl %2</translation>
     </message>
@@ -2707,88 +3093,93 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalSocket</name>
     <message>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+139"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+134"/>
         <source>%1: Connection refused</source>
         <translation>%1: Forbindelse afvist</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Remote closed</source>
         <translation>%1: Den anden ende lukkede</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+80"/>
-        <location line="+43"/>
+        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
+        <location line="+64"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Ugyldigt navn</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket access error</source>
         <translation>%1: Fejl i socket-adgang</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket resource error</source>
         <translation>%1: Fejl i socket-ressource</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Socket operation timed out</source>
         <translation>%1: Socket-handling timed out</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Datagram too large</source>
         <translation>%1: Datagram er for stort</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-48"/>
+        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Forbindelsesfejl</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+3"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: The socket operation is not supported</source>
         <translation>%1: Socket-handlingen understøttes ikke</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+4"/>
         <source>%1: Unknown error</source>
         <translation>%1: Ukendt fejl</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+10"/>
+        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Ukendt fejl %2</translation>
+    </message>
+    <message>
+        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
+        <source>%1: Access denied</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1252"/>
+        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1292"/>
         <source>Unable to open database &apos;</source>
         <translation>Kunne ikke åbne databasen &apos;</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+11"/>
         <source>Unable to connect</source>
         <translation>Kunne ikke forbinde</translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+154"/>
         <source>Unable to begin transaction</source>
         <translation>Kunne ikke påbegynde transaktionen</translation>
     </message>
@@ -2806,12 +3197,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLResult</name>
     <message>
-        <location line="-935"/>
+        <location line="-986"/>
+        <location line="+31"/>
         <source>Unable to fetch data</source>
         <translation>Kunne ikke hente data</translation>
     </message>
     <message>
-        <location line="+183"/>
+        <location line="+161"/>
         <source>Unable to execute query</source>
         <translation>Kunne ikke udføre forespørgsel</translation>
     </message>
@@ -2821,18 +3213,18 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke gemme resultatet</translation>
     </message>
     <message>
-        <location line="+194"/>
+        <location line="+191"/>
         <location line="+8"/>
         <source>Unable to prepare statement</source>
         <translation>Kunne ikke forberede udsagn</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>Unable to reset statement</source>
         <translation>Kunne ikke nulstille udsagn</translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+91"/>
         <source>Unable to bind value</source>
         <translation>Kunne ikke tildele værdi</translation>
     </message>
@@ -2853,7 +3245,7 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke gemme udsagnsresultater</translation>
     </message>
     <message>
-        <location line="-257"/>
+        <location line="-258"/>
         <source>Unable to execute next query</source>
         <translation>Kunne ikke udføre næste forespørgsel</translation>
     </message>
@@ -2866,7 +3258,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+290"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
         <source>(Untitled)</source>
         <translation>(Uden titel)</translation>
     </message>
@@ -2874,7 +3266,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+280"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+281"/>
         <source>%1 - [%2]</source>
         <translation></translation>
     </message>
@@ -2975,63 +3367,63 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="-224"/>
         <location line="+225"/>
+        <location line="+54"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
     <message>
-        <location line="-223"/>
+        <location line="-277"/>
         <location line="+225"/>
-        <location line="+51"/>
+        <location line="+53"/>
         <source>Execute</source>
         <translation>Udfør</translation>
     </message>
 </context>
 <context>
+    <name>QMenuBar</name>
+    <message>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1802"/>
+        <source>Corner Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-1111"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-1109"/>
         <source>Help</source>
         <translation>Hjælp</translation>
     </message>
     <message>
-        <location line="-853"/>
-        <location line="+852"/>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="-52"/>
-        <location line="+8"/>
+        <location line="-846"/>
+        <location line="+845"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+475"/>
-        <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants. Qt is also available for embedded devices as Qt for Embedded Linux and Qt for Windows CE.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 2.1 or GNU GPL version 3.0.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt applications (proprietary or open source) provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU General Public License version 3.0 is appropriate for the development of Qt applications where you wish to use such applications in combination with software subject to the terms of the GNU GPL version 3.0 or where you are otherwise willing to comply with the terms of the GNU GPL version 3.0.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://qt.io/licensing&quot;&gt;qt.io/licensing&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is a The Qt Company product. See &lt;a href=&quot;http://qt.io/&quot;&gt;qt.io&lt;/a&gt; for more information.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Om Qt&lt;/h3&gt;&lt;p&gt;Dette program anvender Qt version %1.&lt;/p&gt;&lt;p&gt;Qt er et C++ toolkit til cross-platform applikationsudvikling.&lt;/p&gt;&lt;p&gt;Qt tilbyder single-source portabilitet til MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, og alle større kommercielle Unix-varianter. Qt er også tilgængeligt til indlejrede systemer som Qt for Embedded Linux and Qt for Windows CE.&lt;/p&gt;Qt er tilgængeligt under tre forskellige licenser skabt med henblik på at imødekomme forskellige brugeres behov.&lt;/p&gt;&lt;p&gt;Qt licenseret under vores kommercielle licensaftale er passende for udvikling af proprietær/kommerciel software, hvor du ikke ønsker at dele sourcekode med tredie part, eller på anden vis ikke kan tiltræde vilkårerne i GNU LGPL version 2.1 eller GNU GPL version 3.0&lt;/p&gt;&lt;p&gt;Qt licenseret under GLU General Public License version 3.0 er passende for udvikling af Qt applikationer, hvor du ønsker at bruge softwaren i kombination med software under vilkårerne i GNU GPL version 3.0, eller hvor du ellers er villig til at overholde vilkårerne i GNU GPL version 3.0&lt;/p&gt;&lt;p&gt;See venligst &lt;a href=&quot;http://qt.io/licensing&quot;&gt;qt.io/licensing&lt;/a&gt; for et overblik over Qt licensforhold.&lt;/p&gt;&lt;p&gt;Qt er et The Qt Company produkt. Se &lt;a href=&quot;http://qt.io/&quot;&gt;qt.io&lt;/a&gt; for yderligere information.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location line="+34"/>
+        <location line="+524"/>
         <source>About Qt</source>
         <translation>Om Qt</translation>
     </message>
     <message>
-        <source>&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;Dette program bruger Qt-version %1.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location line="-1608"/>
+        <location line="-1634"/>
         <source>Show Details...</source>
         <translation>Vis detaljer...</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+0"/>
         <source>Hide Details...</source>
         <translation>Skjul detaljer...</translation>
     </message>
     <message>
-        <source>&lt;h3&gt;About Qt&lt;/h3&gt;%1&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, and all major commercial Unix variants. Qt is also available for embedded devices as Qt for Embedded Linux and Qt for Windows CE.&lt;/p&gt;&lt;p&gt;Qt is a The Qt Company product. See &lt;a href=&quot;http://qt.io/&quot;&gt;qt.io&lt;/a&gt; for more information.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;h3&gt;Om Qt&lt;/h3&gt;%1&lt;p&gt;Qt er et C++ toolkit til cross-platform applikationsudvikling.&lt;/p&gt;&lt;p&gt;Qt tilbyder single-source portabilitet til MS&amp;nbsp;Windows, Mac&amp;nbsp;OS&amp;nbsp;X, Linux, og alle større kommercielle Unix-varianter. Qt er også tilgængeligt til indlejrede systemer som Qt for Embedded Linux and Qt for Windows CE.&lt;/p&gt;&lt;p&gt;Qt er et The Qt Company produkt. Se &lt;a href=&quot;http://qt.io/&quot;&gt;qt.io&lt;/a&gt; for yderligere information.&lt;/p&gt;</translation>
+        <location line="+1599"/>
+        <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;This program uses Qt Open Source Edition version %1.&lt;/p&gt;&lt;p&gt;Qt Open Source Edition is intended for the development of Open Source applications. You need a commercial Qt license for development of proprietary (closed source) applications.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://qt.io/company/model/&quot;&gt;qt.io/company/model/&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;</source>
-        <translation type="obsolete">&lt;p&gt;Dette program bruger Qt Open Source Edition version %1.&lt;/p&gt;&lt;p&gt;Qt Open Source Edition er beregnet til udvikling af Open Source applikationer. En kommerciel Qt licens er nødvendig til udvikling af proprietære (lukket sourcekode) applikationer.&lt;/p&gt;&lt;p&gt;Se venligst &lt;a href=&quot;http://qt.io/company/model/&quot;&gt;qt.io/company/model/&lt;/a&gt; for et overblik over Qt licensforhold.&lt;/p&gt;</translation>
+        <location line="+5"/>
+        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3058,7 +3450,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNativeSocketEngine</name>
     <message>
-        <location filename="../src/network/socket/qnativesocketengine.cpp" line="+206"/>
+        <location filename="../src/network/socket/qnativesocketengine.cpp" line="+210"/>
         <source>The remote host closed the connection</source>
         <translation>Fjern-hosten lukkede forbindelsen</translation>
     </message>
@@ -3191,30 +3583,59 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessCacheBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesscachebackend.cpp" line="+65"/>
+        <location filename="../src/network/access/qnetworkaccesscachebackend.cpp" line="+66"/>
         <source>Error opening %1</source>
         <translation>Der opstod fejl i at åbne %1</translation>
     </message>
 </context>
 <context>
+    <name>QNetworkAccessDataBackend</name>
+    <message>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <source>Invalid URI: %1</source>
+        <translation type="unfinished">Ugyldig URI: %1</translation>
+    </message>
+</context>
+<context>
+    <name>QNetworkAccessDebugPipeBackend</name>
+    <message>
+        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+195"/>
+        <source>Write error writing to %1: %2</source>
+        <translation type="unfinished">Skrivefejl mens der blev skrevet til %1: %2</translation>
+    </message>
+    <message>
+        <location line="+60"/>
+        <source>Socket error on %1: %2</source>
+        <translation type="unfinished">Socket-fejl på %1: %2</translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Remote host closed the connection prematurely on %1</source>
+        <translation type="unfinished">Fjern-host lukkede forbindelsen for tidligt på %1</translation>
+    </message>
+</context>
+<context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+99"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
         <source>Request for opening non-local file %1</source>
         <translation>Anmodning om at åbne ikke-lokal fil %1</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+45"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+36"/>
         <source>Error opening %1: %2</source>
         <translation>Der opstod fejl i at åbne %1: %2</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+38"/>
         <source>Write error writing to %1: %2</source>
         <translation>Skrivefejl mens der blev skrevet til %1: %2</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+42"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="-13"/>
         <source>Cannot open %1: Path is a directory</source>
         <translation>Kan ikke åbne %1: Stien er et katalog</translation>
     </message>
@@ -3227,7 +3648,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessFtpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessftpbackend.cpp" line="+165"/>
+        <location filename="../src/network/access/qnetworkaccessftpbackend.cpp" line="+134"/>
         <source>No suitable proxy found</source>
         <translation>Ingen passende proxy blev fundet</translation>
     </message>
@@ -3237,12 +3658,12 @@ Do you want to delete it anyway?</source>
         <translation>Kan ikke åbne %1: Er et katalog</translation>
     </message>
     <message>
-        <location line="+130"/>
+        <location line="+100"/>
         <source>Logging in to %1 failed: authentication required</source>
         <translation>Der opstod fejl i at logge på %1: Autentificering kræves</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+32"/>
         <source>Error while downloading %1: %2</source>
         <translation>Der opstod fejl i at downloade %1: %2</translation>
     </message>
@@ -3255,120 +3676,124 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+597"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+430"/>
         <source>No suitable proxy found</source>
         <translation>Ingen passende proxy blev fundet</translation>
     </message>
 </context>
 <context>
+    <name>QNetworkAccessManager</name>
+    <message>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1118"/>
+        <source>Network access is disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QNetworkReply</name>
     <message>
-        <location line="+128"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+433"/>
+        <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Der opstod fejl i at downloade %1 - serveren svarede: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+68"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1030"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Protokollen &quot;%1&quot; er ukendt</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <location line="+191"/>
+        <source>Network session error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-184"/>
+        <source>backend start error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+652"/>
+        <source>Temporary network failure.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+432"/>
-        <location line="+22"/>
+        <location line="+119"/>
+        <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Handling blev annulleret</translation>
     </message>
 </context>
 <context>
-    <name>QOCIDriver</name>
+    <name>QNetworkSession</name>
     <message>
-        <location filename="../src/sql/drivers/oci/qsql_oci.cpp" line="+2069"/>
-        <source>Unable to logon</source>
-        <translation>Kunne ikke logge på</translation>
-    </message>
-    <message>
-        <location line="-144"/>
-        <source>Unable to initialize</source>
-        <comment>QOCIDriver</comment>
-        <translation>Kunne ikke initialisere</translation>
-    </message>
-    <message>
-        <location line="+215"/>
-        <source>Unable to begin transaction</source>
-        <translation>Kunne ikke påbegynde transaktionen</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Unable to commit transaction</source>
-        <translation>Kunne ikke gennemføre transaktionen</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Unable to rollback transaction</source>
-        <translation>Kunne ikke tilbagetrække transaktionen</translation>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
+        <source>Invalid configuration.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>QOCIResult</name>
+    <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location line="-963"/>
-        <location line="+161"/>
-        <location line="+15"/>
-        <source>Unable to bind column for batch execute</source>
-        <translation>Kunne ikke tildele kolonne til batch-udførsel</translation>
+        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
+        <source>Unknown session error.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Unable to execute batch statement</source>
-        <translation>Kunne ikke udføre batch-udsagn</translation>
+        <location line="+2"/>
+        <source>The session was aborted by the user or system.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+302"/>
-        <source>Unable to goto next</source>
-        <translation>Kunne ikke gå til den næste</translation>
+        <location line="+2"/>
+        <source>The requested operation is not supported by the system.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+59"/>
-        <source>Unable to alloc statement</source>
-        <translation>Kunne ikke allokere udsagn</translation>
+        <location line="+2"/>
+        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1036"/>
+        <source>The specified configuration cannot be used.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Unable to prepare statement</source>
-        <translation>Kunne ikke forberede udsagn</translation>
+        <location line="+2"/>
+        <source>Roaming was aborted or is not possible.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
-        <source>Unable to bind value</source>
-        <translation>Kunne ikke tildele værdi</translation>
+        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="-6"/>
+        <source>Roaming error</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to execute select statement</source>
-        <translation type="obsolete">Kunne ikke udføre det valgte udsagn</translation>
+        <location line="+3"/>
+        <source>Session aborted by user or system</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>Unable to execute statement</source>
-        <translation>Kunne ikke udføre udsagn</translation>
+        <location line="+7"/>
+        <source>Unidentified Error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1781"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1883"/>
         <source>Unable to connect</source>
         <translation>Kunne ikke forbinde</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Unable to connect - Driver doesn&apos;t support all needed functionality</source>
-        <translation>Kunne ikke forbinde. Driveren understøtter ikke alle de nødvendige funktionaliteter</translation>
+        <source>Unable to connect - Driver doesn&apos;t support all functionality required</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+242"/>
+        <location line="+287"/>
         <source>Unable to disable autocommit</source>
         <translation>Kunne ikke slå auto-udfør fra</translation>
     </message>
@@ -3391,41 +3816,40 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-1218"/>
-        <location line="+349"/>
+        <location line="-1278"/>
+        <location line="+346"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: Kunne ikke indstille &apos;SQL_CURSOR_STATIC&apos; til udsagnsattribut. Kontrollér ODBC-driver-konfigurationen</translation>
     </message>
     <message>
-        <location line="-332"/>
-        <location line="+626"/>
+        <location line="-329"/>
+        <location line="+628"/>
         <source>Unable to execute statement</source>
         <translation>Kunne ikke udføre udsagn</translation>
     </message>
     <message>
-        <location line="-555"/>
+        <location line="-552"/>
         <source>Unable to fetch next</source>
         <translation>Kunne ikke hente den næste</translation>
     </message>
     <message>
-        <location line="+279"/>
+        <location line="+271"/>
         <source>Unable to prepare statement</source>
         <translation>Kunne ikke forberede udsagn</translation>
     </message>
     <message>
-        <location line="+268"/>
+        <location line="+273"/>
         <source>Unable to bind variable</source>
         <translation>Kunne ikke tildele variabel</translation>
     </message>
     <message>
-        <location filename="../src/sql/drivers/db2/qsql_db2.cpp" line="+194"/>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="-475"/>
-        <location line="+578"/>
+        <location line="-472"/>
+        <location line="+584"/>
         <source>Unable to fetch last</source>
         <translation>Kunne ikke hente den sidste</translation>
     </message>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="-672"/>
+        <location line="-678"/>
         <source>Unable to fetch</source>
         <translation>Kunne ikke hente</translation>
     </message>
@@ -3443,56 +3867,76 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+165"/>
+        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
         <source>Home</source>
         <translation>Hjem</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdatabackend.cpp" line="+74"/>
-        <source>Operation not supported on %1</source>
-        <translation>Handling blev ikke understøttet på %1</translation>
+        <location filename="../src/declarative/util/qdeclarativexmllistmodel.cpp" line="-245"/>
+        <source>&quot;%1&quot; duplicates a previous role name and will be disabled.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
-        <source>Invalid URI: %1</source>
-        <translation>Ugyldig URI: %1</translation>
+        <location line="+524"/>
+        <location line="+4"/>
+        <source>invalid query: &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkaccessdebugpipebackend.cpp" line="+175"/>
-        <source>Write error writing to %1: %2</source>
-        <translation>Skrivefejl mens der blev skrevet til %1: %2</translation>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <source>Could not read image data</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
-        <source>Read error reading from %1: %2</source>
-        <translation>Læsefejl mens der blev læst fra %1: %2</translation>
+        <location line="+5"/>
+        <source>Sequential device (eg socket) for image read not supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
-        <source>Socket error on %1: %2</source>
-        <translation>Socket-fejl på %1: %2</translation>
+        <location line="+5"/>
+        <source>Seek file/device for image read failed</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Remote host closed the connection prematurely on %1</source>
-        <translation>Fjern-host lukkede forbindelsen for tidligt på %1</translation>
+        <location line="+6"/>
+        <source>Image mHeader read failed</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
-        <source>Protocol error: packet of size 0 received</source>
-        <translation>Protokolfejl: Pakke på størrelsen 0 modtaget</translation>
+        <location line="+7"/>
+        <source>Image type not supported</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo.cpp" line="+177"/>
-        <location line="+57"/>
-        <source>No host name given</source>
-        <translation>Hostnavn mangler</translation>
+        <location line="+8"/>
+        <source>Image depth not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Could not seek to image read footer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Could not read footer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Image type (non-TrueVision 2.0) not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Could not reset to start position</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1197"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1213"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -3505,7 +3949,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+763"/>
+        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+866"/>
         <source>Unable to connect</source>
         <translation>Kunne ikke skabe forbindelse</translation>
     </message>
@@ -3515,17 +3959,17 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke påbegynde transaktion</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+33"/>
         <source>Could not commit transaction</source>
         <translation>Kunne ikke gennemføre transaktion</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+17"/>
         <source>Could not rollback transaction</source>
         <translation>Kunne ikke tilbagetrække transaktion</translation>
     </message>
     <message>
-        <location line="+358"/>
+        <location line="+385"/>
         <source>Unable to subscribe</source>
         <translation>Kunne ikke tilmelde</translation>
     </message>
@@ -3538,12 +3982,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPSQLResult</name>
     <message>
-        <location line="-1058"/>
+        <location line="-1148"/>
         <source>Unable to create query</source>
         <translation>Kunne ikke oprette forespørgsel</translation>
     </message>
     <message>
-        <location line="+374"/>
+        <location line="+366"/>
         <source>Unable to prepare statement</source>
         <translation>Kunne ikke forberede udsagn</translation>
     </message>
@@ -3570,96 +4014,16 @@ Do you want to delete it anyway?</source>
         <source>Points (pt)</source>
         <translation>Point (pt)</translation>
     </message>
-    <message>
-        <location filename="../src/gui/dialogs/qpagesetupwidget.ui"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Paper</source>
-        <translation>Papir</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Page size:</source>
-        <translation>Sidestørrelse:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Width:</source>
-        <translation>Vidde:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Height:</source>
-        <translation>Højde:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Paper source:</source>
-        <translation>Papirkilde:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Orientation</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Portrait</source>
-        <translation>Portræt</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Landscape</source>
-        <translation>Landskab</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Reverse landscape</source>
-        <translation>Omvendt landskab</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Reverse portrait</source>
-        <translation>Omvendt portræt</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Margins</source>
-        <translation>Margener</translation>
-    </message>
-    <message>
-        <location/>
-        <source>top margin</source>
-        <translation>Margen - øverst</translation>
-    </message>
-    <message>
-        <location/>
-        <source>left margin</source>
-        <translation>Margen - venstre</translation>
-    </message>
-    <message>
-        <location/>
-        <source>right margin</source>
-        <translation>Margen - højre</translation>
-    </message>
-    <message>
-        <location/>
-        <source>bottom margin</source>
-        <translation>Margen - bund</translation>
-    </message>
 </context>
 <context>
     <name>QPluginLoader</name>
     <message>
-        <location filename="../src/corelib/plugin/qpluginloader.cpp" line="+24"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+24"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
     </message>
     <message>
-        <location line="-68"/>
+        <location line="-72"/>
         <source>The plugin was not loaded.</source>
         <translation>Plugin blev ikke indlæst.</translation>
     </message>
@@ -3667,7 +4031,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+98"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+135"/>
         <source>locally connected</source>
         <translation>lokalt forbundet</translation>
     </message>
@@ -3678,13 +4042,13 @@ Do you want to delete it anyway?</source>
         <translation>Aliasser: %1</translation>
     </message>
     <message>
-        <location line="+223"/>
+        <location line="+225"/>
         <location line="+199"/>
         <source>unknown</source>
         <translation>Ukendt</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+329"/>
+        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+333"/>
         <source>A0 (841 x 1189 mm)</source>
         <translation></translation>
     </message>
@@ -3834,24 +4198,29 @@ Do you want to delete it anyway?</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+268"/>
+        <location line="+20"/>
+        <source>Print current page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+274"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+110"/>
+        <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
         <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
         <source>Print</source>
         <translation>Udskriv</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-357"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-392"/>
         <source>Print To File ...</source>
         <translation>Udskriv til fil...</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+19"/>
+        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="-1"/>
         <source>Print range</source>
         <translation>Udskriftsområde</translation>
     </message>
@@ -3861,7 +4230,7 @@ Do you want to delete it anyway?</source>
         <translation>Udskriv alle</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+80"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+82"/>
         <source>File %1 is not writable.
 Please choose a different file name.</source>
         <translation>Filen %1 kan ikke skrives.
@@ -3875,7 +4244,7 @@ Do you want to overwrite it?</source>
 Ønsker du at overskrive?</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="-227"/>
+        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="-231"/>
         <source>File exists</source>
         <translation>Fil findes</translation>
     </message>
@@ -3885,7 +4254,7 @@ Do you want to overwrite it?</source>
         <translation>&lt;qt&gt;Ønsker du at overskrive?&lt;/qt&gt;</translation>
     </message>
     <message>
-        <location line="+227"/>
+        <location line="+231"/>
         <source>Print selection</source>
         <translation>Udskriv markerede</translation>
     </message>
@@ -4052,7 +4421,7 @@ Vælg et andet filnavn.</translation>
         <translation>Brugerdefineret</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-524"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-505"/>
         <location line="+68"/>
         <source>&amp;Options &gt;&gt;</source>
         <translation>&amp;Indstillinger&gt;&gt;</translation>
@@ -4068,7 +4437,7 @@ Vælg et andet filnavn.</translation>
         <translation>&amp;Indstillinger&lt;&lt;</translation>
     </message>
     <message>
-        <location line="+253"/>
+        <location line="+235"/>
         <source>Print to File (PDF)</source>
         <translation>Udskriv til fil (PDF)</translation>
     </message>
@@ -4102,17 +4471,17 @@ Vælg et andet filnavn.</translation>
         <translation>Sideopsætning</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+252"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
         <source>%1%</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+84"/>
         <source>Print Preview</source>
         <translation>Vis udskrift</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+30"/>
         <source>Next page</source>
         <translation>Næste side</translation>
     </message>
@@ -4187,12 +4556,12 @@ Vælg et andet filnavn.</translation>
         <translation>Sideopsætning</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+6"/>
         <source>Close</source>
         <translation>Luk</translation>
     </message>
     <message>
-        <location line="+151"/>
+        <location line="+148"/>
         <source>Export to PDF</source>
         <translation>Eksportér til PDF</translation>
     </message>
@@ -4203,194 +4572,30 @@ Vælg et andet filnavn.</translation>
     </message>
 </context>
 <context>
-    <name>QPrintPropertiesWidget</name>
-    <message>
-        <location filename="../src/gui/dialogs/qprintpropertieswidget.ui"/>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Page</source>
-        <translation>Side</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Advanced</source>
-        <translation>Avanceret</translation>
-    </message>
-</context>
-<context>
-    <name>QPrintSettingsOutput</name>
-    <message>
-        <location filename="../src/gui/dialogs/qprintsettingsoutput.ui"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Copies</source>
-        <translation>Kopier</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Print range</source>
-        <translation>Udskriv sider</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Print all</source>
-        <translation>Udskriv alle</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Pages from</source>
-        <translation>Sider fra</translation>
-    </message>
-    <message>
-        <location/>
-        <source>to</source>
-        <translation>til</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Selection</source>
-        <translation>Valg</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Output Settings</source>
-        <translation>Udskriftsindstillinger</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Copies:</source>
-        <translation>Kopier:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Collate</source>
-        <translation>Samordne</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Reverse</source>
-        <translation>Omvendt</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Options</source>
-        <translation>Valgmuligheder</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Color Mode</source>
-        <translation>Farvetilstand</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Color</source>
-        <translation>Farve</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Grayscale</source>
-        <translation>Gråskala</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Duplex Printing</source>
-        <translation>Dobbelsidet</translation>
-    </message>
-    <message>
-        <location/>
-        <source>None</source>
-        <translation>Ingen</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Long side</source>
-        <translation>Bog</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Short side</source>
-        <translation>Tavle</translation>
-    </message>
-</context>
-<context>
-    <name>QPrintWidget</name>
-    <message>
-        <location filename="../src/gui/dialogs/qprintwidget.ui"/>
-        <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Printer</source>
-        <translation>&apos;</translation>
-    </message>
-    <message>
-        <location/>
-        <source>&amp;Name:</source>
-        <translation>&amp;Navn:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>P&amp;roperties</source>
-        <translation>&amp;Egenskaber</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Location:</source>
-        <translation>Placering:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Preview</source>
-        <translation>Vis udskrift</translation>
-    </message>
-    <message>
-        <location/>
-        <source>Type:</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Output &amp;file:</source>
-        <translation>Udskrifts&amp;fil:</translation>
-    </message>
-    <message>
-        <location/>
-        <source>...</source>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/corelib/io/qprocess_unix.cpp" line="+475"/>
-        <location filename="../src/corelib/io/qprocess_win.cpp" line="+147"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
+        <location filename="../src/core/io/qprocess_win.cpp" line="+138"/>
         <source>Could not open input redirection for reading</source>
         <translation>Kunne ikke åbne input redirection for læsning</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/corelib/io/qprocess_win.cpp" line="+36"/>
+        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Kunne ikke åbne output redirection for skrivning</translation>
     </message>
     <message>
-        <location line="+235"/>
+        <location line="+280"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Ressource fejl (fork fejl): %1</translation>
     </message>
     <message>
-        <location line="+259"/>
-        <location line="+53"/>
+        <location line="+346"/>
+        <location line="+52"/>
         <location line="+74"/>
-        <location line="+67"/>
-        <location filename="../src/corelib/io/qprocess_win.cpp" line="+422"/>
+        <location line="+66"/>
+        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
         <location line="+50"/>
         <location line="+75"/>
         <location line="+42"/>
@@ -4399,40 +4604,40 @@ Vælg et andet filnavn.</translation>
         <translation>Proces-operation time out</translation>
     </message>
     <message>
-        <location filename="../src/corelib/io/qprocess.cpp" line="+533"/>
-        <location line="+52"/>
-        <location filename="../src/corelib/io/qprocess_win.cpp" line="-211"/>
+        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
+        <source>Process failed to start: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+170"/>
         <location line="+50"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+883"/>
+        <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Fejl ved læsning fra proces</translation>
     </message>
     <message>
-        <location line="+47"/>
-        <location line="+779"/>
-        <location filename="../src/corelib/io/qprocess_win.cpp" line="+140"/>
+        <location line="+140"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Fejl ved skrivning til proces</translation>
     </message>
     <message>
-        <location line="-709"/>
+        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
         <source>Process crashed</source>
         <translation>Proces crashede</translation>
     </message>
     <message>
-        <location line="+912"/>
+        <location line="+977"/>
         <source>No program defined</source>
         <translation>Intet program defineret</translation>
-    </message>
-    <message>
-        <location filename="../src/corelib/io/qprocess_win.cpp" line="-341"/>
-        <source>Process failed to start</source>
-        <translation>Processen kunne ikke starte</translation>
     </message>
 </context>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+182"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+195"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
@@ -4440,7 +4645,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-8"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-642"/>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
@@ -4456,7 +4661,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/corelib/tools/qregexp.cpp" line="+64"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
         <source>no error occurred</source>
         <translation>der opstod ingen fejl</translation>
     </message>
@@ -4474,6 +4679,11 @@ Vælg et andet filnavn.</translation>
         <location line="+1"/>
         <source>bad lookahead syntax</source>
         <translation>dårlig lookahead syntaks</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>lookbehinds not supported, see QTBUG-2371</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4500,52 +4710,26 @@ Vælg et andet filnavn.</translation>
         <source>met internal limit</source>
         <translation>nåede interne grænse</translation>
     </message>
-</context>
-<context>
-    <name>QSQLite2Driver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite2/qsql_sqlite2.cpp" line="+396"/>
-        <source>Error to open database</source>
-        <translation>Der opstod fejl ved åbning af database</translation>
+        <location line="+1"/>
+        <source>invalid interval</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
-        <source>Unable to begin transaction</source>
-        <translation>Kunne ikke påbegynde transaktionen</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unable to commit transaction</source>
-        <translation>Kunne ikke gennemføre transaktionen</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unable to rollback Transaction</source>
-        <translation>Kunne ikke tilbagetrække transaktion</translation>
-    </message>
-</context>
-<context>
-    <name>QSQLite2Result</name>
-    <message>
-        <location line="-323"/>
-        <source>Unable to fetch results</source>
-        <translation>Kunne ikke hente resultater</translation>
-    </message>
-    <message>
-        <location line="+147"/>
-        <source>Unable to execute statement</source>
-        <translation>Kunne ikke udføre statement</translation>
+        <location line="+1"/>
+        <source>invalid category</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+528"/>
+        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+576"/>
         <source>Error opening database</source>
         <translation>Der opstod fejl ved åbning af database</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+14"/>
         <source>Error closing database</source>
         <translation>Der opstod fejl ved lukning af database</translation>
     </message>
@@ -4568,16 +4752,21 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QSQLiteResult</name>
     <message>
-        <location line="-400"/>
-        <location line="+66"/>
+        <location line="-410"/>
+        <location line="+63"/>
         <location line="+8"/>
         <source>Unable to fetch row</source>
         <translation>Kunne ikke hente række</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+65"/>
         <source>Unable to execute statement</source>
         <translation>Kunne ikke udføre udsagn</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Unable to execute multiple statements at a time</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+20"/>
@@ -4595,15 +4784,353 @@ Vælg et andet filnavn.</translation>
         <translation>Misforhold i parametertælling</translation>
     </message>
     <message>
-        <location line="-208"/>
+        <location line="-212"/>
         <source>No query</source>
         <translation>Ingen forespørgesel</translation>
     </message>
 </context>
 <context>
+    <name>QScriptBreakpointsModel</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointsmodel.cpp" line="+455"/>
+        <source>ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Ignore-count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Single-shot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hit-count</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QScriptBreakpointsWidget</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+298"/>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Delete</source>
+        <translation type="unfinished">Slet</translation>
+    </message>
+</context>
+<context>
+    <name>QScriptDebugger</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
+        <location line="+1014"/>
+        <source>Go to Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1013"/>
+        <source>Line:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+792"/>
+        <source>Interrupt</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shift+F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Continue</source>
+        <translation type="unfinished">Fortsæt</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>F5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Step Into</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>F11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Step Over</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>F10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Step Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shift+F11</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Run to Cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Ctrl+F10</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Run to New Script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Toggle Breakpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>F9</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Clear Debug Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Clear Error Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Clear Console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>&amp;Find in Script...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ctrl+F</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Find &amp;Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>F3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Find &amp;Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shift+F3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Ctrl+G</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QScriptDebuggerCodeFinderWidget</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+141"/>
+        <source>Close</source>
+        <translation type="unfinished">Luk</translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Case Sensitive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Whole words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>&lt;img src=&quot;:/qt/scripttools/debugging/images/wrap.png&quot;&gt;&amp;nbsp;Search wrapped</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QScriptDebuggerLocalsModel</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+897"/>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Value</source>
+        <translation type="unfinished">Værdi</translation>
+    </message>
+</context>
+<context>
+    <name>QScriptDebuggerStackModel</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerstackmodel.cpp" line="+161"/>
+        <source>Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QScriptEdit</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptedit.cpp" line="+411"/>
+        <source>Toggle Breakpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Disable Breakpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Enable Breakpoint</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Breakpoint Condition:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QScriptEngineDebugger</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptenginedebugger.cpp" line="+523"/>
+        <source>Loaded Scripts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Breakpoints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Stack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Locals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Console</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Debug Output</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Error Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Search</source>
+        <translation type="unfinished">Søg</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Qt Script Debugger</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QScriptNewBreakpointWidget</name>
+    <message>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="-223"/>
+        <source>Close</source>
+        <translation type="unfinished">Luk</translation>
+    </message>
+</context>
+<context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+448"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+408"/>
         <source>Scroll here</source>
         <translation>Scroll her</translation>
     </message>
@@ -4634,7 +5161,7 @@ Vælg et andet filnavn.</translation>
     </message>
     <message>
         <location line="+0"/>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+143"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+139"/>
         <source>Page up</source>
         <translation>Side øverst</translation>
     </message>
@@ -4688,65 +5215,68 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/corelib/kernel/qsharedmemory.cpp" line="+207"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+263"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: Kunne ikke oprette nøgle</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+84"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: create size is less then 0</translation>
     </message>
     <message>
-        <location line="+168"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_p.h" line="+148"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+176"/>
         <source>%1: unable to lock</source>
         <translation>%1: Kunne ikke låse</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+22"/>
         <source>%1: unable to unlock</source>
         <translation>%1: Kunne ikke oprette nøgle</translation>
     </message>
     <message>
-        <location filename="../src/corelib/kernel/qsharedmemory_unix.cpp" line="+78"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="+87"/>
+        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+93"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: permission denied</source>
         <translation>%1: Tilladelse nægtet</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="-22"/>
+        <location line="-22"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: Findes allerede</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="+9"/>
-        <source>%1: doesn&apos;t exists</source>
-        <translation>%1: Findes ikke</translation>
+        <location line="+9"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <source>%1: doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="+9"/>
+        <location line="+9"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
         <source>%1: out of resources</source>
         <translation>%1: Ikke flere ressourcer</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="+7"/>
+        <location line="+7"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1: ukendt fejl %2</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+15"/>
+        <location line="+28"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: nøgle er tom</translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>%1: unix key file doesn&apos;t exists</source>
-        <translation>%1: Kunne ikke oprette nøgle</translation>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-19"/>
+        <source>%1: UNIX key file doesn&apos;t exist</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+7"/>
@@ -4754,33 +5284,34 @@ Vælg et andet filnavn.</translation>
         <translation>%1: ftok mislykkedes</translation>
     </message>
     <message>
-        <location line="+51"/>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="+15"/>
+        <location line="+75"/>
         <source>%1: unable to make key</source>
         <translation>%1: Kunne ikke oprette nøgle</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+18"/>
         <source>%1: system-imposed size restrictions</source>
         <translation>%1: System-pålagte størrelsesrestriktioner</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+23"/>
+        <location line="+62"/>
+        <source>%1: bad name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
         <source>%1: not attached</source>
         <translation>%1: Ikke vedhæftet</translation>
     </message>
     <message>
-        <location filename="../src/corelib/kernel/qsharedmemory_win.cpp" line="-27"/>
+        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-55"/>
+        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-261"/>
         <source>%1: invalid size</source>
         <translation>%1: Ugyldig størrelse</translation>
     </message>
     <message>
-        <location line="+68"/>
-        <source>%1: key error</source>
-        <translation>%1: Nøglefejl</translation>
-    </message>
-    <message>
-        <location line="+38"/>
+        <location line="+84"/>
         <source>%1: size query failed</source>
         <translation>%1: Størrelsesforespørgsel mislykkedes</translation>
     </message>
@@ -4788,8 +5319,9 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+373"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+396"/>
         <source>Space</source>
+        <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation></translation>
     </message>
     <message>
@@ -4913,7 +5445,7 @@ Vælg et andet filnavn.</translation>
         <translation>Hjælp</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>Back</source>
         <translation>Tilbage</translation>
     </message>
@@ -4996,6 +5528,18 @@ Vælg et andet filnavn.</translation>
         <location line="+1"/>
         <source>Media Record</source>
         <translation></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Media Pause</source>
+        <extracomment>Media player pause button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Toggle Media Play/Pause</source>
+        <extracomment>Media player button to toggle between playing and paused</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
@@ -5108,6 +5652,451 @@ Vælg et andet filnavn.</translation>
         <translation>Start (F)</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Monitor Brightness Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Monitor Brightness Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keyboard Light On/Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keyboard Brightness Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keyboard Brightness Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Power Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Wake Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Eject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Screensaver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>WWW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sleep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>LightBulb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Shop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Favorite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hot Links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Adjust Brightness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Community</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audio Rewind</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Back Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Application Left</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Application Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Book</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Calculator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Clear</source>
+        <translation type="unfinished">Ryd</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Clear Grab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Close</source>
+        <translation type="unfinished">Luk</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy</source>
+        <translation type="unfinished">Kopiér</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cut</source>
+        <translation type="unfinished">Klip</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>DOS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Spreadsheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Game</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Go</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>iTouch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Logoff</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Market</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Meeting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Keyboard Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Menu PB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>My Sites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>News</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Home Office</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Option</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Paste</source>
+        <translation type="unfinished">Sæt ind</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Phone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reload</source>
+        <translation type="unfinished">Genindlæs</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rotate Windows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rotation PB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Rotation KB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Save</source>
+        <translation type="unfinished">Gem</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Send</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Spellchecker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Split Screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Task Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Travel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Word Processor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>XFer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zoom In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zoom Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Away</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Messenger</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>WebCam</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Mail Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Music</source>
+        <translation type="unfinished">Musik</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Battery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bluetooth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Wireless</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Ultra Wide Band</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audio Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audio Repeat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audio Random Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Subtitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Audio Cycle Track</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Top Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Suspend</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hibernate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+4"/>
         <source>Print Screen</source>
         <translation></translation>
@@ -5163,7 +6152,8 @@ Vælg et andet filnavn.</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-18"/>
+        <location line="+22"/>
         <source>Select</source>
         <translation>Væg</translation>
     </message>
@@ -5198,14 +6188,22 @@ Vælg et andet filnavn.</translation>
         <translation>Kontekst4</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Call</source>
+        <extracomment>Button to start a call (note: a separate button is used to end the call)</extracomment>
         <translation>Ring til</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Hangup</source>
+        <extracomment>Button to end a call (note: a separate button is used to start the call)</extracomment>
         <translation>Læg på</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Toggle Call/Hangup</source>
+        <extracomment>Button that will hang up if we&apos;re in call, or make a call if we&apos;re not.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
@@ -5213,41 +6211,215 @@ Vælg et andet filnavn.</translation>
         <translation>Vend</translation>
     </message>
     <message>
-        <location line="+527"/>
-        <location line="+122"/>
+        <location line="+2"/>
+        <source>Voice Dial</source>
+        <extracomment>Button to trigger voice dialing</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Last Number Redial</source>
+        <extracomment>Button to redial the last number called</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Camera Shutter</source>
+        <extracomment>Button to trigger the camera shutter (take a picture)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Camera Focus</source>
+        <extracomment>Button to focus the camera</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Kanji</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Muhenkan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Henkan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Romaji</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hiragana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Katakana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hiragana Katakana</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zenkaku</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hankaku</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Zenkaku Hankaku</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Touroku</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Massyo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Kana Lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Kana Shift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Eisu Shift</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Eisu toggle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Code input</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Multiple Candidate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous Candidate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Hangul</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul End</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Hanja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Jamo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Romaja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Jeonja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Banja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul PreHanja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul PostHanja</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Hangul Special</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+601"/>
+        <location line="+135"/>
         <source>Ctrl</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-121"/>
-        <location line="+125"/>
+        <location line="-134"/>
+        <location line="+138"/>
         <source>Shift</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-124"/>
-        <location line="+122"/>
+        <location line="-137"/>
+        <location line="+135"/>
         <source>Alt</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-121"/>
-        <location line="+117"/>
+        <location line="-134"/>
+        <location line="+130"/>
         <source>Meta</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-25"/>
+        <location line="-40"/>
         <source>+</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+61"/>
         <source>F%1</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-720"/>
+        <location line="-945"/>
         <source>Home Page</source>
         <translation>Startside</translation>
     </message>
@@ -5255,7 +6427,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QSlider</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+151"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+147"/>
         <source>Page left</source>
         <translation>Side venstre</translation>
     </message>
@@ -5348,15 +6520,43 @@ Vælg et andet filnavn.</translation>
         <translation>Ukendt SOCKSv5 proxy fejlkode 0x%1</translation>
     </message>
     <message>
-        <location line="+685"/>
+        <location line="+694"/>
         <source>Network operation timed out</source>
         <translation>Netværksoperationen timed out</translation>
     </message>
 </context>
 <context>
+    <name>QSoftKeyManager</name>
+    <message>
+        <location filename="../src/gui/kernel/qsoftkeymanager.cpp" line="+60"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Select</source>
+        <translation type="unfinished">Væg</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Options</source>
+        <translation type="unfinished">Valgmuligheder</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuller</translation>
+    </message>
+</context>
+<context>
     <name>QSpinBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-574"/>
+        <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-562"/>
         <source>More</source>
         <translation>Mere</translation>
     </message>
@@ -5367,101 +6567,60 @@ Vælg et andet filnavn.</translation>
     </message>
 </context>
 <context>
-    <name>QSql</name>
-    <message>
-        <location filename="../src/qt3support/sql/q3sqlmanager_p.cpp" line="+890"/>
-        <source>Delete</source>
-        <translation>Slet</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Delete this record?</source>
-        <translation>Slet denne post?</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <location line="+16"/>
-        <location line="+36"/>
-        <source>Yes</source>
-        <translation>Ja</translation>
-    </message>
-    <message>
-        <location line="-51"/>
-        <location line="+16"/>
-        <location line="+36"/>
-        <source>No</source>
-        <translation>Nej</translation>
-    </message>
-    <message>
-        <location line="-44"/>
-        <source>Insert</source>
-        <translation>Indsæt</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Update</source>
-        <translation>Opdater</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Save edits?</source>
-        <translation>Gem ændringer?</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cancel</source>
-        <translation>Annuller</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Confirm</source>
-        <translation>Bekræft</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Cancel your edits?</source>
-        <translation>Skal dine ændringer annulleres?</translation>
-    </message>
-</context>
-<context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+569"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+828"/>
         <source>Unable to write data: %1</source>
         <translation>Kunne ikke skrive data: %1</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+70"/>
+        <source>Unable to decrypt data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>The TLS/SSL connection has been closed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+10"/>
         <source>Error while reading: %1</source>
         <translation>Der opstod en fejl under læsning af: %1</translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+95"/>
         <source>Error during SSL handshake: %1</source>
         <translation>Der opstod en fejl under SSL handshake: %1</translation>
     </message>
     <message>
-        <location line="-524"/>
+        <location line="-797"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Der opstod fejl under oprettelse af SSL-kontekst (%1)</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+54"/>
         <source>Invalid or empty cipher list (%1)</source>
         <translation>Ugyldig eller tom chifferliste (%1)</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+63"/>
+        <source>Private key does not certify public key, %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
         <source>Error creating SSL session, %1</source>
         <translation>Der opstod fejl under oprettelse af SSL-session, %1</translation>
     </message>
     <message>
-        <location line="+15"/>
+        <location line="+36"/>
         <source>Error creating SSL session: %1</source>
         <translation>Der opstod fejl under oprettelse af SSL-session, %1</translation>
     </message>
     <message>
-        <location line="-61"/>
+        <location line="-85"/>
         <source>Cannot provide a certificate with no key, %1</source>
         <translation>Kan ikke give et certifikat uden nøgle, %1</translation>
     </message>
@@ -5471,32 +6630,259 @@ Vælg et andet filnavn.</translation>
         <translation>Der opstod fejl under indlæsning af lokalt certifikat, %1</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Error loading private key, %1</source>
         <translation>Der opstod fejl under indlæsning af privat nøgle, %1</translation>
     </message>
     <message>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <source>No error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The issuer certificate could not be found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The certificate signature could not be decrypted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The public key in the certificate could not be read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The signature of the certificate is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The certificate is not yet valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The certificate has expired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The certificate&apos;s notBefore field contains an invalid time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The certificate&apos;s notAfter field contains an invalid time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The certificate is self-signed, and untrusted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The root certificate of the certificate chain is self-signed, and untrusted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The issuer certificate of a locally looked up certificate could not be found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>No certificates could be verified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>One of the CA certificates is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The basicConstraints path length parameter has been exceeded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The supplied certificate is unsuitable for this purpose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The root CA certificate is not trusted for this purpose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The root CA certificate is marked to reject the specified purpose</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The current candidate issuer certificate was rejected because its subject name did not match the issuer name of the current certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The current candidate issuer certificate was rejected because its issuer name and serial number was present and did not match the authority key identifier of the current certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>The peer did not present any certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The host name did not match any of the valid hosts for this certificate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The peer certificate is blacklisted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QStandardPaths</name>
+    <message>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <source>Desktop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Documents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Fonts</source>
+        <translation type="unfinished">Skrifttyper</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Applications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Music</source>
+        <translation type="unfinished">Musik</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Movies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Pictures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Temporary Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
+        <source>Home</source>
+        <translation type="unfinished">Hjem</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Application Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shared Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Runtime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shared Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Shared Cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QStateMachine</name>
+    <message>
+        <location filename="../src/core/statemachine/qstatemachine.cpp" line="+1028"/>
+        <source>Missing initial state in compound state &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+7"/>
-        <source>Private key does not certificate public key, %1</source>
-        <translation>Privat-nøgle autoriserer ikke offentlig-nøgle, %1</translation>
+        <source>Missing default state in history state &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>No common ancestor for targets and source of transition from state &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Unknown error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/corelib/kernel/qsystemsemaphore_unix.cpp" line="-41"/>
-        <location filename="../src/corelib/kernel/qsystemsemaphore_win.cpp" line="+66"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+68"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-46"/>
         <source>%1: out of resources</source>
         <translation>%1: Ikke flere ressourcer</translation>
     </message>
     <message>
-        <location line="-13"/>
-        <location filename="../src/corelib/kernel/qsystemsemaphore_win.cpp" line="+4"/>
+        <location line="+4"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-17"/>
         <source>%1: permission denied</source>
         <translation>%1: Tilladelse nægtet</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: Findes allerede</translation>
     </message>
@@ -5506,29 +6892,21 @@ Vælg et andet filnavn.</translation>
         <translation>%1: Findes ikke</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location filename="../src/corelib/kernel/qsystemsemaphore_win.cpp" line="+3"/>
+        <location line="+13"/>
+        <source>%1: name error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+3"/>
+        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: Ukendt fejl %2</translation>
     </message>
 </context>
 <context>
-    <name>QTDSDriver</name>
-    <message>
-        <location filename="../src/sql/drivers/tds/qsql_tds.cpp" line="+584"/>
-        <source>Unable to open connection</source>
-        <translation>Kunne ikke etablere forbindelsen</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Unable to use database</source>
-        <translation>Kunne ikke bruge databasen</translation>
-    </message>
-</context>
-<context>
     <name>QTabBar</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="-326"/>
+        <location filename="../src/plugins/accessible/widgets/complexwidgets.cpp" line="-400"/>
         <source>Scroll Left</source>
         <translation>Scroll til venstre</translation>
     </message>
@@ -5537,11 +6915,37 @@ Vælg et andet filnavn.</translation>
         <source>Scroll Right</source>
         <translation>Scroll til højre</translation>
     </message>
+    <message>
+        <location line="+99"/>
+        <source>Close</source>
+        <translation type="unfinished">Luk</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Activate</source>
+        <translation type="unfinished">Aktivér</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Press</source>
+        <translation type="unfinished">Tryk på</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Close the tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Activate the tab</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QTcpServer</name>
     <message>
-        <location filename="../src/network/socket/qtcpserver.cpp" line="+282"/>
+        <location filename="../src/network/socket/qtcpserver.cpp" line="+292"/>
+        <location line="+129"/>
         <source>Operation on socket is not supported</source>
         <translation>Socket-operation ikke understøttet</translation>
     </message>
@@ -5549,7 +6953,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1973"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+2123"/>
         <source>&amp;Undo</source>
         <translation>&amp;Fortryd</translation>
     </message>
@@ -5592,7 +6996,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QToolButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+254"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+321"/>
         <location line="+6"/>
         <source>Press</source>
         <translation>Tryk på</translation>
@@ -5607,7 +7011,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QUdpSocket</name>
     <message>
-        <location filename="../src/network/socket/qudpsocket.cpp" line="+169"/>
+        <location filename="../src/network/socket/qudpsocket.cpp" line="+199"/>
         <source>This platform does not support IPv6</source>
         <translation>Denne platform understøtter ikke IPv6</translation>
     </message>
@@ -5615,14 +7019,26 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QUndoGroup</name>
     <message>
-        <location filename="../src/gui/util/qundogroup.cpp" line="+386"/>
-        <source>Undo</source>
-        <translation>Fortryd</translation>
+        <location filename="../src/gui/util/qundogroup.cpp" line="+388"/>
+        <source>Undo %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+0"/>
+        <source>Undo</source>
+        <comment>Default text for undo action</comment>
+        <translation type="unfinished">Fortryd</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Redo %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
         <source>Redo</source>
-        <translation>Gendan</translation>
+        <comment>Default text for redo action</comment>
+        <translation type="unfinished">Gendan</translation>
     </message>
 </context>
 <context>
@@ -5636,20 +7052,32 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QUndoStack</name>
     <message>
-        <location filename="../src/gui/util/qundostack.cpp" line="+834"/>
-        <source>Undo</source>
-        <translation>Fortryd</translation>
+        <location filename="../src/gui/util/qundostack.cpp" line="+877"/>
+        <source>Undo %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+0"/>
+        <source>Undo</source>
+        <comment>Default text for undo action</comment>
+        <translation type="unfinished">Fortryd</translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Redo %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
         <source>Redo</source>
-        <translation>Gendan</translation>
+        <comment>Default text for redo action</comment>
+        <translation type="unfinished">Gendan</translation>
     </message>
 </context>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+884"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+927"/>
         <source>LRM Left-to-right mark</source>
         <translation></translation>
     </message>
@@ -5705,583 +7133,25 @@ Vælg et andet filnavn.</translation>
     </message>
 </context>
 <context>
-    <name>QWebFrame</name>
+    <name>QView3DPlugin</name>
     <message>
-        <location filename="../src/3rdparty/webkit/WebKit/qt/WebCoreSupport/FrameLoaderClientQt.cpp" line="+692"/>
-        <source>Request cancelled</source>
-        <translation>Anmodning annulleret</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Request blocked</source>
-        <translation>Anmodning blokeret</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Cannot show URL</source>
-        <translation>Kan ikke vise URL</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Frame load interruped by policy change</source>
-        <translation>Billedindlæsning afbrudt af ændringer i retningslinier</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Cannot show mimetype</source>
-        <translation>Kan ikke vise MIME-type</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>File does not exist</source>
-        <translation>Filen findes ikke</translation>
+        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
+        <source>3D View</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>QWebPage</name>
-    <message>
-        <location filename="../src/3rdparty/webkit/WebCore/platform/network/qt/QNetworkReplyHandler.cpp" line="+384"/>
-        <source>Bad HTTP request</source>
-        <translation>Dårlig HTTP-anmodning</translation>
-    </message>
-    <message>
-        <location filename="../src/3rdparty/webkit/WebCore/platform/qt/Localizations.cpp" line="+42"/>
-        <source>Submit</source>
-        <comment>default label for Submit buttons in forms on web pages</comment>
-        <translation>Send</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Submit</source>
-        <comment>Submit (input element) alt text for &lt;input&gt; elements with no alt, title, or value</comment>
-        <translation>Send</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Reset</source>
-        <comment>default label for Reset buttons in forms on web pages</comment>
-        <translation>Nulstil</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>This is a searchable index. Enter search keywords: </source>
-        <comment>text that appears at the start of nearly-obsolete web pages in the form of a &apos;searchable index&apos;</comment>
-        <translation>Dette er et søgeindeks. Indtast søgeord:</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Choose File</source>
-        <comment>title for file button used in HTML forms</comment>
-        <translation>Vælg fil</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>No file selected</source>
-        <comment>text to display in file button used in HTML forms when no file is selected</comment>
-        <translation>Der er ikke valgt en fil</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open in New Window</source>
-        <comment>Open in New Window context menu item</comment>
-        <translation>Åbn i nyt vindue</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Save Link...</source>
-        <comment>Download Linked File context menu item</comment>
-        <translation>Gem link...</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Copy Link</source>
-        <comment>Copy Link context menu item</comment>
-        <translation>Kopiér link</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open Image</source>
-        <comment>Open Image in New Window context menu item</comment>
-        <translation>Åbn billede</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Save Image</source>
-        <comment>Download Image context menu item</comment>
-        <translation>Gem billede</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Copy Image</source>
-        <comment>Copy Link context menu item</comment>
-        <translation>Kopiér billede</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open Frame</source>
-        <comment>Open Frame in New Window context menu item</comment>
-        <translation>Åbn faneblad</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Copy</source>
-        <comment>Copy context menu item</comment>
-        <translation>Kopiér</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Go Back</source>
-        <comment>Back context menu item</comment>
-        <translation>Gå tilbage</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Go Forward</source>
-        <comment>Forward context menu item</comment>
-        <translation>Gå frem</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Stop</source>
-        <comment>Stop context menu item</comment>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Reload</source>
-        <comment>Reload context menu item</comment>
-        <translation>Genindlæs</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Cut</source>
-        <comment>Cut context menu item</comment>
-        <translation>Klip</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Paste</source>
-        <comment>Paste context menu item</comment>
-        <translation>Sæt ind</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>No Guesses Found</source>
-        <comment>No Guesses Found context menu item</comment>
-        <translation>Der er ikke fundet nogen gæt</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Ignore</source>
-        <comment>Ignore Spelling context menu item</comment>
-        <translation>Ignorér</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Add To Dictionary</source>
-        <comment>Learn Spelling context menu item</comment>
-        <translation>Tilføj til ordbog</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Search The Web</source>
-        <comment>Search The Web context menu item</comment>
-        <translation>Søg på nettet</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Look Up In Dictionary</source>
-        <comment>Look Up in Dictionary context menu item</comment>
-        <translation>Slå op i ordbog</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Open Link</source>
-        <comment>Open Link context menu item</comment>
-        <translation>Åbn link</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Ignore</source>
-        <comment>Ignore Grammar context menu item</comment>
-        <translation>Ignorér</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Spelling</source>
-        <comment>Spelling and Grammar context sub-menu item</comment>
-        <translation>Stavekontrol</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Show Spelling and Grammar</source>
-        <comment>menu item title</comment>
-        <translation>Vis stave- og grammatikkontrol</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Spelling and Grammar</source>
-        <comment>menu item title</comment>
-        <translation>Skjul stave- og grammatikkontrol</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Check Spelling</source>
-        <comment>Check spelling context menu item</comment>
-        <translation>Kør stavekontrol</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Check Spelling While Typing</source>
-        <comment>Check spelling while typing context menu item</comment>
-        <translation>Kør stavekontrol mens der tastes</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Check Grammar With Spelling</source>
-        <comment>Check grammar with spelling context menu item</comment>
-        <translation>Kør grammatikkontrol sammen med stavekontrol</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Fonts</source>
-        <comment>Font context sub-menu item</comment>
-        <translation>Skrifttyper</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Bold</source>
-        <comment>Bold context menu item</comment>
-        <translation>Fed</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Italic</source>
-        <comment>Italic context menu item</comment>
-        <translation>Kursiv</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Underline</source>
-        <comment>Underline context menu item</comment>
-        <translation>Understreget</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Outline</source>
-        <comment>Outline context menu item</comment>
-        <translation>Kontur</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Direction</source>
-        <comment>Writing direction context sub-menu item</comment>
-        <translation>Retning</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Text Direction</source>
-        <comment>Text direction context sub-menu item</comment>
-        <translation>Tekstretning</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Default</source>
-        <comment>Default writing direction context menu item</comment>
-        <translation>Standard</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>LTR</source>
-        <comment>Left to Right context menu item</comment>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>RTL</source>
-        <comment>Right to Left context menu item</comment>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Inspect</source>
-        <comment>Inspect Element context menu item</comment>
-        <translation>Inspicér</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>No recent searches</source>
-        <comment>Label for only item in menu that appears when clicking on the search field image, when no searches have been performed</comment>
-        <translation>Ingen aktuelle søgninger</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Recent searches</source>
-        <comment>label for first item in the menu that appears when clicking on the search field image, used as embedded menu title</comment>
-        <translation>Aktuelle søgninger</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Clear recent searches</source>
-        <comment>menu item in Recent Searches menu that empties menu&apos;s contents</comment>
-        <translation>Ryd aktuelle søgninger</translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>Unknown</source>
-        <comment>Unknown filesize FTP directory listing item</comment>
-        <translation>Ukendt</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 (%2x%3 pixels)</source>
-        <comment>Title string for images</comment>
-        <translation>%1 (%2x%3 pixels)</translation>
-    </message>
-    <message>
-        <location filename="../src/3rdparty/webkit/WebKit/qt/WebCoreSupport/InspectorClientQt.cpp" line="+185"/>
-        <source>Web Inspector - %2</source>
-        <translation>Web-inspektør - %2</translation>
-    </message>
-    <message>
-        <location filename="../src/3rdparty/webkit/WebCore/platform/qt/ScrollbarQt.cpp" line="+58"/>
-        <source>Scroll here</source>
-        <translation>Scroll her</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Left edge</source>
-        <translation>Venstre kant</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Top</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Right edge</source>
-        <translation>Højre kant</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Bottom</source>
-        <translation>Bund</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Page left</source>
-        <translation>Side venstre</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Page up</source>
-        <translation>Side øverst</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Page right</source>
-        <translation>Side højre</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Page down</source>
-        <translation>Side ned</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Scroll left</source>
-        <translation>Scroll til venstre</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Scroll up</source>
-        <translation>Scroll op</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Scroll right</source>
-        <translation>Scroll til højre</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>Scroll down</source>
-        <translation>Scroll ned</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/3rdparty/webkit/WebCore/platform/qt/FileChooserQt.cpp" line="+45"/>
-        <source>%n file(s)</source>
-        <comment>number of chosen file</comment>
-        <translation>
-            <numerusform>%n fil</numerusform>
-            <numerusform>%n filer</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/3rdparty/webkit/WebKit/qt/Api/qwebpage.cpp" line="+1322"/>
-        <source>JavaScript Alert - %1</source>
-        <translation>JavaScript alert - %1</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>JavaScript Confirm - %1</source>
-        <translation>JavaScript Bekræft - %1</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>JavaScript Prompt - %1</source>
-        <translation>JavaScript Prompt - %1</translation>
-    </message>
-    <message>
-        <location line="+340"/>
-        <source>Move the cursor to the next character</source>
-        <translation>Flyt markør til næste tegn</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the previous character</source>
-        <translation>Flyt markør til forrige tegn</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the next word</source>
-        <translation>Flyt markør til næste ord</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the previous word</source>
-        <translation>Flyt markør til forrige ord</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the next line</source>
-        <translation>Flyt markør til næste linie</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the previous line</source>
-        <translation>Flyt markør til forrige linie</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the start of the line</source>
-        <translation>Flyt markør til starten af linien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the end of the line</source>
-        <translation>Flyt markør til slutningen af linien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the start of the block</source>
-        <translation>Flyt markør til starten af sektionen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the end of the block</source>
-        <translation>Flyt markør til slutningen af sektionen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the start of the document</source>
-        <translation>Flyt markør til starten af dokumentet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Move the cursor to the end of the document</source>
-        <translation>Flyt markør til slutningen af dokumentet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select all</source>
-        <translation>Markér alt</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the next character</source>
-        <translation>Vælg til næste tegn</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the previous character</source>
-        <translation>Vælg til forrige tegn</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the next word</source>
-        <translation>Vælg til næste ord</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the previous word</source>
-        <translation>Vælg til forrige ord</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the next line</source>
-        <translation>Vælg til næste linie</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the previous line</source>
-        <translation>Vælg til forrige linie</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the start of the line</source>
-        <translation>Vælg til starten af linien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the end of the line</source>
-        <translation>Vælg til slutningen af linien</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the start of the block</source>
-        <translation>Vælg til starten af sektionen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the end of the block</source>
-        <translation>Vælg til slutningen af sektionen</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the start of the document</source>
-        <translation>Vælg til starten af dokumentet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select to the end of the document</source>
-        <translation>Vælg til slutningen af dokumentet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Delete to the start of the word</source>
-        <translation>Slet til starten af ordet</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Delete to the end of the word</source>
-        <translation>Slet til slutningen af ordet</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <source>Insert a new paragraph</source>
-        <translation>Indsæt et nyt afsnit</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Insert a new line</source>
-        <translation>Insert ny linie</translation>
+    <name>QView3DTool</name>
+    <message>
+        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
+        <source>3DView</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+522"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
         <source>What&apos;s This?</source>
         <translation>Hvad er dette?</translation>
     </message>
@@ -6289,7 +7159,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5340"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
         <source>*</source>
         <translation></translation>
     </message>
@@ -6297,7 +7167,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+637"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+688"/>
         <source>Go Back</source>
         <translation>Gå tilbage</translation>
     </message>
@@ -6355,7 +7225,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1094"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1076"/>
         <source>&amp;Restore</source>
         <translation>&amp;Gendan</translation>
     </message>
@@ -6391,7 +7261,7 @@ Vælg et andet filnavn.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+1059"/>
+        <location line="+1039"/>
         <source>Sh&amp;ade</source>
         <translation>Sk&amp;ygge</translation>
     </message>
@@ -6402,7 +7272,7 @@ Vælg et andet filnavn.</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="-1837"/>
+        <location line="-1799"/>
         <source>Minimize</source>
         <translation>Minimer</translation>
     </message>
@@ -6417,7 +7287,7 @@ Vælg et andet filnavn.</translation>
         <translation>Luk</translation>
     </message>
     <message>
-        <location line="+2053"/>
+        <location line="+2015"/>
         <source>&amp;Unshade</source>
         <translation>&amp;Fjern skygge</translation>
     </message>
@@ -6425,7 +7295,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+58"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
         <source>no error occurred</source>
         <translation>der opstod ingen fejl</translation>
     </message>
@@ -6541,20 +7411,48 @@ Vælg et andet filnavn.</translation>
     </message>
 </context>
 <context>
+    <name>QXmlPatternistCLI</name>
+    <message>
+        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
+        <source>Warning in %1, at line %2, column %3: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Warning in %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Unknown location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Error %1 in %2, at line %3, column %4: %5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Error %1 in %2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/corelib/xml/qxmlstream.cpp" line="+592"/>
-        <location filename="../src/corelib/xml/qxmlstream_p.h" line="+1769"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+611"/>
+        <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>Ekstra indhold sidst i dokumentet.</translation>
     </message>
     <message>
-        <location line="+222"/>
+        <location line="+276"/>
         <source>Invalid entity value.</source>
         <translation>Ugyldig enhedsværdi.</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+109"/>
         <source>Invalid XML character.</source>
         <translation>Ugyldigt XML-tegn.</translation>
     </message>
@@ -6634,12 +7532,12 @@ Vælg et andet filnavn.</translation>
         <translation>Uventet &apos;</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+225"/>
         <source>Expected character data.</source>
         <translation>Forventet tegndata.</translation>
     </message>
     <message>
-        <location filename="../src/corelib/xml/qxmlstream_p.h" line="-995"/>
+        <location filename="../src/core/xml/qxmlstream_p.h" line="-995"/>
         <source>Recursive entity detected.</source>
         <translation>Rekursiv entitet opdaget.</translation>
     </message>
@@ -6669,15 +7567,15 @@ Vælg et andet filnavn.</translation>
         <translation>Ugyldigt processing-instruction-navn.</translation>
     </message>
     <message>
-        <location filename="../src/corelib/xml/qxmlstream.cpp" line="-521"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-536"/>
         <location line="+12"/>
-        <location filename="../src/corelib/xml/qxmlstream_p.h" line="+164"/>
+        <location filename="../src/core/xml/qxmlstream_p.h" line="+164"/>
         <location line="+53"/>
         <source>Illegal namespace declaration.</source>
         <translation>Ulovligt navnerumsdeklaration.</translation>
     </message>
     <message>
-        <location filename="../src/corelib/xml/qxmlstream_p.h" line="+15"/>
+        <location filename="../src/core/xml/qxmlstream_p.h" line="+15"/>
         <source>Invalid XML name.</source>
         <translation>Ugyldigt XML-navn.</translation>
     </message>
@@ -6709,8 +7607,8 @@ Vælg et andet filnavn.</translation>
         <translation>Ugyldig tegnreference.</translation>
     </message>
     <message>
-        <location filename="../src/corelib/xml/qxmlstream.cpp" line="-75"/>
-        <location filename="../src/corelib/xml/qxmlstream_p.h" line="-823"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-75"/>
+        <location filename="../src/core/xml/qxmlstream_p.h" line="-823"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>Indhold med forkert enkodning læst.</translation>
     </message>
@@ -6720,7 +7618,7 @@ Vælg et andet filnavn.</translation>
         <translation>Den frie pseudo-attribut skal optræde efter enkodningen.</translation>
     </message>
     <message>
-        <location filename="../src/corelib/xml/qxmlstream_p.h" line="+562"/>
+        <location filename="../src/core/xml/qxmlstream_p.h" line="+562"/>
         <source>%1 is an invalid PUBLIC identifier.</source>
         <translation>%1 er en ugyldig PUBLIC identifier.</translation>
     </message>
@@ -6728,7 +7626,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QtXmlPatterns</name>
     <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+205"/>
+        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+216"/>
         <source>An %1-attribute with value %2 has already been declared.</source>
         <translation>En %1-attribut med værdi %2 er allerede erklæret.</translation>
     </message>
@@ -6738,12 +7636,12 @@ Vælg et andet filnavn.</translation>
         <translation>En %1-attribut skal have en gyldig %2 som værdi, hvilket %3 ikke er.</translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+84"/>
+        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
         <source>Network timeout.</source>
         <translation>Netværk timeout.</translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+320"/>
+        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
         <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
         <translation>Element %1 kan ikke serialiseres fordi det optræder udenfor dokument-elementet.</translation>
     </message>
@@ -6915,7 +7813,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+134"/>
+        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
         <source>No casting is possible with %1 as the target type.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6965,7 +7863,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+169"/>
+        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
         <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6986,7 +7884,7 @@ Vælg et andet filnavn.</translation>
     </message>
     <message>
         <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, is %2 invalid.</source>
+        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7107,7 +8005,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+99"/>
+        <location line="+100"/>
         <source>%1 is an invalid regular expression pattern: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7132,7 +8030,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+279"/>
+        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+282"/>
         <source>The default collection is undefined</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7167,13 +8065,13 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+379"/>
-        <location line="+7253"/>
+        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+352"/>
+        <location line="+7323"/>
         <source>%1 is an unknown schema type.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-6971"/>
+        <location line="-7041"/>
         <source>Only one %1 declaration can occur in the query prolog.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7183,17 +8081,12 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
-        <source>No variable by name %1 exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
         <source>The variable %1 is unused</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2841"/>
+        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2904"/>
         <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7254,52 +8147,17 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
-        <source>No value is available for the external variable by name %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-4154"/>
-        <source>A construct was encountered which only is allowed in XQuery.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+118"/>
-        <source>A template by name %1 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3581"/>
+        <location line="-403"/>
         <source>The keyword %1 cannot occur with any other mode name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
-        <source>The value of attribute %1 must of type %2, which %3 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>The prefix %1 can not be bound. By default, it is already bound to the namespace %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+312"/>
-        <source>A variable by name %1 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+135"/>
+        <location line="+551"/>
         <source>A stylesheet function must have a prefixed name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1 which exists for cases like this)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
+        <location line="+18"/>
         <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7319,8 +8177,58 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
-        <source>An argument by name %1 has already been declared. Every argument name must be unique.</source>
+        <location line="-4345"/>
+        <source>W3C XML Schema identity constraint selector</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>W3C XML Schema identity constraint field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>A construct was encountered which is disallowed in the current language(%1).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+119"/>
+        <source>A template with name %1 has already been declared.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+464"/>
+        <source>No variable with name %1 exists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3146"/>
+        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+75"/>
+        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+312"/>
+        <source>A variable with name %1 has already been declared.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>No value is available for the external variable with name %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+115"/>
+        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7364,17 +8272,17 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+758"/>
+        <location line="+778"/>
         <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+40"/>
         <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+267"/>
+        <location line="+269"/>
         <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7384,22 +8292,27 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1150"/>
+        <location line="+333"/>
+        <source>No function with name %1 is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+250"/>
+        <source>An attribute with name %1 has already appeared on this element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+614"/>
         <source>%1 is not a valid name for a processing-instruction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-7029"/>
+        <location line="-7099"/>
         <source>%1 is not a valid numeric literal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6165"/>
-        <source>No function by name %1 is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+102"/>
+        <location line="+6337"/>
         <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7434,12 +8347,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>An attribute by name %1 has already appeared on this element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+61"/>
+        <location line="+77"/>
         <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7530,7 +8438,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+314"/>
+        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+344"/>
         <source>%1 is an unsupported encoding.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7540,7 +8448,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+22"/>
         <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7570,7 +8478,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+117"/>
+        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
         <source>Circularity detected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7615,7 +8523,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+106"/>
         <source>Unknown XSL-T attribute %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7645,7 +8553,7 @@ Vælg et andet filnavn.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+183"/>
+        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
         <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7765,19 +8673,1474 @@ Vælg et andet filnavn.</translation>
         <source>At least one %1 element must appear as child of %2.</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>VolumeSlider</name>
     <message>
-        <location filename="../src/3rdparty/phonon/phonon/volumeslider.cpp" line="+67"/>
-        <source>Muted</source>
-        <translation></translation>
+        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
+        <source>Empty particle cannot be derived from non-empty particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Derived particle is missing element %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
+        <source>Derived element %1 has weaker value constraint than base particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Element %1 is missing in derived particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+270"/>
+        <source>Derived particle allows content that is not allowed in the base particle.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
+        <location line="+63"/>
+        <source>Base attribute %1 is required but derived attribute is not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-57"/>
+        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Derived attribute %1 does not exist in the base definition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Base attribute %1 is required but missing in derived definition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Derived wildcard is not a subset of the base wildcard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Attribute %1 from base type is missing in derived type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Type of derived attribute %1 differs from type of base attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Base definition contains an %1 element that is missing in the derived definition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
+        <source>%1 has inheritance loop in its base type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <location line="+24"/>
+        <source>Circular inheritance of base type %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Circular inheritance of union %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Base type of simple type %1 cannot be complex type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Simple type %1 cannot have direct base type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <location line="+9"/>
+        <source>Simple type %1 is not allowed to have base type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Simple type %1 can only have simple atomic type as base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location line="+484"/>
+        <source>Variety of item type of %1 must be either atomic or union.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-474"/>
+        <location line="+483"/>
+        <source>Variety of member types of %1 must be atomic.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-470"/>
+        <location line="+451"/>
+        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-431"/>
+        <source>Simple type %1 is only allowed to have %2 facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Base type of simple type %1 must have variety of type list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Item type of base type does not match item type of %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <location line="+93"/>
+        <source>Simple type %1 contains not allowed facet type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-72"/>
+        <location line="+413"/>
+        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-404"/>
+        <source>%1 is not allowed to have any facets.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Base type %1 of simple type %2 must have variety of union.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Complex type %1 has duplicated element %2 in its content model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Complex type %1 has non-deterministic content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Complex type %1 must have simple content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Complex type %1 must have the same simple type as its base class %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+67"/>
+        <source>Complex type %1 cannot be derived from base type %2%3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Item type of simple type %1 cannot be a complex type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Member type of simple type %1 cannot be a complex type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 is not allowed to have a member type with the same name as itself.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+83"/>
+        <location line="+29"/>
+        <location line="+34"/>
+        <source>%1 facet collides with %2 facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-20"/>
+        <source>%1 facet must have the same value as %2 facet of base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <location line="+125"/>
+        <location line="+55"/>
+        <location line="+12"/>
+        <location line="+91"/>
+        <location line="+58"/>
+        <location line="+34"/>
+        <location line="+35"/>
+        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-389"/>
+        <source>%1 facet contains invalid regular expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+15"/>
-        <source>Volume: %1%</source>
-        <translation>Lydstyrke: %1%</translation>
+        <source>Unknown notation %1 used in %2 facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>%1 facet contains invalid value %2: %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <location line="+55"/>
+        <location line="+230"/>
+        <source>%1 facet must be less than or equal to %2 facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-257"/>
+        <location line="+134"/>
+        <location line="+82"/>
+        <source>%1 facet must be less than %2 facet of base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-201"/>
+        <location line="+79"/>
+        <source>%1 facet and %2 facet cannot appear together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-27"/>
+        <location line="+12"/>
+        <location line="+113"/>
+        <source>%1 facet must be greater than %2 facet of base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-86"/>
+        <location line="+58"/>
+        <source>%1 facet must be less than %2 facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-42"/>
+        <location line="+58"/>
+        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+113"/>
+        <source>Simple type contains not allowed facet %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Only %1 and %2 facets are allowed when derived by union.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <location line="+16"/>
+        <source>%1 contains %2 facet with invalid data: %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Attribute group %1 contains attribute %2 twice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Complex type %1 contains attribute %2 twice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+11"/>
+        <source>Value constraint of element %1 is not of elements type: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Attribute %1 has value constraint but has type derived from %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <location line="+15"/>
+        <source>Element %1 exists twice with different types.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Particle contains non-deterministic wildcards.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
+        <source>Element %1 is missing child element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>There is one IDREF value with no corresponding ID: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Loaded schema file is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>%1 contains invalid data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>No schema defined for validation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>No definition for element %1 available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <location line="+49"/>
+        <location line="+142"/>
+        <source>Specified type %1 is not known to the schema.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-176"/>
+        <source>Element %1 is not defined in this scope.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Declaration for element %1 does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Element %1 contains invalid content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>Element %1 is declared as abstract.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Element %1 is not nillable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Attribute %1 contains invalid data: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Element contains content although it is nillable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Fixed value constraint not allowed if element is nillable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Specified type %1 is not validly substitutable with element type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Complex type %1 is not allowed to be abstract.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Element %1 contains not allowed attributes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+97"/>
+        <source>Element %1 contains not allowed child element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-76"/>
+        <location line="+93"/>
+        <source>Content of element %1 does not match its type definition: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-85"/>
+        <location line="+92"/>
+        <location line="+41"/>
+        <source>Content of element %1 does not match defined value constraint.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-73"/>
+        <source>Element %1 contains not allowed child content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Element %1 contains not allowed text content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Element %1 is missing required attribute %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Attribute %1 does not match the attribute wildcard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Declaration for attribute %1 does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Element %1 contains two attributes of type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Attribute %1 contains invalid content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Element %1 contains unknown attribute %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <location line="+46"/>
+        <source>Content of attribute %1 does not match its type definition: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-38"/>
+        <location line="+46"/>
+        <source>Content of attribute %1 does not match defined value constraint.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+88"/>
+        <source>Non-unique value found for constraint %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Key constraint %1 contains absent fields.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Key constraint %1 contains references nillable element %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>No referenced value found for key reference %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
+        <source>More than one value found for field %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Field %1 has no simple type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+73"/>
+        <source>ID value &apos;%1&apos; is not unique.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
+        <source>%1 references unknown %2 or %3 element %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Base type %1 of %2 element cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+84"/>
+        <source>Item type %1 of %2 element cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Member type %1 of %2 element cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <location line="+415"/>
+        <location line="+30"/>
+        <source>Type %1 of %2 element cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-423"/>
+        <source>Base type %1 of complex type cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>%1 cannot have complex base type that has a %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+286"/>
+        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>Type of %1 element must be a simple type, %2 is not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>Substitution group %1 of %2 element cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Substitution group %1 has circular definition.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+120"/>
+        <location line="+7"/>
+        <source>Duplicated element names %1 in %2 element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <location line="+52"/>
+        <location line="+71"/>
+        <location line="+28"/>
+        <source>Reference %1 of %2 element cannot be resolved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-138"/>
+        <source>Circular group reference for %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>%1 element is not allowed in this scope</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>%1 element cannot have %2 attribute with value other than %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+91"/>
+        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Attribute group %1 has circular reference.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+131"/>
+        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>%1 has attribute wildcard but its base type %2 has not.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Namespace prefix of qualified name %1 is not defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <location line="+18"/>
+        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
+        <location line="+7"/>
+        <location line="+21"/>
+        <source>%1 is not valid according to %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+167"/>
+        <source>String content does not match the length facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>String content does not match the minLength facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>String content does not match the maxLength facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>String content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>String content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Signed integer content does not match the maxInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Signed integer content does not match the maxExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Signed integer content does not match the minInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Signed integer content does not match the minExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Signed integer content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Signed integer content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Signed integer content does not match in the totalDigits facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Unsigned integer content does not match the maxInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Unsigned integer content does not match the maxExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Unsigned integer content does not match the minInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Unsigned integer content does not match the minExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Unsigned integer content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Unsigned integer content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Unsigned integer content does not match in the totalDigits facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Double content does not match the maxInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Double content does not match the maxExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Double content does not match the minInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Double content does not match the minExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Double content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Double content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Decimal content does not match in the fractionDigits facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Decimal content does not match in the totalDigits facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Date time content does not match the maxInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Date time content does not match the maxExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Date time content does not match the minInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Date time content does not match the minExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Date time content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Date time content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Duration content does not match the maxInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Duration content does not match the maxExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Duration content does not match the minInclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Duration content does not match the minExclusive facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Duration content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Duration content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Boolean content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Binary content does not match the length facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Binary content does not match the minLength facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Binary content does not match the maxLength facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Binary content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Invalid QName content: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>QName content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>QName content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>Notation content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>List content does not match length facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>List content does not match minLength facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>List content does not match maxLength facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+90"/>
+        <source>List content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>List content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Union content is not listed in the enumeration facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Union content does not match pattern facet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Data of type %1 are not allowed to be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
+        <source>Can not process unknown element %1, expected elements are: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Child element is missing in that scope, possible child elements are: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+143"/>
+        <source>Document is not a XML schema.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <location line="+11"/>
+        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+243"/>
+        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+851"/>
+        <location line="+158"/>
+        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-97"/>
+        <location line="+119"/>
+        <location line="+89"/>
+        <source>%1 element has neither %2 attribute nor %3 child element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+835"/>
+        <location line="+1474"/>
+        <location line="+232"/>
+        <location line="+7"/>
+        <location line="+260"/>
+        <location line="+17"/>
+        <location line="+258"/>
+        <location line="+6"/>
+        <location line="+17"/>
+        <location line="+6"/>
+        <location line="+17"/>
+        <location line="+11"/>
+        <location line="+11"/>
+        <location line="+11"/>
+        <source>%1 element with %2 child element must not have a %3 attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-1325"/>
+        <source>%1 attribute of %2 element must be %3 or %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>%1 attribute of %2 element must have a value of %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+34"/>
+        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+319"/>
+        <location line="+129"/>
+        <location line="+9"/>
+        <location line="+7"/>
+        <location line="+7"/>
+        <location line="+327"/>
+        <location line="+203"/>
+        <location line="+6"/>
+        <location line="+6"/>
+        <location line="+6"/>
+        <location line="+6"/>
+        <location line="+6"/>
+        <location line="+6"/>
+        <location line="+77"/>
+        <source>%1 element must not have %2 and %3 attribute together.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-768"/>
+        <location line="+222"/>
+        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-215"/>
+        <location line="+222"/>
+        <source>%1 attribute of %2 element must not be %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-64"/>
+        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+187"/>
+        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+353"/>
+        <source>%1 element must have either %2 or %3 attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+554"/>
+        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>%1 element requires either %2 or %3 attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Text or entity references not allowed inside %1 element</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <location line="+112"/>
+        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+126"/>
+        <source>%1 element is not allowed in this context.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Prefix of qualified name %1 is not defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <location line="+61"/>
+        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+131"/>
+        <source>Component with ID %1 has been defined previously.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Element %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Attribute %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Type %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Attribute group %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Element group %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Notation %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Identity constraint %1 already defined.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Duplicated facets in simple type %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VideoPlayerTaskMenu</name>
+    <message>
+        <location filename="../src/plugins/designer/phonon/videoplayertaskmenu.cpp" line="+99"/>
+        <source>Available Mime Types</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Display supported mime types...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Load...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Play</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Stop</source>
+        <translation type="unfinished">Stop</translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Choose Video Player Media Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>An error has occurred in &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Video Player Error</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
