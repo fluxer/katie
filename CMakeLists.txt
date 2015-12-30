@@ -414,7 +414,6 @@ set_package_properties(MySQL PROPERTIES
     TYPE OPTIONAL
 )
 
-set(SQLITE_MIN_VERSION "3")
 find_package(Sqlite)
 set_package_properties(Sqlite PROPERTIES
     PURPOSE "Required for SQLite database support"

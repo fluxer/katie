@@ -13,7 +13,7 @@ set(KATIE_TOOLS "moc uic rcc qdbusxml2cpp qdbuscpp2xml qhelpgenerator qcollectio
 set(QT_LICENSE "Open Source")
 set(QT_PRODUCT "OpenSauce") # it's not a bug, it's a feature!
 
-# in case it's being include by something other than Katie build system
+# in case it's being included by something other than Katie build system
 if(NOT KATIE_PLATFORM)
     set(KATIE_PLATFORM "auto")
 endif()
