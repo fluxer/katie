@@ -16,6 +16,7 @@ endif()
 find_path(MYSQL_INCLUDES
     NAMES
     mysql.h
+    PATH_SUFFIXES mysql
     HINTS
     $ENV{MYSQLDIR}/include
     /usr/include
@@ -24,8 +25,7 @@ find_path(MYSQL_INCLUDES
 )
 
 find_library(MYSQL_LIBRARIES
-    mysql
-    PATH_SUFFIXES mysql
+    mysqld
     HINTS
     $ENV{MYSQLDIR}/lib
     /usr/lib
