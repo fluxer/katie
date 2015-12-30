@@ -1,6 +1,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 version=4.8.7
+release=2
 description='C++ toolkit derived from the Qt 4.8 framework'
 depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'
@@ -8,6 +9,13 @@ depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
 makedepends=('python')
 optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'vlc' 'nas')
 sources=("https://github.com/fluxer/katie.git")
+
+src_prepare() {
+    echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
+        >> katie.git/mkspecs/linux/vendor.cmake
+    echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
+        >> katie.git/mkspecs/linux/vendor.cmake
+}
 
 src_compile() {
     mkdir -p build && cd build
@@ -23,11 +31,6 @@ src_compile() {
         -DWITH_VLC=$OPTIONAL_VLC_BOOL \
         -DWITH_NAS=$OPTIONAL_NAS_BOOL
     make
-}
-
-src_check() {
-    cd "$SOURCE_DIR/build"
-    make check
 }
 
 src_install() {
