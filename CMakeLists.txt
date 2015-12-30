@@ -635,4 +635,17 @@ install(
     FILE KatieBinaryTargets.cmake
 )
 
+if(UNIX AND (CMAKE_SKIP_INSTALL_RPATH OR NOT CMAKE_INSTALL_RPATH))
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
+        ${CMAKE_BINARY_DIR}/katie.conf
+        @ONLY
+    )
+
+    install(
+        FILES ${CMAKE_BINARY_DIR}/katie.conf
+        DESTINATION etc/ld.so.conf.d
+    )
+endif()
+
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 
