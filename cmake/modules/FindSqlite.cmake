@@ -34,6 +34,6 @@ find_library(SQLITE_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(SQLITE DEFAULT_MSG SQLITE_INCLUDES SQLITE_LIBRARIES)
+find_package_handle_standard_args(SQLite DEFAULT_MSG SQLITE_INCLUDES SQLITE_LIBRARIES)
 
 mark_as_advanced(SQLITE_INCLUDES SQLITE_LIBRARIES)

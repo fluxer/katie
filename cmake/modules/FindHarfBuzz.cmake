@@ -1,46 +1,39 @@
-# Copyright (c) 2012, Intel Corporation
+# - Try to find HarfBuzz
+# Once done this will define
 #
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
+#  HARFBUZZ_FOUND - system has HarfBuzz
+#  HARFBUZZ_INCLUDES - the HarfBuzz include directory
+#  HARFBUZZ_LIBRARIES - The libraries needed to use HarfBuzz
 #
-# * Redistributions of source code must retain the above copyright notice, this
-#   list of conditions and the following disclaimer.
-# * Redistributions in binary form must reproduce the above copyright notice,
-#   this list of conditions and the following disclaimer in the documentation
-#   and/or other materials provided with the distribution.
-# * Neither the name of Intel Corporation nor the names of its contributors may
-#   be used to endorse or promote products derived from this software without
-#   specific prior written permission.
+# Copyright (c) 2015, Ivailo Monev, <xakepa10@gmail.com>
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-# POSSIBILITY OF SUCH DAMAGE.
-#
-# Try to find Harfbuzz include and library directories.
-#
-# After successful discovery, this will set for inclusion where needed:
-# HARFBUZZ_INCLUDE_DIRS - containg the HarfBuzz headers
-# HARFBUZZ_LIBRARIES - containg the HarfBuzz library
+# Redistribution and use is allowed according to the terms of the BSD license.
 
-INCLUDE(FindPkgConfig)
+if(HARFBUZZ_INCLUDES AND HARFBUZZ_LIBRARIES)
+    set(HARFBUZZ_FIND_QUIETLY TRUE)
+endif()
 
-PKG_CHECK_MODULES(PC_HARFBUZZ harfbuzz>=0.9.0)
-
-FIND_PATH(HARFBUZZ_INCLUDE_DIRS NAMES hb.h
-  HINTS ${PC_HARFBUZZ_INCLUDE_DIRS} ${PC_HARFBUZZ_INCLUDEDIR}
+find_path(HARFBUZZ_INCLUDES
+    NAMES
+    hb.h
+    PATH_SUFFIXES harfbuzz
+    HINTS
+    $ENV{HARFBUZZDIR}/include
+    /usr/include
+    /usr/local/include
+    ${INCLUDE_INSTALL_DIR}
 )
 
-FIND_LIBRARY(HARFBUZZ_LIBRARIES NAMES harfbuzz
-  HINTS ${PC_HARFBUZZ_LIBRARY_DIRS} ${PC_HARFBUZZ_LIBDIR}
+find_library(HARFBUZZ_LIBRARIES
+    harfbuzz
+    HINTS
+    $ENV{HARFBUZZDIR}/lib
+    /usr/lib
+    /usr/local/lib
+    ${LIB_INSTALL_DIR}
 )
 
-INCLUDE(FindPackageHandleStandardArgs)
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(HarfBuzz DEFAULT_MSG HARFBUZZ_INCLUDE_DIRS HARFBUZZ_LIBRARIES)
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(HarfBuzz DEFAULT_MSG HARFBUZZ_INCLUDES HARFBUZZ_LIBRARIES)
+
+mark_as_advanced(HARFBUZZ_INCLUDES HARFBUZZ_LIBRARIES)

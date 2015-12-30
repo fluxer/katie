@@ -9,7 +9,7 @@ set(MYSQLCDRIVER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/drivers/mysql/qsql_mysql.cpp
 )
 
-include_directories(${MYSQL_INCLUDE_DIR})
+include_directories(${MYSQL_INCLUDES})
 
 katie_resources("${MYSQLCDRIVER_SOURCES}")
 katie_resources("${MYSQLCDRIVER_HEADERS}")
