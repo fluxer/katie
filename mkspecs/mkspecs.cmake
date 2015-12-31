@@ -108,6 +108,11 @@ endif()
 
 include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 
+# vendors are free to change them
+set(LDCONF_INSTALL_DIR "etc/ld.so.conf.d")
+set(DBUS_INTERFACES_INSTALL_DIR "etc/dbus-1/interfaces")
+set(KDE4_SERVICES_INSTALL_DIR "share/kde4/services/phononbackends")
+
 if(${KATIE_KEY} STREQUAL "auto")
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
 endif()

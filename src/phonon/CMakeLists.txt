@@ -72,9 +72,6 @@ set(PHONON_LIB_PATCH_VERSION ${KATIE_MICRO})
 set(PHONON_EXPERIMENTAL TRUE)
 set(PHONON_GRAPHICS TRUE)
 set(BACKEND_INSTALL_DIR "${QT_PLUGINS_PATH_INST}/phonon_backend/")
-# TODO: revisit
-set(DBUS_INTERFACES_INSTALL_DIR "etc/dbus-1/interfaces")
-set(SERVICES_INSTALL_DIR "share/kde4/services")
 
 set_source_files_properties(
     ${CMAKE_CURRENT_SOURCE_DIR}/experimental/factory.cpp

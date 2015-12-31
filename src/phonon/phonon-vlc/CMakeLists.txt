@@ -129,5 +129,5 @@ configure_file(
 
 install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/vlc.desktop
-    DESTINATION ${SERVICES_INSTALL_DIR}/phononbackends
+    DESTINATION ${KDE4_SERVICES_INSTALL_DIR}
 )

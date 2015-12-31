@@ -644,7 +644,7 @@ if(UNIX AND (CMAKE_SKIP_INSTALL_RPATH OR NOT CMAKE_INSTALL_RPATH))
 
     install(
         FILES ${CMAKE_BINARY_DIR}/katie.conf
-        DESTINATION etc/ld.so.conf.d
+        DESTINATION ${LDCONF_INSTALL_DIR}
     )
 endif()
 
