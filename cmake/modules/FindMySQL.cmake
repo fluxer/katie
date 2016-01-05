@@ -1,9 +1,9 @@
 # - Try to find MySQL
 # Once done this will define
 #
-#  HARFBUZZ_FOUND - system has MySQL
-#  HARFBUZZ_INCLUDES - the MySQL include directory
-#  HARFBUZZ_LIBRARIES - The libraries needed to use MySQL
+#  MYSQL_FOUND - system has MySQL
+#  MYSQL_INCLUDES - the MySQL include directory
+#  MYSQL_LIBRARIES - The libraries needed to use MySQL
 #
 # Copyright (c) 2015, Ivailo Monev, <xakepa10@gmail.com>
 #
