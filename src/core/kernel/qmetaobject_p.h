@@ -65,7 +65,7 @@ enum PropertyFlags  {
     Resettable = 0x00000004,
     EnumOrFlag = 0x00000008,
     StdCppSet = 0x00000100,
-//     Override = 0x00000200,
+    // Override = 0x00000200,
     Constant = 0x00000400,
     Final = 0x00000800,
     Designable = 0x00001000,

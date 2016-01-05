@@ -96,7 +96,9 @@ private:
         Resettable = 0x00000004,
         EnumOrFlag = 0x00000008,
         StdCppSet = 0x00000100,
-  //    Override = 0x00000200,
+        // Override = 0x00000200,
+        Constant = 0x00000400,
+        Final = 0x00000800,
         Designable = 0x00001000,
         ResolveDesignable = 0x00002000,
         Scriptable = 0x00004000,
@@ -106,7 +108,9 @@ private:
         Editable = 0x00040000,
         ResolveEditable = 0x00080000,
         User = 0x00100000,
-        ResolveUser = 0x00200000
+        ResolveUser = 0x00200000,
+        Notify = 0x00400000,
+        Revisioned = 0x00800000
     };
 
     enum MethodFlags  {
@@ -118,11 +122,12 @@ private:
         MethodMethod = 0x00,
         MethodSignal = 0x04,
         MethodSlot = 0x08,
+        MethodConstructor = 0x0c,
         MethodTypeMask = 0x0c,
 
-        MethodCompatibility = 0x10,
-        MethodCloned = 0x20,
-        MethodScriptable = 0x40
+        MethodCloned = 0x10,
+        MethodScriptable = 0x20,
+        MethodRevisioned = 0x40
     };
 
     QMap<QByteArray, Method> methods;
