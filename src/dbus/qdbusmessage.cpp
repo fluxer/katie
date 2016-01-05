@@ -105,11 +105,6 @@ QString QDBusMessage::errorMessage() const
 DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDBusConnection::ConnectionCapabilities capabilities,
                                                 QDBusError *error)
 {
-    if (!qdbus_loadLibDBus()) {
-        *error = QDBusError(QDBusError::Failed, QLatin1String("Could not open lidbus-1 library"));
-        return 0;
-    }
-
     DBusMessage *msg = 0;
     const QDBusMessagePrivate *d_ptr = message.d_ptr;
 

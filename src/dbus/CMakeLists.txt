@@ -1,6 +1,5 @@
 add_definitions(
     -DQT_BUILD_DBUS_LIB
-    -UQT_LINKED_LIBDBUS
     -DDBUS_API_SUBJECT_TO_CHANGE
 )
 set(EXTRA_DBUS_LIBS KtCore KtXml ${DBUS_LIBRARIES})
@@ -91,7 +90,6 @@ set(DBUS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscontext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingcall.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingreply.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdbus_symbols.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusservicewatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusunixfiledescriptor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusvirtualobject.cpp

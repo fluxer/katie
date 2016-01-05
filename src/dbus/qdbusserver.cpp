@@ -66,10 +66,6 @@ QDBusServer::QDBusServer(const QString &address, QObject *parent)
     if (address.isEmpty())
         return;
 
-    if (!qdbus_loadLibDBus()) {
-        d = 0;
-        return;
-    }
     d = new QDBusConnectionPrivate(this);
 
     QObject::connect(d, SIGNAL(newServerConnection(QDBusConnection)),

@@ -331,10 +331,6 @@ QDBusConnection QDBusConnection::connectToBus(BusType type, const QString &name)
 {
 //    Q_ASSERT_X(QCoreApplication::instance(), "QDBusConnection::addConnection",
 //               "Cannot create connection without a Q[Core]Application instance");
-    if (!qdbus_loadLibDBus()) {
-        QDBusConnectionPrivate *d = 0;
-        return QDBusConnection(d);
-    }
 
     QMutexLocker locker(&_q_manager()->mutex);
 
@@ -378,10 +374,6 @@ QDBusConnection QDBusConnection::connectToBus(const QString &address,
 {
 //    Q_ASSERT_X(QCoreApplication::instance(), "QDBusConnection::addConnection",
 //               "Cannot create connection without a Q[Core]Application instance");
-    if (!qdbus_loadLibDBus()) {
-        QDBusConnectionPrivate *d = 0;
-        return QDBusConnection(d);
-    }
 
     QMutexLocker locker(&_q_manager()->mutex);
 
@@ -421,10 +413,6 @@ QDBusConnection QDBusConnection::connectToPeer(const QString &address,
 {
 //    Q_ASSERT_X(QCoreApplication::instance(), "QDBusConnection::addConnection",
 //               "Cannot create connection without a Q[Core]Application instance");
-    if (!qdbus_loadLibDBus()) {
-        QDBusConnectionPrivate *d = 0;
-        return QDBusConnection(d);
-    }
 
     QMutexLocker locker(&_q_manager()->mutex);
 

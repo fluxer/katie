@@ -68,9 +68,6 @@ QDBusArgumentPrivate::~QDBusArgumentPrivate()
 
 QByteArray QDBusArgumentPrivate::createSignature(int id)
 {
-    if (!qdbus_loadLibDBus())
-        return "";
-
     QByteArray signature;
     QDBusMarshaller *marshaller = new QDBusMarshaller(0);
     marshaller->ba = &signature;
@@ -290,11 +287,6 @@ bool QDBusArgumentPrivate::checkReadAndDetach(QDBusArgumentPrivate *&d)
 */
 QDBusArgument::QDBusArgument()
 {
-    if (!qdbus_loadLibDBus()) {
-        d = 0;
-        return;
-    }
-
     QDBusMarshaller *dd = new QDBusMarshaller(0);
     d = dd;
 

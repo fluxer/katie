@@ -61,30 +61,8 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined QT_LINKED_LIBDBUS
-
-void *qdbus_resolve_conditionally(const char *name); // doesn't print a warning
-void *qdbus_resolve_me(const char *name); // prints a warning
-bool qdbus_loadLibDBus();
-
-# define DEFINEFUNC(ret, func, args, argcall, funcret)          \
-    typedef ret (* _q_PTR_##func) args;                         \
-    static inline ret q_##func args                             \
-    {                                                           \
-        static _q_PTR_##func ptr;                               \
-        if (!ptr)                                               \
-            ptr = (_q_PTR_##func) qdbus_resolve_me(#func);      \
-        funcret ptr argcall;                                    \
-    }
-
-#else // defined QT_LINKED_LIBDBUS
-
-inline bool qdbus_loadLibDBus() { return true; }
-
-# define DEFINEFUNC(ret, func, args, argcall, funcret) \
+#define DEFINEFUNC(ret, func, args, argcall, funcret) \
     static inline ret q_##func args { funcret func argcall; }
-
-#endif // defined QT_LINKED_LIBDBUS
 
 /* dbus-bus.h */
 DEFINEFUNC(void, dbus_bus_add_match, (DBusConnection *connection,
