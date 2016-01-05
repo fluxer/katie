@@ -6785,7 +6785,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+2"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">מוזיקה</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -10126,7 +10126,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+1"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pause</translation>
     </message>
     <message>
         <location line="+1"/>

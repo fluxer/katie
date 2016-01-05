@@ -3989,7 +3989,7 @@ Deseja apagar de qualquer forma?</translation>
     <message>
         <location line="+366"/>
         <source>Unable to prepare statement</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Não foi possível preparar a expressão</translation>
     </message>
 </context>
 <context>
@@ -4745,7 +4745,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+15"/>
         <source>Unable to rollback transaction</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Não foi possível anular a transacção</translation>
     </message>
 </context>
 <context>

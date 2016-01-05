@@ -3989,7 +3989,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location line="+366"/>
         <source>Unable to prepare statement</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">No es posible preparar la instrucción</translation>
     </message>
 </context>
 <context>

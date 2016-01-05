@@ -6521,7 +6521,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/kernel/qsoftkeymanager.cpp" line="+60"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">موافق</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -6771,7 +6771,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+2"/>
         <source>Music</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">الموسيقى</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -10124,7 +10124,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+1"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">وقف</translation>
     </message>
     <message>
         <location line="+32"/>

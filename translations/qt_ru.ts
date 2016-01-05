@@ -10124,7 +10124,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+1"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pause</translation>
     </message>
     <message>
         <location line="+1"/>

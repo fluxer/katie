@@ -10122,7 +10122,7 @@ Ar norite jį perrašyti?</translation>
     <message>
         <location line="+1"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pauzė</translation>
     </message>
     <message>
         <location line="+1"/>

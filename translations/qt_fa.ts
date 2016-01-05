@@ -10119,12 +10119,12 @@ Do you want to overwrite it?</source>
     <message>
         <location line="+1"/>
         <source>Pause</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pause</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stop</translation>
     </message>
     <message>
         <location line="+32"/>

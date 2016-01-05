@@ -10144,7 +10144,7 @@ Veuillez choisir un nom de fichier différent.</translation>
     <message>
         <location line="+1"/>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arrêter</translation>
     </message>
     <message>
         <location line="+32"/>

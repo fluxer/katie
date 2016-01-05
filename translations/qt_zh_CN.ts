@@ -6530,7 +6530,7 @@ Please choose a different file name.</source>
     <message>
         <location filename="../src/gui/kernel/qsoftkeymanager.cpp" line="+60"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">确定</translation>
     </message>
     <message>
         <location line="+3"/>
