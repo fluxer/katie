@@ -101,7 +101,7 @@ if (QLatin1String(signal) == SIGNAL(propertyChanged(QString,QDBusVariant))) {
                                QLatin1String(CONNMAN_MANAGER_PATH),
                                QLatin1String(CONNMAN_MANAGER_INTERFACE),
                                QLatin1String("PropertyChanged"),
-                               this,SIGNAL(propertyChanged(const QString &, const QDBusVariant & )))) {
+                               this,SIGNAL(propertyChanged(QString,QDBusVariant)))) {
             qWarning() << "PropertyCHanged not connected";
         }
     }
@@ -111,7 +111,7 @@ if (QLatin1String(signal) == SIGNAL(propertyChanged(QString,QDBusVariant))) {
                                     QLatin1String(CONNMAN_MANAGER_PATH),
                                     QLatin1String(CONNMAN_MANAGER_INTERFACE),
                                     QLatin1String("StateChanged"),
-                                    this,SIGNAL(stateChanged(const QString&)))) {
+                                    this,SIGNAL(stateChanged(QString)))) {
             qWarning() << "StateChanged not connected";
 
         }
@@ -127,8 +127,8 @@ if (QLatin1String(signal) == SIGNAL(propertyChanged(QString,QDBusVariant))) {
                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
-        QObject::connect(helper,SIGNAL(propertyChangedContext(const QString &,const QString &,const QDBusVariant &)),
-                this,SIGNAL(propertyChangedContext(const QString &,const QString &,const QDBusVariant &)), Qt::UniqueConnection);
+        QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
+                this,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)), Qt::UniqueConnection);
     }
 }
 
@@ -390,7 +390,7 @@ void QConnmanProfileInterface::connectNotify(const char *signal)
 
 void QConnmanProfileInterface::disconnectNotify(const char *signal)
 {
-    if (QLatin1String(signal) == SIGNAL(propertyChanged(QString, QVariant))) {
+    if (QLatin1String(signal) == SIGNAL(propertyChanged(QString,QVariant))) {
 
     }
 }
@@ -464,8 +464,8 @@ void QConnmanServiceInterface::connectNotify(const char *signal)
                                QLatin1String("PropertyChanged"),
                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
-        QObject::connect(helper,SIGNAL(propertyChangedContext(const QString &,const QString &,const QDBusVariant &)),
-                this,SIGNAL(propertyChangedContext(const QString &,const QString &,const QDBusVariant &)), Qt::UniqueConnection);
+        QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
+                this,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)), Qt::UniqueConnection);
     }
 }
 
@@ -791,8 +791,8 @@ void QConnmanTechnologyInterface::connectNotify(const char *signal)
                                QLatin1String("PropertyChanged"),
                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
-        QObject::connect(helper,SIGNAL(propertyChangedContext(const QString &,const QString &,const QDBusVariant &)),
-                this,SIGNAL(propertyChangedContext(const QString &,const QString &,const QDBusVariant &)), Qt::UniqueConnection);
+        QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
+                this,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)), Qt::UniqueConnection);
     }
 }
 
@@ -859,13 +859,13 @@ void QConnmanAgentInterface::connectNotify(const char *signal)
 //                               this->path(),
 //                               QLatin1String(CONNMAN_NETWORK_INTERFACE),
 //                               QLatin1String("PropertyChanged"),
-//                               this,SIGNAL(propertyChanged(const QString &, QVariant &)));
+//                               this,SIGNAL(propertyChanged(QString,QVariant&)));
     }
 }
 
 void QConnmanAgentInterface::disconnectNotify(const char *signal)
 {
-    if (QLatin1String(signal) == SIGNAL(propertyChanged(QString, QDBusVariant))) {
+    if (QLatin1String(signal) == SIGNAL(propertyChanged(QString,QDBusVariant))) {
 
     }
 }

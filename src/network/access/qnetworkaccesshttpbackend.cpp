@@ -574,7 +574,7 @@ void QNetworkAccessHttpBackend::postRequest()
                 this, SLOT(replyDownloadProgressSlot(qint64,qint64)),
                 Qt::QueuedConnection);
         connect(delegate, SIGNAL(error(QNetworkReply::NetworkError,QString)),
-                this, SLOT(httpError(QNetworkReply::NetworkError, const QString)),
+                this, SLOT(httpError(QNetworkReply::NetworkError,QString)),
                 Qt::QueuedConnection);
 #ifndef QT_NO_OPENSSL
         connect(delegate, SIGNAL(sslConfigurationChanged(QSslConfiguration)),
@@ -592,7 +592,7 @@ void QNetworkAccessHttpBackend::postRequest()
 #endif
 #ifndef QT_NO_OPENSSL
         connect(delegate, SIGNAL(sslErrors(QList<QSslError>,bool*,QList<QSslError>*)),
-                this, SLOT(replySslErrors(const QList<QSslError> &, bool *, QList<QSslError> *)),
+                this, SLOT(replySslErrors(QList<QSslError>,bool*,QList<QSslError>*)),
                 Qt::BlockingQueuedConnection);
 #endif
         // This signal we will use to start the request.
@@ -621,7 +621,7 @@ void QNetworkAccessHttpBackend::postRequest()
             // From http thread to user thread:
             QObject::connect(forwardUploadDevice, SIGNAL(wantData(qint64)),
                              this, SLOT(wantUploadDataSlot(qint64)));
-            QObject::connect(forwardUploadDevice,SIGNAL(processedData(qint64, qint64)),
+            QObject::connect(forwardUploadDevice,SIGNAL(processedData(qint64,qint64)),
                              this, SLOT(sentUploadDataSlot(qint64,qint64)));
             connect(forwardUploadDevice, SIGNAL(resetData(bool*)),
                     this, SLOT(resetUploadDataSlot(bool*)),

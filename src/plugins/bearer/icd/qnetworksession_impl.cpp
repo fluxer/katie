@@ -355,8 +355,8 @@ void QNetworkSessionPrivateImpl::syncStateWithInterface()
     isOpen = false;
     opened = false;
 
-    connect(engine, SIGNAL(iapStateChanged(const QString&, uint)),
-            this, SLOT(iapStateChanged(const QString&, uint)));
+    connect(engine, SIGNAL(iapStateChanged(QString,uint)),
+            this, SLOT(iapStateChanged(QString,uint)));
 
     QObject::connect(q, SIGNAL(stateChanged(QNetworkSession::State)), this, SLOT(updateProxies(QNetworkSession::State)));
 

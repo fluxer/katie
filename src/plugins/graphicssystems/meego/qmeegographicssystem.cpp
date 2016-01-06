@@ -117,7 +117,7 @@ void QMeeGoGraphicsSystemSwitchHandler::addWidget(QWidget *widget)
 {
     if (widget != qt_gl_share_widget() && !m_widgets.contains(widget)) {
         widget->installEventFilter(this);
-        connect(widget, SIGNAL(destroyed(QObject *)), this, SLOT(removeWidget(QObject *)));
+        connect(widget, SIGNAL(destroyed(QObject*)), this, SLOT(removeWidget(QObject*)));
         m_widgets << widget;
     }
 }
