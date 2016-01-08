@@ -350,9 +350,7 @@ public:
         inline bool operator!=(const iterator &o) { return operator!=(const_iterator(o)); }
 #endif
 
-    private:
-        // ### Qt 5: remove
-        inline operator bool() const { return false; }
+        friend class QMap<Key, T>;
     };
     friend class const_iterator;
 
