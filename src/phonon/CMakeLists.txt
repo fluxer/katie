@@ -238,7 +238,7 @@ if(WITH_GLIB2 AND GLIB2_FOUND AND WITH_PULSEAUDIO AND PULSEAUDIO_FOUND)
     )
     add_definitions(-DHAVE_PULSEAUDIO)
     include_directories(
-        ${GLIB2_INCLUDE_DIR}
+        ${GLIB2_INCLUDES}
         ${PULSEAUDIO_INCLUDE_DIR}
     )
 endif()

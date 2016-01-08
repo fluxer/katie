@@ -86,7 +86,7 @@ if(UNIX)
             ${CORE_HEADERS}
             ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_p.h
         )
-        include_directories(${GLIB2_INCLUDE_DIR})
+        include_directories(${GLIB2_INCLUDES})
         set(EXTRA_CORE_LIBS
             ${EXTRA_CORE_LIBS}
             ${GLIB2_LIBRARIES}

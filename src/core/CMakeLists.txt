@@ -303,7 +303,7 @@ if(WITH_GLIB2 AND GLIB2_FOUND)
         ${EXTRA_CORE_LIBS}
         ${GLIB2_LIBRARIES}
     )
-    include_directories(${GLIB2_INCLUDE_DIR})
+    include_directories(${GLIB2_INCLUDES})
 endif()
 
 if(WITH_ZLIB AND ZLIB_FOUND)

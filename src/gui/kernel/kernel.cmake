@@ -126,7 +126,7 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
             ${EXTRA_GUI_LIBS}
             ${GLIB2_LIBRARIES}
         )
-        include_directories(${GLIB2_INCLUDE_DIR})
+        include_directories(${GLIB2_INCLUDES})
     else()
         add_definitions(-DQT_NO_GLIB)
     endif()
@@ -208,9 +208,7 @@ elseif(KATIE_PLATFORM STREQUAL "qws")
             ${EXTRA_GUI_LIBS}
             ${GLIB2_LIBRARIES}
         )
-        include_directories(${GLIB2_INCLUDE_DIR})
-    else()
-        add_definitions(-DQT_NO_GLIB)
+        include_directories(${GLIB2_INCLUDES})
     endif()
 elseif(KATIE_PLATFORM STREQUAL "qpa")
     set(GUI_HEADERS
@@ -272,7 +270,7 @@ elseif(KATIE_PLATFORM STREQUAL "qpa")
             ${EXTRA_GUI_LIBS}
             ${GLIB2_LIBRARIES}
         )
-        include_directories(${GLIB2_INCLUDE_DIR})
+        include_directories(${GLIB2_INCLUDES})
         if(KATIE_PLATFORM STREQUAL "blackberry")
             set(GUI_HEADERS
                 ${GUI_HEADERS}

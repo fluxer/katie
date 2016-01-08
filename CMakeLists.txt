@@ -342,8 +342,8 @@ set_package_properties(HarfBuzz PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(GLIB2)
-set_package_properties(GLIB2 PROPERTIES
+find_package(GLib2)
+set_package_properties(GLib2 PROPERTIES
     PURPOSE "Required for glib mainloop support"
     DESCRIPTION "Core application building blocks for libraries and applications written in C"
     URL "https://developer.gnome.org/glib"
@@ -520,6 +520,10 @@ if(NOT WITH_DIRECTWRITE)
     katie_definition(-DQT_NO_DIRECTWRITE)
 endif()
 
+if(NOT WITH_OPENGL OR NOT OPENGL_FOUND)
+    katie_definition(-DQT_NO_OPENGL)
+endif()
+
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
@@ -536,8 +540,6 @@ if(NOT KATIE_BOOTSTRAP)
     add_subdirectory(src/network)
     if(WITH_OPENGL AND OPENGL_FOUND)
         add_subdirectory(src/opengl)
-    else()
-        katie_definition(-DQT_NO_OPENGL)
     endif()
     add_subdirectory(src/phonon)
     add_subdirectory(src/plugins)

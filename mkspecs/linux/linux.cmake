@@ -11,7 +11,7 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
         # -Wall -Wreturn-type -fno-strict-aliasing -Wcast-align
         # -Wchar-subscripts  -Wreturn-type -Wno-unused-parameter
         # -Wno-sign-compare -Wno-switch -Wno-switch-enum
-        # -Wundef -Wmissing-noreturn -Winit-self
+        # -Wundef -Wmissing-noreturn -Winit-self -Wunused-comparison
     )
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
