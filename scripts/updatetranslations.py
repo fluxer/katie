@@ -2,27 +2,28 @@
 
 import os, glob, subprocess, shlex
 
-components = ['core', 'declarative', 'gui', 'multimedia', 'network', 'opengl', 'plugins', 'script', 'scripttools', 'sql', 'svg', 'xml', 'xmlpatterns']
-tools = ['lrelease', 'uic', 'moc', 'lupdate', 'idc', 'qcollectiongenerator', 'rcc', 'lconvert', 'qhelpgenerator', 'qdbus']
+components = ('core', 'declarative', 'gui', 'multimedia', 'network', 'opengl',
+    'plugins', 'script', 'scripttools', 'sql', 'svg', 'xml', 'xmlpatterns')
+tools = ('lrelease', 'uic', 'moc', 'lupdate', 'idc', 'qcollectiongenerator',
+    'rcc', 'lconvert', 'qhelpgenerator', 'qdbus')
 cfiles = []
 tfiles = []
 
 def list_files(sdir):
-    slist = []
+    lfiles = []
     for root, subdirs, files in os.walk(sdir):
         for sfile in files:
-            slist.append('%s/%s' % (root, sfile))
-    return slist
+            if sfile.endswith(('.cpp', '.h', '.js')):
+                lfiles.append('%s/%s' % (root, sfile))
+    return lfiles
 
 for c in components:
     for f in list_files('src/%s' % c):
-        if f.endswith(('.cpp', '.h', '.js')):
             cfiles.append(f)
 
 for t in tools:
-    for f in list_files('src/%s' % c):
-        if f.endswith(('.cpp', '.js')):
-            tfiles.append(f)
+    for f in list_files('src/tools/%s' % t):
+        tfiles.append(f)
 
 for t in glob.glob('translations/qt*.ts'):
     if 'tools' in t:
