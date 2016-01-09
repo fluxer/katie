@@ -13,12 +13,18 @@ if(SQLITE_INCLUDES AND SQLITE_LIBRARIES)
     set(SQLITE_FIND_QUIETLY TRUE)
 endif()
 
+if(NOT WIN32)
+    include(FindPkgConfig)
+    pkg_check_modules(PC_SQLITE QUIET sqlite3)
+endif()
+
 find_path(SQLITE_INCLUDES
     NAMES
     sqlite3.h
     PATH_SUFFIXES sqlite3
     HINTS
     $ENV{SQLITEDIR}/include
+    ${PC_SQLITE_INCLUDEDIR}
     /usr/include
     /usr/local/include
     ${INCLUDE_INSTALL_DIR}
@@ -28,6 +34,7 @@ find_library(SQLITE_LIBRARIES
     sqlite3
     HINTS
     $ENV{SQLITEDIR}/lib
+    ${PC_SQLITE_LIBDIR}
     /usr/lib
     /usr/local/lib
     ${LIB_INSTALL_DIR}

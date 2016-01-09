@@ -13,6 +13,8 @@ if(NAS_INCLUDES AND NAS_LIBRARIES)
     set(NAS_FIND_QUIETLY TRUE)
 endif()
 
+# NAS does not provide pkg-config files
+
 find_path(NAS_INCLUDES
     NAMES
     audio.h

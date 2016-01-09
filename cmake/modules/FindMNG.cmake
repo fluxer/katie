@@ -13,12 +13,18 @@ if(MNG_INCLUDES AND MNG_LIBRARIES)
     set(MNG_FIND_QUIETLY TRUE)
 endif()
 
+if(NOT WIN32)
+    include(FindPkgConfig)
+    pkg_check_modules(PC_MNG QUIET libmng)
+endif()
+
 find_path(MNG_INCLUDES
     NAMES
     libmng.h
     PATH_SUFFIXES mng
     HINTS
     $ENV{MNGDIR}/include
+    ${PC_MNG_INCLUDEDIR}
     /usr/include
     /usr/local/include
     ${INCLUDE_INSTALL_DIR}
@@ -28,6 +34,7 @@ find_library(MNG_LIBRARIES
     mng
     HINTS
     $ENV{MNGDIR}/lib
+    ${PC_MNG_LIBDIR}
     /usr/lib
     /usr/local/lib
     ${LIB_INSTALL_DIR}

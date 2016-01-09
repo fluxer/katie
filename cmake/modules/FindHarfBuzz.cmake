@@ -13,12 +13,18 @@ if(HARFBUZZ_INCLUDES AND HARFBUZZ_LIBRARIES)
     set(HARFBUZZ_FIND_QUIETLY TRUE)
 endif()
 
+if(NOT WIN32)
+    include(FindPkgConfig)
+    pkg_check_modules(PC_HARFBUZZ QUIET harfbuzz)
+endif()
+
 find_path(HARFBUZZ_INCLUDES
     NAMES
     hb.h
     PATH_SUFFIXES harfbuzz
     HINTS
     $ENV{HARFBUZZDIR}/include
+    ${PC_HARFBUZZ_INCLUDEDIR}
     /usr/include
     /usr/local/include
     ${INCLUDE_INSTALL_DIR}
@@ -28,6 +34,7 @@ find_library(HARFBUZZ_LIBRARIES
     harfbuzz
     HINTS
     $ENV{HARFBUZZDIR}/lib
+    ${PC_HARFBUZZ_LIBDIR}
     /usr/lib
     /usr/local/lib
     ${LIB_INSTALL_DIR}

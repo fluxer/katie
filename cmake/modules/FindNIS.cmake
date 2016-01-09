@@ -13,6 +13,8 @@ if(NIS_INCLUDES AND NIS_LIBRARIES)
     set(NIS_FIND_QUIETLY TRUE)
 endif()
 
+# NIS does not provide pkg-config files
+
 find_path(NIS_INCLUDES
     NAMES
     rpc/rpc.h

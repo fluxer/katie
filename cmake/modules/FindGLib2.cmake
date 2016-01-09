@@ -14,12 +14,18 @@ if(GLIB2_INCLUDES AND GLIB2_LIBRARIES)
     set(GLIB2_FIND_QUIETLY TRUE)
 endif()
 
+if(NOT WIN32)
+    include(FindPkgConfig)
+    pkg_check_modules(PC_GLIB2 QUIET glib-2.0)
+endif()
+
 find_path(GLIB2_INCLUDES
     NAMES
     glib.h
     PATH_SUFFIXES glib-2.0
     HINTS
     $ENV{GLIB2DIR}/include
+    ${PC_GLIB2_INCLUDEDIR}
     /usr/include
     /usr/local/include
     ${INCLUDE_INSTALL_DIR}
@@ -31,6 +37,7 @@ find_path(GLIB2_CONFIG_INCLUDES
     PATH_SUFFIXES glib-2.0/include
     HINTS
     $ENV{GLIB2DIR}/include
+    ${PC_GLIB2_INCLUDEDIR}
     /usr/include
     /usr/local/include
     /usr/lib
@@ -46,6 +53,7 @@ find_library(GLIB2_LIBRARIES
     glib-2.0
     HINTS
     $ENV{GLIB2DIR}/lib
+    ${PC_GLIB2_LIBDIR}
     /usr/lib
     /usr/local/lib
     ${LIB_INSTALL_DIR}
@@ -53,3 +61,5 @@ find_library(GLIB2_LIBRARIES
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(GLib2 DEFAULT_MSG GLIB2_INCLUDES GLIB2_CONFIG_INCLUDES GLIB2_LIBRARIES)
+
+mark_as_advanced(GLIB2_INCLUDES GLIB2_CONFIG_INCLUDES GLIB2_LIBRARIES)
