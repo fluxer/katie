@@ -129,14 +129,6 @@ void WriteIncludes::acceptUI(DomUI *node)
         qWarning("%s: Warning: The form file has external pixmaps or qPixmapFromMimeSource() set as a pixmap function. "
                  "This requires Qt 3 support, which is disabled. The resulting code will not compile.",
                  qPrintable(m_uic->option().messagePrefix()));
-        add(QLatin1String("Q3MimeSourceFactory"));
-    }
-
-    if (m_uic->databaseInfo()->connections().size()) {
-        add(QLatin1String("QSqlDatabase"));
-        add(QLatin1String("Q3SqlCursor"));
-        add(QLatin1String("QSqlRecord"));
-        add(QLatin1String("Q3SqlForm"));
     }
 
     TreeWalker::acceptUI(node);
@@ -244,10 +236,6 @@ void WriteIncludes::add(const QString &className, bool determineHeader, const QS
         return;
     }
 
-    if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("Q3ListView"))  ||
-        m_uic->customWidgetsInfo()->extends(className, QLatin1String("Q3Table"))) {
-        add(QLatin1String("Q3Header"));
-    }
     if (determineHeader)
         insertIncludeForClass(className, header, global);
 }

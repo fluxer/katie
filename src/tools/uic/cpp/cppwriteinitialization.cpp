@@ -636,7 +636,7 @@ void WriteInitialization::acceptWidget(DomWidget *node)
 
     const QString savedParentWidget = parentWidget;
 
-    if (m_uic->isContainer(parentClass) || m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("Q3ToolBar")))
+    if (m_uic->isContainer(parentClass))
         parentWidget.clear();
 
     if (m_widgetChain.size() != 1)
@@ -652,8 +652,6 @@ void WriteInitialization::acceptWidget(DomWidget *node)
         initializeTreeWidget(node);
     } else if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("QTableWidget"))) {
         initializeTableWidget(node);
-    } else if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("Q3DataBrowser"))) {
-        initializeQ3SqlDataBrowser(node);
     }
 
     if (m_uic->isButton(className))
@@ -694,12 +692,10 @@ void WriteInitialization::acceptWidget(DomWidget *node)
         id = pid->elementNumber();
     }
 
-    if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QMainWindow"))
-            || m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("Q3MainWindow"))) {
+    if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QMainWindow"))) {
 
         if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("QMenuBar"))) {
-            if (!m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("Q3MainWindow")))
-                m_output << m_indent << parentWidget << "->setMenuBar(" << varName <<");\n";
+            m_output << m_indent << parentWidget << "->setMenuBar(" << varName <<");\n";
         } else if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("QToolBar"))) {
             m_output << m_indent << parentWidget << "->addToolBar("
                      << toolBarAreaStringFromDOMAttributes(attributes) << varName << ");\n";
@@ -721,9 +717,8 @@ void WriteInitialization::acceptWidget(DomWidget *node)
             m_output << m_indent << parentWidget << "->addDockWidget(" << area << varName << ");\n";
         } else if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("QStatusBar"))) {
             m_output << m_indent << parentWidget << "->setStatusBar(" << varName << ");\n";
-        } else if (!m_uic->customWidgetsInfo()->extends(className, QLatin1String("Q3DockWindow"))
-                   && !m_uic->customWidgetsInfo()->extends(className, QLatin1String("Q3ToolBar"))) {
-                m_output << m_indent << parentWidget << "->setCentralWidget(" << varName << ");\n";
+        } else {
+            m_output << m_indent << parentWidget << "->setCentralWidget(" << varName << ");\n";
         }
     }
 
@@ -735,8 +730,6 @@ void WriteInitialization::acceptWidget(DomWidget *node)
         m_output << m_indent << parentWidget << "->addWidget(" << varName << ");\n";
     } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QToolBar"))) {
         m_output << m_indent << parentWidget << "->addWidget(" << varName << ");\n";
-    } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("Q3WidgetStack"))) {
-        m_output << m_indent << parentWidget << "->addWidget(" << varName << ", " << id << ");\n";
     } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QDockWidget"))) {
         m_output << m_indent << parentWidget << "->setWidget(" << varName << ");\n";
     } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("QScrollArea"))) {
@@ -797,15 +790,6 @@ void WriteInitialization::acceptWidget(DomWidget *node)
                        << parentWidget << "->indexOf(" << varName << "), " << autoTrCall(pwhatsThis->elementString()) << ");\n";
         }
 #endif // QT_NO_WHATSTHIS
-    } else if (m_uic->customWidgetsInfo()->extends(parentClass, QLatin1String("Q3Wizard"))) {
-        const DomProperty *ptitle = attributes.value(QLatin1String("title"));
-        DomString *ptitleString = ptitle ? ptitle->elementString() : 0;
-
-        m_output << m_indent << parentWidget << "->addPage(" << varName << ", " << noTrCall(ptitleString, pageDefaultString) << ");\n";
-
-        autoTrOutput(ptitleString, pageDefaultString) << m_indent << parentWidget << "->setTitle("
-                   << varName << ", " << autoTrCall(ptitleString, pageDefaultString) << ");\n";
-
     }
 
     //
@@ -923,55 +907,19 @@ void WriteInitialization::acceptLayout(DomLayout *node)
     const DomPropertyMap properties = propertyMap(node->elementProperty());
     const bool oldLayoutProperties = properties.constFind(QLatin1String("margin")) != properties.constEnd();
 
-    bool isGroupBox = false;
-
-    if (m_widgetChain.top()) {
-        const QString parentWidget = m_widgetChain.top()->attributeClass();
-
-        if (!m_layoutChain.top() && (m_uic->customWidgetsInfo()->extends(parentWidget, QLatin1String("Q3GroupBox"))
-                        || m_uic->customWidgetsInfo()->extends(parentWidget, QLatin1String("Q3ButtonGroup")))) {
-            const QString parent = m_driver->findOrInsertWidget(m_widgetChain.top());
-
-            isGroupBox = true;
-            // special case for group box
-
-            m_output << m_indent << parent << "->setColumnLayout(0, Qt::Vertical);\n";
-            QString objectName = parent;
-            objectName += QLatin1String("->layout()");
-            int marginType = Use43UiFile;
-            if (oldLayoutProperties)
-                marginType = m_layoutMarginType;
-
-            m_LayoutDefaultHandler.writeProperties(m_indent,
-                                    objectName, properties, marginType, false, m_output);
-        }
-    }
-
     m_output << m_indent << varName << " = new " << className << '(';
 
-    if (!m_layoutChain.top() && !isGroupBox)
+    if (!m_layoutChain.top())
         m_output << m_driver->findOrInsertWidget(m_widgetChain.top());
 
     m_output << ");\n";
 
-    if (isGroupBox) {
-        const QString tempName = m_driver->unique(QLatin1String("boxlayout"));
-        m_output << m_indent << "QBoxLayout *" << tempName << " = qobject_cast<QBoxLayout *>(" <<
-                    m_driver->findOrInsertWidget(m_widgetChain.top()) << "->layout());\n";
-        m_output << m_indent << "if (" << tempName << ")\n";
-        m_output << m_dindent << tempName << "->addLayout(" << varName << ");\n";
-    }
-
-    if (isGroupBox) {
-        m_output << m_indent << varName << "->setAlignment(Qt::AlignTop);\n";
-    }  else {
-        // Suppress margin on a read child layout
-        const bool suppressMarginDefault = m_layoutChain.top();
-        int marginType = Use43UiFile;
-        if (oldLayoutProperties)
-            marginType = m_layoutMarginType;
-        m_LayoutDefaultHandler.writeProperties(m_indent, varName, properties, marginType, suppressMarginDefault, m_output);
-    }
+    // Suppress margin on a read child layout
+    const bool suppressMarginDefault = m_layoutChain.top();
+    int marginType = Use43UiFile;
+    if (oldLayoutProperties)
+        marginType = m_layoutMarginType;
+    m_LayoutDefaultHandler.writeProperties(m_indent, varName, properties, marginType, suppressMarginDefault, m_output);
 
     m_layoutMarginType = SubLayoutMargin;
 
@@ -1165,11 +1113,6 @@ void WriteInitialization::acceptActionRef(DomActionRef *node)
         return;
     } else if (DomWidget *w = m_driver->widgetByName(actionName)) {
         isMenu = m_uic->isMenu(w->attributeClass());
-        bool inQ3ToolBar = m_uic->customWidgetsInfo()->extends(m_widgetChain.top()->attributeClass(), QLatin1String("Q3ToolBar"));
-        if (!isMenu && inQ3ToolBar) {
-            m_actionOut << m_indent << actionName << "->setParent(" << varName << ");\n";
-            return;
-        }
     } else if (!(m_driver->actionByName(actionName) || isSeparator)) {
         fprintf(stderr, "%s: Warning: action `%s' not declared\n",
                 qPrintable(m_option.messagePrefix()),
@@ -1205,8 +1148,6 @@ void WriteInitialization::writeProperties(const QString &varName,
         }
     }
 
-    DomWidget *buttonGroupWidget = findWidget(QLatin1String("Q3ButtonGroup"));
-
     QString indent;
     if (!m_widgetChain.top()) {
         indent = m_option.indent;
@@ -1231,11 +1172,6 @@ void WriteInitialization::writeProperties(const QString &varName,
         if (isTopLevel && propertyName == QLatin1String("geometry") && p->elementRect()) {
             const DomRect *r = p->elementRect();
             m_output << m_indent << varName << "->resize(" << r->elementWidth() << ", " << r->elementHeight() << ");\n";
-            continue;
-        } else if (propertyName == QLatin1String("buttonGroupId")) { // Q3ButtonGroup support
-            if (buttonGroupWidget)
-                m_output << m_indent << m_driver->findOrInsertWidget(buttonGroupWidget) << "->insert("
-                         << varName << ", " << p->elementNumber() << ");\n";
             continue;
         } else if (propertyName == QLatin1String("currentRow") // QListWidget::currentRow
                     && m_uic->customWidgetsInfo()->extends(className, QLatin1String("QListWidget"))) {
@@ -1552,16 +1488,7 @@ void WriteInitialization::writeProperties(const QString &varName,
         }
     }
     if (leftMargin != -1 || topMargin != -1 || rightMargin != -1 || bottomMargin != -1) {
-        QString objectName = varName;
-        if (m_widgetChain.top()) {
-            const QString parentWidget = m_widgetChain.top()->attributeClass();
-
-            if (!m_layoutChain.top() && (m_uic->customWidgetsInfo()->extends(parentWidget, QLatin1String("Q3GroupBox"))
-                        || m_uic->customWidgetsInfo()->extends(parentWidget, QLatin1String("Q3ButtonGroup")))) {
-                objectName = m_driver->findOrInsertWidget(m_widgetChain.top()) + QLatin1String("->layout()");
-            }
-        }
-        m_output << m_indent << objectName << QLatin1String("->setContentsMargins(")
+        m_output << m_indent << varName << QLatin1String("->setContentsMargins(")
                  << leftMargin << QLatin1String(", ")
                  << topMargin << QLatin1String(", ")
                  << rightMargin << QLatin1String(", ")
@@ -2386,86 +2313,6 @@ QString WriteInitialization::trCall(const QString &str, const QString &commentHi
 
     result += QLatin1Char(')');
     return result;
-}
-
-void WriteInitialization::initializeQ3SqlDataTable(DomWidget *w)
-{
-    const DomPropertyMap properties = propertyMap(w->elementProperty());
-
-    const DomProperty *frameworkCode = properties.value(QLatin1String("frameworkCode"), 0);
-    if (frameworkCode && toBool(frameworkCode->elementBool()) == false)
-        return;
-
-    QString connection;
-    QString table;
-    QString field;
-
-    const DomProperty *db = properties.value(QLatin1String("database"), 0);
-    if (db && db->elementStringList()) {
-        const QStringList info = db->elementStringList()->elementString();
-        connection = info.size() > 0 ? info.at(0) : QString();
-        table = info.size() > 1 ? info.at(1) : QString();
-        field = info.size() > 2 ? info.at(2) : QString();
-    }
-
-    if (table.isEmpty() || connection.isEmpty()) {
-        fprintf(stderr, "%s: Warning: Invalid database connection\n", qPrintable(m_option.messagePrefix()));
-        return;
-    }
-
-   const QString varName = m_driver->findOrInsertWidget(w);
-
-    m_output << m_indent << "if (!" << varName << "->sqlCursor()) {\n";
-
-    m_output << m_dindent << varName << "->setSqlCursor(";
-
-    if (connection == QLatin1String("(default)")) {
-        m_output << "new Q3SqlCursor(" << fixString(table, m_dindent) << "), false, true);\n";
-    } else {
-        m_output << "new Q3SqlCursor(" << fixString(table, m_dindent) << ", true, " << connection << "Connection" << "), false, true);\n";
-    }
-    m_output << m_dindent << varName << "->refresh(Q3DataTable::RefreshAll);\n";
-    m_output << m_indent << "}\n";
-}
-
-void WriteInitialization::initializeQ3SqlDataBrowser(DomWidget *w)
-{
-    const DomPropertyMap properties = propertyMap(w->elementProperty());
-
-    const DomProperty *frameworkCode = properties.value(QLatin1String("frameworkCode"), 0);
-    if (frameworkCode && toBool(frameworkCode->elementBool()) == false)
-        return;
-
-    QString connection;
-    QString table;
-    QString field;
-
-    const DomProperty *db = properties.value(QLatin1String("database"), 0);
-    if (db && db->elementStringList()) {
-        const QStringList info = db->elementStringList()->elementString();
-        connection = info.size() > 0 ? info.at(0) : QString();
-        table = info.size() > 1 ? info.at(1) : QString();
-        field = info.size() > 2 ? info.at(2) : QString();
-    }
-
-    if (table.isEmpty() || connection.isEmpty()) {
-        fprintf(stderr, "%s: Warning: Invalid database connection\n", qPrintable(m_option.messagePrefix()));
-        return;
-    }
-
-    const QString varName = m_driver->findOrInsertWidget(w);
-
-    m_output << m_indent << "if (!" << varName << "->sqlCursor()) {\n";
-
-    m_output << m_dindent << varName << "->setSqlCursor(";
-
-    if (connection == QLatin1String("(default)")) {
-        m_output << "new Q3SqlCursor(" << fixString(table, m_dindent) << "), true);\n";
-    } else {
-        m_output << "new Q3SqlCursor(" << fixString(table, m_dindent) << ", true, " << connection << "Connection" << "), false, true);\n";
-    }
-    m_output << m_dindent << varName << "->refresh();\n";
-    m_output << m_indent << "}\n";
 }
 
 void WriteInitialization::initializeMenu(DomWidget *w, const QString &/*parentWidget*/)

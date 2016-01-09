@@ -250,12 +250,6 @@ private:
     QString disableSorting(DomWidget *w, const QString &varName);
     void enableSorting(DomWidget *w, const QString &varName, const QString &tempName);
 
-//
-// Sql
-//
-    void initializeQ3SqlDataTable(DomWidget *w);
-    void initializeQ3SqlDataBrowser(DomWidget *w);
-
     QString findDeclaration(const QString &name);
     DomWidget *findWidget(const QLatin1String &widgetClass);
     DomImage *findImage(const QString &name) const;
