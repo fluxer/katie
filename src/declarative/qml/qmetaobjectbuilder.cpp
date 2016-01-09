@@ -715,21 +715,13 @@ void QMetaObjectBuilder::addMetaObject
     }
 
     if ((members & RelatedMetaObjects) != 0) {
+        Q_ASSERT(priv(prototype->d.data)->revision >= 6);
 #ifdef Q_NO_DATA_RELOCATION
         const QMetaObjectAccessor *objects = 0;
 #else
         const QMetaObject **objects;
-        if (priv(prototype->d.data)->revision < 2) {
-            objects = (const QMetaObject **)(prototype->d.extradata);
-        } else
 #endif
-        {
-            const QMetaObjectExtraData *extra = (const QMetaObjectExtraData *)(prototype->d.extradata);
-            if (extra)
-                objects = extra->objects;
-            else
-                objects = 0;
-        }
+        objects = prototype->d.relatedMetaObjects;
         if (objects) {
             while (*objects != 0) {
                 addRelatedMetaObject(*objects);
@@ -739,11 +731,10 @@ void QMetaObjectBuilder::addMetaObject
     }
 
     if ((members & StaticMetacall) != 0) {
+        Q_ASSERT(priv(prototype->d.data)->revision >= 6);
         if (priv(prototype->d.data)->revision >= 6) {
-            const QMetaObjectExtraData *extra =
-                (const QMetaObjectExtraData *)(prototype->d.extradata);
-            if (extra && extra->static_metacall)
-                setStaticMetacallFunction(extra->static_metacall);
+            if (prototype->d.static_metacall)
+                setStaticMetacallFunction(prototype->d.static_metacall);
         }
     }
 }
@@ -1123,7 +1114,7 @@ static QByteArray buildParameterNames
 // Build a QMetaObject in "buf" based on the information in "d".
 // If "buf" is null, then return the number of bytes needed to
 // build the QMetaObject.  Returns -1 if the metaobject if 
-// relocatable is set, but the metaobject contains extradata.
+// relocatable is set, but the metaobject contains relatedMetaObjects.
 static int buildMetaObject(QMetaObjectBuilderPrivate *d, char *buf, 
                            bool relocatable)
 {
@@ -1143,7 +1134,9 @@ static int buildMetaObject(QMetaObjectBuilderPrivate *d, char *buf,
     ALIGN(size, int);
     if (buf) {
         if (!relocatable) meta->d.superdata = d->superClass;
+        meta->d.relatedMetaObjects = 0;
         meta->d.extradata = 0;
+        meta->d.static_metacall = d->staticMetacallFunction;
     }
 
     // Populate the QMetaObjectPrivate structure.
@@ -1349,13 +1342,8 @@ static int buildMetaObject(QMetaObjectBuilderPrivate *d, char *buf,
     if (buf)
         data[enumIndex] = 0;
 
-    // Create the extradata block if we need one.
-    if (d->relatedMetaObjects.size() > 0 || d->staticMetacallFunction) {
-        ALIGN(size, QMetaObject **);
-        ALIGN(size, QMetaObjectBuilder::StaticMetacallFunction);
-        QMetaObjectExtraData *extra =
-            reinterpret_cast<QMetaObjectExtraData *>(buf + size);
-        size += sizeof(QMetaObjectExtraData);
+    // Create the relatedMetaObjects block if we need one.
+    if (d->relatedMetaObjects.size() > 0) {
         ALIGN(size, QMetaObject *);
 #ifdef Q_NO_DATA_RELOCATION
         QMetaObjectAccessor *objects =
@@ -1365,19 +1353,12 @@ static int buildMetaObject(QMetaObjectBuilderPrivate *d, char *buf,
             reinterpret_cast<const QMetaObject **>(buf + size);
 #endif
         if (buf) {
-            if (d->relatedMetaObjects.size() > 0) {
-                extra->objects = objects;
-                for (index = 0; index < d->relatedMetaObjects.size(); ++index)
-                    objects[index] = d->relatedMetaObjects[index];
-                objects[index] = 0;
-            } else {
-                extra->objects = 0;
-            }
-            extra->static_metacall = d->staticMetacallFunction;
-            meta->d.extradata = reinterpret_cast<void *>(extra);
+            meta->d.relatedMetaObjects = objects;
+            for (index = 0; index < d->relatedMetaObjects.size(); ++index)
+                objects[index] = d->relatedMetaObjects[index];
+            objects[index] = 0;
         }
-        if (d->relatedMetaObjects.size() > 0)
-            size += sizeof(QMetaObject *) * (d->relatedMetaObjects.size() + 1);
+        size += sizeof(QMetaObject *) * (d->relatedMetaObjects.size() + 1);
     }
 
     // Align the final size and return it.
@@ -1459,6 +1440,7 @@ void QMetaObjectBuilder::fromRelocatableData(QMetaObject *output,
     output->d.stringdata = buf + stringdataOffset;
     output->d.data = reinterpret_cast<const uint *>(buf + dataOffset);
     output->d.extradata = 0;
+    output->d.relatedMetaObjects = 0;
 }
 
 /*!

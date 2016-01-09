@@ -2881,9 +2881,8 @@ bool QMetaObjectPrivate::connect(const QObject *sender, int signal_index,
     QObject *r = const_cast<QObject *>(receiver);
 
     int method_offset = rmeta ? rmeta->methodOffset() : 0;
-    QObjectPrivate::StaticMetaCallFunction callFunction =
-        (rmeta && QMetaObjectPrivate::get(rmeta)->revision >= 6 && rmeta->d.extradata)
-        ? reinterpret_cast<const QMetaObjectExtraData *>(rmeta->d.extradata)->static_metacall : 0;
+    Q_ASSERT(!rmeta || QMetaObjectPrivate::get(rmeta)->revision >= 6);
+    QObjectPrivate::StaticMetaCallFunction callFunction = rmeta ? rmeta->d.static_metacall : 0;
 
     QOrderedMutexLocker locker(signalSlotLock(sender),
                                signalSlotLock(receiver));

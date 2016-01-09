@@ -218,20 +218,11 @@ QObject *QMetaObject::newInstance(QGenericArgument val0,
 */
 int QMetaObject::static_metacall(Call cl, int idx, void **argv) const
 {
-    const QMetaObjectExtraData *extra = reinterpret_cast<const QMetaObjectExtraData *>(d.extradata);
-    if (priv(d.data)->revision >= 6) {
-        if (!extra || !extra->static_metacall)
-            return 0;
-        extra->static_metacall(0, cl, idx, argv);
-        return -1;
-    } else if (priv(d.data)->revision >= 2) {
-        if (!extra || !extra->static_metacall)
-            return 0;
-        typedef int (*OldMetacall)(QMetaObject::Call, int, void **);
-        OldMetacall o = reinterpret_cast<OldMetacall>(extra->static_metacall);
-        return o(cl, idx, argv);
-    }
-    return 0;
+    Q_ASSERT(priv(d.data)->revision >= 6);
+    if (!d.static_metacall)
+        return 0;
+    d.static_metacall(0, cl, idx, argv);
+    return -1;
 }
 
 /*!
@@ -654,20 +645,14 @@ static const QMetaObject *QMetaObject_findMetaObject(const QMetaObject *self, co
     while (self) {
         if (strcmp(self->d.stringdata, name) == 0)
             return self;
-        if (self->d.extradata) {
+        if (self->d.relatedMetaObjects) {
+            Q_ASSERT(priv(self->d.data)->revision >= 6);
 #ifdef Q_NO_DATA_RELOCATION
             const QMetaObjectAccessor *e;
-            Q_ASSERT(priv(self->d.data)->revision >= 2);
 #else
             const QMetaObject **e;
-            if (priv(self->d.data)->revision < 2) {
-                e = (const QMetaObject**)(self->d.extradata);
-            } else
 #endif
-            {
-                const QMetaObjectExtraData *extra = (const QMetaObjectExtraData*)(self->d.extradata);
-                e = extra->objects;
-            }
+            e = self->d.relatedMetaObjects;
             if (e) {
                 while (*e) {
 #ifdef Q_NO_DATA_RELOCATION
@@ -1638,9 +1623,8 @@ bool QMetaMethod::invoke(QObject *object,
     // recompute the methodIndex by reversing the arithmetic in QMetaObject::property()
     int idx_relative = ((handle - priv(mobj->d.data)->methodData) / 5);
     int idx_offset =  mobj->methodOffset();
-    QObjectPrivate::StaticMetaCallFunction callFunction =
-        (QMetaObjectPrivate::get(mobj)->revision >= 6 && mobj->d.extradata)
-        ? reinterpret_cast<const QMetaObjectExtraData *>(mobj->d.extradata)->static_metacall : 0;
+    Q_ASSERT(QMetaObjectPrivate::get(mobj)->revision >= 6);
+    QObjectPrivate::StaticMetaCallFunction callFunction = mobj->d.static_metacall;
 
     if (connectionType == Qt::DirectConnection) {
         if (callFunction) {
