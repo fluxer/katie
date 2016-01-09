@@ -37,7 +37,9 @@ find_path(GLIB2_CONFIG_INCLUDES
     PATH_SUFFIXES glib-2.0/include
     HINTS
     $ENV{GLIB2DIR}/include
+    $ENV{GLIB2DIR}/lib
     ${PC_GLIB2_INCLUDEDIR}
+    ${PC_GLIB2_LIBDIR}
     /usr/include
     /usr/local/include
     /usr/lib
