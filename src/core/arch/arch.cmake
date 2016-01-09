@@ -53,7 +53,7 @@ set(CORE_HEADERS
 # TODO: inline assembly check
 set(CORE_SOURCES
     ${CORE_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/arch/i386/qatomic_i386.s
+    # ${CMAKE_CURRENT_SOURCE_DIR}/arch/i386/qatomic_${KATIE_ARCHITECTURE}.s
 )
 
 if(UNIX)
