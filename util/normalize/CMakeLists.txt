@@ -16,5 +16,5 @@ set(NORMALIZE_SOURCES
 katie_resources(${NORMALIZE_SOURCES})
 katie_setup_flags()
 
-add_executable(normalize ${NORMALIZE_SOURCES})
+add_executable(normalize EXCLUDE_FROM_ALL ${NORMALIZE_SOURCES})
 target_link_libraries(normalize ${EXTRA_NORMALIZE_LIBS})

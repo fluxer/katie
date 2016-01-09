@@ -28,5 +28,5 @@ set(LEXGEN_HEADERS
 katie_resources(${LEXGEN_SOURCES} ${LEXGEN_HEADERS})
 katie_setup_flags()
 
-add_executable(lexgen ${LEXGEN_SOURCES} ${LEXGEN_HEADERS})
+add_executable(lexgen EXCLUDE_FROM_ALL ${LEXGEN_SOURCES} ${LEXGEN_HEADERS})
 target_link_libraries(lexgen ${EXTRA_LEXGEN_LIBS})

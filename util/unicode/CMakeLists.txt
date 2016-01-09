@@ -16,5 +16,5 @@ set(UNICODE_SOURCES
 katie_resources(${UNICODE_SOURCES})
 katie_setup_flags()
 
-add_executable(unicode ${UNICODE_SOURCES})
+add_executable(unicode EXCLUDE_FROM_ALL ${UNICODE_SOURCES})
 target_link_libraries(unicode ${EXTRA_UNICODE_LIBS})

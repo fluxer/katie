@@ -29,5 +29,5 @@ set(MAKEQPF_HEADERS
 katie_resources(${MAKEQPF_SOURCES} ${MAKEQPF_HEADERS})
 katie_setup_flags()
 
-add_executable(makeqpf ${MAKEQPF_SOURCES} ${MAKEQPF_HEADERS})
+add_executable(makeqpf EXCLUDE_FROM_ALL ${MAKEQPF_SOURCES} ${MAKEQPF_HEADERS})
 target_link_libraries(makeqpf ${EXTRA_MAKEQPF_LIBS})

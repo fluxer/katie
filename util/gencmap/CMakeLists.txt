@@ -18,5 +18,5 @@ set(GENCMAP_SOURCES
 katie_resources(${GENCMAP_SOURCES})
 katie_setup_flags()
 
-add_executable(gencmap ${GENCMAP_SOURCES})
+add_executable(gencmap EXCLUDE_FROM_ALL ${GENCMAP_SOURCES})
 target_link_libraries(gencmap ${EXTRA_GENCMAP_LIBS})
