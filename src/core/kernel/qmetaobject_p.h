@@ -100,7 +100,8 @@ enum MethodFlags  {
 };
 
 enum MetaObjectFlags {
-    DynamicMetaObject = 0x01
+    DynamicMetaObject = 0x01,
+    RequiresVariantMetaObject = 0x02
 };
 
 class QMutex;
