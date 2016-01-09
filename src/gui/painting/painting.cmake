@@ -244,7 +244,7 @@ else()
     )
 endif()
 
-if((UNIX OR KATIE_PLATFORM MATCHES "(qws|qpa)") AND WITH_CUPS AND CUPS_FOUND)
+if((UNIX AND NOT KATIE_PLATFORM STREQUAL "mac") OR KATIE_PLATFORM STREQUAL "qpa")
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
