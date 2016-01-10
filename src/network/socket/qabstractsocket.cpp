@@ -482,7 +482,6 @@ QAbstractSocketPrivate::QAbstractSocketPrivate()
       blockingTimeout(30000),
       connectTimer(0),
       disconnectTimer(0),
-      connectTimeElapsed(0),
       hostLookupId(-1),
       socketType(QAbstractSocket::UnknownSocketType),
       state(QAbstractSocket::UnconnectedState),
@@ -853,8 +852,6 @@ void QAbstractSocketPrivate::startConnectingByName(const QString &host)
     state = QAbstractSocket::ConnectingState;
     emit q->stateChanged(state);
 
-    connectTimeElapsed = 0;
-
     if (initSocketLayer(QAbstractSocket::UnknownNetworkLayerProtocol)) {
         if (socketEngine->connectToHostByName(host, port) ||
             socketEngine->state() == QAbstractSocket::ConnectingState) {
@@ -928,9 +925,6 @@ void QAbstractSocketPrivate::_q_startConnecting(const QHostInfo &hostInfo)
 
     // Report the successful host lookup
     emit q->hostFound();
-
-    // Reset the total time spent connecting.
-    connectTimeElapsed = 0;
 
     // The addresses returned by the lookup will be tested one after
     // another by _q_connectToNextAddress().
