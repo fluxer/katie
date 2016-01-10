@@ -115,22 +115,10 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_blitter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblittable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
-
-    # SIMD
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx3dnow.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse3dnow.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse2.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_ssse3.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_iwmmxt.cpp
-
-    # TODO: link to pixman for arm-neon?
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon_asm.S
 )
 
 katie_setup_sources(
+    GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx3dnow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse3dnow.cpp
@@ -138,6 +126,7 @@ katie_setup_sources(
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_ssse3.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_iwmmxt.cpp
+    # TODO: link to pixman for arm-neon?
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon_asm.S
 )

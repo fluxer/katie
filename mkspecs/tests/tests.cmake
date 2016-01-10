@@ -1,6 +1,6 @@
 ################################ CPU TESTS ################################
 
-function(KATIE_CPU_TEST _test _define _flag)
+macro(KATIE_CPU_TEST _test _define _flag)
     string(TOUPPER ${_test} uppertest)
     try_compile(
         _has_cpu_feature
@@ -16,21 +16,21 @@ function(KATIE_CPU_TEST _test _define _flag)
     message(STATUS "Host CPU supports ${uppertest}: ${_has_cpu_feature}")
     file(WRITE ${CMAKE_BINARY_DIR}/katie_tests/cpu/${_test}.log "${_cpu_feature_log}")
 
-    set(_${uppertest}_RESULT ${_has_cpu_feature} PARENT_SCOPE)
-endfunction()
+    set(KATIE_${uppertest}_RESULT ${_has_cpu_feature} CACHE BOOL "Host CPU supports ${uppertest}")
+endmacro()
 
 katie_cpu_test(3dnow 3DNOW 3dnow)
 katie_cpu_test(avx AVX avx)
 katie_cpu_test(mmx MMX mmx)
 katie_cpu_test(sse SSE sse)
 katie_cpu_test(sse2 SSE2 sse2)
-if(_SSE2_RESULT)
+if(KATIE_SSE2_RESULT)
     katie_cpu_test(sse3 SSE3 sse3)
-    if(_SSE3_RESULT)
+    if(KATIE_SSE3_RESULT)
         katie_cpu_test(ssse3 SSSE3 ssse3)
-        if(_SSSE3_RESULT)
+        if(KATIE_SSSE3_RESULT)
             katie_cpu_test(sse4_1 SSE4_1 sse4.1)
-            if(_SSE4_1_RESULT)
+            if(KATIE_SSE4_1_RESULT)
                 katie_cpu_test(sse4_2 SSE4_2 sse4.2)
             endif()
         endif()
@@ -38,7 +38,7 @@ if(_SSE2_RESULT)
 endif()
 if("${KATIE_ARCHITECTURE}" STREQUAL "arm")
     katie_cpu_test(iwmmxt IWMMXT cpu=iwmmxt)
-    if(NOT _IWMMXT_RESULT)
+    if(NOT KATIE_IWMMXT_RESULT)
         message(SEND_ERROR "Please make sure your compiler supports iWMMXt intrinsics!")
     endif()
     katie_cpu_test(neon NEON -mfpu=neon)
@@ -46,7 +46,7 @@ endif()
 
 ################################ MISC TESTS ################################
 
-function(KATIE_MISC_TEST _test _define)
+macro(KATIE_MISC_TEST _test _define)
     string(TOUPPER ${_test} uppertest)
     try_compile(
         _has_misc_feature
@@ -63,8 +63,8 @@ function(KATIE_MISC_TEST _test _define)
     message(STATUS "Host supports ${uppertest}: ${_has_misc_feature}")
     file(WRITE ${CMAKE_BINARY_DIR}/katie_tests/misc/${_test}.log "${_misc_feature_log}")
 
-    set(_${uppertest}_RESULT ${_has_misc_feature} PARENT_SCOPE)
-endfunction()
+    set(KATIE_${uppertest}_RESULT ${_has_misc_feature} CACHE BOOL "Host supports ${uppertest}")
+endmacro()
 
 katie_misc_test(stl STL)
 

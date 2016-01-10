@@ -67,13 +67,10 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxbmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler.cpp
-    # SIMD
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_neon.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_sse2.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_ssse3.cpp
 )
 
 katie_setup_sources(
+    GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_neon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_sse2.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_ssse3.cpp
