@@ -31,7 +31,7 @@ find_path(PULSEAUDIO_INCLUDES
 )
 
 find_library(PULSEAUDIO_LIBRARIES
-    mng
+    pulse
     HINTS
     $ENV{PULSEAUDIODIR}/lib
     ${PC_PULSEAUDIO_LIBDIR}
@@ -41,7 +41,7 @@ find_library(PULSEAUDIO_LIBRARIES
 )
 
 find_library(PULSEAUDIO_MAINLOOP_LIBRARIES
-    mng
+    pulse-mainloop-glib
     HINTS
     $ENV{PULSEAUDIODIR}/lib
     ${PC_PULSEAUDIO_MAINLOOP_LIBDIR}
