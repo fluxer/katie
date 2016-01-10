@@ -75,8 +75,6 @@ public:
     QString suffix;
     Qt::CaseSensitivity cs;
     QStringList loadedPaths;
-
-    void unloadPath(const QString &path);
 };
 
 QFactoryLoaderPrivate::~QFactoryLoaderPrivate()
