@@ -1,23 +1,24 @@
-Source: katie
+Source: katie-git
 Section: x11
 Priority: optional
 Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://github.com/fluxer/katie
-Vcs-Git: git://github.com/fluxer/katie
+Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
 Standards-Version: 4.8.7
 X-Python-Version: >= 2.7
 Build-Depends: debhelper (>= 9~), g++, python-dev (>= 2.7~), libssl-dev,
  zlib1g-dev, libc6-dev, libpng12-dev, libjpeg62-turbo-dev, libtiff5-dev,
  libmng-dev, libcups2-dev, libasound2-dev, libpulse-dev, libfreetype6-dev,
- libfontconfig1-dev, libicu-dev, libglib-2.0-dev, libdbus-1-dev, libgtk2.0-dev,
+ libfontconfig1-dev, libicu-dev, libglib2.0-dev, libdbus-1-dev, libgtk2.0-dev,
  libgl1-mesa-dev, libwayland-dev, unixodbc-dev, libpq-dev, libmysqld-dev,
- libsqlite3-dev, libvlc-dev, xorg-dev, cmake
+ libsqlite3-dev, libvlc-dev, xorg-dev, cmake, git
+
 Package: katie-git
 Architecture: i386 amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, openssl, zlib1g, libc6, libpng12,
  libjpeg62-turbo, libtiffxx5, libmng1, libcups2, libasound2, libpulse0, nas,
- libfreetype6, libfontconfig1, libicu52, libglib-2.0, libdbus-1, libgtk2.0,
+ libfreetype6, libfontconfig1, libicu52, libglib2.0, libdbus-1, libgtk2.0,
  libgl1-mesa-glx, libwayland-client0, libwayland-server0, libsqlite3
 Recommends: unixodbc, libpq5, libmysqlclient18, libvlc5, xorg
 Description: C++ toolkit derived from the Qt 4.8 framework
