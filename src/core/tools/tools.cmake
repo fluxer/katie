@@ -55,10 +55,6 @@ set(CORE_HEADERS
 
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h
-
-    # XXX: obsolete?
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmultihash.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qscopedarraypointer.h
 )
 
 set(CORE_SOURCES

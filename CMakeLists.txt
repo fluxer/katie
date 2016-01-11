@@ -574,6 +574,9 @@ add_subdirectory(util/xkbdatagen)
 
 # obsolete but still widely required headers
 katie_generate_obsolete(qtglobal.h QtCore qglobal.h)
+katie_generate_obsolete(qmultihash.h QtCore qhash.h)
+katie_generate_obsolete(qscopedarraypointer.h QtCore qscopedpointer.h)
+katie_generate_obsolete(qdate.h QtCore qdatetime.h)
 katie_generate_obsolete(qwizardpage.h QtGui qwizard.h)
 katie_generate_obsolete(qtimeedit.h QtGui qdatetimeedit.h)
 katie_generate_obsolete(qdateedit.h QtGui qdatetimeedit.h)
