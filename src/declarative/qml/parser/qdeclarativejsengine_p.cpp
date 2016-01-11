@@ -53,9 +53,6 @@ namespace QDeclarativeJS {
 uint qHash(const QDeclarativeJS::NameId &id)
 { return qHash(id.asString()); }
 
-QString numberToString(double value)
-{ return QString::number(value); }
-
 int Ecma::RegExp::flagFromChar(const QChar &ch)
 {
     static QHash<QChar, int> flagsHash;
