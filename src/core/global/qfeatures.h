@@ -639,11 +639,6 @@
 #define QT_NO_SVG
 #endif
 
-// Q3TabDialog
-#if !defined(QT_NO_TABDIALOG) && (defined(QT_NO_TABBAR))
-#define QT_NO_TABDIALOG
-#endif
-
 // QTextCodecPlugin
 #if !defined(QT_NO_TEXTCODECPLUGIN) && (defined(QT_NO_TEXTCODEC) || defined(QT_NO_LIBRARY))
 #define QT_NO_TEXTCODECPLUGIN

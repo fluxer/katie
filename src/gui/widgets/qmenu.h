@@ -194,7 +194,6 @@ private:
     friend class QMenuBar;
     friend class QMenuBarPrivate;
     friend class QTornOffMenu;
-    friend class Q3PopupMenu;
     friend class QComboBox;
     friend class QAction;
     friend class QToolButtonPrivate;

@@ -200,7 +200,6 @@ private:
 
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &in, const QKeySequence &ks);
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &in, QKeySequence &ks);
-    friend class Q3AccelManager;
     friend class QShortcutMap;
     friend class QShortcut;
 

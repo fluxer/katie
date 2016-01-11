@@ -80,7 +80,6 @@
 #cmakedefine QT_NO_PRINTDIALOG
 #cmakedefine QT_NO_PRINTPREVIEWDIALOG
 #cmakedefine QT_NO_PROGRESSDIALOG
-#cmakedefine QT_NO_TABDIALOG
 #cmakedefine QT_NO_WIZARD
 
 /* File I/O */

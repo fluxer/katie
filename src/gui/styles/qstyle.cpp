@@ -1149,7 +1149,7 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
 
     \value SC_ToolButton  Tool button (see also QToolButton).
     \value SC_ToolButtonMenu  Sub-control for opening a popup menu in a
-        tool button; see also Q3PopupMenu.
+        tool button; see also QMenu.
 
     \value SC_TitleBarSysMenu  System menu button (i.e., restore, close, etc.).
     \value SC_TitleBarMinButton  Minimize button.

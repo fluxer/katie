@@ -109,7 +109,6 @@ QStringList AccessibleFactory::keys() const
     list << QLatin1String("QStatusBar");
     list << QLatin1String("QProgressBar");
     list << QLatin1String("QMenuBar");
-    list << QLatin1String("Q3PopupMenu");
     list << QLatin1String("QMenu");
     list << QLatin1String("QHeaderView");
     list << QLatin1String("QTabBar");
@@ -252,8 +251,6 @@ QAccessibleInterface *AccessibleFactory::create(const QString &classname, QObjec
 #endif
 #ifndef QT_NO_MENU
     } else if (classname == QLatin1String("QMenu")) {
-        iface = new QAccessibleMenu(widget);
-    } else if (classname == QLatin1String("Q3PopupMenu")) {
         iface = new QAccessibleMenu(widget);
 #endif
 #ifndef QT_NO_ITEMVIEWS

@@ -190,7 +190,6 @@ private:
     friend class QApplication;
     friend class QApplicationPrivate;
     friend class QETWidget;
-    friend class Q3AccelManager;
     friend class QShortcutMap;
     friend class QWidget;
     friend class QWidgetPrivate;
