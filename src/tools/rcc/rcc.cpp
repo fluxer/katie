@@ -248,7 +248,6 @@ qint64 RCCFileInfo::writeDataBlob(RCCResourceLibrary &lib, qint64 offset,
     }
 
     // write the length
-
     lib.writeNumber4(data.size());
     if (text)
         lib.writeString("\n  ");

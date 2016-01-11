@@ -18,12 +18,10 @@ def list_files(sdir):
     return lfiles
 
 for c in components:
-    for f in list_files('src/%s' % c):
-            cfiles.append(f)
+    cfiles.extend(list_files('src/%s' % c))
 
 for t in tools:
-    for f in list_files('src/tools/%s' % t):
-        tfiles.append(f)
+    tfiles.extend(list_files('src/tools/%s' % t))
 
 for t in glob.glob('translations/qt*.ts'):
     if 'tools' in t:

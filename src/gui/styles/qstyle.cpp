@@ -1231,9 +1231,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \row \o \l{CC_TitleBar} \o \l QStyleOptionTitleBar
          \o \l State_Enabled \o Set if the title bar is enabled.
 
-    \row \o \l{CC_Q3ListView} \o \l QStyleOptionQ3ListView
-         \o \l State_Enabled \o Set if the list view is enabled.
-
     \endtable
 
     \sa drawPrimitive(), drawControl()
@@ -1542,7 +1539,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \row \o \l CT_ToolButton   \o \l QStyleOptionToolButton
     \row \o \l CT_ComboBox     \o \l QStyleOptionComboBox
     \row \o \l CT_Splitter     \o \l QStyleOption
-    \row \o \l CT_Q3DockWindow \o \l QStyleOptionQ3DockWindow
     \row \o \l CT_ProgressBar  \o \l QStyleOptionProgressBar
     \row \o \l CT_MenuItem     \o \l QStyleOptionMenuItem
     \endtable
