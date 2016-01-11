@@ -9,7 +9,7 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
         -fvisibility=hidden
         -fvisibility-inlines-hidden
         # -Wall -Wreturn-type -fno-strict-aliasing -Wcast-align
-        # -Wchar-subscripts  -Wreturn-type -Wno-unused-parameter
+        # -Wchar-subscripts  -Wunused-function -Wno-unused-parameter
         # -Wno-sign-compare -Wno-switch -Wno-switch-enum
         # -Wundef -Wmissing-noreturn -Winit-self -Wunused-comparison
     )

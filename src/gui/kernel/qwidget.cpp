@@ -11377,12 +11377,6 @@ void QWidget::languageChange() { }  // compat
 */
 
 /*!
-    \fn QColorGroup QWidget::colorGroup() const
-
-    Use QColorGroup(palette()) instead.
-*/
-
-/*!
     \fn QWidget *QWidget::parentWidget(bool sameWindow) const
 
     Use the no-argument overload instead.

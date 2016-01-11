@@ -135,7 +135,6 @@ QT_BEGIN_NAMESPACE
     \value QWidgetStar QWidget *
     \value QVariant QVariant
 
-    \value QColorGroup QColorGroup
     \value QCursor QCursor
     \value QDate QDate
     \value QSize QSize
@@ -269,7 +268,6 @@ static const struct { const char * typeName; int typeNameLength; int type; } typ
     QT_ADD_STATIC_METATYPE("QEasingCurve", QMetaType::QEasingCurve),
 
     /* All GUI types */
-    QT_ADD_STATIC_METATYPE("QColorGroup", 63),
     QT_ADD_STATIC_METATYPE("QFont", QMetaType::QFont),
     QT_ADD_STATIC_METATYPE("QPixmap", QMetaType::QPixmap),
     QT_ADD_STATIC_METATYPE("QBrush", QMetaType::QBrush),

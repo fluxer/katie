@@ -52,7 +52,6 @@ QT_BEGIN_NAMESPACE
 
 
 class QPainter;
-class QColorGroup;
 class QPalette;
 class QPoint;
 class QColor;

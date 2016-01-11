@@ -72,7 +72,7 @@ public:
 
         QJsonValue = 45, QJsonObject = 46, QJsonArray = 47, QJsonDocument = 48,
 
-        FirstGuiType = 63 /* QColorGroup */,
+        FirstGuiType = 64 /* QFont */,
         QFont = 64, QPixmap = 65, QBrush = 66, QColor = 67, QPalette = 68,
         QIcon = 69, QImage = 70, QPolygon = 71, QRegion = 72, QBitmap = 73,
         QCursor = 74, QSizePolicy = 75, QKeySequence = 76, QPen = 77,
