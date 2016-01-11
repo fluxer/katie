@@ -489,6 +489,12 @@ void GlobalClientData::mark(JSC::MarkStack& markStack)
     engine->mark(markStack);
 }
 
+void GlobalClientData::uncaughtException(JSC::ExecState* exec, unsigned bytecodeOffset,
+                                         JSC::JSValue value)
+{
+    engine->uncaughtException(exec, bytecodeOffset, value);
+}
+
 class TimeoutCheckerProxy : public JSC::TimeoutChecker
 {
 public:
@@ -962,7 +968,8 @@ QScriptEnginePrivate::QScriptEnginePrivate()
       qobjectPrototype(0), qmetaobjectPrototype(0), variantPrototype(0),
       activeAgent(0), agentLineNumber(-1),
       registeredScriptValues(0), freeScriptValues(0), freeScriptValuesCount(0),
-      registeredScriptStrings(0), processEventsInterval(-1), inEval(false)
+      registeredScriptStrings(0), processEventsInterval(-1), inEval(false),
+      uncaughtExceptionLineNumber(-1)
 {
     qMetaTypeId<QScriptValue>();
     qMetaTypeId<QList<int> >();
@@ -1408,6 +1415,51 @@ JSC::JSValue QScriptEnginePrivate::evaluateHelper(JSC::ExecState *exec, intptr_t
 
     Q_ASSERT(!exec->hadException());
     return result;
+}
+
+// See ExceptionHelpers.cpp createStackOverflowError()
+bool QScriptEnginePrivate::isLikelyStackOverflowError(JSC::ExecState *exec, JSC::JSValue value)
+{
+    if (!isError(value))
+        return false;
+
+    JSC::JSValue name = property(exec, value, exec->propertyNames().name);
+    if (!name || !name.isString() || name.toString(exec) != "RangeError")
+        return false;
+
+    JSC::JSValue message = property(exec, value, exec->propertyNames().message);
+    if (!message || !message.isString() || message.toString(exec) != "Maximum call stack size exceeded.")
+        return false;
+
+    return true;
+}
+
+/*!
+  \internal
+  Called by the VM when an uncaught exception is being processed.
+  If the VM call stack contains a native call inbetween two JS calls at the
+  time the exception is thrown, this function will get called multiple times
+  for a single exception (once per "interval" of JS call frames). In other
+  words, at the time of this call, the VM stack can be in a partially unwound
+  state.
+*/
+void QScriptEnginePrivate::uncaughtException(JSC::ExecState *exec, unsigned bytecodeOffset,
+                                             JSC::JSValue value)
+{
+    // Don't capture exception information if we already have.
+    if (uncaughtExceptionLineNumber != -1)
+        return;
+
+    QScript::SaveFrameHelper saveFrame(this, exec);
+
+    uncaughtExceptionLineNumber = exec->codeBlock()->lineNumberForBytecodeOffset(exec, bytecodeOffset);
+
+    if (isLikelyStackOverflowError(exec, value)) {
+        // Don't save the backtrace, it's likely to take forever to create.
+        uncaughtExceptionBacktrace.clear();
+    } else {
+        uncaughtExceptionBacktrace = contextForFrame(exec)->backtrace();
+    }
 }
 
 #ifndef QT_NO_QOBJECT
@@ -2881,32 +2933,26 @@ QScriptValue QScriptEngine::uncaughtException() const
 */
 int QScriptEngine::uncaughtExceptionLineNumber() const
 {
+    Q_D(const QScriptEngine);
     if (!hasUncaughtException())
         return -1;
+    if (d->uncaughtExceptionLineNumber != -1)
+        return d->uncaughtExceptionLineNumber;
+
     return uncaughtException().property(QLatin1String("lineNumber")).toInt32();
 }
 
 /*!
   Returns a human-readable backtrace of the last uncaught exception.
 
-  It is in the form \c{<function-name>()@<file-name>:<line-number>}.
+  It is in the form \c{<function-name>() at <file-name>:<line-number>}.
 
   \sa uncaughtException()
 */
 QStringList QScriptEngine::uncaughtExceptionBacktrace() const
 {
-    if (!hasUncaughtException())
-        return QStringList();
-// ### currently no way to get a full backtrace from JSC without installing a
-// debugger that reimplements exception() and store the backtrace there.
-    QScriptValue value = uncaughtException();
-    if (!value.isError())
-        return QStringList();
-    QStringList result;
-    result.append(QString::fromLatin1("<anonymous>()@%0:%1")
-                  .arg(value.property(QLatin1String("fileName")).toString())
-                  .arg(value.property(QLatin1String("lineNumber")).toInt32()));
-    return result;
+    Q_D(const QScriptEngine);
+    return d->uncaughtExceptionBacktrace;
 }
 
 /*!
