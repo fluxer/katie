@@ -269,9 +269,6 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionDockWidgetV2
     QStyleOptionGroupBox
     QStyleOptionProgressBar
-    QStyleOptionQ3DockWindow
-    QStyleOptionQ3ListView
-    QStyleOptionQ3ListViewItem
     QStyleOptionSizeGrip
     QStyleOptionTab
     QStyleOptionTabBarBase
