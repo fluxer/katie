@@ -44,11 +44,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsoftkeymanager_common_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
-
-    # XXX: obsolete?
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhboxlayout.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvboxlayout.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qspaceritem.h
 )
 
 set(GUI_SOURCES

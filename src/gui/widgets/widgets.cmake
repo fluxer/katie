@@ -81,9 +81,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.h
-    
-    # XXX: obsolete?
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qdoublespinbox.h
 )
 
 set(GUI_SOURCES
