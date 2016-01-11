@@ -136,12 +136,6 @@ public:
 
 
     enum PrimitiveElement {
-        PE_Q3CheckListController,
-        PE_Q3CheckListExclusiveIndicator,
-        PE_Q3CheckListIndicator,
-        PE_Q3DockWindowSeparator,
-        PE_Q3Separator,
-
         PE_Frame,
         PE_FrameDefaultButton,
         PE_FrameDockWidget,
@@ -297,8 +291,6 @@ public:
 
         SE_SliderFocusRect,
 
-        SE_Q3DockWindowHandleRect,
-
         SE_ProgressBarGroove,
         SE_ProgressBarContents,
         SE_ProgressBarLabel,
@@ -371,7 +363,6 @@ public:
         CC_Slider,
         CC_ToolButton,
         CC_TitleBar,
-        CC_Q3ListView,
         CC_Dial,
         CC_GroupBox,
         CC_MdiControls,
@@ -502,8 +493,6 @@ public:
         PM_IndicatorHeight,
         PM_ExclusiveIndicatorWidth,
         PM_ExclusiveIndicatorHeight,
-        PM_CheckListButtonSize,
-        PM_CheckListControllerSize,
 
         PM_DialogButtonsSeparator,
         PM_DialogButtonsButtonWidth,
@@ -593,7 +582,6 @@ public:
         CT_TabBarTab,
         CT_Slider,
         CT_ScrollBar,
-        CT_Q3Header,
         CT_LineEdit,
         CT_SpinBox,
         CT_SizeGrip,
@@ -657,7 +645,8 @@ public:
         SH_ToolBox_SelectedPageTitleBold,
         SH_TabBar_PreferNoArrows,
         SH_ScrollBar_LeftClickAbsolutePosition,
-        SH_Q3ListViewExpand_SelectMouseType,
+        SH_ListViewExpand_SelectMouseType,
+        SH_Q3ListViewExpand_SelectMouseType = SH_ListViewExpand_SelectMouseType, // obsolete
         SH_UnderlineShortcut,
         SH_SpinBox_AnimateButton,
         SH_SpinBox_KeyPressAutoRepeatRate,

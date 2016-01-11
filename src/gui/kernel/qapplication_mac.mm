@@ -580,7 +580,6 @@ void qt_mac_update_os_settings()
             FontMap("QMenu", kThemeMenuItemFont),
             FontMap("QComboMenuItem", kThemeSystemFont),
             FontMap("QHeaderView", kThemeSmallSystemFont),
-            FontMap("Q3Header", kThemeSmallSystemFont),
             FontMap("QTipLabel", kThemeSmallSystemFont),
             FontMap("QLabel", kThemeSystemFont),
             FontMap("QToolButton", kThemeSmallSystemFont),
@@ -626,7 +625,6 @@ void QApplicationPrivate::initializeWidgetPaletteHash()
             PaletteMap("QToolButton", kThemeTextColorBevelButtonActive, kThemeTextColorBevelButtonInactive),
             PaletteMap("QAbstractButton", kThemeTextColorPushButtonActive, kThemeTextColorPushButtonInactive),
             PaletteMap("QHeaderView", kThemeTextColorPushButtonActive, kThemeTextColorPushButtonInactive),
-            PaletteMap("Q3Header", kThemeTextColorPushButtonActive, kThemeTextColorPushButtonInactive),
             PaletteMap("QComboBox", kThemeTextColorPopupButtonActive, kThemeTextColorPopupButtonInactive),
             PaletteMap("QAbstractItemView", kThemeTextColorListView, kThemeTextColorDialogInactive),
             PaletteMap("QMessageBoxLabel", kThemeTextColorAlertActive, kThemeTextColorAlertInactive),
@@ -662,8 +660,7 @@ void QApplicationPrivate::initializeWidgetPaletteHash()
                 qc = qcolorForThemeTextColor(kThemeTextColorMenuItemDisabled);
                 pal.setBrush(QPalette::Disabled, QPalette::Text, qc);
             } else if (!strcmp(mac_widget_colors[i].qt_class, "QAbstractButton")
-                      || !strcmp(mac_widget_colors[i].qt_class, "QHeaderView")
-                      || !strcmp(mac_widget_colors[i].qt_class, "Q3Header")) { //special
+                      || !strcmp(mac_widget_colors[i].qt_class, "QHeaderView")) { //special
                 pal.setColor(QPalette::Disabled, QPalette::ButtonText,
                              pal.color(QPalette::Disabled, QPalette::Text));
                 pal.setColor(QPalette::Inactive, QPalette::ButtonText,

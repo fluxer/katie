@@ -631,7 +631,6 @@ static void qt_set_windows_font_resources()
     QApplication::setFont(messageFont, "QMessageBox");
     QApplication::setFont(statusFont, "QTipLabel");
     QApplication::setFont(statusFont, "QStatusBar");
-    QApplication::setFont(titleFont, "Q3TitleBar");
     QApplication::setFont(titleFont, "QWorkspaceTitleBar");
     QApplication::setFont(iconTitleFont, "QAbstractItemView");
     QApplication::setFont(iconTitleFont, "QDockWidgetTitle");
