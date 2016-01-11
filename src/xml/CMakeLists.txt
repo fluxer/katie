@@ -39,7 +39,6 @@ set(XML_PUBLIC_HEADERS
 
 include(dom/dom.cmake)
 include(sax/sax.cmake)
-include(stream/stream.cmake)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -50,7 +49,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}/dom
     ${CMAKE_CURRENT_SOURCE_DIR}/sax
-    ${CMAKE_CURRENT_SOURCE_DIR}/stream
 )
 
 if(${KATIE_PLATFORM} MATCHES "win32" AND MSVC)
@@ -60,11 +58,18 @@ if(${KATIE_PLATFORM} MATCHES "win32" AND MSVC)
     )
 endif()
 
+# The platforms that require the symbol to be present in QtXml
+if(${KATIE_TYPE} STREQUAL SHARED AND ${KATIE_PLATFORM} MATCHES "(win32|mac|aix)")
+    set(XML_SOURCES
+        ${XML_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/core/xml/qxmlstream.cpp
+    )
+endif()
+
 katie_generate_misc("${XML_HEADERS}" QtXml)
 katie_generate_public("${XML_PUBLIC_HEADERS}" QtXml)
 katie_generate_map(QtXml Q_XML_EXPORT)
-katie_resources("${XML_SOURCES}")
-katie_resources("${XML_HEADERS}")
+katie_resources(${XML_SOURCES} ${XML_HEADERS})
 katie_setup_flags()
 
 add_library(KtXml ${KATIE_TYPE} ${XML_SOURCES} ${XML_HEADERS})
