@@ -580,6 +580,12 @@ katie_generate_obsolete(qdate.h QtCore qdatetime.h)
 katie_generate_obsolete(qwizardpage.h QtGui qwizard.h)
 katie_generate_obsolete(qtimeedit.h QtGui qdatetimeedit.h)
 katie_generate_obsolete(qdateedit.h QtGui qdatetimeedit.h)
+
+katie_generate_obsolete(qhboxlayout.h QtGui qboxlayout.h)
+katie_generate_obsolete(qvboxlayout.h QtGui qboxlayout.h)
+katie_generate_obsolete(qspaceritem.h QtGui qlayoutitem.h)
+katie_generate_obsolete(qdoublespinbox.h QtGui qspinbox.h)
+
 katie_generate_obsolete(global.h Phonon ../phonon/phononnamespace.h)
 katie_generate_obsolete(qxmlstream.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamwriter.h QtXml ../QtCore/qxmlstream.h)
