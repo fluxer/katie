@@ -73,10 +73,6 @@
 #include "qdeclarativetextinput_p.h"
 #include "qdeclarativevisualitemmodel_p.h"
 #include "qdeclarativegraphicswidget_p.h"
-#ifdef QT_WEBKIT_LIB
-#include "qdeclarativewebview_p.h"
-#include "qdeclarativewebview_p_p.h"
-#endif
 #include "qdeclarativeanchors_p.h"
 #include "qdeclarativepincharea_p.h"
 
