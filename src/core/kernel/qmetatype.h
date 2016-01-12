@@ -68,9 +68,10 @@ public:
         QBitArray = 13, QDate = 14, QTime = 15, QDateTime = 16, QUrl = 17,
         QLocale = 18, QRect = 19, QRectF = 20, QSize = 21, QSizeF = 22,
         QLine = 23, QLineF = 24, QPoint = 25, QPointF = 26, QRegExp = 27,
-        QVariantHash = 28, QEasingCurve = 29, LastCoreType = QEasingCurve,
+        QVariantHash = 28, QEasingCurve = 29, QJsonValue = 30,
+        QJsonObject = 31, QJsonArray = 32, QJsonDocument = 34,
+        LastCoreType = QJsonDocument,
 
-        QJsonValue = 45, QJsonObject = 46, QJsonArray = 47, QJsonDocument = 48,
 
         FirstGuiType = 64 /* QFont */,
         QFont = 64, QPixmap = 65, QBrush = 66, QColor = 67, QPalette = 68,
