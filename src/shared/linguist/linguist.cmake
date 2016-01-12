@@ -26,10 +26,6 @@ set(SHAREDLINGUIST_SOURCES
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/po.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/ts.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/xliff.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/ioutils.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/proitems.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/profileparser.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/profileevaluator.cpp
 )
 
 set(SHAREDLINGUIST_HEADERS
@@ -37,11 +33,6 @@ set(SHAREDLINGUIST_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/simtexth.h
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translator.h
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translatormessage.h
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/proparser_global.h
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/ioutils.h
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/proitems.h
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/profileparser.h
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/profileevaluator.h
 ) 
 
 add_library(sharedlinguist OBJECT ${SHAREDLINGUIST_SOURCES})
