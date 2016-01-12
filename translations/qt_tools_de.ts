@@ -164,7 +164,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+87"/>
         <source>lrelease version %1
 </source>
         <translation type="unfinished"></translation>
@@ -526,7 +526,7 @@ Options:
         </translation>
     </message>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="+92"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="+90"/>
         <source>Usage:
     lupdate [options] [project-file]...
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
@@ -616,31 +616,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+129"/>
-        <source>lupdate warning: Codec for source &apos;%1&apos; is invalid. Falling back to codec for tr().
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>lupdate warning: TS files from command line will override TRANSLATIONS in %1.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>lupdate warning: TS files from command line prevent recursing into %1.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>lupdate warning: no TS files specified. Only diagnostics will be produced for &apos;%1&apos;.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+74"/>
+        <location line="+101"/>
         <source>The option -target-language requires a parameter.
 </source>
         <translation type="unfinished"></translation>
@@ -730,7 +706,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+5"/>
         <source>Scanning directory &apos;%1&apos;...
 </source>
         <translation type="unfinished"></translation>
@@ -748,14 +724,8 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>lupdate warning: no TS files specified. Only diagnostics will be produced.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>lupdate error: Both project and source files / include paths specified.
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -951,7 +921,7 @@ qhelpgenerator &lt;help-project-file&gt; [options]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="-169"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="-150"/>
         <source>lupdate version %1
 </source>
         <translation type="unfinished"></translation>

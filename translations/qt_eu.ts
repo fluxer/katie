@@ -50,20 +50,20 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1826"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1820"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
         <source>Socket operation timed out</source>
         <translation>Hartune eragiketa epez kanpo</translation>
     </message>
     <message>
-        <location line="-1271"/>
-        <location line="+827"/>
+        <location line="-1266"/>
+        <location line="+822"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>Hartuneko eragiketa ez dago sostengatuta</translation>
     </message>
     <message>
-        <location line="-689"/>
+        <location line="-686"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+689"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+664"/>
         <location line="+26"/>
@@ -71,7 +71,7 @@
         <translation>Hostalaria ez da aurkitu</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+47"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+3"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+4"/>
         <source>Connection refused</source>
@@ -462,7 +462,7 @@
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+106"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
         <location line="+108"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt eraikita dago QMovie-rako sostengu gabe</translation>
@@ -2015,6 +2015,84 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <source>Unknown</source>
         <translation>Ezezaguna</translation>
     </message>
+    <message>
+        <location filename="../src/gui/dialogs/qfiledialog.ui"/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Look in:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Back</source>
+        <translation type="unfinished">Atzera</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Go back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Forward</source>
+        <translation type="unfinished">Aurrera</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Go forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Parent Directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Go to the parent directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Create New Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Create a New Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>List View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Change to list view mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Detail View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Change to detail view mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
+        <source>Files of type:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QFileSystemModel</name>
@@ -2960,7 +3038,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
     <message>
         <location line="+263"/>
         <location line="+127"/>
-        <location filename="../src/core/plugin/qpluginloader.cpp" line="+298"/>
+        <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Elkarbanatutako liburutegia ez da aurkitu.</translation>
     </message>
@@ -4014,6 +4092,86 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <source>Points (pt)</source>
         <translation>Puntoak (pt)</translation>
     </message>
+    <message>
+        <location filename="../src/gui/dialogs/qpagesetupwidget.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Paper</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Page size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Height:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Paper source:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Portrait</source>
+        <translation type="unfinished">Argazkia</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Landscape</source>
+        <translation type="unfinished">Landargazkia</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Reverse landscape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Reverse portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Margins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>top margin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>left margin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>right margin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>bottom margin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QPluginLoader</name>
@@ -4569,6 +4727,175 @@ Gainidaztea nahi duzu?</translation>
         <location line="+3"/>
         <source>Export to PostScript</source>
         <translation>Esportatu PostScript-ra</translation>
+    </message>
+</context>
+<context>
+    <name>QPrintPropertiesWidget</name>
+    <message>
+        <location filename="../src/gui/dialogs/qprintpropertieswidget.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Advanced</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QPrintSettingsOutput</name>
+    <message>
+        <location filename="../src/gui/dialogs/qprintsettingsoutput.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Copies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Print range</source>
+        <translation type="unfinished">Irarketa maila</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Print all</source>
+        <translation type="unfinished">Irarkitu denak</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Pages from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Output Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Copies:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Collate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Reverse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Options</source>
+        <translation type="unfinished">Aukerak</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Color Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Grayscale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Duplex Printing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Long side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Short side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QPrintWidget</name>
+    <message>
+        <location filename="../src/gui/dialogs/qprintwidget.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Printer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>P&amp;roperties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Location:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Output &amp;file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6944,7 +7271,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QTcpServer</name>
     <message>
-        <location filename="../src/network/socket/qtcpserver.cpp" line="+292"/>
+        <location filename="../src/network/socket/qtcpserver.cpp" line="+286"/>
         <location line="+129"/>
         <source>Operation on socket is not supported</source>
         <translation>Eragiketa ahoan ez dago sostengatuta</translation>

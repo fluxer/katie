@@ -13,7 +13,7 @@ def list_files(sdir):
     lfiles = []
     for root, subdirs, files in os.walk(sdir):
         for sfile in files:
-            if sfile.endswith(('.cpp', '.h', '.js')):
+            if sfile.endswith(('.cpp', '.h', '.js', '.qs', '.qml', '.ui')):
                 lfiles.append('%s/%s' % (root, sfile))
     return lfiles
 
