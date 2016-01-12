@@ -25,7 +25,6 @@ set(SHAREDLINGUIST_SOURCES
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/qph.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/po.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/ts.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/xliff.cpp
 )
 
 set(SHAREDLINGUIST_HEADERS
