@@ -62,7 +62,7 @@ static HashReturn Final(hashState *state, BitSequence *hashval)
     return (HashReturn) Squeeze(state, hashval, state->fixedOutputLength);
 }
 
-#ifndef QT_BUILDING_QT
+#ifndef QT_KATIE
 static HashReturn Hash(int hashbitlen, const BitSequence *data, DataLength databitlen, BitSequence *hashval)
 {
     hashState state;

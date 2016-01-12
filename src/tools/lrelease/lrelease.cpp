@@ -186,14 +186,6 @@ static bool releaseTsFile(const QString& tsFileName,
     return releaseTranslator(tor, qmFileName, cd, removeIdentical);
 }
 
-static void print(const QString &fileName, int lineNo, const QString &msg)
-{
-    if (lineNo)
-        printErr(QString::fromLatin1("%2(%1): %3").arg(lineNo).arg(fileName, msg));
-    else
-        printErr(msg);
-}
-
 int main(int argc, char **argv)
 {
 #ifdef QT_BOOTSTRAPPED

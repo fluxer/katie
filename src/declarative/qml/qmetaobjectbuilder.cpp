@@ -102,8 +102,8 @@ static inline const QMetaObjectPrivate *priv(const uint* data)
 
 // must be kept in sync with the moc
 // Number of fields in the QMetaObjectPrivate.
-static int qmetaobjectindex = 14;
-static int qmetaobjectrevision = 6;
+const static int qmetaobjectindex = 14;
+const static int qmetaobjectrevision = 6;
 
 class QMetaMethodBuilderPrivate
 {

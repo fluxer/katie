@@ -209,6 +209,7 @@ static const char * x11_atomnames = {
     "ERASER\0"
 };
 
+// TODO: share with qapplication_x11
 /*!
     \internal
     Try to resolve a \a symbol from \a library with the version specified

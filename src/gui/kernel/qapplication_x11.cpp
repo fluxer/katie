@@ -459,6 +459,8 @@ extern bool qt_xdnd_dragging;
 // gui or non-gui from qapplication.cpp
 extern bool qt_is_gui_used;
 
+#ifndef QT_NO_XINPUT
+# ifdef QT_RUNTIME_XINPUT
 /*!
     \internal
     Try to resolve a \a symbol from \a library with the version specified
@@ -491,6 +493,8 @@ static void* qt_load_library_runtime(const char *library, int vernum,
     }
     return 0;
 }
+# endif // QT_RUNTIME_XINPUT
+#endif // QT_NO_XINPUT
 
 #ifndef QT_NO_XINPUT
 # ifdef QT_RUNTIME_XINPUT
