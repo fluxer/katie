@@ -67,9 +67,7 @@
 #include "QtGui/qtextcursor.h"
 #include "QtCore/qset.h"
 #include "QtCore/qdebug.h"
-#ifndef QT_BUILD_COMPAT_LIB
 #include "qtextdocument_p.h"
-#endif
 #include "qharfbuzz_p.h"
 #include "qfixed_p.h"
 
@@ -540,19 +538,11 @@ public:
 
     int findItem(int strPos) const;
     inline QTextFormatCollection *formats() const {
-#ifdef QT_BUILD_COMPAT_LIB
-        return 0; // Compat should never reference this symbol
-#else
         return block.docHandle()->formatCollection();
-#endif
     }
     QTextCharFormat format(const QScriptItem *si) const;
     inline QAbstractTextDocumentLayout *docLayout() const {
-#ifdef QT_BUILD_COMPAT_LIB
-        return 0; // Compat should never reference this symbol
-#else
         return block.docHandle()->document()->documentLayout();
-#endif
     }
     int formatIndex(const QScriptItem *si) const;
 

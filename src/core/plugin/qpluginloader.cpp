@@ -118,16 +118,6 @@ QT_BEGIN_NAMESPACE
     link to plugins statically. You can use QLibrary if you need to
     load dynamic libraries in a statically linked application.
 
-    \note In Symbian the plugin stub files must be used whenever a
-    path to plugin is needed. For the purposes of loading plugins,
-    the stubs can be considered to have the same name as the actual
-    plugin binary. In practice they have ".qtplugin" extension
-    instead of ".dll", but this difference is handled transparently
-    by QPluginLoader and QLibrary to avoid need for Symbian specific
-    plugin handling in most Qt applications. Plugin stubs are needed
-    because Symbian Platform Security denies all access to the directory
-    where the actual plugin binaries are located.
-
     \sa QLibrary, {Plug & Paint Example}
 */
 

@@ -1501,16 +1501,6 @@ class QDataStream;
 #    else
 #      define Q_SCRIPTTOOLS_EXPORT Q_DECL_IMPORT
 #    endif
-#    if defined(QT_BUILD_CANVAS_LIB)
-#      define Q_CANVAS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_CANVAS_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_COMPAT_LIB)
-#      define Q_COMPAT_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_COMPAT_EXPORT Q_DECL_IMPORT
-#    endif
 #    if defined(QT_BUILD_DBUS_LIB)
 #      define Q_DBUS_EXPORT Q_DECL_EXPORT
 #    else
@@ -1591,11 +1581,6 @@ class QDataStream;
 #      define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
 #    else
 #      define Q_GUI_EXPORT_INLINE inline
-#    endif
-#    if defined(QT_BUILD_COMPAT_LIB)
-#      define Q_COMPAT_EXPORT_INLINE Q_COMPAT_EXPORT inline
-#    else
-#      define Q_COMPAT_EXPORT_INLINE inline
 #    endif
 #elif defined(Q_CC_RVCT)
 // we force RVCT not to export inlines by passing --visibility_inlines_hidden

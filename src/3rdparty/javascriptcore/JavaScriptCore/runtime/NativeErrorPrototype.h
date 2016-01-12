@@ -22,9 +22,7 @@
 #define NativeErrorPrototype_h
 
 #include "JSObject.h"
-#ifdef QT_BUILD_SCRIPT_LIB
 #include "ErrorInstance.h"
-#endif
 
 namespace JSC {
 

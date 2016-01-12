@@ -715,7 +715,7 @@ bool QCacheItem::read(QFile *device, bool readData)
         data.open(QBuffer::ReadOnly);
     }
 
-    // quick and dirty check if metadata's URL field and the file's name are in synch
+    // quick and dirty check if metadata's URL field and the file's name are in sync
     QString expectedFilename = QNetworkDiskCachePrivate::uniqueFileName(metaData.url());
     if (!device->fileName().endsWith(expectedFilename))
         return false;
@@ -727,6 +727,4 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_NETWORKDISKCACHE
 
-
 #include "moc_qnetworkdiskcache.h"
-

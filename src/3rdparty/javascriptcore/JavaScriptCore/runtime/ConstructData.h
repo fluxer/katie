@@ -68,7 +68,7 @@ namespace JSC {
         JSObject* operator()(ExecState*, JSObject*, const ArgList&) const;
     };
 
-#if defined(QT_BUILD_SCRIPT_LIB) && OS(SOLARIS)
+#if OS(SOLARIS)
     struct
 #else
     union

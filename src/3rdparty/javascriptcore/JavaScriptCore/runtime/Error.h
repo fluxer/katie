@@ -61,13 +61,8 @@ namespace JSC {
     JSObject* throwError(ExecState*, ErrorType);
     JSObject* throwError(ExecState*, JSObject*);
 
-#ifdef QT_BUILD_SCRIPT_LIB
-#  define JSC_ERROR_FILENAME_PROPERTYNAME "fileName"
-#  define JSC_ERROR_LINENUMBER_PROPERTYNAME "lineNumber"
-#else
-#  define JSC_ERROR_FILENAME_PROPERTYNAME "sourceURL"
-#  define JSC_ERROR_LINENUMBER_PROPERTYNAME "line"
-#endif
+#define JSC_ERROR_FILENAME_PROPERTYNAME "fileName"
+#define JSC_ERROR_LINENUMBER_PROPERTYNAME "lineNumber"
 
 } // namespace JSC
 

@@ -123,10 +123,6 @@ QT_BEGIN_NAMESPACE
   resource and then exits without releasing it, Unix will release that
   resource.
 
-  \o Symbian: QSystemSemaphore behaves the same as Windows semaphores.
-  In other words, the operating system owns the semaphore and ignores
-  QSystemSemaphore::AccessMode.
-
   \endlist
 
   \sa QSharedMemory, QSemaphore

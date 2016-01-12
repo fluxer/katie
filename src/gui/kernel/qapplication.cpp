@@ -1370,13 +1370,13 @@ QStyle *QApplication::style()
         QString style;
 #ifdef QT_BUILD_INTERNAL
         QString envStyle = QString::fromLocal8Bit(qgetenv("QT_STYLE_OVERRIDE"));
-#else
-        QString envStyle;
 #endif
         if (!QApplicationPrivate::styleOverride.isEmpty()) {
             style = QApplicationPrivate::styleOverride;
+#ifdef QT_BUILD_INTERNAL
         } else if (!envStyle.isEmpty()) {
             style = envStyle;
+#endif
         } else {
             style = QApplicationPrivate::desktopStyleKey();
         }
