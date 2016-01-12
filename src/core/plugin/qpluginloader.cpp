@@ -378,7 +378,9 @@ QObjectList QPluginLoader::staticInstances()
     QObjectList instances;
     StaticInstanceFunctionList *functions = staticInstanceFunctionList();
     if (functions) {
-        for (int i = 0; i < functions->count(); ++i)
+        const int numFunctions = functions->size();
+        instances.reserve(numFunctions);
+        for (int i = 0; i < numFunctions; ++i)
             instances.append((*functions)[i]());
     }
     return instances;

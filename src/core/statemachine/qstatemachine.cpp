@@ -1649,6 +1649,7 @@ void QStateMachinePrivate::handleTransitionSignal(QObject *sender, int signalInd
     QList<QByteArray> parameterTypes = method.parameterTypes();
     int argc = parameterTypes.count();
     QList<QVariant> vargs;
+    vargs.reserve(argc);
     for (int i = 0; i < argc; ++i) {
         int type = QMetaType::type(parameterTypes.at(i));
         vargs.append(QVariant(type, argv[i+1]));
