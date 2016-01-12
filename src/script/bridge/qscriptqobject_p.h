@@ -205,6 +205,7 @@ public:
     QObject *qobject() const;
     const QMetaObject *metaObject() const;
     int initialIndex() const;
+    int specificIndex(const QScriptContext *context) const;
     bool maybeOverloaded() const;
     int mostGeneralMethod(QMetaMethod *out = 0) const;
     QList<int> overloadedIndexes() const;
