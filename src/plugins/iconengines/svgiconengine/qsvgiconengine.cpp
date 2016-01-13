@@ -87,11 +87,6 @@ public:
 
 QAtomicInt QSvgIconEnginePrivate::lastSerialNum;
 
-static inline int pmKey(const QSize &size, QIcon::Mode mode, QIcon::State state)
-{
-    return ((((((size.width()<<11)|size.height())<<11)|mode)<<4)|state);
-}
-
 QSvgIconEngine::QSvgIconEngine()
     : d(new QSvgIconEnginePrivate)
 {
@@ -310,10 +305,6 @@ bool QSvgIconEngine::read(QDataStream &in)
 bool QSvgIconEngine::write(QDataStream &out) const
 {
     if (out.version() >= QDataStream::Qt_4_4) {
-        int isCompressed = 0;
-#ifndef QT_NO_COMPRESS
-        isCompressed = 1;
-#endif
         QHash<int, QByteArray> svgBuffers;
         if (d->svgBuffers)
             svgBuffers = *d->svgBuffers;
@@ -327,7 +318,11 @@ bool QSvgIconEngine::write(QDataStream &out) const
 #endif
             svgBuffers.insert(key, buf);
         }
-        out << d->svgFiles << isCompressed << svgBuffers;
+#ifndef QT_NO_COMPRESS
+        out << d->svgFiles << 1 << svgBuffers;
+#else
+        out << d->svgFiles << 0 << svgBuffers;
+#endif
         if (d->addedPixmaps)
             out << (int)1 << *d->addedPixmaps;
         else
