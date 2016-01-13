@@ -74,8 +74,6 @@ QT_BEGIN_NAMESPACE
 static const char *qt_inherit_text = "inherit";
 #define QT_INHERIT QLatin1String(qt_inherit_text)
 
-Q_CORE_EXPORT double qstrtod(const char *s00, char const **se, bool *ok);
-
 // ======== duplicated from qcolor_p
 
 static inline int qsvg_h2i(char hex)
@@ -636,8 +634,7 @@ static qreal toDouble(const QChar *&str)
         else
 #endif
         {
-            bool ok = false;
-            val = qstrtod(temp, 0, &ok);
+            val = QByteArray::fromRawData(temp, pos).toDouble();
         }
     }
     return val;
