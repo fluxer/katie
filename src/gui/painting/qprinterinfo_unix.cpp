@@ -111,15 +111,6 @@ static inline QPrinter::PaperSize string2PaperSize(const char *name)
         return r->size;
     return QPrinter::Custom;
 }
-
-static inline const char *paperSize2String(QPrinter::PaperSize size)
-{
-    for (int i = 0; i < QPrinter::NPageSize; ++i) {
-        if (size == named_sizes_map[i].size)
-            return named_sizes_map[i].name;
-    }
-    return 0;
-}
 #endif
 
 void qt_perhapsAddPrinter(QList<QPrinterDescription> *printers, const QString &name,

@@ -167,7 +167,7 @@ static inline bool is_space(char s)
 #endif
 
 // This code is shared with moc.cpp
-static QByteArray normalizeTypeInternal(const char *t, const char *e, bool fixScope = false, bool adjustConst = true)
+static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool fixScope = false, bool adjustConst = true)
 {
     int len = e - t;
     /*

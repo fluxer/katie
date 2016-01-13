@@ -755,15 +755,6 @@ static inline void SLL_PushRange(void **head, void *start, void *end) {
   *head = start;
 }
 
-static inline size_t SLL_Size(void *head) {
-  int count = 0;
-  while (head) {
-    count++;
-    head = SLL_Next(head);
-  }
-  return count;
-}
-
 // Setup helper functions.
 
 static ALWAYS_INLINE size_t SizeClass(size_t size) {
@@ -3433,12 +3424,14 @@ static Span* DoSampledAllocation(size_t size) {
 }
 #endif
 
+#if !ASSERT_DISABLED
 static inline bool CheckCachedSizeClass(void *ptr) {
   PageID p = reinterpret_cast<uintptr_t>(ptr) >> kPageShift;
   size_t cached_value = pageheap->GetSizeClassIfCached(p);
   return cached_value == 0 ||
       cached_value == pageheap->GetDescriptor(p)->sizeclass;
 }
+#endif
 
 static inline void* CheckedMallocResult(void *result)
 {

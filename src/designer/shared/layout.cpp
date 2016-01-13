@@ -1109,11 +1109,6 @@ void addWidgetToGrid(QGridLayout *lt, QWidget * widget, int row, int column, int
     lt->addWidget(widget, row, column, rowSpan, columnSpan, alignment);
 }
 
-inline void getGridItemPosition(QFormLayout *formLayout, int index, int *row, int *column, int *rowspan, int *colspan)
-{
-    getFormLayoutItemPosition(formLayout, index, row, column, rowspan, colspan);
-}
-
 inline void addWidgetToGrid(QFormLayout *lt, QWidget * widget, int row, int column, int, int columnSpan, Qt::Alignment)
 {
     formLayoutAddWidget(lt, widget, QRect(column, row,  columnSpan, 1), false);

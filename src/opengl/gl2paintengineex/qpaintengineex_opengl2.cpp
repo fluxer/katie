@@ -90,10 +90,12 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifdef QT_OPENGL_ES_2
 inline static bool isPowerOfTwo(uint x)
 {
     return x && !(x & (x - 1));
 }
+#endif
 
 #if defined(Q_WS_WIN)
 extern Q_GUI_EXPORT bool qt_cleartype_enabled;

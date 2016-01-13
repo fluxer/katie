@@ -324,11 +324,6 @@ static inline qint64 qCross(const QPodPoint &u, const QPodPoint &v)
     return qint64(u.x) * qint64(v.y) - qint64(u.y) * qint64(v.x);
 }
 
-static inline qint64 qDot(const QPodPoint &u, const QPodPoint &v)
-{
-    return qint64(u.x) * qint64(v.x) + qint64(u.y) * qint64(v.y);
-}
-
 // Return positive value if 'p' is to the right of the line 'v1'->'v2', negative if left of the
 // line and zero if exactly on the line.
 // The returned value is the z-component of the qCross product between 'v2-v1' and 'p-v1',
@@ -341,23 +336,6 @@ static inline qint64 qPointDistanceFromLine(const QPodPoint &p, const QPodPoint 
 static inline bool qPointIsLeftOfLine(const QPodPoint &p, const QPodPoint &v1, const QPodPoint &v2)
 {
     return QT_PREPEND_NAMESPACE(qPointDistanceFromLine)(p, v1, v2) < 0;
-}
-
-// Return:
-// -1 if u < v
-//  0 if u == v
-//  1 if u > v
-static int comparePoints(const QPodPoint &u, const QPodPoint &v)
-{
-    if (u.y < v.y)
-        return -1;
-    if (u.y > v.y)
-        return 1;
-    if (u.x < v.x)
-        return -1;
-    if (u.x > v.x)
-        return 1;
-    return 0;
 }
 
 //============================================================================//
@@ -386,13 +364,6 @@ static inline QIntersectionPoint qIntersectionPoint(const QPodPoint &point)
 {
     // upperLeft = point, xOffset = 0/1, yOffset = 0/1.
     QIntersectionPoint p = {{point.x, point.y}, {0, 1}, {0, 1}};
-    return p;
-}
-
-static inline QIntersectionPoint qIntersectionPoint(int x, int y)
-{
-    // upperLeft = (x, y), xOffset = 0/1, yOffset = 0/1.
-    QIntersectionPoint p = {{x, y}, {0, 1}, {0, 1}};
     return p;
 }
 
