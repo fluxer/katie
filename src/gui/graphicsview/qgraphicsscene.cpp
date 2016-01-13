@@ -2501,7 +2501,7 @@ QGraphicsItemGroup *QGraphicsScene::createItemGroup(const QList<QGraphicsItem *>
 */
 void QGraphicsScene::destroyItemGroup(QGraphicsItemGroup *group)
 {
-    foreach (QGraphicsItem *item, group->children())
+    foreach (QGraphicsItem *item, group->childItems())
         group->removeFromGroup(item);
     removeItem(group);
     delete group;
@@ -5710,7 +5710,7 @@ void QGraphicsScene::setActiveWindow(QGraphicsWidget *widget)
         QList<QGraphicsItem *> siblingWindows;
         QGraphicsItem *parent = panel->parentItem();
         // Raise ### inefficient for toplevels
-        foreach (QGraphicsItem *sibling, parent ? parent->children() : items()) {
+        foreach (QGraphicsItem *sibling, parent ? parent->childItems() : items()) {
             if (sibling != panel && sibling->isWindow())
                 siblingWindows << sibling;
         }

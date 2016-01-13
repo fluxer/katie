@@ -287,7 +287,7 @@ void QGraphicsProxyWidgetPrivate::sendWidgetMouseEvent(QGraphicsSceneMouseEvent 
     // grabber child widget.
     if (embeddedMouseGrabber && type == QEvent::MouseButtonRelease && !event->buttons()) {
         Q_Q(QGraphicsProxyWidget);
-        if (q->rect().contains(event->pos()) && q->acceptsHoverEvents())
+        if (q->rect().contains(event->pos()) && q->acceptHoverEvents())
             lastWidgetUnderMouse = alienWidget ? alienWidget : widget;
         else // released on the frame our outside the item, or doesn't accept hover events.
             lastWidgetUnderMouse = 0;

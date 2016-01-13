@@ -179,7 +179,6 @@ public:
     QGraphicsWidget *window() const;
     QGraphicsItem *panel() const;
     void setParentItem(QGraphicsItem *parent);
-    QList<QGraphicsItem *> children() const; // ### obsolete
     QList<QGraphicsItem *> childItems() const;
     bool isWidget() const;
     bool isWindow() const;
@@ -242,8 +241,6 @@ public:
     Qt::MouseButtons acceptedMouseButtons() const;
     void setAcceptedMouseButtons(Qt::MouseButtons buttons);
 
-    bool acceptsHoverEvents() const; // ### obsolete
-    void setAcceptsHoverEvents(bool enabled); // ### obsolete
     bool acceptHoverEvents() const;
     void setAcceptHoverEvents(bool enabled);
     bool acceptTouchEvents() const;
@@ -336,8 +333,7 @@ public:
     virtual bool collidesWithItem(const QGraphicsItem *other, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
     virtual bool collidesWithPath(const QPainterPath &path, Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
     QList<QGraphicsItem *> collidingItems(Qt::ItemSelectionMode mode = Qt::IntersectsItemShape) const;
-    bool isObscured() const;
-    bool isObscured(const QRectF &rect) const; // ### Qt 5: merge with isObscured(), add QRectF arg to isObscuredBy()
+    bool isObscured(const QRectF &rect = QRectF()) const;
     inline bool isObscured(qreal x, qreal y, qreal w, qreal h) const;
     virtual bool isObscuredBy(const QGraphicsItem *item) const;
     virtual QPainterPath opaqueArea() const;

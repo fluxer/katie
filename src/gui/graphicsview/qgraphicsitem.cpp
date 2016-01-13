@@ -1709,18 +1709,6 @@ void QGraphicsItem::setParentItem(QGraphicsItem *newParent)
 }
 
 /*!
-    \obsolete
-
-    Use childItems() instead.
-
-    \sa setParentItem()
-*/
-QList<QGraphicsItem *> QGraphicsItem::children() const
-{
-    return childItems();
-}
-
-/*!
     \since 4.4
 
     Returns a list of this item's children.
@@ -1795,24 +1783,6 @@ void QGraphicsItem::setFlag(GraphicsItemFlag flag, bool enabled)
         setFlags(GraphicsItemFlags(d_ptr->flags) | flag);
     else
         setFlags(GraphicsItemFlags(d_ptr->flags) & ~flag);
-}
-
-/*!
-    \internal
-
-    Sets the flag \a flag on \a item and all its children, to \a enabled.
-*/
-static void _q_qgraphicsItemSetFlag(QGraphicsItem *item, QGraphicsItem::GraphicsItemFlag flag,
-                                    bool enabled)
-{
-    if (item->flags() & flag) {
-        // If this item already has the correct flag set, we don't have to
-        // propagate it.
-        return;
-    }
-    item->setFlag(flag, enabled);
-    foreach (QGraphicsItem *child, item->children())
-        _q_qgraphicsItemSetFlag(child, flag, enabled);
 }
 
 /*!
@@ -2976,16 +2946,6 @@ bool QGraphicsItem::acceptHoverEvents() const
 }
 
 /*!
-    \obsolete
-
-    Call acceptHoverEvents() instead.
-*/
-bool QGraphicsItem::acceptsHoverEvents() const
-{
-    return d_ptr->acceptsHover;
-}
-
-/*!
     \since 4.4
 
     If \a enabled is true, this item will accept hover events;
@@ -3025,16 +2985,6 @@ void QGraphicsItem::setAcceptHoverEvents(bool enabled)
         d_ptr->scene->d_func()->allItemsIgnoreHoverEvents = false;
         d_ptr->scene->d_func()->enableMouseTrackingOnViews();
     }
-}
-
-/*!
-    \obsolete
-
-    Use setAcceptHoverEvents(\a enabled) instead.
-*/
-void QGraphicsItem::setAcceptsHoverEvents(bool enabled)
-{
-    setAcceptHoverEvents(enabled);
 }
 
 /*! \since 4.6
@@ -5078,21 +5028,6 @@ QList<QGraphicsItem *> QGraphicsItem::collidingItems(Qt::ItemSelectionMode mode)
 }
 
 /*!
-    Returns true if this item's bounding rect is completely obscured by the
-    opaque shape of any of colliding items above it (i.e., with a higher Z
-    value than this item).
-
-    Its implementation is based on calling isObscuredBy(), which you can
-    reimplement to provide a custom obscurity algorithm.
-
-  \sa opaqueArea()
-*/
-bool QGraphicsItem::isObscured() const
-{
-    return isObscured(QRectF());
-}
-
-/*!
     \internal
 
     Item obscurity helper function.
@@ -5110,14 +5045,10 @@ static bool qt_QGraphicsItem_isObscured(const QGraphicsItem *item,
 }
 
 /*!
-    \overload
     \since 4.3
 
     Returns true if \a rect is completely obscured by the opaque shape of any
     of colliding items above it (i.e., with a higher Z value than this item).
-
-    Unlike the default isObscured() function, this function does not call
-    isObscuredBy().
 
     \sa opaqueArea()
 */
