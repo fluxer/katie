@@ -69,6 +69,7 @@ QT_BEGIN_NAMESPACE
 
 extern QRegion qt_dirtyRegion(QWidget *);
 
+#ifdef Q_BACKINGSTORE_SUBSURFACES
 /*
    A version of QRect::intersects() that does not normalize the rects.
 */
@@ -77,6 +78,7 @@ static inline bool qRectIntersects(const QRect &r1, const QRect &r2)
     return (qMax(r1.left(), r2.left()) <= qMin(r1.right(), r2.right())
             && qMax(r1.top(), r2.top()) <= qMin(r1.bottom(), r2.bottom()));
 }
+#endif
 
 /**
  * Flushes the contents of the \a windowSurface into the screen area of \a widget.

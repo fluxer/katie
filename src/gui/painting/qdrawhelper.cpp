@@ -3696,57 +3696,6 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_untransformed_argb(int count, const QSpan 
     }
 }
 
-static inline quint16 interpolate_pixel_rgb16_255(quint16 x, quint8 a,
-                                                  quint16 y, quint8 b)
-{
-    quint16 t = ((((x & 0x07e0) * a) + ((y & 0x07e0) * b)) >> 5) & 0x07e0;
-    t |= ((((x & 0xf81f) * a) + ((y & 0xf81f) * b)) >> 5) & 0xf81f;
-
-    return t;
-}
-
-static inline quint32 interpolate_pixel_rgb16x2_255(quint32 x, quint8 a,
-                                                    quint32 y, quint8 b)
-{
-    uint t;
-    t = ((((x & 0xf81f07e0) >> 5) * a) + (((y & 0xf81f07e0) >> 5) * b)) & 0xf81f07e0;
-    t |= ((((x & 0x07e0f81f) * a) + ((y & 0x07e0f81f) * b)) >> 5) & 0x07e0f81f;
-    return t;
-}
-
-static inline void blend_sourceOver_rgb16_rgb16(quint16 *dest,
-                                                const quint16 *src,
-                                                int length,
-                                                const quint8 alpha,
-                                                const quint8 ialpha)
-{
-    const int dstAlign = ((quintptr)dest) & 0x3;
-    if (dstAlign) {
-        *dest = interpolate_pixel_rgb16_255(*src, alpha, *dest, ialpha);
-        ++dest;
-        ++src;
-        --length;
-    }
-    const int srcAlign = ((quintptr)src) & 0x3;
-    int length32 = length >> 1;
-    if (length32 && srcAlign == 0) {
-        while (length32--) {
-            const quint32 *src32 = reinterpret_cast<const quint32*>(src);
-            quint32 *dest32 = reinterpret_cast<quint32*>(dest);
-            *dest32 = interpolate_pixel_rgb16x2_255(*src32, alpha,
-                                                    *dest32, ialpha);
-            dest += 2;
-            src += 2;
-        }
-        length &= 0x1;
-    }
-    while (length--) {
-        *dest = interpolate_pixel_rgb16_255(*src, alpha, *dest, ialpha);
-        ++dest;
-        ++src;
-    }
-}
-
 template <class DST, class SRC>
 Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void madd_2(DST *dest, const quint16 alpha, const SRC *src)
