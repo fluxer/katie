@@ -651,7 +651,7 @@ install(
 if(UNIX AND (CMAKE_SKIP_INSTALL_RPATH OR NOT CMAKE_INSTALL_RPATH))
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-        ${CMAKE_BINARY_DIR}/katie.conf
+        ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
         @ONLY
     )
 
