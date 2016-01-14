@@ -929,7 +929,7 @@ inline QT_ASCII_CAST_WARN const QString operator+(const QString &s, const QByteA
 
 #ifndef QT_NO_STL
 inline std::string QString::toStdString() const
-{ const QByteArray asc = toAscii(); return std::string(asc.constData(), asc.length()); }
+{ return toAscii().toStdString(); }
 
 inline QString QString::fromStdString(const std::string &s)
 { return fromAscii(s.data(), int(s.size())); }

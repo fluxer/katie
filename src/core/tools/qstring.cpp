@@ -923,7 +923,7 @@ int QString::grow(int size)
     This constructor is only available if Qt is configured with STL
     compatibility enabled.
 
-    \sa  fromAscii(), fromLatin1(), fromLocal8Bit(), fromUtf8()
+    \sa  fromAscii(), fromLatin1(), fromLocal8Bit(), fromUtf8(), QByteArray::fromStdString()
 */
 
 /*! \fn QString QString::fromStdWString(const std::wstring &str)
@@ -7104,7 +7104,7 @@ bool QString::isRightToLeft() const
     This operator is only available if Qt is configured with STL
     compatibility enabled.
 
-    \sa toAscii(), toLatin1(), toUtf8(), toLocal8Bit()
+    \sa toAscii(), toLatin1(), toUtf8(), toLocal8Bit(), QByteArray::fromStdString()
 */
 
 /*!

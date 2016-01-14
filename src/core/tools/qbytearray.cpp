@@ -859,6 +859,27 @@ QByteArray::Data QByteArray::shared_empty = { Q_BASIC_ATOMIC_INITIALIZER(1),
     Same as prepend(\a ch).
 */
 
+/*! \fn QByteArray QByteArray::fromStdString(const std::string &str)
+ \since 5.4
+
+ Returns a copy of the \a str string as a QByteArray.
+
+ \sa toStdString(), QString::fromStdString()
+*/
+
+/*!
+ \fn std::string QByteArray::toStdString() const
+ \since 5.4
+
+ Returns a std::string object with the data contained in this
+ QByteArray.
+
+ This operator is mostly useful to pass a QByteArray to a function
+ that accepts a std::string object.
+
+ \sa fromStdString(), QString::toStdString()
+*/
+
 /*! \fn QByteArray::QByteArray(const QByteArray &other)
 
     Constructs a copy of \a other.
