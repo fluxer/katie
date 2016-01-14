@@ -73,10 +73,6 @@ namespace JSC {
 #elif ENABLE(YARR)
         OwnPtr<Yarr::BytecodePattern> m_regExpBytecode;
 #else
-#if ENABLE(WREC)
-        WREC::CompiledRegExp m_wrecFunction;
-        RefPtr<ExecutablePool> m_executablePool;
-#endif
         JSRegExp* m_regExp;
 #endif
     };
