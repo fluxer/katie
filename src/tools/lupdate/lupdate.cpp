@@ -89,7 +89,6 @@ static void printUsage()
 {
     printOut(LU::tr(
         "Usage:\n"
-        "    lupdate [options] [project-file]...\n"
         "    lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file\n\n"
         "lupdate is part of Qt's Linguist tool chain. It extracts translatable\n"
         "messages from Qt UI files, C++, Java and JavaScript/QtScript source code.\n"
@@ -123,9 +122,6 @@ static void printUsage()
         "           Do not record line numbers in references to UI files.\n"
         "    -disable-heuristic {sametext|similartext|number}\n"
         "           Disable the named merge heuristic. Can be specified multiple times.\n"
-        "    -pro <filename>\n"
-        "           Name of a .pro file. Useful for files with .pro file syntax but\n"
-        "           different file suffix. Projects are recursed into and merged.\n"
         "    -source-language <language>[_<region>]\n"
         "           Specify the language of the source strings for new files.\n"
         "           Defaults to POSIX if not specified.\n"
@@ -268,7 +264,6 @@ int main(int argc, char **argv)
 
     QStringList args = app.arguments();
     QStringList tsFileNames;
-    QStringList proFiles;
     QMultiHash<QString, QString> allCSources;
     QSet<QString> projectRoots;
     QStringList sourceFiles;
@@ -395,15 +390,6 @@ int main(int argc, char **argv)
                 return 1;
             }
             extensions = args[i];
-            continue;
-        } else if (arg == QLatin1String("-pro")) {
-            ++i;
-            if (i == argc) {
-                printErr(LU::tr("The -pro option should be followed by a filename of .pro file.\n"));
-                return 1;
-            }
-            proFiles += args[i];
-            numFiles++;
             continue;
         } else if (arg.startsWith(QLatin1String("-I"))) {
             if (arg.length() == 2) {
