@@ -75,14 +75,10 @@ public:
     int weekNumber(int *yearNum = 0) const;
 
 #ifndef QT_NO_TEXTDATE
-    // ### Qt 5: merge these functions.
     static QString shortMonthName(int month, MonthNameType type = QDate::DateFormat);
-    static QString shortDayName(int weekday);
-    static QString shortDayName(int weekday, MonthNameType type);
-    static QString longMonthName(int month);
-    static QString longMonthName(int month, MonthNameType type);
-    static QString longDayName(int weekday);
-    static QString longDayName(int weekday, MonthNameType type);
+    static QString shortDayName(int weekday, MonthNameType type = QDate::DateFormat);
+    static QString longMonthName(int month, MonthNameType type = QDate::DateFormat);
+    static QString longDayName(int weekday, MonthNameType type = QDate::DateFormat);
 #endif // QT_NO_TEXTDATE
 #ifndef QT_NO_DATESTRING
     QString toString(Qt::DateFormat f = Qt::TextDate) const;

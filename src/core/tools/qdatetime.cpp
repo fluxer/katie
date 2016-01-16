@@ -575,21 +575,6 @@ QString QDate::longMonthName(int month, MonthNameType type)
 }
 
 /*!
-    Returns the long version of the name of the \a month. The
-    returned name is in normal type which can be used for date formatting.
-
-    \sa toString(), shortMonthName(), shortDayName(), longDayName()
- */
-
-QString QDate::longMonthName(int month)
-{
-    if (month < 1 || month > 12) {
-        month = 1;
-    }
-    return QLocale::system().monthName(month, QLocale::LongFormat);
-}
-
-/*!
     \since 4.5
 
     Returns the short name of the \a weekday for the representation specified
@@ -630,21 +615,6 @@ QString QDate::shortDayName(int weekday, MonthNameType type)
 }
 
 /*!
-    Returns the short version of the name of the \a weekday. The
-    returned name is in normal type which can be used for date formatting.
-
-    \sa toString(), longDayName(), shortMonthName(), longMonthName()
- */
-
-QString QDate::shortDayName(int weekday)
-{
-    if (weekday < 1 || weekday > 7) {
-        weekday = 1;
-    }
-    return QLocale::system().dayName(weekday, QLocale::ShortFormat);
-}
-
-/*!
     \since 4.5
 
     Returns the long name of the \a weekday for the representation specified
@@ -680,21 +650,6 @@ QString QDate::longDayName(int weekday, MonthNameType type)
         return QLocale::system().standaloneDayName(weekday, QLocale::LongFormat);
     default:
         break;
-    }
-    return QLocale::system().dayName(weekday, QLocale::LongFormat);
-}
-
-/*!
-    Returns the long version of the name of the \a weekday. The
-    returned name is in normal type which can be used for date formatting.
-
-    \sa toString(), shortDayName(), shortMonthName(), longMonthName()
- */
-
-QString QDate::longDayName(int weekday)
-{
-    if (weekday < 1 || weekday > 7) {
-        weekday = 1;
     }
     return QLocale::system().dayName(weekday, QLocale::LongFormat);
 }
