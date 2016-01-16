@@ -199,3 +199,21 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
         message(AUTHOR_WARNING "unifdef not installed, cannot optimize headers for: ${basename}")
     endif()
 endmacro()
+
+macro(KATIE_TEST TESTNAME TESTSOURCES)
+    katie_resources(${TESTSOURCES} ${ARGN})
+
+    add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
+
+    target_link_libraries(${TESTNAME} KtCore KtTest)
+    target_compile_definitions(
+        ${TESTNAME} PRIVATE
+        -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}"
+    )
+    set_target_properties(
+        ${TESTNAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
+
+    add_test(NAME ${TESTNAME} COMMAND ${TESTNAME})
+endmacro()

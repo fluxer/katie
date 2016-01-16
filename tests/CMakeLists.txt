@@ -42,3 +42,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
 )
+
+file(GLOB_RECURSE CMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
+foreach(cmakefile ${CMAKEFILES})
+    get_filename_component(dirname ${cmakefile} PATH)
+    # message(STATUS "Adding sub-directory: ${dirname}")
+    add_subdirectory(${dirname})
+endforeach()
