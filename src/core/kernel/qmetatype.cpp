@@ -260,12 +260,12 @@ static const struct { const char * typeName; int typeNameLength; int type; } typ
     QT_ADD_STATIC_METATYPE("QPoint", QMetaType::QPoint),
     QT_ADD_STATIC_METATYPE("QPointF", QMetaType::QPointF),
     QT_ADD_STATIC_METATYPE("QRegExp", QMetaType::QRegExp),
+    QT_ADD_STATIC_METATYPE("QVariantHash", QMetaType::QVariantHash),
+    QT_ADD_STATIC_METATYPE("QEasingCurve", QMetaType::QEasingCurve),
     QT_ADD_STATIC_METATYPE("QJsonValue", QMetaType:: QJsonValue),
     QT_ADD_STATIC_METATYPE("QJsonObject", QMetaType::QJsonObject),
     QT_ADD_STATIC_METATYPE("QJsonArray", QMetaType::QJsonArray),
     QT_ADD_STATIC_METATYPE("QJsonDocument", QMetaType::QJsonDocument),
-    QT_ADD_STATIC_METATYPE("QVariantHash", QMetaType::QVariantHash),
-    QT_ADD_STATIC_METATYPE("QEasingCurve", QMetaType::QEasingCurve),
 
     /* All GUI types */
     QT_ADD_STATIC_METATYPE("QFont", QMetaType::QFont),
