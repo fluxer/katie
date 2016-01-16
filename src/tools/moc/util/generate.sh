@@ -42,15 +42,10 @@
 
 set -e
 
-if [ "x$1" = "x" ];then
-    echo "pass directory for includes"
-    exit 1
-elif [ "x$2" = "x" ];then
-    echo "pass directory for libraries"
-    exit 2
-fi
+cwd="$(dirname $0)"
+builddir="../../../../build"
 
-gcc generate_keywords.cpp -I$1 -I$1/QtCore -L$2 -lKtCore -lstdc++ -o generate_keywords
+gcc generate_keywords.cpp -I"$builddir/include" -I"$builddir/include/QtCore" -L"$builddir/lib" -lKtCore -lstdc++ -o generate_keywords
 cat licenseheader.txt > ../keywords.cpp
 cat licenseheader.txt > ../ppkeywords.cpp
 ./generate_keywords >> ../keywords.cpp
