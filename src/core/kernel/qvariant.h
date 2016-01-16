@@ -120,12 +120,11 @@ class Q_CORE_EXPORT QVariant
         RegExp = 27,
         Hash = 28,
         EasingCurve = 29,
-        LastCoreType = EasingCurve,
-
-        JsonValue = 45,
-        JsonObject = 46,
-        JsonArray = 47,
-        JsonDocument = 48,
+        JsonValue = 30,
+        JsonObject = 31,
+        JsonArray = 32,
+        JsonDocument = 33,
+        LastCoreType = JsonDocument,
 
         // value 62 is internally reserved
         Font = 64,

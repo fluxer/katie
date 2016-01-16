@@ -69,7 +69,7 @@ public:
         QLocale = 18, QRect = 19, QRectF = 20, QSize = 21, QSizeF = 22,
         QLine = 23, QLineF = 24, QPoint = 25, QPointF = 26, QRegExp = 27,
         QVariantHash = 28, QEasingCurve = 29, QJsonValue = 30,
-        QJsonObject = 31, QJsonArray = 32, QJsonDocument = 34,
+        QJsonObject = 31, QJsonArray = 32, QJsonDocument = 33,
         LastCoreType = QJsonDocument,
 
 
