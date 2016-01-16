@@ -108,10 +108,7 @@ public:
 
     QSizePolicy() : data(0) { }
 
-    // ### Qt 5: merge these two constructors (with type == DefaultType)
-    QSizePolicy(Policy horizontal, Policy vertical)
-        : data(horizontal | (vertical << HSize)) { }
-    QSizePolicy(Policy horizontal, Policy vertical, ControlType type)
+    QSizePolicy(Policy horizontal, Policy vertical, ControlType type = DefaultType)
         : data(horizontal | (vertical << HSize)) { setControlType(type); }
 
     Policy horizontalPolicy() const { return static_cast<Policy>(data & HMask); }
