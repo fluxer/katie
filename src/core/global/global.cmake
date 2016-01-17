@@ -13,7 +13,6 @@ set(CORE_SOURCES
     ${CORE_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/global/qmalloc.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.cpp
 )
 

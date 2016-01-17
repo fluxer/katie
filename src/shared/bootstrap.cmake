@@ -49,7 +49,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qtsciicodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/codecs/qutfcodec.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/global/qmalloc.cpp
     ${CMAKE_SOURCE_DIR}/src/core/global/qnumeric.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qabstractfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qbuffer.cpp
