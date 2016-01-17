@@ -53,7 +53,6 @@ class QDeclarativeItemModule
 {
 public:
     static void defineModule();
-    static void defineModuleCompat();
 };
 
 QT_END_NAMESPACE

@@ -188,13 +188,6 @@ void QDeclarativeEnginePrivate::defineModule()
     qmlRegisterType<QDeclarativeBinding>();
 }
 
-void QDeclarativeEnginePrivate::defineModuleCompat()
-{
-    qmlRegisterType<QDeclarativeComponent>("Qt",4,7,"Component");
-    qmlRegisterType<QObject>("Qt",4,7,"QtObject");
-    qmlRegisterType<QDeclarativeWorkerScript>("Qt",4,7,"WorkerScript");
-}
-
 /*!
 \qmlclass QML:Qt QDeclarativeEnginePrivate
   \ingroup qml-utility-elements
