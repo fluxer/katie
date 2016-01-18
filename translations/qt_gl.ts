@@ -378,7 +378,6 @@
     </message>
     <message>
         <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+108"/>
-        <location line="+50"/>
         <source>Animation is an abstract class</source>
         <translation>A animación é unha clase abstracta</translation>
     </message>
@@ -464,7 +463,6 @@ superior, inferior nin vcenter.</translation>
     <name>QDeclarativeAnimatedImage</name>
     <message>
         <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
-        <location line="+108"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt construíuse sen a implementación de QMovie</translation>
     </message>
@@ -472,7 +470,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QDeclarativeApplication</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="-78"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="-28"/>
         <source>Application is an abstract class</source>
         <translation>A aplicación é unha clase abstracta</translation>
     </message>
@@ -1082,8 +1080,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QDeclarativeKeyNavigationAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="-36"/>
-        <location line="+88"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+72"/>
         <source>KeyNavigation is only available via attached properties</source>
         <translation>KeyNavigation só está dispoñíbel mediante as propiedades anexadas</translation>
     </message>
@@ -1091,8 +1088,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QDeclarativeKeysAttached</name>
     <message>
-        <location line="-87"/>
-        <location line="+88"/>
+        <location line="+1"/>
         <source>Keys is only available via attached properties</source>
         <translation>Keys só está dispoñíbel mediante as propiedades anexadas</translation>
     </message>
@@ -1105,7 +1101,7 @@ superior, inferior nin vcenter.</translation>
         <translation>A propriedade anexa LayoutDirection só funciona con «Items»</translation>
     </message>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="-63"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+25"/>
         <source>LayoutMirroring is only available via attached properties</source>
         <translation>LayoutMirroring só está dispoñíbel a través das propiedades anexas</translation>
     </message>
@@ -1512,8 +1508,6 @@ superior, inferior nin vcenter.</translation>
     <name>QDeclarativeXmlListModel</name>
     <message>
         <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+40"/>
-        <location line="+2"/>
-        <location line="+49"/>
         <location line="+2"/>
         <source>Qt was built without support for xmlpatterns</source>
         <translation>Qt construíuse sen implementación de xmlpatterns</translation>
@@ -2896,7 +2890,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2138"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Permiso negado</translation>
@@ -3345,7 +3339,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+280"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+272"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
@@ -4606,7 +4600,7 @@ Desexa sobrescribilo?</translation>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+135"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
         <source>locally connected</source>
         <translation>conectado localmente</translation>
     </message>

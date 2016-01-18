@@ -378,7 +378,6 @@
     </message>
     <message>
         <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+108"/>
-        <location line="+50"/>
         <source>Animation is an abstract class</source>
         <translation>Animácia je abstraktná trieda</translation>
     </message>
@@ -463,7 +462,6 @@
     <name>QDeclarativeAnimatedImage</name>
     <message>
         <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
-        <location line="+108"/>
         <source>Qt was built without support for QMovie</source>
         <translation>QT bolo zostavené bez podpory preQMovie</translation>
     </message>
@@ -471,7 +469,7 @@
 <context>
     <name>QDeclarativeApplication</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="-78"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="-28"/>
         <source>Application is an abstract class</source>
         <translation>Aplikácia je abstraktná trieda</translation>
     </message>
@@ -1081,8 +1079,7 @@
 <context>
     <name>QDeclarativeKeyNavigationAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="-36"/>
-        <location line="+88"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+72"/>
         <source>KeyNavigation is only available via attached properties</source>
         <translation>&apos;KeyNavigation&apos; je dostupné iba cez pripojené vlastnosti</translation>
     </message>
@@ -1090,8 +1087,7 @@
 <context>
     <name>QDeclarativeKeysAttached</name>
     <message>
-        <location line="-87"/>
-        <location line="+88"/>
+        <location line="+1"/>
         <source>Keys is only available via attached properties</source>
         <translation>Klávesy sú dostupné iba cez pripojené vlastnosti</translation>
     </message>
@@ -1104,7 +1100,7 @@
         <translation>Pripojená vlastnosť LayoutDirection pracuje iba s položkami</translation>
     </message>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="-63"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+25"/>
         <source>LayoutMirroring is only available via attached properties</source>
         <translation>LayoutMirroring je dostupný len cez pripojené vlastnosti</translation>
     </message>
@@ -1511,8 +1507,6 @@
     <name>QDeclarativeXmlListModel</name>
     <message>
         <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+40"/>
-        <location line="+2"/>
-        <location line="+49"/>
         <location line="+2"/>
         <source>Qt was built without support for xmlpatterns</source>
         <translation>Qt bolo zostavené bez podpory pre xmlpatterns</translation>
@@ -2895,7 +2889,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2138"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Prístup zamietnutý</translation>
@@ -3344,7 +3338,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+280"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+272"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
@@ -4603,7 +4597,7 @@ Má sa prepísať?</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+135"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
         <source>locally connected</source>
         <translation>lokálne pripojená</translation>
     </message>

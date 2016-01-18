@@ -540,7 +540,6 @@ Options:
     <message>
         <location filename="../src/tools/lupdate/lupdate.cpp" line="+90"/>
         <source>Usage:
-    lupdate [options] [project-file]...
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
 
 lupdate is part of Qt&apos;s Linguist tool chain. It extracts translatable
@@ -576,9 +575,6 @@ Options:
            Do not record line numbers in references to UI files.
     -disable-heuristic {sametext|similartext|number}
            Disable the named merge heuristic. Can be specified multiple times.
-    -pro &lt;filename&gt;
-           Name of a .pro file. Useful for files with .pro file syntax but
-           different file suffix. Projects are recursed into and merged.
     -source-language &lt;language&gt;[_&lt;region&gt;]
            Specify the language of the source strings for new files.
            Defaults to POSIX if not specified.
@@ -598,7 +594,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+73"/>
         <source>lupdate warning: Codec for tr() &apos;%1&apos; disagrees with existing file&apos;s codec &apos;%2&apos;. Expect trouble.
 </source>
         <translation type="unfinished"></translation>
@@ -628,7 +624,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+100"/>
         <source>The option -target-language requires a parameter.
 </source>
         <translation type="unfinished"></translation>
@@ -676,13 +672,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
-        <source>The -pro option should be followed by a filename of .pro file.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>The -I option should be followed by a path.
 </source>
         <translation type="unfinished"></translation>
@@ -925,7 +915,7 @@ qhelpgenerator &lt;help-project-file&gt; [options]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="-150"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="-141"/>
         <source>lupdate version %1
 </source>
         <translation type="unfinished"></translation>
