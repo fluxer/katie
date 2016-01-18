@@ -744,6 +744,15 @@ int QDeclarativePrivate::qmlregister(RegistrationType type, void *data)
 */
 bool QDeclarativeMetaType::isModule(const QByteArray &module, int versionMajor, int versionMinor)
 {
+    // "import Qt 4.7" should have died off
+    if (strcmp(module.constData(), "Qt") == 0 && versionMajor == 4 && versionMinor == 7) {
+        static bool qt47Registered = false;
+        if (!qt47Registered) {
+            qWarning() << Q_FUNC_INFO << "Qt 4.7 import detected; please note that Qt 4.7 is directly reusable as QtQuick 1.x with no code changes.";
+            qt47Registered = true;
+        }
+    }
+
     QDeclarativeMetaTypeData *data = metaTypeData();
     QDeclarativeMetaTypeData::ModuleInfoHash::Iterator it = data->modules.find(module);
     return it != data->modules.end()
