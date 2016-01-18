@@ -131,8 +131,6 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
             ${NAS_LIBRARIES}
         )
         include_directories(${NAS_INCLUDES})
-    else()
-        add_definitions(-DQT_NO_NAS)
     endif()
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/xorg)
 elseif(KATIE_PLATFORM STREQUAL "win32")

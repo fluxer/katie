@@ -528,6 +528,10 @@ if(NOT WITH_OPENGL OR NOT OPENGL_FOUND)
     katie_definition(-DQT_NO_OPENGL)
 endif()
 
+if(NOT WITH_NAS OR NOT NAS_FOUND)
+    katie_definition(-DQT_NO_NAS)
+endif()
+
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
