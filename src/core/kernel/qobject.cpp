@@ -2303,20 +2303,14 @@ bool QObject::connect(const QObject *sender, const char *signal,
     const QMetaObject *smeta = sender->metaObject();
     const char *signal_arg = signal;
     ++signal; //skip code
-    int signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal, false);
+    int signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal);
     if (signal_index < 0) {
         // check for normalized signatures
         tmp_signal_name = QMetaObject::normalizedSignature(signal - 1);
         signal = tmp_signal_name.constData() + 1;
 
         smeta = sender->metaObject();
-        signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal, false);
-    }
-    if (signal_index < 0) {
-        // re-use tmp_signal_name and signal from above
-
-        smeta = sender->metaObject();
-        signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal, true);
+        signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal);
     }
     if (signal_index < 0) {
         err_method_notfound(sender, signal_arg, "connect");
@@ -2341,10 +2335,10 @@ bool QObject::connect(const QObject *sender, const char *signal,
     int method_index_relative = -1;
     switch (membcode) {
     case QSLOT_CODE:
-        method_index_relative = QMetaObjectPrivate::indexOfSlotRelative(&rmeta, method, false);
+        method_index_relative = QMetaObjectPrivate::indexOfSlotRelative(&rmeta, method);
         break;
     case QSIGNAL_CODE:
-        method_index_relative = QMetaObjectPrivate::indexOfSignalRelative(&rmeta, method, false);
+        method_index_relative = QMetaObjectPrivate::indexOfSignalRelative(&rmeta, method);
         break;
     }
 
@@ -2357,14 +2351,10 @@ bool QObject::connect(const QObject *sender, const char *signal,
         rmeta = receiver->metaObject();
         switch (membcode) {
         case QSLOT_CODE:
-            method_index_relative = QMetaObjectPrivate::indexOfSlotRelative(&rmeta, method, false);
-            if (method_index_relative < 0)
-                method_index_relative = QMetaObjectPrivate::indexOfSlotRelative(&rmeta, method, true);
+            method_index_relative = QMetaObjectPrivate::indexOfSlotRelative(&rmeta, method);
             break;
         case QSIGNAL_CODE:
-            method_index_relative = QMetaObjectPrivate::indexOfSignalRelative(&rmeta, method, false);
-            if (method_index_relative < 0)
-                method_index_relative = QMetaObjectPrivate::indexOfSignalRelative(&rmeta, method, true);
+            method_index_relative = QMetaObjectPrivate::indexOfSignalRelative(&rmeta, method);
             break;
         }
     }
@@ -2620,9 +2610,7 @@ bool QObject::disconnect(const QObject *sender, const char *signal,
     do {
         int signal_index = -1;
         if (signal) {
-            signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal, false);
-            if (signal_index < 0)
-                signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal, true);
+            signal_index = QMetaObjectPrivate::indexOfSignalRelative(&smeta, signal);
             if (signal_index < 0)
                 break;
             signal_index = QMetaObjectPrivate::originalClone(smeta, signal_index);
@@ -3349,9 +3337,7 @@ int QObjectPrivate::signalIndex(const char *signalName) const
 {
     Q_Q(const QObject);
     const QMetaObject *base = q->metaObject();
-    int relative_index = QMetaObjectPrivate::indexOfSignalRelative(&base, signalName, false);
-    if (relative_index < 0)
-        relative_index = QMetaObjectPrivate::indexOfSignalRelative(&base, signalName, true);
+    int relative_index = QMetaObjectPrivate::indexOfSignalRelative(&base, signalName);
     if (relative_index < 0)
         return relative_index;
     relative_index = QMetaObjectPrivate::originalClone(base, relative_index);

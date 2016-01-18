@@ -124,11 +124,9 @@ struct QMetaObjectPrivate
     { return reinterpret_cast<const QMetaObjectPrivate*>(metaobject->d.data); }
 
     static int indexOfSignalRelative(const QMetaObject **baseObject,
-                                     const char* name,
-                                     bool normalizeStringData);
+                                     const char* name);
     static int indexOfSlotRelative(const QMetaObject **m,
-                           const char *slot,
-                           bool normalizeStringData);
+                           const char *slot);
     static int originalClone(const QMetaObject *obj, int local_method_index);
 
 #ifndef QT_NO_QOBJECT
