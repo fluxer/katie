@@ -1523,7 +1523,6 @@ class QDataStream;
 #    define Q_XMLPATTERNS_EXPORT Q_DECL_IMPORT
 #    define Q_SCRIPT_EXPORT Q_DECL_IMPORT
 #    define Q_SCRIPTTOOLS_EXPORT Q_DECL_IMPORT
-#    define Q_COMPAT_EXPORT Q_DECL_IMPORT
 #    define Q_DBUS_EXPORT Q_DECL_IMPORT
 #    define Q_TEMPLATEDLL
 #  endif
@@ -1551,7 +1550,6 @@ class QDataStream;
 #    define Q_XMLPATTERNS_EXPORT Q_DECL_EXPORT
 #    define Q_SCRIPT_EXPORT Q_DECL_EXPORT
 #    define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
-#    define Q_COMPAT_EXPORT Q_DECL_EXPORT
 #    define Q_DBUS_EXPORT Q_DECL_EXPORT
 #  else
 #    define Q_CORE_EXPORT
@@ -1566,7 +1564,6 @@ class QDataStream;
 #    define Q_XMLPATTERNS_EXPORT
 #    define Q_SCRIPT_EXPORT
 #    define Q_SCRIPTTOOLS_EXPORT
-#    define Q_COMPAT_EXPORT
 #    define Q_DBUS_EXPORT
 #  endif
 #endif
@@ -1590,11 +1587,9 @@ class QDataStream;
 // note: this affects the contents of the DEF files (ie. these functions do not appear)
 #    define Q_CORE_EXPORT_INLINE inline
 #    define Q_GUI_EXPORT_INLINE inline
-#    define Q_COMPAT_EXPORT_INLINE inline
 #else
 #    define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
 #    define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
-#    define Q_COMPAT_EXPORT_INLINE Q_COMPAT_EXPORT inline
 #endif
 
 /*
