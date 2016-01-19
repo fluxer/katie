@@ -31,7 +31,10 @@ set(KATIE_MKSPECS "${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 
 foreach(component ${KATIE_COMPONENTS})
     string(TOUPPER ${component} uppercomp)
-    if(uppercomp STREQUAL "PHONON")
+    if(uppercomp STREQUAL "MAIN")
+        set(KATIE_INCLUDES ${KATIE_INCLUDES} @QT_HEADERS_PATH@)
+        set(KATIE_${uppercomp}_INCLUDES @QT_HEADERS_PATH@)
+    elseif(uppercomp STREQUAL "PHONON")
         set(KATIE_INCLUDES ${KATIE_INCLUDES}
             @QT_HEADERS_PATH@/phonon
             @QT_HEADERS_PATH@/Phonon
@@ -90,8 +93,8 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     set(QT_USE_FILE ${KATIE_MKSPECS})
     set(QT_MKSPECS_DIR ${KATIE_MKSPECS_DIR})
 
-    # those are exceptions because they have "q" prefix
     set(_binsuffix "${CMAKE_EXECUTABLE_SUFFIX}")
+    # those are exceptions because they have "q" prefix
     set(QT_DBUSXML2CPP_EXECUTABLE @QT_BINARIES_PATH@/qdbusxml2cpp${_binsuffix})
     set(QT_DBUSCPP2XML_EXECUTABLE @QT_BINARIES_PATH@/qdbuscpp2xml${_binsuffix})
 

@@ -320,9 +320,7 @@ if(${KATIE_PLATFORM} STREQUAL "linux")
         dl
         ${CMAKE_THREAD_LIBS_INIT}
     )
-endif()
-
-if(${KATIE_PLATFORM} STREQUAL "win32")
+elseif(${KATIE_PLATFORM} STREQUAL "win32")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         ole32
@@ -333,9 +331,7 @@ if(${KATIE_PLATFORM} STREQUAL "win32")
         -Wl,-luuid
     )
     add_definitions(-DQT_MAKEDLL)
-endif()
-
-if(${KATIE_PLATFORM} STREQUAL "mac")
+elseif(${KATIE_PLATFORM} STREQUAL "mac")
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
         -framework CoreFoundation
