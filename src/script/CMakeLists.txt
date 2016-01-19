@@ -246,7 +246,7 @@ include_directories(
 if(KATIE_COMPILER STREQUAL "gcc")
     set(KATIE_CXXFLAGS
         ${KATIE_CXXFLAGS}
-        # XXX: it is only for gcc newer than v3.0.x
+        # TODO: it is only for gcc newer than v3.0.x and only when the JIT is enabled (default)
         -fno-stack-protector
     )
 elseif(KATIE_COMPILER STREQUAL "msvc")
@@ -289,6 +289,13 @@ elseif(KATIE_PLATFORM STREQUAL "integrity")
 endif()
 
 if(KATIE_PLATFORM STREQUAL "wince")
+    set(SCRIPT_SOURCES
+        ${SCRIPT_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/ce-compat/ce_time.c
+    )
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/ce-compat
+    )
     add_definitions(-DWINCEBASIC)
 endif()
 
