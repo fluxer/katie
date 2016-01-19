@@ -56,6 +56,10 @@
 #include <QtCore/qglobal.h>
 #include <QtCore/qobjectdefs.h>
 
+#ifndef QT_NO_QOBJECT
+#  include <QtCore/qobject_p.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 enum PropertyFlags  {
