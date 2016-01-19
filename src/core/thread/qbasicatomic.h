@@ -219,7 +219,7 @@ public:
 QT_END_NAMESPACE
 QT_END_HEADER
 
-#if defined(QT_MOC) || defined(QT_RCC) || defined(QT_UIC) || defined(QT_BOOTSTRAPPED)
+#if defined(QT_BOOTSTRAPPED)
 #  include <qatomic_bootstrap.h>
 #else
 #  include <qatomic_arch.h>
