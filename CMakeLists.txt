@@ -190,7 +190,7 @@ add_definitions(
 
 # this is how Qt4 does it
 if(NOT "${KATIE_PLATFORM}" STREQUAL "integrity" AND NOT MINGW)
-    set(QT_LARGEFILE_SUPPORT TRUE)
+    set(QT_LARGEFILE_SUPPORT 64)
     add_definitions(
         -D_LARGEFILE64_SOURCE
         -D_LARGEFILE_SOURCE
