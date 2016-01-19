@@ -1,4 +1,4 @@
-add_definitions(-DQT_UIC_CPP_GENERATOR)
+add_definitions(-DQT_UIC -DQT_UIC_CPP_GENERATOR)
 set(EXTRA_UIC_LIBS KtCore KtXml)
 
 include_directories(
@@ -53,7 +53,7 @@ set(UIC_HEADERS
 katie_setup_flags()
 
 add_executable(bootstrap_uic $<TARGET_OBJECTS:bootstrap> ${UIC_SOURCES} ${UIC_HEADERS})
-target_compile_definitions(bootstrap_uic PRIVATE -DQT_UIC ${BOOTSTRAP_DEFINITIONS})
+target_compile_definitions(bootstrap_uic PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 add_executable(uic ${UIC_SOURCES} ${UIC_HEADERS})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})

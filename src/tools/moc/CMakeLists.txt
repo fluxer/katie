@@ -1,4 +1,4 @@
-# add_definitions()
+add_definitions(-DQT_MOC)
 set(EXTRA_MOC_LIBS KtCore)
 
 include_directories(
@@ -35,7 +35,7 @@ set(MOC_HEADERS
 katie_setup_flags()
 
 add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES} ${MOC_HEADERS})
-target_compile_definitions(bootstrap_moc PRIVATE -DQT_MOC ${BOOTSTRAP_DEFINITIONS})
+target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 add_executable(moc ${MOC_SOURCES} ${MOC_HEADERS})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
