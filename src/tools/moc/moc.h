@@ -185,13 +185,12 @@ class Moc : public Parser
 {
 public:
     Moc()
-        : noInclude(false), generatedCode(false), mustIncludeQMetaTypeH(false)
+        : noInclude(false), mustIncludeQMetaTypeH(false)
         {}
 
     QByteArray filename;
 
     bool noInclude;
-    bool generatedCode;
     bool mustIncludeQMetaTypeH;
     QByteArray includePath;
     QList<QByteArray> includeFiles;
