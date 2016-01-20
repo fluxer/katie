@@ -42,7 +42,6 @@
 #include "uic.h"
 #include "option.h"
 #include "driver.h"
-#include "qconfig.cpp"
 #include <QtCore/QFile>
 #include <QtCore/QDir>
 #include <QtCore/QTextStream>

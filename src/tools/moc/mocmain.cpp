@@ -42,7 +42,6 @@
 #include "preprocessor.h"
 #include "moc.h"
 #include "outputrevision.h"
-#include "qconfig.cpp"
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
