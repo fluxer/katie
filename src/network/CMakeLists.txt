@@ -75,8 +75,7 @@ include_directories(
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
 katie_generate_map(QtNetwork Q_NETWORK_EXPORT)
-katie_resources("${NETWORK_SOURCES}")
-katie_resources("${NETWORK_HEADERS}")
+katie_resources(${NETWORK_SOURCES} ${NETWORK_HEADERS})
 katie_setup_flags()
 
 add_library(KtNetwork ${KATIE_TYPE} ${NETWORK_SOURCES} ${NETWORK_HEADERS})

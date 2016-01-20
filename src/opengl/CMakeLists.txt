@@ -212,15 +212,12 @@ if(WITH_FREETYPE AND FREETYPE_FOUND)
         ${EXTRA_OPENGL_LIBS}
         ${FREETYPE_LIBRARIES}
     )
-else()
-    add_definitions(-DQT_NO_FREETYPE)
 endif()
 
 katie_generate_misc("${OPENGL_HEADERS}" QtOpenGL)
 katie_generate_public("${OPENGL_PUBLIC_HEADERS}" QtOpenGL)
 katie_generate_map(QtOpenGL Q_OPENGL_EXPORT)
-katie_resources("${OPENGL_SOURCES}")
-katie_resources("${OPENGL_HEADERS}")
+katie_resources(${OPENGL_SOURCES} ${OPENGL_HEADERS})
 katie_setup_flags()
 
 add_library(KtOpenGL ${KATIE_TYPE} ${OPENGL_SOURCES} ${OPENGL_HEADERS})

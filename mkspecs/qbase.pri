@@ -1,10 +1,3 @@
-QMAKE_TARGET_COMPANY = The Qt Company Ltd
-QMAKE_TARGET_PRODUCT = Qt4
-QMAKE_TARGET_DESCRIPTION = C++ application development framework.
-QMAKE_TARGET_COPYRIGHT = Copyright (C) 2015 The Qt Company Ltd.
-
-VERSION=4.8.7
-
 contains(QT_CONFIG, reduce_exports):CONFIG += hide_symbols
 unix:contains(QT_CONFIG, reduce_relocations):CONFIG += bsymbolic_functions
 

@@ -90,8 +90,7 @@ include_directories(
 katie_generate_misc("${HELP_HEADERS}" QtHelp)
 katie_generate_public("${HELP_PUBLIC_HEADERS}" QtHelp)
 katie_generate_map(QtHelp QHELP_EXPORT)
-katie_resources("${HELP_SOURCES}")
-katie_resources("${HELP_HEADERS}")
+katie_resources(${HELP_SOURCES} ${HELP_HEADERS})
 katie_setup_flags()
 
 add_library(KtHelp ${KATIE_TYPE} ${HELP_SOURCES} ${HELP_HEADERS})
