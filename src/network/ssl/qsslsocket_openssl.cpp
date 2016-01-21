@@ -513,9 +513,7 @@ bool QSslSocketPrivate::supportsSsl()
 
 bool QSslSocketPrivate::ensureLibraryLoaded()
 {
-    if (!q_resolveOpenSslSymbols())
-        return false;
-
+#ifndef QT_NO_OPENSSL
     // Check if the library itself needs to be initialized.
     QMutexLocker locker(openssl_locks()->initLock());
     if (!s_libraryLoaded) {
@@ -558,6 +556,9 @@ bool QSslSocketPrivate::ensureLibraryLoaded()
         }
     }
     return true;
+#else
+    return false;
+#endif // QT_NO_OPENSSL
 }
 
 void QSslSocketPrivate::ensureCiphersAndCertsLoaded()

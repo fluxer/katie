@@ -287,15 +287,6 @@ DEFINEFUNC(void, OPENSSL_add_all_algorithms_conf, void, DUMMYARG, return, DUMMYA
 DEFINEFUNC3(int, SSL_CTX_load_verify_locations, SSL_CTX *ctx, ctx, const char *CAfile, CAfile, const char *CApath, CApath, return 0, return)
 DEFINEFUNC(long, SSLeay, void, DUMMYARG, return 0, return)
 
-
-bool q_resolveOpenSslSymbols()
-{
-#ifdef QT_NO_OPENSSL
-    return false;
-#endif
-    return true;
-}
-
 //==============================================================================
 // contributed by Jay Case of Sarvega, Inc.; http://sarvega.com/
 // Based on X509_cmp_time() for intitial buffer hacking.
