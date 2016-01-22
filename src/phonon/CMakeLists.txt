@@ -109,7 +109,6 @@ set(PHONON_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/phonon_export.h
     ${CMAKE_CURRENT_SOURCE_DIR}/phonondefs.h
     ${CMAKE_CURRENT_SOURCE_DIR}/platformplugin.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/pulsesupport.h
     ${CMAKE_CURRENT_SOURCE_DIR}/seekslider.h
     ${CMAKE_CURRENT_SOURCE_DIR}/streaminterface.h
     ${CMAKE_CURRENT_SOURCE_DIR}/videoplayer.h
@@ -181,7 +180,6 @@ set(PHONON_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/path.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/phononnamespace.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/platform.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/pulsesupport.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/seekslider.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/statesvalidator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/streaminterface.cpp
@@ -219,27 +217,6 @@ if((WITH_OPENGL AND OPENGL_FOUND) AND PHONON_GRAPHICS)
 else()
     set(PHONON_GRAPHICS TRUE)
     katie_definition(-DPHONON_NO_GRAPHICSVIEW)
-endif()
-
-if(WITH_GLIB2 AND GLIB2_FOUND AND WITH_PULSEAUDIO AND PULSEAUDIO_FOUND)
-    set(PHONON_HEADERS
-        ${PHONON_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/pulsestream_p.h
-    )
-    set(PHONON_SOURCES
-        ${PHONON_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/pulsestream.cpp
-    )
-    set(EXTRA_PHONON_LIBS
-        ${EXTRA_PHONON_LIBS}
-        ${PULSEAUDIO_LIBRARIES}
-        ${GLIB2_LIBRARIES}
-    )
-    add_definitions(-DHAVE_PULSEAUDIO)
-    include_directories(
-        ${GLIB2_INCLUDES}
-        ${PULSEAUDIO_INCLUDES}
-    )
 endif()
 
 if(WITH_DBUS AND DBUS_FOUND)

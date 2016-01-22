@@ -29,7 +29,6 @@
 #include <QVariant>
 
 #include <phonon/GlobalDescriptionContainer>
-#include <phonon/pulsesupport.h>
 
 #include <vlc/libvlc_version.h>
 
@@ -102,9 +101,6 @@ Backend::Backend(QObject *parent, const QVariantList &)
                      " PulseAudio requires you to set QCoreApplication::applicationName()");
         }
 
-        PulseSupport::getInstance()->enable(true);
-        const bool pulseActive = PulseSupport::getInstance()->isActive();
-        PulseSupport::getInstance()->enable(false);
         if (!qApp->applicationName().isEmpty()) {
             const QString id = QString("org.kde.phonon.%1").arg(qApp->applicationName());
             const QString version = qApp->applicationVersion();
@@ -121,11 +117,6 @@ Backend::Backend(QObject *parent, const QVariantList &)
                               id.toUtf8().constData(),
                               version.toUtf8().constData(),
                               icon.toUtf8().constData());
-        } else if (pulseActive) {
-            qWarning("WARNING: Setting PulseAudio context information requires you"
-                     " to set QCoreApplication::applicationName(),"
-                     " QCoreApplication::applicationVersion() and"
-                     " QGuiApplication::windowIcon().");
         }
     } else {
 #ifdef __GNUC__
@@ -143,20 +134,6 @@ Backend::Backend(QObject *parent, const QVariantList &)
         fatal() << "Phonon::VLC::vlcInit: Failed to initialize VLC";
     }
 
-    // Initialise PulseAudio support
-    PulseSupport *pulse = PulseSupport::getInstance();
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
-    // VLC 2.2 changed the stream creation order around internally which breaks
-    // the Pulseaudio hijacking. Since VLC upstream doesn't feel like giving us
-    // any more property control we now consider this feature unsupported. As
-    // such whatever properties VLC sets will be what pulse knows about us.
-    pulse->enable(true);
-    connect(pulse, SIGNAL(objectDescriptionChanged(ObjectDescriptionType)),
-            SIGNAL(objectDescriptionChanged(ObjectDescriptionType)));
-#else
-    pulse->enable(false);
-#endif
-
     m_deviceManager = new DeviceManager(this);
     m_effectManager = new EffectManager(this);
 }
@@ -169,7 +146,6 @@ Backend::~Backend()
         delete GlobalAudioChannels::self;
     if (GlobalSubtitles::self)
         delete GlobalSubtitles::self;
-    PulseSupport::shutdown();
 }
 
 QObject *Backend::createObject(BackendInterface::Class c, QObject *parent, const QList<QVariant> &args)

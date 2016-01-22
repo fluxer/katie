@@ -20,8 +20,6 @@
 
 #include "audiooutput.h"
 
-#include <phonon/pulsesupport.h>
-
 #include <vlc/vlc.h>
 
 #include "backend.h"
@@ -47,22 +45,16 @@ void AudioOutput::handleConnectToMediaObject(MediaObject *mediaObject)
 {
     Q_UNUSED(mediaObject);
     setOutputDeviceImplementation();
-    if (!PulseSupport::getInstance()->isActive()) {
-        connect(m_player, SIGNAL(mutedChanged(bool)),
-                this, SLOT(onMutedChanged(bool)));
-        connect(m_player, SIGNAL(volumeChanged(float)),
-                this, SLOT(onVolumeChanged(float)));
-        applyVolume();
-    }
+    connect(m_player, SIGNAL(mutedChanged(bool)),
+            this, SLOT(onMutedChanged(bool)));
+    connect(m_player, SIGNAL(volumeChanged(float)),
+            this, SLOT(onVolumeChanged(float)));
+    applyVolume();
 }
 
 void AudioOutput::handleAddToMedia(Media *media)
 {
     media->addOption(":audio");
-    PulseSupport *pulse = PulseSupport::getInstance();
-    if (pulse && pulse->isActive()) {
-        pulse->setupStreamEnvironment(m_streamUuid);
-    }
 }
 
 qreal AudioOutput::volume() const
@@ -128,23 +120,6 @@ void AudioOutput::setStreamUuid(QString uuid)
 void AudioOutput::setOutputDeviceImplementation()
 {
     Q_ASSERT(m_player);
-#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
-    // VLC 2.2 has the PulseSupport overrides always disabled because of
-    // incompatibility. Also see backend.cpp for more detals.
-    // To get access to the correct activity state we need to temporarily
-    // enable pulse and then disable it again. This is necessary because isActive
-    // is in fact isActive&isEnabled.............
-    PulseSupport::getInstance()->enable(true);
-    const bool pulseActive = PulseSupport::getInstance()->isActive();
-    PulseSupport::getInstance()->enable(false);
-#else
-    const bool pulseActive = PulseSupport::getInstance()->isActive();
-#endif
-    if (pulseActive) {
-        m_player->setAudioOutput("pulse");
-        debug() << "Setting aout to pulse";
-        return;
-    }
 
     const QVariant dalProperty = m_device.property("deviceAccessList");
     if (!dalProperty.isValid()) {

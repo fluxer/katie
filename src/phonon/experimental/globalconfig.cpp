@@ -28,7 +28,6 @@
 #include "../backendinterface.h"
 #include "../qsettingsgroup_p.h"
 #include "../platformplugin.h"
-#include "pulsesupport.h"
 
 #include <QtCore/QList>
 #include <QtCore/QVariant>

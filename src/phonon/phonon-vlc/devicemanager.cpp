@@ -21,8 +21,6 @@
 
 #include "devicemanager.h"
 
-#include <phonon/pulsesupport.h>
-
 #include <vlc/vlc.h>
 
 #include "backend.h"
@@ -207,19 +205,6 @@ void DeviceManager::updateDeviceList()
         return;
 
     QList<QByteArray> audioOutBackends = vlcAudioOutBackends();
-
-    PulseSupport *pulse = PulseSupport::getInstance();
-    if (pulse && pulse->isActive()) {
-        if (audioOutBackends.contains("pulse")) {
-            DeviceInfo defaultAudioOutputDevice(tr("Default"), false);
-            defaultAudioOutputDevice.setCapabilities(DeviceInfo::AudioOutput);
-            defaultAudioOutputDevice.addAccess(DeviceAccess("pulse", "default"));
-            newDeviceList.append(defaultAudioOutputDevice);
-            return;
-        } else {
-            pulse->enable(false);
-        }
-    }
 
     QList<QByteArray> knownSoundSystems;
     // Whitelist - Order has no particular impact.

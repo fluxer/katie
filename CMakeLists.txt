@@ -7,6 +7,16 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
+if(MINGW)
+    set(CMAKE_GNUtoMS TRUE)
+endif()
+if(WIN32)
+    set(CMAKE_WIN32_EXECUTABLE TRUE)
+endif()
+if(APPLE)
+    set(CMAKE_MACOSX_BUNDLE TRUE)
+endif()
+
 project(katie C CXX ASM)
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
@@ -42,9 +52,6 @@ add_feature_info(cups WITH_CUPS "an open source something")
 
 option(WITH_ALSA "Build alsa support" ON)
 add_feature_info(alsa WITH_ALSA "an open source something")
-
-option(WITH_PULSEAUDIO "Build pulseaudio support" ON)
-add_feature_info(pulseaudio WITH_PULSEAUDIO "an open source something")
 
 option(WITH_PNG "Build png support" ON)
 add_feature_info(png WITH_PNG "an open source something")
@@ -303,14 +310,6 @@ set_package_properties(ALSA PROPERTIES
     DESCRIPTION "Advanced Linux Sound Architecture"
     URL "http://www.alsa-project.org"
     TYPE RECOMMENDED
-)
-
-find_package(PulseAudio)
-set_package_properties(PulseAudio PROPERTIES
-    PURPOSE "Required for PulseAudio support"
-    DESCRIPTION "Featureful, general-purpose sound server"
-    URL "http://www.freedesktop.org/wiki/Software/PulseAudio"
-    TYPE OPTIONAL
 )
 
 find_package(Freetype)
