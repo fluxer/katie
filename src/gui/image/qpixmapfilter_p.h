@@ -113,7 +113,6 @@ public:
 
 private:
     friend class QGLPixmapConvolutionFilter;
-    friend class QVGPixmapConvolutionFilter;
     const qreal *convolutionKernel() const;
     int rows() const;
     int columns() const;
