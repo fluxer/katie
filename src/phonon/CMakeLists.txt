@@ -385,7 +385,7 @@ if(WITH_DBUS AND DBUS_FOUND)
 endif()
 katie_generate_package(KtPhonon "" "${EXTRA_PHONON_LIBS}" "${PHONON_REQUIRES}")
 
-if(WITH_VLC AND LIBVLC_FOUND)
+if(WITH_VLC AND VLC_FOUND)
     add_subdirectory(phonon-vlc)
 endif()
 

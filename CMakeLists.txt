@@ -426,9 +426,9 @@ set_package_properties(Sqlite PROPERTIES
     TYPE RECOMMENDED
 )
 
-set(LIBVLC_MIN_VERSION "2.1.0")
-find_package(LIBVLC)
-set_package_properties(LIBVLC PROPERTIES
+set(VLC_MIN_VERSION "2.1.0")
+find_package(VLC)
+set_package_properties(VLC PROPERTIES
     PURPOSE "Required for VLC Phonon backend"
     DESCRIPTION "VLC C API Library"
     URL "http://www.videolan.org/vlc/"

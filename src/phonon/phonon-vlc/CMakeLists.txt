@@ -5,8 +5,8 @@ else()
 endif()
 
 include_directories(
-    ${LIBVLC_INCLUDE_DIR}
-    ${LIBVLC_INCLUDE_DIR}/vlc/plugins
+    ${VLC_INCLUDES}
+    ${VLC_INCLUDES}/vlc/plugins
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}/audio
@@ -59,7 +59,7 @@ set(phonon_vlc_SRCS
     utils/libvlc.cpp
 )
 
-if(${LIBVLC_VERSION} VERSION_GREATER "2.2.0" OR ${LIBVLC_VERSION} VERSION_EQUAL "2.2.0")
+if(${VLC_VERSION} VERSION_GREATER "2.2.0" OR ${VLC_VERSION} VERSION_EQUAL "2.2.0")
     list(APPEND phonon_vlc_SRCS equalizereffect.cpp)
 endif()
 
@@ -106,8 +106,7 @@ set_target_properties(phonon_vlc PROPERTIES
 
 target_link_libraries(phonon_vlc
     KtPhonon
-    ${LIBVLCCORE_LIBRARY}
-    ${LIBVLC_LIBRARY}
+    ${VLC_LIBRARIES}
 )
 
 install(
