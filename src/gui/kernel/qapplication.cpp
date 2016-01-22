@@ -660,9 +660,6 @@ void QApplicationPrivate::process_cmdline()
             Qt::RightToLeft
         \o  -graphicssystem, sets the backend to be used for on-screen widgets
             and QPixmaps. Available options are \c{raster} and \c{opengl}.
-        \o  -qmljsdebugger=, activates the QML/JS debugger with a specified port.
-            The value must be of format port:1234[,block], where block is optional
-            and will make the application wait until a debugger connects to it.
     \endlist
 
     The X11 version of Qt supports some traditional X11 command line options:

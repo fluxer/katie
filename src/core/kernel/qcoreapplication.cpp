@@ -163,8 +163,6 @@ bool QCoreApplicationPrivate::checkInstance(const char *function)
     return b;
 }
 
-Q_GLOBAL_STATIC(QString, qmljs_debug_arguments);
-
 void QCoreApplicationPrivate::processCommandLineArguments()
 {
     int j = argc ? 1 : 0;
@@ -173,15 +171,7 @@ void QCoreApplicationPrivate::processCommandLineArguments()
             argv[j++] = argv[i];
             continue;
         }
-        QByteArray arg = argv[i];
-        if (arg.startsWith("-qmljsdebugger=")) {
-            *qmljs_debug_arguments() = QString::fromLocal8Bit(arg.right(arg.length() - 15));
-        } else if (arg == "-qmljsdebugger" && i < argc - 1) {
-            ++i;
-            *qmljs_debug_arguments() = QString::fromLocal8Bit(argv[i]);
-        } else {
-            argv[j++] = argv[i];
-        }
+        argv[j++] = argv[i];
     }
 
     if (j < argc) {
@@ -460,11 +450,6 @@ void QCoreApplicationPrivate::appendApplicationPathToLibraryPaths()
     if (QFile::exists(app_location) && !app_libpaths->contains(app_location))
         app_libpaths->append(app_location);
 #endif
-}
-
-QString QCoreApplicationPrivate::qmljsDebugArguments()
-{
-    return *qmljs_debug_arguments();
 }
 
 QString qAppName()
@@ -2025,11 +2010,9 @@ QStringList QCoreApplication::arguments()
                 l1arg == "-stylesheet" ||
                 l1arg == "-widgetcount")
                 ;
-            else if (l1arg.startsWith("-style=") ||
-                     l1arg.startsWith("-qmljsdebugger="))
+            else if (l1arg.startsWith("-style="))
                 ;
             else if (l1arg == "-style" ||
-                     l1arg == "-qmljsdebugger" ||
                      l1arg == "-session" ||
                      l1arg == "-graphicssystem" ||
                      l1arg == "-testability")
