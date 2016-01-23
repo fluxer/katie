@@ -135,9 +135,10 @@ public:
                              JSC::JSValue receiver,
                              JSC::JSValue slot);
 
-    void execute(int slotIndex, void **argv);
-
     void mark(JSC::MarkStack&);
+
+// private slots:
+    void execute(int slotIndex, void **argv);
 
 private:
     QScriptEnginePrivate *engine;
@@ -2103,9 +2104,14 @@ const QMetaObject QObjectConnectionManager::staticMetaObject = {
       qt_meta_data_QObjectConnectionManager, qt_static_metacall, 0, 0 }
 };
 
-const QMetaObject *QObjectConnectionManager::metaObject() const
+
+#ifdef Q_NO_DATA_RELOCATION
+const QMetaObject &QScript::QObjectConnectionManager::getStaticMetaObject() { return staticMetaObject; }
+#endif //Q_NO_DATA_RELOCATION
+
+const QMetaObject *QScript::QObjectConnectionManager::metaObject() const
 {
-    return &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
 void *QObjectConnectionManager::qt_metacast(const char *_clname)

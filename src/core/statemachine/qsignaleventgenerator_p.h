@@ -66,7 +66,7 @@ public:
     QSignalEventGenerator(QStateMachine *parent);
 
 private:
-// slots
+// private slots:
     void execute(void **_a);
 
 private:

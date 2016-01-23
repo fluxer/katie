@@ -379,9 +379,13 @@ const QMetaObject QDBusAdaptorConnector::staticMetaObject = {
       qt_meta_data_QDBusAdaptorConnector, qt_static_metacall, 0, 0 }
 };
 
+#ifdef Q_NO_DATA_RELOCATION
+const QMetaObject &QDBusAdaptorConnector::getStaticMetaObject() { return staticMetaObject; }
+#endif //Q_NO_DATA_RELOCATION
+
 const QMetaObject *QDBusAdaptorConnector::metaObject() const
 {
-    return &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
 void *QDBusAdaptorConnector::qt_metacast(const char *_clname)

@@ -2252,9 +2252,13 @@ const QMetaObject QSignalEventGenerator::staticMetaObject = {
       qt_meta_data_QSignalEventGenerator, qt_static_metacall, 0, 0 }
 };
 
+#ifdef Q_NO_DATA_RELOCATION
+const QMetaObject &QSignalEventGenerator::getStaticMetaObject() { return staticMetaObject; }
+#endif //Q_NO_DATA_RELOCATION
+
 const QMetaObject *QSignalEventGenerator::metaObject() const
 {
-    return &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
 void *QSignalEventGenerator::qt_metacast(const char *_clname)
