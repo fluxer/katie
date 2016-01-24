@@ -59,8 +59,8 @@ QT_BEGIN_NAMESPACE
 // for instructions see the program at
 // util/qurl-generateTLDs
 
-static const quint16 tldCount = 7835;
-static const quint16 tldIndices[] = {
+static const quint32 tldCount = 7835;
+static const quint32 tldIndices[] = {
 0,
 0,
 17,

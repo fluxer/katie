@@ -118,10 +118,10 @@ int main(int argc, char **argv) {
         strings[num].append("\\0");
     }
 
-    outIndicesBuffer.write("static const quint16 tldCount = ");
+    outIndicesBuffer.write("static const quint32 tldCount = ");
     outIndicesBuffer.write(QByteArray::number(lineCount));
     outIndicesBuffer.write(";\n");
-    outIndicesBuffer.write("static const quint16 tldIndices[");
+    outIndicesBuffer.write("static const quint32 tldIndices[");
 //    outIndicesBuffer.write(QByteArray::number(lineCount+1)); // not needed
     outIndicesBuffer.write("] = {\n");
 
