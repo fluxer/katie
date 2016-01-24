@@ -84,7 +84,7 @@ public:
 #error Add the datastream version for this Qt version
         Qt_4_9 = Qt_4_8
 #endif
-        Qt_Default
+        Qt_Default = Qt_4_8
     };
 
     enum ByteOrder {

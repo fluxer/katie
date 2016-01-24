@@ -249,10 +249,6 @@ QT_BEGIN_NAMESPACE
     if (q_status != Ok) \
         return retVal;
 
-enum {
-    DefaultStreamVersion = QDataStream::Qt_4_6
-};
-
 // ### 5.0: when streaming invalid QVariants, just the type should
 // be written, no "data" after it
 
@@ -267,7 +263,7 @@ QDataStream::QDataStream()
     dev = 0;
     owndev = false;
     byteorder = BigEndian;
-    ver = DefaultStreamVersion;
+    ver = QDataStream::Qt_Default;
     noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
     q_status = Ok;
 }
@@ -289,7 +285,7 @@ QDataStream::QDataStream(QIODevice *d)
     dev = d;                                // set device
     owndev = false;
     byteorder = BigEndian;                        // default byte order
-    ver = DefaultStreamVersion;
+    ver = QDataStream::Qt_Default;
     noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
     q_status = Ok;
 }
@@ -318,7 +314,7 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
     dev = buf;
     owndev = true;
     byteorder = BigEndian;
-    ver = DefaultStreamVersion;
+    ver = QDataStream::Qt_Default;
     noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
     q_status = Ok;
 }
@@ -342,7 +338,7 @@ QDataStream::QDataStream(const QByteArray &a)
     dev = buf;
     owndev = true;
     byteorder = BigEndian;
-    ver = DefaultStreamVersion;
+    ver = QDataStream::Qt_Default;
     noswap = QSysInfo::ByteOrder == QSysInfo::BigEndian;
     q_status = Ok;
 }
@@ -526,6 +522,7 @@ void QDataStream::setByteOrder(ByteOrder bo)
     \value Qt_4_6 Version 6 (Qt 4.6, Qt 4.7, Qt 4.8)
     \value Qt_4_7 Same as Qt_4_6.
     \value Qt_4_8 Same as Qt_4_6.
+    \value Qt_Default
 
     \sa setVersion(), version()
 */
