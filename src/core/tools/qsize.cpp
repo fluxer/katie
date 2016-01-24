@@ -385,10 +385,7 @@ void QSize::scale(const QSize &s, Qt::AspectRatioMode mode)
 
 QDataStream &operator<<(QDataStream &s, const QSize &sz)
 {
-    if (s.version() == 1)
-        s << (qint16)sz.width() << (qint16)sz.height();
-    else
-        s << (qint32)sz.width() << (qint32)sz.height();
+    s << (qint32)sz.width() << (qint32)sz.height();
     return s;
 }
 
@@ -404,16 +401,9 @@ QDataStream &operator<<(QDataStream &s, const QSize &sz)
 
 QDataStream &operator>>(QDataStream &s, QSize &sz)
 {
-    if (s.version() == 1) {
-        qint16 w, h;
-        s >> w;  sz.rwidth() = w;
-        s >> h;  sz.rheight() = h;
-    }
-    else {
-        qint32 w, h;
-        s >> w;  sz.rwidth() = w;
-        s >> h;  sz.rheight() = h;
-    }
+    qint32 w, h;
+    s >> w;  sz.rwidth() = w;
+    s >> h;  sz.rheight() = h;
     return s;
 }
 #endif // QT_NO_DATASTREAM

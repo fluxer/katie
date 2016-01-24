@@ -7458,25 +7458,21 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
 QDataStream &operator<<(QDataStream &out, const QString &str)
 {
-    if (out.version() == 1) {
-        out << str.toLatin1();
-    } else {
-        if (!str.isNull() || out.version() < 3) {
-            if ((out.byteOrder() == QDataStream::BigEndian) == (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
-                out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
-            } else {
-                QVarLengthArray<ushort> buffer(str.length());
-                const ushort *data = reinterpret_cast<const ushort *>(str.constData());
-                for (int i = 0; i < str.length(); i++) {
-                    buffer[i] = qbswap(*data);
-                    ++data;
-                }
-                out.writeBytes(reinterpret_cast<const char *>(buffer.data()), sizeof(ushort) * buffer.size());
-            }
+    if (!str.isNull()) {
+        if ((out.byteOrder() == QDataStream::BigEndian) == (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
+            out.writeBytes(reinterpret_cast<const char *>(str.unicode()), sizeof(QChar) * str.length());
         } else {
-            // write null marker
-            out << (quint32)0xffffffff;
+            QVarLengthArray<ushort> buffer(str.length());
+            const ushort *data = reinterpret_cast<const ushort *>(str.constData());
+            for (int i = 0; i < str.length(); i++) {
+                buffer[i] = qbswap(*data);
+                ++data;
+            }
+            out.writeBytes(reinterpret_cast<const char *>(buffer.data()), sizeof(ushort) * buffer.size());
         }
+    } else {
+        // write null marker
+        out << (quint32)0xffffffff;
     }
     return out;
 }
@@ -7498,49 +7494,43 @@ QDataStream &operator>>(QDataStream &in, QString &str)
 #endif
 #endif
 
-    if (in.version() == 1) {
-        QByteArray l;
-        in >> l;
-        str = QString::fromLatin1(l);
-    } else {
-        quint32 bytes = 0;
-        in >> bytes;                                  // read size of string
-        if (bytes == 0xffffffff) {                    // null string
+    quint32 bytes = 0;
+    in >> bytes;                                  // read size of string
+    if (bytes == 0xffffffff) {                    // null string
+        str.clear();
+    } else if (bytes > 0) {                       // not empty
+        if (bytes & 0x1) {
             str.clear();
-        } else if (bytes > 0) {                       // not empty
-            if (bytes & 0x1) {
+            in.setStatus(QDataStream::ReadCorruptData);
+            return in;
+        }
+
+        const quint32 Step = 1024 * 1024;
+        quint32 len = bytes / 2;
+        quint32 allocated = 0;
+
+        while (allocated < len) {
+            int blockSize = qMin(Step, len - allocated);
+            str.resize(allocated + blockSize);
+            if (in.readRawData(reinterpret_cast<char *>(str.data()) + allocated * 2,
+                                blockSize * 2) != blockSize * 2) {
                 str.clear();
-                in.setStatus(QDataStream::ReadCorruptData);
+                in.setStatus(QDataStream::ReadPastEnd);
                 return in;
             }
-
-            const quint32 Step = 1024 * 1024;
-            quint32 len = bytes / 2;
-            quint32 allocated = 0;
-
-            while (allocated < len) {
-                int blockSize = qMin(Step, len - allocated);
-                str.resize(allocated + blockSize);
-                if (in.readRawData(reinterpret_cast<char *>(str.data()) + allocated * 2,
-                                   blockSize * 2) != blockSize * 2) {
-                    str.clear();
-                    in.setStatus(QDataStream::ReadPastEnd);
-                    return in;
-                }
-                allocated += blockSize;
-            }
-
-            if ((in.byteOrder() == QDataStream::BigEndian)
-                    != (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
-                ushort *data = reinterpret_cast<ushort *>(str.data());
-                while (len--) {
-                    *data = qbswap(*data);
-                    ++data;
-                }
-            }
-        } else {
-            str = QLatin1String("");
+            allocated += blockSize;
         }
+
+        if ((in.byteOrder() == QDataStream::BigEndian)
+                != (QSysInfo::ByteOrder == QSysInfo::BigEndian)) {
+            ushort *data = reinterpret_cast<ushort *>(str.data());
+            while (len--) {
+                *data = qbswap(*data);
+                ++data;
+            }
+        }
+    } else {
+        str = QLatin1String("");
     }
     return in;
 }

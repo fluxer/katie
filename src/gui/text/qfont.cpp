@@ -2103,10 +2103,8 @@ static quint8 get_font_bits(int version, const QFontPrivate *f)
     // bits |= 0x10;
     if (f->rawMode)
         bits |= 0x20;
-    if (version >= QDataStream::Qt_4_0) {
-        if (f->kerning)
-            bits |= 0x10;
-    }
+    if (f->kerning)
+        bits |= 0x10;
     if (f->request.style == QFont::StyleOblique)
         bits |= 0x80;
     return bits;
@@ -2139,8 +2137,7 @@ static void set_font_bits(int version, quint8 bits, QFontPrivate *f)
     f->request.fixedPitch    = (bits & 0x08) != 0;
     // f->hintSetByUser      = (bits & 0x10) != 0;
     f->rawMode               = (bits & 0x20) != 0;
-    if (version >= QDataStream::Qt_4_0)
-        f->kerning               = (bits & 0x10) != 0;
+    f->kerning               = (bits & 0x10) != 0;
     if ((bits & 0x80) != 0)
         f->request.style         = QFont::StyleOblique;
 }
@@ -2263,36 +2260,15 @@ void QFont::cacheStatistics()
 */
 QDataStream &operator<<(QDataStream &s, const QFont &font)
 {
-    if (s.version() == 1) {
-        s << font.d->request.family.toLatin1();
-    } else {
-        s << font.d->request.family;
-    }
+    s << font.d->request.family;
 
-    if (s.version() >= QDataStream::Qt_4_0) {
-        // 4.0
-        double pointSize = font.d->request.pointSize;
-        qint32 pixelSize = font.d->request.pixelSize;
-        s << pointSize;
-        s << pixelSize;
-    } else if (s.version() <= 3) {
-        qint16 pointSize = (qint16) (font.d->request.pointSize * 10);
-        if (pointSize < 0) {
-#ifdef Q_WS_X11
-            pointSize = (qint16)(font.d->request.pixelSize*720/QX11Info::appDpiY());
-#else
-            pointSize = (qint16)QFontInfo(font).pointSize() * 10;
-#endif
-        }
-        s << pointSize;
-    } else {
-        s << (qint16) (font.d->request.pointSize * 10);
-        s << (qint16) font.d->request.pixelSize;
-    }
+    double pointSize = font.d->request.pointSize;
+    qint32 pixelSize = font.d->request.pixelSize;
+    s << pointSize;
+    s << pixelSize;
 
     s << (quint8) font.d->request.styleHint;
-    if (s.version() >= QDataStream::Qt_3_1)
-        s << (quint8) font.d->request.styleStrategy;
+    s << (quint8) font.d->request.styleStrategy;
     s << (quint8) 0
       << (quint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
@@ -2323,33 +2299,16 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     quint8 styleHint, styleStrategy = QFont::PreferDefault, charSet, weight, bits;
 
-    if (s.version() == 1) {
-        QByteArray fam;
-        s >> fam;
-        font.d->request.family = QString::fromLatin1(fam);
-    } else {
-        s >> font.d->request.family;
-    }
+    s >> font.d->request.family;
 
-    if (s.version() >= QDataStream::Qt_4_0) {
-        // 4.0
-        double pointSize;
-        qint32 pixelSize;
-        s >> pointSize;
-        s >> pixelSize;
-        font.d->request.pointSize = qreal(pointSize);
-        font.d->request.pixelSize = pixelSize;
-    } else {
-        qint16 pointSize, pixelSize = -1;
-        s >> pointSize;
-        if (s.version() >= 4)
-            s >> pixelSize;
-        font.d->request.pointSize = qreal(pointSize / 10.);
-        font.d->request.pixelSize = pixelSize;
-    }
+    double pointSize;
+    qint32 pixelSize;
+    s >> pointSize;
+    s >> pixelSize;
+    font.d->request.pointSize = qreal(pointSize);
+    font.d->request.pixelSize = pixelSize;
     s >> styleHint;
-    if (s.version() >= QDataStream::Qt_3_1)
-        s >> styleStrategy;
+    s >> styleStrategy;
 
     s >> charSet;
     s >> weight;

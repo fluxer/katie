@@ -1666,7 +1666,7 @@ QDataStream &operator<<(QDataStream &s, const QKeySequence &keysequence)
     QList<quint32> list;
     list << keysequence.d->key[0];
 
-    if (s.version() >= 5 && keysequence.count() > 1) {
+    if (keysequence.count() > 1) {
         list << keysequence.d->key[1];
         list << keysequence.d->key[2];
         list << keysequence.d->key[3];

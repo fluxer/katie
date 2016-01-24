@@ -4798,16 +4798,14 @@ bool QImageData::doImageIO(const QImage *image, QImageWriter *writer, int qualit
 
 QDataStream &operator<<(QDataStream &s, const QImage &image)
 {
-    if (s.version() >= 5) {
-        if (image.isNull()) {
-            s << (qint32) 0; // null image marker
-            return s;
-        } else {
-            s << (qint32) 1;
-            // continue ...
-        }
+    if (image.isNull()) {
+        s << (qint32) 0; // null image marker
+        return s;
+    } else {
+        s << (qint32) 1;
+        // continue ...
     }
-    QImageWriter writer(s.device(), s.version() == 1 ? "bmp" : "png");
+    QImageWriter writer(s.device(), "png");
     writer.write(image);
     return s;
 }
@@ -4824,13 +4822,11 @@ QDataStream &operator<<(QDataStream &s, const QImage &image)
 
 QDataStream &operator>>(QDataStream &s, QImage &image)
 {
-    if (s.version() >= 5) {
-        qint32 nullMarker;
-        s >> nullMarker;
-        if (!nullMarker) {
-            image = QImage(); // null image
-            return s;
-        }
+    qint32 nullMarker;
+    s >> nullMarker;
+    if (!nullMarker) {
+        image = QImage(); // null image
+        return s;
     }
     image = QImageReader(s.device(), 0).read();
     return s;

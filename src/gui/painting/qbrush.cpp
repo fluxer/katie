@@ -1030,13 +1030,10 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
         || style == Qt::ConicalGradientPattern)
         gradient_style = true;
 
-    if (s.version() < QDataStream::Qt_4_0 && gradient_style)
-        style = Qt::NoBrush;
-
     s << style << b.color();
     if (b.style() == Qt::TexturePattern) {
         s << b.texture();
-    } else if (s.version() >= QDataStream::Qt_4_0 && gradient_style) {
+    } else if (gradient_style) {
         const QGradient *gradient = b.gradient();
         int type_as_int = int(gradient->type());
         s << type_as_int;

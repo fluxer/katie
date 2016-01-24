@@ -886,36 +886,29 @@ bool QPen::isDetached()
 QDataStream &operator<<(QDataStream &s, const QPen &p)
 {
     QPenData *dd = static_cast<QPenData *>(p.d);
-    if (s.version() < 3) {
-        s << (quint8)p.style();
-    } else if (s.version() < QDataStream::Qt_4_3) {
+    if (s.version() < QDataStream::Qt_4_3) {
         s << (quint8)(p.style() | p.capStyle() | p.joinStyle());
     } else {
         s << (quint16)(p.style() | p.capStyle() | p.joinStyle());
         s << (bool)(dd->cosmetic);
     }
 
-    if (s.version() < 7) {
-        s << (quint8)p.width();
-        s << p.color();
+    s << double(p.widthF());
+    s << p.brush();
+    s << double(p.miterLimit());
+    if (sizeof(qreal) == sizeof(double)) {
+        s << p.dashPattern();
     } else {
-        s << double(p.widthF());
-        s << p.brush();
-        s << double(p.miterLimit());
-        if (sizeof(qreal) == sizeof(double)) {
-            s << p.dashPattern();
-        } else {
-            // ensure that we write doubles here instead of streaming the pattern
-            // directly; otherwise, platforms that redefine qreal might generate
-            // data that cannot be read on other platforms.
-            QVector<qreal> pattern = p.dashPattern();
-            s << quint32(pattern.size());
-            for (int i = 0; i < pattern.size(); ++i)
-                s << double(pattern.at(i));
-        }
-        if (s.version() >= 9)
-            s << double(p.dashOffset());
+        // ensure that we write doubles here instead of streaming the pattern
+        // directly; otherwise, platforms that redefine qreal might generate
+        // data that cannot be read on other platforms.
+        QVector<qreal> pattern = p.dashPattern();
+        s << quint32(pattern.size());
+        for (int i = 0; i < pattern.size(); ++i)
+            s << double(pattern.at(i));
     }
+    if (s.version() >= QDataStream::Qt_4_3)
+        s << double(p.dashOffset());
     return s;
 }
 
@@ -948,29 +941,22 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
         s >> style;
         s >> cosmetic;
     }
-    if (s.version() < 7) {
-        s >> width8;
-        s >> color;
-        brush = color;
-        width = width8;
+    s >> width;
+    s >> brush;
+    s >> miterLimit;
+    if (sizeof(qreal) == sizeof(double)) {
+        s >> dashPattern;
     } else {
-        s >> width;
-        s >> brush;
-        s >> miterLimit;
-        if (sizeof(qreal) == sizeof(double)) {
-            s >> dashPattern;
-        } else {
-            quint32 numDashes;
-            s >> numDashes;
-            double dash;
-            for (quint32 i = 0; i < numDashes; ++i) {
-                s >> dash;
-                dashPattern << dash;
-            }
+        quint32 numDashes;
+        s >> numDashes;
+        double dash;
+        for (quint32 i = 0; i < numDashes; ++i) {
+            s >> dash;
+            dashPattern << dash;
         }
-        if (s.version() >= 9)
-            s >> dashOffset;
     }
+    if (s.version() >= QDataStream::Qt_4_3)
+        s >> dashOffset;
 
     p.detach();
     QPenData *dd = static_cast<QPenData *>(p.d);

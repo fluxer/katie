@@ -3522,8 +3522,7 @@ QDataStream &operator>>(QDataStream &in, QTime &time)
 QDataStream &operator<<(QDataStream &out, const QDateTime &dateTime)
 {
     out << dateTime.d->date << dateTime.d->time;
-    if (out.version() >= 7)
-        out << (qint8)dateTime.d->spec;
+    out << (qint8)dateTime.d->spec;
     return out;
 }
 
@@ -3541,8 +3540,7 @@ QDataStream &operator>>(QDataStream &in, QDateTime &dateTime)
 
     qint8 ts = (qint8)QDateTimePrivate::LocalUnknown;
     in >> dateTime.d->date >> dateTime.d->time;
-    if (in.version() >= 7)
-        in >> ts;
+    in >> ts;
     dateTime.d->spec = (QDateTimePrivate::Spec)ts;
     return in;
 }

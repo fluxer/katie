@@ -2072,11 +2072,6 @@ void QVariant::load(QDataStream &s)
 
     quint32 u;
     s >> u;
-    if (s.version() < QDataStream::Qt_4_0) {
-        if (u >= MapFromThreeCount)
-            return;
-        u = map_from_three[u];
-    }
     qint8 is_null = false;
     if (s.version() >= QDataStream::Qt_4_2)
         s >> is_null;
@@ -2116,19 +2111,6 @@ void QVariant::load(QDataStream &s)
 void QVariant::save(QDataStream &s) const
 {
     quint32 tp = type();
-    if (s.version() < QDataStream::Qt_4_0) {
-        int i;
-        for (i = MapFromThreeCount - 1; i >= 0; i--) {
-            if (map_from_three[i] == tp) {
-                tp = i;
-                break;
-            }
-        }
-        if (i == -1) {
-            s << QVariant();
-            return;
-        }
-    }
     s << tp;
     if (s.version() >= QDataStream::Qt_4_2)
         s << qint8(d.is_null);

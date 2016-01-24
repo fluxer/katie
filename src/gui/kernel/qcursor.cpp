@@ -236,11 +236,8 @@ QDataStream &operator<<(QDataStream &s, const QCursor &c)
 {
     s << (qint16)c.shape();                        // write shape id to stream
     if (c.shape() == Qt::BitmapCursor) {                // bitmap cursor
-        bool isPixmap = false;
-        if (s.version() >= 7) {
-            isPixmap = !c.pixmap().isNull();
-            s << isPixmap;
-        }
+        bool isPixmap = !c.pixmap().isNull();
+        s << isPixmap;
         if (isPixmap)
             s << c.pixmap();
         else
@@ -265,8 +262,7 @@ QDataStream &operator>>(QDataStream &s, QCursor &c)
     s >> shape;                                        // read shape id from stream
     if (shape == Qt::BitmapCursor) {                // read bitmap cursor
         bool isPixmap = false;
-        if (s.version() >= 7)
-            s >> isPixmap;
+        s >> isPixmap;
         if (isPixmap) {
             QPixmap pm;
             QPoint hot;

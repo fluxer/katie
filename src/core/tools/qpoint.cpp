@@ -377,10 +377,7 @@ QT_BEGIN_NAMESPACE
 
 QDataStream &operator<<(QDataStream &s, const QPoint &p)
 {
-    if (s.version() == 1)
-        s << (qint16)p.x() << (qint16)p.y();
-    else
-        s << (qint32)p.x() << (qint32)p.y();
+    s << (qint32)p.x() << (qint32)p.y();
     return s;
 }
 
@@ -396,16 +393,9 @@ QDataStream &operator<<(QDataStream &s, const QPoint &p)
 
 QDataStream &operator>>(QDataStream &s, QPoint &p)
 {
-    if (s.version() == 1) {
-        qint16 x, y;
-        s >> x;  p.rx() = x;
-        s >> y;  p.ry() = y;
-    }
-    else {
-        qint32 x, y;
-        s >> x;  p.rx() = x;
-        s >> y;  p.ry() = y;
-    }
+    qint32 x, y;
+    s >> x;  p.rx() = x;
+    s >> y;  p.ry() = y;
     return s;
 }
 

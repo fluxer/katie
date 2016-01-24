@@ -1277,12 +1277,8 @@ bool QRect::intersects(const QRect &r) const
 
 QDataStream &operator<<(QDataStream &s, const QRect &r)
 {
-    if (s.version() == 1)
-        s << (qint16)r.left() << (qint16)r.top()
-          << (qint16)r.right() << (qint16)r.bottom();
-    else
-        s << (qint32)r.left() << (qint32)r.top()
-          << (qint32)r.right() << (qint32)r.bottom();
+    s << (qint32)r.left() << (qint32)r.top()
+        << (qint32)r.right() << (qint32)r.bottom();
     return s;
 }
 
@@ -1298,16 +1294,9 @@ QDataStream &operator<<(QDataStream &s, const QRect &r)
 
 QDataStream &operator>>(QDataStream &s, QRect &r)
 {
-    if (s.version() == 1) {
-        qint16 x1, y1, x2, y2;
-        s >> x1; s >> y1; s >> x2; s >> y2;
-        r.setCoords(x1, y1, x2, y2);
-    }
-    else {
-        qint32 x1, y1, x2, y2;
-        s >> x1; s >> y1; s >> x2; s >> y2;
-        r.setCoords(x1, y1, x2, y2);
-    }
+    qint32 x1, y1, x2, y2;
+    s >> x1; s >> y1; s >> x2; s >> y2;
+    r.setCoords(x1, y1, x2, y2);
     return s;
 }
 

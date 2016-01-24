@@ -71,25 +71,20 @@ class Q_CORE_EXPORT QDataStream
 {
 public:
     enum Version {
-        Qt_1_0 = 1,
-        Qt_2_0 = 2,
-        Qt_2_1 = 3,
-        Qt_3_0 = 4,
-        Qt_3_1 = 5,
-        Qt_3_3 = 6,
-        Qt_4_0 = 7,
+        Qt_4_0 = 1,
         Qt_4_1 = Qt_4_0,
-        Qt_4_2 = 8,
-        Qt_4_3 = 9,
-        Qt_4_4 = 10,
-        Qt_4_5 = 11,
-        Qt_4_6 = 12,
+        Qt_4_2 = 2,
+        Qt_4_3 = 3,
+        Qt_4_4 = 4,
+        Qt_4_5 = 5,
+        Qt_4_6 = 6,
         Qt_4_7 = Qt_4_6,
-        Qt_4_8 = Qt_4_7
+        Qt_4_8 = Qt_4_7,
 #if QT_VERSION >= 0x040900
 #error Add the datastream version for this Qt version
         Qt_4_9 = Qt_4_8
 #endif
+        Qt_Default
     };
 
     enum ByteOrder {

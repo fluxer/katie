@@ -309,13 +309,7 @@ void QRegion::exec(const QByteArray &buffer, int ver, QDataStream::ByteOrder byt
 #endif
     while (!s.atEnd()) {
         qint32 id;
-        if (s.version() == 1) {
-            int id_int;
-            s >> id_int;
-            id = id_int;
-        } else {
-            s >> id;
-        }
+        s >> id;
 #ifndef QT_NO_DEBUG
         if (test_cnt > 0 && id != QRGN_TRANSLATE)
             qWarning("QRegion::exec: Internal error");
@@ -403,20 +397,9 @@ QDataStream &operator<<(QDataStream &s, const QRegion &r)
     if (a.isEmpty()) {
         s << (quint32)0;
     } else {
-        if (s.version() == 1) {
-            int i;
-            for (i = a.size() - 1; i > 0; --i) {
-                s << (quint32)(12 + i * 24);
-                s << (int)QRGN_OR;
-            }
-            for (i = 0; i < a.size(); ++i) {
-                s << (quint32)(4+8) << (int)QRGN_SETRECT << a[i];
-            }
-        } else {
-            s << (quint32)(4 + 4 + 16 * a.size()); // 16: storage size of QRect
-            s << (qint32)QRGN_RECTS;
-            s << a;
-        }
+        s << (quint32)(4 + 4 + 16 * a.size()); // 16: storage size of QRect
+        s << (qint32)QRGN_RECTS;
+        s << a;
     }
     return s;
 }
