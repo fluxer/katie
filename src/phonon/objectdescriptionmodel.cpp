@@ -42,12 +42,15 @@
 static const uint qt_meta_data_Phonon__ObjectDescriptionModel[] = {
 
  // content:
-       1,       // revision
+       6,       // revision
        0,       // classname
        0,    0, // classinfo
        0,    0, // methods
        0,    0, // properties
        0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
 
        0        // eod
 };
@@ -63,7 +66,7 @@ static const uint qt_meta_data_Phonon__ObjectDescriptionModel[] = {
     &QAbstractListModel::staticMetaObject, \
     qt_meta_stringdata_Phonon__ObjectDescriptionModel_ ## X, \
     qt_meta_data_Phonon__ObjectDescriptionModel, \
-    0 }
+    0, 0 }
 
 namespace Phonon
 {
