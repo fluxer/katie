@@ -20,8 +20,9 @@ set(SHADERS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/shaders/shadereffectbuffer.h
 )
 
-katie_resources("${SHADERS_SOURCES}")
-katie_resources("${SHADERS_HEADERS}")
+include_directories(${OPENGL_INCLUDE_DIR})
+
+katie_resources(${SHADERS_SOURCES} ${SHADERS_HEADERS})
 katie_setup_flags()
 
 add_library(qmlshadersplugin ${KATIE_TYPE} ${SHADERS_SOURCES} ${SHADERS_HEADERS})

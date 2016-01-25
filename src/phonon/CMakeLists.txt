@@ -214,6 +214,7 @@ if((WITH_OPENGL AND OPENGL_FOUND) AND PHONON_GRAPHICS)
         ${EXTRA_PHONON_LIBS}
         KtOpenGL
     )
+    include_directories(${OPENGL_INCLUDE_DIR})
 else()
     set(PHONON_GRAPHICS TRUE)
     katie_definition(-DPHONON_NO_GRAPHICSVIEW)
