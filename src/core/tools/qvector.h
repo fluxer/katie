@@ -45,13 +45,7 @@
 #include <QtCore/qlist.h>
 
 #ifndef QT_NO_STL
-#include <iterator>
 #include <vector>
-#endif
-#include <stdlib.h>
-#include <string.h>
-#ifdef Q_COMPILER_INITIALIZER_LISTS
-#include <initializer_list>
 #endif
 
 QT_BEGIN_HEADER

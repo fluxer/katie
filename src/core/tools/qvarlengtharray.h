@@ -43,11 +43,9 @@
 #define QVARLENGTHARRAY_H
 
 #include <QtCore/qcontainerfwd.h>
-#include <QtCore/qglobal.h>
 #include <QtCore/qalgorithms.h>
 
 #include <new>
-#include <string.h>
 
 QT_BEGIN_HEADER
 

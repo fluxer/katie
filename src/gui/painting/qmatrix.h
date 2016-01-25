@@ -44,10 +44,7 @@
 
 #include <QtGui/qpolygon.h>
 #include <QtGui/qregion.h>
-#include <QtGui/qwindowdefs.h>
 #include <QtCore/qline.h>
-#include <QtCore/qpoint.h>
-#include <QtCore/qrect.h>
 
 QT_BEGIN_HEADER
 

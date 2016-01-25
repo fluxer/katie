@@ -44,7 +44,6 @@
 
 #include <QtCore/qmetatype.h>
 #include <QtCore/qhash.h>
-#include <QtCore/qstring.h>
 #include <QtCore/qmap.h>
 
 QT_BEGIN_HEADER

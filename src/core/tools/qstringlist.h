@@ -46,7 +46,6 @@
 #include <QtCore/qdatastream.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qregexp.h>
-#include <QtCore/qstring.h>
 #include <QtCore/qstringmatcher.h>
 
 QT_BEGIN_HEADER

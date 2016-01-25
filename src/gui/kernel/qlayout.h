@@ -42,13 +42,8 @@
 #ifndef QLAYOUT_H
 #define QLAYOUT_H
 
-#include <QtCore/qobject.h>
 #include <QtGui/qlayoutitem.h>
-#include <QtGui/qsizepolicy.h>
-#include <QtCore/qrect.h>
 #include <QtCore/qmargins.h>
-
-#include <limits.h>
 
 QT_BEGIN_HEADER
 
@@ -165,14 +160,9 @@ private:
 
 };
 
-
-//### support old includes
-#if 1 //def QT3_SUPPORT
-QT_BEGIN_INCLUDE_NAMESPACE
+// legacy includes
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qgridlayout.h>
-QT_END_INCLUDE_NAMESPACE
-#endif
 
 QT_END_NAMESPACE
 
