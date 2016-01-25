@@ -2019,47 +2019,6 @@ QVariant::Type QVariant::nameToType(const char *name)
 }
 
 #ifndef QT_NO_DATASTREAM
-enum { MapFromThreeCount = 36 };
-static const ushort map_from_three[MapFromThreeCount] =
-{
-    QVariant::Invalid,
-    QVariant::Map,
-    QVariant::List,
-    QVariant::String,
-    QVariant::StringList,
-    QVariant::Font,
-    QVariant::Pixmap,
-    QVariant::Brush,
-    QVariant::Rect,
-    QVariant::Size,
-    QVariant::Color,
-    QVariant::Palette,
-    63, // ColorGroup
-    QVariant::Icon,
-    QVariant::Point,
-    QVariant::Image,
-    QVariant::Int,
-    QVariant::UInt,
-    QVariant::Bool,
-    QVariant::Double,
-    QVariant::ByteArray,
-    QVariant::Polygon,
-    QVariant::Region,
-    QVariant::Bitmap,
-    QVariant::Cursor,
-    QVariant::SizePolicy,
-    QVariant::Date,
-    QVariant::Time,
-    QVariant::DateTime,
-    QVariant::ByteArray,
-    QVariant::BitArray,
-    QVariant::KeySequence,
-    QVariant::Pen,
-    QVariant::LongLong,
-    QVariant::ULongLong,
-    QVariant::EasingCurve
-};
-
 /*!
     Internal function for loading a variant from stream \a s. Use the
     stream operators instead.
