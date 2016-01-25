@@ -44,7 +44,6 @@
 
 #ifndef QT_NO_QOBJECT
 
-#include <QtCore/qbasictimer.h> // conceptual inheritance
 #include <QtCore/qobject.h>
 
 QT_BEGIN_HEADER

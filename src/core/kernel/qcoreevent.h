@@ -42,7 +42,6 @@
 #ifndef QCOREEVENT_H
 #define QCOREEVENT_H
 
-#include <QtCore/qnamespace.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qobjectdefs.h>
 

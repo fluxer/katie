@@ -42,9 +42,7 @@
 #ifndef QDATASTREAM_H
 #define QDATASTREAM_H
 
-#include <QtCore/qscopedpointer.h>
 #include <QtCore/qiodevice.h>
-#include <QtCore/qglobal.h>
 
 #ifdef Status
 #error qdatastream.h must be included before any header file that defines Status

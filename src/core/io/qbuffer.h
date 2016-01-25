@@ -43,7 +43,6 @@
 #define QBUFFER_H
 
 #include <QtCore/qiodevice.h>
-#include <QtCore/qbytearray.h>
 
 QT_BEGIN_HEADER
 

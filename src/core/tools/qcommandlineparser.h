@@ -33,7 +33,6 @@
 #ifndef QCOMMANDLINEPARSER_H
 #define QCOMMANDLINEPARSER_H
 
-#include <QtCore/qstringlist.h>
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qcommandlineoption.h>
 

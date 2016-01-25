@@ -57,7 +57,6 @@
 #include "qobject_p.h"
 #include "QtCore/qstack.h"
 #include "QtCore/qset.h"
-#include "QtCore/qhash.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -43,8 +43,6 @@
 #define QABSTRACTITEMMODEL_H
 
 #include <QtCore/qvariant.h>
-#include <QtCore/qobject.h>
-#include <QtCore/qhash.h>
 
 QT_BEGIN_HEADER
 

@@ -42,7 +42,6 @@
 #ifndef QCOREAPPLICATION_H
 #define QCOREAPPLICATION_H
 
-#include <QtCore/qobject.h>
 #include <QtCore/qcoreevent.h>
 #include <QtCore/qeventloop.h>
 

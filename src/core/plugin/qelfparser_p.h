@@ -54,7 +54,6 @@
 //
 
 #include <qendian.h>
-#include <qglobal.h>
 
 #ifndef QT_NO_LIBRARY
 #if defined (Q_OF_ELF) && defined(Q_CC_GNU)

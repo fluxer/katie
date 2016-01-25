@@ -54,13 +54,9 @@
 //
 
 #include "qplatformdefs.h"
-#include "QtCore/qatomic.h"
 #include "QtCore/qdatetime.h"
 #include "QtCore/qstringlist.h"
 #include "QtCore/qlocale.h"
-#ifndef QT_BOOTSTRAPPED
-# include "QtCore/qvariant.h"
-#endif
 #include "QtCore/qvector.h"
 
 

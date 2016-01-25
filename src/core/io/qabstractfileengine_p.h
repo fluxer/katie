@@ -54,7 +54,6 @@
 //
 
 #include "QtCore/qabstractfileengine.h"
-#include "QtCore/qfile.h"
 
 QT_BEGIN_NAMESPACE
 

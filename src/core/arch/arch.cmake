@@ -35,7 +35,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_ia64.h
     ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_parisc.h
     ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_sparc.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_arch.h
     ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_generic.h
     ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_powerpc.h
     ${CMAKE_CURRENT_SOURCE_DIR}/arch/qatomic_arm.h

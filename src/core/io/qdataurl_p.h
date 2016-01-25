@@ -54,9 +54,6 @@
 //
 
 #include "QtCore/qurl.h"
-#include "QtCore/qbytearray.h"
-#include "QtCore/qstring.h"
-#include "QtCore/qpair.h"
 
 QT_BEGIN_NAMESPACE
 

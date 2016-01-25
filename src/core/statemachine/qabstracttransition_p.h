@@ -55,9 +55,6 @@
 
 #include <qobject_p.h>
 
-#include <QtCore/qlist.h>
-#include <QtCore/qsharedpointer.h>
-
 QT_BEGIN_NAMESPACE
 
 class QAbstractState;

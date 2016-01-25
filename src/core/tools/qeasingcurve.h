@@ -42,7 +42,6 @@
 #ifndef QEASINGCURVE_H
 #define QEASINGCURVE_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qobjectdefs.h>
 
 QT_BEGIN_HEADER

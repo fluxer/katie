@@ -42,10 +42,8 @@
 #ifndef QDIR_H
 #define QDIR_H
 
-#include <QtCore/qstring.h>
 #include <QtCore/qfileinfo.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qshareddata.h>
 
 QT_BEGIN_HEADER
 

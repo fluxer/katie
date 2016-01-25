@@ -73,6 +73,7 @@
 #include "QtGui/qcompleter.h"
 #include "QtGui/qevent.h"
 #include "QtCore/qdebug.h"
+#include "QtCore/qbasictimer.h"
 
 #include <limits.h>
 

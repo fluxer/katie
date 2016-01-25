@@ -57,6 +57,7 @@
 #include <qtextdocument.h>
 #include <qdebug.h>
 #include <qstylesheetstyle_p.h>
+#include <qbasictimer.h>
 #ifndef QT_NO_TOOLTIP
 
 #ifdef Q_WS_MAC
@@ -620,6 +621,5 @@ void QToolTip::setFont(const QFont &font)
 QT_END_NAMESPACE
 
 #include "moc_qtooltip.cpp"
-
 
 #endif // QT_NO_TOOLTIP

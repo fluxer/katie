@@ -68,6 +68,7 @@
 #include <qfileinfo.h>
 #include <qtimer.h>
 #include <qhash.h>
+#include <qbasictimer.h>
 
 QT_BEGIN_NAMESPACE
 
