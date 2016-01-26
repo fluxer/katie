@@ -1102,9 +1102,6 @@ void Heap::markRoots()
     // Mark explicitly registered roots.
     markProtectedObjects(markStack);
 
-    if (m_globalData->clientData)
-        m_globalData->clientData->mark(markStack);
-
     // Mark misc. other roots.
     if (m_markListSet && m_markListSet->size())
         MarkedArgumentBuffer::markLists(markStack, *m_markListSet);
@@ -1115,6 +1112,9 @@ void Heap::markRoots()
         m_globalData->functionCodeBlockBeingReparsed->markAggregate(markStack);
     if (m_globalData->firstStringifierToMark)
         JSONObject::markStringifiers(markStack, m_globalData->firstStringifierToMark);
+
+    if (m_globalData->clientData)
+        m_globalData->clientData->mark(markStack);
 
     markStack.drain();
     markStack.compact();
