@@ -58,6 +58,8 @@
 
 #if !defined(QDBUS_THREAD_DEBUG) && defined(QT_BUILD_INTERNAL)
 # define QDBUS_THREAD_DEBUG 1
+#else
+# define QDBUS_THREAD_DEBUG 0
 #endif
 
 #if QDBUS_THREAD_DEBUG
