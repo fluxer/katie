@@ -68,7 +68,8 @@ struct Option
     QString translateFunction;
 
     Option()
-        : copyrightHeader(1),
+        : headerProtection(1),
+          copyrightHeader(1),
           generateImplemetation(0),
           generateNamespace(1),
           autoConnection(1),
