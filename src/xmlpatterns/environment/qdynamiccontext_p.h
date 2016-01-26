@@ -55,11 +55,7 @@
 #include "qautoptr_p.h"
 #include "qcachecells_p.h"
 #include "qexternalvariableloader_p.h"
-#include "qitem_p.h"
-#include "qnamepool_p.h"
 #include "qnodebuilder_p.h"
-#include "qprimitives_p.h"
-#include "qreportcontext_p.h"
 #include "qresourceloader_p.h"
 
 QT_BEGIN_HEADER

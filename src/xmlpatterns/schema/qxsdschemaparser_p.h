@@ -52,25 +52,11 @@
 #ifndef Patternist_XsdSchemaParser_H
 #define Patternist_XsdSchemaParser_H
 
-#include "qnamespacesupport_p.h"
-#include "qxsdalternative_p.h"
-#include "qxsdattribute_p.h"
-#include "qxsdattributegroup_p.h"
-#include "qxsdattributeterm_p.h"
-#include "qxsdcomplextype_p.h"
-#include "qxsdelement_p.h"
 #include "qxsdidcache_p.h"
-#include "qxsdmodelgroup_p.h"
-#include "qxsdnotation_p.h"
-#include "qxsdsimpletype_p.h"
 #include "qxsdschemacontext_p.h"
 #include "qxsdschemaparsercontext_p.h"
 #include "qxsdstatemachine_p.h"
 
-#include <QtCore/QHash>
-#include <QtCore/QSet>
-#include <QtCore/QUrl>
-#include <QtXml/qxmlstream.h>
 #include <QtXmlPatterns/QXmlNamePool>
 
 QT_BEGIN_HEADER

@@ -53,7 +53,6 @@
 #define Patternist_AccelIterators_H
 
 #include "qacceltree_p.h"
-#include "qitem_p.h"
 
 QT_BEGIN_HEADER
 

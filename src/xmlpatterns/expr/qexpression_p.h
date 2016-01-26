@@ -53,15 +53,11 @@
 #define Patternist_Expression_H
 
 #include <qglobal.h>
-#include <QSharedData>
 
 #include "qcppcastinghelper_p.h"
 #include "qdebug_p.h"
 #include "qdynamiccontext_p.h"
 #include "qexpressiondispatch_p.h"
-#include "qitem_p.h"
-#include "qsequencetype_p.h"
-#include "qsourcelocationreflection_p.h"
 #include "qstaticcontext_p.h"
 
 QT_BEGIN_HEADER

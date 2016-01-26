@@ -52,13 +52,8 @@
 #ifndef Patternist_DistinctIterator_H
 #define Patternist_DistinctIterator_H
 
-#include <QList>
-
 #include "qexpression_p.h"
-#include "qitem_p.h"
-#include "qatomiccomparator_p.h"
 #include "qcomparisonplatform_p.h"
-#include "qsourcelocationreflection_p.h"
 
 QT_BEGIN_HEADER
 

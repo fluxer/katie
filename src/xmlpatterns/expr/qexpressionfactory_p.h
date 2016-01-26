@@ -52,13 +52,8 @@
 #ifndef Patternist_ExpressionFactory_H
 #define Patternist_ExpressionFactory_H
 
-#include <QXmlQuery>
-
 #include "qexpression_p.h"
 #include "qtokenizer_p.h"
-
-#include <QSharedData>
-#include <QUrl>
 
 QT_BEGIN_HEADER
 

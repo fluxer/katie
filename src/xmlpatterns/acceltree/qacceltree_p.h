@@ -52,11 +52,6 @@
 #ifndef Patternist_AccelTree_H
 #define Patternist_AccelTree_H
 
-#include <QHash>
-#include <QUrl>
-#include <QVector>
-#include <QXmlName>
-
 #include "qitem_p.h"
 #include "qnamepool_p.h"
 

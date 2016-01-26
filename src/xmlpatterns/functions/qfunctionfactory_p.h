@@ -53,13 +53,7 @@
 #ifndef Patternist_FunctionFactory_H
 #define Patternist_FunctionFactory_H
 
-#include <QHash>
-#include <QSharedData>
-
-#include "qexpression_p.h"
 #include "qfunctionsignature_p.h"
-#include "qprimitives_p.h"
-#include "qxmlname.h"
 
 QT_BEGIN_HEADER
 
