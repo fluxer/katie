@@ -48,6 +48,7 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifndef QT_NO_SYSTEMLOCALE
 static QByteArray getSystemLocale()
 {
 #if defined(Q_OS_QNX)
@@ -64,7 +65,6 @@ static QByteArray getSystemLocale()
 #endif
 }
 
-#ifndef QT_NO_SYSTEMLOCALE
 struct QSystemLocaleData
 {
     QSystemLocaleData()
@@ -112,9 +112,7 @@ struct QSystemLocaleData
     QByteArray lc_measurement_var;
 };
 Q_GLOBAL_STATIC(QSystemLocaleData, qSystemLocaleData)
-#endif
 
-#ifndef QT_NO_SYSTEMLOCALE
 QLocale QSystemLocale::fallbackLocale() const
 {
 
