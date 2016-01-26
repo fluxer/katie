@@ -218,7 +218,7 @@ static __inline double elapsed(CycleCounterTicks t1, CycleCounterTicks t0)
 #endif
 #endif
 
-#if _MSC_VER >= 1400 && defined(_WIN32_WCE) && !defined(HAVE_TICK_COUNTER)
+#if defined(_MSC_VER) && _MSC_VER >= 1400 && defined(_WIN32_WCE) && !defined(HAVE_TICK_COUNTER)
 #include <windows.h>
 typedef DWORD CycleCounterTicks;
 
@@ -269,7 +269,7 @@ INLINE_ELAPSED(__inline__)
 #endif
 
 /* Visual C++ */
-#if _MSC_VER >= 1400 && (defined(_M_AMD64) || defined(_M_X64)) && !defined(HAVE_TICK_COUNTER)
+#if defined(_MSC_VER) && _MSC_VER >= 1400 && (defined(_M_AMD64) || defined(_M_X64)) && !defined(HAVE_TICK_COUNTER)
 #include <intrin.h>
 
 typedef unsigned __int64 CycleCounterTicks;
