@@ -1350,7 +1350,7 @@ const char *QMetaMethod::tag() const
 int QMetaMethod::attributes() const
 {
     if (!mobj)
-        return false;
+        return 0;
     return ((mobj->d.data[handle + 4])>>4);
 }
 
