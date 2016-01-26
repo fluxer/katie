@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Zerbitzuak</translation>
     </message>
@@ -2162,7 +2162,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Aldaketa Eguna</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>Nire Ordenagailua</translation>
     </message>
@@ -7050,7 +7050,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Akatsa SSL saioa sortzerakoan, %1</translation>
     </message>
     <message>
-        <location line="+368"/>
+        <location line="+369"/>
         <source>Unable to write data: %1</source>
         <translation>Ezinezkoa datuak idaztea: %1</translation>
     </message>

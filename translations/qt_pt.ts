@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Serviços</translation>
     </message>
@@ -2162,7 +2162,7 @@ Deseja apagar de qualquer forma?</translation>
         <translation type="unfinished">Data de Modificação</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation type="unfinished">O Meu Computador</translation>
     </message>
@@ -6889,7 +6889,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+828"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
         <source>Unable to write data: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6915,7 +6915,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-798"/>
         <source>Error creating SSL context (%1)</source>
         <translation type="unfinished"></translation>
     </message>

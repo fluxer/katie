@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Szolgáltatások</translation>
     </message>
@@ -2133,7 +2133,7 @@ Biztosan törölni akarja?</translation>
         <translation>Módosítás dátuma</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>Számítógép</translation>
     </message>
@@ -6907,7 +6907,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+828"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
         <source>Unable to write data: %1</source>
         <translation>Az adat nem írható: %1</translation>
     </message>
@@ -6933,7 +6933,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>SSL kézfogás hiba: %1</translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-798"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Az SSL kontextus létrehozása sikertelen (%1)</translation>
     </message>

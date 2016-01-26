@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Storitve</translation>
     </message>
@@ -2128,7 +2128,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Datum spremembe</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>Moj računalnik</translation>
     </message>
@@ -6890,7 +6890,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+828"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
         <source>Unable to write data: %1</source>
         <translation>Ni moč zapisati podatkov: %1</translation>
     </message>
@@ -6916,7 +6916,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Napaka med rokovanjem SSL: %1</translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-798"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Napaka pri ustvarjanju konteksta SSL (%1)</translation>
     </message>

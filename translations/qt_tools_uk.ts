@@ -313,7 +313,6 @@ Options:
     <message>
         <location line="+62"/>
         <location filename="../src/tools/lupdate/ui.cpp" line="+188"/>
-        <location filename="../src/tools/lupdate/java.cpp" line="+610"/>
         <location filename="../src/tools/lupdate/qscript.cpp" line="+178"/>
         <source>Cannot open %1: %2</source>
         <translation type="unfinished"></translation>
@@ -326,60 +325,6 @@ Options:
     <message>
         <location line="+42"/>
         <source>Parse error in UI file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/tools/lupdate/java.cpp" line="-406"/>
-        <source>Unterminated Java comment.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Invalid Unicode value.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Unterminated string.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>String used in translation can contain only literals concatenated with other literals, not expressions or numbers.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+110"/>
-        <source>&apos;class&apos; must be followed by a class name.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>Excess closing brace.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>&apos;package&apos; must be followed by package name.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unbalanced opening brace.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Unbalanced opening parenthesis.
-</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -538,7 +483,7 @@ Options:
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
 
 lupdate is part of Qt&apos;s Linguist tool chain. It extracts translatable
-messages from Qt UI files, C++, Java and JavaScript/QtScript source code.
+messages from Qt UI files, C++ and JavaScript/QtScript source code.
 Extracted messages are stored in textual translation source files (typically
 Qt TS XML). New and modified messages can be merged into existing TS files.
 
@@ -619,7 +564,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+100"/>
+        <location line="+97"/>
         <source>The option -target-language requires a parameter.
 </source>
         <translation type="unfinished"></translation>
@@ -709,7 +654,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+51"/>
+        <location line="+49"/>
         <source>lupdate warning: -target-language usually only makes sense with exactly one TS file.
 </source>
         <translation type="unfinished"></translation>
@@ -913,7 +858,7 @@ qhelpgenerator &lt;help-project-file&gt; [options]
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="-141"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="-139"/>
         <source>lupdate version %1
 </source>
         <translation type="unfinished"></translation>

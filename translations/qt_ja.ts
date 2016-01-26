@@ -13,7 +13,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>サービス</translation>
     </message>
@@ -2159,7 +2159,7 @@ Do you want to delete it anyway?</source>
         <translation>&lt;b&gt;ファイル名 &quot;%1&quot; は使用できません。&lt;/b&gt;&lt;p&gt;名前を短くしたり、アクセント記号などを削除して再度試してください。</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>マイコンピュータ</translation>
     </message>
@@ -6937,7 +6937,7 @@ Please choose a different file name.</source>
         <translation>SSL セッションを作成できません: %1</translation>
     </message>
     <message>
-        <location line="+368"/>
+        <location line="+369"/>
         <source>Unable to write data: %1</source>
         <translation>書き込みできません: %1</translation>
     </message>

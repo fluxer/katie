@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>خدمات</translation>
     </message>
@@ -2157,7 +2157,7 @@ Do you want to delete it anyway?</source>
         <translation>تاریخ تغییر</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>رایانه من</translation>
     </message>
@@ -7045,7 +7045,7 @@ Do you want to overwrite it?</source>
         <translation>خطای ایجاد جلسهٔ SSL: %1</translation>
     </message>
     <message>
-        <location line="+368"/>
+        <location line="+369"/>
         <source>Unable to write data: %1</source>
         <translation>نمی‌توان روی داده نوشت: %1</translation>
     </message>

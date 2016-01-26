@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Tarnybos</translation>
     </message>
@@ -2157,7 +2157,7 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Modifikavimo data</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>Kompiuteris</translation>
     </message>
@@ -7045,7 +7045,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Klaida kuriant SSL sesiją: %1</translation>
     </message>
     <message>
-        <location line="+368"/>
+        <location line="+369"/>
         <source>Unable to write data: %1</source>
         <translation>Nepavyko rašyti duomenų: %1</translation>
     </message>

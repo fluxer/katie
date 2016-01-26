@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Tjenester</translation>
     </message>
@@ -2128,7 +2128,7 @@ Do you want to delete it anyway?</source>
         <translation>Ændringsdato</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>Min computer</translation>
     </message>
@@ -6890,7 +6890,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+828"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
         <source>Unable to write data: %1</source>
         <translation>Kunne ikke skrive data: %1</translation>
     </message>
@@ -6916,7 +6916,7 @@ Vælg et andet filnavn.</translation>
         <translation>Der opstod en fejl under SSL handshake: %1</translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-798"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Der opstod fejl under oprettelse af SSL-kontekst (%1)</translation>
     </message>

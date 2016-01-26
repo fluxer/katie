@@ -12,7 +12,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2350"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
         <source>Services</source>
         <translation>Services</translation>
     </message>
@@ -2164,7 +2164,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Dernière modification</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
         <source>My Computer</source>
         <translation>Poste de travail</translation>
     </message>
@@ -6900,7 +6900,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+828"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
         <source>Unable to write data: %1</source>
         <translation>Impossible d&apos;écrire les données : %1</translation>
     </message>
@@ -6921,7 +6921,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Erreur lors de la poignée de main SSL : %1</translation>
     </message>
     <message>
-        <location line="-797"/>
+        <location line="-798"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Erreur lors de la création du contexte SSL (%1)</translation>
     </message>
@@ -6956,12 +6956,12 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Erreur lors du chargement de la clé privée, %1</translation>
     </message>
     <message>
-        <location line="+501"/>
+        <location line="+502"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Impossible de décrypter les données : %1</translation>
     </message>
     <message>
-        <location line="-494"/>
+        <location line="-495"/>
         <source>Private key does not certify public key, %1</source>
         <translation>La clé privée ne certifie pas la clé publique, %1</translation>
     </message>
