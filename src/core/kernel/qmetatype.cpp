@@ -178,6 +178,10 @@ QT_BEGIN_NAMESPACE
     \value QVector4D QVector4D
     \value QQuaternion QQuaternion
     \value QEasingCurve QEasingCurve
+    \value QJsonValue QJsonValue
+    \value QJsonObject QJsonObject
+    \value QJsonArray QJsonArray
+    \value QJsonDocument QJsonDocument
 
     \value User  Base value for user types
 

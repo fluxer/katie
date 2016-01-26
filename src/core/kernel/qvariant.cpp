@@ -1370,6 +1370,10 @@ const QVariant::Handler *QVariant::handler = &qt_kernel_variant_handler;
     \value DateTime  a QDateTime
     \value Double  a double
     \value EasingCurve a QEasingCurve
+    \value QJsonValue QJsonValue
+    \value QJsonObject QJsonObject
+    \value QJsonArray QJsonArray
+    \value QJsonDocument QJsonDocument
     \value Font  a QFont
     \value Hash a QVariantHash
     \value Icon  a QIcon
