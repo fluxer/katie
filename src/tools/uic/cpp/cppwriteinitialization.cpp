@@ -972,7 +972,7 @@ void WriteInitialization::acceptLayout(DomLayout *node)
     TreeWalker::acceptLayout(node);
     m_layoutChain.pop();
 
-    // Stretch? (Unless we are compiling for UIC3)
+    // Stretch?
     const QString numberNull = QString(QLatin1Char('0'));
     writePropertyList(varName, QLatin1String("setStretch"), node->attributeStretch(), numberNull);
     writePropertyList(varName, QLatin1String("setRowStretch"), node->attributeRowStretch(), numberNull);

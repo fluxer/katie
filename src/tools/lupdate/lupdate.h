@@ -76,7 +76,6 @@ Translator merge(const Translator &tor, const Translator &virginTor,
 
 void fetchtrInlinedCpp(const QString &in, Translator &translator, const QString &context);
 void loadCPP(Translator &translator, const QStringList &filenames, ConversionData &cd);
-bool loadJava(Translator &translator, const QString &filename, ConversionData &cd);
 bool loadQScript(Translator &translator, const QString &filename, ConversionData &cd);
 bool loadUI(Translator &translator, const QString &filename, ConversionData &cd);
 

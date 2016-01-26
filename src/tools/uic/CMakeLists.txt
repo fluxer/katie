@@ -1,4 +1,4 @@
-add_definitions(-DQT_UIC -DQT_UIC_CPP_GENERATOR)
+add_definitions(-DQT_UIC)
 set(EXTRA_UIC_LIBS KtCore KtXml)
 
 include_directories(

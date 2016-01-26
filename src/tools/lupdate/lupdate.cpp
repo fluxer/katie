@@ -91,7 +91,7 @@ static void printUsage()
         "Usage:\n"
         "    lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file\n\n"
         "lupdate is part of Qt's Linguist tool chain. It extracts translatable\n"
-        "messages from Qt UI files, C++, Java and JavaScript/QtScript source code.\n"
+        "messages from Qt UI files, C++ and JavaScript/QtScript source code.\n"
         "Extracted messages are stored in textual translation source files (typically\n"
         "Qt TS XML). New and modified messages can be merged into existing TS files.\n\n"
         "Options:\n"
@@ -229,10 +229,7 @@ static void processSources(Translator &fetchedTor,
 {
     QStringList sourceFilesCpp;
     for (QStringList::const_iterator it = sourceFiles.begin(); it != sourceFiles.end(); ++it) {
-        if (it->endsWith(QLatin1String(".java"), Qt::CaseInsensitive))
-            loadJava(fetchedTor, *it, cd);
-        else if (it->endsWith(QLatin1String(".ui"), Qt::CaseInsensitive)
-                 || it->endsWith(QLatin1String(".jui"), Qt::CaseInsensitive))
+        if (it->endsWith(QLatin1String(".ui"), Qt::CaseInsensitive))
             loadUI(fetchedTor, *it, cd);
         else if (it->endsWith(QLatin1String(".js"), Qt::CaseInsensitive)
                  || it->endsWith(QLatin1String(".qs"), Qt::CaseInsensitive))
@@ -260,7 +257,7 @@ int main(int argc, char **argv)
     }
 #endif // Q_OS_WIN32
 
-    m_defaultExtensions = QLatin1String("java,jui,ui,c,c++,cc,cpp,cxx,ch,h,h++,hh,hpp,hxx,js,qs,qml");
+    m_defaultExtensions = QLatin1String("ui,c,c++,cc,cpp,cxx,ch,h,h++,hh,hpp,hxx,js,qs,qml");
 
     QStringList args = app.arguments();
     QStringList tsFileNames;
@@ -474,9 +471,7 @@ int main(int argc, char **argv)
                         QString fn = QDir::cleanPath(fi.absoluteFilePath());
                         sourceFiles << fn;
 
-                        if (!fn.endsWith(QLatin1String(".java"))
-                            && !fn.endsWith(QLatin1String(".jui"))
-                            && !fn.endsWith(QLatin1String(".ui"))
+                        if (!fn.endsWith(QLatin1String(".ui"))
                             && !fn.endsWith(QLatin1String(".js"))
                             && !fn.endsWith(QLatin1String(".qs"))
                             && !fn.endsWith(QLatin1String(".qml"))) {

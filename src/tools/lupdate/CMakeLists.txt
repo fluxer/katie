@@ -16,7 +16,6 @@ set(LUPDATE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/lupdate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/merge.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/java.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qscript.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ui.cpp
 )
