@@ -54,9 +54,11 @@ set(SHAREDGRADIENDEDITOR_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtcolorbutton.h
 )
 
-katie_resources("${SHAREDGRADIENDEDITOR_SOURCES}")
-katie_resources("${SHAREDGRADIENDEDITOR_HEADERS}")
+katie_resources(${SHAREDGRADIENDEDITOR_SOURCES})
+katie_resources(${SHAREDGRADIENDEDITOR_HEADERS})
 
 add_library(sharedqtgradienteditor OBJECT ${SHAREDGRADIENDEDITOR_SOURCES} ${SHAREDGRADIENDEDITOR_HEADERS})
 target_compile_definitions(sharedqtgradienteditor PRIVATE ${SHAREDGRADIENDEDITOR_DEFINITIONS})
 target_include_directories(sharedqtgradienteditor PRIVATE ${SHAREDGRADIENDEDITOR_INCLUDES})
+
+katie_setup_flags(sharedqtgradienteditor)

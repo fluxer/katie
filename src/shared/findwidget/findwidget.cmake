@@ -35,3 +35,5 @@ katie_resources(${SHAREDFINDWIDGET_HEADERS})
 add_library(sharedfindwidget OBJECT ${SHAREDFINDWIDGET_SOURCES} ${SHAREDFINDWIDGET_HEADERS})
 target_compile_definitions(sharedfindwidget PRIVATE ${SHAREDFINDWIDGET_DEFINITIONS})
 target_include_directories(sharedfindwidget PRIVATE ${SHAREDFINDWIDGET_INCLUDES})
+
+katie_setup_flags(sharedfindwidget)

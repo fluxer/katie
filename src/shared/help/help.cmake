@@ -29,3 +29,5 @@ katie_resources(${SHAREDHELP_SOURCES} ${SHAREDHELP_HEADERS})
 add_library(sharedhelp OBJECT ${SHAREDHELP_SOURCES} ${SHAREDHELP_HEADERS})
 target_compile_definitions(sharedhelp PRIVATE ${SHAREDHELP_DEFINITIONS})
 target_include_directories(sharedhelp PRIVATE ${SHAREDHELP_INCLUDES})
+
+katie_setup_flags(sharedhelp)

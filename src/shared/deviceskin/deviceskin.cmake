@@ -46,3 +46,5 @@ katie_resource(
 add_library(shareddeviceskin OBJECT ${SHAREDDEVICESKIN_SOURCES} ${SHAREDDEVICESKIN_HEADERS})
 target_compile_definitions(shareddeviceskin PRIVATE ${SHAREDDEVICESKIN_DEFINITIONS})
 target_include_directories(shareddeviceskin PRIVATE ${SHAREDDEVICESKIN_INCLUDES})
+
+katie_setup_flags(shareddeviceskin)
