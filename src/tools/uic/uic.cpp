@@ -48,7 +48,7 @@
 #include "cppwriteincludes.h"
 #include "cppwritedeclaration.h"
 
-#include <QtCore/QXmlStreamReader>
+#include <QtCore/qxmlstream.h>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
 #include <QtCore/QTextStream>
