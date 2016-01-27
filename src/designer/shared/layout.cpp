@@ -1098,12 +1098,6 @@ bool Grid::locateWidget(QWidget *w, int &row, int &col, int &rowspan, int &colsp
 }
 
 // QGridLayout/QFormLayout Helpers: get item position/add item (overloads to make templates work)
-
-void getGridItemPosition(QGridLayout *gridLayout, int index, int *row, int *column, int *rowspan, int *colspan)
-{
-    gridLayout->getItemPosition(index, row, column, rowspan, colspan);
-}
-
 void addWidgetToGrid(QGridLayout *lt, QWidget * widget, int row, int column, int rowSpan, int columnSpan, Qt::Alignment alignment)
 {
     lt->addWidget(widget, row, column, rowSpan, columnSpan, alignment);
@@ -1146,7 +1140,7 @@ QWidget *GridLayout<GridLikeLayout, LayoutType, GridMode>::widgetAt(GridLikeLayo
     while (QLayoutItem *item = layout->itemAt(index)) {
         if (item->widget()) {
             int r, c, rowspan, colspan;
-            getGridItemPosition(layout, index, &r, &c, &rowspan, &colspan);
+            layout->getItemPosition(index, &r, &c, &rowspan, &colspan);
             if (row == r && column == c)
                 return item->widget();
         }
