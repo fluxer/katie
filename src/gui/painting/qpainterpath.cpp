@@ -55,7 +55,7 @@
 
 #include <qbezier_p.h>
 #include <qfontengine_p.h>
-#include <qnumeric_p.h>
+#include <qnumeric.h>
 #include <qobject_p.h>
 #include <qpathclipper_p.h>
 #include <qstroker_p.h>
@@ -637,7 +637,7 @@ void QPainterPath::moveTo(const QPointF &p)
     printf("QPainterPath::moveTo() (%.2f,%.2f)\n", p.x(), p.y());
 #endif
 
-    if (!qt_is_finite(p.x()) || !qt_is_finite(p.y())) {
+    if (!qIsFinite(p.x()) || !qIsFinite(p.y())) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::moveTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -687,7 +687,7 @@ void QPainterPath::lineTo(const QPointF &p)
     printf("QPainterPath::lineTo() (%.2f,%.2f)\n", p.x(), p.y());
 #endif
 
-    if (!qt_is_finite(p.x()) || !qt_is_finite(p.y())) {
+    if (!qIsFinite(p.x()) || !qIsFinite(p.y())) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::lineTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -746,8 +746,8 @@ void QPainterPath::cubicTo(const QPointF &c1, const QPointF &c2, const QPointF &
            c1.x(), c1.y(), c2.x(), c2.y(), e.x(), e.y());
 #endif
 
-    if (!qt_is_finite(c1.x()) || !qt_is_finite(c1.y()) || !qt_is_finite(c2.x()) || !qt_is_finite(c2.y())
-        || !qt_is_finite(e.x()) || !qt_is_finite(e.y())) {
+    if (!qIsFinite(c1.x()) || !qIsFinite(c1.y()) || !qIsFinite(c2.x()) || !qIsFinite(c2.y())
+        || !qIsFinite(e.x()) || !qIsFinite(e.y())) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::cubicTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -803,7 +803,7 @@ void QPainterPath::quadTo(const QPointF &c, const QPointF &e)
            c.x(), c.y(), e.x(), e.y());
 #endif
 
-    if (!qt_is_finite(c.x()) || !qt_is_finite(c.y()) || !qt_is_finite(e.x()) || !qt_is_finite(e.y())) {
+    if (!qIsFinite(c.x()) || !qIsFinite(c.y()) || !qIsFinite(e.x()) || !qIsFinite(e.y())) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::quadTo: Adding point where x or y is NaN or Inf, ignoring call");
 #endif
@@ -874,8 +874,8 @@ void QPainterPath::arcTo(const QRectF &rect, qreal startAngle, qreal sweepLength
            rect.x(), rect.y(), rect.width(), rect.height(), startAngle, sweepLength);
 #endif
 
-    if ((!qt_is_finite(rect.x()) && !qt_is_finite(rect.y())) || !qt_is_finite(rect.width()) || !qt_is_finite(rect.height())
-        || !qt_is_finite(startAngle) || !qt_is_finite(sweepLength)) {
+    if ((!qIsFinite(rect.x()) && !qIsFinite(rect.y())) || !qIsFinite(rect.width()) || !qIsFinite(rect.height())
+        || !qIsFinite(startAngle) || !qIsFinite(sweepLength)) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::arcTo: Adding arc where a parameter is NaN or Inf, ignoring call");
 #endif
@@ -980,7 +980,7 @@ QPointF QPainterPath::currentPosition() const
 */
 void QPainterPath::addRect(const QRectF &r)
 {
-    if (!qt_is_finite(r.x()) || !qt_is_finite(r.y()) || !qt_is_finite(r.width()) || !qt_is_finite(r.height())) {
+    if (!qIsFinite(r.x()) || !qIsFinite(r.y()) || !qIsFinite(r.width()) || !qIsFinite(r.height())) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::addRect: Adding rect where a parameter is NaN or Inf, ignoring call");
 #endif
@@ -1063,8 +1063,8 @@ void QPainterPath::addPolygon(const QPolygonF &polygon)
 */
 void QPainterPath::addEllipse(const QRectF &boundingRect)
 {
-    if (!qt_is_finite(boundingRect.x()) || !qt_is_finite(boundingRect.y())
-        || !qt_is_finite(boundingRect.width()) || !qt_is_finite(boundingRect.height())) {
+    if (!qIsFinite(boundingRect.x()) || !qIsFinite(boundingRect.y())
+        || !qIsFinite(boundingRect.width()) || !qIsFinite(boundingRect.height())) {
 #ifndef QT_NO_DEBUG
         qWarning("QPainterPath::addEllipse: Adding ellipse where a parameter is NaN or Inf, ignoring call");
 #endif
@@ -2393,7 +2393,7 @@ QDataStream &operator>>(QDataStream &s, QPainterPath &p)
         s >> x;
         s >> y;
         Q_ASSERT(type >= 0 && type <= 3);
-        if (!qt_is_finite(x) || !qt_is_finite(y)) {
+        if (!qIsFinite(x) || !qIsFinite(y)) {
 #ifndef QT_NO_DEBUG
             qWarning("QDataStream::operator>>: NaN or Inf element found in path, skipping it");
 #endif

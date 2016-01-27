@@ -1661,7 +1661,7 @@ public:
 #  endif
     };
 #else
-#  error "Qt not configured correctly, please run configure"
+#  error "Qt not configured correctly, please run cmake"
 #endif
 #if defined(Q_WS_WIN) || defined(Q_OS_CYGWIN)
     enum WinVersion {

@@ -44,7 +44,8 @@
 #include "qmath_p.h"
 #include "qline.h"
 #include "qtransform.h"
-#include <qmath.h>
+#include "qmath.h"
+#include "qnumeric.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -860,8 +861,8 @@ QPointF qt_curves_for_arc(const QRectF &rect, qreal startAngle, qreal sweepLengt
     Q_ASSERT(curves);
 
     *point_count = 0;
-    if (qt_is_nan(rect.x()) || qt_is_nan(rect.y()) || qt_is_nan(rect.width()) || qt_is_nan(rect.height())
-        || qt_is_nan(startAngle) || qt_is_nan(sweepLength)) {
+    if (qIsNaN(rect.x()) || qIsNaN(rect.y()) || qIsNaN(rect.width()) || qIsNaN(rect.height())
+        || qIsNaN(startAngle) || qIsNaN(sweepLength)) {
         qWarning("QPainterPath::arcTo: Adding arc where a parameter is NaN, results are undefined");
         return QPointF();
     }

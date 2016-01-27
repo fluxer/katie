@@ -54,6 +54,7 @@
 #include <qdebug.h>
 #include <qcoreapplication.h>
 #include <qmath.h>
+#include <qnumeric.h>
 
 #include <qfont_p.h>
 #include <qfontengine_p.h>
@@ -754,9 +755,9 @@ QCoreGraphicsPaintEngine::updateMatrix(const QTransform &transform)
     Q_D(QCoreGraphicsPaintEngine);
     Q_ASSERT(isActive());
 
-    if (qt_is_nan(transform.m11()) || qt_is_nan(transform.m12()) || qt_is_nan(transform.m13())
-	|| qt_is_nan(transform.m21()) || qt_is_nan(transform.m22()) || qt_is_nan(transform.m23())
-	|| qt_is_nan(transform.m31()) || qt_is_nan(transform.m32()) || qt_is_nan(transform.m33()))
+    if (qIsNaN(transform.m11()) || qIsNaN(transform.m12()) || qIsNaN(transform.m13())
+	|| qIsNaN(transform.m21()) || qIsNaN(transform.m22()) || qIsNaN(transform.m23())
+	|| qIsNaN(transform.m31()) || qIsNaN(transform.m32()) || qIsNaN(transform.m33()))
 	return;
 
     d->current.transform = transform;

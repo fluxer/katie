@@ -44,17 +44,30 @@
 
 #include <QtCore/qglobal.h>
 
+#ifndef QT_NO_STL
+#include <math.h>
+#endif
+
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
+#ifndef QT_NO_STL
+Q_CORE_EXPORT_INLINE bool qIsInf(double d) { return isinf(d); }
+Q_CORE_EXPORT_INLINE bool qIsNaN(double d) { return isnan(d); }
+Q_CORE_EXPORT_INLINE bool qIsFinite(double d) { return isfinite(d); }
+Q_CORE_EXPORT_INLINE bool qIsInf(float f) { return isinf(f); }
+Q_CORE_EXPORT_INLINE bool qIsNaN(float f) { return isnan(f); }
+Q_CORE_EXPORT_INLINE bool qIsFinite(float f) { return isfinite(f); }
+#else
 Q_CORE_EXPORT bool qIsInf(double d);
 Q_CORE_EXPORT bool qIsNaN(double d);
 Q_CORE_EXPORT bool qIsFinite(double d);
 Q_CORE_EXPORT bool qIsInf(float f);
 Q_CORE_EXPORT bool qIsNaN(float f);
 Q_CORE_EXPORT bool qIsFinite(float f);
+#endif
+
 Q_CORE_EXPORT double qSNaN();
 Q_CORE_EXPORT double qQNaN();
 Q_CORE_EXPORT double qInf();

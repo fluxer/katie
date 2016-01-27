@@ -43,7 +43,7 @@
 #include "qdebug.h"
 #include "qdatastream.h"
 #include "qmath.h"
-#include <qnumeric_p.h>
+#include <qnumeric.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -674,7 +674,7 @@ QLineF::IntersectType QLineF::intersect(const QLineF &l, QPointF *intersectionPo
     const QPointF c = pt1 - l.pt1;
 
     const qreal denominator = a.y() * b.x() - a.x() * b.y();
-    if (denominator == 0 || !qt_is_finite(denominator))
+    if (denominator == 0 || !qIsFinite(denominator))
         return NoIntersection;
 
     const qreal reciprocal = 1 / denominator;

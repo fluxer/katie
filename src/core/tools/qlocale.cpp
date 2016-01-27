@@ -70,6 +70,7 @@ QT_END_NAMESPACE
 #   include "qt_windows.h"
 #   include <time.h>
 #endif
+#include "qnumeric.h"
 #include "qnumeric_p.h"
 #include "qsystemlibrary_p.h"
 
@@ -2496,11 +2497,11 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
     QString num_str;
 
     // Detect special numbers (nan, +/-inf)
-    if (qt_is_inf(d)) {
+    if (qIsInf(d)) {
         num_str = QString::fromLatin1("inf");
         special_number = true;
         negative = d < 0;
-    } else if (qt_is_nan(d)) {
+    } else if (qIsNaN(d)) {
         num_str = QString::fromLatin1("nan");
         special_number = true;
     }

@@ -44,35 +44,97 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifdef QT_NO_STL
 /*!
     Returns true if the double \a {d} is equivalent to infinity.
 */
-Q_CORE_EXPORT bool qIsInf(double d) { return qt_is_inf(d); }
+Q_CORE_EXPORT bool qIsInf(double d)
+{
+    uchar *ch = (uchar *)&d;
+#ifdef QT_ARMFPA
+    return (ch[3] & 0x7f) == 0x7f && ch[2] == 0xf0;
+#else
+    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
+        return (ch[0] & 0x7f) == 0x7f && ch[1] == 0xf0;
+    } else {
+        return (ch[7] & 0x7f) == 0x7f && ch[6] == 0xf0;
+    }
+#endif
+}
 
 /*!
     Returns true if the double \a {d} is not a number (NaN).
 */
-Q_CORE_EXPORT bool qIsNaN(double d) { return qt_is_nan(d); }
+Q_CORE_EXPORT bool qIsNaN(double d)
+{
+    uchar *ch = (uchar *)&d;
+#ifdef QT_ARMFPA
+    return (ch[3] & 0x7f) == 0x7f && ch[2] > 0xf0;
+#else
+    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
+        return (ch[0] & 0x7f) == 0x7f && ch[1] > 0xf0;
+    } else {
+        return (ch[7] & 0x7f) == 0x7f && ch[6] > 0xf0;
+    }
+#endif
+}
 
 /*!
     Returns true if the double \a {d} is a finite number.
 */
-Q_CORE_EXPORT bool qIsFinite(double d) { return qt_is_finite(d); }
+Q_CORE_EXPORT bool qIsFinite(double d)
+{
+    uchar *ch = (uchar *)&d;
+#ifdef QT_ARMFPA
+    return (ch[3] & 0x7f) != 0x7f || (ch[2] & 0xf0) != 0xf0;
+#else
+    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
+        return (ch[0] & 0x7f) != 0x7f || (ch[1] & 0xf0) != 0xf0;
+    } else {
+        return (ch[7] & 0x7f) != 0x7f || (ch[6] & 0xf0) != 0xf0;
+    }
+#endif
+}
 
 /*!
     Returns true if the float \a {f} is equivalent to infinity.
 */
-Q_CORE_EXPORT bool qIsInf(float f) { return qt_is_inf(f); }
+Q_CORE_EXPORT bool qIsInf(float f)
+{
+    uchar *ch = (uchar *)&f;
+    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
+        return (ch[0] & 0x7f) == 0x7f && ch[1] == 0x80;
+    } else {
+        return (ch[3] & 0x7f) == 0x7f && ch[2] == 0x80;
+    }
+}
 
 /*!
     Returns true if the float \a {f} is not a number (NaN).
 */
-Q_CORE_EXPORT bool qIsNaN(float f) { return qt_is_nan(f); }
+Q_CORE_EXPORT bool qIsNaN(float f)
+{
+    uchar *ch = (uchar *)&f;
+    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
+        return (ch[0] & 0x7f) == 0x7f && ch[1] > 0x80;
+    } else {
+        return (ch[3] & 0x7f) == 0x7f && ch[2] > 0x80;
+    }
+}
 
 /*!
     Returns true if the float \a {f} is a finite number.
 */
-Q_CORE_EXPORT bool qIsFinite(float f) { return qt_is_finite(f); }
+Q_CORE_EXPORT bool qIsFinite(float f)
+{
+    uchar *ch = (uchar *)&f;
+    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
+        return (ch[0] & 0x7f) != 0x7f || (ch[1] & 0x80) != 0x80;
+    } else {
+        return (ch[3] & 0x7f) != 0x7f || (ch[2] & 0x80) != 0x80;
+    }
+}
+#endif // QT_NO_STL
 
 /*!
     Returns the bit pattern of a signalling NaN as a double.
@@ -88,6 +150,5 @@ Q_CORE_EXPORT double qQNaN() { return qt_qnan(); }
     Returns the bit pattern for an infinite number as a double.
 */
 Q_CORE_EXPORT double qInf() { return qt_inf(); }
-
 
 QT_END_NAMESPACE
