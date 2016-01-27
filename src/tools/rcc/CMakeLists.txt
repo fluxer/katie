@@ -9,7 +9,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${BOOTSTRAP_INCLUDES}
 )
 
 set(RCC_SOURCES
@@ -20,14 +19,9 @@ set(RCC_SOURCES
 set(RCC_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/rcc.h
     ${CMAKE_SOURCE_DIR}/src/core/kernel/qcorecmdlineargs_p.h
-    ${BOOTSTRAP_HEADERS}
 )
 
-# katie_resources("${RCC_SOURCES}")
 katie_setup_flags()
-
-add_executable(bootstrap_rcc $<TARGET_OBJECTS:bootstrap> ${RCC_SOURCES} ${RCC_HEADERS})
-target_compile_definitions(bootstrap_rcc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 add_executable(rcc ${RCC_SOURCES} ${RCC_HEADERS})
 target_link_libraries(rcc ${EXTRA_RCC_LIBS})

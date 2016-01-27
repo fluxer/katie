@@ -6,9 +6,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp
-    ${BOOTSTRAP_INCLUDES}
 )
 
 set(UIC_SOURCES
@@ -49,11 +50,7 @@ set(UIC_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteinitialization.cpp
 )
 
-# katie_resources("${UIC_SOURCES}")
 katie_setup_flags()
-
-add_executable(bootstrap_uic $<TARGET_OBJECTS:bootstrap> ${UIC_SOURCES} ${UIC_HEADERS})
-target_compile_definitions(bootstrap_uic PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 add_executable(uic ${UIC_SOURCES} ${UIC_HEADERS})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})

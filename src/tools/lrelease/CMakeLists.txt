@@ -13,7 +13,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${SHAREDLINGUIST_INCLUDES}
-    ${BOOTSTRAP_INCLUDES}
 )
 
 set(LRELEASE_SOURCES
@@ -28,12 +27,6 @@ set(LRELEASE_HEADERS
 )
 
 katie_setup_flags()
-
-# can not reuse sharedlinguist objects since this is a bootstrap target and
-# they must take the bootstrap definitions into account
-add_executable(bootstrap_lrelease $<TARGET_OBJECTS:bootstrap>
-    ${SHAREDLINGUIST_SOURCES} ${LRELEASE_SOURCES} ${LRELEASE_HEADERS})
-target_compile_definitions(bootstrap_lrelease PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 add_executable(lrelease $<TARGET_OBJECTS:sharedlinguist> ${LRELEASE_SOURCES} ${LRELEASE_HEADERS})
 target_link_libraries(lrelease ${EXTRA_LRELEASE_LIBS})
