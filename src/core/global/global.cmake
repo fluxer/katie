@@ -1,6 +1,5 @@
 set(CORE_HEADERS
     ${CORE_HEADERS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/global/qglobal.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnamespace.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qendian.h
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.h

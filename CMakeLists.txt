@@ -213,7 +213,11 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/qconfig.cpp
 )
 configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h
+    ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h.cmake
+    ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
+)
+configure_file(
+    ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h.cmake
     ${CMAKE_BINARY_DIR}/include/qtglobal.h
 )
 

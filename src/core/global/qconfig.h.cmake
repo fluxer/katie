@@ -268,7 +268,4 @@
 #cmakedefine QT_NO_TREEWIDGET
 #cmakedefine QT_NO_VALIDATOR
 
-/* Windows */
-#cmakedefine QT_NO_WIN_ACTIVEQT
-
 #endif

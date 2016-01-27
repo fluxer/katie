@@ -47,11 +47,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define QT_VERSION_STR   "4.8.7"
+#define QT_VERSION_STR   "${KATIE_VERSION}"
 /*
    QT_VERSION is (major << 16) + (minor << 8) + patch.
 */
-#define QT_VERSION 0x040807
+#define QT_VERSION ${KATIE_HEX}
 /*
    can be used like #if (QT_VERSION >= QT_VERSION_CHECK(4, 4, 0))
 */
@@ -145,9 +145,7 @@
 #  error Unable to detect target endianness
 #endif
 
-#if !defined(QT_BUILD_MOC)
 #include <QtCore/qconfig.h>
-#endif
 
 #ifdef __cplusplus
 
