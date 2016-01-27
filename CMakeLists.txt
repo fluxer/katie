@@ -216,10 +216,6 @@ configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h.cmake
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
-configure_file(
-    ${CMAKE_SOURCE_DIR}/src/core/global/qglobal.h.cmake
-    ${CMAKE_BINARY_DIR}/include/qtglobal.h
-)
 
 find_package(PythonInterp)
 set_package_properties(PythonInterp PROPERTIES

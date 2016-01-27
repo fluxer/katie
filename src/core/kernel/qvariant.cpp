@@ -1418,9 +1418,6 @@ const QVariant::Handler *QVariant::handler = &qt_kernel_variant_handler;
 
     \value UserType Base value for user-defined types.
 
-    \omitvalue CString
-    \omitvalue ColorGroup
-    \omitvalue IconSet
     \omitvalue LastGuiType
     \omitvalue LastCoreType
     \omitvalue LastType
