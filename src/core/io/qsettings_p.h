@@ -54,9 +54,7 @@
 //
 
 #include "QtCore/qdatetime.h"
-#include "QtCore/qmap.h"
 #include "QtCore/qmutex.h"
-#include "QtCore/qiodevice.h"
 #include "QtCore/qstack.h"
 #include "QtCore/qstringlist.h"
 #ifndef QT_NO_QOBJECT

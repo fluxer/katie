@@ -42,7 +42,6 @@
 #ifndef QMETATYPE_H
 #define QMETATYPE_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qatomic.h>
 
 #ifndef QT_NO_DATASTREAM

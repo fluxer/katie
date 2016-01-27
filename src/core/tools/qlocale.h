@@ -43,8 +43,6 @@
 #define QLOCALE_H
 
 #include <QtCore/qvariant.h>
-#include <QtCore/qstring.h>
-#include <QtCore/qobjectdefs.h>
 
 QT_BEGIN_HEADER
 

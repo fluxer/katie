@@ -55,9 +55,7 @@
 
 #include "QtCore/qprocess.h"
 #include "QtCore/qstringlist.h"
-#include "QtCore/qhash.h"
 #include "QtCore/qshareddata.h"
-#include "qringbuffer_p.h"
 #include "qiodevice_p.h"
 #ifdef Q_OS_UNIX
 #include <qorderedmutexlocker_p.h>

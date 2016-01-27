@@ -56,12 +56,8 @@
 #include "qstate_p.h"
 
 #include <QtCore/qcoreevent.h>
-#include <QtCore/qhash.h>
-#include <QtCore/qlist.h>
 #include <QtCore/qmutex.h>
-#include <QtCore/qpair.h>
 #include <QtCore/qset.h>
-#include <QtCore/qvector.h>
 
 QT_BEGIN_NAMESPACE
 

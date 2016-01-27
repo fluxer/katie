@@ -55,10 +55,6 @@
 
 #include "qabstractstate_p.h"
 
-#include <QtCore/qlist.h>
-#include <QtCore/qbytearray.h>
-#include <QtCore/qvariant.h>
-
 QT_BEGIN_NAMESPACE
 
 struct QPropertyAssignment

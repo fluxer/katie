@@ -42,7 +42,6 @@
 #ifndef QSHAREDDATA_H
 #define QSHAREDDATA_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qatomic.h>
 
 QT_BEGIN_HEADER

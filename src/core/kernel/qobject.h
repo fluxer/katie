@@ -46,7 +46,6 @@
 
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qstring.h>
-#include <QtCore/qbytearray.h>
 #include <QtCore/qlist.h>
 #ifdef QT_INCLUDE_COMPAT
 #include <QtCore/qcoreevent.h>

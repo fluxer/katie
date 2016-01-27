@@ -44,8 +44,6 @@
 
 #include <QtCore/qabstractstate.h>
 
-#include <QtCore/qlist.h>
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE

@@ -53,7 +53,6 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qobjectdefs.h>
 
 #ifndef QT_NO_QOBJECT
