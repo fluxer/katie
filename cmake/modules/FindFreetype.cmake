@@ -44,6 +44,10 @@ find_library(FREETYPE_LIBRARIES
 if(FREETYPE_INCLUDES)
     set(FREETYPE_INCLUDE_DIRS ${FREETYPE_INCLUDES})
 endif()
+# usually CMake handles this but in this case it does not
+if(FREETYPE_INCLUDES AND FREETYPE_LIBRARIES)
+    set(FREETYPE_FOUND TRUE)
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Freetype2 DEFAULT_MSG FREETYPE_INCLUDES FREETYPE_LIBRARIES)
