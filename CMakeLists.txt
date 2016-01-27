@@ -466,7 +466,7 @@ if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac")
     )
 endif()
 
-# so that sources can say: #include <shared/blah.h>
+# various sources use #include <shared/blah.h>
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 # semi-shared
@@ -481,7 +481,7 @@ if(NOT KATIE_BOOTSTRAP)
 endif()
 
 if(ENABLE_TESTING)
-    message(WARNING "Unless it is intentionally you should not enable testing")
+    message(WARNING "Unless it is intentionall you should not enable testing")
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
