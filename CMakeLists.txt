@@ -316,6 +316,9 @@ set_package_properties(ALSA PROPERTIES
     TYPE RECOMMENDED
 )
 
+# old versions of CMake ship bogus module, always use the custom one
+cmake_policy(PUSH)
+cmake_policy(SET CMP0017 OLD)
 find_package(Freetype)
 set_package_properties(Freetype PROPERTIES
     PURPOSE "Required for fonts configuration support"
@@ -323,6 +326,7 @@ set_package_properties(Freetype PROPERTIES
     URL "http://www.freetype.org"
     TYPE RECOMMENDED
 )
+cmake_policy(POP)
 
 find_package(Fontconfig)
 set_package_properties(Fontconfig PROPERTIES
