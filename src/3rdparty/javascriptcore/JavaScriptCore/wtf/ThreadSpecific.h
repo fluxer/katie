@@ -140,8 +140,6 @@ inline void ThreadSpecific<T>::destroy(void* ptr)
 
     data->value->~T();
     fastFree(data->value);
-
-    delete data;
 #endif
 }
 
