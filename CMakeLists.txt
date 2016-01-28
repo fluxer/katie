@@ -578,6 +578,7 @@ add_subdirectory(util/qlalr)
 add_subdirectory(util/qurl-generateTLDs)
 add_subdirectory(util/unicode)
 add_subdirectory(util/xkbdatagen)
+add_subdirectory(util/generaterun)
 
 # obsolete but still widely required headers
 katie_generate_obsolete(qtglobal.h QtCore qglobal.h)
