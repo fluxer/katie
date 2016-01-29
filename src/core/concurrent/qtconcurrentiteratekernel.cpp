@@ -57,7 +57,6 @@
 
 #include "qfunctions_p.h"
 
-
 #ifndef QT_NO_CONCURRENT
 
 QT_BEGIN_NAMESPACE

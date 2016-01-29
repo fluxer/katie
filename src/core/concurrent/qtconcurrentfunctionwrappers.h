@@ -49,8 +49,6 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-
-
 namespace QtConcurrent {
 
 template <typename T>

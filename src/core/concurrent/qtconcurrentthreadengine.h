@@ -57,8 +57,6 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-
-
 namespace QtConcurrent {
 
 // The ThreadEngineBarrier counts worker threads, and allows one
@@ -71,10 +69,7 @@ private:
     // variable. The count can be either positive or negative - a negative
     // count signals that a thread is waiting on the barrier.
 
-    // BC note: inlined code from Qt < 4.6 will expect to find the QAtomicInt 
-    // here. ### Qt 5: remove.
     QAtomicInt count;
-
     QSemaphore semaphore;
 public:
     ThreadEngineBarrier();
@@ -271,7 +266,6 @@ inline ThreadEngineStarter<typename ThreadEngine::ResultType> startThreadEngine(
 }
 
 } // namespace QtConcurrent
-
 
 QT_END_NAMESPACE
 QT_END_HEADER

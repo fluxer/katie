@@ -230,7 +230,6 @@ public:
 
 } // namespace QtConcurrent
 
-
 QT_END_NAMESPACE
 QT_END_HEADER
 

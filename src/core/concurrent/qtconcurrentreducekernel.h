@@ -57,7 +57,6 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-
 namespace QtConcurrent {
 
 
@@ -238,7 +237,6 @@ struct SequenceHolder2 : public Base
         sequence = Sequence();
     }
 };
-
 
 } // namespace QtConcurrent
 

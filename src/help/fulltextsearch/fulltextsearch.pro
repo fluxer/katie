@@ -5,8 +5,6 @@ contains(QT_CONFIG, reduce_exports) {
     linux*-g++*:DEFINES += _GLIBCXX_EXTERN_TEMPLATE=0
 }
 
-unix|win32-g++*:QMAKE_PKGCONFIG_REQUIRES = QtCore
-
 # impossible to disable exceptions in clucene atm
 CONFIG(exceptions_off) {
     CONFIG -= exceptions_off
@@ -19,11 +17,6 @@ CONFIG(exceptions_off) {
         QMAKE_CXXFLAGS += -fexceptions
         QMAKE_LFLAGS += -fexceptions
     }
-}
-
-win32-msvc.net | win32-msvc2* {
-    QMAKE_CFLAGS_RELEASE	-= -O2
-    QMAKE_CXXFLAGS_RELEASE	-= -O2    
 }
 
 # the following define could be set globally in case we need it elsewhere

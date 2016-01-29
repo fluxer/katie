@@ -52,8 +52,6 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-
-
 namespace QtConcurrent {
 
 template <typename T>
@@ -117,7 +115,6 @@ private:
 };
 
 } // namespace QtConcurrent
-
 
 QT_END_NAMESPACE
 QT_END_HEADER

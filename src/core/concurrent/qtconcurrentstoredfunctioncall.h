@@ -51,8 +51,6 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-
-
 namespace QtConcurrent {
 template <typename T, typename FunctionPointer>
 struct StoredFunctorCall0: public RunFunctionTask<T>
@@ -1298,9 +1296,7 @@ private:
     Functor functor;
 };
 
-
 } //namespace QtConcurrent
-
 
 QT_END_NAMESPACE
 QT_END_HEADER

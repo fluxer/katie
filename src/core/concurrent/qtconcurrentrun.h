@@ -53,8 +53,6 @@
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
-
-
 namespace QtConcurrent {
 
 template <typename T>
@@ -326,7 +324,6 @@ QFuture<T> run(const Class *object, T (Class::*fn)(Param1, Param2, Param3, Param
 }
 
 } //namespace QtConcurrent
-
 
 QT_END_NAMESPACE
 QT_END_HEADER
