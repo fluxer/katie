@@ -79,7 +79,7 @@
 #    include "qfontlaocodec_p.h"
 #    include "../../plugins/codecs/jp/qfontjpcodec.h"
 #  endif
-#endif // QT_NO_SYMBIAN
+#endif // Q_OS_INTEGRITY
 #endif // QT_NO_CODECS
 #include "qlocale.h"
 #include "qmutex.h"
@@ -147,7 +147,6 @@ static bool nameMatch(const QByteArray &name, const QByteArray &test)
            ++h;
     return (*h == '\0');
 }
-
 
 static QTextCodec *createForName(const QByteArray &name)
 {

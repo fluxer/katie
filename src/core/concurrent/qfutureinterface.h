@@ -102,12 +102,18 @@ public:
     int resultCount() const;
 
     bool queryState(State state) const;
-    bool isRunning() const;
-    bool isStarted() const;
-    bool isCanceled() const;
-    bool isFinished() const;
-    bool isPaused() const;
-    bool isThrottled() const;
+    inline bool isRunning() const
+        { return queryState(Running); }
+    inline bool isStarted() const
+        { return queryState(Started); }
+    inline bool isCanceled() const
+        { return queryState(Canceled); }
+    inline bool isFinished() const
+        { return queryState(Finished); }
+    inline bool isPaused() const
+        { return queryState(Paused); }
+    inline bool isThrottled() const
+        { return queryState(Throttled); }
     bool isResultReadyAt(int index) const;
 
     void cancel();

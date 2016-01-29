@@ -192,11 +192,6 @@ QUnifiedTimer *QUnifiedTimer::instance(bool create)
     return inst;
 }
 
-QUnifiedTimer *QUnifiedTimer::instance()
-{
-    return instance(true);
-}
-
 void QUnifiedTimer::ensureTimerUpdate()
 {
     QUnifiedTimer *inst = QUnifiedTimer::instance(false);

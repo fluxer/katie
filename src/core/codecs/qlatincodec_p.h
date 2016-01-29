@@ -72,8 +72,6 @@ public:
     int mibEnum() const;
 };
 
-
-
 class QLatin15Codec: public QTextCodec
 {
 public:

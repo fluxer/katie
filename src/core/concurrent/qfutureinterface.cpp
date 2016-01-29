@@ -128,37 +128,6 @@ void QFutureInterfaceBase::setThrottled(bool enable)
     }
 }
 
-
-bool QFutureInterfaceBase::isRunning() const
-{
-    return queryState(Running);
-}
-
-bool QFutureInterfaceBase::isStarted() const
-{
-    return queryState(Started);
-}
-
-bool QFutureInterfaceBase::isCanceled() const
-{
-    return queryState(Canceled);
-}
-
-bool QFutureInterfaceBase::isFinished() const
-{
-    return queryState(Finished);
-}
-
-bool QFutureInterfaceBase::isPaused() const
-{
-    return queryState(Paused);
-}
-
-bool QFutureInterfaceBase::isThrottled() const
-{
-    return queryState(Throttled);
-}
-
 bool QFutureInterfaceBase::isResultReadyAt(int index) const
 {
     QMutexLocker lock(&d->m_mutex);

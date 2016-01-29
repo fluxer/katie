@@ -158,9 +158,6 @@ private:
     void stop();
 };
 
-
-
-
 #endif //QT_NO_ANIMATION
 
 QT_END_NAMESPACE

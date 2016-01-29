@@ -54,11 +54,10 @@
 //
 
 #include "qvariantanimation.h"
+#include "qabstractanimation_p.h"
 #include <QtCore/qeasingcurve.h>
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qvector.h>
-
-#include "qabstractanimation_p.h"
 
 #ifndef QT_NO_ANIMATION
 

@@ -54,7 +54,6 @@
 //
 
 #include "qpropertyanimation.h"
-
 #include "qvariantanimation_p.h"
 
 #ifndef QT_NO_ANIMATION

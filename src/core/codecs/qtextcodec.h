@@ -62,7 +62,8 @@ class Q_CORE_EXPORT QTextCodec
     Q_DISABLE_COPY(QTextCodec)
 public:
     static QTextCodec* codecForName(const QByteArray &name);
-    static QTextCodec* codecForName(const char *name) { return codecForName(QByteArray(name)); }
+    static inline QTextCodec* codecForName(const char *name)
+        { return codecForName(QByteArray(name)); }
     static QTextCodec* codecForMib(int mib);
 
     static QList<QByteArray> availableCodecs();
@@ -71,11 +72,15 @@ public:
     static QTextCodec* codecForLocale();
     static void setCodecForLocale(QTextCodec *c);
 
-    static QTextCodec* codecForTr();
-    static void setCodecForTr(QTextCodec *c);
+    static inline QTextCodec* codecForTr()
+        { return validCodecs() ? cftr : 0; }
+    static inline void setCodecForTr(QTextCodec *c)
+        { cftr = c; }
 
-    static QTextCodec* codecForCStrings();
-    static void setCodecForCStrings(QTextCodec *c);
+    static inline QTextCodec* codecForCStrings()
+        { return validCodecs() ? QString::codecForCStrings : 0; }
+    static inline void setCodecForCStrings(QTextCodec *c)
+        { QString::codecForCStrings = c; }
 
     static QTextCodec *codecForHtml(const QByteArray &ba);
     static QTextCodec *codecForHtml(const QByteArray &ba, QTextCodec *defaultCodec);
@@ -116,7 +121,7 @@ public:
         { return convertFromUnicode(in, length, state); }
 
     QTextDecoder* makeDecoder(ConversionFlags flags = DefaultConversion) const;
-    QTextEncoder* makeEncoder(ConversionFlags flags  = DefaultConversion) const;
+    QTextEncoder* makeEncoder(ConversionFlags flags = DefaultConversion) const;
 
     virtual QByteArray name() const = 0;
     virtual QList<QByteArray> aliases() const;
@@ -137,11 +142,6 @@ private:
     static bool validCodecs();
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTextCodec::ConversionFlags)
-
-        inline QTextCodec* QTextCodec::codecForTr() { return validCodecs() ? cftr : 0; }
-inline void QTextCodec::setCodecForTr(QTextCodec *c) { cftr = c; }
-inline QTextCodec* QTextCodec::codecForCStrings() { return validCodecs() ? QString::codecForCStrings : 0; }
-inline void QTextCodec::setCodecForCStrings(QTextCodec *c) { QString::codecForCStrings = c; }
 
 class Q_CORE_EXPORT QTextEncoder {
     Q_DISABLE_COPY(QTextEncoder)

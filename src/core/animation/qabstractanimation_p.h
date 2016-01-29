@@ -148,8 +148,7 @@ private:
 
 public:
     //XXX this is needed by dui
-    static QUnifiedTimer *instance();
-    static QUnifiedTimer *instance(bool create);
+    static QUnifiedTimer *instance(bool create = true);
 
     static void registerAnimation(QAbstractAnimation *animation, bool isTopLevel);
     static void unregisterAnimation(QAbstractAnimation *animation);
