@@ -292,14 +292,6 @@ void QCryptographicHash::addData(const char *data, int length)
 }
 
 /*!
-  \overload addData()
-*/
-void QCryptographicHash::addData(const QByteArray &data)
-{
-    addData(data.constData(), data.length());
-}
-
-/*!
   Reads the data from the open QIODevice \a device until it ends
   and hashes it. Returns \c true if reading was successful.
   \since 4.9

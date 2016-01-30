@@ -75,7 +75,8 @@ public:
     void reset();
 
     void addData(const char *data, int length);
-    void addData(const QByteArray &data);
+    inline void addData(const QByteArray &data)
+        { addData(data.constData(), data.length()); }
     bool addData(QIODevice* device);
 
     QByteArray result() const;
