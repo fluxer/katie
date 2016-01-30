@@ -271,11 +271,11 @@ class Q_CORE_EXPORT QVariant
 #ifndef QT_NO_REGEXP
     QRegExp toRegExp() const;
 #endif
+#ifndef QT_BOOTSTRAPPED
     QJsonValue toJsonValue() const;
     QJsonObject toJsonObject() const;
     QJsonArray toJsonArray() const;
     QJsonDocument toJsonDocument() const;
-#ifndef QT_BOOTSTRAPPED
     QEasingCurve toEasingCurve() const;
 #endif
 

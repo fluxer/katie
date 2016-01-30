@@ -2258,7 +2258,7 @@ QDateTime QVariant::toDateTime() const
 
 #ifndef QT_BOOTSTRAPPED
 /*!
-    \since 4.8.7
+    \since 4.9
 
     Returns the variant as a QJsonValue if the variant has userType() \l
     QJsonValue; otherwise returns a default constructed QJsonValue.
@@ -2271,7 +2271,7 @@ QJsonValue QVariant::toJsonValue() const
 }
 
 /*!
-    \since 4.8.7
+    \since 4.9
 
     Returns the variant as a QJsonObject if the variant has userType() \l
     QJsonObject; otherwise returns a default constructed QJsonObject.
@@ -2284,7 +2284,7 @@ QJsonObject QVariant::toJsonObject() const
 }
 
 /*!
-    \since 4.8.7
+    \since 4.9
 
     Returns the variant as a QJsonArray if the variant has userType() \l
     QJsonArray; otherwise returns a default constructed QJsonArray.
@@ -2297,7 +2297,7 @@ QJsonArray QVariant::toJsonArray() const
 }
 
 /*!
-    \since 4.8.7
+    \since 4.9
 
     Returns the variant as a QJsonDocument if the variant has userType() \l
     QJsonDocument; otherwise returns a default constructed QJsonDocument.
