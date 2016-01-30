@@ -8,9 +8,9 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
         -Werror=format-security
         -fvisibility=hidden
         -fvisibility-inlines-hidden
-        -Wreturn-type -Wunused-function -Wundef -Winline
+        -Wreturn-type -Wunused-function -Wundef
         # -Wall -fno-strict-aliasing -Wcast-align -Wchar-subscripts
-        # -Wundef -Wmissing-noreturn -Winit-self -Wunused-comparison
+        # -Wmissing-noreturn -Winit-self -Wunused-comparison -Winline
     )
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
