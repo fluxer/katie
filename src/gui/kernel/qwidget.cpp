@@ -150,7 +150,7 @@ Q_GUI_EXPORT void qt_x11_set_global_double_buffer(bool enable)
 }
 #endif
 
-#if defined(QT_MAC_USE_COCOA)
+#ifdef QT_MAC_USE_COCOA
 bool qt_mac_clearDirtyOnWidgetInsideDrawWidget = false;
 #endif
 
@@ -325,7 +325,7 @@ QWidgetPrivate::QWidgetPrivate(int version)
 
     isWidget = true;
     memset(high_attributes, 0, sizeof(high_attributes));
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     drawRectOriginalAdded = false;
     originalDrawMethod = true;
     changeMethods = false;
@@ -1677,11 +1677,9 @@ void QWidgetPrivate::createTLExtra()
         x->inTopLevelResize = false;
         x->inRepaint = false;
         x->embedded = 0;
-#ifdef Q_WS_MAC
-#ifdef QT_MAC_USE_COCOA
+#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
         x->wasMaximized = false;
-#endif // QT_MAC_USE_COCOA
-#endif // Q_WS_MAC
+#endif // Q_WS_MAC && QT_MAC_USE_COCOA
         createTLSysExtra();
 #ifdef QWIDGET_EXTRA_DEBUG
         static int count = 0;
@@ -12315,7 +12313,7 @@ void QWidget::clearMask()
 */
 
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
 void QWidgetPrivate::syncUnifiedMode() {
     // The whole purpose of this method is to keep the unifiedToolbar in sync.
     // That means making sure we either exchange the drawing methods or we let
