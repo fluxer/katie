@@ -621,17 +621,16 @@ static const QMetaObject *QMetaObject_findMetaObject(const QMetaObject *self, co
         if (self->d.relatedMetaObjects) {
             Q_ASSERT(priv(self->d.data)->revision >= 6);
 #ifdef Q_NO_DATA_RELOCATION
-            const QMetaObjectAccessor *e;
+            const QMetaObjectAccessor *e = self->d.relatedMetaObjects;
 #else
-            const QMetaObject **e;
+            const QMetaObject **e = self->d.relatedMetaObjects;
 #endif
-            e = self->d.relatedMetaObjects;
             if (e) {
                 while (*e) {
 #ifdef Q_NO_DATA_RELOCATION
-                    if (const QMetaObject *m =QMetaObject_findMetaObject(&((*e)()), name))
+                    if (const QMetaObject *m = QMetaObject_findMetaObject(&((*e)()), name))
 #else
-                    if (const QMetaObject *m =QMetaObject_findMetaObject((*e), name))
+                    if (const QMetaObject *m = QMetaObject_findMetaObject((*e), name))
 #endif
                         return m;
                     ++e;
