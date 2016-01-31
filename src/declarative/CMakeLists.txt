@@ -3,8 +3,7 @@ add_definitions(
     -DQT_NO_URL_CAST_FROM_STRING
     -DQT_NO_OPENTYPE
 )
-# XXX: make QtSvg conditional?
-set(EXTRA_DECLARATIVE_LIBS KtCore KtGui KtNetwork KtScript KtSvg KtXmlPatterns KtSql)
+set(EXTRA_DECLARATIVE_LIBS KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql)
 
 set(DECLARATIVE_PUBLIC_HEADERS
     ${DECLARATIVE_PUBLIC_HEADERS}
@@ -48,8 +47,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
-    ${CMAKE_BINARY_DIR}/include/QtSvg
-    ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
     ${CMAKE_BINARY_DIR}/include/QtXmlPatterns
     ${CMAKE_BINARY_DIR}/privateinclude/QtXmlPatterns
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
@@ -93,7 +90,7 @@ katie_generate_package(
     KtDeclarative
     ""
     "${EXTRA_DECLARATIVE_LIBS}"
-    "KtCore KtGui KtNetwork KtScript KtSvg KtXmlPatterns KtSql"
+    "KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql"
 )
 
 install(
