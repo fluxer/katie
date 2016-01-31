@@ -215,10 +215,12 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    target_link_libraries(${TESTNAME} KtCore KtTest)
+    # TODO: make GUI access optional
+    target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(
         ${TESTNAME} PRIVATE
         -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
+        -DQT_GUI_LIB
     )
     set_target_properties(
         ${TESTNAME} PROPERTIES
