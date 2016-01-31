@@ -60,11 +60,6 @@
 #include <QtGui/qicon.h>
 #include <QtGui/qpixmap.h>
 
-#if 0
-// inform syncqt
-#pragma qt_no_master_include
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE

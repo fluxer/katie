@@ -29,12 +29,6 @@
 #include <QtCore/QObject>
 
 
-#ifdef __QT_SYNCQT__
-// Tell syncqt that the BackendCapabilities namespace should be treated like a class
-#pragma qt_class(Phonon::BackendCapabilities)
-#pragma qt_sync_stop_processing
-#endif
-
 template<class T> class QList;
 class QStringList;
 

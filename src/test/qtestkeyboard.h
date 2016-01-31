@@ -42,11 +42,6 @@
 #if !defined(QTESTKEYBOARD_H)
 #define QTESTKEYBOARD_H
 
-#if 0
-// inform syncqt
-#pragma qt_no_master_include
-#endif
-
 #include <QtTest/qtestassert.h>
 #include <QtTest/qtest_global.h>
 #include <QtTest/qtestsystem.h>

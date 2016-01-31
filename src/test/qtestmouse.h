@@ -42,11 +42,6 @@
 #if !defined(QTESTMOUSE_H)
 #define QTESTMOUSE_H
 
-#if 0
-// inform syncqt
-#pragma qt_no_master_include
-#endif
-
 #include <QtTest/qtest_global.h>
 #include <QtTest/qtestassert.h>
 #include <QtTest/qtestsystem.h>

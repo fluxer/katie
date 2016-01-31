@@ -54,11 +54,6 @@
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-#if 0
-// pragma for syncqt, don't remove.
-
-#pragma qt_class(QAbstractFormBuilder)
-#endif
 
 class QAction;
 class QButtonGroup;

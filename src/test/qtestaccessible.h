@@ -42,11 +42,6 @@
 #ifndef QTESTACCESSIBLE_H
 #define QTESTACCESSIBLE_H
 
-#if 0
-// inform syncqt
-#pragma qt_no_master_include
-#endif
-
 #ifndef QT_NO_ACCESSIBILITY
 
 #define QTEST_ACCESSIBILITY

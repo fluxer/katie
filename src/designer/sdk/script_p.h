@@ -61,7 +61,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QString; // FIXME: fool syncqt
+class QString;
 
 class QDESIGNER_SDK_EXPORT QDesignerScriptExtension
 {

@@ -42,11 +42,6 @@
 #ifndef QTESTEVENT_H
 #define QTESTEVENT_H
 
-#if 0
-// inform syncqt
-#pragma qt_no_master_include
-#endif
-
 #include <QtTest/qtest_global.h>
 #ifdef QT_GUI_LIB
 #include <QtTest/qtestkeyboard.h>

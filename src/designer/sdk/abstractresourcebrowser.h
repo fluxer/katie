@@ -50,7 +50,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QWidget; // FIXME: fool syncqt
+class QWidget;
 
 class QDESIGNER_SDK_EXPORT QDesignerResourceBrowserInterface: public QWidget
 {
