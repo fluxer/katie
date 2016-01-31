@@ -296,10 +296,15 @@ QEventDispatcherGlibPrivate::QEventDispatcherGlibPrivate(GMainContext *context)
     : mainContext(context)
 {
     if (qgetenv("QT_NO_THREADED_GLIB").isEmpty()) {
+#if GLIB_MAJOR_VERSION == 2 && GLIB_MINOR_VERSION < 32
         static int dummyValue = 0; // only used for its address
         QMutexLocker locker(QMutexPool::instance()->get(&dummyValue));
         if (!g_thread_supported())
             g_thread_init(NULL);
+#else
+    } else {
+        qWarning("QEventDispatcherGlib: it is not possible to disable GLib threading");
+#endif
     }
 
     if (mainContext) {
