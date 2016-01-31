@@ -56,18 +56,6 @@
 #include <winsock.h>
 #include <ceconfig.h>
 
-QT_BEGIN_HEADER
-QT_BEGIN_NAMESPACE
-
-#ifdef QT_BUILD_CORE_LIB
-#ifdef __cplusplus // zlib is written in C, and does not like about the implementation of QT_MODULE macro
-#endif // __cplusplus
-#endif // QT_BUILD_CORE_LIB
-
-QT_END_NAMESPACE
-QT_END_HEADER
-
-
 // The standard SDK misses this define...
 #define _control87 _controlfp
 
