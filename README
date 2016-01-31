@@ -13,7 +13,7 @@ There are several things you should be aware before considering Katie:
   - QMake build system replaced with CMake
   - QStyleOption*V{2,3,4} classes have been merged
   - QKeyEventEx and QKeyEvent classes have been merged
-  - OpenSSL and D-Bus are not a runtime dependencies, they must be linked to
+  - OpenSSL and D-Bus cannot be runtime dependencies, they must be linked to
     during build
   - QtUiTools is build as shared library by default
   - Phonon has been updated to 4.8.51
@@ -36,6 +36,6 @@ QTBUG-28321, QTBUG-21993, QTBUG-26590, QTBUG-2124, QTBUG-20482,
 QTBUG-41361, QTBUG-40153, QTBUG-35479
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
-Qt4 in the same code-base is trivial and requires only a minor changes because
-Katie is mostly compatible with Qt4. Should you enouncter a problem please
-report it at https://github.com/fluxer/katie/issues.
+Qt4 in the same codebase is trivial and requires only minor changes because
+Katie is mostly source compatible with Qt4. Should you enouncter a problem
+please report it at https://github.com/fluxer/katie/issues.

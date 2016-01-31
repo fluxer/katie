@@ -90,7 +90,6 @@ public:
     static QDeclarativeValueType *valueType(int);
 
     static void registerValueTypes();
-    static void registerValueTypesCompat();
 
     QDeclarativeValueType *operator[](int idx) const {
         if (idx < 0 || idx >= (int)QVariant::UserType) return 0;

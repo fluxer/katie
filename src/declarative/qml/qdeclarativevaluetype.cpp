@@ -104,15 +104,6 @@ void QDeclarativeValueTypeFactory::registerValueTypes()
     qmlRegisterValueTypeEnums<QDeclarativeFontValueType>("QtQuick",1,0,"Font");
 }
 
-void QDeclarativeValueTypeFactory::registerValueTypesCompat()
-{
-    if (QApplication::type() == QApplication::Tty)
-        return;
-
-    qmlRegisterValueTypeEnums<QDeclarativeEasingValueType>("Qt",4,7,"Easing");
-    qmlRegisterValueTypeEnums<QDeclarativeFontValueType>("Qt",4,7,"Font");
-}
-
 QDeclarativeValueType *QDeclarativeValueTypeFactory::valueType(int t)
 {
     QDeclarativeValueType *rv = 0;

@@ -717,11 +717,10 @@ void QMetaObjectBuilder::addMetaObject
     if ((members & RelatedMetaObjects) != 0) {
         Q_ASSERT(priv(prototype->d.data)->revision >= 6);
 #ifdef Q_NO_DATA_RELOCATION
-        const QMetaObjectAccessor *objects = 0;
+        const QMetaObjectAccessor *objects = prototype->d.relatedMetaObjects;
 #else
-        const QMetaObject **objects;
+        const QMetaObject **objects = prototype->d.relatedMetaObjects;
 #endif
-        objects = prototype->d.relatedMetaObjects;
         if (objects) {
             while (*objects != 0) {
                 addRelatedMetaObject(*objects);
