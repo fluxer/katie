@@ -150,4 +150,4 @@ void tst_QGraphicsLayout::invalidate()
 
 QTEST_MAIN(tst_QGraphicsLayout)
 
-#include "tst_qgraphicslayout.moc"
+#include "moc_tst_qgraphicslayout.cpp"

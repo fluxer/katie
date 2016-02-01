@@ -256,4 +256,5 @@ void tst_QGraphicsScene::initialShow()
 }
 
 QTEST_MAIN(tst_QGraphicsScene)
-#include "tst_qgraphicsscene.moc"
+
+#include "moc_tst_qgraphicsscene.cpp"

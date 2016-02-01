@@ -589,4 +589,5 @@ void tst_QTransform::inverted()
 }
 
 QTEST_MAIN(tst_QTransform)
-#include "tst_qtransform.moc"
+
+#include "moc_tst_qtransform.cpp"

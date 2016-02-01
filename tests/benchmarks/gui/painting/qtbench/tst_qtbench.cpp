@@ -41,11 +41,10 @@
 
 #include <qtest.h>
 
+#include <QtCore/qmath.h>
 #include <QtGui>
 
 #include "benchmarktests.h"
-
-//TESTED_FILES=
 
 class BenchWidget : public QWidget
 {
@@ -251,4 +250,5 @@ void tst_QtBench::qtBench()
 }
 
 QTEST_MAIN(tst_QtBench)
-#include "tst_qtbench.moc"
+
+#include "moc_tst_qtbench.cpp"

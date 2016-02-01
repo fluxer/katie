@@ -46,7 +46,7 @@
 #include <QImageReader>
 #include <QPainter>
 #include <QPixmap>
-#include <private/qpixmap_raster_p.h>
+#include <qpixmap_raster_p.h>
 
 class tst_QPixmap : public QObject
 {
@@ -312,4 +312,4 @@ void tst_QPixmap::fromImageReader()
 
 QTEST_MAIN(tst_QPixmap)
 
-#include "tst_qpixmap.moc"
+#include "moc_tst_qpixmap.cpp"

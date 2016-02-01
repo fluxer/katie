@@ -41,12 +41,11 @@
 
 #include <qtest.h>
 
+#include <QtCore/qmath.h>
 #include <QtGui>
 
-#include <private/qpaintengineex_p.h>
-#include <private/qpaintbuffer_p.h>
-
-//TESTED_FILES=
+#include <qpaintengineex_p.h>
+#include <qpaintbuffer_p.h>
 
 class ReplayWidget : public QWidget
 {
@@ -259,4 +258,6 @@ void tst_QTraceBench::trace()
 }
 
 QTEST_MAIN(tst_QTraceBench)
-#include "tst_qtracebench.moc"
+
+#include "moc_tst_qtracebench.cpp"
+#include "qrc_qtracebench.cpp"

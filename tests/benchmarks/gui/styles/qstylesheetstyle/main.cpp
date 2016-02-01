@@ -157,13 +157,6 @@ void tst_qstylesheetstyle::grid()
     QFETCH(bool, show);
     QFETCH(int, N);
 
-#ifdef Q_OS_SYMBIAN
-    // Symbian has limited stack (max 80k), which will run out when N >= 20 due to
-    // QWidget::show() using recursion among grid labels somewhere down the line.
-    if (show && N >= 20)
-        QSKIP("Grid too big for device to show", SkipSingle);
-#endif
-
     QWidget *w = new QWidget();
     QGridLayout *layout = new QGridLayout(w);
     w->setLayout(layout);
@@ -198,4 +191,4 @@ void tst_qstylesheetstyle::grid()
 
 QTEST_MAIN(tst_qstylesheetstyle)
 
-#include "main.moc"
+#include "moc_main.cpp"

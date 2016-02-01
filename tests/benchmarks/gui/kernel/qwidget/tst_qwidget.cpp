@@ -159,17 +159,12 @@ void tst_QWidget::update_data()
     QTest::newRow("10x10x1 opaque")        << 10 << 10 << 1   << true;
     QTest::newRow("10x10x10 opaque")       << 10 << 10 << 10  << true;
     QTest::newRow("10x10x100 opaque")      << 10 << 10 << 100 << true;
-#ifndef Q_OS_SYMBIAN
-    //These test cases cause stack overflow in QWidgetPrivate::paintSiblingsRecursive
-    //see http://bugreports.qt-project.org/browse/QTBUG-8512
-    //Symbian threads have a hard limit of 80kB user stack
     QTest::newRow("25x25x1 transparent ")  << 25 << 25 << 1   << false;
     QTest::newRow("25x25x10 transparent")  << 25 << 25 << 10  << false;
     QTest::newRow("25x25x100 transparent") << 25 << 25 << 100 << false;
     QTest::newRow("25x25x1 opaque")        << 25 << 25 << 1   << true;
     QTest::newRow("25x25x10 opaque")       << 25 << 25 << 10  << true;
     QTest::newRow("25x25x100 opaque")      << 25 << 25 << 100 << true;
-#endif
 }
 
 void tst_QWidget::update()
@@ -257,4 +252,4 @@ void tst_QWidget::updateComplex()
 
 QTEST_MAIN(tst_QWidget)
 
-#include "tst_qwidget.moc"
+#include "moc_tst_qwidget.cpp"

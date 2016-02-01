@@ -105,4 +105,5 @@ QImage tst_QImageConversion::generateImageRgb888(int width, int height)
 }
 
 QTEST_MAIN(tst_QImageConversion)
-#include "tst_qimageconversion.moc"
+
+#include "moc_tst_qimageconversion.cpp"

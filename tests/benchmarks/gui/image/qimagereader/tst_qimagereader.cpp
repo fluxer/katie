@@ -241,4 +241,5 @@ void tst_QImageReader::setScaledClipRect()
 }
 
 QTEST_MAIN(tst_QImageReader)
-#include "tst_qimagereader.moc"
+
+#include "moc_tst_qimagereader.cpp"

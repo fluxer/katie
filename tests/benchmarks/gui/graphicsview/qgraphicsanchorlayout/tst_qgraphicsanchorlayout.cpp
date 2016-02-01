@@ -430,4 +430,4 @@ void tst_QGraphicsAnchorLayout::linearVsAnchorNested()
 
 QTEST_MAIN(tst_QGraphicsAnchorLayout)
 
-#include "tst_qgraphicsanchorlayout.moc"
+#include "moc_tst_qgraphicsanchorlayout.cpp"

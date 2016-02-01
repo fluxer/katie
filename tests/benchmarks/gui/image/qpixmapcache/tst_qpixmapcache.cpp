@@ -223,4 +223,5 @@ void tst_QPixmapCache::styleUseCaseComplexKey()
 
 
 QTEST_MAIN(tst_QPixmapCache)
-#include "tst_qpixmapcache.moc"
+
+#include "moc_tst_qpixmapcache.cpp"

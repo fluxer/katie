@@ -42,7 +42,8 @@
 #include <QtGui>
 #include <qtest.h>
 
-#include "dummyobject.h"
+// ###: was dummyobject.h
+#include "moc_dummyobject.h"
 #include "dummyanimation.h"
 #include "rectanimation.h"
 
@@ -184,8 +185,6 @@ void tst_qanimation::floatAnimation()
     }
 }
 
-
-
 QTEST_MAIN(tst_qanimation)
 
-#include "main.moc"
+#include "moc_main.cpp"

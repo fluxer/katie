@@ -112,4 +112,5 @@ void tst_QGuiVariant::createGuiTypeCopy()
 }
 
 QTEST_MAIN(tst_QGuiVariant)
-#include "tst_qguivariant.moc"
+
+#include "moc_tst_qguivariant.cpp"

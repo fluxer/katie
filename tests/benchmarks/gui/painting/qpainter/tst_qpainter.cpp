@@ -41,6 +41,7 @@
 
 #include <qtest.h>
 #include <QPainter>
+#include <QPen>
 #include <QPixmap>
 #include <QDialog>
 #include <QImage>
@@ -50,7 +51,7 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-#include <private/qpixmap_raster_p.h>
+#include <qpixmap_raster_p.h>
 
 Q_DECLARE_METATYPE(QLine)
 Q_DECLARE_METATYPE(QRect)
@@ -1663,4 +1664,4 @@ void tst_QPainter::drawTransformedFilledImage()
 
 QTEST_MAIN(tst_QPainter)
 
-#include "tst_qpainter.moc"
+#include "moc_tst_qpainter.cpp"

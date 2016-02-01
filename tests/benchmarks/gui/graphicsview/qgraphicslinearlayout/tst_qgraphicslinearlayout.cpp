@@ -130,4 +130,4 @@ void tst_QGraphicsLinearLayout::heightForWidth()
 
 QTEST_MAIN(tst_QGraphicsLinearLayout)
 
-#include "tst_qgraphicslinearlayout.moc"
+#include "moc_tst_qgraphicslinearlayout.cpp"

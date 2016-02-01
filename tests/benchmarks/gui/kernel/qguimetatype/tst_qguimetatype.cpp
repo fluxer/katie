@@ -114,4 +114,5 @@ void tst_QGuiMetaType::constructGuiTypeCopy()
 }
 
 QTEST_MAIN(tst_QGuiMetaType)
-#include "tst_qguimetatype.moc"
+
+#include "moc_tst_qguimetatype.cpp"

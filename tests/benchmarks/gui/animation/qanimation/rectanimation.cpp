@@ -39,6 +39,9 @@
 **
 ****************************************************************************/
 
+#include <QAbstractAnimation>
+#include <QEasingCurve>
+
 #include "rectanimation.h"
 #include "dummyobject.h"
 

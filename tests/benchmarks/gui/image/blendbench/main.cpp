@@ -224,4 +224,4 @@ void BlendBench::unalignedBlendArgb32()
 
 QTEST_MAIN(BlendBench)
 
-#include "main.moc"
+#include "moc_main.cpp"

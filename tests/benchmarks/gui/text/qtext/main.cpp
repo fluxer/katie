@@ -44,18 +44,12 @@
 #include <QTextDocumentWriter>
 #include <QTextLayout>
 #include <QTextCursor>
-#include <private/qtextcontrol_p.h>
+#include <qtextcontrol_p.h>
 #include <qmath.h>
 #include <QFile>
 #include <QPainter>
 #include <QBuffer>
 #include <qtest.h>
-
-#ifdef Q_OS_SYMBIAN
-// In Symbian OS test data is located in applications private dir
-// Application private dir is default serach path for files, so SRCDIR can be set to empty
-#define SRCDIR ""
-#endif
 
 Q_DECLARE_METATYPE(QTextDocument*)
 
@@ -141,11 +135,7 @@ void tst_QText::shaping_data()
     QTest::newRow("lorem") << m_lorem;
     QTest::newRow("short") << QString::fromLatin1("Lorem ipsum dolor sit amet");
 
-#if !defined(Q_OS_SYMBIAN)
     QFile file(QString::fromLatin1(SRCDIR) + QLatin1String("/bidi.txt"));
-#else
-    QFile file( SRCDIR "bidi.txt" );
-#endif
     QVERIFY(file.open(QFile::ReadOnly));
     QByteArray data = file.readAll();
     QVERIFY(data.count() > 1000);
@@ -497,4 +487,4 @@ void tst_QText::paintControlToPixmap_painterFill()
 
 QTEST_MAIN(tst_QText)
 
-#include "main.moc"
+#include "moc_main.cpp"

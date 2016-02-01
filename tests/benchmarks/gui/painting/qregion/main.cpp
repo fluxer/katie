@@ -136,4 +136,4 @@ void tst_qregion::intersects()
 
 QTEST_MAIN(tst_qregion)
 
-#include "main.moc"
+#include "moc_main.cpp"

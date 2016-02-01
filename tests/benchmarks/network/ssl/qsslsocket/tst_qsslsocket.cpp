@@ -111,4 +111,5 @@ void tst_QSslSocket::systemCaCertificates()
 }
 
 QTEST_MAIN(tst_QSslSocket)
-#include "tst_qsslsocket.moc"
+
+#include "moc_tst_qsslsocket.cpp"

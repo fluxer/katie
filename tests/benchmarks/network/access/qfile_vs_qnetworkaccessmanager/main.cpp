@@ -77,11 +77,7 @@ void qfile_vs_qnetworkaccessmanager::initTestCase()
 {
     testFile.open();
     QByteArray qba(1*1024*1024, 'x'); // 1 MB
-#ifdef Q_OS_SYMBIAN
-    for (int i = 0; i < 10; i++) { // for Symbian only 10 MB
-#else
     for (int i = 0; i < 100; i++) {
-#endif
         testFile.write(qba);
         testFile.flush();
         size += qba.size();
@@ -193,4 +189,4 @@ void qfile_vs_qnetworkaccessmanager::qfileFileRead()
 
 QTEST_MAIN(qfile_vs_qnetworkaccessmanager)
 
-#include "main.moc"
+#include "moc_main.cpp"

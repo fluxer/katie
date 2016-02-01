@@ -124,7 +124,7 @@ void tst_QGraphicsItem::setParentItem_deep()
             childRect->setParentItem(lastRect);
             lastRect = childRect;
         }
-        QGraphicsItem *first = rect.children().first();
+        QGraphicsItem *first = rect.childItems().first();
         first->setParentItem(0);
     }
 }
@@ -243,4 +243,5 @@ void tst_QGraphicsItem::translate()
 }
 
 QTEST_MAIN(tst_QGraphicsItem)
-#include "tst_qgraphicsitem.moc"
+
+#include "moc_tst_qgraphicsitem.cpp"

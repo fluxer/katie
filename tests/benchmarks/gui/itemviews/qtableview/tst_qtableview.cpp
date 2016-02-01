@@ -364,4 +364,5 @@ void tst_QTableView::columnRemoval()
 }
 
 QTEST_MAIN(tst_QTableView)
-#include "tst_qtableview.moc"
+
+#include "moc_tst_qtableview.cpp"

@@ -1,0 +1,9 @@
+katie_test(tst_bench_qanimation
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dummyobject.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dummyanimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/rectanimation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dummyobject.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/dummyanimation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/rectanimation.h
+)

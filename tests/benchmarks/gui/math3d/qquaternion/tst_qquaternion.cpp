@@ -121,4 +121,5 @@ void tst_QQuaternion::multiply()
 }
 
 QTEST_MAIN(tst_QQuaternion)
-#include "tst_qquaternion.moc"
+
+#include "moc_tst_qquaternion.cpp"

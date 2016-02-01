@@ -68,4 +68,4 @@ void tst_qapplication::ctor()
 
 QTEST_APPLESS_MAIN(tst_qapplication)
 
-#include "main.moc"
+#include "moc_main.cpp"

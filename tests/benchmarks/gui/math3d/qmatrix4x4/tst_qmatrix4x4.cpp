@@ -669,4 +669,4 @@ void tst_QMatrix4x4::compareRotateAfterScale()
 
 QTEST_MAIN(tst_QMatrix4x4)
 
-#include "tst_qmatrix4x4.moc"
+#include "moc_tst_qmatrix4x4.cpp"

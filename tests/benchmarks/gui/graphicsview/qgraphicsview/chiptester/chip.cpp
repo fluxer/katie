@@ -41,6 +41,7 @@
 
 #include "chip.h"
 
+#include "QtCore/qvarlengtharray.h"
 #include <QtGui>
 
 Chip::Chip(const QColor &color, int x, int y)
@@ -51,7 +52,7 @@ Chip::Chip(const QColor &color, int x, int y)
     setZValue((x + y) % 2);
 
     setFlags(ItemIsSelectable | ItemIsMovable);
-    setAcceptsHoverEvents(true);
+    setAcceptHoverEvents(true);
 }
 
 QRectF Chip::boundingRect() const
@@ -180,3 +181,5 @@ void Chip::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     QGraphicsItem::mouseReleaseEvent(event);
     update();
 }
+
+#include "chiptester/moc_chiptester.h"

@@ -64,9 +64,6 @@ Q_DECLARE_METATYPE(QList<QNetworkProxy>)
 
 #include "../../../../auto/network-settings.h"
 
-//TESTED_CLASS=
-//TESTED_FILES=
-
 class tst_QTcpServer : public QObject
 {
     Q_OBJECT
@@ -310,4 +307,5 @@ void tst_QTcpServer::ipv4PerformanceTest()
 }
 
 QTEST_MAIN(tst_QTcpServer)
-#include "tst_qtcpserver.moc"
+
+#include "moc_tst_qtcpserver.cpp"

@@ -91,4 +91,5 @@ void tst_QGraphicsWidget::move()
 }
 
 QTEST_MAIN(tst_QGraphicsWidget)
-#include "tst_qgraphicswidget.moc"
+
+#include "moc_tst_qgraphicswidget.cpp"

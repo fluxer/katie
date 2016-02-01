@@ -48,7 +48,7 @@
 #include <qtest.h>
 #include <qtesteventloop.h>
 
-#include "private/qhostinfo_p.h"
+#include "qhostinfo_p.h"
 
 class tst_qhostinfo : public QObject
 {
@@ -117,4 +117,4 @@ void tst_qhostinfo::lookupSpeed()
 
 QTEST_MAIN(tst_qhostinfo)
 
-#include "main.moc"
+#include "moc_main.cpp"

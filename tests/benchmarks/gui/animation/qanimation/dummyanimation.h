@@ -39,6 +39,8 @@
 **
 ****************************************************************************/
 
+#include <QVariantAnimation>
+#include <QPropertyAnimation>
 #include <QtGui>
 
 #ifndef _DUMMYANIMATION_H__

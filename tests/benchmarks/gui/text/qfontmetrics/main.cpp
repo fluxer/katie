@@ -109,4 +109,4 @@ void tst_QFontMetrics::fontmetrics_height_once_loaded()
 
 QTEST_MAIN(tst_QFontMetrics)
 
-#include "main.moc"
+#include "moc_main.cpp"
