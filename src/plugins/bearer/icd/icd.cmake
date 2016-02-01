@@ -2,26 +2,26 @@
 
 set(ICDPLUGIN_HEADERS
     ${ICDPLUGIN_HEADERS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/qicdengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/qnetworksession_impl.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/dbusdispatcher.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/iapconf.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/iapmonitor.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/maemo_icd.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/proxyconf.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/wlan-utils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/qicdengine.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/qnetworksession_impl.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/dbusdispatcher.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/iapconf.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/iapmonitor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/maemo_icd.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/proxyconf.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/wlan-utils.h
 )
 
 set(ICDPLUGIN_SOURCES
     ${ICDPLUGIN_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/icdmain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/qicdengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/qnetworksession_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/dbusdispatcher.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/iapmonitor.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/iapconf.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/maemo_icd.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/proxyconf.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/icdmain.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/qicdengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/qnetworksession_impl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/dbusdispatcher.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/iapmonitor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/iapconf.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/maemo_icd.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icd/proxyconf.cpp
 )
 
 katie_resources(${ICDPLUGIN_HEADERS} ${ICDPLUGIN_SOURCES})
