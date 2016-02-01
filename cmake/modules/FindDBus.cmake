@@ -45,6 +45,7 @@ find_path(DBUS_ARCH_INCLUDES
     /usr/lib
     /usr/local/lib
     ${INCLUDE_INSTALL_DIR}
+    ${LIB_INSTALL_DIR}
 )
 
 if(DBUS_INCLUDES AND DBUS_ARCH_INCLUDES)

@@ -134,12 +134,11 @@ option(WITH_QTOPIA "Build qtopia support" OFF)
 add_feature_info(qtopia WITH_QTOPIA "an open source something")
 
 # windows
-# TODO: enable when build system adjusts
-option(WITH_ICD "Build icd support (Windows)" OFF)
+option(WITH_ICD "Build icd support (Windows)" ON)
 add_feature_info(icd WITH_ICD "an closed source something")
 
 option(WITH_DIRECTWRITE "Build DirectWrite support (Windows)" OFF)
-add_feature_info(directwrite WITH_DIRECTWRITE "an open source something")
+add_feature_info(directwrite WITH_DIRECTWRITE "an closed source something")
 
 # mac
 option(WITH_COREWLAN "Build corewlan support (Mac)" ON)
@@ -466,17 +465,6 @@ endif()
 # various sources use #include <shared/blah.h>
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
-# semi-shared
-include(src/shared/linguist/linguist.cmake)
-include(src/shared/bootstrap.cmake)
-if(NOT KATIE_BOOTSTRAP)
-    include(src/shared/deviceskin/deviceskin.cmake)
-    include(src/shared/help/help.cmake)
-    include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
-    include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
-    include(src/shared/findwidget/findwidget.cmake)
-endif()
-
 if(ENABLE_TESTING)
     message(WARNING "Unless it is intentionall you should not enable testing")
     enable_testing()
@@ -532,6 +520,17 @@ if(NOT WITH_NAS OR NOT NAS_FOUND)
     katie_definition(-DQT_NO_NAS)
 endif()
 
+# semi-shared
+include(src/shared/linguist/linguist.cmake)
+include(src/shared/bootstrap.cmake)
+if(NOT KATIE_BOOTSTRAP)
+    include(src/shared/deviceskin/deviceskin.cmake)
+    include(src/shared/help/help.cmake)
+    include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
+    include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
+    include(src/shared/findwidget/findwidget.cmake)
+endif()
+
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
@@ -561,11 +560,11 @@ if(NOT KATIE_BOOTSTRAP)
         add_subdirectory(src/winmain)
     endif()
     add_subdirectory(src/xmlpatterns)
+    if(ENABLE_TESTING)
+        add_subdirectory(tests)
+    endif()
 endif()
 add_subdirectory(src/tools)
-if(ENABLE_TESTING)
-    add_subdirectory(tests)
-endif()
 
 # utilities needed for Katie maintainance
 add_subdirectory(util/fixnonlatin1)

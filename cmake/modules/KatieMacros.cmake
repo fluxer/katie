@@ -59,25 +59,25 @@ macro(KATIE_RESOURCE SRCDEP RESOURCES OUTNAME)
     set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()
 
-macro(KATIE_DBUS_ADAPTOR SRCDEP SRCIN SRCOUT)
+macro(KATIE_DBUS_ADAPTOR SRCDEP SRCIN OUTNAME)
     get_filename_component(resource ${SRCIN} ABSOLUTE)
-    set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${SRCOUT}.h)
-    set(mocout ${CMAKE_CURRENT_BINARY_DIR}/${SRCOUT}.moc)
+    set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}.h)
+    set(mocout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}.moc)
     add_custom_command(
         OUTPUT "${rscout}"
-        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${resource}" -a "${rscout}" -p "${SRCOUT}" ${ARGN}
+        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${resource}" -a "${rscout}" -p "${OUTNAME}" ${ARGN}
         COMMAND "${KATIE_MOC}" -nw "${rscout}" -o "${mocout}" -i
     )
     set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()
 
 macro(KATIE_DBUS_INTERFACE SRCIN)
-    string(REGEX MATCH ".*\\.(.*)\\.xml" ${SRCIN} SRCOUT)
+    string(REGEX MATCH ".*\\.(.*)\\.xml" ${SRCIN} OUTNAME)
     string(TOLOWER ${SRCIN} SRCIN)
-    set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${SRCOUT}ineterface.h)
+    set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}ineterface.h)
     add_custom_command(
         OUTPUT "${rscout}"
-        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${SRCIN}" -a "${rscout}" -p "${SRCOUT}ineterface" ${ARGN}
+        COMMAND "${KATIE_QDBUSXML2CPP}" -m "${SRCIN}" -a "${rscout}" -p "${OUTNAME}ineterface" ${ARGN}
     )
     set_property(SOURCE ${SRCIN} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()

@@ -24,11 +24,13 @@ set(ICDPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/icde/proxyconf.cpp
 )
 
-katie_resources("${ICDPLUGIN_HEADERS}")
-katie_resources("${ICDPLUGIN_SOURCES}")
+katie_resources(${ICDPLUGIN_HEADERS} ${ICDPLUGIN_SOURCES})
 
 add_library(qicdbearerplugin ${KATIE_TYPE} ${ICDPLUGIN_SOURCES} ${ICDPLUGIN_HEADERS})
 set_target_properties(qicdbearerplugin PROPERTIES OUTPUT_NAME qicdbearer)
 target_include_directories(qicdbearerplugin PRIVATE ${CMAKE_SOURCE_DIR}/src/3rdparty/libgq)
 
-install(TARGETS qicdbearerplugin DESTINATION ${QT_PLUGINS_PATH_INST}/bearer/)
+install(
+    TARGETS qicdbearerplugin
+    DESTINATION ${QT_PLUGINS_PATH_INST}/bearer
+)

@@ -20,8 +20,8 @@ set(QTCONNMANBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-katie_resources("${QTCONNMANBEARERPLUGIN_HEADERS}")
-katie_resources("${QTCONNMANBEARERPLUGIN_SOURCES}")
+katie_resources(${QTCONNMANBEARERPLUGIN_HEADERS})
+katie_resources(${QTCONNMANBEARERPLUGIN_SOURCES})
 
 add_library(qconnmanbearerplugin ${KATIE_TYPE} ${QTCONNMANBEARERPLUGIN_SOURCES} ${QTCONNMANBEARERPLUGIN_HEADERS})
 target_link_libraries(qconnmanbearerplugin KtCore KtNetwork KtDBus)
