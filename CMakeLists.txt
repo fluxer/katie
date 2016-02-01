@@ -595,6 +595,8 @@ katie_generate_obsolete(global.h Phonon ../phonon/phononnamespace.h)
 katie_generate_obsolete(qxmlstream.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamwriter.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamreader.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qnetworkconfigurationmanager.h QtNetwork qnetworkconfigmanager.h)
+katie_generate_obsolete(qnetworkcachemetadata.h QtNetwork qabstractnetworkcache.h)
 # those are aliases
 if(UNIX AND WITH_X11 AND X11_FOUND)
     katie_generate_obsolete(qx11info.h QtGui qx11info_x11.h)

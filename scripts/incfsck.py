@@ -257,6 +257,7 @@ incmap = {
         'QHttpHeader': 'qhttp.h',
         'QNetworkConfigurationManager': 'qnetworkconfigmanager.h',
         'QNetworkAddressEntry': 'qnetworkinterface.h',
+        'QNetworkCacheMetaData': 'qabstractnetworkcache.h',
         },
     'QtTest': {
         'QEventSizeOfChecker': 'qtestspontaneevent.h',
