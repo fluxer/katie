@@ -1,0 +1,5 @@
+katie_test(tst_qmltime
+    ${CMAKE_CURRENT_SOURCE_DIR}/qmltime.cpp
+)
+
+target_link_libraries(tst_qmltime KtDeclarative)
