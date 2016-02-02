@@ -1,0 +1,6 @@
+katie_test(tst_bench_qscriptclass_bytearray
+    ${CMAKE_CURRENT_SOURCE_DIR}/tst_qscriptclass_bytearray.cpp
+    {CMAKE_CURRENT_SOURCE_DIR}/qscriptclass_bytearray.qrc
+)
+
+target_link_libraries(tst_bench_qscriptclass_bytearray KtScript)

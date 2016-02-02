@@ -1,9 +1,3 @@
-load(qttest_p4)
-TEMPLATE = app
-TARGET = tst_bench_context2d
-
-SOURCES += tst_context2d.cpp
-
 CONTEXT2D_EXAMPLE_DIR = $$QT_SOURCE_TREE/examples/script/context2d
 INCLUDEPATH += $$CONTEXT2D_EXAMPLE_DIR
 

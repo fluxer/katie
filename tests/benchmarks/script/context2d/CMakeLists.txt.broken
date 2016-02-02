@@ -1,0 +1,5 @@
+katie_test(tst_bench_context2d
+    ${CMAKE_CURRENT_SOURCE_DIR}/tst_context2d.cpp
+)
+
+target_link_libraries(tst_bench_context2d KtScript)

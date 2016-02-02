@@ -46,8 +46,6 @@
 #include <QtScript/qscriptengine.h>
 #include <QtScript/qscriptvalue.h>
 
-//TESTED_FILES=
-
 static QString readFile(const QString &filename)
 {
     QFile file(filename);
@@ -134,4 +132,6 @@ void tst_V8::benchmark()
 }
 
 QTEST_MAIN(tst_V8)
-#include "tst_v8.moc"
+
+#include "moc_tst_v8.cpp"
+#include "qrc_v8.cpp"

@@ -46,8 +46,6 @@
 #include <QtScript/qscriptengine.h>
 #include <QtScript/qscriptvalue.h>
 
-//TESTED_FILES=
-
 static QString readFile(const QString &filename)
 {
     QFile file(filename);
@@ -121,4 +119,6 @@ void tst_SunSpider::benchmark()
 }
 
 QTEST_MAIN(tst_SunSpider)
+
 #include "tst_sunspider.moc"
+#include "qrc_sunspider.cpp"

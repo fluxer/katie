@@ -106,4 +106,6 @@ void tst_QScriptClass_ByteArray::benchmark()
 }
 
 QTEST_MAIN(tst_QScriptClass_ByteArray)
-#include "tst_qscriptclass_bytearray.moc"
+
+#include "moc_tst_qscriptclass_bytearray.cpp"
+#include "qrc_qscriptclass_bytearray.cpp"
