@@ -121,15 +121,11 @@ public:
         FirstButton        = Ok,                // internal
         LastButton         = RestoreDefaults,   // internal
 
-        YesAll             = YesToAll,          // obsolete
-        NoAll              = NoToAll,           // obsolete
-
         Default            = 0x00000100,        // obsolete
         Escape             = 0x00000200,        // obsolete
         FlagMask           = 0x00000300,        // obsolete
         ButtonMask         = ~FlagMask          // obsolete
     };
-    typedef StandardButton Button;  // obsolete
 
     Q_DECLARE_FLAGS(StandardButtons, StandardButton)
 
@@ -204,76 +200,6 @@ public:
 
     QSize sizeHint() const;
 
-    // the following functions are obsolete:
-
-    QMessageBox(const QString &title, const QString &text, Icon icon,
-                  int button0, int button1, int button2,
-                  QWidget *parent = 0,
-                  Qt::WindowFlags f = Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-
-    static int information(QWidget *parent, const QString &title,
-                           const QString& text,
-                           int button0, int button1 = 0, int button2 = 0);
-    static int information(QWidget *parent, const QString &title,
-                           const QString& text,
-                           const QString& button0Text,
-                           const QString& button1Text = QString(),
-                           const QString& button2Text = QString(),
-                           int defaultButtonNumber = 0,
-                           int escapeButtonNumber = -1);
-    inline static StandardButton information(QWidget *parent, const QString &title,
-                                  const QString& text,
-                                  StandardButton button0, StandardButton button1 = NoButton)
-    { return information(parent, title, text, StandardButtons(button0), button1); }
-
-    static int question(QWidget *parent, const QString &title,
-                        const QString& text,
-                        int button0, int button1 = 0, int button2 = 0);
-    static int question(QWidget *parent, const QString &title,
-                        const QString& text,
-                        const QString& button0Text,
-                        const QString& button1Text = QString(),
-                        const QString& button2Text = QString(),
-                        int defaultButtonNumber = 0,
-                        int escapeButtonNumber = -1);
-    inline static int question(QWidget *parent, const QString &title,
-                               const QString& text,
-                               StandardButton button0, StandardButton button1)
-    { return question(parent, title, text, StandardButtons(button0), button1); }
-
-    static int warning(QWidget *parent, const QString &title,
-                       const QString& text,
-                       int button0, int button1, int button2 = 0);
-    static int warning(QWidget *parent, const QString &title,
-                       const QString& text,
-                       const QString& button0Text,
-                       const QString& button1Text = QString(),
-                       const QString& button2Text = QString(),
-                       int defaultButtonNumber = 0,
-                       int escapeButtonNumber = -1);
-    inline static int warning(QWidget *parent, const QString &title,
-                              const QString& text,
-                              StandardButton button0, StandardButton button1)
-    { return warning(parent, title, text, StandardButtons(button0), button1); }
-
-    static int critical(QWidget *parent, const QString &title,
-                        const QString& text,
-                        int button0, int button1, int button2 = 0);
-    static int critical(QWidget *parent, const QString &title,
-                        const QString& text,
-                        const QString& button0Text,
-                        const QString& button1Text = QString(),
-                        const QString& button2Text = QString(),
-                        int defaultButtonNumber = 0,
-                        int escapeButtonNumber = -1);
-    inline static int critical(QWidget *parent, const QString &title,
-                               const QString& text,
-                               StandardButton button0, StandardButton button1)
-    { return critical(parent, title, text, StandardButtons(button0), button1); }
-
-    QString buttonText(int button) const;
-    void setButtonText(int button, const QString &text);
-
     QString informativeText() const;
     void setInformativeText(const QString &text);
 
@@ -285,12 +211,10 @@ public:
     void setWindowTitle(const QString &title);
     void setWindowModality(Qt::WindowModality windowModality);
 
-
     static QPixmap standardIcon(Icon icon);
 
 Q_SIGNALS:
     void buttonClicked(QAbstractButton *button);
-
 
 protected:
     bool event(QEvent *e);
