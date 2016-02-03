@@ -123,7 +123,6 @@ public:
 private:
     QGLFramebufferObject* fbo;
     QGLFormat fboFormat;
-    bool wasBound;
     bool reqAlpha;
 };
 
