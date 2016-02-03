@@ -42,11 +42,9 @@
 #include <qtest.h>
 #include <QtScript>
 
-#include <QtScript/private/qscriptdeclarativeclass_p.h>
+#include <QtScript/qscriptdeclarativeclass_p.h>
 
 Q_DECLARE_METATYPE(QScriptValue)
-
-//TESTED_FILES=
 
 class tst_QScriptEngine : public QObject
 {
@@ -572,4 +570,5 @@ void tst_QScriptEngine::readScopeProperty()
 }
 
 QTEST_MAIN(tst_QScriptEngine)
-#include "tst_qscriptengine.moc"
+
+#include "moc_tst_qscriptengine.cpp"

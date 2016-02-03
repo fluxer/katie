@@ -120,5 +120,5 @@ void tst_SunSpider::benchmark()
 
 QTEST_MAIN(tst_SunSpider)
 
-#include "tst_sunspider.moc"
+#include "moc_tst_sunspider.cpp"
 #include "qrc_sunspider.cpp"

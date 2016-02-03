@@ -1262,4 +1262,5 @@ void tst_QScriptQObject::callQScriptableSlot()
 }
 
 QTEST_MAIN(tst_QScriptQObject)
-#include "tst_qscriptqobject.moc"
+
+#include "moc_tst_qscriptqobject.cpp"

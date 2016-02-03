@@ -282,4 +282,5 @@ void tst_QScriptClass::iterate()
 }
 
 QTEST_MAIN(tst_QScriptClass)
-#include "tst_qscriptclass.moc"
+
+#include "moc_tst_qscriptclass.cpp"

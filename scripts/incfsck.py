@@ -208,6 +208,7 @@ incmap = {
         'QAccessibleTable2CellInterface': 'qaccessible2.h',
         'QAccessibleTable2Interface': 'qaccessible2.h',
         'QAccessibleTableInterface': 'qaccessible2.h',
+        'QTextLength': 'qtextformat.h',
         'QMacCocoaViewContainer': 'qmaccocoaviewcontainer_mac.h',
         # 'QPlatformIntegrationPlugin': 'qplatformintegrationplugin_qpa.h',
         # 'QPlatformIntegration': 'qplatformintegration_qpa.h',

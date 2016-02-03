@@ -44,8 +44,6 @@
 
 Q_DECLARE_METATYPE(QScriptValue)
 
-//TESTED_FILES=
-
 class tst_QScriptValue : public QObject
 {
     Q_OBJECT
@@ -1019,4 +1017,5 @@ void tst_QScriptValue::defineStandardTestValues()
 }
 
 QTEST_MAIN(tst_QScriptValue)
-#include "tst_qscriptvalue.moc"
+
+#include "moc_tst_qscriptvalue.cpp"

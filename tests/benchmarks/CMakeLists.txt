@@ -1,6 +1,0 @@
-# if(WITH_OPENGL AND OPENGL_FOUND)
-#     add_subdirectory(opengl)
-# endif()
-# if(WITH_DBUS AND DBUS_FOUND)
-#     add_subdirectory(dbus)
-# endif()

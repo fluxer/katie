@@ -42,8 +42,6 @@
 #include <qtest.h>
 #include <QtScript>
 
-//TESTED_FILES=
-
 class tst_QScriptValueIterator : public QObject
 {
     Q_OBJECT
@@ -290,4 +288,5 @@ void tst_QScriptValueIterator::iterateArrayAndRemoveAllElements()
 }
 
 QTEST_MAIN(tst_QScriptValueIterator)
-#include "tst_qscriptvalueiterator.moc"
+
+#include "moc_tst_qscriptvalueiterator.cpp"
