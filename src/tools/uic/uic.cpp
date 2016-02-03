@@ -64,7 +64,7 @@ Uic::Uic(Driver *d)
      : drv(d),
        out(d->output()),
        opt(d->option()),
-       info(d),
+       info(),
        externalPix(true)
 {
 }

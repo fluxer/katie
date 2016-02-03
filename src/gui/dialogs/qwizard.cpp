@@ -925,7 +925,7 @@ QWizardLayoutInfo QWizardPrivate::layoutInfoForCurrentPage()
         info.buttonSpacing = 12;
 
     info.wizStyle = wizStyle;
-    if ((info.wizStyle == QWizard::AeroStyle)
+    if (info.wizStyle == QWizard::AeroStyle
 #if !defined(QT_NO_STYLE_WINDOWSVISTA)
         && (QVistaHelper::vistaState() == QVistaHelper::Classic || vistaDisabled())
 #endif

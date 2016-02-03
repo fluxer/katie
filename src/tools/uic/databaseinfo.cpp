@@ -40,14 +40,12 @@
 ****************************************************************************/
 
 #include "databaseinfo.h"
-#include "driver.h"
 #include "ui4.h"
 #include "utils.h"
 
 QT_BEGIN_NAMESPACE
 
-DatabaseInfo::DatabaseInfo(Driver *drv)
-    : driver(drv)
+DatabaseInfo::DatabaseInfo()
 {
 }
 

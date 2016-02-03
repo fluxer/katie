@@ -73,6 +73,8 @@ QDeclarativeParser::Object::Object()
     extObject.d.stringdata = 0;
     extObject.d.data = 0;
     extObject.d.extradata = 0;
+    extObject.d.relatedMetaObjects = 0;
+    extObject.d.static_metacall = 0;
 }
 
 QDeclarativeParser::Object::~Object() 

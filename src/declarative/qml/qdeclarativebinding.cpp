@@ -480,7 +480,7 @@ void QDeclarativeBinding::disconnect(DisconnectMode disconnectMode)
 }
 
 QDeclarativeValueTypeProxyBinding::QDeclarativeValueTypeProxyBinding(QObject *o, int index)
-: m_object(o), m_index(index), m_bindings(0)
+: m_object(o), m_bindings(0)
 {
 }
 
