@@ -1401,8 +1401,6 @@ RegisterID* BytecodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, Regi
     ASSERT(func->refCount());
     ASSERT(thisRegister->refCount());
 
-    RegisterID* originalFunc = func;
-
     // Generate code for arguments.
     Vector<RefPtr<RegisterID>, 16> argv;
     argv.append(thisRegister);
@@ -1482,8 +1480,6 @@ RegisterID* BytecodeGenerator::emitUnaryNoDstOp(OpcodeID opcodeID, RegisterID* s
 RegisterID* BytecodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, ArgumentsNode* argumentsNode, unsigned divot, unsigned startOffset, unsigned endOffset)
 {
     ASSERT(func->refCount());
-
-    RegisterID* originalFunc = func;
 
     RefPtr<RegisterID> funcProto = newTemporary();
 

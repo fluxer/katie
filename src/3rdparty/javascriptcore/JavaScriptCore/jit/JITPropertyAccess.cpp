@@ -226,9 +226,9 @@ void JIT::emit_op_method_check(Instruction* currentInstruction)
     move(Imm32(JSValue::CellTag), regT1);
     Jump match = jump();
 
-    ASSERT(differenceBetween(info.structureToCompare, protoObj) == patchOffsetMethodCheckProtoObj);
+    ASSERT_UNUSED(protoObj, differenceBetween(info.structureToCompare, protoObj) == patchOffsetMethodCheckProtoObj);
     ASSERT(differenceBetween(info.structureToCompare, protoStructureToCompare) == patchOffsetMethodCheckProtoStruct);
-    ASSERT(differenceBetween(info.structureToCompare, putFunction) == patchOffsetMethodCheckPutFunction);
+    ASSERT_UNUSED(putFunction, differenceBetween(info.structureToCompare, putFunction) == patchOffsetMethodCheckPutFunction);
 
     // Link the failure cases here.
     structureCheck.link(this);
@@ -392,14 +392,20 @@ void JIT::compileGetByIdHotPath()
     ASSERT(differenceBetween(hotPathBegin, structureToCompare) == patchOffsetGetByIdStructure);
     ASSERT(differenceBetween(hotPathBegin, structureCheck) == patchOffsetGetByIdBranchToSlowCase);
 
+#if !ASSERT_DISABLED
     Label externalLoad = loadPtrWithPatchToLEA(Address(regT0, OBJECT_OFFSETOF(JSObject, m_externalStorage)), regT2);
+#endif
     Label externalLoadComplete(this);
     ASSERT(differenceBetween(hotPathBegin, externalLoad) == patchOffsetGetByIdExternalLoad);
     ASSERT(differenceBetween(externalLoad, externalLoadComplete) == patchLengthGetByIdExternalLoad);
 
+#if !ASSERT_DISABLED
     DataLabel32 displacementLabel1 = loadPtrWithAddressOffsetPatch(Address(regT2, patchGetByIdDefaultOffset), regT0); // payload
+#endif
     ASSERT(differenceBetween(hotPathBegin, displacementLabel1) == patchOffsetGetByIdPropertyMapOffset1);
+#if !ASSERT_DISABLED
     DataLabel32 displacementLabel2 = loadPtrWithAddressOffsetPatch(Address(regT2, patchGetByIdDefaultOffset), regT1); // tag
+#endif
     ASSERT(differenceBetween(hotPathBegin, displacementLabel2) == patchOffsetGetByIdPropertyMapOffset2);
 
     Label putResult(this);
@@ -471,13 +477,17 @@ void JIT::emit_op_put_by_id(Instruction* currentInstruction)
     ASSERT(differenceBetween(hotPathBegin, structureToCompare) == patchOffsetPutByIdStructure);
 
     // Plant a load from a bogus ofset in the object's property map; we will patch this later, if it is to be used.
+#if !ASSERT_DISABLED
     Label externalLoad = loadPtrWithPatchToLEA(Address(regT0, OBJECT_OFFSETOF(JSObject, m_externalStorage)), regT0);
+#endif
     Label externalLoadComplete(this);
     ASSERT(differenceBetween(hotPathBegin, externalLoad) == patchOffsetPutByIdExternalLoad);
     ASSERT(differenceBetween(externalLoad, externalLoadComplete) == patchLengthPutByIdExternalLoad);
 
+#if !ASSERT_DISABLED
     DataLabel32 displacementLabel1 = storePtrWithAddressOffsetPatch(regT2, Address(regT0, patchGetByIdDefaultOffset)); // payload
     DataLabel32 displacementLabel2 = storePtrWithAddressOffsetPatch(regT3, Address(regT0, patchGetByIdDefaultOffset)); // tag
+#endif
 
     END_UNINTERRUPTED_SEQUENCE(sequencePutById);
 
