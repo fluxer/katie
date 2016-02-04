@@ -123,10 +123,7 @@ private:
     void *m_data;
     int m_index_data_offset;
 
-    void *m_reserved_pointer;
-
     uint m_owns_data : 1;
-    uint m_reserved_bits : 31;
 
     float m_prealloc[16];
 };

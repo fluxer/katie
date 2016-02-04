@@ -142,7 +142,6 @@ private:
     snd_async_handler_t* ahandler;
     snd_pcm_access_t access;
     snd_pcm_format_t pcmformat;
-    snd_timestamp_t* timestamp;
     snd_pcm_hw_params_t *hwparams;
 };
 

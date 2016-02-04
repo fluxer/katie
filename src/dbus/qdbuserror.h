@@ -105,7 +105,6 @@ private:
     ErrorType code;
     QString msg;
     QString nm;
-    void *unused;
 };
 
 #ifndef QT_NO_DEBUG_STREAM

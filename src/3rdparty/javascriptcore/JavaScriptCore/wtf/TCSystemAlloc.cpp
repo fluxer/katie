@@ -109,9 +109,6 @@ DEFINE_int32(malloc_devmem_start, 0,
 DEFINE_int32(malloc_devmem_limit, 0,
              "Physical memory limit location in MB for /dev/mem allocation."
              "  Setting this to 0 means no limit.");
-#else
-static const int32_t FLAGS_malloc_devmem_start = 0;
-static const int32_t FLAGS_malloc_devmem_limit = 0;
 #endif
 
 #if HAVE(SBRK)

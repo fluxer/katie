@@ -101,7 +101,6 @@ private:
     int length;
     int pos;
     uint freePrivate : 1;
-    uint unused : 31;
     QTextBoundaryFinderPrivate *d;
 };
 

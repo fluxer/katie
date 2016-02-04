@@ -110,6 +110,7 @@ namespace QPatternist
                                                m_axis(axis)
         {
             Q_ASSERT(m_test);
+            Q_UNUSED(m_axis);
         }
 
         virtual Action actionForElement(const QXmlName name,

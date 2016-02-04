@@ -145,8 +145,6 @@ private:
     int m_refs;
     bool m_dirtyTexture : 1;
     bool m_dirtySceneGraph : 1;
-    bool m_multisamplingSupported : 1;
-    bool m_checkedForMultisamplingSupport : 1;
     bool m_live : 1;
     bool m_hideSource : 1;
     bool m_mirrored : 1;
