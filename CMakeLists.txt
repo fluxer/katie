@@ -9,11 +9,9 @@
 
 if(MINGW)
     set(CMAKE_GNUtoMS TRUE)
-endif()
-if(WIN32)
+elseif(WIN32)
     set(CMAKE_WIN32_EXECUTABLE TRUE)
-endif()
-if(APPLE)
+elseif(APPLE)
     set(CMAKE_MACOSX_BUNDLE TRUE)
 endif()
 
