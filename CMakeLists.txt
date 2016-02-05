@@ -471,10 +471,6 @@ if(ENABLE_TESTING)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-if(NOT WITH_ZLIB OR NOT ZLIB_FOUND)
-    katie_definition(-DQT_NO_COMPRESS)
-endif()
-
 if(NOT WTIH_EGL OR NOT EGL_FOUND)
     katie_definition(-DQT_NO_EGL)
 endif()

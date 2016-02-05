@@ -312,6 +312,12 @@ if(WITH_ZLIB AND ZLIB_FOUND)
         ${ZLIB_LIBRARIES}
     )
     include_directories(${ZLIB_INCLUDE_DIRS})
+else()
+    set(CORE_SOURCES
+        ${CORE_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/miniz/miniz.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
 endif()
 
 if(${KATIE_PLATFORM} STREQUAL "linux")

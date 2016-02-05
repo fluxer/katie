@@ -72,6 +72,14 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/ssl
 )
 
+if(NOT WITH_ZLIB OR NOT ZLIB_FOUND)
+    set(NETWORK_SOURCES
+        ${NETWORK_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/miniz/miniz.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
+endif()
+
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
 katie_generate_map(QtNetwork Q_NETWORK_EXPORT)
