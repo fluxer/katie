@@ -196,7 +196,7 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/pcre/pcre_xclass.cpp
 )
 
-if(NOT UNIX OR NOT ${KATIE_PLATFORM} STREQUAL "mac")
+if(NOT ${KATIE_PLATFORM} MATCHES "(win32|wince|mac)")
     set(SCRIPT_SOURCES
         ${SCRIPT_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/TCSystemAlloc.cpp
