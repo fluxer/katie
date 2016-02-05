@@ -51,6 +51,7 @@
 // Get Qt defines/settings
 
 #include "qglobal.h"
+#include "qt_windows.h"
 
 #define _POSIX_
 #include <limits.h>
