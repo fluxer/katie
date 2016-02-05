@@ -154,7 +154,7 @@ QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 
         if (zlibResult == Z_STREAM_END) {
             // Make sure there are no more members to process before exiting
-            if (!(zlibStream.avail_in && inflateReset(&zlibStream) == Z_OK))
+            if (!(zlibStream.avail_in && inflateEnd(&zlibStream) && inflateInit2(&zlibStream, MAX_WBITS + 16)))
                 stillMoreWorkToDo = false;
         }
     }
