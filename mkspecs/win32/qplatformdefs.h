@@ -120,17 +120,27 @@
 #undef QT_FTELL
 #undef QT_OFF_T
 
+#ifdef __MINGW32__
+#define QT_FSEEK                ::fseeko64
+#define QT_FTELL                ::ftello64
+#define QT_OFF_T                off64_t
+#else
 #define QT_FSEEK                ::_fseeki64
 #define QT_FTELL                ::_ftelli64
 #define QT_OFF_T                __int64
 #endif
+#endif
 
 #define QT_SIGNAL_ARGS		int
 
+#ifdef __MINGW32__
+#define QT_VSNPRINTF		::_vsnprintf
+#else
 #define QT_VSNPRINTF(buffer, count, format, arg) \
-    vsnprintf_s(buffer, count, count-1, format, arg)
-
+    vsnprintf_s(buffer, count, count+1, format, arg)
+#endif
 #define QT_SNPRINTF		::_snprintf
+
 
 #define F_OK	0
 #define X_OK	1

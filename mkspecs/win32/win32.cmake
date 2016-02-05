@@ -1,4 +1,7 @@
 add_definitions(-D_USE_MATH_DEFINES -DUNICODE -DWIN32 -DQT_NEEDS_QMAIN)
+if(MINGW)
+	add_definitions(-D__GNU__)
+endif()
 set(KATIE_TOOLS "${KATIE_TOOLS} idc")
 set(KATIE_COMPONENTS "${KATIE_COMPONENTS} Main")
 
@@ -13,7 +16,7 @@ set(QT_TRANSLATIONS_PATH "${QT_DATA_PATH}/translations")
 set(QT_DOCUMENTATION_PATH "${QT_DATA_PATH}/doc")
 set(QT_EXAMPLES_PATH "${QT_DATA_PATH}/examples")
 set(QT_DEMOS_PATH "${QT_DATA_PATH}/demos")
-# FIXME: that's incorrect
+# FIXME: that's incorrect, probably irrelevant once QStandardPaths are used
 set(QT_SETTINGS_PATH "${QT_DATA_PATH}/settings")
 
 set(WITH_FREETYPE OFF)
