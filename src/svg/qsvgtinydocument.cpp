@@ -154,7 +154,12 @@ QByteArray qt_inflateGZipDataFrom(QIODevice *device)
 
         if (zlibResult == Z_STREAM_END) {
             // Make sure there are no more members to process before exiting
+#ifdef MINIZ_HEADER_INCLUDED
+            // miniz does not support inflateReset()
             if (!(zlibStream.avail_in && inflateEnd(&zlibStream) && inflateInit2(&zlibStream, MAX_WBITS + 16)))
+#else
+            if (!(zlibStream.avail_in && inflateReset(&zlibStream) == Z_OK))
+#endif
                 stillMoreWorkToDo = false;
         }
     }
