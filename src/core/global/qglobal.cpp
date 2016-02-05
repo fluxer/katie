@@ -1706,6 +1706,7 @@ static inline bool determineWinOsVersionPost8(OSVERSIONINFO *result)
     return true;
 }
 
+#if defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x0600
 // Fallback for determining Windows versions >= 8 by looping using the
 // version check macros. Note that it will return build number=0 to avoid
 // inefficient looping.
@@ -1729,6 +1730,7 @@ static inline void determineWinOsVersionFallbackPost8(OSVERSIONINFO *result)
         result->dwMinorVersion = checkVersion.dwMinorVersion;
 }
 
+#endif // defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x0600
 #  endif // !Q_OS_WINCE
 
 static inline OSVERSIONINFO winOsVersion()
@@ -1746,8 +1748,11 @@ static inline OSVERSIONINFO winOsVersion()
 #  endif
 #  ifndef Q_OS_WINCE
     if (result.dwMajorVersion == 6 && result.dwMinorVersion == 2) {
-        if (!determineWinOsVersionPost8(&result))
+		if (!determineWinOsVersionPost8(&result)) {
+#if defined(_WIN32_WINNT) && _WIN32_WINNT >= 0x0600
             determineWinOsVersionFallbackPost8(&result);
+#endif
+        }
     }
 #  endif // !Q_OS_WINCE
     return result;
