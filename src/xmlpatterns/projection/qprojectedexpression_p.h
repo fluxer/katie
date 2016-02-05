@@ -110,6 +110,7 @@ namespace QPatternist
                                                m_axis(axis)
         {
             Q_ASSERT(m_test);
+            Q_UNUSED(m_test);
             Q_UNUSED(m_axis);
         }
 
@@ -124,7 +125,7 @@ namespace QPatternist
 
     private:
         const ProjectedNodeTest::Ptr    m_test;
-        const QXmlNodeModelIndex::Axis                m_axis;
+        const QXmlNodeModelIndex::Axis  m_axis;
     };
 
     class ProjectedPath : public ProjectedExpression
@@ -136,6 +137,7 @@ namespace QPatternist
         {
             Q_ASSERT(m_left);
             Q_ASSERT(m_right);
+            Q_UNUSED(m_right);
         }
 
         virtual Action actionForElement(const QXmlName name,
