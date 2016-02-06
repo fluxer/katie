@@ -345,38 +345,6 @@ QDeclarativeComponent::Status QDeclarativeComponent::status() const
 }
 
 /*!
-    Returns true if status() == QDeclarativeComponent::Null.
-*/
-bool QDeclarativeComponent::isNull() const
-{
-    return status() == Null;
-}
-
-/*!
-    Returns true if status() == QDeclarativeComponent::Ready.
-*/
-bool QDeclarativeComponent::isReady() const
-{
-    return status() == Ready;
-}
-
-/*!
-    Returns true if status() == QDeclarativeComponent::Error.
-*/
-bool QDeclarativeComponent::isError() const
-{
-    return status() == Error;
-}
-
-/*!
-    Returns true if status() == QDeclarativeComponent::Loading.
-*/
-bool QDeclarativeComponent::isLoading() const
-{
-    return status() == Loading;
-}
-
-/*!
     \qmlproperty real Component::progress
     The progress of loading the component, from 0.0 (nothing loaded)
     to 1.0 (finished).

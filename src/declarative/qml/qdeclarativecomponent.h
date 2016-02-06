@@ -79,10 +79,14 @@ public:
     enum Status { Null, Ready, Loading, Error };
     Status status() const;
 
-    bool isNull() const;
-    bool isReady() const;
-    bool isError() const;
-    bool isLoading() const;
+    inline bool isNull() const
+        { return status() == Null; }
+    inline bool isReady() const
+        { return status() == Ready; }
+    inline bool isError() const
+        { return status() == Error; }
+    inline bool isLoading() const
+        { return status() == Loading; }
 
     QList<QDeclarativeError> errors() const;
     Q_INVOKABLE QString errorString() const;
