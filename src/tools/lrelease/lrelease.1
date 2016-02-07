@@ -41,18 +41,15 @@
 lrelease \- generate Qt message files from Qt Linguist translation files
 .SH SYNOPSIS
 .B lrelease
-.RI "[ " options " ] " project-file
-.br
 .B lrelease
 .RI "[ " options " ] " ts-files " [ -qm " qm-file " ]"
 .SH DESCRIPTION
 This page documents the
 .B Qt Linguist Release
 tool for the Qt GUI toolkit.
-.B Lrelease
-reads a qmake/tmake project file (.pro file) and converts the
-translation files (TS files) specified in it into Qt message files
-(QM files) used by the application to translate.
+reads XML-based translations files (TS files) and converts the
+them into Qt message files (QM files) used by the application
+to translate.
 .PP
 The QM file format is a compact binary format that provides
 extremely fast lookups for translations and that is used by Qt.
@@ -79,31 +76,6 @@ Display the version of
 .B lrelease
 and exit.
 .SH USAGE
-Here is an example .pro file that can be given to
-.B lrelease:
-.PP
-.in +4
-.nf
-HEADERS         = funnydialog.h \\
-                  wackywidget.h
-SOURCES         = funnydialog.cpp \\
-                  main.cpp \\
-                  wackywidget.cpp
-FORMS           = fancybox.ui
-TRANSLATIONS    = gnomovision_dk.ts \\
-                  gnomovision_fi.ts \\
-                  gnomovision_no.ts \\
-                  gnomovision_se.ts
-.fi
-.in -4
-.PP
-When running
-.B lrelease
-on this project file, the Qt message files gnomovision_dk.qm,
-gnomovision_fi.qm, gnomovision_no.qm and gnomovision_se.qm will be
-generated from gnomovision_dk.ts, gnomovision_fi.ts,
-gnomovision_no.ts and gnomovision_se.ts, respectively.
-.PP
 .B Lrelease
 can also be invoked with a list of TS files to convert:
 .PP
