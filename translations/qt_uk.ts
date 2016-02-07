@@ -142,7 +142,7 @@
         <translation>Активує головне вікно програми</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Виконуваний модуль &apos;%1&apos; вимагає Qt %2, знайдено Qt %3.</translation>
     </message>
@@ -919,7 +919,7 @@
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation>Неправильний порожній URL</translation>
     </message>
@@ -1563,8 +1563,6 @@
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation></translation>
     </message>
@@ -2889,7 +2887,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Доступ заборонено</translation>
@@ -3462,7 +3460,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-2220"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+133"/>
         <source>Show Details...</source>
         <translation>Показати деталі...</translation>
     </message>
@@ -3472,8 +3470,8 @@ Do you want to delete it anyway?</source>
         <translation>Приховати деталі...</translation>
     </message>
     <message>
-        <location line="+265"/>
-        <location line="+845"/>
+        <location line="+249"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -3483,7 +3481,7 @@ Do you want to delete it anyway?</source>
         <translation>Довідка</translation>
     </message>
     <message>
-        <location line="+488"/>
+        <location line="+480"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Про Qt&lt;/h3&gt;&lt;p&gt;Ця програма використовує Qt версії %1.&lt;/p&gt;</translation>
     </message>
@@ -3855,7 +3853,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1883"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>Неможливо з&apos;єднатись</translation>
     </message>
@@ -4592,11 +4590,6 @@ Do you want to overwrite it?</source>
         <translation>Значення поля &apos;З&apos; не може бути більшим значення поля &apos;По&apos;.</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
         <source>locally connected</source>
         <translation>локально з&apos;єднано</translation>
@@ -5160,17 +5153,17 @@ Do you want to overwrite it?</source>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Перейти до рядка</translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation>Рядок:</translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation>Перервати</translation>
     </message>
@@ -7005,7 +6998,7 @@ Do you want to overwrite it?</source>
         <translation>Невідома помилка</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+287"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+291"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Помилка створення контексту SSL (%1)</translation>
     </message>
@@ -7480,7 +7473,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>

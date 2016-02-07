@@ -174,7 +174,7 @@ Options:
 <context>
     <name>LUpdate</name>
     <message>
-        <location filename="../src/tools/lupdate/cpp.cpp" line="+639"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+638"/>
         <source>Parenthesis/bracket/brace mismatch between #if and #else branches; using #if branch
 </source>
         <translation type="unfinished"></translation>

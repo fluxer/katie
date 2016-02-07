@@ -148,7 +148,7 @@
         <translation>Activa a xanela principal do programa</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>O executábel «%1» require de Qt %2, e atopouse Qt %3.</translation>
     </message>
@@ -920,7 +920,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation>URL baleiro non válido</translation>
     </message>
@@ -1564,8 +1564,6 @@ superior, inferior nin vcenter.</translation>
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
@@ -2890,7 +2888,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Permiso negado</translation>
@@ -3463,7 +3461,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-2220"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+133"/>
         <source>Show Details...</source>
         <translation>Mostrar os detalles...</translation>
     </message>
@@ -3473,8 +3471,8 @@ Desexa aínda así borralo?</translation>
         <translation>Acochar os detalles...</translation>
     </message>
     <message>
-        <location line="+265"/>
-        <location line="+845"/>
+        <location line="+249"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
@@ -3484,7 +3482,7 @@ Desexa aínda así borralo?</translation>
         <translation>Axuda</translation>
     </message>
     <message>
-        <location line="+488"/>
+        <location line="+480"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Acerca de Qt&lt;/h3&gt;&lt;p&gt;Este programa emprega a versión %1 de Qt.&lt;/p&gt;</translation>
     </message>
@@ -3857,7 +3855,7 @@ texto</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1883"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>Non foi posíbel conectar</translation>
     </message>
@@ -4595,11 +4593,6 @@ Desexa sobrescribilo?</translation>
         <translation>O valor «de» non pode ser maior do que o valor «até».</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>OK</source>
-        <translation>Aceptar</translation>
-    </message>
-    <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
         <source>locally connected</source>
         <translation>conectado localmente</translation>
@@ -5163,17 +5156,17 @@ Desexa sobrescribilo?</translation>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Ir para a liña</translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation>Liña:</translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation>Interromper</translation>
     </message>
@@ -7013,7 +7006,7 @@ Desexa sobrescribilo?</translation>
         <translation>Erro descoñecido</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+287"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+291"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Aconteceu un erro ao crear o contexto SSL (%1)</translation>
     </message>
@@ -7483,7 +7476,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>

@@ -137,7 +137,7 @@
         <translation>Activar</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>El ejecutable «%1» requiere Qt %2 (se encontró Qt %3).</translation>
     </message>
@@ -919,7 +919,7 @@
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1563,8 +1563,6 @@
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
@@ -2889,7 +2887,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Permiso denegado</translation>
@@ -3462,18 +3460,18 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-1109"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1200"/>
         <source>Help</source>
         <translation>Ayuda</translation>
     </message>
     <message>
-        <location line="-846"/>
-        <location line="+845"/>
+        <location line="-818"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>Aceptar</translation>
     </message>
     <message>
-        <location line="+489"/>
+        <location line="+481"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3488,7 +3486,7 @@ Do you want to delete it anyway?</source>
         <translation>Acerca de Qt</translation>
     </message>
     <message>
-        <location line="-1634"/>
+        <location line="-1582"/>
         <source>Show Details...</source>
         <translation>Mostrar los detalles...</translation>
     </message>
@@ -3855,7 +3853,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1883"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>No es posible establecer una conexión</translation>
     </message>
@@ -4370,14 +4368,9 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+274"/>
-        <source>OK</source>
-        <translation>Aceptar</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
+        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Imprimir</translation>
     </message>
@@ -5160,17 +5153,17 @@ Elija un nombre de fichero diferente.</translation>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6890,7 +6883,7 @@ Elija un nombre de fichero diferente.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+833"/>
         <source>Unable to write data: %1</source>
         <translation>No es posible escribir los datos: %1</translation>
     </message>
@@ -7480,7 +7473,7 @@ Elija un nombre de fichero diferente.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>

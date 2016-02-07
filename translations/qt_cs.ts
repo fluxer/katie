@@ -142,7 +142,7 @@
         <translation>Spustit</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Použití &apos;%1&apos; vyžaduje Qt %2; bylo ale nalezeno Qt %3.</translation>
     </message>
@@ -919,7 +919,7 @@
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation>Neplátná prázdná adresa (URL)</translation>
     </message>
@@ -1563,8 +1563,6 @@
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2889,7 +2887,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2134"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2139"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+118"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
@@ -3462,8 +3460,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-1955"/>
-        <location line="+845"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+382"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -3473,12 +3471,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Nápověda</translation>
     </message>
     <message>
-        <location line="-1111"/>
+        <location line="-1067"/>
         <source>Show Details...</source>
         <translation>Ukázat podrobnosti...</translation>
     </message>
     <message>
-        <location line="+1599"/>
+        <location line="+1547"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;O Qt&lt;/h3&gt;&lt;p&gt;Tento program používá Qt-verze %1.&lt;/p&gt;</translation>
     </message>
@@ -3493,7 +3491,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location line="-1634"/>
+        <location line="-1582"/>
         <source>Hide Details...</source>
         <translation>Skrýt podrobnosti...</translation>
     </message>
@@ -3855,7 +3853,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+2193"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+2187"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -4283,12 +4281,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>B9</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+274"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>B10</source>
         <translation>B10</translation>
     </message>
@@ -4330,7 +4323,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
+        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
@@ -5160,17 +5153,17 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Jít na řádek</translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation>Řádek:</translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation>Přerušit</translation>
     </message>
@@ -6890,7 +6883,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+460"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+464"/>
         <source>Error creating SSL session: %1</source>
         <translation>Nepodařilo se vytvořit sezení SSL: %1</translation>
     </message>
@@ -7480,7 +7473,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>

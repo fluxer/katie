@@ -142,7 +142,7 @@
         <translation>Uaktywnia główne okno programu</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Program &apos;%1&apos; wymaga do uruchomienia Qt %2, znaleziono Qt %3.</translation>
     </message>
@@ -919,7 +919,7 @@
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation>Niepoprawny pusty URL</translation>
     </message>
@@ -1633,8 +1633,6 @@
     </message>
     <message>
         <location line="-41"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2891,7 +2889,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2137"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2142"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+121"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
@@ -3464,28 +3462,28 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-586"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1715"/>
         <source>About Qt</source>
         <translation>Informacje o Qt</translation>
     </message>
     <message>
-        <location line="-523"/>
+        <location line="-515"/>
         <source>Help</source>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location line="-1111"/>
+        <location line="-1067"/>
         <source>Hide Details...</source>
         <translation>Ukryj szczegóły...</translation>
     </message>
     <message>
-        <location line="+265"/>
-        <location line="+845"/>
+        <location line="+249"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="+489"/>
+        <location line="+481"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Informacje o Qt&lt;/h3&gt;&lt;p&gt; Ten program używa Qt w wersji %1.&lt;/p&gt;</translation>
     </message>
@@ -3495,7 +3493,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1604"/>
+        <location line="-1552"/>
         <source>Show Details...</source>
         <translation>Pokaż szczegóły...</translation>
     </message>
@@ -3857,7 +3855,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+2193"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+2187"/>
         <source>Unable to commit transaction</source>
         <translation>Nie można dokonać transakcji</translation>
     </message>
@@ -4316,11 +4314,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>podłączony lokalnie</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+274"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+24"/>
         <source>Print all</source>
         <translation>Drukuj wszystko</translation>
@@ -4374,7 +4367,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
+        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Drukowanie</translation>
     </message>
@@ -5162,17 +5155,17 @@ Proszę wybrać inną nazwę pliku.</translation>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Przejdź do linii</translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation>Linia:</translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation>Przerwij</translation>
     </message>
@@ -6892,7 +6885,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+833"/>
         <source>Unable to write data: %1</source>
         <translation></translation>
     </message>
@@ -7482,7 +7475,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>

@@ -132,7 +132,7 @@
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Программный модуль «%1» требует Qt %2, найдена версия %3.</translation>
     </message>
@@ -920,7 +920,7 @@
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation>Пустой адрес URL</translation>
     </message>
@@ -1564,8 +1564,6 @@
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation>ОК</translation>
     </message>
@@ -2890,7 +2888,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Доступ запрещён</translation>
@@ -3463,13 +3461,13 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-1955"/>
-        <location line="+845"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+382"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location line="+489"/>
+        <location line="+481"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;О Qt&lt;/h3&gt;&lt;p&gt;Данная программа использует Qt версии %1.&lt;/p&gt;</translation>
     </message>
@@ -3479,12 +3477,12 @@ Please verify the correct directory name was given.</source>
         <translation>О Qt</translation>
     </message>
     <message>
-        <location line="-523"/>
+        <location line="-515"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location line="-1111"/>
+        <location line="-1067"/>
         <source>Show Details...</source>
         <translation>Показать подробности...</translation>
     </message>
@@ -3494,7 +3492,7 @@ Please verify the correct directory name was given.</source>
         <translation>Скрыть подробности...</translation>
     </message>
     <message>
-        <location line="+1604"/>
+        <location line="+1552"/>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3857,7 +3855,7 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1883"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>Невозможно соединиться</translation>
     </message>
@@ -4202,11 +4200,6 @@ Please verify the correct directory name was given.</source>
         <translation>неизвестно</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+274"/>
-        <source>OK</source>
-        <translation>Закрыть</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+379"/>
         <source>Print all</source>
         <translation>Все страницы</translation>
@@ -4379,7 +4372,7 @@ Please verify the correct directory name was given.</source>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
+        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Печать</translation>
     </message>
@@ -5162,17 +5155,17 @@ Please choose a different file name.</source>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Перейти к строке</translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation>Строка:</translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation>Прервать</translation>
     </message>
@@ -6892,7 +6885,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+829"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+833"/>
         <source>Unable to write data: %1</source>
         <translation>Невозможно записать данные: %1</translation>
     </message>
@@ -7482,7 +7475,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>

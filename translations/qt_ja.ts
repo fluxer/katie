@@ -144,7 +144,7 @@
         <translation>メインウィンドウをアクティブにする</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+322"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>実行可能ファイル &apos;%1&apos; には Qt %2 が必要です。Qt %3 が見つかりました。</translation>
     </message>
@@ -921,7 +921,7 @@
 <context>
     <name>QDeclarativeComponent</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+529"/>
+        <location filename="../src/declarative/qml/qdeclarativecomponent.cpp" line="+497"/>
         <source>Invalid empty URL</source>
         <translation>空の URL は無効です</translation>
     </message>
@@ -1565,8 +1565,6 @@
     <name>QDialogButtonBox</name>
     <message>
         <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1911"/>
-        <location line="+446"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -2891,7 +2889,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2128"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>許可されていません</translation>
@@ -3465,18 +3463,18 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="-1109"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1200"/>
         <source>Help</source>
         <translation>ヘルプ</translation>
     </message>
     <message>
-        <location line="-846"/>
-        <location line="+845"/>
+        <location line="-818"/>
+        <location line="+817"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location line="+494"/>
+        <location line="+486"/>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3486,7 +3484,7 @@ Do you want to delete it anyway?</source>
         <translation>Qt について</translation>
     </message>
     <message>
-        <location line="-1634"/>
+        <location line="-1582"/>
         <source>Show Details...</source>
         <translation>詳細を表示...</translation>
     </message>
@@ -3496,7 +3494,7 @@ Do you want to delete it anyway?</source>
         <translation>詳細を隠す...</translation>
     </message>
     <message>
-        <location line="+1599"/>
+        <location line="+1547"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Qt について&lt;/h3&gt;&lt;p&gt;このプログラムは Qt バージョン %1 を使用しています。&lt;/p&gt;</translation>
     </message>
@@ -3858,7 +3856,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1883"/>
+        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>接続できません</translation>
     </message>
@@ -4186,11 +4184,6 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+274"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
         <source>locally connected</source>
         <translation>ローカルに接続しています</translation>
@@ -4375,7 +4368,7 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-2"/>
+        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>印刷</translation>
     </message>
@@ -5164,17 +5157,17 @@ Please choose a different file name.</source>
     <name>QScriptDebugger</name>
     <message>
         <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
-        <location line="+1014"/>
+        <location line="+1013"/>
         <source>Go to Line</source>
         <translation>指定した行へ移動</translation>
     </message>
     <message>
-        <location line="-1013"/>
+        <location line="-1012"/>
         <source>Line:</source>
         <translation>行番号:</translation>
     </message>
     <message>
-        <location line="+792"/>
+        <location line="+791"/>
         <source>Interrupt</source>
         <translation>割り込み</translation>
     </message>
@@ -6897,7 +6890,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+287"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+291"/>
         <source>Error creating SSL context (%1)</source>
         <translation>SSL context の作成に失敗しました (%1)</translation>
     </message>
@@ -7487,7 +7480,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5775"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
         <source>*</source>
         <translation>*</translation>
     </message>
