@@ -138,7 +138,7 @@
 #define QT_VSNPRINTF		::_vsnprintf
 #else
 #define QT_VSNPRINTF(buffer, count, format, arg) \
-    vsnprintf_s(buffer, count, count+1, format, arg)
+    vsnprintf_s(buffer, count, count-1, format, arg)
 #endif
 #define QT_SNPRINTF		::_snprintf
 
