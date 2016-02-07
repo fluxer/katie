@@ -466,6 +466,14 @@ if(WITH_NIS AND NIS_FOUND)
     include_directories(${NIS_INCLUDES})
 endif()
 
+if(NOT WITH_ZLIB OR NOT ZLIB_FOUND)
+    set(GUI_SOURCES
+        ${GUI_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/miniz/miniz.c
+    )
+    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
+endif()
+
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_map(QtGui Q_GUI_EXPORT)
