@@ -110,7 +110,9 @@ public:
 
     Call call()
     {
+#if !ASSERT_DISABLED
         DataLabelPtr label = moveWithPatch(ImmPtr(0), scratchRegister);
+#endif
         Call result = Call(m_assembler.call(scratchRegister), Call::Linkable);
         ASSERT(differenceBetween(label, result) == REPTACH_OFFSET_CALL_R11);
         return result;
@@ -118,7 +120,9 @@ public:
 
     Call tailRecursiveCall()
     {
+#if !ASSERT_DISABLED
         DataLabelPtr label = moveWithPatch(ImmPtr(0), scratchRegister);
+#endif
         Jump newJump = Jump(m_assembler.jmp_r(scratchRegister));
         ASSERT(differenceBetween(label, newJump) == REPTACH_OFFSET_CALL_R11);
         return Call::fromTailJump(newJump);
@@ -127,7 +131,9 @@ public:
     Call makeTailRecursiveCall(Jump oldJump)
     {
         oldJump.link(this);
+#if !ASSERT_DISABLED
         DataLabelPtr label = moveWithPatch(ImmPtr(0), scratchRegister);
+#endif
         Jump newJump = Jump(m_assembler.jmp_r(scratchRegister));
         ASSERT(differenceBetween(label, newJump) == REPTACH_OFFSET_CALL_R11);
         return Call::fromTailJump(newJump);
