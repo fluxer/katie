@@ -106,10 +106,14 @@ endif()
 
 include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 
-# vendors are free to change them
+# vendors are free to change them, paths are relative to CMAKE_INSTALL_PREFIX
+# otherwise CPack will attempt to install to the root directory on UNIX and
+# fail to create the package. if vendors do not use CPack to generate their
+# packages then paths can be full paths as seen in the shipped package files.
 set(LDCONF_INSTALL_DIR "etc/ld.so.conf.d")
 set(DBUS_INTERFACES_INSTALL_DIR "etc/dbus-1/interfaces")
 set(KDE4_SERVICES_INSTALL_DIR "share/kde4/services/phononbackends")
+set(MAN_INSTALL_DIR "share/man")
 
 if(${KATIE_KEY} STREQUAL "auto")
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")

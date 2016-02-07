@@ -49,3 +49,12 @@ install(
     RUNTIME DESTINATION ${QT_BINARIES_PATH_INST}
     COMPONENT Devel
 )
+
+if(NOT "${KATIE_PLATFORM}" MATCHES "(win32|wince|mac)")
+    install(
+        FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
+        DESTINATION
+        ${MAN_INSTALL_DIR}/man1
+    )
+endif()
