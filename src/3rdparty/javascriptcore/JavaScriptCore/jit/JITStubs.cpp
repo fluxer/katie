@@ -474,7 +474,7 @@ SYMBOL_STRING(ctiOpThrowNotCaught) ":" "\n"
 // need to change the assembly trampolines below to match.
 COMPILE_ASSERT(offsetof(struct JITStackFrame, callFrame) == 0x58, JITStackFrame_callFrame_offset_matches_ctiTrampoline);
 COMPILE_ASSERT(offsetof(struct JITStackFrame, code) == 0x48, JITStackFrame_code_offset_matches_ctiTrampoline);
-COMPILE_ASSERT(offsetof(struct JITStackFrame, savedRBX) == 0x78, JITStackFrame_stub_argument_space_matches_ctiTrampoline);
+COMPILE_ASSERT(offsetof(struct JITStackFrame, savedRBX) == 0x70, JITStackFrame_stub_argument_space_matches_ctiTrampoline);
 
 asm volatile (
 ".text\n"
@@ -501,7 +501,7 @@ SYMBOL_STRING(ctiTrampoline) ":" "\n"
     "movq $0xFFFF000000000002, %r15" "\n"
     "movq %rdx, %r13" "\n"
     "call *%rdi" "\n"
-    "addq $0x78, %rsp" "\n"
+    "addq $0x70, %rsp" "\n"
     "popq %rbx" "\n"
     "popq %r15" "\n"
     "popq %r14" "\n"
