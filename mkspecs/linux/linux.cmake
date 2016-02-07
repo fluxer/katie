@@ -6,7 +6,7 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
         -Wformat -Werror=format-security
         -Wreturn-type -Wundef -Wunused -Wparentheses
         # -Wall -fno-strict-aliasing -Wcast-align -Wchar-subscripts
-        # -Wmissing-noreturn -Winit-self -Winline
+        # -Wmissing-noreturn -Winit-self -Winline -Wcast-qual
     )
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
