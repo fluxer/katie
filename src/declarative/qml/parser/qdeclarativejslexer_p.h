@@ -82,7 +82,7 @@ public:
     int startLineNo() const { return startlineno; }
     int startColumnNo() const { return startcolumn; }
 
-    int endLineNo() const { return currentLineNo(); }
+    inline int endLineNo() const { return currentLineNo(); }
     int endColumnNo() const
     { int col = currentColumnNo(); return (col > 0) ? col - 1 : col; }
 

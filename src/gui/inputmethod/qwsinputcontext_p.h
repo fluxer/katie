@@ -71,8 +71,8 @@ public:
     ~QWSInputContext() {}
 
 
-    QString identifierName() { return QString(); }
-    QString language() { return QString(); }
+    inline QString identifierName() { return QString(); }
+    inline QString language() { return QString(); }
 
     void reset();
     void update();

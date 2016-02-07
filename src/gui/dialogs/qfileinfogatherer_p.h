@@ -110,11 +110,13 @@ public:
 
     bool isSymLink(bool ignoreNtfsSymLinks = false) const
     {
-        if (ignoreNtfsSymLinks) {
 #ifdef Q_WS_WIN
+        if (ignoreNtfsSymLinks) {
             return !mFileInfo.suffix().compare(QLatin1String("lnk"), Qt::CaseInsensitive);
-#endif
         }
+#else
+        Q_UNUSED(ignoreNtfsSymLinks);
+#endif
         return mFileInfo.isSymLink();
     }
 
