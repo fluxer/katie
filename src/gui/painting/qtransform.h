@@ -41,14 +41,7 @@
 #ifndef QTRANSFORM_H
 #define QTRANSFORM_H
 
-#include <QtGui/qmatrix.h>
 #include <QtGui/qpainterpath.h>
-#include <QtGui/qpolygon.h>
-#include <QtGui/qregion.h>
-#include <QtGui/qwindowdefs.h>
-#include <QtCore/qline.h>
-#include <QtCore/qpoint.h>
-#include <QtCore/qrect.h>
 
 #if defined(Q_OS_VXWORKS) && defined(m_type)
 #  undef m_type

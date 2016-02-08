@@ -43,19 +43,12 @@
 #define QWIDGET_H
 
 #include <QtCore/qconfig.h>
-#include <QtGui/qwindowdefs.h>
-#include <QtCore/qobject.h>
 #include <QtCore/qmargins.h>
-#include <QtGui/qpaintdevice.h>
 #include <QtGui/qpalette.h>
-#include <QtGui/qfont.h>
 #include <QtGui/qfontmetrics.h>
 #include <QtGui/qfontinfo.h>
 #include <QtGui/qsizepolicy.h>
-#include <QtGui/qregion.h>
-#include <QtGui/qbrush.h>
 #include <QtGui/qcursor.h>
-#include <QtGui/qkeysequence.h>
 
 #ifdef Q_WS_QPA //should this go somewhere else?
 #include <QtGui/qplatformwindowformat_qpa.h>
@@ -63,6 +56,11 @@
 
 #ifdef QT_INCLUDE_COMPAT
 #include <QtGui/qevent.h>
+#else
+#include <QtCore/qobject.h>
+#include <QtGui/qkeysequence.h>
+#include <QtGui/qregion.h>
+#include <QtGui/qwindowdefs.h>
 #endif
 
 QT_BEGIN_HEADER
