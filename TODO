@@ -5,3 +5,5 @@ make use of qstandarddirs and qcommandlineparser trought the codebase, e.g. moc
 move phonon sources to 3rdparty, still, generate docs for it
 do not rebuild phonon on prefix change
 QT_MOC_CPP seems unused but checked for in two headers
+manual pages for lconvert, qcollectiongenerator, qhelpgenerator, rcc and uic
+new logo, branding, copyright header changes, etc.
