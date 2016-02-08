@@ -51,8 +51,6 @@
 #include <qdebug.h>
 #include <qdir.h>
 
-#include <zlib.h>
-
 #if defined(Q_OS_WIN)
 #  undef S_IFREG
 #  define S_IFREG 0100000

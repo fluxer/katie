@@ -59,6 +59,10 @@
 #include <QtCore/qfile.h>
 #include <QtCore/qstring.h>
 
+// to ensure that when building with miniz the FileInfo struct
+// gets proper typedefs for crc32
+#include <zlib.h>
+
 QT_BEGIN_NAMESPACE
 
 class QZipReaderPrivate;
