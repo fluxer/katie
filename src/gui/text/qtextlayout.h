@@ -41,14 +41,8 @@
 #ifndef QTEXTLAYOUT_H
 #define QTEXTLAYOUT_H
 
-#include <QtCore/qstring.h>
-#include <QtCore/qnamespace.h>
-#include <QtCore/qrect.h>
-#include <QtCore/qvector.h>
-#include <QtGui/qcolor.h>
 #include <QtCore/qobject.h>
 #include <QtGui/qevent.h>
-#include <QtGui/qtextformat.h>
 #include <QtGui/qglyphrun.h>
 #include <QtGui/qtextcursor.h>
 

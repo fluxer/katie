@@ -44,9 +44,7 @@
 
 #include <QtGui/qabstractscrollarea.h>
 #include <QtGui/qtextdocument.h>
-#include <QtGui/qtextoption.h>
 #include <QtGui/qtextcursor.h>
-#include <QtGui/qtextformat.h>
 
 #ifndef QT_NO_TEXTEDIT
 

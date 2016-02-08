@@ -53,25 +53,11 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
-#include "QtCore/qstring.h"
 #include "QtCore/qvarlengtharray.h"
-#include "QtCore/qnamespace.h"
-#include "QtGui/qtextlayout.h"
-#include "qtextformat_p.h"
 #include "qfont_p.h"
-#include "QtCore/qvector.h"
 #include "QtGui/qpaintengine.h"
-#include "QtGui/qtextobject.h"
-#include "QtGui/qtextoption.h"
-#include "QtGui/qtextcursor.h"
-#include "QtCore/qset.h"
-#include "QtCore/qdebug.h"
 #include "qtextdocument_p.h"
 #include "qharfbuzz_p.h"
-#include "qfixed_p.h"
-
-#include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
 

@@ -43,7 +43,6 @@
 #define QTEXTLIST_H
 
 #include <QtGui/qtextobject.h>
-#include <QtCore/qobject.h>
 
 QT_BEGIN_HEADER
 

@@ -57,10 +57,8 @@
 #ifdef QT_INCLUDE_COMPAT
 #include <QtGui/qevent.h>
 #else
-#include <QtCore/qobject.h>
 #include <QtGui/qkeysequence.h>
 #include <QtGui/qregion.h>
-#include <QtGui/qwindowdefs.h>
 #endif
 
 QT_BEGIN_HEADER

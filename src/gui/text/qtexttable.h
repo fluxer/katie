@@ -42,8 +42,6 @@
 #ifndef QTEXTTABLE_H
 #define QTEXTTABLE_H
 
-#include <QtCore/qglobal.h>
-#include <QtCore/qobject.h>
 #include <QtGui/qtextobject.h>
 
 QT_BEGIN_HEADER

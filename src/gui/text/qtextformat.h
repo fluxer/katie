@@ -42,13 +42,10 @@
 #ifndef QTEXTFORMAT_H
 #define QTEXTFORMAT_H
 
-#include <QtGui/qcolor.h>
-#include <QtGui/qfont.h>
 #include <QtCore/qshareddata.h>
-#include <QtCore/qvector.h>
 #include <QtCore/qvariant.h>
+#include <QtGui/qfont.h>
 #include <QtGui/qpen.h>
-#include <QtGui/qbrush.h>
 #include <QtGui/qtextoption.h>
 
 QT_BEGIN_HEADER

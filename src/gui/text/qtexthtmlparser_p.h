@@ -53,14 +53,8 @@
 // We mean it.
 //
 
-#include "QtCore/qvector.h"
-#include "QtGui/qbrush.h"
-#include "QtGui/qcolor.h"
-#include "QtGui/qfont.h"
+#include "QtGui/qtextformat.h"
 #include "QtGui/qtextdocument.h"
-#include "QtGui/qtextcursor.h"
-#include "qtextformat_p.h"
-#include "qtextdocument_p.h"
 #include "qcssparser_p.h"
 
 #ifndef QT_NO_TEXTHTMLPARSER
