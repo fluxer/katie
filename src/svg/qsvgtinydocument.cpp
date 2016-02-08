@@ -156,7 +156,8 @@ QByteArray qt_inflateGZipDataFrom(QIODevice *device)
             // Make sure there are no more members to process before exiting
 #ifdef MINIZ_HEADER_INCLUDED
             // miniz does not support inflateReset()
-            if (!(zlibStream.avail_in && inflateEnd(&zlibStream) && inflateInit2(&zlibStream, MAX_WBITS + 16)))
+            if (!(zlibStream.avail_in && inflateEnd(&zlibStream) == Z_OK
+                && inflateInit2(&zlibStream, MAX_WBITS + 16) == Z_OK))
 #else
             if (!(zlibStream.avail_in && inflateReset(&zlibStream) == Z_OK))
 #endif
