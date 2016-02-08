@@ -173,11 +173,8 @@ public:
         //AlertHigh       = 0x10000000, /* reused for HasInvokeExtension */
         Protected       = 0x20000000,
         HasPopup        = 0x40000000,
-        Modal           = 0x80000000,
+        Modal           = 0x80000000
 
-        // #### Qt5 ManagesDescendants
-        // #### Qt5 remove HasInvokeExtension
-        HasInvokeExtension = 0x10000000 // internal
     };
     Q_DECLARE_FLAGS(State, StateFlag)
 
@@ -395,7 +392,7 @@ public:
     virtual QString actionText(int action, Text t, int child) const = 0;
     virtual bool doAction(int action, int child, const QVariantList &params = QVariantList()) = 0;
 
-    QVariant invokeMethod(Method method, int child = 0,
+    virtual QVariant invokeMethod(Method method, int child = 0,
                           const QVariantList &params = QVariantList());
 
     inline QSet<Method> supportedMethods()
@@ -428,19 +425,14 @@ public:
     inline QAccessibleTable2Interface *table2Interface()
     { return reinterpret_cast<QAccessibleTable2Interface *>(cast_helper(QAccessible2::Table2Interface)); }
 
-private:
-    QAccessible2Interface *cast_helper(QAccessible2::InterfaceType);
-};
-
-class Q_GUI_EXPORT QAccessibleInterfaceEx: public QAccessibleInterface
-{
-public:
-    virtual QVariant invokeMethodEx(Method method, int child, const QVariantList &params) = 0;
+    // FIXME
     virtual QVariant virtual_hook(const QVariant &data);
     virtual QAccessible2Interface *interface_cast(QAccessible2::InterfaceType)
     { return 0; }
-};
 
+private:
+    QAccessible2Interface *cast_helper(QAccessible2::InterfaceType);
+};
 
 class Q_GUI_EXPORT QAccessibleEvent : public QEvent
 {

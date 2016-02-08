@@ -306,7 +306,7 @@ QAccessibleTextEdit::QAccessibleTextEdit(QWidget *o)
 : QAccessibleTextWidget(o, EditableText)
 {
     Q_ASSERT(widget()->inherits("QTextEdit"));
-    childOffset = QAccessibleWidgetEx::childCount();
+    childOffset = QAccessibleWidget::childCount();
 }
 
 /*! Returns the text edit. */
@@ -346,7 +346,7 @@ QPoint QAccessibleTextEdit::scrollBarPosition() const
 QRect QAccessibleTextEdit::rect(int child) const
 {
     if (child <= childOffset)
-        return QAccessibleWidgetEx::rect(child);
+        return QAccessibleWidget::rect(child);
 
      QTextEdit *edit = textEdit();
      QTextBlock block = qTextBlockAt(edit->document(), child - childOffset - 1);
@@ -374,7 +374,7 @@ int QAccessibleTextEdit::childAt(int x, int y) const
     if (block.isValid())
         return qTextBlockPosition(block) + childOffset;
 
-    return QAccessibleWidgetEx::childAt(x, y);
+    return QAccessibleWidget::childAt(x, y);
 }
 
 /*! \reimp */
@@ -387,14 +387,14 @@ QString QAccessibleTextEdit::text(Text t, int child) const
             return textEdit()->toPlainText();
     }
 
-    return QAccessibleWidgetEx::text(t, child);
+    return QAccessibleWidget::text(t, child);
 }
 
 /*! \reimp */
 void QAccessibleTextEdit::setText(Text t, int child, const QString &text)
 {
     if (t != Value || (child > 0 && child <= childOffset)) {
-        QAccessibleWidgetEx::setText(t, child, text);
+        QAccessibleWidget::setText(t, child, text);
         return;
     }
     if (textEdit()->isReadOnly())
@@ -418,10 +418,10 @@ QAccessible::Role QAccessibleTextEdit::role(int child) const
 {
     if (child > childOffset)
         return EditableText;
-    return QAccessibleWidgetEx::role(child);
+    return QAccessibleWidget::role(child);
 }
 
-QVariant QAccessibleTextEdit::invokeMethodEx(QAccessible::Method method, int child,
+QVariant QAccessibleTextEdit::invokeMethod(QAccessible::Method method, int child,
                                                      const QVariantList &params)
 {
     if (child)
@@ -432,7 +432,7 @@ QVariant QAccessibleTextEdit::invokeMethodEx(QAccessible::Method method, int chi
         QSet<QAccessible::Method> set;
         set << ListSupportedMethods << SetCursorPosition << GetCursorPosition;
         return QVariant::fromValue(set | qvariant_cast<QSet<QAccessible::Method> >(
-                    QAccessibleWidgetEx::invokeMethodEx(method, child, params)));
+                    QAccessibleWidget::invokeMethod(method, child, params)));
     }
     case SetCursorPosition:
         setCursorPosition(params.value(0).toInt());
@@ -440,7 +440,7 @@ QVariant QAccessibleTextEdit::invokeMethodEx(QAccessible::Method method, int chi
     case GetCursorPosition:
         return textEdit()->textCursor().position();
     default:
-        return QAccessibleWidgetEx::invokeMethodEx(method, child, params);
+        return QAccessibleWidget::invokeMethod(method, child, params);
     }
 }
 
@@ -453,12 +453,12 @@ int QAccessibleTextEdit::childCount() const
 #ifndef QT_NO_STACKEDWIDGET
 // ======================= QAccessibleStackedWidget ======================
 QAccessibleStackedWidget::QAccessibleStackedWidget(QWidget *widget)
-    : QAccessibleWidgetEx(widget, LayeredPane)
+    : QAccessibleWidget(widget, LayeredPane)
 {
     Q_ASSERT(qobject_cast<QStackedWidget *>(widget));
 }
 
-QVariant QAccessibleStackedWidget::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleStackedWidget::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -506,7 +506,7 @@ int QAccessibleStackedWidget::navigate(RelationFlag relation, int entry, QAccess
         targetObject = stackedWidget()->widget(entry-1);
         break;
     default:
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     }
     *target = QAccessible::queryAccessibleInterface(targetObject);
     return *target ? 0 : -1;
@@ -521,7 +521,7 @@ QStackedWidget *QAccessibleStackedWidget::stackedWidget() const
 #ifndef QT_NO_TOOLBOX
 // ======================= QAccessibleToolBox ======================
 QAccessibleToolBox::QAccessibleToolBox(QWidget *widget)
-    : QAccessibleWidgetEx(widget, LayeredPane)
+    : QAccessibleWidget(widget, LayeredPane)
 {
     Q_ASSERT(qobject_cast<QToolBox *>(widget));
 }
@@ -529,14 +529,14 @@ QAccessibleToolBox::QAccessibleToolBox(QWidget *widget)
 QString QAccessibleToolBox::text(Text textType, int child) const
 {
     if (textType != Value || child <= 0 || child > toolBox()->count())
-        return QAccessibleWidgetEx::text(textType, child);
+        return QAccessibleWidget::text(textType, child);
     return toolBox()->itemText(child - 1);
 }
 
 void QAccessibleToolBox::setText(Text textType, int child, const QString &text)
 {
     if (textType != Value || child <= 0 || child > toolBox()->count()) {
-        QAccessibleWidgetEx::setText(textType, child, text);
+        QAccessibleWidget::setText(textType, child, text);
         return;
     }
     toolBox()->setItemText(child - 1, text);
@@ -546,7 +546,7 @@ QAccessible::State QAccessibleToolBox::state(int child) const
 {
     QWidget *childWidget = toolBox()->widget(child - 1);
     if (!childWidget)
-        return QAccessibleWidgetEx::state(child);
+        return QAccessibleWidget::state(child);
     QAccessible::State childState = QAccessible::Normal;
     if (toolBox()->currentWidget() == childWidget)
         childState |= QAccessible::Expanded;
@@ -555,7 +555,7 @@ QAccessible::State QAccessibleToolBox::state(int child) const
     return childState;
 }
 
-QVariant QAccessibleToolBox::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleToolBox::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -582,7 +582,7 @@ int QAccessibleToolBox::navigate(RelationFlag relation, int entry, QAccessibleIn
 {
     *target = 0;
     if (entry <= 0 || entry > toolBox()->count())
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     int index = -1;
     if (relation == QAccessible::Up)
         index = entry - 2;
@@ -601,7 +601,7 @@ QToolBox * QAccessibleToolBox::toolBox() const
 // ======================= QAccessibleMdiArea ======================
 #ifndef QT_NO_MDIAREA
 QAccessibleMdiArea::QAccessibleMdiArea(QWidget *widget)
-    : QAccessibleWidgetEx(widget, LayeredPane)
+    : QAccessibleWidget(widget, LayeredPane)
 {
     Q_ASSERT(qobject_cast<QMdiArea *>(widget));
 }
@@ -609,18 +609,18 @@ QAccessibleMdiArea::QAccessibleMdiArea(QWidget *widget)
 QAccessible::State QAccessibleMdiArea::state(int child) const
 {
     if (child < 0)
-        return QAccessibleWidgetEx::state(child);
+        return QAccessibleWidget::state(child);
     if (child == 0)
         return QAccessible::Normal;
     QList<QMdiSubWindow *> subWindows = mdiArea()->subWindowList();
     if (subWindows.isEmpty() || child > subWindows.count())
-        return QAccessibleWidgetEx::state(child);
+        return QAccessibleWidget::state(child);
     if (subWindows.at(child - 1) == mdiArea()->activeSubWindow())
         return QAccessible::Focused;
     return QAccessible::Normal;
 }
 
-QVariant QAccessibleMdiArea::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleMdiArea::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -660,7 +660,7 @@ int QAccessibleMdiArea::navigate(RelationFlag relation, int entry, QAccessibleIn
         targetObject = mdiAreaNavigate(mdiArea(), relation, entry);
         break;
     default:
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     }
     *target = QAccessible::queryAccessibleInterface(targetObject);
     return *target ? 0: -1;
@@ -673,7 +673,7 @@ QMdiArea *QAccessibleMdiArea::mdiArea() const
 
 // ======================= QAccessibleMdiSubWindow ======================
 QAccessibleMdiSubWindow::QAccessibleMdiSubWindow(QWidget *widget)
-    : QAccessibleWidgetEx(widget, QAccessible::Window)
+    : QAccessibleWidget(widget, QAccessible::Window)
 {
     Q_ASSERT(qobject_cast<QMdiSubWindow *>(widget));
 }
@@ -685,7 +685,7 @@ QString QAccessibleMdiSubWindow::text(Text textType, int child) const
         title.replace(QLatin1String("[*]"), QLatin1String(""));
         return title;
     }
-    return QAccessibleWidgetEx::text(textType, child);
+    return QAccessibleWidget::text(textType, child);
 }
 
 void QAccessibleMdiSubWindow::setText(Text textType, int child, const QString &text)
@@ -693,13 +693,13 @@ void QAccessibleMdiSubWindow::setText(Text textType, int child, const QString &t
     if (textType == QAccessible::Name && (child == 0 || child == 1))
         mdiSubWindow()->setWindowTitle(text);
     else
-        QAccessibleWidgetEx::setText(textType, child, text);
+        QAccessibleWidget::setText(textType, child, text);
 }
 
 QAccessible::State QAccessibleMdiSubWindow::state(int child) const
 {
     if (child != 0 || !mdiSubWindow()->parent())
-        return QAccessibleWidgetEx::state(child);
+        return QAccessibleWidget::state(child);
     QAccessible::State state = QAccessible::Normal | QAccessible::Focusable;
     if (!mdiSubWindow()->isMaximized())
         state |= (QAccessible::Movable | QAccessible::Sizeable);
@@ -715,7 +715,7 @@ QAccessible::State QAccessibleMdiSubWindow::state(int child) const
     return state;
 }
 
-QVariant QAccessibleMdiSubWindow::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleMdiSubWindow::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -739,7 +739,7 @@ int QAccessibleMdiSubWindow::navigate(RelationFlag relation, int entry, QAccessi
     *target = 0;
 
     if (!mdiSubWindow()->parent())
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
 
     QWidget *targetObject = 0;
     QMdiSubWindow *source = mdiSubWindow();
@@ -771,7 +771,7 @@ int QAccessibleMdiSubWindow::navigate(RelationFlag relation, int entry, QAccessi
         break;
     }
     default:
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     }
     *target = QAccessible::queryAccessibleInterface(targetObject);
     return *target ? 0: -1;
@@ -782,7 +782,7 @@ QRect QAccessibleMdiSubWindow::rect(int child) const
     if (mdiSubWindow()->isHidden())
         return QRect();
     if (!mdiSubWindow()->parent())
-        return QAccessibleWidgetEx::rect(child);
+        return QAccessibleWidget::rect(child);
     const QPoint pos = mdiSubWindow()->mapToGlobal(QPoint(0, 0));
     if (child == 0)
         return QRect(pos, mdiSubWindow()->size());
@@ -801,7 +801,7 @@ int QAccessibleMdiSubWindow::childAt(int x, int y) const
     if (!mdiSubWindow()->isVisible())
         return -1;
     if (!mdiSubWindow()->parent())
-        return QAccessibleWidgetEx::childAt(x, y);
+        return QAccessibleWidget::childAt(x, y);
     const QRect globalGeometry = rect(0);
     if (!globalGeometry.isValid())
         return -1;
@@ -822,7 +822,7 @@ QMdiSubWindow *QAccessibleMdiSubWindow::mdiSubWindow() const
 // ======================= QAccessibleWorkspace ======================
 #ifndef QT_NO_WORKSPACE
 QAccessibleWorkspace::QAccessibleWorkspace(QWidget *widget)
-    : QAccessibleWidgetEx(widget, LayeredPane)
+    : QAccessibleWidget(widget, LayeredPane)
 {
     Q_ASSERT(qobject_cast<QWorkspace *>(widget));
 }
@@ -830,18 +830,18 @@ QAccessibleWorkspace::QAccessibleWorkspace(QWidget *widget)
 QAccessible::State QAccessibleWorkspace::state(int child) const
 {
     if (child < 0)
-        return QAccessibleWidgetEx::state(child);
+        return QAccessibleWidget::state(child);
     if (child == 0)
         return QAccessible::Normal;
     QWidgetList subWindows = workspace()->windowList();
     if (subWindows.isEmpty() || child > subWindows.count())
-        return QAccessibleWidgetEx::state(child);
+        return QAccessibleWidget::state(child);
     if (subWindows.at(child - 1) == workspace()->activeWindow())
         return QAccessible::Focused;
     return QAccessible::Normal;
 }
 
-QVariant QAccessibleWorkspace::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleWorkspace::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -881,7 +881,7 @@ int QAccessibleWorkspace::navigate(RelationFlag relation, int entry, QAccessible
         targetObject = mdiAreaNavigate(workspace(), relation, entry);
         break;
     default:
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     }
     *target = QAccessible::queryAccessibleInterface(targetObject);
     return *target ? 0: -1;
@@ -896,12 +896,12 @@ QWorkspace *QAccessibleWorkspace::workspace() const
 #ifndef QT_NO_DIALOGBUTTONBOX
 // ======================= QAccessibleDialogButtonBox ======================
 QAccessibleDialogButtonBox::QAccessibleDialogButtonBox(QWidget *widget)
-    : QAccessibleWidgetEx(widget, Grouping)
+    : QAccessibleWidget(widget, Grouping)
 {
     Q_ASSERT(qobject_cast<QDialogButtonBox*>(widget));
 }
 
-QVariant QAccessibleDialogButtonBox::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleDialogButtonBox::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -925,12 +925,12 @@ QAccessible::Role QAccessibleTextBrowser::role(int child) const
 #ifndef QT_NO_CALENDARWIDGET
 // ===================== QAccessibleCalendarWidget ========================
 QAccessibleCalendarWidget::QAccessibleCalendarWidget(QWidget *widget)
-    : QAccessibleWidgetEx(widget, Table)
+    : QAccessibleWidget(widget, Table)
 {
     Q_ASSERT(qobject_cast<QCalendarWidget *>(widget));
 }
 
-QVariant QAccessibleCalendarWidget::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleCalendarWidget::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -953,7 +953,7 @@ int QAccessibleCalendarWidget::navigate(RelationFlag relation, int entry, QAcces
 {
     *target = 0;
     if (entry <= 0 || entry > childCount())
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     QWidget *targetWidget = 0;
     switch (relation) {
     case Child:
@@ -975,7 +975,7 @@ int QAccessibleCalendarWidget::navigate(RelationFlag relation, int entry, QAcces
             targetWidget = calendarView();
         break;
     default:
-        return QAccessibleWidgetEx::navigate(relation, entry, target);
+        return QAccessibleWidget::navigate(relation, entry, target);
     }
     *target = queryAccessibleInterface(targetWidget);
     return *target ? 0: -1;
@@ -986,7 +986,7 @@ QRect QAccessibleCalendarWidget::rect(int child) const
     if (!calendarWidget()->isVisible() || child > childCount())
         return QRect();
     if (child == 0)
-        return QAccessibleWidgetEx::rect(child);
+        return QAccessibleWidget::rect(child);
     QWidget *childWidget = 0;
     if (childCount() == 2)
         childWidget = child == 1 ? navigationBar() : calendarView();
@@ -1033,7 +1033,7 @@ QWidget *QAccessibleCalendarWidget::navigationBar() const
 
 #ifndef QT_NO_DOCKWIDGET
 QAccessibleDockWidget::QAccessibleDockWidget(QWidget *widget)
-    : QAccessibleWidgetEx(widget, Window)
+    : QAccessibleWidget(widget, Window)
 {
 
 }
@@ -1052,7 +1052,7 @@ int QAccessibleDockWidget::navigate(RelationFlag relation, int entry, QAccessibl
         *iface = 0;
         return -1;
     }
-    return QAccessibleWidgetEx::navigate(relation, entry, iface);
+    return QAccessibleWidget::navigate(relation, entry, iface);
 }
 
 int QAccessibleDockWidget::childAt(int x, int y) const
@@ -1100,7 +1100,7 @@ QAccessible::Role QAccessibleDockWidget::role(int child) const
 QAccessible::State QAccessibleDockWidget::state(int child) const
 {
     //### mark tabified widgets as invisible
-    return QAccessibleWidgetEx::state(child);
+    return QAccessibleWidget::state(child);
 }
 
 QRect QAccessibleDockWidget::rect (int child ) const
@@ -1130,7 +1130,7 @@ QRect QAccessibleDockWidget::rect (int child ) const
     return rect;
 }
 
-QVariant QAccessibleDockWidget::invokeMethodEx(QAccessible::Method, int, const QVariantList &)
+QVariant QAccessibleDockWidget::invokeMethod(QAccessible::Method, int, const QVariantList &)
 {
     return QVariant();
 }
@@ -1394,7 +1394,7 @@ bool QAccessibleTitleBar::isValid() const
 #endif // QT_NO_DOCKWIDGET
 
 QAccessibleTextWidget::QAccessibleTextWidget(QWidget* o, QAccessible::Role r, const QString& name):
-    QAccessibleWidgetEx(o, r, name)
+    QAccessibleWidget(o, r, name)
 {
 }
 
@@ -1875,9 +1875,9 @@ void QAccessibleTextEdit::setAttributes(int startOffset, int endOffset, const QS
 
 #ifndef QT_NO_MAINWINDOW
 QAccessibleMainWindow::QAccessibleMainWindow(QWidget *widget)
-    : QAccessibleWidgetEx(widget, Window) { }
+    : QAccessibleWidget(widget, Window) { }
 
-QVariant QAccessibleMainWindow::invokeMethodEx(QAccessible::Method /*method*/, int /*child*/, const QVariantList & /*params*/)
+QVariant QAccessibleMainWindow::invokeMethod(QAccessible::Method /*method*/, int /*child*/, const QVariantList & /*params*/)
 {
     return QVariant();
 }
@@ -1904,7 +1904,7 @@ int QAccessibleMainWindow::navigate(RelationFlag relation, int entry, QAccessibl
             return *iface ? 0 : -1;
         }
     }
-    return QAccessibleWidgetEx::navigate(relation, entry, iface);
+    return QAccessibleWidget::navigate(relation, entry, iface);
 }
 
 int QAccessibleMainWindow::childAt(int x, int y) const
