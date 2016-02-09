@@ -7,7 +7,7 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
-project(katie C CXX ASM)
+project(Katie C CXX ASM)
 
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
