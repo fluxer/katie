@@ -109,22 +109,10 @@ BOOL MemoryManager::virtualFree(LPVOID lpAddress, DWORD dwSize, DWORD dwFreeType
     return ::VirtualFree(lpAddress, dwSize, dwFreeType);
 }
 
-
-#if defined(USE_SYSTEM_MALLOC) && USE_SYSTEM_MALLOC
-
-void *fastMalloc(size_t n) { return malloc(n); }
-void *fastCalloc(size_t n_elements, size_t element_size) { return calloc(n_elements, element_size); }
-void fastFree(void* p) { return free(p); }
-void *fastRealloc(void* p, size_t n) { return realloc(p, n); }
-
-#else
-
-void *fastMalloc(size_t n) { return MemoryManager::m_malloc(n); }
-void *fastCalloc(size_t n_elements, size_t element_size) { return MemoryManager::m_calloc(n_elements, element_size); }
-void fastFree(void* p) { return MemoryManager::m_free(p); }
-void *fastRealloc(void* p, size_t n) { return MemoryManager::m_realloc(p, n); }
-
-#endif
+inline void *fastMalloc(size_t n) { return malloc(n); }
+inline void *fastCalloc(size_t n_elements, size_t element_size) { return calloc(n_elements, element_size); }
+inline void fastFree(void* p) { return free(p); }
+inline void *fastRealloc(void* p, size_t n) { return realloc(p, n); }
 
 #ifndef NDEBUG
 void fastMallocForbid() {}

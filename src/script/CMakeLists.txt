@@ -196,15 +196,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/pcre/pcre_xclass.cpp
 )
 
-if(NOT ${KATIE_PLATFORM} MATCHES "(win32|wince|mac)")
-    set(SCRIPT_SOURCES
-        ${SCRIPT_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/TCSystemAlloc.cpp
-    )
-else()
-    add_definitions(-DUSE_SYSTEM_MALLOC)
-endif()
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude

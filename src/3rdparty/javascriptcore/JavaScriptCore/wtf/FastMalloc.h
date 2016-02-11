@@ -78,8 +78,6 @@ namespace WTF {
     void fastMallocForbid();
     void fastMallocAllow();
 #endif
-
-    void releaseFastMallocFreeMemory();
     
     struct FastMallocStatistics {
         size_t heapSize;

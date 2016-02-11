@@ -47,35 +47,13 @@ void fastMallocForbid();
 void fastMallocAllow();
 #endif
 
-#if !defined(USE_SYSTEM_MALLOC) || !USE_SYSTEM_MALLOC
-
-#define malloc(n)                           fastMalloc(n)
-#define calloc(n_elements, element_size)    fastCalloc(n_elements, element_size)
-#define realloc(p, n)                       fastRealloc(p, n)
-#define free(p)                             fastFree(p)
-#define strdup(p)                           fastStrDup(p)
-
-#else
-
 #define strdup(p)                           _strdup(p)
-
-#endif
 
 #ifdef __cplusplus
 }
 #endif
 
 #ifdef __cplusplus
-#if !defined(USE_SYSTEM_MALLOC) || !USE_SYSTEM_MALLOC
-static inline void* __cdecl operator new(size_t s) { return fastMalloc(s); }
-static inline void __cdecl operator delete(void* p) { fastFree(p); }
-static inline void* __cdecl operator new[](size_t s) { return fastMalloc(s); }
-static inline void __cdecl operator delete[](void* p) { fastFree(p); }
-static inline void* operator new(size_t s, const std::nothrow_t&) throw() { return fastMalloc(s); }
-static inline void operator delete(void* p, const std::nothrow_t&) throw() { fastFree(p); }
-static inline void* operator new[](size_t s, const std::nothrow_t&) throw() { return fastMalloc(s); }
-static inline void operator delete[](void* p, const std::nothrow_t&) throw() { fastFree(p); }
-#endif
 
 namespace WTF {
     // This defines a type which holds an unsigned integer and is the same
