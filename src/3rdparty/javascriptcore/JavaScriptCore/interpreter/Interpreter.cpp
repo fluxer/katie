@@ -1981,7 +1981,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         ScopeChainNode* scopeChain = callFrame->scopeChain();
         ScopeChainIterator iter = scopeChain->begin();
         ScopeChainIterator end = scopeChain->end();
-        ASSERT_UNUSED(end, iter != end);
+        ASSERT(iter != end);
         while (skip--) {
             ++iter;
             ASSERT(iter != end);
@@ -2004,7 +2004,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         ScopeChainNode* scopeChain = callFrame->scopeChain();
         ScopeChainIterator iter = scopeChain->begin();
         ScopeChainIterator end = scopeChain->end();
-        ASSERT_UNUSED(end, iter != end);
+        ASSERT(iter != end);
         while (skip--) {
             ++iter;
             ASSERT(iter != end);
