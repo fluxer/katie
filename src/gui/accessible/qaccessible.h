@@ -433,6 +433,7 @@ public:
 private:
     QAccessible2Interface *cast_helper(QAccessible2::InterfaceType);
 };
+typedef QAccessibleInterface QAccessibleInterfaceEx;
 
 class Q_GUI_EXPORT QAccessibleEvent : public QEvent
 {

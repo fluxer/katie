@@ -78,6 +78,7 @@ private:
     QAccessibleObjectPrivate *d;
     Q_DISABLE_COPY(QAccessibleObject)
 };
+typedef QAccessibleObject QAccessibleObjectEx;
 
 class Q_GUI_EXPORT QAccessibleApplication : public QAccessibleObject
 {

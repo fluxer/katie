@@ -93,7 +93,7 @@ private:
     QAccessibleWidgetPrivate *d;
     Q_DISABLE_COPY(QAccessibleWidget)
 };
-
+typedef QAccessibleWidget QAccessibleWidgetEx;
 
 #endif // QT_NO_ACCESSIBILITY
 
