@@ -110,8 +110,8 @@ QObject *QObjectCleanupHandler::add(QObject* object)
 */
 void QObjectCleanupHandler::remove(QObject *object)
 {
-    int index;
-    if ((index = cleanupObjects.indexOf(object)) != -1) {
+    int index = cleanupObjects.indexOf(object);
+    if (index != -1) {
         cleanupObjects.removeAt(index);
         disconnect(object, SIGNAL(destroyed(QObject*)), this, SLOT(objectDestroyed(QObject*)));
     }
