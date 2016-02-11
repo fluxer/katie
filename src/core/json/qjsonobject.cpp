@@ -133,7 +133,7 @@ QVariantMap QJsonObject::toVariantMap() const
 
 /*!
     Converts the variant hash \a hash to a QJsonObject.
-    \since 4.8.7
+    \since 4.9
 
     The keys in \a hash will be used as the keys in the JSON object,
     and the QVariant values will be converted to JSON values.
@@ -152,7 +152,7 @@ QJsonObject QJsonObject::fromVariantHash(const QVariantHash &hash)
 
 /*!
     Converts this object to a QVariantHash.
-    \since 4.8.7
+    \since 4.9
 
     Returns the created hash.
 

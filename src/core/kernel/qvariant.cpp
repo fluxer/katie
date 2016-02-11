@@ -1589,28 +1589,28 @@ QVariant::QVariant(const char *val)
 */
 
 /*!
-    \since 4.8.7
+    \since 4.9
     \fn QVariant::QVariant(const QJsonValue &val)
 
     Constructs a new variant with a json value, \a val.
 */
 
 /*!
-    \since 4.8.7
+    \since 4.9
     \fn QVariant::QVariant(const QJsonObject &val)
 
     Constructs a new variant with a json object value, \a val.
 */
 
 /*!
-    \since 4.8.7
+    \since 4.9
     \fn QVariant::QVariant(const QJsonArray &val)
 
     Constructs a new variant with a json array value, \a val.
 */
 
 /*!
-    \since 4.8.7
+    \since 4.9
     \fn QVariant::QVariant(const QJsonDocument &val)
 
     Constructs a new variant with a json document value, \a val.
