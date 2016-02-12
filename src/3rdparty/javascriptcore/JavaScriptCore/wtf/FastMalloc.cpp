@@ -83,12 +83,6 @@
 #include <pthread.h>
 #endif
 
-#ifndef NO_TCMALLOC_SAMPLES
-#ifdef WTF_CHANGES
-#define NO_TCMALLOC_SAMPLES
-#endif
-#endif
-
 // Use a background thread to periodically scavenge memory to release back to the system
 // https://bugs.webkit.org/show_bug.cgi?id=27900: don't turn this on for Tiger until we have figured out why it caused a crash.
 #if defined(BUILDING_ON_TIGER)
