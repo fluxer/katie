@@ -59,67 +59,67 @@ public:
         ExecutableAllocator::makeExecutable(m_start, m_size);
     }
 
-    void relink(CodeLocationJump jump, CodeLocationLabel destination)
+    inline void relink(CodeLocationJump jump, CodeLocationLabel destination)
     {
         MacroAssembler::repatchJump(jump, destination);
     }
 
-    void relink(CodeLocationCall call, CodeLocationLabel destination)
+    inline void relink(CodeLocationCall call, CodeLocationLabel destination)
     {
         MacroAssembler::repatchCall(call, destination);
     }
 
-    void relink(CodeLocationCall call, FunctionPtr destination)
+    inline void relink(CodeLocationCall call, FunctionPtr destination)
     {
         MacroAssembler::repatchCall(call, destination);
     }
 
-    void relink(CodeLocationNearCall nearCall, CodePtr destination)
+    inline void relink(CodeLocationNearCall nearCall, CodePtr destination)
     {
         MacroAssembler::repatchNearCall(nearCall, CodeLocationLabel(destination));
     }
 
-    void relink(CodeLocationNearCall nearCall, CodeLocationLabel destination)
+    inline void relink(CodeLocationNearCall nearCall, CodeLocationLabel destination)
     {
         MacroAssembler::repatchNearCall(nearCall, destination);
     }
 
-    void repatch(CodeLocationDataLabel32 dataLabel32, int32_t value)
+    inline void repatch(CodeLocationDataLabel32 dataLabel32, int32_t value)
     {
         MacroAssembler::repatchInt32(dataLabel32, value);
     }
 
-    void repatch(CodeLocationDataLabelPtr dataLabelPtr, void* value)
+    inline void repatch(CodeLocationDataLabelPtr dataLabelPtr, void* value)
     {
         MacroAssembler::repatchPointer(dataLabelPtr, value);
     }
 
-    void repatchLoadPtrToLEA(CodeLocationInstruction instruction)
+    inline void repatchLoadPtrToLEA(CodeLocationInstruction instruction)
     {
         MacroAssembler::repatchLoadPtrToLEA(instruction);
     }
 
-    void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
+    inline void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
     {
         relink(CodeLocationCall(CodePtr(returnAddress)), label);
     }
     
-    void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodePtr newCalleeFunction)
+    inline void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodePtr newCalleeFunction)
     {
         relinkCallerToTrampoline(returnAddress, CodeLocationLabel(newCalleeFunction));
     }
 
-    void relinkCallerToFunction(ReturnAddressPtr returnAddress, FunctionPtr function)
+    inline void relinkCallerToFunction(ReturnAddressPtr returnAddress, FunctionPtr function)
     {
         relink(CodeLocationCall(CodePtr(returnAddress)), function);
     }
     
-    void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
+    inline void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
     {
         relink(CodeLocationNearCall(CodePtr(returnAddress)), label);
     }
     
-    void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodePtr newCalleeFunction)
+    inline void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodePtr newCalleeFunction)
     {
         relinkNearCallerToTrampoline(returnAddress, CodeLocationLabel(newCalleeFunction));
     }
