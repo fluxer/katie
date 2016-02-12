@@ -79,7 +79,8 @@
 #include <atomic.h>
 #endif
 
-#include <qglobal.h>
+#include <QThread>
+#include <QCoreApplication>
 QT_BEGIN_NAMESPACE
 class QMutex;
 class QWaitCondition;
@@ -110,7 +111,8 @@ ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char* threadN
 void initializeCurrentThreadInternal(const char* threadName);
 
 ThreadIdentifier currentThread();
-bool isMainThread();
+inline bool isMainThread()
+{ return QThread::currentThread() == QCoreApplication::instance()->thread(); }
 int waitForThreadCompletion(ThreadIdentifier, void**);
 void detachThread(ThreadIdentifier);
 

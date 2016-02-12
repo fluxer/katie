@@ -29,16 +29,43 @@
 #include "config.h"
 #include "Threading.h"
 
-#if !ENABLE(SINGLE_THREADED)
+#if ENABLE(SINGLE_THREADED)
+
+namespace WTF {
+
+void initializeThreading() { }
+inline ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char*) { return ThreadIdentifier(); }
+void initializeCurrentThreadInternal(const char*) { }
+int waitForThreadCompletion(ThreadIdentifier, void**) { return 0; }
+void detachThread(ThreadIdentifier) { }
+inline ThreadIdentifier currentThread() { return ThreadIdentifier(); }
+
+Mutex::Mutex() { }
+Mutex::~Mutex() { }
+void Mutex::lock() { }
+inline bool Mutex::tryLock() { return false; }
+void Mutex::unlock() { }
+
+ThreadCondition::ThreadCondition() { }
+ThreadCondition::~ThreadCondition() { }
+void ThreadCondition::wait(Mutex&) { }
+inline bool ThreadCondition::timedWait(Mutex&, double) { return false; }
+void ThreadCondition::signal() { }
+void ThreadCondition::broadcast() { }
+
+void lockAtomicallyInitializedStaticMutex() { }
+void unlockAtomicallyInitializedStaticMutex() { }
+
+} // namespace WebCore
+
+#else // SINGLE_THREADED
 
 #include "CurrentTime.h"
 #include "HashMap.h"
 #include "MainThread.h"
 #include "RandomNumberSeed.h"
 
-#include <QCoreApplication>
 #include <QMutex>
-#include <QThread>
 #include <QWaitCondition>
 
 namespace WTF {
@@ -215,11 +242,6 @@ ThreadIdentifier currentThread()
     if (ThreadIdentifier id = identifierByQthreadHandle(currentThread))
         return id;
     return establishIdentifierForThread(currentThread);
-}
-
-bool isMainThread()
-{
-    return QThread::currentThread() == QCoreApplication::instance()->thread();
 }
 
 Mutex::Mutex()
