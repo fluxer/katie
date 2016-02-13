@@ -33,6 +33,8 @@ prepare() {
 
     echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
         >> katie/mkspecs/linux/vendor.cmake
+    echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
+        >> katie/mkspecs/linux/vendor.cmake
     echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
         >> katie/mkspecs/linux/vendor.cmake
 }
