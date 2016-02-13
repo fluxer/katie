@@ -5,7 +5,7 @@ set(QTIFFPLUGIN_SOURCES
 )
 
 add_library(qtiffplugin ${KATIE_TYPE} ${QTIFFPLUGIN_SOURCES})
-target_link_libraries(qtiffplugin KtCore KtGui KtOpenGL)
+target_link_libraries(qtiffplugin KtCore KtGui)
 set_target_properties(qtiffplugin PROPERTIES OUTPUT_NAME qtiff)
 
 install(
