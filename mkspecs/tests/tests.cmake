@@ -9,14 +9,19 @@ macro(KATIE_CPU_TEST _test _define _flag)
         COMPILE_DEFINITIONS -m${_flag}
         OUTPUT_VARIABLE _cpu_feature_log
     )
-    if(_has_cpu_feature)
-        add_definitions(-DQT_HAVE_${_define})
-    endif()
 
-    message(STATUS "Host CPU supports ${uppertest}: ${_has_cpu_feature}")
     file(WRITE ${CMAKE_BINARY_DIR}/katie_tests/cpu/${_test}.log "${_cpu_feature_log}")
 
     set(KATIE_${uppertest}_RESULT ${_has_cpu_feature} CACHE BOOL "Host CPU supports ${uppertest}")
+    if(KATIE_${uppertest}_RESULT)
+        add_definitions(-DQT_HAVE_${_define})
+    endif()
+
+    set(_cache_override)
+    if(NOT _has_cpu_feature STREQUAL KATIE_${uppertest}_RESULT)
+        set(_cache_override " (cache override)")
+    endif()
+    message(STATUS "Host CPU supports ${uppertest}: ${_has_cpu_feature}${_cache_override}")
 endmacro()
 
 katie_cpu_test(3dnow 3DNOW 3dnow)
@@ -54,16 +59,21 @@ macro(KATIE_MISC_TEST _test _define)
         ${KATIE_MKSPECS_DIR}/tests/misc/${_test}.cpp
         OUTPUT_VARIABLE _misc_feature_log
     )
-    if(_has_misc_feature)
+
+    file(WRITE ${CMAKE_BINARY_DIR}/katie_tests/misc/${_test}.log "${_misc_feature_log}")
+
+    set(KATIE_${uppertest}_RESULT ${_has_misc_feature} CACHE BOOL "Host supports ${uppertest}")
+    if(KATIE_${uppertest}_RESULT)
         add_definitions(-DQT_${_define})
     else()
         add_definitions(-DQT_NO_${_define})
     endif()
 
-    message(STATUS "Host supports ${uppertest}: ${_has_misc_feature}")
-    file(WRITE ${CMAKE_BINARY_DIR}/katie_tests/misc/${_test}.log "${_misc_feature_log}")
-
-    set(KATIE_${uppertest}_RESULT ${_has_misc_feature} CACHE BOOL "Host supports ${uppertest}")
+    set(_cache_override)
+    if(NOT _has_misc_feature STREQUAL KATIE_${uppertest}_RESULT)
+        set(_cache_override " (cache override)")
+    endif()
+    message(STATUS "Host supports ${uppertest}: ${KATIE_${uppertest}_RESULT}${_cache_override}")
 endmacro()
 
 katie_misc_test(stl STL)
