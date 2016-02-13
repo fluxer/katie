@@ -295,7 +295,7 @@ QT_BEGIN_INCLUDE_NAMESPACE
 QT_END_INCLUDE_NAMESPACE
 # endif
 
-# if defined(Q_OS_LINUX) &&  __GLIBC__ - 0 >= 2 && __GLIBC_MINOR__ - 0 >= 1
+# if defined(Q_OS_LINUX) && defined(__GLIBC__) && __GLIBC__ - 0 >= 2 && __GLIBC_MINOR__ - 0 >= 1
 #  include <netpacket/packet.h>
 
 static QList<QNetworkInterfacePrivate *> createInterfaces(ifaddrs *rawList)
