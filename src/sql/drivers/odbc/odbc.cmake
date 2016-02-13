@@ -13,7 +13,7 @@ if(UNIX)
     add_definitions(-DUNICODE)
 endif()
 
-include_directories(${ODBC_INCLUDE_DIRECTORIES})
+include_directories(${ODBC_INCLUDES})
 
 katie_resources("${ODBCDRIVER_SOURCES}")
 katie_resources("${ODBCDRIVER_HEADERS}")

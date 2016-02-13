@@ -18,6 +18,7 @@ endif()
 find_path(ODBC_INCLUDES
     NAMES
     sql.h
+    PATH_SUFFIXES iodbc
     HINTS
     $ENV{ODBCDIR}/include
     /usr/include
@@ -26,7 +27,7 @@ find_path(ODBC_INCLUDES
 )
 
 find_library(ODBC_LIBRARIES
-    odbc
+    odbc iodbc
     HINTS
     $ENV{ODBCDIR}/lib
     /usr/lib
