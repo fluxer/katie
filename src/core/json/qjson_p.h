@@ -432,33 +432,14 @@ class Latin1String
    }
 
    inline bool operator ==(const QString &str) const {
-      /* Qt 5 Beta 1
-           return QLatin1String(d->latin1, d->length) == str;
-      */
-      // Temporary for QLatinString(const char*, int)
-
-      if (str.size() != d->length) {
-         return false;
-      }
-
-      const char *latinBegin = d->latin1;
-      const char *latinEnd = d->latin1 + d->length;
-
-      return std::equal(latinBegin, latinEnd,
-                        str.begin());
+      return QLatin1String(d->latin1) == str;
    }
    inline bool operator !=(const QString &str) const {
       return !operator ==(str);
    }
    inline bool operator >=(const QString &str) const {
-      /* Qt 5 Beta 1
-           return QLatin1String(d->latin1, d->length) >= str;
-      */
-      // Temporary for QLatinString(const char*, int)
-      const char *latinBegin = d->latin1;
-      const char *latinEnd = d->latin1 + d->length;
-      return !std::lexicographical_compare(latinBegin, latinEnd,
-                                           str.begin(), str.end());
+      // ###
+      return toString() >= str;
    }
 
    inline bool operator ==(const Latin1String &str) const {
