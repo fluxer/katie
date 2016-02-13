@@ -643,16 +643,27 @@ install(
     FILE KatieBinaryTargets.cmake
 )
 
-if(NOT "${KATIE_PLATFORM}" MATCHES "(win32|wince|mac)" AND (CMAKE_SKIP_INSTALL_RPATH OR NOT CMAKE_INSTALL_RPATH))
+if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
+    if(CMAKE_SKIP_INSTALL_RPATH OR NOT CMAKE_INSTALL_RPATH)
+        configure_file(
+            ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
+            ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+            @ONLY
+        )
+        install(
+            FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+            DESTINATION ${LDCONF_INSTALL_DIR}
+        )
+    endif()
+
     configure_file(
-        ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-        ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+        ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
+        ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
         @ONLY
     )
-
     install(
-        FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-        DESTINATION ${LDCONF_INSTALL_DIR}
+        FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+        DESTINATION ${PROFILE_INSTALL_DIR}
     )
 endif()
 

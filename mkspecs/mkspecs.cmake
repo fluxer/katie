@@ -111,6 +111,7 @@ include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 # fail to create the package. if vendors do not use CPack to generate their
 # packages then paths can be full paths as seen in the shipped package files.
 set(LDCONF_INSTALL_DIR "etc/ld.so.conf.d")
+set(PROFILE_INSTALL_DIR "etc/profile.d")
 set(DBUS_INTERFACES_INSTALL_DIR "etc/dbus-1/interfaces")
 set(KDE4_SERVICES_INSTALL_DIR "share/kde4/services/phononbackends")
 set(MAN_INSTALL_DIR "share/man")
