@@ -427,7 +427,7 @@ set_package_properties(VLC PROPERTIES
 # module for Qt Platform Abstraction
 # find_package(QPA)
 
-if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac")
+if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac" AND NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     find_package(Threads REQUIRED)
 
@@ -436,7 +436,7 @@ if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac")
         PURPOSE "Required for X11/X.Org integration support"
         DESCRIPTION "Open source implementation of the X Window System"
         URL "http://www.x.org"
-        TYPE RECOMMENDED
+        TYPE REQUIRED
     )
 
     set_package_properties(Fontconfig PROPERTIES
