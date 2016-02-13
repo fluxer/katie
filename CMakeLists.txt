@@ -431,7 +431,7 @@ if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac")
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     find_package(Threads REQUIRED)
 
-    find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes Xi Xinerama Xrandr Xrender X11 Xtst)
+    find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes Xi Xinerama Xrandr Xrender X11 Xtst Xt)
     set_package_properties(X11 PROPERTIES
         PURPOSE "Required for X11/X.Org integration support"
         DESCRIPTION "Open source implementation of the X Window System"
