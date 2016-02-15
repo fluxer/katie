@@ -6698,7 +6698,7 @@ QString QString::arg(qlonglong a, int fieldWidth, int base, const QChar &fillCha
     QString locale_arg;
     if (d.locale_occurrences > 0) {
         QLocale locale;
-        if (!locale.numberOptions() & QLocale::OmitGroupSeparator)
+        if (!(locale.numberOptions() & QLocale::OmitGroupSeparator))
             flags |= QLocalePrivate::ThousandsGroup;
         locale_arg = locale.d()->longLongToString(a, -1, base, fieldWidth, flags);
     }
@@ -6742,7 +6742,7 @@ QString QString::arg(qulonglong a, int fieldWidth, int base, const QChar &fillCh
     QString locale_arg;
     if (d.locale_occurrences > 0) {
         QLocale locale;
-        if (!locale.numberOptions() & QLocale::OmitGroupSeparator)
+        if (!(locale.numberOptions() & QLocale::OmitGroupSeparator))
             flags |= QLocalePrivate::ThousandsGroup;
         locale_arg = locale.d()->unsLongLongToString(a, -1, base, fieldWidth, flags);
     }
@@ -6877,7 +6877,7 @@ QString QString::arg(double a, int fieldWidth, char fmt, int prec, const QChar &
     if (d.locale_occurrences > 0) {
         QLocale locale;
 
-        if (!locale.numberOptions() & QLocale::OmitGroupSeparator)
+        if (!(locale.numberOptions() & QLocale::OmitGroupSeparator))
             flags |= QLocalePrivate::ThousandsGroup;
         locale_arg = locale.d()->doubleToString(a, prec, form, fieldWidth, flags);
     }
