@@ -42,11 +42,8 @@
 #ifndef QDBUSABSTRACTINTERFACE_H
 #define QDBUSABSTRACTINTERFACE_H
 
-#include <QtCore/qstring.h>
-#include <QtCore/qvariant.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qobject.h>
-
 #include <QtDBus/qdbusmessage.h>
 #include <QtDBus/qdbusextratypes.h>
 #include <QtDBus/qdbusconnection.h>

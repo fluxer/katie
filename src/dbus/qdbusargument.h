@@ -43,15 +43,10 @@
 #define QDBUSARGUMENT_H
 
 #include <QtCore/qbytearray.h>
-#include <QtCore/qhash.h>
-#include <QtCore/qglobal.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qmap.h>
-#include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qvariant.h>
 #include <QtDBus/qdbusextratypes.h>
-#include <QtDBus/qdbusmacros.h>
 
 #ifndef QT_NO_DBUS
 

@@ -53,7 +53,6 @@
 #ifdef Q_CC_MSVC
 #include <QtCore/qlist.h>
 #include <QtCore/qset.h>
-#include <QtCore/qhash.h>
 #include <QtCore/qvector.h>
 #endif
 
