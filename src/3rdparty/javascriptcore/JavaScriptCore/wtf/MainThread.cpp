@@ -68,7 +68,6 @@ static FunctionQueue& functionQueue()
 void initializeMainThread()
 {
     mainThreadFunctionQueueMutex();
-    initializeMainThreadPlatform();
 }
 
 // 0.1 sec delays in UI is approximate threshold when they become noticeable. Have a limit that's half of that.

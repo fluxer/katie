@@ -891,7 +891,7 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
         return;
     }
     
-    JSCell* baseCell = asCell(baseValue);
+    JSCell* baseCell = baseValue.asCell();
     Structure* structure = baseCell->structure();
 
     if (structure->isUncacheableDictionary()) {
@@ -981,7 +981,7 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
         return;
     }
 
-    Structure* structure = asCell(baseValue)->structure();
+    Structure* structure = baseValue.asCell()->structure();
 
     if (structure->isUncacheableDictionary()) {
         vPC[0] = getOpcode(op_get_by_id_generic);
@@ -1276,7 +1276,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             NEXT_INSTRUCTION();
         }
         
-        callFrame->r(dst) = jsBoolean(!src.isCell() || !asCell(src)->structure()->typeInfo().masqueradesAsUndefined());
+        callFrame->r(dst) = jsBoolean(!src.isCell() || !src.asCell()->structure()->typeInfo().masqueradesAsUndefined());
         vPC += OPCODE_LENGTH(op_neq_null);
         NEXT_INSTRUCTION();
     }
@@ -2085,7 +2085,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         JSValue baseValue = callFrame->r(base).jsValue();
 
         if (LIKELY(baseValue.isCell())) {
-            JSCell* baseCell = asCell(baseValue);
+            JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {
@@ -2116,7 +2116,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         JSValue baseValue = callFrame->r(base).jsValue();
 
         if (LIKELY(baseValue.isCell())) {
-            JSCell* baseCell = asCell(baseValue);
+            JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {
@@ -2166,7 +2166,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         JSValue baseValue = callFrame->r(base).jsValue();
 
         if (LIKELY(baseValue.isCell())) {
-            JSCell* baseCell = asCell(baseValue);
+            JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {
@@ -2302,7 +2302,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         JSValue baseValue = callFrame->r(base).jsValue();
         
         if (LIKELY(baseValue.isCell())) {
-            JSCell* baseCell = asCell(baseValue);
+            JSCell* baseCell = baseValue.asCell();
             Structure* oldStructure = vPC[4].u.structure;
             Structure* newStructure = vPC[5].u.structure;
             
@@ -2352,7 +2352,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         JSValue baseValue = callFrame->r(base).jsValue();
 
         if (LIKELY(baseValue.isCell())) {
-            JSCell* baseCell = asCell(baseValue);
+            JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {

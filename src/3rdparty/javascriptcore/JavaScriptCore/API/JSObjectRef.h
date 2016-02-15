@@ -29,7 +29,6 @@
 
 #include <JavaScriptCore/JSBase.h>
 #include <JavaScriptCore/JSValueRef.h>
-#include <JavaScriptCore/WebKitAvailability.h>
 
 #ifndef __cplusplus
 #include <stdbool.h>
@@ -441,7 +440,7 @@ JS_EXPORT JSObjectRef JSObjectMakeConstructor(JSContextRef ctx, JSClassRef jsCla
  @discussion The behavior of this function does not exactly match the behavior of the built-in Array constructor. Specifically, if one argument 
  is supplied, this function returns an array with one element.
  */
-JS_EXPORT JSObjectRef JSObjectMakeArray(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSObjectRef JSObjectMakeArray(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
 
 /*!
  @function
@@ -452,7 +451,7 @@ JS_EXPORT JSObjectRef JSObjectMakeArray(JSContextRef ctx, size_t argumentCount, 
  @param exception A pointer to a JSValueRef in which to store an exception, if any. Pass NULL if you do not care to store an exception.
  @result A JSObject that is a Date.
  */
-JS_EXPORT JSObjectRef JSObjectMakeDate(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSObjectRef JSObjectMakeDate(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
 
 /*!
  @function
@@ -463,7 +462,7 @@ JS_EXPORT JSObjectRef JSObjectMakeDate(JSContextRef ctx, size_t argumentCount, c
  @param exception A pointer to a JSValueRef in which to store an exception, if any. Pass NULL if you do not care to store an exception.
  @result A JSObject that is a Error.
  */
-JS_EXPORT JSObjectRef JSObjectMakeError(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSObjectRef JSObjectMakeError(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
 
 /*!
  @function
@@ -474,7 +473,7 @@ JS_EXPORT JSObjectRef JSObjectMakeError(JSContextRef ctx, size_t argumentCount, 
  @param exception A pointer to a JSValueRef in which to store an exception, if any. Pass NULL if you do not care to store an exception.
  @result A JSObject that is a RegExp.
  */
-JS_EXPORT JSObjectRef JSObjectMakeRegExp(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSObjectRef JSObjectMakeRegExp(JSContextRef ctx, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception);
 
 /*!
 @function

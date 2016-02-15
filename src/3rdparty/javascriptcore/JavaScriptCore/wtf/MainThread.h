@@ -49,7 +49,6 @@ void setMainThreadCallbacksPaused(bool paused);
 void initializeMainThread();
 
 // These functions are internal to the callOnMainThread implementation.
-void initializeMainThreadPlatform();
 void scheduleDispatchFunctionsOnMainThread();
 Mutex& mainThreadFunctionQueueMutex();
 void dispatchFunctionsFromMainThread();

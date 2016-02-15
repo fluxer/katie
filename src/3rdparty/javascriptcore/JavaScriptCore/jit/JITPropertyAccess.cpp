@@ -547,7 +547,7 @@ void JIT::testPrototype(Structure* structure, JumpList& failureCases)
     if (structure->m_prototype.isNull())
         return;
 
-    failureCases.append(branchPtr(NotEqual, AbsoluteAddress(&asCell(structure->m_prototype)->m_structure), ImmPtr(asCell(structure->m_prototype)->m_structure)));
+    failureCases.append(branchPtr(NotEqual, AbsoluteAddress(&structure->m_prototype.asCell()->m_structure), ImmPtr(structure->m_prototype.asCell()->m_structure)));
 }
 
 void JIT::privateCompilePutByIdTransition(StructureStubInfo* stubInfo, Structure* oldStructure, Structure* newStructure, size_t cachedOffset, StructureChain* chain, ReturnAddressPtr returnAddress)
@@ -1496,8 +1496,8 @@ void JIT::testPrototype(Structure* structure, JumpList& failureCases)
     if (structure->m_prototype.isNull())
         return;
 
-    move(ImmPtr(&asCell(structure->m_prototype)->m_structure), regT2);
-    move(ImmPtr(asCell(structure->m_prototype)->m_structure), regT3);
+    move(ImmPtr(&structure->m_prototype.asCell()->m_structure), regT2);
+    move(ImmPtr(structure->m_prototype.asCell()->m_structure), regT3);
     failureCases.append(branchPtr(NotEqual, Address(regT2), regT3));
 }
 

@@ -28,7 +28,6 @@
 
 #include <JavaScriptCore/JSObjectRef.h>
 #include <JavaScriptCore/JSValueRef.h>
-#include <JavaScriptCore/WebKitAvailability.h>
 
 #ifndef __cplusplus
 #include <stdbool.h>

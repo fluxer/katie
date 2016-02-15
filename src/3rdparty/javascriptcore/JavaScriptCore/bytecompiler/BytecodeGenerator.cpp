@@ -1112,7 +1112,7 @@ RegisterID* BytecodeGenerator::emitGetScopedVar(RegisterID* dst, size_t depth, i
     if (globalObject) {
         emitOpcode(op_get_global_var);
         instructions().append(dst->index());
-        instructions().append(asCell(globalObject));
+        instructions().append(globalObject.asCell());
         instructions().append(index);
         return dst;
     }
@@ -1128,7 +1128,7 @@ RegisterID* BytecodeGenerator::emitPutScopedVar(size_t depth, int index, Registe
 {
     if (globalObject) {
         emitOpcode(op_put_global_var);
-        instructions().append(asCell(globalObject));
+        instructions().append(globalObject.asCell());
         instructions().append(index);
         instructions().append(value->index());
         return value;

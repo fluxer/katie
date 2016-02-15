@@ -92,7 +92,7 @@ bool jsIsObjectType(JSValue v)
     if (!v.isCell())
         return v.isNull();
 
-    JSType type = asCell(v)->structure()->typeInfo().type();
+    JSType type = v.asCell()->structure()->typeInfo().type();
     if (type == NumberType || type == StringType)
         return false;
     if (type == ObjectType) {

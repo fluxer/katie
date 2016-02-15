@@ -27,7 +27,6 @@
 #define JSBasePrivate_h
 
 #include <JavaScriptCore/JSBase.h>
-#include <JavaScriptCore/WebKitAvailability.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -43,7 +42,7 @@ owns a large non-GC memory region. Calling this function will encourage the
 garbage collector to collect soon, hoping to reclaim that large non-GC memory
 region.
 */
-JS_EXPORT void JSReportExtraMemoryCost(JSContextRef ctx, size_t size) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT void JSReportExtraMemoryCost(JSContextRef ctx, size_t size);
 
 #ifdef __cplusplus
 }

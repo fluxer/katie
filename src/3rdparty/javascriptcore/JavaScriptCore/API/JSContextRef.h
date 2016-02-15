@@ -28,7 +28,6 @@
 
 #include <JavaScriptCore/JSObjectRef.h>
 #include <JavaScriptCore/JSValueRef.h>
-#include <JavaScriptCore/WebKitAvailability.h>
 
 #ifndef __cplusplus
 #include <stdbool.h>
@@ -48,7 +47,7 @@ extern "C" {
  synchronization is required.
 @result The created JSContextGroup.
 */
-JS_EXPORT JSContextGroupRef JSContextGroupCreate() AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSContextGroupRef JSContextGroupCreate();
 
 /*!
 @function
@@ -56,14 +55,14 @@ JS_EXPORT JSContextGroupRef JSContextGroupCreate() AVAILABLE_IN_WEBKIT_VERSION_4
 @param group The JSContextGroup to retain.
 @result A JSContextGroup that is the same as group.
 */
-JS_EXPORT JSContextGroupRef JSContextGroupRetain(JSContextGroupRef group) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSContextGroupRef JSContextGroupRetain(JSContextGroupRef group);
 
 /*!
 @function
 @abstract Releases a JavaScript context group.
 @param group The JSContextGroup to release.
 */
-JS_EXPORT void JSContextGroupRelease(JSContextGroupRef group) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT void JSContextGroupRelease(JSContextGroupRef group);
 
 /*!
 @function
@@ -78,7 +77,7 @@ JS_EXPORT void JSContextGroupRelease(JSContextGroupRef group) AVAILABLE_IN_WEBKI
  NULL to use the default object class.
 @result A JSGlobalContext with a global object of class globalObjectClass.
 */
-JS_EXPORT JSGlobalContextRef JSGlobalContextCreate(JSClassRef globalObjectClass) AVAILABLE_WEBKIT_VERSION_3_0_AND_LATER;
+JS_EXPORT JSGlobalContextRef JSGlobalContextCreate(JSClassRef globalObjectClass);
 
 /*!
 @function
@@ -92,7 +91,7 @@ JS_EXPORT JSGlobalContextRef JSGlobalContextCreate(JSClassRef globalObjectClass)
 @result A JSGlobalContext with a global object of class globalObjectClass and a context
  group equal to group.
 */
-JS_EXPORT JSGlobalContextRef JSGlobalContextCreateInGroup(JSContextGroupRef group, JSClassRef globalObjectClass) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSGlobalContextRef JSGlobalContextCreateInGroup(JSContextGroupRef group, JSClassRef globalObjectClass);
 
 /*!
 @function
@@ -123,7 +122,7 @@ JS_EXPORT JSObjectRef JSContextGetGlobalObject(JSContextRef ctx);
 @param ctx The JSContext whose group you want to get.
 @result ctx's group.
 */
-JS_EXPORT JSContextGroupRef JSContextGetGroup(JSContextRef ctx) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+JS_EXPORT JSContextGroupRef JSContextGetGroup(JSContextRef ctx);
 
 #ifdef __cplusplus
 }
