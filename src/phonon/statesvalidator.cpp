@@ -69,16 +69,18 @@ StatesValidator::~StatesValidator()
  */
 void StatesValidator::validateAboutToFinish()
 {
-    if (m_aboutToFinishEmitted)
+    if (m_aboutToFinishEmitted) {
         P_INVALID_STATE("aboutToFinish emitted more than once!");
+    }
     m_aboutToFinishEmitted = true;
     m_aboutToFinishPos = m_pos;
 }
 
 void StatesValidator::validateFinished()
 {
-    if (m_mediaObject->state() != Phonon::PlayingState)
+    if (m_mediaObject->state() != Phonon::PlayingState) {
         P_INVALID_STATE("Playback finished when we weren't playing!");
+    }
 }
 
 void StatesValidator::validateSourceChange()
@@ -109,8 +111,9 @@ void StatesValidator::validateTick(qint64 pos)
     // then start buffering for example for a seek.
     if (m_mediaObject->state() != Phonon::PlayingState
             && (m_prevState != Phonon::PlayingState
-                && m_mediaObject->state() != Phonon::BufferingState))
+            && m_mediaObject->state() != Phonon::BufferingState)) {
         P_INVALID_STATE("Received tick outside of Playing state.");
+    }
     // If and only if we did not queue a new source may a seek back in time
     // result in a reemission of the signal. It should not, but it is allowed.
     // Point being, if the API consumer did not set one the first time, they
