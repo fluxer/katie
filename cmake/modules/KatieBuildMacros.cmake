@@ -217,6 +217,9 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     # TODO: make GUI access optional
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
+    if(KATIE_PLATFORM MATCHES "(win32|wince)")
+        target_link_libraries(${TESTNAME} KtMain)
+    endif()
     target_compile_definitions(
         ${TESTNAME} PRIVATE
         -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
