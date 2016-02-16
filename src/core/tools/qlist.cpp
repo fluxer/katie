@@ -82,7 +82,7 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
     int l = x->end - x->begin;
     int nl = l + num;
     int alloc = grow(nl);
-    Data* t = static_cast<Data *>(qMalloc(DataHeaderSize + alloc * sizeof(void *)));
+    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * sizeof(void *)));
     Q_CHECK_PTR(t);
 
     t->ref = 1;
@@ -113,64 +113,6 @@ QListData::Data *QListData::detach_grow(int *idx, int num)
     return x;
 }
 
-#if QT_VERSION >= 0x050000
-#  error "Remove QListData::detach(), it is only required for binary compatibility for 4.0.x to 4.2.x"
-#endif
-QListData::Data *QListData::detach()
-{
-    Data *x = static_cast<Data *>(qMalloc(DataHeaderSize + d->alloc * sizeof(void *)));
-    Q_CHECK_PTR(x);
-
-    x->ref = 1;
-    x->sharable = true;
-    x->alloc = d->alloc;
-    if (!x->alloc) {
-        x->begin = 0;
-        x->end = 0;
-    } else {
-        x->begin = d->begin;
-        x->end   = d->end;
-    }
-
-    qSwap(d, x);
-    if (!x->ref.deref())
-        return x;
-    return 0;
-}
-
-/*!
- *  Detaches the QListData by reallocating new memory.
- *  Returns the old (shared) data, it is up to the caller to deref() and free()
- *  For the new data node_copy needs to be called.
- *
- *  \internal
- */
-#if QT_VERSION >= 0x050000
-#  error "Remove QListData::detach2(), it is only required for binary compatibility for 4.3.x to 4.5.x"
-#endif
-QListData::Data *QListData::detach2()
-{
-    Data *x = d;
-    Data* t = static_cast<Data *>(qMalloc(DataHeaderSize + x->alloc * sizeof(void *)));
-    Q_CHECK_PTR(t);
-
-    ::memcpy(t, d, DataHeaderSize + d->alloc * sizeof(void *));
-
-    t->ref = 1;
-    t->sharable = true;
-    t->alloc = x->alloc;
-    if (!t->alloc) {
-        t->begin = 0;
-        t->end = 0;
-    } else {
-        t->begin = x->begin;
-        t->end   = x->end;
-    }
-    d = t;
-
-    return x;
-}
-
 /*!
  *  Detaches the QListData by allocating new memory for a list which possibly
  *  has a different size than the copied one.
@@ -182,7 +124,7 @@ QListData::Data *QListData::detach2()
 QListData::Data *QListData::detach(int alloc)
 {
     Data *x = d;
-    Data* t = static_cast<Data *>(qMalloc(DataHeaderSize + alloc * sizeof(void *)));
+    Data* t = static_cast<Data *>(malloc(DataHeaderSize + alloc * sizeof(void *)));
     Q_CHECK_PTR(t);
 
     t->ref = 1;
@@ -207,18 +149,10 @@ QListData::Data *QListData::detach(int alloc)
  *
  *  \internal
  */
-#if QT_VERSION >= 0x050000
-#  error "Remove QListData::detach3(), it is only required for binary compatibility for 4.5.x to 4.6.x"
-#endif
-QListData::Data *QListData::detach3()
-{
-    return detach(d->alloc);
-}
-
-void QListData::realloc(int alloc)
+void QListData::reallocData(int alloc)
 {
     Q_ASSERT(d->ref == 1);
-    Data *x = static_cast<Data *>(qRealloc(d, DataHeaderSize + alloc * sizeof(void *)));
+    Data *x = static_cast<Data *>(realloc(d, DataHeaderSize + alloc * sizeof(void *)));
     Q_CHECK_PTR(x);
 
     d = x;
@@ -240,7 +174,7 @@ void **QListData::append(int n)
             ::memmove(d->array, d->array + b, e * sizeof(void *));
             d->begin = 0;
         } else {
-            realloc(grow(d->alloc + n));
+            reallocData(grow(d->alloc + n));
         }
     }
     d->end = e + n;
@@ -254,25 +188,7 @@ void **QListData::append()
 }
 
 // ensures that enough space is available to append the list
-#if QT_VERSION >= 0x050000
-#  error "Remove QListData::append(), it is only required for binary compatibility up to 4.5.x"
-#endif
 void **QListData::append(const QListData& l)
-{
-    Q_ASSERT(d->ref == 1);
-    int e = d->end;
-    int n = l.d->end - l.d->begin;
-    if (n) {
-        if (e + n > d->alloc)
-            realloc(grow(e + n));
-        ::memcpy(d->array + d->end, l.d->array + l.d->begin, n*sizeof(void*));
-        d->end += n;
-    }
-    return d->array + e;
-}
-
-// ensures that enough space is available to append the list
-void **QListData::append2(const QListData& l)
 {
     return append(l.d->end - l.d->begin);
 }
@@ -282,7 +198,7 @@ void **QListData::prepend()
     Q_ASSERT(d->ref == 1);
     if (d->begin == 0) {
         if (d->end >= d->alloc / 3)
-            realloc(grow(d->alloc + 1));
+            reallocData(grow(d->alloc + 1));
 
         if (d->end < d->alloc / 3)
             d->begin = d->alloc - 2 * d->end;
@@ -309,7 +225,7 @@ void **QListData::insert(int i)
     if (d->begin == 0) {
         if (d->end == d->alloc) {
             // If the array is full, we expand it and move some items rightward
-            realloc(grow(d->alloc + 1));
+            reallocData(grow(d->alloc + 1));
         } else {
             // If there is free space at the end of the array, we move some items rightward
         }

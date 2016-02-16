@@ -286,7 +286,7 @@ QDeclarativeBoundSignalParameters::QDeclarativeBoundSignalParameters(const QMeta
 QDeclarativeBoundSignalParameters::~QDeclarativeBoundSignalParameters()
 {
     delete [] types;
-    qFree(myMetaObject);
+    free(myMetaObject);
 }
 
 void QDeclarativeBoundSignalParameters::setValues(void **v)

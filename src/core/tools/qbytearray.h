@@ -353,7 +353,7 @@ private:
     static Data shared_empty;
     Data *d;
     QByteArray(Data *dd, int /*dummy*/, int /*dummy*/) : d(dd) {}
-    void realloc(int alloc);
+    void reallocData(int alloc);
     void expand(int i);
     QByteArray nulTerminated() const;
 
@@ -366,7 +366,7 @@ public:
 };
 
 inline QByteArray::QByteArray(): d(&shared_null) { d->ref.ref(); }
-inline QByteArray::~QByteArray() { if (!d->ref.deref()) qFree(d); }
+inline QByteArray::~QByteArray() { if (!d->ref.deref()) free(d); }
 inline int QByteArray::size() const
 { return d->size; }
 
@@ -401,7 +401,7 @@ inline const char *QByteArray::data() const
 inline const char *QByteArray::constData() const
 { return d->data; }
 inline void QByteArray::detach()
-{ if (d->ref != 1 || d->data != d->array) realloc(d->size); }
+{ if (d->ref != 1 || d->data != d->array) reallocData(d->size); }
 inline bool QByteArray::isDetached() const
 { return d->ref == 1; }
 inline QByteArray::QByteArray(const QByteArray &a) : d(a.d)
@@ -411,10 +411,10 @@ inline int QByteArray::capacity() const
 { return d->alloc; }
 
 inline void QByteArray::reserve(int asize)
-{ if (d->ref != 1 || asize > d->alloc) realloc(asize); }
+{ if (d->ref != 1 || asize > d->alloc) reallocData(asize); }
 
 inline void QByteArray::squeeze()
-{ if (d->size < d->alloc) realloc(d->size); }
+{ if (d->size < d->alloc) reallocData(d->size); }
 
 class Q_CORE_EXPORT QByteRef {
     QByteArray &a;

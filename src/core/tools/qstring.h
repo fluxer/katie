@@ -107,7 +107,7 @@ public:
 
     int capacity() const;
     inline void reserve(int size);
-    inline void squeeze() { if (d->size < d->alloc || d->ref != 1) realloc(); d->capacity = 0;}
+    inline void squeeze() { if (d->size < d->alloc || d->ref != 1) reallocData(); d->capacity = 0;}
 
     inline const QChar *unicode() const;
     inline QChar *data();
@@ -260,7 +260,7 @@ public:
 
     inline QString &operator+=(QChar c) {
         if (d->ref != 1 || d->size + 1 > d->alloc)
-            realloc(grow(d->size + 1));
+            reallocData(grow(d->size + 1));
         d->data[d->size++] = c.unicode();
         d->data[d->size] = '\0';
         return *this;
@@ -526,9 +526,9 @@ private:
     static QTextCodec *codecForCStrings;
 #endif
     static int grow(int);
-    static void free(Data *);
-    void realloc();
-    void realloc(int alloc);
+    static void freeData(Data *);
+    void reallocData();
+    void reallocData(int alloc);
     void expand(int i);
     void updateProperties() const;
     QString multiArg(int numArgs, const QString **args) const;
@@ -617,7 +617,7 @@ inline QChar *QString::data()
 inline const QChar *QString::constData() const
 { return reinterpret_cast<const QChar*>(d->data); }
 inline void QString::detach()
-{ if (d->ref != 1 || d->data != d->array) realloc(); }
+{ if (d->ref != 1 || d->data != d->array) reallocData(); }
 inline bool QString::isDetached() const
 { return d->ref == 1; }
 inline QString &QString::operator=(const QLatin1String &s)
@@ -770,8 +770,8 @@ inline void QCharRef::setCell(uchar acell) { QChar(*this).setCell(acell); }
 
 
 inline QString::QString() : d(&shared_null) { d->ref.ref(); }
-inline QString::~QString() { if (!d->ref.deref()) free(d); }
-inline void QString::reserve(int asize) { if (d->ref != 1 || asize > d->alloc) realloc(asize); d->capacity = 1;}
+inline QString::~QString() { if (!d->ref.deref()) freeData(d); }
+inline void QString::reserve(int asize) { if (d->ref != 1 || asize > d->alloc) reallocData(asize); d->capacity = 1;}
 inline QString &QString::setUtf16(const ushort *autf16, int asize)
 { return setUnicode(reinterpret_cast<const QChar *>(autf16), asize); }
 inline QCharRef QString::operator[](int i)

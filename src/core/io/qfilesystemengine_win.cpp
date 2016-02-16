@@ -180,7 +180,7 @@ public:
 
 SidCleanup::~SidCleanup()
 {
-    qFree(currentUserSID);
+    free(currentUserSID);
     currentUserSID = 0;
 
     // worldSID was allocated with AllocateAndInitializeSid so it needs to be freed with FreeSid
@@ -231,15 +231,15 @@ static void resolveLibs()
                 // doing a dummy GetTokenInformation call.
                 ::GetTokenInformation(token, TokenUser, 0, 0, &retsize);
                 if (retsize) {
-                    void *tokenBuffer = qMalloc(retsize);
+                    void *tokenBuffer = malloc(retsize);
                     if (::GetTokenInformation(token, TokenUser, tokenBuffer, retsize, &retsize)) {
                         PSID tokenSid = reinterpret_cast<PTOKEN_USER>(tokenBuffer)->User.Sid;
                         DWORD sidLen = ::GetLengthSid(tokenSid);
-                        currentUserSID = reinterpret_cast<PSID>(qMalloc(sidLen));
+                        currentUserSID = reinterpret_cast<PSID>(malloc(sidLen));
                         if (::CopySid(sidLen, currentUserSID, tokenSid))
                             ptrBuildTrusteeWithSidW(&currentUserTrusteeW, currentUserSID);
                     }
-                    qFree(tokenBuffer);
+                    free(tokenBuffer);
                 }
                 ::CloseHandle(token);
             }
@@ -314,7 +314,7 @@ static QString readSymLink(const QFileSystemEntry &link)
                                0);
     if (handle != INVALID_HANDLE_VALUE) {
         DWORD bufsize = MAXIMUM_REPARSE_DATA_BUFFER_SIZE;
-        REPARSE_DATA_BUFFER *rdb = (REPARSE_DATA_BUFFER*)qMalloc(bufsize);
+        REPARSE_DATA_BUFFER *rdb = (REPARSE_DATA_BUFFER*)malloc(bufsize);
         DWORD retsize = 0;
         if (::DeviceIoControl(handle, FSCTL_GET_REPARSE_POINT, 0, 0, rdb, bufsize, &retsize, 0)) {
             if (rdb->ReparseTag == IO_REPARSE_TAG_MOUNT_POINT) {
@@ -332,7 +332,7 @@ static QString readSymLink(const QFileSystemEntry &link)
             if (result.size() > 4 && result.at(0) == QLatin1Char('\\') && result.at(2) == QLatin1Char('?') && result.at(3) == QLatin1Char('\\'))
                 result = result.mid(4);
         }
-        qFree(rdb);
+        free(rdb);
         CloseHandle(handle);
 
 #if !defined(QT_NO_LIBRARY)

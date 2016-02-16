@@ -79,7 +79,7 @@ struct QScopedPointerArrayDeleter
 
 struct QScopedPointerPodDeleter
 {
-    static inline void cleanup(void *pointer) { if (pointer) qFree(pointer); }
+    static inline void cleanup(void *pointer) { if (pointer) free(pointer); }
 };
 
 template <typename T, typename Cleanup = QScopedPointerDeleter<T> >

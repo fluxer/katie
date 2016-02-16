@@ -41,7 +41,7 @@ SyntaxChecker::SyntaxChecker():
 SyntaxChecker::~SyntaxChecker()
 {
     if (stack_size) {
-        qFree(state_stack);
+        free(state_stack);
     }
 }
 
