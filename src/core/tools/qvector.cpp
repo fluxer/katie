@@ -54,32 +54,24 @@ static inline int alignmentThreshold()
 
 QVectorData QVectorData::shared_null = { Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, true, false, 0 };
 
-QVectorData *QVectorData::malloc(int sizeofTypedData, int size, int sizeofT, QVectorData *init)
-{
-    QVectorData* p = (QVectorData *)qMalloc(sizeofTypedData + (size - 1) * sizeofT);
-    Q_CHECK_PTR(p);
-    ::memcpy(p, init, sizeofTypedData + (qMin(size, init->alloc) - 1) * sizeofT);
-    return p;
-}
-
 QVectorData *QVectorData::allocate(int size, int alignment)
 {
-    return static_cast<QVectorData *>(alignment > alignmentThreshold() ? qMallocAligned(size, alignment) : qMalloc(size));
+    return static_cast<QVectorData *>(alignment > alignmentThreshold() ? qMallocAligned(size, alignment) : malloc(size));
 }
 
 QVectorData *QVectorData::reallocate(QVectorData *x, int newsize, int oldsize, int alignment)
 {
     if (alignment > alignmentThreshold())
         return static_cast<QVectorData *>(qReallocAligned(x, newsize, oldsize, alignment));
-    return static_cast<QVectorData *>(qRealloc(x, newsize));
+    return static_cast<QVectorData *>(realloc(x, newsize));
 }
 
-void QVectorData::free(QVectorData *x, int alignment)
+void QVectorData::freeData(QVectorData *x, int alignment)
 {
     if (alignment > alignmentThreshold())
         qFreeAligned(x);
     else
-        qFree(x);
+        free(x);
 }
 
 int QVectorData::grow(int sizeofTypedData, int size, int sizeofT, bool excessive)

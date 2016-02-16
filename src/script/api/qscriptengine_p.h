@@ -610,7 +610,7 @@ inline QScriptValuePrivate *QScriptEnginePrivate::allocateScriptValuePrivate(siz
         --freeScriptValuesCount;
         return p;
     }
-    return reinterpret_cast<QScriptValuePrivate*>(qMalloc(size));
+    return reinterpret_cast<QScriptValuePrivate*>(malloc(size));
 }
 
 inline void QScriptEnginePrivate::freeScriptValuePrivate(QScriptValuePrivate *p)
@@ -620,7 +620,7 @@ inline void QScriptEnginePrivate::freeScriptValuePrivate(QScriptValuePrivate *p)
         freeScriptValues = p;
         ++freeScriptValuesCount;
     } else {
-        qFree(p);
+        free(p);
     }
 }
 
@@ -809,7 +809,7 @@ inline void* QScriptValuePrivate::operator new(size_t size, QScriptEnginePrivate
 {
     if (engine)
         return engine->allocateScriptValuePrivate(size);
-    return qMalloc(size);
+    return malloc(size);
 }
 
 inline void QScriptValuePrivate::operator delete(void *ptr)
@@ -818,7 +818,7 @@ inline void QScriptValuePrivate::operator delete(void *ptr)
     if (d->engine)
         d->engine->freeScriptValuePrivate(d);
     else
-        qFree(d);
+        free(d);
 }
 
 inline void QScriptEnginePrivate::saveException(JSC::ExecState *exec, JSC::JSValue *val)

@@ -78,17 +78,13 @@ struct Q_CORE_EXPORT QListData {
 
     Data *detach(int alloc);
     Data *detach_grow(int *i, int n);
-    Data *detach(); // remove in 5.0
-    Data *detach2(); // remove in 5.0
-    Data *detach3(); // remove in 5.0
-    void realloc(int alloc);
+    void reallocData(int alloc);
     static Data shared_null;
     Data *d;
     void **erase(void **xi);
     void **append(int n);
     void **append();
     void **append(const QListData &l);
-    void **append2(const QListData &l); // remove in 5.0
     void **prepend();
     void **insert(int i);
     void remove(int i);
@@ -338,7 +334,7 @@ private:
     Node *detach_helper_grow(int i, int n);
     void detach_helper(int alloc);
     void detach_helper();
-    void free(QListData::Data *d);
+    void freeData(QListData::Data *d);
 
     void node_construct(Node *n, const T &t);
     void node_destruct(Node *n);
@@ -485,7 +481,7 @@ Q_OUTOFLINE_TEMPLATE void QList<T>::reserve(int alloc)
         if (d->ref != 1)
             detach_helper(alloc);
         else
-            p.realloc(alloc);
+            p.reallocData(alloc);
     }
 }
 
@@ -667,7 +663,7 @@ Q_OUTOFLINE_TEMPLATE typename QList<T>::Node *QList<T>::detach_helper_grow(int i
         node_copy(reinterpret_cast<Node *>(p.begin()),
                   reinterpret_cast<Node *>(p.begin() + i), n);
     } QT_CATCH(...) {
-        qFree(d);
+        free(d);
         d = x;
         QT_RETHROW;
     }
@@ -677,7 +673,7 @@ Q_OUTOFLINE_TEMPLATE typename QList<T>::Node *QList<T>::detach_helper_grow(int i
     } QT_CATCH(...) {
         node_destruct(reinterpret_cast<Node *>(p.begin()),
                       reinterpret_cast<Node *>(p.begin() + i));
-        qFree(d);
+        free(d);
         d = x;
         QT_RETHROW;
     }
@@ -696,7 +692,7 @@ Q_OUTOFLINE_TEMPLATE void QList<T>::detach_helper(int alloc)
     QT_TRY {
         node_copy(reinterpret_cast<Node *>(p.begin()), reinterpret_cast<Node *>(p.end()), n);
     } QT_CATCH(...) {
-        qFree(d);
+        free(d);
         d = x;
         QT_RETHROW;
     }
@@ -736,13 +732,12 @@ Q_OUTOFLINE_TEMPLATE bool QList<T>::operator==(const QList<T> &l) const
     return true;
 }
 
-// ### Qt 5: rename freeData() to avoid confusion with std::free()
 template <typename T>
-Q_OUTOFLINE_TEMPLATE void QList<T>::free(QListData::Data *data)
+Q_OUTOFLINE_TEMPLATE void QList<T>::freeData(QListData::Data *data)
 {
     node_destruct(reinterpret_cast<Node *>(data->array + data->begin),
                   reinterpret_cast<Node *>(data->array + data->end));
-    qFree(data);
+    free(data);
 }
 
 
@@ -809,7 +804,7 @@ Q_OUTOFLINE_TEMPLATE QList<T> &QList<T>::operator+=(const QList<T> &l)
         } else {
             Node *n = (d->ref != 1)
                       ? detach_helper_grow(INT_MAX, l.size())
-                      : reinterpret_cast<Node *>(p.append2(l.p));
+                      : reinterpret_cast<Node *>(p.append(l.p));
             QT_TRY {
                 node_copy(n, reinterpret_cast<Node *>(p.end()),
                           reinterpret_cast<Node *>(l.p.begin()));

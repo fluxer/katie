@@ -61,7 +61,7 @@ QContiguousCacheData *QContiguousCacheData::allocate(int size, int alignment)
     return static_cast<QContiguousCacheData *>(qMallocAligned(size, alignment));
 }
 
-void QContiguousCacheData::free(QContiguousCacheData *data)
+void QContiguousCacheData::freeData(QContiguousCacheData *data)
 {
     qFreeAligned(data);
 }

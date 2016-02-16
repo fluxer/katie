@@ -69,13 +69,9 @@ struct Q_CORE_EXPORT QVectorData
 #endif
 
     static QVectorData shared_null;
-    // ### Qt 5: rename to 'allocate()'. The current name causes problems for
-    // some debugges when the QVector is member of a class within an unnamed namespace.
-    // ### Qt 5: can be removed completely. (Ralf)
-    static QVectorData *malloc(int sizeofTypedData, int size, int sizeofT, QVectorData *init);
     static QVectorData *allocate(int size, int alignment);
     static QVectorData *reallocate(QVectorData *old, int newsize, int oldsize, int alignment);
-    static void free(QVectorData *data, int alignment);
+    static void freeData(QVectorData *data, int alignment);
     static int grow(int sizeofTypedData, int size, int sizeofT, bool excessive);
 };
 
@@ -85,7 +81,7 @@ struct QVectorTypedData : private QVectorData
   // as this would break strict aliasing rules. (in the case of shared_null)
     T array[1];
 
-    static inline void free(QVectorTypedData<T> *x, int alignment) { QVectorData::free(static_cast<QVectorData *>(x), alignment); }
+    static inline void free(QVectorTypedData<T> *x, int alignment) { QVectorData::freeData(static_cast<QVectorData *>(x), alignment); }
 };
 
 class QRegion;

@@ -1378,7 +1378,7 @@ static int buildMetaObject(QMetaObjectBuilderPrivate *d, char *buf,
 QMetaObject *QMetaObjectBuilder::toMetaObject() const
 {
     int size = buildMetaObject(d, 0, false);
-    char *buf = reinterpret_cast<char *>(qMalloc(size));
+    char *buf = reinterpret_cast<char *>(malloc(size));
     memset(buf, 0, size);
     buildMetaObject(d, buf, false);
     return reinterpret_cast<QMetaObject *>(buf);

@@ -231,7 +231,7 @@ QList<int> QAudioDeviceInfoInternal::channelsList()
                                     &propSize, 
                                     0) == noErr) {
 
-        AudioBufferList* audioBufferList = static_cast<AudioBufferList*>(qMalloc(propSize));
+        AudioBufferList* audioBufferList = static_cast<AudioBufferList*>(malloc(propSize));
 
         if (audioBufferList != 0) {
             if (AudioDeviceGetProperty(deviceId, 
@@ -247,7 +247,7 @@ QList<int> QAudioDeviceInfoInternal::channelsList()
                 }
             }
 
-            qFree(audioBufferList);
+            free(audioBufferList);
         }
     }
 

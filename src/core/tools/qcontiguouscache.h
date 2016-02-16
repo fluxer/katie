@@ -69,7 +69,7 @@ struct Q_CORE_EXPORT QContiguousCacheData
     //  (such as long double on 64-bit platforms, __int128, __float128)
 
     static QContiguousCacheData *allocate(int size, int alignment);
-    static void free(QContiguousCacheData *data);
+    static void freeData(QContiguousCacheData *data);
 
 #ifdef QT_QCONTIGUOUSCACHE_DEBUG
     void dump() const;
@@ -82,7 +82,7 @@ struct QContiguousCacheTypedData: private QContiguousCacheData
     // private inheritance to avoid aliasing warningss
     T array[1];
 
-    static inline void free(QContiguousCacheTypedData *data) { QContiguousCacheData::free(data); }
+    static inline void free(QContiguousCacheTypedData *data) { QContiguousCacheData::freeData(data); }
 };
 
 template<typename T>

@@ -202,7 +202,7 @@ QPixmap QPixmap::fromWinHBITMAP(HBITMAP bitmap, HBitmapFormat format)
 
     QImage result;
     // Get bitmap bits
-    uchar *data = (uchar *) qMalloc(bmi.bmiHeader.biSizeImage);
+    uchar *data = (uchar *) malloc(bmi.bmiHeader.biSizeImage);
 
     HDC display_dc = GetDC(0);
     if (GetDIBits(display_dc, bitmap, 0, h, data, &bmi, DIB_RGB_COLORS)) {
@@ -235,7 +235,7 @@ QPixmap QPixmap::fromWinHBITMAP(HBITMAP bitmap, HBitmapFormat format)
         qWarning("QPixmap::fromWinHBITMAP(), failed to get bitmap bits");
     }
     ReleaseDC(0, display_dc);
-    qFree(data);
+    free(data);
     return fromImage(result);
 }
 
@@ -297,7 +297,7 @@ static QImage qt_fromWinHBITMAP(HDC hdc, HBITMAP bitmap, int w, int h)
         return image;
 
     // Get bitmap bits
-    uchar *data = (uchar *) qMalloc(bmi.bmiHeader.biSizeImage);
+    uchar *data = (uchar *) malloc(bmi.bmiHeader.biSizeImage);
 
     if (GetDIBits(hdc, bitmap, 0, h, data, &bmi, DIB_RGB_COLORS)) {
         // Create image and copy data into image.
@@ -309,7 +309,7 @@ static QImage qt_fromWinHBITMAP(HDC hdc, HBITMAP bitmap, int w, int h)
     } else {
         qWarning("qt_fromWinHBITMAP(), failed to get bitmap bits");
     }
-    qFree(data);
+    free(data);
 
     return image;
 }

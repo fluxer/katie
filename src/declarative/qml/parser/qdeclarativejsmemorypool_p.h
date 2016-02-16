@@ -78,9 +78,9 @@ public:
 
     virtual ~MemoryPool() {
         for (int index = 0; index < m_blockIndex + 1; ++index)
-            qFree(m_storage[index]);
+            free(m_storage[index]);
 
-        qFree(m_storage);
+        free(m_storage);
     }
 
     char *allocate(int bytes) {
@@ -89,8 +89,8 @@ public:
             ++m_blockIndex;
             m_currentBlockSize = defaultBlockSize << m_blockIndex;
 
-            m_storage = reinterpret_cast<char**>(qRealloc(m_storage, sizeof(char*) * (1 + m_blockIndex)));
-            m_currentBlock = m_storage[m_blockIndex] = reinterpret_cast<char*>(qMalloc(m_currentBlockSize));
+            m_storage = reinterpret_cast<char**>(realloc(m_storage, sizeof(char*) * (1 + m_blockIndex)));
+            m_currentBlock = m_storage[m_blockIndex] = reinterpret_cast<char*>(malloc(m_currentBlockSize));
             ::memset(m_currentBlock, 0, m_currentBlockSize);
 
             m_currentIndex = (8 - quintptr(m_currentBlock)) & 7; // ensure first chunk is 64-bit aligned

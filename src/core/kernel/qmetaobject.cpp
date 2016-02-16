@@ -1615,9 +1615,9 @@ bool QMetaMethod::invoke(QObject *object,
         }
 
         int nargs = 1; // include return type
-        void **args = (void **) qMalloc(paramCount * sizeof(void *));
+        void **args = (void **) malloc(paramCount * sizeof(void *));
         Q_CHECK_PTR(args);
-        int *types = (int *) qMalloc(paramCount * sizeof(int));
+        int *types = (int *) malloc(paramCount * sizeof(int));
         Q_CHECK_PTR(types);
         types[0] = 0; // return type
         args[0] = 0;
@@ -1634,8 +1634,8 @@ bool QMetaMethod::invoke(QObject *object,
                     if (types[x] && args[x])
                         QMetaType::destroy(types[x], args[x]);
                 }
-                qFree(types);
-                qFree(args);
+                free(types);
+                free(args);
                 return false;
             }
         }

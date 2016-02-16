@@ -3103,7 +3103,7 @@ void *qReallocAligned(void *oldptr, size_t newsize, size_t oldsize, size_t align
     void *actualptr = oldptr ? static_cast<void **>(oldptr)[-1] : 0;
     if (alignment <= sizeof(void*)) {
         // special, fast case
-        void **newptr = static_cast<void **>(qRealloc(actualptr, newsize + sizeof(void*)));
+        void **newptr = static_cast<void **>(realloc(actualptr, newsize + sizeof(void*)));
         if (!newptr)
             return 0;
         if (newptr == actualptr) {
@@ -3123,7 +3123,7 @@ void *qReallocAligned(void *oldptr, size_t newsize, size_t oldsize, size_t align
     // However, we need to store the actual pointer, so we need to allocate actually size +
     // alignment anyway.
 
-    void *real = qRealloc(actualptr, newsize + alignment);
+    void *real = realloc(actualptr, newsize + alignment);
     if (!real)
         return 0;
 
