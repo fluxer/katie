@@ -422,7 +422,7 @@ Q_INLINE_TEMPLATE QList<T> &QList<T>::operator=(const QList<T> &l)
         QListData::Data *o = l.d;
         o->ref.ref();
         if (!d->ref.deref())
-            free(d);
+            freeData(d);
         d = o;
         if (!d->sharable)
             detach_helper();
@@ -711,7 +711,7 @@ template <typename T>
 Q_OUTOFLINE_TEMPLATE QList<T>::~QList()
 {
     if (!d->ref.deref())
-        free(d);
+        freeData(d);
 }
 
 template <typename T>

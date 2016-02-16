@@ -64,7 +64,6 @@ elseif(${KATIE_PLATFORM} STREQUAL "win32")
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qdialogsbinarycompat_win.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog_win.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_win.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_win.cpp

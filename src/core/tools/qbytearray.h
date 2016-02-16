@@ -345,8 +345,6 @@ public:
     int length() const { return d->size; }
     bool isNull() const;
 
-    // compatibility
-
 private:
     operator QNoImplicitBoolCast() const;
     static Data shared_null;
