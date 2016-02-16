@@ -35,7 +35,7 @@ Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,
 QTBUG-21548, QTBUG-6133, QTBUG-18188, QTBUG-36767, QTBUG-35387, QTBUG-37035,
 QTBUG-28321, QTBUG-21993, QTBUG-26590, QTBUG-2124, QTBUG-20482,
-QTBUG-41361, QTBUG-40153, QTBUG-35479
+QTBUG-41361, QTBUG-40153, QTBUG-35479, QTBUG-1628
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because
