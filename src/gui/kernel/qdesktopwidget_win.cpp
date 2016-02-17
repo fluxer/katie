@@ -262,7 +262,7 @@ int QDesktopWidget::primaryScreen() const
     return d_func()->primaryScreen;
 }
 
-int QDesktopWidget::numScreens() const
+int QDesktopWidget::screenCount() const
 {
     return d_func()->screenCount;
 }

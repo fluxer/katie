@@ -174,11 +174,6 @@ int QDesktopWidget::primaryScreen() const
     return qdesktopWidgetImplementation()->appScreen;
 }
 
-int QDesktopWidget::numScreens() const
-{
-    return qdesktopWidgetImplementation()->screenCount;
-}
-
 QWidget *QDesktopWidget::screen(int)
 {
     return this;

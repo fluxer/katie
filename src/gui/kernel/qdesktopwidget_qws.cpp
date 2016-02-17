@@ -67,7 +67,7 @@ int QDesktopWidget::primaryScreen() const
     return 0;
 }
 
-int QDesktopWidget::numScreens() const
+int QDesktopWidget::screenCount() const
 {
     QScreen *screen = QScreen::instance();
     if (!screen)

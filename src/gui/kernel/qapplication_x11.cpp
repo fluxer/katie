@@ -3892,7 +3892,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
 
                 // emit the workAreaResized() signal
                 QDesktopWidget *desktop = QApplication::desktop();
-                int numScreens = desktop->numScreens();
+                int numScreens = desktop->screenCount();
                 for (int i = 0; i < numScreens; ++i)
                     emit desktop->workAreaResized(i);
             }

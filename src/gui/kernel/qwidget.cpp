@@ -6815,7 +6815,7 @@ bool QWidget::restoreGeometry(const QByteArray &geometry)
     }
 
     const QDesktopWidget * const desktop = QApplication::desktop();
-    if (restoredScreenNumber >= desktop->numScreens())
+    if (restoredScreenNumber >= desktop->screenCount())
         restoredScreenNumber = desktop->primaryScreen();
 
     const QRect availableGeometry = desktop->availableGeometry(restoredScreenNumber);

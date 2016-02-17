@@ -64,7 +64,6 @@ public:
 
     bool isVirtualDesktop() const;
 
-    int numScreens() const;
     int screenCount() const;
     int primaryScreen() const;
 
@@ -98,9 +97,6 @@ private:
     friend class QApplication;
     friend class QApplicationPrivate;
 };
-
-inline int QDesktopWidget::screenCount() const
-{ return numScreens(); }
 
 QT_END_NAMESPACE
 

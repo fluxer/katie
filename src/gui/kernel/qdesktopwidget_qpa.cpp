@@ -107,7 +107,7 @@ int QDesktopWidget::primaryScreen() const
     return 0;
 }
 
-int QDesktopWidget::numScreens() const
+int QDesktopWidget::screenCount() const
 {
     QPlatformIntegration *pi = QApplicationPrivate::platformIntegration();
     return qMax(pi->screens().size(), 1);
