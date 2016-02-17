@@ -122,11 +122,6 @@ static bool qt_pixmap_thread_test()
     return true;
 }
 
-void QPixmap::init(int w, int h, Type type)
-{
-    init(w, h, int(type));
-}
-
 extern QApplication::Type qt_appType;
 
 void QPixmap::init(int w, int h, int type)
@@ -212,17 +207,6 @@ QPixmap::QPixmap(const QSize &size)
         init(0, 0, QPixmapData::PixmapType);
     else
         init(size.width(), size.height(), QPixmapData::PixmapType);
-}
-
-/*!
-  \internal
-*/
-QPixmap::QPixmap(const QSize &s, Type type)
-{
-    if (!qt_pixmap_thread_test())
-        init(0, 0, type);
-    else
-        init(s.width(), s.height(), type);
 }
 
 /*!

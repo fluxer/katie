@@ -212,11 +212,6 @@ private:
 
     bool doImageIO(QImageWriter *io, int quality) const;
 
-    // ### Qt5: remove the following three lines
-    enum Type { PixmapType, BitmapType }; // must match QPixmapData::PixelType
-    QPixmap(const QSize &s, Type);
-    void init(int, int, Type = PixmapType);
-
     QPixmap(const QSize &s, int type);
     void init(int, int, int);
     void deref();
