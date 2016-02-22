@@ -7,3 +7,4 @@ do not rebuild phonon on prefix change
 QT_MOC_CPP seems unused but checked for in two headers
 manual pages for lconvert, qcollectiongenerator, qhelpgenerator, rcc and uic
 new logo, branding, copyright header changes, etc.
+QCache must implement begin() and end() for qDeleteAll()

@@ -182,7 +182,7 @@ add_definitions(
 )
 
 # this is how Qt4 does it
-if(NOT "${KATIE_PLATFORM}" STREQUAL "integrity" AND NOT MINGW)
+if(NOT KATIE_PLATFORM STREQUAL "integrity" AND NOT MINGW)
     set(QT_LARGEFILE_SUPPORT 64)
     add_definitions(
         -D_LARGEFILE64_SOURCE
@@ -427,7 +427,7 @@ set_package_properties(VLC PROPERTIES
 # module for Qt Platform Abstraction
 # find_package(QPA)
 
-if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac" AND NOT KATIE_BOOTSTRAP)
+if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)" AND NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     find_package(Threads REQUIRED)
 
@@ -444,10 +444,6 @@ if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac" AND NOT KATIE_BOOTSTRAP)
     )
 
     set_package_properties(Freetype PROPERTIES
-        TYPE REQUIRED
-    )
-
-    set_package_properties(X11 PROPERTIES
         TYPE REQUIRED
     )
 endif()
