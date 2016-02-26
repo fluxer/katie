@@ -235,18 +235,6 @@ QString Qt::convertFromPlainText(const QString &plain, Qt::WhiteSpaceMode mode)
     return rich;
 }
 
-#ifndef QT_NO_TEXTCODEC
-/*!
-    \internal
-
-    This function is defined in the \c <QTextDocument> header file.
-*/
-QTextCodec *Qt::codecForHtml(const QByteArray &ba)
-{
-    return QTextCodec::codecForHtml(ba);
-}
-#endif
-
 /*!
     \class QTextDocument
     \reentrant

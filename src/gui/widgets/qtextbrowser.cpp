@@ -284,7 +284,7 @@ void QTextBrowserPrivate::setSource(const QUrl &url)
         } else if (data.type() == QVariant::ByteArray) {
 #ifndef QT_NO_TEXTCODEC
             QByteArray ba = data.toByteArray();
-            QTextCodec *codec = Qt::codecForHtml(ba);
+            QTextCodec *codec = QTextCodec::codecForHtml(ba);
             txt = codec->toUnicode(ba);
 #else
 	    txt = data.toString();
