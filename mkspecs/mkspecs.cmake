@@ -14,7 +14,10 @@ set(KATIE_TOOLS "moc uic rcc qdbusxml2cpp qdbuscpp2xml qhelpgenerator qcollectio
 set(QT_LICENSE "Open Source")
 set(QT_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
 
-set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
+# KatieConfig overrides that
+if(NOT KATIE_MKSPECS_DIR)
+    set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
+endif()
 
 # TODO: more platforms/architectures support
 include_directories(${KATIE_MKSPECS_DIR})
