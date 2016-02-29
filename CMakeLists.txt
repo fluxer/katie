@@ -7,9 +7,9 @@
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
 #     find -name CMakeLists.txt -exec grep -E 'TODO|FIXME' {} +
 
-project(Katie C CXX ASM)
-
 cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+
+project(Katie C CXX ASM)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_AUTOMOC FALSE)
@@ -150,7 +150,6 @@ katie_generate_string("qt_stngpath=${QT_SETTINGS_PATH}" "QT_SETTINGS_PATH_STR" "
 katie_generate_string("qt_docspath=${QT_DOCUMENTATION_PATH}" "QT_DOCUMENTATION_PATH_STR" "QT_DOCUMENTATION_PATH_INST")
 katie_generate_string("${QT_EXAMPLES_PATH}" "QT_EXAMPLES_PATH_STR" "QT_EXAMPLES_PATH_INST")
 katie_generate_string("${QT_DEMOS_PATH}" "QT_DEMOS_PATH_STR" "QT_DEMOS_PATH_INST")
-
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 framework")
 set(CPACK_PACKAGE_VENDOR "Katie")
