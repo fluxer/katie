@@ -122,8 +122,6 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
             ${GLIB2_LIBRARIES}
         )
         include_directories(${GLIB2_INCLUDES})
-    else()
-        add_definitions(-DQT_NO_GLIB)
     endif()
     if(WITH_NAS AND NAS_FOUND)
         set(EXTRA_GUI_LIBS
@@ -274,8 +272,6 @@ elseif(KATIE_PLATFORM STREQUAL "qpa")
                 ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry_qpa.cpp
             )
         endif()
-    else()
-        add_definitions(-DQT_NO_GLIB)
     endif()
 elseif(KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS

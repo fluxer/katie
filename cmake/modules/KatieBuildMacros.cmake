@@ -114,6 +114,7 @@ function(KATIE_GENERATE_STRING INSTR OUTSTR OUTSTR2)
 
     if(OUTSTR2)
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" instpath ${INSTR})
+        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" instpath ${instpath})
         set(${OUTSTR2} "${instpath}" PARENT_SCOPE)
     endif()
 endfunction()

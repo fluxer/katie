@@ -610,7 +610,7 @@ configure_file(
 
 install(
     DIRECTORY mkspecs
-    DESTINATION ${QT_DATA_PATH_INST}/cmake/Katie
+    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
     COMPONENT Devel
 )
 
@@ -619,22 +619,21 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
-    DESTINATION
-    ${QT_DATA_PATH_INST}/cmake/Katie
+    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
     COMPONENT Devel
 )
 
 install(
     EXPORT KatieLibraryTargets
     NAMESPACE Katie::
-    DESTINATION ${QT_DATA_PATH_INST}/cmake/Katie
+    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
     FILE KatieLibraryTargets.cmake
 )
 
 install(
     EXPORT KatieBinaryTargets
     NAMESPACE Katie::
-    DESTINATION ${QT_DATA_PATH_INST}/cmake/Katie
+    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
     FILE KatieBinaryTargets.cmake
 )
 
