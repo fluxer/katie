@@ -37,6 +37,8 @@ prepare() {
         >> katie/mkspecs/linux/vendor.cmake
     echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
         >> katie/mkspecs/linux/vendor.cmake
+    echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
+        >> katie/mkspecs/linux/vendor.cmake
 }
 
 build() {

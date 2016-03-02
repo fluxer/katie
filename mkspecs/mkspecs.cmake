@@ -14,7 +14,10 @@ set(KATIE_TOOLS "moc uic rcc qdbusxml2cpp qdbuscpp2xml qhelpgenerator qcollectio
 set(QT_LICENSE "Open Source")
 set(QT_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
 
-set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
+# KatieConfig overrides that
+if(NOT KATIE_MKSPECS_DIR)
+    set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
+endif()
 
 # TODO: more platforms/architectures support
 include_directories(${KATIE_MKSPECS_DIR})
@@ -97,6 +100,7 @@ set(PROFILE_INSTALL_DIR "etc/profile.d")
 set(DBUS_INTERFACES_INSTALL_DIR "etc/dbus-1/interfaces")
 set(KDE4_SERVICES_INSTALL_DIR "share/kde4/services/phononbackends")
 set(MAN_INSTALL_DIR "share/man")
+set(CMAKE_INSTALL_DIR "cmake")
 
 if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
