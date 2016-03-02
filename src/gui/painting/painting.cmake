@@ -58,6 +58,11 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdatabuffer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qfixed_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
 
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_x86_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx_p.h
@@ -115,6 +120,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_blitter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblittable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
 )
 
 katie_setup_sources(
@@ -162,30 +172,6 @@ if(KATIE_PLATFORM STREQUAL "win32")
         ${EXTRA_GUI_LIBS}
         msimg32
     )
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_qws_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/painting/qwindowsurface_qws_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_qws.cpp
-    )
-    if(WITH_QTOPIA)
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_qws_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_qws.cpp
-        )
-        add_definitions(-DQTOPIA_PRINTENGINE)
-    endif()
 elseif(KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS
         ${GUI_HEADERS}
@@ -208,50 +194,15 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
     )
 endif()
 
-if(NOT KATIE_PLATFORM STREQUAL "qpa")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
-    )
-else()
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_qpa.cpp
-    )
-endif()
-
-if((UNIX AND NOT KATIE_PLATFORM STREQUAL "mac") OR KATIE_PLATFORM STREQUAL "qpa")
+if(UNIX AND NOT KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups_p.h
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
     )
-    if(WITH_QTOPIA)
-        katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
-    else()
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
-        )
-    endif()
 endif()

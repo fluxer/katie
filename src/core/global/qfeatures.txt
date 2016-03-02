@@ -958,22 +958,6 @@ Requires:
 Name: Freetype Font Engine
 SeeAlso: ???
 
-Feature: QWS_QPF
-Description: Supports Qt's pre-rendered fonts, a light-weight non-scalable font format
-specific to Qt for Embedded Linux.
-Section: Fonts
-Requires:
-Name: Qt Prerendered Font Format
-SeeAlso: ???
-
-Feature: QWS_QPF2
-Description: Supports Qt's second generation of pre-rendered fonts, a light-weight
-non-scalable font format specific to Qt for Embedded Linux.
-Section: Fonts
-Requires:
-Name: Qt Prerendered Font Format 2
-SeeAlso: ???
-
 # Internationalization
 
 Feature: TEXTCODECPLUGIN

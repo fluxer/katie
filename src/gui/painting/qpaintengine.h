@@ -255,23 +255,9 @@ private:
 #ifndef QT_NO_FREETYPE
     friend class QFontEngineFT;
 #endif
-#ifndef QT_NO_QWS_QPF
-    friend class QFontEngineQPF1;
-#endif
-#ifndef QT_NO_QWS_QPF2
-    friend class QFontEngineQPF;
-#endif
     friend class QPSPrintEngine;
     friend class QMacPrintEngine;
     friend class QMacPrintEnginePrivate;
-#ifdef Q_WS_QWS
-    friend class QtopiaPrintEngine;
-    friend class QtopiaPrintEnginePrivate;
-    friend class QProxyFontEngine;
-#endif
-#ifdef Q_WS_QPA
-    friend class QFontEngineQPA;
-#endif
     friend class QPainter;
     friend class QPainterPrivate;
     friend class QWidget;

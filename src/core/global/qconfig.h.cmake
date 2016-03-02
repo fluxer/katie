@@ -47,6 +47,7 @@
 #define QT_NO_STYLE_S60
 #define QT_NO_PHONON
 #define QT_NO_WIN_ACTIVEQT
+#define QT_NO_QWS_QPF2
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -95,7 +96,6 @@
 
 /* Fonts */
 #cmakedefine QT_NO_FREETYPE
-#cmakedefine QT_NO_QWS_QPF2
 
 /* Images */
 #cmakedefine QT_NO_IMAGEFORMATPLUGIN

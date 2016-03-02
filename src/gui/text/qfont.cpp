@@ -68,10 +68,6 @@
 #endif
 #ifdef Q_WS_QWS
 #include "qscreen_qws.h"
-#if !defined(QT_NO_QWS_QPF2)
-#include <qfile.h>
-#include "qfontengine_qpf_p.h"
-#endif
 #endif
 #ifdef Q_WS_QPA
 #include <QtGui/qplatformscreen_qpa.h>
@@ -2765,17 +2761,6 @@ void QFontCache::clear()
     engineCache.clear();
 }
 
-#if defined(Q_WS_QWS) && !defined(QT_NO_QWS_QPF2)
-void QFontCache::removeEngineForFont(const QByteArray &_fontName)
-{
-
-    /* This could be optimized but the code becomes much more complex if we want to handle multi
-     * font engines and it is probably not worth it. Therefore we just clear the entire font cache.
-     */
-    Q_UNUSED(_fontName);
-    clear();
-}
-#endif
 
 QFontEngineData *QFontCache::findEngineData(const Key &key) const
 {

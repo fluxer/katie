@@ -700,7 +700,6 @@ public:
 
 #if defined(Q_WS_QWS)
     bool loadFromCache(const QString &fontPath);
-    void addQPF2File(const QByteArray &file);
 #endif // Q_WS_QWS
 #if defined(Q_WS_QWS) && !defined(QT_NO_FREETYPE)
     void addFont(const QString &familyname, const char *foundryname, int weight,

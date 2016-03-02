@@ -86,9 +86,7 @@ elseif(${KATIE_PLATFORM} STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_mac.mm
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qcolordialog_mac.mm
     )
-endif()
-
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|qpa)")
+elseif(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|qpa)")
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
@@ -101,29 +99,4 @@ if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|qpa)")
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
     )
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    if(WITH_QTOPIA)
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_qws.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
-        )
-        add_definitions(-DQTOPIA_PRINTDIALOG)
-    else()
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
-            ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui
-        )
-    endif()
 endif()

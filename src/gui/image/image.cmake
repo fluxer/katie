@@ -154,16 +154,6 @@ if(KATIE_PLATFORM STREQUAL "win32")
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_win.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_qws.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "qpa")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_qpa.cpp
-    )
 elseif(KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS
         ${GUI_HEADERS}

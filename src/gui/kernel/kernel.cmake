@@ -44,6 +44,8 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsoftkeymanager_common_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound_p.h
 )
 
 set(GUI_SOURCES
@@ -81,6 +83,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsoftkeymanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.cpp
 )
 
 if(UNIX AND WITH_X11 AND X11_FOUND)
@@ -170,113 +173,6 @@ elseif(KATIE_PLATFORM STREQUAL "wince")
         ${CMAKE_SOURCE_DIR}/core/kernel/qfunctions_wince.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguifunctions_wince.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_qws_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qclipboard_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsessionmanager_qws.cpp
-    )
-    if(WITH_GLIB2 AND GLIB2_FOUND)
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_qws_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_qws.cpp
-        )
-        set(EXTRA_GUI_LIBS
-            ${EXTRA_GUI_LIBS}
-            ${GLIB2_LIBRARIES}
-        )
-        include_directories(${GLIB2_INCLUDES})
-    endif()
-elseif(KATIE_PLATFORM STREQUAL "qpa")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgenericpluginfactory_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgenericplugin_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_qpa_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwindowsysteminterface_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwindowsysteminterface_qpa_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformintegration_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformscreen_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformintegrationfactory_qpa_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformintegrationplugin_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformwindow_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformwindowformat_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformglcontext_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_qpa_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformeventloopintegration_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformcursor_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformclipboard_qpa.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformnativeinterface_qpa.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qclipboard_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgenericpluginfactory_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgenericplugin_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwindowsysteminterface_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformintegration_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformscreen_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformintegrationfactory_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformintegrationplugin_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformwindow_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformwindowformat_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformeventloopintegration_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformglcontext_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformcursor_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformclipboard_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qplatformnativeinterface_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsessionmanager_qpa.cpp
-    )
-    if(WITH_GLIB2 AND GLIB2_FOUND)
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_qpa_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_qpa.cpp
-        )
-        set(EXTRA_GUI_LIBS
-            ${EXTRA_GUI_LIBS}
-            ${GLIB2_LIBRARIES}
-        )
-        include_directories(${GLIB2_INCLUDES})
-        if(KATIE_PLATFORM STREQUAL "blackberry")
-            set(GUI_HEADERS
-                ${GUI_HEADERS}
-                ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry_qpa_p.h
-            )
-            set(GUI_SOURCES
-                ${GUI_SOURCES}
-                ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry_qpa.cpp
-            )
-        endif()
-    else()
-        add_definitions(-DQT_NO_GLIB)
-    endif()
 elseif(KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS
         ${GUI_HEADERS}
@@ -334,17 +230,5 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         -framework AppKit
         -framework Carbon
         -lz
-    )
-endif()
-
-if(NOT KATIE_PLATFORM STREQUAL "qpa")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.cpp
     )
 endif()

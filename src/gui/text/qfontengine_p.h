@@ -110,12 +110,7 @@ public:
 
         // QWS types
         Freetype,
-        QPF1,
-        QPF2,
         Proxy,
-
-        // S60 types
-        S60FontEngine, // Cannot be simply called "S60". Reason is qt_s60Data.h
 
         DirectWrite,
 
@@ -301,49 +296,6 @@ inline uint qHash(const QFontEngine::FaceId &f)
 
 
 class QGlyph;
-
-#if defined(Q_WS_QWS)
-
-#ifndef QT_NO_QWS_QPF
-
-class QFontEngineQPF1Data;
-
-class QFontEngineQPF1 : public QFontEngine
-{
-public:
-    QFontEngineQPF1(const QFontDef&, const QString &fn);
-   ~QFontEngineQPF1();
-
-    virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs, QTextEngine::ShaperFlags flags) const;
-    virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
-
-    virtual void draw(QPaintEngine *p, qreal x, qreal y, const QTextItemInt &si);
-    virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path, QTextItem::RenderFlags flags);
-
-    virtual glyph_metrics_t boundingBox(const QGlyphLayout &glyphs);
-    virtual glyph_metrics_t boundingBox(glyph_t glyph);
-
-    virtual QFixed ascent() const;
-    virtual QFixed descent() const;
-    virtual QFixed leading() const;
-    virtual qreal maxCharWidth() const;
-    virtual qreal minLeftBearing() const;
-    virtual qreal minRightBearing() const;
-    virtual QFixed underlinePosition() const;
-    virtual QFixed lineThickness() const;
-
-    virtual Type type() const;
-
-    virtual bool canRender(const QChar *string, int len);
-    inline const char *name() const { return 0; }
-    virtual QImage alphaMapForGlyph(glyph_t);
-
-
-    QFontEngineQPF1Data *d;
-};
-#endif // QT_NO_QWS_QPF
-
-#endif // QWS
 
 
 class QFontEngineBox : public QFontEngine

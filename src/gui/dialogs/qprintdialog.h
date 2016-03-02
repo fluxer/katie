@@ -55,7 +55,7 @@ class QPrintDialogPrivate;
 class QPushButton;
 class QPrinter;
 
-#if defined (Q_OS_UNIX) && !defined(QTOPIA_PRINTDIALOG) && !defined(Q_WS_MAC)
+#if defined (Q_OS_UNIX) && !defined(Q_WS_MAC)
 class QUnixPrintWidgetPrivate;
 
 class Q_GUI_EXPORT QUnixPrintWidget : public QWidget
@@ -90,7 +90,7 @@ public:
     ~QPrintDialog();
 
     int exec();
-#if defined (Q_OS_UNIX) && !defined(QTOPIA_PRINTDIALOG) && !defined(Q_WS_MAC)
+#if defined (Q_OS_UNIX) && !defined(Q_WS_MAC)
     virtual void accept();
 #endif
     void done(int result);
@@ -112,12 +112,6 @@ public:
 #endif
     void open(QObject *receiver, const char *member);
 
-
-#ifdef QTOPIA_PRINTDIALOG
-public:
-    bool eventFilter(QObject *, QEvent *);
-#endif
-
 #ifdef Q_NO_USING_KEYWORD
     void accepted() { QDialog::accepted(); }
 #else
@@ -128,7 +122,6 @@ Q_SIGNALS:
     void accepted(QPrinter *printer);
 
 private:
-#ifndef QTOPIA_PRINTDIALOG
     Q_PRIVATE_SLOT(d_func(), void _q_chbPrintLastFirstToggled(bool))
 #if defined (Q_OS_UNIX) && !defined (Q_OS_MAC)
     Q_PRIVATE_SLOT(d_func(), void _q_collapseOrExpandDialog())
@@ -136,19 +129,6 @@ private:
 # if defined(Q_OS_UNIX) && !defined (Q_OS_MAC) && !defined(QT_NO_MESSAGEBOX)
     Q_PRIVATE_SLOT(d_func(), void _q_checkFields())
 # endif
-#else // QTOPIA_PRINTDIALOG
-    Q_PRIVATE_SLOT(d_func(), void _q_okClicked())
-    Q_PRIVATE_SLOT(d_func(),void _q_printerOrFileSelected(QAbstractButton *b))
-    Q_PRIVATE_SLOT(d_func(),void _q_paperSizeSelected(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_orientSelected(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_pageOrderSelected(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_colorModeSelected(QAbstractButton *))
-    Q_PRIVATE_SLOT(d_func(), void _q_setNumCopies(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_printRangeSelected(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_setFirstPage(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_setLastPage(int))
-    Q_PRIVATE_SLOT(d_func(), void _q_fileNameEditChanged(const QString &text))
-#endif // QTOPIA_PRINTDIALOG
     friend class QUnixPrintWidget;
 };
 
