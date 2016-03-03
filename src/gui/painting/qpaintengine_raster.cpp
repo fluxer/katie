@@ -91,9 +91,6 @@
 #  if !defined(QT_NO_FREETYPE)
 #    include <qfontengine_ft_p.h>
 #  endif
-#  if !defined(QT_NO_QWS_QPF2)
-#    include <qfontengine_qpf_p.h>
-#  endif
 #  include <qabstractfontengine_p.h>
 #elif defined(Q_WS_QPA)
 #  include <qfontengine_ft_p.h>
@@ -3048,10 +3045,9 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     }
 
     if (s->matrix.type() < QTransform::TxScale
-        && (fontEngine->type() == QFontEngine::QPF1 || fontEngine->type() == QFontEngine::QPF2
-            || (fontEngine->type() == QFontEngine::Proxy
+        && (fontEngine->type() == QFontEngine::Proxy
                 && !(static_cast<QProxyFontEngine *>(fontEngine)->drawAsOutline()))
-            )) {
+            ) {
         fontEngine->draw(this, qFloor(p.x() + aliasedCoordinateDelta), qFloor(p.y() + aliasedCoordinateDelta), ti);
         return;
     }
@@ -3087,13 +3083,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
 #if (defined(Q_WS_X11) || defined(Q_WS_QWS)) && !defined(QT_NO_FREETYPE)
 
-#if defined(Q_WS_QWS) && !defined(QT_NO_QWS_QPF2)
-    if (fontEngine->type() == QFontEngine::QPF2) {
-        QFontEngine *renderingEngine = static_cast<QFontEngineQPF *>(fontEngine)->renderingEngine();
-        if (renderingEngine)
-            fontEngine = renderingEngine;
-    }
-#endif
 
     if (fontEngine->type() != QFontEngine::Freetype) {
         QPaintEngineEx::drawTextItem(p, ti);

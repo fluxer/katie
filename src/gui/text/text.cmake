@@ -155,35 +155,4 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
     if(WITH_HARFBUZZ)
         add_definitions(-DQT_ENABLE_HARFBUZZ_FOR_MAC)
     endif()
-elseif(KATIE_PLATFORM STREQUAL "qpa")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qplatformfontdatabase_qpa.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qplatformfontdatabase_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_qpa.cpp
-    )
-    add_definitions(-DQT_NO_FONTCONFIG -DQT_NO_FREETYPE)
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_qpf_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qabstractfontengine_qws.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qabstractfontengine_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_qpf.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qabstractfontengine_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_ft.cpp
-    )
-    add_definitions(-DQT_NO_FONTCONFIG)
 endif()

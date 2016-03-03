@@ -120,9 +120,6 @@ add_feature_info(opengles2 WITH_OPENGLES2 "an open source something")
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "an open source something")
 
-option(WITH_QTOPIA "Build qtopia support" OFF)
-add_feature_info(qtopia WITH_QTOPIA "an open source something")
-
 # windows
 option(WITH_ICD "Build icd support (Windows)" ON)
 add_feature_info(icd WITH_ICD "an closed source something")
@@ -423,9 +420,6 @@ set_package_properties(VLC PROPERTIES
     TYPE RECOMMENDED
 )
 
-# module for Qt Platform Abstraction
-# find_package(QPA)
-
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)" AND NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
     find_package(Threads REQUIRED)
@@ -551,7 +545,6 @@ add_subdirectory(src/tools)
 add_subdirectory(util/fixnonlatin1)
 add_subdirectory(util/gencmap)
 add_subdirectory(util/lexgen)
-add_subdirectory(util/makeqpf)
 add_subdirectory(util/normalize)
 add_subdirectory(util/plugintest)
 add_subdirectory(util/qlalr)

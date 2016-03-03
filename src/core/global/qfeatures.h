@@ -205,12 +205,6 @@
 // QProxyScreen
 //#define QT_NO_QWS_PROXYSCREEN
 
-// Qt Prerendered Font Format
-//#define QT_NO_QWS_QPF
-
-// Qt Prerendered Font Format 2
-//#define QT_NO_QWS_QPF2
-
 // Raster Paint Engine callback functions
 //#define QT_NO_RASTERCALLBACKS
 

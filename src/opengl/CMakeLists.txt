@@ -154,12 +154,6 @@ if(WITH_X11 AND X11_FOUND)
             ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_x11.cpp
         )
     endif()
-elseif(KATIE_PLATFORM STREQUAL "qpa")
-    set(OPENGL_SOURCES
-        ${OPENGL_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_qpa.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_stub.cpp
-    )
 elseif(KATIE_PLATFORM STREQUAL "wince")
     set(OPENGL_HEADERS
         ${OPENGL_HEADERS}
@@ -188,21 +182,6 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${KATIE_LDFLAGS}
         -framework AppKit
         -framework Carbon
-    )
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    set(OPENGL_HEADERS
-        ${OPENGL_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglscreen_qws.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglwindowsurface_qws_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_egl_p.h
-    )
-    set(OPENGL_SOURCES
-        ${OPENGL_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_egl.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglscreen_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglwindowsurface_qws.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_egl.cpp
     )
 endif()
 

@@ -11,22 +11,10 @@ if(WITH_EGL AND EGL_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/egl/qeglproperties.cpp
     )
     if(UNIX)
-        if(KATIE_PLATFORM STREQUAL "qws")
-            set(GUI_SOURCES
-                ${GUI_SOURCES}
-                ${CMAKE_CURRENT_SOURCE_DIR}/egl/qegl_qws.cpp
-            )
-        elseif(KATIE_PLATFORM STREQUAL "qpa")
-            set(GUI_SOURCES
-                ${GUI_SOURCES}
-                ${CMAKE_CURRENT_SOURCE_DIR}/egl/qegl_qpa.cpp
-            )
-        else()
-            set(GUI_SOURCES
-                ${GUI_SOURCES}
-                ${CMAKE_CURRENT_SOURCE_DIR}/egl/qegl_x11.cpp
-            )
-        endif()
+        set(GUI_SOURCES
+            ${GUI_SOURCES}
+            ${CMAKE_CURRENT_SOURCE_DIR}/egl/qegl_x11.cpp
+        )
     elseif(KATIE_PLATFORM STREQUAL "wince")
         set(GUI_SOURCES
             ${GUI_SOURCES}

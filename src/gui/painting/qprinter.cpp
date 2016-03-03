@@ -57,8 +57,6 @@
 #include <qprintengine_win_p.h>
 #elif defined (Q_WS_MAC)
 #include <qprintengine_mac_p.h>
-#elif defined (QTOPIA_PRINTENGINE)
-#include <qprintengine_qws_p.h>
 #endif
 #include <qprintengine_ps_p.h>
 
@@ -158,12 +156,10 @@ QSizeF qt_printerPaperSize(QPrinter::Orientation orientation,
 void QPrinterPrivate::createDefaultEngines()
 {
     QPrinter::OutputFormat realOutputFormat = outputFormat;
-#if !defined (QTOPIA_PRINTENGINE)
 #if defined (Q_OS_UNIX) && ! defined (Q_WS_MAC)
     if(outputFormat == QPrinter::NativeFormat) {
         realOutputFormat = QPrinter::PostScriptFormat;
     }
-#endif
 #endif
 
     switch (realOutputFormat) {
@@ -176,10 +172,6 @@ void QPrinterPrivate::createDefaultEngines()
         QMacPrintEngine *macEngine = new QMacPrintEngine(printerMode);
         paintEngine = macEngine;
         printEngine = macEngine;
-#elif defined (QTOPIA_PRINTENGINE)
-        QtopiaPrintEngine *qwsEngine = new QtopiaPrintEngine(printerMode);
-        paintEngine = qwsEngine;
-        printEngine = qwsEngine;
 #elif defined (Q_OS_UNIX)
         Q_ASSERT(false);
 #endif
