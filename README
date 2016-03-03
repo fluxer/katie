@@ -19,7 +19,7 @@ There are several things you should be aware before considering Katie:
   - Phonon has been updated to 4.8.51
   - Phonon backends (GStreamer, DS9, MMF, QT7, WaveOut) replaced with VLC
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
-  - Symbian is no longer supported platform
+  - Symbian, QWS and QPA are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - QML debugger and inspector have been removed, potentially dangerous
   - removed non-open source DB2, OCI and TDS database drivers
@@ -30,7 +30,7 @@ There are several things you should be aware before considering Katie:
   - command line parser
   - standard directories handler
   - building against IODBC instead of unixODBC is possible
-  - support alternative libc implementations
+  - alternative libc implementations support
 
 Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,
