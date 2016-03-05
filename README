@@ -5,8 +5,8 @@ on the latest Git revision of Qt v4.8.
 There are several things you should be aware before considering Katie:
 
  - some components and tools have been removed:
-  - QMake, Designer, D-Bus viewer, Linguist, Assistant, checksdk, macdeployqt,
-    pixeltool, qconfig, qdoc, qev, qvfb, runonphone and other non-essential
+  - QMake, D-Bus viewer, Linguist, Assistant, checksdk, macdeployqt, pixeltool,
+    qconfig, qdoc, qev, qvfb, runonphone and other non-essential
   - Qt3Support, QtWebKit and ActiveQt
 
  - some things have changed:

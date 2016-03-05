@@ -1,0 +1,9 @@
+set(DESIGNERBIN_SOURCES
+    ${DESIGNERBIN_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/fontpanel/fontpanel.cpp
+)
+
+set(DESIGNERBIN_HEADERS
+    ${DESIGNERBIN_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/fontpanel/fontpanel.h
+) 

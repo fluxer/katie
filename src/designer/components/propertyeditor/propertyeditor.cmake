@@ -1,0 +1,38 @@
+set(DESIGNERCOMPONENTS_HEADERS
+    ${DESIGNERCOMPONENTS_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/propertyeditor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/designerpropertymanager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditorbutton.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditorbutton.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewframe.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/newdynamicpropertydialog.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/brushpropertymanager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/fontpropertymanager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/propertyeditor_global.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qlonglongvalidator.h
+)
+
+set(DESIGNERCOMPONENTS_SOURCES
+    ${DESIGNERCOMPONENTS_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/propertyeditor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/designerpropertymanager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditorbutton.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditorbutton.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewframe.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/newdynamicpropertydialog.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/brushpropertymanager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/fontpropertymanager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/qlonglongvalidator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/propertyeditor.qrc
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/paletteeditor.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/stringlisteditor.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/previewwidget.ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor/newdynamicpropertydialog.ui
+)
+
