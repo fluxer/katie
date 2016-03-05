@@ -3,7 +3,7 @@
 
 pkgname=katie-git
 pkgver=4.8.7.8e624df
-pkgrel=2
+pkgrel=3
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
 url='https://github.com/fluxer/katie'
@@ -56,4 +56,21 @@ package() {
 
     install -vDm644 ../katie/LGPL_EXCEPTION.txt \
         "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
+
+    # register Designer as application
+    install -v -Dm644 ../katie/src/designer/designer/images/designer.png \
+        "${pkgdir}/usr/share/pixmaps/designer-katie.png"
+    mkdir -p "${pkgdir}/usr/share/applications"
+    cat > "${pkgdir}/usr/share/applications/designer-katie.desktop" << EOF
+[Desktop Entry]
+Name=Katie Designer
+Comment=Design GUIs for Katie applications
+Exec=designer-katie
+Icon=designer-katie.png
+MimeType=application/x-designer;
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;
+EOF
 }

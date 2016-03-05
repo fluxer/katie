@@ -1,7 +1,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 version=4.8.7
-release=2
+release=3
 description='C++ toolkit derived from the Qt 4.8 framework'
 depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'
@@ -47,5 +47,22 @@ src_install() {
         # ln -sfv ../lib/katie/bin/$(basename "$file") "$INSTALL_DIR/usr/bin/$(basename $file)"
         ln -sfv ../lib/katie/bin/$(basename "$file") "$INSTALL_DIR/usr/bin/$(basename $file)-katie"
     done
+
+    # register Designer as application
+    install -vDm644 ../katie.git/src/designer/designer/images/designer.png \
+        "$INSTALL_DIR/usr/share/pixmaps/designer-katie.png"
+    mkdir -p "$INSTALL_DIR/usr/share/applications"
+    cat > "$INSTALL_DIR/usr/share/applications/designer-katie.desktop" << EOF
+[Desktop Entry]
+Name=Katie Designer
+Comment=Design GUIs for Katie applications
+Exec=designer-katie
+Icon=designer-katie.png
+MimeType=application/x-designer;
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;
+EOF
 }
 
