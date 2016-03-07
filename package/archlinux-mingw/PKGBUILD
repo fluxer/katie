@@ -64,5 +64,5 @@ package() {
 
     # bootstrap files, they should not be installed and this should be fixed
     # in Katie itself
-    rm -rf "${pkgdir}/local" "${pkgdir}/share"
+    rm -rf "${pkgdir}/usr/local" "${pkgdir}/usr/share"
 }
