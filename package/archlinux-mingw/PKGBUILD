@@ -17,6 +17,8 @@ sha1sums=('SKIP')
 conflicts=('mingw-w64-katie')
 options=('!strip' 'staticlibs' '!buildflags') # 'debug')
 
+_arch="${CARCH}-w64-mingw32"
+
 pkgver() {
     cd katie
     printf "4.9.0.%s" "$(git rev-parse --short HEAD)"
@@ -25,14 +27,20 @@ pkgver() {
 prepare() {
     mkdir -p build
 
-    echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
-        >> katie/mkspecs/linux/vendor.cmake
+    echo "set(DBUS_INTERFACES_INSTALL_DIR /usr/${_arch}/etc/dbus-1/interfaces)" \
+        >> katie/mkspecs/win32/vendor.cmake
+    echo "set(CMAKE_INSTALL_DIR /usr/${_arch}/share/cmake)" \
+        >> katie/mkspecs/win32/vendor.cmake
+    echo 'set(QT_LIBRARIES_PATH "${QT_PREFIX_PATH}/lib/katie")' \
+        >> katie/mkspecs/win32/vendor.cmake
+    echo 'set(QT_PLUGINS_PATH "${QT_LIBRARIES_PATH}/plugins")' \
+        >> katie/mkspecs/win32/vendor.cmake
+    echo 'set(QT_IMPORTS_PATH "${QT_LIBRARIES_PATH}/imports")' \
+        >> katie/mkspecs/win32/vendor.cmake
+    echo 'set(QT_BINARIES_PATH "${QT_LIBRARIES_PATH}/bin")' \
+        >> katie/mkspecs/win32/vendor.cmake
+    echo 'set(QT_DATA_PATH "${QT_PREFIX_PATH}/share")' \
+        >> katie/mkspecs/win32/vendor.cmake
 }
 
 build() {
@@ -52,5 +60,5 @@ package() {
     ${_arch}-strip --strip-unneeded "${pkgdir}/usr/${_arch}/lib/katie/"*.dll
 
     install -vDm644 ../katie/LGPL_EXCEPTION.txt \
-        "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
+        "${pkgdir}/usr/share/licenses/mingw-w64-katie-git/LGPL_EXCEPTION.txt"
 }

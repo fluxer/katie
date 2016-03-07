@@ -1,6 +1,6 @@
 add_definitions(-D_USE_MATH_DEFINES -DUNICODE -DWIN32)
 if(MINGW)
-	add_definitions(-D__GNU__)
+    add_definitions(-D__GNU__)
 else()
      add_definitions(-DQT_NEEDS_QMAIN)
 endif()
