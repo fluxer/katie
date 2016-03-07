@@ -8,11 +8,9 @@ if(CMAKE_CROSSCOMPILING)
         external_katie
         GIT_REPOSITORY https://github.com/fluxer/katie
         SOURCE_DIR ${CMAKE_BINARY_DIR}/external_katie
-        INSTALL_DIR ${CMAKE_BINARY_DIR}/external_katie_install
         BUILD_IN_SOURCE 1
         UPDATE_DISCONNECTED 1 # it always fails
         CMAKE_ARGS -DKATIE_BOOTSTRAP=TRUE -Wno-dev
-        CMAKE_CACHE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_BINARY_DIR}/external_katie_install
     )
     # TODO: native executable suffix
     set(KATIE_UIC "${CMAKE_BINARY_DIR}/external_katie/bin/uic")
