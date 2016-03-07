@@ -361,7 +361,7 @@ set_package_properties(GTK2 PROPERTIES
 find_package(EGL)
 set_package_properties(EGL PROPERTIES
     PURPOSE "Required for EGL support"
-    DESCRIPTION "Platform dependendant EGL implementation"
+    DESCRIPTION "Platform dependent EGL implementation"
     URL ""
     TYPE RECOMMENDED
 )
@@ -369,7 +369,7 @@ set_package_properties(EGL PROPERTIES
 find_package(OpenGL)
 set_package_properties(OpenGL PROPERTIES
     PURPOSE "Required for GL/EGL support"
-    DESCRIPTION "Platform dependendant OpenGL implementation"
+    DESCRIPTION "Platform dependent OpenGL implementation"
     URL ""
     TYPE RECOMMENDED
 )
@@ -426,7 +426,7 @@ set_package_properties(VLC PROPERTIES
 find_package(Threads)
 set_package_properties(Threads PROPERTIES
     PURPOSE "Required for threads support"
-    DESCRIPTION "Platform dependendant threads implementation"
+    DESCRIPTION "Platform dependent threads implementation"
     URL ""
     TYPE RECOMMENDED
 )
