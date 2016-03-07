@@ -324,7 +324,6 @@ if(${KATIE_PLATFORM} STREQUAL "linux")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         dl
-        ${CMAKE_THREAD_LIBS_INIT}
     )
 elseif(${KATIE_PLATFORM} STREQUAL "win32")
     set(EXTRA_CORE_LIBS
@@ -344,6 +343,13 @@ elseif(${KATIE_PLATFORM} STREQUAL "mac")
         -framework Security
         -framework ApplicationServices
         -lObjC
+    )
+endif()
+
+if(CMAKE_THREAD_LIBS_INIT)
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${CMAKE_THREAD_LIBS_INIT}
     )
 endif()
 
