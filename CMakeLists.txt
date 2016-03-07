@@ -28,6 +28,9 @@ include(KatieMacros)
 include(KatieBuildMacros)
 
 # optional package features
+option(WITH_THREADS "Build threads support" ON)
+add_feature_info(threads WITH_THREADS "an open source something")
+
 option(WITH_OPENSSL "Build openssl support" ON)
 add_feature_info(openssl WITH_OPENSSL "an open source something")
 
@@ -420,9 +423,16 @@ set_package_properties(VLC PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(Threads)
+set_package_properties(Threads PROPERTIES
+    PURPOSE "Required for threads support"
+    DESCRIPTION "Platform dependendant threads implementation"
+    URL ""
+    TYPE RECOMMENDED
+)
+
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)" AND NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-    find_package(Threads REQUIRED)
 
     find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes Xi Xinerama Xrandr Xrender X11 Xtst Xt)
     set_package_properties(X11 PROPERTIES
@@ -448,6 +458,10 @@ if(ENABLE_TESTING)
     message(WARNING "Unless it is intentionall you should not enable testing")
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
+endif()
+
+if(NOT WITH_THREADS OR NOT THREADS_FOUND)
+    katie_definition(-DQT_NO_THREAD)
 endif()
 
 if(NOT WTIH_EGL OR NOT EGL_FOUND)
