@@ -1,7 +1,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
-version=4.8.7
-release=3
+version=4.9.0
+release=1
 description='C++ toolkit derived from the Qt 4.8 framework'
 depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'

@@ -5,7 +5,7 @@ Maintainer: Ivailo Monev <xakepa10@gmail.com>
 Homepage: https://github.com/fluxer/katie
 Vcs-Git: git://github.com/fluxer/katie.git
 Vcs-browser: https://github.com/fluxer/katie
-Standards-Version: 4.8.7
+Standards-Version: 4.9.0
 X-Python-Version: >= 2.7
 Build-Depends: debhelper (>= 9~), g++, python-dev (>= 2.7~), libssl-dev,
  zlib1g-dev, libc6-dev, libpng12-dev, libjpeg62-turbo-dev, libtiff5-dev,
