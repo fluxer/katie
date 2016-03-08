@@ -23,6 +23,13 @@ include(MimeTypes.cmake)
 
 add_definitions(-DPHONON_LIB_INSTALL_DIR="${LIB_INSTALL_DIR}")
 
+if(MINGW AND WITH_THREADS)
+    # VLC is trying to use POSIX poll() even with _WIN32
+    add_definitions(-DLIBVLC_USE_PTHREAD)
+    add_definitions(-DLIBVLC_USE_PTHREAD_CLEANUP)
+    add_definitions(-DLIBVLC_USE_PTHREAD_CANCEL)
+endif()
+
 if (MSVC OR (WIN32 AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel"))
     include(CheckIncludeFileCXX)
     check_include_file_cxx(inttypes.h HAVE_INTTYPES)
@@ -46,6 +53,7 @@ set(phonon_vlc_SRCS
     devicemanager.cpp
     effect.cpp
     effectmanager.cpp
+    equalizereffect.cpp
     media.cpp
     mediacontroller.cpp
     mediaobject.cpp
@@ -58,10 +66,6 @@ set(phonon_vlc_SRCS
     utils/debug.cpp
     utils/libvlc.cpp
 )
-
-if(${VLC_VERSION} VERSION_GREATER "2.2.0" OR ${VLC_VERSION} VERSION_EQUAL "2.2.0")
-    list(APPEND phonon_vlc_SRCS equalizereffect.cpp)
-endif()
 
 if(PHONON_GRAPHICS)
     list(APPEND phonon_vlc_SRCS video/videographicsobject.cpp)

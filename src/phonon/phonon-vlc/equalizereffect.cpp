@@ -15,6 +15,9 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <vlc/libvlc_version.h>
+#if (LIBVLC_VERSION_INT >= LIBVLC_VERSION(2, 2, 0, 0))
+
 #include "equalizereffect.h"
 
 #include "mediaplayer.h"
@@ -79,3 +82,5 @@ void EqualizerEffect::handleConnectToMediaObject(MediaObject *mediaObject)
 } // namespace Phonon
 
 #include "phonon-vlc/moc_equalizereffect.h"
+
+#endif // LIBVLC_VERSION
