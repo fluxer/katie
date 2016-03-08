@@ -32,20 +32,20 @@ set(KATIE_MKSPECS "${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 foreach(component ${KATIE_COMPONENTS})
     string(TOUPPER ${component} uppercomp)
     if(uppercomp STREQUAL "MAIN")
-        set(KATIE_INCLUDES ${KATIE_INCLUDES} @QT_HEADERS_PATH@)
-        set(KATIE_${uppercomp}_INCLUDES @QT_HEADERS_PATH@)
+        set(KATIE_INCLUDES ${KATIE_INCLUDES} "@QT_HEADERS_PATH@")
+        set(KATIE_${uppercomp}_INCLUDES "@QT_HEADERS_PATH@")
     elseif(uppercomp STREQUAL "PHONON")
         set(KATIE_INCLUDES ${KATIE_INCLUDES}
-            @QT_HEADERS_PATH@/phonon
-            @QT_HEADERS_PATH@/Phonon
+            "@QT_HEADERS_PATH@/phonon"
+            "@QT_HEADERS_PATH@/Phonon"
         )
         set(KATIE_${uppercomp}_INCLUDES
-            @QT_HEADERS_PATH@/phonon
-            @QT_HEADERS_PATH@/Phonon
+            "@QT_HEADERS_PATH@/phonon"
+            "@QT_HEADERS_PATH@/Phonon"
         )
     else()
-        set(KATIE_INCLUDES ${KATIE_INCLUDES} @QT_HEADERS_PATH@/Qt${component})
-        set(KATIE_${uppercomp}_INCLUDES @QT_HEADERS_PATH@/Qt${component})
+        set(KATIE_INCLUDES ${KATIE_INCLUDES} "@QT_HEADERS_PATH@/Qt${component}")
+        set(KATIE_${uppercomp}_INCLUDES "@QT_HEADERS_PATH@/Qt${component}")
     endif()
     set(KATIE_LIBRARIES ${KATIE_LIBRARIES} Katie::${component})
 
@@ -95,8 +95,8 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
 
     set(_binsuffix "${CMAKE_EXECUTABLE_SUFFIX}")
     # those are exceptions because they have "q" prefix
-    set(QT_DBUSXML2CPP_EXECUTABLE @QT_BINARIES_PATH@/qdbusxml2cpp${_binsuffix})
-    set(QT_DBUSCPP2XML_EXECUTABLE @QT_BINARIES_PATH@/qdbuscpp2xml${_binsuffix})
+    set(QT_DBUSXML2CPP_EXECUTABLE "@QT_BINARIES_PATH@/qdbusxml2cpp${_binsuffix}")
+    set(QT_DBUSCPP2XML_EXECUTABLE "@QT_BINARIES_PATH@/qdbuscpp2xml${_binsuffix}")
 
     if(NOT KATIE_COMPAT_ISSET)
         set(KATIE_COMPAT_ISSET CACHE BOOL TRUE "")
@@ -112,10 +112,10 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
             set_property(
                 TARGET Qt4::${tool}
                 PROPERTY
-                IMPORTED_LOCATION @QT_BINARIES_PATH@/${tool}${_binsuffix}
+                IMPORTED_LOCATION "@QT_BINARIES_PATH@/${tool}${_binsuffix}"
             )
             string(TOUPPER ${tool} uppertool)
-            set(QT_${uppertool}_EXECUTABLE @QT_BINARIES_PATH@/${tool}${_binsuffix})
+            set(QT_${uppertool}_EXECUTABLE "@QT_BINARIES_PATH@/${tool}${_binsuffix}")
         endforeach()
 
         foreach(component ${_COMPONENTS})
@@ -123,7 +123,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
             set_property(
                 TARGET Qt4::Qt${component}
                 PROPERTY
-                IMPORTED_LOCATION @QT_LIBRARIES_PATH@/libKt${component}${_libsuffix}
+                IMPORTED_LOCATION "@QT_LIBRARIES_PATH@/libKt${component}${_libsuffix}"
             )
         endforeach()
     endif()
