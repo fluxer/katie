@@ -22,7 +22,7 @@ include("${KATIE_CMAKE_DIR}/KatieBinaryTargets.cmake")
 
 # These are pre-set and dynamically set variables, some use IMPORTED targets
 set(KATIE_DEFINITIONS @KATIE_DEFINITIONS@)
-set(KATIE_INCLUDES @QT_HEADERS_PATH@)
+set(KATIE_INCLUDES "@QT_HEADERS_PATH@")
 set(KATIE_LIBRARIES)
 set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
 set(KATIE_TOOLS @KATIE_TOOLS@)
