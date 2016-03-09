@@ -139,7 +139,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
         set(QT_QT${uppercomp}_FOUND ${KATIE_${uppercomp}_FOUND})
         set(QT_QT${uppercomp}_LIBRARY "${KATIE_${uppercomp}_LIBRARIES}")
         set(QT_QT${uppercomp}_LIBRARIES "${KATIE_${uppercomp}_LIBRARIES}")
-        set(QT_QT${uppercomp}_INCLUDE_DIR "@QT_HEADERS_PATH@ ${KATIE_${uppercomp}_INCLUDES}")
+        set(QT_QT${uppercomp}_INCLUDE_DIR "@QT_HEADERS_PATH@" "${KATIE_${uppercomp}_INCLUDES}")
         # TODO: component definitions
     endforeach()
 

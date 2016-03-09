@@ -32,6 +32,5 @@ else()
         ${CMAKE_CURRENT_SOURCE_DIR}/egl/qegl_stub.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/egl/qeglproperties_stub.cpp
     )
-    add_definitions(-DQT_NO_EGL)
 endif()
 

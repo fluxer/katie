@@ -22,6 +22,8 @@
 #ifndef Phonon_VLC_EFFECTMANAGER_H
 #define Phonon_VLC_EFFECTMANAGER_H
 
+#ifndef QT_NO_PHONON_EFFECT
+
 #include <QtCore/QObject>
 
 namespace Phonon {
@@ -115,5 +117,7 @@ private:
 
 } // namespace VLC
 } // namespace Phonon
+
+#endif // QT_NO_PHONON_EFFECT
 
 #endif // Phonon_VLC_EFFECTMANAGER_H

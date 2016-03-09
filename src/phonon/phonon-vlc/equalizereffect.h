@@ -18,6 +18,8 @@
 #ifndef PHONON_VLC_EQUALIZEREFFECT_H
 #define PHONON_VLC_EQUALIZEREFFECT_H
 
+#ifndef QT_NO_PHONON_EFFECT
+
 #include <QtCore/QObject>
 
 #include <phonon/effectinterface.h>
@@ -51,5 +53,7 @@ private:
 
 } // namespace VLC
 } // namespace Phonon
+
+#endif // QT_NO_PHONON_EFFECT
 
 #endif // PHONON_VLC_EQUALIZEREFFECT_H

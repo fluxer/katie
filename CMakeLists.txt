@@ -515,6 +515,22 @@ if(NOT WITH_NAS OR NOT NAS_FOUND)
     katie_definition(-DQT_NO_NAS)
 endif()
 
+if(NOT WITH_PNG OR NOT PNG_FOUND)
+    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
+endif()
+
+if(NOT WITH_JPEG OR NOT JPEG_FOUND)
+    katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
+endif()
+
+if(NOT WITH_MNG OR NOT MNG_FOUND)
+    katie_definition(-DQT_NO_IMAGEFORMAT_MNG)
+endif()
+
+if(NOT WITH_TIFF OR NOT TIFF_FOUND)
+    katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
+endif()
+
 # semi-shared
 include(src/shared/linguist/linguist.cmake)
 include(src/shared/bootstrap.cmake)
