@@ -18,6 +18,8 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef QT_NO_PHONON_EFFECT
+
 #include "effect.h"
 
 #include "effectmanager.h"
@@ -225,3 +227,5 @@ void Effect::setParameterValue(const EffectParameter &param, const QVariant &new
 } // Namespace Phonon::VLC
 
 #include "phonon-vlc/moc_effect.h"
+
+#endif // QT_NO_PHONON_EFFECT

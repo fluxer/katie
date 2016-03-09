@@ -19,6 +19,8 @@
     License along with this library.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef QT_NO_PHONON_EFFECT
+
 #include "effectmanager.h"
 
 #include <vlc/vlc.h>
@@ -133,4 +135,7 @@ void EffectManager::updateEffects()
 
 } // namespace VLC
 } // namespace Phonon
+
 #include "phonon-vlc/moc_effectmanager.h"
+
+#endif // QT_NO_PHONON_EFFECT

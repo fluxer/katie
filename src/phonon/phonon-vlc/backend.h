@@ -34,7 +34,9 @@ namespace Phonon
 namespace VLC
 {
 class DeviceManager;
+#ifndef QT_NO_PHONON_EFFECT
 class EffectManager;
+#endif // QT_NO_PHONON_EFFECT
 
 /** \brief Backend class for Phonon-VLC.
  *
@@ -75,8 +77,10 @@ public:
     /// \return The device manager that is associated with this backend object
     DeviceManager *deviceManager() const;
 
+#ifndef QT_NO_PHONON_EFFECT
     /// \return The effect manager that is associated with this backend object.
     EffectManager *effectManager() const;
+#endif // QT_NO_PHONON_EFFECT
 
     /**
      * Creates a backend object of the desired class and with the desired parent. Extra arguments can be provided.
@@ -148,7 +152,9 @@ private:
     mutable QStringList m_supportedMimeTypes;
 
     DeviceManager *m_deviceManager;
+#ifndef QT_NO_PHONON_EFFECT
     EffectManager *m_effectManager;
+#endif // QT_NO_PHONON_EFFECT
 };
 
 } // namespace VLC

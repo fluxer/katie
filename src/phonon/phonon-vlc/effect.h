@@ -21,6 +21,8 @@
 #ifndef PHONON_VLC_EFFECT_H
 #define PHONON_VLC_EFFECT_H
 
+#ifndef QT_NO_PHONON_EFFECT
+
 #include "sinknode.h"
 #include "effectmanager.h"
 
@@ -76,5 +78,7 @@ private:
 
 }
 } // Namespace Phonon::VLC
+
+#endif // QT_NO_PHONON_EFFECT
 
 #endif // PHONON_VLC_EFFECT_H

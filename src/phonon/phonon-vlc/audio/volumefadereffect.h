@@ -19,6 +19,8 @@
 #ifndef PHONON_VLC_VOLUMEFADEREFFECT_H
 #define PHONON_VLC_VOLUMEFADEREFFECT_H
 
+#ifndef QT_NO_PHONON_EFFECT
+
 #include <phonon/volumefaderinterface.h>
 
 #include <QtCore/QDateTime>
@@ -67,5 +69,7 @@ private:
 
 } // namespace VLC
 } // namespace Phonon
+
+#endif // QT_NO_PHONON_EFFECT
 
 #endif // PHONON_VLC_VOLUMEFADEREFFECT_H

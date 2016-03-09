@@ -422,8 +422,12 @@ QDebug operator <<(QDebug dbg, const Phonon::MediaSource &source)
     }
     case MediaSource::CaptureDevice:
     case MediaSource::AudioVideoCapture:
+#ifndef QT_NO_PHONON_EFFECT
         dbg.nospace() << "AudioVideoCapture(A:" << source.audioCaptureDevice().name()
                       << "/V: " << source.videoCaptureDevice().name() << ")";
+#else
+        dbg.nospace() << "AudioVideoCapture(A:/V: )";
+#endif
         break;
     case MediaSource::Empty:
         dbg.nospace() << "Empty()";

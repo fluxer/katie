@@ -63,7 +63,9 @@ Backend *Backend::self;
 Backend::Backend(QObject *parent, const QVariantList &)
     : QObject(parent)
     , m_deviceManager(0)
+#ifndef QT_NO_PHONON_EFFECT
     , m_effectManager(0)
+#endif // QT_NO_PHONON_EFFECT
 {
     self = this;
 
@@ -135,7 +137,9 @@ Backend::Backend(QObject *parent, const QVariantList &)
     }
 
     m_deviceManager = new DeviceManager(this);
+#ifndef QT_NO_PHONON_EFFECT
     m_effectManager = new EffectManager(this);
+#endif // QT_NO_PHONON_EFFECT
 }
 
 Backend::~Backend()
@@ -172,8 +176,10 @@ QObject *Backend::createObject(BackendInterface::Class c, QObject *parent, const
     case VideoGraphicsObjectClass:
         return new VideoGraphicsObject(parent);
 #endif
+#ifndef QT_NO_PHONON_EFFECT
     case EffectClass:
         return effectManager()->createEffect(args[0].toInt(), parent);
+#endif // QT_NO_PHONON_EFFECT
     case VideoWidgetClass:
         return new VideoWidget(qobject_cast<QWidget *>(parent));
 //    case VolumeFaderEffectClass:
@@ -209,6 +215,7 @@ QList<int> Backend::objectDescriptionIndexes(ObjectDescriptionType type) const
         return deviceManager()->deviceIds(type);
     }
     break;
+#ifndef QT_NO_PHONON_EFFECT
     case Phonon::EffectType: {
         QList<EffectInfo> effectList = effectManager()->effects();
         for (int eff = 0; eff < effectList.size(); ++eff) {
@@ -216,6 +223,7 @@ QList<int> Backend::objectDescriptionIndexes(ObjectDescriptionType type) const
         }
     }
     break;
+#endif // QT_NO_PHONON_EFFECT
     case Phonon::SubtitleType: {
         list << GlobalSubtitles::instance()->globalIndexes();
     }
@@ -243,6 +251,7 @@ QHash<QByteArray, QVariant> Backend::objectDescriptionProperties(ObjectDescripti
         return deviceManager()->deviceProperties(index);
     }
     break;
+#ifndef QT_NO_PHONON_EFFECT
     case Phonon::EffectType: {
         const QList<EffectInfo> effectList = effectManager()->effects();
         if (index >= 0 && index <= effectList.size()) {
@@ -255,6 +264,7 @@ QHash<QByteArray, QVariant> Backend::objectDescriptionProperties(ObjectDescripti
         }
     }
     break;
+#endif // QT_NO_PHONON_EFFECT
     case Phonon::SubtitleType: {
         const SubtitleDescription description = GlobalSubtitles::instance()->fromIndex(index);
         ret.insert("name", description.name());
@@ -293,11 +303,13 @@ bool Backend::connectNodes(QObject *source, QObject *sink)
             return true;
         }
 
+#ifndef QT_NO_PHONON_EFFECT
         VolumeFaderEffect *effect = qobject_cast<VolumeFaderEffect *>(source);
         if (effect) {
             sinkNode->connectToMediaObject(effect->mediaObject());
             return true;
         }
+#endif // QT_NO_PHONON_EFFECT
     }
 
     warning() << "Linking" << source->metaObject()->className() << "to" << sink->metaObject()->className() << "failed";
@@ -316,11 +328,13 @@ bool Backend::disconnectNodes(QObject *source, QObject *sink)
             return true;
         }
 
+#ifndef QT_NO_PHONON_EFFECT
         VolumeFaderEffect *const effect = qobject_cast<VolumeFaderEffect *>(source);
         if (effect) {
             sinkNode->disconnectFromMediaObject(effect->mediaObject());
             return true;
         }
+#endif // QT_NO_PHONON_EFFECT
     }
 
     return false;
@@ -339,10 +353,12 @@ DeviceManager *Backend::deviceManager() const
     return m_deviceManager;
 }
 
+#ifndef QT_NO_PHONON_EFFECT
 EffectManager *Backend::effectManager() const
 {
     return m_effectManager;
 }
+#endif // QT_NO_PHONON_EFFECT
 
 } // namespace VLC
 } // namespace Phonon
