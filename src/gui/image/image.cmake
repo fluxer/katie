@@ -91,8 +91,6 @@ if(WITH_PNG AND PNG_FOUND)
     )
     include_directories(${PNG_INCLUDE_DIRS})
     add_definitions(${PNG_DEFINITIONS})
-else()
-    add_definitions(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
 if(WITH_JPEG AND JPEG_FOUND)
@@ -109,8 +107,6 @@ if(WITH_JPEG AND JPEG_FOUND)
         ${JPEG_LIBRARIES}
     )
     include_directories(${JPEG_INCLUDE_DIR})
-else()
-    add_definitions(-DQT_NO_IMAGEFORMAT_JPEG)
 endif()
 
 if(WITH_MNG AND MNG_FOUND)
@@ -127,8 +123,6 @@ if(WITH_MNG AND MNG_FOUND)
         ${MNG_LIBRARIES}
     )
     include_directories(${MNG_INCLUDES})
-else()
-    add_definitions(-DQT_NO_IMAGEFORMAT_MNG)
 endif()
 
 if(WITH_TIFF AND TIFF_FOUND)
@@ -145,8 +139,6 @@ if(WITH_TIFF AND TIFF_FOUND)
         ${TIFF_LIBRARIES}
     )
     include_directories(${TIFF_INCLUDE_DIR})
-else()
-    add_definitions(-DQT_NO_IMAGEFORMAT_TIFF)
 endif()
 
 if(KATIE_PLATFORM STREQUAL "win32")
