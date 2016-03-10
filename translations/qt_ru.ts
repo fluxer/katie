@@ -2,11 +2,1025 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru">
 <context>
+    <name>AbstractItemEditor</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/itemlisteditor.cpp" line="+108"/>
+        <source>Selectable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Editable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>DragEnabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>DropEnabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>UserCheckable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Enabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tristate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Unchecked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>PartiallyChecked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checked</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AddLinkDialog</name>
+    <message>
+        <location filename="../src/designer/shared/addlinkdialog.ui"/>
+        <source>Insert Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>URL:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>BrushPropertyManager</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/brushpropertymanager.cpp" line="+52"/>
+        <source>No brush</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Solid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Dense 7</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Vertical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cross</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Backward diagonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Forward diagonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Crossing diagonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+93"/>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <source>[%1, %2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloseButton</name>
     <message>
         <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
         <source>Close Tab</source>
         <translation>Закрыть вкладку</translation>
+    </message>
+</context>
+<context>
+    <name>Command</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_menu.cpp" line="+1195"/>
+        <source>Set action text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Insert action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+89"/>
+        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="+914"/>
+        <source>Move action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="-431"/>
+        <source>Change Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Insert Menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/formlayoutmenu.cpp" line="+458"/>
+        <location filename="../src/designer/components/taskmenu/button_taskmenu.cpp" line="+282"/>
+        <source>Add &apos;%1&apos; to &apos;%2&apos;</source>
+        <extracomment>Command description for adding buttons to a QButtonGroup</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_command2.cpp" line="+154"/>
+        <source>Change layout of &apos;%1&apos; from %2 to %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Change layout alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/signalslotdialog.cpp" line="+202"/>
+        <source>Change signals/slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/scriptcommand.cpp" line="+55"/>
+        <source>Change script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/morphmenu.cpp" line="+350"/>
+        <source>Morph %1/&apos;%2&apos; into %3</source>
+        <extracomment>MorphWidgetCommand description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_command.cpp" line="+149"/>
+        <source>Insert &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+133"/>
+        <source>Change Z-order of &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Raise &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Lower &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+113"/>
+        <source>Delete &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+119"/>
+        <source>Reparent &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>Promote to custom widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Demote from custom widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+79"/>
+        <source>Lay out using grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lay out vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lay out horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+41"/>
+        <source>Break layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+105"/>
+        <source>Simplify Grid Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+135"/>
+        <location line="+235"/>
+        <location line="+78"/>
+        <source>Move Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-279"/>
+        <location line="+123"/>
+        <location line="+188"/>
+        <location line="+666"/>
+        <source>Delete Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-939"/>
+        <location line="+123"/>
+        <source>Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-118"/>
+        <location line="+123"/>
+        <location line="+186"/>
+        <location line="+667"/>
+        <source>Insert Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-647"/>
+        <source>Change Tab order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Create Menu Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Delete Menu Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Create Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Delete Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>Add Tool Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+59"/>
+        <source>Add Dock Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>Adjust Size of &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <source>Change Form Layout Item Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+95"/>
+        <source>Change Layout Item Geometry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+138"/>
+        <source>Delete Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Insert Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+391"/>
+        <source>Change Table Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+107"/>
+        <source>Change Tree Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+74"/>
+        <location line="+146"/>
+        <source>Add action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-120"/>
+        <location line="+126"/>
+        <source>Remove action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>Add menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Remove menu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Create submenu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Delete Tool Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_propertycommand.cpp" line="+1225"/>
+        <source>Changed &apos;%1&apos; of &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+3"/>
+        <source>Changed &apos;%1&apos; of %n objects</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+84"/>
+        <source>Reset &apos;%1&apos; of &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+3"/>
+        <source>Reset &apos;%1&apos; of %n objects</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+89"/>
+        <source>Add dynamic property &apos;%1&apos; to &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+3"/>
+        <source>Add dynamic property &apos;%1&apos; to %n objects</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+86"/>
+        <source>Remove dynamic property &apos;%1&apos; from &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+3"/>
+        <source>Remove dynamic property &apos;%1&apos; from %n objects</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/connectionedit.cpp" line="+144"/>
+        <source>Add connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Adjust connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Delete connections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+58"/>
+        <source>Change source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Change target</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditor.cpp" line="+208"/>
+        <location line="+258"/>
+        <source>Change signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-256"/>
+        <location line="+268"/>
+        <source>Change slot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-220"/>
+        <source>Change signal-slot connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+234"/>
+        <source>Change sender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Change receiver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/taskmenu/button_taskmenu.cpp" line="-61"/>
+        <source>Create button group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Break button group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Break button group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Add buttons to group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Remove buttons from group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Remove &apos;%1&apos; from &apos;%2&apos;</source>
+        <extracomment>Command description for removing buttons from a QButtonGroup</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConnectDialog</name>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/connectdialog.ui"/>
+        <source>Configure Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Show signals and slots inherited from QWidget</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConnectionDelegate</name>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="+645"/>
+        <source>&lt;object&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>&lt;signal&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>&lt;slot&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DPI_Chooser</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/dpi_chooser.cpp" line="+69"/>
+        <source>Standard (96 x 96)</source>
+        <extracomment>Embedded device standard screen resolution</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Greenphone (179 x 185)</source>
+        <extracomment>Embedded device screen resolution</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>High (192 x 192)</source>
+        <extracomment>Embedded device high definition screen resolution</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Designer</name>
+    <message>
+        <location filename="../src/designer/shared/qsimpleresource.cpp" line="+339"/>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Promoted Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_utils.cpp" line="+788"/>
+        <source>Unable to launch %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>%1 timed out.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+450"/>
+        <source>Qt Designer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>This file contains top level spacers.&lt;br&gt;They have &lt;b&gt;NOT&lt;/b&gt; been saved into the form.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Perhaps you forgot to create a layout?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+173"/>
+        <source>Invalid UI file: The root element &lt;ui&gt; is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>An error has occurred while reading the UI file at line %1, column %2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>This file cannot be read because it was created using %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>This file was created using Designer from Qt-%1 and cannot be read.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>The converted file could not be read.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>This file was created using Designer from Qt-%1 and will be converted to a new form by Qt Designer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>The old form has not been touched, but you will have to save the form under a new name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>This file was created using Designer from Qt-%1 and could not be read:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Please run it through &lt;b&gt;uic3&amp;nbsp;-convert&lt;/b&gt; to convert it to Qt-4&apos;s ui format.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>This file cannot be read because the extra info extension failed to load.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DesignerMetaEnum</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_utils.cpp" line="-618"/>
+        <source>%1 is not a valid enumeration value of &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&apos;%1&apos; could not be converted to an enumeration value of type &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DesignerMetaFlags</name>
+    <message>
+        <location line="+78"/>
+        <source>&apos;%1&apos; could not be converted to a flag value of type &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeviceProfile</name>
+    <message>
+        <location filename="../src/designer/shared/deviceprofile.cpp" line="+397"/>
+        <source>&apos;%1&apos; is not a number.</source>
+        <extracomment>Reading a number for an embedded device profile</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>An invalid tag &lt;%1&gt; was encountered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DeviceProfileDialog</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/deviceprofiledialog.ui"/>
+        <source>&amp;Family</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Point Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Device DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Dialog</name>
+    <message>
+        <location filename="../src/designer/shared/templates/forms/Dialog_without_Buttons.ui"/>
+        <location filename="../src/designer/shared/templates/forms/Dialog_with_Buttons_Right.ui"/>
+        <location filename="../src/designer/shared/templates/forms/Dialog_with_Buttons_Bottom.ui"/>
+        <location filename="../src/designer/shared/templates/forms/320x240/Dialog_with_Buttons_Right.ui"/>
+        <location filename="../src/designer/shared/templates/forms/320x240/Dialog_with_Buttons_Bottom.ui"/>
+        <location filename="../src/designer/shared/templates/forms/640x480/Dialog_with_Buttons_Right.ui"/>
+        <location filename="../src/designer/shared/templates/forms/640x480/Dialog_with_Buttons_Bottom.ui"/>
+        <location filename="../src/designer/shared/templates/forms/480x640/Dialog_with_Buttons_Right.ui"/>
+        <location filename="../src/designer/shared/templates/forms/480x640/Dialog_with_Buttons_Bottom.ui"/>
+        <location filename="../src/designer/shared/templates/forms/240x320/Dialog_with_Buttons_Right.ui"/>
+        <location filename="../src/designer/shared/templates/forms/240x320/Dialog_with_Buttons_Bottom.ui"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EmbeddedOptionsControl</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/embeddedoptionspage.cpp" line="+307"/>
+        <source>&lt;html&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Font&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%1, %2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Style&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%3&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;&lt;b&gt;Resolution&lt;/b&gt;&lt;/td&gt;&lt;td&gt;%4 x %5&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/html&gt;</source>
+        <extracomment>Format embedded device profile description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EmbeddedOptionsPage</name>
+    <message>
+        <location line="+103"/>
+        <source>Embedded Design</source>
+        <extracomment>Tab in preferences dialog</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Device Profiles</source>
+        <extracomment>EmbeddedOptionsControl group box&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FontPropertyManager</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/fontpropertymanager.cpp" line="+62"/>
+        <source>PreferDefault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>NoAntialias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>PreferAntialias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+61"/>
+        <source>Antialiasing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Form</name>
+    <message>
+        <location filename="../src/designer/shared/templates/forms/Widget.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FormEditorOptionsPage</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formeditor_optionspage.cpp" line="+92"/>
+        <source>%1 %</source>
+        <extracomment>Zoom percentage</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Preview Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Default Zoom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Forms</source>
+        <extracomment>Tab in preferences dialog</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Default Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FormLayoutRowDialog</name>
+    <message>
+        <location filename="../src/designer/shared/formlayoutrowdialog.ui"/>
+        <source>Add Form Layout Row</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Label text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Field &amp;type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Field name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Buddy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Row:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Label &amp;name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FormWindow</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <source>Unexpected element &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Error while pasting clipboard contents at line %1, column %2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FormWindowSettings</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formwindowsettings.ui"/>
+        <source>Form Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Layout &amp;Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Margin:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Layout Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Ma&amp;rgin:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Spa&amp;cing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Pixmap Function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Include Hints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Embedded Design</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>IconSelector</name>
+    <message>
+        <location filename="../src/designer/shared/iconselector.cpp" line="+365"/>
+        <source>All Pixmaps (</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ItemPropertyBrowser</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/itemlisteditor.cpp" line="-55"/>
+        <source>XX Icon Selected off</source>
+        <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -45,6 +1059,105 @@
         <location line="+1"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../src/designer/shared/templates/forms/Main_Window.ui"/>
+        <source>MainWindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ObjectInspectorModel</name>
+    <message>
+        <location filename="../src/designer/components/objectinspector/objectinspectormodel.cpp" line="+360"/>
+        <source>Object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+98"/>
+        <source>&lt;noname&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ObjectNameDialog</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_taskmenu.cpp" line="+159"/>
+        <source>Change Object Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Object Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PluginDialog</name>
+    <message>
+        <location filename="../src/designer/shared/plugindialog.ui"/>
+        <source>Plugin Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PreviewConfigurationWidget</name>
+    <message>
+        <location filename="../src/designer/shared/previewconfigurationwidget.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Print/Preview Configuration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Style sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Device skin</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PromotionModel</name>
+    <message>
+        <location filename="../src/designer/shared/promotionmodel.cpp" line="+112"/>
+        <source>Not used</source>
+        <extracomment>Usage of promoted widgets</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -339,6 +1452,56 @@
         <source>%1: ftok failed</source>
         <comment>QSystemSemaphore</comment>
         <translation>%1: ошибка ftok</translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_promotion.cpp" line="+83"/>
+        <source>%1 is not a promoted class.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>The base class %1 is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The class %1 already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Promoted Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+126"/>
+        <source>The class %1 cannot be removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>The class %1 cannot be removed because it is still referenced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>The class %1 cannot be renamed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>The class %1 cannot be renamed to an empty name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>There is already a class named %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>Cannot set an empty include file.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1530,6 +2693,200 @@
     </message>
 </context>
 <context>
+    <name>QDesignerFormBuilder</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_formbuilder.cpp" line="+89"/>
+        <source>Script errors occurred:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+307"/>
+        <source>The preview failed to build.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>Designer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerMenu</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_menu.cpp" line="-1179"/>
+        <source>Type Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Add Separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+371"/>
+        <source>Insert separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Remove separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Remove action &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <location line="+648"/>
+        <source>Add separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-348"/>
+        <source>Insert action</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerMenuBar</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="-375"/>
+        <source>Type Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+298"/>
+        <source>Remove Menu &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Remove Menu Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Menu</source>
+        <translation type="unfinished">Меню</translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerPluginManager</name>
+    <message>
+        <location filename="../src/designer/shared/pluginmanager.cpp" line="+271"/>
+        <source>An XML error was encountered when parsing the XML of the custom widget %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>A required attribute (&apos;%1&apos;) is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>An invalid property specification (&apos;%1&apos;) was encountered. Supported types: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>&apos;%1&apos; is not a valid string property specification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>The XML of the custom widget %1 does not contain any of the elements &lt;widget&gt; or &lt;ui&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>The class attribute for the class %1 is missing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The class attribute for the class %1 does not match the class name %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerPropertySheet</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+762"/>
+        <source>Dynamic Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerResource</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+461"/>
+        <source>The layout type &apos;%1&apos; is not supported, defaulting to grid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+211"/>
+        <source>The container extension of the widget &apos;%1&apos; (%2) returned a widget not managed by Designer &apos;%3&apos; (%4) when queried for page #%5.
+Container pages should only be added by specifying them in XML returned by the domXml() method of the custom widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+545"/>
+        <source>Unexpected element &lt;%1&gt;</source>
+        <extracomment>Parsing clipboard contents</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Error while pasting clipboard contents at line %1, column %2: %3</source>
+        <extracomment>Parsing clipboard contents</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Error while pasting clipboard contents: The root element &lt;ui&gt; is missing.</source>
+        <extracomment>Parsing clipboard contents</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerSharedSettings</name>
+    <message>
+        <location filename="../src/designer/shared/shared_settings.cpp" line="+83"/>
+        <source>The template path %1 could not be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+184"/>
+        <source>An error has been encountered while parsing device profile XML: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QDesignerWidgetBox</name>
+    <message>
+        <location filename="../src/designer/components/widgetbox/widgetboxtreewidget.cpp" line="+349"/>
+        <source>An error has been encountered at line %1 of %2: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+139"/>
+        <source>Unexpected element &lt;%1&gt; encountered when parsing for &lt;widget&gt; or &lt;ui&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Unexpected end of file encountered when parsing widgets.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>A widget element could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QDial</name>
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="+933"/>
@@ -2175,50 +3532,50 @@ Please verify the correct directory name was given.</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+109"/>
-        <location line="+1387"/>
+        <location line="+1386"/>
         <source>Normal</source>
         <translation>Обычный</translation>
     </message>
     <message>
-        <location line="-1384"/>
+        <location line="-1383"/>
         <location line="+12"/>
-        <location line="+1360"/>
+        <location line="+1359"/>
         <source>Bold</source>
         <translation>Жирный</translation>
     </message>
     <message>
-        <location line="-1369"/>
-        <location line="+1371"/>
+        <location line="-1368"/>
+        <location line="+1370"/>
         <source>Demi Bold</source>
         <translation>Полужирный</translation>
     </message>
     <message>
-        <location line="-1368"/>
+        <location line="-1367"/>
         <location line="+18"/>
-        <location line="+1346"/>
+        <location line="+1345"/>
         <source>Black</source>
         <translation>Чёрный</translation>
     </message>
     <message>
-        <location line="-1356"/>
+        <location line="-1355"/>
         <source>Demi</source>
         <translation>Средний</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1356"/>
+        <location line="+1355"/>
         <source>Light</source>
         <translation>Светлый</translation>
     </message>
     <message>
-        <location line="-1186"/>
-        <location line="+1189"/>
+        <location line="-1185"/>
+        <location line="+1188"/>
         <source>Italic</source>
         <translation>Курсив</translation>
     </message>
     <message>
-        <location line="-1186"/>
-        <location line="+1188"/>
+        <location line="-1185"/>
+        <location line="+1187"/>
         <source>Oblique</source>
         <translation>Наклонный</translation>
     </message>
@@ -4200,176 +5557,6 @@ Please verify the correct directory name was given.</source>
         <translation>неизвестно</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="+379"/>
-        <source>Print all</source>
-        <translation>Все страницы</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Print range</source>
-        <translation>Диапазон страниц</translation>
-    </message>
-    <message>
-        <location line="-48"/>
-        <source>A0 (841 x 1189 mm)</source>
-        <translation>A0 (841 x 1189 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A1 (594 x 841 mm)</source>
-        <translation>A1 (594 x 841 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A2 (420 x 594 mm)</source>
-        <translation>A2 (420 x 594 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A3 (297 x 420 mm)</source>
-        <translation>A3 (297 x 420 мм)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>A5 (148 x 210 mm)</source>
-        <translation>A5 (148 x 210 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A6 (105 x 148 mm)</source>
-        <translation>A6 (105 x 148 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A7 (74 x 105 mm)</source>
-        <translation>A7 (74 x 105 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A8 (52 x 74 mm)</source>
-        <translation>A8 (52 x 74 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>A9 (37 x 52 mm)</source>
-        <translation>A9 (37 x 52 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B0 (1000 x 1414 mm)</source>
-        <translation>B0 (1000 x 1414 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B1 (707 x 1000 mm)</source>
-        <translation>B1 (707 x 1000 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B2 (500 x 707 mm)</source>
-        <translation>B2 (500 x 707 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B3 (353 x 500 mm)</source>
-        <translation>B3 (353 x 500 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B4 (250 x 353 mm)</source>
-        <translation>B4 (250 x 353 мм)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>B6 (125 x 176 mm)</source>
-        <translation>B6 (125 x 176 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B7 (88 x 125 mm)</source>
-        <translation>B7 (88 x 125 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B8 (62 x 88 mm)</source>
-        <translation>B8 (62 x 88 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B9 (44 x 62 mm)</source>
-        <translation>B9 (44 x 62 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>B10 (31 x 44 mm)</source>
-        <translation>B10 (31 x 44 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>C5E (163 x 229 mm)</source>
-        <translation>C5E (163 x 229 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>DLE (110 x 220 mm)</source>
-        <translation>DLE (110 x 220 мм)</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Folio (210 x 330 mm)</source>
-        <translation>Folio (210 x 330 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Ledger (432 x 279 mm)</source>
-        <translation>Ledger (432 x 279 мм)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Tabloid (279 x 432 mm)</source>
-        <translation>Tabloid (279 x 432 мм)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>US Common #10 Envelope (105 x 241 mm)</source>
-        <translation>Конверт US #10 (105x241 мм)</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Print current page</source>
-        <translation>Текущая страница</translation>
-    </message>
-    <message>
-        <location line="-45"/>
-        <source>A4 (210 x 297 mm, 8.26 x 11.7 inches)</source>
-        <translation>A4 (210 x 297 мм, 8.26 x 11.7 дюймов)</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>B5 (176 x 250 mm, 6.93 x 9.84 inches)</source>
-        <translation>B5 (176 x 250 мм, 6.93 x 9.84 дюймов)</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Executive (7.5 x 10 inches, 191 x 254 mm)</source>
-        <translation>Executive (191 x 254 мм, 7.5 x 10 дюймов)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Legal (8.5 x 14 inches, 216 x 356 mm)</source>
-        <translation>Legal (216 x 356 мм, 8.5 x 14 дюймов)</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Letter (8.5 x 11 inches, 216 x 279 mm)</source>
-        <translation>Letter (216 x 279 мм, 8.5 x 11 дюймов)</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Print selection</source>
-        <translation>Выделенный фрагмент</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
         <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
@@ -4396,17 +5583,7 @@ Do you want to overwrite it?</source>
 Хотите заменить его?</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_qws.cpp" line="-232"/>
-        <source>File exists</source>
-        <translation>Файл существует</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>&lt;qt&gt;Do you want to overwrite it?&lt;/qt&gt;</source>
-        <translation>&lt;qt&gt;Хотите заменить?&lt;/qt&gt;</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="-8"/>
+        <location line="-8"/>
         <source>%1 is a directory.
 Please choose a different file name.</source>
         <translation>%1 - это каталог.
@@ -7072,6 +8249,68 @@ Please choose a different file name.</source>
     </message>
 </context>
 <context>
+    <name>QStackedWidgetEventFilter</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_stackedbox.cpp" line="+191"/>
+        <source>Previous Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Before Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>After Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change Page Order...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
+        <source>Change Page Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+4"/>
+        <source>Insert Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QStackedWidgetPreviewEventFilter</name>
+    <message>
+        <location line="-153"/>
+        <source>Go to previous page of %1 &apos;%2&apos; (%3/%4).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Go to next page of %1 &apos;%2&apos; (%3/%4).</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QStandardPaths</name>
     <message>
         <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
@@ -7258,6 +8497,35 @@ Please choose a different file name.</source>
     </message>
 </context>
 <context>
+    <name>QTabWidgetEventFilter</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_tabwidget.cpp" line="+89"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Before Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>After Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+283"/>
+        <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <location line="+4"/>
+        <source>Insert Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QTcpServer</name>
     <message>
         <location filename="../src/network/socket/qtcpserver.cpp" line="+286"/>
@@ -7307,6 +8575,44 @@ Please choose a different file name.</source>
         <location line="+7"/>
         <source>Select All</source>
         <translation>Выделить всё</translation>
+    </message>
+</context>
+<context>
+    <name>QToolBoxHelper</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_toolbox.cpp" line="+64"/>
+        <source>Delete Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Before Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>After Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change Page Order...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+116"/>
+        <source>Change Page Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Insert Page</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7937,6 +9243,319 @@ Please choose a different file name.</source>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+562"/>
         <source>%1 is an invalid PUBLIC identifier.</source>
         <translation>%1 - некорректный идентификатор PUBLIC.</translation>
+    </message>
+</context>
+<context>
+    <name>QtResourceEditorDialog</name>
+    <message>
+        <location filename="../src/designer/shared/qtresourceeditordialog.ui"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>New File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>N</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Remove File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>New Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Remove Resource or File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/qtresourceeditordialog.cpp" line="+76"/>
+        <source>%1 already exists.
+Do you want to replace it?</source>
+        <translation type="unfinished">%1 уже существует.
+Хотите заменить его?</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>The file does not appear to be a resource file; element &apos;%1&apos; was found where &apos;%2&apos; was expected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+902"/>
+        <source>%1 [read-only]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <location line="+198"/>
+        <source>%1 [missing]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-72"/>
+        <source>&lt;no prefix&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+320"/>
+        <location line="+566"/>
+        <source>New Resource File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-564"/>
+        <location line="+25"/>
+        <source>Resource files (*.qrc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-2"/>
+        <source>Import Resource File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+112"/>
+        <source>newPrefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>&lt;p&gt;&lt;b&gt;Warning:&lt;/b&gt; The file&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;is outside of the current resource file&apos;s parent directory.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>&lt;p&gt;To resolve the issue, press:&lt;/p&gt;&lt;table&gt;&lt;tr&gt;&lt;th align=&quot;left&quot;&gt;Copy&lt;/th&gt;&lt;td&gt;to copy the file to the resource file&apos;s parent directory.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th align=&quot;left&quot;&gt;Copy As...&lt;/th&gt;&lt;td&gt;to copy the file into a subdirectory of the resource file&apos;s parent directory.&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;th align=&quot;left&quot;&gt;Keep&lt;/th&gt;&lt;td&gt;to use its current location.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Add Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Incorrect Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+19"/>
+        <location line="+212"/>
+        <location line="+7"/>
+        <source>Copy</source>
+        <translation type="unfinished">Копировать</translation>
+    </message>
+    <message>
+        <location line="-236"/>
+        <source>Copy As...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Keep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+87"/>
+        <source>Clone Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Enter the suffix which you want to add to the names of the cloned files.
+This could for example be a language extension like &quot;_de&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+113"/>
+        <location line="+4"/>
+        <source>Copy As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;p&gt;The selected file:&lt;/p&gt;&lt;p&gt;%1&lt;/p&gt;&lt;p&gt;is outside of the current resource file&apos;s directory:&lt;/p&gt;&lt;p&gt;%2&lt;/p&gt;&lt;p&gt;Please select another path within this directory.&lt;p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Could not overwrite %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Could not copy
+%1
+to
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>A parse error occurred at line %1, column %2 of %3:
+%4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Save Resource File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Could not write %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Edit Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>New...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Open Resource File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+11"/>
+        <source>Remove</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location line="+11"/>
+        <source>Move Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-10"/>
+        <location line="+11"/>
+        <source>Move Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-9"/>
+        <location line="+1"/>
+        <source>Add Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Files...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change Alias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Clone Prefix...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Prefix / Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Language / Alias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+117"/>
+        <source>&lt;html&gt;&lt;p&gt;&lt;b&gt;Warning:&lt;/b&gt; There have been problems while reloading the resources:&lt;/p&gt;&lt;pre&gt;%1&lt;/pre&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Resource Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QtResourceView</name>
+    <message>
+        <location filename="../src/designer/shared/qtresourceview.cpp" line="+567"/>
+        <source>Size: %1 x %2
+%3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+20"/>
+        <source>Edit Resources...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Reload</source>
+        <translation type="unfinished">Перезагрузить</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Copy Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QtResourceViewDialog</name>
+    <message>
+        <location line="+252"/>
+        <source>Select Resource</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10414,6 +12033,101 @@ Please choose a different file name.</source>
     </message>
 </context>
 <context>
+    <name>ScriptErrorDialog</name>
+    <message>
+        <location filename="../src/designer/shared/scripterrordialog.cpp" line="+59"/>
+        <source>An error occurred while running the scripts for &quot;%1&quot;:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SelectSignalDialog</name>
+    <message>
+        <location filename="../src/designer/shared/selectsignaldialog.ui"/>
+        <source>Go to slot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Select signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>class</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SignalSlotConnection</name>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditor.cpp" line="-358"/>
+        <source>SENDER(%1), SIGNAL(%2), RECEIVER(%3), SLOT(%4)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SignalSlotDialogClass</name>
+    <message>
+        <location filename="../src/designer/shared/signalslotdialog.ui"/>
+        <source>Signals and slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Signals</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Spacer</name>
+    <message>
+        <location filename="../src/designer/shared/spacer_widget.cpp" line="+275"/>
+        <source>Horizontal Spacer &apos;%1&apos;, %2 x %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Vertical Spacer &apos;%1&apos;, %2 x %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TemplateOptionsPage</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/templateoptionspage.cpp" line="+156"/>
+        <source>Template Paths</source>
+        <extracomment>Tab in preferences dialog</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>VideoPlayerTaskMenu</name>
     <message>
         <location filename="../src/plugins/designer/phonon/videoplayertaskmenu.cpp" line="+99"/>
@@ -10458,6 +12172,3095 @@ Please choose a different file name.</source>
     <message>
         <location line="+1"/>
         <source>Video Player Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WidgetDataBase</name>
+    <message>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+813"/>
+        <source>The file contains a custom widget &apos;%1&apos; whose base class (%2) differs from the current entry in the widget database (%3). The widget database is left unchanged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ActionEditor</name>
+    <message>
+        <location filename="../src/designer/shared/actioneditor.cpp" line="+123"/>
+        <source>New...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Go to slot...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy</source>
+        <translation type="unfinished">Копировать</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cut</source>
+        <translation type="unfinished">Вырезать</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Paste</source>
+        <translation type="unfinished">Вставить</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Select all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Configure Action Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Icon View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Detailed View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+246"/>
+        <source>New action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <source>Edit action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+69"/>
+        <source>Remove action &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Remove actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+186"/>
+        <source>Used In</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ActionModel</name>
+    <message>
+        <location filename="../src/designer/shared/actionrepository.cpp" line="+89"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Used</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Shortcut</source>
+        <translation type="unfinished">Ярлык</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Checkable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>ToolTip</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::BrushManagerProxy</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/brushmanagerproxy.cpp" line="+219"/>
+        <source>The element &apos;%1&apos; is missing the required attribute &apos;%2&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Empty brush name encountered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>An unexpected element &apos;%1&apos; was encountered.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>An error occurred when reading the brush definition file &apos;%1&apos; at line line %2, column %3: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>An error occurred when reading the resource file &apos;%1&apos; at line %2, column %3: %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::BuddyEditor</name>
+    <message>
+        <location filename="../src/designer/components/buddyeditor/buddyeditor.cpp" line="+263"/>
+        <source>Add buddy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Remove buddies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+24"/>
+        <source>Remove %n buddies</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location line="+51"/>
+        <source>Add %n buddies</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Set automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::BuddyEditorPlugin</name>
+    <message>
+        <location filename="../src/designer/components/buddyeditor/buddyeditor_plugin.cpp" line="+73"/>
+        <source>Edit Buddies</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::BuddyEditorTool</name>
+    <message>
+        <location filename="../src/designer/components/buddyeditor/buddyeditor_tool.cpp" line="+56"/>
+        <source>Edit Buddies</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ButtonGroupMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/button_taskmenu.cpp" line="+7"/>
+        <source>Select members</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Break</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ButtonTaskMenu</name>
+    <message>
+        <location line="+121"/>
+        <source>Assign to button group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Button group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>New button group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+101"/>
+        <source>Button group &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::CodeDialog</name>
+    <message>
+        <location filename="../src/designer/shared/codedialog.cpp" line="+95"/>
+        <source>Save...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Copy All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Find in Text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+75"/>
+        <source>A temporary form file could not be created in %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The temporary form file %1 could not be written.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>%1 - [Code]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Save Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Header Files (*.%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The file %1 could not be opened: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>The file %1 could not be written: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>%1 - Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ColorAction</name>
+    <message>
+        <location filename="../src/designer/shared/richtexteditor.cpp" line="+350"/>
+        <source>Text Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ComboBoxTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/combobox_taskmenu.cpp" line="+68"/>
+        <source>Edit Items...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Change Combobox Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::CommandLinkButtonTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/button_taskmenu.cpp" line="+156"/>
+        <source>Change description...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ConnectionEdit</name>
+    <message>
+        <location filename="../src/designer/shared/connectionedit.cpp" line="+1311"/>
+        <source>Select All</source>
+        <translation type="unfinished">Выделить всё</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Deselect All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ConnectionModel</name>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="-469"/>
+        <source>Sender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Signal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Receiver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Slot</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+90"/>
+        <source>&lt;sender&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;signal&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;receiver&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;slot&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+108"/>
+        <source>The connection already exists!&lt;br&gt;%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Signal and Slot Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ContainerWidgetTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/containerwidget_taskmenu.cpp" line="+79"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Insert</source>
+        <translation type="unfinished">Вставить</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Insert Page Before Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Insert Page After Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Add Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Page %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::DPI_Chooser</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/dpi_chooser.cpp" line="+27"/>
+        <source>System (%1 x %2)</source>
+        <extracomment>System resolution</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>User defined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source> x </source>
+        <extracomment>DPI X/Y separator</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::DesignerPropertyManager</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+787"/>
+        <location line="+6"/>
+        <source>AlignLeft</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-5"/>
+        <source>AlignHCenter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>AlignRight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>AlignJustify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>AlignTop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <location line="+4"/>
+        <source>AlignVCenter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-3"/>
+        <source>AlignBottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+598"/>
+        <source>%1, %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+6"/>
+        <source>Customized (%n roles)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Inherited</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>[Theme] %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+572"/>
+        <source>Horizontal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Vertical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Normal Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Normal On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Disabled Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Disabled On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selected Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selected On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <location line="+21"/>
+        <source>translatable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-15"/>
+        <location line="+21"/>
+        <source>disambiguation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-15"/>
+        <location line="+21"/>
+        <source>comment</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::DeviceProfileDialog</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/deviceprofiledialog.cpp" line="+63"/>
+        <source>Device Profiles (*.%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+67"/>
+        <source>Save Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Save Profile - Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Unable to open the file &apos;%1&apos; for writing: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Open profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+6"/>
+        <source>Open Profile - Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-6"/>
+        <source>Unable to open the file &apos;%1&apos; for reading: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&apos;%1&apos; is not a valid profile: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::Dialog</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/stringlisteditor.ui"/>
+        <source>Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>StringList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>New String</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Delete String</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Удалить</translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move String Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Up</source>
+        <translation type="unfinished">Вверх</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move String Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Down</source>
+        <translation type="unfinished">Вниз</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::EmbeddedOptionsControl</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/embeddedoptionspage.cpp" line="-260"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Add a profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Edit the selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delete the selected profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Add Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>New profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Edit Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Delete Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Would you like to delete the profile &apos;%1&apos;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FilterWidget</name>
+    <message>
+        <location filename="../src/designer/shared/filterwidget.cpp" line="+165"/>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>Clear text</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FormEditor</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formeditor.cpp" line="+190"/>
+        <source>Resource File Changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The file &quot;%1&quot; has changed outside Designer. Do you want to reload it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FormLayoutMenu</name>
+    <message>
+        <location filename="../src/designer/shared/formlayoutmenu.cpp" line="+24"/>
+        <source>Add form layout row...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FormWindow</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <source>Edit contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>F2</source>
+        <translation type="unfinished">F2</translation>
+    </message>
+    <message>
+        <location line="+775"/>
+        <source>Insert widget &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>Resize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+248"/>
+        <source>Key Resize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Key Move</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+259"/>
+        <source>Paste %n action(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location line="+2"/>
+        <source>Paste %n widget(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Paste (%1 widgets, %2 actions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+56"/>
+        <source>Cannot paste widgets. Designer could not find a container without a layout to paste into.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Break the layout of the container you want to paste into, select this container and then paste again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Paste error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+181"/>
+        <source>Raise widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Lower widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+204"/>
+        <source>Select Ancestor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Lay out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+485"/>
+        <location line="+55"/>
+        <source>Drop widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-13"/>
+        <source>A QMainWindow-based form does not contain a central widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FormWindowBase</name>
+    <message>
+        <location filename="../src/designer/shared/formwindowbase.cpp" line="+404"/>
+        <source>Delete &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FormWindowManager</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formwindowmanager.cpp" line="+366"/>
+        <source>Cu&amp;t</source>
+        <translation type="unfinished">&amp;Вырезать</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Cuts the selected widgets and puts them on the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Copy</source>
+        <translation type="unfinished">&amp;Копировать</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Copies the selected widgets to the clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Paste</source>
+        <translation type="unfinished">В&amp;ставить</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Pastes the clipboard&apos;s contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Удалить</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Deletes the selected widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Select &amp;All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Selects all widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Bring to &amp;Front</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+1"/>
+        <source>Raises the selected widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Send to &amp;Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+1"/>
+        <source>Lowers the selected widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Adjust &amp;Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Adjusts the size of the selected widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Lay Out &amp;Horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lays out the selected widgets horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Lay Out &amp;Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lays out the selected widgets vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Lay Out in a &amp;Form Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lays out the selected widgets in a form layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Lay Out in a &amp;Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lays out the selected widgets in a grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Lay Out Horizontally in S&amp;plitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lays out the selected widgets horizontally in a splitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Lay Out Vertically in Sp&amp;litter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Lays out the selected widgets vertically in a splitter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>&amp;Break Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Breaks the selected layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Si&amp;mplify Grid Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Removes empty columns and rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&amp;Preview...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Preview current form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Form &amp;Settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+94"/>
+        <source>Break Layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Adjust Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+43"/>
+        <source>Could not create form preview</source>
+        <comment>Title of warning message box</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+341"/>
+        <source>Form Settings - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::FormWindowSettings</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/formwindowsettings.cpp" line="+193"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Device Profile: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::GridPanel</name>
+    <message>
+        <location filename="../src/designer/shared/gridpanel.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Grid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Grid &amp;X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Reset</source>
+        <translation type="unfinished">Сбросить</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Grid &amp;Y</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::GroupBoxTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/groupbox_taskmenu.cpp" line="+82"/>
+        <source>Change title...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::HtmlTextEdit</name>
+    <message>
+        <location filename="../src/designer/shared/richtexteditor.cpp" line="-58"/>
+        <source>Insert HTML entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::IconSelector</name>
+    <message>
+        <location filename="../src/designer/shared/iconselector.cpp" line="-24"/>
+        <source>The pixmap file &apos;%1&apos; cannot be read.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>The file &apos;%1&apos; does not appear to be a valid pixmap file: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>The file &apos;%1&apos; could not be read: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Choose a Pixmap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Pixmap Read Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Normal Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Normal On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Disabled Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Disabled On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Active On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selected Off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Selected On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Choose Resource...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Choose File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reset</source>
+        <translation type="unfinished">Сбросить</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Reset All</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::IconThemeDialog</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1736"/>
+        <source>Set Icon From Theme</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Input icon name from the current theme:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ItemListEditor</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/itemlisteditor.ui"/>
+        <source>Items List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>New Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Delete Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Удалить</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move Item Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>U</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move Item Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/designer/components/taskmenu/itemlisteditor.cpp" line="+350"/>
+        <source>Properties &amp;&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/taskmenu/itemlisteditor.cpp" line="+0"/>
+        <source>Properties &amp;&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::LabelTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/label_taskmenu.cpp" line="+85"/>
+        <source>Change rich text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change plain text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::LanguageResourceDialog</name>
+    <message>
+        <location filename="../src/designer/shared/iconselector.cpp" line="-348"/>
+        <source>Choose Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::LineEditTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/lineedit_taskmenu.cpp" line="+80"/>
+        <source>Change text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ListWidgetEditor</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/listwidgeteditor.cpp" line="+69"/>
+        <source>New Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Edit List Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Edit Combobox</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ListWidgetTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/listwidget_taskmenu.cpp" line="+67"/>
+        <source>Edit Items...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Change List Contents</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::MdiContainerWidgetTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/containerwidget_taskmenu.cpp" line="+118"/>
+        <source>Next Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous Subwindow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Cascade</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::MenuTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/menutaskmenu.cpp" line="+56"/>
+        <source>Remove</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::MorphMenu</name>
+    <message>
+        <location filename="../src/designer/shared/morphmenu.cpp" line="+271"/>
+        <source>Morph into</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::NewActionDialog</name>
+    <message>
+        <location filename="../src/designer/shared/newactiondialog.ui"/>
+        <source>New Action...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Object &amp;name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>T&amp;oolTip:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Icon th&amp;eme:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Icon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Checkable:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Shortcut:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::NewDynamicPropertyDialog</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/newdynamicpropertydialog.ui"/>
+        <source>Create Dynamic Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Property Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>horizontalSpacer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Property Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/newdynamicpropertydialog.cpp" line="+134"/>
+        <source>Set Property Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>The current object already has a property named &apos;%1&apos;.
+Please select another, unique one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>The &apos;_q_&apos; prefix is reserved for the Qt library.
+Please select another name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::NewFormWidget</name>
+    <message>
+        <location filename="../src/designer/shared/newformwidget.ui"/>
+        <source>0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Choose a template for a preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Embedded Design</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Device:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Screen Size:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/newformwidget.cpp" line="+103"/>
+        <source>Default size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>QVGA portrait (240x320)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>QVGA landscape (320x240)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>VGA portrait (480x640)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>VGA landscape (640x480)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+66"/>
+        <source>Widgets</source>
+        <extracomment>New Form Dialog Categories</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+57"/>
+        <source>Error loading form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+244"/>
+        <source>Unable to open the form template file &apos;%1&apos;: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+67"/>
+        <source>Internal error: No template selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::NewPromotedClassPanel</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_promotiondialog.cpp" line="+93"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>New Promoted Class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Base class name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Promoted class name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Header file:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Global include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Reset</source>
+        <translation type="unfinished">Сбросить</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ObjectInspector</name>
+    <message>
+        <location filename="../src/designer/components/objectinspector/objectinspector.cpp" line="+316"/>
+        <source>Change Current Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+438"/>
+        <source>&amp;Find in Text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::OrderDialog</name>
+    <message>
+        <location filename="../src/designer/shared/orderdialog.ui"/>
+        <source>Change Page Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Page Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move page up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move page down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/shared/orderdialog.cpp" line="+109"/>
+        <source>Index %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>%1 %2</source>
+        <translation type="unfinished">%1 %2</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PaletteEditor</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/paletteeditor.ui"/>
+        <source>Edit Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Tune Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Show Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Compute Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Quick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Inactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PaletteEditorButton</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+57"/>
+        <source>Change Palette</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PaletteModel</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+375"/>
+        <source>Color Role</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Inactive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PixmapEditor</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+81"/>
+        <source>Choose Resource...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Choose File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Set Icon From Theme...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Paste Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <location line="+18"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>[Theme] %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PlainTextEditorDialog</name>
+    <message>
+        <location filename="../src/designer/shared/plaintexteditor.cpp" line="+65"/>
+        <source>Edit text</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PluginDialog</name>
+    <message>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <source>Components</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Plugin Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Refresh</source>
+        <translation type="unfinished">Обновить</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Scan for newly installed custom widget plugins.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Loaded Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Failed Plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Qt Designer couldn&apos;t find any plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Qt Designer found the following plugins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>New custom widget plugins have been found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PreviewActionGroup</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/previewactiongroup.cpp" line="+95"/>
+        <source>%1 Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PreviewConfigurationWidget</name>
+    <message>
+        <location filename="../src/designer/shared/previewconfigurationwidget.cpp" line="+139"/>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Browse...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+118"/>
+        <source>Load Custom Device Skin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>All QVFB Skins (*.%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>%1 - Duplicate Skin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The skin &apos;%1&apos; already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>%1 - Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>%1 is not a valid skin directory:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PreviewDeviceSkin</name>
+    <message>
+        <location filename="../src/designer/shared/previewmanager.cpp" line="+259"/>
+        <source>&amp;Portrait</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Landscape (&amp;CCW)</source>
+        <extracomment>Rotate form preview counter-clockwise</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Landscape (CW)</source>
+        <extracomment>Rotate form preview clockwise</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Close</source>
+        <translation type="unfinished">&amp;Закрыть</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PreviewManager</name>
+    <message>
+        <location line="+434"/>
+        <source>%1 - [Preview]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PreviewMdiArea</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/previewframe.cpp" line="+72"/>
+        <source>The moose in the noose
+ate the goose who was loose.</source>
+        <extracomment>Palette editor background</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PreviewWidget</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/previewwidget.ui"/>
+        <source>Preview Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>LineEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>ComboBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>PushButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>ButtonGroup2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>CheckBox1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>CheckBox2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>ButtonGroup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>RadioButton1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>RadioButton2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>RadioButton3</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PromotionModel</name>
+    <message>
+        <location filename="../src/designer/shared/promotionmodel.cpp" line="+17"/>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Header file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Global include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PromotionTaskMenu</name>
+    <message>
+        <location filename="../src/designer/shared/promotiontaskmenu.cpp" line="+85"/>
+        <source>Promoted widgets...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Promote to ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change signals/slots...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Promote to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Demote to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PropertyEditor</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+232"/>
+        <source>Add Dynamic Property...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Remove Dynamic Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Sorting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Color Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tree View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Drop Down Button View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>String...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Bool...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Other...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Configure Property Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+542"/>
+        <source>Object: %1
+Class: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::PropertyLineEdit</name>
+    <message>
+        <location filename="../src/designer/shared/propertylineedit.cpp" line="+88"/>
+        <source>Insert line break</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::QDesignerPromotionDialog</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_promotiondialog.cpp" line="+90"/>
+        <source>Promoted Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Promoted Classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+62"/>
+        <source>Promote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+152"/>
+        <source>Change signals/slots...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>%1 - Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::QDesignerResource</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+277"/>
+        <source>Loading qrc file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The specified qrc file &lt;p&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/p&gt;&lt;p&gt;could not be found. Do you want to update the file location?&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>New location for %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Resource files (*.qrc)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::QDesignerTaskMenu</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_taskmenu.cpp" line="+62"/>
+        <source>Layout Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>No Horizontal Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Left</source>
+        <translation type="unfinished">Влево</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Center Horizontally</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Right</source>
+        <translation type="unfinished">Вправо</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>No Vertical Alignment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Top</source>
+        <translation type="unfinished">Вверх</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Center Vertically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Bottom</source>
+        <translation type="unfinished">Вниз</translation>
+    </message>
+    <message>
+        <location line="+107"/>
+        <source>Change objectName...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change toolTip...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change whatsThis...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change styleSheet...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Create Menu Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Tool Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Remove Status Bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change script...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change signals/slots...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Go to slot...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Size Constraints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Set Minimum Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Set Minimum Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Set Minimum Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Set Maximum Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Set Maximum Height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Set Maximum Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+239"/>
+        <source>Edit ToolTip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Edit WhatsThis</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+144"/>
+        <source>no signals available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location line="+67"/>
+        <source>Set size constraint on %n widget(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::QDesignerWidgetBox</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_widgetbox.cpp" line="+123"/>
+        <location line="+13"/>
+        <source>Unexpected element &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>A parse error occurred at line %1, column %2 of the XML code specified for the widget %3: %4
+%5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>The XML code specified for the widget %1 does not contain any widget elements.
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::RichTextEditorDialog</name>
+    <message>
+        <location filename="../src/designer/shared/richtexteditor.cpp" line="+467"/>
+        <source>Edit text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
+        <source>Rich Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>&amp;OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Cancel</source>
+        <translation type="unfinished">От&amp;мена</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::RichTextEditorToolBar</name>
+    <message>
+        <location line="-341"/>
+        <source>Bold</source>
+        <translation type="unfinished">Жирный</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CTRL+B</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Italic</source>
+        <translation type="unfinished">Курсив</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CTRL+I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Underline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>CTRL+U</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Left Align</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Right Align</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Justify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Superscript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Subscript</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Insert &amp;Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Insert &amp;Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
+        <source>Simplify Rich Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ScriptDialog</name>
+    <message>
+        <location filename="../src/designer/shared/scriptdialog.cpp" line="+66"/>
+        <source>Edit script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&lt;html&gt;Enter a Qt Script snippet to be executed while loading the form.&lt;br&gt;The widget and its children are accessible via the variables &lt;i&gt;widget&lt;/i&gt; and &lt;i&gt;childWidgets&lt;/i&gt;, respectively.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+51"/>
+        <source>Syntax error</source>
+        <translation type="unfinished">Синтаксическая ошибка</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ScriptErrorDialog</name>
+    <message>
+        <location filename="../src/designer/shared/scripterrordialog.cpp" line="+27"/>
+        <source>Script errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::SignalSlotDialog</name>
+    <message>
+        <location filename="../src/designer/shared/signalslotdialog.cpp" line="+199"/>
+        <source>There is already a slot with the signature &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>There is already a signal with the signature &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>%1 - Duplicate Signature</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <location line="+76"/>
+        <source>Signals/Slots of %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::SignalSlotEditorPlugin</name>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditor_plugin.cpp" line="+72"/>
+        <source>Edit Signals/Slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>F4</source>
+        <translation type="unfinished">F4</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::SignalSlotEditorTool</name>
+    <message>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditor_tool.cpp" line="+58"/>
+        <source>Edit Signals/Slots</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::StatusBarTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/toolbar_taskmenu.cpp" line="+81"/>
+        <source>Remove</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::StringListEditorButton</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/stringlisteditorbutton.cpp" line="+56"/>
+        <source>Change String List</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::StyleSheetEditorDialog</name>
+    <message>
+        <location filename="../src/designer/shared/stylesheeteditor.cpp" line="+91"/>
+        <location line="+280"/>
+        <source>Valid Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-278"/>
+        <source>Add Resource...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Gradient...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Color...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Add Font...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Edit Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+276"/>
+        <source>Invalid Style Sheet</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TabOrderEditor</name>
+    <message>
+        <location filename="../src/designer/components/tabordereditor/tabordereditor.cpp" line="+363"/>
+        <source>Start from Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Tab Order List...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Tab Order List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Tab Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TabOrderEditorPlugin</name>
+    <message>
+        <location filename="../src/designer/components/tabordereditor/tabordereditor_plugin.cpp" line="+73"/>
+        <source>Edit Tab Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TabOrderEditorTool</name>
+    <message>
+        <location filename="../src/designer/components/tabordereditor/tabordereditor_tool.cpp" line="+57"/>
+        <source>Edit Tab Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TableWidgetEditor</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/tablewidgeteditor.ui"/>
+        <source>Edit Table Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Table Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/designer/components/taskmenu/tablewidgeteditor.cpp" line="+242"/>
+        <source>Properties &amp;&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/taskmenu/tablewidgeteditor.cpp" line="-175"/>
+        <source>New Column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>New Row</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>&amp;Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Rows</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+163"/>
+        <source>Properties &amp;&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TableWidgetTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/tablewidget_taskmenu.cpp" line="+64"/>
+        <source>Edit Items...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TemplateOptionsWidget</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/templateoptionspage.ui"/>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Additional Template Paths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/formeditor/templateoptionspage.cpp" line="-18"/>
+        <source>Pick a directory to save templates in</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TextEditTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/textedit_taskmenu.cpp" line="+58"/>
+        <source>Edit HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change HTML...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Edit Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Change Plain Text...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TextEditor</name>
+    <message>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-332"/>
+        <source>Choose Resource...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Choose File...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+138"/>
+        <source>Choose a File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ToolBarEventFilter</name>
+    <message>
+        <location filename="../src/designer/shared/qdesigner_toolbar.cpp" line="+148"/>
+        <source>Insert Separator before &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Append Separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Remove action &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Remove Toolbar &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+58"/>
+        <source>Insert Separator</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TreeWidgetEditor</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/treewidgeteditor.ui"/>
+        <source>Edit Tree Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Tree Items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/designer/components/taskmenu/treewidgeteditor.cpp" line="+224"/>
+        <source>New Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/designer/components/taskmenu/treewidgeteditor.cpp" line="+19"/>
+        <source>New Subitem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>New &amp;Subitem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Delete Item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>&amp;Delete</source>
+        <translation type="unfinished">&amp;Удалить</translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move Item Left (before Parent Item)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>L</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move Item Right (as a First Subitem of the Next Sibling Item)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>R</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move Item Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>U</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>Move Item Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>D</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <location filename="../src/designer/components/taskmenu/treewidgeteditor.cpp" line="+176"/>
+        <source>Properties &amp;&gt;&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/designer/components/taskmenu/treewidgeteditor.cpp" line="-351"/>
+        <source>New Column</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>&amp;Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+94"/>
+        <source>Per column properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Common properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+248"/>
+        <source>Properties &amp;&lt;&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::TreeWidgetTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/treewidget_taskmenu.cpp" line="+63"/>
+        <source>Edit Items...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::WidgetBox</name>
+    <message>
+        <location filename="../src/designer/components/widgetbox/widgetbox_dnditem.cpp" line="+115"/>
+        <source>Warning: Widget creation failed in the widget box. This could be caused by invalid custom widget XML.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::WidgetBoxTreeWidget</name>
+    <message>
+        <location filename="../src/designer/components/widgetbox/widgetboxtreewidget.cpp" line="-268"/>
+        <source>Scratchpad</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+370"/>
+        <source>Custom Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+263"/>
+        <source>Expand all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Collapse all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>List View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Icon View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Remove</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Edit name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::WidgetDataBase</name>
+    <message>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="-410"/>
+        <source>A custom widget plugin whose class name (%1) matches that of an existing class has been found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::WidgetEditorTool</name>
+    <message>
+        <location filename="../src/designer/components/formeditor/tool_widgeteditor.cpp" line="+67"/>
+        <source>Edit Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::WidgetFactory</name>
+    <message>
+        <location filename="../src/designer/shared/widgetfactory.cpp" line="+263"/>
+        <source>The custom widget factory registered for widgets of class %1 returned 0.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>A class name mismatch occurred when creating a widget using the custom widget factory registered for widgets of class %1. It returned a widget of class %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+99"/>
+        <source>%1 Widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <source>The current page of the container &apos;%1&apos; (%2) could not be determined while creating a layout.This indicates an inconsistency in the ui-file, probably a layout being constructed on a container widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>Attempt to add a layout to a widget &apos;%1&apos; (%2) which already has an unmanaged layout of type %3.
+This indicates an inconsistency in the ui-file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+211"/>
+        <source>Cannot create style &apos;%1&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::WizardContainerWidgetTaskMenu</name>
+    <message>
+        <location filename="../src/designer/components/taskmenu/containerwidget_taskmenu.cpp" line="-49"/>
+        <source>Next</source>
+        <translation type="unfinished">Следующий</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ZoomMenu</name>
+    <message>
+        <location filename="../src/designer/shared/zoomwidget.cpp" line="+79"/>
+        <source>%1 %</source>
+        <extracomment>Zoom factor</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>qdesigner_internal::ZoomablePreviewDeviceSkin</name>
+    <message>
+        <location filename="../src/designer/shared/previewmanager.cpp" line="-270"/>
+        <source>&amp;Zoom</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

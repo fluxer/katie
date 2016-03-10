@@ -223,7 +223,7 @@ void QDesigner::initialize()
     QTranslator *qtTranslator = new QTranslator(this);
 
     const QString localSysName = QLocale::system().name();
-    QString  translatorFileName = QLatin1String("designer_");
+    QString  translatorFileName = QLatin1String("qt_tools_");
     translatorFileName += localSysName;
     translator->load(translatorFileName, resourceDir);
 

@@ -9,7 +9,6 @@ include(sdk/sdk.cmake)
 include(shared/shared.cmake)
 
 add_subdirectory(components)
-add_subdirectory(designer)
 
 set(DESIGNER_PUBLIC_HEADERS
     ${DESIGNER_PUBLIC_HEADERS}
