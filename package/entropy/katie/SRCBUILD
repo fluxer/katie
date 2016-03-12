@@ -49,7 +49,7 @@ src_install() {
     done
 
     # register Designer as application
-    install -vDm644 ../katie.git/src/designer/designer/images/designer.png \
+    install -vDm644 ../katie.git/src/tools/designer/images/designer.png \
         "$INSTALL_DIR/usr/share/pixmaps/designer-katie.png"
     mkdir -p "$INSTALL_DIR/usr/share/applications"
     cat > "$INSTALL_DIR/usr/share/applications/designer-katie.desktop" << EOF

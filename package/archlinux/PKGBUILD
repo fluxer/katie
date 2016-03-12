@@ -58,7 +58,7 @@ package() {
         "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
 
     # register Designer as application
-    install -v -Dm644 ../katie/src/designer/designer/images/designer.png \
+    install -v -Dm644 ../katie/src/tools/designer/images/designer.png \
         "${pkgdir}/usr/share/pixmaps/designer-katie.png"
     mkdir -p "${pkgdir}/usr/share/applications"
     cat > "${pkgdir}/usr/share/applications/designer-katie.desktop" << EOF
