@@ -7,7 +7,7 @@ There are several things you should be aware before considering Katie:
  - some components and tools have been removed:
   - QMake, D-Bus viewer, Linguist, Assistant, checksdk, macdeployqt, pixeltool,
     qconfig, qdoc, qev, qvfb, runonphone and other non-essential
-  - Qt3Support, QtWebKit and ActiveQt
+  - Qt3Support, QtWebKit, ActiveQt and Phonon
 
  - some things have changed:
   - QMake build system replaced with CMake
@@ -16,8 +16,6 @@ There are several things you should be aware before considering Katie:
   - OpenSSL and D-Bus cannot be runtime dependencies, they must be linked to
     during build
   - QtUiTools is build as shared library by default
-  - Phonon has been updated to 4.8.51
-  - Phonon backends (GStreamer, DS9, MMF, QT7, WaveOut) replaced with VLC
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - Symbian, QWS and QPA are no longer supported platforms
   - OpenVG is no longer supported graphics output

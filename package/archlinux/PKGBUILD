@@ -13,11 +13,10 @@ depends=('openssl' 'zlib' 'cups' 'alsa-lib' 'gtk2' 'libgl' 'libice'
         'libsm' 'libxcursor' 'libxext' 'libxfixes' 'libxi' 'libxinerama'
         'libxrandr' 'libxrender' 'libx11' 'fontconfig' 'freetype2' 'glib2')
 makedepends=('cmake' 'git' 'python' 'postgresql' 'mariadb' 'unixodbc' 'mesa'
-        'vlc' 'unifdef')
+        'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'
-        'unixodbc: ODBC driver'
-        'vlc: Phonon VLC backend')
+        'unixodbc: ODBC driver')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')
@@ -34,8 +33,6 @@ prepare() {
     echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
         >> katie/mkspecs/linux/vendor.cmake
     echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
         >> katie/mkspecs/linux/vendor.cmake
     echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
         >> katie/mkspecs/linux/vendor.cmake

@@ -34,15 +34,6 @@ foreach(component ${KATIE_COMPONENTS})
     if(uppercomp STREQUAL "MAIN")
         set(KATIE_INCLUDES ${KATIE_INCLUDES} "@QT_HEADERS_PATH@")
         set(KATIE_${uppercomp}_INCLUDES "@QT_HEADERS_PATH@")
-    elseif(uppercomp STREQUAL "PHONON")
-        set(KATIE_INCLUDES ${KATIE_INCLUDES}
-            "@QT_HEADERS_PATH@/phonon"
-            "@QT_HEADERS_PATH@/Phonon"
-        )
-        set(KATIE_${uppercomp}_INCLUDES
-            "@QT_HEADERS_PATH@/phonon"
-            "@QT_HEADERS_PATH@/Phonon"
-        )
     else()
         set(KATIE_INCLUDES ${KATIE_INCLUDES} "@QT_HEADERS_PATH@/Qt${component}")
         set(KATIE_${uppercomp}_INCLUDES "@QT_HEADERS_PATH@/Qt${component}")

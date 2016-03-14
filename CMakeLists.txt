@@ -104,9 +104,6 @@ add_feature_info(mysql WITH_MYSQL "the world's most popular open source database
 option(WITH_SQLITE "Build SQLite database plugin" ON)
 add_feature_info(sqlite WITH_SQLITE "the world's most popular open source database")
 
-option(WITH_VLC "Build VLC Phonon backend" ON)
-add_feature_info(sqlite WITH_VLC "VLC C API Library")
-
 option(WITH_X11 "Build X11/X.Org support" ON)
 add_feature_info(x11 WITH_X11 "an open source something")
 
@@ -420,15 +417,6 @@ set_package_properties(Sqlite PROPERTIES
     TYPE RECOMMENDED
 )
 
-set(VLC_MIN_VERSION "2.1.0")
-find_package(VLC)
-set_package_properties(VLC PROPERTIES
-    PURPOSE "Required for VLC Phonon backend"
-    DESCRIPTION "VLC C API Library"
-    URL "http://www.videolan.org/vlc/"
-    TYPE RECOMMENDED
-)
-
 find_package(Threads)
 set_package_properties(Threads PROPERTIES
     PURPOSE "Required for threads support"
@@ -559,7 +547,6 @@ if(NOT KATIE_BOOTSTRAP)
     if(WITH_OPENGL AND OPENGL_FOUND)
         add_subdirectory(src/opengl)
     endif()
-    add_subdirectory(src/phonon)
     add_subdirectory(src/plugins)
     add_subdirectory(src/script)
     add_subdirectory(src/scripttools)
@@ -601,7 +588,6 @@ katie_generate_obsolete(qhboxlayout.h QtGui qboxlayout.h)
 katie_generate_obsolete(qvboxlayout.h QtGui qboxlayout.h)
 katie_generate_obsolete(qspaceritem.h QtGui qlayoutitem.h)
 katie_generate_obsolete(qdoublespinbox.h QtGui qspinbox.h)
-katie_generate_obsolete(global.h Phonon ../phonon/phononnamespace.h)
 katie_generate_obsolete(qxmlstream.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamwriter.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamreader.h QtXml ../QtCore/qxmlstream.h)

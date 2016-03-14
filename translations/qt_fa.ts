@@ -12115,54 +12115,6 @@ to
     </message>
 </context>
 <context>
-    <name>VideoPlayerTaskMenu</name>
-    <message>
-        <location filename="../src/plugins/designer/phonon/videoplayertaskmenu.cpp" line="+99"/>
-        <source>Available Mime Types</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Display supported mime types...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Load...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Play</source>
-        <translation type="unfinished">شروع</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Pause</source>
-        <translation type="unfinished">Pause</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Stop</source>
-        <translation type="unfinished">Stop</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Choose Video Player Media Source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>An error has occurred in &apos;%1&apos;: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Video Player Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>WidgetDataBase</name>
     <message>
         <location filename="../src/designer/shared/widgetdatabase.cpp" line="+813"/>

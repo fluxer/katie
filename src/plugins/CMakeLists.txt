@@ -26,8 +26,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtOpenGL
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
-    ${CMAKE_BINARY_DIR}/include/Phonon
-    ${CMAKE_BINARY_DIR}/privateinclude/Phonon
     ${CMAKE_CURRENT_SOURCE_DIR}/script
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs
     ${CMAKE_CURRENT_SOURCE_DIR}/imageformats
@@ -134,4 +132,3 @@ endif()
 
 
 include(designer/qdeclarativeview/qdeclarativeview.cmake)
-include(designer/phonon/phonon.cmake)

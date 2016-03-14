@@ -8,8 +8,6 @@ override_dh_auto_configure:
         	> mkspecs/linux/vendor.cmake
 	echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
 		>> mkspecs/linux/vendor.cmake
-	echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
-        	>> mkspecs/linux/vendor.cmake
 	echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
 			>> mkspecs/linux/vendor.cmake
 

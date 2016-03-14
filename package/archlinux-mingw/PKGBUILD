@@ -8,10 +8,8 @@ pkgdesc='C++ toolkit derived from the Qt 4.8 framework (mingw-w64)'
 arch=('i686' 'x86_64')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
-# FIXME: depend on mingw-w64-vlc
 depends=('mingw-w64-openssl' 'mingw-w64-zlib' 'mingw-w64-crt')
-makedepends=('cmake' 'git' 'python' 'vlc' 'unifdef' 'mingw-w64-gcc')
-optdepends=('vlc: Phonon VLC backend')
+makedepends=('cmake' 'git' 'python' 'unifdef' 'mingw-w64-gcc')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('mingw-w64-katie')
@@ -27,8 +25,6 @@ pkgver() {
 prepare() {
     mkdir -p build
 
-    echo "set(DBUS_INTERFACES_INSTALL_DIR /usr/${_arch}/etc/dbus-1/interfaces)" \
-        >> katie/mkspecs/win32/vendor.cmake
     echo "set(CMAKE_INSTALL_DIR /usr/${_arch}/share/cmake)" \
         >> katie/mkspecs/win32/vendor.cmake
     echo 'set(QT_LIBRARIES_PATH "${QT_PREFIX_PATH}/lib/katie")' \
