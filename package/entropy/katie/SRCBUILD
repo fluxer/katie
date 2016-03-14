@@ -7,15 +7,13 @@ depends=('libtiff' 'libpng' 'libmng' 'sqlite' 'ca-certificates' 'glib' 'dbus'
         'fontconfig' 'xorg-libraries' 'alsa-lib' 'icu' 'hicolor-icon-theme'
         'mesalib' 'cups')
 makedepends=('python')
-optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'vlc' 'nas')
+optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'nas')
 sources=("https://github.com/fluxer/katie.git")
 
 src_prepare() {
     echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
         >> katie.git/mkspecs/linux/vendor.cmake
     echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
-        >> katie.git/mkspecs/linux/vendor.cmake
-    echo 'set(DBUS_INTERFACES_INSTALL_DIR /etc/dbus-1/interfaces)' \
         >> katie.git/mkspecs/linux/vendor.cmake
     echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
         >> katie.git/mkspecs/linux/vendor.cmake
@@ -32,7 +30,6 @@ src_compile() {
         -DWITH_MYSQL=$OPTIONAL_MARIADB_BOOL \
         -DWITH_ODBC=$OPTIONAL_UNIXODBC_BOOL \
         -DWITH_PSQL=$OPTIONAL_POSTGRESQL_BOOL \
-        -DWITH_VLC=$OPTIONAL_VLC_BOOL \
         -DWITH_NAS=$OPTIONAL_NAS_BOOL
     make
 }

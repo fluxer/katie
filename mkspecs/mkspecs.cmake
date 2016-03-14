@@ -97,7 +97,6 @@ include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 # packages then paths can be full paths as seen in the shipped package files.
 set(LDCONF_INSTALL_DIR "etc/ld.so.conf.d")
 set(PROFILE_INSTALL_DIR "etc/profile.d")
-set(DBUS_INTERFACES_INSTALL_DIR "etc/dbus-1/interfaces")
 set(MAN_INSTALL_DIR "share/man")
 set(CMAKE_INSTALL_DIR "cmake")
 
