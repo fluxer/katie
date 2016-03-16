@@ -1059,6 +1059,85 @@ qcollectiongenerator &lt;collection-config-file&gt; [options]
     </message>
 </context>
 <context>
+    <name>QDBusViewer</name>
+    <message>
+        <location filename="../src/tools/qdbusviewer/qdbusviewer.cpp" line="+81"/>
+        <source>Search...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>&amp;Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+116"/>
+        <source>Arguments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Please enter the value of the property %1 (type %2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Unable to marshall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Value conversion failed, unable to set property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+37"/>
+        <source>Unable to find method</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Unable to find method %1 on path %2 in interface %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Please enter parameters for the method &quot;%1&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>&amp;Connect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>&amp;Set value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;Get value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+33"/>
+        <source>Unable to connect to service %1, path %2, interface %3, signal %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+121"/>
+        <location line="+1"/>
+        <source>D-Bus Viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QDesigner</name>
     <message>
         <location filename="../src/tools/designer/qdesigner.cpp" line="+141"/>
@@ -1626,6 +1705,49 @@ qhelpgenerator &lt;help-project-file&gt; [options]
         <location filename="../src/tools/lupdate/lupdate.cpp" line="-139"/>
         <source>lupdate version %1
 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+65"/>
+        <source>Session Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>System Bus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>&amp;File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>&amp;Help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&amp;About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>About &amp;Qt</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QtDBusViewer</name>
+    <message>
+        <location line="-20"/>
+        <source>Qt D-Bus Viewer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
