@@ -48,6 +48,8 @@ src_install() {
     # register Designer as application
     install -vDm644 ../katie.git/src/tools/designer/images/designer.png \
         "$INSTALL_DIR/usr/share/pixmaps/designer-katie.png"
+    install -vDm644 ../katie.git/src/tools/qdbusviewer/images/qdbusviewer.png \
+        "$INSTALL_DIR/usr/share/pixmaps/qdbusviewer-katie.png"
     mkdir -p "$INSTALL_DIR/usr/share/applications"
     cat > "$INSTALL_DIR/usr/share/applications/designer-katie.desktop" << EOF
 [Desktop Entry]
@@ -60,6 +62,17 @@ Terminal=false
 Encoding=UTF-8
 Type=Application
 Categories=Qt;Development;
+EOF
+    cat > "$INSTALL_DIR/usr/share/applications/qdbusviewer-katie.desktop" << EOF
+[Desktop Entry]
+Name=Katie D-Bus Viewer
+Comment=Debug D-Bus applications
+Exec=qdbusviewer-katie
+Icon=qdbusviewer-katie.png
+Terminal=false
+Encoding=UTF-8
+Type=Application
+Categories=Qt;Development;Debugger;
 EOF
 }
 
