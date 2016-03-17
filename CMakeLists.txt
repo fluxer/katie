@@ -596,7 +596,7 @@ katie_generate_obsolete(qnetworkcachemetadata.h QtNetwork qabstractnetworkcache.
 # those are aliases
 if(UNIX AND WITH_X11 AND X11_FOUND)
     katie_generate_obsolete(qx11info.h QtGui qx11info_x11.h)
-    katie_generate_obsolete(qx11embedcontainer QtGui qx11embed_x11.h)
+    katie_generate_obsolete(qx11embedcontainer.h QtGui qx11embed_x11.h)
     katie_generate_obsolete(qx11embedwidget.h QtGui qx11embed_x11.h)
 endif()
 # those have shuffled, e.g. from QtDesginer to QtUiTools
