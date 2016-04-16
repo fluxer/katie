@@ -48,6 +48,7 @@
 #define QT_NO_PHONON
 #define QT_NO_WIN_ACTIVEQT
 #define QT_NO_QWS_QPF2
+#define QT_NO_STYLE_WINDOWSMOBILE
 
 /* Qt build specs */
 #ifndef QT_EDITION

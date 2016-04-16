@@ -147,7 +147,3 @@ if(KATIE_PLATFORM STREQUAL "win32" OR KATIE_WINDOWS_STYLE)
 else()
     add_definitions(-DQT_NO_STYLE_WINDOWS)
 endif()
-
-
-# not supported
-add_definitions(-DQT_NO_STYLE_WINDOWSMOBILE)

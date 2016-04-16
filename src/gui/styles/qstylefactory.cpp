@@ -66,9 +66,6 @@
 #ifndef QT_NO_STYLE_WINDOWSCE
 #include "qwindowscestyle.h"
 #endif
-#ifndef QT_NO_STYLE_WINDOWSMOBILE
-#include "qwindowsmobilestyle.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -127,11 +124,6 @@ QStyle *QStyleFactory::create(const QString& key)
 #ifndef QT_NO_STYLE_WINDOWSCE
     if (style == QLatin1String("windowsce"))
         ret = new QWindowsCEStyle;
-    else
-#endif
-#ifndef QT_NO_STYLE_WINDOWSMOBILE
-    if (style == QLatin1String("windowsmobile"))
-        ret = new QWindowsMobileStyle;
     else
 #endif
 #ifndef QT_NO_STYLE_WINDOWSXP
@@ -210,10 +202,6 @@ QStringList QStyleFactory::keys()
 #ifndef QT_NO_STYLE_WINDOWSCE
     if (!list.contains(QLatin1String("WindowsCE")))
         list << QLatin1String("WindowsCE");
-#endif
-#ifndef QT_NO_STYLE_WINDOWSMOBILE
-    if (!list.contains(QLatin1String("WindowsMobile")))
-        list << QLatin1String("WindowsMobile");
 #endif
 #ifndef QT_NO_STYLE_WINDOWSXP
     if (!list.contains(QLatin1String("WindowsXP")) &&
