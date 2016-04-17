@@ -731,9 +731,8 @@ void QMetaObjectBuilder::addMetaObject
 
     if ((members & StaticMetacall) != 0) {
         Q_ASSERT(priv(prototype->d.data)->revision >= 6);
-        if (priv(prototype->d.data)->revision >= 6) {
-            if (prototype->d.static_metacall)
-                setStaticMetacallFunction(prototype->d.static_metacall);
+        if (prototype->d.static_metacall) {
+            setStaticMetacallFunction(prototype->d.static_metacall);
         }
     }
 }
