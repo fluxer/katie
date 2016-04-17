@@ -561,7 +561,7 @@ int QDeclarativeVMEMetaObject::metaCall(QMetaObject::Call c, int _id, void **a)
                 }
 
                 if (c == QMetaObject::WriteProperty && needActivate) {
-                    activate(object, object->metaObject(), methodOffset + id, 0);
+                    activate(object, methodOffset + id, 0);
                 }
 
                 return -1;
@@ -636,7 +636,7 @@ int QDeclarativeVMEMetaObject::metaCall(QMetaObject::Call c, int _id, void **a)
             int plainSignals = metaData->signalCount + metaData->propertyCount +
                                metaData->aliasCount;
             if (id < plainSignals) {
-                QMetaObject::activate(object, object->metaObject(), _id, a);
+                QMetaObject::activate(object, _id, a);
                 return -1;
             }
 
@@ -720,7 +720,7 @@ QVariant QDeclarativeVMEMetaObject::readVarPropertyAsVariant(int id)
 void QDeclarativeVMEMetaObject::writeVarProperty(int id, const QScriptValue &value)
 {
     data[id].setValue(value);
-    activate(object, object->metaObject(), methodOffset + id, 0);
+    activate(object, methodOffset + id, 0);
 }
 
 void QDeclarativeVMEMetaObject::writeVarProperty(int id, const QVariant &value)
@@ -737,19 +737,19 @@ void QDeclarativeVMEMetaObject::writeVarProperty(int id, const QVariant &value)
         data[id].setValue(value);
     }
     if (needActivate)
-        activate(object, object->metaObject(), methodOffset + id, 0);
+        activate(object, methodOffset + id, 0);
 }
 
 void QDeclarativeVMEMetaObject::listChanged(int id)
 {
-    activate(object, object->metaObject(), methodOffset + id, 0);
+    activate(object, methodOffset + id, 0);
 }
 
 void QDeclarativeVMEMetaObject::list_append(QDeclarativeListProperty<QObject> *prop, QObject *o)
 {
     List *list = static_cast<List *>(prop->data);
     list->append(o);
-    QMetaObject::activate(prop->object, prop->object->metaObject(), list->notifyIndex, 0);
+    QMetaObject::activate(prop->object, list->notifyIndex, 0);
 }
 
 int QDeclarativeVMEMetaObject::list_count(QDeclarativeListProperty<QObject> *prop)
@@ -766,7 +766,7 @@ void QDeclarativeVMEMetaObject::list_clear(QDeclarativeListProperty<QObject> *pr
 {
     List *list = static_cast<List *>(prop->data);
     list->clear();
-    QMetaObject::activate(prop->object, prop->object->metaObject(), list->notifyIndex, 0);
+    QMetaObject::activate(prop->object, list->notifyIndex, 0);
 }
 
 void QDeclarativeVMEMetaObject::registerInterceptor(int index, int valueIndex, QDeclarativePropertyValueInterceptor *interceptor)

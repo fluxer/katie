@@ -233,7 +233,7 @@ int QDeclarativeOpenMetaObject::metaCall(QMetaObject::Call c, int id, void **a)
                 propertyWrite(propId);
                 d->writeData(propId, *reinterpret_cast<QVariant *>(a[0]));
                 propertyWritten(propId);
-                activate(d->object, d->object->metaObject(), d->type->d->signalOffset + propId, 0);
+                activate(d->object, d->type->d->signalOffset + propId, 0);
             }
         } 
         return -1;
@@ -258,7 +258,7 @@ QVariant QDeclarativeOpenMetaObject::value(int id) const
 void QDeclarativeOpenMetaObject::setValue(int id, const QVariant &value)
 {
     d->writeData(id, value);
-    activate(d->object, d->object->metaObject(), d->type->d->signalOffset + id, 0);
+    activate(d->object, d->type->d->signalOffset + id, 0);
 }
 
 QVariant QDeclarativeOpenMetaObject::value(const QByteArray &name) const
@@ -300,7 +300,7 @@ void QDeclarativeOpenMetaObject::setValue(const QByteArray &name, const QVariant
             return;
 
         dataVal = val;
-        activate(d->object, d->object->metaObject(), d->type->d->signalOffset + d, 0);
+        activate(d->object, d->type->d->signalOffset + id, 0);
     }
 }
 

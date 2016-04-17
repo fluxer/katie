@@ -110,7 +110,7 @@ int QDeclarativeProxyMetaObject::metaCall(QMetaObject::Call c, int id, void **a)
                id >= metaObjects->last().methodOffset) {
         QMetaMethod m = object->metaObject()->method(id);
         if (m.methodType() == QMetaMethod::Signal) {
-            QMetaObject::activate(object, object->metaObject(), id, a);
+            QMetaObject::activate(object, id, a);
             return -1;
         }
     }

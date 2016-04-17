@@ -323,7 +323,7 @@ void QDeclarativeContext::setContextProperty(const QString &name, const QVariant
         data->refreshExpressions();
     } else {
         d->propertyValues[idx] = value;
-        QMetaObject::activate(this, this->metaObject(), idx + d->notifyIndex, 0);
+        QMetaObject::activate(this, idx + d->notifyIndex, 0);
     }
 }
 
@@ -360,7 +360,7 @@ void QDeclarativeContext::setContextProperty(const QString &name, QObject *value
         data->refreshExpressions();
     } else {
         d->propertyValues[idx] = QVariant::fromValue(value);
-        QMetaObject::activate(this, this->metaObject(), idx + d->notifyIndex, 0);
+        QMetaObject::activate(this, idx + d->notifyIndex, 0);
     }
 }
 

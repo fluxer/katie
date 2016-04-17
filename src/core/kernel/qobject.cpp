@@ -3143,6 +3143,17 @@ static void queued_activate(QObject *sender, int signal, QObjectPrivate::Connect
 }
 
 /*!\internal
+   Obsolete.  (signal_index comes from indexOfMethod())
+*/
+void QMetaObject::activate(QObject *sender, int signal_index, void **argv)
+{
+    const QMetaObject *mo = sender->metaObject();
+    while (mo->methodOffset() > signal_index)
+        mo = mo->superClass();
+    activate(sender, mo, signal_index - mo->methodOffset(), argv);
+}
+
+/*!\internal
  */
 void QMetaObject::activate(QObject *sender, const QMetaObject *m, int local_signal_index,
                            void **argv)
