@@ -561,7 +561,7 @@ int QDeclarativeVMEMetaObject::metaCall(QMetaObject::Call c, int _id, void **a)
                 }
 
                 if (c == QMetaObject::WriteProperty && needActivate) {
-                    activate(object, object->metaObject(), id, 0);
+                    activate(object, object->metaObject(), methodOffset + id, 0);
                 }
 
                 return -1;
@@ -720,7 +720,7 @@ QVariant QDeclarativeVMEMetaObject::readVarPropertyAsVariant(int id)
 void QDeclarativeVMEMetaObject::writeVarProperty(int id, const QScriptValue &value)
 {
     data[id].setValue(value);
-    activate(object, object->metaObject(), id, 0);
+    activate(object, object->metaObject(), methodOffset + id, 0);
 }
 
 void QDeclarativeVMEMetaObject::writeVarProperty(int id, const QVariant &value)
@@ -737,12 +737,12 @@ void QDeclarativeVMEMetaObject::writeVarProperty(int id, const QVariant &value)
         data[id].setValue(value);
     }
     if (needActivate)
-        activate(object, object->metaObject(), id, 0);
+        activate(object, object->metaObject(), methodOffset + id, 0);
 }
 
 void QDeclarativeVMEMetaObject::listChanged(int id)
 {
-    activate(object, object->metaObject(), id, 0);
+    activate(object, object->metaObject(), methodOffset + id, 0);
 }
 
 void QDeclarativeVMEMetaObject::list_append(QDeclarativeListProperty<QObject> *prop, QObject *o)
