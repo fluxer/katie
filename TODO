@@ -1,8 +1,6 @@
 finish plugins porting to cmake
-deal with obsolete headers, besides those mentioned in the CMake files
 use system harfbuzz and clucene (optionally) and unbundle
-make use of qstandarddirs and qcommandlineparser trought the codebase, e.g. moc
 QT_MOC_CPP seems unused but checked for in two headers
-manual pages for lconvert, qcollectiongenerator, qhelpgenerator, rcc and uic
-new logo, branding, copyright header changes, etc.
 QCache must implement begin() and end() for qDeleteAll()
+
+Also: https://github.com/fluxer/katie/issues
