@@ -641,6 +641,10 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
     case QMetaType::VoidStar:
     case QMetaType::QObjectStar:
     case QMetaType::QWidgetStar:
+    case QMetaType::QJsonValue:
+    case QMetaType::QJsonObject:
+    case QMetaType::QJsonArray:
+    case QMetaType::QJsonDocument:
         return false;
     case QMetaType::Long:
         stream << qlonglong(*static_cast<const long *>(data));
@@ -761,11 +765,6 @@ bool QMetaType::save(QDataStream &stream, int type, const void *data)
         stream << *static_cast<const NS(QRegExp)*>(data);
         break;
 #endif
-    case QMetaType::QJsonValue:
-    case QMetaType::QJsonObject:
-    case QMetaType::QJsonArray:
-    case QMetaType::QJsonDocument:
-        return false;
 #ifndef QT_BOOTSTRAPPED
     case QMetaType::QEasingCurve:
         stream << *static_cast<const NS(QEasingCurve)*>(data);
@@ -842,6 +841,10 @@ bool QMetaType::load(QDataStream &stream, int type, void *data)
     case QMetaType::VoidStar:
     case QMetaType::QObjectStar:
     case QMetaType::QWidgetStar:
+    case QMetaType::QJsonValue:
+    case QMetaType::QJsonObject:
+    case QMetaType::QJsonArray:
+    case QMetaType::QJsonDocument:
         return false;
     case QMetaType::Long: {
         qlonglong l;
