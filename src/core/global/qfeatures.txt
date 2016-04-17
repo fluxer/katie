@@ -804,13 +804,6 @@ Requires: STYLE_WINDOWS IMAGEFORMAT_XPM
 Name: QWindowsCEStyle
 SeeAlso: ???
 
-Feature: STYLE_WINDOWSMOBILE
-Description: WindowsMobile look and feel
-Section: Styles
-Requires: STYLE_WINDOWS IMAGEFORMAT_XPM
-Name: QWindowsMobileStyle
-SeeAlso: ???
-
 Feature: STYLE_STYLESHEET
 Description:
 Section: Styles
