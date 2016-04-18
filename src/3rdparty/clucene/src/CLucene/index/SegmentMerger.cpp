@@ -265,7 +265,6 @@ int32_t SegmentMerger::mergeFields()
 
     try {  
         IndexReader* reader = NULL;
-        int32_t maxDoc          = 0;
         //Iterate through all readers
         for (uint32_t i = 0; i < readers.size(); i++) {
             // get the i-th reader

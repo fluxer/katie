@@ -317,7 +317,6 @@ SegmentTermVector* TermVectorsReader::readTermVector(const TCHAR* field,
     free(buffer);
 	terms[numTerms]=NULL; //null terminate terms array
 
-	SegmentTermVector* tv = NULL;
 	if (storePositions || storeOffsets){
 	  return _CLNEW SegmentTermPositionVector(field, terms, termFreqs, positions, offsets);
 	}else {
