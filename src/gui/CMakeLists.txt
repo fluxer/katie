@@ -378,6 +378,9 @@ set(GUI_PUBLIC_HEADERS
     # mixed
     QListWidgetItem
     QStandardItem
+    QCloseEvent
+    QResizeEvent
+    QShowEvent
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit
