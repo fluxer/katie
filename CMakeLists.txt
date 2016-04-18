@@ -598,15 +598,20 @@ katie_generate_obsolete(qnetworkcachemetadata.h QtNetwork qabstractnetworkcache.
 # obsolete, not so important
 katie_generate_obsolete(qflags.h QtCore qglobal.h)
 katie_generate_obsolete(qtplugin.h QtCore qplugin.h)
+katie_generate_obsolete(qtalgorithms.h QtCore qalgorithms.h)
 katie_generate_obsolete(qdbuspendingcallwatcher.h QtDBus qdbuspendingcall.h)
 # mixed headers
 katie_generate_obsolete(qvariantmap.h QtCore qvariant.h)
+katie_generate_obsolete(qsizef.h QtCore qsize.h)
+katie_generate_obsolete(qrectf.h QtCore qrect.h)
 katie_generate_obsolete(qdbusobjectpath.h QtDBus qdbusextratypes.h)
 katie_generate_obsolete(qlistwidgetitem.h QtGui qlistwidget.h)
 katie_generate_obsolete(qstandarditem.h QtGui qstandarditemmodel.h)
 katie_generate_obsolete(qcloseevent.h QtGui qevent.h)
 katie_generate_obsolete(qresizeevent.h QtGui qevent.h)
 katie_generate_obsolete(qshowevent.h QtGui qevent.h)
+katie_generate_obsolete(qitemselection.h QtGui qitemselectionmodel.h)
+katie_generate_obsolete(qintvalidator.h QtGui qvalidator.h)
 katie_generate_obsolete(qnetworkaddressentry.h QtNetwork qnetworkinterface.h)
 # those are aliases
 if(UNIX AND WITH_X11 AND X11_FOUND)
@@ -617,9 +622,6 @@ endif()
 # those have shuffled, e.g. from QtDesginer to QtUiTools
 katie_generate_obsolete(customwidget.h QtDesginer ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
-# TODO: deal with those and many more
-# QMacStyle
-# QAbstractFontEngine
 
 # translations
 file(GLOB TRANSLATIONS "translations/*.ts")

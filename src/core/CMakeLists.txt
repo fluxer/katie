@@ -248,6 +248,8 @@ set(CORE_PUBLIC_HEADERS
     # obsolete
     QVariantMap
     QFlags
+    QSizeF
+    QRectF
 )
 
 include(animation/animation.cmake)
