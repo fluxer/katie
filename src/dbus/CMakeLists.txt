@@ -23,6 +23,8 @@ set(DBUS_PUBLIC_HEADERS
     QDBusServiceWatcher
     QDBusUnixFileDescriptor
     QDBusVirtualObject
+    # mixed
+    QDBusObjectPath
 )
 
 set(DBUS_HEADERS
