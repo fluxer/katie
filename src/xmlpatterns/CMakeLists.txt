@@ -90,7 +90,7 @@ katie_generate_package(
     KtXmlPatterns
     ""
     "${EXTRA_XMLPATTERNS_LIBS}"
-    "QtCore QtNetwork"
+    "KtCore KtNetwork"
 )
 
 install(
