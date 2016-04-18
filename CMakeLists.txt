@@ -576,7 +576,7 @@ add_subdirectory(util/unicode)
 add_subdirectory(util/xkbdatagen)
 add_subdirectory(util/generaterun)
 
-# obsolete but still widely required headers
+# obsolete but still widely required headers, unlikely to go away
 katie_generate_obsolete(qtglobal.h QtCore qglobal.h)
 katie_generate_obsolete(qmultihash.h QtCore qhash.h)
 katie_generate_obsolete(qscopedarraypointer.h QtCore qscopedpointer.h)
@@ -594,8 +594,13 @@ katie_generate_obsolete(qxmlstreamwriter.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamreader.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qnetworkconfigurationmanager.h QtNetwork qnetworkconfigmanager.h)
 katie_generate_obsolete(qnetworkcachemetadata.h QtNetwork qabstractnetworkcache.h)
+# obsolete, not so important
+katie_generate_obsolete(qflags.h QtCore qglobal.h)
+katie_generate_obsolete(qdbuspendingcallwatcher.h QtDBus qdbuspendingcall.h)
 # mixed headers
+katie_generate_obsolete(qvariantmap.h QtCore qvariant.h)
 katie_generate_obsolete(qdbusobjectpath.h QtDBus qdbusextratypes.h)
+katie_generate_obsolete(qnetworkaddressentry.h QtNetwork qnetworkinterface.h)
 # those are aliases
 if(UNIX AND WITH_X11 AND X11_FOUND)
     katie_generate_obsolete(qx11info.h QtGui qx11info_x11.h)

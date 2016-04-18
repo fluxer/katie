@@ -244,6 +244,9 @@ set(CORE_PUBLIC_HEADERS
     QJsonValue
     QCommandLineOption
     QCommandLineParser
+    # obsolete
+    QVariantMap
+    QFlags
 )
 
 include(animation/animation.cmake)

@@ -20,7 +20,6 @@ set(NETWORK_PUBLIC_HEADERS
     QLocalServer
     QLocalSocket
     QNetworkAccessManager
-    QNetworkAddressEntry
     QNetworkCacheMetaData
     QNetworkConfiguration
     QNetworkConfigurationManager
@@ -45,6 +44,8 @@ set(NETWORK_PUBLIC_HEADERS
     QTcpSocket
     QUdpSocket
     QUrlInfo
+    # mixed
+    QNetworkAddressEntry
 )
 
 include(access/access.cmake)

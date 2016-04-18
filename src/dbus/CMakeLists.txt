@@ -25,6 +25,7 @@ set(DBUS_PUBLIC_HEADERS
     QDBusVirtualObject
     # mixed
     QDBusObjectPath
+    QDBusPendingCallWatcher
 )
 
 set(DBUS_HEADERS
