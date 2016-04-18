@@ -207,7 +207,7 @@ set_target_properties(KtOpenGL PROPERTIES
     EXPORT_NAME OpenGL
 )
 
-katie_generate_package(KtOpenGL "" "${EXTRA_OPENGL_LIBS}" "KtCore KtGui")
+katie_generate_package(KtOpenGL "KtCore KtGui")
 
 install(
     TARGETS KtOpenGL

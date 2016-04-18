@@ -95,7 +95,7 @@ set_target_properties(KtNetwork PROPERTIES
     EXPORT_NAME Network
 )
 
-katie_generate_package(KtNetwork "" "${EXTRA_NETWORK_LIBS}" "KtCore")
+katie_generate_package(KtNetwork "KtCore")
 
 install(
     TARGETS KtNetwork

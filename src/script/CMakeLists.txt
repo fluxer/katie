@@ -319,7 +319,7 @@ set_target_properties(KtScript PROPERTIES
     EXPORT_NAME Script
 )
 
-katie_generate_package(KtScript "" "${EXTRA_SCRIPT_LIBS}" "KtCore")
+katie_generate_package(KtScript "KtCore")
 
 install(
     TARGETS KtScript

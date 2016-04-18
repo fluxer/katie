@@ -144,7 +144,7 @@ set_target_properties(KtTest PROPERTIES
     EXPORT_NAME Test
 )
 
-katie_generate_package(KtTest "" "${EXTRA_TEST_LIBS}" "KtCore")
+katie_generate_package(KtTest "KtCore")
 
 install(
     TARGETS KtTest

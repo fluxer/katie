@@ -138,7 +138,7 @@ set_target_properties(KtDBus PROPERTIES
     EXPORT_NAME DBus
 )
 
-katie_generate_package(KtDBus "" "${EXTRA_DBUS_LIBS}" "KtCore KtXml")
+katie_generate_package(KtDBus "KtCore KtXml")
 
 install(
     TARGETS KtDBus

@@ -496,7 +496,7 @@ set_target_properties(KtGui PROPERTIES
     EXPORT_NAME Gui
 )
 
-katie_generate_package(KtGui "" "${EXTRA_GUI_LIBS}" "KtCore")
+katie_generate_package(KtGui "KtCore")
 
 install(
     TARGETS KtGui

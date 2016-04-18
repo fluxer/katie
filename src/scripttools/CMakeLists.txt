@@ -37,12 +37,7 @@ set_target_properties(KtScriptTools PROPERTIES
     EXPORT_NAME ScriptTools
 )
 
-katie_generate_package(
-    KtScriptTools
-    ""
-    "${EXTRA_SCRIPTTOOLS_LIBS}"
-    "KtCore KtGui KtScript"
-)
+katie_generate_package(KtScriptTools "KtCore KtGui KtScript")
 
 install(
     TARGETS KtScriptTools

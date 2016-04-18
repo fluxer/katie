@@ -80,17 +80,10 @@ macro(KATIE_GENERATE_OBSOLETE OBSOLETE_INCLUDE SUBDIR REDIRECT)
     endif()
 endmacro()
 
-macro(KATIE_GENERATE_PACKAGE FORTARGET CXXFLAGS LIBRARIES REQUIRES)
+macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     if(UNIX)
-        # the list must be adjusted
-        string(REPLACE ";" " -l" modlibs "${LIBRARIES}")
-        if(NOT "${modlibs}" STREQUAL "")
-            set(modlibs "-l${modlibs}")
-        endif()
         string(REPLACE "Kt" "Qt" PACKAGE_FAKE "${FORTARGET}")
         set(PACKAGE_NAME ${FORTARGET})
-        set(PACKAGE_CFLAGS ${CXXFLAGS})
-        set(PACKAGE_LIBRARIES ${modlibs})
         set(PACKAGE_REQUIRES ${REQUIRES})
         configure_file(
             ${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake

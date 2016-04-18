@@ -86,12 +86,7 @@ set_target_properties(KtDeclarative PROPERTIES
     EXPORT_NAME Declarative
 )
 
-katie_generate_package(
-    KtDeclarative
-    ""
-    "${EXTRA_DECLARATIVE_LIBS}"
-    "KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql"
-)
+katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql")
 
 install(
     TARGETS KtDeclarative

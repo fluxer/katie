@@ -82,7 +82,7 @@ set_target_properties(KtSvg PROPERTIES
     EXPORT_NAME Svg
 )
 
-katie_generate_package(KtSvg "" "${EXTRA_SVG_LIBS}" "KtCore KtGui")
+katie_generate_package(KtSvg "KtCore KtGui")
 
 install(
     TARGETS KtSvg

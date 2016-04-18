@@ -101,12 +101,7 @@ set_target_properties(KtHelp PROPERTIES
     EXPORT_NAME Help
 )
 
-katie_generate_package(
-    KtHelp
-    ""
-    "${EXTRA_HELP_LIBS}"
-    "KtCore KtGui KtNetwork KtSql KtXml"
-)
+katie_generate_package(KtHelp "KtCore KtGui KtNetwork KtSql KtXml")
 
 install(
     TARGETS KtHelp

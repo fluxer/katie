@@ -52,7 +52,7 @@ set_target_properties(KtMultimedia PROPERTIES
     EXPORT_NAME Multimedia
 )
 
-katie_generate_package(KtMultimedia "" "${EXTRA_MULTIMEDIA_LIBS}" "KtCore KtGui")
+katie_generate_package(KtMultimedia "KtCore KtGui")
 
 install(
     TARGETS KtMultimedia

@@ -132,12 +132,7 @@ set_target_properties(KtDesigner PROPERTIES
     EXPORT_NAME Designer
 )
 
-katie_generate_package(
-    KtDesigner
-    ""
-    "${EXTRA_DESIGNER_LIBS}"
-    "KtCore KtGui KtXml KtUiTools"
-)
+katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
 
 install(
     TARGETS KtDesigner

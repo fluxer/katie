@@ -100,12 +100,7 @@ set_target_properties(KtDesignerComponents PROPERTIES
     EXPORT_NAME DesignerComponents
 )
 
-katie_generate_package(
-    KtDesignerComponents
-    ""
-    "${EXTRA_DESIGNERCOMPONENTS_LIBS}"
-    "KtCore KtGui KtXml KtDesigner KtScript"
-)
+katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript")
 
 install(
     TARGETS KtDesignerComponents

@@ -88,7 +88,7 @@ set_target_properties(KtSql PROPERTIES
     EXPORT_NAME Sql
 )
 
-katie_generate_package(KtSql "" "${EXTRA_SQL_LIBS}" "KtCore")
+katie_generate_package(KtSql "KtCore")
 
 install(
     TARGETS KtSql

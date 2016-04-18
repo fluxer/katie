@@ -86,12 +86,7 @@ set_target_properties(KtXmlPatterns PROPERTIES
     EXPORT_NAME XmlPatterns
 )
 
-katie_generate_package(
-    KtXmlPatterns
-    ""
-    "${EXTRA_XMLPATTERNS_LIBS}"
-    "KtCore KtNetwork"
-)
+katie_generate_package(KtXmlPatterns "KtCore KtNetwork")
 
 install(
     TARGETS KtXmlPatterns

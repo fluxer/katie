@@ -373,7 +373,7 @@ set_target_properties(KtCore PROPERTIES
     EXPORT_NAME Core
 )
 
-katie_generate_package(KtCore "" "${EXTRA_CORE_LIBS}" "")
+katie_generate_package(KtCore "")
 
 install(
     TARGETS KtCore

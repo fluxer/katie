@@ -82,7 +82,7 @@ set_target_properties(KtXml PROPERTIES
     EXPORT_NAME Xml
 )
 
-katie_generate_package(KtXml "" "${EXTRA_XML_LIBS}" "KtCore")
+katie_generate_package(KtXml "KtCore")
 
 install(
     TARGETS KtXml
