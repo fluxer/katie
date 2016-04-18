@@ -23,7 +23,6 @@ set(CORE_PUBLIC_HEADERS
     QDynamicPropertyChangeEvent
     QHash
     QThreadStorage
-    QtPlugin
     QTextStreamManipulator
     QMutableMapIterator
     QXmlStreamNotationDeclaration
@@ -244,6 +243,8 @@ set(CORE_PUBLIC_HEADERS
     QJsonValue
     QCommandLineOption
     QCommandLineParser
+    # aliases
+    QtPlugin
     # obsolete
     QVariantMap
     QFlags

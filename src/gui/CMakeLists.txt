@@ -375,6 +375,9 @@ set(GUI_PUBLIC_HEADERS
     QX11Info
     QX11EmbedContainer
     QX11EmbedWidget
+    # mixed
+    QListWidgetItem
+    QStandardItem
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit
