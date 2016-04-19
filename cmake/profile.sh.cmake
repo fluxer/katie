@@ -5,3 +5,9 @@ if [ -n "$LD_LIBRARY_PATH" ];then
 else
     export LD_LIBRARY_PATH="@QT_LIBRARIES_PATH@"
 fi
+
+if [ -n "$PKG_CONFIG_PATH" ];then
+    export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:@QT_LIBRARIES_PATH@/pkgconfig"
+else
+    export PKG_CONFIG_PATH="@QT_LIBRARIES_PATH@/pkgconfig"
+fi
