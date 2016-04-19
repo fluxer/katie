@@ -3,7 +3,6 @@ set(EXTRA_CORE_LIBS)
 
 set(CORE_PUBLIC_HEADERS
     ${CORE_PUBLIC_HEADERS}
-    QModelIndex
     QVarLengthArray
     QThreadStorageData
     QList
@@ -40,7 +39,6 @@ set(CORE_PUBLIC_HEADERS
     QFuture
     QCryptographicHash
     QWaitCondition
-    QProcessEnvironment
     QContiguousCacheData
     QMimeData
     QTypeInfo
@@ -214,7 +212,6 @@ set(CORE_PUBLIC_HEADERS
     QRunnable
     QBool
     QtEndian
-    QAbstractListModel
     QArgument
     QGenericReturnArgument
     QAtomicInt
@@ -245,8 +242,12 @@ set(CORE_PUBLIC_HEADERS
     QCommandLineParser
     # aliases
     QtPlugin
-    # obsolete
+    # mixed
     QVariantMap
+    QAbstractListModel
+    QProcessEnvironment
+    QModelIndex
+    # obsolete
     QFlags
     QSizeF
     QRectF
