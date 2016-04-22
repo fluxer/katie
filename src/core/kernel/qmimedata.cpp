@@ -144,12 +144,6 @@ QVariant QMimeDataPrivate::retrieveTypedData(const QString &format, QVariant::Ty
         }
         case QVariant::Url: {
             QByteArray ba = data.toByteArray();
-            // Qt 3.x will send text/uri-list with a trailing
-            // null-terminator (that is *not* sent for any other
-            // text/* mime-type), so chop it off
-            if (ba.endsWith('\0'))
-                ba.chop(1);
-
             QList<QByteArray> urls = ba.split('\n');
             QList<QVariant> list;
             for (int i = 0; i < urls.size(); ++i) {
