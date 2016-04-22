@@ -555,16 +555,19 @@ void QDataStream::setByteOrder(ByteOrder bo)
 
     \table
     \header \i Qt Version       \i QDataStream Version
+    \row \i Qt 4.9                  \i 12
+    \row \i Qt 4.8                  \i 12
+    \row \i Qt 4.7                  \i 12
     \row \i Qt 4.6                  \i 12
     \row \i Qt 4.5                  \i 11
     \row \i Qt 4.4                  \i 10
     \row \i Qt 4.3                  \i 9
     \row \i Qt 4.2                  \i 8
-    \row \i Qt 4.0, 4.1            \i 7
+    \row \i Qt 4.0, 4.1             \i 7
     \row \i Qt 3.3                  \i 6
     \row \i Qt 3.1, 3.2             \i 5
     \row \i Qt 3.0                  \i 4
-    \row \i Qt 2.1, 2.2, 2.3      \i 3
+    \row \i Qt 2.1, 2.2, 2.3        \i 3
     \row \i Qt 2.0                  \i 2
     \row \i Qt 1.x                  \i 1
     \endtable
