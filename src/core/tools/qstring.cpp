@@ -7636,13 +7636,13 @@ QDataStream &operator>>(QDataStream &in, QString &str)
 */
 
 /*!
-    \fn QBool QString::contains(QChar c, bool cs) const
+    \fn bool QString::contains(QChar c, bool cs) const
 
     Use the contains(QChar, Qt::CaseSensitive) overload instead.
 */
 
 /*!
-    \fn QBool QString::contains(const QString &s, bool cs) const
+    \fn bool QString::contains(const QString &s, bool cs) const
 
     Use the contains(QString, Qt::CaseSensitive) overload instead.
 */

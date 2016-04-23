@@ -210,7 +210,6 @@ set(CORE_PUBLIC_HEADERS
     QResource
     QModelIndexList
     QRunnable
-    QBool
     QtEndian
     QArgument
     QGenericReturnArgument
