@@ -29,6 +29,8 @@ There are several things you should be aware before considering Katie:
   - standard directories handler
   - building against IODBC instead of unixODBC is possible
   - alternative libc implementations support
+  - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
+  - support for generating SHA3-224, SHA3-256, SHA3-384, SHA3-512 hash sums
 
 Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,
