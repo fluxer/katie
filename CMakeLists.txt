@@ -622,6 +622,7 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
     katie_generate_obsolete(qx11embedcontainer.h QtGui qx11embed_x11.h)
     katie_generate_obsolete(qx11embedwidget.h QtGui qx11embed_x11.h)
 endif()
+katie_generate_obsolete(qttestgui.h QtTest qtest_gui.h)
 # those have shuffled, e.g. from QtDesginer to QtUiTools
 katie_generate_obsolete(customwidget.h QtDesginer ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)

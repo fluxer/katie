@@ -22,6 +22,8 @@ set(TEST_PUBLIC_HEADERS
     QTestLightXmlStreamer
     QTestXmlStreamer
     QTestXunitStreamer
+    # those are aliases
+    QtTestGui
 )
 
 set(TEST_HEADERS
