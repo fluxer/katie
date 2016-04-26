@@ -103,6 +103,7 @@ install(
     COMPONENT Devel
 )
 
+message(STATUS "${APPLICATIONS_INSTALL_PATH_INST}, ${PIXMAPS_INSTALL_PATH_INST}")
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     configure_file(
         ${CMAKE_CURRENT_SOURCE_DIR}/designer.desktop.cmake
@@ -111,12 +112,12 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     )
     install(
         PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
-        DESTINATION ${APPLICATIONS_INSTALL_DIR}
+        DESTINATION ${APPLICATIONS_INSTALL_PATH_INST}
         COMPONENT Devel
     )
     install(
         FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/designer.png
-        DESTINATION ${PIXMAPS_INSTALL_DIR}
+        DESTINATION ${PIXMAPS_INSTALL_PATH_INST}
         COMPONENT Devel
     )
 endif()

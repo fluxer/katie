@@ -10,19 +10,6 @@ makedepends=('python')
 optdepends=('gtk2' 'mariadb' 'unixodbc' 'postgresql' 'nas')
 sources=("https://github.com/fluxer/katie.git")
 
-src_prepare() {
-    echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
-        >> katie.git/mkspecs/linux/vendor.cmake
-    echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
-        >> katie.git/mkspecs/linux/vendor.cmake
-    echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
-        >> katie.git/mkspecs/linux/vendor.cmake
-    echo 'set(APPLICATIONS_INSTALL_DIR /usr/share/applications)' \
-        >> katie.git/mkspecs/linux/vendor.cmake
-    echo 'set(PIXMAPS_INSTALL_DIR /usr/share/pixmaps)' \
-        >> katie.git/mkspecs/linux/vendor.cmake
-}
-
 src_compile() {
     mkdir -p build && cd build
 
@@ -30,6 +17,7 @@ src_compile() {
          -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
+        -DSYSCONF_INSTALL_DIR=/etc \
         -DWITH_GTK2=$OPTIONAL_GTK2_BOOL \
         -DWITH_MYSQL=$OPTIONAL_MARIADB_BOOL \
         -DWITH_ODBC=$OPTIONAL_UNIXODBC_BOOL \

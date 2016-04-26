@@ -52,9 +52,7 @@ install(
 
 if(NOT "${KATIE_PLATFORM}" MATCHES "(win32|wince|mac)")
     install(
-        FILES
-        ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
-        DESTINATION
-        ${MAN_INSTALL_DIR}/man1
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
+        DESTINATION ${MAN_INSTALL_PATH_INST}/man1
     )
 endif()

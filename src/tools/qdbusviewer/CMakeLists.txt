@@ -55,12 +55,12 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     )
     install(
         PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
-        DESTINATION ${APPLICATIONS_INSTALL_DIR}
+        DESTINATION ${APPLICATIONS_INSTALL_PATH_INST}
         COMPONENT Devel
     )
     install(
         FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
-        DESTINATION ${PIXMAPS_INSTALL_DIR}
+        DESTINATION ${PIXMAPS_INSTALL_PATH_INST}
         COMPONENT Devel
     )
 endif()

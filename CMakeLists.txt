@@ -134,6 +134,13 @@ add_feature_info(corewlan WITH_COREWLAN "an closed source something")
 
 include(mkspecs/mkspecs.cmake)
 
+katie_generate_string("${LDCONF_INSTALL_PATH}" "LDCONF_INSTALL_PATH_STR" "LDCONF_INSTALL_PATH_INST")
+katie_generate_string("${PROFILE_INSTALL_PATH}" "PROFILE_INSTALL_PATH_STR" "PROFILE_INSTALL_PATH_INST")
+katie_generate_string("${MAN_INSTALL_PATH}" "MAN_INSTALL_PATH_STR" "MAN_INSTALL_PATH_INST")
+katie_generate_string("${CMAKE_INSTALL_PATH}" "CMAKE_INSTALL_PATH_STR" "CMAKE_INSTALL_PATH_INST")
+katie_generate_string("${APPLICATIONS_INSTALL_PATH}" "APPLICATIONS_INSTALL_PATH_STR" "APPLICATIONS_INSTALL_PATH_INST")
+katie_generate_string("${PIXMAPS_INSTALL_PATH}" "PIXMAPS_INSTALL_PATH_STR" "PIXMAPS_INSTALL_PATH_INST")
+
 katie_generate_string("qt_lcnsuser=${QT_LICENSE}" "QT_LICENSE_STR" "")
 katie_generate_string("qt_lcnsprod=${QT_PRODUCT}" "QT_PRODUCT_STR" "")
 katie_generate_string("qt_prfxpath=${QT_PREFIX_PATH}" "QT_PREFIX_PATH_STR" "")
@@ -647,7 +654,7 @@ configure_file(
 
 install(
     DIRECTORY mkspecs
-    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
     COMPONENT Devel
 )
 
@@ -656,21 +663,21 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
-    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
     COMPONENT Devel
 )
 
 install(
     EXPORT KatieLibraryTargets
     NAMESPACE Katie::
-    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
     FILE KatieLibraryTargets.cmake
 )
 
 install(
     EXPORT KatieBinaryTargets
     NAMESPACE Katie::
-    DESTINATION ${CMAKE_INSTALL_DIR}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
     FILE KatieBinaryTargets.cmake
 )
 
@@ -683,7 +690,7 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
         )
         install(
             FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-            DESTINATION ${LDCONF_INSTALL_DIR}
+            DESTINATION ${LDCONF_INSTALL_PATH_INST}
         )
     endif()
 
@@ -694,7 +701,7 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     )
     install(
         FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
-        DESTINATION ${PROFILE_INSTALL_DIR}
+        DESTINATION ${PROFILE_INSTALL_PATH_INST}
     )
 endif()
 

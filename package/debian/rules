@@ -4,26 +4,6 @@
 	dh $@
 
 override_dh_auto_configure:
-	echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
-        	> mkspecs/linux/vendor.cmake
-	echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
-		>> mkspecs/linux/vendor.cmake
-	echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
-			>> mkspecs/linux/vendor.cmake
-	echo 'set(APPLICATIONS_INSTALL_DIR /usr/share/applications)' \
-		>> mkspecs/linux/vendor.cmake
-	echo 'set(PIXMAPS_INSTALL_DIR /usr/share/pixmaps)' \
-		>> mkspecs/linux/vendor.cmake
-
-	echo "set(QT_LIBRARIES_PATH /usr/lib/${DEB_TARGET_MULTIARCH}/katie)" \
-		>> mkspecs/linux/vendor.cmake
-	echo "set(QT_BINARIES_PATH /usr/lib/${DEB_TARGET_MULTIARCH}/katie/bin)" \
-		>> mkspecs/linux/vendor.cmake
-	echo "set(QT_PLUGINS_PATH /usr/lib/${DEB_TARGET_MULTIARCH}/katie/plugins)" \
-		>> mkspecs/linux/vendor.cmake
-	echo "set(QT_IMPORTS_PATH /usr/lib/${DEB_TARGET_MULTIARCH}/katie/imports)" \
-		>> mkspecs/linux/vendor.cmake
-
 	# the mysqld library is not much of a static
 	dh_auto_configure -- -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" -Wno-dev
 

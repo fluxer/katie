@@ -91,16 +91,10 @@ endif()
 
 include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 
-# vendors are free to change them, paths are relative to CMAKE_INSTALL_PREFIX
-# otherwise CPack will attempt to install to the root directory on UNIX and
-# fail to create the package. if vendors do not use CPack to generate their
-# packages then paths can be full paths as seen in the shipped package files.
-set(LDCONF_INSTALL_DIR "etc/ld.so.conf.d")
-set(PROFILE_INSTALL_DIR "etc/profile.d")
-set(MAN_INSTALL_DIR "share/man")
-set(CMAKE_INSTALL_DIR "cmake")
-set(APPLICATIONS_INSTALL_DIR "share/applications")
-set(PIXMAPS_INSTALL_DIR "share/pixmaps")
+if(NOT SYSCONF_INSTALL_DIR)
+    # FIXME: right now SYSCONF_INSTALL_DIR is silent requirement
+    set(SYSCONF_INSTALL_DIR "/etc")
+endif()
 
 if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")

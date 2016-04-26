@@ -29,17 +29,6 @@ pkgver() {
 
 prepare() {
     mkdir -p build
-
-    echo 'set(LDCONF_INSTALL_DIR /etc/ld.so.conf.d)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(PROFILE_INSTALL_DIR /etc/profile.d)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(APPLICATIONS_INSTALL_DIR /usr/share/applications)' \
-        >> katie/mkspecs/linux/vendor.cmake
-    echo 'set(PIXMAPS_INSTALL_DIR /usr/share/pixmaps)' \
-        >> katie/mkspecs/linux/vendor.cmake
 }
 
 build() {
@@ -47,7 +36,8 @@ build() {
     cmake ../katie \
         -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX=/usr
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DSYSCONF_INSTALL_DIR=/etc
     make
 }
 
