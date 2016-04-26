@@ -36,6 +36,10 @@ prepare() {
         >> katie/mkspecs/linux/vendor.cmake
     echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
         >> katie/mkspecs/linux/vendor.cmake
+    echo 'set(APPLICATIONS_INSTALL_DIR /usr/share/applications)' \
+        >> katie/mkspecs/linux/vendor.cmake
+    echo 'set(PIXMAPS_INSTALL_DIR /usr/share/pixmaps)' \
+        >> katie/mkspecs/linux/vendor.cmake
 }
 
 build() {
@@ -53,34 +57,4 @@ package() {
 
     install -vDm644 ../katie/LGPL_EXCEPTION.txt \
         "${pkgdir}/usr/share/licenses/katie-git/LGPL_EXCEPTION.txt"
-
-    # register applications
-    install -v -Dm644 ../katie/src/tools/designer/images/designer.png \
-        "${pkgdir}/usr/share/pixmaps/designer-katie.png"
-    install -v -Dm644 ../katie/src/tools/qdbusviewer/images/qdbusviewer.png \
-        "${pkgdir}/usr/share/pixmaps/qdbusviewer-katie.png"
-    mkdir -p "${pkgdir}/usr/share/applications"
-    cat > "${pkgdir}/usr/share/applications/designer-katie.desktop" << EOF
-[Desktop Entry]
-Name=Katie Designer
-Comment=Design GUIs for Katie applications
-Exec=designer-katie
-Icon=designer-katie.png
-MimeType=application/x-designer;
-Terminal=false
-Encoding=UTF-8
-Type=Application
-Categories=Qt;Development;
-EOF
-    cat > "${pkgdir}/usr/share/applications/qdbusviewer-katie.desktop" << EOF
-[Desktop Entry]
-Name=Katie D-Bus Viewer
-Comment=Debug D-Bus applications
-Exec=qdbusviewer-katie
-Icon=qdbusviewer-katie.png
-Terminal=false
-Encoding=UTF-8
-Type=Application
-Categories=Qt;Development;Debugger;
-EOF
 }

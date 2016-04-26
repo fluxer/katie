@@ -17,6 +17,10 @@ src_prepare() {
         >> katie.git/mkspecs/linux/vendor.cmake
     echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
         >> katie.git/mkspecs/linux/vendor.cmake
+    echo 'set(APPLICATIONS_INSTALL_DIR /usr/share/applications)' \
+        >> katie.git/mkspecs/linux/vendor.cmake
+    echo 'set(PIXMAPS_INSTALL_DIR /usr/share/pixmaps)' \
+        >> katie.git/mkspecs/linux/vendor.cmake
 }
 
 src_compile() {
@@ -40,39 +44,9 @@ src_install() {
 
     # create convenience symlinks
     install -vdm755 "$INSTALL_DIR/usr/bin"
-    for file in "$INSTALL_DIR/usr/lib/katie/bin/"*;do
-        # ln -sfv ../lib/katie/bin/$(basename "$file") "$INSTALL_DIR/usr/bin/$(basename $file)"
-        ln -sfv ../lib/katie/bin/$(basename "$file") "$INSTALL_DIR/usr/bin/$(basename $file)-katie"
+    for b in "$INSTALL_DIR/usr/lib/katie/bin/"*;do
+        # ln -sfv ../lib/katie/bin/$(basename "$b") "$INSTALL_DIR/usr/bin/$(basename $b)"
+        ln -sfv ../lib/katie/bin/$(basename "$b") "$INSTALL_DIR/usr/bin/$(basename $b)-katie"
     done
-
-    # register Designer as application
-    install -vDm644 ../katie.git/src/tools/designer/images/designer.png \
-        "$INSTALL_DIR/usr/share/pixmaps/designer-katie.png"
-    install -vDm644 ../katie.git/src/tools/qdbusviewer/images/qdbusviewer.png \
-        "$INSTALL_DIR/usr/share/pixmaps/qdbusviewer-katie.png"
-    mkdir -p "$INSTALL_DIR/usr/share/applications"
-    cat > "$INSTALL_DIR/usr/share/applications/designer-katie.desktop" << EOF
-[Desktop Entry]
-Name=Katie Designer
-Comment=Design GUIs for Katie applications
-Exec=designer-katie
-Icon=designer-katie.png
-MimeType=application/x-designer;
-Terminal=false
-Encoding=UTF-8
-Type=Application
-Categories=Qt;Development;
-EOF
-    cat > "$INSTALL_DIR/usr/share/applications/qdbusviewer-katie.desktop" << EOF
-[Desktop Entry]
-Name=Katie D-Bus Viewer
-Comment=Debug D-Bus applications
-Exec=qdbusviewer-katie
-Icon=qdbusviewer-katie.png
-Terminal=false
-Encoding=UTF-8
-Type=Application
-Categories=Qt;Development;Debugger;
-EOF
 }
 

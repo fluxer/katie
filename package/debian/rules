@@ -10,6 +10,10 @@ override_dh_auto_configure:
 		>> mkspecs/linux/vendor.cmake
 	echo 'set(CMAKE_INSTALL_DIR /usr/share/cmake)' \
 			>> mkspecs/linux/vendor.cmake
+	echo 'set(APPLICATIONS_INSTALL_DIR /usr/share/applications)' \
+		>> mkspecs/linux/vendor.cmake
+	echo 'set(PIXMAPS_INSTALL_DIR /usr/share/pixmaps)' \
+		>> mkspecs/linux/vendor.cmake
 
 	echo "set(QT_LIBRARIES_PATH /usr/lib/${DEB_TARGET_MULTIARCH}/katie)" \
 		>> mkspecs/linux/vendor.cmake

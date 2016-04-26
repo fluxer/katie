@@ -487,7 +487,7 @@ void QDBusViewer::about()
 {
     QMessageBox box(this);
 
-    box.setText(QString::fromLatin1("<center><img src=\":/trolltech/qdbusviewer/images/qdbusviewer-128.png\">"
+    box.setText(QString::fromLatin1("<center><img src=\":/trolltech/qdbusviewer/images/qdbusviewer.png\">"
                 "<h3>%1</h3>"
                 "<p>Version %2</p></center>"
                 "<p>Copyright (C) 2015 The Qt Company Ltd.</p>")

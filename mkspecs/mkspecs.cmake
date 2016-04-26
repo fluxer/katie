@@ -99,6 +99,8 @@ set(LDCONF_INSTALL_DIR "etc/ld.so.conf.d")
 set(PROFILE_INSTALL_DIR "etc/profile.d")
 set(MAN_INSTALL_DIR "share/man")
 set(CMAKE_INSTALL_DIR "cmake")
+set(APPLICATIONS_INSTALL_DIR "share/applications")
+set(PIXMAPS_INSTALL_DIR "share/pixmaps")
 
 if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
