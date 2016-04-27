@@ -145,8 +145,6 @@
 #  error Unable to detect target endianness
 #endif
 
-#include <QtCore/qconfig.h>
-
 #ifdef __cplusplus
 
 #ifndef QT_NO_STL
