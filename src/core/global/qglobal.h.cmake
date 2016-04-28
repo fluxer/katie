@@ -1041,12 +1041,6 @@ namespace QT_NAMESPACE {}
 #  endif
 #endif
 
-#ifndef Q_COMPILER_MANGLES_RETURN_TYPE
-#  if defined(Q_CC_MSVC)
-#    define Q_COMPILER_MANGLES_RETURN_TYPE
-#  endif
-#endif
-
 #ifdef __cplusplus
 # if defined(Q_OS_QNX) || defined(Q_OS_BLACKBERRY)
 #  include <utility>
