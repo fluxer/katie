@@ -236,7 +236,7 @@ public:
 
 private:
     void detach_helper();
-    void free(QLinkedListData*);
+    void freeData(QLinkedListData*);
 };
 
 template <typename T>
@@ -245,7 +245,7 @@ inline QLinkedList<T>::~QLinkedList()
     if (!d)
         return;
     if (!d->ref.deref())
-        free(d);
+        freeData(d);
 }
 
 template <typename T>
@@ -266,19 +266,19 @@ void QLinkedList<T>::detach_helper()
             copy = copy->n;
         } QT_CATCH(...) {
             copy->n = x.e;
-            free(x.d);
+            freeData(x.d);
             QT_RETHROW;
         }
     }
     copy->n = x.e;
     x.e->p = copy;
     if (!d->ref.deref())
-        free(d);
+        freeData(d);
     d = x.d;
 }
 
 template <typename T>
-void QLinkedList<T>::free(QLinkedListData *x)
+void QLinkedList<T>::freeData(QLinkedListData *x)
 {
     Node *y = reinterpret_cast<Node*>(x);
     Node *i = y->n;
@@ -305,7 +305,7 @@ QLinkedList<T> &QLinkedList<T>::operator=(const QLinkedList<T> &l)
         QLinkedListData *o = l.d;
         o->ref.ref();
         if (!d->ref.deref())
-            free(d);
+            freeData(d);
         d = o;
         if (!d->sharable)
             detach_helper();
