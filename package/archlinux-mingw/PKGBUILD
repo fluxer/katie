@@ -44,8 +44,4 @@ package() {
 
     install -vDm644 ../katie/LGPL_EXCEPTION.txt \
         "${pkgdir}/usr/share/licenses/mingw-w64-katie-git/LGPL_EXCEPTION.txt"
-
-    # bootstrap files, they should not be installed and this should be fixed
-    # in Katie itself
-    rm -rf "${pkgdir}/usr/local" "${pkgdir}/usr/share"
 }

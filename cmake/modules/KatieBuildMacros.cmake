@@ -9,6 +9,7 @@ if(CMAKE_CROSSCOMPILING)
         GIT_REPOSITORY https://github.com/fluxer/katie
         SOURCE_DIR ${CMAKE_BINARY_DIR}/external_katie
         BUILD_IN_SOURCE 1
+        INSTALL_COMMAND "" # disable installation
         UPDATE_DISCONNECTED 1 # it always fails
         CMAKE_ARGS -DKATIE_BOOTSTRAP=TRUE -Wno-dev
     )
