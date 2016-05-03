@@ -36,7 +36,6 @@ katie_setup_flags()
 add_executable(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
 set_target_properties(qdbusviewer PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}
     EXPORT_NAME qdbusviewer
 )
 
