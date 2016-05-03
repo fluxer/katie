@@ -682,17 +682,15 @@ install(
 )
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    if(CMAKE_SKIP_INSTALL_RPATH OR NOT CMAKE_INSTALL_RPATH)
-        configure_file(
-            ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-            ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-            @ONLY
-        )
-        install(
-            FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-            DESTINATION ${LDCONF_INSTALL_PATH_INST}
-        )
-    endif()
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
+        ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+        @ONLY
+    )
+    install(
+        FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+        DESTINATION ${LDCONF_INSTALL_PATH_INST}
+    )
 
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
