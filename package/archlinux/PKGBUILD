@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.8e624df
+pkgver=4.9.0.d1d4268
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
@@ -37,7 +37,8 @@ build() {
         -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DSYSCONF_INSTALL_DIR=/etc
+        -DLDCONF_INSTALL_PATH=/etc/ld.conf.d \
+        -DPROFILE_INSTALL_PATH=/etc/profile.d
     make
 }
 

@@ -18,6 +18,7 @@ if(CMAKE_CROSSCOMPILING)
     set(KATIE_RCC "${CMAKE_BINARY_DIR}/external_katie/bin/rcc")
     set(KATIE_MOC "${CMAKE_BINARY_DIR}/external_katie/bin/moc")
     set(KATIE_LRELEASE "${CMAKE_BINARY_DIR}/external_katie/bin/lrelease")
+    # NOTE: ExternalProject_Add_StepDependencies
 else()
     set(KATIE_UIC "uic")
     set(KATIE_RCC "rcc")
