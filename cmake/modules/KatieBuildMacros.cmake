@@ -129,11 +129,6 @@ function(KATIE_FIXUP_STRING INSTR OUTSTR)
     endif()
 endfunction()
 
-macro(KATIE_CONFIG VAR VAL)
-    set(${VAR} ${VAL})
-    add_definitions(-D${VAR}=${VAL})
-endmacro()
-
 function(KATIE_SETUP_FLAGS)
     katie_fixup_string("${KATIE_CXXFLAGS}" KATIE_CXXFLAGS)
     katie_fixup_string("${KATIE_LDFLAGS}" KATIE_LDFLAGS)
@@ -164,6 +159,7 @@ function(KATIE_SETUP_SOURCES SOURCESVAR)
             string(TOUPPER "${flag}" upperflag)
             if("${flag}" MATCHES "(iwmmxt|neno)" AND NOT "${KATIE_ARCHITECTURE}" STREQUAL "arm")
                 set(flagmatch)
+                message(AUTHOR_WARNING "The source file ${source} is ARM specifiec, make it conditional")
             endif()
             if("${flag}" STREQUAL "mmx" AND "${sourcename}" MATCHES "iwmmxt")
                 # false positive
@@ -208,7 +204,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    # TODO: make GUI access optional
+    # TODO: make GUI access optional, it is required by many tests so it should still be default
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     if(KATIE_PLATFORM MATCHES "(win32|wince)")
         target_link_libraries(${TESTNAME} KtMain)
