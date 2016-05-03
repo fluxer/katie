@@ -52,6 +52,13 @@ endforeach()
 # Include macros, tools variables must be set before that
 include("${KATIE_CMAKE_DIR}/KatieMacros.cmake")
 
+# Platform specifiec stuff and some tests
+if(EXISTS ${KATIE_MKSPECS})
+    include(${KATIE_MKSPECS})
+else()
+    message(SEND_ERROR "mkspecs file does not exists, it is set to: ${KATIE_MKSPECS}")
+endif()
+
 # The stored configuration paths that vendors usually change
 set(LDCONF_INSTALL_PATH "@LDCONF_INSTALL_PATH@")
 set(PROFILE_INSTALL_PATH "@PROFILE_INSTALL_PATH@")
@@ -72,13 +79,6 @@ set(QT_DOCUMENTATION_PATH "@QT_DOCUMENTATION_PATH@")
 set(QT_EXAMPLES_PATH "@QT_EXAMPLES_PATH@")
 set(QT_DEMOS_PATH "@QT_DEMOS_PATH@")
 set(QT_SETTINGS_PATH "@QT_SETTINGS_PATH@")
-
-# Last but not least the platform specifiec stuff
-if(EXISTS ${KATIE_MKSPECS})
-    include(${KATIE_MKSPECS})
-else()
-    message(SEND_ERROR "mkspecs file does not exists, it is set to: ${KATIE_MKSPECS}")
-endif()
 
 if(NOT "${KATIE_FIND_QUIETLY}")
     message(STATUS "Found Katie version: ${KATIE_VERSION}")

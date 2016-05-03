@@ -88,20 +88,38 @@ endif()
 
 include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
 
-if(NOT SYSCONF_INSTALL_DIR)
-    # FIXME: right now SYSCONF_INSTALL_DIR is silent requirement
-    set(SYSCONF_INSTALL_DIR "/etc")
-endif()
-
 if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
 endif()
+
+# forward setup of configuration paths, overriden by platform mkspecs
+set(QT_PREFIX_PATH "" CACHE PATH "General installation prefix")
+set(QT_HEADERS_PATH "" CACHE PATH "Headers installation path")
+set(QT_LIBRARIES_PATH "" CACHE PATH "Libraries installation path")
+set(QT_BINARIES_PATH "" CACHE PATH "Binaries installation path")
+set(QT_PLUGINS_PATH "" CACHE PATH "Plugins installation path")
+set(QT_IMPORTS_PATH "" CACHE PATH "Declerative imports installation path")
+set(QT_DATA_PATH "" CACHE PATH "Generic data installation path")
+set(QT_TRANSLATIONS_PATH "" CACHE PATH "Translations instllation path")
+set(QT_DOCUMENTATION_PATH "" CACHE PATH "Documenation installation path")
+set(QT_EXAMPLES_PATH "" CACHE PATH "Examples installation path")
+set(QT_DEMOS_PATH "" CACHE PATH "Demos installation path")
+set(QT_SETTINGS_PATH "" CACHE PATH "Settings runtime path")
 
 if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
     include(${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
 endif()
 
-# for distributions to override build specifications
+# misc paths, relevant mostly for UNIX-like platforms
+set(CMAKE_INSTALL_PATH "${QT_DATA_PATH}/cmake" CACHE PATH "CMake aware modules path")
+set(LDCONF_INSTALL_PATH "${QT_DATA_PATH}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs path (UNIX)")
+set(PROFILE_INSTALL_PATH "${QT_DATA_PATH}/profile.d" CACHE PATH "Shell profile scripts path (UNIX)")
+set(MAN_INSTALL_PATH "${QT_DATA_PATH}/man" CACHE PATH "Manual pages path (UNIX)")
+set(APPLICATIONS_INSTALL_PATH "${QT_DATA_PATH}/applications" CACHE PATH "Desktop applications register path (UNIX)")
+set(PIXMAPS_INSTALL_PATH "${QT_DATA_PATH}/pixmaps" CACHE PATH "Desktop applications icon path (UNIX)")
+
+# for distributions to override build specifications, do note that paths specifiec on the command
+# line during configuration override even that file
 if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/vendor.cmake)
     include(${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/vendor.cmake)
 endif()

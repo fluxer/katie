@@ -9,13 +9,6 @@ set(KATIE_CXXFLAGS
 
 add_definitions(-D_THREAD_SAFE)
 
-set(LDCONF_INSTALL_PATH "/etc/ld.so.conf.d")
-set(PROFILE_INSTALL_PATH "/etc/profile.d")
-set(MAN_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/share/man")
-set(CMAKE_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/share/cmake")
-set(APPLICATIONS_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/share/applications")
-set(PIXMAPS_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/share/pixmaps")
-
 set(QT_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
 set(QT_HEADERS_PATH "${QT_PREFIX_PATH}/include/katie")
 set(QT_LIBRARIES_PATH "${QT_PREFIX_PATH}/lib/katie")
