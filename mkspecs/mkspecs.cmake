@@ -8,9 +8,6 @@ set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 set(KATIE_STRING "katie ${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 set(KATIE_BUGREPORT "xakepa10@gmail.com")
 set(KATIE_URL "http://github.com/fluxer/katie")
-set(KATIE_COMPONENTS "Core Gui DBus Declarative Designer DesignerComponents Help Multimedia Network OpenGL Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
-# TODO: make dbus tools optional
-set(KATIE_TOOLS "moc uic rcc qdbusxml2cpp qdbuscpp2xml qdbusviewer qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer")
 set(QT_LICENSE "Open Source")
 set(QT_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
 

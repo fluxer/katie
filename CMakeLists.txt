@@ -28,6 +28,10 @@ include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
 
+# components and tools that will be build, changed depending on the requirements availability
+set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Multimedia Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
+set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer")
+
 # optional package features
 option(WITH_THREADS "Build threads support" ON)
 add_feature_info(threads WITH_THREADS "an open source something")
@@ -472,6 +476,8 @@ endif()
 
 if(NOT WITH_OPENSSL OR NOT OPENSSL_FOUND)
     katie_definition(-DQT_NO_OPENSSL)
+else()
+    set(KATIE_COMPONENTS "${KATIE_COMPONENTS} OpenGL")
 endif()
 
 if(NOT WITH_FREETYPE OR NOT FREETYPE_FOUND)
@@ -485,6 +491,9 @@ endif()
 
 if(NOT WITH_DBUS OR NOT DBUS_FOUND)
     katie_definition(-DQT_NO_DBUS)
+else()
+    set(KATIE_COMPONENTS "${KATIE_COMPONENTS} DBus")
+    set(KATIE_TOOLS "${KATIE_TOOLS} qdbusxml2cpp qdbuscpp2xml qdbusviewer")
 endif()
 
 if(NOT WITH_GLIB2 OR NOT GLIB2_FOUND)
