@@ -88,10 +88,6 @@ endif()
 if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     message(STATUS "Setting up Qt4 compatibility via Katie")
 
-    # FIXME: once used lists turn into strings, great..
-    string(REPLACE " " ";" _TOOLS ${KATIE_TOOLS})
-    string(REPLACE " " ";" _COMPONENTS ${KATIE_COMPONENTS})
-
     set(Qt4_FOUND TRUE)
     set(QT_FOUND TRUE)
     set(QT4_FOUND TRUE)
@@ -107,7 +103,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     set(QT_MKSPECS_DIR ${KATIE_MKSPECS_DIR})
 
     set(_binsuffix "${CMAKE_EXECUTABLE_SUFFIX}")
-    # those are exceptions because they have "q" prefix
+    # those are exceptions because they have "q" prefix which the macros from Qt4Macros do not expect
     set(QT_DBUSXML2CPP_EXECUTABLE "@QT_BINARIES_PATH@/qdbusxml2cpp${_binsuffix}")
     set(QT_DBUSCPP2XML_EXECUTABLE "@QT_BINARIES_PATH@/qdbuscpp2xml${_binsuffix}")
 
@@ -120,7 +116,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
         else()
             set(_libsuffix "${CMAKE_STATIC_LIBRARY_SUFFIX}")
         endif()
-        foreach(tool ${_TOOLS})
+        foreach(tool ${KATIE_TOOLS})
             add_executable(Qt4::${tool} IMPORTED)
             set_property(
                 TARGET Qt4::${tool}
@@ -131,7 +127,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
             set(QT_${uppertool}_EXECUTABLE "@QT_BINARIES_PATH@/${tool}${_binsuffix}")
         endforeach()
 
-        foreach(component ${_COMPONENTS})
+        foreach(component ${KATIE_COMPONENTS})
             add_library(Qt4::Qt${component} ${KATIE_TYPE} IMPORTED)
             set_property(
                 TARGET Qt4::Qt${component}
@@ -147,7 +143,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
         find_package(X11 REQUIRED)
     endif()
 
-    foreach(component ${_COMPONENTS})
+    foreach(component ${KATIE_COMPONENTS})
         string(TOUPPER ${component} uppercomp)
         set(QT_QT${uppercomp}_FOUND ${KATIE_${uppercomp}_FOUND})
         set(QT4_QT${uppercomp}_FOUND ${KATIE_${uppercomp}_FOUND})
