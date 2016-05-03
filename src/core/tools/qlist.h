@@ -737,7 +737,7 @@ Q_OUTOFLINE_TEMPLATE void QList<T>::freeData(QListData::Data *data)
 {
     node_destruct(reinterpret_cast<Node *>(data->array + data->begin),
                   reinterpret_cast<Node *>(data->array + data->end));
-    free(data);
+    delete data;
 }
 
 
