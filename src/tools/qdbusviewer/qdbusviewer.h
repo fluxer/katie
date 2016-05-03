@@ -92,7 +92,6 @@ private:
     QString currentService;
     QTreeView *tree;
     QAction *refreshAction;
-    QTreeWidget *services;
     QStringListModel *servicesModel;
     QSortFilterProxyModel *servicesFilterModel;
     QLineEdit *serviceFilterLine;
