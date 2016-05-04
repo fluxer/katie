@@ -17,7 +17,7 @@ src_compile() {
          -Wno-dev \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr \
-        -DLDCONF_INSTALL_PATH=/etc/ld.conf.d \
+        -DLDCONF_INSTALL_PATH=/etc/ld.so.conf.d \
         -DPROFILE_INSTALL_PATH=/etc/profile.d \
         -DWITH_GTK2=$OPTIONAL_GTK2_BOOL \
         -DWITH_MYSQL=$OPTIONAL_MARIADB_BOOL \

@@ -7,7 +7,7 @@ override_dh_auto_configure:
 	# the mysqld library is not much of a static
 	dh_auto_configure -- -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" \
 		-Wno-dev \
-		-DLDCONF_INSTALL_PATH=/etc/ld.conf.d \
+		-DLDCONF_INSTALL_PATH=/etc/ld.so.conf.d \
 		-DPROFILE_INSTALL_PATH=/etc/profile.d
 
 override_dh_auto_build:
