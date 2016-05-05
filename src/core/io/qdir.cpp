@@ -68,9 +68,9 @@
 
 QT_BEGIN_NAMESPACE
 
+#ifdef Q_OS_WIN
 static QString driveSpec(const QString &path)
 {
-#if defined(Q_OS_WIN)
     if (path.size() < 2)
         return QString();
     char c = path.at(0).toAscii();
@@ -79,11 +79,8 @@ static QString driveSpec(const QString &path)
     if (path.at(1).toAscii() != ':')
         return QString();
     return path.mid(0, 2);
-#else
-    Q_UNUSED(path);
-    return QString();
-#endif
 }
+#endif
 
 //************* QDirPrivate
 QDirPrivate::QDirPrivate(const QString &path, const QStringList &nameFilters_, QDir::SortFlags sort_, QDir::Filters filters_)
@@ -716,6 +713,7 @@ QString QDir::relativeFilePath(const QString &fileName) const
     if (isRelativePath(file) || isRelativePath(dir))
         return file;
 
+#ifdef Q_OS_WIN
     QString dirDrive = driveSpec(dir);
     QString fileDrive = driveSpec(file);
 
@@ -725,18 +723,19 @@ QString QDir::relativeFilePath(const QString &fileName) const
         fileDriveMissing = true;
     }
 
-#ifdef Q_OS_WIN
     if (fileDrive.toLower() != dirDrive.toLower()
         || (file.startsWith(QLatin1String("//"))
         && !dir.startsWith(QLatin1String("//"))))
-#else
-    if (fileDrive != dirDrive)
-#endif
         return file;
 
     dir.remove(0, dirDrive.size());
     if (!fileDriveMissing)
         file.remove(0, fileDrive.size());
+#else
+    if (file.startsWith(QLatin1String("//")) 
+        && !dir.startsWith(QLatin1String("//")))
+        return file;
+#endif
 
     QString result;
     QStringList dirElts = dir.split(QLatin1Char('/'), QString::SkipEmptyParts);
