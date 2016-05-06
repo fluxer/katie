@@ -568,7 +568,7 @@ void
 QResource::addSearchPath(const QString &path)
 {
     if (!path.startsWith(QLatin1Char('/'))) {
-        qWarning("QResource::addResourceSearchPath: Search paths must be absolute (start with /) [%s]",
+        qWarning("QResource::addSearchPath: Search paths must be absolute (start with /) [%s]",
                  path.toLocal8Bit().data());
         return;
     }

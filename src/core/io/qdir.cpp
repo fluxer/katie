@@ -937,26 +937,6 @@ void QDir::setNameFilters(const QStringList &nameFilters)
     d->nameFilters = nameFilters;
 }
 
-/*!
-    \obsolete
-
-    Use QDir::addSearchPath() with a prefix instead.
-
-    Adds \a path to the search paths searched in to find resources
-    that are not specified with an absolute path. The default search
-    path is to search only in the root (\c{:/}).
-
-    \sa {The Qt Resource System}
-*/
-void QDir::addResourceSearchPath(const QString &path)
-{
-#ifdef QT_BUILD_CORE_LIB
-    QResource::addSearchPath(path);
-#else
-    Q_UNUSED(path)
-#endif
-}
-
 #ifdef QT_BUILD_CORE_LIB
 /*!
     \since 4.3

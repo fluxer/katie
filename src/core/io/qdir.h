@@ -120,8 +120,6 @@ public:
     QString absolutePath() const;
     QString canonicalPath() const;
 
-    static void addResourceSearchPath(const QString &path);
-
     static void setSearchPaths(const QString &prefix, const QStringList &searchPaths);
     static void addSearchPath(const QString &prefix, const QString &path);
     static QStringList searchPaths(const QString &prefix);
