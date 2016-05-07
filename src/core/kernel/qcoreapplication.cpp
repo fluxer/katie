@@ -157,10 +157,11 @@ QString QCoreApplicationPrivate::appName() const
 
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
-    bool b = (QCoreApplication::self != 0);
-    if (!b)
+    if (QCoreApplication::self == 0) {
         qWarning("QApplication::%s: Please instantiate the QApplication object first", function);
-    return b;
+        return false;
+    }
+    return true;
 }
 
 void QCoreApplicationPrivate::processCommandLineArguments()
