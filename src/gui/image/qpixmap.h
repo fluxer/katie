@@ -240,7 +240,6 @@ private:
 #if !defined(QT_NO_DATASTREAM)
     friend Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPixmap &);
 #endif
-    friend Q_GUI_EXPORT qint64 qt_pixmap_id(const QPixmap &pixmap);
 
 public:
     QPixmapData* pixmapData() const;
