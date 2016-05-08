@@ -476,8 +476,6 @@ endif()
 
 if(NOT WITH_OPENSSL OR NOT OPENSSL_FOUND)
     katie_definition(-DQT_NO_OPENSSL)
-else()
-    set(KATIE_COMPONENTS "${KATIE_COMPONENTS} OpenGL")
 endif()
 
 if(NOT WITH_FREETYPE OR NOT FREETYPE_FOUND)
@@ -514,6 +512,8 @@ endif()
 
 if(NOT WITH_OPENGL OR NOT OPENGL_FOUND)
     katie_definition(-DQT_NO_OPENGL)
+else()
+    set(KATIE_COMPONENTS "${KATIE_COMPONENTS} OpenGL")
 endif()
 
 if(NOT WITH_NAS OR NOT NAS_FOUND)
