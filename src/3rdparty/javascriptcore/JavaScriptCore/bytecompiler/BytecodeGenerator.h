@@ -503,7 +503,6 @@ namespace JSC {
         int m_nextParameterIndex;
         int m_firstConstantIndex;
         int m_nextConstantOffset;
-        unsigned m_globalConstantIndex;
 
         int m_globalVarStorageOffset;
 

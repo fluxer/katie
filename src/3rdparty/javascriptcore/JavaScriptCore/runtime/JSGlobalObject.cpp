@@ -73,12 +73,6 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSGlobalObject);
 
-// Default number of ticks before a timeout check should be done.
-static const int initialTickCountThreshold = 255;
-
-// Preferred number of milliseconds between each timeout check
-static const int preferredScriptCheckTimeInterval = 1000;
-
 static inline void markIfNeeded(MarkStack& markStack, JSValue v)
 {
     if (v)

@@ -424,7 +424,7 @@ class APIShim
 {
 public:
     APIShim(QScriptEnginePrivate *engine)
-        : m_engine(engine), m_oldTable(JSC::setCurrentIdentifierTable(engine->globalData->identifierTable))
+        : m_oldTable(JSC::setCurrentIdentifierTable(engine->globalData->identifierTable))
     {
     }
     ~APIShim()
@@ -433,7 +433,6 @@ public:
     }
 
 private:
-    QScriptEnginePrivate *m_engine;
     JSC::IdentifierTable *m_oldTable;
 };
 

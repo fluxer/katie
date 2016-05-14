@@ -96,8 +96,8 @@ bool isVariantType(const char* type)
     return qvariant_nameToType(type) != 0;
 }
 
-// copied from core's qmetaobject.cpp
-static inline const QMetaObjectPrivate *priv(const uint* data)
+// copied from core's qmetaobject.cpp, static was removed to avoid compiler warning
+inline const QMetaObjectPrivate *priv(const uint* data)
 { return reinterpret_cast<const QMetaObjectPrivate*>(data); }
 
 // must be kept in sync with the moc

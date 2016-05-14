@@ -46,10 +46,6 @@ namespace WTF {
         static std::auto_ptr<Collator> userDefault();
 
         Result collate(const ::UChar*, size_t, const ::UChar*, size_t) const;
-
-    private:
-        char* m_locale;
-        bool m_lowerFirst;
     };
 }
 

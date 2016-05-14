@@ -1248,7 +1248,6 @@ namespace JSC {
         ExpressionNode* m_expr2;
         ExpressionNode* m_expr3;
         StatementNode* m_statement;
-        bool m_expr1WasVarDecl;
     };
 
     class ForInNode : public StatementNode, public ThrowableExpressionData {
@@ -1264,7 +1263,6 @@ namespace JSC {
         ExpressionNode* m_lexpr;
         ExpressionNode* m_expr;
         StatementNode* m_statement;
-        bool m_identIsVarDecl;
     };
 
     class ContinueNode : public StatementNode, public ThrowableExpressionData {

@@ -724,7 +724,6 @@ namespace JSC {
         , m_expr2(expr2)
         , m_expr3(expr3)
         , m_statement(statement)
-        , m_expr1WasVarDecl(expr1 && expr1WasVarDecl)
     {
         ASSERT(statement);
     }
@@ -872,7 +871,6 @@ namespace JSC {
         , m_lexpr(l)
         , m_expr(expr)
         , m_statement(statement)
-        , m_identIsVarDecl(false)
     {
     }
 
@@ -883,7 +881,6 @@ namespace JSC {
         , m_lexpr(new (globalData) ResolveNode(globalData, ident, divot - startOffset))
         , m_expr(expr)
         , m_statement(statement)
-        , m_identIsVarDecl(true)
     {
         if (in) {
             AssignResolveNode* node = new (globalData) AssignResolveNode(globalData, ident, in, true);
