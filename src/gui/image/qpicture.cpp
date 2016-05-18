@@ -1370,7 +1370,7 @@ void QPictureIO::init()
 QPictureIO::~QPictureIO()
 {
     if (d->parameters)
-        delete [] (char*)d->parameters;
+        delete [] d->parameters;
     delete d;
 }
 

@@ -344,7 +344,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
         if (lib)
             lib->errorString = file.errorString();
         if (qt_debug_component()) {
-            qWarning("%s: %s", (const char*) QFile::encodeName(library),
+            qWarning("%s: %s", QFile::encodeName(library).data(),
                 qPrintable(qt_error_string(errno)));
         }
         return false;
@@ -798,7 +798,7 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
         if (qt_debug_component()) {
             qWarning("In %s:\n"
                  "  Plugin uses incompatible Qt library (%d.%d.%d) [%s]",
-                 (const char*) QFile::encodeName(fileName),
+                 QFile::encodeName(fileName).data(),
                  (qt_version&0xff0000) >> 16, (qt_version&0xff00) >> 8, qt_version&0xff,
                  debug ? "debug" : "release");
         }
