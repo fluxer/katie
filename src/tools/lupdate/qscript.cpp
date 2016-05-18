@@ -992,8 +992,6 @@ private:
 
 } // namespace QScript
 
-extern double qstrtod(const char *s00, char const **se, bool *ok);
-
 #define shiftWindowsLineBreak() if(current == '\r' && next1 == '\n') shift(1);
 
 namespace QScript {
@@ -1733,7 +1731,7 @@ int QScript::Lexer::lex()
 
     double dval = 0;
     if (state == Number) {
-        dval = qstrtod(buffer8, 0, 0);
+        dval = QByteArray::fromRawData(buffer8, 0).toDouble();
     } else if (state == Hex) { // scan hex numbers
         dval = QScript::integerFromString(buffer8, pos8, 16);
         state = Number;

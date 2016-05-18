@@ -1567,7 +1567,7 @@ static const double tinytens[] = { 1e-16, 1e-32 };
 */
 static double g_double_zero = 0.0;
 
-Q_CORE_EXPORT double qstrtod(const char *s00, const char **se, bool *ok)
+double qstrtod(const char *s00, const char **se, bool *ok)
 {
     int bb2, bb5, bbe, bd2, bd5, bbbits, bs2, c, dsign,
         e, e1, esign, i, j, k, nd, nd0, nf, nz, nz0, sign;
@@ -2954,7 +2954,7 @@ Q_CORE_EXPORT char *qdtoa( double d, int mode, int ndigits, int *decpt, int *sig
     return *resultp;
 }
 
-Q_CORE_EXPORT double qstrtod(const char *s00, const char **se, bool *ok)
+double qstrtod(const char *s00, const char **se, bool *ok)
 {
     double ret = strtod((char*)s00, (char**)se);
     if (ok) {
