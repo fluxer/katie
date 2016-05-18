@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=mingw-w64-katie-git
-pkgver=4.9.0.aa9772c
+pkgver=4.9.0.2ac76cf
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework (mingw-w64)'
 arch=('i686' 'x86_64')
@@ -33,6 +33,7 @@ build() {
         -DCMAKE_TOOLCHAIN_FILE=cmake/archlinux-mingw.cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX=/usr/${_arch}
+    make external_katie
     make
 }
 
