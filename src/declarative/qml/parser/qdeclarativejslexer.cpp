@@ -822,7 +822,7 @@ int Lexer::lex()
 
     double dval = 0;
     if (state == Number) {
-        dval = QByteArray::fromRawData(buffer8, 0).toDouble();
+        dval = QByteArray::fromRawData(buffer8, pos8).toDouble();
     } else if (state == Hex) { // scan hex numbers
         dval = integerFromString(buffer8, pos8, 16);
         state = Number;
