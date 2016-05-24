@@ -19,11 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/staticlib")
 
-include(CheckCXXCompilerFlag)
-include(CheckCXXSourceCompiles)
 include(CheckIncludeFile)
-include(CheckIncludeFiles)
-include(CheckTypeSize)
 include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
@@ -202,6 +198,14 @@ if(NOT KATIE_PLATFORM STREQUAL "integrity" AND NOT MINGW)
         -D_LARGEFILE64_SOURCE
         -D_LARGEFILE_SOURCE
     )
+endif()
+
+# for 3rd party source used in help and test components
+check_include_file(sys/time.h HAVE_SYS_TIME_H)
+if(HAVE_SYS_TIME_H)
+    add_definitions(-DTIME_WITH_SYS_TIME=1 -DHAVE_SYS_TIME_H)
+else()
+    add_definitions(-DTIME_WITH_SYS_TIME=0)
 endif()
 
 configure_file(
