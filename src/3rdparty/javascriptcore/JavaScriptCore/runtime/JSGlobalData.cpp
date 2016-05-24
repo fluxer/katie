@@ -139,9 +139,6 @@ JSGlobalData::JSGlobalData(bool isShared)
     , functionCodeBlockBeingReparsed(0)
     , firstStringifierToMark(0)
     , markStack(jsArrayVPtr)
-#ifndef NDEBUG
-    , mainThreadOnly(false)
-#endif
 {
 }
 

@@ -181,13 +181,9 @@ namespace JSC {
         MarkStack markStack;
 
         LocalTimeOffsetCache localTimeOffsetCache;
-        
+
         UString cachedDateString;
         double cachedDateStringValue;
-
-#ifndef NDEBUG
-        bool mainThreadOnly;
-#endif
 
         void resetDateCache();
 
