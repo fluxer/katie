@@ -3101,7 +3101,7 @@ void QXmlStreamWriterPrivate::writeEscaped(const QString &s, bool escapeWhitespa
             else
                 escaped += c;
         } else {
-            escaped += QChar(c);
+            escaped += c;
         }
     }
     write(escaped);

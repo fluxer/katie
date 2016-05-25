@@ -4459,7 +4459,7 @@ bool QXmlSimpleReaderPrivate::parseContent()
 
 bool QXmlSimpleReaderPrivate::reportEndEntities()
 {
-    int count = (int)xmlRefStack.count();
+    int count = xmlRefStack.count();
     while (count != 0 && xmlRefStack.top().isEmpty()) {
         if (contentHnd) {
             if (reportWhitespaceCharData || !string().simplified().isEmpty()) {
@@ -7751,7 +7751,7 @@ bool QXmlSimpleReaderPrivate::processReference()
                     {
                         // Bypassed
                         stringAddC(QLatin1Char('&'));
-                        for (int i=0; i<(int)reference.length(); i++) {
+                        for (int i=0; i<reference.length(); i++) {
                             stringAddC(reference[i]);
                         }
                         stringAddC(QLatin1Char(';'));
@@ -7773,7 +7773,7 @@ bool QXmlSimpleReaderPrivate::processReference()
                 if (parseReference_context == InEntityValue) {
                     // Bypassed
                     stringAddC(QLatin1Char('&'));
-                    for (int i=0; i<(int)reference.length(); i++) {
+                    for (int i=0; i<reference.length(); i++) {
                         stringAddC(reference[i]);
                     }
                     stringAddC(QLatin1Char(';'));
@@ -7855,7 +7855,7 @@ bool QXmlSimpleReaderPrivate::processReference()
                         {
                             // Bypassed
                             stringAddC(QLatin1Char('&'));
-                            for (int i=0; i<(int)reference.length(); i++) {
+                            for (int i=0; i<reference.length(); i++) {
                                 stringAddC(reference[i]);
                             }
                             stringAddC(QLatin1Char(';'));

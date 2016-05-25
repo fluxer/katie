@@ -3907,7 +3907,7 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     localTM.tm_mday = fakeDate.day();
     localTM.tm_mon = fakeDate.month() - 1;
     localTM.tm_year = fakeDate.year() - 1900;
-    localTM.tm_isdst = (int)isdst;
+    localTM.tm_isdst = isdst;
 #if defined(Q_OS_WINCE)
     time_t secsSince1Jan1970UTC = (toMSecsSinceEpoch_helper(fakeDate.toJulianDay(), QTime().msecsTo(time)) / 1000);
 #else
@@ -3941,7 +3941,7 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     res.tm_mday = sysTime.wDay;
     res.tm_mon = sysTime.wMonth - 1;
     res.tm_year = sysTime.wYear - 1900;
-    res.tm_isdst = (int)isdst;
+    res.tm_isdst = isdst;
     brokenDown = &res;
 #elif !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of gmtime() where available
