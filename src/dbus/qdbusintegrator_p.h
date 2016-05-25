@@ -54,8 +54,6 @@
 #ifndef QDBUSINTEGRATOR_P_H
 #define QDBUSINTEGRATOR_P_H
 
-#include "qdbus_symbols_p.h"
-
 #include "qcoreevent.h"
 #include "qeventloop.h"
 #include "qhash.h"
@@ -70,6 +68,7 @@
 #include "qdbusconnection_p.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 

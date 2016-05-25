@@ -41,13 +41,13 @@
 
 #include "qdbusservicewatcher.h"
 #include "qdbusconnection.h"
-#include "qdbus_symbols_p.h"
 
 #include <QStringList>
 
 #include <qobject_p.h>
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 

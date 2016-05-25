@@ -41,7 +41,6 @@
 
 #include "qdbusconnection_p.h"
 
-#include "qdbus_symbols_p.h"
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qstringlist.h>
@@ -59,6 +58,7 @@
 #include "qdbusvirtualobject.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 

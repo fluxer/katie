@@ -41,7 +41,6 @@
 
 #include "qdbusinterface.h"
 
-#include "qdbus_symbols_p.h"
 #include <QtCore/qpointer.h>
 #include <QtCore/qstringlist.h>
 
@@ -50,6 +49,7 @@
 #include "qdbusconnection_p.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 

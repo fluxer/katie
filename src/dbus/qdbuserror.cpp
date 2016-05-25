@@ -44,11 +44,11 @@
 #include <qdebug.h>
 #include <qvarlengtharray.h>
 
-#include "qdbus_symbols_p.h"
 #include "qdbusmessage.h"
 #include "qdbusmessage_p.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -246,7 +246,7 @@ static inline QDBusError::ErrorType get(const char *name)
 QDBusError::QDBusError(const DBusError *error)
     : code(NoError)
 {
-    if (!error || !q_dbus_error_is_set(error))
+    if (!error || !dbus_error_is_set(error))
         return;
 
     code = ::get(error->name);

@@ -55,9 +55,9 @@
 
 #include <qdbusargument.h>
 #include "qdbusunixfiledescriptor.h"
-#include "qdbus_symbols_p.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 #ifndef DBUS_TYPE_UNIX_FD
 # define DBUS_TYPE_UNIX_FD int('h')

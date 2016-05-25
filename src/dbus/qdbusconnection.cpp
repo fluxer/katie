@@ -343,13 +343,13 @@ QDBusConnection QDBusConnection::connectToBus(BusType type, const QString &name)
     QDBusErrorInternal error;
     switch (type) {
         case SystemBus:
-            c = q_dbus_bus_get_private(DBUS_BUS_SYSTEM, error);
+            c = dbus_bus_get_private(DBUS_BUS_SYSTEM, error);
             break;
         case SessionBus:
-            c = q_dbus_bus_get_private(DBUS_BUS_SESSION, error);
+            c = dbus_bus_get_private(DBUS_BUS_SESSION, error);
             break;
         case ActivationBus:
-            c = q_dbus_bus_get_private(DBUS_BUS_STARTER, error);
+            c = dbus_bus_get_private(DBUS_BUS_STARTER, error);
             break;
     }
     d->setConnection(c, error); //setConnection does the error handling for us
@@ -384,10 +384,10 @@ QDBusConnection QDBusConnection::connectToBus(const QString &address,
     d = new QDBusConnectionPrivate;
     // setConnection does the error handling for us
     QDBusErrorInternal error;
-    DBusConnection *c = q_dbus_connection_open_private(address.toUtf8().constData(), error);
+    DBusConnection *c = dbus_connection_open_private(address.toUtf8().constData(), error);
     if (c) {
-        if (!q_dbus_bus_register(c, error)) {
-            q_dbus_connection_unref(c);
+        if (!dbus_bus_register(c, error)) {
+            dbus_connection_unref(c);
             c = 0;
         }
     }
@@ -423,7 +423,7 @@ QDBusConnection QDBusConnection::connectToPeer(const QString &address,
     d = new QDBusConnectionPrivate;
     // setPeer does the error handling for us
     QDBusErrorInternal error;
-    DBusConnection *c = q_dbus_connection_open_private(address.toUtf8().constData(), error);
+    DBusConnection *c = dbus_connection_open_private(address.toUtf8().constData(), error);
 
     d->setPeer(c, error);
     _q_manager()->setConnection(name, d);
@@ -987,7 +987,7 @@ void *QDBusConnection::internalPointer() const
 */
 bool QDBusConnection::isConnected() const
 {
-    return d && d->connection && q_dbus_connection_get_is_connected(d->connection);
+    return d && d->connection && dbus_connection_get_is_connected(d->connection);
 }
 
 /*!
@@ -1177,9 +1177,9 @@ void QDBusConnectionPrivate::setBusService(const QDBusConnection &connection)
 */
 QByteArray QDBusConnection::localMachineId()
 {
-    char *dbus_machine_id = q_dbus_get_local_machine_id();
+    char *dbus_machine_id = dbus_get_local_machine_id();
     QByteArray result = dbus_machine_id;
-    q_dbus_free(dbus_machine_id);
+    dbus_free(dbus_machine_id);
     return result;
 }
 

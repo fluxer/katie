@@ -44,8 +44,6 @@
 #include <qdebug.h>
 #include <qstringlist.h>
 
-#include "qdbus_symbols_p.h"
-
 #include "qdbusargument_p.h"
 #include "qdbuserror.h"
 #include "qdbusmessage_p.h"
@@ -54,6 +52,7 @@
 #include "qdbusutil_p.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -72,9 +71,9 @@ QDBusMessagePrivate::QDBusMessagePrivate()
 QDBusMessagePrivate::~QDBusMessagePrivate()
 {
     if (msg)
-        q_dbus_message_unref(msg);
+        dbus_message_unref(msg);
     if (reply)
-        q_dbus_message_unref(reply);
+        dbus_message_unref(reply);
     delete localReply;
 }
 
@@ -96,7 +95,7 @@ QString QDBusMessage::errorMessage() const
 /*!
     \internal
     Constructs a DBusMessage object from \a message. The returned value must be de-referenced
-    with q_dbus_message_unref. The \a capabilities flags indicates which capabilities to use.
+    with dbus_message_unref. The \a capabilities flags indicates which capabilities to use.
 
     The \a error object is set to indicate the error if anything went wrong with the
     marshalling. Usually, this error message will be placed in the reply, as if the call failed.
@@ -125,15 +124,15 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
         }
 
-        msg = q_dbus_message_new_method_call(data(d_ptr->service.toUtf8()), d_ptr->path.toUtf8(),
-                                             data(d_ptr->interface.toUtf8()), d_ptr->name.toUtf8());
-        q_dbus_message_set_auto_start( msg, d_ptr->autoStartService );
+        msg = dbus_message_new_method_call(data(d_ptr->service.toUtf8()), d_ptr->path.toUtf8(),
+                                           data(d_ptr->interface.toUtf8()), d_ptr->name.toUtf8());
+        dbus_message_set_auto_start( msg, d_ptr->autoStartService );
         break;
     case DBUS_MESSAGE_TYPE_METHOD_RETURN:
-        msg = q_dbus_message_new(DBUS_MESSAGE_TYPE_METHOD_RETURN);
+        msg = dbus_message_new(DBUS_MESSAGE_TYPE_METHOD_RETURN);
         if (!d_ptr->localMessage) {
-            q_dbus_message_set_destination(msg, q_dbus_message_get_sender(d_ptr->reply));
-            q_dbus_message_set_reply_serial(msg, q_dbus_message_get_serial(d_ptr->reply));
+            dbus_message_set_destination(msg, dbus_message_get_sender(d_ptr->reply));
+            dbus_message_set_reply_serial(msg, dbus_message_get_serial(d_ptr->reply));
         }
         break;
     case DBUS_MESSAGE_TYPE_ERROR:
@@ -142,11 +141,11 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
             && !QDBusUtil::checkErrorName(d_ptr->name, QDBusUtil::EmptyNotAllowed, error))
             return 0;
 
-        msg = q_dbus_message_new(DBUS_MESSAGE_TYPE_ERROR);
-        q_dbus_message_set_error_name(msg, d_ptr->name.toUtf8());
+        msg = dbus_message_new(DBUS_MESSAGE_TYPE_ERROR);
+        dbus_message_set_error_name(msg, d_ptr->name.toUtf8());
         if (!d_ptr->localMessage) {
-            q_dbus_message_set_destination(msg, q_dbus_message_get_sender(d_ptr->reply));
-            q_dbus_message_set_reply_serial(msg, q_dbus_message_get_serial(d_ptr->reply));
+            dbus_message_set_destination(msg, dbus_message_get_sender(d_ptr->reply));
+            dbus_message_set_reply_serial(msg, dbus_message_get_serial(d_ptr->reply));
         }
         break;
     case DBUS_MESSAGE_TYPE_SIGNAL:
@@ -160,8 +159,8 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
                 return 0;
         }
 
-        msg = q_dbus_message_new_signal(d_ptr->path.toUtf8(), d_ptr->interface.toUtf8(),
-                                        d_ptr->name.toUtf8());
+        msg = dbus_message_new_signal(d_ptr->path.toUtf8(), d_ptr->interface.toUtf8(),
+                                      d_ptr->name.toUtf8());
         break;
     default:
         Q_ASSERT(false);
@@ -176,7 +175,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
     QDBusMarshaller marshaller(capabilities);
     QVariantList::ConstIterator it =  d_ptr->arguments.constBegin();
     QVariantList::ConstIterator cend = d_ptr->arguments.constEnd();
-    q_dbus_message_iter_init_append(msg, &marshaller.iterator);
+    dbus_message_iter_init_append(msg, &marshaller.iterator);
     if (!d_ptr->message.isEmpty())
         // prepend the error message
         marshaller.append(d_ptr->message);
@@ -188,7 +187,7 @@ DBusMessage *QDBusMessagePrivate::toDBusMessage(const QDBusMessage &message, QDB
         return msg;
 
     // not ok;
-    q_dbus_message_unref(msg);
+    dbus_message_unref(msg);
     *error = QDBusError(QDBusError::Failed, QLatin1String("Marshalling failed: ") + marshaller.errorString);
     return 0;
 }
@@ -224,19 +223,19 @@ QDBusMessage QDBusMessagePrivate::fromDBusMessage(DBusMessage *dmsg, QDBusConnec
     if (!dmsg)
         return message;
 
-    message.d_ptr->type = q_dbus_message_get_type(dmsg);
-    message.d_ptr->path = QString::fromUtf8(q_dbus_message_get_path(dmsg));
-    message.d_ptr->interface = QString::fromUtf8(q_dbus_message_get_interface(dmsg));
+    message.d_ptr->type = dbus_message_get_type(dmsg);
+    message.d_ptr->path = QString::fromUtf8(dbus_message_get_path(dmsg));
+    message.d_ptr->interface = QString::fromUtf8(dbus_message_get_interface(dmsg));
     message.d_ptr->name = message.d_ptr->type == DBUS_MESSAGE_TYPE_ERROR ?
-                      QString::fromUtf8(q_dbus_message_get_error_name(dmsg)) :
-                      QString::fromUtf8(q_dbus_message_get_member(dmsg));
-    message.d_ptr->service = QString::fromUtf8(q_dbus_message_get_sender(dmsg));
-    message.d_ptr->signature = QString::fromUtf8(q_dbus_message_get_signature(dmsg));
-    message.d_ptr->msg = q_dbus_message_ref(dmsg);
+                      QString::fromUtf8(dbus_message_get_error_name(dmsg)) :
+                      QString::fromUtf8(dbus_message_get_member(dmsg));
+    message.d_ptr->service = QString::fromUtf8(dbus_message_get_sender(dmsg));
+    message.d_ptr->signature = QString::fromUtf8(dbus_message_get_signature(dmsg));
+    message.d_ptr->msg = dbus_message_ref(dmsg);
 
     QDBusDemarshaller demarshaller(capabilities);
-    demarshaller.message = q_dbus_message_ref(dmsg);
-    if (q_dbus_message_iter_init(demarshaller.message, &demarshaller.iterator))
+    demarshaller.message = dbus_message_ref(dmsg);
+    if (dbus_message_iter_init(demarshaller.message, &demarshaller.iterator))
         while (!demarshaller.atEnd())
             message << demarshaller.toVariantInternal();
     return message;
@@ -274,11 +273,11 @@ QDBusMessage QDBusMessagePrivate::makeLocal(const QDBusConnectionPrivate &conn,
                 return QDBusMessage::createError(error);
             }
 
-            q_dbus_message_set_sender(message, conn.baseService.toUtf8());
+            dbus_message_set_sender(message, conn.baseService.toUtf8());
 
             QDBusMessage retval = fromDBusMessage(message, conn.capabilities);
             retval.d_ptr->localMessage = true;
-            q_dbus_message_unref(message);
+            dbus_message_unref(message);
             if (retval.d_ptr->service.isEmpty())
                 retval.d_ptr->service = conn.baseService;
             return retval;
@@ -442,7 +441,7 @@ QDBusMessage QDBusMessage::createReply(const QVariantList &arguments) const
     reply.setArguments(arguments);
     reply.d_ptr->type = DBUS_MESSAGE_TYPE_METHOD_RETURN;
     if (d_ptr->msg)
-        reply.d_ptr->reply = q_dbus_message_ref(d_ptr->msg);
+        reply.d_ptr->reply = dbus_message_ref(d_ptr->msg);
     if (d_ptr->localMessage) {
         reply.d_ptr->localMessage = true;
         d_ptr->localReply = new QDBusMessage(reply); // keep an internal copy
@@ -461,7 +460,7 @@ QDBusMessage QDBusMessage::createErrorReply(const QString name, const QString &m
 {
     QDBusMessage reply = QDBusMessage::createError(name, msg);
     if (d_ptr->msg)
-        reply.d_ptr->reply = q_dbus_message_ref(d_ptr->msg);
+        reply.d_ptr->reply = dbus_message_ref(d_ptr->msg);
     if (d_ptr->localMessage) {
         reply.d_ptr->localMessage = true;
         d_ptr->localReply = new QDBusMessage(reply); // keep an internal copy
@@ -610,7 +609,7 @@ bool QDBusMessage::isReplyRequired() const
 {
     if (!d_ptr->msg)
         return d_ptr->localMessage; // if it's a local message, reply is required
-    return !q_dbus_message_get_no_reply(d_ptr->msg);
+    return !dbus_message_get_no_reply(d_ptr->msg);
 }
 
 /*!

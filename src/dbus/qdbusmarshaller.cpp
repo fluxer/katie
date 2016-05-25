@@ -53,7 +53,7 @@ static void qIterAppend(DBusMessageIter *it, QByteArray *ba, int type, const voi
     if (ba)
         *ba += char(type);
     else
-        q_dbus_message_iter_append_basic(it, type, arg);
+        dbus_message_iter_append_basic(it, type, arg);
 }
 
 QDBusMarshaller::~QDBusMarshaller()
@@ -64,7 +64,7 @@ QDBusMarshaller::~QDBusMarshaller()
 inline QString QDBusMarshaller::currentSignature()
 {
     if (message)
-        return QString::fromUtf8(q_dbus_message_get_signature(message));
+        return QString::fromUtf8(dbus_message_get_signature(message));
     return QString();
 }
 
@@ -158,10 +158,10 @@ inline void QDBusMarshaller::append(const QByteArray &arg)
 
     const char* cdata = arg.constData();
     DBusMessageIter subiterator;
-    q_dbus_message_iter_open_container(&iterator, DBUS_TYPE_ARRAY, DBUS_TYPE_BYTE_AS_STRING,
+    dbus_message_iter_open_container(&iterator, DBUS_TYPE_ARRAY, DBUS_TYPE_BYTE_AS_STRING,
                                      &subiterator);
-    q_dbus_message_iter_append_fixed_array(&subiterator, DBUS_TYPE_BYTE, &cdata, arg.length());
-    q_dbus_message_iter_close_container(&iterator, &subiterator);
+    dbus_message_iter_append_fixed_array(&subiterator, DBUS_TYPE_BYTE, &cdata, arg.length());
+    dbus_message_iter_close_container(&iterator, &subiterator);
 }
 
 inline bool QDBusMarshaller::append(const QDBusVariant &arg)
@@ -310,7 +310,7 @@ void QDBusMarshaller::open(QDBusMarshaller &sub, int code, const char *signature
             break;
         }
     else
-        q_dbus_message_iter_open_container(&iterator, code, signature, &sub.iterator);
+        dbus_message_iter_open_container(&iterator, code, signature, &sub.iterator);
 }
 
 QDBusMarshaller *QDBusMarshaller::beginCommon(int code, const char *signature)
@@ -345,7 +345,7 @@ void QDBusMarshaller::close()
         if (closeCode)
             *ba += closeCode;
     } else if (parent) {
-        q_dbus_message_iter_close_container(&parent->iterator, &iterator);
+        dbus_message_iter_close_container(&parent->iterator, &iterator);
     }
 }
 
@@ -375,14 +375,14 @@ bool QDBusMarshaller::appendVariantInternal(const QVariant &arg)
             return false;       // can't append this one...
 
         QDBusDemarshaller demarshaller(capabilities);
-        demarshaller.message = q_dbus_message_ref(d->message);
+        demarshaller.message = dbus_message_ref(d->message);
 
         if (d->direction == Demarshalling) {
             // it's demarshalling; just copy
             demarshaller.iterator = static_cast<QDBusDemarshaller *>(d)->iterator;
         } else {
             // it's marshalling; start over
-            if (!q_dbus_message_iter_init(demarshaller.message, &demarshaller.iterator))
+            if (!dbus_message_iter_init(demarshaller.message, &demarshaller.iterator))
                 return false;   // error!
         }
 
@@ -510,35 +510,35 @@ bool QDBusMarshaller::appendRegisteredType(const QVariant &arg)
 
 bool QDBusMarshaller::appendCrossMarshalling(QDBusDemarshaller *demarshaller)
 {
-    int code = q_dbus_message_iter_get_arg_type(&demarshaller->iterator);
+    int code = dbus_message_iter_get_arg_type(&demarshaller->iterator);
     if (QDBusUtil::isValidBasicType(code)) {
         // easy: just append
         // do exactly like the D-BUS docs suggest
-        // (see apidocs for q_dbus_message_iter_get_basic)
+        // (see apidocs for dbus_message_iter_get_basic)
 
         qlonglong value;
-        q_dbus_message_iter_get_basic(&demarshaller->iterator, &value);
-        q_dbus_message_iter_next(&demarshaller->iterator);
-        q_dbus_message_iter_append_basic(&iterator, code, &value);
+        dbus_message_iter_get_basic(&demarshaller->iterator, &value);
+        dbus_message_iter_next(&demarshaller->iterator);
+        dbus_message_iter_append_basic(&iterator, code, &value);
         return true;
     }
 
     if (code == DBUS_TYPE_ARRAY) {
-        int element = q_dbus_message_iter_get_element_type(&demarshaller->iterator);
+        int element = dbus_message_iter_get_element_type(&demarshaller->iterator);
         if (QDBusUtil::isValidFixedType(element) && element != DBUS_TYPE_UNIX_FD) {
             // another optimization: fixed size arrays
             // code is exactly like QDBusDemarshaller::toByteArray
             DBusMessageIter sub;
-            q_dbus_message_iter_recurse(&demarshaller->iterator, &sub);
-            q_dbus_message_iter_next(&demarshaller->iterator);
+            dbus_message_iter_recurse(&demarshaller->iterator, &sub);
+            dbus_message_iter_next(&demarshaller->iterator);
             int len;
             void* data;
-            q_dbus_message_iter_get_fixed_array(&sub,&data,&len);
+            dbus_message_iter_get_fixed_array(&sub,&data,&len);
 
             char signature[2] = { char(element), 0 };
-            q_dbus_message_iter_open_container(&iterator, DBUS_TYPE_ARRAY, signature, &sub);
-            q_dbus_message_iter_append_fixed_array(&sub, element, &data, len);
-            q_dbus_message_iter_close_container(&iterator, &sub);
+            dbus_message_iter_open_container(&iterator, DBUS_TYPE_ARRAY, signature, &sub);
+            dbus_message_iter_append_fixed_array(&sub, element, &data, len);
+            dbus_message_iter_close_container(&iterator, &sub);
 
             return true;
         }

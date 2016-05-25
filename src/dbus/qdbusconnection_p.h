@@ -67,11 +67,10 @@
 #include <QtCore/qvarlengtharray.h>
 #include <QtCore/qvector.h>
 
-#include "qdbus_symbols_p.h"
-
 #include <qdbusmessage.h>
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -93,11 +92,11 @@ class QDBusErrorInternal
     mutable DBusError error;
     Q_DISABLE_COPY(QDBusErrorInternal)
 public:
-    inline QDBusErrorInternal() { q_dbus_error_init(&error); }
-    inline ~QDBusErrorInternal() { q_dbus_error_free(&error); }
-    inline bool operator !() const { return !q_dbus_error_is_set(&error); }
-    inline operator DBusError *() { q_dbus_error_free(&error); return &error; }
-    inline operator QDBusError() const { QDBusError err(&error); q_dbus_error_free(&error); return err; }
+    inline QDBusErrorInternal() { dbus_error_init(&error); }
+    inline ~QDBusErrorInternal() { dbus_error_free(&error); }
+    inline bool operator !() const { return !dbus_error_is_set(&error); }
+    inline operator DBusError *() { dbus_error_free(&error); return &error; }
+    inline operator QDBusError() const { QDBusError err(&error); dbus_error_free(&error); return err; }
 };
 
 // QDBusConnectionPrivate holds the DBusConnection and

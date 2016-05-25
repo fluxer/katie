@@ -72,7 +72,7 @@ QDBusServer::QDBusServer(const QString &address, QObject *parent)
                      this, SIGNAL(newConnection(QDBusConnection)));
 
     QDBusErrorInternal error;
-    d->setServer(q_dbus_server_listen(address.toUtf8().constData(), error), error);
+    d->setServer(dbus_server_listen(address.toUtf8().constData(), error), error);
 }
 
 /*!
@@ -96,7 +96,7 @@ QDBusServer::~QDBusServer()
 */
 bool QDBusServer::isConnected() const
 {
-    return d && d->server && q_dbus_server_get_is_connected(d->server);
+    return d && d->server && dbus_server_get_is_connected(d->server);
 }
 
 /*!
@@ -116,9 +116,9 @@ QString QDBusServer::address() const
 {
     QString addr;
     if (d && d->server) {
-        char *c = q_dbus_server_get_address(d->server);
+        char *c = dbus_server_get_address(d->server);
         addr = QString::fromUtf8(c);
-        q_dbus_free(c);
+        dbus_free(c);
     }
 
     return addr;

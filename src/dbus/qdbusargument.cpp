@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
 QDBusArgumentPrivate::~QDBusArgumentPrivate()
 {
     if (message)
-        q_dbus_message_unref(message);
+        dbus_message_unref(message);
 }
 
 QByteArray QDBusArgumentPrivate::createSignature(int id)
@@ -112,8 +112,8 @@ bool QDBusArgumentPrivate::checkWrite(QDBusArgumentPrivate *&d)
 
         if (d->message && d->ref != 1) {
             QDBusMarshaller *dd = new QDBusMarshaller(d->capabilities);
-            dd->message = q_dbus_message_copy(d->message);
-            q_dbus_message_iter_init_append(dd->message, &dd->iterator);
+            dd->message = dbus_message_copy(d->message);
+            dbus_message_iter_init_append(dd->message, &dd->iterator);
 
             if (!d->ref.deref())
                 delete d;
@@ -155,7 +155,7 @@ bool QDBusArgumentPrivate::checkReadAndDetach(QDBusArgumentPrivate *&d)
         return true;            // no need to detach
 
     QDBusDemarshaller *dd = new QDBusDemarshaller(d->capabilities);
-    dd->message = q_dbus_message_ref(d->message);
+    dd->message = dbus_message_ref(d->message);
     dd->iterator = static_cast<QDBusDemarshaller*>(d)->iterator;
 
     if (!d->ref.deref())
@@ -291,8 +291,8 @@ QDBusArgument::QDBusArgument()
     d = dd;
 
     // create a new message with any type, we won't sent it anyways
-    dd->message = q_dbus_message_new(DBUS_MESSAGE_TYPE_METHOD_CALL);
-    q_dbus_message_iter_init_append(dd->message, &dd->iterator);
+    dd->message = dbus_message_new(DBUS_MESSAGE_TYPE_METHOD_CALL);
+    dbus_message_iter_init_append(dd->message, &dd->iterator);
 }
 
 /*!

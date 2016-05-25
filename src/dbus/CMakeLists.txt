@@ -59,9 +59,8 @@ set(DBUS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusthreaddebug_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusintegrator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingcall_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdbus_symbols_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmetaobject_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}//qdbusintrospection_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdbusintrospection_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusservicewatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusunixfiledescriptor.h
 )

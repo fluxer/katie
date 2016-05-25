@@ -133,8 +133,8 @@ void QDBusPendingCallWatcherHelper::add(QDBusPendingCallWatcher *watcher)
 QDBusPendingCallPrivate::~QDBusPendingCallPrivate()
 {
     if (pending) {
-        q_dbus_pending_call_cancel(pending);
-        q_dbus_pending_call_unref(pending);
+        dbus_pending_call_cancel(pending);
+        dbus_pending_call_unref(pending);
     }
     delete watcherHelper;
 }

@@ -42,7 +42,6 @@
 #include "qdbusmetatype.h"
 
 #include <string.h>
-#include "qdbus_symbols_p.h"
 
 #include <qbytearray.h>
 #include <qglobal.h>
@@ -56,6 +55,7 @@
 #include "qdbusargument_p.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 #ifndef DBUS_TYPE_UNIX_FD
 # define DBUS_TYPE_UNIX_FD int('h')

@@ -49,9 +49,8 @@
 #include <QtCore/QVariant>
 #include <QtCore/QDebug>
 
-#include "qdbus_symbols_p.h"          // for the DBUS_* constants
-
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h> // for the DBUS_* constants
 
 QT_BEGIN_NAMESPACE
 

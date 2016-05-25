@@ -41,14 +41,13 @@
 
 #include "qdbusutil_p.h"
 
-#include "qdbus_symbols_p.h"
-
 #include <QtCore/qstringlist.h>
 
 #include "qdbusargument.h"
 #include "qdbusunixfiledescriptor.h"
 
 #ifndef QT_NO_DBUS
+#include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
 
