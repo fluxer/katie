@@ -1,4 +1,4 @@
-# HEADERS_DIRECTORY and HEADERS_DEFINITIONS origin from the macro call
+# UNIFDEF_EXECUTABLE, HEADERS_DIRECTORY and HEADERS_DEFINITIONS origin from the macro call
 
 file(GLOB headers "$ENV{DESTDIR}/${HEADERS_DIRECTORY}/*.h")
 
