@@ -42,7 +42,7 @@ if(UNIX)
                 ${ICONV_LIBRARIES}
             )
         endif()
-        include_directories(${ICONV_INCLUDE_DIR})
+        include_directories(${ICONV_INCLUDES})
     else()
         # no iconv, so we put all plugins in the library
         set(CORE_HEADERS
