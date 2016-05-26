@@ -289,7 +289,7 @@ void QPluginLoader::setFileName(const QString &fileName)
 #else
     if (qt_debug_component()) {
         qWarning("Cannot load %s into a statically linked Qt library.",
-            (const char*)QFile::encodeName(fileName));
+            QFile::encodeName(fileName).data());
     }
     Q_UNUSED(fileName);
 #endif

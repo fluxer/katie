@@ -3503,7 +3503,7 @@ static void dumpRecursive(int level, QObject *object)
             }
         }
 #endif
-        qDebug("%s%s::%s %s", (const char*)buf, object->metaObject()->className(), name.toLocal8Bit().data(),
+        qDebug("%s%s::%s %s", buf.data(), object->metaObject()->className(), name.toLocal8Bit().data(),
                flags.toLatin1().data());
         QObjectList children = object->children();
         if (!children.isEmpty()) {
