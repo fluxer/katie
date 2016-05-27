@@ -87,8 +87,6 @@ set(DBUS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusreply.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmetatype.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusextratypes.cpp
-    # FIXME: why is this causing mulitple dfinitions?
-    # ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmarshaller.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscontext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingcall.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuspendingreply.cpp
