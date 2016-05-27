@@ -226,9 +226,9 @@ void JIT::emit_op_method_check(Instruction* currentInstruction)
     move(Imm32(JSValue::CellTag), regT1);
     Jump match = jump();
 
-    ASSERT(differenceBetween(info.structureToCompare, protoObj) == patchOffsetMethodCheckProtoObj);
+    ASSERT_UNUSED(protoObj, differenceBetween(info.structureToCompare, protoObj) == patchOffsetMethodCheckProtoObj);
     ASSERT(differenceBetween(info.structureToCompare, protoStructureToCompare) == patchOffsetMethodCheckProtoStruct);
-    ASSERT(differenceBetween(info.structureToCompare, putFunction) == patchOffsetMethodCheckPutFunction);
+    ASSERT_UNUSED(putFunction, differenceBetween(info.structureToCompare, putFunction) == patchOffsetMethodCheckPutFunction);
 
     // Link the failure cases here.
     structureCheck.link(this);
@@ -395,12 +395,12 @@ void JIT::compileGetByIdHotPath()
     Label externalLoad = loadPtrWithPatchToLEA(Address(regT0, OBJECT_OFFSETOF(JSObject, m_externalStorage)), regT2);
     Label externalLoadComplete(this);
     ASSERT(differenceBetween(hotPathBegin, externalLoad) == patchOffsetGetByIdExternalLoad);
-    ASSERT(differenceBetween(externalLoad, externalLoadComplete) == patchLengthGetByIdExternalLoad);
+    ASSERT_UNUSED(externalLoad, differenceBetween(externalLoad, externalLoadComplete) == patchLengthGetByIdExternalLoad);
 
     DataLabel32 displacementLabel1 = loadPtrWithAddressOffsetPatch(Address(regT2, patchGetByIdDefaultOffset), regT0); // payload
-    ASSERT(differenceBetween(hotPathBegin, displacementLabel1) == patchOffsetGetByIdPropertyMapOffset1);
+    ASSERT_UNUSED(displacementLabel1, differenceBetween(hotPathBegin, displacementLabel1) == patchOffsetGetByIdPropertyMapOffset1);
     DataLabel32 displacementLabel2 = loadPtrWithAddressOffsetPatch(Address(regT2, patchGetByIdDefaultOffset), regT1); // tag
-    ASSERT(differenceBetween(hotPathBegin, displacementLabel2) == patchOffsetGetByIdPropertyMapOffset2);
+    ASSERT_UNUSED(displacementLabel2, differenceBetween(hotPathBegin, displacementLabel2) == patchOffsetGetByIdPropertyMapOffset2);
 
     Label putResult(this);
     ASSERT(differenceBetween(hotPathBegin, putResult) == patchOffsetGetByIdPutResult);
@@ -474,15 +474,15 @@ void JIT::emit_op_put_by_id(Instruction* currentInstruction)
     Label externalLoad = loadPtrWithPatchToLEA(Address(regT0, OBJECT_OFFSETOF(JSObject, m_externalStorage)), regT0);
     Label externalLoadComplete(this);
     ASSERT(differenceBetween(hotPathBegin, externalLoad) == patchOffsetPutByIdExternalLoad);
-    ASSERT(differenceBetween(externalLoad, externalLoadComplete) == patchLengthPutByIdExternalLoad);
+    ASSERT_UNUSED(externalLoad, differenceBetween(externalLoad, externalLoadComplete) == patchLengthPutByIdExternalLoad);
 
     DataLabel32 displacementLabel1 = storePtrWithAddressOffsetPatch(regT2, Address(regT0, patchGetByIdDefaultOffset)); // payload
     DataLabel32 displacementLabel2 = storePtrWithAddressOffsetPatch(regT3, Address(regT0, patchGetByIdDefaultOffset)); // tag
 
     END_UNINTERRUPTED_SEQUENCE(sequencePutById);
 
-    ASSERT(differenceBetween(hotPathBegin, displacementLabel1) == patchOffsetPutByIdPropertyMapOffset1);
-    ASSERT(differenceBetween(hotPathBegin, displacementLabel2) == patchOffsetPutByIdPropertyMapOffset2);
+    ASSERT_UNUSED(displacementLabel1, differenceBetween(hotPathBegin, displacementLabel1) == patchOffsetPutByIdPropertyMapOffset1);
+    ASSERT_UNUSED(displacementLabel2, differenceBetween(hotPathBegin, displacementLabel2) == patchOffsetPutByIdPropertyMapOffset2);
 }
 
 void JIT::emitSlow_op_put_by_id(Instruction* currentInstruction, Vector<SlowCaseEntry>::iterator& iter)
