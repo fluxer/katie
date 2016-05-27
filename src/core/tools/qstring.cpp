@@ -794,9 +794,9 @@ const QString::Null QString::null = { };
 */
 
 QString::Data QString::shared_null = { Q_BASIC_ATOMIC_INITIALIZER(1),
-                                       0, 0, shared_null.array, 0, 0, 0, 0, 0, {0} };
+                                       0, 0, shared_null.array, 0, {0} };
 QString::Data QString::shared_empty = { Q_BASIC_ATOMIC_INITIALIZER(1),
-                                        0, 0, shared_empty.array, 0, 0, 0, 0, 0, {0} };
+                                        0, 0, shared_empty.array, 0, {0} };
 
 int QString::grow(int size)
 {
@@ -1053,7 +1053,7 @@ QString::QString(const QChar *unicode, int size)
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
-        d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+        d->capacity = 0;
         d->data = d->array;
         memcpy(d->array, unicode, size * sizeof(QChar));
         d->array[size] = '\0';
@@ -1086,7 +1086,7 @@ QString::QString(const QChar *unicode)
              Q_CHECK_PTR(d);
              d->ref = 1;
              d->alloc = d->size = size;
-             d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+             d->capacity = 0;
              d->data = d->array;
              memcpy(d->array, unicode, size * sizeof(QChar));
              d->array[size] = '\0';
@@ -1111,7 +1111,7 @@ QString::QString(int size, QChar ch)
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
-        d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+        d->capacity = 0;
         d->data = d->array;
         d->array[size] = '\0';
         ushort *i = d->array + size;
@@ -1134,7 +1134,7 @@ QString::QString(int size, Qt::Initialization)
     Q_CHECK_PTR(d);
     d->ref = 1;
     d->alloc = d->size = size;
-    d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+    d->capacity = 0;
     d->data = d->array;
     d->array[size] = '\0';
 }
@@ -1156,7 +1156,7 @@ QString::QString(QChar ch)
     d = reinterpret_cast<Data *>(buf);
     d->ref = 1;
     d->alloc = d->size = 1;
-    d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+    d->capacity = 0;
     d->data = d->array;
     d->array[0] = ch.unicode();
     d->array[1] = '\0';
@@ -1333,9 +1333,6 @@ void QString::reallocData(int alloc)
         x->array[x->size] = 0;
         x->ref = 1;
         x->alloc = alloc;
-        x->clean = d->clean;
-        x->simpletext = d->simpletext;
-        x->righttoleft = d->righttoleft;
         x->capacity = d->capacity;
         x->data = x->array;
         if (!d->ref.deref())
@@ -3799,7 +3796,7 @@ QString::Data *QString::fromLatin1_helper(const char *str, int size)
         Q_CHECK_PTR(d);
         d->ref = 1;
         d->alloc = d->size = size;
-        d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+        d->capacity = 0;
         d->data = d->array;
         d->array[size] = '\0';
         ushort *dst = d->data;
@@ -6958,62 +6955,48 @@ QString QString::multiArg(int numArgs, const QString **args) const
     return result;
 }
 
-static bool isStringRightToLeft(const ushort *p, const ushort *end)
-{
-    bool righttoleft = false;
-    while (p < end) {
-        switch(QChar::direction(*p))
-        {
-        case QChar::DirL:
-            goto end;
-        case QChar::DirR:
-        case QChar::DirAL:
-            righttoleft = true;
-            goto end;
-        default:
-            break;
-        }
-        ++p;
-    }
- end:
-    return righttoleft;
-}
-
-/*! \internal
- */
-void QString::updateProperties() const
-{
-    ushort *p = d->data;
-    ushort *end = p + d->size;
-    d->simpletext = true;
-    while (p < end) {
-        ushort uc = *p;
-        // sort out regions of complex text formatting
-        if (uc > 0x058f && (uc < 0x1100 || uc > 0xfb0f)) {
-            d->simpletext = false;
-        }
-        p++;
-    }
-
-    d->righttoleft = isStringRightToLeft(d->data, d->data + d->size);
-    d->clean = true;
-}
-
-bool QString::isRightToLeft() const
-{
-    return isStringRightToLeft(d->data, d->data + d->size);
-}
-
 /*! \fn bool QString::isSimpleText() const
 
     \internal
 */
+bool QString::isSimpleText() const
+{
+    ushort *p = d->data;
+    ushort *end = p + d->size;
+    while (p < end) {
+        ushort uc = *p;
+        // sort out regions of complex text formatting
+        if (uc > 0x058f && (uc < 0x1100 || uc > 0xfb0f)) {
+            return false;
+        }
+        p++;
+    }
+    return true;
+}
 
 /*! \fn bool QString::isRightToLeft() const
 
     Returns true if the string is read right to left.
 */
-
+bool QString::isRightToLeft() const
+{
+    const ushort *p = d->data;
+    const ushort *end = p + d->size;
+    while (p < end) {
+        switch(QChar::direction(*p))
+        {
+        case QChar::DirL:
+            return false;
+        case QChar::DirR:
+        case QChar::DirAL:
+            return true;
+        default:
+            break;
+        }
+        ++p;
+    }
+    return false;
+}
 
 /*! \fn QChar *QString::data()
 
@@ -7139,7 +7122,7 @@ QString QString::fromRawData(const QChar *unicode, int size)
     x->ref = 1;
     x->alloc = x->size = size;
     *x->array = '\0';
-    x->clean = x->simpletext = x->righttoleft = x->capacity = 0;
+    x->capacity = 0;
     return QString(x, 0);
 }
 
@@ -7170,7 +7153,7 @@ QString &QString::setRawData(const QChar *unicode, int size)
         }
         d->alloc = d->size = size;
         *d->array = '\0';
-        d->clean = d->simpletext = d->righttoleft = d->capacity = 0;
+        d->capacity = 0;
     }
     return *this;
 }

@@ -491,7 +491,7 @@ public:
     inline bool isNull() const { return d == &shared_null; }
 
 
-    bool isSimpleText() const { if (!d->clean) updateProperties(); return d->simpletext; }
+    bool isSimpleText() const;
     bool isRightToLeft() const;
 
     QString(int size, Qt::Initialization);
@@ -510,12 +510,7 @@ private:
         QBasicAtomicInt ref;
         int alloc, size;
         ushort *data; // QT5: put that after the bit field to fill alignment gap; don't use sizeof any more then
-        ushort clean : 1;
-        ushort simpletext : 1;
-        ushort righttoleft : 1;
         ushort capacity : 1;
-        ushort reserved : 11;
-        // ### Qt5: try to ensure that "array" is aligned to 16 bytes on both 32- and 64-bit
         ushort array[1];
     };
     static Data shared_null;
