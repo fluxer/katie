@@ -356,7 +356,7 @@ QRect QAccessibleTextEdit::rect(int child) const
      QRect rect = edit->document()->documentLayout()->blockBoundingRect(block).toRect();
      rect.translate(-edit->horizontalScrollBar()->value(), -edit->verticalScrollBar()->value());
 
-     rect = edit->viewport()->rect().intersect(rect);
+     rect = edit->viewport()->rect().intersected(rect);
      if (rect.isEmpty())
          return QRect();
 
