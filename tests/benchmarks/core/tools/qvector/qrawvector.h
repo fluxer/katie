@@ -406,7 +406,7 @@ void QRawVector<T>::free(T *begin, int size)
              i->~T();
     }
     Data *x = toBase(begin);
-    x->free(x, alignOfTypedData());
+    x->freeData(x, alignOfTypedData());
 }
 
 template <typename T>
