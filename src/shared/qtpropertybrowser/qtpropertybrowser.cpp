@@ -1305,7 +1305,7 @@ void QtAbstractPropertyBrowserPrivate::createBrowserIndexes(QtProperty *property
     QMap<QtBrowserItem *, QtBrowserItem *> parentToAfter;
     if (afterProperty) {
         QMap<QtProperty *, QList<QtBrowserItem *> >::ConstIterator it =
-            m_propertyToIndexes.find(afterProperty);
+            m_propertyToIndexes.constFind(afterProperty);
         if (it == m_propertyToIndexes.constEnd())
             return;
 
@@ -1319,7 +1319,7 @@ void QtAbstractPropertyBrowserPrivate::createBrowserIndexes(QtProperty *property
         }
     } else if (parentProperty) {
         QMap<QtProperty *, QList<QtBrowserItem *> >::ConstIterator it =
-                m_propertyToIndexes.find(parentProperty);
+                m_propertyToIndexes.constFind(parentProperty);
         if (it == m_propertyToIndexes.constEnd())
             return;
 
@@ -1366,7 +1366,7 @@ void QtAbstractPropertyBrowserPrivate::removeBrowserIndexes(QtProperty *property
 {
     QList<QtBrowserItem *> toRemove;
     QMap<QtProperty *, QList<QtBrowserItem *> >::ConstIterator it =
-        m_propertyToIndexes.find(property);
+        m_propertyToIndexes.constFind(property);
     if (it == m_propertyToIndexes.constEnd())
         return;
 
@@ -1454,7 +1454,7 @@ void QtAbstractPropertyBrowserPrivate::slotPropertyDataChanged(QtProperty *prope
         return;
 
     QMap<QtProperty *, QList<QtBrowserItem *> >::ConstIterator it =
-            m_propertyToIndexes.find(property);
+            m_propertyToIndexes.constFind(property);
     if (it == m_propertyToIndexes.constEnd())
         return;
 

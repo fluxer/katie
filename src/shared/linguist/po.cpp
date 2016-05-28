@@ -617,8 +617,8 @@ bool loadPO(Translator &translator, QIODevice &dev, ConversionData &cd)
                         item.isFuzzy = true;
                     flags.removeOne(QLatin1String("qt-format"));
                     TranslatorMessage::ExtraData::const_iterator it =
-                            item.extra.find(QLatin1String("po-flags"));
-                    if (it != item.extra.end())
+                            item.extra.constFind(QLatin1String("po-flags"));
+                    if (it != item.extra.constEnd())
                         flags.prepend(*it);
                     if (!flags.isEmpty())
                         item.extra[QLatin1String("po-flags")] = flags.join(QLatin1String(", "));
@@ -801,8 +801,8 @@ bool savePO(const Translator &translator, QIODevice &dev, ConversionData &cd)
         if (msg.type() == TranslatorMessage::Unfinished && msg.isTranslated())
             flags.append(QLatin1String("fuzzy"));
         TranslatorMessage::ExtraData::const_iterator itr =
-                msg.extras().find(QLatin1String("po-flags"));
-        if (itr != msg.extras().end()) {
+                msg.extras().constFind(QLatin1String("po-flags"));
+        if (itr != msg.extras().constEnd()) {
             QStringList atoms = itr->split(QLatin1String(", "));
             foreach (const QString &atom, atoms)
                 if (atom.endsWith(str_format)) {

@@ -393,7 +393,7 @@ QDBusMessage qDBusPropertySet(const QDBusConnectionPrivate::ObjectTreeNode &node
             QDBusAdaptorConnector::AdaptorMap::ConstIterator it;
             it = qLowerBound(connector->adaptors.constBegin(), connector->adaptors.constEnd(),
                              interface_name);
-            if (it != connector->adaptors.end() && interface_name == QLatin1String(it->interface)) {
+            if (it != connector->adaptors.constEnd() && interface_name == QLatin1String(it->interface)) {
                 return propertyWriteReply(msg, interface_name, property_name,
                                           writeProperty(it->adaptor, property_name, value));
             }
