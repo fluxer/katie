@@ -122,6 +122,7 @@ variables <i>widget</i> and <i>childWidgets</i>, respectively.");
                              windowTitle(), tr("Syntax error"), QMessageBox::Ok);
         return  false;
 #else
+        Q_UNUSED(m_dialogGui);
         return true;
 #endif
     }

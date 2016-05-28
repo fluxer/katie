@@ -159,8 +159,7 @@ void HintLineEdit::focusInEvent(QFocusEvent *e)
 FilterWidget::FilterWidget(QWidget *parent, LayoutMode lm)  :
     QWidget(parent),
     m_editor(new HintLineEdit(this)),
-    m_button(new IconButton(m_editor)),
-    m_buttonwidth(0)
+    m_button(new IconButton(m_editor))
 {
     m_editor->setPlaceholderText(tr("Filter"));
 

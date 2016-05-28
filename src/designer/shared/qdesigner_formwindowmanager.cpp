@@ -61,7 +61,7 @@ using namespace qdesigner_internal;
 
 
 QDesignerFormWindowManager::QDesignerFormWindowManager(QObject *parent)
-    : QDesignerFormWindowManagerInterface(parent), m_unused(0)
+    : QDesignerFormWindowManagerInterface(parent)
 {
 }
 

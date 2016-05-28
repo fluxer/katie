@@ -141,7 +141,6 @@ private slots:
 private:
     HintLineEdit *m_editor;
     IconButton *m_button;
-    int m_buttonwidth;
     QString m_oldText;
 };
 } // namespace qdesigner_internal

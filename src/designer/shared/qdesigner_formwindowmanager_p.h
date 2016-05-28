@@ -87,9 +87,6 @@ Q_SIGNALS:
 public Q_SLOTS:
     virtual void closeAllPreviews() = 0;
     void aboutPlugins();
-
-private:
-    void *m_unused;
 };
 
 } // namespace qdesigner_internal
