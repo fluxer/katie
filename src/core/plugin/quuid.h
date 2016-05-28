@@ -107,7 +107,6 @@ struct Q_CORE_EXPORT QUuid
     QUuid(const QString &);
     QUuid(const char *);
     QString toString() const;
-    operator QString() const { return toString(); } // ### Qt5 remove
     QUuid(const QByteArray &);
     QByteArray toByteArray() const;
 #endif
