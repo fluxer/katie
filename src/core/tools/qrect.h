@@ -542,9 +542,7 @@ public:
     bool contains(const QPointF &p) const;
     bool contains(qreal x, qreal y) const;
     bool contains(const QRectF &r) const;
-    QRectF unite(const QRectF &r) const;  // ### Qt 5: make QT4_SUPPORT
     QRectF united(const QRectF &other) const;
-    QRectF intersect(const QRectF &r) const;  // ### Qt 5: make QT4_SUPPORT
     QRectF intersected(const QRectF &other) const;
     bool intersects(const QRectF &r) const;
 
@@ -762,24 +760,14 @@ inline QRectF& QRectF::operator&=(const QRectF &r)
     return *this;
 }
 
-inline QRectF QRectF::intersect(const QRectF &r) const
+inline QRectF QRectF::intersected(const QRectF &r) const
 {
     return *this & r;
 }
 
-inline QRectF QRectF::intersected(const QRectF &r) const
-{
-    return intersect(r);
-}
-
-inline QRectF QRectF::unite(const QRectF &r) const
-{
-    return *this | r;
-}
-
 inline QRectF QRectF::united(const QRectF &r) const
 {
-    return unite(r);
+    return *this | r;
 }
 
 inline bool operator==(const QRectF &r1, const QRectF &r2)
