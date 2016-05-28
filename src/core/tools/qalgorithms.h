@@ -76,47 +76,71 @@ Q_OUTOFLINE_TEMPLATE RandomAccessIterator qBinaryFindHelper(RandomAccessIterator
 template <typename InputIterator, typename OutputIterator>
 inline OutputIterator qCopy(InputIterator begin, InputIterator end, OutputIterator dest)
 {
+#ifndef QT_NO_STL
+    return std::copy(begin, end, dest);
+#else
     while (begin != end)
         *dest++ = *begin++;
     return dest;
+#endif
 }
 
 template <typename BiIterator1, typename BiIterator2>
 inline BiIterator2 qCopyBackward(BiIterator1 begin, BiIterator1 end, BiIterator2 dest)
 {
+#ifndef QT_NO_STL
+    return std::copy_backward(begin, end, dest);
+#else
     while (begin != end)
         *--dest = *--end;
     return dest;
+#endif
 }
 
 template <typename InputIterator1, typename InputIterator2>
 inline bool qEqual(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
 {
+#ifndef QT_NO_STL
+    return std::equal(first1, last1, first2);
+#else
     for (; first1 != last1; ++first1, ++first2)
         if (!(*first1 == *first2))
             return false;
     return true;
+#endif
 }
 
 template <typename ForwardIterator, typename T>
 inline void qFill(ForwardIterator first, ForwardIterator last, const T &val)
 {
+#ifndef QT_NO_STL
+    return std::fill(first, last, val);
+#else
     for (; first != last; ++first)
         *first = val;
+#endif
 }
 
 template <typename Container, typename T>
 inline void qFill(Container &container, const T &val)
 {
+#ifndef QT_NO_STL
+    return std::fill_n(container, val);
+#else
     qFill(container.begin(), container.end(), val);
+#endif
 }
 
 template <typename InputIterator, typename T>
 inline InputIterator qFind(InputIterator first, InputIterator last, const T &val)
 {
+#ifndef QT_NO_STL
+    return std::find(first, last, val);
+#else
     while (first != last && !(*first == val))
         ++first;
     return first;
+#endif
 }
 
 template <typename Container, typename T>
@@ -128,9 +152,13 @@ inline typename Container::const_iterator qFind(const Container &container, cons
 template <typename InputIterator, typename T, typename Size>
 inline void qCount(InputIterator first, InputIterator last, const T &value, Size &n)
 {
+#ifndef QT_NO_STL
+    return std::count(first, last, n);
+#else
     for (; first != last; ++first)
         if (*first == value)
             ++n;
+#endif
 }
 
 template <typename Container, typename T, typename Size>
