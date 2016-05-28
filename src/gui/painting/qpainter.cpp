@@ -6521,7 +6521,7 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
         return;
 
     const RenderHints oldRenderHints = d->state->renderHints;
-    if (!d->state->renderHints & QPainter::Antialiasing && d->state->matrix.type() >= QTransform::TxScale) {
+    if (!(d->state->renderHints & QPainter::Antialiasing) && d->state->matrix.type() >= QTransform::TxScale) {
         // draw antialias decoration (underline/overline/strikeout) with
         // transformed text
 
