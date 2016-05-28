@@ -40,5 +40,7 @@ QTBUG-40153, QTBUG-35479, QTBUG-1628
 
 Unless you use QMake and QDoc porting to Katie or even supporting it along with
 Qt4 in the same codebase is trivial and requires only minor changes because
-Katie is mostly source compatible with Qt4. Should you enouncter a problem
-please report it at https://github.com/fluxer/katie/issues.
+Katie is mostly source compatible with Qt4. Do note that using libraries that
+are linked to Qt4 from applications linked to Katie will trigger undefined
+behaviour. Should you enouncter a problem please report it at
+https://github.com/fluxer/katie/issues.
