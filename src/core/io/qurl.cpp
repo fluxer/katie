@@ -248,9 +248,6 @@ static QString fromPercentEncodingMutable(QByteArray *ba)
 
 //#define QURL_DEBUG
 
-// implemented in qvsnprintf.cpp
-Q_CORE_EXPORT int qsnprintf(char *str, size_t n, const char *fmt, ...);
-
 // needed by the punycode encoder/decoder
 #define Q_MAXINT ((uint)((uint)(-1)>>1))
 static const uint base = 36;
