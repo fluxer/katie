@@ -137,9 +137,7 @@ public:
     bool contains(int x, int y) const; // inline methods, _don't_ merge these
     bool contains(int x, int y, bool proper) const;
     bool contains(const QRect &r, bool proper = false) const;
-    QRect unite(const QRect &r) const;  // ### Qt 5: make QT4_SUPPORT
     QRect united(const QRect &other) const;
-    QRect intersect(const QRect &r) const;  // ### Qt 5: make QT4_SUPPORT
     QRect intersected(const QRect &other) const;
     bool intersects(const QRect &r) const;
 
@@ -151,19 +149,10 @@ private:
 #if defined(Q_WS_X11)
     friend void qt_setCoords(QRect *r, int xp1, int yp1, int xp2, int yp2);
 #endif
-    // ### Qt 5;  remove the ifdef and just have the same order on all platforms.
-#if defined(Q_OS_MAC)
-    int y1;
-    int x1;
-    int y2;
-    int x2;
-#else
     int x1;
     int y1;
     int x2;
     int y2;
-#endif
-
 };
 Q_DECLARE_TYPEINFO(QRect, Q_MOVABLE_TYPE);
 
@@ -446,24 +435,14 @@ inline QRect& QRect::operator&=(const QRect &r)
     return *this;
 }
 
-inline QRect QRect::intersect(const QRect &r) const
+inline QRect QRect::intersected(const QRect &r) const
 {
     return *this & r;
 }
 
-inline QRect QRect::intersected(const QRect &other) const
-{
-    return intersect(other);
-}
-
-inline QRect QRect::unite(const QRect &r) const
-{
-    return *this | r;
-}
-
 inline QRect QRect::united(const QRect &r) const
 {
-     return unite(r);
+    return *this | r;
 }
 
 inline bool operator==(const QRect &r1, const QRect &r2)
