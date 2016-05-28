@@ -5821,24 +5821,9 @@ QByteArray QUrl::toEncoded(FormattingOptions options) const
 }
 
 /*!
-    Parses \a input and returns the corresponding QUrl. \a input is
-    assumed to be in encoded form, containing only ASCII characters.
-
-    The URL is parsed using TolerantMode.
-
-    \sa toEncoded(), setUrl()
-*/
-QUrl QUrl::fromEncoded(const QByteArray &input)
-{
-    QUrl tmp;
-    tmp.setEncodedUrl(input, TolerantMode);
-    return tmp;
-}
-
-/*!
-    \overload
-
-    Parses the URL using \a parsingMode.
+    Parses \a input using \a parsingMode and returns the corresponding
+    QUrl. \a input is assumed to be in encoded form, containing only
+    ASCII characters.
 
     \sa toEncoded(), setUrl()
 */

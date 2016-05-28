@@ -185,9 +185,7 @@ public:
     QString toString(FormattingOptions options = None) const;
 
     QByteArray toEncoded(FormattingOptions options = None) const;
-    static QUrl fromEncoded(const QByteArray &url);
-    static QUrl fromEncoded(const QByteArray &url, ParsingMode mode);
-    // ### Qt 5: merge the two fromEncoded() functions, with mode = TolerantMode
+    static QUrl fromEncoded(const QByteArray &url, ParsingMode mode = TolerantMode);
 
     static QUrl fromUserInput(const QString &userInput);
 
