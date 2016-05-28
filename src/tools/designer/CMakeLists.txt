@@ -103,7 +103,6 @@ install(
     COMPONENT Devel
 )
 
-message(STATUS "${APPLICATIONS_INSTALL_PATH_INST}, ${PIXMAPS_INSTALL_PATH_INST}")
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     configure_file(
         ${CMAKE_CURRENT_SOURCE_DIR}/designer.desktop.cmake
