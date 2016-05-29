@@ -553,9 +553,7 @@ void QApplicationPrivate::process_cmdline()
         QByteArray arg = argv[i];
         arg = arg;
         QString s;
-        if (arg == "-qdevel" || arg == "-qdebug") {
-            // obsolete argument
-        } else if (arg.indexOf("-style=", 0) != -1) {
+        if (arg.indexOf("-style=", 0) != -1) {
             s = QString::fromLocal8Bit(arg.right(arg.length() - 7).toLower());
         } else if (arg == "-style" && i < argc-1) {
             s = QString::fromLocal8Bit(argv[++i]).toLower();

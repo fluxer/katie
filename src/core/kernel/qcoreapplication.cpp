@@ -2005,9 +2005,7 @@ QStringList QCoreApplication::arguments()
         for (int a = 0; a < list.count(); ++a) {
             QString arg = list.at(a);
             QByteArray l1arg = arg.toLatin1();
-            if (l1arg == "-qdevel" ||
-                l1arg == "-qdebug" ||
-                l1arg == "-reverse" ||
+            if (l1arg == "-reverse" ||
                 l1arg == "-stylesheet" ||
                 l1arg == "-widgetcount")
                 ;
