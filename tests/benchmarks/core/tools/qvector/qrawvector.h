@@ -367,7 +367,7 @@ QRawVector<T> &QRawVector<T>::operator=(const QRawVector<T> &v)
 template <typename T>
 inline T *QRawVector<T>::allocate(int aalloc)
 {
-    QVectorData *d = QVectorData::allocate(sizeOfTypedData() + (aalloc - 1) * sizeof(T), alignOfTypedData());
+    QVectorData *d = QVectorData::allocate(sizeOfTypedData() + (aalloc - 1) * sizeof(T));
     Q_CHECK_PTR(d);
     return fromBase(d);
 }
@@ -406,7 +406,7 @@ void QRawVector<T>::free(T *begin, int size)
              i->~T();
     }
     Data *x = toBase(begin);
-    x->freeData(x, alignOfTypedData());
+    x->freeData(x);
 }
 
 template <typename T>
@@ -444,9 +444,7 @@ void QRawVector<T>::realloc(int asize, int aalloc, bool ref)
         } else {
             QT_TRY {
                 QVectorData *mem = QVectorData::reallocate(
-                    toBase(m_begin), sizeOfTypedData() + (aalloc - 1) * sizeof(T),
-                                                           sizeOfTypedData()
-+ (xalloc - 1) * sizeof(T), alignOfTypedData());
+                    toBase(m_begin), sizeOfTypedData() + (aalloc - 1) * sizeof(T));
                 Q_CHECK_PTR(mem);
                 xbegin = fromBase(mem);
                 xsize = m_size;
