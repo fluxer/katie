@@ -2250,18 +2250,25 @@ Q_DECLARE_TYPEINFO(long double, Q_PRIMITIVE_TYPE);
 #endif
 
 /*
-   These functions make it possible to use standard C++ functions with
-   a similar name from Qt header files (especially template classes).
+   These functions are for compatibility only
 */
 Q_CORE_EXPORT_INLINE void *qMalloc(size_t size) { return ::malloc(size); }
 Q_CORE_EXPORT_INLINE void qFree(void *ptr) { ::free(ptr); }
 Q_CORE_EXPORT_INLINE void *qRealloc(void *ptr, size_t size) { return ::realloc(ptr, size); }
-Q_CORE_EXPORT_INLINE void *qMemCopy(void *dest, const void *src, size_t n) { return memcpy(dest, src, n); }
-Q_CORE_EXPORT_INLINE void *qMemSet(void *dest, int c, size_t n) { return memset(dest, c, n); }
-Q_CORE_EXPORT void *qMallocAligned(size_t size, size_t alignment);
-Q_CORE_EXPORT void *qReallocAligned(void *ptr, size_t size, size_t oldsize, size_t alignment);
-Q_CORE_EXPORT void qFreeAligned(void *ptr);
-
+Q_CORE_EXPORT_INLINE void *qMemCopy(void *dest, const void *src, size_t n) { return ::memcpy(dest, src, n); }
+Q_CORE_EXPORT_INLINE void *qMemSet(void *dest, int c, size_t n) { return ::memset(dest, c, n); }
+Q_CORE_EXPORT_INLINE void *qMallocAligned(size_t size, size_t alignment) { Q_UNUSED(alignment); return qMalloc(size); }
+Q_CORE_EXPORT_INLINE void qFreeAligned(void *ptr) { qFree(ptr); }
+Q_CORE_EXPORT_INLINE void *qReallocAligned(void *ptr, size_t size, size_t oldsize, size_t alignment)
+{
+    Q_UNUSED(oldsize);
+    Q_UNUSED(alignment);
+    return qRealloc(ptr, size);
+}
+/*
+   These functions make it possible to use standard C++ functions with
+   a similar name from Qt header files (especially template classes).
+*/
 
 /*
    Avoid some particularly useless warnings from some stupid compilers.
