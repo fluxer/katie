@@ -350,22 +350,6 @@ bool QBuffer::open(OpenMode flags)
 /*!
     \reimp
 */
-void QBuffer::close()
-{
-    QIODevice::close();
-}
-
-/*!
-    \reimp
-*/
-qint64 QBuffer::pos() const
-{
-    return QIODevice::pos();
-}
-
-/*!
-    \reimp
-*/
 qint64 QBuffer::size() const
 {
     Q_D(const QBuffer);
@@ -394,14 +378,6 @@ bool QBuffer::seek(qint64 pos)
     }
     d->ioIndex = int(pos);
     return QIODevice::seek(pos);
-}
-
-/*!
-    \reimp
-*/
-bool QBuffer::atEnd() const
-{
-    return QIODevice::atEnd();
 }
 
 /*!

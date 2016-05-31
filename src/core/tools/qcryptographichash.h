@@ -58,7 +58,7 @@ public:
     enum Algorithm {
         Md4,
         Md5,
-        Sha1 = 2,
+        Sha1,
         Sha224,
         Sha256,
         Sha384,

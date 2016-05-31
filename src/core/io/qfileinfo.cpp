@@ -236,7 +236,7 @@ QDateTime &QFileInfoPrivate::getFileTime(QAbstractFileEngine::FileTime request) 
     size() to get its size.
 
     The file's type is obtained with isFile(), isDir() and
-    isSymLink(). The symLinkTarget() function provides the name of the file
+    isSymLink(). The readLink() function provides the name of the file
     the symlink points to.
 
     On Unix (including Mac OS X), the symlink has the same size() has
@@ -380,7 +380,19 @@ QFileInfo::~QFileInfo()
 */
 
 /*!
-    \overload
+    Returns true if this QFileInfo object refers to a file in the same
+    location as \a fileinfo; otherwise returns false.
+
+    Note that the result of comparing two empty QFileInfo objects,
+    containing no file references, is undefined.
+
+    \warning This will not compare two different symbolic links
+    pointing to the same file.
+
+    \warning Long and short file names that refer to the same file on Windows
+    are treated as if they referred to different files.
+
+    \sa operator!=()
 */
 bool QFileInfo::operator==(const QFileInfo &fileinfo) const
 {
@@ -413,26 +425,6 @@ bool QFileInfo::operator==(const QFileInfo &fileinfo) const
 
    // Fallback to expensive canonical path computation
    return canonicalFilePath().compare(fileinfo.canonicalFilePath(), sensitive) == 0;
-}
-
-/*!
-    Returns true if this QFileInfo object refers to a file in the same
-    location as \a fileinfo; otherwise returns false.
-
-    Note that the result of comparing two empty QFileInfo objects,
-    containing no file references, is undefined.
-
-    \warning This will not compare two different symbolic links
-    pointing to the same file.
-
-    \warning Long and short file names that refer to the same file on Windows
-    are treated as if they referred to different files.
-
-    \sa operator!=()
-*/
-bool QFileInfo::operator==(const QFileInfo &fileinfo)
-{
-    return const_cast<const QFileInfo *>(this)->operator==(fileinfo);
 }
 
 /*!
@@ -996,7 +988,7 @@ bool QFileInfo::isBundle() const
     shortcut on Windows); otherwise returns false.
 
     On Unix (including Mac OS X), opening a symlink effectively opens
-    the \l{symLinkTarget()}{link's target}. On Windows, it opens the \c
+    the \l{readLink()}{link's target}. On Windows, it opens the \c
     .lnk file itself.
 
     Example:
@@ -1006,7 +998,7 @@ bool QFileInfo::isBundle() const
     \note If the symlink points to a non existing file, exists() returns
      false.
 
-    \sa isFile(), isDir(), symLinkTarget()
+    \sa isFile(), isDir(), readLink()
 */
 bool QFileInfo::isSymLink() const
 {

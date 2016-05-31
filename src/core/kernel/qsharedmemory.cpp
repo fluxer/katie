@@ -56,7 +56,6 @@ QT_BEGIN_NAMESPACE
     the subset that the win/unix kernel allows.
 
     On Unix this will be a file name
-    On Symbian key will be truncated to 80 characters
   */
 QString
 QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,

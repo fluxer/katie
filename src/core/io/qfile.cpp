@@ -1445,15 +1445,6 @@ qint64 QFile::size() const
 }
 
 /*!
-  \reimp
-*/
-
-qint64 QFile::pos() const
-{
-    return QIODevice::pos();
-}
-
-/*!
   Returns true if the end of the file has been reached; otherwise returns
   false.
 

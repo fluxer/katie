@@ -1140,7 +1140,7 @@ QIcon QDirModel::fileIcon(const QModelIndex &index) const
   information about the symbolic link itself, regardless of whether
   resolveSymlinks is enabled or not.
 
-  \sa QFileInfo::symLinkTarget()
+  \sa QFileInfo::readLink()
 */
 
 QFileInfo QDirModel::fileInfo(const QModelIndex &index) const
@@ -1205,7 +1205,7 @@ QVector<QDirModelPrivate::QDirNode> QDirModelPrivate::children(QDirNode *parent,
     } else if (parent->info.isDir()) {
         //resolve directory links only if requested.
         if (parent->info.isSymLink() && resolveSymlinks) {
-            QString link = parent->info.symLinkTarget();
+            QString link = parent->info.readLink();
             if (link.size() > 1 && link.at(link.size() - 1) == QDir::separator())
                 link.chop(1);
             if (stat)
@@ -1382,11 +1382,11 @@ QFileInfo QDirModelPrivate::resolvedInfo(QFileInfo info)
 {
 #ifdef Q_OS_WIN
     // On windows, we cannot create a shortcut to a shortcut.
-    return QFileInfo(info.symLinkTarget());
+    return QFileInfo(info.readLink());
 #else
     QStringList paths;
     do {
-        QFileInfo link(info.symLinkTarget());
+        QFileInfo link(info.readLink());
         if (link.isRelative())
             info.setFile(info.absolutePath(), link.filePath());
         else

@@ -595,7 +595,7 @@ QStringList QDesignerPluginManager::findPlugins(const QString &path)
     for (QFileInfoList::const_iterator it = infoList.constBegin(); it != icend; ++it) {
         QString fileName;
         if (it->isSymLink()) {
-            const QFileInfo linkTarget = QFileInfo(it->symLinkTarget());
+            const QFileInfo linkTarget = QFileInfo(it->readLink());
             if (linkTarget.exists() && linkTarget.isFile())
                 fileName = linkTarget.absoluteFilePath();
         } else {

@@ -88,7 +88,7 @@ QString QFileSystemEngine::slowCanonicalized(const QString &path)
             !nonSymlinks.contains(prefix)) {
             fi.setFile(prefix);
             if (fi.isSymLink()) {
-                QString target = fi.symLinkTarget();
+                QString target = fi.readLink();
                 if(QFileInfo(target).isRelative())
                     target = fi.absolutePath() + slash + target;
                 if (separatorPos != -1) {

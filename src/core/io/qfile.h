@@ -147,7 +147,6 @@ public:
     virtual void close();
 
     qint64 size() const;
-    qint64 pos() const;
     bool seek(qint64 offset);
     bool atEnd() const;
     bool flush();

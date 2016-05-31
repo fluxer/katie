@@ -77,11 +77,8 @@ public:
 
     bool open(OpenMode openMode);
 
-    void close();
     qint64 size() const;
-    qint64 pos() const;
     bool seek(qint64 off);
-    bool atEnd() const;
     bool canReadLine() const;
 
 protected:

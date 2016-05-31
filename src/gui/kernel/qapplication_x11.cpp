@@ -1644,7 +1644,7 @@ bool runningUnderDebugger()
     const QString parentProc = QLatin1String("/proc/") + QString::number(getppid());
     const QFileInfo parentProcExe(parentProc + QLatin1String("/exe"));
     if (parentProcExe.isSymLink())
-        return parentProcExe.symLinkTarget().endsWith(QLatin1String("/gdb"));
+        return parentProcExe.readLink().endsWith(QLatin1String("/gdb"));
     QFile f(parentProc + QLatin1String("/cmdline"));
     if (!f.open(QIODevice::ReadOnly))
         return false;

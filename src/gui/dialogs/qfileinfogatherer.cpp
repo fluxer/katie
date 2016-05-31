@@ -249,7 +249,7 @@ QExtendedInformation QFileInfoGatherer::getInfo(const QFileInfo &fileInfo) const
 #endif
 
     if (m_resolveSymlinks && info.isSymLink(/* ignoreNtfsSymLinks = */ true)) {
-        QFileInfo resolvedInfo(fileInfo.symLinkTarget());
+        QFileInfo resolvedInfo(fileInfo.readLink());
         resolvedInfo = resolvedInfo.canonicalFilePath();
         if (resolvedInfo.exists()) {
             emit nameResolved(fileInfo.filePath(), resolvedInfo.fileName());
