@@ -250,6 +250,9 @@ namespace JSC {
 
 #if COMPILER(GCC)
 #pragma GCC visibility push(hidden)
+#define REFERENCED_FROM_ASM __attribute__((used))
+#else
+#define REFERENCED_FROM_ASM
 #endif
 
 extern "C" {
@@ -311,7 +314,7 @@ extern "C" {
     EncodedJSValue JIT_STUB cti_op_to_primitive(STUB_ARGS_DECLARATION);
     EncodedJSValue JIT_STUB cti_op_typeof(STUB_ARGS_DECLARATION);
     EncodedJSValue JIT_STUB cti_op_urshift(STUB_ARGS_DECLARATION);
-    EncodedJSValue JIT_STUB cti_vm_throw(STUB_ARGS_DECLARATION);
+    EncodedJSValue JIT_STUB cti_vm_throw(STUB_ARGS_DECLARATION) REFERENCED_FROM_ASM;
     EncodedJSValue JIT_STUB cti_to_object(STUB_ARGS_DECLARATION);
     JSObject* JIT_STUB cti_op_construct_JSConstruct(STUB_ARGS_DECLARATION);
     JSObject* JIT_STUB cti_op_new_array(STUB_ARGS_DECLARATION);
