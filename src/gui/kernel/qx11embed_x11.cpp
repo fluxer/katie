@@ -275,7 +275,7 @@ public:
     QTLWExtra* topData() { return d_func()->topData(); }
 };
 
-static unsigned int XEMBED_VERSION = 0;
+static quint32 XEMBED_VERSION = 0;
 
 enum QX11EmbedMessageType {
     XEMBED_EMBEDDED_NOTIFY = 0,
@@ -483,7 +483,7 @@ QX11EmbedWidget::QX11EmbedWidget(QWidget *parent)
                     | ExposureMask | StructureNotifyMask
                     | SubstructureNotifyMask | PropertyChangeMask);
 
-    long data[] = {XEMBED_VERSION, XEMBED_MAPPED};
+    quint32 data[] = {XEMBED_VERSION, XEMBED_MAPPED};
     XChangeProperty(x11Info().display(), internalWinId(), ATOM(_XEMBED_INFO),
                     ATOM(_XEMBED_INFO), 32, PropModeReplace,
                     (unsigned char*) data, 2);
@@ -1578,9 +1578,9 @@ void QX11EmbedContainer::showEvent(QShowEvent *)
 {
     Q_D(QX11EmbedContainer);
     if (d->client) {
-        long data[] = {XEMBED_VERSION, XEMBED_MAPPED};
-	XChangeProperty(x11Info().display(), d->client, ATOM(_XEMBED_INFO), ATOM(_XEMBED_INFO), 32,
-			PropModeReplace, (unsigned char *) data, 2);
+        quint32 data[] = {XEMBED_VERSION, XEMBED_MAPPED};
+        XChangeProperty(x11Info().display(), d->client, ATOM(_XEMBED_INFO), ATOM(_XEMBED_INFO), 32,
+                        PropModeReplace, (unsigned char *) data, 2);
     }
 }
 
@@ -1594,9 +1594,9 @@ void QX11EmbedContainer::hideEvent(QHideEvent *)
 {
     Q_D(QX11EmbedContainer);
     if (d->client) {
-        long data[] = {XEMBED_VERSION, XEMBED_MAPPED};
-	XChangeProperty(x11Info().display(), d->client, ATOM(_XEMBED_INFO), ATOM(_XEMBED_INFO), 32,
-			PropModeReplace, (unsigned char *) data, 2);
+        quint32 data[] = {XEMBED_VERSION, XEMBED_MAPPED};
+        XChangeProperty(x11Info().display(), d->client, ATOM(_XEMBED_INFO), ATOM(_XEMBED_INFO), 32,
+                        PropModeReplace, (unsigned char *) data, 2);
     }
 }
 
