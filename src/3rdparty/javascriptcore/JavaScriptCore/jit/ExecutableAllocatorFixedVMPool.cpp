@@ -30,10 +30,9 @@
 #if ENABLE(EXECUTABLE_ALLOCATOR_FIXED)
 
 #include <errno.h>
-
-#include "TCSpinLock.h"
 #include <sys/mman.h>
 #include <unistd.h>
+#include <pthread.h>
 #include <wtf/AVLTree.h>
 #include <wtf/VMTags.h>
 
@@ -57,6 +56,17 @@
 using namespace WTF;
 
 namespace JSC {
+
+// FIXME: remove the pthread requirement for Windows platform
+// Automatic mutex lock guard
+class SpinLockHolder {
+  private:
+      pthread_mutex_t* lock_;
+  public:
+    SpinLockHolder(pthread_mutex_t* l)
+      : lock_(l) { if (pthread_mutex_lock(lock_) != 0) CRASH(); }
+    ~SpinLockHolder() { if (pthread_mutex_unlock(lock_) != 0) CRASH(); }
+};
 
 // FreeListEntry describes a free chunk of memory, stored in the freeList.
 struct FreeListEntry {
@@ -437,7 +447,7 @@ void ExecutableAllocator::intializePageSize()
 }
 
 static FixedVMPoolAllocator* allocator = 0;
-static SpinLock spinlock = SPINLOCK_INITIALIZER;
+static pthread_mutex_t spinlock = PTHREAD_MUTEX_INITIALIZER;
 
 ExecutablePool::Allocation ExecutablePool::systemAlloc(size_t size)
 {
