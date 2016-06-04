@@ -74,7 +74,7 @@ Writer::~Writer()
 void Writer::reset()
 {
     for(QHash<QString, Entry*>::ConstIterator it =
-        index.begin(); it != index.end(); ++it) {
+        index.constBegin(); it != index.constEnd(); ++it) {
             delete it.value();
     }
 

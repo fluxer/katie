@@ -673,7 +673,7 @@ void QtResourceView::selectResource(const QString &resource)
         dir = QDir(resource);
     QString dirPath = dir.absolutePath();
     QMap<QString, QTreeWidgetItem *>::const_iterator it;
-    while ((it = d_ptr->m_pathToItem.find(dirPath)) == d_ptr->m_pathToItem.constEnd()) {
+    while ((it = d_ptr->m_pathToItem.constFind(dirPath)) == d_ptr->m_pathToItem.constEnd()) {
         if (!dir.cdUp())
             break;
         dirPath = dir.absolutePath();

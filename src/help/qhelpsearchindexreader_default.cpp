@@ -161,7 +161,7 @@ void Reader::setIndexPath(const QString &path)
 void Reader::filterFilesForAttributes(const QStringList &attributes)
 {
     searchIndexTable.clear();
-    for(IndexTable::ConstIterator it = indexTable.begin(); it != indexTable.end(); ++it) {
+    for(IndexTable::ConstIterator it = indexTable.constBegin(); it != indexTable.constEnd(); ++it) {
         const QString fileName = it.key();
         bool containsAll = true;
         QStringList split = fileName.split(QLatin1String("@"));
@@ -237,8 +237,8 @@ void Reader::searchInIndex(const QStringList &terms)
     foreach (const QString &term, terms) {
         QVector<Document> documents;
 
-        for(IndexTable::ConstIterator it = searchIndexTable.begin();
-            it != searchIndexTable.end(); ++it) {
+        for(IndexTable::ConstIterator it = searchIndexTable.constBegin();
+            it != searchIndexTable.constEnd(); ++it) {
             EntryTable entryTable = it.value().first;
             DocumentList documentList = it.value().second;
 
@@ -318,7 +318,7 @@ bool Reader::searchForPattern(const QStringList &patterns, const QStringList &wo
         return false;
 
     for(QHash<QString, PosEntry*>::ConstIterator mit =
-        miniIndex.begin(); mit != miniIndex.end(); ++mit) {
+        miniIndex.constBegin(); mit != miniIndex.constEnd(); ++mit) {
             delete mit.value();
     }
     miniIndex.clear();
@@ -483,7 +483,7 @@ void Reader::reset()
 void Reader::cleanupIndex(EntryTable &entryTable)
 {
     for(EntryTable::ConstIterator it =
-        entryTable.begin(); it != entryTable.end(); ++it) {
+        entryTable.constBegin(); it != entryTable.constEnd(); ++it) {
             delete it.value();
     }
 

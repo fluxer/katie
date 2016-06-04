@@ -733,8 +733,8 @@ bool QHelpGenerator::insertKeywords(const QList<QHelpDataIndexItem> &keywords,
         if (fName.startsWith(QLatin1String("./")))
             fName = fName.mid(2);
 
-        QMap<QString, int>::ConstIterator it = d->fileMap.find(fName);
-        if (it != d->fileMap.end())
+        QMap<QString, int>::ConstIterator it = d->fileMap.constFind(fName);
+        if (it != d->fileMap.constEnd())
             fileId = it.value();
         else
             fileId = 1;

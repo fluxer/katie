@@ -1546,7 +1546,7 @@ void QDBusActivateObjectEvent::placeMetaCall(QObject *)
 
 void QDBusConnectionPrivate::handleSignal(const QString &key, const QDBusMessage& msg)
 {
-    SignalHookHash::const_iterator it = signalHooks.find(key);
+    SignalHookHash::const_iterator it = signalHooks.constFind(key);
     SignalHookHash::const_iterator end = signalHooks.constEnd();
     //qDebug("looking for: %s", path.toLocal8Bit().constData());
     //qDBusDebug() << signalHooks.keys();
@@ -2077,7 +2077,7 @@ bool QDBusConnectionPrivate::connectSignal(const QString &service,
         return false;           // don't connect
 
     // avoid duplicating:
-    QDBusConnectionPrivate::SignalHookHash::ConstIterator it = signalHooks.find(key);
+    QDBusConnectionPrivate::SignalHookHash::ConstIterator it = signalHooks.constFind(key);
     QDBusConnectionPrivate::SignalHookHash::ConstIterator end = signalHooks.constEnd();
     for ( ; it != end && it.key() == key; ++it) {
         const QDBusConnectionPrivate::SignalHook &entry = it.value();
@@ -2272,7 +2272,7 @@ void QDBusConnectionPrivate::connectRelay(const QString &service,
 
     // add it to our list:
     QDBusWriteLocker locker(ConnectRelayAction, this);
-    SignalHookHash::ConstIterator it = signalHooks.find(key);
+    SignalHookHash::ConstIterator it = signalHooks.constFind(key);
     SignalHookHash::ConstIterator end = signalHooks.constEnd();
     for ( ; it != end && it.key() == key; ++it) {
         const SignalHook &entry = it.value();

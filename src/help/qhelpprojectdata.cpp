@@ -294,7 +294,7 @@ void QHelpProjectDataPrivate::addMatchingFiles(const QString &pattern)
     const QString &path = dir.canonicalPath();
 
     // QDir::entryList() is expensive, so we cache the results.
-    QMap<QString, QStringList>::ConstIterator it = dirEntriesCache.find(path);
+    QMap<QString, QStringList>::ConstIterator it = dirEntriesCache.constFind(path);
     const QStringList &entries = it != dirEntriesCache.constEnd() ?
                                  it.value() : dir.entryList(QDir::Files);
     if (it == dirEntriesCache.constEnd())

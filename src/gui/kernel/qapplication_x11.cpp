@@ -3111,7 +3111,7 @@ void qPRCleanup(QWidget *widget)
     if (!(wPRmapper && widget->testAttribute(Qt::WA_WState_Reparented)))
         return;                                        // not a reparented widget
     QWidgetMapper::Iterator it = wPRmapper->begin();
-    while (it != wPRmapper->constEnd()) {
+    while (it != wPRmapper->end()) {
         QWidget *w = *it;
         if (w == etw) {                       // found widget
             etw->setAttribute(Qt::WA_WState_Reparented, false); // clear flag

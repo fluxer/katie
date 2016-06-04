@@ -2647,61 +2647,17 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
     return layoutData->string;
 }
 
-namespace {
-struct QScriptItemComparator {
-    bool operator()(const QScriptItem &a, const QScriptItem &b) { return a.position < b.position; }
-    bool operator()(int p, const QScriptItem &b) { return p < b.position; }
-    //bool operator()(const QScriptItem &a, int p) { return a.position < p; }
-};
-}
-
 void QTextEngine::setBoundary(int strPos) const
 {
-    if (strPos <= 0 || strPos >= layoutData->string.length())
+    const int item = findItem(strPos);
+    if (item < 0)
         return;
 
-    const QScriptItem* it = qUpperBound(layoutData->items.constBegin(), layoutData->items.constEnd(),
-                                        strPos, QScriptItemComparator());
-    Q_ASSERT(it > layoutData->items.constBegin());
-    --it;
-    if (it->position == strPos) {
-        // already a split at the requested position
-        return;
+    QScriptItem newItem = layoutData->items.at(item);
+    if (newItem.position != strPos) {
+        newItem.position = strPos;
+        layoutData->items.insert(item + 1, newItem);
     }
-    splitItem(it - layoutData->items.constBegin(), strPos - it->position);
-}
-
-void QTextEngine::splitItem(int item, int pos) const
-{
-    if (pos <= 0)
-        return;
-
-    layoutData->items.insert(item + 1, layoutData->items[item]);
-    QScriptItem &oldItem = layoutData->items[item];
-    QScriptItem &newItem = layoutData->items[item+1];
-    newItem.position += pos;
-
-    if (oldItem.num_glyphs) {
-        // already shaped, break glyphs aswell
-        int breakGlyph = logClusters(&oldItem)[pos];
-
-        newItem.num_glyphs = oldItem.num_glyphs - breakGlyph;
-        oldItem.num_glyphs = breakGlyph;
-        newItem.glyph_data_offset = oldItem.glyph_data_offset + breakGlyph;
-
-        for (int i = 0; i < newItem.num_glyphs; i++)
-            logClusters(&newItem)[i] -= breakGlyph;
-
-        QFixed w = 0;
-        const QGlyphLayout g = shapedGlyphs(&oldItem);
-        for(int j = 0; j < breakGlyph; ++j)
-            w += g.advances_x[j] * !g.attributes[j].dontPrint;
-
-        newItem.width = oldItem.width - w;
-        oldItem.width = w;
-    }
-
-//     qDebug("split at position %d itempos=%d", pos, item);
 }
 
 QFixed QTextEngine::calculateTabWidth(int item, QFixed x) const
