@@ -48,8 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QByteArrayMatcherPrivate;
-
 class Q_CORE_EXPORT QByteArrayMatcher
 {
 public:
@@ -68,30 +66,18 @@ public:
     inline QByteArray pattern() const
     {
         if (q_pattern.isNull())
-            return QByteArray(reinterpret_cast<const char*>(p.p), p.l);
+            return QByteArray(d.p, d.l);
         return q_pattern;
     }
 
 private:
-    QByteArrayMatcherPrivate *d;
     QByteArray q_pattern;
-#ifdef Q_CC_RVCT
-// explicitly allow anonymous unions for RVCT to prevent compiler warnings
-#  pragma push
-#  pragma anon_unions
-#endif
     struct Data {
-        uchar q_skiptable[256];
-        const uchar *p;
+        char q_skiptable[256];
+        const char *p;
         int l;
     };
-    union {
-        uint dummy[256];
-        Data p;
-    };
-#ifdef Q_CC_RVCT
-#  pragma pop
-#endif
+    Data d;
 };
 
 QT_END_NAMESPACE
