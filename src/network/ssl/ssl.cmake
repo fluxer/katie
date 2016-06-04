@@ -11,7 +11,6 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslkey.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl_symbols_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_p.h
 )
 
@@ -25,7 +24,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslkey.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl_symbols.cpp
 )
 
 if(WITH_OPENSSL AND OPENSSL_FOUND)

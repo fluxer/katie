@@ -59,7 +59,7 @@
 
 #ifndef QT_NO_OPENSSL
 
-#include "qsslsocket_openssl_symbols_p.h"
+#include "qsslsocket_openssl_p.h"
 #include "qsslkey.h"
 #include "qsslkey_p.h"
 #include "qsslsocket.h"
@@ -85,12 +85,12 @@ void QSslKeyPrivate::clear(bool deep)
         return;
     if (rsa) {
         if (deep)
-            q_RSA_free(rsa);
+            RSA_free(rsa);
         rsa = 0;
     }
     if (dsa) {
         if (deep)
-            q_DSA_free(dsa);
+            DSA_free(dsa);
         dsa = 0;
     }
 }
@@ -119,7 +119,7 @@ void QSslKeyPrivate::decodePem(const QByteArray &pem, const QByteArray &passPhra
     if (!QSslSocket::supportsSsl())
         return;
 
-    BIO *bio = q_BIO_new_mem_buf(const_cast<char *>(pem.data()), pem.size());
+    BIO *bio = BIO_new_mem_buf(const_cast<char *>(pem.data()), pem.size());
     if (!bio)
         return;
 
@@ -127,19 +127,19 @@ void QSslKeyPrivate::decodePem(const QByteArray &pem, const QByteArray &passPhra
 
     if (algorithm == QSsl::Rsa) {
         RSA *result = (type == QSsl::PublicKey)
-            ? q_PEM_read_bio_RSA_PUBKEY(bio, &rsa, 0, phrase)
-            : q_PEM_read_bio_RSAPrivateKey(bio, &rsa, 0, phrase);
+            ? PEM_read_bio_RSA_PUBKEY(bio, &rsa, 0, phrase)
+            : PEM_read_bio_RSAPrivateKey(bio, &rsa, 0, phrase);
         if (rsa && rsa == result)
             isNull = false;
     } else {
         DSA *result = (type == QSsl::PublicKey)
-            ? q_PEM_read_bio_DSA_PUBKEY(bio, &dsa, 0, phrase)
-            : q_PEM_read_bio_DSAPrivateKey(bio, &dsa, 0, phrase);
+            ? PEM_read_bio_DSA_PUBKEY(bio, &dsa, 0, phrase)
+            : PEM_read_bio_DSAPrivateKey(bio, &dsa, 0, phrase);
         if (dsa && dsa == result)
             isNull = false;
     }
 
-    q_BIO_free(bio);
+    BIO_free(bio);
 }
 
 /*!
@@ -322,7 +322,7 @@ int QSslKey::length() const
     if (d->isNull)
         return -1;
     return (d->algorithm == QSsl::Rsa)
-           ? q_BN_num_bits(d->rsa->n) : q_BN_num_bits(d->dsa->p);
+           ? BN_num_bits(d->rsa->n) : BN_num_bits(d->dsa->p);
 }
 
 /*!
@@ -364,7 +364,7 @@ QByteArray QSslKey::toPem(const QByteArray &passPhrase) const
     if (!QSslSocket::supportsSsl() || d->isNull)
         return QByteArray();
 
-    BIO *bio = q_BIO_new(q_BIO_s_mem());
+    BIO *bio = BIO_new(BIO_s_mem());
     if (!bio)
         return QByteArray();
 
@@ -372,26 +372,26 @@ QByteArray QSslKey::toPem(const QByteArray &passPhrase) const
 
     if (d->algorithm == QSsl::Rsa) {
         if (d->type == QSsl::PublicKey) {
-            if (!q_PEM_write_bio_RSA_PUBKEY(bio, d->rsa))
+            if (!PEM_write_bio_RSA_PUBKEY(bio, d->rsa))
                 fail = true;
         } else {
-            if (!q_PEM_write_bio_RSAPrivateKey(
+            if (!PEM_write_bio_RSAPrivateKey(
                     bio, d->rsa,
                     // ### the cipher should be selectable in the API:
-                    passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : q_EVP_des_ede3_cbc(),
+                    passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : EVP_des_ede3_cbc(),
                     (uchar *)passPhrase.data(), passPhrase.size(), 0, 0)) {
                 fail = true;
             }
         }
     } else {
         if (d->type == QSsl::PublicKey) {
-            if (!q_PEM_write_bio_DSA_PUBKEY(bio, d->dsa))
+            if (!PEM_write_bio_DSA_PUBKEY(bio, d->dsa))
                 fail = true;
         } else {
-            if (!q_PEM_write_bio_DSAPrivateKey(
+            if (!PEM_write_bio_DSAPrivateKey(
                     bio, d->dsa,
                     // ### the cipher should be selectable in the API:
-                    passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : q_EVP_des_ede3_cbc(),
+                    passPhrase.isEmpty() ? (const EVP_CIPHER *)0 : EVP_des_ede3_cbc(),
                     (uchar *)passPhrase.data(), passPhrase.size(), 0, 0)) {
                 fail = true;
             }
@@ -401,10 +401,10 @@ QByteArray QSslKey::toPem(const QByteArray &passPhrase) const
     QByteArray pem;
     if (!fail) {
         char *data;
-        long size = q_BIO_get_mem_data(bio, &data);
+        long size = BIO_get_mem_data(bio, &data);
         pem = QByteArray(data, size);
     }
-    q_BIO_free(bio);
+    BIO_free(bio);
     return pem;
 }
 

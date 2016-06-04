@@ -76,7 +76,7 @@ public:
     ~QSslCertificatePrivate()
     {
         if (x509)
-            q_X509_free(x509);
+            X509_free(x509);
     }
 
     bool null;
