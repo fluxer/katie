@@ -49,8 +49,6 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-class QStringMatcherPrivate;
-
 class Q_CORE_EXPORT QStringMatcher
 {
 public:
@@ -73,7 +71,6 @@ public:
     inline Qt::CaseSensitivity caseSensitivity() const { return q_cs; }
 
 private:
-    QStringMatcherPrivate *d_ptr;
     QString q_pattern;
     Qt::CaseSensitivity q_cs;
 #ifdef Q_CC_RVCT

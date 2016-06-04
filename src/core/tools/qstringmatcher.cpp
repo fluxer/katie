@@ -149,7 +149,7 @@ static inline int bm_find(const ushort *uc, uint l, int index, const ushort *puc
     Call setPattern() to give it a pattern to match.
 */
 QStringMatcher::QStringMatcher()
-    : d_ptr(0), q_cs(Qt::CaseSensitive)
+    : q_cs(Qt::CaseSensitive)
 {
     memset(q_data, 0, sizeof(q_data));
 }
@@ -161,7 +161,7 @@ QStringMatcher::QStringMatcher()
     Call indexIn() to perform a search.
 */
 QStringMatcher::QStringMatcher(const QString &pattern, Qt::CaseSensitivity cs)
-    : d_ptr(0), q_pattern(pattern), q_cs(cs)
+    : q_pattern(pattern), q_cs(cs)
 {
     p.uc = pattern.unicode();
     p.len = pattern.size();
@@ -176,7 +176,7 @@ QStringMatcher::QStringMatcher(const QString &pattern, Qt::CaseSensitivity cs)
     by \a uc with the given \a length and case sensitivity specified by \a cs.
 */
 QStringMatcher::QStringMatcher(const QChar *uc, int len, Qt::CaseSensitivity cs)
-    : d_ptr(0), q_cs(cs)
+    : q_cs(cs)
 {
     p.uc = uc;
     p.len = len;
@@ -187,7 +187,6 @@ QStringMatcher::QStringMatcher(const QChar *uc, int len, Qt::CaseSensitivity cs)
     Copies the \a other string matcher to this string matcher.
 */
 QStringMatcher::QStringMatcher(const QStringMatcher &other)
-    : d_ptr(0)
 {
     operator=(other);
 }
@@ -223,7 +222,7 @@ void QStringMatcher::setPattern(const QString &pattern)
     q_pattern = pattern;
     p.uc = pattern.unicode();
     p.len = pattern.size();
-    bm_init_skiptable((const ushort *)pattern.unicode(), pattern.size(), p.q_skiptable, q_cs);
+    bm_init_skiptable((const ushort *)p.uc, pattern.size(), p.q_skiptable, q_cs);
 }
 
 /*!
