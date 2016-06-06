@@ -358,7 +358,7 @@ public:
 };
 
 inline QByteArray::QByteArray(): d(&shared_null) { d->ref.ref(); }
-inline QByteArray::~QByteArray() { if (!d->ref.deref()) delete d; }
+inline QByteArray::~QByteArray() { if (!d->ref.deref()) free(d); }
 inline int QByteArray::size() const
 { return d->size; }
 
