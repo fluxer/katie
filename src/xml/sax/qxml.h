@@ -73,7 +73,6 @@ class QXmlSimpleReader;
 
 class QXmlSimpleReaderPrivate;
 class QXmlNamespaceSupportPrivate;
-class QXmlAttributesPrivate;
 class QXmlInputSourcePrivate;
 class QXmlParseExceptionPrivate;
 class QXmlLocatorPrivate;
@@ -146,8 +145,6 @@ private:
     };
     typedef QList<Attribute> AttributeList;
     AttributeList attList;
-
-    QXmlAttributesPrivate *d;
 };
 
 //

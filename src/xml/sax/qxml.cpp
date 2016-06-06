@@ -206,10 +206,6 @@ static bool stripTextDecl(QString& str)
 }
 
 
-class QXmlAttributesPrivate
-{
-};
-
 /* \class QXmlInputSourcePrivate
     \internal
 
