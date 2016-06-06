@@ -153,19 +153,6 @@ void fastMallocAllow()
 
 namespace WTF {
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-
-namespace Internal {
-
-void fastMallocMatchFailed(void*)
-{
-    CRASH();
-}
-
-} // namespace Internal
-
-#endif
-
 void* fastZeroedMalloc(size_t n) 
 {
     void* result = fastMalloc(n);
@@ -201,35 +188,14 @@ TryMallocReturnValue tryFastMalloc(size_t n)
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    if (std::numeric_limits<size_t>::max() - sizeof(AllocAlignmentInteger) <= n)  // If overflow would occur...
-        return 0;
-
-    void* result = malloc(n + sizeof(AllocAlignmentInteger));
-    if (!result)
-        return 0;
-
-    *static_cast<AllocAlignmentInteger*>(result) = Internal::AllocTypeMalloc;
-    result = static_cast<AllocAlignmentInteger*>(result) + 1;
-
-    return result;
-#else
     return malloc(n);
-#endif
 }
 
 void* fastMalloc(size_t n) 
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    TryMallocReturnValue returnValue = tryFastMalloc(n);
-    void* result;
-    returnValue.getValue(result);
-#else
     void* result = malloc(n);
-#endif
-
     if (!result)
         CRASH();
     return result;
@@ -239,37 +205,14 @@ TryMallocReturnValue tryFastCalloc(size_t n_elements, size_t element_size)
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    size_t totalBytes = n_elements * element_size;
-    if (n_elements > 1 && element_size && (totalBytes / element_size) != n_elements || (std::numeric_limits<size_t>::max() - sizeof(AllocAlignmentInteger) <= totalBytes))
-        return 0;
-
-    totalBytes += sizeof(AllocAlignmentInteger);
-    void* result = malloc(totalBytes);
-    if (!result)
-        return 0;
-
-    memset(result, 0, totalBytes);
-    *static_cast<AllocAlignmentInteger*>(result) = Internal::AllocTypeMalloc;
-    result = static_cast<AllocAlignmentInteger*>(result) + 1;
-    return result;
-#else
     return calloc(n_elements, element_size);
-#endif
 }
 
 void* fastCalloc(size_t n_elements, size_t element_size)
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    TryMallocReturnValue returnValue = tryFastCalloc(n_elements, element_size);
-    void* result;
-    returnValue.getValue(result);
-#else
     void* result = calloc(n_elements, element_size);
-#endif
-
     if (!result)
         CRASH();
     return result;
@@ -279,73 +222,24 @@ void fastFree(void* p)
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    if (!p)
-        return;
-
-    AllocAlignmentInteger* header = Internal::fastMallocMatchValidationValue(p);
-    if (*header != Internal::AllocTypeMalloc)
-        Internal::fastMallocMatchFailed(p);
-    free(header);
-#else
     free(p);
-#endif
 }
 
 TryMallocReturnValue tryFastRealloc(void* p, size_t n)
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    if (p) {
-        if (std::numeric_limits<size_t>::max() - sizeof(AllocAlignmentInteger) <= n)  // If overflow would occur...
-            return 0;
-        AllocAlignmentInteger* header = Internal::fastMallocMatchValidationValue(p);
-        if (*header != Internal::AllocTypeMalloc)
-            Internal::fastMallocMatchFailed(p);
-        void* result = realloc(header, n + sizeof(AllocAlignmentInteger));
-        if (!result)
-            return 0;
-
-        // This should not be needed because the value is already there:
-        // *static_cast<AllocAlignmentInteger*>(result) = Internal::AllocTypeMalloc;
-        result = static_cast<AllocAlignmentInteger*>(result) + 1;
-        return result;
-    } else {
-        return fastMalloc(n);
-    }
-#else
     return realloc(p, n);
-#endif
 }
 
 void* fastRealloc(void* p, size_t n)
 {
     ASSERT(!isForbidden());
 
-#if ENABLE(FAST_MALLOC_MATCH_VALIDATION)
-    TryMallocReturnValue returnValue = tryFastRealloc(p, n);
-    void* result;
-    returnValue.getValue(result);
-#else
     void* result = realloc(p, n);
-#endif
-
     if (!result)
         CRASH();
     return result;
 }
 
-FastMallocStatistics fastMallocStatistics()
-{
-    FastMallocStatistics statistics = { 0, 0, 0, 0 };
-    return statistics;
-}
-
 } // namespace WTF
-
-#if OS(DARWIN)
-// This symbol is present in the JavaScriptCore exports file even when FastMalloc is disabled.
-// It will never be used in this case, so it's type and value are less interesting than its presence.
-extern "C" const int jscore_fastmalloc_introspection = 0;
-#endif

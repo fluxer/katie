@@ -93,27 +93,21 @@ namespace WTF {
 
         void* operator new(size_t size)
         {
-            void* p = fastMalloc(size);
-            fastMallocMatchValidateMalloc(p, Internal::AllocTypeClassNew);
-            return p;
+            return fastMalloc(size);
         }
 
         void operator delete(void* p)
         {
-            fastMallocMatchValidateFree(p, Internal::AllocTypeClassNew);
             fastFree(p);
         }
 
         void* operator new[](size_t size)
         {
-            void* p = fastMalloc(size);
-            fastMallocMatchValidateMalloc(p, Internal::AllocTypeClassNewArray);
-            return p;
+            return fastMalloc(size);
         }
 
         void operator delete[](void* p)
         {
-            fastMallocMatchValidateFree(p, Internal::AllocTypeClassNewArray);
             fastFree(p);
         }
     };
@@ -128,7 +122,6 @@ namespace WTF {
         if (!p)
             return 0;
 
-        fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNew);
         return ::new(p) T;
     }
 
@@ -140,7 +133,6 @@ namespace WTF {
         if (!p)
             return 0;
 
-        fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNew);
         return ::new(p) T(arg1);
     }
 
@@ -152,7 +144,6 @@ namespace WTF {
         if (!p)
             return 0;
 
-        fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNew);
         return ::new(p) T(arg1, arg2);
     }
 
@@ -164,7 +155,6 @@ namespace WTF {
         if (!p)
             return 0;
 
-        fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNew);
         return ::new(p) T(arg1, arg2, arg3);
     }
 
@@ -176,7 +166,6 @@ namespace WTF {
         if (!p)
             return 0;
 
-        fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNew);
         return ::new(p) T(arg1, arg2, arg3, arg4);
     }
 
@@ -188,7 +177,6 @@ namespace WTF {
         if (!p)
             return 0;
 
-        fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNew);
         return ::new(p) T(arg1, arg2, arg3, arg4, arg5);
     }
 
@@ -215,9 +203,7 @@ namespace WTF {
         struct NewArrayImpl {
             static T* fastNewArray(size_t count)
             {
-                T* p = static_cast<T*>(fastMalloc(sizeof(T) * count));
-                fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNewArray);
-                return p;
+                return static_cast<T*>(fastMalloc(sizeof(T) * count));
             }
         };
 
@@ -231,8 +217,6 @@ namespace WTF {
 
                 if (!p)
                     return 0;
-
-                fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNewArray);
 
                 for (T* pObject = p, *pObjectEnd = pObject + count; pObject != pObjectEnd; ++pObject)
                     ::new(pObject) T;
@@ -253,7 +237,6 @@ namespace WTF {
                 if (!p)
                     return 0;
 
-                fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNewArray);
                 *a.size++ = count;
                 // No need to construct the objects in this case.
 
@@ -273,7 +256,6 @@ namespace WTF {
                 if (!p)
                     return 0;
 
-                fastMallocMatchValidateMalloc(p, Internal::AllocTypeFastNewArray);
                 *a.size++ = count;
 
                 for (T* pT = a.t, *pTEnd = pT + count; pT != pTEnd; ++pT)
@@ -296,7 +278,6 @@ namespace WTF {
         if (!p)
             return;
 
-        fastMallocMatchValidateFree(p, Internal::AllocTypeFastNew);
         p->~T();
         fastFree(p);
     }
@@ -307,7 +288,6 @@ namespace WTF {
         if (!p)
             return;
 
-        fastMallocMatchValidateFree(p, Internal::AllocTypeFastNew);
         fastFree(p);
     }
 
@@ -320,7 +300,6 @@ namespace WTF {
             {
                 // No need to destruct the objects in this case.
                 // We expect that fastFree checks for null.
-                fastMallocMatchValidateFree(p, Internal::AllocTypeFastNewArray);
                 fastFree(p);
             }
         };
@@ -342,7 +321,6 @@ namespace WTF {
                 while (pEnd-- != p)
                     pEnd->~T();
 
-                fastMallocMatchValidateFree(a.size, Internal::AllocTypeFastNewArray);
                 fastFree(a.size);
             }
         };
@@ -359,7 +337,6 @@ namespace WTF {
     template <typename T>
     inline void fastNonNullDelete(T* p)
     {
-        fastMallocMatchValidateFree(p, Internal::AllocTypeFastNew);
         p->~T();
         fastFree(p);
     }
@@ -371,7 +348,6 @@ namespace WTF {
         struct NonNullDeleteArrayImpl {
             static void fastNonNullDeleteArray(void* p)
             {
-                fastMallocMatchValidateFree(p, Internal::AllocTypeFastNewArray);
                 // No need to destruct the objects in this case.
                 fastFree(p);
             }
@@ -391,7 +367,6 @@ namespace WTF {
                 while (pEnd-- != p)
                     pEnd->~T();
 
-                fastMallocMatchValidateFree(a.size, Internal::AllocTypeFastNewArray);
                 fastFree(a.size);
             }
         };

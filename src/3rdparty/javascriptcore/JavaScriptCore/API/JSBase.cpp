@@ -33,7 +33,6 @@
 #include "OpaqueJSString.h"
 #include "SourceCode.h"
 #include <interpreter/CallFrame.h>
-#include <runtime/InitializeThreading.h>
 #include <runtime/Completion.h>
 #include <runtime/JSGlobalObject.h>
 #include <runtime/JSLock.h>
