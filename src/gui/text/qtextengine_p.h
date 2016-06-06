@@ -618,6 +618,7 @@ private:
 #if defined(Q_WS_MAC)
     void shapeTextMac(int item) const;
 #endif
+    void splitItem(int item, int pos) const;
 
     void resolveAdditionalFormats() const;
     int endOfLine(int lineNum);
