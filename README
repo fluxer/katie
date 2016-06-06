@@ -16,6 +16,7 @@ There are several things you should be aware before considering Katie:
   - OpenSSL and D-Bus cannot be runtime dependencies, they must be linked to
     during build
   - QtUiTools is build as shared library by default
+  - moc, uic, rcc and lrelease are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - Symbian, QWS and QPA are no longer supported platforms
   - OpenVG is no longer supported graphics output
