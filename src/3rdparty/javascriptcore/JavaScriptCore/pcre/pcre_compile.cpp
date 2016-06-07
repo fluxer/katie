@@ -2603,23 +2603,22 @@ JSRegExp* jsRegExpCompile(const UChar* pattern, int patternLength,
      error, errorcode will be set non-zero, so we don't need to look at the result
      of the function here. */
     
-    const UChar* ptr = (const UChar*)pattern;
     const UChar* patternEnd = pattern + patternLength;
     unsigned char* code = const_cast<unsigned char*>(codeStart);
     int firstByte, reqByte;
     int bracketCount = 0;
     if (!cd.needOuterBracket)
-        compileBranch(re->options, &bracketCount, &code, &ptr, patternEnd, &errorcode, &firstByte, &reqByte, cd);
+        compileBranch(re->options, &bracketCount, &code, &pattern, patternEnd, &errorcode, &firstByte, &reqByte, cd);
     else {
         *code = OP_BRA;
-        compileBracket(re->options, &bracketCount, &code, &ptr, patternEnd, &errorcode, 0, &firstByte, &reqByte, cd);
+        compileBracket(re->options, &bracketCount, &code, &pattern, patternEnd, &errorcode, 0, &firstByte, &reqByte, cd);
     }
     re->topBracket = bracketCount;
     re->topBackref = cd.topBackref;
     
     /* If not reached end of pattern on success, there's an excess bracket. */
     
-    if (errorcode == 0 && ptr < patternEnd)
+    if (errorcode == 0 && pattern < patternEnd)
         errorcode = ERR10;
     
     /* Fill in the terminating state and check for disastrous overflow, but

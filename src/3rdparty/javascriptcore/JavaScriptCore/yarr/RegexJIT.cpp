@@ -1399,7 +1399,7 @@ void jitCompileRegex(JSGlobalData* globalData, RegexCodeBlock& jitObject, const 
     if (generator.generationFailed()) {
         JSRegExpIgnoreCaseOption ignoreCaseOption = ignoreCase ? JSRegExpIgnoreCase : JSRegExpDoNotIgnoreCase;
         JSRegExpMultilineOption multilineOption = multiline ? JSRegExpMultiline : JSRegExpSingleLine;
-        jitObject.setFallback(jsRegExpCompile(reinterpret_cast<const UChar*>(patternString.data()), patternString.size(), ignoreCaseOption, multilineOption, &numSubpatterns, &error));
+        jitObject.setFallback(jsRegExpCompile(patternString.data(), patternString.size(), ignoreCaseOption, multilineOption, &numSubpatterns, &error));
     }
 }
 
