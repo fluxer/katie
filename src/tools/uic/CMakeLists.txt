@@ -18,7 +18,6 @@ set(UIC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/driver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/validator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppextractimages.h
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwritedeclaration.h
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondata.h
@@ -38,7 +37,6 @@ set(UIC_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.h
     ${CMAKE_CURRENT_SOURCE_DIR}/utils.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/validator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppextractimages.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwritedeclaration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondata.cpp

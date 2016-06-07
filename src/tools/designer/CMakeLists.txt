@@ -77,6 +77,13 @@ set(DESIGNERBIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/designer.qrc
 )
 
+if(KATIE_PLATFORM MATCHES "(win32|wince)")
+    set(DESIGNERBIN_SOURCES
+        ${DESIGNERBIN_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/designer.rc
+    )
+endif()
+
 if(NOT ${KATIE_TYPE} STREQUAL SHARED)
     add_definitions(-DQT_DESIGNER_STATIC)
 endif()

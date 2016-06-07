@@ -44,7 +44,6 @@
 #include "driver.h"
 #include "option.h"
 #include "treewalker.h"
-#include "validator.h"
 #include "cppwriteincludes.h"
 #include "cppwritedeclaration.h"
 
@@ -243,7 +242,6 @@ bool Uic::write(DomUI *ui)
     WriteIncludes writeIncludes(this);
     writeIncludes.acceptUI(ui);
 
-    Validator(this).acceptUI(ui);
     WriteDeclaration(this, writeIncludes.scriptsActivated()).acceptUI(ui);
 
     if (opt.headerProtection)

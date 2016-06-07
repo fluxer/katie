@@ -56,8 +56,6 @@ void DatabaseInfo::acceptUI(DomUI *node)
     m_fields.clear();
 
     TreeWalker::acceptUI(node);
-
-    m_connections = unique(m_connections);
 }
 
 void DatabaseInfo::acceptWidget(DomWidget *node)
