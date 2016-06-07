@@ -21,10 +21,6 @@ set(SHAREDLINGUIST_SOURCES
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/numerus.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translator.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translatormessage.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/qm.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/qph.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/po.cpp
-    ${CMAKE_SOURCE_DIR}/src/shared/linguist/ts.cpp
 )
 
 set(SHAREDLINGUIST_HEADERS
