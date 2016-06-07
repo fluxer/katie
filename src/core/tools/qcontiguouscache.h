@@ -61,7 +61,6 @@ struct Q_CORE_EXPORT QContiguousCacheData
     int start;
     int offset;
     uint sharable : 1;
-    uint reserved : 31;
 
     // total is 24 bytes (HP-UX aCC: 40 bytes)
     // the next entry is already aligned to 8 bytes

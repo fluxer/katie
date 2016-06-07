@@ -57,16 +57,8 @@ struct Q_CORE_EXPORT QVectorData
     QBasicAtomicInt ref;
     int alloc;
     int size;
-#if defined(QT_ARCH_SPARC) && defined(Q_CC_GNU) && defined(__LP64__) && defined(QT_BOOTSTRAPPED)
-    // workaround for bug in gcc 3.4.2
-    uint sharable;
-    uint capacity;
-    uint reserved;
-#else
     uint sharable : 1;
     uint capacity : 1;
-    uint reserved : 30;
-#endif
 
     static QVectorData shared_null;
     static QVectorData *allocate(int size);
@@ -495,7 +487,6 @@ void QVector<T>::realloc(int asize, int aalloc)
         x.d->alloc = aalloc;
         x.d->sharable = true;
         x.d->capacity = d->capacity;
-        x.d->reserved = 0;
     }
 
     if (QTypeInfo<T>::isComplex) {

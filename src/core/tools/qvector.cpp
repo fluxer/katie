@@ -45,7 +45,7 @@
 
 QT_BEGIN_NAMESPACE
 
-QVectorData QVectorData::shared_null = { Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, true, false, 0 };
+QVectorData QVectorData::shared_null = { Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, true, false };
 
 QVectorData *QVectorData::allocate(int size)
 {

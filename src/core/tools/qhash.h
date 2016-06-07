@@ -122,7 +122,6 @@ struct Q_CORE_EXPORT QHashData
     int numBuckets;
     uint sharable : 1;
     uint strictAlignment : 1;
-    uint reserved : 30;
 
     void *allocateNode(int nodeAlign = 0);
     void freeNode(void *node);

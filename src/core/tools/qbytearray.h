@@ -128,9 +128,6 @@ private:
     struct Data {
         QBasicAtomicInt ref;
         int alloc, size;
-        // ### Qt 5.0: We need to add the missing capacity bit
-        // (like other tool classes have), to maintain the
-        // reserved memory on resize.
         char *data;
         char array[1];
     };
