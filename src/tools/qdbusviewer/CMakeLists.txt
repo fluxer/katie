@@ -30,6 +30,13 @@ set(QDBUSVIEWER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.qrc
 )
 
+if(KATIE_PLATFORM MATCHES "(win32|wince)")
+    set(QDBUSVIEWER_SOURCES
+        ${QDBUSVIEWER_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.rc
+    )
+endif()
+
 katie_resources(${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_flags()
 
