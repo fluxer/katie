@@ -49,7 +49,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativexmlhttprequest_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativesqldatabase_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qmetaobjectbuilder_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativewatcher_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecleanup_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativepropertycache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativenotifier_p.h
@@ -121,7 +120,6 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativexmlhttprequest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativesqldatabase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qmetaobjectbuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativewatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecleanup.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativepropertycache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativenotifier.cpp

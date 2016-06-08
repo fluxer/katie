@@ -636,7 +636,6 @@ QDeclarativeEngine::QDeclarativeEngine(QObject *parent)
 */
 QDeclarativeEngine::~QDeclarativeEngine()
 {
-    Q_D(QDeclarativeEngine);
 }
 
 /*! \fn void QDeclarativeEngine::quit()
