@@ -280,6 +280,9 @@ public:
         {}
 };
 
+struct QMetaObject;
+typedef const QMetaObject& (*QMetaObjectAccessor)();
+
 struct Q_CORE_EXPORT QMetaObject
 {
     const char *className() const;
@@ -442,7 +445,11 @@ struct Q_CORE_EXPORT QMetaObject
         const uint *data;
         typedef void (*StaticMetacallFunction)(QObject *, QMetaObject::Call, int, void **);
         StaticMetacallFunction static_metacall;
+#ifdef Q_NO_DATA_RELOCATION
+        const QMetaObjectAccessor *relatedMetaObjects;
+#else
         const QMetaObject **relatedMetaObjects;
+#endif
         void *extradata; //reserved for future use
     } d;
 };
