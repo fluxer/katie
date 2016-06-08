@@ -466,7 +466,10 @@ endif()
 include_directories(${CMAKE_SOURCE_DIR}/src)
 
 if(ENABLE_TESTING)
-    message(WARNING "Unless it is intentionall you should not enable testing")
+    message(WARNING
+        "\nUnless it is intentionall you should not enable testing. You will have to unset "
+        "QT_PLUGIN_PATH if you have Qt4 installed on the system prior to running the tests."
+    )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
