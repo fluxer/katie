@@ -48,7 +48,6 @@
 #include "qfileinfo.h"
 #include "qiodevice_p.h"
 #include "qfile_p.h"
-#include "qsystemerror_p.h"
 #if defined(QT_BUILD_CORE_LIB)
 # include "qcoreapplication.h"
 #endif
