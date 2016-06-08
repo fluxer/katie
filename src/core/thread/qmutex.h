@@ -143,7 +143,6 @@ class QMutexData
     public:
         QAtomicInt contenders;
         const uint recursive : 1;
-        uint reserved : 31;
     protected:
         QMutexData(QMutex::RecursionMode mode);
         ~QMutexData();

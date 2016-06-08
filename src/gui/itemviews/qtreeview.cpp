@@ -1816,11 +1816,11 @@ void QTreeView::drawBranches(QPainter *painter, const QRect &rect,
 */
 void QTreeView::mousePressEvent(QMouseEvent *event)
 {
-	Q_D(QTreeView);
+    Q_D(QTreeView);
     bool handled = false;
     if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) == QEvent::MouseButtonPress)
         handled = d->expandOrCollapseItemAtPos(event->pos());
-	if (!handled && d->itemDecorationAt(event->pos()) == -1)
+    if (!handled && d->itemDecorationAt(event->pos()) == -1)
         QAbstractItemView::mousePressEvent(event);
 }
 
@@ -2526,7 +2526,7 @@ void QTreeView::columnCountChanged(int oldCount, int newCount)
 
     if (isVisible())
         updateGeometries();
-	viewport()->update();
+    viewport()->update();
 }
 
 /*!

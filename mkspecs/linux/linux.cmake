@@ -1,11 +1,10 @@
 if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
     set(KATIE_CXXFLAGS
         ${KATIE_CXXFLAGS}
-        -fPIC
         -fvisibility=hidden -fvisibility-inlines-hidden
         -Wformat -Werror=format-security
-        -Wreturn-type -Wundef -Wunused -Wparentheses
-        # -Wall -fno-strict-aliasing -Wcast-align -Wchar-subscripts
+        -Wall -Wundef -Wunused
+        # -fno-strict-aliasing -Wcast-align
         # -Wmissing-noreturn -Winit-self -Winline -Wcast-qual
     )
     set(KATIE_LDFLAGS

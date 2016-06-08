@@ -144,13 +144,8 @@ inline QDebug &QDebug::operator=(const QDebug &other)
     return *this;
 }
 
-#if defined(FORCE_UREF)
-template <class T>
-inline QDebug &operator<<(QDebug debug, const QList<T> &list)
-#else
 template <class T>
 inline QDebug operator<<(QDebug debug, const QList<T> &list)
-#endif
 {
     debug.nospace() << '(';
     for (Q_TYPENAME QList<T>::size_type i = 0; i < list.count(); ++i) {
@@ -162,25 +157,15 @@ inline QDebug operator<<(QDebug debug, const QList<T> &list)
     return debug.space();
 }
 
-#if defined(FORCE_UREF)
-template <typename T>
-inline QDebug &operator<<(QDebug debug, const QVector<T> &vec)
-#else
 template <typename T>
 inline QDebug operator<<(QDebug debug, const QVector<T> &vec)
-#endif
 {
     debug.nospace() << "QVector";
     return operator<<(debug, vec.toList());
 }
 
-#if defined(FORCE_UREF)
-template <class aKey, class aT>
-inline QDebug &operator<<(QDebug debug, const QMap<aKey, aT> &map)
-#else
 template <class aKey, class aT>
 inline QDebug operator<<(QDebug debug, const QMap<aKey, aT> &map)
-#endif
 {
     debug.nospace() << "QMap(";
     for (typename QMap<aKey, aT>::const_iterator it = map.constBegin();
@@ -191,13 +176,8 @@ inline QDebug operator<<(QDebug debug, const QMap<aKey, aT> &map)
     return debug.space();
 }
 
-#if defined(FORCE_UREF)
-template <class aKey, class aT>
-inline QDebug &operator<<(QDebug debug, const QHash<aKey, aT> &hash)
-#else
 template <class aKey, class aT>
 inline QDebug operator<<(QDebug debug, const QHash<aKey, aT> &hash)
-#endif
 {
     debug.nospace() << "QHash(";
     for (typename QHash<aKey, aT>::const_iterator it = hash.constBegin();
@@ -207,13 +187,8 @@ inline QDebug operator<<(QDebug debug, const QHash<aKey, aT> &hash)
     return debug.space();
 }
 
-#if defined(FORCE_UREF)
-template <class T1, class T2>
-inline QDebug &operator<<(QDebug debug, const QPair<T1, T2> &pair)
-#else
 template <class T1, class T2>
 inline QDebug operator<<(QDebug debug, const QPair<T1, T2> &pair)
-#endif
 {
     debug.nospace() << "QPair(" << pair.first << ',' << pair.second << ')';
     return debug.space();
@@ -226,13 +201,8 @@ inline QDebug operator<<(QDebug debug, const QSet<T> &set)
     return operator<<(debug, set.toList());
 }
 
-#if defined(FORCE_UREF)
-template <class T>
-inline QDebug &operator<<(QDebug debug, const QContiguousCache<T> &cache)
-#else
 template <class T>
 inline QDebug operator<<(QDebug debug, const QContiguousCache<T> &cache)
-#endif
 {
     debug.nospace() << "QContiguousCache(";
     for (int i = cache.firstIndex(); i <= cache.lastIndex(); ++i) {
@@ -244,13 +214,8 @@ inline QDebug operator<<(QDebug debug, const QContiguousCache<T> &cache)
     return debug.space();
 }
 
-#if defined(FORCE_UREF)
-template <class T>
-inline QDebug &operator<<(QDebug debug, const QFlags<T> &flags)
-#else
 template <class T>
 inline QDebug operator<<(QDebug debug, const QFlags<T> &flags)
-#endif
 {
     debug.nospace() << "QFlags(";
     bool needSeparator = false;
