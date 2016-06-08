@@ -91,7 +91,7 @@ void tst_QDBusPerformance::initTestCase()
 #ifdef Q_OS_WIN
     proc.start("server");
 #else
-    proc.start("./server/server");
+    proc.start("./server");
 #endif
     QVERIFY(proc.waitForStarted());
 
