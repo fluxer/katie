@@ -189,7 +189,6 @@ void QContiguousCache<T>::detach_helper()
     x.d->offset = d->offset;
     x.d->alloc = d->alloc;
     x.d->sharable = true;
-    x.d->reserved = 0;
 
     T *dest = x.p->array + x.d->start;
     T *src = p->array + d->start;
