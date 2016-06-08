@@ -42,7 +42,6 @@
 #ifndef QTEMPORARYFILE_H
 #define QTEMPORARYFILE_H
 
-#include <QtCore/qiodevice.h>
 #include <QtCore/qfile.h>
 
 #ifdef open

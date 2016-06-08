@@ -45,7 +45,6 @@
 #include <QtCore/qstate.h>
 
 #include <QtCore/qcoreevent.h>
-#include <QtCore/qlist.h>
 #include <QtCore/qobject.h>
 #include <QtCore/qset.h>
 #include <QtCore/qvariant.h>

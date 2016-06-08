@@ -43,7 +43,6 @@
 #define QFUTUREWATCHER_H
 
 #include <QtCore/qfuture.h>
-
 #include <QtCore/qobject.h>
 
 QT_BEGIN_HEADER

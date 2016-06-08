@@ -54,7 +54,6 @@
 //
 
 #include <QtCore/qstring.h>
-#include <QtCore/qbytearray.h>
 
 #if defined(Q_OS_WIN)
 #define QFILESYSTEMENTRY_NATIVE_PATH_IS_UTF16

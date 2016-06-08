@@ -47,7 +47,6 @@
 #ifndef QT_NO_QFUTURE
 
 #include <QtCore/qmap.h>
-#include <QtCore/qdebug.h>
 
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE

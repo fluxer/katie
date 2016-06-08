@@ -44,7 +44,6 @@
 
 #include <QtCore/qplugin.h>
 #include <QtCore/qfactoryinterface.h>
-#include <QtCore/qbytearray.h>
 
 QT_BEGIN_HEADER
 
