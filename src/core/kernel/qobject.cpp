@@ -3513,7 +3513,7 @@ static void dumpRecursive(int level, QObject *object)
     }
 #else
     Q_UNUSED(level)
-        Q_UNUSED(object)
+    Q_UNUSED(object)
 #endif
 }
 
