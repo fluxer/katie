@@ -66,7 +66,6 @@ if(UNIX)
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
@@ -74,7 +73,6 @@ if(UNIX)
     set(CORE_HEADERS
         ${CORE_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
     )
     if(WITH_GLIB2 AND GLIB2_FOUND)
@@ -136,7 +134,6 @@ elseif(KATIE_PLATFORM STREQUAL "integrity")
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
@@ -144,7 +141,6 @@ elseif(KATIE_PLATFORM STREQUAL "integrity")
     set(CORE_HEADERS
         ${CORE_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcrashhandler_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
     )
 elseif(KATIE_PLATFORM STREQUAL "blackberry")

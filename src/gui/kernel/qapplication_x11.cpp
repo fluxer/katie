@@ -2281,9 +2281,6 @@ void qt_init(QApplicationPrivate *priv, int,
         QKeyMapper::changeKeyboard();
 
         // Misc. initialization
-#if 0 //disabled for now..
-        QSegfaultHandler::initialize(priv->argv, priv->argc);
-#endif
         QCursorData::initialize();
     }
     QFont::initialize();
