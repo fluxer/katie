@@ -47,10 +47,11 @@
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qlist.h>
+#include <QtCore/qscopedpointer.h>
+
 #ifdef QT_INCLUDE_COMPAT
 #include <QtCore/qcoreevent.h>
 #endif
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 
