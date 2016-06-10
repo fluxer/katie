@@ -13,4 +13,7 @@ add_library(qicoplugin ${KATIE_TYPE} ${QICOPLUGIN_SOURCES} ${QICOPLUGIN_HEADERS}
 target_link_libraries(qicoplugin KtCore KtGui)
 set_target_properties(qicoplugin PROPERTIES OUTPUT_NAME qico)
 
-install(TARGETS qicoplugin DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats/)
+install(
+    TARGETS qicoplugin
+    DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats
+)
