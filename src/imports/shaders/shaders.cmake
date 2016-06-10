@@ -30,9 +30,9 @@ target_link_libraries(qmlshadersplugin ${EXTRA_SHADERS_LIBS})
 
 install(
     TARGETS qmlshadersplugin
-    DESTINATION ${QT_IMPORTS_PATH_INST}/Qt/labs/shaders
+    DESTINATION ${QT_IMPORTS_PATH}/Qt/labs/shaders
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/shaders/qmldir
-    DESTINATION ${QT_IMPORTS_PATH_INST}/Qt/labs/shaders
+    DESTINATION ${QT_IMPORTS_PATH}/Qt/labs/shaders
 )

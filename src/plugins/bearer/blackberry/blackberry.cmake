@@ -21,4 +21,7 @@ katie_resources("${QBBBEARERPLUGIN_SOURCES}")
 add_library(qbbbearerplugin ${KATIE_TYPE} ${QBBBEARERPLUGIN_SOURCES} ${QBBBEARER_HEADERS})
 set_target_properties(qbbbearerplugin PROPERTIES OUTPUT_NAME qbbbearer)
 
-install(TARGETS qbbbearerplugin DESTINATION ${QT_PLUGINS_PATH_INST}/bearer/)
+install(
+    TARGETS qbbbearerplugin
+    DESTINATION ${QT_PLUGINS_PATH}/bearer
+)

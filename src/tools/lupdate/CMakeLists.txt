@@ -37,13 +37,13 @@ set_target_properties(lupdate PROPERTIES
 install(
     TARGETS lupdate
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH_INST}
+    RUNTIME DESTINATION ${QT_BINARIES_PATH}
     COMPONENT Devel
 )
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     install(
         FILES ${CMAKE_CURRENT_SOURCE_DIR}/lupdate.1
-        DESTINATION ${MAN_INSTALL_PATH_INST}/man1
+        DESTINATION ${MAN_INSTALL_PATH}/man1
     )
 endif()

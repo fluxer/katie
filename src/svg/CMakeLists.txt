@@ -87,12 +87,12 @@ katie_generate_package(KtSvg "KtCore KtGui")
 install(
     TARGETS KtSvg
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH_INST}
+    DESTINATION ${QT_LIBRARIES_PATH}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtSvg
-    DESTINATION ${QT_HEADERS_PATH_INST}
+    DESTINATION ${QT_HEADERS_PATH}
     COMPONENT Devel
 )
 

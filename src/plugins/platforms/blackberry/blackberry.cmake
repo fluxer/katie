@@ -81,4 +81,7 @@ target_link_libraries(blackberryplugin pps screen clipboard ${EGL_LIBRARIES})
 target_compile_definitions(blackberryplugin ${BLACKBERRYPLUGIN_DEFINITIONS})
 target_include_directories(blackberryplugin PRIVATE ${BLACKBERRYPLUGIN_INCLUDES})
 
-install(TARGETS blackberryplugin DESTINATION ${QT_PLUGINS_PATH_INST}/platforms/)
+install(
+    TARGETS blackberryplugin
+    DESTINATION ${QT_PLUGINS_PATH}/platforms
+)

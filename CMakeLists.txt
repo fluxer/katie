@@ -134,27 +134,27 @@ add_feature_info(corewlan WITH_COREWLAN "an closed source something")
 
 include(mkspecs/mkspecs.cmake)
 
-katie_generate_string("${CMAKE_INSTALL_PATH}" "CMAKE_INSTALL_PATH_STR" "CMAKE_INSTALL_PATH_INST")
-katie_generate_string("${LDCONF_INSTALL_PATH}" "LDCONF_INSTALL_PATH_STR" "LDCONF_INSTALL_PATH_INST")
-katie_generate_string("${PROFILE_INSTALL_PATH}" "PROFILE_INSTALL_PATH_STR" "PROFILE_INSTALL_PATH_INST")
-katie_generate_string("${MAN_INSTALL_PATH}" "MAN_INSTALL_PATH_STR" "MAN_INSTALL_PATH_INST")
-katie_generate_string("${APPLICATIONS_INSTALL_PATH}" "APPLICATIONS_INSTALL_PATH_STR" "APPLICATIONS_INSTALL_PATH_INST")
-katie_generate_string("${PIXMAPS_INSTALL_PATH}" "PIXMAPS_INSTALL_PATH_STR" "PIXMAPS_INSTALL_PATH_INST")
+katie_generate_string("${CMAKE_INSTALL_PATH}" "CMAKE_INSTALL_PATH_STR")
+katie_generate_string("${LDCONF_INSTALL_PATH}" "LDCONF_INSTALL_PATH_STR")
+katie_generate_string("${PROFILE_INSTALL_PATH}" "PROFILE_INSTALL_PATH_STR")
+katie_generate_string("${MAN_INSTALL_PATH}" "MAN_INSTALL_PATH_STR")
+katie_generate_string("${APPLICATIONS_INSTALL_PATH}" "APPLICATIONS_INSTALL_PATH_STR")
+katie_generate_string("${PIXMAPS_INSTALL_PATH}" "PIXMAPS_INSTALL_PATH_STR")
 
-katie_generate_string("qt_lcnsuser=${QT_LICENSE}" "QT_LICENSE_STR" "")
+katie_generate_string("qt_lcnsuser=${QT_LICENSE}" "QT_LICENSE_STR")
 katie_generate_string("qt_lcnsprod=${QT_PRODUCT}" "QT_PRODUCT_STR" "")
-katie_generate_string("qt_prfxpath=${QT_PREFIX_PATH}" "QT_PREFIX_PATH_STR" "")
-katie_generate_string("qt_hdrspath=${QT_HEADERS_PATH}" "QT_HEADERS_PATH_STR" "QT_HEADERS_PATH_INST")
-katie_generate_string("qt_libspath=${QT_LIBRARIES_PATH}" "QT_LIBRARIES_PATH_STR" "QT_LIBRARIES_PATH_INST")
-katie_generate_string("qt_binspath=${QT_BINARIES_PATH}" "QT_BINARIES_PATH_STR" "QT_BINARIES_PATH_INST")
-katie_generate_string("qt_plugpath=${QT_PLUGINS_PATH}" "QT_PLUGINS_PATH_STR" "QT_PLUGINS_PATH_INST")
-katie_generate_string("qt_impspath=${QT_IMPORTS_PATH}" "QT_IMPORTS_PATH_STR" "QT_IMPORTS_PATH_INST")
-katie_generate_string("qt_datapath=${QT_DATA_PATH}" "QT_DATA_PATH_STR" "QT_DATA_PATH_INST")
-katie_generate_string("qt_trnspath=${QT_TRANSLATIONS_PATH}" "QT_TRANSLATIONS_PATH_STR" "QT_TRANSLATIONS_PATH_INST")
-katie_generate_string("qt_stngpath=${QT_SETTINGS_PATH}" "QT_SETTINGS_PATH_STR" "QT_SETTINGS_PATH_INST")
-katie_generate_string("qt_docspath=${QT_DOCUMENTATION_PATH}" "QT_DOCUMENTATION_PATH_STR" "QT_DOCUMENTATION_PATH_INST")
-katie_generate_string("${QT_EXAMPLES_PATH}" "QT_EXAMPLES_PATH_STR" "QT_EXAMPLES_PATH_INST")
-katie_generate_string("${QT_DEMOS_PATH}" "QT_DEMOS_PATH_STR" "QT_DEMOS_PATH_INST")
+katie_generate_string("qt_prfxpath=${QT_PREFIX_PATH}" "QT_PREFIX_PATH_STR")
+katie_generate_string("qt_hdrspath=${QT_HEADERS_PATH}" "QT_HEADERS_PATH_STR")
+katie_generate_string("qt_libspath=${QT_LIBRARIES_PATH}" "QT_LIBRARIES_PATH_STR")
+katie_generate_string("qt_binspath=${QT_BINARIES_PATH}" "QT_BINARIES_PATH_STR")
+katie_generate_string("qt_plugpath=${QT_PLUGINS_PATH}" "QT_PLUGINS_PATH_STR")
+katie_generate_string("qt_impspath=${QT_IMPORTS_PATH}" "QT_IMPORTS_PATH_STR")
+katie_generate_string("qt_datapath=${QT_DATA_PATH}" "QT_DATA_PATH_STR")
+katie_generate_string("qt_trnspath=${QT_TRANSLATIONS_PATH}" "QT_TRANSLATIONS_PATH_STR")
+katie_generate_string("qt_stngpath=${QT_SETTINGS_PATH}" "QT_SETTINGS_PATH_STR")
+katie_generate_string("qt_docspath=${QT_DOCUMENTATION_PATH}" "QT_DOCUMENTATION_PATH_STR")
+katie_generate_string("${QT_EXAMPLES_PATH}" "QT_EXAMPLES_PATH_STR")
+katie_generate_string("${QT_DEMOS_PATH}" "QT_DEMOS_PATH_STR")
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 framework")
 set(CPACK_PACKAGE_VENDOR "Katie")
@@ -166,6 +166,7 @@ set(CPACK_PACKAGE_VERSION_MINOR ${KATIE_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${KATIE_MICRO})
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Katie")
 set(CPACK_SOURCE_IGNORE_FILES "/build/;/mingw/;/.git;${CPACK_SOURCE_IGNORE_FILES}")
+set(CPACK_SET_DESTDIR TRUE)
 if(WIN32 AND CMAKE_CROSSCOMPILING)
     # Windows build on non-Windows host, NSIS is not manditory on such
     set(CPACK_GENERATOR "ZIP")
@@ -671,7 +672,7 @@ configure_file(
 
 install(
     DIRECTORY mkspecs
-    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH}
     COMPONENT Devel
 )
 
@@ -680,21 +681,21 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
-    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH}
     COMPONENT Devel
 )
 
 install(
     EXPORT KatieLibraryTargets
     NAMESPACE Katie::
-    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH}
     FILE KatieLibraryTargets.cmake
 )
 
 install(
     EXPORT KatieBinaryTargets
     NAMESPACE Katie::
-    DESTINATION ${CMAKE_INSTALL_PATH_INST}/Katie
+    DESTINATION ${CMAKE_INSTALL_PATH}
     FILE KatieBinaryTargets.cmake
 )
 
@@ -706,7 +707,7 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     )
     install(
         FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-        DESTINATION ${LDCONF_INSTALL_PATH_INST}
+        DESTINATION ${LDCONF_INSTALL_PATH}
     )
 
     configure_file(
@@ -716,7 +717,7 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     )
     install(
         FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
-        DESTINATION ${PROFILE_INSTALL_PATH_INST}
+        DESTINATION ${PROFILE_INSTALL_PATH}
     )
 endif()
 

@@ -105,11 +105,11 @@ katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScr
 install(
     TARGETS KtDesignerComponents
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH_INST}
+    DESTINATION ${QT_LIBRARIES_PATH}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
-    DESTINATION ${QT_HEADERS_PATH_INST}
+    DESTINATION ${QT_HEADERS_PATH}
     COMPONENT Devel
 )

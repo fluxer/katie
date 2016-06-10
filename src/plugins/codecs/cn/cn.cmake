@@ -12,4 +12,7 @@ add_library(qcncodecsplugin ${KATIE_TYPE} ${CNCODECSPLUGIN_SOURCES} ${CNCODECSPL
 target_link_libraries(qcncodecsplugin KtCore)
 set_target_properties(qcncodecsplugin PROPERTIES OUTPUT_NAME qcncodecs)
 
-install(TARGETS qcncodecsplugin DESTINATION ${QT_PLUGINS_PATH_INST}/codecs/)
+install(
+    TARGETS qcncodecsplugin
+    DESTINATION ${QT_PLUGINS_PATH}/codecs
+)

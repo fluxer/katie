@@ -30,4 +30,7 @@ katie_resources("${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES}")
 add_library(qmeegographicssystemplugin ${KATIE_TYPE} ${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES} ${QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS})
 set_target_properties(qmeegographicssystemplugin PROPERTIES OUTPUT_NAME qmeegographicssystem)
 
-install(TARGETS qmeegographicssystemplugin DESTINATION ${QT_PLUGINS_PATH_INST}/graphicssystems/)
+install(
+    TARGETS qmeegographicssystemplugin
+    DESTINATION ${QT_PLUGINS_PATH}/graphicssystems
+)

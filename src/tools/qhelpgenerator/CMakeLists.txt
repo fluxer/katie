@@ -38,6 +38,6 @@ set_target_properties(qhelpgenerator PROPERTIES
 install(
     TARGETS qhelpgenerator
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH_INST}
+    RUNTIME DESTINATION ${QT_BINARIES_PATH}
     COMPONENT Devel
 )

@@ -21,5 +21,5 @@ target_include_directories(qtscriptdbusplugin PRIVATE ${CMAKE_CURRENT_SOURCE_DIR
 
 install(
     TARGETS qtscriptdbusplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/script
+    DESTINATION ${QT_PLUGINS_PATH}/script
 )

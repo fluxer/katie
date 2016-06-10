@@ -324,12 +324,12 @@ katie_generate_package(KtScript "KtCore")
 install(
     TARGETS KtScript
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH_INST}
+    DESTINATION ${QT_LIBRARIES_PATH}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtScript
-    DESTINATION ${QT_HEADERS_PATH_INST}
+    DESTINATION ${QT_HEADERS_PATH}
     COMPONENT Devel
 )
 

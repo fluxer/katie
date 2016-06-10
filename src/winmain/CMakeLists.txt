@@ -26,5 +26,5 @@ set_target_properties(KtMain PROPERTIES
 install(
     TARGETS KtMain
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH_INST}
+    DESTINATION ${QT_LIBRARIES_PATH}
 )

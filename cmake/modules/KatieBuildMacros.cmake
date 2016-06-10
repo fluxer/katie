@@ -93,23 +93,17 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         )
         install(
             FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
-            DESTINATION ${QT_LIBRARIES_PATH_INST}/pkgconfig
+            DESTINATION ${QT_LIBRARIES_PATH}/pkgconfig
         )
     endif()
 endmacro()
 
-function(KATIE_GENERATE_STRING INSTR OUTSTR OUTSTR2)
+function(KATIE_GENERATE_STRING INSTR OUTSTR)
     if("${INSTR}" GREATER "536")
         message(FATAL_ERROR "${OUTSTR} is greater than 536")
     endif()
     # qt used to do some magic, adding trailing \0 in a weird way via padstring script
     set(${OUTSTR} "${INSTR}\\0" PARENT_SCOPE)
-
-    if(OUTSTR2)
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" instpath ${INSTR})
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" instpath ${instpath})
-        set(${OUTSTR2} "${instpath}" PARENT_SCOPE)
-    endif()
 endfunction()
 
 # the purpose of this function is to ensure that (1) the output string is not

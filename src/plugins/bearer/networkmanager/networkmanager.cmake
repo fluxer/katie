@@ -29,5 +29,5 @@ set_target_properties(qnmbearerplugin PROPERTIES OUTPUT_NAME qnmbearer)
 
 install(
     TARGETS qnmbearerplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/bearer
+    DESTINATION ${QT_PLUGINS_PATH}/bearer
 )

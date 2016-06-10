@@ -50,4 +50,7 @@ set_target_properties(qwaylandplugin PROPERTIES OUTPUT_NAME qwayland)
 target_compile_definitions(qwaylandplugin ${WAYLANDPLUGIN_DEFINITIONS})
 target_include_directories(qwaylandplugin ${WAYLANDPLUGIN_INCLUDES})
 
-install(TARGETS qwaylandplugin DESTINATION ${QT_PLUGINS_PATH_INST}/platforms/)
+install(
+    TARGETS qwaylandplugin
+    DESTINATION ${QT_PLUGINS_PATH}/platforms
+)

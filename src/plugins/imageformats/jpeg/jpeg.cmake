@@ -10,5 +10,5 @@ set_target_properties(qjpegplugin PROPERTIES OUTPUT_NAME qjpeg)
 
 install(
     TARGETS qjpegplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats
+    DESTINATION ${QT_PLUGINS_PATH}/imageformats
 )

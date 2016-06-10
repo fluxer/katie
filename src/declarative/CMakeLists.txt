@@ -91,12 +91,12 @@ katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript KtXmlPatte
 install(
     TARGETS KtDeclarative
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH_INST}
+    DESTINATION ${QT_LIBRARIES_PATH}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    DESTINATION ${QT_HEADERS_PATH_INST}
+    DESTINATION ${QT_HEADERS_PATH}
     COMPONENT Devel
 )
 

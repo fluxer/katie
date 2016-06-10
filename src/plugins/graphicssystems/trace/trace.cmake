@@ -12,5 +12,5 @@ set_target_properties(qtracegraphicssystemplugin PROPERTIES OUTPUT_NAME qtracegr
 
 install(
     TARGETS qtracegraphicssystemplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/graphicssystems
+    DESTINATION ${QT_PLUGINS_PATH}/graphicssystems
 )

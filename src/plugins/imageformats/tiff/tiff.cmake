@@ -10,5 +10,5 @@ set_target_properties(qtiffplugin PROPERTIES OUTPUT_NAME qtiff)
 
 install(
     TARGETS qtiffplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats
+    DESTINATION ${QT_PLUGINS_PATH}/imageformats
 )

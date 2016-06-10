@@ -17,5 +17,5 @@ set_target_properties(qtgaplugin PROPERTIES OUTPUT_NAME qtga)
 
 install(
     TARGETS qtgaplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats
+    DESTINATION ${QT_PLUGINS_PATH}/imageformats
 )

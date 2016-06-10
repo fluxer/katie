@@ -19,9 +19,9 @@ target_link_libraries(qmlparticlesplugin ${EXTRA_PARTICLES_LIBS})
 
 install(
     TARGETS qmlparticlesplugin
-    DESTINATION ${QT_IMPORTS_PATH_INST}/Qt/labs/particles
+    DESTINATION ${QT_IMPORTS_PATH}/Qt/labs/particles
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/particles/qmldir
-    DESTINATION ${QT_IMPORTS_PATH_INST}/Qt/labs/particles
+    DESTINATION ${QT_IMPORTS_PATH}/Qt/labs/particles
 )

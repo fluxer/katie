@@ -15,5 +15,5 @@ set_target_properties(qicoplugin PROPERTIES OUTPUT_NAME qico)
 
 install(
     TARGETS qicoplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats
+    DESTINATION ${QT_PLUGINS_PATH}/imageformats
 )

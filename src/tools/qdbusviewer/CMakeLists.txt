@@ -49,7 +49,7 @@ set_target_properties(qdbusviewer PROPERTIES
 install(
     TARGETS qdbusviewer
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH_INST}
+    RUNTIME DESTINATION ${QT_BINARIES_PATH}
     COMPONENT Devel
 )
 
@@ -61,12 +61,12 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     )
     install(
         PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
-        DESTINATION ${APPLICATIONS_INSTALL_PATH_INST}
+        DESTINATION ${APPLICATIONS_INSTALL_PATH}
         COMPONENT Devel
     )
     install(
         FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
-        DESTINATION ${PIXMAPS_INSTALL_PATH_INST}
+        DESTINATION ${PIXMAPS_INSTALL_PATH}
         COMPONENT Devel
     )
 endif()

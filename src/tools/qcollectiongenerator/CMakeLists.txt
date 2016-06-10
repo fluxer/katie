@@ -40,6 +40,6 @@ set_target_properties(qcollectiongenerator PROPERTIES
 install(
     TARGETS qcollectiongenerator
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH_INST}
+    RUNTIME DESTINATION ${QT_BINARIES_PATH}
     COMPONENT Devel
 )

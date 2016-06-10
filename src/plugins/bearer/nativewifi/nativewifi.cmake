@@ -27,5 +27,5 @@ set_target_properties(qnativewifibearerplugin PROPERTIES OUTPUT_NAME qnativewifi
 
 install(
     TARGETS qnativewifibearerplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/bearer
+    DESTINATION ${QT_PLUGINS_PATH}/bearer
 )

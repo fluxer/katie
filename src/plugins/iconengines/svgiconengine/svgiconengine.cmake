@@ -18,5 +18,5 @@ set_target_properties(qsvgiconplugin PROPERTIES OUTPUT_NAME qsvgicon)
 
 install(
     TARGETS qsvgiconplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/iconengines
+    DESTINATION ${QT_PLUGINS_PATH}/iconengines
 )

@@ -10,5 +10,5 @@ set_target_properties(qmngplugin PROPERTIES OUTPUT_NAME qmng)
 
 install(
     TARGETS qmngplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/imageformats
+    DESTINATION ${QT_PLUGINS_PATH}/imageformats
 )

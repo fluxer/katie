@@ -83,7 +83,7 @@ macro(KATIE_DBUS_INTERFACE SRCIN)
 endmacro()
 
 macro(KATIE_TRANSLATIONS TRANSLATIONS)
-    if(NOT QT_TRANSLATIONS_PATH_INST)
+    if(NOT QT_TRANSLATIONS_PATH)
         message(SEND_ERROR "Directory where the translation should be installed is not set")
     endif()
     foreach(translation ${TRANSLATIONS} ${ARGN})
@@ -97,7 +97,7 @@ macro(KATIE_TRANSLATIONS TRANSLATIONS)
             COMMAND "${KATIE_LRELEASE}" "${translation}" -qm "${trout}"
         )
         file(WRITE ${trout} "This file exists only to keep the CMake logic straight")
-        install(FILES ${trout} DESTINATION ${QT_TRANSLATIONS_PATH_INST})
+        install(FILES ${trout} DESTINATION ${QT_TRANSLATIONS_PATH})
     endforeach()
 endmacro()
 

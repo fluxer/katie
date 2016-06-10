@@ -24,4 +24,7 @@ target_link_libraries(qtaccessiblewidgetsplugin KtCore KtGui)
 set_target_properties(qtaccessiblewidgetsplugin PROPERTIES OUTPUT_NAME qtaccessiblewidgets)
 target_include_directories(qtaccessiblewidgetsplugin PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/accessible/widgets)
 
-install(TARGETS qtaccessiblewidgetsplugin DESTINATION ${QT_PLUGINS_PATH_INST}/accessible/)
+install(
+    TARGETS qtaccessiblewidgetsplugin
+    DESTINATION ${QT_PLUGINS_PATH}/accessible
+)

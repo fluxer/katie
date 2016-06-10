@@ -30,5 +30,5 @@ target_include_directories(qconnmanbearerplugin PRIVATE ${CMAKE_CURRENT_SOURCE_D
 
 install(
     TARGETS qconnmanbearerplugin
-    DESTINATION ${QT_PLUGINS_PATH_INST}/bearer
+    DESTINATION ${QT_PLUGINS_PATH}/bearer
 )

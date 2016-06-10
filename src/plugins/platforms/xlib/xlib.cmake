@@ -94,4 +94,7 @@ set_target_properties(qxlibplugin PROPERTIES OUTPUT_NAME qxlib)
 target_link_libraries(qxlibplugin ${EXTRA_QXLIB_LIBS})
 target_include_directories(qxlibplugin PRIVATE ${QXLIBPLUGIN_INCLUDES})
 
-install(TARGETS qxlibplugin DESTINATION ${QT_PLUGINS_PATH_INST}/platforms/)
+install(
+    TARGETS qxlibplugin
+    DESTINATION ${QT_PLUGINS_PATH}/platforms
+)

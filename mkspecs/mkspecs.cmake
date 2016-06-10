@@ -111,7 +111,7 @@ if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
 endif()
 
 # misc paths, relevant mostly for UNIX-like platforms
-set(CMAKE_INSTALL_PATH "${QT_DATA_PATH}/cmake" CACHE PATH "CMake aware modules path")
+set(CMAKE_INSTALL_PATH "${QT_DATA_PATH}/cmake/Katie" CACHE PATH "CMake aware modules path")
 set(LDCONF_INSTALL_PATH "${QT_DATA_PATH}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs path (UNIX)")
 set(PROFILE_INSTALL_PATH "${QT_DATA_PATH}/profile.d" CACHE PATH "Shell profile scripts path (UNIX)")
 set(MAN_INSTALL_PATH "${QT_DATA_PATH}/man" CACHE PATH "Manual pages path (UNIX)")

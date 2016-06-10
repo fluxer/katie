@@ -19,4 +19,7 @@ add_library(qcorewlanbearerplugin ${KATIE_TYPE} ${QCOREWLANBEARERPLUGIN_SOURCES}
 set_target_properties(qcorewlanbearerplugin PROPERTIES OUTPUT_NAME qcorewlanbearer)
 set_target_properties(qcorewlanbearerplugin PROPERTIES LINK_FLAGS "-framework Foundation -framework SystemConfiguration -framework CoreWLAN -framework Security")
 
-install(TARGETS qcorewlanbearerplugin DESTINATION ${QT_PLUGINS_PATH_INST}/bearer/)
+install(
+    TARGETS qcorewlanbearerplugin
+    DESTINATION ${QT_PLUGINS_PATH}/bearer
+)

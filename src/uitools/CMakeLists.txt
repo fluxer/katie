@@ -74,12 +74,12 @@ katie_generate_package(KtUiTools "KtCore KtGui KtXml KtScript")
 install(
     TARGETS KtUiTools
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH_INST}
+    DESTINATION ${QT_LIBRARIES_PATH}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtUiTools
-    DESTINATION ${QT_HEADERS_PATH_INST}
+    DESTINATION ${QT_HEADERS_PATH}
     COMPONENT Devel
 )
 
