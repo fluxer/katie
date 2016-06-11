@@ -904,7 +904,7 @@ QByteArray &QByteArray::operator=(const QByteArray & other)
 {
     other.d->ref.ref();
     if (!d->ref.deref())
-        free(d);
+        freeData(d);
     d = other.d;
     return *this;
 }
@@ -933,7 +933,7 @@ QByteArray &QByteArray::operator=(const char *str)
     }
     x->ref.ref();
     if (!d->ref.deref())
-         free(d);
+         freeData(d);
     d = x;
     return *this;
 }
@@ -1425,7 +1425,7 @@ void QByteArray::resize(int size)
         Data *x = &shared_empty;
         x->ref.ref();
         if (!d->ref.deref())
-            free(d);
+            freeData(d);
         d = x;
     } else if (d == &shared_null) {
         //
@@ -1475,6 +1475,11 @@ QByteArray &QByteArray::fill(char ch, int size)
     return *this;
 }
 
+void QByteArray::freeData(Data *d)
+{
+    free(d);
+}
+
 void QByteArray::reallocData(int alloc)
 {
     if (d->ref != 1 || d->data != d->array) {
@@ -1487,7 +1492,7 @@ void QByteArray::reallocData(int alloc)
         x->alloc = alloc;
         x->data = x->array;
         if (!d->ref.deref())
-            free(d);
+            freeData(d);
         d = x;
     } else {
         Data *x = static_cast<Data *>(realloc(d, sizeof(Data) + alloc));
@@ -2743,7 +2748,7 @@ QByteArray QByteArray::toUpper() const
 void QByteArray::clear()
 {
     if (!d->ref.deref())
-        free(d);
+        freeData(d);
     d = &shared_null;
     d->ref.ref();
 }

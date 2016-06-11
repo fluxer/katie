@@ -342,6 +342,7 @@ private:
     static Data shared_empty;
     Data *d;
     QByteArray(Data *dd, int /*dummy*/, int /*dummy*/) : d(dd) {}
+    static void freeData(Data *);
     void reallocData(int alloc);
     void expand(int i);
     QByteArray nulTerminated() const;
@@ -355,7 +356,7 @@ public:
 };
 
 inline QByteArray::QByteArray(): d(&shared_null) { d->ref.ref(); }
-inline QByteArray::~QByteArray() { if (!d->ref.deref()) free(d); }
+inline QByteArray::~QByteArray() { if (!d->ref.deref()) freeData(d); }
 inline int QByteArray::size() const
 { return d->size; }
 
