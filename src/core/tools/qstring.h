@@ -187,9 +187,12 @@ public:
     int lastIndexOf(const QLatin1String &s, int from = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     int lastIndexOf(const QStringRef &s, int from = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
 
-    inline bool contains(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-    inline bool contains(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
-    inline bool contains(const QStringRef &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+    inline bool contains(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+        { return indexOf(c, 0, cs) != -1; }
+    inline bool contains(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+        { return indexOf(s, 0, cs) != -1; }
+    inline bool contains(const QStringRef &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+        { return indexOf(s, 0, cs) != -1; }
     int count(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     int count(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
     int count(const QStringRef &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
@@ -509,7 +512,7 @@ private:
     struct Data {
         QBasicAtomicInt ref;
         int alloc, size;
-        ushort *data; // QT5: put that after the bit field to fill alignment gap; don't use sizeof any more then
+        ushort *data;
         ushort capacity : 1;
         ushort array[1];
     };
@@ -751,7 +754,6 @@ public:
     char toLatin1() const { return QChar(*this).toLatin1(); }
     ushort unicode() const { return QChar(*this).unicode(); }
     ushort& unicode() { return s.data()[i].unicode(); }
-
 };
 
 inline void QCharRef::setRow(uchar arow) { QChar(*this).setRow(arow); }
@@ -779,12 +781,6 @@ inline QString::const_iterator QString::end() const
 { return reinterpret_cast<const QChar*>(d->data + d->size); }
 inline QString::const_iterator QString::constEnd() const
 { return reinterpret_cast<const QChar*>(d->data + d->size); }
-inline bool QString::contains(const QString &s, Qt::CaseSensitivity cs) const
-{ return indexOf(s, 0, cs) != -1; }
-inline bool QString::contains(const QStringRef &s, Qt::CaseSensitivity cs) const
-{ return indexOf(s, 0, cs) != -1; }
-inline bool QString::contains(QChar c, Qt::CaseSensitivity cs) const
-{ return indexOf(c, 0, cs) != -1; }
 
 
 inline bool operator==(QString::Null, QString::Null) { return true; }
