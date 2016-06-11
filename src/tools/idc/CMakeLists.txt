@@ -23,9 +23,6 @@ katie_setup_flags()
 
 add_executable(idc $<TARGET_OBJECTS:bootstrap> ${IDC_SOURCES} ${IDC_HEADERS})
 target_link_libraries(idc ${EXTRA_IDC_LIBS})
-set_target_properties(idc PROPERTIES
-    EXPORT_NAME idc
-)
 
 target_compile_definitions(idc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 

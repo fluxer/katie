@@ -16,21 +16,12 @@ katie_setup_flags()
 
 add_executable(qdbus ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.cpp)
 target_link_libraries(qdbus ${EXTRA_QDBUS_LIBS})
-set_target_properties(qdbus PROPERTIES
-    EXPORT_NAME qdbus
-)
 
 add_executable(qdbuscpp2xml ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscpp2xml.cpp)
 target_link_libraries(qdbuscpp2xml ${EXTRA_QDBUS_LIBS})
-set_target_properties(qdbuscpp2xml PROPERTIES
-    EXPORT_NAME qdbuscpp2xml
-)
 
 add_executable(qdbusxml2cpp ${CMAKE_CURRENT_SOURCE_DIR}/qdbusxml2cpp.cpp)
 target_link_libraries(qdbusxml2cpp ${EXTRA_QDBUS_LIBS})
-set_target_properties(qdbusxml2cpp PROPERTIES
-    EXPORT_NAME qdbusxml2cpp
-)
 
 install(
     TARGETS qdbus qdbuscpp2xml qdbusxml2cpp

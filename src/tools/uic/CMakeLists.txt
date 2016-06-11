@@ -50,9 +50,6 @@ katie_setup_flags()
 
 add_executable(uic ${UIC_SOURCES} ${UIC_HEADERS})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})
-set_target_properties(uic PROPERTIES
-    EXPORT_NAME uic
-)
 
 install(
     TARGETS uic

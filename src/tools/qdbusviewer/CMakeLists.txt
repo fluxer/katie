@@ -40,11 +40,11 @@ endif()
 katie_resources(${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_flags()
 
-add_executable(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
-target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
-set_target_properties(qdbusviewer PROPERTIES
-    EXPORT_NAME qdbusviewer
+add_executable(qdbusviewer
+    WIN32 MACOSX_BUNDLE
+    ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS}
 )
+target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
 
 install(
     TARGETS qdbusviewer

@@ -25,9 +25,6 @@ katie_setup_flags()
 
 add_executable(rcc ${RCC_SOURCES} ${RCC_HEADERS})
 target_link_libraries(rcc ${EXTRA_RCC_LIBS})
-set_target_properties(rcc PROPERTIES
-    EXPORT_NAME rcc
-)
 
 install(
     TARGETS rcc
