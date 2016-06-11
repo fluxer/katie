@@ -30,9 +30,6 @@ katie_setup_flags()
 
 add_executable(lrelease $<TARGET_OBJECTS:sharedlinguist> ${LRELEASE_SOURCES} ${LRELEASE_HEADERS})
 target_link_libraries(lrelease ${EXTRA_LRELEASE_LIBS})
-set_target_properties(lrelease PROPERTIES
-    EXPORT_NAME lrelease
-)
 
 install(
     TARGETS lrelease

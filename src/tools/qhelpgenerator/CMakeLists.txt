@@ -31,9 +31,6 @@ katie_setup_flags()
 
 add_executable(qhelpgenerator $<TARGET_OBJECTS:sharedhelp> ${QHELPGENERATOR_SOURCES} ${QHELPGENERATOR_HEADERS})
 target_link_libraries(qhelpgenerator ${EXTRA_QHELPGENERATOR_LIBS})
-set_target_properties(qhelpgenerator PROPERTIES
-    EXPORT_NAME qhelpgenerator
-)
 
 install(
     TARGETS qhelpgenerator

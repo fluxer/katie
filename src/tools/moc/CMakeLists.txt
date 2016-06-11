@@ -39,9 +39,6 @@ target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 add_executable(moc ${MOC_SOURCES} ${MOC_HEADERS})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
-set_target_properties(moc PROPERTIES
-    EXPORT_NAME moc
-)
 
 install(
     TARGETS moc

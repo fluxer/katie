@@ -33,9 +33,6 @@ katie_setup_flags()
 
 add_executable(qcollectiongenerator $<TARGET_OBJECTS:sharedhelp> ${QCOLLECTIONGENERATOR_SOURCES} ${QCOLLECTIONGENERATOR_HEADERS})
 target_link_libraries(qcollectiongenerator ${EXTRA_QCOLLECTIONGENERATOR_LIBS})
-set_target_properties(qcollectiongenerator PROPERTIES
-    EXPORT_NAME qcollectiongenerator
-)
 
 install(
     TARGETS qcollectiongenerator

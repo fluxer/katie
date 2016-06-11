@@ -30,9 +30,6 @@ katie_setup_flags()
 
 add_executable(lupdate $<TARGET_OBJECTS:sharedlinguist> ${LUPDATE_SOURCES} ${LUPDATE_HEADERS})
 target_link_libraries(lupdate ${EXTRA_LUPDATE_LIBS})
-set_target_properties(lupdate PROPERTIES
-    EXPORT_NAME lupdate
-)
 
 install(
     TARGETS lupdate
