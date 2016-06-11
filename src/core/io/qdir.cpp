@@ -669,7 +669,7 @@ QString QDir::filePath(const QString &fileName) const
 
     QString ret = d->dirEntry.filePath();
     if (!fileName.isEmpty()) {
-        if (!ret.isEmpty() && ret[(int)ret.length()-1] != QLatin1Char('/') && fileName[0] != QLatin1Char('/'))
+        if (!ret.isEmpty() && ret[ret.length()-1] != QLatin1Char('/') && fileName[0] != QLatin1Char('/'))
             ret += QLatin1Char('/');
         ret += fileName;
     }
