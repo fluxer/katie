@@ -254,27 +254,26 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     QString contentDir = theme.contentDir() + QLatin1Char('/');
     QList<QIconDirInfo> subDirs = theme.keyList();
 
-    const QString svgext(QLatin1String(".svg"));
-    const QString pngext(QLatin1String(".png"));
-
     // Add all relevant files
     for (int i = 0; i < subDirs.size() ; ++i) {
         const QIconDirInfo &dirInfo = subDirs.at(i);
-        QString subdir = dirInfo.path;
-        QDir currentDir(contentDir + subdir);
-        if (currentDir.exists(iconName + pngext)) {
+        const QString subDir = contentDir + dirInfo.path + QLatin1Char('/');
+        const QString pngPath = subDir + iconName + QLatin1String(".png");
+        if (QFile::exists(pngPath)) {
             PixmapEntry *iconEntry = new PixmapEntry;
             iconEntry->dir = dirInfo;
-            iconEntry->filename = currentDir.filePath(iconName + pngext);
+            iconEntry->filename = pngPath;
             // Notice we ensure that pixmap entries always come before
             // scalable to preserve search order afterwards
             entries.prepend(iconEntry);
-        } else if (m_supportsSvg &&
-            currentDir.exists(iconName + svgext)) {
-            ScalableEntry *iconEntry = new ScalableEntry;
-            iconEntry->dir = dirInfo;
-            iconEntry->filename = currentDir.filePath(iconName + svgext);
-            entries.append(iconEntry);
+        } else if (m_supportsSvg) {
+            const QString svgPath = subDir + iconName + QLatin1String(".svg");
+            if (QFile::exists(svgPath)) {
+                ScalableEntry *iconEntry = new ScalableEntry;
+                iconEntry->dir = dirInfo;
+                iconEntry->filename = svgPath;
+                entries.append(iconEntry);
+            }
         }
     }
 
