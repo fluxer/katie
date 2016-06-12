@@ -748,7 +748,7 @@ bool savePO(const Translator &translator, QIODevice &dev, ConversionData &cd)
     // Keep in sync with loadPO
     addPoHeader(headers, hdrOrder, "MIME-Version", QLatin1String("1.0"));
     addPoHeader(headers, hdrOrder, "Content-Type",
-                QLatin1String("text/plain; charset=" + out.codec()->name()));
+                QLatin1String("text/plain; charset=") + out.codec()->name());
     addPoHeader(headers, hdrOrder, "Content-Transfer-Encoding", QLatin1String("8bit"));
     if (!translator.languageCode().isEmpty()) {
         QLocale::Language l;

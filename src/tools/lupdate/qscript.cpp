@@ -2381,7 +2381,7 @@ case 73: {
 
 case 94: {
     if ((sym(1).type() == QVariant::String) || (sym(3).type() == QVariant::String))
-        sym(1) = sym(1).toString() + sym(3).toString();
+        sym(1) = QVariant(sym(1).toString() + sym(3).toString());
     else
         sym(1) = QVariant();
 } break;
