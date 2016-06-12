@@ -334,7 +334,6 @@ private:
     Node *detach_helper_grow(int i, int n);
     void detach_helper(int alloc);
     void detach_helper();
-    void freeData(QListData::Data *d);
 
     void node_construct(Node *n, const T &t);
     void node_destruct(Node *n);
@@ -421,8 +420,11 @@ Q_INLINE_TEMPLATE QList<T> &QList<T>::operator=(const QList<T> &l)
     if (d != l.d) {
         QListData::Data *o = l.d;
         o->ref.ref();
-        if (!d->ref.deref())
-            freeData(d);
+        if (!d->ref.deref()) {
+            node_destruct(reinterpret_cast<Node *>(d->array + d->begin),
+                          reinterpret_cast<Node *>(d->array + d->end));
+            free(d);
+        }
         d = o;
         if (!d->sharable)
             detach_helper();
@@ -710,8 +712,11 @@ Q_OUTOFLINE_TEMPLATE void QList<T>::detach_helper()
 template <typename T>
 Q_OUTOFLINE_TEMPLATE QList<T>::~QList()
 {
-    if (!d->ref.deref())
-        freeData(d);
+    if (!d->ref.deref()) {
+        node_destruct(reinterpret_cast<Node *>(d->array + d->begin),
+                      reinterpret_cast<Node *>(d->array + d->end));
+        free(d);
+    }
 }
 
 template <typename T>
@@ -731,15 +736,6 @@ Q_OUTOFLINE_TEMPLATE bool QList<T>::operator==(const QList<T> &l) const
     }
     return true;
 }
-
-template <typename T>
-Q_OUTOFLINE_TEMPLATE void QList<T>::freeData(QListData::Data *data)
-{
-    node_destruct(reinterpret_cast<Node *>(data->array + data->begin),
-                  reinterpret_cast<Node *>(data->array + data->end));
-    free(data);
-}
-
 
 template <typename T>
 Q_OUTOFLINE_TEMPLATE void QList<T>::clear()
