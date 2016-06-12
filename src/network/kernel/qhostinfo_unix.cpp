@@ -71,11 +71,6 @@ QT_END_NAMESPACE
 
 QT_BEGIN_NAMESPACE
 
-// Almost always the same. If not, specify in qplatformdefs.h.
-#if !defined(QT_SOCKOPTLEN_T)
-# define QT_SOCKOPTLEN_T QT_SOCKLEN_T
-#endif
-
 // HP-UXi has a bug in getaddrinfo(3) that makes it thread-unsafe
 // with this flag. So disable it in that platform.
 #if defined(AI_ADDRCONFIG) && !defined(Q_OS_HPUX)
