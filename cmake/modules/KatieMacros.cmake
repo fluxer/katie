@@ -96,7 +96,7 @@ macro(KATIE_TRANSLATIONS TRANSLATIONS)
             ${trname}_translation ALL
             COMMAND "${KATIE_LRELEASE}" "${translation}" -qm "${trout}"
         )
-        file(WRITE ${trout} "This file exists only to keep the CMake logic straight")
+        set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
         install(FILES ${trout} DESTINATION ${QT_TRANSLATIONS_PATH})
     endforeach()
 endmacro()
