@@ -480,7 +480,7 @@ QStringList QtFullToolBarManager::categories() const
 QList<QAction *> QtFullToolBarManager::categoryActions(const QString &category) const
 {
     QMap<QString, QList<QAction *> >::ConstIterator it =
-                d_ptr->categoryToActions.find(category);
+                d_ptr->categoryToActions.constFind(category);
     if (it != d_ptr->categoryToActions.constEnd())
         return it.value();
     return QList<QAction *>();
@@ -488,7 +488,7 @@ QList<QAction *> QtFullToolBarManager::categoryActions(const QString &category) 
 
 QString QtFullToolBarManager::actionCategory(QAction *action) const
 {
-    QMap<QAction *, QString>::ConstIterator it = d_ptr->actionToCategory.find(action);
+    QMap<QAction *, QString>::ConstIterator it = d_ptr->actionToCategory.constFind(action);
     if (it != d_ptr->actionToCategory.constEnd())
         return it.value();
     return QString();
@@ -1267,7 +1267,7 @@ void QtToolBarDialogPrivate::removeToolBar(ToolBarItem *item)
         wasCurrent = true;
     int row = ui.toolBarList->row(i);
     QMap<ToolBarItem *, QSet<QAction *> >::ConstIterator itToolBar =
-            toolBarToWidgetActions.find(item);
+            toolBarToWidgetActions.constFind(item);
     if (itToolBar != toolBarToWidgetActions.constEnd()) {
         QSet<QAction *> actions = itToolBar.value();
         QSetIterator<QAction *> itAction(actions);
