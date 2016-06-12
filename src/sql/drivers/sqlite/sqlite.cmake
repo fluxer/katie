@@ -19,8 +19,7 @@ else()
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite3)
 endif()
 
-katie_resources("${SQLDRIVER_SOURCES}")
-katie_resources("${SQLDRIVER_HEADERS}")
+katie_resources(${SQLDRIVER_SOURCES} ${SQLDRIVER_HEADERS})
 
 add_library(qsqlite ${KATIE_TYPE} ${SQLDRIVER_SOURCES} ${SQLDRIVER_HEADERS})
 if(SQLITE_FOUND)
@@ -31,5 +30,5 @@ endif()
 
 install(
     TARGETS qsqlite
-    DESTINATION ${QT_PLUGINS_PATH_INST}/sqldrivers
+    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
 )

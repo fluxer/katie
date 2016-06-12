@@ -11,13 +11,12 @@ set(MYSQLCDRIVER_SOURCES
 
 include_directories(${MYSQL_INCLUDES})
 
-katie_resources("${MYSQLCDRIVER_SOURCES}")
-katie_resources("${MYSQLCDRIVER_HEADERS}")
+katie_resources(${MYSQLCDRIVER_SOURCES} ${MYSQLCDRIVER_HEADERS})
 
 add_library(qsqlmysql ${KATIE_TYPE} ${MYSQLCDRIVER_SOURCES} ${MYSQLCDRIVER_HEADERS})
 target_link_libraries(qsqlmysql KtSql ${MYSQL_LIBRARIES})
 
 install(
     TARGETS qsqlmysql
-    DESTINATION ${QT_PLUGINS_PATH_INST}/sqldrivers
+    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
 )

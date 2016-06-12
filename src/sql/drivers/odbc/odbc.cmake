@@ -15,13 +15,12 @@ endif()
 
 include_directories(${ODBC_INCLUDES})
 
-katie_resources("${ODBCDRIVER_SOURCES}")
-katie_resources("${ODBCDRIVER_HEADERS}")
+katie_resources(${ODBCDRIVER_SOURCES} ${ODBCDRIVER_HEADERS})
 
 add_library(qsqlodbc ${KATIE_TYPE} ${ODBCDRIVER_SOURCES} ${ODBCDRIVER_HEADERS})
 target_link_libraries(qsqlodbc KtSql ${ODBC_LIBRARIES})
 
 install(
     TARGETS qsqlodbc
-    DESTINATION ${QT_PLUGINS_PATH_INST}/sqldrivers
+    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
 )

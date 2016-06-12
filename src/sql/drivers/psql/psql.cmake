@@ -11,13 +11,12 @@ set(PSQLDRIVER_SOURCES
 
 include_directories(${PostgreSQL_INCLUDE_DIRS})
 
-katie_resources("${PSQLDRIVER_SOURCES}")
-katie_resources("${PSQLDRIVER_HEADERS}")
+katie_resources(${PSQLDRIVER_SOURCES} ${PSQLDRIVER_HEADERS})
 
 add_library(qsqlpsql ${KATIE_TYPE} ${PSQLDRIVER_SOURCES} ${PSQLDRIVER_HEADERS})
 target_link_libraries(qsqlpsql KtSql ${PostgreSQL_LIBRARIES})
 
 install(
     TARGETS qsqlpsql
-    DESTINATION ${QT_PLUGINS_PATH_INST}/sqldrivers
+    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
 )

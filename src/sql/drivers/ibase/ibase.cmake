@@ -28,13 +28,12 @@ set(EXTRA_SQL_LIBS
     ${EXTRA_IBASEDRIVERS_LIBS}
 )
 
-katie_resources("${IBASEDRIVER_SOURCES}")
-katie_resources("${IBASEDRIVER_HEADERS}")
+katie_resources(${IBASEDRIVER_SOURCES} ${IBASEDRIVER_HEADERS})
 
 add_library(qsqlibase ${KATIE_TYPE} ${IBASEDRIVER_SOURCES} ${IBASEDRIVER_HEADERS})
 target_link_libraries(qsqlibase KtSql ${EXTRA_IBASEDRIVER_LIBS})
 
 install(
     TARGETS qsqlibase
-    DESTINATION ${QT_PLUGINS_PATH_INST}/sqldrivers
+    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
 )
