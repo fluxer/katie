@@ -370,14 +370,6 @@ void QColormap::initialize()
             // look for a specific visual or type of visual
             d->visual = find_visual(display, i, X11->visual_class, X11->visual_id,
                                     &d->depth, &d->defaultVisual);
-        } else if (QApplication::colorSpec() == QApplication::ManyColor) {
-            // look for a TrueColor w/ a depth higher than 8bpp
-            d->visual = find_visual(display, i, TrueColor, -1, &d->depth, &d->defaultVisual);
-            if (d->depth <= 8) {
-                d->visual = DefaultVisual(display, i);
-                d->defaultVisual = true;
-                color_count = 216;
-            }
         } else if (!X11->custom_cmap) {
             XStandardColormap *stdcmap = 0;
             int ncmaps = 0;

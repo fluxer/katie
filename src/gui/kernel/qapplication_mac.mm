@@ -2910,7 +2910,6 @@ bool QApplicationPrivate::qt_mac_apply_settings()
       doubleClickInterval    - int
       cursorFlashTime        - int
       wheelScrollLines       - int
-      colorSpec              - QString
       defaultCodec           - QString
       globalStrut/width      - int
       globalStrut/height     - int
@@ -3002,17 +3001,6 @@ bool QApplicationPrivate::qt_mac_apply_settings()
                             QApplication::wheelScrollLines()).toInt();
         QApplication::setWheelScrollLines(num);
 #endif
-
-        QString colorspec = settings.value(QLatin1String("colorSpec"),
-                                            QVariant(QLatin1String("default"))).toString();
-        if (colorspec == QLatin1String("normal"))
-            QApplication::setColorSpec(QApplication::NormalColor);
-        else if (colorspec == QLatin1String("custom"))
-            QApplication::setColorSpec(QApplication::CustomColor);
-        else if (colorspec == QLatin1String("many"))
-            QApplication::setColorSpec(QApplication::ManyColor);
-        else if (colorspec != QLatin1String("default"))
-            colorspec = QLatin1String("default");
 
         int w = settings.value(QLatin1String("globalStrut/width")).toInt();
         int h = settings.value(QLatin1String("globalStrut/height")).toInt();

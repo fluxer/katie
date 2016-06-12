@@ -126,9 +126,6 @@ public:
     static QStyle *style();
     static void setStyle(QStyle*);
     static QStyle *setStyle(const QString&);
-    enum ColorSpec { NormalColor=0, CustomColor=1, ManyColor=2 };
-    static int colorSpec();
-    static void setColorSpec(int);
     static void setGraphicsSystem(const QString &);
 
 #ifndef QT_NO_CURSOR
