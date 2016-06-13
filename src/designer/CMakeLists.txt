@@ -133,6 +133,7 @@ set_target_properties(KtDesigner PROPERTIES
 )
 
 katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
+katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser shareddeviceskin sharedfindwidget)
 
 install(
     TARGETS KtDesigner

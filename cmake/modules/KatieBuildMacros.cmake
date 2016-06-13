@@ -143,6 +143,17 @@ function(KATIE_SETUP_FLAGS)
     endif()
 endfunction()
 
+macro(KATIE_SETUP_OBJECT FORTARGET)
+    get_target_property(targets_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
+    if(CMAKE_POSITION_INDEPENDENT_CODE OR targets_pic)
+        foreach(objtarget ${ARGN})
+            set_target_properties(${objtarget} PROPERTIES
+                POSITION_INDEPENDENT_CODE TRUE
+            )
+        endforeach()
+    endif()
+endmacro()
+
 function(KATIE_SETUP_SOURCES SOURCESVAR)
     set(compilesources)
     foreach(source ${ARGN})

@@ -101,6 +101,7 @@ set_target_properties(KtDesignerComponents PROPERTIES
 )
 
 katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript")
+katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser sharedqtgradienteditor)
 
 install(
     TARGETS KtDesignerComponents
