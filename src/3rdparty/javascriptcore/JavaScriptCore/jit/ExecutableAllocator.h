@@ -254,11 +254,9 @@ inline ExecutablePool::ExecutablePool(size_t n)
 inline void* ExecutablePool::poolAllocate(size_t n)
 {
     size_t allocSize = roundUpAllocationSize(n, JIT_ALLOCATOR_PAGE_SIZE);
-    
+
     Allocation result = systemAlloc(allocSize);
-    if (!result.pages)
-        CRASH(); // Failed to allocate
-    
+
     ASSERT(m_end >= m_freePtr);
     if ((allocSize - n) > static_cast<size_t>(m_end - m_freePtr)) {
         // Replace allocation pool
