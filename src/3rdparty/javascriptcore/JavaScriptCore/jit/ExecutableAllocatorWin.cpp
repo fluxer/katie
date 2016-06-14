@@ -27,7 +27,7 @@
 
 #include "ExecutableAllocator.h"
 
-#if ENABLE(EXECUTABLE_ALLOCATOR_DEMAND) && OS(WINDOWS)
+#if OS(WINDOWS)
 
 #include "windows.h"
 

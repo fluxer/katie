@@ -117,7 +117,6 @@ int waitForThreadCompletion(ThreadIdentifier, void**);
 void detachThread(ThreadIdentifier);
 
 typedef QT_PREPEND_NAMESPACE(QMutex)* PlatformMutex;
-typedef void* PlatformReadWriteLock; // FIXME: Implement.
 typedef QT_PREPEND_NAMESPACE(QWaitCondition)* PlatformCondition;
     
 class Mutex : public Noncopyable {
@@ -136,23 +135,6 @@ private:
 };
 
 typedef Locker<Mutex> MutexLocker;
-
-class ReadWriteLock : public Noncopyable {
-public:
-    ReadWriteLock();
-    ~ReadWriteLock();
-
-    void readLock();
-    bool tryReadLock();
-
-    void writeLock();
-    bool tryWriteLock();
-    
-    void unlock();
-
-private:
-    PlatformReadWriteLock m_readWriteLock;
-};
 
 class ThreadCondition : public Noncopyable {
 public:
