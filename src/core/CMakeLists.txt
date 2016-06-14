@@ -243,6 +243,7 @@ set(CORE_PUBLIC_HEADERS
     QtPlugin
     # mixed
     QVariantMap
+    QVariantList
     QAbstractListModel
     QProcessEnvironment
     QModelIndex

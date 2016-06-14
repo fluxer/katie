@@ -377,6 +377,7 @@ set(GUI_PUBLIC_HEADERS
     QX11EmbedWidget
     # mixed
     QListWidgetItem
+    QTreeWidgetItem
     QStandardItem
     QCloseEvent
     QResizeEvent

@@ -35,8 +35,10 @@ set(XML_PUBLIC_HEADERS
     QXmlStreamReader
     QXmlStreamStringRef
     QXmlStreamWriter
-    # obsolete
+    # mixed
     QDomDocument
+    QDomElement
+    QDomNode
 )
 
 include(dom/dom.cmake)
