@@ -78,6 +78,7 @@ struct Q_CORE_EXPORT QListData {
 
     Data *detach(int alloc);
     Data *detach_grow(int *i, int n);
+    static void freeData(Data *);
     void reallocData(int alloc);
     static Data shared_null;
     Data *d;
@@ -715,7 +716,7 @@ Q_OUTOFLINE_TEMPLATE QList<T>::~QList()
     if (!d->ref.deref()) {
         node_destruct(reinterpret_cast<Node *>(d->array + d->begin),
                       reinterpret_cast<Node *>(d->array + d->end));
-        free(d);
+        QListData::freeData(d);
     }
 }
 

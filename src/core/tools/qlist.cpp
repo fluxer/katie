@@ -143,6 +143,14 @@ QListData::Data *QListData::detach(int alloc)
 }
 
 /*!
+ *  \internal
+ */
+void QListData::freeData(Data *data)
+{
+    free(data);
+}
+
+/*!
  *  Detaches the QListData by reallocating new memory.
  *  Returns the old (shared) data, it is up to the caller to deref() and free()
  *  For the new data node_copy needs to be called.
