@@ -151,8 +151,7 @@ void QNativeWifiEngine::scanComplete()
             if (network.strProfileName[0] != 0) {
                 networkName = QString::fromWCharArray(network.strProfileName);
             } else {
-                networkName = QByteArray(reinterpret_cast<char *>(network.dot11Ssid.ucSSID),
-                                         network.dot11Ssid.uSSIDLength);
+                networkName = QString::fromLatin1(reinterpret_cast<char *>(network.dot11Ssid.ucSSID));
             }
 
             const QString id = QString::number(qHash(QLatin1String("WLAN:") + networkName));
@@ -281,13 +280,13 @@ QString QNativeWifiEngine::getInterfaceFromId(const QString &id)
 
         if (qHash(QLatin1String("WLAN:") +
                   QString::fromWCharArray(connectionAttributes->strProfileName)) == id.toUInt()) {
-            QString guid("{%1-%2-%3-%4%5-%6%7%8%9%10%11}");
+            QString guid(QLatin1String("{%1-%2-%3-%4%5-%6%7%8%9%10%11}"));
 
-            guid = guid.arg(interface.InterfaceGuid.Data1, 8, 16, QChar('0'));
-            guid = guid.arg(interface.InterfaceGuid.Data2, 4, 16, QChar('0'));
-            guid = guid.arg(interface.InterfaceGuid.Data3, 4, 16, QChar('0'));
+            guid = guid.arg(interface.InterfaceGuid.Data1, 8, 16, QLatin1Char('0'));
+            guid = guid.arg(interface.InterfaceGuid.Data2, 4, 16, QLatin1Char('0'));
+            guid = guid.arg(interface.InterfaceGuid.Data3, 4, 16, QLatin1Char('0'));
             for (int i = 0; i < 8; ++i)
-                guid = guid.arg(interface.InterfaceGuid.Data4[i], 2, 16, QChar('0'));
+                guid = guid.arg(interface.InterfaceGuid.Data4[i], 2, 16, QLatin1Char('0'));
 
             local_WlanFreeMemory(connectionAttributes);
             local_WlanFreeMemory(interfaceList);
@@ -342,8 +341,7 @@ bool QNativeWifiEngine::hasIdentifier(const QString &id)
             if (network.strProfileName[0] != 0) {
                 networkName = QString::fromWCharArray(network.strProfileName);
             } else {
-                networkName = QByteArray(reinterpret_cast<char *>(network.dot11Ssid.ucSSID),
-                                         network.dot11Ssid.uSSIDLength);
+                networkName = QString::fromLatin1(reinterpret_cast<char *>(network.dot11Ssid.ucSSID));
             }
 
             if (qHash(QLatin1String("WLAN:") + networkName) == id.toUInt()) {
@@ -461,7 +459,7 @@ void QNativeWifiEngine::disconnectFromId(const QString &id)
         return;
     }
 
-    QStringList split = interface.mid(1, interface.length() - 2).split('-');
+    QStringList split = interface.mid(1, interface.length() - 2).split(QLatin1Char('-'));
 
     GUID guid;
     guid.Data1 = split.at(0).toUInt(0, 16);
