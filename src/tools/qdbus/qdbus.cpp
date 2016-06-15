@@ -294,7 +294,7 @@ static int placeCall(const QString &service, const QString &path, const QString 
                     proparg += interface;
                     proparg += member;
                     proparg += args.first();
-                    if (!placeCall(service, path, "org.freedesktop.DBus.Properties", "Set", proparg, false))
+                    if (!placeCall(service, path, QLatin1String("org.freedesktop.DBus.Properties"), QLatin1String("Set"), proparg, false))
                         return 0;
                 }
                 fprintf(stderr, "Cannot find '%s.%s' in object %s at %s\n",
@@ -390,7 +390,7 @@ static int placeCall(const QString &service, const QString &path, const QString 
             QStringList proparg;
             proparg += interface;
             proparg += member;
-            if (!placeCall(service, path, "org.freedesktop.DBus.Properties", "Get", proparg, false))
+            if (!placeCall(service, path, QLatin1String("org.freedesktop.DBus.Properties"), QLatin1String("Get"), proparg, false))
                 return 0;
         }
         if (err.type() == QDBusError::ServiceUnknown)
@@ -460,7 +460,7 @@ int main(int argc, char **argv)
             connectionOpened = true;
         } else if (arg == QLatin1String("--address")) {
             if (!args.isEmpty()) {
-                connection = QDBusConnection::connectToBus(args.takeFirst(), "bus");
+                connection = QDBusConnection::connectToBus(args.takeFirst(), QLatin1String("bus"));
                 connectionOpened = true;
             }
         } else if (arg == QLatin1String("--literal")) {

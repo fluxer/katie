@@ -189,7 +189,7 @@ private:
             queryHist.queries.append(query);
             foreach (const QHelpSearchQuery &queryPart, query) {
                 static_cast<CompleterModel *>(searchCompleter.model())->
-                        addTerm(queryPart.wordList.join(" "));
+                        addTerm(queryPart.wordList.join(QLatin1String(" ")));
             }
         }
     }
@@ -218,7 +218,7 @@ private:
             queryHist->queries.at(queryHist->curQuery);
         foreach (const QHelpSearchQuery &queryPart, query) {
             if (QLineEdit *lineEdit = lineEditFor(queryPart.fieldName))
-                lineEdit->setText(queryPart.wordList.join(" "));
+                lineEdit->setText(queryPart.wordList.join(QLatin1String(" ")));
         }
 
         if (queryHist->curQuery == maxOrMinIndex)

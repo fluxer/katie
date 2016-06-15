@@ -202,25 +202,25 @@ QOfonoModemInterface::~QOfonoModemInterface()
 
 bool QOfonoModemInterface::isPowered()
 {
-    QVariant var = getProperty("Powered");
+    QVariant var = getProperty(QLatin1String("Powered"));
     return qdbus_cast<bool>(var);
 }
 
 bool QOfonoModemInterface::isOnline()
 {
-    QVariant var = getProperty("Online");
+    QVariant var = getProperty(QLatin1String("Online"));
     return qdbus_cast<bool>(var);
 }
 
 QString QOfonoModemInterface::getName()
 {
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoModemInterface::getManufacturer()
 {
-    QVariant var = getProperty("Manufacturer");
+    QVariant var = getProperty(QLatin1String("Manufacturer"));
     return qdbus_cast<QString>(var);
 
 }
@@ -228,19 +228,19 @@ QString QOfonoModemInterface::getManufacturer()
 QString QOfonoModemInterface::getModel()
 {
 
-    QVariant var = getProperty("Model");
+    QVariant var = getProperty(QLatin1String("Model"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoModemInterface::getRevision()
 {
-    QVariant var = getProperty("Revision");
+    QVariant var = getProperty(QLatin1String("Revision"));
     return qdbus_cast<QString>(var);
 
 }
 QString QOfonoModemInterface::getSerial()
 {
-    QVariant var = getProperty("Serial");
+    QVariant var = getProperty(QLatin1String("Serial"));
     return qdbus_cast<QString>(var);
 
 }
@@ -248,13 +248,13 @@ QString QOfonoModemInterface::getSerial()
 QStringList QOfonoModemInterface::getFeatures()
 {
     //sms, sim
-    QVariant var = getProperty("Features");
+    QVariant var = getProperty(QLatin1String("Features"));
     return qdbus_cast<QStringList>(var);
 }
 
 QStringList QOfonoModemInterface::getInterfaces()
 {
-    QVariant var = getProperty("Interfaces");
+    QVariant var = getProperty(QLatin1String("Interfaces"));
     return qdbus_cast<QStringList>(var);
 }
 
@@ -341,46 +341,46 @@ QString QOfonoNetworkRegistrationInterface::getStatus()
                 "denied"        Registration has been denied
                 "unknown"       Status is unknown
                 "roaming"       Registered, but roaming*/
-    QVariant var = getProperty("Status");
+    QVariant var = getProperty(QLatin1String("Status"));
     return qdbus_cast<QString>(var);
 }
 
 quint16 QOfonoNetworkRegistrationInterface::getLac()
 {
-    QVariant var = getProperty("LocationAreaCode");
+    QVariant var = getProperty(QLatin1String("LocationAreaCode"));
     return var.value<quint16>();
 }
 
 
 quint32 QOfonoNetworkRegistrationInterface::getCellId()
 {
-    QVariant var = getProperty("CellId");
+    QVariant var = getProperty(QLatin1String("CellId"));
     return var.value<quint32>();
 }
 
 QString QOfonoNetworkRegistrationInterface::getTechnology()
 {
     // "gsm", "edge", "umts", "hspa","lte"
-    QVariant var = getProperty("Technology");
+    QVariant var = getProperty(QLatin1String("Technology"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoNetworkRegistrationInterface::getOperatorName()
 {
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 int QOfonoNetworkRegistrationInterface::getSignalStrength()
 {
-    QVariant var = getProperty("Strength");
+    QVariant var = getProperty(QLatin1String("Strength"));
     return qdbus_cast<int>(var);
 
 }
 
 QString QOfonoNetworkRegistrationInterface::getBaseStation()
 {
-    QVariant var = getProperty("BaseStation");
+    QVariant var = getProperty(QLatin1String("BaseStation"));
     return qdbus_cast<QString>(var);
 }
 
@@ -467,32 +467,32 @@ QOfonoNetworkOperatorInterface::~QOfonoNetworkOperatorInterface()
 
 QString QOfonoNetworkOperatorInterface::getName()
 {
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoNetworkOperatorInterface::getStatus()
 {
     // "unknown", "available", "current" and "forbidden"
-    QVariant var = getProperty("Status");
+    QVariant var = getProperty(QLatin1String("Status"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoNetworkOperatorInterface::getMcc()
 {
-    QVariant var = getProperty("MobileCountryCode");
+    QVariant var = getProperty(QLatin1String("MobileCountryCode"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoNetworkOperatorInterface::getMnc()
 {
-    QVariant var = getProperty("MobileNetworkCode");
+    QVariant var = getProperty(QLatin1String("MobileNetworkCode"));
     return qdbus_cast<QString>(var);
 }
 
 QStringList QOfonoNetworkOperatorInterface::getTechnologies()
 {
-    QVariant var = getProperty("Technologies");
+    QVariant var = getProperty(QLatin1String("Technologies"));
     return qdbus_cast<QStringList>(var);
 }
 
@@ -563,19 +563,19 @@ QOfonoSimInterface::~QOfonoSimInterface()
 
 bool QOfonoSimInterface::isPresent()
 {
-    QVariant var = getProperty("Present");
+    QVariant var = getProperty(QLatin1String("Present"));
     return qdbus_cast<bool>(var);
 }
 
 QString QOfonoSimInterface::getHomeMcc()
 {
-    QVariant var = getProperty("MobileCountryCode");
+    QVariant var = getProperty(QLatin1String("MobileCountryCode"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoSimInterface::getHomeMnc()
 {
-    QVariant var = getProperty("MobileNetworkCode");
+    QVariant var = getProperty(QLatin1String("MobileNetworkCode"));
     return qdbus_cast<QString>(var);
 }
 
@@ -583,19 +583,19 @@ QString QOfonoSimInterface::getHomeMnc()
 //    QMap<QString,QString> serviceNumbers();
 QString QOfonoSimInterface::pinRequired()
 {
-    QVariant var = getProperty("PinRequired");
+    QVariant var = getProperty(QLatin1String("PinRequired"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoSimInterface::lockedPins()
 {
-    QVariant var = getProperty("LockedPins");
+    QVariant var = getProperty(QLatin1String("LockedPins"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoSimInterface::cardIdentifier()
 {
-    QVariant var = getProperty("CardIdentifier");
+    QVariant var = getProperty(QLatin1String("CardIdentifier"));
     return qdbus_cast<QString>(var);
 }
 
@@ -680,19 +680,19 @@ QList<QDBusObjectPath> QOfonoDataConnectionManagerInterface::getPrimaryContexts(
 
 bool QOfonoDataConnectionManagerInterface::isAttached()
 {
-    QVariant var = getProperty("Attached");
+    QVariant var = getProperty(QLatin1String("Attached"));
     return qdbus_cast<bool>(var);
 }
 
 bool QOfonoDataConnectionManagerInterface::isRoamingAllowed()
 {
-    QVariant var = getProperty("RoamingAllowed");
+    QVariant var = getProperty(QLatin1String("RoamingAllowed"));
     return qdbus_cast<bool>(var);
 }
 
 bool QOfonoDataConnectionManagerInterface::isPowered()
 {
-    QVariant var = getProperty("Powered");
+    QVariant var = getProperty(QLatin1String("Powered"));
     return qdbus_cast<bool>(var);
 }
 
@@ -763,43 +763,43 @@ QOfonoPrimaryDataContextInterface::~QOfonoPrimaryDataContextInterface()
 
 bool QOfonoPrimaryDataContextInterface::isActive()
 {
-    QVariant var = getProperty("Active");
+    QVariant var = getProperty(QLatin1String("Active"));
     return qdbus_cast<bool>(var);
 }
 
 QString QOfonoPrimaryDataContextInterface::getApName()
 {
-    QVariant var = getProperty("AccessPointName");
+    QVariant var = getProperty(QLatin1String("AccessPointName"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoPrimaryDataContextInterface::getType()
 {
-    QVariant var = getProperty("Type");
+    QVariant var = getProperty(QLatin1String("Type"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoPrimaryDataContextInterface::getName()
 {
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 QVariantMap QOfonoPrimaryDataContextInterface::getSettings()
 {
-    QVariant var = getProperty("Settings");
+    QVariant var = getProperty(QLatin1String("Settings"));
     return qdbus_cast<QVariantMap>(var);
 }
 
 QString QOfonoPrimaryDataContextInterface::getInterface()
 {
-    QVariant var = getProperty("Interface");
+    QVariant var = getProperty(QLatin1String("Interface"));
     return qdbus_cast<QString>(var);
 }
 
 QString QOfonoPrimaryDataContextInterface::getAddress()
 {
-    QVariant var = getProperty("Address");
+    QVariant var = getProperty(QLatin1String("Address"));
     return qdbus_cast<QString>(var);
 }
 
@@ -807,12 +807,12 @@ bool QOfonoPrimaryDataContextInterface::setActive(bool on)
 {
 //    this->setProperty("Active", QVariant(on));
 
-    return setProp("Active", qVariantFromValue(on));
+    return setProp(QLatin1String("Active"), qVariantFromValue(on));
 }
 
 bool QOfonoPrimaryDataContextInterface::setApn(const QString &name)
 {
-    return setProp("AccessPointName", QVariant::fromValue(name));
+    return setProp(QLatin1String("AccessPointName"), QVariant::fromValue(name));
 }
 
 void QOfonoPrimaryDataContextInterface::connectNotify(const char *signal)

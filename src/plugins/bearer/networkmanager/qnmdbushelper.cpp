@@ -98,7 +98,7 @@ void QNmDBusHelper::slotPropertiesChanged(QMap<QString,QVariant> map)
     QMapIterator<QString, QVariant> i(map);
     while (i.hasNext()) {
         i.next();
-        if( i.key() == "State") { //state only applies to device interfaces
+        if( i.key() == QLatin1String("State")) { //state only applies to device interfaces
             quint32 state = i.value().toUInt();
             if( state == NM_DEVICE_STATE_ACTIVATED
                 || state == NM_DEVICE_STATE_DISCONNECTED
@@ -106,14 +106,14 @@ void QNmDBusHelper::slotPropertiesChanged(QMap<QString,QVariant> map)
                 || state == NM_DEVICE_STATE_FAILED) {
                 emit  pathForPropertiesChanged( msg.path(), map);
             }
-        } else if( i.key() == "ActiveAccessPoint") {
+        } else if( i.key() == QLatin1String("ActiveAccessPoint")) {
             emit pathForPropertiesChanged(msg.path(), map);
             //            qWarning()  << __PRETTY_FUNCTION__ << i.key() << ": " << i.value().value<QDBusObjectPath>().path();
             //      } else if( i.key() == "Strength")
             //            qWarning()  << __PRETTY_FUNCTION__ << i.key() << ": " << i.value().toUInt();
             //   else
             //            qWarning()  << __PRETTY_FUNCTION__ << i.key() << ": " << i.value();
-        } else if (i.key() == "ActiveConnections") {
+        } else if (i.key() == QLatin1String("ActiveConnections")) {
             emit pathForPropertiesChanged(msg.path(), map);
         }
     }

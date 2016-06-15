@@ -77,7 +77,7 @@ private:
 private slots:
     void initTestCase()
     {
-        QFile list(":/4.6.0-list.txt");
+        QFile list(QLatin1String(":/4.6.0-list.txt"));
         QVERIFY(list.open(QIODevice::ReadOnly | QIODevice::Text));
 
         QVERIFY(fs.createDirectory(prefix));

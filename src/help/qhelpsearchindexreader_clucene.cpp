@@ -283,8 +283,8 @@ bool QHelpSearchIndexReaderClucene::buildTryHarderQuery(
 
 bool QHelpSearchIndexReaderClucene::isNegativeQuery(const QHelpSearchQuery &query) const
 {
-    const QString &search = query.wordList.join(" ");
-    return search.contains('!') || search.contains('-')
+    const QString &search = query.wordList.join(QLatin1String(" "));
+    return search.contains(QLatin1Char('!')) || search.contains(QLatin1Char('-'))
             || search.contains(QLatin1String(" NOT "));
 }
 
@@ -293,11 +293,10 @@ bool QHelpSearchIndexReaderClucene::addFuzzyQuery(const QHelpSearchQuery &query,
     QCLuceneAnalyzer &analyzer)
 {
     bool queryIsValid = false;
-    const QLatin1String fuzzy("~");
     foreach (const QString &term, query.wordList) {
         if (!term.isEmpty()) {
             QCLuceneQuery *lQuery =
-                    QCLuceneQueryParser::parse(term + fuzzy, fieldName, analyzer);
+                    QCLuceneQueryParser::parse(term + QLatin1Char('~'), fieldName, analyzer);
             if (lQuery != 0) {
                 booleanQuery.add(lQuery, true, false, false);
                 queryIsValid = true;

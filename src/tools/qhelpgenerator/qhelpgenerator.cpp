@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
 
     if (showVersion) {
         fputs(qPrintable(QHG::tr("Qt Help Generator version 1.0 (Qt %1)\n")
-                         .arg(QT_VERSION_STR)), stdout);
+                         .arg(QLatin1String(QT_VERSION_STR))), stdout);
         return 0;
     }
 

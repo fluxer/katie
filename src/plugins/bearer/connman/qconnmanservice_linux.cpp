@@ -161,7 +161,7 @@ QVariantMap QConnmanManagerInterface::getProperties()
 
 QString QConnmanManagerInterface::getState()
 {
-    QDBusReply<QString > reply =  this->call("GetState");
+    QDBusReply<QString > reply =  this->call(QLatin1String("GetState"));
     return reply.value();
 }
 
@@ -277,43 +277,43 @@ QDBusObjectPath QConnmanManagerInterface::lookupService(const QString &service)
 
 QStringList QConnmanManagerInterface::getAvailableTechnologies()
 {
-    QVariant var = getProperty("AvailableTechnologies");
+    QVariant var = getProperty(QLatin1String("AvailableTechnologies"));
     return qdbus_cast<QStringList>(var);
 }
 
 QStringList QConnmanManagerInterface::getEnabledTechnologies()
 {
-    QVariant var = getProperty("EnabledTechnologies");
+    QVariant var = getProperty(QLatin1String("EnabledTechnologies"));
     return qdbus_cast<QStringList>(var);
 }
 
 QStringList QConnmanManagerInterface::getConnectedTechnologies()
 {
-    QVariant var = getProperty("ConnectedTechnologies");
+    QVariant var = getProperty(QLatin1String("ConnectedTechnologies"));
     return qdbus_cast<QStringList>(var);
 }
 
 QString QConnmanManagerInterface::getDefaultTechnology()
 {
-    QVariant var = getProperty("DefaultTechnology");
+    QVariant var = getProperty(QLatin1String("DefaultTechnology"));
     return qdbus_cast<QString>(var);
 }
 
 bool QConnmanManagerInterface::getOfflineMode()
 {
-    QVariant var = getProperty("OfflineMode");
+    QVariant var = getProperty(QLatin1String("OfflineMode"));
     return qdbus_cast<bool>(var);
 }
 
 QString QConnmanManagerInterface::getActiveProfile()
 {
-    QVariant var = getProperty("ActiveProfile");
+    QVariant var = getProperty(QLatin1String("ActiveProfile"));
     return qdbus_cast<QString>(var);
 }
 
 QStringList QConnmanManagerInterface::getProfiles()
 {
-    QVariant var = getProperty("Profiles");
+    QVariant var = getProperty(QLatin1String("Profiles"));
     return qdbus_cast<QStringList>(var);
 }
 
@@ -327,7 +327,7 @@ QStringList QConnmanManagerInterface::getTechnologies()
         }
     } else {
         // try for older version
-        QVariant var = getProperty("Technologies");
+        QVariant var = getProperty(QLatin1String("Technologies"));
         if (!var.isNull()) {
             list = qdbus_cast<QStringList>(var);
         }
@@ -345,7 +345,7 @@ QStringList QConnmanManagerInterface::getServices()
         }
     } else {
         // try for older version
-        QVariant var = getProperty("Services");
+        QVariant var = getProperty(QLatin1String("Services"));
         if (!var.isNull()) {
             list = qdbus_cast<QStringList>(var);
         }
@@ -360,7 +360,7 @@ QString QConnmanManagerInterface::getPathForTechnology(const QString &name)
             return path;
         }
     }
-    return "";
+    return QLatin1String("");
 }
 
 
@@ -415,19 +415,19 @@ QVariant QConnmanProfileInterface::getProperty(const QString &property)
 QString QConnmanProfileInterface::getName()
 {
 
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 bool QConnmanProfileInterface::isOfflineMode()
 {
-    QVariant var = getProperty("OfflineMode");
+    QVariant var = getProperty(QLatin1String("OfflineMode"));
     return qdbus_cast<bool>(var);
 }
 
 QStringList QConnmanProfileInterface::getServices()
 {
-    QVariant var = getProperty("Services");
+    QVariant var = getProperty(QLatin1String("Services"));
     return qdbus_cast<QStringList>(var);
 }
 
@@ -517,139 +517,139 @@ void QConnmanServiceInterface::remove()
 // properties
 QString QConnmanServiceInterface::getState()
 {
-    QVariant var = getProperty("State");
+    QVariant var = getProperty(QLatin1String("State"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getError()
 {
-    QVariant var = getProperty("Error");
+    QVariant var = getProperty(QLatin1String("Error"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getName()
 {
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getType()
 {
-    QVariant var = getProperty("Type");
+    QVariant var = getProperty(QLatin1String("Type"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getMode()
 {
-    QVariant var = getProperty("Mode");
+    QVariant var = getProperty(QLatin1String("Mode"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getSecurity()
 {
-    QVariant var = getProperty("Security");
+    QVariant var = getProperty(QLatin1String("Security"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getPassphrase()
 {
-    QVariant var = getProperty("Passphrase");
+    QVariant var = getProperty(QLatin1String("Passphrase"));
     return qdbus_cast<QString>(var);
 }
 
 bool QConnmanServiceInterface::isPassphraseRequired()
 {
-    QVariant var = getProperty("PassphraseRequired");
+    QVariant var = getProperty(QLatin1String("PassphraseRequired"));
     return qdbus_cast<bool>(var);
 }
 
 quint8 QConnmanServiceInterface::getSignalStrength()
 {
-    QVariant var = getProperty("Strength");
+    QVariant var = getProperty(QLatin1String("Strength"));
     return qdbus_cast<quint8>(var);
 }
 
 bool QConnmanServiceInterface::isFavorite()
 {
-    QVariant var = getProperty("Favorite");
+    QVariant var = getProperty(QLatin1String("Favorite"));
     return qdbus_cast<bool>(var);
 }
 
 bool QConnmanServiceInterface::isImmutable()
 {
-    QVariant var = getProperty("Immutable");
+    QVariant var = getProperty(QLatin1String("Immutable"));
     return qdbus_cast<bool>(var);
 }
 
 bool QConnmanServiceInterface::isAutoConnect()
 {
-    QVariant var = getProperty("AutoConnect");
+    QVariant var = getProperty(QLatin1String("AutoConnect"));
     return qdbus_cast<bool>(var);
 }
 
 bool QConnmanServiceInterface::isSetupRequired()
 {
-    QVariant var = getProperty("SetupRequired");
+    QVariant var = getProperty(QLatin1String("SetupRequired"));
     return qdbus_cast<bool>(var);
 }
 
 QString QConnmanServiceInterface::getAPN()
 {
-    QVariant var = getProperty("APN");
+    QVariant var = getProperty(QLatin1String("APN"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getMCC()
 {
-    QVariant var = getProperty("MCC");
+    QVariant var = getProperty(QLatin1String("MCC"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanServiceInterface::getMNC()
 {
-    QVariant var = getProperty("MNC");
+    QVariant var = getProperty(QLatin1String("MNC"));
     return qdbus_cast<QString>(var);
 }
 
 bool QConnmanServiceInterface::isRoaming()
 {
-    QVariant var = getProperty("Roaming");
+    QVariant var = getProperty(QLatin1String("Roaming"));
     return qdbus_cast<bool>(var);
 }
 
 QStringList QConnmanServiceInterface::getNameservers()
 {
-    QVariant var = getProperty("NameServers");
+    QVariant var = getProperty(QLatin1String("NameServers"));
     return qdbus_cast<QStringList>(var);
 }
 
 QStringList QConnmanServiceInterface::getDomains()
 {
-    QVariant var = getProperty("Domains");
+    QVariant var = getProperty(QLatin1String("Domains"));
     return qdbus_cast<QStringList>(var);
 }
 
 QVariantMap QConnmanServiceInterface::getIPv4()
 {
-    QVariant var = getProperty("IPv4");
+    QVariant var = getProperty(QLatin1String("IPv4"));
     return qdbus_cast<QVariantMap >(var);
 }
 
 QVariantMap QConnmanServiceInterface::getIPv4Configuration()
 {
-    QVariant var = getProperty("IPv4.Configuration");
+    QVariant var = getProperty(QLatin1String("IPv4.Configuration"));
     return qdbus_cast<QVariantMap >(var);
 }
 
 QVariantMap QConnmanServiceInterface::getProxy()
 {
-    QVariant var = getProperty("Proxy");
+    QVariant var = getProperty(QLatin1String("Proxy"));
     return qdbus_cast<QVariantMap >(var);
 }
 
 QVariantMap QConnmanServiceInterface::getEthernet()
 {
-    QVariant var = getProperty("Ethernet");
+    QVariant var = getProperty(QLatin1String("Ethernet"));
     return qdbus_cast<QVariantMap >(var);
 }
 
@@ -660,7 +660,7 @@ QString QConnmanServiceInterface::getMethod()
     QMapIterator<QString,QVariant> it(map);
     while(it.hasNext()) {
         it.next();
-        if(it.key() == "Method") {
+        if(it.key() == QLatin1String("Method")) {
             return it.value().toString();
         }
     }
@@ -675,7 +675,7 @@ QString QConnmanServiceInterface::getInterface()
     QMapIterator<QString,QVariant> it(map);
     while(it.hasNext()) {
         it.next();
-        if(it.key() == "Interface") {
+        if(it.key() == QLatin1String("Interface")) {
             return it.value().toString();
         }
     }
@@ -691,7 +691,7 @@ QString QConnmanServiceInterface::getMacAddress()
     QMapIterator<QString,QVariant> it(map);
     while(it.hasNext()) {
         it.next();
-        if(it.key() == "Address") {
+        if(it.key() == QLatin1String("Address")) {
             return it.value().toString();
         }
     }
@@ -707,7 +707,7 @@ quint16 QConnmanServiceInterface::getMtu()
     QMapIterator<QString,QVariant> it(map);
     while(it.hasNext()) {
         it.next();
-        if(it.key() == "MTU") {
+        if(it.key() == QLatin1String("MTU")) {
             return it.value().toUInt();
         }
     }
@@ -723,7 +723,7 @@ quint16 QConnmanServiceInterface::getSpeed()
     QMapIterator<QString,QVariant> it(map);
     while(it.hasNext()) {
         it.next();
-        if(it.key() == "Speed") {
+        if(it.key() == QLatin1String("Speed")) {
             return it.value().toUInt();
         }
     }
@@ -738,7 +738,7 @@ QString QConnmanServiceInterface::getDuplex()
     QMapIterator<QString,QVariant> it(map);
     while(it.hasNext()) {
         it.next();
-        if(it.key() == "Duplex") {
+        if(it.key() == QLatin1String("Duplex")) {
             return it.value().toString();
         }
     }
@@ -748,13 +748,13 @@ QString QConnmanServiceInterface::getDuplex()
 
 bool QConnmanServiceInterface::isOfflineMode()
 {
-    QVariant var = getProperty("OfflineMode");
+    QVariant var = getProperty(QLatin1String("OfflineMode"));
     return qdbus_cast<bool>(var);
 }
 
 QStringList QConnmanServiceInterface::getServices()
 {
-    QVariant var = getProperty("Services");
+    QVariant var = getProperty(QLatin1String("Services"));
     return qdbus_cast<QStringList>(var);
 }
 
@@ -822,19 +822,19 @@ QVariant QConnmanTechnologyInterface::getProperty(const QString &property)
 // properties
 QString QConnmanTechnologyInterface::getState()
 {
-    QVariant var = getProperty("State");
+    QVariant var = getProperty(QLatin1String("State"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanTechnologyInterface::getName()
 {
-    QVariant var = getProperty("Name");
+    QVariant var = getProperty(QLatin1String("Name"));
     return qdbus_cast<QString>(var);
 }
 
 QString QConnmanTechnologyInterface::getType()
 {
-    QVariant var = getProperty("Type");
+    QVariant var = getProperty(QLatin1String("Type"));
     return qdbus_cast<QString>(var);
 }
 

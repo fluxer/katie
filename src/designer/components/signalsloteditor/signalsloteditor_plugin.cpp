@@ -72,7 +72,7 @@ void SignalSlotEditorPlugin::initialize(QDesignerFormEditorInterface *core)
     m_action = new QAction(tr("Edit Signals/Slots"), this);
     m_action->setObjectName(QLatin1String("__qt_edit_signals_slots_action"));
     m_action->setShortcut(tr("F4"));
-    QIcon icon = QIcon::fromTheme("designer-edit-signals",
+    QIcon icon = QIcon::fromTheme(QLatin1String("designer-edit-signals"),
                                   QIcon(core->resourceLocation() + QLatin1String("/signalslottool.png")));
     m_action->setIcon(icon);
     m_action->setEnabled(false);

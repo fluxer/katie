@@ -203,13 +203,13 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
       m_previewManager(0)
 {
 #ifdef Q_WS_X11
-    m_newFormAction->setIcon(QIcon::fromTheme("document-new", m_newFormAction->icon()));
-    m_openFormAction->setIcon(QIcon::fromTheme("document-open", m_openFormAction->icon()));
-    m_saveFormAction->setIcon(QIcon::fromTheme("document-save", m_saveFormAction->icon()));
-    m_saveFormAsAction->setIcon(QIcon::fromTheme("document-save-as", m_saveFormAsAction->icon()));
-    m_printPreviewAction->setIcon(QIcon::fromTheme("document-print", m_printPreviewAction->icon()));
-    m_closeFormAction->setIcon(QIcon::fromTheme("window-close", m_closeFormAction->icon()));
-    m_quitAction->setIcon(QIcon::fromTheme("application-exit", m_quitAction->icon()));
+    m_newFormAction->setIcon(QIcon::fromTheme(QLatin1String("document-new"), m_newFormAction->icon()));
+    m_openFormAction->setIcon(QIcon::fromTheme(QLatin1String("document-open"), m_openFormAction->icon()));
+    m_saveFormAction->setIcon(QIcon::fromTheme(QLatin1String("document-save"), m_saveFormAction->icon()));
+    m_saveFormAsAction->setIcon(QIcon::fromTheme(QLatin1String("document-save-as"), m_saveFormAsAction->icon()));
+    m_printPreviewAction->setIcon(QIcon::fromTheme(QLatin1String("document-print"), m_printPreviewAction->icon()));
+    m_closeFormAction->setIcon(QIcon::fromTheme(QLatin1String("window-close"), m_closeFormAction->icon()));
+    m_quitAction->setIcon(QIcon::fromTheme(QLatin1String("application-exit"), m_quitAction->icon()));
 #endif
 
     Q_ASSERT(m_core != 0);
@@ -343,7 +343,7 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
 #endif
     m_editWidgetsAction->setShortcuts(shortcuts);
     QIcon fallback(m_core->resourceLocation() + QLatin1String("/widgettool.png"));
-    m_editWidgetsAction->setIcon(QIcon::fromTheme("designer-edit-widget", fallback));
+    m_editWidgetsAction->setIcon(QIcon::fromTheme(QLatin1String("designer-edit-widget"), fallback));
     connect(m_editWidgetsAction, SIGNAL(triggered()), this, SLOT(editWidgetsSlot()));
     m_editWidgetsAction->setChecked(true);
     m_editWidgetsAction->setEnabled(false);
@@ -516,13 +516,13 @@ QAction *QDesignerActions::createRecentFilesMenu()
     }
     updateRecentFileActions();
     menu->addSeparator();
-    act = new QAction(QIcon::fromTheme("edit-clear"), tr("Clear &Menu"), this);
+    act = new QAction(QIcon::fromTheme(QLatin1String("edit-clear")), tr("Clear &Menu"), this);
     act->setObjectName(QLatin1String("__qt_action_clear_menu_"));
     connect(act, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
     m_recentFilesActions->addAction(act);
     menu->addAction(act);
 
-    act = new QAction(QIcon::fromTheme("document-open-recent"), tr("&Recent Forms"), this);
+    act = new QAction(QIcon::fromTheme(QLatin1String("document-open-recent")), tr("&Recent Forms"), this);
     act->setMenu(menu);
     return act;
 }

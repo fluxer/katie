@@ -445,7 +445,7 @@ void FormWindowManager::setupActions()
     m_actionVerticalLayout->setEnabled(false);
     connect(m_actionVerticalLayout, SIGNAL(triggered()), this, SLOT(createLayout()));
 
-    QIcon formIcon = QIcon::fromTheme("designer-form-layout", createIconSet(QLatin1String("editform.png")));
+    QIcon formIcon = QIcon::fromTheme(QLatin1String("designer-form-layout"), createIconSet(QLatin1String("editform.png")));
     QAction *actionFormLayout = new QAction(formIcon, tr("Lay Out in a &Form Layout"), this);
     actionFormLayout->setObjectName(QLatin1String("__qt_form_layout_action"));
     actionFormLayout->setShortcut(Qt::CTRL + Qt::Key_6);
@@ -514,10 +514,10 @@ void FormWindowManager::setupActions()
     m_actionUndo = m_undoGroup->createUndoAction(this);
     m_actionUndo->setEnabled(false);
 
-    m_actionUndo->setIcon(QIcon::fromTheme("edit-undo", createIconSet(QLatin1String("undo.png"))));
+    m_actionUndo->setIcon(QIcon::fromTheme(QLatin1String("edit-undo"), createIconSet(QLatin1String("undo.png"))));
     m_actionRedo = m_undoGroup->createRedoAction(this);
     m_actionRedo->setEnabled(false);
-    m_actionRedo->setIcon(QIcon::fromTheme("edit-redo", createIconSet(QLatin1String("redo.png"))));
+    m_actionRedo->setIcon(QIcon::fromTheme(QLatin1String("edit-redo"), createIconSet(QLatin1String("redo.png"))));
 
     m_actionShowFormWindowSettingsDialog = new QAction(tr("Form &Settings..."), this);
     m_actionShowFormWindowSettingsDialog->setObjectName(QLatin1String("__qt_form_settings_action"));
@@ -525,19 +525,19 @@ void FormWindowManager::setupActions()
     m_actionShowFormWindowSettingsDialog->setEnabled(false);
 
 #ifdef Q_WS_X11
-    m_actionCopy->setIcon(QIcon::fromTheme("edit-copy", m_actionCopy->icon()));
-    m_actionCut->setIcon(QIcon::fromTheme("edit-cut", m_actionCut->icon()));
-    m_actionPaste->setIcon(QIcon::fromTheme("edit-paste", m_actionPaste->icon()));
-    m_actionDelete->setIcon(QIcon::fromTheme("edit-delete", m_actionDelete->icon()));
+    m_actionCopy->setIcon(QIcon::fromTheme(QLatin1String("edit-copy"), m_actionCopy->icon()));
+    m_actionCut->setIcon(QIcon::fromTheme(QLatin1String("edit-cut"), m_actionCut->icon()));
+    m_actionPaste->setIcon(QIcon::fromTheme(QLatin1String("edit-paste"), m_actionPaste->icon()));
+    m_actionDelete->setIcon(QIcon::fromTheme(QLatin1String("edit-delete"), m_actionDelete->icon()));
 
     // These do not currently exist, but will allow theme authors to fill in the gaps
-    m_actionBreakLayout->setIcon(QIcon::fromTheme("designer-break-layout", m_actionBreakLayout->icon()));
-    m_actionGridLayout->setIcon(QIcon::fromTheme("designer-grid-layout", m_actionGridLayout->icon()));
-    m_actionHorizontalLayout->setIcon(QIcon::fromTheme("designer-horizontal-layout", m_actionHorizontalLayout->icon()));
-    m_actionVerticalLayout->setIcon(QIcon::fromTheme("designer-vertical-layout", m_actionVerticalLayout->icon()));
-    m_actionSplitHorizontal->setIcon(QIcon::fromTheme("designer-split-horizontal", m_actionSplitHorizontal->icon()));
-    m_actionSplitVertical->setIcon(QIcon::fromTheme("designer-split-vertical", m_actionSplitVertical->icon()));
-    m_actionAdjustSize->setIcon(QIcon::fromTheme("designer-adjust-size", m_actionAdjustSize->icon()));
+    m_actionBreakLayout->setIcon(QIcon::fromTheme(QLatin1String("designer-break-layout"), m_actionBreakLayout->icon()));
+    m_actionGridLayout->setIcon(QIcon::fromTheme(QLatin1String("designer-grid-layout"), m_actionGridLayout->icon()));
+    m_actionHorizontalLayout->setIcon(QIcon::fromTheme(QLatin1String("designer-horizontal-layout"), m_actionHorizontalLayout->icon()));
+    m_actionVerticalLayout->setIcon(QIcon::fromTheme(QLatin1String("designer-vertical-layout"), m_actionVerticalLayout->icon()));
+    m_actionSplitHorizontal->setIcon(QIcon::fromTheme(QLatin1String("designer-split-horizontal"), m_actionSplitHorizontal->icon()));
+    m_actionSplitVertical->setIcon(QIcon::fromTheme(QLatin1String("designer-split-vertical"), m_actionSplitVertical->icon()));
+    m_actionAdjustSize->setIcon(QIcon::fromTheme(QLatin1String("designer-adjust-size"), m_actionAdjustSize->icon()));
 #endif
 }
 

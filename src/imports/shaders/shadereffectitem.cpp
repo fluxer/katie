@@ -807,10 +807,10 @@ void ShaderEffectItem::updateProperties()
     QString fragmentCode = m_fragment_code;
 
     if (vertexCode.isEmpty())
-        vertexCode = qt_default_vertex_code;
+        vertexCode = QString::fromLatin1(qt_default_vertex_code);
 
     if (fragmentCode.isEmpty())
-        fragmentCode = qt_default_fragment_code;
+        fragmentCode = QString::fromLatin1(qt_default_fragment_code);
 
     lookThroughShaderCode(vertexCode);
     lookThroughShaderCode(fragmentCode);

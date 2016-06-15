@@ -72,7 +72,7 @@ void TabOrderEditorPlugin::initialize(QDesignerFormEditorInterface *core)
 
     m_action = new QAction(tr("Edit Tab Order"), this);
     m_action->setObjectName(QLatin1String("_qt_edit_tab_order_action"));
-    QIcon icon = QIcon::fromTheme("designer-edit-tabs",
+    QIcon icon = QIcon::fromTheme(QLatin1String("designer-edit-tabs"),
                                   QIcon(core->resourceLocation() + QLatin1String("/tabordertool.png")));
     m_action->setIcon(icon);
     m_action->setEnabled(false);

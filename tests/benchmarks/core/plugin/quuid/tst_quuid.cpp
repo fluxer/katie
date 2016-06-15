@@ -91,7 +91,7 @@ void tst_bench_QUuid::toString()
 
 void tst_bench_QUuid::fromString()
 {
-    QString string = "{67C8770B-44F1-410A-AB9A-F9B5446F13EE}";
+    QString string = QLatin1String("{67C8770B-44F1-410A-AB9A-F9B5446F13EE}");
     QBENCHMARK {
         QUuid uuid(string);
     }

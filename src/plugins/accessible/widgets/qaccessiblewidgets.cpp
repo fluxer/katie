@@ -1520,58 +1520,59 @@ QString QAccessibleTextWidget::attributes(int offset, int *startOffset, int *end
 
     QString family = charFormat.fontFamily();
     if (!family.isEmpty()) {
-        family = family.replace('\\',"\\\\");
-        family = family.replace(':',"\\:");
-        family = family.replace(',',"\\,");
-        family = family.replace('=',"\\=");
-        family = family.replace(';',"\\;");
-        family = family.replace('\"',"\\\"");
-        attrs["font-family"] = '"'+family+'"';
+        family = family.replace(QLatin1Char('\\'), QLatin1String("\\\\"));
+        family = family.replace(QLatin1Char(':'), QLatin1String("\\:"));
+        family = family.replace(QLatin1Char(','), QLatin1String("\\,"));
+        family = family.replace(QLatin1Char('='), QLatin1String("\\="));
+        family = family.replace(QLatin1Char(';'), QLatin1String("\\;"));
+        family = family.replace(QLatin1Char('\"'), QLatin1String("\\\""));
+        attrs[QLatin1String("font-family")] = QLatin1Char('"') + family + QLatin1Char('"');
     }
 
     int fontSize = int(charFormat.fontPointSize());
     if (fontSize)
-        attrs["font-size"] = QString::number(fontSize).append("pt");
+        attrs[QLatin1String("font-size")] = QString::number(fontSize).append(QLatin1String("pt"));
 
     //Different weight values are not handled
-    attrs["font-weight"] = (charFormat.fontWeight() > QFont::Normal) ? "bold" : "normal";
+    attrs[QLatin1String("font-weight")] = (charFormat.fontWeight() > QFont::Normal) ? QLatin1String("bold") : QLatin1String("normal");
 
     QFont::Style style = charFormat.font().style();
-    attrs["font-style"] = (style == QFont::StyleItalic) ? "italic" : ((style == QFont::StyleOblique) ? "oblique": "normal");
+    attrs[QLatin1String("font-style")] = (style == QFont::StyleItalic) ? QLatin1String("italic") : ((style == QFont::StyleOblique) ? QLatin1String("oblique"): QLatin1String("normal"));
 
-    attrs["text-underline-style"] = charFormat.font().underline() ? "solid" : "none";
+    attrs[QLatin1String("text-underline-style")] = charFormat.font().underline() ? QLatin1String("solid") : QLatin1String("none");
 
     QTextCharFormat::VerticalAlignment alignment = charFormat.verticalAlignment();
-    attrs["text-position"] = (alignment == QTextCharFormat::AlignSubScript) ? "sub" : ((alignment == QTextCharFormat::AlignSuperScript) ? "super" : "baseline" );
+    attrs[QLatin1String("text-position")] = (alignment == QTextCharFormat::AlignSubScript) ? QLatin1String("sub") : ((alignment == QTextCharFormat::AlignSuperScript) ? QLatin1String("super") : QLatin1String("baseline") );
 
     QBrush background = charFormat.background();
+    QString rgbString = QString::fromLatin1("rgb(%1,%2,%3)").arg(background.color().red()).arg(background.color().green()).arg(background.color().blue());
     if (background.style() == Qt::SolidPattern) {
-        attrs["background-color"] = QString("rgb(%1,%2,%3)").arg(background.color().red()).arg(background.color().green()).arg(background.color().blue());
+        attrs[QLatin1String("background-color")] = rgbString;
     }
 
     QBrush foreground = charFormat.foreground();
     if (foreground.style() == Qt::SolidPattern) {
-        attrs["color"] = QString("rgb(%1,%2,%3)").arg(foreground.color().red()).arg(foreground.color().green()).arg(foreground.color().blue());
+        attrs[QLatin1String("color")] = rgbString;
     }
 
     switch (blockFormat.alignment() & (Qt::AlignLeft | Qt::AlignRight | Qt::AlignHCenter | Qt::AlignJustify)) {
     case Qt::AlignLeft:
-        attrs["text-align"] = "left";
+        attrs[QLatin1String("text-align")] = QLatin1String("left");
         break;
     case Qt::AlignRight:
-        attrs["text-align"] = "right";
+        attrs[QLatin1String("text-align")] = QLatin1String("right");
         break;
     case Qt::AlignHCenter:
-        attrs["text-align"] = "center";
+        attrs[QLatin1String("text-align")] = QLatin1String("center");
         break;
     case Qt::AlignJustify:
-        attrs["text-align"] = "left";
+        attrs[QLatin1String("text-align")] = QLatin1String("left");
         break;
     }
 
     QString result;
     foreach (const QString &attributeName, attrs.keys()) {
-        result.append(attributeName).append(':').append(attrs[attributeName]).append(';');
+        result.append(attributeName).append(QLatin1Char(':')).append(attrs[attributeName]).append(QLatin1Char(';'));
     }
 
     return result;

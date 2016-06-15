@@ -1464,9 +1464,8 @@ void FormBuilderSaveLayoutEntry::setAlignment(Qt::Alignment al)
     if (!item->widget())
         return;
 
-    const QString className = item->widget()->metaObject()->className();
-    if (className == QLatin1String("Spacer")
-            || className == QLatin1String("QLayoutWidget"))
+    const char *className = item->widget()->metaObject()->className();
+    if (qstrcmp(className, "Spacer") == 0 || qstrcmp(className, "QLayoutWidget") == 0)
         return;
 
     alignment = al;
