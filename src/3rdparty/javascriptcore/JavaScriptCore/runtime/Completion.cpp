@@ -25,7 +25,6 @@
 
 #include "CallFrame.h"
 #include "JSGlobalObject.h"
-#include "JSLock.h"
 #include "Interpreter.h"
 #include "Parser.h"
 #include "Debugger.h"
@@ -35,7 +34,6 @@ namespace JSC {
 
 Completion checkSyntax(ExecState* exec, const SourceCode& source)
 {
-    JSLock lock(exec);
     ASSERT(exec->globalData().identifierTable == currentIdentifierTable());
 
     RefPtr<ProgramExecutable> program = ProgramExecutable::create(exec, source);
@@ -48,7 +46,6 @@ Completion checkSyntax(ExecState* exec, const SourceCode& source)
 
 Completion evaluate(ExecState* exec, ScopeChain& scopeChain, const SourceCode& source, JSValue thisValue)
 {
-    JSLock lock(exec);
     ASSERT(exec->globalData().identifierTable == currentIdentifierTable());
 
     RefPtr<ProgramExecutable> program = ProgramExecutable::create(exec, source);

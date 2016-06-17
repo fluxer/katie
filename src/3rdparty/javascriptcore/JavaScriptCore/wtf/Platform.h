@@ -95,9 +95,6 @@
 
 /* Specific compiler features */
 #if COMPILER(GCC) && !COMPILER(CLANG)
-#if GCC_VERSION_AT_LEAST(4, 8, 0)
-#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
-#endif
 #if defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112L
 /* C11 support */
 #define WTF_COMPILER_SUPPORTS_C_STATIC_ASSERT 1
@@ -552,10 +549,6 @@
 #   include <ce_time.h>
 #endif
 
-#if (OS(DARWIN) && !ENABLE(SINGLE_THREADED)) && !defined(ENABLE_JSC_MULTIPLE_THREADS)
-#define ENABLE_JSC_MULTIPLE_THREADS 1
-#endif
-
 /* On Windows, use QueryPerformanceCounter by default */
 #if OS(WINDOWS)
 #define WTF_USE_QUERY_PERFORMANCE_COUNTER  1
@@ -775,13 +768,6 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 
 #if ENABLE(JIT) || ENABLE(YARR_JIT)
 #define ENABLE_ASSEMBLER 1
-#endif
-/* Setting this flag prevents the assembler from using RWX memory; this may improve
-   security but currectly comes at a significant performance cost. */
-#if PLATFORM(IPHONE)
-#define ENABLE_ASSEMBLER_WX_EXCLUSIVE 1
-#else
-#define ENABLE_ASSEMBLER_WX_EXCLUSIVE 0
 #endif
 
 #if COMPILER(GCC)

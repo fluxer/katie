@@ -71,7 +71,6 @@ JSGlobalContextRef JSGlobalContextCreate(JSClassRef globalObjectClass)
 #else
     {
 #endif
-        JSLock lock(LockForReal);
         return JSGlobalContextCreateInGroup(toRef(&JSGlobalData::sharedInstance()), globalObjectClass);
     }
 #endif // OS(DARWIN)
@@ -83,14 +82,9 @@ JSGlobalContextRef JSGlobalContextCreateInGroup(JSContextGroupRef group, JSClass
 {
     initializeThreading();
 
-    JSLock lock(LockForReal);
     RefPtr<JSGlobalData> globalData = group ? PassRefPtr<JSGlobalData>(toJS(group)) : JSGlobalData::createNonDefault();
 
-    APIEntryShim entryShim(globalData.get(), false);
-
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    globalData->makeUsableFromMultipleThreads();
-#endif
+    APIEntryShim entryShim(globalData.get());
 
     if (!globalObjectClass) {
         JSGlobalObject* globalObject = new (globalData.get()) JSGlobalObject;
@@ -120,7 +114,7 @@ JSGlobalContextRef JSGlobalContextRetain(JSGlobalContextRef ctx)
 void JSGlobalContextRelease(JSGlobalContextRef ctx)
 {
     ExecState* exec = toJS(ctx);
-    APIEntryShim entryShim(exec, false);
+    APIEntryShim entryShim(exec);
 
     gcUnprotect(exec->dynamicGlobalObject());
 

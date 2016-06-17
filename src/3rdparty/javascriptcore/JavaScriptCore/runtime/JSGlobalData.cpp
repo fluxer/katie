@@ -41,7 +41,6 @@
 #include "JSByteArray.h"
 #include "JSClassRef.h"
 #include "JSFunction.h"
-#include "JSLock.h"
 #include "JSNotAnObject.h"
 #include "JSPropertyNameIterator.h"
 #include "JSStaticScopeObject.h"
@@ -49,10 +48,6 @@
 #include "Lookup.h"
 #include "Nodes.h"
 #include "Parser.h"
-
-#if ENABLE(JSC_MULTIPLE_THREADS)
-#include <wtf/Threading.h>
-#endif
 
 using namespace WTF;
 
@@ -215,16 +210,12 @@ JSGlobalData& JSGlobalData::sharedInstance()
     JSGlobalData*& instance = sharedInstanceInternal();
     if (!instance) {
         instance = new JSGlobalData(true);
-#if ENABLE(JSC_MULTIPLE_THREADS)
-        instance->makeUsableFromMultipleThreads();
-#endif
     }
     return *instance;
 }
 
 JSGlobalData*& JSGlobalData::sharedInstanceInternal()
 {
-    ASSERT(JSLock::currentThreadIsHoldingLock());
     static JSGlobalData* sharedInstance;
     return sharedInstance;
 }

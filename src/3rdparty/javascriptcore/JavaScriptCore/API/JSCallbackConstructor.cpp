@@ -29,7 +29,6 @@
 #include "APIShims.h"
 #include "APICast.h"
 #include <runtime/JSGlobalObject.h>
-#include <runtime/JSLock.h>
 #include <runtime/ObjectPrototype.h>
 #include <wtf/Vector.h>
 

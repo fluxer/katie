@@ -27,22 +27,27 @@
 #define APIShims_h
 
 #include "CallFrame.h"
-#include "JSLock.h"
 
 namespace JSC {
 
-class APIEntryShimWithoutLock {
-protected:
-    APIEntryShimWithoutLock(JSGlobalData* globalData, bool registerThread)
-        : m_globalData(globalData)
-        , m_entryIdentifierTable(setCurrentIdentifierTable(globalData->identifierTable))
+class APIEntryShim {
+public:
+    // Normal API entry
+    APIEntryShim(ExecState* exec)
+        : m_globalData(&exec->globalData())
+        , m_entryIdentifierTable(setCurrentIdentifierTable(m_globalData->identifierTable))
     {
-        if (registerThread)
-            globalData->heap.registerThread();
         m_globalData->timeoutChecker->start();
     }
 
-    ~APIEntryShimWithoutLock()
+    // JSPropertyNameAccumulator only has a globalData.
+    APIEntryShim(JSGlobalData* globalData)
+        : m_globalData(globalData)
+        , m_entryIdentifierTable(setCurrentIdentifierTable(globalData->identifierTable))
+    {
+    }
+
+    ~APIEntryShim()
     {
         m_globalData->timeoutChecker->stop();
         setCurrentIdentifierTable(m_entryIdentifierTable);
@@ -53,31 +58,10 @@ private:
     IdentifierTable* m_entryIdentifierTable;
 };
 
-class APIEntryShim : public APIEntryShimWithoutLock {
-public:
-    // Normal API entry
-    APIEntryShim(ExecState* exec, bool registerThread = true)
-        : APIEntryShimWithoutLock(&exec->globalData(), registerThread)
-        , m_lock(exec)
-    {
-    }
-
-    // JSPropertyNameAccumulator only has a globalData.
-    APIEntryShim(JSGlobalData* globalData, bool registerThread = true)
-        : APIEntryShimWithoutLock(globalData, registerThread)
-        , m_lock(globalData->isSharedInstance ? LockForReal : SilenceAssertionsOnly)
-    {
-    }
-
-private:
-    JSLock m_lock;
-};
-
 class APICallbackShim {
 public:
     APICallbackShim(ExecState* exec)
-        : m_dropAllLocks(exec)
-        , m_globalData(&exec->globalData())
+        : m_globalData(&exec->globalData())
     {
         resetCurrentIdentifierTable();
         m_globalData->timeoutChecker->start();
@@ -90,7 +74,6 @@ public:
     }
 
 private:
-    JSLock::DropAllLocks m_dropAllLocks;
     JSGlobalData* m_globalData;
 };
 

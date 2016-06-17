@@ -55,20 +55,17 @@ namespace JSC {
 
 void ctiPatchNearCallByReturnAddress(CodeBlock* codeblock, ReturnAddressPtr returnAddress, MacroAssemblerCodePtr newCalleeFunction)
 {
-    RepatchBuffer repatchBuffer(codeblock);
-    repatchBuffer.relinkNearCallerToTrampoline(returnAddress, newCalleeFunction);
+    RepatchBuffer::relinkNearCallerToTrampoline(returnAddress, newCalleeFunction);
 }
 
 void ctiPatchCallByReturnAddress(CodeBlock* codeblock, ReturnAddressPtr returnAddress, MacroAssemblerCodePtr newCalleeFunction)
 {
-    RepatchBuffer repatchBuffer(codeblock);
-    repatchBuffer.relinkCallerToTrampoline(returnAddress, newCalleeFunction);
+    RepatchBuffer::relinkCallerToTrampoline(returnAddress, newCalleeFunction);
 }
 
 void ctiPatchCallByReturnAddress(CodeBlock* codeblock, ReturnAddressPtr returnAddress, FunctionPtr newCalleeFunction)
 {
-    RepatchBuffer repatchBuffer(codeblock);
-    repatchBuffer.relinkCallerToFunction(returnAddress, newCalleeFunction);
+    RepatchBuffer::relinkCallerToFunction(returnAddress, newCalleeFunction);
 }
 
 JIT::JIT(JSGlobalData* globalData, CodeBlock* codeBlock)
@@ -524,7 +521,7 @@ JITCode JIT::privateCompile()
     if (m_codeBlock->hasExceptionInfo()) {
         m_codeBlock->callReturnIndexVector().reserveCapacity(m_calls.size());
         for (Vector<CallRecord>::iterator iter = m_calls.begin(); iter != m_calls.end(); ++iter)
-            m_codeBlock->callReturnIndexVector().append(CallReturnOffsetToBytecodeIndex(patchBuffer.returnAddressOffset(iter->from), iter->bytecodeIndex));
+            m_codeBlock->callReturnIndexVector().append(CallReturnOffsetToBytecodeIndex(MacroAssembler::getLinkerCallReturnOffset(iter->from), iter->bytecodeIndex));
     }
 
     // Link absolute addresses for jsr
@@ -580,18 +577,15 @@ void JIT::unlinkCall(CallLinkInfo* callLinkInfo)
     // When the JSFunction is deleted the pointer embedded in the instruction stream will no longer be valid
     // (and, if a new JSFunction happened to be constructed at the same location, we could get a false positive
     // match).  Reset the check so it no longer matches.
-    RepatchBuffer repatchBuffer(callLinkInfo->ownerCodeBlock.get());
 #if USE(JSVALUE32_64)
-    repatchBuffer.repatch(callLinkInfo->hotPathBegin, 0);
+    RepatchBuffer::repatch(callLinkInfo->hotPathBegin, 0);
 #else
-    repatchBuffer.repatch(callLinkInfo->hotPathBegin, JSValue::encode(JSValue()));
+    RepatchBuffer::repatch(callLinkInfo->hotPathBegin, JSValue::encode(JSValue()));
 #endif
 }
 
 void JIT::linkCall(JSFunction* callee, CodeBlock* callerCodeBlock, CodeBlock* calleeCodeBlock, JITCode& code, CallLinkInfo* callLinkInfo, int callerArgCount, JSGlobalData* globalData)
 {
-    RepatchBuffer repatchBuffer(callerCodeBlock);
-
     // Currently we only link calls with the exact number of arguments.
     // If this is a native call calleeCodeBlock is null so the number of parameters is unimportant
     if (!calleeCodeBlock || (callerArgCount == calleeCodeBlock->m_numParameters)) {
@@ -600,12 +594,12 @@ void JIT::linkCall(JSFunction* callee, CodeBlock* callerCodeBlock, CodeBlock* ca
         if (calleeCodeBlock)
             calleeCodeBlock->addCaller(callLinkInfo);
     
-        repatchBuffer.repatch(callLinkInfo->hotPathBegin, callee);
-        repatchBuffer.relink(callLinkInfo->hotPathOther, code.addressForCall());
+        RepatchBuffer::repatch(callLinkInfo->hotPathBegin, callee);
+        RepatchBuffer::relink(callLinkInfo->hotPathOther, code.addressForCall());
     }
 
     // patch the call so we do not continue to try to link.
-    repatchBuffer.relink(callLinkInfo->callReturnLocation, globalData->jitStubs.ctiVirtualCall());
+    RepatchBuffer::relink(callLinkInfo->callReturnLocation, globalData->jitStubs.ctiVirtualCall());
 }
 #endif // ENABLE(JIT_OPTIMIZE_CALL)
 

@@ -49,7 +49,6 @@
 #include "GlobalEvalFunction.h"
 #include "JSFunction.h"
 #include "JSGlobalObjectFunctions.h"
-#include "JSLock.h"
 #include "JSONObject.h"
 #include "Interpreter.h"
 #include "MathObject.h"
@@ -87,8 +86,6 @@ static inline void markIfNeeded(MarkStack& markStack, const RefPtr<Structure>& s
 
 JSGlobalObject::~JSGlobalObject()
 {
-    ASSERT(JSLock::currentThreadIsHoldingLock());
-
     if (d()->debugger)
         d()->debugger->detach(this);
 
@@ -114,8 +111,6 @@ JSGlobalObject::~JSGlobalObject()
 
 void JSGlobalObject::init(JSObject* thisValue)
 {
-    ASSERT(JSLock::currentThreadIsHoldingLock());
-
     structure()->disableSpecificFunctionTracking();
 
     d()->globalData = Heap::heap(this)->globalData();

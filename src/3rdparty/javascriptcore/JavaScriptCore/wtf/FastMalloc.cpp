@@ -79,9 +79,6 @@
 
 #include "Assertions.h"
 #include <limits>
-#if ENABLE(JSC_MULTIPLE_THREADS)
-#include <pthread.h>
-#endif
 
 // Use a background thread to periodically scavenge memory to release back to the system
 // https://bugs.webkit.org/show_bug.cgi?id=27900: don't turn this on for Tiger until we have figured out why it caused a crash.
@@ -99,36 +96,6 @@
 #ifndef NDEBUG
 namespace WTF {
 
-#if ENABLE(JSC_MULTIPLE_THREADS)
-static pthread_key_t isForbiddenKey;
-static pthread_once_t isForbiddenKeyOnce = PTHREAD_ONCE_INIT;
-static void initializeIsForbiddenKey()
-{
-  pthread_key_create(&isForbiddenKey, 0);
-}
-
-#if !ASSERT_DISABLED
-static bool isForbidden()
-{
-    pthread_once(&isForbiddenKeyOnce, initializeIsForbiddenKey);
-    return !!pthread_getspecific(isForbiddenKey);
-}
-#endif
-
-void fastMallocForbid()
-{
-    pthread_once(&isForbiddenKeyOnce, initializeIsForbiddenKey);
-    pthread_setspecific(isForbiddenKey, &isForbiddenKey);
-}
-
-void fastMallocAllow()
-{
-    pthread_once(&isForbiddenKeyOnce, initializeIsForbiddenKey);
-    pthread_setspecific(isForbiddenKey, 0);
-}
-
-#else
-
 static bool staticIsForbidden;
 static bool isForbidden()
 {
@@ -144,7 +111,6 @@ void fastMallocAllow()
 {
     staticIsForbidden = false;
 }
-#endif // ENABLE(JSC_MULTIPLE_THREADS)
 
 } // namespace WTF
 #endif // NDEBUG

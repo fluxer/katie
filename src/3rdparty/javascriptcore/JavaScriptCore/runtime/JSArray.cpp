@@ -948,8 +948,7 @@ void JSArray::fillArgList(ExecState* exec, MarkedArgumentBuffer& args)
 
 void JSArray::copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxSize)
 {
-    ASSERT(m_storage->m_length == maxSize);
-    UNUSED_PARAM(maxSize);
+    ASSERT_UNUSED(maxSize, m_storage->m_length == maxSize);
     JSValue* vector = m_storage->m_vector;
     unsigned vectorEnd = min(m_storage->m_length, m_vectorLength);
     unsigned i = 0;

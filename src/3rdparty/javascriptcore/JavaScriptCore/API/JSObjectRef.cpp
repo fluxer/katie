@@ -473,7 +473,7 @@ JSPropertyNameArrayRef JSPropertyNameArrayRetain(JSPropertyNameArrayRef array)
 void JSPropertyNameArrayRelease(JSPropertyNameArrayRef array)
 {
     if (--array->refCount == 0) {
-        APIEntryShim entryShim(array->globalData, false);
+        APIEntryShim entryShim(array->globalData);
         delete array;
     }
 }

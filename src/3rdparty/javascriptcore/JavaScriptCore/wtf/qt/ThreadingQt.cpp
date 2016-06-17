@@ -56,7 +56,7 @@ void ThreadCondition::broadcast() { }
 void lockAtomicallyInitializedStaticMutex() { }
 void unlockAtomicallyInitializedStaticMutex() { }
 
-} // namespace WebCore
+} // namespace WTF
 
 #else // SINGLE_THREADED
 
@@ -312,7 +312,7 @@ void ThreadCondition::broadcast()
     m_condition->wakeAll();
 }
 
-} // namespace WebCore
+} // namespace WTF
 
 #include "moc_ThreadingQt.cpp"
 

@@ -265,28 +265,10 @@ void Identifier::checkSameIdentifierTable(JSGlobalData*, UString::Rep*)
 
 ThreadSpecific<ThreadIdentifierTableData>* g_identifierTableSpecific = 0;
 
-#if ENABLE(JSC_MULTIPLE_THREADS)
-
-pthread_once_t createIdentifierTableSpecificOnce = PTHREAD_ONCE_INIT;
-static void createIdentifierTableSpecificCallback()
-{
-    ASSERT(!g_identifierTableSpecific);
-    g_identifierTableSpecific = new ThreadSpecific<ThreadIdentifierTableData>();
-}
-void createIdentifierTableSpecific()
-{
-    pthread_once(&createIdentifierTableSpecificOnce, createIdentifierTableSpecificCallback);
-    ASSERT(g_identifierTableSpecific);
-}
-
-#else 
-
 void createIdentifierTableSpecific()
 {
     ASSERT(!g_identifierTableSpecific);
     g_identifierTableSpecific = new ThreadSpecific<ThreadIdentifierTableData>();
 }
-
-#endif
 
 } // namespace JSC

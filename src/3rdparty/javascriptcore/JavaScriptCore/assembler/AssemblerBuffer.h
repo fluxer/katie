@@ -134,8 +134,6 @@ namespace JSC {
             if (!result)
                 return 0;
 
-            ExecutableAllocator::makeWritable(result, m_size);
-
             return memcpy(result, m_buffer, m_size);
         }
 

@@ -28,7 +28,6 @@
 #include "InitializeThreading.h"
 #include "JSArray.h"
 #include "JSFunction.h"
-#include "JSLock.h"
 #include "JSString.h"
 #include "PrototypeFunction.h"
 #include "SamplingTool.h"
@@ -191,7 +190,6 @@ JSValue JSC_HOST_CALL functionDebug(ExecState* exec, JSObject*, JSValue, const A
 
 JSValue JSC_HOST_CALL functionGC(ExecState* exec, JSObject*, JSValue, const ArgList&)
 {
-    JSLock lock(SilenceAssertionsOnly);
     exec->heap()->collectAllGarbage();
     return jsUndefined();
 }
@@ -353,7 +351,6 @@ int main(int argc, char** argv)
 
 static void cleanupGlobalData(JSGlobalData* globalData)
 {
-    JSLock lock(SilenceAssertionsOnly);
     globalData->heap.destroy();
     globalData->deref();
 }
@@ -516,8 +513,6 @@ static void parseArguments(int argc, char** argv, Options& options, JSGlobalData
 
 int jscmain(int argc, char** argv, JSGlobalData* globalData)
 {
-    JSLock lock(SilenceAssertionsOnly);
-
     Options options;
     parseArguments(argc, argv, options, globalData);
 

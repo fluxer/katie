@@ -42,7 +42,7 @@ void ExecutableAllocator::intializePageSize()
 
 ExecutablePool::Allocation ExecutablePool::systemAlloc(size_t n)
 {
-    void* allocation = mmap(NULL, n, INITIAL_PROTECTION_FLAGS, MAP_PRIVATE | MAP_ANON, VM_TAG_FOR_EXECUTABLEALLOCATOR_MEMORY, 0);
+    void* allocation = mmap(NULL, n, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_PRIVATE | MAP_ANON, VM_TAG_FOR_EXECUTABLEALLOCATOR_MEMORY, 0);
     if (allocation == MAP_FAILED)
         CRASH();
     ExecutablePool::Allocation alloc = { reinterpret_cast<char*>(allocation), n };

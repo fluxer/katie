@@ -42,91 +42,71 @@ namespace JSC {
 // used to apply optimizations to the code.
 //
 class RepatchBuffer {
-    typedef MacroAssemblerCodePtr CodePtr;
-
 public:
-    RepatchBuffer(CodeBlock* codeBlock)
-    {
-        JITCode& code = codeBlock->getJITCode();
-        m_start = code.start();
-        m_size = code.size();
-
-        ExecutableAllocator::makeWritable(m_start, m_size);
-    }
-
-    ~RepatchBuffer()
-    {
-        ExecutableAllocator::makeExecutable(m_start, m_size);
-    }
-
-    inline void relink(CodeLocationJump jump, CodeLocationLabel destination)
+    static inline void relink(CodeLocationJump jump, CodeLocationLabel destination)
     {
         MacroAssembler::repatchJump(jump, destination);
     }
 
-    inline void relink(CodeLocationCall call, CodeLocationLabel destination)
+    static inline void relink(CodeLocationCall call, CodeLocationLabel destination)
     {
         MacroAssembler::repatchCall(call, destination);
     }
 
-    inline void relink(CodeLocationCall call, FunctionPtr destination)
+    static inline void relink(CodeLocationCall call, FunctionPtr destination)
     {
         MacroAssembler::repatchCall(call, destination);
     }
 
-    inline void relink(CodeLocationNearCall nearCall, CodePtr destination)
+    static inline void relink(CodeLocationNearCall nearCall, MacroAssemblerCodePtr destination)
     {
         MacroAssembler::repatchNearCall(nearCall, CodeLocationLabel(destination));
     }
 
-    inline void relink(CodeLocationNearCall nearCall, CodeLocationLabel destination)
+    static inline void relink(CodeLocationNearCall nearCall, CodeLocationLabel destination)
     {
         MacroAssembler::repatchNearCall(nearCall, destination);
     }
 
-    inline void repatch(CodeLocationDataLabel32 dataLabel32, int32_t value)
+    static inline void repatch(CodeLocationDataLabel32 dataLabel32, int32_t value)
     {
         MacroAssembler::repatchInt32(dataLabel32, value);
     }
 
-    inline void repatch(CodeLocationDataLabelPtr dataLabelPtr, void* value)
+    static inline void repatch(CodeLocationDataLabelPtr dataLabelPtr, void* value)
     {
         MacroAssembler::repatchPointer(dataLabelPtr, value);
     }
 
-    inline void repatchLoadPtrToLEA(CodeLocationInstruction instruction)
+    static inline void repatchLoadPtrToLEA(CodeLocationInstruction instruction)
     {
         MacroAssembler::repatchLoadPtrToLEA(instruction);
     }
 
-    inline void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
+    static inline void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
     {
-        relink(CodeLocationCall(CodePtr(returnAddress)), label);
+        relink(CodeLocationCall(MacroAssemblerCodePtr(returnAddress)), label);
     }
     
-    inline void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, CodePtr newCalleeFunction)
+    static inline void relinkCallerToTrampoline(ReturnAddressPtr returnAddress, MacroAssemblerCodePtr newCalleeFunction)
     {
         relinkCallerToTrampoline(returnAddress, CodeLocationLabel(newCalleeFunction));
     }
 
-    inline void relinkCallerToFunction(ReturnAddressPtr returnAddress, FunctionPtr function)
+    static inline void relinkCallerToFunction(ReturnAddressPtr returnAddress, FunctionPtr function)
     {
-        relink(CodeLocationCall(CodePtr(returnAddress)), function);
+        relink(CodeLocationCall(MacroAssemblerCodePtr(returnAddress)), function);
     }
     
-    inline void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
+    static inline void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodeLocationLabel label)
     {
-        relink(CodeLocationNearCall(CodePtr(returnAddress)), label);
+        relink(CodeLocationNearCall(MacroAssemblerCodePtr(returnAddress)), label);
     }
     
-    inline void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, CodePtr newCalleeFunction)
+    static inline void relinkNearCallerToTrampoline(ReturnAddressPtr returnAddress, MacroAssemblerCodePtr newCalleeFunction)
     {
         relinkNearCallerToTrampoline(returnAddress, CodeLocationLabel(newCalleeFunction));
     }
-
-private:
-    void* m_start;
-    size_t m_size;
 };
 
 } // namespace JSC

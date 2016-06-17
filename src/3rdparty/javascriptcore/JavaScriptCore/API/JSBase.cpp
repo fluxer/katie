@@ -35,7 +35,6 @@
 #include <interpreter/CallFrame.h>
 #include <runtime/Completion.h>
 #include <runtime/JSGlobalObject.h>
-#include <runtime/JSLock.h>
 #include <runtime/JSObject.h>
 
 using namespace JSC;
@@ -92,7 +91,7 @@ void JSGarbageCollect(JSContextRef ctx)
         return;
 
     ExecState* exec = toJS(ctx);
-    APIEntryShim entryShim(exec, false);
+    APIEntryShim entryShim(exec);
 
     JSGlobalData& globalData = exec->globalData();
     if (!globalData.heap.isBusy())

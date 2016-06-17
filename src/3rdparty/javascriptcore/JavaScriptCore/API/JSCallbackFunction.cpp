@@ -33,7 +33,6 @@
 #include "JSFunction.h"
 #include "FunctionPrototype.h"
 #include <runtime/JSGlobalObject.h>
-#include <runtime/JSLock.h>
 #include <wtf/Vector.h>
 
 namespace JSC {

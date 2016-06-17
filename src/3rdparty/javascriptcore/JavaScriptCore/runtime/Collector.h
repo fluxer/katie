@@ -31,10 +31,6 @@
 #include <wtf/StdLibExtras.h>
 #include <wtf/Threading.h>
 
-#if ENABLE(JSC_MULTIPLE_THREADS)
-#include <pthread.h>
-#endif
-
 #define ASSERT_CLASS_FITS_IN_CELL(class) COMPILE_ASSERT(sizeof(class) <= CELL_SIZE, class_fits_in_cell)
 
 namespace JSC {
@@ -101,8 +97,6 @@ namespace JSC {
         size_t protectedGlobalObjectCount();
         HashCountedSet<const char*>* protectedObjectTypeCounts();
 
-        void registerThread(); // Only needs to be called by clients that can use the same heap from multiple threads.
-
         static bool isCellMarked(const JSCell*);
         static void markCell(JSCell*);
 
@@ -146,7 +140,6 @@ namespace JSC {
         void markCurrentThreadConservatively(MarkStack&);
         void markCurrentThreadConservativelyInternal(MarkStack&);
         void markOtherThreadConservatively(MarkStack&, Thread*);
-        void markStackObjectsConservatively(MarkStack&);
 
         typedef HashCountedSet<JSCell*> ProtectCountSet;
 
@@ -155,17 +148,6 @@ namespace JSC {
         ProtectCountSet m_protectedValues;
 
         HashSet<MarkedArgumentBuffer*>* m_markListSet;
-
-#if ENABLE(JSC_MULTIPLE_THREADS)
-        void makeUsableFromMultipleThreads();
-
-        static void unregisterThread(void*);
-        void unregisterThread();
-
-        Mutex m_registeredThreadsMutex;
-        Thread* m_registeredThreads;
-        pthread_key_t m_currentThreadRegistrar;
-#endif
 
         JSGlobalData* m_globalData;
     };

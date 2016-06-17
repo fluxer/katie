@@ -35,10 +35,6 @@
 #include <wtf/RefCountedLeakCounter.h>
 #include <wtf/RefPtr.h>
 
-#if ENABLE(JSC_MULTIPLE_THREADS)
-#include <wtf/Threading.h>
-#endif
-
 #define DUMP_STRUCTURE_ID_STATISTICS 0
 
 #ifndef NDEBUG
@@ -63,10 +59,6 @@ static const unsigned newTableSize = 16;
 
 #ifndef NDEBUG
 static WTF::RefCountedLeakCounter structureCounter("Structure");
-
-#if ENABLE(JSC_MULTIPLE_THREADS)
-static Mutex& ignoreSetMutex = *(new Mutex);
-#endif
 
 static bool shouldIgnoreLeaks;
 static HashSet<Structure*>& ignoreSet = *(new HashSet<Structure*>);
@@ -139,9 +131,6 @@ Structure::Structure(JSValue prototype, const TypeInfo& typeInfo)
     ASSERT(m_prototype.isObject() || m_prototype.isNull());
 
 #ifndef NDEBUG
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    MutexLocker protect(ignoreSetMutex);
-#endif
     if (shouldIgnoreLeaks)
         ignoreSet.add(this);
     else
@@ -179,9 +168,6 @@ Structure::~Structure()
     }
 
 #ifndef NDEBUG
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    MutexLocker protect(ignoreSetMutex);
-#endif
     HashSet<Structure*>::iterator it = ignoreSet.find(this);
     if (it != ignoreSet.end())
         ignoreSet.remove(it);

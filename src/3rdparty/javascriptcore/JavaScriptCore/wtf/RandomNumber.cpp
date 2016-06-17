@@ -54,13 +54,11 @@ double weakRandomNumber()
 
 double randomNumber()
 {
-#if !ENABLE(JSC_MULTIPLE_THREADS)
     static bool s_initialized = false;
     if (!s_initialized) {
         initializeRandomNumberGenerator();
         s_initialized = true;
     }
-#endif
     
 #if COMPILER(MSVC) && defined(_CRT_RAND_S)
     uint32_t bits;

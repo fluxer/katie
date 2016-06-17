@@ -175,10 +175,6 @@ Exactly one of IEEE_8087, IEEE_ARM or IEEE_MC68k should be defined.
 
 namespace WTF {
 
-#if ENABLE(JSC_MULTIPLE_THREADS)
-Mutex* s_dtoaP5Mutex;
-#endif
-
 typedef union { double d; uint32_t L[2]; } U;
 
 #ifdef YES_ALIAS
@@ -579,9 +575,6 @@ static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
     if (!(k >>= 2))
         return;
 
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    s_dtoaP5Mutex->lock();
-#endif
     P5Node* p5 = p5s;
 
     if (!p5) {
@@ -594,9 +587,6 @@ static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
     }
 
     int p5s_count_local = p5s_count;
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    s_dtoaP5Mutex->unlock();
-#endif
     int p5s_used = 0;
 
     for (;;) {
@@ -607,9 +597,6 @@ static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
             break;
 
         if (++p5s_used == p5s_count_local) {
-#if ENABLE(JSC_MULTIPLE_THREADS)
-            s_dtoaP5Mutex->lock();
-#endif
             if (p5s_used == p5s_count) {
                 ASSERT(!p5->next);
                 p5->next = new P5Node;
@@ -620,9 +607,6 @@ static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
             }
             
             p5s_count_local = p5s_count;
-#if ENABLE(JSC_MULTIPLE_THREADS)
-            s_dtoaP5Mutex->unlock();
-#endif
         }
         p5 = p5->next;
     }

@@ -79,20 +79,12 @@ RefCountedLeakCounter::~RefCountedLeakCounter()
 
 void RefCountedLeakCounter::increment()
 {
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    atomicIncrement(&m_count);
-#else
     ++m_count;
-#endif
 }
 
 void RefCountedLeakCounter::decrement()
 {
-#if ENABLE(JSC_MULTIPLE_THREADS)
-    atomicDecrement(&m_count);
-#else
     --m_count;
-#endif
 }
 
 #endif
