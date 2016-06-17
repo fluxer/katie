@@ -231,13 +231,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/ForwardingHeaders
 )
 
-if(KATIE_COMPILER STREQUAL "gcc")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        # TODO: it is only for gcc newer than v3.0.x and only when the JIT is enabled (default)
-        -fno-stack-protector
-    )
-elseif(KATIE_COMPILER STREQUAL "msvc")
+if(KATIE_COMPILER STREQUAL "msvc")
     # Disable a few warnings on Windows.
     set(KATIE_CXXFLAGS
         ${KATIE_CXXFLAGS}
