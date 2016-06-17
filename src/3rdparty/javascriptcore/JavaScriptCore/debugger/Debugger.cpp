@@ -97,16 +97,4 @@ void Debugger::recompileAllJSFunctions(JSGlobalData* globalData)
         sourceParsed(iter->second, SourceCode(iter->first), -1, 0);
 }
 
-JSValue evaluateInGlobalCallFrame(const UString& script, JSValue& exception, JSGlobalObject* globalObject)
-{
-    CallFrame* globalCallFrame = globalObject->globalExec();
-
-    RefPtr<EvalExecutable> eval = EvalExecutable::create(globalCallFrame, makeSource(script));
-    JSObject* error = eval->compile(globalCallFrame, globalCallFrame->scopeChain());
-    if (error)
-        return error;
-
-    return globalObject->globalData()->interpreter->execute(eval.get(), globalCallFrame, globalObject, globalCallFrame->scopeChain(), &exception);
-}
-
 } // namespace JSC

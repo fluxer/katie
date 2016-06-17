@@ -26,7 +26,11 @@
 #ifndef JavaScriptCore_h
 #define JavaScriptCore_h
 
-#include <JavaScriptCore/JavaScript.h>
-#include <JavaScriptCore/JSStringRefCF.h>
+#include <JSBase.h>
+#include <JSContextRef.h>
+#include <JSStringRef.h>
+#include <JSObjectRef.h>
+#include <JSValueRef.h>
+#include <JSStringRefCF.h>
 
 #endif /* JavaScriptCore_h */

@@ -112,7 +112,7 @@ namespace JSC {
         const HashTable* regExpTable;
         const HashTable* regExpConstructorTable;
         const HashTable* stringTable;
-        
+
         RefPtr<Structure> activationStructure;
         RefPtr<Structure> interruptedExecutionErrorStructure;
         RefPtr<Structure> staticScopeStructure;
@@ -140,7 +140,7 @@ namespace JSC {
         SmallStrings smallStrings;
         NumericStrings numericStrings;
         DateInstanceCache dateInstanceCache;
-        
+
 #if ENABLE(ASSEMBLER)
         ExecutableAllocator executableAllocator;
 #endif
@@ -190,7 +190,6 @@ namespace JSC {
         static JSGlobalData*& sharedInstanceInternal();
         void createNativeThunk();
     };
-    
 } // namespace JSC
 
 #endif // JSGlobalData_h

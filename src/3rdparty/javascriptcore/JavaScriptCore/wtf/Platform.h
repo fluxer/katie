@@ -641,10 +641,6 @@
 
 /* ENABLE macro defaults */
 
-#if !defined(ENABLE_JAVASCRIPT_DEBUGGER)
-#define ENABLE_JAVASCRIPT_DEBUGGER 1
-#endif
-
 #if !defined(ENABLE_OPCODE_STATS)
 #define ENABLE_OPCODE_STATS 0
 #endif
@@ -737,12 +733,6 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 
 #if COMPILER(GCC) && !ENABLE(JIT)
 #define HAVE_COMPUTED_GOTO 1
-#endif
-
-#if ENABLE(JIT) && defined(COVERAGE)
-    #define WTF_USE_INTERPRETER 0
-#else
-    #define WTF_USE_INTERPRETER 1
 #endif
 
 /* Yet Another Regex Runtime. */

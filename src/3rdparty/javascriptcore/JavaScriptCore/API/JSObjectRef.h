@@ -27,12 +27,9 @@
 #ifndef JSObjectRef_h
 #define JSObjectRef_h
 
-#include <JavaScriptCore/JSBase.h>
-#include <JavaScriptCore/JSValueRef.h>
+#include <JSBase.h>
+#include <JSValueRef.h>
 
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
 #include <stddef.h> /* for size_t */
 
 #ifdef __cplusplus

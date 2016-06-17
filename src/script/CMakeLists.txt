@@ -228,7 +228,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/pcre
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/tmp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/yarr
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/ForwardingHeaders
 )
 
 if(KATIE_COMPILER STREQUAL "msvc")
@@ -251,13 +250,6 @@ if(KATIE_PLATFORM STREQUAL "mac")
         ${KATIE_LDFLAGS}
         -framework AppKit
     )
-    add_definitions(-DENABLE_JSC_MULTIPLE_THREADS=0)
-elseif(KATIE_PLATFORM STREQUAL "qpa")
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
-        -framework CoreFoundation
-    )
-    add_definitions(-DENABLE_JSC_MULTIPLE_THREADS=0)
 elseif(KATIE_PLATFORM MATCHES "(win32|wince)" AND KATIE_COMPILER STREQUAL "msvc")
     include_directories(
         ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/os-wince

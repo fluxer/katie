@@ -26,10 +26,6 @@
 #ifndef JSBase_h
 #define JSBase_h
 
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
-
 /* JavaScript engine interface */
 
 /*! @typedef JSContextGroupRef A group that associates JavaScript contexts with one another. Contexts in the same group may share and exchange JavaScript objects. */

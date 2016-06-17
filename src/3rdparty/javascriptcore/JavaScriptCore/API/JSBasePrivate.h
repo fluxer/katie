@@ -26,7 +26,7 @@
 #ifndef JSBasePrivate_h
 #define JSBasePrivate_h
 
-#include <JavaScriptCore/JSBase.h>
+#include <JSBase.h>
 
 #ifdef __cplusplus
 extern "C" {

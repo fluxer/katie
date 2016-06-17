@@ -29,7 +29,7 @@
 #ifndef JSRetainPtr_h
 #define JSRetainPtr_h
 
-#include <JavaScriptCore/JSStringRef.h>
+#include <JSStringRef.h>
 #include <algorithm>
 
 inline void JSRetain(JSStringRef string) { JSStringRetain(string); }

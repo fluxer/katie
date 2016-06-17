@@ -26,11 +26,8 @@
 #ifndef JSStringRef_h
 #define JSStringRef_h
 
-#include <JavaScriptCore/JSValueRef.h>
+#include <JSValueRef.h>
 
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
 #include <stddef.h> /* for size_t */
 
 #ifdef __cplusplus

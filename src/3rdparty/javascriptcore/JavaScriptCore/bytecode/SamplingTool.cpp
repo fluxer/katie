@@ -90,32 +90,6 @@ void SamplingFlags::stop() {}
 */
 uint32_t SamplingFlags::s_flags = 1 << 15;
 
-
-#if OS(WINDOWS)
-
-static void sleepForMicroseconds(unsigned us)
-{
-    unsigned ms = us / 1000;
-    if (us && !ms)
-        ms = 1;
-    Sleep(ms);
-}
-
-#else 
-
-static void sleepForMicroseconds(unsigned us)
-{
-    usleep(us);
-}
-
-#endif
-
-static inline unsigned hertz2us(unsigned hertz)
-{
-    return 1000000 / hertz;
-}
-
-
 SamplingTool* SamplingTool::s_samplingTool = 0;
 
 
@@ -126,7 +100,15 @@ ThreadIdentifier SamplingThread::s_samplingThread;
 void* SamplingThread::threadStartFunc(void*)
 {
     while (s_running) {
-        sleepForMicroseconds(hertz2us(s_hertz));
+        unsigned us = 1000000 / s_hertz;
+#if OS(WINDOWS)
+        unsigned ms = us / 1000;
+        if (us && !ms)
+            ms = 1;
+        Sleep(ms);
+#else
+        usleep(us);
+#endif // OS(WINDOWS)
 
 #if ENABLE(SAMPLING_FLAGS)
         SamplingFlags::sample();

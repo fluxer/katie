@@ -26,11 +26,7 @@
 #ifndef JSValueRef_h
 #define JSValueRef_h
 
-#include <JavaScriptCore/JSBase.h>
-
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
+#include <JSBase.h>
 
 /*!
 @enum JSType

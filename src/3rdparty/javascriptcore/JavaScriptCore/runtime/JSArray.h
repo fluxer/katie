@@ -121,8 +121,6 @@ namespace JSC {
         ArrayStorage* m_storage;
     };
 
-    JSArray* asArray(JSValue);
-
     inline JSArray* asArray(JSCell* cell)
     {
         ASSERT(cell->inherits(&JSArray::info));

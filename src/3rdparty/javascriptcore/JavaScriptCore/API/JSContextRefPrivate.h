@@ -26,12 +26,8 @@
 #ifndef JSContextRefPrivate_h
 #define JSContextRefPrivate_h
 
-#include <JavaScriptCore/JSObjectRef.h>
-#include <JavaScriptCore/JSValueRef.h>
-
-#ifndef __cplusplus
-#include <stdbool.h>
-#endif
+#include <JSObjectRef.h>
+#include <JSValueRef.h>
 
 #ifdef __cplusplus
 extern "C" {
