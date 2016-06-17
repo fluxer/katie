@@ -125,7 +125,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSGlobalObject.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSGlobalObjectFunctions.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSImmediate.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSLock.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSNotAnObject.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSNumberCell.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/JSObject.cpp
