@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.e0a0918
+pkgver=4.9.0.f8c122e
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
@@ -21,6 +21,8 @@ source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')
 # options=('debug')
+
+export CFLAGS="${CFLAGS} -flto" CXXFLAGS="${CXXFLAGS} -flto"
 
 pkgver() {
     cd katie
