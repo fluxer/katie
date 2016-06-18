@@ -44,9 +44,10 @@ for component in components:
 
 mapdata += '\n#endif\n'
 
-sys.stdout.write('-- Writing: %s\n' % mapoutput)
-with open(mapoutput, 'wb') as f:
-    if sys.version_info[0] == 3:
-        f.write(bytes(mapdata, 'utf-8'))
-    else:
-        f.write(mapdata)
+with open(mapoutput, 'r+b') as f:
+    if f.read() != mapdata:
+        sys.stdout.write('-- Writing: %s\n' % mapoutput)
+        if sys.version_info[0] == 3:
+            f.write(bytes(mapdata, 'utf-8'))
+        else:
+            f.write(mapdata)
