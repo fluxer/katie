@@ -65,7 +65,7 @@ struct ClassInfoEntry
 
 static const ClassInfoEntry qclass_lib_map[] = {
 #define QT_CLASS_LIB(klass, module, header) { #klass, #module, #header },
-#include "qclass_lib_map.h"
+#include "shared/qclass_lib_map.h"
 
 #undef QT_CLASS_LIB
 };
@@ -85,21 +85,15 @@ WriteIncludes::WriteIncludes(Uic *uic)
     : m_uic(uic), m_output(uic->output()), m_scriptsActivated(false), m_laidOut(false)
 {
     // When possible (no namespace) use the "QtModule/QClass" convention
-    // and create a re-mapping of the old header "qclass.h" to it. Do not do this
-    // for the "Phonon::Someclass" classes, however.
-    const QString namespaceDelimiter = QLatin1String("::");
+    // and create a re-mapping of the old header "qclass.h" to it.
     const ClassInfoEntry *classLibEnd = qclass_lib_map + sizeof(qclass_lib_map)/sizeof(ClassInfoEntry);    
-    for(const ClassInfoEntry *it = qclass_lib_map; it < classLibEnd;  ++it) {        
+    for(const ClassInfoEntry *it = qclass_lib_map; it < classLibEnd;  ++it) {
         const QString klass = QLatin1String(it->klass);
         const QString module = QLatin1String(it->module);
-        QLatin1String header = QLatin1String(it->header);
-        if (klass.contains(namespaceDelimiter)) {
-            m_classToHeader.insert(klass, moduleHeader(module, header));
-        } else {
-            const QString newHeader = moduleHeader(module, klass);
-            m_classToHeader.insert(klass, newHeader);
-            m_oldHeaderToNewHeader.insert(header, newHeader);
-        }
+        const QLatin1String header = QLatin1String(it->header);
+        const QString newHeader = moduleHeader(module, klass);
+        m_classToHeader.insert(klass, newHeader);
+        m_oldHeaderToNewHeader.insert(header, newHeader);
     }
 }
 
