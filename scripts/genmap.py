@@ -2,14 +2,29 @@
 
 import sys, os, re
 
-headersdir = os.getcwd()
-component = sys.argv[1]
-keyword = sys.argv[2]
+components = {
+    'core': 'Q_CORE_EXPORT',
+    'gui': 'Q_GUI_EXPORT',
+    'dbus': 'Q_DBUS_EXPORT',
+    'declarative': 'Q_DECLARATIVE_EXPORT',
+    'designer': 'QDESIGNER_COMPONENTS_EXPORT|QDESIGNER_EXTENSION_EXPORT|QT_FORMEDITOR_EXPORT|QT_PROPERTYEDITOR_EXPORT|QT_SIGNALSLOTEDITOR_EXPORT|QT_OBJECTINSPECTOR_EXPORT|QT_WIDGETBOX_EXPORT|QT_BUDDYEDITOR_EXPORT|QT_TABORDEREDITOR_EXPORT|QT_TASKMENU_EXPORT',
+    'help': 'QHELP_EXPORT',
+    'multimedia': 'Q_MULTIMEDIA_EXPORT',
+    'network': 'Q_NETWORK_EXPORT',
+    'sql': 'Q_SQL_EXPORT',
+    'svg': 'Q_SVG_EXPORT',
+    'xml': 'Q_XML_EXPORT',
+    'xmlpatterns': 'Q_XMLPATTERNS_EXPORT',
+    'script': 'Q_SCRIPT_EXPORT',
+    'scripttools': 'Q_SCRIPTTOOLS_EXPORT',
+    'test': 'Q_TESTLIB_EXPORT',
+    'uitools': 'QDESIGNER_UILIB_EXPORT',
+    'opengl': 'Q_OPENGL_EXPORT',
+}
+mapoutput = 'src/shared/qclass_lib_map.h'
+mapdata = '#ifndef QT_CLASS_MAP_H\n#define QT_CLASS_MAP_H\n\n'
 
-mapoutput = '%s/include/%s_map.h' % (headersdir, component)
-mapdata = '#ifndef %s_MAP_H\n#define %s_MAP_H\n\n' % (component, component)
-
-def exportscan(sdir):
+def exportscan(sdir, keyword, component):
     dirmap = ''
     for sroot, sdir, lfiles in os.walk(sdir):
         for sfile in lfiles:
@@ -23,11 +38,13 @@ def exportscan(sdir):
                 dirmap += 'QT_CLASS_LIB(%s, %s, %s)\n' % (match, component, sfile)
     return dirmap
 
-mapdata += exportscan('%s/include/%s' % (headersdir, component))
-mapdata += exportscan('%s/privateinclude/%s' % (headersdir, component))
+for component in components:
+    keyword = components[component]
+    mapdata += exportscan('src/%s' % component, keyword, 'Qt%s' % component.capitalize())
+
 mapdata += '\n#endif\n'
 
-sys.stderr.write('-- Writing: %s\n' % os.path.basename(mapoutput))
+sys.stdout.write('-- Writing: %s\n' % mapoutput)
 with open(mapoutput, 'wb') as f:
     if sys.version_info[0] == 3:
         f.write(bytes(mapdata, 'utf-8'))

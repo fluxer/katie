@@ -228,7 +228,7 @@ set_package_properties(PythonInterp PROPERTIES
     PURPOSE "UI class maps generator script"
     DESCRIPTION "Programming language that lets you work quickly"
     URL "https://www.python.org/"
-    TYPE REQUIRED
+    TYPE RECOMMENDED
 )
 
 find_package(OpenSSL)
@@ -460,6 +460,22 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)" AND NOT KATIE_BOOTSTRAP)
 
     set_package_properties(Freetype PROPERTIES
         TYPE REQUIRED
+    )
+endif()
+
+if(PYTHONINTERP_FOUND)
+    execute_process(
+        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/genmap.py
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        RESULT_VARIABLE genmap_result
+        ERROR_VARIABLE genmap_error
+    )
+    if(NOT genmap_result EQUAL 0)
+        message(SEND_ERROR "${genmap_error}")
+    endif()
+else()
+    message(WARNING
+        "\nUsing pre-generated classes map"
     )
 endif()
 

@@ -195,7 +195,6 @@ endif()
 
 katie_generate_misc("${OPENGL_HEADERS}" QtOpenGL)
 katie_generate_public("${OPENGL_PUBLIC_HEADERS}" QtOpenGL)
-katie_generate_map(QtOpenGL Q_OPENGL_EXPORT)
 katie_resources(${OPENGL_SOURCES} ${OPENGL_HEADERS})
 katie_setup_flags()
 

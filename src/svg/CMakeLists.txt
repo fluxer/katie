@@ -70,7 +70,6 @@ endif()
 
 katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
-katie_generate_map(QtSvg Q_SVG_EXPORT)
 katie_resources(${SVG_SOURCES} ${SVG_HEADERS})
 katie_setup_flags()
 

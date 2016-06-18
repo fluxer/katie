@@ -25,7 +25,6 @@ include_directories(
 
 katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)
 katie_generate_public("${SCRIPTTOOLS_PUBLIC_HEADERS}" QtScriptTools)
-katie_generate_map(QtScriptTools Q_SCRIPTTOOLS_EXPORT)
 katie_resources(${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
 katie_setup_flags()
 

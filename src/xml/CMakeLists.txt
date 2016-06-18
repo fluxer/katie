@@ -72,7 +72,6 @@ endif()
 
 katie_generate_misc("${XML_HEADERS}" QtXml)
 katie_generate_public("${XML_PUBLIC_HEADERS}" QtXml)
-katie_generate_map(QtXml Q_XML_EXPORT)
 katie_resources(${XML_SOURCES} ${XML_HEADERS})
 katie_setup_flags()
 

@@ -83,7 +83,6 @@ endif()
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
-katie_generate_map(QtNetwork Q_NETWORK_EXPORT)
 katie_resources(${NETWORK_SOURCES} ${NETWORK_HEADERS})
 katie_setup_flags()
 

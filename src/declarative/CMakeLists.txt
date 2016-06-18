@@ -73,7 +73,6 @@ endif()
 
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
-katie_generate_map(QtDeclarative Q_DECLARATIVE_EXPORT)
 katie_resources("${DECLARATIVE_SOURCES}")
 katie_resources("${DECLARATIVE_HEADERS}")
 katie_setup_flags()

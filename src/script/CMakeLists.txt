@@ -291,7 +291,6 @@ set(SCRIPT_RESOURCES
 
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
-katie_generate_map(QtScript Q_SCRIPT_EXPORT)
 katie_resources(${SCRIPT_RESOURCES})
 katie_setup_flags()
 

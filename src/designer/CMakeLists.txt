@@ -114,7 +114,6 @@ endif()
 
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
-katie_generate_map(QtDesigner "QDESIGNER_COMPONENTS_EXPORT|QDESIGNER_EXTENSION_EXPORT")
 katie_resources("${DESIGNER_SOURCES}")
 katie_resources("${DESIGNER_HEADERS}")
 katie_setup_flags()

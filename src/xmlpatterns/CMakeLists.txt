@@ -74,7 +74,6 @@ include_directories(
 
 katie_generate_misc("${XMLPATTERNS_HEADERS}" QtXmlPatterns)
 katie_generate_public("${XMLPATTERNS_PUBLIC_HEADERS}" QtXmlPatterns)
-katie_generate_map(QtXmlPatterns Q_XMLPATTERNS_EXPORT)
 katie_resources(${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
 katie_setup_flags()
 

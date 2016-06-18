@@ -79,10 +79,6 @@ endif()
 # headers go in one place!
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
-katie_generate_map(
-    QtDesignerComponents
-    "QT_FORMEDITOR_EXPORT|QT_PROPERTYEDITOR_EXPORT|QT_SIGNALSLOTEDITOR_EXPORT|QT_OBJECTINSPECTOR_EXPORT|QT_WIDGETBOX_EXPORT|QT_BUDDYEDITOR_EXPORT|QT_TABORDEREDITOR_EXPORT|QT_TASKMENU_EXPORT"
-)
 katie_resources(${DESIGNERCOMPONENTS_SOURCES})
 katie_resources(${DESIGNERCOMPONENTS_HEADERS})
 katie_setup_flags()

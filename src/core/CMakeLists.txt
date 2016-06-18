@@ -362,7 +362,6 @@ endif()
 
 katie_generate_misc("${CORE_HEADERS}" QtCore)
 katie_generate_public("${CORE_PUBLIC_HEADERS}" QtCore)
-katie_generate_map(QtCore Q_CORE_EXPORT)
 katie_resources(${CORE_SOURCES} ${CORE_HEADERS})
 katie_setup_flags()
 

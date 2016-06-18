@@ -27,20 +27,6 @@ else()
 endif()
 set(KATIE_QDBUSXML2CPP "qdbusxml2cpp")
 
-macro(KATIE_GENERATE_MAP SUBDIR KEYWORD)
-    execute_process(
-        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/genmap.py ${SUBDIR} ${KEYWORD}
-        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-        RESULT_VARIABLE genmap_result
-        ERROR_VARIABLE genmap_error
-    )
-    if(NOT genmap_result EQUAL 0)
-        message(SEND_ERROR "${genmap_error}")
-    endif()
-endmacro()
-
-set(CLASSMAPOUT ${CMAKE_BINARY_DIR}/include/qclass_lib_map.h)
-file(WRITE ${CLASSMAPOUT} "")
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     set(metaout ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${SUBDIR})
     set(metadata "#ifndef Qt${SUBDIR}_META_H\n#define Qt${SUBDIR}_META_H\n\n")
@@ -60,7 +46,6 @@ macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     endforeach(pubheader)
     set(metadata "${metadata}\n#endif\n")
     file(WRITE ${metaout} "${metadata}")
-    file(APPEND ${CLASSMAPOUT} "#include <${SUBDIR}_map.h>\n")
 endmacro()
 
 macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
@@ -108,12 +93,11 @@ endfunction()
 
 # the purpose of this function is to ensure that (1) the output string is not
 # null so that when it is passed to another function/macro it does not complain
-# about inproper number of arguments and (2) it joins the input which if
-# quoted has semicolons to it (if it is a list) that the sub-command
-# (e.g. gcc) can not handle. that's a dirty hack to support gcc and clang at
-# the same time along with custom target COMPILE_FLAGS/LINK_FLAGS without
-# doing compiler checks all over the place. if anyone has a better solution
-# I'll be glad to drop the function bellow!
+# about inproper number of arguments and (2) it joins the input which if quoted
+# has semicolons in it (if it is a list) that the sub-command (e.g. gcc) can
+# not handle. that's a dirty hack to support gcc and clang at the same time
+# along with custom target COMPILE_FLAGS/LINK_FLAGS without doing compiler
+# checks all over the place.
 function(KATIE_FIXUP_STRING INSTR OUTSTR)
     string(STRIP "${INSTR}" instrtrimmed)
     if("${instrtrimmed}" STREQUAL "")

@@ -57,7 +57,6 @@ include_directories(
 
 katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)
 katie_generate_public("${UITOOLS_PUBLIC_HEADERS}" QtUiTools)
-katie_generate_map(QtUiTools QDESIGNER_UILIB_EXPORT)
 katie_resources(${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
 katie_setup_flags()
 

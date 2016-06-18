@@ -39,7 +39,6 @@ include_directories(
 
 katie_generate_misc("${MULTIMEDIA_HEADERS}" QtMultimedia)
 katie_generate_public("${MULTIMEDIA_PUBLIC_HEADERS}" QtMultimedia)
-katie_generate_map(QtMultimedia Q_MULTIMEDIA_EXPORT)
 katie_resources("${MULTIMEDIA_SOURCES}")
 katie_resources("${MULTIMEDIA_HEADERS}")
 katie_setup_flags()

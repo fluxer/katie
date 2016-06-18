@@ -76,7 +76,6 @@ include_directories(
 
 katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)
-katie_generate_map(QtSql Q_SQL_EXPORT)
 katie_resources(${SQL_SOURCES} ${SQL_HEADERS})
 katie_setup_flags()
 

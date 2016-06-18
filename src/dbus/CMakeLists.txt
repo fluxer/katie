@@ -123,7 +123,6 @@ endif()
 
 katie_generate_misc("${DBUS_HEADERS}" QtDBus)
 katie_generate_public("${DBUS_PUBLIC_HEADERS}" QtDBus)
-katie_generate_map(QtDBus Q_DBUS_EXPORT)
 katie_resources(${DBUS_SOURCES} ${DBUS_HEADERS})
 katie_setup_flags()
 
