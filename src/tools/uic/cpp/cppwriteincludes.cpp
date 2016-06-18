@@ -70,15 +70,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
 #undef QT_CLASS_LIB
 };
 
-// Format a module header as 'QtCore/QObject'
-static inline QString moduleHeader(const QString &module, const QString &header)
-{
-    QString rc = module;
-    rc += QLatin1Char('/');
-    rc += header;
-    return rc;
-}
-
 namespace CPP {
 
 WriteIncludes::WriteIncludes(Uic *uic)
@@ -89,11 +80,10 @@ WriteIncludes::WriteIncludes(Uic *uic)
     const ClassInfoEntry *classLibEnd = qclass_lib_map + sizeof(qclass_lib_map)/sizeof(ClassInfoEntry);    
     for(const ClassInfoEntry *it = qclass_lib_map; it < classLibEnd;  ++it) {
         const QString klass = QLatin1String(it->klass);
-        const QString module = QLatin1String(it->module);
         const QLatin1String header = QLatin1String(it->header);
-        const QString newHeader = moduleHeader(module, klass);
+        // Format a module header as 'QtCore/QObject'
+        const QString newHeader = QLatin1String(it->module) + QLatin1Char('/') + header;
         m_classToHeader.insert(klass, newHeader);
-        m_oldHeaderToNewHeader.insert(header, newHeader);
     }
 }
 
@@ -298,9 +288,7 @@ void WriteIncludes::writeHeaders(const OrderedSet &headers, bool global)
     // Check for the old headers 'qslider.h' and replace by 'QtGui/QSlider'
     const OrderedSet::const_iterator cend = headers.constEnd();
     for (OrderedSet::const_iterator sit = headers.constBegin(); sit != cend; ++sit) {
-        const StringMap::const_iterator hit = m_oldHeaderToNewHeader.constFind(sit.key());
-        const bool mapped =  hit != m_oldHeaderToNewHeader.constEnd();
-        const  QString header =  mapped ? hit.value() : sit.key();
+        const  QString header =  sit.key();
         if (!header.trimmed().isEmpty()) {
             m_output << "#include " << openingQuote << header << closingQuote << QLatin1Char('\n');
         }

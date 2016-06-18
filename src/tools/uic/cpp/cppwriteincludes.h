@@ -104,7 +104,6 @@ private:
 
     typedef QMap<QString, QString> StringMap;
     StringMap m_classToHeader;
-    StringMap m_oldHeaderToNewHeader;
 
     bool m_scriptsActivated;
     bool m_laidOut;
