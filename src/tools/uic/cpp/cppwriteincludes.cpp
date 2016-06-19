@@ -53,37 +53,26 @@
 
 QT_BEGIN_NAMESPACE
 
-enum { debugWriteIncludes = 0 };
-enum { warnHeaderGeneration = 0 };
+#define DEBUG_WRITE_INCLUDES 0
+#define WARN_HEADER_GENERATOR 0
 
 struct ClassInfoEntry
 {
     const char *klass;
-    const char *module;
     const char *header;
 };
 
-static const ClassInfoEntry qclass_lib_map[] = {
-#define QT_CLASS_LIB(klass, module, header) { #klass, #module, #header },
 #include "shared/qclass_lib_map.h"
-
-#undef QT_CLASS_LIB
-};
 
 namespace CPP {
 
 WriteIncludes::WriteIncludes(Uic *uic)
     : m_uic(uic), m_output(uic->output()), m_scriptsActivated(false), m_laidOut(false)
 {
-    // When possible (no namespace) use the "QtModule/QClass" convention
-    // and create a re-mapping of the old header "qclass.h" to it.
-    const ClassInfoEntry *classLibEnd = qclass_lib_map + sizeof(qclass_lib_map)/sizeof(ClassInfoEntry);    
-    for(const ClassInfoEntry *it = qclass_lib_map; it < classLibEnd;  ++it) {
-        const QString klass = QLatin1String(it->klass);
-        const QLatin1String header = QLatin1String(it->header);
-        // Format a module header as 'QtCore/QObject'
-        const QString newHeader = QLatin1String(it->module) + QLatin1Char('/') + header;
-        m_classToHeader.insert(klass, newHeader);
+    for(int i = 0; i != qclass_lib_count; i++) {
+        const QLatin1String klass = QLatin1String(qclass_lib_map[i].klass);
+        const QLatin1String header = QLatin1String(qclass_lib_map[i].header);
+        m_classToHeader.insert(klass, header);
     }
 }
 
@@ -125,8 +114,9 @@ void WriteIncludes::acceptUI(DomUI *node)
 
 void WriteIncludes::acceptWidget(DomWidget *node)
 {
-    if (debugWriteIncludes)
-        fprintf(stderr, "%s '%s'\n", Q_FUNC_INFO, qPrintable(node->attributeClass()));
+#if DEBUG_WRITE_INCLUDES
+    fprintf(stderr, "%s '%s'\n", Q_FUNC_INFO, qPrintable(node->attributeClass()));
+#endif
 
     add(node->attributeClass());
     TreeWalker::acceptWidget(node);
@@ -156,8 +146,9 @@ void WriteIncludes::acceptProperty(DomProperty *node)
 
 void WriteIncludes::insertIncludeForClass(const QString &className, QString header, bool global)
 {
-    if (debugWriteIncludes)
-        fprintf(stderr, "%s %s '%s' %d\n", Q_FUNC_INFO, qPrintable(className), qPrintable(header), global);
+#if DEBUG_WRITE_INCLUDES
+    fprintf(stderr, "%s %s '%s' %d\n", Q_FUNC_INFO, qPrintable(className), qPrintable(header), global);
+#endif
 
     do {
         if (!header.isEmpty())
@@ -186,14 +177,12 @@ void WriteIncludes::insertIncludeForClass(const QString &className, QString head
         // Last resort: Create default header
         if (!m_uic->option().implicitIncludes)
             break;
-        header = lowerClassName;
-        header += QLatin1String(".h");
-        if (warnHeaderGeneration) {
-            qWarning("%s: Warning: generated header '%s' for class '%s'.",
-                     qPrintable(m_uic->option().messagePrefix()),
-                     qPrintable(header), qPrintable(className));
-
-        }
+        header = lowerClassName + QLatin1String(".h");
+#if WARN_HEADER_GENERATOR
+        qWarning("%s: Warning: generated header '%s' for class '%s'.",
+                 qPrintable(m_uic->option().messagePrefix()),
+                 qPrintable(header), qPrintable(className));
+#endif
 
         global = true;
     } while (false);
@@ -204,8 +193,9 @@ void WriteIncludes::insertIncludeForClass(const QString &className, QString head
 
 void WriteIncludes::add(const QString &className, bool determineHeader, const QString &header, bool global)
 {
-    if (debugWriteIncludes)
-            fprintf(stderr, "%s %s '%s' %d\n", Q_FUNC_INFO, qPrintable(className), qPrintable(header), global);
+#if DEBUG_WRITE_INCLUDES
+    fprintf(stderr, "%s %s '%s' %d\n", Q_FUNC_INFO, qPrintable(className), qPrintable(header), global);
+#endif
 
     if (className.isEmpty() || m_knownClasses.contains(className))
         return;
@@ -268,8 +258,9 @@ void WriteIncludes::acceptInclude(DomInclude *node)
 
 void WriteIncludes::insertInclude(const QString &header, bool global)
 {
-    if (debugWriteIncludes)
-        fprintf(stderr, "%s %s %d\n", Q_FUNC_INFO, qPrintable(header), global);
+#if DEBUG_WRITE_INCLUDES
+    fprintf(stderr, "%s %s %d\n", Q_FUNC_INFO, qPrintable(header), global);
+#endif
 
     OrderedSet &includes = global ?  m_globalIncludes : m_localIncludes;
     if (includes.contains(header))
