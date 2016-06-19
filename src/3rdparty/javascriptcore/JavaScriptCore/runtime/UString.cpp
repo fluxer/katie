@@ -57,95 +57,6 @@ namespace JSC {
 extern const double NaN;
 extern const double Inf;
 
-CString::CString(const char* c)
-    : m_length(strlen(c))
-    , m_data(new char[m_length + 1])
-{
-    memcpy(m_data, c, m_length + 1);
-}
-
-CString::CString(const char* c, size_t length)
-    : m_length(length)
-    , m_data(new char[length + 1])
-{
-    memcpy(m_data, c, m_length);
-    m_data[m_length] = 0;
-}
-
-CString::CString(const CString& b)
-{
-    m_length = b.m_length;
-    if (b.m_data) {
-        m_data = new char[m_length + 1];
-        memcpy(m_data, b.m_data, m_length + 1);
-    } else
-        m_data = 0;
-}
-
-CString::~CString()
-{
-    delete [] m_data;
-}
-
-CString CString::adopt(char* c, size_t length)
-{
-    CString s;
-    s.m_data = c;
-    s.m_length = length;
-    return s;
-}
-
-CString& CString::append(const CString& t)
-{
-    char* n;
-    n = new char[m_length + t.m_length + 1];
-    if (m_length)
-        memcpy(n, m_data, m_length);
-    if (t.m_length)
-        memcpy(n + m_length, t.m_data, t.m_length);
-    m_length += t.m_length;
-    n[m_length] = 0;
-
-    delete [] m_data;
-    m_data = n;
-
-    return *this;
-}
-
-CString& CString::operator=(const char* c)
-{
-    if (m_data)
-        delete [] m_data;
-    m_length = strlen(c);
-    m_data = new char[m_length + 1];
-    memcpy(m_data, c, m_length + 1);
-
-    return *this;
-}
-
-CString& CString::operator=(const CString& str)
-{
-    if (this == &str)
-        return *this;
-
-    if (m_data)
-        delete [] m_data;
-    m_length = str.m_length;
-    if (str.m_data) {
-        m_data = new char[m_length + 1];
-        memcpy(m_data, str.m_data, m_length + 1);
-    } else
-        m_data = 0;
-
-    return *this;
-}
-
-bool operator==(const CString& c1, const CString& c2)
-{
-    size_t len = c1.size();
-    return len == c2.size() && (len == 0 || memcmp(c1.c_str(), c2.c_str(), len) == 0);
-}
-
 // These static strings are immutable, except for rc, whose initial value is chosen to 
 // reduce the possibility of it becoming zero due to ref/deref not being thread-safe.
 static UChar sharedEmptyChar;
@@ -877,7 +788,7 @@ bool equal(const UString::Rep* r, const UString::Rep* b)
     return true;
 }
 
-CString UString::UTF8String(bool strict) const
+const char* UString::UTF8String(bool strict) const
 {
     // Allocate a buffer big enough to hold all the characters.
     const int length = size();
@@ -888,9 +799,9 @@ CString UString::UTF8String(bool strict) const
     const UChar* d = reinterpret_cast<const UChar*>(&data()[0]);
     ConversionResult result = convertUTF16ToUTF8(&d, d + length, &p, p + buffer.size(), strict);
     if (result != conversionOK)
-        return CString();
+        return 0;
 
-    return CString(buffer.data(), p - buffer.data());
+    return buffer.data();
 }
 
 // For use in error handling code paths -- having this not be inlined helps avoid PIC branches to fetch the global on Mac OS X.

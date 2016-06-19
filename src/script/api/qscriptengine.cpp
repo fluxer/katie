@@ -832,9 +832,9 @@ JSC::JSValue JSC_HOST_CALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObje
 #endif
     JSC::UString result;
 #ifndef QT_NO_QOBJECT
-    result = QCoreApplication::translate(context.UTF8String().c_str(),
-                                         text.UTF8String().c_str(),
-                                         comment.UTF8String().c_str(),
+    result = QCoreApplication::translate(context.UTF8String(),
+                                         text.UTF8String(),
+                                         comment.UTF8String(),
                                          encoding, n);
 #else
     result = text;
@@ -887,9 +887,9 @@ JSC::JSValue JSC_HOST_CALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JS
 #endif
     JSC::UString result;
 #ifndef QT_NO_QOBJECT
-    result = QCoreApplication::translate(context.UTF8String().c_str(),
-                                         text.UTF8String().c_str(),
-                                         comment.UTF8String().c_str(),
+    result = QCoreApplication::translate(context.UTF8String(),
+                                         text.UTF8String(),
+                                         comment.UTF8String(),
                                          QCoreApplication::UnicodeUTF8, n);
 #else
     result = text;
@@ -916,7 +916,7 @@ JSC::JSValue JSC_HOST_CALL functionQsTrId(JSC::ExecState *exec, JSC::JSObject*, 
     int n = -1;
     if (args.size() > 1)
         n = args.at(1).toInt32(exec);
-    return JSC::jsString(exec, qtTrId(id.UTF8String().c_str(), n));
+    return JSC::jsString(exec, qtTrId(id.UTF8String(), n));
 }
 
 JSC::JSValue JSC_HOST_CALL functionQsTrIdNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)

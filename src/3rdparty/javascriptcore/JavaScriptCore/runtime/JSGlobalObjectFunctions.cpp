@@ -53,13 +53,13 @@ namespace JSC {
 static JSValue encode(ExecState* exec, const ArgList& args, const char* doNotEscape)
 {
     UString str = args.at(0).toString(exec);
-    CString cstr = str.UTF8String(true);
-    if (!cstr.c_str())
+    const char* cstr = str.UTF8String(true);
+    if (!cstr)
         return throwError(exec, URIError, "String contained an illegal UTF-16 sequence.");
 
     StringBuilder builder;
-    const char* p = cstr.c_str();
-    for (size_t k = 0; k < cstr.size(); k++, p++) {
+    const char* p = cstr;
+    for (size_t k = 0; k < strlen(cstr); k++, p++) {
         char c = *p;
         if (c && strchr(doNotEscape, c))
             builder.append(c);

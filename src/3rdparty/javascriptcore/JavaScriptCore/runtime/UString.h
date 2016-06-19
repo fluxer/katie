@@ -43,37 +43,6 @@ namespace JSC {
     using WTF::PlacementNewAdoptType;
     using WTF::PlacementNewAdopt;
 
-    class CString {
-    public:
-        CString()
-            : m_length(0)
-            , m_data(0)
-        {
-        }
-
-        CString(const char*);
-        CString(const char*, size_t);
-        CString(const CString&);
-
-        ~CString();
-
-        static CString adopt(char*, size_t); // buffer should be allocated with new[].
-
-        CString& append(const CString&);
-        CString& operator=(const char* c);
-        CString& operator=(const CString&);
-        CString& operator+=(const CString& c) { return append(c); }
-
-        size_t size() const { return m_length; }
-        const char* c_str() const { return m_data; }
-
-    private:
-        size_t m_length;
-        char* m_data;
-    };
-
-    bool operator==(const CString&, const CString&);
-
     typedef Vector<char, 32> CStringBuffer;
 
     class UString {
@@ -90,8 +59,7 @@ namespace JSC {
             *this = JSC::UString(reinterpret_cast<const UChar*>(str.constData()), str.length());
         }
         typedef UStringImpl Rep;
-    
-    public:
+
         // UString constructors passed char*s assume ISO Latin-1 encoding; for UTF8 use 'createFromUTF8', below.
         UString();
         UString(const char*); // Constructor for null-terminated string.
@@ -162,7 +130,7 @@ namespace JSC {
          * guaranteed to be otherwise valid.
          * In strict mode, error is returned as null CString.
          */
-        CString UTF8String(bool strict = false) const;
+        const char* UTF8String(bool strict = false) const;
 
         UString& operator=(const char*c);
 
