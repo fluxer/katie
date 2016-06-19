@@ -129,8 +129,6 @@ void JSGlobalObject::init(JSObject* thisValue)
     d()->recursion = 0;
     d()->debugger = 0;
 
-    d()->profileGroup = 0;
-
     reset(prototype());
 }
 

@@ -50,11 +50,6 @@ namespace JSC {
     class RegExpPrototype;
     class RegisterFile;
 
-    struct ActivationStackNode;
-    struct HashTable;
-
-    typedef Vector<ExecState*, 16> ExecStateStack;
-    
     class JSGlobalObject : public JSVariableObject {
     protected:
         using JSVariableObject::JSVariableObjectData;
@@ -151,7 +146,6 @@ namespace JSC {
             RefPtr<Structure> stringObjectStructure;
 
             SymbolTable symbolTable;
-            unsigned profileGroup;
 
             RefPtr<JSGlobalData> globalData;
 
@@ -234,9 +228,6 @@ namespace JSC {
         Structure* regExpMatchesArrayStructure() const { return d()->regExpMatchesArrayStructure.get(); }
         Structure* regExpStructure() const { return d()->regExpStructure.get(); }
         Structure* stringObjectStructure() const { return d()->stringObjectStructure.get(); }
-
-        void setProfileGroup(unsigned value) { d()->profileGroup = value; }
-        unsigned profileGroup() const { return d()->profileGroup; }
 
         Debugger* debugger() const { return d()->debugger; }
         void setDebugger(Debugger* debugger) { d()->debugger = debugger; }
