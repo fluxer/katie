@@ -20,10 +20,9 @@ set(QNMBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-katie_resources("${QNMBEARERPLUGIN_HEADERS}")
-katie_resources("${QNMBEARERPLUGIN_SOURCES}")
+katie_resources(${QNMBEARERPLUGIN_HEADERS} ${QNMBEARERPLUGIN_SOURCES})
 
-add_library(qnmbearerplugin ${KATIE_TYPE} ${QNMBEARERPLUGIN_SOURCES} ${QNMBEARERPLUGIN_HEADERS})
+add_library(qnmbearerplugin MODULE ${QNMBEARERPLUGIN_SOURCES} ${QNMBEARERPLUGIN_HEADERS})
 target_link_libraries(qnmbearerplugin KtCore KtNetwork KtDBus)
 set_target_properties(qnmbearerplugin PROPERTIES OUTPUT_NAME qnmbearer)
 

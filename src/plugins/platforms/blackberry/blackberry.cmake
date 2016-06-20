@@ -72,10 +72,9 @@ if(${KATIE_PLATFORM} STREQUAL "blackberry")
     )
 endif()
 
-katie_resources("${BLACKBERRYPLUGIN_SOURCES}")
-katie_resources("${BLACKBERRYPLUGIN_HEADERS}")
+katie_resources(${BLACKBERRYPLUGIN_SOURCES} ${BLACKBERRYPLUGIN_HEADERS})
 
-add_library(blackberryplugin ${KATIE_TYPE} ${BLACKBERRYPLUGIN_SOURCES} ${BLACKBERRYPLUGIN_HEADERS})
+add_library(blackberryplugin MODULE ${BLACKBERRYPLUGIN_SOURCES} ${BLACKBERRYPLUGIN_HEADERS})
 set_target_properties(blackberryplugin PROPERTIES OUTPUT_NAME blackberry)
 target_link_libraries(blackberryplugin pps screen clipboard ${EGL_LIBRARIES})
 target_compile_definitions(blackberryplugin ${BLACKBERRYPLUGIN_DEFINITIONS})

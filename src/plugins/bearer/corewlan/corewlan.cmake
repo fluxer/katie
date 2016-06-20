@@ -12,12 +12,13 @@ set(QCOREWLANBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-katie_resources("${QCOREWLANBEARERPLUGIN_HEADERS}")
-katie_resources("${QCOREWLANBEARERPLUGIN_SOURCES}")
+katie_resources(${QCOREWLANBEARERPLUGIN_HEADERS} ${QCOREWLANBEARERPLUGIN_SOURCES})
 
-add_library(qcorewlanbearerplugin ${KATIE_TYPE} ${QCOREWLANBEARERPLUGIN_SOURCES} ${QCOREWLANBEARERPLUGIN_HEADERS})
+add_library(qcorewlanbearerplugin MODULE ${QCOREWLANBEARERPLUGIN_SOURCES} ${QCOREWLANBEARERPLUGIN_HEADERS})
 set_target_properties(qcorewlanbearerplugin PROPERTIES OUTPUT_NAME qcorewlanbearer)
-set_target_properties(qcorewlanbearerplugin PROPERTIES LINK_FLAGS "-framework Foundation -framework SystemConfiguration -framework CoreWLAN -framework Security")
+set_target_properties(qcorewlanbearerplugin PROPERTIES
+    LINK_FLAGS "-framework Foundation -framework SystemConfiguration -framework CoreWLAN -framework Security"
+)
 
 install(
     TARGETS qcorewlanbearerplugin

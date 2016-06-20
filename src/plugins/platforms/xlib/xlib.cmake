@@ -86,10 +86,9 @@ if(${KATIE_PLATFORM} STREQUAL "mac")
     )
 endif()
 
-katie_resources("${QXLIBPLUGIN_SOURCES}")
-katie_resources("${QXLIBPLUGIN_HEADERS}")
+katie_resources(${QXLIBPLUGIN_SOURCES} ${QXLIBPLUGIN_HEADERS})
 
-add_library(qxlibplugin ${KATIE_TYPE} ${QXLIBPLUGIN_SOURCES} ${QXLIBPLUGIN_HEADERS})
+add_library(qxlibplugin MODULE ${QXLIBPLUGIN_SOURCES} ${QXLIBPLUGIN_HEADERS})
 set_target_properties(qxlibplugin PROPERTIES OUTPUT_NAME qxlib)
 target_link_libraries(qxlibplugin ${EXTRA_QXLIB_LIBS})
 target_include_directories(qxlibplugin PRIVATE ${QXLIBPLUGIN_INCLUDES})

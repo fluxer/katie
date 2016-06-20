@@ -26,7 +26,7 @@ set(ICDPLUGIN_SOURCES
 
 katie_resources(${ICDPLUGIN_HEADERS} ${ICDPLUGIN_SOURCES})
 
-add_library(qicdbearerplugin ${KATIE_TYPE} ${ICDPLUGIN_SOURCES} ${ICDPLUGIN_HEADERS})
+add_library(qicdbearerplugin MODULE ${ICDPLUGIN_SOURCES} ${ICDPLUGIN_HEADERS})
 set_target_properties(qicdbearerplugin PROPERTIES OUTPUT_NAME qicdbearer)
 target_include_directories(qicdbearerplugin PRIVATE ${CMAKE_SOURCE_DIR}/src/3rdparty/libgq)
 

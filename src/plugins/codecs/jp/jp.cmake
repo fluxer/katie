@@ -17,7 +17,7 @@ set(JPCODECSPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/jpmain.cpp
 )
 
-add_library(qjpcodecsplugin ${KATIE_TYPE} ${JPCODECSPLUGIN_SOURCES} ${JPCODECSPLUGIN_HEADERS})
+add_library(qjpcodecsplugin MODULE ${JPCODECSPLUGIN_SOURCES} ${JPCODECSPLUGIN_HEADERS})
 target_link_libraries(qjpcodecsplugin KtCore)
 set_target_properties(qjpcodecsplugin PROPERTIES OUTPUT_NAME qjpcodecs)
 

@@ -42,10 +42,9 @@ set(WAYLANDPLUGIN_SOURCES
 include(gl_integration/gl_integration.cmake)
 include(windowmanager_integration/windowmanager_integration.cmake)
 
-katie_resources("${WAYLANDPLUGIN_SOURCES}")
-katie_resources("${WAYLANDPLUGIN_HEADERS}")
+katie_resources(${WAYLANDPLUGIN_SOURCES} ${WAYLANDPLUGIN_HEADERS})
 
-add_library(qwaylandplugin ${KATIE_TYPE} ${WAYLANDPLUGIN_SOURCES} ${WAYLANDPLUGIN_HEADERS})
+add_library(qwaylandplugin MODULE ${WAYLANDPLUGIN_SOURCES} ${WAYLANDPLUGIN_HEADERS})
 set_target_properties(qwaylandplugin PROPERTIES OUTPUT_NAME qwayland)
 target_compile_definitions(qwaylandplugin ${WAYLANDPLUGIN_DEFINITIONS})
 target_include_directories(qwaylandplugin ${WAYLANDPLUGIN_INCLUDES})

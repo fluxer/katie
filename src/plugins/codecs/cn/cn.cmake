@@ -8,7 +8,7 @@ set(CNCODECSPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/cn/qgb18030codec.cpp
 )
 
-add_library(qcncodecsplugin ${KATIE_TYPE} ${CNCODECSPLUGIN_SOURCES} ${CNCODECSPLUGIN_HEADERS})
+add_library(qcncodecsplugin MODULE ${CNCODECSPLUGIN_SOURCES} ${CNCODECSPLUGIN_HEADERS})
 target_link_libraries(qcncodecsplugin KtCore)
 set_target_properties(qcncodecsplugin PROPERTIES OUTPUT_NAME qcncodecs)
 

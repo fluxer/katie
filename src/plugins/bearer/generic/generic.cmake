@@ -18,10 +18,9 @@ set(QGENERICBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-katie_resources(${QGENERICBEARERPLUGIN_HEADERS})
-katie_resources(${QGENERICBEARERPLUGIN_SOURCES})
+katie_resources(${QGENERICBEARERPLUGIN_HEADERS} ${QGENERICBEARERPLUGIN_SOURCES})
 
-add_library(qgenericbearerplugin ${KATIE_TYPE} ${QGENERICBEARERPLUGIN_SOURCES} ${QGENERICBEARERPLUGIN_HEADERS})
+add_library(qgenericbearerplugin MODULE ${QGENERICBEARERPLUGIN_SOURCES} ${QGENERICBEARERPLUGIN_HEADERS})
 target_link_libraries(qgenericbearerplugin KtCore KtNetwork)
 set_target_properties(qgenericbearerplugin PROPERTIES OUTPUT_NAME qgenericbearer)
 

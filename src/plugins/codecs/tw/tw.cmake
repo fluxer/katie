@@ -9,7 +9,7 @@ set(TWCODECSPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/tw/twmain.cpp
 )
 
-add_library(qtwcodecsplugin ${KATIE_TYPE} ${TWCODECSPLUGIN_SOURCES} ${TWCODECSPLUGIN_HEADERS})
+add_library(qtwcodecsplugin MODULE ${TWCODECSPLUGIN_SOURCES} ${TWCODECSPLUGIN_HEADERS})
 target_link_libraries(qtwcodecsplugin KtCore)
 set_target_properties(qtwcodecsplugin PROPERTIES OUTPUT_NAME qtwcodecs)
 

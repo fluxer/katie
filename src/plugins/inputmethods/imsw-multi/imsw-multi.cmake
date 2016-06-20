@@ -14,10 +14,9 @@ set(QIMSWMULTIPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods/imsw-multi/qmultiinputcontextplugin.cpp
 )
 
-katie_resources(${QIMSWMULTIPLUGIN_HEADERS})
-katie_resources(${QIMSWMULTIPLUGIN_SOURCES})
+katie_resources(${QIMSWMULTIPLUGIN_HEADERS} ${QIMSWMULTIPLUGIN_SOURCES})
 
-add_library(qimsw-multiplugin ${KATIE_TYPE} ${QIMSWMULTIPLUGIN_SOURCES} ${QIMSWMULTIPLUGIN_HEADERS})
+add_library(qimsw-multiplugin MODULE ${QIMSWMULTIPLUGIN_SOURCES} ${QIMSWMULTIPLUGIN_HEADERS})
 target_link_libraries(qimsw-multiplugin KtCore KtGui)
 set_target_properties(qimsw-multiplugin PROPERTIES OUTPUT_NAME qimsw-multi)
 

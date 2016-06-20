@@ -9,7 +9,7 @@ set(QICOPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/ico/qicohandler.cpp
 )
 
-add_library(qicoplugin ${KATIE_TYPE} ${QICOPLUGIN_SOURCES} ${QICOPLUGIN_HEADERS})
+add_library(qicoplugin MODULE ${QICOPLUGIN_SOURCES} ${QICOPLUGIN_HEADERS})
 target_link_libraries(qicoplugin KtCore KtGui)
 set_target_properties(qicoplugin PROPERTIES OUTPUT_NAME qico)
 

@@ -4,7 +4,7 @@ set(QGIFPLUGIN_SOURCES
     ${CMAKE_SOURCE_DIR}/src/gui/image/qgifhandler.cpp
 )
 
-add_library(qgifplugin ${KATIE_TYPE} ${QGIFPLUGIN_SOURCES})
+add_library(qgifplugin MODULE ${QGIFPLUGIN_SOURCES})
 target_link_libraries(qgifplugin KtCore KtGui)
 set_target_properties(qgifplugin PROPERTIES OUTPUT_NAME qgif)
 

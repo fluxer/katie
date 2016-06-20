@@ -11,7 +11,7 @@ set(QTGAPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/tga/qtgafile.cpp
 )
 
-add_library(qtgaplugin ${KATIE_TYPE} ${QTGAPLUGIN_SOURCES} ${QTGAPLUGIN_HEADERS})
+add_library(qtgaplugin MODULE ${QTGAPLUGIN_SOURCES} ${QTGAPLUGIN_HEADERS})
 target_link_libraries(qtgaplugin KtCore KtGui)
 set_target_properties(qtgaplugin PROPERTIES OUTPUT_NAME qtga)
 

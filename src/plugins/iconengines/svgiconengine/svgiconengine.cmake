@@ -9,10 +9,9 @@ set(QSVGICONPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/iconengines/svgiconengine/qsvgiconengine.cpp
 )
 
-katie_resources("${QSVGICONPLUGIN_HEADERS}")
-katie_resources("${QSVGICONPLUGIN_SOURCES}")
+katie_resources(${QSVGICONPLUGIN_HEADERS} ${QSVGICONPLUGIN_SOURCES})
 
-add_library(qsvgiconplugin ${KATIE_TYPE} ${QSVGICONPLUGIN_SOURCES} ${QSVGICONPLUGIN_HEADERS})
+add_library(qsvgiconplugin MODULE ${QSVGICONPLUGIN_SOURCES} ${QSVGICONPLUGIN_HEADERS})
 target_link_libraries(qsvgiconplugin KtCore KtGui KtSvg)
 set_target_properties(qsvgiconplugin PROPERTIES OUTPUT_NAME qsvgicon)
 

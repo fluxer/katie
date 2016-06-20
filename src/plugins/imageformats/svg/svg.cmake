@@ -9,7 +9,7 @@ set(QSVGPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/svg/qsvgiohandler.cpp
 )
 
-add_library(qsvgplugin ${KATIE_TYPE} ${QSVGPLUGIN_SOURCES} ${QSVGPLUGIN_HEADERS})
+add_library(qsvgplugin MODULE ${QSVGPLUGIN_SOURCES} ${QSVGPLUGIN_HEADERS})
 target_link_libraries(qsvgplugin KtCore KtGui KtSvg)
 set_target_properties(qsvgplugin PROPERTIES OUTPUT_NAME qsvg)
 

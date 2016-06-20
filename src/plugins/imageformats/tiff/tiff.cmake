@@ -4,7 +4,7 @@ set(QTIFFPLUGIN_SOURCES
     ${CMAKE_SOURCE_DIR}/src/gui/image/qtiffhandler.cpp
 )
 
-add_library(qtiffplugin ${KATIE_TYPE} ${QTIFFPLUGIN_SOURCES})
+add_library(qtiffplugin MODULE ${QTIFFPLUGIN_SOURCES})
 target_link_libraries(qtiffplugin KtCore KtGui)
 set_target_properties(qtiffplugin PROPERTIES OUTPUT_NAME qtiff)
 

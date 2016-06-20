@@ -4,7 +4,7 @@ set(QJPEGPLUGIN_SOURCES
     ${CMAKE_SOURCE_DIR}/src/gui/image/qjpeghandler.cpp
 )
 
-add_library(qjpegplugin ${KATIE_TYPE} ${QJPEGPLUGIN_SOURCES})
+add_library(qjpegplugin MODULE ${QJPEGPLUGIN_SOURCES})
 target_link_libraries(qjpegplugin KtCore KtGui)
 set_target_properties(qjpegplugin PROPERTIES OUTPUT_NAME qjpeg)
 
