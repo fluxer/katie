@@ -79,7 +79,7 @@ class Q_GUI_EXPORT QStaticTextItem
 {
 public:    
     QStaticTextItem() : chars(0), numChars(0), useBackendOptimizations(false),
-                        userDataNeedsUpdate(0), m_fontEngine(0), m_userData(0) {}
+                        userDataNeedsUpdate(false), m_fontEngine(0), m_userData(0) {}
 
     QStaticTextItem(const QStaticTextItem &other)
     {
@@ -144,7 +144,7 @@ public:
     QFont font;                                  // 8 bytes per item
     QColor color;                                // 10 bytes per item
     char useBackendOptimizations : 1;            // 1 byte per item
-    char userDataNeedsUpdate : 1;                //
+    bool userDataNeedsUpdate : 1;                //
                                                  // ================
                                                  // 51 bytes per item
 

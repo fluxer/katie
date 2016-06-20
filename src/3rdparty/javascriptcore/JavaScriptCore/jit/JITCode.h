@@ -110,7 +110,7 @@ namespace JSC {
         CodeRef m_ref;
     };
 
-};
+}
 
 #endif
 

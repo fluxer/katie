@@ -275,6 +275,4 @@ UString FunctionExecutable::paramString() const
     return builder.release();
 }
 
-};
-
-
+}

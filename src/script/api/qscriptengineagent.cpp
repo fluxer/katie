@@ -144,7 +144,7 @@ void QScriptEngineAgentPrivate::exceptionThrow(const JSC::DebuggerCallFrame& fra
     engine->agentLineNumber = oldAgentLineNumber;
     engine->currentFrame = oldFrame;
     engine->setCurrentException(value);
-};
+}
 
 void QScriptEngineAgentPrivate::exceptionCatch(const JSC::DebuggerCallFrame& frame, intptr_t sourceID)
 {
@@ -208,7 +208,7 @@ void QScriptEngineAgentPrivate::didReachBreakpoint(const JSC::DebuggerCallFrame&
         engine->currentFrame = oldFrame;
         engine->agentLineNumber = oldAgentLineNumber;
     }
-};
+}
 
 /*!
     Constructs a QScriptEngineAgent object for the given \a engine.

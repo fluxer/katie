@@ -141,7 +141,7 @@ namespace JSC {
         }
 
         int accessType : 31;
-        int seen : 1;
+        bool seen : 1;
 
         union {
             struct {

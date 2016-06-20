@@ -32,19 +32,19 @@
 
 #if CPU(ARM_THUMB2)
 #include "MacroAssemblerARMv7.h"
-namespace JSC { typedef MacroAssemblerARMv7 MacroAssemblerBase; };
+namespace JSC { typedef MacroAssemblerARMv7 MacroAssemblerBase; }
 
 #elif CPU(ARM_TRADITIONAL)
 #include "MacroAssemblerARM.h"
-namespace JSC { typedef MacroAssemblerARM MacroAssemblerBase; };
+namespace JSC { typedef MacroAssemblerARM MacroAssemblerBase; }
 
 #elif CPU(X86)
 #include "MacroAssemblerX86.h"
-namespace JSC { typedef MacroAssemblerX86 MacroAssemblerBase; };
+namespace JSC { typedef MacroAssemblerX86 MacroAssemblerBase; }
 
 #elif CPU(X86_64)
 #include "MacroAssemblerX86_64.h"
-namespace JSC { typedef MacroAssemblerX86_64 MacroAssemblerBase; };
+namespace JSC { typedef MacroAssemblerX86_64 MacroAssemblerBase; }
 
 #else
 #error "The MacroAssembler is not supported on this platform."

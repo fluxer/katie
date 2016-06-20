@@ -1098,7 +1098,7 @@ QT_END_NAMESPACE
 #include <QtGui/qvector4d.h>
 #include <QtGui/qquaternion.h>
 
-Q_DECLARE_METATYPE(QScriptValue);
+Q_DECLARE_METATYPE(QScriptValue)
 
 QT_BEGIN_NAMESPACE
 

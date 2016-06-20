@@ -196,7 +196,7 @@ public:
         Privacy = 0x1
     };
     
-    Q_DECLARE_FLAGS(ApFlags, ApFlag);
+    Q_DECLARE_FLAGS(ApFlags, ApFlag)
     
     enum ApSecurityFlag {
         ApSecurityNone = 0x0,
@@ -212,7 +212,7 @@ public:
         Key8021x = 0x200
     };
     
-    Q_DECLARE_FLAGS(ApSecurityFlags, ApSecurityFlag);
+    Q_DECLARE_FLAGS(ApSecurityFlags, ApSecurityFlag)
     
     explicit QNetworkManagerInterfaceAccessPoint(const QString &dbusPathName, QObject *parent = 0);
     ~QNetworkManagerInterfaceAccessPoint();

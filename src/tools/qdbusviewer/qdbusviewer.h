@@ -46,9 +46,9 @@
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusMessage>
 
-QT_FORWARD_DECLARE_CLASS(QTreeView);
-QT_FORWARD_DECLARE_CLASS(QDomDocument);
-QT_FORWARD_DECLARE_CLASS(QDomElement);
+QT_FORWARD_DECLARE_CLASS(QTreeView)
+QT_FORWARD_DECLARE_CLASS(QDomDocument)
+QT_FORWARD_DECLARE_CLASS(QDomElement)
 
 struct BusSignature
 {

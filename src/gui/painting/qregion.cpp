@@ -946,7 +946,7 @@ struct Segment
     }
 
     int horizontal : 1;
-    int added : 1;
+    bool added : 1;
 
     QPoint point;
     Segment *prev;

@@ -180,7 +180,7 @@ namespace JSC {
     const int numOpcodeIDs = op_end + 1;
 
     #define OPCODE_ID_LENGTHS(id, length) const int id##_length = length;
-         FOR_EACH_OPCODE_ID(OPCODE_ID_LENGTHS);
+         FOR_EACH_OPCODE_ID(OPCODE_ID_LENGTHS)
     #undef OPCODE_ID_LENGTHS
     
     #define OPCODE_LENGTH(opcode) opcode##_length
@@ -190,7 +190,7 @@ namespace JSC {
     #undef OPCODE_ID_LENGTH_MAP
 
     #define VERIFY_OPCODE_ID(id, size) COMPILE_ASSERT(id <= op_end, ASSERT_THAT_JS_OPCODE_IDS_ARE_VALID);
-        FOR_EACH_OPCODE_ID(VERIFY_OPCODE_ID);
+        FOR_EACH_OPCODE_ID(VERIFY_OPCODE_ID)
     #undef VERIFY_OPCODE_ID
 
 #if HAVE(COMPUTED_GOTO)
