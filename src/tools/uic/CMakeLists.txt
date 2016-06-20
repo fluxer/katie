@@ -18,25 +18,6 @@ set(UIC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/driver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppextractimages.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwritedeclaration.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondata.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondeclaration.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteiconinitialization.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteincludes.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteinitialization.h
-)
-
-set(UIC_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/uic.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/customwidgetsinfo.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/databaseinfo.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/driver.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/globaldefs.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/option.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/treewalker.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/ui4.h
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppextractimages.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwritedeclaration.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteicondata.cpp
@@ -48,7 +29,7 @@ set(UIC_HEADERS
 
 katie_setup_flags()
 
-add_executable(uic ${UIC_SOURCES} ${UIC_HEADERS})
+add_executable(uic ${UIC_SOURCES})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})
 
 install(

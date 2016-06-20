@@ -1,5 +1,5 @@
 # add_definitions()
-set(EXTRA_IDC_LIBS "")
+set(EXTRA_IDC_LIBS KtCore)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -14,17 +14,10 @@ set(IDC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-set(IDC_HEADERS
-    ${BOOTSTRAP_HEADERS}
-)
-
-# katie_resources("${IDC_SOURCES}")
 katie_setup_flags()
 
-add_executable(idc $<TARGET_OBJECTS:bootstrap> ${IDC_SOURCES} ${IDC_HEADERS})
+add_executable(idc ${IDC_SOURCES})
 target_link_libraries(idc ${EXTRA_IDC_LIBS})
-
-target_compile_definitions(idc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 install(
     TARGETS idc
