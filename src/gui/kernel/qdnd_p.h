@@ -261,9 +261,6 @@ public:
 #endif
 
 private:
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    Qt::DropAction currentActionForOverrideCursor;
-#endif
     QWidget *currentDropTarget;
 
     static QDragManager *instance;

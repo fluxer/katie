@@ -58,7 +58,7 @@ QT_BEGIN_NAMESPACE
 template <class T> class QVector;
 class QVariant;
 
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA) || defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
 struct QRegionPrivate;
 #endif
 
@@ -153,8 +153,6 @@ public:
 #endif
     HIMutableShapeRef toHIMutableShape() const;
     static QRegion fromHIShapeRef(HIShapeRef shape);
-#elif defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    inline void *handle() const { return d->qt_rgn; }
 #endif
 
 #ifndef QT_NO_DATASTREAM
@@ -189,10 +187,8 @@ private:
 #elif defined(Q_WS_X11)
         Region rgn;
         void *xrectangles;
-#elif defined(Q_WS_MAC) && !defined(QT_MAC_USE_COCOA)
-        mutable RgnHandle unused; // Here for binary compatibility reasons. ### Qt 5 remove.
 #endif
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA) || defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
         QRegionPrivate *qt_rgn;
 #endif
     };

@@ -76,14 +76,6 @@
 #include <qpaintengine_opengl_p.h>
 #endif
 
-#ifdef Q_WS_QWS
-#include <qglwindowsurface_qws_p.h>
-#endif
-
-#ifdef Q_WS_QPA
-#include <QtGui/QPlatformGLContext>
-#endif
-
 #include <qglpixelbuffer.h>
 #include <qglframebufferobject.h>
 
@@ -106,7 +98,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
 QGLExtensionFuncs QGLContextPrivate::qt_extensionFuncs;
 #endif
 
@@ -122,9 +114,7 @@ struct QGLThreadContext {
     QGLContext *context;
 };
 
-#ifndef Q_WS_QPA
 static QThreadStorage<QGLThreadContext *> qgl_context_storage;
-#endif
 
 Q_GLOBAL_STATIC(QGLFormat, qgl_default_format)
 
@@ -1711,9 +1701,6 @@ void QGLContextPrivate::init(QPaintDevice *dev, const QGLFormat &format)
 #  endif
     vi = 0;
 #endif
-#if defined(Q_WS_QPA)
-    platformContext = 0;
-#endif
 #if !defined(QT_NO_EGL)
     ownsEglContext = false;
     eglContext = 0;
@@ -2301,7 +2288,7 @@ static void convertToGLFormatHelper(QImage &dst, const QImage &img, GLenum textu
     }
 }
 
-#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
 QGLExtensionFuncs& QGLContextPrivate::extensionFuncs(const QGLContext *)
 {
     return qt_extensionFuncs;
@@ -3300,11 +3287,7 @@ bool QGLContext::areSharing(const QGLContext *context1, const QGLContext *contex
 bool QGLContext::create(const QGLContext* shareContext)
 {
     Q_D(QGLContext);
-#ifdef Q_WS_QPA
-    if (!d->paintDevice && !d->platformContext)
-#else
     if (!d->paintDevice)
-#endif
         return false;
 
     reset();
@@ -3313,10 +3296,9 @@ bool QGLContext::create(const QGLContext* shareContext)
         QWidgetPrivate *wd = qt_widget_private(static_cast<QWidget *>(d->paintDevice));
         wd->usesDoubleBufferedGLContext = d->glFormat.doubleBuffer();
     }
-#ifndef Q_WS_QPA //We do this in choose context->setupSharing()
+    // We do this in choose context->setupSharing()
     if (d->sharing)  // ok, we managed to share
         QGLContextGroup::addShare(this, shareContext);
-#endif
     return d->valid;
 }
 
@@ -3390,25 +3372,15 @@ void QGLContext::setInitialized(bool on)
 
 const QGLContext* QGLContext::currentContext()
 {
-#ifdef Q_WS_QPA
-    if (const QPlatformGLContext *threadContext = QPlatformGLContext::currentContext()) {
-        return QGLContext::fromPlatformGLContext(const_cast<QPlatformGLContext *>(threadContext));
-    }
-    return 0;
-#else
     QGLThreadContext *threadContext = qgl_context_storage.localData();
     if (threadContext) {
         return threadContext->context;
     }
     return 0;
-#endif //Q_WS_QPA
 }
 
 void QGLContextPrivate::setCurrentContext(QGLContext *context)
 {
-#ifdef Q_WS_QPA
-    Q_UNUSED(context);
-#else
     QGLThreadContext *threadContext = qgl_context_storage.localData();
     if (!threadContext) {
         if (!QThread::currentThread()) {
@@ -3421,7 +3393,6 @@ void QGLContextPrivate::setCurrentContext(QGLContext *context)
     }
     threadContext->context = context;
     QGLContext::currentCtx = context; // XXX: backwards-compat, not thread-safe
-#endif
 }
 
 /*!
@@ -4236,7 +4207,7 @@ void QGLWidget::resizeOverlayGL(int, int)
 /*! \fn bool QGLWidget::event(QEvent *e)
   \reimp
 */
-#if !defined(Q_OS_WINCE) && !defined(Q_WS_QWS) && !defined(Q_WS_QPA)
+#if !defined(Q_OS_WINCE)
 bool QGLWidget::event(QEvent *e)
 {
     Q_D(QGLWidget);
@@ -5463,7 +5434,7 @@ void QGLWidgetPrivate::initContext(QGLContext *context, const QGLWidget* shareWi
         glcx = new QGLContext(QGLFormat::defaultFormat(), q);
 }
 
-#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
 Q_GLOBAL_STATIC(QString, qt_gl_lib_name)
 
 Q_OPENGL_EXPORT void qt_set_gl_library_name(const QString& name)

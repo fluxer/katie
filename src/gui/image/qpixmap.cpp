@@ -71,10 +71,6 @@
 # include "qpixmap_mac_p.h"
 #endif
 
-#ifdef Q_WS_QPA
-# include "qplatformintegration_qpa.h"
-#endif
-
 #if defined(Q_WS_X11)
 # include "qx11info_x11.h"
 # include <qt_x11_p.h>
@@ -99,11 +95,6 @@ static bool qt_pixmap_thread_test()
 #if defined (Q_WS_X11)
         if (!QApplication::testAttribute(Qt::AA_X11InitThreads))
             fail = true;
-#elif defined (Q_WS_QPA)
-        if (!QApplicationPrivate::platformIntegration()->hasCapability(QPlatformIntegration::ThreadedPixmaps)) {
-            printf("Lighthouse plugin does not support threaded pixmaps!\n");
-            fail = true;
-        }
 #else
         if (QApplicationPrivate::graphics_system_name != QLatin1String("raster"))
             fail = true;
@@ -1663,9 +1654,7 @@ QBitmap QPixmap::mask() const
 */
 int QPixmap::defaultDepth()
 {
-#if defined(Q_WS_QWS)
-    return QScreen::instance()->depth();
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     return QX11Info::appDepth();
 #elif defined(Q_WS_WINCE)
     return QColormap::instance().depth();
@@ -1673,8 +1662,6 @@ int QPixmap::defaultDepth()
     return 32; // XXX
 #elif defined(Q_WS_MAC)
     return 32;
-#elif defined(Q_WS_QPA)
-    return 32; //LITE: use graphicssystem (we should do that in general)
 #endif
 }
 

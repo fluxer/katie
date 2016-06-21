@@ -50,9 +50,6 @@
 #ifdef Q_WS_MAC
 # include <qpixmap_mac_p.h>
 #endif
-#ifdef Q_WS_QPA
-# include <QtGui/qapplication_p.h>
-#endif
 # include <qgraphicssystemex_p.h>
 
 QT_BEGIN_NAMESPACE
@@ -63,18 +60,13 @@ QGraphicsSystem::~QGraphicsSystem()
 
 QPixmapData *QGraphicsSystem::createDefaultPixmapData(QPixmapData::PixelType type)
 {
-#ifdef Q_WS_QWS
-    Q_UNUSED(type);
-#endif
 #if defined(Q_WS_X11)
     return new QX11PixmapData(type);
 #elif defined(Q_WS_WIN)
     return new QRasterPixmapData(type);
 #elif defined(Q_WS_MAC)
     return new QMacPixmapData(type);
-#elif defined(Q_WS_QPA)
-    return QApplicationPrivate::platformIntegration()->createPixmapData(type);
-#elif !defined(Q_WS_QWS)
+#else
 #error QGraphicsSystem::createDefaultPixmapData() not implemented
 #endif
     return 0;

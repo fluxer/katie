@@ -50,10 +50,6 @@
 #include <QtGui/qsizepolicy.h>
 #include <QtGui/qcursor.h>
 
-#ifdef Q_WS_QPA //should this go somewhere else?
-#include <QtGui/qplatformwindowformat_qpa.h>
-#endif
-
 #ifdef QT_INCLUDE_COMPAT
 #include <QtGui/qevent.h>
 #else
@@ -622,16 +618,6 @@ public:
     void setWindowSurface(QWindowSurface *surface);
     QWindowSurface *windowSurface() const;
 
-#if defined(Q_WS_QPA)
-    void setPlatformWindow(QPlatformWindow *window);
-    QPlatformWindow *platformWindow() const;
-
-    void setPlatformWindowFormat(const QPlatformWindowFormat &format);
-    QPlatformWindowFormat platformWindowFormat() const;
-
-    friend class QDesktopScreenWidget;
-#endif
-
 Q_SIGNALS:
     void customContextMenuRequested(const QPoint &pos);
 
@@ -765,17 +751,6 @@ private:
     friend bool qt_mac_sendMacEventToWidget(QWidget *widget, EventRef ref);
     friend class QRasterWindowSurface;
     friend class QUnifiedToolbarSurface;
-#endif
-#ifdef Q_WS_QWS
-    friend class QWSBackingStore;
-    friend class QWSManager;
-    friend class QWSManagerPrivate;
-    friend class QDecoration;
-    friend class QWSWindowSurface;
-    friend class QScreen;
-    friend class QVNCScreen;
-    friend bool isWidgetOpaque(const QWidget *);
-    friend class QGLWidgetPrivate;
 #endif
 #ifdef Q_WS_X11
     friend void qt_net_update_user_time(QWidget *tlw, unsigned long timestamp);

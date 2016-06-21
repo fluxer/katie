@@ -95,9 +95,6 @@ void QBlittablePixmapData::resize(int width, int height)
 
     m_blittable.reset(0);
     m_engine.reset(0);
-#ifdef Q_WS_QPA
-    d = QApplicationPrivate::platformIntegration()->screens().at(0)->depth();
-#endif
     w = width;
     h = height;
     is_null = (w <= 0 || h <= 0);

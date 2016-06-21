@@ -116,24 +116,6 @@ typedef unsigned long  WId;
 
 #endif // Q_WS_X11
 
-#if defined(Q_WS_QWS)
-
-typedef unsigned long  WId;
-QT_BEGIN_HEADER
-QT_BEGIN_NAMESPACE
-struct QWSEvent;
-QT_END_NAMESPACE
-QT_END_HEADER
-
-#endif // Q_WS_QWS
-
-#if defined(Q_WS_QPA)
-
-typedef unsigned long  WId;
-
-#endif // Q_WS_QPA
-
-
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 

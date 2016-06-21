@@ -92,8 +92,6 @@
 #    include <qfontengine_ft_p.h>
 #  endif
 #  include <qabstractfontengine_p.h>
-#elif defined(Q_WS_QPA)
-#  include <qfontengine_ft_p.h>
 #endif
 
 #if defined(Q_WS_WIN64)
@@ -242,19 +240,6 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate() :
     Note that this functionality is only available in
     \l{Qt for Embedded Linux}.
 
-    In \l{Qt for Embedded Linux}, painting is a pure software
-    implementation. But starting with Qt 4.2, it is
-    possible to add an accelerated graphics driver to take advantage
-    of available hardware resources.
-
-    Hardware acceleration is accomplished by creating a custom screen
-    driver, accelerating the copying from memory to the screen, and
-    implementing a custom paint engine accelerating the various
-    painting operations. Then a custom paint device (derived from the
-    QCustomRasterPaintDevice class) and a custom window surface
-    (derived from QWSWindowSurface) must be implemented to make
-    \l{Qt for Embedded Linux} aware of the accelerated driver.
-
     \note The QRasterPaintEngine class does not support 8-bit images.
     Instead, they need to be converted to a supported format, such as
     QImage::Format_ARGB32_Premultiplied.
@@ -262,7 +247,7 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate() :
     See the \l {Adding an Accelerated Graphics Driver to Qt for Embedded Linux}
     documentation for details.
 
-    \sa QCustomRasterPaintDevice, QPaintEngine
+    \sa QPaintEngine
 */
 
 /*!
@@ -355,11 +340,6 @@ void QRasterPaintEngine::init()
     case QInternal::Image:
         format = d->rasterBuffer->prepare(static_cast<QImage *>(d->device));
         break;
-#ifdef Q_WS_QWS
-    case QInternal::CustomRaster:
-        d->rasterBuffer->prepare(static_cast<QCustomRasterPaintDevice*>(d->device));
-        break;
-#endif
     default:
         qWarning("QRasterPaintEngine: unsupported target device %d\n", d->device->devType());
         d->device = 0;
@@ -954,13 +934,6 @@ void QRasterPaintEngine::clipEnabledChanged()
         s->pixmapFlags |= DirtyClipEnabled;
     }
 }
-
-#ifdef Q_WS_QWS
-void QRasterPaintEnginePrivate::prepare(QCustomRasterPaintDevice *device)
-{
-    rasterBuffer->prepare(device);
-}
-#endif
 
 void QRasterPaintEnginePrivate::drawImage(const QPointF &pt,
                                           const QImage &img,
@@ -3019,7 +2992,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     ensurePen();
     ensureState();
 
-#if defined (Q_WS_WIN) || defined(Q_WS_MAC) || (defined(Q_OS_MAC) && defined(Q_WS_QPA))
+#if defined (Q_WS_WIN) || defined(Q_WS_MAC)
 
     if (!supportsTransformations(ti.fontEngine)) {
         QVarLengthArray<QFixedPoint> positions;
@@ -3037,49 +3010,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 #else // Q_WS_WIN || Q_WS_MAC
 
     QFontEngine *fontEngine = ti.fontEngine;
-
-#if defined(Q_WS_QWS)
-    if (fontEngine->type() == QFontEngine::Box) {
-        fontEngine->draw(this, qFloor(p.x()), qFloor(p.y()), ti);
-        return;
-    }
-
-    if (s->matrix.type() < QTransform::TxScale
-        && (fontEngine->type() == QFontEngine::Proxy
-                && !(static_cast<QProxyFontEngine *>(fontEngine)->drawAsOutline()))
-            ) {
-        fontEngine->draw(this, qFloor(p.x() + aliasedCoordinateDelta), qFloor(p.y() + aliasedCoordinateDelta), ti);
-        return;
-    }
-#endif // Q_WS_QWS
-
-#ifdef Q_WS_QPA
-    if (s->matrix.type() < QTransform::TxScale) {
-
-        QVarLengthArray<QFixedPoint> positions;
-        QVarLengthArray<glyph_t> glyphs;
-        QTransform matrix = state()->transform();
-
-        qreal _x = qFloor(p.x());
-        qreal _y = qFloor(p.y());
-        matrix.translate(_x, _y);
-
-        fontEngine->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
-        if (glyphs.size() == 0)
-            return;
-
-        for(int i = 0; i < glyphs.size(); i++) {
-            QImage img = fontEngine->alphaMapForGlyph(glyphs[i]);
-            glyph_metrics_t metrics = fontEngine->boundingBox(glyphs[i]);
-            // ### hm, perhaps an QFixed offs = QFixed::fromReal(aliasedCoordinateDelta) is needed here?
-            alphaPenBlt(img.bits(), img.bytesPerLine(), img.depth(),
-                                         qRound(positions[i].x + metrics.x),
-                                         qRound(positions[i].y + metrics.y),
-                                         img.width(), img.height());
-        }
-        return;
-    }
-#endif //Q_WS_QPA
 
 #if (defined(Q_WS_X11) || defined(Q_WS_QWS)) && !defined(QT_NO_FREETYPE)
 
@@ -3346,7 +3276,7 @@ bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) 
 
 bool QRasterPaintEngine::supportsTransformations(qreal pixelSize, const QTransform &m) const
 {
-#if defined(Q_WS_MAC) || (defined(Q_OS_MAC) && defined(Q_WS_QPA))
+#if defined(Q_WS_MAC)
     // Mac font engines don't support scaling and rotation
     if (m.type() > QTransform::TxTranslate)
 #else
@@ -3847,121 +3777,6 @@ void QRasterBuffer::resetBuffer(int val)
 {
     memset(m_buffer, val, m_height*bytes_per_line);
 }
-
-
-#if defined(Q_WS_QWS)
-void QRasterBuffer::prepare(QCustomRasterPaintDevice *device)
-{
-    m_buffer = reinterpret_cast<uchar*>(device->memory());
-    m_width = qMin(QT_RASTER_COORD_LIMIT, device->width());
-    m_height = qMin(QT_RASTER_COORD_LIMIT, device->height());
-    bytes_per_pixel = device->depth() / 8;
-    bytes_per_line = device->bytesPerLine();
-    format = device->format();
-#ifndef QT_NO_RASTERCALLBACKS
-    if (!m_buffer)
-        drawHelper = qDrawHelperCallback + format;
-    else
-#endif
-        drawHelper = qDrawHelper + format;
-}
-
-int QCustomRasterPaintDevice::metric(PaintDeviceMetric m) const
-{
-    switch (m) {
-    case PdmWidth:
-        return widget->frameGeometry().width();
-    case PdmHeight:
-        return widget->frameGeometry().height();
-    default:
-        break;
-    }
-
-    return qt_paint_device_metric(widget, m);
-}
-
-int QCustomRasterPaintDevice::bytesPerLine() const
-{
-    return (width() * depth() + 7) / 8;
-}
-
-#endif // Q_WS_QWS
-
-/*!
-    \class QCustomRasterPaintDevice
-    \preliminary
-    \ingroup qws
-    \since 4.2
-
-    \brief The QCustomRasterPaintDevice class is provided to activate
-    hardware accelerated paint engines in Qt for Embedded Linux.
-
-    Note that this class is only available in \l{Qt for Embedded Linux}.
-
-    In \l{Qt for Embedded Linux}, painting is a pure software
-    implementation. But starting with Qt 4.2, it is
-    possible to add an accelerated graphics driver to take advantage
-    of available hardware resources.
-
-    Hardware acceleration is accomplished by creating a custom screen
-    driver, accelerating the copying from memory to the screen, and
-    implementing a custom paint engine accelerating the various
-    painting operations. Then a custom paint device (derived from the
-    QCustomRasterPaintDevice class) and a custom window surface
-    (derived from QWSWindowSurface) must be implemented to make
-    \l{Qt for Embedded Linux} aware of the accelerated driver.
-
-    See the \l {Adding an Accelerated Graphics Driver to Qt for Embedded Linux}
-    documentation for details.
-
-    \sa QRasterPaintEngine, QPaintDevice
-*/
-
-/*!
-    \fn QCustomRasterPaintDevice::QCustomRasterPaintDevice(QWidget *widget)
-
-    Constructs a custom raster based paint device for the given
-    top-level \a widget.
-*/
-
-/*!
-    \fn int QCustomRasterPaintDevice::bytesPerLine() const
-
-    Returns the number of bytes per line in the framebuffer. Note that
-    this number might be larger than the framebuffer width.
-*/
-
-/*!
-    \fn int QCustomRasterPaintDevice::devType() const
-    \internal
-*/
-
-/*!
-    \fn QImage::Format QCustomRasterPaintDevice::format() const
-
-    Returns the format of the device's memory buffet.
-
-    The default format is QImage::Format_ARGB32_Premultiplied. The
-    only other valid format is QImage::Format_RGB16.
-*/
-
-/*!
-    \fn void * QCustomRasterPaintDevice::memory () const
-
-    Returns a pointer to the paint device's memory buffer, or 0 if no
-    such buffer exists.
-*/
-
-/*!
-    \fn int QCustomRasterPaintDevice::metric ( PaintDeviceMetric m ) const
-    \reimp
-*/
-
-/*!
-    \fn QSize QCustomRasterPaintDevice::size () const
-    \internal
-*/
-
 
 QClipData::QClipData(int height)
 {

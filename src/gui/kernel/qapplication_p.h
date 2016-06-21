@@ -69,15 +69,6 @@
 #include <qthread_p.h>
 #include "QtCore/qpoint.h"
 #include "QtCore/qdatetime.h"
-#ifdef Q_WS_QWS
-#include "QtGui/qscreen_qws.h"
-#include <qgraphicssystem_qws_p.h>
-#endif
-#ifdef Q_WS_QPA
-#include <QWindowSystemInterface>
-#include "qwindowsysteminterface_qpa_p.h"
-#include "QtGui/qplatformintegration_qpa.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -105,11 +96,6 @@ enum { QT_TABLET_NPACKETQSIZE = 128 };
 # endif
 #elif defined (Q_OS_MAC)
 extern QSysInfo::MacVersion qt_macver;
-#endif
-#if defined(Q_WS_QWS)
-class QWSManager;
-class QDirectPainter;
-struct QWSServerCleaner { ~QWSServerCleaner(); };
 #endif
 
 #ifndef QT_NO_TABLET
@@ -304,14 +290,6 @@ public:
     { return graphics_system; }
 #endif
 
-#if defined(Q_WS_QPA)
-    static QPlatformIntegration *platformIntegration()
-    { return platform_integration; }
-
-    static QAbstractEventDispatcher *qt_qpa_core_dispatcher()
-    { return QCoreApplication::instance()->d_func()->threadData->eventDispatcher; }
-#endif
-
     void createEventDispatcher();
     QString appName() const;
     static void dispatchEnterLeave(QWidget *enter, QWidget *leave);
@@ -398,9 +376,6 @@ public:
     static QGraphicsSystem *graphics_system;
     static QString graphics_system_name;
     static bool runtime_graphics_system;
-#ifdef Q_WS_QPA
-    static QPlatformIntegration *platform_integration;
-#endif
 
 private:
     static QFont *app_font; // private for a reason! Always use QApplication::font() instead!
@@ -456,45 +431,6 @@ public:
     static bool qt_mac_apply_settings();
 #endif
 
-#ifdef Q_WS_QPA
-    static void processMouseEvent(QWindowSystemInterfacePrivate::MouseEvent *e);
-    static void processKeyEvent(QWindowSystemInterfacePrivate::KeyEvent *e);
-    static void processWheelEvent(QWindowSystemInterfacePrivate::WheelEvent *e);
-    static void processTouchEvent(QWindowSystemInterfacePrivate::TouchEvent *e);
-    static void processPlatformPanelEvent(QWindowSystemInterfacePrivate::PlatformPanelEvent *e);
-
-    static void processCloseEvent(QWindowSystemInterfacePrivate::CloseEvent *e);
-
-    static void processGeometryChangeEvent(QWindowSystemInterfacePrivate::GeometryChangeEvent *e);
-
-    static void processEnterEvent(QWindowSystemInterfacePrivate::EnterEvent *e);
-    static void processLeaveEvent(QWindowSystemInterfacePrivate::LeaveEvent *e);
-
-    static void processActivatedEvent(QWindowSystemInterfacePrivate::ActivatedWindowEvent *e);
-
-    static void processWindowSystemEvent(QWindowSystemInterfacePrivate::WindowSystemEvent *e);
-    static void processWindowStateChangedEvent(QWindowSystemInterfacePrivate::WindowStateChangedEvent *e);
-
-//    static void reportScreenCount(int count);
-    static void reportScreenCount(QWindowSystemInterfacePrivate::ScreenCountEvent *e);
-//    static void reportGeometryChange(int screenIndex);
-    static void reportGeometryChange(QWindowSystemInterfacePrivate::ScreenGeometryEvent *e);
-//    static void reportAvailableGeometryChange(int screenIndex);
-    static void reportAvailableGeometryChange(QWindowSystemInterfacePrivate::ScreenAvailableGeometryEvent *e);
-    static void reportLocaleChange();
-#endif
-
-#ifdef Q_WS_QWS
-    QPointer<QWSManager> last_manager;
-    QWSServerCleaner qwsServerCleaner;
-# ifndef QT_NO_DIRECTPAINTER
-    QMap<WId, QDirectPainter *> *directPainters;
-# endif
-    QRect maxWindowRect(const QScreen *screen) const { return maxWindowRects[screen]; }
-    void setMaxWindowRect(const QScreen *screen, int screenNo, const QRect &rect);
-    void setScreenTransformation(QScreen *screen, int screenNo, int transformation);
-#endif
-
     static QApplicationPrivate *instance() { return self; }
 
     static QString styleOverride;
@@ -518,7 +454,7 @@ public:
     static bool sendMouseEvent(QWidget *receiver, QMouseEvent *event, QWidget *alienWidget,
                                QWidget *native, QWidget **buttonDown, QPointer<QWidget> &lastMouseReceiver,
                                bool spontaneous = true);
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined (Q_WS_QWS) || defined(Q_WS_MAC) || defined(Q_WS_QPA)
+#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
     void sendSyntheticEnterLeave(QWidget *widget);
 #endif
 
@@ -616,8 +552,6 @@ Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,
 #elif defined(Q_WS_X11)
   extern void qt_x11_enforce_cursor(QWidget *, bool);
   extern void qt_x11_enforce_cursor(QWidget *);
-#elif defined (Q_WS_QPA)
-  extern void qt_qpa_set_cursor(QWidget *, bool);
 #endif
 
 QT_END_NAMESPACE

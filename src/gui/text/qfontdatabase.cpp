@@ -51,12 +51,6 @@
 #include "qfontengine_p.h"
 #include "qfontinfo.h"
 
-#ifdef Q_WS_QPA
-#include <QtGui/qapplication_p.h>
-#include <QtGui/qplatformfontdatabase_qpa.h>
-#include "qabstractfileengine.h"
-#endif
-
 #ifdef Q_WS_X11
 #include <locale.h>
 #endif
@@ -174,14 +168,6 @@ struct  QtFontSize
     unsigned short count : 16;
 #endif // Q_WS_X11
 
-#if defined(Q_WS_QWS)
-    QByteArray fileName;
-    int fileIndex;
-#endif // defined(Q_WS_QWS) || defined(Q_WS_QPA)
-#if defined(Q_WS_QPA)
-    void *handle;
-#endif
-
     unsigned short pixelSize : 16;
 };
 
@@ -254,21 +240,12 @@ struct QtFontStyle
         delete [] weightName;
         delete [] setwidthName;
 #endif
-#if defined(Q_WS_X11) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11)
         while (count) {
             // bitfield count-- in while condition does not work correctly in mwccsym2
             count--;
 #ifdef Q_WS_X11
             free(pixelSizes[count].encodings);
-#endif
-#if defined(Q_WS_QWS)
-            pixelSizes[count].fileName.~QByteArray();
-#endif
-#if defined (Q_WS_QPA)
-            QPlatformIntegration *integration = QApplicationPrivate::platformIntegration();
-            if (integration) { //on shut down there will be some that we don't release.
-                integration->fontDatabase()->releaseHandle(pixelSizes[count].handle);
-            }
 #endif
         }
 #endif
@@ -286,9 +263,6 @@ struct QtFontStyle
     const char *weightName;
     const char *setwidthName;
 #endif // Q_WS_X11
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    bool antialiased;
-#endif
 
     QtFontSize *pixelSize(unsigned short size, bool = false);
 };
@@ -331,13 +305,6 @@ QtFontSize *QtFontStyle::pixelSize(unsigned short size, bool add)
 #ifdef Q_WS_X11
     pixelSizes[count].count = 0;
     pixelSizes[count].encodings = 0;
-#endif
-#if defined(Q_WS_QWS)
-    new (&pixelSizes[count].fileName) QByteArray;
-    pixelSizes[count].fileIndex = 0;
-#endif
-#if defined(Q_WS_QPA)
-    pixelSizes[count].handle = 0;
 #endif
     return pixelSizes + (count++);
 }
@@ -415,12 +382,6 @@ struct  QtFontFamily
         fixedPitchComputed(false),
 #endif
         name(n), count(0), foundries(0)
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA) && !defined(QT_NO_FREETYPE)
-        , bogusWritingSystems(false)
-#endif
-#if defined(Q_WS_QPA)
-        , askedForFallback(false)
-#endif
     {
         memset(writingSystems, 0, sizeof(writingSystems));
     }
@@ -458,13 +419,6 @@ struct  QtFontFamily
     int count;
     QtFontFoundry **foundries;
 
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA) && !defined(QT_NO_FREETYPE)
-    bool bogusWritingSystems;
-    QStringList fallbackFamilies;
-#endif
-#if defined (Q_WS_QPA)
-    bool askedForFallback;
-#endif
     unsigned char writingSystems[QFontDatabase::WritingSystemsCount];
 
     QtFontFoundry *foundry(const QString &f, bool = false);
@@ -709,12 +663,6 @@ public:
 #ifndef QT_NO_FREETYPE
     QStringList addTTFile(const QByteArray &file, const QByteArray &fontData = QByteArray());
 #endif // QT_NO_FREETYPE
-#endif
-#if defined(Q_WS_QWS)
-    QDataStream *stream;
-#endif
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    QStringList fallbackFamilies;
 #endif
 };
 
@@ -994,7 +942,7 @@ static void match(int script, const QFontDef &request,
                   const QString &family_name, const QString &foundry_name, int force_encoding_id,
                   QtFontDesc *desc, const QList<int> &blacklistedFamilies = QList<int>(), bool forceXLFD=false);
 
-#if defined(Q_WS_X11) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11)
 static void initFontDef(const QtFontDesc &desc, const QFontDef &request, QFontDef *fontDef)
 {
     fontDef->family = desc.family->name;
@@ -1023,7 +971,7 @@ static void initFontDef(const QtFontDesc &desc, const QFontDef &request, QFontDe
 #endif
 #endif
 
-#if defined(Q_WS_X11) || defined(Q_WS_WIN) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11) || defined(Q_WS_WIN)
 static void getEngineData(const QFontPrivate *d, const QFontCache::Key &key)
 {
     // look for the requested font in the engine data cache
@@ -1082,10 +1030,6 @@ QT_BEGIN_INCLUDE_NAMESPACE
 #  include "qfontdatabase_mac.h"
 #elif defined(Q_WS_WIN)
 #  include "qfontdatabase_win.h"
-#elif defined(Q_WS_QWS)
-#  include "qfontdatabase_qws.h"
-#elif defined(Q_WS_QPA)
-#  include "qfontdatabase_qpa.h"
 #endif
 QT_END_INCLUDE_NAMESPACE
 

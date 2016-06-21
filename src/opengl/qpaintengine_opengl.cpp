@@ -66,12 +66,6 @@
 
 #include "util/fragmentprograms_p.h"
 
-#ifdef Q_WS_QWS
-#include "qglwindowsurface_qws_p.h"
-#include "qwsmanager_qws.h"
-#include "qwsmanager_p.h"
-#endif
-
 #define QGL_FUNC_CONTEXT QGLContext *ctx = const_cast<QGLContext *>(device->context());
 
 #include <stdlib.h>
@@ -4860,19 +4854,13 @@ void QGLGlyphCache::cacheGlyphs(QGLContext *context, QFontEngine *fontEngine,
                 uchar *tex_data = (uchar *) malloc(glyph_width*glyph_height*2);
                 memset(tex_data, 0, glyph_width*glyph_height*2);
 
-                bool is8BitGray = false;
-#ifdef Q_WS_QPA
-                if (glyph_im.format() == QImage::Format_Indexed8) {
-                    is8BitGray = true;
-                }
-#endif
                 glyph_im = glyph_im.convertToFormat(QImage::Format_Indexed8);
                 int cacheLineStart = (font_tex->x_offset + font_tex->y_offset*font_tex->width)*2;
                 for (int y=0; y<glyph_height; ++y) {
                     uchar *s = (uchar *) glyph_im.scanLine(y);
                     int lineStart = idx;
                     for (int x=0; x<glyph_im.width(); ++x) {
-                        uchar alpha = is8BitGray ? *s : qAlpha(glyph_im.color(*s));
+                        uchar alpha = qAlpha(glyph_im.color(*s));
                         tex_data[idx] = alpha;
                         tex_data[idx+1] = alpha;
                         ++s;

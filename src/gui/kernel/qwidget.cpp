@@ -70,15 +70,6 @@
 # include "qtoolbar.h"
 # include <qmainwindowlayout_p.h>
 #endif
-#if defined(Q_WS_QWS)
-# include "qwsdisplay_qws.h"
-# include "qwsmanager_qws.h"
-# include "qpaintengine.h" // for PorterDuff
-# include "qwindowsurface_qws_p.h"
-#endif
-#if defined(Q_WS_QPA)
-#include "qplatformwindow_qpa.h"
-#endif
 #include "qpainter.h"
 #include "qtooltip.h"
 #include "qwhatsthis.h"
@@ -1278,13 +1269,6 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
         // programmer specified desktop widget
         xinfo = desktopWidget->d_func()->xinfo;
     }
-#elif defined(Q_WS_QPA)
-    if (desktopWidget) {
-        int screen = desktopWidget->d_func()->topData()->screenIndex;
-        topData()->screenIndex = screen;
-        QPlatformIntegration *platform = QApplicationPrivate::platformIntegration();
-        platform->moveToScreen(q, screen);
-    }
 #else
     Q_UNUSED(desktopWidget);
 #endif
@@ -1407,7 +1391,6 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
         flags |= Qt::Window;
     }
 
-#ifndef Q_WS_QPA
     if (QWidget *parent = parentWidget()) {
         if (type & Qt::Window) {
             if (!parent->testAttribute(Qt::WA_WState_Created))
@@ -1424,8 +1407,6 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
             return;
         }
     }
-#endif //Q_WS_QPA
-
 
     static int paintOnScreenEnv = -1;
     if (paintOnScreenEnv == -1)
@@ -1564,10 +1545,6 @@ QWidget::~QWidget()
     else if (!internalWinId() && isVisible()) {
         qApp->d_func()->sendSyntheticEnterLeave(this);
     }
-#elif defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    else if (isVisible()) {
-        qApp->d_func()->sendSyntheticEnterLeave(this);
-    }
 #endif
 
     if (QWidgetBackingStore *bs = d->maybeBackingStore()) {
@@ -1685,11 +1662,6 @@ void QWidgetPrivate::createTLExtra()
         static int count = 0;
         qDebug() << "tlextra" << ++count;
 #endif
-#if defined(Q_WS_QPA)
-        x->platformWindow = 0;
-        x->platformWindowFormat = QPlatformWindowFormat::defaultFormat();
-        x->screenIndex = 0;
-#endif
     }
 }
 
@@ -1753,9 +1725,6 @@ void QWidgetPrivate::deleteExtra()
             extra->topextra->backingStore.destroy();
             delete extra->topextra->icon;
             delete extra->topextra->iconPixmap;
-#if defined(Q_WS_QWS) && !defined(QT_NO_QWS_MANAGER)
-            delete extra->topextra->qwsManager;
-#endif
             delete extra->topextra->windowSurface;
             delete extra->topextra;
         }
@@ -2310,19 +2279,7 @@ void QWidgetPrivate::paintBackground(QPainter *painter, const QRegion &rgn, int 
 
     if ((flags & DrawAsRoot) && !(q->autoFillBackground() && autoFillBrush.isOpaque())) {
         const QBrush bg = q->palette().brush(QPalette::Window);
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA)
-        if (!(flags & DontSetCompositionMode)) {
-            //copy alpha straight in
-            QPainter::CompositionMode oldMode = painter->compositionMode();
-            painter->setCompositionMode(QPainter::CompositionMode_Source);
-            fillRegion(painter, rgn, bg);
-            painter->setCompositionMode(oldMode);
-        } else {
-            fillRegion(painter, rgn, bg);
-        }
-#else
         fillRegion(painter, rgn, bg);
-#endif
     }
 
     if (q->autoFillBackground())
@@ -2416,9 +2373,7 @@ WId QWidget::winId() const
         qDebug() << "QWidget::winId: creating native window for" << this;
 #endif
         QWidget *that = const_cast<QWidget*>(this);
-#ifndef Q_WS_QPA
         that->setAttribute(Qt::WA_NativeWindow);
-#endif
         that->d_func()->createWinId();
         return that->data->winid;
     }
@@ -2435,7 +2390,6 @@ void QWidgetPrivate::createWinId(WId winid)
 #endif
     const bool forceNativeWindow = q->testAttribute(Qt::WA_NativeWindow);
     if (!q->testAttribute(Qt::WA_WState_Created) || (forceNativeWindow && !q->internalWinId())) {
-#ifndef Q_WS_QPA
         if (!q->isWindow()) {
             QWidget *parent = q->parentWidget();
             QWidgetPrivate *pd = parent->d_func();
@@ -2463,11 +2417,6 @@ void QWidgetPrivate::createWinId(WId winid)
         } else {
             q->create();
         }
-#else
-        Q_UNUSED(winid);
-        q->create();
-#endif //Q_WS_QPA
-
     }
 }
 
@@ -5311,10 +5260,8 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
             //actually send the paint event
             QPaintEvent e(toBePainted);
             QCoreApplication::sendSpontaneousEvent(q, &e);
-#if !defined(Q_WS_QWS) && !defined(Q_WS_QPA)
             if (backingStore && !onScreen && !asRoot && (q->internalWinId() || !q->nativeParentWidget()->isWindow()))
                 backingStore->markDirtyOnScreen(toBePainted, q, offset);
-#endif
 
             //restore
             if (paintEngine) {
@@ -5433,10 +5380,6 @@ void QWidgetPrivate::render(QPaintDevice *target, const QPoint &targetOffset,
         flags |= DrawRecursive;
     else
         flags |= DontSubtractOpaqueChildren;
-
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    flags |= DontSetCompositionMode;
-#endif
 
     if (target->devType() == QInternal::Printer) {
         QPainter p(target);
@@ -7358,7 +7301,7 @@ void QWidgetPrivate::hide_helper()
     // next bit tries to move the focus if the focus widget is now
     // hidden.
     if (wasVisible) {
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined (Q_WS_QWS) || defined(Q_WS_MAC) || defined(Q_WS_QPA)
+#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
         qApp->d_func()->sendSyntheticEnterLeave(q);
 #endif
 
@@ -7487,7 +7430,7 @@ void QWidget::setVisible(bool visible)
 
             d->show_helper();
 
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined (Q_WS_QWS) || defined(Q_WS_MAC) || defined(Q_WS_QPA)
+#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
             qApp->d_func()->sendSyntheticEnterLeave(this);
 #endif
         }
@@ -7613,7 +7556,7 @@ void QWidgetPrivate::hideChildren(bool spontaneous)
                 widget->d_func()->hide_sys();
             }
         }
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined (Q_WS_QWS) || defined(Q_WS_MAC) || defined(Q_WS_QPA)
+#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
         qApp->d_func()->sendSyntheticEnterLeave(widget);
 #endif
 #ifndef QT_NO_ACCESSIBILITY
@@ -7800,13 +7743,6 @@ QRegion QWidget::visibleRegion() const
     QRegion r(clipRect);
     d->subtractOpaqueChildren(r, clipRect);
     d->subtractOpaqueSiblings(r);
-#ifdef Q_WS_QWS
-    const QWSWindowSurface *surface = static_cast<const QWSWindowSurface*>(windowSurface());
-    if (surface) {
-        const QPoint offset = mapTo(surface->window(), QPoint());
-        r &= surface->clipRegion().translated(-offset);
-    }
-#endif
     return r;
 }
 
@@ -10541,14 +10477,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
             // from the desktop. show_sys will only update platform specific
             // attributes at this point.
             d->hide_sys();
-#ifdef Q_WS_QWS
-            // Release the region for this window from qws if the widget has
-            // been shown before the attribute was set.
-            if (QWSWindowSurface *surface = static_cast<QWSWindowSurface *>(windowSurface())) {
-                QWidget::qwsDisplay()->requestRegion(surface->winId(), surface->key(),
-                                                     surface->permanentState(), QRegion());
-            }
-#endif
             d->show_sys();
         }
         break;

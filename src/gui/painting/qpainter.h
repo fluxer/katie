@@ -477,7 +477,6 @@ private:
     friend class QFontEngineMac;
     friend class QFontEngineWin;
     friend class QFontEngineXLFD;
-    friend class QWSManager;
     friend class QPaintEngine;
     friend class QPaintEngineExPrivate;
     friend class QOpenGLPaintEngine;

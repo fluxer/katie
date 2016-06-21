@@ -81,25 +81,13 @@
 #include <qt_mac_p.h>
 #endif
 
-#if defined(Q_WS_QWS)
-#include "QtGui/qinputcontext.h"
-#include "QtGui/qscreen_qws.h"
-#endif
-
-
 QT_BEGIN_NAMESPACE
 
 // Extra QWidget data
 //  - to minimize memory usage for members that are seldom used.
 //  - top-level widgets have extra extra data to reduce cost further
-#if defined(Q_WS_QWS)
-class QWSManager;
-#endif
 #if defined(Q_WS_MAC)
 class QCoreGraphicsPaintEnginePrivate;
-#endif
-#if defined(Q_WS_QPA)
-class QPlatformWindow;
 #endif
 class QPaintEngine;
 class QPixmap;
@@ -220,15 +208,6 @@ struct QTLWExtra {
     // starting position as 0,0 instead of the normal starting position.
     bool wasMaximized;
 #endif // QT_MAC_USE_COCOA
-
-#elif defined(Q_WS_QWS) // <--------------------------------------------------------- QWS
-#ifndef QT_NO_QWS_MANAGER
-    QWSManager *qwsManager;
-#endif
-#elif defined(Q_WS_QPA)
-    QPlatformWindow *platformWindow;
-    QPlatformWindowFormat platformWindowFormat;
-    quint32 screenIndex; // index in qplatformscreenlist
 #endif
 };
 
@@ -831,26 +810,6 @@ public:
     static OSStatus qt_widget_event(EventHandlerCallRef er, EventRef event, void *);
     static bool qt_widget_rgn(QWidget *, short, RgnHandle, bool);
     void registerTouchWindow(bool enable = true);
-#elif defined(Q_WS_QWS) // <--------------------------------------------------------- QWS
-    void setMaxWindowState_helper();
-    void setFullScreenSize_helper();
-    void moveSurface(QWindowSurface *surface, const QPoint &offset);
-    QRegion localRequestedRegion() const;
-    QRegion localAllocatedRegion() const;
-
-    friend class QWSManager;
-    friend class QWSManagerPrivate;
-    friend class QDecoration;
-#ifndef QT_NO_CURSOR
-    void updateCursor() const;
-#endif
-    QScreen* getScreen() const;
-#elif defined(Q_WS_QPA) // <--------------------------------------------------------- QPA
-    void setMaxWindowState_helper();
-    void setFullScreenSize_helper();
-#ifndef QT_NO_CURSOR
-    void updateCursor() const;
-#endif
 #endif
 
 };

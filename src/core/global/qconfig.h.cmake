@@ -49,6 +49,7 @@
 #define QT_NO_WIN_ACTIVEQT
 #define QT_NO_QWS_QPF2
 #define QT_NO_STYLE_WINDOWSMOBILE
+#define QT_NO_DIRECTPAINTER
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -165,7 +166,6 @@
 
 /* Painting */
 #cmakedefine QT_NO_COLORNAMES
-#cmakedefine QT_NO_DIRECTPAINTER
 #cmakedefine QT_NO_PAINTONSCREEN
 #cmakedefine QT_NO_PAINT_DEBUG
 #cmakedefine QT_NO_PICTURE

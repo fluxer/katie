@@ -361,12 +361,11 @@ QGLWindowSurface::~QGLWindowSurface()
 {
     if (d_ptr->ctx)
         glDeleteTextures(1, &d_ptr->tex_id);
-#ifndef Q_WS_QPA // Don't delete the contexts. Destroying the window does that for us
+    // Don't delete the contexts. Destroying the window does that for us
     foreach(QGLContext **ctx, d_ptr->contexts) {
         delete *ctx;
         *ctx = 0;
     }
-#endif
     delete d_ptr->pb;
     delete d_ptr->fbo;
     delete d_ptr;
@@ -386,7 +385,7 @@ void QGLWindowSurface::deleted(QObject *object)
             d_ptr->fbo = 0;
         }
 
-#ifndef Q_WS_QPA //no need to specifically delete the QGLContext as it will be deleted by QWidget
+        //no need to specifically delete the QGLContext as it will be deleted by QWidget
         QWidgetPrivate *widgetPrivate = widget->d_func();
         if (widgetPrivate->extraData()) {
             union { QGLContext **ctxPtrPtr; void **voidPtrPtr; };
@@ -398,7 +397,6 @@ void QGLWindowSurface::deleted(QObject *object)
                 d_ptr->contexts.removeAt(index);
             }
         }
-#endif
     }
 }
 
@@ -574,13 +572,8 @@ void QGLWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint &
     QWidget *parent = widget->internalWinId() ? widget : widget->nativeParentWidget();
     Q_ASSERT(parent);
 
-#if !defined(Q_WS_QPA)
     if (!geometry().isValid())
         return;
-#else
-    if (!size().isValid())
-        return;
-#endif
 
     // Needed to support native child-widgets...
     hijackWindow(parent);
@@ -814,19 +807,11 @@ void QGLWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint &
 }
 
 
-#if !defined(Q_WS_QPA)
 void QGLWindowSurface::setGeometry(const QRect &rect)
 {
     QWindowSurface::setGeometry(rect);
     d_ptr->geometry_updated = true;
 }
-#else
-void QGLWindowSurface::resize(const QSize &size)
-{
-    QWindowSurface::resize(size);
-    d_ptr->geometry_updated = true;
-}
-#endif
 
 void QGLWindowSurface::updateGeometry() {
     if (!d_ptr->geometry_updated)
@@ -897,7 +882,7 @@ void QGLWindowSurface::updateGeometry() {
         }
     }
 
-#if !defined(QT_OPENGL_ES_2) && !defined(Q_WS_QPA) //QPA doesn't support pixelbuffers
+#if !defined(QT_OPENGL_ES_2)
     if (d_ptr->destructive_swap_buffers && (d_ptr->pb || !d_ptr->tried_pb)) {
         d_ptr->tried_pb = true;
 
@@ -936,7 +921,7 @@ void QGLWindowSurface::updateGeometry() {
             d_ptr->pb = 0;
         }
     }
-#endif // !defined(QT_OPENGL_ES_2) !defined(Q_WS_QPA)
+#endif // !defined(QT_OPENGL_ES_2)
 
     ctx->makeCurrent();
 

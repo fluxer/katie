@@ -69,10 +69,6 @@
 #include <QtGui/qegl_p.h>
 #endif
 
-#if defined(Q_WS_QPA)
-#include <QtGui/QPlatformGLContext>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QGLContext;
@@ -369,11 +365,7 @@ public:
     static void setExtraWindowSurfaceCreationProps(QEglProperties *props);
 #endif
 
-#if defined(Q_WS_QPA)
-    QPlatformGLContext *platformContext;
-    void setupSharing();
-
-#elif defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
     void* cx;
 #endif
 #if defined(Q_WS_X11) || defined(Q_WS_MAC)
@@ -446,7 +438,7 @@ public:
     static inline QGLExtensionFuncs& extensionFuncs(const QGLContext *ctx) { return ctx->d_ptr->group->extensionFuncs(); }
 #endif
 
-#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_X11) || defined(Q_WS_MAC)
     static Q_OPENGL_EXPORT QGLExtensionFuncs qt_extensionFuncs;
     static Q_OPENGL_EXPORT QGLExtensionFuncs& extensionFuncs(const QGLContext *);
 #endif

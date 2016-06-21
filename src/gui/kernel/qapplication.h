@@ -71,11 +71,6 @@ class QInputContext;
 #endif
 template <typename T> class QList;
 class QLocale;
-#if defined(Q_WS_QWS)
-class QDecoration;
-#elif defined(Q_WS_QPA)
-class QPlatformNativeInterface;
-#endif
 
 class QApplication;
 class QApplicationPrivate;
@@ -229,11 +224,6 @@ public:
 #endif
 #endif
 
-#if defined(Q_WS_QPA)
-    static QPlatformNativeInterface *platformNativeInterface();
-#endif
-
-
 #if defined(Q_WS_WIN)
     void winFocus(QWidget *, bool);
     static void winMouseButtonUp();
@@ -331,12 +321,6 @@ private:
     friend class QAction;
     friend class QFontDatabasePrivate;
 
-#if defined(Q_WS_QWS)
-    friend class QInputContext;
-    friend class QWSDirectPainterSurface;
-    friend class QDirectPainter;
-    friend class QDirectPainterPrivate;
-#endif
 #ifndef QT_NO_GESTURES
     friend class QGestureManager;
 #endif

@@ -1374,8 +1374,6 @@ public:
     typedef void *HANDLE;
 #elif defined(Q_WS_X11)
     typedef unsigned long HANDLE;
-#elif defined(Q_WS_QWS) || defined(Q_WS_QPA)
-    typedef void * HANDLE;
 #endif
     typedef WindowFlags WFlags;
 

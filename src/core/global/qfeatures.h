@@ -73,9 +73,6 @@
 // QDesktopServices
 //#define QT_NO_DESKTOPSERVICES
 
-// QDirectPainter
-//#define QT_NO_DIRECTPAINTER
-
 // Document Object Model
 //#define QT_NO_DOM
 

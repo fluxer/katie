@@ -759,7 +759,7 @@ QFontEngineGlyphCache *QFontEngine::glyphCache(void *key, QFontEngineGlyphCache:
     return 0;
 }
 
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_QWS) || defined(Q_WS_QPA)
+#if defined(Q_WS_WIN) || defined(Q_WS_X11)
 static inline QFixed kerning(int left, int right, const QFontEngine::KernPair *pairs, int numPairs)
 {
     uint left_right = (left << 16) + right;
@@ -1202,35 +1202,6 @@ glyph_metrics_t QFontEngineBox::boundingBox(const QGlyphLayout &glyphs)
     overall.xoff = overall.width;
     return overall;
 }
-
-#if defined(Q_WS_QWS) || defined(Q_WS_QPA)
-void QFontEngineBox::draw(QPaintEngine *p, qreal x, qreal y, const QTextItemInt &ti)
-{
-    if (!ti.glyphs.numGlyphs)
-        return;
-
-    // any fixes here should probably also be done in QPaintEnginePrivate::drawBoxTextItem
-    QSize s(_size - 3, _size - 3);
-
-    QVarLengthArray<QFixedPoint> positions;
-    QVarLengthArray<glyph_t> glyphs;
-    QTransform matrix = QTransform::fromTranslate(x, y - _size);
-    ti.fontEngine->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
-    if (glyphs.size() == 0)
-        return;
-
-
-    QPainter *painter = p->painter();
-    painter->save();
-    painter->setBrush(Qt::NoBrush);
-    QPen pen = painter->pen();
-    pen.setWidthF(lineThickness().toReal());
-    painter->setPen(pen);
-    for (int k = 0; k < positions.size(); k++)
-        painter->drawRect(QRectF(positions[k].toPointF(), s));
-    painter->restore();
-}
-#endif
 
 glyph_metrics_t QFontEngineBox::boundingBox(glyph_t)
 {

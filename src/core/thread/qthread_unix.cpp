@@ -415,7 +415,7 @@ int QThread::idealThreadCount()
 {
     int cores = -1;
 
-#if defined(Q_OS_MAC) && !defined(Q_WS_QPA)
+#if defined(Q_OS_MAC)
     // Mac OS X
     cores = MPProcessorsScheduled();
 #elif defined(Q_OS_HPUX)

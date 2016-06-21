@@ -885,13 +885,6 @@ SeeAlso: ???
 
 # Painting
 
-Feature: DIRECTPAINTER
-Description: Supports direct access to the video hardware.
-Section: Painting
-Requires:
-Name: QDirectPainter
-SeeAlso: ???
-
 Feature: PICTURE
 Description: Supports recording and replaying QPainter commands.
 Section: Painting

@@ -66,13 +66,6 @@
 #include "qx11info_x11.h"
 #include <qt_x11_p.h>
 #endif
-#ifdef Q_WS_QWS
-#include "qscreen_qws.h"
-#endif
-#ifdef Q_WS_QPA
-#include <QtGui/qplatformscreen_qpa.h>
-#include <QtGui/qapplication_p.h>
-#endif
 
 // #define QFONTCACHE_DEBUG
 #ifdef QFONTCACHE_DEBUG
@@ -156,36 +149,14 @@ Q_GUI_EXPORT int qt_defaultDpiX()
     if (!qt_is_gui_used)
         return 75;
 
-    int dpi;
 #ifdef Q_WS_X11
-    dpi = QX11Info::appDpiX();
+    return QX11Info::appDpiX();
 #elif defined(Q_WS_WIN)
-    dpi = GetDeviceCaps(shared_dc(),LOGPIXELSX);
+    return GetDeviceCaps(shared_dc(),LOGPIXELSX);
 #elif defined(Q_WS_MAC)
     extern float qt_mac_defaultDpi_x(); //qpaintdevice_mac.cpp
-    dpi = qt_mac_defaultDpi_x();
-#elif defined(Q_WS_QWS)
-    if (!qt_screen)
-        return 72;
-    QScreen *screen = qt_screen;
-    const QList<QScreen*> subScreens = qt_screen->subScreens();
-    if (!subScreens.isEmpty())
-        screen = subScreens.at(0);
-    dpi = qRound(screen->width() / (screen->physicalWidth() / qreal(25.4)));
-#elif defined(Q_WS_QPA)
-    QPlatformIntegration *pi = QApplicationPrivate::platformIntegration();
-    if (pi) {
-        QPlatformScreen *screen = QApplicationPrivate::platformIntegration()->screens().at(0);
-        const QSize screenSize = screen->geometry().size();
-        const QSize physicalSize = screen->physicalSize();
-        dpi = qRound(screenSize.width() / (physicalSize.width() / qreal(25.4)));
-    } else {
-        //PI has not been initialised, or it is being initialised. Give a default dpi
-        dpi = 100;
-    }
+    return qt_mac_defaultDpi_x();
 #endif // Q_WS_X11
-
-    return dpi;
 }
 
 Q_GUI_EXPORT int qt_defaultDpiY()
@@ -193,36 +164,14 @@ Q_GUI_EXPORT int qt_defaultDpiY()
     if (!qt_is_gui_used)
         return 75;
 
-    int dpi;
 #ifdef Q_WS_X11
-    dpi = QX11Info::appDpiY();
+    return QX11Info::appDpiY();
 #elif defined(Q_WS_WIN)
-    dpi = GetDeviceCaps(shared_dc(),LOGPIXELSY);
+    return GetDeviceCaps(shared_dc(),LOGPIXELSY);
 #elif defined(Q_WS_MAC)
     extern float qt_mac_defaultDpi_y(); //qpaintdevice_mac.cpp
-    dpi = qt_mac_defaultDpi_y();
-#elif defined(Q_WS_QWS)
-    if (!qt_screen)
-        return 72;
-    QScreen *screen = qt_screen;
-    const QList<QScreen*> subScreens = qt_screen->subScreens();
-    if (!subScreens.isEmpty())
-        screen = subScreens.at(0);
-    dpi = qRound(screen->height() / (screen->physicalHeight() / qreal(25.4)));
-#elif defined(Q_WS_QPA)
-    QPlatformIntegration *pi = QApplicationPrivate::platformIntegration();
-    if (pi) {
-        QPlatformScreen *screen = QApplicationPrivate::platformIntegration()->screens().at(0);
-        const QSize screenSize = screen->geometry().size();
-        const QSize physicalSize = screen->physicalSize();
-        dpi = qRound(screenSize.height() / (physicalSize.height() / qreal(25.4)));
-    } else {
-        //PI has not been initialised, or it is being initialised. Give a default dpi
-        dpi = 100;
-    }
+    return qt_mac_defaultDpi_y();
 #endif // Q_WS_X11
-
-    return dpi;
 }
 
 Q_GUI_EXPORT int qt_defaultDpi()

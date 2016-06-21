@@ -56,11 +56,7 @@ public:
     }
 
     QWidget *window;
-#if !defined(Q_WS_QPA)
     QRect geometry;
-#else
-    QSize size;
-#endif //Q_WS_QPA
     QRegion staticContents;
     QList<QImage*> bufferImages;
 };
@@ -153,7 +149,6 @@ void QWindowSurface::endPaint(const QRegion &)
     d_ptr->bufferImages.clear();
 }
 
-#if !defined(Q_WS_QPA)
 /*!
     Sets the currently allocated area to be the given \a rect.
 
@@ -174,26 +169,6 @@ QRect QWindowSurface::geometry() const
 {
     return d_ptr->geometry;
 }
-#else
-
-/*!
-      Sets the size of the windowsurface to be \a size.
-
-      \sa size()
-*/
-void QWindowSurface::resize(const QSize &size)
-{
-    d_ptr->size = size;
-}
-
-/*!
-    Returns the current size of the windowsurface.
-*/
-QSize QWindowSurface::size() const
-{
-    return d_ptr->size;
-}
-#endif //Q_WS_QPA
 
 /*!
     Scrolls the given \a area \a dx pixels to the right and \a dy
@@ -327,13 +302,7 @@ QWindowSurface::WindowSurfaceFeatures QWindowSurface::features() const
     return PartialUpdates | PreservedContents;
 }
 
-#ifdef Q_WS_QPA
-#define Q_EXPORT_SCROLLRECT Q_GUI_EXPORT
-#else
-#define Q_EXPORT_SCROLLRECT
-#endif
-
-void Q_EXPORT_SCROLLRECT qt_scrollRectInImage(QImage &img, const QRect &rect, const QPoint &offset)
+void qt_scrollRectInImage(QImage &img, const QRect &rect, const QPoint &offset)
 {
     // make sure we don't detach
     uchar *mem = const_cast<uchar*>(const_cast<const QImage &>(img).bits());
