@@ -54,19 +54,6 @@ QT_BEGIN_NAMESPACE
 
 
 #define MASK(src, a) src = BYTE_MUL(src, a)
-
-#if defined(Q_OS_IRIX) && defined(Q_CC_GNU) && __GNUC__ == 3 && __GNUC__ < 4 && QT_POINTER_SIZE == 8
-#define Q_IRIX_GCC3_3_WORKAROUND
-//
-// work around http://gcc.gnu.org/bugzilla/show_bug.cgi?id=14484
-//
-static uint gccBug(uint value) __attribute__((noinline));
-static uint gccBug(uint value)
-{
-    return value;
-}
-#endif
-
 /*
   constants and structures
 */
@@ -3273,12 +3260,6 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
 
 
 // -------------------- blend methods ---------------------
-
-enum SpanMethod {
-    RegularSpans,
-    CallbackSpans
-};
-
 #if !defined(Q_CC_SUN)
 static
 #endif
@@ -3527,7 +3508,6 @@ struct QBlendBase
     uint src_buffer[buffer_size];
 };
 
-template <SpanMethod spanMethod>
 class BlendSrcGeneric : public QBlendBase
 {
 public:
@@ -3538,36 +3518,31 @@ public:
 
     const uint *fetch(int x, int y, int len)
     {
-        if (spanMethod == RegularSpans)
-            dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, y, len) : buffer;
-
+        dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, y, len) : buffer;
         return op.src_fetch(src_buffer, &op, data, y, x, len);
     }
 
     void process(int x, int y, int len, int coverage, const uint *src, int offset)
     {
-        if (spanMethod == RegularSpans)
-            op.func(dest + offset, src + offset, len, coverage);
+        op.func(dest + offset, src + offset, len, coverage);
     }
 
     void store(int x, int y, int len)
     {
-        if (spanMethod == RegularSpans && op.dest_store) {
+        if (op.dest_store) {
             op.dest_store(data->rasterBuffer, x, y, dest, len);
         }
     }
 };
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_src_generic(int count, const QSpan *spans, void *userData)
+static void blend_src_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    BlendSrcGeneric<spanMethod> blend(data, getOperator(data, spans, count));
+    BlendSrcGeneric blend(data, getOperator(data, spans, count));
     handleSpans(count, spans, data, blend);
 }
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_untransformed_generic(int count, const QSpan *spans, void *userData)
+static void blend_untransformed_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
@@ -3598,12 +3573,10 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_untransformed_generic(int count, const QSp
                 while (length) {
                     int l = qMin(buffer_size, length);
                     const uint *src = op.src_fetch(src_buffer, &op, data, sy, sx, l);
-                    if (spanMethod == RegularSpans) {
-                        uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
-                        op.func(dest, src, l, coverage);
-                        if (op.dest_store)
-                            op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
-                    }
+                    uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
+                    op.func(dest, src, l, coverage);
+                    if (op.dest_store)
+                        op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
                     x += l;
                     sx += l;
                     length -= l;
@@ -3614,13 +3587,12 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_untransformed_generic(int count, const QSp
     }
 }
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_untransformed_argb(int count, const QSpan *spans, void *userData)
+static void blend_untransformed_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     if (data->texture.format != QImage::Format_ARGB32_Premultiplied
         && data->texture.format != QImage::Format_RGB32) {
-        blend_untransformed_generic<spanMethod>(count, spans, userData);
+        blend_untransformed_generic(count, spans, userData);
         return;
     }
 
@@ -3647,10 +3619,8 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_untransformed_argb(int count, const QSpan 
             if (length > 0) {
                 const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
                 const uint *src = (uint *)data->texture.scanLine(sy) + sx;
-                if (spanMethod == RegularSpans) {
-                    uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
-                    op.func(dest, src, length, coverage);
-                }
+                uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
+                op.func(dest, src, length, coverage);
             }
         }
         ++spans;
@@ -4812,7 +4782,7 @@ void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *userDat
     if (mode != QPainter::CompositionMode_SourceOver &&
         mode != QPainter::CompositionMode_Source)
     {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -4867,25 +4837,25 @@ void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *userDat
 static void blend_untransformed_rgb888(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_argb6666(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_rgb666(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_argb8565(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_rgb565(int count, const QSpan *spans,
@@ -4898,35 +4868,34 @@ static void blend_untransformed_rgb565(int count, const QSpan *spans,
     else if (data->texture.format == QImage::Format_RGB16)
         blendUntransformed<qrgb565, qrgb565>(count, spans, userData);
     else
-        blend_untransformed_generic<RegularSpans>(count, spans, userData);
+        blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_argb8555(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_rgb555(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_argb4444(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
 static void blend_untransformed_rgb444(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_untransformed_generic<RegularSpans>(count, spans, userData);
+    blend_untransformed_generic(count, spans, userData);
 }
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_tiled_generic(int count, const QSpan *spans, void *userData)
+static void blend_tiled_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
 
@@ -4960,12 +4929,10 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_tiled_generic(int count, const QSpan *span
             if (buffer_size < l)
                 l = buffer_size;
             const uint *src = op.src_fetch(src_buffer, &op, data, sy, sx, l);
-            if (spanMethod == RegularSpans) {
-                uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
-                op.func(dest, src, l, coverage);
-                if (op.dest_store)
-                    op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
-            }
+            uint *dest = op.dest_fetch ? op.dest_fetch(buffer, data->rasterBuffer, x, spans->y, l) : buffer;
+            op.func(dest, src, l, coverage);
+            if (op.dest_store)
+                op.dest_store(data->rasterBuffer, x, spans->y, dest, l);
             x += l;
             sx += l;
             length -= l;
@@ -4976,13 +4943,12 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_tiled_generic(int count, const QSpan *span
     }
 }
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_tiled_argb(int count, const QSpan *spans, void *userData)
+static void blend_tiled_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     if (data->texture.format != QImage::Format_ARGB32_Premultiplied
         && data->texture.format != QImage::Format_RGB32) {
-        blend_tiled_generic<spanMethod>(count, spans, userData);
+        blend_tiled_generic(count, spans, userData);
         return;
     }
 
@@ -5014,10 +4980,8 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_tiled_argb(int count, const QSpan *spans, 
             if (buffer_size < l)
                 l = buffer_size;
             const uint *src = (uint *)data->texture.scanLine(sy) + sx;
-            if (spanMethod == RegularSpans) {
-                uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
-                op.func(dest, src, l, coverage);
-            }
+            uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
+            op.func(dest, src, l, coverage);
             x += l;
             length -= l;
             sx = 0;
@@ -5035,7 +4999,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTiled(int count, const QSpan *spans, void *
     if (mode != QPainter::CompositionMode_SourceOver &&
         mode != QPainter::CompositionMode_Source)
     {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -5132,22 +5096,22 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTiled(int count, const QSpan *spans, void *
 
 static void blend_tiled_rgb888(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_argb6666(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_rgb666(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_argb8565(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_rgb565(int count, const QSpan *spans, void *userData)
@@ -5159,27 +5123,27 @@ static void blend_tiled_rgb565(int count, const QSpan *spans, void *userData)
     else if (data->texture.format == QImage::Format_RGB16)
         blendTiled<qrgb565, qrgb565>(count, spans, userData);
     else
-        blend_tiled_generic<RegularSpans>(count, spans, userData);
+        blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_argb8555(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_rgb555(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_argb4444(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 static void blend_tiled_rgb444(int count, const QSpan *spans, void *userData)
 {
-    blend_tiled_generic<RegularSpans>(count, spans, userData);
+    blend_tiled_generic(count, spans, userData);
 }
 
 template <class DST, class SRC>
@@ -5191,7 +5155,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTransformedBilinear(int count, const QSpan 
 
 
     if (mode != QPainter::CompositionMode_SourceOver) {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -5407,22 +5371,22 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTransformedBilinear(int count, const QSpan 
 
 static void blend_transformed_bilinear_rgb888(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_argb6666(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_rgb666(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_argb8565(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_rgb565(int count, const QSpan *spans,
@@ -5435,36 +5399,35 @@ static void blend_transformed_bilinear_rgb565(int count, const QSpan *spans,
     else if (data->texture.format == QImage::Format_ARGB8565_Premultiplied)
         blendTransformedBilinear<qrgb565, qargb8565>(count, spans, userData);
     else
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_argb8555(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_rgb555(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_argb4444(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_bilinear_rgb444(int count, const QSpan *spans, void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_transformed_argb(int count, const QSpan *spans, void *userData)
+static void blend_transformed_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     if (data->texture.format != QImage::Format_ARGB32_Premultiplied
         && data->texture.format != QImage::Format_RGB32) {
-        blend_src_generic<spanMethod>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -5513,8 +5476,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_transformed_argb(int count, const QSpan *s
                     y += fdy;
                     ++b;
                 }
-                if (spanMethod == RegularSpans)
-                    func(target, buffer, l, coverage);
+                func(target, buffer, l, coverage);
                 target += l;
                 length -= l;
             }
@@ -5561,8 +5523,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_transformed_argb(int count, const QSpan *s
 
                     ++b;
                 }
-                if (spanMethod == RegularSpans)
-                    func(target, buffer, l, coverage);
+                func(target, buffer, l, coverage);
                 target += l;
                 length -= l;
             }
@@ -5578,7 +5539,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTransformed(int count, const QSpan *spans, 
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
 
     if (mode != QPainter::CompositionMode_SourceOver) {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -5720,25 +5681,25 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTransformed(int count, const QSpan *spans, 
 static void blend_transformed_rgb888(int count, const QSpan *spans,
                                      void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_argb6666(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_rgb666(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_argb8565(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_rgb565(int count, const QSpan *spans,
@@ -5751,40 +5712,39 @@ static void blend_transformed_rgb565(int count, const QSpan *spans,
     else if (data->texture.format == QImage::Format_RGB16)
         blendTransformed<qrgb565, qrgb565>(count, spans, userData);
     else
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_argb8555(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_rgb555(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_argb4444(int count, const QSpan *spans,
                                          void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_rgb444(int count, const QSpan *spans,
                                        void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
-template <SpanMethod spanMethod>
-Q_STATIC_TEMPLATE_FUNCTION void blend_transformed_tiled_argb(int count, const QSpan *spans, void *userData)
+static void blend_transformed_tiled_argb(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     if (data->texture.format != QImage::Format_ARGB32_Premultiplied
         && data->texture.format != QImage::Format_RGB32) {
-        blend_src_generic<spanMethod>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -5837,8 +5797,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_transformed_tiled_argb(int count, const QS
                     y += fdy;
                     ++b;
                 }
-                if (spanMethod == RegularSpans)
-                    func(target, buffer, l, coverage);
+                func(target, buffer, l, coverage);
                 target += l;
                 length -= l;
             }
@@ -5893,8 +5852,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blend_transformed_tiled_argb(int count, const QS
                     }
                     ++b;
                 }
-                if (spanMethod == RegularSpans)
-                    func(target, buffer, l, coverage);
+                func(target, buffer, l, coverage);
                 target += l;
                 length -= l;
             }
@@ -5910,7 +5868,7 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTransformedTiled(int count, const QSpan *sp
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
 
     if (mode != QPainter::CompositionMode_SourceOver) {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
         return;
     }
 
@@ -6055,25 +6013,25 @@ Q_STATIC_TEMPLATE_FUNCTION void blendTransformedTiled(int count, const QSpan *sp
 static void blend_transformed_tiled_rgb888(int count, const QSpan *spans,
                                            void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_argb6666(int count, const QSpan *spans,
                                              void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_rgb666(int count, const QSpan *spans,
                                            void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_argb8565(int count, const QSpan *spans,
                                              void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_rgb565(int count, const QSpan *spans,
@@ -6086,47 +6044,44 @@ static void blend_transformed_tiled_rgb565(int count, const QSpan *spans,
     else if (data->texture.format == QImage::Format_RGB16)
         blendTransformedTiled<qrgb565, qrgb565>(count, spans, userData);
     else
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_argb8555(int count, const QSpan *spans,
                                              void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_rgb555(int count, const QSpan *spans,
                                            void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_argb4444(int count, const QSpan *spans,
                                              void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
 
 static void blend_transformed_tiled_rgb444(int count, const QSpan *spans,
                                            void *userData)
 {
-    blend_src_generic<RegularSpans>(count, spans, userData);
+    blend_src_generic(count, spans, userData);
 }
-
-# define SPANFUNC_POINTER(Name, Arg) Name<Arg>
-
 
 /* Image formats here are target formats */
 static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats] = {
     // Untransformed
     {
         0, // Invalid
-        SPANFUNC_POINTER(blend_untransformed_generic, RegularSpans), // Mono
-        SPANFUNC_POINTER(blend_untransformed_generic, RegularSpans), // MonoLsb
-        SPANFUNC_POINTER(blend_untransformed_generic, RegularSpans), // Indexed8
-        SPANFUNC_POINTER(blend_untransformed_generic, RegularSpans), // RGB32
-        SPANFUNC_POINTER(blend_untransformed_generic, RegularSpans), // ARGB32
-        SPANFUNC_POINTER(blend_untransformed_argb, RegularSpans), // ARGB32_Premultiplied
+        blend_untransformed_generic, // Mono
+        blend_untransformed_generic, // MonoLsb
+        blend_untransformed_generic, // Indexed8
+        blend_untransformed_generic, // RGB32
+        blend_untransformed_generic, // ARGB32
+        blend_untransformed_argb, // ARGB32_Premultiplied
         blend_untransformed_rgb565,
         blend_untransformed_argb8565,
         blend_untransformed_rgb666,
@@ -6140,12 +6095,12 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
     // Tiled
     {
         0, // Invalid
-        SPANFUNC_POINTER(blend_tiled_generic, RegularSpans), // Mono
-        SPANFUNC_POINTER(blend_tiled_generic, RegularSpans), // MonoLsb
-        SPANFUNC_POINTER(blend_tiled_generic, RegularSpans), // Indexed8
-        SPANFUNC_POINTER(blend_tiled_generic, RegularSpans), // RGB32
-        SPANFUNC_POINTER(blend_tiled_generic, RegularSpans), // ARGB32
-        SPANFUNC_POINTER(blend_tiled_argb, RegularSpans), // ARGB32_Premultiplied
+        blend_tiled_generic, // Mono
+        blend_tiled_generic, // MonoLsb
+        blend_tiled_generic, // Indexed8
+        blend_tiled_generic, // RGB32
+        blend_tiled_generic, // ARGB32
+        blend_tiled_argb, // ARGB32_Premultiplied
         blend_tiled_rgb565,
         blend_tiled_argb8565,
         blend_tiled_rgb666,
@@ -6159,12 +6114,12 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
     // Transformed
     {
         0, // Invalid
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Mono
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // MonoLsb
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Indexed8
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB32
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB32
-        SPANFUNC_POINTER(blend_transformed_argb, RegularSpans), // ARGB32_Premultiplied
+        blend_src_generic, // Mono
+        blend_src_generic, // MonoLsb
+        blend_src_generic, // Indexed8
+        blend_src_generic, // RGB32
+        blend_src_generic, // ARGB32
+        blend_transformed_argb, // ARGB32_Premultiplied
         blend_transformed_rgb565,
         blend_transformed_argb8565,
         blend_transformed_rgb666,
@@ -6178,12 +6133,12 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
      // TransformedTiled
     {
         0,
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Mono
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // MonoLsb
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Indexed8
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB32
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB32
-        SPANFUNC_POINTER(blend_transformed_tiled_argb, RegularSpans), // ARGB32_Premultiplied
+        blend_src_generic, // Mono
+        blend_src_generic, // MonoLsb
+        blend_src_generic, // Indexed8
+        blend_src_generic, // RGB32
+        blend_src_generic, // ARGB32
+        blend_transformed_tiled_argb, // ARGB32_Premultiplied
         blend_transformed_tiled_rgb565,
         blend_transformed_tiled_argb8565,
         blend_transformed_tiled_rgb666,
@@ -6197,12 +6152,12 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
     // Bilinear
     {
         0,
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Mono
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // MonoLsb
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Indexed8
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB32
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB32
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB32_Premultiplied
+        blend_src_generic, // Mono
+        blend_src_generic, // MonoLsb
+        blend_src_generic, // Indexed8
+        blend_src_generic, // RGB32
+        blend_src_generic, // ARGB32
+        blend_src_generic, // ARGB32_Premultiplied
         blend_transformed_bilinear_rgb565,
         blend_transformed_bilinear_argb8565,
         blend_transformed_bilinear_rgb666,
@@ -6216,21 +6171,21 @@ static const ProcessSpans processTextureSpans[NBlendTypes][QImage::NImageFormats
     // BilinearTiled
     {
         0,
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Mono
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // MonoLsb
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // Indexed8
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB32
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB32
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB32_Premultiplied
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB16
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB8565_Premultiplied
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB666
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB6666_Premultiplied
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB555
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB8555_Premultiplied
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB888
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // RGB444
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans), // ARGB4444_Premultiplied
+        blend_src_generic, // Mono
+        blend_src_generic, // MonoLsb
+        blend_src_generic, // Indexed8
+        blend_src_generic, // RGB32
+        blend_src_generic, // ARGB32
+        blend_src_generic, // ARGB32_Premultiplied
+        blend_src_generic, // RGB16
+        blend_src_generic, // ARGB8565_Premultiplied
+        blend_src_generic, // RGB666
+        blend_src_generic, // ARGB6666_Premultiplied
+        blend_src_generic, // RGB555
+        blend_src_generic, // ARGB8555_Premultiplied
+        blend_src_generic, // RGB888
+        blend_src_generic, // RGB444
+        blend_src_generic, // ARGB4444_Premultiplied
     }
 };
 
@@ -6352,7 +6307,7 @@ static void qt_gradient_quint32(int count, const QSpan *spans, void *userData)
         }
 
     } else {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
     }
 }
 
@@ -6400,7 +6355,7 @@ static void qt_gradient_quint16(int count, const QSpan *spans, void *userData)
         data->solid.color = oldColor;
 
     } else {
-        blend_src_generic<RegularSpans>(count, spans, userData);
+        blend_src_generic(count, spans, userData);
     }
 }
 
@@ -6781,19 +6736,19 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     // Format_Mono,
     {
         blend_color_generic,
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0, 0
     },
     // Format_MonoLSB,
     {
         blend_color_generic,
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0, 0
     },
     // Format_Indexed8,
     {
         blend_color_generic,
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0, 0
     },
     // Format_RGB32,
@@ -6835,56 +6790,56 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     // Format_ARGB8565_Premultiplied
     {
         SPANFUNC_POINTER_BLENDCOLOR(qargb8565),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb8565
     },
     // Format_RGB666
     {
         SPANFUNC_POINTER_BLENDCOLOR(qrgb666),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb666
     },
     // Format_ARGB6666_Premultiplied
     {
         SPANFUNC_POINTER_BLENDCOLOR(qargb6666),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb6666
     },
     // Format_RGB555
     {
         SPANFUNC_POINTER_BLENDCOLOR(qrgb555),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb555
     },
     // Format_ARGB8555_Premultiplied
     {
         SPANFUNC_POINTER_BLENDCOLOR(qargb8555),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb8555
     },
     // Format_RGB888
     {
         SPANFUNC_POINTER_BLENDCOLOR(qrgb888),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb888
     },
     // Format_RGB444
     {
         SPANFUNC_POINTER_BLENDCOLOR(qrgb444),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb444
     },
     // Format_ARGB4444_Premultiplied
     {
         SPANFUNC_POINTER_BLENDCOLOR(qargb4444),
-        SPANFUNC_POINTER(blend_src_generic, RegularSpans),
+        blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb4444
     }
