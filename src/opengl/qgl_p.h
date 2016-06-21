@@ -93,11 +93,6 @@ QT_END_INCLUDE_NAMESPACE
 class QMacWindowChangeEvent;
 #endif
 
-#ifdef Q_WS_QWS
-class QWSGLWindowSurface;
-#endif
-
-
 #ifndef QT_NO_EGL
 class QEglContext;
 #endif
@@ -163,9 +158,6 @@ class QGLWidgetPrivate : public QWidgetPrivate
 public:
     QGLWidgetPrivate() : QWidgetPrivate()
                        , disable_clear_on_painter_begin(false)
-#if defined(Q_WS_QWS)
-                       , wsurf(0)
-#endif
 #if defined(Q_WS_X11) && !defined(QT_NO_EGL)
                        , eglSurfaceWindowId(0)
 #endif
@@ -207,8 +199,6 @@ public:
 #elif defined(Q_WS_MAC)
     QGLContext *olcx;
     void updatePaintDevice();
-#elif defined(Q_WS_QWS)
-    QWSGLWindowSurface *wsurf;
 #endif
 };
 

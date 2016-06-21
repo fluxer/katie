@@ -46,7 +46,7 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qsharedpointer.h>
 
-#if defined(Q_WS_X11) || defined(Q_WS_QWS)
+#if defined(Q_WS_X11)
 typedef struct FT_FaceRec_* FT_Face;
 #endif
 
@@ -252,7 +252,7 @@ public:
 #ifdef Q_WS_MAC
     quint32 macFontID() const;
 #endif
-#if defined(Q_WS_X11) || defined(Q_WS_QWS)
+#if defined(Q_WS_X11)
     FT_Face freetypeFace() const;
 #endif
 
@@ -273,9 +273,6 @@ public:
     static void removeSubstitution(const QString &);
     static void initialize();
     static void cleanup();
-#ifndef Q_WS_QWS
-    static void cacheStatistics();
-#endif
 
     QString defaultFamily() const;
     QString lastResortFamily() const;

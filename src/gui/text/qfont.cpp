@@ -2176,19 +2176,6 @@ bool QFont::fromString(const QString &descrip)
     return true;
 }
 
-#if !defined(Q_WS_QWS)
-/*! \internal
-
-  Internal function that dumps font cache statistics.
-*/
-void QFont::cacheStatistics()
-{
-
-
-}
-#endif // !Q_WS_QWS
-
-
 
 /*****************************************************************************
   QFont stream functions
@@ -2804,7 +2791,7 @@ void QFontCache::decreaseCost(uint cost)
             cost, total_cost, max_cost);
 }
 
-#if defined(Q_WS_WIN) || defined (Q_WS_QWS)
+#if defined(Q_WS_WIN)
 void QFontCache::cleanupPrinterFonts()
 {
     FC_DEBUG("QFontCache::cleanupPrinterFonts");

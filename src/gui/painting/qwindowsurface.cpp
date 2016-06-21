@@ -268,11 +268,7 @@ QPixmap QWindowSurface::grabWidget(const QWidget *widget, const QRect &rectangle
 QPoint QWindowSurface::offset(const QWidget *widget) const
 {
     QWidget *window = d_ptr->window;
-    QPoint offset = widget->mapTo(window, QPoint());
-#ifdef Q_WS_QWS
-    offset += window->geometry().topLeft() - window->frameGeometry().topLeft();
-#endif
-    return offset;
+    return widget->mapTo(window, QPoint());
 }
 
 /*!

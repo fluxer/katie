@@ -61,9 +61,6 @@
 // QtConcurrent
 //#define QT_NO_CONCURRENT
 
-// QCopChannel
-//#define QT_NO_COP
-
 // CssParser
 //#define QT_NO_CSSPARSER
 

@@ -49,11 +49,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#if defined(Q_WS_QWS)
-class QWSDisplay;
-#endif
-
 class QPaintEngine;
 
 class Q_GUI_EXPORT QPaintDevice                                // device for QPainter
@@ -77,10 +72,6 @@ public:
     virtual int devType() const;
     bool paintingActive() const;
     virtual QPaintEngine *paintEngine() const = 0;
-
-#if defined(Q_WS_QWS)
-    static QWSDisplay *qwsDisplay();
-#endif
 
 #ifdef Q_WS_WIN
     virtual HDC getDC() const;

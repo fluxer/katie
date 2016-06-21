@@ -7305,7 +7305,7 @@ void QGraphicsItem::setInputMethodHints(Qt::InputMethodHints hints)
     if (!hasFocus())
         return;
     d->scene->d_func()->updateInputMethodSensitivityInViews();
-#if !defined(QT_NO_IM) && (defined(Q_WS_X11) || defined(Q_WS_QWS))
+#if !defined(QT_NO_IM) && defined(Q_WS_X11)
     QWidget *fw = QApplication::focusWidget();
     if (!fw)
         return;
@@ -7325,7 +7325,7 @@ void QGraphicsItem::setInputMethodHints(Qt::InputMethodHints hints)
 */
 void QGraphicsItem::updateMicroFocus()
 {
-#if !defined(QT_NO_IM) && (defined(Q_WS_X11) || defined(Q_WS_QWS))
+#if !defined(QT_NO_IM) && defined(Q_WS_X11)
     if (QWidget *fw = QApplication::focusWidget()) {
         if (scene()) {
             for (int i = 0 ; i < scene()->views().count() ; ++i) {

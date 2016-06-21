@@ -181,10 +181,6 @@ QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::T
 
     quitOnLastWindowClosed = true;
 
-#if defined(Q_WS_QWS) && !defined(QT_NO_DIRECTPAINTER)
-    directPainters = 0;
-#endif
-
 #ifndef QT_NO_GESTURES
     gestureManager = 0;
     gestureWidget = 0;
@@ -4594,7 +4590,7 @@ bool QApplicationPrivate::notify_helper(QObject *receiver, QEvent * e)
   Stubbed session management support
  *****************************************************************************/
 #ifndef QT_NO_SESSIONMANAGER
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC) || defined(Q_WS_QWS)
+#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
 
 #if defined(Q_OS_WINCE)
 HRESULT qt_CoCreateGuid(GUID* guid)

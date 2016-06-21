@@ -263,7 +263,7 @@ QBitmap QBitmap::fromImage(const QImage &image, Qt::ImageConversionFlags flags)
         img.setColor(1, c0);
     }
 
-    QGraphicsSystem* gs = QApplicationPrivate::graphicsSystem();
+    QGraphicsSystem* gs = QApplicationPrivate::graphics_system;
     QScopedPointer<QPixmapData> data(gs ? gs->createPixmapData(QPixmapData::BitmapType)
                 : QGraphicsSystem::createDefaultPixmapData(QPixmapData::BitmapType));
 

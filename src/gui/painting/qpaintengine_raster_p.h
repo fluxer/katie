@@ -128,11 +128,7 @@ public:
 /*******************************************************************************
  * QRasterPaintEngine
  */
-class
-#ifdef Q_WS_QWS
-Q_GUI_EXPORT
-#endif
-QRasterPaintEngine : public QPaintEngineEx
+class QRasterPaintEngine : public QPaintEngineEx
 {
     Q_DECLARE_PRIVATE(QRasterPaintEngine)
 public:
@@ -240,11 +236,6 @@ public:
 
     QPoint coordinateOffset() const;
 
-#if defined(Q_WS_QWS) && !defined(QT_NO_RASTERCALLBACKS)
-    virtual void drawColorSpans(const QSpan *spans, int count, uint color);
-    virtual void drawBufferSpan(const uint *buffer, int bufsize,
-                                int x, int y, int length, uint const_alpha);
-#endif
     bool supportsTransformations(const QFontEngine *fontEngine) const;
     bool supportsTransformations(qreal pixelSize, const QTransform &m) const;
 
@@ -291,11 +282,7 @@ private:
 /*******************************************************************************
  * QRasterPaintEnginePrivate
  */
-class
-#ifdef Q_WS_QWS
-Q_GUI_EXPORT
-#endif
-QRasterPaintEnginePrivate : public QPaintEngineExPrivate
+class QRasterPaintEnginePrivate : public QPaintEngineExPrivate
 {
     Q_DECLARE_PUBLIC(QRasterPaintEngine)
 public:
@@ -375,11 +362,7 @@ public:
 };
 
 
-class
-#ifdef Q_WS_QWS
-Q_GUI_EXPORT
-#endif
-QClipData {
+class QClipData {
 public:
     QClipData(int height);
     ~QClipData();

@@ -50,16 +50,10 @@
 #ifdef QT_INCLUDE_COMPAT
 # include <QtGui/qdesktopwidget.h>
 #endif
-#ifdef Q_WS_QWS
-# include <QtGui/qrgb.h>
-# include <QtGui/qtransportauth_qws.h>
-#endif
 
 QT_BEGIN_HEADER
 
-
 QT_BEGIN_NAMESPACE
-
 
 class QSessionManager;
 class QDesktopWidget;
@@ -213,16 +207,6 @@ public:
     virtual int x11ClientMessage(QWidget*, XEvent*, bool passive_only);
     int x11ProcessEvent(XEvent*);
 #endif
-#if defined(Q_WS_QWS)
-    virtual bool qwsEventFilter(QWSEvent *);
-    int qwsProcessEvent(QWSEvent*);
-    void qwsSetCustomColors(QRgb *colortable, int start, int numColors);
-#ifndef QT_NO_QWS_MANAGER
-    static QDecoration &qwsDecoration();
-    static void qwsSetDecoration(QDecoration *);
-    static QDecoration *qwsSetDecoration(const QString &decoration);
-#endif
-#endif
 
 #if defined(Q_WS_WIN)
     void winFocus(QWidget *, bool);
@@ -283,9 +267,6 @@ public Q_SLOTS:
     static void aboutQt();
 
 protected:
-#if defined(Q_WS_QWS)
-    void setArgs(int, char **);
-#endif
     bool event(QEvent *);
     bool compressEvent(QEvent *, QObject *receiver, QPostEventList *);
 

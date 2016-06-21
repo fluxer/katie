@@ -134,9 +134,6 @@ QDragManager::QDragManager()
 {
     Q_ASSERT(!instance);
 
-#ifdef Q_WS_QWS
-    currentActionForOverrideCursor = Qt::IgnoreAction;
-#endif
     object = 0;
     beingCancelled = false;
     restoreCursor = false;

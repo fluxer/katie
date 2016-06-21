@@ -50,6 +50,7 @@
 #define QT_NO_QWS_QPF2
 #define QT_NO_STYLE_WINDOWSMOBILE
 #define QT_NO_DIRECTPAINTER
+#define QT_NO_COP
 
 /* Qt build specs */
 #ifndef QT_EDITION

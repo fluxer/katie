@@ -597,7 +597,7 @@ public:
         }
     }
 
-#ifndef Q_WS_QWS // Almost cross-platform :-)
+    // Almost cross-platform :-)
     void setWSGeometry(bool dontShow=false, const QRect &oldRect = QRect());
 
     inline QPoint mapToWS(const QPoint &p) const
@@ -611,7 +611,6 @@ public:
 
     inline QRect mapFromWS(const QRect &r) const
     { QRect rr(r); rr.translate(data.wrect.topLeft()); return rr; }
-#endif
 
     // Variables.
     // Regular pointers (keep them together to avoid gaps on 64 bit architectures).

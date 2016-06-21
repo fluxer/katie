@@ -820,10 +820,8 @@ QFontEngineFT::Glyph *QFontEngineFT::loadGlyph(QGlyphSet *set, uint glyph,
     int vfactor = 1;
     int load_flags = loadFlags(set, format, 0, hsubpixel, vfactor);
 
-#ifndef Q_WS_QWS
     if (format != Format_Mono && !embeddedbitmap)
         load_flags |= FT_LOAD_NO_BITMAP;
-#endif
 
     FT_Matrix matrix = freetype->matrix;
     bool transform = matrix.xx != 0x10000

@@ -1275,7 +1275,7 @@ OSStatus QWidgetPrivate::qt_widget_event(EventHandlerCallRef er, EventRef event,
                 extern void qt_mac_send_posted_gl_updates(QWidget *widget);
                 qt_mac_send_posted_gl_updates(widget);
 
-                if (QApplicationPrivate::graphicsSystem() && !widget->d_func()->paintOnScreen()) {
+                if (QApplicationPrivate::graphics_system && !widget->d_func()->paintOnScreen()) {
                     widget->d_func()->syncBackingStore();
                     widget->d_func()->dirtyOnWidget = QRegion();
                     return noErr;
@@ -4205,7 +4205,7 @@ void QWidgetPrivate::setWSGeometry(bool dontShow, const QRect &oldRect)
     Q_Q(QWidget);
     Q_ASSERT(q->testAttribute(Qt::WA_WState_Created));
 
-    if (!q->internalWinId() && QApplicationPrivate::graphicsSystem() != 0) {
+    if (!q->internalWinId() && QApplicationPrivate::graphics_system != 0) {
         // We have no view to move, and no paint engine that
         // we can update dirty regions on. So just return:
         return;
@@ -4403,7 +4403,7 @@ void QWidgetPrivate::setWSGeometry(bool dontShow, const QRect &oldRect)
         [nsview setFrame:bounds];
         if (jump)
             q->update();
-    } else if (QApplicationPrivate::graphicsSystem() == 0){
+    } else if (QApplicationPrivate::graphics_system == 0){
         // INVARIANT: q is alien and we use native paint engine.
         // Schedule updates where q is moved from and to:
         const QWidget *parent = q->parentWidget();
@@ -4614,12 +4614,12 @@ void QWidgetPrivate::setGeometry_sys_helper(int x, int y, int w, int h, bool isM
 #endif
     } else {
         const QRect oldRect(oldp, olds);
-        if (!isResize && QApplicationPrivate::graphicsSystem())
+        if (!isResize && QApplicationPrivate::graphics_system)
             moveRect(oldRect, x - oldp.x(), y - oldp.y());
 
         setWSGeometry(false, oldRect);
 
-        if (isResize && q->parentWidget() && QApplicationPrivate::graphicsSystem())
+        if (isResize && q->parentWidget() && QApplicationPrivate::graphics_system)
             invalidateBuffer_resizeHelper(oldp, olds);
     }
 
@@ -4699,7 +4699,7 @@ void QWidgetPrivate::updateMaximizeButton_sys()
 
 void QWidgetPrivate::scroll_sys(int dx, int dy)
 {
-    if (QApplicationPrivate::graphicsSystem() && !paintOnScreen()) {
+    if (QApplicationPrivate::graphics_system && !paintOnScreen()) {
         // INVARIANT: Alien paint engine
         scrollChildren(dx, dy);
         scrollRect(q_func()->rect(), dx, dy);
@@ -4714,7 +4714,7 @@ void QWidgetPrivate::scroll_sys(int dx, int dy, const QRect &qscrollRect)
         return;
 
     Q_Q(QWidget);
-    if (QApplicationPrivate::graphicsSystem() && !paintOnScreen()) {
+    if (QApplicationPrivate::graphics_system && !paintOnScreen()) {
         // INVARIANT: Alien paint engine
         scrollRect(qscrollRect, dx, dy);
         return;

@@ -176,12 +176,7 @@ public:
 
     bool isQBitmap() const;
 
-#if defined(Q_WS_QWS)
-    const uchar *qwsBits() const;
-    int qwsBytesPerLine() const;
-    QRgb *clut() const;
-    int colorCount() const;
-#elif defined(Q_WS_MAC)
+#if defined(Q_WS_MAC)
     Qt::HANDLE macQDHandle() const;
     Qt::HANDLE macQDAlphaHandle() const;
     Qt::HANDLE macCGHandle() const;
@@ -195,7 +190,7 @@ public:
     Qt::HANDLE x11PictureHandle() const;
 #endif
 
-#if defined(Q_WS_X11) || defined(Q_WS_QWS)
+#if defined(Q_WS_X11)
     Qt::HANDLE handle() const;
 #endif
 

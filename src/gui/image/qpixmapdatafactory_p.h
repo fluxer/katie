@@ -67,7 +67,7 @@ class QPixmapData;
 class QPixmapDataFactory
 {
 public:
-    static QPixmapDataFactory* instance(int screen = 0);
+    static QPixmapDataFactory* instance();
     virtual ~QPixmapDataFactory();
 
     virtual QPixmapData* create(QPixmapData::PixelType type) = 0;

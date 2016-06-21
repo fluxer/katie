@@ -607,11 +607,7 @@ void QPSPrintEnginePrivate::emitPages()
 }
 
 
-#ifdef Q_WS_QWS
-static const int max_in_memory_size = 2000000;
-#else
 static const int max_in_memory_size = 32000000;
-#endif
 
 void QPSPrintEnginePrivate::flushPage(bool last)
 {

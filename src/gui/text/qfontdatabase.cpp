@@ -57,11 +57,6 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#if defined(Q_WS_QWS) && !defined(QT_NO_FREETYPE)
-#  include <ft2build.h>
-#  include FT_TRUETYPE_TABLES_H
-#endif
-
 // #define QFONTDATABASE_DEBUG
 #ifdef QFONTDATABASE_DEBUG
 #  define FD_DEBUG qDebug
@@ -593,9 +588,6 @@ class QFontDatabasePrivate
 public:
     QFontDatabasePrivate()
         : count(0), families(0), reregisterAppFonts(false)
-#if defined(Q_WS_QWS)
-          , stream(0)
-#endif
 #if defined(Q_WS_WIN) && !defined(QT_NO_DIRECTWRITE)
           , directWriteFactory(0)
           , directWriteGdiInterop(0)
@@ -651,19 +643,6 @@ public:
     bool isApplicationFont(const QString &fileName);
 
     void invalidate();
-
-#if defined(Q_WS_QWS)
-    bool loadFromCache(const QString &fontPath);
-#endif // Q_WS_QWS
-#if defined(Q_WS_QWS) && !defined(QT_NO_FREETYPE)
-    void addFont(const QString &familyname, const char *foundryname, int weight,
-                 bool italic, int pixelSize, const QByteArray &file, int fileIndex,
-                 bool antialiased,
-                 const QList<QFontDatabase::WritingSystem> &writingSystems = QList<QFontDatabase::WritingSystem>());
-#ifndef QT_NO_FREETYPE
-    QStringList addTTFile(const QByteArray &file, const QByteArray &fontData = QByteArray());
-#endif // QT_NO_FREETYPE
-#endif
 };
 
 void QFontDatabasePrivate::invalidate()
@@ -712,119 +691,6 @@ QtFontFamily *QFontDatabasePrivate::family(const QString &f, bool create)
     return families[pos];
 }
 
-#if defined(Q_WS_QWS) && !defined(QT_NO_FREETYPE)
-void QFontDatabasePrivate::addFont(const QString &familyname, const char *foundryname, int weight, bool italic, int pixelSize,
-                                   const QByteArray &file, int fileIndex, bool antialiased,
-                                   const QList<QFontDatabase::WritingSystem> &writingSystems)
-{
-//    qDebug() << "Adding font" << familyname << weight << italic << pixelSize << file << fileIndex << antialiased;
-    QtFontStyle::Key styleKey;
-    styleKey.style = italic ? QFont::StyleItalic : QFont::StyleNormal;
-    styleKey.weight = weight;
-    styleKey.stretch = 100;
-    QtFontFamily *f = family(familyname, true);
-
-    if (writingSystems.isEmpty()) {
-        for (int ws = 1; ws < QFontDatabase::WritingSystemsCount; ++ws) {
-            f->writingSystems[ws] = QtFontFamily::Supported;
-        }
-        f->bogusWritingSystems = true;
-    } else {
-        for (int i = 0; i < writingSystems.count(); ++i) {
-            f->writingSystems[writingSystems.at(i)] = QtFontFamily::Supported;
-        }
-    }
-
-    QtFontFoundry *foundry = f->foundry(QString::fromLatin1(foundryname), true);
-    QtFontStyle *style = foundry->style(styleKey, QString(), true);
-    style->smoothScalable = (pixelSize == 0);
-    style->antialiased = antialiased;
-    QtFontSize *size = style->pixelSize(pixelSize?pixelSize:SMOOTH_SCALABLE, true);
-    size->fileName = file;
-    size->fileIndex = fileIndex;
-
-#if defined(Q_WS_QWS)
-    if (stream) {
-        *stream << familyname << foundry->name << weight << quint8(italic) << pixelSize
-                << file << fileIndex << quint8(antialiased);
-        *stream << quint8(writingSystems.count());
-        for (int i = 0; i < writingSystems.count(); ++i)
-            *stream << quint8(writingSystems.at(i));
-    }
-#else // ..in case of !defined(QT_NO_FREETYPE)
-    f->fontFilename = file;
-    f->fontFileIndex = fileIndex;
-#endif
-}
-#endif
-
-#if defined(Q_WS_QWS) && !defined(QT_NO_FREETYPE)
-QStringList QFontDatabasePrivate::addTTFile(const QByteArray &file, const QByteArray &fontData)
-{
-    QStringList families;
-    extern FT_Library qt_getFreetype();
-    FT_Library library = qt_getFreetype();
-
-    int index = 0;
-    int numFaces = 0;
-    do {
-        FT_Face face;
-        FT_Error error;
-        if (!fontData.isEmpty()) {
-            error = FT_New_Memory_Face(library, (const FT_Byte *)fontData.constData(), fontData.size(), index, &face);
-        } else {
-            error = FT_New_Face(library, file, index, &face);
-        }
-        if (error != FT_Err_Ok) {
-            qDebug() << "FT_New_Face failed with index" << index << ":" << hex << error;
-            break;
-        }
-        numFaces = face->num_faces;
-
-        int weight = QFont::Normal;
-        bool italic = face->style_flags & FT_STYLE_FLAG_ITALIC;
-
-        if (face->style_flags & FT_STYLE_FLAG_BOLD)
-            weight = QFont::Bold;
-
-        QList<QFontDatabase::WritingSystem> writingSystems;
-        // detect symbol fonts
-        for (int i = 0; i < face->num_charmaps; ++i) {
-            FT_CharMap cm = face->charmaps[i];
-            if (cm->encoding == ft_encoding_adobe_custom
-                    || cm->encoding == ft_encoding_symbol) {
-                writingSystems.append(QFontDatabase::Symbol);
-                break;
-            }
-        }
-        if (writingSystems.isEmpty()) {
-            TT_OS2 *os2 = (TT_OS2 *)FT_Get_Sfnt_Table(face, ft_sfnt_os2);
-            if (os2) {
-                quint32 unicodeRange[4] = {
-                    static_cast<quint32>(os2->ulUnicodeRange1), static_cast<quint32>(os2->ulUnicodeRange2), static_cast<quint32>(os2->ulUnicodeRange3), static_cast<quint32>(os2->ulUnicodeRange4)
-                };
-                quint32 codePageRange[2] = {
-                    static_cast<quint32>(os2->ulCodePageRange1), static_cast<quint32>(os2->ulCodePageRange2)
-                };
-
-                writingSystems = qt_determine_writing_systems_from_truetype_bits(unicodeRange, codePageRange);
-                //for (int i = 0; i < writingSystems.count(); ++i)
-                //    qDebug() << QFontDatabase::writingSystemName(writingSystems.at(i));
-            }
-        }
-
-        QString family = QString::fromAscii(face->family_name);
-        families.append(family);
-        addFont(family, /*foundry*/ "", weight, italic,
-                /*pixelsize*/ 0, file, index, /*antialias*/ true, writingSystems);
-
-        FT_Done_Face(face);
-        ++index;
-    } while (index < numFaces);
-    return families;
-}
-#endif
-
 static const int scriptForWritingSystem[] = {
     QUnicodeTables::Common, // Any
     QUnicodeTables::Latin, // Latin
@@ -868,7 +734,7 @@ int qt_script_for_writing_system(QFontDatabase::WritingSystem writingSystem)
 }
 
 
-#if defined Q_WS_QWS || (defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)) || defined(Q_WS_WIN)
+#if (defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)) || defined(Q_WS_WIN)
 static inline bool requiresOpenType(int writingSystem)
 {
     return ((writingSystem >= QFontDatabase::Syriac && writingSystem <= QFontDatabase::Sinhala)

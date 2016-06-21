@@ -50,7 +50,7 @@
 #endif
 
 #ifndef QT_NO_FREETYPE
-#if defined(Q_WS_X11) || defined(Q_WS_QWS)
+#if defined(Q_WS_X11)
 #    include "qfontengine_ft_p.h"
 #endif
 #include <ft2build.h>
@@ -297,12 +297,6 @@ static FT_Face ft_face(const QFontEngine *engine)
     if (engine->type() == QFontEngine::XLFD) {
         const QFontEngineXLFD *xlfd = static_cast<const QFontEngineXLFD *>(engine);
         return xlfd->non_locked_face();
-    }
-#endif
-#ifdef Q_WS_QWS
-    if (engine->type() == QFontEngine::Freetype) {
-        const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
-        return ft->non_locked_face();
     }
 #endif
     return 0;

@@ -130,17 +130,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(Q_WS_QWS)
-static bool qt_enable_backingstore = true;
-#endif
-#ifdef Q_WS_X11
-// for compatibility with Qt 4.0
-Q_GUI_EXPORT void qt_x11_set_global_double_buffer(bool enable)
-{
-    qt_enable_backingstore = enable;
-}
-#endif
-
 #ifdef QT_MAC_USE_COCOA
 bool qt_mac_clearDirtyOnWidgetInsideDrawWidget = false;
 #endif
@@ -154,7 +143,7 @@ static inline bool qRectIntersects(const QRect &r1, const QRect &r2)
 static inline bool hasBackingStoreSupport()
 {
 #ifdef Q_WS_MAC
-    return QApplicationPrivate::graphicsSystem() != 0;
+    return QApplicationPrivate::graphics_system != 0;
 #else
     return true;
 #endif
@@ -366,8 +355,8 @@ QWindowSurface *QWidgetPrivate::createDefaultWindowSurface()
     } else
 #endif
     {
-        if (QApplicationPrivate::graphicsSystem())
-            surface = QApplicationPrivate::graphicsSystem()->createWindowSurface(q);
+        if (QApplicationPrivate::graphics_system)
+            surface = QApplicationPrivate::graphics_system->createWindowSurface(q);
         else
             surface = createDefaultWindowSurface_sys();
     }
@@ -390,10 +379,8 @@ void QWidgetPrivate::scrollChildren(int dx, int dy)
                 QPoint oldp = w->pos();
                 QRect  r(w->pos() + pd, w->size());
                 w->data->crect = r;
-#ifndef Q_WS_QWS
                 if (w->testAttribute(Qt::WA_WState_Created))
                     w->d_func()->setWSGeometry();
-#endif
                 w->d_func()->setDirtyOpaqueRegion();
                 QMoveEvent e(r.topLeft(), oldp);
                 QApplication::sendEvent(w, &e);
@@ -2113,9 +2100,7 @@ void QWidgetPrivate::clipToEffectiveMask(QRegion &region) const
 
 bool QWidgetPrivate::paintOnScreen() const
 {
-#if defined(Q_WS_QWS)
-    return false;
-#elif  defined(QT_NO_BACKINGSTORE)
+#if defined(QT_NO_BACKINGSTORE)
     return true;
 #else
     Q_Q(const QWidget);
@@ -2124,7 +2109,7 @@ bool QWidgetPrivate::paintOnScreen() const
         return true;
     }
 
-    return !qt_enable_backingstore;
+    return false;
 #endif
 }
 
@@ -3749,19 +3734,6 @@ bool QWidgetPrivate::setMinimumSize_helper(int &minw, int &minh)
 {
     Q_Q(QWidget);
 
-#ifdef Q_WS_QWS
-    if (q->isWindow()) {
-        const QRect maxWindowRect = QApplication::desktop()->availableGeometry(QApplication::desktop()->screenNumber(q));
-        if (!maxWindowRect.isEmpty()) {
-            // ### This is really just a work-around. Layout shouldn't be
-            // asking for minimum sizes bigger than the screen.
-            if (minw > maxWindowRect.width())
-                minw = maxWindowRect.width();
-            if (minh > maxWindowRect.height())
-                minh = maxWindowRect.height();
-        }
-    }
-#endif
     int mw = minw, mh = minh;
     if (mw == QWIDGETSIZE_MAX)
         mw = 0;
@@ -3952,15 +3924,7 @@ void QWidget::setFixedSize(const QSize & s)
 void QWidget::setFixedSize(int w, int h)
 {
     Q_D(QWidget);
-#ifdef Q_WS_QWS
-    // temporary fix for 4.3.x.
-    // Should move the embedded spesific contraints in setMinimumSize_helper into QLayout
-    int tmpW = w;
-    int tmpH = h;
-    bool minSizeSet = d->setMinimumSize_helper(tmpW, tmpH);
-#else
     bool minSizeSet = d->setMinimumSize_helper(w, h);
-#endif
     bool maxSizeSet = d->setMaximumSize_helper(w, h);
     if (!minSizeSet && !maxSizeSet)
         return;
@@ -4769,7 +4733,7 @@ void QWidget::setCursor(const QCursor &cursor)
 {
     Q_D(QWidget);
 // On Mac we must set the cursor even if it is the ArrowCursor.
-#if !defined(Q_WS_MAC) && !defined(Q_WS_QWS)
+#if !defined(Q_WS_MAC)
     if (cursor.shape() != Qt::ArrowCursor
         || (d->extra && d->extra->curs))
 #endif
@@ -7372,9 +7336,6 @@ void QWidget::setVisible(bool visible)
 #if defined(Q_WS_X11)
         if (windowType() == Qt::Window)
             QApplicationPrivate::applyX11SpecificCommandLineArguments(this);
-#elif defined(Q_WS_QWS)
-        if (windowType() == Qt::Window)
-            QApplicationPrivate::applyQWSSpecificCommandLineArguments(this);
 #endif
 
         bool wasResized = testAttribute(Qt::WA_Resized);
@@ -8490,10 +8451,6 @@ void QWidget::changeEvent(QEvent * event)
         updateGeometry();
         if (d->layout)
             d->layout->invalidate();
-#ifdef Q_WS_QWS
-        if (isWindow())
-            d->data.fstrut_dirty = true;
-#endif
         break;
     }
 
@@ -9268,30 +9225,6 @@ bool QWidget::winEvent(MSG *message, long *result)
     \sa QApplication::x11EventFilter(), QWidget::winId()
 */
 bool QWidget::x11Event(XEvent *)
-{
-    return false;
-}
-
-#endif
-#if defined(Q_WS_QWS)
-
-/*!
-    \fn bool QWidget::qwsEvent(QWSEvent *event)
-
-    This special event handler can be reimplemented in a subclass to
-    receive native Qt for Embedded Linux events which are passed in the
-    \a event parameter.
-
-    In your reimplementation of this function, if you want to stop the
-    event being handled by Qt, return true. If you return false, this
-    native event is passed back to Qt, which translates the event into
-    a Qt event and sends it to the widget.
-
-    \warning This function is not portable.
-
-    \sa QApplication::qwsEventFilter()
-*/
-bool QWidget::qwsEvent(QWSEvent *)
 {
     return false;
 }
@@ -10638,10 +10571,8 @@ void QWidget::setWindowOpacity(qreal opacity)
     extra->opacity = uint(opacity * 255);
     setAttribute(Qt::WA_WState_WindowOpacitySet);
 
-#ifndef Q_WS_QWS
     if (!testAttribute(Qt::WA_WState_Created))
         return;
-#endif
 
 #ifndef QT_NO_GRAPHICSVIEW
     if (QGraphicsProxyWidget *proxy = graphicsProxyWidget()) {
@@ -10931,7 +10862,7 @@ void QWidget::setShortcutAutoRepeat(int id, bool enable)
 */
 void QWidget::updateMicroFocus()
 {
-#if !defined(QT_NO_IM) && (defined(Q_WS_X11) || defined(Q_WS_QWS))
+#if !defined(QT_NO_IM) && defined(Q_WS_X11)
     Q_D(QWidget);
     // and optimization to update input context only it has already been created.
     if (d->assignedInputContext() || qApp->d_func()->inputContext) {

@@ -41,9 +41,6 @@
 
 #include "qpixmapdatafactory_p.h"
 
-#ifdef Q_WS_QWS
-# include <QtGui/qscreen_qws.h>
-#endif
 #ifdef Q_WS_X11
 # include <qpixmap_x11_p.h>
 #endif
@@ -59,8 +56,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(Q_WS_QWS)
-
 class QSimplePixmapDataFactory : public QPixmapDataFactory
 {
 public:
@@ -70,8 +65,8 @@ public:
 
 QPixmapData* QSimplePixmapDataFactory::create(QPixmapData::PixelType type)
 {
-    if (QApplicationPrivate::graphicsSystem())
-        return QApplicationPrivate::graphicsSystem()->createPixmapData(type);
+    if (QApplicationPrivate::graphics_system)
+        return QApplicationPrivate::graphics_system->createPixmapData(type);
 
 #if defined(Q_WS_X11)
     return new QX11PixmapData(type);
@@ -86,20 +81,13 @@ QPixmapData* QSimplePixmapDataFactory::create(QPixmapData::PixelType type)
 
 Q_GLOBAL_STATIC(QSimplePixmapDataFactory, factory)
 
-#endif // !defined(Q_WS_QWS)
-
 QPixmapDataFactory::~QPixmapDataFactory()
 {
 }
 
-QPixmapDataFactory* QPixmapDataFactory::instance(int screen)
+QPixmapDataFactory* QPixmapDataFactory::instance()
 {
-    Q_UNUSED(screen);
-#ifdef Q_WS_QWS
-    return QScreen::instance()->pixmapDataFactory();
-#else
     return factory();
-#endif
 }
 
 QT_END_NAMESPACE

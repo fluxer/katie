@@ -205,7 +205,6 @@ public:
     KeyboardLayoutKind keyboard_kind;
     UInt32 keyboard_dead;
     KeyboardLayoutItem *keyLayout[256];
-#elif defined(Q_WS_QWS)
 #endif
 };
 

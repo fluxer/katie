@@ -90,7 +90,7 @@ QT_END_HEADER
 
 // Window system dependent definitions
 
-#if defined(Q_WS_MAC) && !defined(Q_WS_QWS)
+#if defined(Q_WS_MAC)
 
 #include <QtGui/qmacdefines_mac.h>
 

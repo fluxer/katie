@@ -102,22 +102,10 @@ QPixmapData *QRasterPixmapData::createCompatiblePixmapData() const
 void QRasterPixmapData::resize(int width, int height)
 {
     QImage::Format format;
-#ifdef Q_WS_QWS
-    if (pixelType() == BitmapType) {
-        format = QImage::Format_Mono;
-    } else {
-        format = QScreen::instance()->pixelFormat();
-        if (format == QImage::Format_Invalid)
-            format = QImage::Format_ARGB32_Premultiplied;
-        else if (format == QImage::Format_Indexed8) // currently not supported
-            format = QImage::Format_RGB444;
-    }
-#else
     if (pixelType() == BitmapType)
         format = QImage::Format_MonoLSB;
     else
         format = QNativeImage::systemFormat();
-#endif
 
     image = QImage(width, height, format);
     w = width;
@@ -386,45 +374,9 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
 void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConversionFlags flags, bool inPlace)
 {
     QImage::Format format;
-    if (flags & Qt::NoFormatConversion)
+    if (flags & Qt::NoFormatConversion) {
         format = sourceImage.format();
-    else
-#ifdef Q_WS_QWS
-    if (pixelType() == BitmapType) {
-        format = QImage::Format_Mono;
-    } else {
-        format = QScreen::instance()->pixelFormat();
-        if (format == QImage::Format_Invalid)
-            format = QImage::Format_ARGB32_Premultiplied;
-        else if (format == QImage::Format_Indexed8) // currently not supported
-            format = QImage::Format_RGB444;
-    }
-
-    if (sourceImage.hasAlphaChannel()
-        && ((flags & Qt::NoOpaqueDetection)
-            || const_cast<QImage &>(sourceImage).data_ptr()->checkForAlphaPixels())) {
-        switch (format) {
-            case QImage::Format_RGB16:
-                format = QImage::Format_ARGB8565_Premultiplied;
-                break;
-            case QImage::Format_RGB666:
-                format = QImage::Format_ARGB6666_Premultiplied;
-                break;
-            case QImage::Format_RGB555:
-                format = QImage::Format_ARGB8555_Premultiplied;
-                break;
-            case QImage::Format_RGB444:
-                format = QImage::Format_ARGB4444_Premultiplied;
-                break;
-            default:
-                format = QImage::Format_ARGB32_Premultiplied;
-                break;
-        }
-    } else if (format == QImage::Format_Invalid) {
-        format = QImage::Format_ARGB32_Premultiplied;
-    }
-#else
-    if (pixelType() == BitmapType) {
+    } else if (pixelType() == BitmapType) {
         format = QImage::Format_MonoLSB;
     } else {
         if (sourceImage.depth() == 1) {
@@ -465,7 +417,6 @@ void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConve
             }
         }
     }
-#endif
 
     if (inPlace && sourceImage.d->convertInPlace(format, flags)) {
         image = sourceImage;

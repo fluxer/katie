@@ -55,7 +55,7 @@ const uchar qt_pixmap_bit_mask[] = { 0x01, 0x02, 0x04, 0x08,
 QPixmapData *QPixmapData::create(int w, int h, PixelType type)
 {
     QPixmapData *data;
-    QGraphicsSystem* gs = QApplicationPrivate::graphicsSystem();
+    QGraphicsSystem* gs = QApplicationPrivate::graphics_system;
     if (gs)
         data = gs->createPixmapData(static_cast<QPixmapData::PixelType>(type));
     else
@@ -96,7 +96,7 @@ QPixmapData::~QPixmapData()
 QPixmapData *QPixmapData::createCompatiblePixmapData() const
 {
     QPixmapData *d;
-    QGraphicsSystem *gs = QApplicationPrivate::graphicsSystem();
+    QGraphicsSystem *gs = QApplicationPrivate::graphics_system;
     if (gs)
         d = gs->createPixmapData(pixelType());
     else

@@ -1762,7 +1762,6 @@ FatalSignalHandler::FatalSignalHandler()
 
     for (int i = 0; fatalSignals[i]; ++i) {
         sigaction(fatalSignals[i], &act, &oldact);
-#ifndef Q_WS_QWS
         // Don't overwrite any non-default handlers
         // however, we need to replace the default QWS handlers
         if (
@@ -1771,9 +1770,7 @@ FatalSignalHandler::FatalSignalHandler()
 #endif
             oldact.sa_handler != SIG_DFL) {
             sigaction(fatalSignals[i], &oldact, 0);
-        } else
-#endif
-        {
+        } else {
             sigaddset(&handledSignals, fatalSignals[i]);
         }
     }

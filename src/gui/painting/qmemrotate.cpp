@@ -546,8 +546,6 @@ void qt_memrotate270(const srctype *src, int w, int h, int sstride, \
 }
 
 
-
-
 QT_IMPL_MEMROTATE(quint32, quint32)
 QT_IMPL_MEMROTATE(quint32, quint16)
 QT_IMPL_MEMROTATE(quint16, quint32)
@@ -559,18 +557,6 @@ QT_IMPL_MEMROTATE(quint32, quint8)
 QT_IMPL_MEMROTATE(quint16, quint8)
 QT_IMPL_MEMROTATE(qrgb444, quint8)
 QT_IMPL_MEMROTATE(quint8, quint8)
-
-#if defined(QT_QWS_ROTATE_BGR)
-QT_IMPL_SIMPLE_MEMROTATE(quint16, qbgr565)
-QT_IMPL_SIMPLE_MEMROTATE(quint32, qbgr565)
-QT_IMPL_SIMPLE_MEMROTATE(qrgb555, qbgr555)
-QT_IMPL_SIMPLE_MEMROTATE(quint32, qbgr555)
-#endif
-
-#ifdef QT_QWS_DEPTH_GENERIC
-QT_IMPL_MEMROTATE(quint32, qrgb_generic16)
-QT_IMPL_MEMROTATE(quint16, qrgb_generic16)
-#endif
 
 struct qrgb_gl_rgba
 {

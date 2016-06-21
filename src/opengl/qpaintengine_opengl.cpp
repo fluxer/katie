@@ -1161,9 +1161,7 @@ void QGLGradientCache::generateGradientColorTable(const QGradient& gradient, uin
     colorTable[size-1] = last_color;
 }
 
-#ifndef Q_WS_QWS
 Q_GLOBAL_STATIC(QGLGradientCache, qt_opengl_gradient_cache)
-#endif
 
 void QOpenGLPaintEnginePrivate::createGradientPaletteTexture(const QGradient& g)
 {
@@ -1778,7 +1776,7 @@ static void drawTrapezoid(const QGLTrapezoid &trap, const qreal offscreenHeight,
 
     glTexCoord4f(0.0f, 0.0f, 0.0f, 1.0f);
 }
-#endif // !Q_WS_QWS
+#endif // !QT_OPENGL_ES
 
 class QOpenGLTrapezoidToArrayTessellator : public QOpenGLTessellator
 {
@@ -2353,13 +2351,11 @@ void QOpenGLPaintEngine::updateClipRegion(const QRegion &clipRegion, Qt::ClipOpe
         if (d->pdev->devType() != QInternal::Widget) {
             d->use_system_clip = true;
         } else {
-#ifndef Q_WS_QWS
             // Only use the system clip if we're currently rendering a widget with a GL painter.
             if (d->currentClipWidget) {
                 QWidgetPrivate *widgetPrivate = qt_widget_private(d->currentClipWidget->window());
                 d->use_system_clip = widgetPrivate->extra && widgetPrivate->extra->inRenderWithPainter;
             }
-#endif
         }
     }
 
@@ -3381,9 +3377,6 @@ void QGLEllipseMaskGenerator::drawMask(const QRect &rect)
 
 void QOpenGLPaintEnginePrivate::drawOffscreenPath(const QPainterPath &path)
 {
-#ifdef Q_WS_QWS
-    Q_UNUSED(path);
-#else
     DEBUG_ONCE_STR("QOpenGLPaintEnginePrivate::drawOffscreenPath()");
 
     disableClipping();
@@ -3394,7 +3387,6 @@ void QOpenGLPaintEnginePrivate::drawOffscreenPath(const QPainterPath &path)
     addItem(qt_mask_texture_cache()->getMask(maskGenerator, this));
 
     enableClipping();
-#endif
 }
 
 void QOpenGLPaintEnginePrivate::drawFastRect(const QRectF &r)
@@ -4921,13 +4913,6 @@ void QOpenGLPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
     qt_glColor4ubv(d->pen_color);
     glEnable(GL_TEXTURE_2D);
 
-#ifdef Q_WS_QWS
-    // XXX: it is necessary to disable alpha writes on GLES/embedded because we don't want
-    // text rendering to update the alpha in the window surface.
-    // XXX: This may not be needed as this behavior does seem to be caused by driver bug
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_FALSE);
-#endif
-
     // do the actual drawing
     GLfloat vertexArray[4*2];
     GLfloat texCoordArray[4*2];
@@ -4968,12 +4953,6 @@ void QOpenGLPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
     glDisableClientState(GL_VERTEX_ARRAY);
 
     glDisable(GL_TEXTURE_2D);
-
-#ifdef Q_WS_QWS
-    // XXX: This may not be needed as this behavior does seem to be caused by driver bug
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-#endif
-
 }
 
 void QOpenGLPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
@@ -5012,7 +4991,6 @@ void QOpenGLPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
 void QOpenGLPaintEngine::drawEllipse(const QRectF &rect)
 {
-#ifndef Q_WS_QWS
     Q_D(QOpenGLPaintEngine);
 
     if (d->use_emulation) {
@@ -5057,17 +5035,11 @@ void QOpenGLPaintEngine::drawEllipse(const QRectF &rect)
         path.addEllipse(rect);
         drawPath(path);
     }
-#else
-    QPaintEngineEx::drawEllipse(rect);
-#endif
 }
 
 
 void QOpenGLPaintEnginePrivate::updateFragmentProgramData(int locations[])
 {
-#ifdef Q_WS_QWS
-    Q_UNUSED(locations);
-#else
     QGL_FUNC_CONTEXT;
 
     QSize sz = offscreen.offscreenSize();
@@ -5148,15 +5120,11 @@ void QOpenGLPaintEnginePrivate::updateFragmentProgramData(int locations[])
             qDebug() << "QOpenGLPaintEnginePrivate: Unhandled fragment variable:" << i;
         }
     }
-#endif
 }
 
 
 void QOpenGLPaintEnginePrivate::copyDrawable(const QRectF &rect)
 {
-#ifdef Q_WS_QWS
-    Q_UNUSED(rect);
-#else
     ensureDrawableTexture();
 
     DEBUG_ONCE qDebug() << "Refreshing drawable_texture for rectangle" << rect;
@@ -5170,21 +5138,15 @@ void QOpenGLPaintEnginePrivate::copyDrawable(const QRectF &rect)
 
     glBindTexture(GL_TEXTURE_2D, drawable_texture);
     glCopyTexSubImage2D(GL_TEXTURE_2D, 0, left, bottom, left, bottom, width, height);
-#endif
 }
 
 
 void QOpenGLPaintEnginePrivate::composite(const QRectF &rect, const QPoint &maskOffset)
 {
-#ifdef Q_WS_QWS
-    Q_UNUSED(rect);
-    Q_UNUSED(maskOffset);
-#else
     GLfloat vertexArray[8];
     qt_add_rect_to_array(rect, vertexArray);
 
     composite(GL_TRIANGLE_FAN, vertexArray, 4, maskOffset);
-#endif
 }
 
 

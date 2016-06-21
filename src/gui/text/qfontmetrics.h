@@ -52,14 +52,8 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifdef Q_WS_QWS
-class QFontEngine;
-#endif
-
 class QTextCodec;
 class QRect;
-
 
 class Q_GUI_EXPORT QFontMetrics
 {

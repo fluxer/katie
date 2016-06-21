@@ -262,7 +262,7 @@ static int qCocoaViewCount = 0;
     //
     // Widgets that are set to paint on screen, specifically QGLWidget,
     // requires the native engine to execute in order to be drawn.
-    if (QApplicationPrivate::graphicsSystem() != 0 && !qwidget->testAttribute(Qt::WA_PaintOnScreen)) {
+    if (QApplicationPrivate::graphics_system != 0 && !qwidget->testAttribute(Qt::WA_PaintOnScreen)) {
 
         // Raster engine.
         if (QApplicationPrivate::graphics_system_name == QLatin1String("raster")) {

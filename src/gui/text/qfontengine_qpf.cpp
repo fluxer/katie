@@ -67,13 +67,7 @@ QT_BEGIN_NAMESPACE
 
 QString qws_fontCacheDir()
 {
-    QString dir;
-#if defined(Q_WS_QWS)
-    extern QString qws_dataDir();
-    dir = qws_dataDir();
-#else
-    dir = QDir::tempPath();
-#endif
+    QString dir = QDir::tempPath();
     dir.append(QLatin1String("/fonts/"));
     QDir qd(dir);
     if (!qd.exists() && !qd.mkpath(dir))

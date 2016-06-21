@@ -1620,7 +1620,7 @@ bool qSharedBuild()
  */
 
 /*!
-  \sa Q_WS_MAC, Q_WS_WIN, Q_WS_X11, Q_WS_QWS
+  \sa Q_WS_MAC, Q_WS_WIN, Q_WS_X11
  */
 
 

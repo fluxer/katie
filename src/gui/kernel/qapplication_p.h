@@ -271,9 +271,6 @@ public:
     static bool x11_apply_settings();
 #endif
     static void reset_instance_pointer();
-#elif defined(Q_WS_QWS)
-    static bool qws_apply_settings();
-    static QWidget *findWidget(const QObjectList&, const QPoint &, bool rec);
 #endif
     static bool quitOnLastWindowClosed;
     static void emitLastWindowClosed();
@@ -282,13 +279,6 @@ public:
 #endif
     static bool autoSipEnabled;
     static QString desktopStyleKey();
-
-    static QGraphicsSystem *graphicsSystem()
-#if defined(Q_WS_QWS)
-    { return QScreen::instance()->graphicsSystem(); }
-#else
-    { return graphics_system; }
-#endif
 
     void createEventDispatcher();
     QString appName() const;
@@ -416,8 +406,6 @@ public:
 
 #if defined(Q_WS_X11)
     static void applyX11SpecificCommandLineArguments(QWidget *main_widget);
-#elif defined(Q_WS_QWS)
-    static void applyQWSSpecificCommandLineArguments(QWidget *main_widget);
 #endif
 
 #ifdef Q_WS_MAC
@@ -527,11 +515,6 @@ public:
 
 
 private:
-#ifdef Q_WS_QWS
-    QMap<const QScreen*, QRect> maxWindowRects;
-#endif
-
-
     static QApplicationPrivate *self;
 
     static void giveFocusAccordingToFocusPolicy(QWidget *w,

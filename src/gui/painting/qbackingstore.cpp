@@ -60,11 +60,6 @@
 
 #include "qgraphicssystem_p.h"
 
-#ifdef Q_WS_QWS
-#include <QtGui/qwsmanager_qws.h>
-#include <qwsmanager_p.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 extern QRegion qt_dirtyRegion(QWidget *);
@@ -93,8 +88,7 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
     Q_ASSERT(windowSurface);
     Q_ASSERT(tlw);
 
-#if !defined(QT_NO_PAINT_DEBUG) && !defined(Q_WS_QWS)
-    // QWS does flush update in QWindowSurface::flush (because it needs to lock the surface etc).
+#if !defined(QT_NO_PAINT_DEBUG)
     static int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
     if (flushUpdate > 0)
         QWidgetBackingStore::showYellowThing(widget, region, flushUpdate * 10, false);
@@ -159,13 +153,6 @@ static void showYellowThing_win(QWidget *widget, const QRegion &region, int msec
 
 void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePainted, int msec, bool unclipped)
 {
-#ifdef Q_WS_QWS
-    Q_UNUSED(widget);
-    Q_UNUSED(unclipped);
-    static QWSYellowSurface surface(true);
-    surface.setDelay(msec);
-    surface.flush(widget, toBePainted, QPoint());
-#else
     QRegion paintRegion = toBePainted;
     QRect widgetRect = widget->rect();
 
@@ -232,7 +219,6 @@ void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePa
     ::usleep(1000 * msec);
 #endif
 #endif // Q_WS_WIN
-#endif // Q_WS_QWS
 }
 
 bool QWidgetBackingStore::flushPaint(QWidget *widget, const QRegion &rgn)
@@ -288,11 +274,7 @@ bool QWidgetBackingStore::bltRect(const QRect &rect, int dx, int dy, QWidget *wi
 void QWidgetBackingStore::releaseBuffer()
 {
     if (windowSurface)
-#if defined(Q_WS_QPA)
-        windowSurface->resize(QSize());
-#else
         windowSurface->setGeometry(QRect());
-#endif
 #ifdef Q_BACKINGSTORE_SUBSURFACES
     for (int i = 0; i < subSurfaces.size(); ++i)
         subSurfaces.at(i)->setGeometry(QRect());
@@ -308,74 +290,11 @@ void QWidgetBackingStore::releaseBuffer()
 void QWidgetBackingStore::beginPaint(QRegion &toClean, QWidget *widget, QWindowSurface *windowSurface,
                                      BeginPaintInfo *returnInfo, bool toCleanIsInTopLevelCoordinates)
 {
-#ifdef Q_WS_QWS
-    QWSWindowSurface *surface = static_cast<QWSWindowSurface *>(windowSurface);
-    QWidget *surfaceWidget = surface->window();
-
-    if (!surface->isValid()) {
-        // this looks strange but it really just releases the surface
-        surface->releaseSurface();
-        // the old window surface is deleted in setWindowSurface, which is
-        // called from QWindowSurface constructor.
-        windowSurface = tlw->d_func()->createDefaultWindowSurface();
-        surface = static_cast<QWSWindowSurface *>(windowSurface);
-        // createDefaultWindowSurface() will set topdata->windowSurface on the
-        // widget to zero. However, if this is a sub-surface, it should point
-        // to the widget's sub windowSurface, so we set that here:
-        if (!surfaceWidget->isWindow())
-            surfaceWidget->d_func()->topData()->windowSurface = windowSurface;
-        surface->setGeometry(topLevelRect());
-        returnInfo->windowSurfaceRecreated = true;
-    }
-
-    const QRegion toCleanUnclipped(toClean);
-
-    if (surfaceWidget->isWindow())
-        tlwOffset = surface->painterOffset();
-#ifdef Q_BACKINGSTORE_SUBSURFACES
-    else if (toCleanIsInTopLevelCoordinates)
-        toClean &= surface->clipRegion().translated(surfaceWidget->mapTo(tlw, QPoint()));
-    if (!toCleanIsInTopLevelCoordinates && windowSurface == this->windowSurface)
-        toClean &= surface->clipRegion().translated(-widget->mapTo(surfaceWidget, QPoint()));
-#else
-    toClean &= surface->clipRegion();
-#endif
-
-    if (toClean.isEmpty()) {
-        if (surfaceWidget->isWindow()) {
-            dirtyFromPreviousSync += toCleanUnclipped;
-            hasDirtyFromPreviousSync = true;
-        }
-
-        returnInfo->nothingToPaint = true;
-        // Nothing to repaint. However, we might have newly exposed areas on the
-        // screen, so we have to make sure those are flushed.
-        flush();
-        return;
-    }
-
-    if (surfaceWidget->isWindow()) {
-        if (toCleanUnclipped != toClean) {
-            dirtyFromPreviousSync += (toCleanUnclipped - surface->clipRegion());
-            hasDirtyFromPreviousSync = true;
-        }
-        if (hasDirtyFromPreviousSync) {
-            dirtyFromPreviousSync -= toClean;
-            hasDirtyFromPreviousSync = !dirtyFromPreviousSync.isEmpty();
-        }
-    }
-
-#endif // Q_WS_QWS
-
     Q_UNUSED(widget);
     Q_UNUSED(toCleanIsInTopLevelCoordinates);
 
     // Always flush repainted areas.
     dirtyOnScreen += toClean;
-
-#if defined(Q_WS_QWS) && !defined(Q_BACKINGSTORE_SUBSURFACES)
-    toClean.translate(tlwOffset);
-#endif
 
 #ifdef QT_NO_PAINT_DEBUG
     windowSurface->beginPaint(toClean);
@@ -421,12 +340,8 @@ void QWidgetBackingStore::endPaint(const QRegion &cleaned, QWindowSurface *windo
 QRegion QWidgetBackingStore::dirtyRegion(QWidget *widget) const
 {
     const bool widgetDirty = widget && widget != tlw;
-    const QRect tlwRect(topLevelRect());
-#if defined(Q_WS_QPA)
-    const QRect surfaceGeometry(tlwRect.topLeft(), windowSurface->size());
-#else
+    const QRect tlwRect(tlw->data->crect);
     const QRect surfaceGeometry(windowSurface->geometry());
-#endif
     if (fullUpdatePending || (surfaceGeometry != tlwRect && surfaceGeometry.size() != tlwRect.size())) {
         if (widgetDirty) {
             const QRect dirtyTlwRect = QRect(QPoint(), tlwRect.size());
@@ -477,11 +392,7 @@ QRegion QWidgetBackingStore::dirtyRegion(QWidget *widget) const
 QRegion QWidgetBackingStore::staticContents(QWidget *parent, const QRect &withinClipRect) const
 {
     if (!parent && tlw->testAttribute(Qt::WA_StaticContents)) {
-#if defined(Q_WS_QPA)
-        const QSize surfaceGeometry(windowSurface->size());
-#else
         const QRect surfaceGeometry(windowSurface->geometry());
-#endif
         QRect surfaceRect(0, 0, surfaceGeometry.width(), surfaceGeometry.height());
         if (!withinClipRect.isEmpty())
             surfaceRect &= withinClipRect;
@@ -735,7 +646,7 @@ void QWidgetBackingStore::markDirtyOnScreen(const QRegion &region, QWidget *widg
     if (!widget || widget->d_func()->paintOnScreen() || region.isEmpty())
         return;
 
-#if defined(Q_WS_QWS) || defined(Q_WS_MAC)
+#if defined(Q_WS_MAC)
     if (!widget->testAttribute(Qt::WA_WState_InPaintEvent))
         dirtyOnScreen += region.translated(topLevelOffset);
     return;
@@ -791,73 +702,6 @@ void QWidgetBackingStore::removeDirtyWidget(QWidget *w)
             removeDirtyWidget(child);
     }
 }
-
-#if defined(Q_WS_QWS) && !defined(QT_NO_QWS_MANAGER)
-bool QWidgetBackingStore::hasDirtyWindowDecoration() const
-{
-    QTLWExtra *tlwExtra = tlw->d_func()->maybeTopData();
-    if (tlwExtra && tlwExtra->qwsManager)
-        return !tlwExtra->qwsManager->d_func()->dirtyRegions.isEmpty();
-    return false;
-}
-
-void QWidgetBackingStore::paintWindowDecoration()
-{
-    if (!hasDirtyWindowDecoration())
-        return;
-
-    QDecoration &decoration = QApplication::qwsDecoration();
-    const QRect decorationRect = tlw->rect();
-    QRegion decorationRegion = decoration.region(tlw, decorationRect);
-
-    QWSManagerPrivate *managerPrivate = tlw->d_func()->topData()->qwsManager->d_func();
-    const bool doClipping = !managerPrivate->entireDecorationNeedsRepaint
-                            && !managerPrivate->dirtyClip.isEmpty();
-
-    if (doClipping) {
-        decorationRegion &= static_cast<QWSWindowSurface *>(windowSurface)->clipRegion();
-        decorationRegion &= managerPrivate->dirtyClip;
-    }
-
-    if (decorationRegion.isEmpty())
-        return;
-
-    //### The QWS decorations do not always paint the pixels they promise to paint.
-    // This causes painting problems with QWSMemorySurface. Since none of the other
-    // window surfaces actually use the region, passing an empty region is a safe
-    // workaround.
-
-    windowSurface->beginPaint(QRegion());
-
-    QPaintEngine *engine = windowSurface->paintDevice()->paintEngine();
-    Q_ASSERT(engine);
-    const QRegion oldSystemClip(engine->systemClip());
-    engine->setSystemClip(decorationRegion.translated(tlwOffset));
-
-    QPainter painter(windowSurface->paintDevice());
-    painter.setFont(QApplication::font());
-    painter.translate(tlwOffset);
-
-    const int numDirty = managerPrivate->dirtyRegions.size();
-    for (int i = 0; i < numDirty; ++i) {
-        const int area = managerPrivate->dirtyRegions.at(i);
-
-        QRegion clipRegion = decoration.region(tlw, decorationRect, area);
-        if (!clipRegion.isEmpty()) {
-            // Decoration styles changes the clip and assumes the old clip is non-empty,
-            // so we have to set it, but in theory it shouldn't be required.
-            painter.setClipRegion(clipRegion);
-            decoration.paint(&painter, tlw, area, managerPrivate->dirtyStates.at(i));
-        }
-    }
-    markDirtyOnScreen(decorationRegion, tlw, QPoint());
-
-    painter.end();
-    windowSurface->endPaint(decorationRegion);
-    managerPrivate->clearDirtyRegions();
-    engine->setSystemClip(oldSystemClip);
-}
-#endif
 
 void QWidgetBackingStore::updateLists(QWidget *cur)
 {
@@ -936,11 +780,6 @@ void QWidgetPrivate::moveRect(const QRect &rect, int dx, int dy)
     QPoint toplevelOffset = pw->mapTo(tlw, QPoint());
     QWidgetPrivate *pd = pw->d_func();
     QRect clipR(pd->clipRect());
-#ifdef Q_WS_QWS
-    QWidgetBackingStore *wbs = x->backingStore.data();
-    QWSWindowSurface *surface = static_cast<QWSWindowSurface*>(wbs->windowSurface);
-    clipR = clipR.intersected(surface->clipRegion().translated(-toplevelOffset).boundingRect());
-#endif
     const QRect newRect(rect.translated(dx, dy));
     QRect destRect = rect.intersected(clipR);
     if (destRect.isValid())
@@ -1024,26 +863,6 @@ void QWidgetPrivate::scrollRect(const QRect &rect, int dx, int dy)
     bool accelerateScroll = accelEnv && isOpaque
                             && !(overlapped = isOverlapped(scrollRect.translated(data.crect.topLeft())));
 
-#if defined(Q_WS_QWS)
-    QWSWindowSurface *surface;
-    surface = static_cast<QWSWindowSurface*>(wbs->windowSurface);
-
-    if (accelerateScroll && !surface->isBuffered()) {
-        const QRegion surfaceClip = surface->clipRegion();
-        const QRegion outsideClip = QRegion(rect) - surfaceClip;
-        if (!outsideClip.isEmpty()) {
-            const QVector<QRect> clipped = (surfaceClip & rect).rects();
-            if (clipped.size() < 8) {
-                for (int i = 0; i < clipped.size(); ++i)
-                    this->scrollRect(clipped.at(i), dx, dy);
-                return;
-            } else {
-                accelerateScroll = false;
-            }
-        }
-    }
-#endif // Q_WS_QWS
-
     if (!accelerateScroll) {
         if (overlapped) {
             QRegion region(scrollRect);
@@ -1054,12 +873,6 @@ void QWidgetPrivate::scrollRect(const QRect &rect, int dx, int dy)
         }
     } else {
         const QPoint toplevelOffset = q->mapTo(tlw, QPoint());
-#ifdef Q_WS_QWS
-        QWSWindowSurface *surface = static_cast<QWSWindowSurface*>(wbs->windowSurface);
-        const QRegion clip = surface->clipRegion().translated(-toplevelOffset) & scrollRect;
-        const QRect clipBoundingRect = clip.boundingRect();
-        scrollRect &= clipBoundingRect;
-#endif
         const QRect destRect = scrollRect.translated(dx, dy) & scrollRect;
         const QRect sourceRect = destRect.translated(-dx, -dy);
 
@@ -1189,12 +1002,8 @@ void QWidgetBackingStore::sync()
     bool repaintAllWidgets = false;
 
     const bool inTopLevelResize = tlwExtra->inTopLevelResize;
-    const QRect tlwRect(topLevelRect());
-#ifdef  Q_WS_QPA
-    const QRect surfaceGeometry(tlwRect.topLeft(), windowSurface->size());
-#else
+    const QRect tlwRect(tlw->data->crect);
     const QRect surfaceGeometry(windowSurface->geometry());
-#endif
     if ((fullUpdatePending || inTopLevelResize || surfaceGeometry.size() != tlwRect.size()) && !updatesDisabled) {
         if (hasStaticContents()) {
             // Repaint existing dirty area and newly visible area.
@@ -1214,13 +1023,8 @@ void QWidgetBackingStore::sync()
         }
     }
 
-#ifdef Q_WS_QPA
-    if (inTopLevelResize || surfaceGeometry.size() != tlwRect.size())
-        windowSurface->resize(tlwRect.size());
-#else
     if (inTopLevelResize || surfaceGeometry != tlwRect)
         windowSurface->setGeometry(tlwRect);
-#endif
 
     if (updatesDisabled)
         return;
@@ -1426,10 +1230,6 @@ void QWidgetBackingStore::sync()
 */
 void QWidgetBackingStore::flush(QWidget *widget, QWindowSurface *surface)
 {
-#if defined(Q_WS_QWS) && !defined(QT_NO_QWS_MANAGER)
-    paintWindowDecoration();
-#endif
-
     if (!dirtyOnScreen.isEmpty()) {
         QWidget *target = widget ? widget : tlw;
         QWindowSurface *source = surface ? surface : windowSurface;
@@ -1627,11 +1427,7 @@ void QWidgetPrivate::repaint_sys(const QRegion &rgn)
         extra->staticContentsSize = data.crect.size();
     }
 
-#ifdef Q_WS_QPA //Don't even call q->p
-    QPaintEngine *engine = 0;
-#else
     QPaintEngine *engine = q->paintEngine();
-#endif
     // QGLWidget does not support partial updates if:
     // 1) The context is double buffered
     // 2) The context is single buffered and auto-fill background is enabled.

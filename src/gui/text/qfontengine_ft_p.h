@@ -292,10 +292,6 @@ private:
                     const QFixedPoint *positions,
                     GlyphFormat format = Format_Render);
 
-#if defined(Q_WS_QWS)
-    virtual void draw(QPaintEngine * /*p*/, qreal /*x*/, qreal /*y*/, const QTextItemInt & /*si*/) {}
-#endif
-
     QFontEngineFT(const QFontDef &fd);
     virtual ~QFontEngineFT();
 

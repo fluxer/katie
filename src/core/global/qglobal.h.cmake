@@ -1375,10 +1375,6 @@ class QDataStream;
 #  endif
 #endif
 
-#if !defined(Q_WS_QWS) && !defined(QT_NO_COP)
-#  define QT_NO_COP
-#endif
-
 #if defined(Q_OS_VXWORKS)
 #  define QT_NO_CRASHHANDLER     // no popen
 #  define QT_NO_PROCESS          // no exec*, no fork

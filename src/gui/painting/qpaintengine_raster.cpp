@@ -87,11 +87,6 @@
 #  include <qt_mac_p.h>
 #  include <qpixmap_mac_p.h>
 #  include <qpaintengine_mac_p.h>
-#elif defined(Q_WS_QWS)
-#  if !defined(QT_NO_FREETYPE)
-#    include <qfontengine_ft_p.h>
-#  endif
-#  include <qabstractfontengine_p.h>
 #endif
 
 #if defined(Q_WS_WIN64)
@@ -3011,7 +3006,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     QFontEngine *fontEngine = ti.fontEngine;
 
-#if (defined(Q_WS_X11) || defined(Q_WS_QWS)) && !defined(QT_NO_FREETYPE)
+#if defined(Q_WS_X11) && !defined(QT_NO_FREETYPE)
 
 
     if (fontEngine->type() != QFontEngine::Freetype) {
@@ -3297,59 +3292,6 @@ QPoint QRasterPaintEngine::coordinateOffset() const
 {
     return QPoint(0, 0);
 }
-
-/*!
-    Draws the given color \a spans with the specified \a color. The \a
-    count parameter specifies the number of spans.
-
-    The default implementation does nothing; reimplement this function
-    to draw the given color \a spans with the specified \a color. Note
-    that this function \e must be reimplemented if the framebuffer is
-    not memory-mapped.
-
-    \sa drawBufferSpan()
-*/
-#if defined(Q_WS_QWS) && !defined(QT_NO_RASTERCALLBACKS)
-void QRasterPaintEngine::drawColorSpans(const QSpan *spans, int count, uint color)
-{
-    Q_UNUSED(spans);
-    Q_UNUSED(count);
-    Q_UNUSED(color);
-    qFatal("QRasterPaintEngine::drawColorSpans must be reimplemented on "
-           "a non memory-mapped device");
-}
-
-/*!
-    \fn void QRasterPaintEngine::drawBufferSpan(const uint *buffer, int size, int x, int y, int length, uint alpha)
-
-    Draws the given \a buffer.
-
-    The default implementation does nothing; reimplement this function
-    to draw a buffer that contains more than one color. Note that this
-    function \e must be reimplemented if the framebuffer is not
-    memory-mapped.
-
-    The \a size parameter specifies the total size of the given \a
-    buffer, while the \a length parameter specifies the number of
-    pixels to draw. The buffer's position is given by (\a x, \a
-    y). The provided \a alpha value is added to each pixel in the
-    buffer when drawing.
-
-    \sa drawColorSpans()
-*/
-void QRasterPaintEngine::drawBufferSpan(const uint *buffer, int bufsize,
-                                        int x, int y, int length, uint const_alpha)
-{
-    Q_UNUSED(buffer);
-    Q_UNUSED(bufsize);
-    Q_UNUSED(x);
-    Q_UNUSED(y);
-    Q_UNUSED(length);
-    Q_UNUSED(const_alpha);
-    qFatal("QRasterPaintEngine::drawBufferSpan must be reimplemented on "
-           "a non memory-mapped device");
-}
-#endif // Q_WS_QWS
 
 void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fg)
 {
@@ -4502,9 +4444,6 @@ Q_GLOBAL_STATIC(QGradientCache, qt_gradient_cache)
 void QSpanData::init(QRasterBuffer *rb, const QRasterPaintEngine *pe)
 {
     rasterBuffer = rb;
-#ifdef Q_WS_QWS
-    rasterEngine = const_cast<QRasterPaintEngine *>(pe);
-#endif
     type = None;
     txop = 0;
     bilinear = false;
@@ -4650,16 +4589,7 @@ void QSpanData::adjustSpanMethods()
         unclipped_blend = rasterBuffer->drawHelper->blendGradient;
         break;
     case Texture:
-#ifdef Q_WS_QWS
-#ifndef QT_NO_RASTERCALLBACKS
-        if (!rasterBuffer->buffer())
-            unclipped_blend = qBlendTextureCallback;
-        else
-#endif
-            unclipped_blend = qBlendTexture;
-#else
         unclipped_blend = qBlendTexture;
-#endif
         if (!texture.imageData)
             unclipped_blend = 0;
 
