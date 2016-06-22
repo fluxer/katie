@@ -75,7 +75,6 @@ set(CORE_PUBLIC_HEADERS
     QtConfig
     QPair
     QHashDummyNode
-    QtDebug
     QHashDummyValue
     QFutureWatcherBase
     QPoint
@@ -84,7 +83,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaMethod
     QByteArray
     QWriteLocker
-    QWeakPointer
     QHashData
     QSharedData
     QReadLocker
@@ -241,16 +239,18 @@ set(CORE_PUBLIC_HEADERS
     QCommandLineParser
     # aliases
     QtPlugin
+    QtDebug
     # mixed
     QVariantMap
     QVariantList
     QAbstractListModel
     QProcessEnvironment
     QModelIndex
-    # obsolete
-    QFlags
     QSizeF
     QRectF
+    QWeakPointer
+    # obsolete
+    QFlags
 )
 
 include(animation/animation.cmake)

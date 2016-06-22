@@ -384,6 +384,7 @@ set(GUI_PUBLIC_HEADERS
     QShowEvent
     QItemSelection
     QIntValidator
+    QFontMetricsF
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit
