@@ -166,9 +166,9 @@ Q_GLOBAL_STATIC(QThreadStorage<QUnifiedTimer *>, unifiedTimer)
 #endif
 
 QUnifiedTimer::QUnifiedTimer() :
-    QObject(), defaultDriver(this), lastTick(0), timingInterval(DEFAULT_TIMER_INTERVAL),
-    currentAnimationIdx(0), insideTick(false), consistentTiming(false), slowMode(false),
-    slowdownFactor(5.0f), isPauseTimerActive(false), runningLeafAnimations(0)
+    QObject(), defaultDriver(), lastTick(0),
+    currentAnimationIdx(0), insideTick(false),
+    isPauseTimerActive(false), runningLeafAnimations(0)
 {
     time.invalidate();
     driver = &defaultDriver;
@@ -206,15 +206,7 @@ void QUnifiedTimer::updateAnimationsTime()
         return;
 
     qint64 totalElapsed = time.elapsed();
-    // ignore consistentTiming in case the pause timer is active
-    int delta = (consistentTiming && !isPauseTimerActive) ?
-                        timingInterval : totalElapsed - lastTick;
-    if (slowMode) {
-        if (slowdownFactor > 0)
-            delta = qRound(delta / slowdownFactor);
-        else
-            delta = 0;
-    }
+    int delta = totalElapsed - lastTick;
 
     lastTick = totalElapsed;
 
@@ -259,24 +251,9 @@ void QUnifiedTimer::restartAnimationTimer()
         driver->stop();
 }
 
-void QUnifiedTimer::setTimingInterval(int interval)
-{
-    timingInterval = interval;
-
-    if (driver->isRunning() && !isPauseTimerActive) {
-        //we changed the timing interval
-        driver->stop();
-        driver->start();
-    }
-}
-
-
 void QUnifiedTimer::timerEvent(QTimerEvent *event)
 {
-    //in the case of consistent timing we make sure the orders in which events come is always the same
-   //for that purpose we do as if the startstoptimer would always fire before the animation timer
-    if ((consistentTiming && startStopAnimationTimer.isActive()) ||
-        event->timerId() == startStopAnimationTimer.timerId()) {
+    if (event->timerId() == startStopAnimationTimer.timerId()) {
         startStopAnimationTimer.stop();
 
         //we transfer the waiting animations into the "really running" state
@@ -498,8 +475,8 @@ void QAnimationDriver::stop()
 /*!
    The default animation driver just spins the timer...
  */
-QDefaultAnimationDriver::QDefaultAnimationDriver(QUnifiedTimer *timer)
-    : QAnimationDriver(0), m_unified_timer(timer)
+QDefaultAnimationDriver::QDefaultAnimationDriver()
+    : QAnimationDriver(0)
 {
 }
 
@@ -512,7 +489,7 @@ void QDefaultAnimationDriver::timerEvent(QTimerEvent *e)
 
 void QDefaultAnimationDriver::started()
 {
-    m_timer.start(m_unified_timer->timingInterval, this);
+    m_timer.start(DEFAULT_TIMER_INTERVAL, this);
 }
 
 void QDefaultAnimationDriver::stopped()
@@ -1002,15 +979,6 @@ void QAbstractAnimation::setPaused(bool paused)
         pause();
     else
         resume();
-}
-
-
-/*!
-    \reimp
-*/
-bool QAbstractAnimation::event(QEvent *event)
-{
-    return QObject::event(event);
 }
 
 /*!

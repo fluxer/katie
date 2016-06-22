@@ -1553,7 +1553,6 @@ qint64 QFile::readLineData(char *data, qint64 maxlen)
 /*!
   \reimp
 */
-
 qint64 QFile::readData(char *data, qint64 len)
 {
     Q_D(QFile);
@@ -1636,7 +1635,6 @@ bool QFilePrivate::putCharHelper(char c)
 /*!
   \reimp
 */
-
 qint64
 QFile::writeData(const char *data, qint64 len)
 {

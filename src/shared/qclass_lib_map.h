@@ -568,7 +568,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QConicalGradient", "QtGui/qbrush.h"},
     { "QTextureGlyphCache", "QtGui/qtextureglyphcache_p.h"},
     { "QImageTextureGlyphCache", "QtGui/qtextureglyphcache_p.h"},
-    { "QCustomRasterPaintDevice", "QtGui/qpaintengine_raster_p.h"},
     { "QRuntimePixmapData", "QtGui/qgraphicssystem_runtime_p.h"},
     { "QBlittable", "QtGui/qblittable_p.h"},
     { "QGraphicsSystem", "QtGui/qgraphicssystem_p.h"},
@@ -1034,6 +1033,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 1028;
+static const int qclass_lib_count = 1027;
 
 #endif

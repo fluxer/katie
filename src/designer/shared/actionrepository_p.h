@@ -124,7 +124,7 @@ private:
 };
 
 // Internal class that provides the detailed view of actions.
-class  ActionTreeView: public QTreeView
+class ActionTreeView: public QTreeView
 {
     Q_OBJECT
 public:
@@ -195,7 +195,7 @@ private:
 // using a  QStackedWidget of  ActionListView / ActionTreeView
 // that share the item model and the selection model.
 
-class ActionView : public  QStackedWidget {
+class ActionView: public  QStackedWidget {
     Q_OBJECT
 public:
     // Separate initialize() function takes core argument to make this

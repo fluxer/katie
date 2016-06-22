@@ -136,7 +136,6 @@ void QAbstractPageSetupDialog::done(int result)
 
 QT_END_NAMESPACE
 
-
 #include "moc_qabstractpagesetupdialog.h"
 
 #endif // QT_NO_PRINTDIALOG
