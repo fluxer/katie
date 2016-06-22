@@ -538,7 +538,7 @@ void ShaderEffectItem::updateEffectState(const QMatrix4x4 &matrix)
 
 static inline int size_of_type(GLenum type)
 {
-    static int sizes[] = {
+    static const int sizes[] = {
         sizeof(char),
         sizeof(unsigned char),
         sizeof(short),

@@ -96,7 +96,7 @@ protected:
 
 private:
     void setPropertyBrowserVisible(bool v);
-    QtVariantProperty *setupPropertyGroup(const QString &title, PropertyDefinition *propDefs);
+    QtVariantProperty *setupPropertyGroup(const QString &title, const PropertyDefinition *propDefs);
     void updateEditor();
     void moveColumnItems(const PropertyDefinition *propList, QTreeWidgetItem *item, int fromColumn, int toColumn, int step);
     void moveColumns(int fromColumn, int toColumn, int step);

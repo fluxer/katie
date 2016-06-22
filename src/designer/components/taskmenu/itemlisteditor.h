@@ -96,9 +96,9 @@ private slots:
     void cacheReloaded();
 
 protected:
-    void setupProperties(PropertyDefinition *propDefs);
+    void setupProperties(const PropertyDefinition *propDefs);
     void setupObject(QWidget *object);
-    void setupEditor(QWidget *object, PropertyDefinition *propDefs);
+    void setupEditor(QWidget *object, const PropertyDefinition *propDefs);
     void injectPropertyBrowser(QWidget *parent, QWidget *widget);
     void updateBrowser();
     virtual void setItemData(int role, const QVariant &v) = 0;
@@ -122,7 +122,7 @@ class ItemListEditor: public AbstractItemEditor
 public:
     explicit ItemListEditor(QDesignerFormWindowInterface *form, QWidget *parent);
 
-    void setupEditor(QWidget *object, PropertyDefinition *propDefs);
+    void setupEditor(QWidget *object, const PropertyDefinition *propDefs);
     QListWidget *listWidget() const { return ui.listWidget; }
     void setNewItemText(const QString &tpl) { m_newItemText = tpl; }
     QString newItemText() const { return m_newItemText; }

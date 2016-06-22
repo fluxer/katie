@@ -130,7 +130,7 @@ static QStringList c2qStringList(const char * const in[])
     return out;
 }
 
-void AbstractItemEditor::setupProperties(PropertyDefinition *propList)
+void AbstractItemEditor::setupProperties(const PropertyDefinition *propList)
 {
     for (int i = 0; propList[i].name; i++) {
         int type = propList[i].typeFunc ? propList[i].typeFunc() : propList[i].type;
@@ -162,7 +162,7 @@ void AbstractItemEditor::setupObject(QWidget *object)
     m_editorFactory->setFormWindowBase(fwb);
 }
 
-void AbstractItemEditor::setupEditor(QWidget *object, PropertyDefinition *propList)
+void AbstractItemEditor::setupEditor(QWidget *object, const PropertyDefinition *propList)
 {
     setupProperties(propList);
     setupObject(object);
@@ -309,7 +309,7 @@ ItemListEditor::ItemListEditor(QDesignerFormWindowInterface *form, QWidget *pare
     connect(iconCache(), SIGNAL(reloaded()), this, SLOT(cacheReloaded()));
 }
 
-void ItemListEditor::setupEditor(QWidget *object, PropertyDefinition *propList)
+void ItemListEditor::setupEditor(QWidget *object, const PropertyDefinition *propList)
 {
     AbstractItemEditor::setupEditor(object, propList);
 

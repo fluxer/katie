@@ -1834,7 +1834,7 @@ case 344: {
             goto _Lcheck_token;
         }
 
-        static int tokens[] = {
+        static const int tokens[] = {
             T_PLUS,
             T_EQ,
 
@@ -1852,13 +1852,14 @@ case 344: {
             EOF_SYMBOL
         };
 
-        for (int *tk = tokens; *tk != EOF_SYMBOL; ++tk) {
-            int a = t_action(errorState, *tk);
+        for (int tk = 0; tokens[tk] != EOF_SYMBOL; ++tk) {
+            int token = tokens[tk];
+            int a = t_action(errorState, token);
             if (a > 0 && t_action(a, yytoken)) {
-                const QString msg = qApp->translate("QDeclarativeParser", "Expected token `%1'").arg(QLatin1String(spell[*tk]));
+                const QString msg = qApp->translate("QDeclarativeParser", "Expected token `%1'").arg(QLatin1String(spell[token]));
                 diagnostic_messages.append(DiagnosticMessage(DiagnosticMessage::Error, token_buffer[0].loc, msg));
 
-                yytoken = *tk;
+                yytoken = token;
                 yylval = 0;
                 yylloc = token_buffer[0].loc;
                 yylloc.length = 0;

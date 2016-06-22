@@ -115,7 +115,7 @@ TableWidgetEditor::TableWidgetEditor(QDesignerFormWindowInterface *form, QDialog
             this, SLOT(on_rowEditor_itemMovedDown(int)));
 }
 
-static AbstractItemEditor::PropertyDefinition tableHeaderPropList[] = {
+static const AbstractItemEditor::PropertyDefinition tableHeaderPropList[] = {
     { Qt::DisplayPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "text" },
     { Qt::DecorationPropertyRole, 0, DesignerPropertyManager::designerIconTypeId, "icon" },
     { Qt::ToolTipPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "toolTip" },
@@ -128,7 +128,7 @@ static AbstractItemEditor::PropertyDefinition tableHeaderPropList[] = {
     { 0, 0, 0, 0 }
 };
 
-static AbstractItemEditor::PropertyDefinition tableItemPropList[] = {
+static const AbstractItemEditor::PropertyDefinition tableItemPropList[] = {
     { Qt::DisplayPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "text" },
     { Qt::DecorationPropertyRole, 0, DesignerPropertyManager::designerIconTypeId, "icon" },
     { Qt::ToolTipPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "toolTip" },

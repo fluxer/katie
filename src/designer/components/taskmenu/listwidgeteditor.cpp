@@ -81,7 +81,7 @@ ListWidgetEditor::ListWidgetEditor(QDesignerFormWindowInterface *form,
     resize(550, 360);
 }
 
-static AbstractItemEditor::PropertyDefinition listBoxPropList[] = {
+static const AbstractItemEditor::PropertyDefinition listBoxPropList[] = {
     { Qt::DisplayPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "text" },
     { Qt::DecorationPropertyRole, 0, DesignerPropertyManager::designerIconTypeId, "icon" },
     { Qt::ToolTipPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "toolTip" },
@@ -109,7 +109,7 @@ ListContents ListWidgetEditor::fillContentsFromListWidget(QListWidget *listWidge
     return retVal;
 }
 
-static AbstractItemEditor::PropertyDefinition comboBoxPropList[] = {
+static const AbstractItemEditor::PropertyDefinition comboBoxPropList[] = {
     { Qt::DisplayPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "text" },
     { Qt::DecorationPropertyRole, 0, DesignerPropertyManager::designerIconTypeId, "icon" },
     { 0, 0, 0, 0 }

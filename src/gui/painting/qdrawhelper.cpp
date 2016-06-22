@@ -3095,7 +3095,7 @@ void QT_FASTCALL rasterop_SourceAndNotDestination(uint *dest,
     }
 }
 
-static CompositionFunctionSolid functionForModeSolid_C[] = {
+static const CompositionFunctionSolid functionForModeSolid_C[] = {
         comp_func_solid_SourceOver,
         comp_func_solid_DestinationOver,
         comp_func_solid_Clear,
@@ -3133,7 +3133,7 @@ static CompositionFunctionSolid functionForModeSolid_C[] = {
 
 static const CompositionFunctionSolid *functionForModeSolid = functionForModeSolid_C;
 
-static CompositionFunction functionForMode_C[] = {
+static const CompositionFunction functionForMode_C[] = {
         comp_func_SourceOver,
         comp_func_DestinationOver,
         comp_func_Clear,

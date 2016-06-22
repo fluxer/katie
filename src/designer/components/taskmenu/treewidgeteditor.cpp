@@ -115,7 +115,7 @@ TreeWidgetEditor::TreeWidgetEditor(QDesignerFormWindowInterface *form, QDialog *
     connect(iconCache(), SIGNAL(reloaded()), this, SLOT(cacheReloaded()));
 }
 
-static AbstractItemEditor::PropertyDefinition treeHeaderPropList[] = {
+static const AbstractItemEditor::PropertyDefinition treeHeaderPropList[] = {
     { Qt::DisplayPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "text" },
     { Qt::DecorationPropertyRole, 0, DesignerPropertyManager::designerIconTypeId, "icon" },
     { Qt::ToolTipPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "toolTip" },
@@ -128,7 +128,7 @@ static AbstractItemEditor::PropertyDefinition treeHeaderPropList[] = {
     { 0, 0, 0, 0 }
 };
 
-static AbstractItemEditor::PropertyDefinition treeItemColumnPropList[] = {
+static const AbstractItemEditor::PropertyDefinition treeItemColumnPropList[] = {
     { Qt::DisplayPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "text" },
     { Qt::DecorationPropertyRole, 0, DesignerPropertyManager::designerIconTypeId, "icon" },
     { Qt::ToolTipPropertyRole, 0, DesignerPropertyManager::designerStringTypeId, "toolTip" },
@@ -142,12 +142,12 @@ static AbstractItemEditor::PropertyDefinition treeItemColumnPropList[] = {
     { 0, 0, 0, 0 }
 };
 
-static AbstractItemEditor::PropertyDefinition treeItemCommonPropList[] = {
+static const AbstractItemEditor::PropertyDefinition treeItemCommonPropList[] = {
     { ItemFlagsShadowRole, 0, QtVariantPropertyManager::flagTypeId, "flags" },
     { 0, 0, 0, 0 }
 };
 
-QtVariantProperty *TreeWidgetEditor::setupPropertyGroup(const QString &title, PropertyDefinition *propDefs)
+QtVariantProperty *TreeWidgetEditor::setupPropertyGroup(const QString &title, const PropertyDefinition *propDefs)
 {
     setupProperties(propDefs);
     QtVariantProperty *groupProp = m_propertyManager->addProperty(QtVariantPropertyManager::groupTypeId(), title);

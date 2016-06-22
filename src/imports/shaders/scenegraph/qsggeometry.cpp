@@ -46,7 +46,7 @@ QT_BEGIN_NAMESPACE
 
 const QSGGeometry::AttributeSet &QSGGeometry::defaultAttributes_Point2D()
 {
-    static Attribute data[] = {
+    static const Attribute data[] = {
         { 0, 2, GL_FLOAT }
     };
     static AttributeSet attrs = { 1, sizeof(float) * 2, data };
@@ -56,7 +56,7 @@ const QSGGeometry::AttributeSet &QSGGeometry::defaultAttributes_Point2D()
 
 const QSGGeometry::AttributeSet &QSGGeometry::defaultAttributes_TexturedPoint2D()
 {
-    static Attribute data[] = {
+    static const Attribute data[] = {
         { 0, 2, GL_FLOAT },
         { 1, 2, GL_FLOAT }
     };
@@ -67,7 +67,7 @@ const QSGGeometry::AttributeSet &QSGGeometry::defaultAttributes_TexturedPoint2D(
 
 const QSGGeometry::AttributeSet &QSGGeometry::defaultAttributes_ColoredPoint2D()
 {
-    static Attribute data[] = {
+    static const Attribute data[] = {
         { 0, 2, GL_FLOAT },
         { 1, 4, GL_UNSIGNED_BYTE }
     };

@@ -127,7 +127,7 @@ EGLConfig QEgl::defaultConfig(int devType, API api, ConfigOptions options)
 
     EGLConfig* targetConfig = 0;
 
-    static EGLConfig defaultVGConfigs[] = {
+    static const EGLConfig defaultVGConfigs[] = {
         QEGL_NO_CONFIG, // 0    Window  Renderable  Translucent
         QEGL_NO_CONFIG, // 1    Window  Renderable  Opaque
         QEGL_NO_CONFIG, // 2    Pixmap  Renderable  Translucent
@@ -136,7 +136,7 @@ EGLConfig QEgl::defaultConfig(int devType, API api, ConfigOptions options)
         QEGL_NO_CONFIG  // 5    Pixmap  ReadOnly    Opaque
     };
 
-    static EGLConfig defaultGLConfigs[] = {
+    static const EGLConfig defaultGLConfigs[] = {
         QEGL_NO_CONFIG, // 0    Window  Renderable  Translucent
         QEGL_NO_CONFIG, // 1    Window  Renderable  Opaque
         QEGL_NO_CONFIG, // 2    PBuffer Renderable  Translucent
