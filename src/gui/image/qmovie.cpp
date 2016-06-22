@@ -1072,15 +1072,6 @@ void QMovie::setCacheMode(CacheMode cacheMode)
     d->cacheMode = cacheMode;
 }
 
-/*!
-  \internal
-*/
-QMovie::CacheMode QMovie::cacheMode()
-{
-    Q_D(QMovie);
-    return d->cacheMode;
-}
-
 QT_END_NAMESPACE
 
 

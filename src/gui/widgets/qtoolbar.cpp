@@ -1314,22 +1314,6 @@ void QToolBar::initStyleOption(QStyleOptionToolBar *option) const
     layout->getStyleOptionInfo(option, const_cast<QToolBar *>(this));
 }
 
-/*!
-    \reimp
-*/
-void QToolBar::childEvent(QChildEvent *event) // ### remove me in 5.0
-{
-    QWidget::childEvent(event);
-}
-
-/*!
-    \reimp
-*/
-void QToolBar::resizeEvent(QResizeEvent *event) // ### remove me in 5.0
-{
-    QWidget::resizeEvent(event);
-}
-
 QT_END_NAMESPACE
 
 

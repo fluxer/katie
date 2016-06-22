@@ -209,7 +209,6 @@ private:
 
     QPixmap(const QSize &s, int type);
     void init(int, int, int);
-    void deref();
 #if defined(Q_WS_WIN)
     void initAlphaPixmap(uchar *bytes, int length, struct tagBITMAPINFO *bmi);
 #endif

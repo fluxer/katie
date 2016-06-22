@@ -1161,14 +1161,6 @@ bool QPixmap::isDetached() const
     return data && data->ref == 1;
 }
 
-/*! \internal
-  ### Qt5 - remove me.
-*/
-void QPixmap::deref()
-{
-    Q_ASSERT_X(false, "QPixmap::deref()", "Do not call this function anymore!");
-}
-
 /*!
     \fn QImage QPixmap::convertToImage() const
 
@@ -1945,16 +1937,6 @@ QPixmapData* QPixmap::pixmapData() const
 /*! \fn int QPixmap::colorCount() const
     \since 4.6
     \internal
-*/
-
-/*! \fn const uchar* QPixmap::qwsBits() const
-    \internal
-    \since 4.1
-*/
-
-/*! \fn int QPixmap::qwsBytesPerLine() const
-    \internal
-    \since 4.1
 */
 
 QT_END_NAMESPACE
