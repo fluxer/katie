@@ -65,71 +65,8 @@ DEFINE_BOOL_CONFIG_OPTION(bindingsDump, QML_BINDINGS_DUMP)
 
 Q_GLOBAL_STATIC(QDeclarativeFastProperties, fastProperties)
 
-#if defined(Q_CC_GNU) && (!defined(Q_CC_INTEL) || __INTEL_COMPILER >= 1200)
-#  define QML_THREADED_INTERPRETER
-#endif
-
-#define FOR_EACH_QML_INSTR(F) \
-    F(Noop)                    /* Nop */ \
-    F(BindingId)               /* id */ \
-    F(Subscribe)               /* subscribe */ \
-    F(SubscribeId)             /* subscribe */ \
-    F(FetchAndSubscribe)       /* fetchAndSubscribe */ \
-    F(LoadId)                  /* load */ \
-    F(LoadScope)               /* load */ \
-    F(LoadRoot)                /* load */ \
-    F(LoadAttached)            /* attached */ \
-    F(ConvertIntToReal)        /* unaryop */ \
-    F(ConvertRealToInt)        /* unaryop */ \
-    F(Real)                    /* real_value */ \
-    F(Int)                     /* int_value */ \
-    F(Bool)                    /* bool_value */ \
-    F(String)                  /* string_value */ \
-    F(AddReal)                 /* binaryop */ \
-    F(AddInt)                  /* binaryop */ \
-    F(AddString)               /* binaryop */ \
-    F(MinusReal)               /* binaryop */ \
-    F(MinusInt)                /* binaryop */ \
-    F(CompareReal)             /* binaryop */ \
-    F(CompareString)           /* binaryop */ \
-    F(NotCompareReal)          /* binaryop */ \
-    F(NotCompareString)        /* binaryop */ \
-    F(GreaterThanReal)         /* binaryop */ \
-    F(MaxReal)                 /* binaryop */ \
-    F(MinReal)                 /* binaryop */ \
-    F(NewString)               /* construct */ \
-    F(NewUrl)                  /* construct */ \
-    F(CleanupUrl)              /* cleanup */ \
-    F(CleanupString)           /* cleanup */ \
-    F(Copy)                    /* copy */ \
-    F(Fetch)                   /* fetch */ \
-    F(Store)                   /* store */ \
-    F(Skip)                    /* skip */ \
-    F(Done)                    /* done */ \
-    /* Speculative property resolution */ \
-    F(InitString)              /* initstring */ \
-    F(FindGeneric)             /* find */ \
-    F(FindGenericTerminal)     /* find */ \
-    F(FindProperty)            /* find */ \
-    F(FindPropertyTerminal)    /* find */ \
-    F(CleanupGeneric)          /* cleanup */ \
-    F(ConvertGenericToReal)    /* unaryop */ \
-    F(ConvertGenericToBool)    /* unaryop */ \
-    F(ConvertGenericToString)  /* unaryop */ \
-    F(ConvertGenericToUrl)     /* unaryop */
-
-#define QML_INSTR_ENUM(I) I,
-#define QML_INSTR_ADDR(I) &&op_##I,
-
-#ifdef QML_THREADED_INTERPRETER
-#  define QML_BEGIN_INSTR(I) op_##I:
-#  define QML_END_INSTR(I) ++instr; goto *instr->common.code;
-#  define QML_INSTR_HEADER void *code;
-#else
-#  define QML_BEGIN_INSTR(I) case Instr::I:
-#  define QML_END_INSTR(I) break;
-#  define QML_INSTR_HEADER
-#endif
+#define QML_BEGIN_INSTR(I) case Instr::I:
+#define QML_END_INSTR(I) break;
 
 
 using namespace QDeclarativeJS;
@@ -431,45 +368,85 @@ namespace {
 // This structure is exactly 8-bytes in size
 struct Instr {
     enum {
-        FOR_EACH_QML_INSTR(QML_INSTR_ENUM)
+        Noop,                    /* Nop */ \
+        BindingId,               /* id */ \
+        Subscribe,               /* subscribe */ \
+        SubscribeId,             /* subscribe */ \
+        FetchAndSubscribe,       /* fetchAndSubscribe */ \
+        LoadId,                  /* load */ \
+        LoadScope,               /* load */ \
+        LoadRoot,                /* load */ \
+        LoadAttached,            /* attached */ \
+        ConvertIntToReal,        /* unaryop */ \
+        ConvertRealToInt,        /* unaryop */ \
+        Real,                    /* real_value */ \
+        Int,                     /* int_value */ \
+        Bool,                    /* bool_value */ \
+        String,                  /* string_value */ \
+        AddReal,                 /* binaryop */ \
+        AddInt,                  /* binaryop */ \
+        AddString,               /* binaryop */ \
+        MinusReal,               /* binaryop */ \
+        MinusInt,                /* binaryop */ \
+        CompareReal,             /* binaryop */ \
+        CompareString,           /* binaryop */ \
+        NotCompareReal,          /* binaryop */ \
+        NotCompareString,        /* binaryop */ \
+        GreaterThanReal,         /* binaryop */ \
+        MaxReal,                 /* binaryop */ \
+        MinReal,                 /* binaryop */ \
+        NewString,               /* construct */ \
+        NewUrl,                  /* construct */ \
+        CleanupUrl,              /* cleanup */ \
+        CleanupString,           /* cleanup */ \
+        Copy,                    /* copy */ \
+        Fetch,                   /* fetch */ \
+        Store,                   /* store */ \
+        Skip,                    /* skip */ \
+        Done,                    /* done */ \
+        /* Speculative property resolution */ \
+        InitString,              /* initstring */ \
+        FindGeneric,             /* find */ \
+        FindGenericTerminal,     /* find */ \
+        FindProperty,            /* find */ \
+        FindPropertyTerminal,    /* find */ \
+        CleanupGeneric,          /* cleanup */ \
+        ConvertGenericToReal,    /* unaryop */ \
+        ConvertGenericToBool,    /* unaryop */ \
+        ConvertGenericToString,  /* unaryop */ \
+        ConvertGenericToUrl      /* unaryop */
     };
 
     union {
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             quint8 packing[7];
         } common;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             quint8 packing;
             quint16 column;
             quint32 line;
         } id;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             quint8 packing[3];
             quint16 subscriptions;
             quint16 identifiers;
         } init;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint16 offset;
             quint32 index;
         } subscribe;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint8 packing[2];
             quint32 index;
         } load;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 output;
             qint8 reg;
@@ -477,7 +454,6 @@ struct Instr {
             quint32 id;
         } attached;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 output;
             qint8 reg;
@@ -485,7 +461,6 @@ struct Instr {
             quint32 index;
         } store;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 output;
             qint8 objectReg;
@@ -494,7 +469,6 @@ struct Instr {
             quint16 function;
         } fetchAndSubscribe;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 output;
             qint8 objectReg;
@@ -502,48 +476,41 @@ struct Instr {
             quint32 index;
         } fetch;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             qint8 src;
             quint8 packing[5];
         } copy;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint8 packing[6];
         } construct;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint8 packing[2];
             float value;
         } real_value;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint8 packing[2];
             int value;
         } int_value;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             bool value;
             quint8 packing[5];
         } bool_value;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint16 length;
             quint32 offset;
         } string_value;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 output;
             qint8 src1;
@@ -551,21 +518,18 @@ struct Instr {
             quint8 packing[4];
         } binaryop;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 output;
             qint8 src;
             quint8 packing[5];
         } unaryop;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint8 packing[2];
             quint32 count;
         } skip;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             qint8 src;
@@ -574,13 +538,11 @@ struct Instr {
             quint16 subscribeIndex;
         } find;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             qint8 reg;
             quint8 packing[6];
         } cleanup;
         struct {
-            QML_INSTR_HEADER
             quint8 type;
             quint8 packing[1];
             quint16 offset;
@@ -1190,22 +1152,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
     instr += instrIndex;
     const char *data = program->data();
 
-#ifdef QML_THREADED_INTERPRETER
-    static void *decode_instr[] = {
-        FOR_EACH_QML_INSTR(QML_INSTR_ADDR)
-    };
-
-    if (!program->compiled) {
-        program->compiled = true;
-        const Instr *inop = program->instructions();
-        for (int i = 0; i < program->instructionCount; ++i) {
-            Instr *op = (Instr *) inop++;
-            op->common.code = decode_instr[op->common.type];
-        }
-    }
-
-    goto *instr->common.code;
-#else
     // return;
 
 #ifdef COMPILEDBINDINGS_DEBUG
@@ -1217,8 +1163,6 @@ void QDeclarativeCompiledBindingsPrivate::run(int instrIndex,
 
 #ifdef COMPILEDBINDINGS_DEBUG
         dumpInstruction(instr);
-#endif
-
 #endif
 
     QML_BEGIN_INSTR(Noop)
