@@ -77,7 +77,9 @@ public:
     static int cacheLimit();
     static void setCacheLimit(int);
     static QPixmap *find(const QString &key);
-    static bool find(const QString &key, QPixmap &pixmap);
+    // ### get rid of this function
+    static inline bool find(const QString &key, QPixmap &pixmap)
+        { return find(key, &pixmap); };
     static bool find(const QString &key, QPixmap *pixmap);
     static bool find(const Key &key, QPixmap *pixmap);
     static bool insert(const QString &key, const QPixmap &pixmap);

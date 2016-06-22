@@ -487,14 +487,10 @@ QPixmap *QPixmapCache::find(const QString &key)
 
 /*!
     \obsolete
+    \fn QPixmapCache::find(const QString &key, QPixmap& pixmap)
 
     Use bool find(const QString&, QPixmap*) instead.
 */
-
-bool QPixmapCache::find(const QString &key, QPixmap& pixmap)
-{
-    return find(key, &pixmap);
-}
 
 /*!
     Looks for a cached pixmap associated with the given \a key in the cache.
