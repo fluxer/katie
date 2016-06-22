@@ -407,7 +407,7 @@ public:
     enum LayoutState {
         LayoutEmpty,
         InLayout,
-        LayoutFailed,
+        LayoutFailed
     };
     struct LayoutData {
         LayoutData(const QString &str, void **stack_memory, int mem_size);
