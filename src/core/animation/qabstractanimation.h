@@ -120,6 +120,7 @@ public Q_SLOTS:
 
 protected:
     QAbstractAnimation(QAbstractAnimationPrivate &dd, QObject *parent = 0);
+    bool event(QEvent *event);
 
     virtual void updateCurrentTime(int currentTime) = 0;
     virtual void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
