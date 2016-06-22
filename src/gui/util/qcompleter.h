@@ -57,7 +57,6 @@ QT_BEGIN_NAMESPACE
 
 class QCompleterPrivate;
 class QAbstractItemView;
-class QAbstractProxyModel;
 class QWidget;
 
 class Q_GUI_EXPORT QCompleter : public QObject

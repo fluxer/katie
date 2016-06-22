@@ -527,9 +527,9 @@ void QProgressBar::setInvertedAppearance(bool invert)
     update();
 }
 
-bool QProgressBar::invertedAppearance()
+bool QProgressBar::invertedAppearance() const
 {
-    Q_D(QProgressBar);
+    Q_D(const QProgressBar);
     return d->invertedAppearance;
 }
 
@@ -550,9 +550,9 @@ void QProgressBar::setTextDirection(QProgressBar::Direction textDirection)
     update();
 }
 
-QProgressBar::Direction QProgressBar::textDirection()
+QProgressBar::Direction QProgressBar::textDirection() const
 {
-    Q_D(QProgressBar);
+    Q_D(const QProgressBar);
     return d->textDirection;
 }
 
