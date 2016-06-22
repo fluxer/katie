@@ -106,10 +106,11 @@ QFileInfoGatherer::~QFileInfoGatherer()
 
 void QFileInfoGatherer::setResolveSymlinks(bool enable)
 {
-    Q_UNUSED(enable);
 #ifdef Q_OS_WIN
     QMutexLocker locker(&mutex);
     m_resolveSymlinks = enable;
+#else
+    Q_UNUSED(enable);
 #endif
 }
 

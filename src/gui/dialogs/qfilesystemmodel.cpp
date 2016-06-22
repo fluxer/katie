@@ -196,11 +196,11 @@ QT_BEGIN_NAMESPACE
     \sa rmdir()
 */
 
-bool QFileSystemModel::remove(const QModelIndex &aindex) const
+bool QFileSystemModel::remove(const QModelIndex &aindex)
 {
+    Q_D(QFileSystemModel);
     //### TODO optim
     QString path = filePath(aindex);
-    QFileSystemModelPrivate * d = const_cast<QFileSystemModelPrivate*>(d_func());
     d->fileInfoGatherer.removePath(path);
     QDirIterator it(path,
             QDir::AllDirs | QDir:: Files | QDir::NoDotAndDotDot,
@@ -1635,10 +1635,10 @@ bool QFileSystemModel::event(QEvent *event)
     return QAbstractItemModel::event(event);
 }
 
-bool QFileSystemModel::rmdir(const QModelIndex &aindex) const
+bool QFileSystemModel::rmdir(const QModelIndex &aindex)
 {
+    Q_D(QFileSystemModel);
     QString path = filePath(aindex);
-    QFileSystemModelPrivate * d = const_cast<QFileSystemModelPrivate*>(d_func());
     d->fileInfoGatherer.removePath(path);
     return QDir().rmdir(path);
 }
