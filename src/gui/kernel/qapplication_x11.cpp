@@ -347,7 +347,6 @@ static bool        appSync                = false;        // X11 synchronization
 static bool        appNoGrab        = false;        // X11 grabbing enabled
 static bool        appDoGrab        = false;        // X11 grabbing override (gdb)
 #endif
-static bool        app_save_rootinfo = false;        // save root info
 static bool        app_do_modal        = false;        // modal mode
 static Window        curWin = 0;                        // current window
 
@@ -446,7 +445,6 @@ extern bool qt_check_selection_sentinel(); //def in qclipboard_x11.cpp
 extern bool qt_xfixes_clipboard_changed(Window clipboardOwner, Time timestamp); //def in qclipboard_x11.cpp
 extern bool qt_xfixes_selection_changed(Window selectionOwner, Time timestamp); //def in qclipboard_x11.cpp
 
-static void        qt_save_rootinfo();
 Q_GUI_EXPORT bool qt_try_modal(QWidget *, XEvent *);
 
 QWidget *qt_button_down = 0; // last widget to be pressed with the mouse
@@ -2664,9 +2662,6 @@ void QApplicationPrivate::initializeWidgetPaletteHash()
 
 void qt_cleanup()
 {
-    if (app_save_rootinfo)                        // root window must keep state
-        qt_save_rootinfo();
-
     if (qt_is_gui_used) {
         QPixmapCache::clear();
         QCursorData::cleanup();
@@ -2743,59 +2738,6 @@ void qt_cleanup()
 /*****************************************************************************
   Platform specific global and internal functions
  *****************************************************************************/
-
-void qt_save_rootinfo()                                // save new root info
-{
-    Atom type;
-    int format;
-    unsigned long length, after;
-    uchar *data = 0;
-
-    if (ATOM(_XSETROOT_ID)) {                        // kill old pixmap
-        if (XGetWindowProperty(X11->display, QX11Info::appRootWindow(),
-                                 ATOM(_XSETROOT_ID), 0, 1,
-                                 True, AnyPropertyType, &type, &format,
-                                 &length, &after, &data) == Success) {
-            if (type == XA_PIXMAP && format == 32 && length == 1 &&
-                 after == 0 && data) {
-                XKillClient(X11->display, *((Pixmap*)data));
-            }
-            Pixmap dummy = XCreatePixmap(X11->display, QX11Info::appRootWindow(),
-                                          1, 1, 1);
-            XChangeProperty(X11->display, QX11Info::appRootWindow(),
-                             ATOM(_XSETROOT_ID), XA_PIXMAP, 32,
-                             PropModeReplace, (uchar *)&dummy, 1);
-            XSetCloseDownMode(X11->display, RetainPermanent);
-        }
-    }
-    if (data)
-        XFree((char *)data);
-}
-
-void qt_updated_rootinfo()
-{
-    app_save_rootinfo = true;
-}
-
-// ### Cleanup, this function is not in use!
-bool qt_wstate_iconified(WId winid)
-{
-    Atom type;
-    int format;
-    unsigned long length, after;
-    uchar *data = 0;
-    int r = XGetWindowProperty(X11->display, winid, ATOM(WM_STATE), 0, 2,
-                                 False, AnyPropertyType, &type, &format,
-                                 &length, &after, &data);
-    bool iconic = false;
-    if (r == Success && data && format == 32) {
-        // quint32 *wstate = (quint32*)data;
-        unsigned long *wstate = (unsigned long *) data;
-        iconic = (*wstate == IconicState);
-        XFree((char *)data);
-    }
-    return iconic;
-}
 
 QString QApplicationPrivate::appName() const
 {

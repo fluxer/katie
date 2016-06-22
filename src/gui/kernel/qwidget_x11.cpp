@@ -71,11 +71,6 @@
 
 //#define ALIEN_DEBUG
 
-// defined in qapplication_x11.cpp
-//bool qt_wstate_iconified(WId);
-//void qt_updated_rootinfo();
-
-
 #if !defined(QT_NO_IM)
 #include "qinputcontext.h"
 #include "qinputcontextfactory.h"

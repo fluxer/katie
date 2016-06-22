@@ -1369,18 +1369,6 @@ void qt_cleanup()
 }
 
 /*****************************************************************************
-  Platform specific global and internal functions
- *****************************************************************************/
-void qt_updated_rootinfo()
-{
-}
-
-bool qt_wstate_iconified(WId)
-{
-    return false;
-}
-
-/*****************************************************************************
   Platform specific QApplication members
  *****************************************************************************/
 extern QWidget * mac_mouse_grabber;
