@@ -95,15 +95,15 @@
      https://en.wikipedia.org/wiki/GNU_Compiler_Collection#Architectures
 */
 
-#if defined(__alpha__)
+#if defined(__alpha__) || defined(_M_ALPHA)
 #  define QT_ARCH_ALPHA
-#elif defined(__arm__)
+#elif defined(__arm__) || defined(_M_ARM)
 #  define QT_ARCH_ARM
 #elif defined(__avr__)
 #  define QT_ARCH_AVR32
 #elif defined(__bfin__)
 #  define QT_ARCH_BFIN
-#elif defined(__ia64__)
+#elif defined(__ia64__) || defined(_M_IA64)
 #  define QT_ARCH_IA64
 #elif defined(__m68k__)
 #  define QT_ARCH_M68K
@@ -117,9 +117,9 @@
 #  define QT_ARCH_SH
 #elif defined(__native_client__)
 #  define QT_ARCH_NACL
-#elif defined(__x86_64__)
+#elif defined(__x86_64__) || defined(_M_X64)
 #  define QT_ARCH_X86_64
-#elif defined(__i386__)
+#elif defined(__i386__) || defined(_M_IX86)
 #  define QT_ARCH_I386
 #else
 # error Unable to detect architecture, please update above list
