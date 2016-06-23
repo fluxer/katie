@@ -27,7 +27,6 @@
 #include "JSGlobalObject.h"
 #include "Interpreter.h"
 #include "Parser.h"
-#include "Debugger.h"
 #include <stdio.h>
 
 namespace JSC {

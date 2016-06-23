@@ -36,12 +36,12 @@
 //
 
 #include <QtCore/qobjectdefs.h>
-#include "Debugger.h"
 #include "qscriptengineagent.h"
 
 #include "CallFrame.h"
 #include "SourceCode.h"
 #include "UString.h"
+#include "Debugger.h"
 #include "DebuggerCallFrame.h"
 
 QT_BEGIN_NAMESPACE

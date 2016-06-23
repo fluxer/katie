@@ -67,7 +67,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/bytecode/StructureStubInfo.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/bytecompiler/BytecodeGenerator.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/bytecompiler/NodesCodegen.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/debugger/DebuggerActivation.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/debugger/DebuggerCallFrame.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/debugger/Debugger.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/interpreter/CallFrame.cpp

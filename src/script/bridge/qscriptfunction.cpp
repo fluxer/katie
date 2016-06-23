@@ -32,7 +32,6 @@
 #include "qscriptobject_p.h"
 
 #include "JSGlobalObject.h"
-#include "DebuggerCallFrame.h"
 #include "Debugger.h"
 
 namespace JSC

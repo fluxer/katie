@@ -29,7 +29,6 @@
 
 #include "BytecodeGenerator.h"
 #include "CallFrame.h"
-#include "Debugger.h"
 #include "JIT.h"
 #include "JSFunction.h"
 #include "JSGlobalObject.h"

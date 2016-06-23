@@ -35,7 +35,6 @@
 #include "Interpreter.h"
 #include "JSFunction.h"
 #include "JSStaticScopeObject.h"
-#include "Debugger.h"
 #include "BytecodeGenerator.h"
 #include <stdio.h>
 #include <wtf/StringExtras.h>

@@ -23,7 +23,6 @@
 #include "config.h"
 #include "Parser.h"
 
-#include "Debugger.h"
 #include "Lexer.h"
 #include <wtf/HashSet.h>
 #include <wtf/Vector.h>
