@@ -127,8 +127,7 @@
 
 // detect target endianness
 #if defined (__BYTE_ORDER__) && \
-    (__BYTE_ORDER__ - 0 == __ORDER_BIG_ENDIAN__ - 0 || __BYTE_ORDER__ - 0 == __ORDER_LITTLE_ENDIAN__ - 0)
-
+    (__BYTE_ORDER__ == __ORDER_BIG_ENDIAN__ || __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__)
 #  define Q_BYTE_ORDER       __BYTE_ORDER__
 #  define Q_BIG_ENDIAN       __ORDER_BIG_ENDIAN__
 #  define Q_LITTLE_ENDIAN    __ORDER_LITTLE_ENDIAN__
@@ -136,7 +135,6 @@
 #  define Q_BIG_ENDIAN 1234
 #  define Q_LITTLE_ENDIAN 4321
 #  define Q_BYTE_ORDER Q_LITTLE_ENDIAN
-
 #elif defined (__BIG_ENDIAN__)
 #  define Q_BIG_ENDIAN 1234
 #  define Q_LITTLE_ENDIAN 4321
