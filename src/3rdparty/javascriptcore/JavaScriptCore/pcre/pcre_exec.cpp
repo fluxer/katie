@@ -56,20 +56,9 @@ the JavaScript specification. There are also some supporting functions. */
 
 using namespace WTF;
 
-#if COMPILER(GCC)
-#define USE_COMPUTED_GOTO_FOR_MATCH_RECURSION
-//#define USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-#endif
-
 /* Avoid warnings on Windows. */
 #undef min
 #undef max
-
-#ifndef USE_COMPUTED_GOTO_FOR_MATCH_RECURSION
-typedef int ReturnLocation;
-#else
-typedef void* ReturnLocation;
-#endif
 
 #if !REGEXP_HISTOGRAM
 
@@ -113,7 +102,7 @@ struct BracketChainNode {
 };
 
 struct MatchFrame : FastAllocBase {
-    ReturnLocation returnLocation;
+    int returnLocation;
     struct MatchFrame* previousFrame;
     
     /* Function arguments that may change */
@@ -265,27 +254,7 @@ static bool matchRef(int offset, const UChar* subjectPtr, int length, const Matc
     return true;
 }
 
-#ifndef USE_COMPUTED_GOTO_FOR_MATCH_RECURSION
-
 /* Use numbered labels and switch statement at the bottom of the match function. */
-
-#define RMATCH_WHERE(num) num
-#define RRETURN_LABEL RRETURN_SWITCH
-
-#else
-
-/* Use GCC's computed goto extension. */
-
-/* For one test case this is more than 40% faster than the switch statement.
-We could avoid the use of the num argument entirely by using local labels,
-but using it for the GCC case as well as the non-GCC case allows us to share
-a bit more code and notice if we use conflicting numbers.*/
-
-#define RMATCH_WHERE(num) &&RRETURN_##num
-#define RRETURN_LABEL *stack.currentFrame->returnLocation
-
-#endif
-
 #define RECURSIVE_MATCH_COMMON(num) \
     goto RECURSE;\
     RRETURN_##num: \
@@ -293,18 +262,18 @@ a bit more code and notice if we use conflicting numbers.*/
 
 #define RECURSIVE_MATCH(num, ra, rb) \
     do { \
-        stack.pushNewFrame((ra), (rb), RMATCH_WHERE(num)); \
+        stack.pushNewFrame((ra), (rb), num); \
         RECURSIVE_MATCH_COMMON(num) \
     } while (0)
 
 #define RECURSIVE_MATCH_NEW_GROUP(num, ra, rb) \
     do { \
-        stack.pushNewFrame((ra), (rb), RMATCH_WHERE(num)); \
+        stack.pushNewFrame((ra), (rb), num); \
         startNewGroup(stack.currentFrame); \
         RECURSIVE_MATCH_COMMON(num) \
     } while (0)
 
-#define RRETURN goto RRETURN_LABEL
+#define RRETURN goto RRETURN_SWITCH
 
 #define RRETURN_NO_MATCH do { isMatch = false; RRETURN; } while (0)
 
@@ -359,7 +328,7 @@ struct MatchStack {
         return new MatchFrame;
     }
     
-    inline void pushNewFrame(const unsigned char* instructionPtr, BracketChainNode* bracketChain, ReturnLocation returnLocation)
+    inline void pushNewFrame(const unsigned char* instructionPtr, BracketChainNode* bracketChain, int returnLocation)
     {
         MatchFrame* newframe = allocateNextFrame();
         newframe->previousFrame = currentFrame;
@@ -451,26 +420,7 @@ static int match(const UChar* subjectPtr, const unsigned char* instructionPtr, i
     
     MatchStack stack;
 
-    /* The opcode jump table. */
-#ifdef USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-#define EMIT_JUMP_TABLE_ENTRY(opcode) &&LABEL_OP_##opcode,
-    static void* opcodeJumpTable[256] = { FOR_EACH_OPCODE(EMIT_JUMP_TABLE_ENTRY) };
-#undef EMIT_JUMP_TABLE_ENTRY
-#endif
-    
-    /* One-time setup of the opcode jump table. */
-#ifdef USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-    for (int i = 255; !opcodeJumpTable[i]; i--)
-        opcodeJumpTable[i] = &&CAPTURING_BRACKET;
-#endif
-    
-#ifdef USE_COMPUTED_GOTO_FOR_MATCH_RECURSION
-    // Shark shows this as a hot line
-    // Using a static const here makes this line disappear, but makes later access hotter (not sure why)
-    stack.currentFrame->returnLocation = &&RETURN;
-#else
     stack.currentFrame->returnLocation = 0;
-#endif
     stack.currentFrame->args.subjectPtr = subjectPtr;
     stack.currentFrame->args.instructionPtr = instructionPtr;
     stack.currentFrame->args.offsetTop = offsetTop;
@@ -485,25 +435,12 @@ RECURSE:
 
     /* Now start processing the operations. */
     
-#ifndef USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-    while (true)
-#endif
-    {
-        
-#ifdef USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-#define BEGIN_OPCODE(opcode) LABEL_OP_##opcode
-#define NEXT_OPCODE goto *opcodeJumpTable[*stack.currentFrame->args.instructionPtr]
-#else
+    while (true) {
+// TODO: expand the macros
 #define BEGIN_OPCODE(opcode) case OP_##opcode
 #define NEXT_OPCODE continue
-#endif
         
-#ifdef USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-        NEXT_OPCODE;
-#else
-        switch (*stack.currentFrame->args.instructionPtr)
-#endif
-        {
+        switch (*stack.currentFrame->args.instructionPtr) {
             /* Non-capturing bracket: optimized */
                 
             BEGIN_OPCODE(BRA):
@@ -1727,11 +1664,7 @@ RECURSE:
                 ASSERT_NOT_REACHED();
                 return matchError(JSRegExpErrorInternal, stack);
                 
-#ifdef USE_COMPUTED_GOTO_FOR_MATCH_OPCODE_LOOP
-            CAPTURING_BRACKET:
-#else
             default:
-#endif
                 /* Opening capturing bracket. If there is space in the offset vector, save
                  the current subject position in the working slot at the top of the vector. We
                  mustn't change the current values of the data slot, because they may be set
@@ -1800,8 +1733,6 @@ RECURSE:
     
     ASSERT_NOT_REACHED();
     
-#ifndef USE_COMPUTED_GOTO_FOR_MATCH_RECURSION
-    
 RRETURN_SWITCH:
     switch (stack.currentFrame->returnLocation) {
         case 0: goto RETURN;
@@ -1835,9 +1766,7 @@ RRETURN_SWITCH:
     
     ASSERT_NOT_REACHED();
     return matchError(JSRegExpErrorInternal, stack);
-    
-#endif
-    
+
 RETURN:
     return isMatch;
 }
