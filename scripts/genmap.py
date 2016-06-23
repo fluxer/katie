@@ -38,7 +38,7 @@ def exportscan(sdir, keyword, component):
             with open(sfull, 'rb') as f:
                 scontent = f.read()
             scontent = scontent.decode('utf-8')
-            for match in re.findall('class (?:%s) (\w+)' % keyword, scontent):
+            for match in re.findall('(?:class|struct) (?:%s) (\w+)' % keyword, scontent):
                 dirmap += '    { "%s", "%s/%s"},\n' % (match, component, sfile)
                 classcount += 1
     return dirmap

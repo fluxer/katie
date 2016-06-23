@@ -140,7 +140,7 @@ public:
     QList<QTextFrame *> childFrames() const;
     QTextFrame *parentFrame() const;
 
-    class Q_GUI_EXPORT iterator {
+    class iterator {
         QTextFrame *f;
         int b;
         int e;
