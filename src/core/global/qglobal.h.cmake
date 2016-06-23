@@ -1633,22 +1633,18 @@ public:
         WordSize = (sizeof(void *)<<3)
     };
 
-#if defined(Q_BYTE_ORDER)
     enum Endian {
         BigEndian,
-        LittleEndian
+        LittleEndian,
 
-#  if   Q_BYTE_ORDER == Q_BIG_ENDIAN
-        , ByteOrder = BigEndian
-#  elif Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-        , ByteOrder = LittleEndian
-#  else
-#    error "Undefined byte order"
-#  endif
-    };
+#if Q_BYTE_ORDER == Q_BIG_ENDIAN
+        ByteOrder = BigEndian
+#elif Q_BYTE_ORDER == Q_LITTLE_ENDIAN
+        ByteOrder = LittleEndian
 #else
-#  error "Qt not configured correctly, please run cmake"
+#  error "Undefined byte order"
 #endif
+    };
 #if defined(Q_WS_WIN) || defined(Q_OS_CYGWIN)
     enum WinVersion {
         WV_32s      = 0x0001,
