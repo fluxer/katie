@@ -124,7 +124,7 @@ private:
     QSystemLocale(bool);
     friend QSystemLocale *QSystemLocale_globalSystemLocale();
 };
-#endif
+#endif // QT_NO_SYSTEMLOCALE
 
 struct QLocalePrivate;
 class Q_CORE_EXPORT QLocale

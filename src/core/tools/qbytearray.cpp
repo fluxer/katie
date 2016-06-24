@@ -47,7 +47,7 @@
 #include "qlocale.h"
 #include "qlocale_p.h"
 #include "qscopedpointer.h"
-#include <qdatastream.h>
+#include "qdatastream.h"
 
 #ifndef QT_NO_COMPRESS
 #include <zlib.h>
