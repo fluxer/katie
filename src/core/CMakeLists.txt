@@ -337,10 +337,7 @@ elseif(${KATIE_PLATFORM} STREQUAL "win32")
         ${EXTRA_CORE_LIBS}
         ole32
         ws2_32
-    )
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
-        -Wl,-luuid
+        uuid
     )
     add_definitions(-DQT_MAKEDLL)
 elseif(${KATIE_PLATFORM} STREQUAL "mac")
