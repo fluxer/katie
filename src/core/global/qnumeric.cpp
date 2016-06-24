@@ -44,7 +44,7 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef QT_NO_STL
+#if defined(QT_NO_STL) && (defined(_MSC_VER) && _MSC_VER > 1800)
 /*!
     Returns true if the double \a {d} is equivalent to infinity.
 */
