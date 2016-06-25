@@ -18,8 +18,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/util
 )
 
-set(HELP_SOURCES
-    ${HELP_SOURCES}
+set(FULLTEXTSEARCH_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/StdHeader.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/AnalysisHeader.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/Analyzers.cpp
@@ -121,32 +120,7 @@ set(HELP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard/StandardAnalyzer.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard/StandardFilter.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src/CLucene/analysis/standard/StandardTokenizer.cpp
-)
 
-set(HELP_HEADERS
-    ${HELP_HEADERS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qclucene_global_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qclucene-config_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qanalyzer_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenizer_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtoken_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenstream_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qdocument_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qfield_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qindexreader_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qindexwriter_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qterm_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qqueryparser_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qfilter_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qhits_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsearchable_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsort_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qquery_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qreader_p.h
-)
-
-set(HELP_SOURCES
-    ${HELP_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qanalyzer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtokenizer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qtoken.cpp
@@ -163,4 +137,14 @@ set(HELP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qsort.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qquery.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/fulltextsearch/qreader.cpp
+)
+
+# impossible to disable exceptions in clucene atm
+if(NOT KATIE_PLATFORM STREQUAL "win32")
+    set_source_files_properties(${FULLTEXTSEARCH_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
+endif()
+
+set(HELP_SOURCES
+    ${HELP_SOURCES}
+    ${FULLTEXTSEARCH_SOURCES}
 )
