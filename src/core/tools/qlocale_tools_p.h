@@ -94,7 +94,7 @@ QString &exponentForm(QChar zero, QChar decimal, QChar exponential,
                       PrecisionMode pm,
                       bool always_show_decpt);
 
-inline bool isZero(double d)
+static inline bool qIsZero(double d)
 {
     uchar *ch = (uchar *)&d;
 #ifdef QT_ARMFPA
@@ -106,6 +106,29 @@ inline bool isZero(double d)
         return !(ch[7] & 0x7F || ch[6] || ch[5] || ch[4] || ch[3] || ch[2] || ch[1] || ch[0]);
     }
 #endif
+}
+
+static inline bool qIsUpper(char ch)
+{
+    return ch >= 'A' && ch <= 'Z';
+}
+
+static inline bool qIsDigit(char ch)
+{
+    return ch >= '0' && ch <= '9';
+}
+
+static inline char qToLower(char ch)
+{
+    if (ch >= 'A' && ch <= 'Z')
+        return ch - 'A' + 'a';
+    else
+        return ch;
+}
+
+static inline bool qIsAlnum(char c)
+{
+    return (c >= '0' && c <= '9') || ((c | 0x20) >= 'a' && (c | 0x20) <= 'z');
 }
 
 // Removes thousand-group separators in "C" locale.

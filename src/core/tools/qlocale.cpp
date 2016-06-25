@@ -1759,19 +1759,6 @@ QChar QLocale::exponential() const
     return d()->exponential();
 }
 
-static bool qIsUpper(char c)
-{
-    return c >= 'A' && c <= 'Z';
-}
-
-static char qToLower(char c)
-{
-    if (c >= 'A' && c <= 'Z')
-        return c - 'A' + 'a';
-    else
-        return c;
-}
-
 /*!
     \overload
 
@@ -2600,7 +2587,7 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
             }
         }
 
-        negative = sign != 0 && !isZero(d);
+        negative = sign != 0 && !qIsZero(d);
     }
 
     // pad with zeros. LeftAdjusted overrides this flag). Also, we don't

@@ -51,6 +51,7 @@
 #include <qlist.h>
 #include "qlocale.h"
 #include "qlocale_p.h"
+#include "qlocale_tools_p.h"
 #include "qstringmatcher.h"
 #include "qvarlengtharray.h"
 #include "qtools_p.h"
@@ -347,24 +348,6 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
     if (sl_minus_1 < (int)sizeof(int) * CHAR_BIT)       \
         hashHaystack -= (a) << sl_minus_1; \
     hashHaystack <<= 1
-
-inline bool qIsUpper(char ch)
-{
-    return ch >= 'A' && ch <= 'Z';
-}
-
-inline bool qIsDigit(char ch)
-{
-    return ch >= '0' && ch <= '9';
-}
-
-inline char qToLower(char ch)
-{
-    if (ch >= 'A' && ch <= 'Z')
-        return ch - 'A' + 'a';
-    else
-        return ch;
-}
 
 const QString::Null QString::null = { };
 

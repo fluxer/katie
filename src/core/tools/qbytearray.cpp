@@ -46,6 +46,7 @@
 #include "qlist.h"
 #include "qlocale.h"
 #include "qlocale_p.h"
+#include "qlocale_tools_p.h"
 #include "qscopedpointer.h"
 #include "qdatastream.h"
 
@@ -600,19 +601,6 @@ QByteArray qUncompress(const uchar* data, int nbytes)
     }
 }
 #endif
-
-static inline bool qIsUpper(char c)
-{
-    return c >= 'A' && c <= 'Z';
-}
-
-static inline char qToLower(char c)
-{
-    if (c >= 'A' && c <= 'Z')
-        return c - 'A' + 'a';
-    else
-        return c;
-}
 
 QByteArray::Data QByteArray::shared_null = {Q_BASIC_ATOMIC_INITIALIZER(1),
                                                           0, 0, shared_null.array, {0} };

@@ -82,6 +82,7 @@
 #endif // Q_OS_INTEGRITY
 #endif // QT_NO_CODECS
 #include "qlocale.h"
+#include "qlocale_tools_p.h"
 #include "qmutex.h"
 #include "qhash.h"
 
@@ -113,11 +114,6 @@ typedef QHash<QByteArray, QTextCodec *> QTextCodecCache;
 Q_GLOBAL_STATIC(QTextCodecCache, qTextCodecCache)
 
 
-static char qtolower(register char c)
-{ if (c >= 'A' && c <= 'Z') return c + 0x20; return c; }
-static bool qisalnum(register char c)
-{ return (c >= '0' && c <= '9') || ((c | 0x20) >= 'a' && (c | 0x20) <= 'z'); }
-
 static bool nameMatch(const QByteArray &name, const QByteArray &test)
 {
     // if they're the same, return a perfect score
@@ -129,21 +125,21 @@ static bool nameMatch(const QByteArray &name, const QByteArray &test)
 
     // if the letters and numbers are the same, we have a match
     while (*n != '\0') {
-        if (qisalnum(*n)) {
+        if (qIsAlnum(*n)) {
             for (;;) {
                 if (*h == '\0')
                     return false;
-                if (qisalnum(*h))
+                if (qIsAlnum(*h))
                     break;
                 ++h;
             }
-            if (qtolower(*n) != qtolower(*h))
+            if (qToLower(*n) != qToLower(*h))
                 return false;
             ++h;
         }
         ++n;
     }
-    while (*h && !qisalnum(*h))
+    while (*h && !qIsAlnum(*h))
            ++h;
     return (*h == '\0');
 }

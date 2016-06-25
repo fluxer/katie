@@ -203,6 +203,7 @@
 #include "qstack.h"
 #include "qvarlengtharray.h"
 #include "qdebug.h"
+#include "qlocale_tools_p.h"
 #ifndef QT_BOOTSTRAPPED
 #include "qtldurl_p.h"
 #endif
@@ -4061,8 +4062,6 @@ QByteArray QUrlPrivate::toEncoded(QUrl::FormattingOptions options) const
 
     return url;
 }
-
-#define qToLower(ch) (((ch|32) >= 'a' && (ch|32) <= 'z') ? (ch|32) : ch)
 
 const QByteArray &QUrlPrivate::normalized() const
 {
