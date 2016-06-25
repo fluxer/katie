@@ -54,7 +54,7 @@ QT_BEGIN_NAMESPACE
 
 class QIconPrivate;
 class QIconEngine;
-class QIconEngineV2;
+class QIconEngine;
 
 class Q_GUI_EXPORT QIcon
 {
@@ -67,7 +67,6 @@ public:
     QIcon(const QIcon &other);
     explicit QIcon(const QString &fileName); // file or resource name
     explicit QIcon(QIconEngine *engine);
-    explicit QIcon(QIconEngineV2 *engine);
     ~QIcon();
     QIcon &operator=(const QIcon &other);
 #ifdef Q_COMPILER_RVALUE_REFS

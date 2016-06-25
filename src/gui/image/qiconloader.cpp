@@ -104,7 +104,7 @@ void QIconLoader::ensureInitialized()
         if (m_systemTheme.isEmpty())
             m_systemTheme = fallbackTheme();
 #ifndef QT_NO_LIBRARY
-        QFactoryLoader iconFactoryLoader(QIconEngineFactoryInterfaceV2_iid,
+        QFactoryLoader iconFactoryLoader(QIconEngineFactoryInterface_iid,
                                          QLatin1String("/iconengines"),
                                          Qt::CaseInsensitive);
         if (iconFactoryLoader.keys().contains(QLatin1String("svg")))
@@ -321,13 +321,13 @@ QIconLoaderEngine::~QIconLoaderEngine()
 }
 
 QIconLoaderEngine::QIconLoaderEngine(const QIconLoaderEngine &other)
-        : QIconEngineV2(other),
+        : QIconEngine(other),
         m_iconName(other.m_iconName),
         m_key(0)
 {
 }
 
-QIconEngineV2 *QIconLoaderEngine::clone() const
+QIconEngine *QIconLoaderEngine::clone() const
 {
     return new QIconLoaderEngine(*this);
 }
@@ -532,36 +532,6 @@ QPixmap QIconLoaderEngine::pixmap(const QSize &size, QIcon::Mode mode,
 QString QIconLoaderEngine::key() const
 {
     return QLatin1String("QIconLoaderEngine");
-}
-
-void QIconLoaderEngine::virtual_hook(int id, void *data)
-{
-    ensureLoaded();
-
-    switch (id) {
-    case QIconEngineV2::AvailableSizesHook:
-        {
-            QIconEngineV2::AvailableSizesArgument &arg
-                    = *reinterpret_cast<QIconEngineV2::AvailableSizesArgument*>(data);
-            const QList<QIconDirInfo> directoryKey = iconLoaderInstance()->theme().keyList();
-            arg.sizes.clear();
-
-            // Gets all sizes from the DirectoryInfo entries
-            for (int i = 0 ; i < m_entries.size() ; ++i) {
-                int size = m_entries.at(i)->dir.size;
-                arg.sizes.append(QSize(size, size));
-            }
-        }
-        break;
-    case QIconEngineV2::IconNameHook:
-        {
-            QString &name = *reinterpret_cast<QString*>(data);
-            name = m_iconName;
-        }
-        break;
-    default:
-        QIconEngineV2::virtual_hook(id, data);
-    }
 }
 
 QT_END_NAMESPACE
