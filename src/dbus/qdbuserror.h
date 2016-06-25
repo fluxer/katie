@@ -85,7 +85,7 @@ public:
         InvalidService,
         InvalidObjectPath,
         InvalidInterface,
-        InvalidMember,
+        InvalidMember
     };
 
     QDBusError(const DBusError *error = 0);

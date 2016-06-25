@@ -63,10 +63,7 @@ public:
         SourceOverPixmapCapability      = 0x0004,
         SourceOverScaledPixmapCapability = 0x0008,
         AlphaFillRectCapability         = 0x0010,
-        OpacityPixmapCapability         = 0x0020,
-
-        // Internal ones
-        OutlineCapability               = 0x0001000,
+        OpacityPixmapCapability         = 0x0020
     };
     Q_DECLARE_FLAGS(Capabilities, Capability)
 
