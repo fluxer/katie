@@ -664,6 +664,7 @@ katie_generate_obsolete(qshowevent.h QtGui qevent.h)
 katie_generate_obsolete(qitemselection.h QtGui qitemselectionmodel.h)
 katie_generate_obsolete(qintvalidator.h QtGui qvalidator.h)
 katie_generate_obsolete(qfontmetricsf.h QtGui qfontmetrics.h)
+katie_generate_obsolete(qstyleoptionslider QtGui qstyleoption.h)
 katie_generate_obsolete(qnetworkaddressentry.h QtNetwork qnetworkinterface.h)
 # those are aliases
 katie_generate_obsolete(qweakpointer.h QtCore qsharedpointer.h)
