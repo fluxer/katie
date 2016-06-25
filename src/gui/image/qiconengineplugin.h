@@ -51,12 +51,12 @@ QT_BEGIN_NAMESPACE
 
 
 class QIconEngine;
-class QIconEngineV2;
 
 struct Q_GUI_EXPORT QIconEngineFactoryInterface : public QFactoryInterface
 {
-    virtual QIconEngine *create(const QString &filename) = 0;
+    virtual QIconEngine *create(const QString &filename= QString()) = 0;
 };
+typedef QIconEngineFactoryInterface QIconEngineFactoryInterfaceV2;
 
 #define QIconEngineFactoryInterface_iid \
     "com.trolltech.Qt.QIconEngineFactoryInterface"
@@ -71,30 +71,9 @@ public:
     ~QIconEnginePlugin();
 
     virtual QStringList keys() const = 0;
-    virtual QIconEngine *create(const QString &filename) = 0;
+    virtual QIconEngine *create(const QString &filename = QString()) = 0;
 };
-
-// ### Qt 5: remove version 2
-struct Q_GUI_EXPORT QIconEngineFactoryInterfaceV2 : public QFactoryInterface
-{
-    virtual QIconEngineV2 *create(const QString &filename = QString()) = 0;
-};
-
-#define QIconEngineFactoryInterfaceV2_iid \
-    "com.trolltech.Qt.QIconEngineFactoryInterfaceV2"
-Q_DECLARE_INTERFACE(QIconEngineFactoryInterfaceV2, QIconEngineFactoryInterfaceV2_iid)
-
-class Q_GUI_EXPORT QIconEnginePluginV2 : public QObject, public QIconEngineFactoryInterfaceV2
-{
-    Q_OBJECT
-    Q_INTERFACES(QIconEngineFactoryInterfaceV2:QFactoryInterface)
-public:
-    QIconEnginePluginV2(QObject *parent = 0);
-    ~QIconEnginePluginV2();
-
-    virtual QStringList keys() const = 0;
-    virtual QIconEngineV2 *create(const QString &filename = QString()) = 0;
-};
+typedef QIconEnginePlugin QIconEnginePluginV2;
 
 QT_END_NAMESPACE
 

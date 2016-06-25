@@ -12,6 +12,9 @@ There are several things you should be aware before considering Katie:
  - some things have changed:
   - QMake build system replaced with CMake
   - QStyleOption*V{2,3,4} classes have been merged
+  - QIconEngineV{2} classes have been merged
+  - QIconEnginePluginV{2} classes have been merged
+  - QIconEngineFactoryInterfaceV{2} classes and interfaces have been merged
   - QKeyEventEx and QKeyEvent classes have been merged
   - OpenSSL and D-Bus cannot be runtime dependencies, they must be linked to
     during build
