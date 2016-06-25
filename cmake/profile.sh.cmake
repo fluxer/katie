@@ -11,3 +11,5 @@ if [ -n "$PKG_CONFIG_PATH" ];then
 else
     export PKG_CONFIG_PATH="@QT_LIBRARIES_PATH@/pkgconfig"
 fi
+
+export Katie_DIR="@CMAKE_INSTALL_PATH@"
