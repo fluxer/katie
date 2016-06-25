@@ -94,6 +94,5 @@ set(XMLPATTERNS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/schema/qxsdvalidatedxmlnodemodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/schema/qxsdvalidatinginstancereader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/schema/qxsdxpathexpression.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/schema/builtinschemas.qrc
 )
 
