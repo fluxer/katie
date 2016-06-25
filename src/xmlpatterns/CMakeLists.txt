@@ -77,6 +77,11 @@ katie_generate_public("${XMLPATTERNS_PUBLIC_HEADERS}" QtXmlPatterns)
 katie_resources(${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
 katie_setup_flags()
 
+# the component requires exceptions
+if(NOT KATIE_PLATFORM STREQUAL "win32")
+    set_source_files_properties(${XMLPATTERNS_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
+endif()
+
 add_library(KtXmlPatterns ${KATIE_TYPE} ${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
 target_link_libraries(KtXmlPatterns ${EXTRA_XMLPATTERNS_LIBS})
 set_target_properties(KtXmlPatterns PROPERTIES
