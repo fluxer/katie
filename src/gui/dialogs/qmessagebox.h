@@ -198,8 +198,6 @@ public:
     static void about(QWidget *parent, const QString &title, const QString &text);
     static void aboutQt(QWidget *parent, const QString &title = QString());
 
-    QSize sizeHint() const;
-
     QString informativeText() const;
     void setInformativeText(const QString &text);
 

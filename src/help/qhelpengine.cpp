@@ -52,7 +52,6 @@
 #include <QtCore/QLibrary>
 #include <QtCore/QPluginLoader>
 #include <QtGui/QApplication>
-#include <QtSql/QSqlQuery>
 
 QT_BEGIN_NAMESPACE
 

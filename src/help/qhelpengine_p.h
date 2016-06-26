@@ -60,8 +60,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QSqlQuery;
-
 class QHelpEngineCore;
 class QHelpDBReader;
 class QHelpContentModel;

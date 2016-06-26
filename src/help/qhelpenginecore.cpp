@@ -51,7 +51,6 @@
 #include <QtCore/QFileInfo>
 #include <QtCore/QThread>
 #include <QtGui/QApplication>
-#include <QtSql/QSqlQuery>
 
 QT_BEGIN_NAMESPACE
 

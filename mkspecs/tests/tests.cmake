@@ -78,5 +78,4 @@ endmacro()
 
 katie_misc_test(stl STL)
 
-include(CheckTypeSize)
-check_type_size(size_t QT_POINTER_SIZE)
+# TODO: check if data relocations should be disabled before any target additions and define Q_NO_DATA_RELOCATION

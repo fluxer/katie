@@ -20,6 +20,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/staticlib")
 
 include(CheckIncludeFile)
+include(CheckTypeSize)
 include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
@@ -209,6 +210,9 @@ if(HAVE_SYS_TIME_H)
 else()
     add_definitions(-DTIME_WITH_SYS_TIME=0)
 endif()
+
+# used in qconfig.h
+check_type_size(size_t QT_POINTER_SIZE)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
