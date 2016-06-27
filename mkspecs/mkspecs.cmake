@@ -119,7 +119,7 @@ set(MAN_INSTALL_PATH "${QT_DATA_PATH}/man" CACHE PATH "Manual pages path (UNIX)"
 set(APPLICATIONS_INSTALL_PATH "${QT_DATA_PATH}/applications" CACHE PATH "Desktop applications register path (UNIX)")
 set(PIXMAPS_INSTALL_PATH "${QT_DATA_PATH}/pixmaps" CACHE PATH "Desktop applications icon path (UNIX)")
 
-# for distributions to override build specifications, do note that paths specifiec on the command
+# for distributions to override build specifications, do note that paths specified on the command
 # line during configuration override even that file
 if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/vendor.cmake)
     include(${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/vendor.cmake)

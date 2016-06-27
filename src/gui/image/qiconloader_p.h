@@ -126,7 +126,6 @@ private:
     QString key() const;
     bool hasIcon() const;
     void ensureLoaded();
-    void virtual_hook(int id, void *data);
     QIconLoaderEngineEntry *entryForSize(const QSize &size);
     QIconLoaderEngine(const QIconLoaderEngine &other);
     QThemeIconEntries m_entries;

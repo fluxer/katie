@@ -113,7 +113,6 @@ public:
     QIconEngine *clone() const;
     bool read(QDataStream &in);
     bool write(QDataStream &out) const;
-    void virtual_hook(int id, void *data);
 
 private:
     QPixmapIconEngineEntry *tryMatch(const QSize &size, QIcon::Mode mode, QIcon::State state);
