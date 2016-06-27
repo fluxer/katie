@@ -149,7 +149,7 @@ class Q_GUI_EXPORT QGraphicsEffectPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsEffect)
 public:
-    QGraphicsEffectPrivate() : source(0), isEnabled(1) {}
+    QGraphicsEffectPrivate() : source(0), isEnabled(true) {}
 
     inline void setGraphicsEffectSource(QGraphicsEffectSource *newSource)
     {
@@ -168,8 +168,7 @@ public:
 
     QGraphicsEffectSource *source;
     QRectF boundingRect;
-    quint32 isEnabled : 1;
-    quint32 padding : 31; // feel free to use
+    bool isEnabled : 1;
 };
 
 
@@ -185,8 +184,7 @@ public:
     ~QGraphicsColorizeEffectPrivate() { delete filter; }
 
     QPixmapColorizeFilter *filter;
-    quint32 opaque : 1;
-    quint32 padding : 31;
+    bool opaque : 1;
 };
 
 class QGraphicsBlurEffectPrivate : public QGraphicsEffectPrivate

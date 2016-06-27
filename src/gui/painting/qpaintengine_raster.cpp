@@ -376,7 +376,7 @@ QRasterPaintEngine::~QRasterPaintEngine()
 {
     Q_D(QRasterPaintEngine);
 
-    qt_ft_grays_raster.raster_done(*d->grayRaster.data());
+    free(*d->grayRaster.data());
 }
 
 /*!
@@ -3630,7 +3630,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
 
             rasterPoolBase = alignAddress(rasterPoolOnHeap, 0xf);
 
-            qt_ft_grays_raster.raster_done(*grayRaster.data());
+            free(*grayRaster.data());
             qt_ft_grays_raster.raster_new(grayRaster.data());
             qt_ft_grays_raster.raster_reset(*grayRaster.data(), rasterPoolBase, rasterPoolSize);
         } else {

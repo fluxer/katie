@@ -740,7 +740,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QUndoView", "QtGui/qundoview.h"},
     { "QCompleter", "QtGui/qcompleter.h"},
     { "QSystemTrayIcon", "QtGui/qsystemtrayicon.h"},
-    { "QFlickGesture", "QtGui/qflickgesture_p.h"},
     { "QUndoCommand", "QtGui/qundostack.h"},
     { "QUndoStack", "QtGui/qundostack.h"},
     { "QDesktopServices", "QtGui/qdesktopservices.h"},
@@ -1065,6 +1064,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 1059;
+static const int qclass_lib_count = 1058;
 
 #endif

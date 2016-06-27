@@ -1125,22 +1125,6 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Raster_DoneFunc                                                 */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    A function used to destroy a given raster object.                  */
-  /*                                                                       */
-  /* <Input>                                                               */
-  /*    raster :: A handle to the raster object.                           */
-  /*                                                                       */
-  typedef void
-  (*QT_FT_Raster_DoneFunc)( QT_FT_Raster  raster );
-
-#define  QT_FT_Raster_Done_Func   QT_FT_Raster_DoneFunc
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* <FuncType>                                                            */
   /*    QT_FT_Raster_ResetFunc                                                */
   /*                                                                       */
   /* <Description>                                                         */
@@ -1263,7 +1247,6 @@ QT_FT_BEGIN_HEADER
     QT_FT_Raster_ResetFunc     raster_reset;
     QT_FT_Raster_SetModeFunc   raster_set_mode;
     QT_FT_Raster_RenderFunc    raster_render;
-    QT_FT_Raster_DoneFunc      raster_done;
 
   } QT_FT_Raster_Funcs;
 

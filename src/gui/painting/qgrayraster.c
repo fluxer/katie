@@ -167,12 +167,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-  /* This macro is used to indicate that a function parameter is unused. */
-  /* Its purpose is simply to reduce compiler warnings.  Note also that  */
-  /* simply defining it as `(void)x' doesn't avoid warnings with certain */
-  /* ANSI compilers (e.g. LCC).                                          */
-#define QT_FT_UNUSED( x )  (x) = (x)
-
   /* Disable the tracing mechanism for simplicity -- developers can      */
   /* activate it easily by redefining these two macros.                  */
 #ifndef QT_FT_ERROR
@@ -338,27 +332,6 @@
       return raster->worker->skip_spans > 0 ? 0 : -raster->worker->skip_spans;
     return 0;
   }
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* Initialize the cells table.                                           */
-  /*                                                                       */
-  static void
-  gray_init_cells( RAS_ARG_ void*  buffer,
-                   long            byte_size )
-  {
-    ras.buffer      = buffer;
-    ras.buffer_size = byte_size;
-
-    ras.ycells      = (PCell*) buffer;
-    ras.cells       = NULL;
-    ras.max_cells   = 0;
-    ras.num_cells   = 0;
-    ras.area        = 0;
-    ras.cover       = 0;
-    ras.invalid     = 1;
-  }
-
 
   /*************************************************************************/
   /*                                                                       */
@@ -1301,11 +1274,9 @@
 
 
   static void
-  gray_sweep( RAS_ARG_ const QT_FT_Bitmap*  target )
+  gray_sweep( RAS_ARG )
   {
     int  yindex;
-
-    QT_FT_UNUSED( target );
 
 
     if ( ras.num_cells == 0 )
@@ -1716,7 +1687,7 @@
 
         if ( !error )
         {
-          gray_sweep( RAS_VAR_ &ras.target );
+          gray_sweep( RAS_VAR );
           band--;
           continue;
         }
@@ -1840,11 +1811,19 @@
       ras.clip_box.yMax =  32767L;
     }
 
-    gray_init_cells( worker, raster->buffer, raster->buffer_size );
+    /* initialize the cells table */
+    ras.buffer      = raster->buffer;
+    ras.buffer_size = raster->buffer_size;
+
+    ras.ycells      = (PCell*) raster->buffer;
+    ras.cells       = NULL;
+    ras.max_cells   = 0;
+    ras.num_cells   = 0;
+    ras.area        = 0;
+    ras.cover       = 0;
+    ras.invalid     = 1;
 
     ras.outline   = *outline;
-    ras.num_cells = 0;
-    ras.invalid   = 1;
     ras.band_size = raster->band_size;
 
     if ( target_map )
@@ -1936,7 +1915,6 @@
     (QT_FT_Raster_Reset_Func)   gray_raster_reset,
     (QT_FT_Raster_Set_Mode_Func)0,
     (QT_FT_Raster_Render_Func)  gray_raster_render,
-    (QT_FT_Raster_Done_Func)    gray_raster_done
   };
 
 /* END */
