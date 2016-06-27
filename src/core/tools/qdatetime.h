@@ -170,7 +170,6 @@ public:
 #endif
     static bool isValid(int h, int m, int s, int ms = 0);
 
-
     void start();
     int restart();
     int elapsed() const;

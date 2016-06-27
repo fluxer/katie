@@ -32,7 +32,7 @@ def exportscan(sdir, keyword, component):
     global classcount
     for sroot, sdir, lfiles in os.walk(sdir):
         for sfile in lfiles:
-            if not sfile.endswith('.h'):
+            if not sfile.endswith('.h') or sfile.endswith('_p.h'):
                 continue
             sfull = '%s/%s' % (sroot, sfile)
             with open(sfull, 'rb') as f:
