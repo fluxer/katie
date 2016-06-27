@@ -66,7 +66,7 @@ add_feature_info(nas WITH_NAS "an open source something")
 option(WITH_ICONV "Build iconv support" ON)
 add_feature_info(iconv WITH_ICONV "an open source something")
 
-option(WITH_GLIB2 "Build glib2 support" ON)
+option(WITH_GLIB2 "Build glib2 support" OFF)
 add_feature_info(glib2 WITH_GLIB2 "an open source something")
 
 option(WITH_DBUS "Build dbus support" ON)
