@@ -86,7 +86,7 @@ elseif(${KATIE_PLATFORM} STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_mac.mm
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qcolordialog_mac.mm
     )
-elseif(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd|qpa)")
+elseif(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h

@@ -43,9 +43,4 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_mac.mm
     )
-elseif(KATIE_PLATFORM MATCHES "(qpa|qws)")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_qws.cpp
-    )
 endif()

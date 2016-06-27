@@ -105,12 +105,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(${KATIE_PLATFORM} STREQUAL "qws")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -fno-rtti
-    )
-elseif(${KATIE_PLATFORM} STREQUAL "wince")
+if(${KATIE_PLATFORM} STREQUAL "wince")
     set(EXTRA_TEST_LIBS
         ${EXTRA_TEST_LIBS}
         libcmt.lib
@@ -122,7 +117,7 @@ elseif(${KATIE_PLATFORM} STREQUAL "wince")
         coredll.lib
         winsock.lib
     )
-elseif(${KATIE_PLATFORM} STREQUAL "qws")
+elseif(${KATIE_PLATFORM} STREQUAL "mac")
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
         -framework IOKit

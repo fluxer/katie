@@ -35,15 +35,6 @@ elseif(KATIE_PLATFORM STREQUAL "win32")
         ${EXTRA_GUI_LIBS}
         imm32
     )
-elseif(KATIE_PLATFORM STREQUAL "qws")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qwsinputcontext_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qwsinputcontext_qws.cpp
-    )
 elseif(KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS
         ${GUI_HEADERS}
