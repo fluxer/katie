@@ -3,23 +3,23 @@
 import sys, os, re
 
 components = {
-    'core': 'Q_CORE_EXPORT',
-    'gui': 'Q_GUI_EXPORT',
-    'dbus': 'Q_DBUS_EXPORT',
-    'declarative': 'Q_DECLARATIVE_EXPORT',
-    'designer': 'QDESIGNER_COMPONENTS_EXPORT|QDESIGNER_EXTENSION_EXPORT|QT_FORMEDITOR_EXPORT|QT_PROPERTYEDITOR_EXPORT|QT_SIGNALSLOTEDITOR_EXPORT|QT_OBJECTINSPECTOR_EXPORT|QT_WIDGETBOX_EXPORT|QT_BUDDYEDITOR_EXPORT|QT_TABORDEREDITOR_EXPORT|QT_TASKMENU_EXPORT',
-    'help': 'QHELP_EXPORT',
-    'multimedia': 'Q_MULTIMEDIA_EXPORT',
-    'network': 'Q_NETWORK_EXPORT',
-    'sql': 'Q_SQL_EXPORT',
-    'svg': 'Q_SVG_EXPORT',
-    'xml': 'Q_XML_EXPORT',
-    'xmlpatterns': 'Q_XMLPATTERNS_EXPORT',
-    'script': 'Q_SCRIPT_EXPORT',
-    'scripttools': 'Q_SCRIPTTOOLS_EXPORT',
-    'test': 'Q_TESTLIB_EXPORT',
-    'uitools': 'QDESIGNER_UILIB_EXPORT',
-    'opengl': 'Q_OPENGL_EXPORT',
+    'Core': 'Q_CORE_EXPORT',
+    'Gui': 'Q_GUI_EXPORT',
+    'DBus': 'Q_DBUS_EXPORT',
+    'Declarative': 'Q_DECLARATIVE_EXPORT',
+    'Designer': 'QDESIGNER_COMPONENTS_EXPORT|QDESIGNER_EXTENSION_EXPORT|QT_FORMEDITOR_EXPORT|QT_PROPERTYEDITOR_EXPORT|QT_SIGNALSLOTEDITOR_EXPORT|QT_OBJECTINSPECTOR_EXPORT|QT_WIDGETBOX_EXPORT|QT_BUDDYEDITOR_EXPORT|QT_TABORDEREDITOR_EXPORT|QT_TASKMENU_EXPORT',
+    'Help': 'QHELP_EXPORT',
+    'Multimedia': 'Q_MULTIMEDIA_EXPORT',
+    'Network': 'Q_NETWORK_EXPORT',
+    'Sql': 'Q_SQL_EXPORT',
+    'Svg': 'Q_SVG_EXPORT',
+    'Xml': 'Q_XML_EXPORT',
+    'XmlPatterns': 'Q_XMLPATTERNS_EXPORT',
+    'Script': 'Q_SCRIPT_EXPORT',
+    'ScriptTools': 'Q_SCRIPTTOOLS_EXPORT',
+    'Test': 'Q_TESTLIB_EXPORT',
+    'UiTools': 'QDESIGNER_UILIB_EXPORT',
+    'OpenGL': 'Q_OPENGL_EXPORT',
 }
 mapoutput = 'src/shared/qclass_lib_map.h'
 classcount = -1
@@ -45,7 +45,7 @@ def exportscan(sdir, keyword, component):
 
 for component in components:
     keyword = components[component]
-    mapdata += exportscan('src/%s' % component, keyword, 'Qt%s' % component.capitalize())
+    mapdata += exportscan('src/%s' % component.lower(), keyword, 'Qt%s' % component)
 
 mapdata += '};\n'
 mapdata += 'static const int qclass_lib_count = %d;\n\n' % classcount
