@@ -166,28 +166,12 @@ static int countBits(int hint)
 const int MinNumBits = 4;
 
 QHashData QHashData::shared_null = {
-    0, 0, Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, MinNumBits, 0, 0, true, false
+    0, 0, Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, MinNumBits, 0, 0, true
 };
-
-void *QHashData::allocateNode(int nodeAlign)
-{
-    void *ptr = strictAlignment ? qMallocAligned(nodeSize, nodeAlign) : malloc(nodeSize);
-    Q_CHECK_PTR(ptr);
-    return ptr;
-}
-
-void QHashData::freeNode(void *node)
-{
-    if (strictAlignment)
-        qFreeAligned(node);
-    else
-        free(node);
-}
 
 QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
                                      void (*node_delete)(Node *),
-                                     int nodeSize,
-                                     int nodeAlign)
+                                     int nodeSize)
 {
     union {
         QHashData *d;
@@ -203,7 +187,6 @@ QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
     d->numBits = numBits;
     d->numBuckets = numBuckets;
     d->sharable = true;
-    d->strictAlignment = nodeAlign > 8;
 
     if (numBuckets) {
         QT_TRY {
@@ -222,12 +205,14 @@ QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
             Node *oldNode = buckets[i];
             while (oldNode != this_e) {
                 QT_TRY {
-                    Node *dup = static_cast<Node *>(allocateNode(nodeAlign));
+                    void *dupptr = malloc(nodeSize);
+                    Q_CHECK_PTR(dupptr);
+                    Node *dup = static_cast<Node *>(dupptr);
 
                     QT_TRY {
                         node_duplicate(oldNode, dup);
                     } QT_CATCH(...) {
-                        freeNode( dup );
+                        ::free( dup );
                         QT_RETHROW;
                     }
 
@@ -262,7 +247,7 @@ void QHashData::free_helper(void (*node_delete)(Node *))
             while (cur != this_e) {
                 Node *next = cur->next;
                 node_delete(cur);
-                freeNode(cur);
+                ::free(cur);
                 cur = next;
             }
         }

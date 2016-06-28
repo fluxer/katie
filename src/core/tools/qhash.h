@@ -121,12 +121,9 @@ struct Q_CORE_EXPORT QHashData
     short numBits;
     int numBuckets;
     uint sharable : 1;
-    uint strictAlignment : 1;
 
-    void *allocateNode(int nodeAlign = 0);
-    void freeNode(void *node);
     QHashData *detach_helper(void (*node_duplicate)(Node *, void *), void (*node_delete)(Node *),
-                              int nodeSize, int nodeAlign);
+                              int nodeSize);
     bool willGrow();
     void hasShrunk();
     void rehash(int hint);
@@ -252,14 +249,6 @@ class QHash
     static inline Node *concrete(QHashData::Node *node) {
         return reinterpret_cast<Node *>(node);
     }
-
-#ifdef Q_ALIGNOF
-    static inline int alignOfNode() { return qMax<int>(sizeof(void*), Q_ALIGNOF(Node)); }
-    static inline int alignOfDummyNode() { return qMax<int>(sizeof(void*), Q_ALIGNOF(DummyNode)); }
-#else
-    static inline int alignOfNode() { return 0; }
-    static inline int alignOfDummyNode() { return 0; }
-#endif
 
 public:
     inline QHash() : d(&QHashData::shared_null) { d->ref.ref(); }
@@ -482,7 +471,7 @@ template <class Key, class T>
 Q_INLINE_TEMPLATE void QHash<Key, T>::deleteNode(Node *node)
 {
     deleteNode2(reinterpret_cast<QHashData::Node*>(node));
-    d->freeNode(node);
+    ::free(node);
 }
 
 template <class Key, class T>
@@ -512,10 +501,12 @@ QHash<Key, T>::createNode(uint ah, const Key &akey, const T &avalue, Node **anex
 {
     Node *node;
 
+    void *nodeptr = malloc(d->nodeSize);
+    Q_CHECK_PTR(nodeptr);
     if (QTypeInfo<T>::isDummy) {
-        node = reinterpret_cast<Node *>(new (d->allocateNode(alignOfDummyNode())) DummyNode(akey));
+        node = reinterpret_cast<Node *>(new (nodeptr) DummyNode(akey));
     } else {
-        node = new (d->allocateNode(alignOfNode())) Node(akey, avalue);
+        node = new (nodeptr) Node(akey, avalue);
     }
 
     node->h = ah;
@@ -553,8 +544,7 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE void QHash<Key, T>::detach_helper()
 {
     QHashData *x = d->detach_helper(duplicateNode, deleteNode2,
-        QTypeInfo<T>::isDummy ? sizeof(DummyNode) : sizeof(Node),
-        QTypeInfo<T>::isDummy ? alignOfDummyNode() : alignOfNode());
+        QTypeInfo<T>::isDummy ? sizeof(DummyNode) : sizeof(Node));
     if (!d->ref.deref())
         freeData(d);
     d = x;

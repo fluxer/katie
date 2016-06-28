@@ -53,10 +53,10 @@ QT_BEGIN_NAMESPACE
 QMapData QMapData::shared_null = {
     &shared_null,
     { &shared_null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, 0, false, true, false
+    Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, 0, false, true
 };
 
-QMapData *QMapData::createData(int alignment)
+QMapData *QMapData::createData()
 {
     QMapData *d = new QMapData;
     Q_CHECK_PTR(d);
@@ -69,7 +69,6 @@ QMapData *QMapData::createData(int alignment)
     d->randomBits = 0;
     d->insertInOrder = false;
     d->sharable = true;
-    d->strictAlignment = alignment > 8;
     return d;
 }
 
@@ -81,10 +80,7 @@ void QMapData::continueFreeData(int offset)
     while (cur != e) {
         prev = cur;
         cur = cur->forward[0];
-        if (strictAlignment)
-            qFreeAligned(reinterpret_cast<char *>(prev) - offset);
-        else
-            free(reinterpret_cast<char *>(prev) - offset);
+        ::free(reinterpret_cast<char *>(prev) - offset);
     }
     delete this;
 }
@@ -98,12 +94,10 @@ void QMapData::continueFreeData(int offset)
     \a offset is an amount of bytes that needs to reserved just before the
     QMapData::Node structure.
 
-    \a alignment dictates the alignment for the data.
-
     \internal
     \since 4.6
 */
-QMapData::Node *QMapData::node_create(Node *update[], int offset, int alignment)
+QMapData::Node *QMapData::node_create(Node *update[], int offset)
 {
     int level = 0;
     uint mask = (1 << Sparseness) - 1;
@@ -124,9 +118,7 @@ QMapData::Node *QMapData::node_create(Node *update[], int offset, int alignment)
     if (level == 3 && !insertInOrder)
         randomBits = qrand();
 
-    void *concreteNode = strictAlignment ?
-                         qMallocAligned(offset + sizeof(Node) + level * sizeof(Node *), alignment) :
-                         malloc(offset + sizeof(Node) + level * sizeof(Node *));
+    void *concreteNode = ::malloc(offset + sizeof(Node) + level * sizeof(Node *));
     Q_CHECK_PTR(concreteNode);
 
     Node *abstractNode = reinterpret_cast<Node *>(reinterpret_cast<char *>(concreteNode) + offset);
@@ -153,10 +145,7 @@ void QMapData::node_delete(Node *update[], int offset, Node *node)
         update[i]->forward[i] = node->forward[i];
     }
     --size;
-    if (strictAlignment)
-        qFreeAligned(reinterpret_cast<char *>(node) - offset);
-    else
-        free(reinterpret_cast<char *>(node) - offset);
+    ::free(reinterpret_cast<char *>(node) - offset);
 }
 
 #ifdef QT_QMAP_DEBUG

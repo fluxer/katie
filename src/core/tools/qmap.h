@@ -73,11 +73,10 @@ struct Q_CORE_EXPORT QMapData
     uint randomBits;
     uint insertInOrder : 1;
     uint sharable : 1;
-    uint strictAlignment : 1;
 
-    static QMapData *createData(int alignment = 0);
+    static QMapData *createData();
     void continueFreeData(int offset);
-    Node *node_create(Node *update[], int offset, int alignment = 0);
+    Node *node_create(Node *update[], int offset);
     void node_delete(Node *update[], int offset, Node *node);
 #ifdef QT_QMAP_DEBUG
     uint adjust_ptr(Node *node);
@@ -163,13 +162,6 @@ class QMap
     };
 
     static inline int payload() { return sizeof(PayloadNode) - sizeof(QMapData::Node *); }
-    static inline int alignment() {
-#ifdef Q_ALIGNOF
-        return int(qMax(sizeof(void*), Q_ALIGNOF(Node)));
-#else
-        return 0;
-#endif
-    }
     static inline Node *concrete(QMapData::Node *node) {
         return reinterpret_cast<Node *>(reinterpret_cast<char *>(node) - payload());
     }
@@ -425,7 +417,7 @@ template <class Key, class T>
 Q_INLINE_TEMPLATE typename QMapData::Node *
 QMap<Key, T>::node_create(QMapData *adt, QMapData::Node *aupdate[], const Key &akey, const T &avalue)
 {
-    QMapData::Node *abstractNode = adt->node_create(aupdate, payload(), alignment());
+    QMapData::Node *abstractNode = adt->node_create(aupdate, payload());
     QT_TRY {
         Node *concreteNode = concrete(abstractNode);
         new (&concreteNode->key) Key(akey);
@@ -708,7 +700,7 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE void QMap<Key, T>::detach_helper()
 {
     union { QMapData *d; QMapData::Node *e; } x;
-    x.d = QMapData::createData(alignment());
+    x.d = QMapData::createData();
     if (d->size) {
         x.d->insertInOrder = true;
         QMapData::Node *update[QMapData::LastLevel + 1];
@@ -901,7 +893,7 @@ Q_OUTOFLINE_TEMPLATE bool QMap<Key, T>::operator==(const QMap<Key, T> &other) co
 template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QMap<Key, T>::QMap(const std::map<Key, T> &other)
 {
-    d = QMapData::createData(alignment());
+    d = QMapData::createData();
     d->insertInOrder = true;
     typename std::map<Key,T>::const_iterator it = other.end();
     while (it != other.begin()) {
