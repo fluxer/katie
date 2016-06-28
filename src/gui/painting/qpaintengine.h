@@ -211,7 +211,6 @@ public:
         Pdf,
         OpenGL2,
         PaintBuffer,
-        Blitter,
 
         User = 50,    // first user type id
         MaxUser = 100 // last user type id

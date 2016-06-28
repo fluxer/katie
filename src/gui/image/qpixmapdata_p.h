@@ -70,7 +70,7 @@ public:
         PixmapType, BitmapType
     };
     enum ClassId { RasterClass, X11Class, MacClass, DirectFBClass,
-                   OpenGLClass, RuntimeClass, BlitterClass,
+                   OpenGLClass, RuntimeClass,
                    CustomClass = 1024 };
 
     QPixmapData(PixelType pixelType, int classId);

@@ -51,8 +51,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblendfunctions_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterdefs_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_blitter_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblittable_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmath_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdatabuffer_p.h
@@ -117,8 +115,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qimagescale.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_blitter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblittable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime.cpp

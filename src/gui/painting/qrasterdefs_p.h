@@ -215,68 +215,6 @@ QT_FT_BEGIN_HEADER
 
   /*************************************************************************/
   /*                                                                       */
-  /* <Enum>                                                                */
-  /*    qt_ft_pixel_mode_xxx                                                  */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    A list of deprecated constants.  Use the corresponding             */
-  /*    @QT_FT_Pixel_Mode values instead.                                     */
-  /*                                                                       */
-  /* <Values>                                                              */
-  /*    qt_ft_pixel_mode_none  :: see @QT_FT_PIXEL_MODE_NONE                     */
-  /*    qt_ft_pixel_mode_mono  :: see @QT_FT_PIXEL_MODE_MONO                     */
-  /*    qt_ft_pixel_mode_grays :: see @QT_FT_PIXEL_MODE_GRAY                     */
-  /*    qt_ft_pixel_mode_pal2  :: see @QT_FT_PIXEL_MODE_GRAY2                    */
-  /*    qt_ft_pixel_mode_pal4  :: see @QT_FT_PIXEL_MODE_GRAY4                    */
-  /*                                                                       */
-#define qt_ft_pixel_mode_none   QT_FT_PIXEL_MODE_NONE
-#define qt_ft_pixel_mode_mono   QT_FT_PIXEL_MODE_MONO
-#define qt_ft_pixel_mode_grays  QT_FT_PIXEL_MODE_GRAY
-#define qt_ft_pixel_mode_pal2   QT_FT_PIXEL_MODE_GRAY2
-#define qt_ft_pixel_mode_pal4   QT_FT_PIXEL_MODE_GRAY4
-
- /* */
-
-#if 0
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* <Enum>                                                                */
-  /*    QT_FT_Palette_Mode                                                    */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    THIS TYPE IS DEPRECATED.  DO NOT USE IT!                           */
-  /*                                                                       */
-  /*    An enumeration type used to describe the format of a bitmap        */
-  /*    palette, used with qt_ft_pixel_mode_pal4 and qt_ft_pixel_mode_pal8.      */
-  /*                                                                       */
-  /* <Fields>                                                              */
-  /*    qt_ft_palette_mode_rgb  :: The palette is an array of 3-bytes RGB     */
-  /*                            records.                                   */
-  /*                                                                       */
-  /*    qt_ft_palette_mode_rgba :: The palette is an array of 4-bytes RGBA    */
-  /*                            records.                                   */
-  /*                                                                       */
-  /* <Note>                                                                */
-  /*    As qt_ft_pixel_mode_pal2, pal4 and pal8 are currently unused by       */
-  /*    FreeType, these types are not handled by the library itself.       */
-  /*                                                                       */
-  typedef enum  QT_FT_Palette_Mode_
-  {
-    qt_ft_palette_mode_rgb = 0,
-    qt_ft_palette_mode_rgba,
-
-    qt_ft_palettte_mode_max   /* do not remove */
-
-  } QT_FT_Palette_Mode;
-
-  /* */
-
-#endif
-
-
-  /*************************************************************************/
-  /*                                                                       */
   /* <Struct>                                                              */
   /*    QT_FT_Bitmap                                                          */
   /*                                                                       */
@@ -402,16 +340,16 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Enum>                                                                */
-  /*   QT_FT_OUTLINE_FLAGS                                                    */
+  /*   QT_FT_OUTLINE_FLAGS                                                 */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A list of bit-field constants use for the flags in an outline's    */
   /*    `flags' field.                                                     */
   /*                                                                       */
   /* <Values>                                                              */
-  /*    QT_FT_OUTLINE_NONE           :: Value 0 is reserved.                  */
+  /*    QT_FT_OUTLINE_NONE           :: Value 0 is reserved.               */
   /*                                                                       */
-  /*    QT_FT_OUTLINE_OWNER          :: If set, this flag indicates that the  */
+  /*    QT_FT_OUTLINE_OWNER          :: If set, this flag indicates that the */
   /*                                 outline's field arrays (i.e.          */
   /*                                 `points', `flags' & `contours') are   */
   /*                                 `owned' by the outline object, and    */
@@ -424,7 +362,7 @@ QT_FT_BEGIN_HEADER
   /*                                 the even-odd fill rule (only works    */
   /*                                 with the smooth raster).              */
   /*                                                                       */
-  /*   QT_FT_OUTLINE_REVERSE_FILL    :: By default, outside contours of an    */
+  /*   QT_FT_OUTLINE_REVERSE_FILL    :: By default, outside contours of an */
   /*                                 outline are oriented in clock-wise    */
   /*                                 direction, as defined in the TrueType */
   /*                                 specification.  This flag is set if   */
@@ -434,14 +372,14 @@ QT_FT_BEGIN_HEADER
   /*                                 scan-converter.  However, it is very  */
   /*                                 important for the auto-hinter.        */
   /*                                                                       */
-  /*   QT_FT_OUTLINE_IGNORE_DROPOUTS :: By default, the scan converter will   */
+  /*   QT_FT_OUTLINE_IGNORE_DROPOUTS :: By default, the scan converter will */
   /*                                 try to detect drop-outs in an outline */
   /*                                 and correct the glyph bitmap to       */
   /*                                 ensure consistent shape continuity.   */
   /*                                 If set, this flag hints the scan-line */
   /*                                 converter to ignore such cases.       */
   /*                                                                       */
-  /*   QT_FT_OUTLINE_HIGH_PRECISION  :: This flag indicates that the          */
+  /*   QT_FT_OUTLINE_HIGH_PRECISION  :: This flag indicates that the       */
   /*                                 scan-line converter should try to     */
   /*                                 convert this outline to bitmaps with  */
   /*                                 the highest possible quality.  It is  */
@@ -450,7 +388,7 @@ QT_FT_BEGIN_HEADER
   /*                                 hint, that might be completely        */
   /*                                 ignored by a given scan-converter.    */
   /*                                                                       */
-  /*   QT_FT_OUTLINE_SINGLE_PASS     :: This flag is set to force a given     */
+  /*   QT_FT_OUTLINE_SINGLE_PASS     :: This flag is set to force a given  */
   /*                                 scan-converter to only use a single   */
   /*                                 pass over the outline to render a     */
   /*                                 bitmap glyph image.  Normally, it is  */
@@ -467,33 +405,6 @@ QT_FT_BEGIN_HEADER
 
 #define QT_FT_OUTLINE_HIGH_PRECISION   0x100
 #define QT_FT_OUTLINE_SINGLE_PASS      0x200
-
-
- /*************************************************************************
-  *
-  * @enum:
-  *   qt_ft_outline_flags
-  *
-  * @description:
-  *   These constants are deprecated.  Please use the corresponding
-  *   @QT_FT_OUTLINE_FLAGS values.
-  *
-  * @values:
-  *   qt_ft_outline_none            :: See @QT_FT_OUTLINE_NONE.
-  *   qt_ft_outline_owner           :: See @QT_FT_OUTLINE_OWNER.
-  *   qt_ft_outline_even_odd_fill   :: See @QT_FT_OUTLINE_EVEN_ODD_FILL.
-  *   qt_ft_outline_reverse_fill    :: See @QT_FT_OUTLINE_REVERSE_FILL.
-  *   qt_ft_outline_ignore_dropouts :: See @QT_FT_OUTLINE_IGNORE_DROPOUTS.
-  *   qt_ft_outline_high_precision  :: See @QT_FT_OUTLINE_HIGH_PRECISION.
-  *   qt_ft_outline_single_pass     :: See @QT_FT_OUTLINE_SINGLE_PASS.
-  */
-#define qt_ft_outline_none             QT_FT_OUTLINE_NONE
-#define qt_ft_outline_owner            QT_FT_OUTLINE_OWNER
-#define qt_ft_outline_even_odd_fill    QT_FT_OUTLINE_EVEN_ODD_FILL
-#define qt_ft_outline_reverse_fill     QT_FT_OUTLINE_REVERSE_FILL
-#define qt_ft_outline_ignore_dropouts  QT_FT_OUTLINE_IGNORE_DROPOUTS
-#define qt_ft_outline_high_precision   QT_FT_OUTLINE_HIGH_PRECISION
-#define qt_ft_outline_single_pass      QT_FT_OUTLINE_SINGLE_PASS
 
   /* */
 
@@ -518,7 +429,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Outline_MoveToFunc                                              */
+  /*    QT_FT_Outline_MoveToFunc                                           */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function pointer type used to describe the signature of a `move  */
@@ -544,7 +455,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Outline_LineToFunc                                              */
+  /*    QT_FT_Outline_LineToFunc                                           */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function pointer type used to describe the signature of a `line  */
@@ -570,7 +481,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Outline_ConicToFunc                                             */
+  /*    QT_FT_Outline_ConicToFunc                                          */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function pointer type use to describe the signature of a `conic  */
@@ -601,7 +512,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Outline_CubicToFunc                                             */
+  /*    QT_FT_Outline_CubicToFunc                                          */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function pointer type used to describe the signature of a `cubic */
@@ -634,7 +545,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Struct>                                                              */
-  /*    QT_FT_Outline_Funcs                                                   */
+  /*    QT_FT_Outline_Funcs                                                */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A structure to hold various function pointers used during outline  */
@@ -691,7 +602,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Macro>                                                               */
-  /*    QT_FT_IMAGE_TAG                                                       */
+  /*    QT_FT_IMAGE_TAG                                                    */
   /*                                                                       */
   /* <Description>                                                         */
   /*    This macro converts four letter tags into an unsigned long.        */
@@ -701,7 +612,7 @@ QT_FT_BEGIN_HEADER
   /*    should redefine this macro in case of problems to something like   */
   /*    this:                                                              */
   /*                                                                       */
-  /*      #define QT_FT_IMAGE_TAG( value, _x1, _x2, _x3, _x4 )  value         */
+  /*      #define QT_FT_IMAGE_TAG( value, _x1, _x2, _x3, _x4 )  value      */
   /*                                                                       */
   /*    to get a simple enumeration without assigning special numbers.     */
   /*                                                                       */
@@ -767,18 +678,18 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Enum>                                                                */
-  /*    qt_ft_glyph_format_xxx                                                */
+  /*    qt_ft_glyph_format_xxx                                             */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A list of decprecated constants.  Use the corresponding            */
-  /*    @QT_FT_Glyph_Format values instead.                                   */
+  /*    @QT_FT_Glyph_Format values instead.                                */
   /*                                                                       */
   /* <Values>                                                              */
-  /*    qt_ft_glyph_format_none      :: see @QT_FT_GLYPH_FORMAT_NONE             */
-  /*    qt_ft_glyph_format_composite :: see @QT_FT_GLYPH_FORMAT_COMPOSITE        */
-  /*    qt_ft_glyph_format_bitmap    :: see @QT_FT_GLYPH_FORMAT_BITMAP           */
-  /*    qt_ft_glyph_format_outline   :: see @QT_FT_GLYPH_FORMAT_OUTLINE          */
-  /*    qt_ft_glyph_format_plotter   :: see @QT_FT_GLYPH_FORMAT_PLOTTER          */
+  /*    qt_ft_glyph_format_none      :: see @QT_FT_GLYPH_FORMAT_NONE       */
+  /*    qt_ft_glyph_format_composite :: see @QT_FT_GLYPH_FORMAT_COMPOSITE  */
+  /*    qt_ft_glyph_format_bitmap    :: see @QT_FT_GLYPH_FORMAT_BITMAP     */
+  /*    qt_ft_glyph_format_outline   :: see @QT_FT_GLYPH_FORMAT_OUTLINE    */
+  /*    qt_ft_glyph_format_plotter   :: see @QT_FT_GLYPH_FORMAT_PLOTTER    */
   /*                                                                       */
 #define qt_ft_glyph_format_none       QT_FT_GLYPH_FORMAT_NONE
 #define qt_ft_glyph_format_composite  QT_FT_GLYPH_FORMAT_COMPOSITE
@@ -830,7 +741,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Type>                                                                */
-  /*    QT_FT_Raster                                                          */
+  /*    QT_FT_Raster                                                       */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A handle (pointer) to a raster object.  Each object can be used    */
@@ -842,7 +753,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Struct>                                                              */
-  /*    QT_FT_Span                                                            */
+  /*    QT_FT_Span                                                         */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A structure used to model a single span of gray (or black) pixels  */
@@ -859,11 +770,11 @@ QT_FT_BEGIN_HEADER
   /*                                                                       */
   /* <Note>                                                                */
   /*    This structure is used by the span drawing callback type named     */
-  /*    QT_FT_SpanFunc which takes the y-coordinate of the span as a          */
+  /*    QT_FT_SpanFunc which takes the y-coordinate of the span as a       */
   /*    a parameter.                                                       */
   /*                                                                       */
   /*    The coverage value is always between 0 and 255, even if the number */
-  /*    of gray levels have been set through QT_FT_Set_Gray_Levels().         */
+  /*    of gray levels have been set through QT_FT_Set_Gray_Levels().      */
   /*                                                                       */
   typedef struct  QT_FT_Span_
   {
@@ -877,7 +788,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_SpanFunc                                                        */
+  /*    QT_FT_SpanFunc                                                     */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function used as a call-back by the anti-aliased renderer in     */
@@ -901,7 +812,7 @@ QT_FT_BEGIN_HEADER
   /*    given background bitmap, and even perform translucency.            */
   /*                                                                       */
   /*    Note that the `count' field cannot be greater than a fixed value   */
-  /*    defined by the QT_FT_MAX_GRAY_SPANS configuration macro in            */
+  /*    defined by the QT_FT_MAX_GRAY_SPANS configuration macro in         */
   /*    ftoption.h.  By default, this value is set to 32, which means that */
   /*    if there are more than 32 spans on a given scanline, the callback  */
   /*    will be called several times with the same `y' parameter in order  */
@@ -917,82 +828,24 @@ QT_FT_BEGIN_HEADER
 
 #define QT_FT_Raster_Span_Func   QT_FT_SpanFunc
 
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* <FuncType>                                                            */
-  /*    QT_FT_Raster_BitTest_Func                                             */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    THIS TYPE IS DEPRECATED.  DO NOT USE IT.                           */
-  /*                                                                       */
-  /*    A function used as a call-back by the monochrome scan-converter    */
-  /*    to test whether a given target pixel is already set to the drawing */
-  /*    `color'.  These tests are crucial to implement drop-out control    */
-  /*    per-se the TrueType spec.                                          */
-  /*                                                                       */
-  /* <Input>                                                               */
-  /*    y     :: The pixel's y-coordinate.                                 */
-  /*                                                                       */
-  /*    x     :: The pixel's x-coordinate.                                 */
-  /*                                                                       */
-  /*    user  :: User-supplied data that is passed to the callback.        */
-  /*                                                                       */
-  /* <Return>                                                              */
-  /*   1 if the pixel is `set', 0 otherwise.                               */
-  /*                                                                       */
-  typedef int
-  (*QT_FT_Raster_BitTest_Func)( int    y,
-                             int    x,
-                             void*  user );
-
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* <FuncType>                                                            */
-  /*    QT_FT_Raster_BitSet_Func                                              */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    THIS TYPE IS DEPRECATED.  DO NOT USE IT.                           */
-  /*                                                                       */
-  /*    A function used as a call-back by the monochrome scan-converter    */
-  /*    to set an individual target pixel.  This is crucial to implement   */
-  /*    drop-out control according to the TrueType specification.          */
-  /*                                                                       */
-  /* <Input>                                                               */
-  /*    y     :: The pixel's y-coordinate.                                 */
-  /*                                                                       */
-  /*    x     :: The pixel's x-coordinate.                                 */
-  /*                                                                       */
-  /*    user  :: User-supplied data that is passed to the callback.        */
-  /*                                                                       */
-  /* <Return>                                                              */
-  /*    1 if the pixel is `set', 0 otherwise.                              */
-  /*                                                                       */
-  typedef void
-  (*QT_FT_Raster_BitSet_Func)( int    y,
-                            int    x,
-                            void*  user );
-
-
   /*************************************************************************/
   /*                                                                       */
   /* <Enum>                                                                */
-  /*    QT_FT_RASTER_FLAG_XXX                                                 */
+  /*    QT_FT_RASTER_FLAG_XXX                                              */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A list of bit flag constants as used in the `flags' field of a     */
-  /*    @QT_FT_Raster_Params structure.                                       */
+  /*    @QT_FT_Raster_Params structure.                                    */
   /*                                                                       */
   /* <Values>                                                              */
-  /*    QT_FT_RASTER_FLAG_DEFAULT :: This value is 0.                         */
+  /*    QT_FT_RASTER_FLAG_DEFAULT :: This value is 0.                      */
   /*                                                                       */
-  /*    QT_FT_RASTER_FLAG_AA      :: This flag is set to indicate that an     */
+  /*    QT_FT_RASTER_FLAG_AA      :: This flag is set to indicate that an  */
   /*                              anti-aliased glyph image should be       */
   /*                              generated.  Otherwise, it will be        */
   /*                              monochrome (1-bit).                      */
   /*                                                                       */
-  /*    QT_FT_RASTER_FLAG_DIRECT  :: This flag is set to indicate direct      */
+  /*    QT_FT_RASTER_FLAG_DIRECT  :: This flag is set to indicate direct   */
   /*                              rendering.  In this mode, client         */
   /*                              applications must provide their own span */
   /*                              callback.  This lets them directly       */
@@ -1004,7 +857,7 @@ QT_FT_BEGIN_HEADER
   /*                              Note that for now, direct rendering is   */
   /*                              only possible with anti-aliased glyphs.  */
   /*                                                                       */
-  /*    QT_FT_RASTER_FLAG_CLIP    :: This flag is only used in direct         */
+  /*    QT_FT_RASTER_FLAG_CLIP    :: This flag is only used in direct      */
   /*                              rendering mode.  If set, the output will */
   /*                              be clipped to a box specified in the     */
   /*                              "clip_box" field of the QT_FT_Raster_Params */
@@ -1020,17 +873,11 @@ QT_FT_BEGIN_HEADER
 #define QT_FT_RASTER_FLAG_DIRECT   0x2
 #define QT_FT_RASTER_FLAG_CLIP     0x4
 
-  /* deprecated */
-#define qt_ft_raster_flag_default  QT_FT_RASTER_FLAG_DEFAULT
-#define qt_ft_raster_flag_aa       QT_FT_RASTER_FLAG_AA
-#define qt_ft_raster_flag_direct   QT_FT_RASTER_FLAG_DIRECT
-#define qt_ft_raster_flag_clip     QT_FT_RASTER_FLAG_CLIP
-
 
   /*************************************************************************/
   /*                                                                       */
   /* <Struct>                                                              */
-  /*    QT_FT_Raster_Params                                                   */
+  /*    QT_FT_Raster_Params                                                */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A structure to hold the arguments used by a raster's render        */
@@ -1040,17 +887,13 @@ QT_FT_BEGIN_HEADER
   /*    target      :: The target bitmap.                                  */
   /*                                                                       */
   /*    source      :: A pointer to the source glyph image (e.g. an        */
-  /*                   QT_FT_Outline).                                        */
+  /*                   QT_FT_Outline).                                     */
   /*                                                                       */
   /*    flags       :: The rendering flags.                                */
   /*                                                                       */
   /*    gray_spans  :: The gray span drawing callback.                     */
   /*                                                                       */
   /*    black_spans :: The black span drawing callback.                    */
-  /*                                                                       */
-  /*    bit_test    :: The bit test callback.  UNIMPLEMENTED!              */
-  /*                                                                       */
-  /*    bit_set     :: The bit set callback.  UNIMPLEMENTED!               */
   /*                                                                       */
   /*    user        :: User-supplied data that is passed to each drawing   */
   /*                   callback.                                           */
@@ -1065,13 +908,12 @@ QT_FT_BEGIN_HEADER
   /*    flag is set in the `flags' field, otherwise a monochrome bitmap    */
   /*    will be generated.                                                 */
   /*                                                                       */
-  /*    If the QT_FT_RASTER_FLAG_DIRECT bit flag is set in `flags', the       */
+  /*    If the QT_FT_RASTER_FLAG_DIRECT bit flag is set in `flags', the    */
   /*    raster will call the `gray_spans' callback to draw gray pixel      */
   /*    spans, in the case of an aa glyph bitmap, it will call             */
-  /*    `black_spans', and `bit_test' and `bit_set' in the case of a       */
-  /*    monochrome bitmap.  This allows direct composition over a          */
-  /*    pre-existing bitmap through user-provided callbacks to perform the */
-  /*    span drawing/composition.                                          */
+  /*    `black_spans' in the case of a monochrome bitmap.  This allows     */
+  /*    direct composition over a pre-existing bitmap through              */
+  /*    user-provided callbacks to perform the span drawing/composition.   */
   /*                                                                       */
   /*    Note that the `bit_test' and `bit_set' callbacks are required when */
   /*    rendering a monochrome bitmap, as they are crucial to implement    */
@@ -1084,8 +926,6 @@ QT_FT_BEGIN_HEADER
     int                     flags;
     QT_FT_SpanFunc             gray_spans;
     QT_FT_SpanFunc             black_spans;
-    QT_FT_Raster_BitTest_Func  bit_test;     /* doesn't work! */
-    QT_FT_Raster_BitSet_Func   bit_set;      /* doesn't work! */
     void*                   user;
     QT_FT_BBox                 clip_box;
     int                     skip_spans;
@@ -1238,7 +1078,6 @@ QT_FT_BEGIN_HEADER
   /*                                                                       */
   /*    raster_render :: A function to render a glyph into a given bitmap. */
   /*                                                                       */
-  /*    raster_done   :: The raster destructor.                            */
   /*                                                                       */
   typedef struct  QT_FT_Raster_Funcs_
   {

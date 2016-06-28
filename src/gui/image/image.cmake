@@ -19,7 +19,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpictureformatplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_blitter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
@@ -57,7 +56,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_blitter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qnativeimage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagepixmapcleanuphooks.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qvolatileimage.cpp

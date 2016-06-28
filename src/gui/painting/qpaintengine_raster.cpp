@@ -389,7 +389,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     if (device->devType() == QInternal::Pixmap) {
         QPixmap *pixmap = static_cast<QPixmap *>(device);
         QPixmapData *pd = pixmap->pixmapData();
-        if (pd->classId() == QPixmapData::RasterClass || pd->classId() == QPixmapData::BlitterClass)
+        if (pd->classId() == QPixmapData::RasterClass)
             d->device = pd->buffer();
     } else {
         d->device = device;
@@ -568,7 +568,6 @@ void QRasterPaintEngine::updateMatrix(const QTransform &matrix)
             ;
     }
 #endif
-
 }
 
 
@@ -3596,8 +3595,6 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     rasterParams.flags = QT_FT_RASTER_FLAG_CLIP;
     rasterParams.gray_spans = 0;
     rasterParams.black_spans = 0;
-    rasterParams.bit_test = 0;
-    rasterParams.bit_set = 0;
     rasterParams.user = data;
     rasterParams.clip_box = clip_box;
 

@@ -1554,25 +1554,6 @@
 
 
   static int
-  gray_convert_glyph_inner( RAS_ARG )
-  {
-    volatile int  error = 0;
-
-    if ( qt_ft_setjmp( ras.jump_buffer ) == 0 )
-    {
-      error = QT_FT_Outline_Decompose( &ras.outline, &ras );
-      gray_record_cell( RAS_VAR );
-    }
-    else
-    {
-      error = ErrRaster_Memory_Overflow;
-    }
-
-    return error;
-  }
-
-
-  static int
   gray_convert_glyph( RAS_ARG )
   {
     TBand            bands[40];
@@ -1683,7 +1664,15 @@
         ras.max_ey    = band->max;
         ras.count_ey  = band->max - band->min;
 
-        error = gray_convert_glyph_inner( RAS_VAR );
+        if ( qt_ft_setjmp( ras.jump_buffer ) == 0 )
+        {
+          error = QT_FT_Outline_Decompose( &ras.outline, &ras );
+          gray_record_cell( RAS_VAR );
+        }
+        else
+        {
+          error = ErrRaster_Memory_Overflow;
+        }
 
         if ( !error )
         {
@@ -1856,13 +1845,6 @@
     QT_FT_MEM_ZERO(*araster, sizeof(TRaster));
 
     return 0;
-  }
-
-
-  static void
-  gray_raster_done( QT_FT_Raster  raster )
-  {
-    free(raster);
   }
 
 

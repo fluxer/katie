@@ -272,7 +272,6 @@ private:
     QImageData *d;
 
     friend class QRasterPixmapData;
-    friend class QBlittablePixmapData;
     friend class QPixmapCacheEntry;
 
 public:

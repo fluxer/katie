@@ -386,7 +386,6 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     \value MaxUser Last user type ID
     \value OpenGL2
     \value PaintBuffer
-    \value Blitter
 */
 
 /*!
