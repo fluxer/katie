@@ -289,7 +289,6 @@
     int         lev_stack[32];
 
     QT_FT_Outline  outline;
-    QT_FT_Bitmap   target;
     QT_FT_BBox     clip_box;
 
     QT_FT_Span     gray_spans[QT_FT_MAX_GRAY_SPANS];
@@ -1095,55 +1094,6 @@
 
 
   static void
-  gray_render_span( int             count,
-                    const QT_FT_Span*  spans,
-                    PWorker         worker )
-  {
-    unsigned char*  p;
-    QT_FT_Bitmap*      map = &worker->target;
-
-    for ( ; count > 0; count--, spans++ )
-    {
-      unsigned char  coverage = spans->coverage;
-
-      /* first of all, compute the scanline offset */
-      p = (unsigned char*)map->buffer - spans->y * map->pitch;
-      if ( map->pitch >= 0 )
-        p += ( map->rows - 1 ) * map->pitch;
-
-
-      if ( coverage )
-      {
-        /* For small-spans it is faster to do it by ourselves than
-         * calling `memset'.  This is mainly due to the cost of the
-         * function call.
-         */
-        if ( spans->len >= 8 )
-          QT_FT_MEM_SET( p + spans->x, (unsigned char)coverage, spans->len );
-        else
-        {
-          unsigned char*  q = p + spans->x;
-
-
-          switch ( spans->len )
-          {
-          case 7: *q++ = (unsigned char)coverage;
-          case 6: *q++ = (unsigned char)coverage;
-          case 5: *q++ = (unsigned char)coverage;
-          case 4: *q++ = (unsigned char)coverage;
-          case 3: *q++ = (unsigned char)coverage;
-          case 2: *q++ = (unsigned char)coverage;
-          case 1: *q   = (unsigned char)coverage;
-          default:
-            ;
-          }
-        }
-      }
-    }
-  }
-
-
-  static void
   gray_hline( RAS_ARG_ TCoord  x,
                        TCoord  y,
                        TPos    area,
@@ -1732,7 +1682,6 @@
                       const QT_FT_Raster_Params*  params )
   {
     const QT_FT_Outline*  outline    = (const QT_FT_Outline*)params->source;
-    const QT_FT_Bitmap*   target_map = params->target;
     PWorker            worker;
 
 
@@ -1761,44 +1710,8 @@
 
     worker = raster->worker;
 
-    /* if direct mode is not set, we must have a target bitmap */
-    if ( ( params->flags & QT_FT_RASTER_FLAG_DIRECT ) == 0 )
-    {
-      if ( !target_map )
-        return ErrRaster_Invalid_Argument;
-
-      /* nothing to do */
-      if ( !target_map->width || !target_map->rows )
-        return 0;
-
-      if ( !target_map->buffer )
-        return ErrRaster_Invalid_Argument;
-    }
-
-    /* this version does not support monochrome rendering */
-    if ( !( params->flags & QT_FT_RASTER_FLAG_AA ) )
-      return ErrRaster_Invalid_Mode;
-
     /* compute clipping box */
-    if ( ( params->flags & QT_FT_RASTER_FLAG_DIRECT ) == 0 )
-    {
-      /* compute clip box from target pixmap */
-      ras.clip_box.xMin = 0;
-      ras.clip_box.yMin = 0;
-      ras.clip_box.xMax = target_map->width;
-      ras.clip_box.yMax = target_map->rows;
-    }
-    else if ( params->flags & QT_FT_RASTER_FLAG_CLIP )
-    {
-      ras.clip_box = params->clip_box;
-    }
-    else
-    {
-      ras.clip_box.xMin = -32768L;
-      ras.clip_box.yMin = -32768L;
-      ras.clip_box.xMax =  32767L;
-      ras.clip_box.yMax =  32767L;
-    }
+    ras.clip_box = params->clip_box;
 
     /* initialize the cells table */
     ras.buffer      = raster->buffer;
@@ -1815,17 +1728,8 @@
     ras.outline   = *outline;
     ras.band_size = raster->band_size;
 
-    if ( target_map )
-      ras.target = *target_map;
-
-    ras.render_span      = (QT_FT_Raster_Span_Func)gray_render_span;
-    ras.render_span_data = &ras;
-
-    if ( params->flags & QT_FT_RASTER_FLAG_DIRECT )
-    {
-      ras.render_span      = (QT_FT_Raster_Span_Func)params->gray_spans;
-      ras.render_span_data = params->user;
-    }
+    ras.render_span      = (QT_FT_Raster_Span_Func)params->gray_spans;
+    ras.render_span_data = params->user;
 
     return gray_convert_glyph( worker );
   }

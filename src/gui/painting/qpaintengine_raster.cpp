@@ -3590,9 +3590,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                             deviceRect.y() + deviceRect.height() };
 
     QT_FT_Raster_Params rasterParams;
-    rasterParams.target = 0;
     rasterParams.source = outline;
-    rasterParams.flags = QT_FT_RASTER_FLAG_CLIP;
     rasterParams.gray_spans = 0;
     rasterParams.black_spans = 0;
     rasterParams.user = data;
@@ -3604,8 +3602,6 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     int rendered_spans = 0;
 
     while (!done) {
-
-        rasterParams.flags |= (QT_FT_RASTER_FLAG_AA | QT_FT_RASTER_FLAG_DIRECT);
         rasterParams.gray_spans = callback;
         rasterParams.skip_spans = rendered_spans;
         error = qt_ft_grays_raster.raster_render(*grayRaster.data(), &rasterParams);
