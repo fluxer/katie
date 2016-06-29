@@ -915,31 +915,6 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Raster_SetModeFunc                                              */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    This function is a generic facility to change modes or attributes  */
-  /*    in a given raster.  This can be used for debugging purposes, or    */
-  /*    simply to allow implementation-specific `features' in a given      */
-  /*    raster module.                                                     */
-  /*                                                                       */
-  /* <Input>                                                               */
-  /*    raster :: A handle to the new raster object.                       */
-  /*                                                                       */
-  /*    mode   :: A 4-byte tag used to name the mode or property.          */
-  /*                                                                       */
-  /*    args   :: A pointer to the new mode/property to use.               */
-  /*                                                                       */
-  typedef int
-  (*QT_FT_Raster_SetModeFunc)( QT_FT_Raster      raster,
-                            unsigned long  mode,
-                            void*          args );
-
-#define  QT_FT_Raster_Set_Mode_Func  QT_FT_Raster_SetModeFunc
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* <FuncType>                                                            */
   /*    QT_FT_Raster_RenderFunc                                               */
   /*                                                                       */
   /* <Description>                                                         */
@@ -1000,7 +975,6 @@ QT_FT_BEGIN_HEADER
     QT_FT_Glyph_Format         glyph_format;
     QT_FT_Raster_NewFunc       raster_new;
     QT_FT_Raster_ResetFunc     raster_reset;
-    QT_FT_Raster_SetModeFunc   raster_set_mode;
     QT_FT_Raster_RenderFunc    raster_render;
 
   } QT_FT_Raster_Funcs;

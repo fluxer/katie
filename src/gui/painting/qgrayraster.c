@@ -121,22 +121,6 @@
   /*                                                                       */
   /*************************************************************************/
 
-/* experimental support for gamma correction within the rasterizer */
-#define xxxGRAYS_USE_GAMMA
-
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* The macro QT_FT_COMPONENT is used in trace mode.  It is an implicit      */
-  /* parameter of the QT_FT_TRACE() and QT_FT_ERROR() macros, used to print/log  */
-  /* messages during execution.                                            */
-  /*                                                                       */
-#undef  QT_FT_COMPONENT
-#define QT_FT_COMPONENT  trace_smooth
-
-
-#define ErrRaster_MemoryOverflow   -4
-
 #if defined(VXWORKS)
 #  include <vxWorksCommon.h>    /* needed for setjmp.h */
 #endif
@@ -147,13 +131,12 @@
 #define QT_FT_UINT_MAX  UINT_MAX
 
 #define qt_ft_memset   memset
-
 #define qt_ft_setjmp   setjmp
 #define qt_ft_longjmp  longjmp
 #define qt_ft_jmp_buf  jmp_buf
 
-#define ErrRaster_Invalid_Mode      -2
 #define ErrRaster_Invalid_Outline   -1
+#define ErrRaster_Invalid_Mode      -2
 #define ErrRaster_Invalid_Argument  -3
 #define ErrRaster_Memory_Overflow   -4
 #define ErrRaster_OutOfMemory       -6
@@ -166,24 +149,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
-  /* Disable the tracing mechanism for simplicity -- developers can      */
-  /* activate it easily by redefining these two macros.                  */
-#ifndef QT_FT_ERROR
-#define QT_FT_ERROR( x )  do ; while ( 0 )     /* nothing */
-#endif
-
-#ifndef QT_FT_TRACE
-#define QT_FT_TRACE( x )  do ; while ( 0 )     /* nothing */
-#endif
-
-#ifndef QT_FT_MEM_SET
-#define QT_FT_MEM_SET( d, s, c )  qt_ft_memset( d, s, c )
-#endif
-
-#ifndef QT_FT_MEM_ZERO
-#define QT_FT_MEM_ZERO( dest, count )  QT_FT_MEM_SET( dest, 0, count )
-#endif
 
   /* define this to dump debugging information */
 #define xxxDEBUG_GRAYS
@@ -205,9 +170,6 @@
 #define PIXEL_MASK      ( -1L << PIXEL_BITS )
 #define TRUNC( x )      ( (TCoord)( (x) >> PIXEL_BITS ) )
 #define SUBPIXELS( x )  ( (TPos)(x) << PIXEL_BITS )
-#define FLOOR( x )      ( (x) & -ONE_PIXEL )
-#define CEILING( x )    ( ( (x) + ONE_PIXEL - 1 ) & -ONE_PIXEL )
-#define ROUND( x )      ( ( (x) + ONE_PIXEL / 2 ) & -ONE_PIXEL )
 
 #if PIXEL_BITS >= 6
 #define UPSCALE( x )    ( (x) << ( PIXEL_BITS - 6 ) )
@@ -332,49 +294,6 @@
     return 0;
   }
 
-  /*************************************************************************/
-  /*                                                                       */
-  /* Compute the outline bounding box.                                     */
-  /*                                                                       */
-  static void
-  gray_compute_cbox( RAS_ARG )
-  {
-    QT_FT_Outline*  outline = &ras.outline;
-    QT_FT_Vector*   vec     = outline->points;
-    QT_FT_Vector*   limit   = vec + outline->n_points;
-
-
-    if ( outline->n_points <= 0 )
-    {
-      ras.min_ex = ras.max_ex = 0;
-      ras.min_ey = ras.max_ey = 0;
-      return;
-    }
-
-    ras.min_ex = ras.max_ex = vec->x;
-    ras.min_ey = ras.max_ey = vec->y;
-
-    vec++;
-
-    for ( ; vec < limit; vec++ )
-    {
-      TPos  x = vec->x;
-      TPos  y = vec->y;
-
-
-      if ( x < ras.min_ex ) ras.min_ex = x;
-      if ( x > ras.max_ex ) ras.max_ex = x;
-      if ( y < ras.min_ey ) ras.min_ey = y;
-      if ( y > ras.max_ey ) ras.max_ey = y;
-    }
-
-    /* truncate the bounding box to integer pixels */
-    ras.min_ex = ras.min_ex >> 6;
-    ras.min_ey = ras.min_ey >> 6;
-    ras.max_ex = ( ras.max_ex + 63 ) >> 6;
-    ras.max_ey = ( ras.max_ey + 63 ) >> 6;
-  }
-
 
   /*************************************************************************/
   /*                                                                       */
@@ -466,31 +385,6 @@
     ras.ey      = ey;
     ras.invalid = ( (unsigned)ey >= (unsigned)ras.count_ey ||
                               ex >= ras.count_ex           );
-  }
-
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* Start a new contour at a given cell.                                  */
-  /*                                                                       */
-  static void
-  gray_start_cell( RAS_ARG_ TCoord  ex,
-                            TCoord  ey )
-  {
-    if ( ex > ras.max_ex )
-      ex = (TCoord)( ras.max_ex );
-
-    if ( ex < ras.min_ex )
-      ex = (TCoord)( ras.min_ex - 1 );
-
-    ras.area    = 0;
-    ras.cover   = 0;
-    ras.ex      = ex - ras.min_ex;
-    ras.ey      = ey - ras.min_ey;
-    ras.last_ey = SUBPIXELS( ey );
-    ras.invalid = 0;
-
-    gray_set_cell( RAS_VAR_ ex, ey );
   }
 
 
@@ -763,26 +657,6 @@
 
 
   static void
-  gray_split_conic( QT_FT_Vector*  base )
-  {
-    TPos  a, b;
-
-
-    base[4].x = base[2].x;
-    b = base[1].x;
-    a = base[3].x = ( base[2].x + b ) / 2;
-    b = base[1].x = ( base[0].x + b ) / 2;
-    base[2].x = ( a + b ) / 2;
-
-    base[4].y = base[2].y;
-    b = base[1].y;
-    a = base[3].y = ( base[2].y + b ) / 2;
-    b = base[1].y = ( base[0].y + b ) / 2;
-    base[2].y = ( a + b ) / 2;
-  }
-
-
-  static void
   gray_render_conic( RAS_ARG_ const QT_FT_Vector*  control,
                               const QT_FT_Vector*  to )
   {
@@ -812,8 +686,7 @@
     /* a shortcut to speed things up */
     if ( level <= 1 )
     {
-      /* we compute the mid-point directly in order to avoid */
-      /* calling gray_split_conic()                          */
+      /* compute the mid-point directly */
       TPos  to_x, to_y, mid_x, mid_y;
 
 
@@ -862,7 +735,21 @@
         if ( TRUNC( min ) >= ras.max_ey || TRUNC( max ) < ras.min_ey )
           goto Draw;
 
-        gray_split_conic( arc );
+        /* split conic */
+        TPos  a, b;
+
+        arc[4].x = arc[2].x;
+        b = arc[1].x;
+        a = arc[3].x = ( arc[2].x + b ) / 2;
+        b = arc[1].x = ( arc[0].x + b ) / 2;
+        arc[2].x = ( a + b ) / 2;
+
+        arc[4].y = arc[2].y;
+        b = arc[1].y;
+        a = arc[3].y = ( arc[2].y + b ) / 2;
+        b = arc[1].y = ( arc[0].y + b ) / 2;
+        arc[2].y = ( a + b ) / 2;
+
         arc += 2;
         top++;
         levels[top] = levels[top - 1] = level - 1;
@@ -889,35 +776,6 @@
 
     return;
   }
-
-
-  static void
-  gray_split_cubic( QT_FT_Vector*  base )
-  {
-    TPos  a, b, c, d;
-
-
-    base[6].x = base[3].x;
-    c = base[1].x;
-    d = base[2].x;
-    base[1].x = a = ( base[0].x + c ) / 2;
-    base[5].x = b = ( base[3].x + d ) / 2;
-    c = ( c + d ) / 2;
-    base[2].x = a = ( a + c ) / 2;
-    base[4].x = b = ( b + c ) / 2;
-    base[3].x = ( a + b ) / 2;
-
-    base[6].y = base[3].y;
-    c = base[1].y;
-    d = base[2].y;
-    base[1].y = a = ( base[0].y + c ) / 2;
-    base[5].y = b = ( base[3].y + d ) / 2;
-    c = ( c + d ) / 2;
-    base[2].y = a = ( a + c ) / 2;
-    base[4].y = b = ( b + c ) / 2;
-    base[3].y = ( a + b ) / 2;
-  }
-
 
   static void
   gray_render_cubic( RAS_ARG_ const QT_FT_Vector*  control1,
@@ -1012,7 +870,30 @@
         if ( y > max ) max = y;
         if ( TRUNC( min ) >= ras.max_ey || TRUNC( max ) < 0 )
           goto Draw;
-        gray_split_cubic( arc );
+
+        /* split cubic */
+        TPos  a, b, c, d;
+
+        arc[6].x = arc[3].x;
+        c = arc[1].x;
+        d = arc[2].x;
+        arc[1].x = a = ( arc[0].x + c ) / 2;
+        arc[5].x = b = ( arc[3].x + d ) / 2;
+        c = ( c + d ) / 2;
+        arc[2].x = a = ( a + c ) / 2;
+        arc[4].x = b = ( b + c ) / 2;
+        arc[3].x = ( a + b ) / 2;
+
+        arc[6].y = arc[3].y;
+        c = arc[1].y;
+        d = arc[2].y;
+        arc[1].y = a = ( arc[0].y + c ) / 2;
+        arc[5].y = b = ( arc[3].y + d ) / 2;
+        c = ( c + d ) / 2;
+        arc[2].y = a = ( a + c ) / 2;
+        arc[4].y = b = ( b + c ) / 2;
+        arc[3].y = ( a + b ) / 2;
+
         arc += 3;
         top ++;
         levels[top] = levels[top - 1] = level - 1;
@@ -1040,13 +921,12 @@
   }
 
 
-
-  static int
+  /* TODO: manually inline */
+  static void
   gray_move_to( const QT_FT_Vector*  to,
                 PWorker           worker )
   {
     TPos  x, y;
-
 
     /* record current cell, if any */
     gray_record_cell( worker );
@@ -1055,15 +935,31 @@
     x = UPSCALE( to->x );
     y = UPSCALE( to->y );
 
-    gray_start_cell( worker, TRUNC( x ), TRUNC( y ) );
+    /* start a new contour at a given cell */
+    TCoord ex = TRUNC( x );
+    TCoord ey = TRUNC( y );
+
+    if ( ex > ras.max_ex )
+      ex = (TCoord)( ras.max_ex );
+
+    if ( ex < ras.min_ex )
+      ex = (TCoord)( ras.min_ex - 1 );
+
+    ras.area    = 0;
+    ras.cover   = 0;
+    ras.ex      = ex - ras.min_ex;
+    ras.ey      = ey - ras.min_ey;
+    ras.last_ey = SUBPIXELS( ey );
+    ras.invalid = 0;
+
+    gray_set_cell( RAS_VAR_ ex, ey );
 
     worker->x = x;
     worker->y = y;
-    return 0;
   }
 
 
-  static int
+  static inline int
   gray_line_to( const QT_FT_Vector*  to,
                 PWorker           worker )
   {
@@ -1072,7 +968,7 @@
   }
 
 
-  static int
+  static inline int
   gray_conic_to( const QT_FT_Vector*  control,
                  const QT_FT_Vector*  to,
                  PWorker           worker )
@@ -1082,7 +978,7 @@
   }
 
 
-  static int
+  static inline int
   gray_cubic_to( const QT_FT_Vector*  control1,
                  const QT_FT_Vector*  control2,
                  const QT_FT_Vector*  to,
@@ -1365,9 +1261,7 @@
         tags--;
       }
 
-      error = gray_move_to( &v_start, user );
-      if ( error )
-        goto Exit;
+      gray_move_to( &v_start, user );
 
       while ( point < limit )
       {
@@ -1515,8 +1409,38 @@
 
     ras.num_gray_spans = 0;
 
-    /* Set up state in the raster object */
-    gray_compute_cbox( RAS_VAR );
+    /* Set up state in the raster object, compute the outline bounding box */
+    QT_FT_Outline*  outline = &ras.outline;
+
+    if ( outline->n_points <= 0 ) {
+      ras.min_ex = ras.max_ex = 0;
+      ras.min_ey = ras.max_ey = 0;
+    } else {
+      QT_FT_Vector*   vec     = outline->points;
+      QT_FT_Vector*   limit   = vec + outline->n_points;
+      ras.min_ex = ras.max_ex = vec->x;
+      ras.min_ey = ras.max_ey = vec->y;
+
+      vec++;
+
+      for ( ; vec < limit; vec++ )
+      {
+        TPos  x = vec->x;
+        TPos  y = vec->y;
+
+
+        if ( x < ras.min_ex ) ras.min_ex = x;
+        if ( x > ras.max_ex ) ras.max_ex = x;
+        if ( y < ras.min_ey ) ras.min_ey = y;
+        if ( y > ras.max_ey ) ras.max_ey = y;
+      }
+
+      /* truncate the bounding box to integer pixels */
+      ras.min_ex = ras.min_ex >> 6;
+      ras.min_ey = ras.min_ey >> 6;
+      ras.max_ex = ( ras.max_ex + 63 ) >> 6;
+      ras.max_ey = ( ras.max_ey + 63 ) >> 6;
+    }
 
     /* clip to target bitmap, exit if nothing to do */
     clip = &ras.clip_box;
@@ -1746,7 +1670,7 @@
         *araster = 0;
         return ErrRaster_Memory_Overflow;
     }
-    QT_FT_MEM_ZERO(*araster, sizeof(TRaster));
+    qt_ft_memset(*araster, 0, sizeof(TRaster));
 
     return 0;
   }
@@ -1799,7 +1723,6 @@
 
     (QT_FT_Raster_New_Func)     gray_raster_new,
     (QT_FT_Raster_Reset_Func)   gray_raster_reset,
-    (QT_FT_Raster_Set_Mode_Func)0,
     (QT_FT_Raster_Render_Func)  gray_raster_render,
   };
 
