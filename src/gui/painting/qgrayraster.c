@@ -401,7 +401,7 @@
   {
     TCoord  ex1, ex2, fx1, fx2, delta;
     int     p, first, dx;
-    int     incr, lift, mod, rem;
+    int     incr, mod;
 
 
     dx = x2 - x1;
@@ -461,8 +461,8 @@
     if ( ex1 != ex2 )
     {
       p    = ONE_PIXEL * ( y2 - y1 + delta );
-      lift = (TCoord)( p / dx );
-      rem  = (TCoord)( p % dx );
+      int lift = (TCoord)( p / dx );
+      int rem  = (TCoord)( p % dx );
       if ( rem < 0 )
       {
         lift--;
@@ -995,9 +995,7 @@
                        TPos    area,
                        int     acount )
   {
-    QT_FT_Span*  span;
     int       coverage;
-    int       skip;
 
 
     /* compute the coverage line's coverage, depending on the    */
@@ -1036,7 +1034,7 @@
     if ( coverage )
     {
       /* see whether we can add this span to the current list */
-      span  = ras.gray_spans + ras.num_gray_spans - 1;
+      QT_FT_Span* span  = ras.gray_spans + ras.num_gray_spans - 1;
       if ( ras.num_gray_spans > 0             &&
            span->y == y                       &&
            (int)span->x + span->len == (int)x &&
@@ -1050,7 +1048,7 @@
       {
         if ( ras.render_span && ras.num_gray_spans > ras.skip_spans )
         {
-          skip = ras.skip_spans > 0 ? ras.skip_spans : 0;
+          int skip = ras.skip_spans > 0 ? ras.skip_spans : 0;
           ras.render_span( ras.num_gray_spans - skip,
                            ras.gray_spans + skip,
                            ras.render_span_data );
@@ -1061,20 +1059,12 @@
         /* ras.render_span( span->y, ras.gray_spans, count ); */
 
 #ifdef DEBUG_GRAYS
-
-        if ( 1 )
-        {
-          int  n;
-
-
-          fprintf( stderr, "y=%3d ", y );
-          span = ras.gray_spans;
-          for ( n = 0; n < count; n++, span++ )
-            fprintf( stderr, "[%d..%d]:%02x ",
-                     span->x, span->x + span->len - 1, span->coverage );
-          fprintf( stderr, "\n" );
-        }
-
+        fprintf( stderr, "y=%3d ", y );
+        span = ras.gray_spans;
+        for ( int n = 0; n < count; n++, span++ )
+          fprintf( stderr, "[%d..%d]:%02x ",
+                   span->x, span->x + span->len - 1, span->coverage );
+        fprintf( stderr, "\n" );
 #endif /* DEBUG_GRAYS */
 
         ras.num_gray_spans = 0;
@@ -1096,17 +1086,12 @@
 
 
 #ifdef DEBUG_GRAYS
-
   /* to be called while in the debugger */
-  gray_dump_cells( RAS_ARG )
+  void gray_dump_cells( RAS_ARG )
   {
-    int  yindex;
-
-
-    for ( yindex = 0; yindex < ras.ycount; yindex++ )
+    for ( int yindex = 0; yindex < ras.ycount; yindex++ )
     {
       PCell  cell;
-
 
       printf( "%3d:", yindex );
 
@@ -1115,49 +1100,8 @@
       printf( "\n" );
     }
   }
-
 #endif /* DEBUG_GRAYS */
 
-
-  static void
-  gray_sweep( RAS_ARG )
-  {
-    int  yindex;
-
-
-    if ( ras.num_cells == 0 )
-      return;
-
-    for ( yindex = 0; yindex < ras.ycount; yindex++ )
-    {
-      PCell   cell  = ras.ycells[yindex];
-      TCoord  cover = 0;
-      TCoord  x     = 0;
-
-
-      for ( ; cell != NULL; cell = cell->next )
-      {
-        TArea  area;
-
-
-        if ( cell->x > x && cover != 0 )
-          gray_hline( RAS_VAR_ x, yindex, cover * ( ONE_PIXEL * 2 ),
-                      cell->x - x );
-
-        cover += cell->cover;
-        area   = cover * ( ONE_PIXEL * 2 ) - cell->area;
-
-        if ( area != 0 && cell->x >= 0 )
-          gray_hline( RAS_VAR_ cell->x, yindex, area, 1 );
-
-        x = cell->x + 1;
-      }
-
-      if ( ras.count_ex > x && cover != 0 )
-        gray_hline( RAS_VAR_ x, yindex, cover * ( ONE_PIXEL * 2 ),
-                    ras.count_ex - x );
-    }
-  }
 
   /*************************************************************************/
   /*                                                                       */
@@ -1504,7 +1448,6 @@
 
         {
           PCell  cells_max;
-          int    yindex;
           int    cell_start, cell_end, cell_mod;
 
 
@@ -1528,7 +1471,7 @@
           if ( ras.max_cells < 2 )
             goto ReduceBands;
 
-          for ( yindex = 0; yindex < ras.ycount; yindex++ )
+          for ( int yindex = 0; yindex < ras.ycount; yindex++ )
             ras.ycells[yindex] = NULL;
         }
 
@@ -1548,9 +1491,38 @@
           error = ErrRaster_Memory_Overflow;
         }
 
-        if ( !error )
+        if ( !error && ras.num_cells != 0)
         {
-          gray_sweep( RAS_VAR );
+          /* sweep */
+          for ( int yindex = 0; yindex < ras.ycount; yindex++ )
+          {
+            PCell   cell  = ras.ycells[yindex];
+            TCoord  cover = 0;
+            TCoord  x     = 0;
+
+
+            for ( ; cell != NULL; cell = cell->next )
+            {
+              TArea  area;
+
+              if ( cell->x > x && cover != 0 )
+                gray_hline( RAS_VAR_ x, yindex, cover * ( ONE_PIXEL * 2 ),
+                            cell->x - x );
+
+              cover += cell->cover;
+              area   = cover * ( ONE_PIXEL * 2 ) - cell->area;
+
+              if ( area != 0 && cell->x >= 0 )
+                gray_hline( RAS_VAR_ cell->x, yindex, area, 1 );
+
+              x = cell->x + 1;
+            }
+
+            if ( ras.count_ex > x && cover != 0 )
+              gray_hline( RAS_VAR_ x, yindex, cover * ( ONE_PIXEL * 2 ),
+                          ras.count_ex - x );
+          }
+
           band--;
           continue;
         }
@@ -1622,10 +1594,10 @@
       return ErrRaster_OutOfMemory;
 
     /* return immediately if the outline is empty */
-    if ( outline->n_points == 0 || outline->n_contours <= 0 )
+    if ( !outline || outline->n_points == 0 || outline->n_contours <= 0 )
       return 0;
 
-    if ( !outline || !outline->contours || !outline->points )
+    if ( !outline->contours || !outline->points )
       return ErrRaster_Invalid_Outline;
 
     if ( outline->n_points !=
