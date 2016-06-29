@@ -51,6 +51,7 @@
 #define QT_NO_STYLE_WINDOWSMOBILE
 #define QT_NO_DIRECTPAINTER
 #define QT_NO_COP
+#define QT_NO_BLITTABLE
 
 /* Qt build specs */
 #ifndef QT_EDITION
