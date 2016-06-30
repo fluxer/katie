@@ -125,7 +125,7 @@ void QDeclarativeAbstractBinding::addToObject(QObject *object, int index)
         }
 
         if (!proxy) {
-            proxy = new QDeclarativeValueTypeProxyBinding(object, coreIndex);
+            proxy = new QDeclarativeValueTypeProxyBinding();
             proxy->addToObject(object, coreIndex);
         }
 
@@ -479,8 +479,8 @@ void QDeclarativeBinding::disconnect(DisconnectMode disconnectMode)
     setNotifyOnValueChanged(false);
 }
 
-QDeclarativeValueTypeProxyBinding::QDeclarativeValueTypeProxyBinding(QObject *o, int index)
-: m_object(o), m_bindings(0)
+QDeclarativeValueTypeProxyBinding::QDeclarativeValueTypeProxyBinding()
+: m_bindings(0)
 {
 }
 

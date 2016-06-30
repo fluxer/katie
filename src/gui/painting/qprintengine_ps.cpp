@@ -161,10 +161,10 @@ static QByteArray wrapDSC(const QByteArray &str)
         wrapped = dsc.left(wrapAt);
         QByteArray tmp = dsc.mid(wrapAt);
         while (tmp.length() > wrapAt-3) {
-            wrapped += "\n%%+" + tmp.left(wrapAt-3);
+            wrapped += QLatin1String("\n%%+") + tmp.left(wrapAt-3);
             tmp = tmp.mid(wrapAt-3);
         }
-        wrapped += "\n%%+" + tmp;
+        wrapped += QLatin1String("\n%%+") + tmp;
     }
     return wrapped + '\n';
 }

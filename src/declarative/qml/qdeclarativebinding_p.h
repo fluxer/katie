@@ -146,7 +146,7 @@ private:
 class QDeclarativeValueTypeProxyBinding : public QDeclarativeAbstractBinding
 {
 public:
-    QDeclarativeValueTypeProxyBinding(QObject *o, int coreIndex);
+    QDeclarativeValueTypeProxyBinding();
 
     virtual Type bindingType() const { return ValueTypeProxy; }
 
@@ -166,7 +166,6 @@ private:
     void recursiveDisable(QDeclarativeAbstractBinding *);
 
     friend class QDeclarativeAbstractBinding;
-    QObject *m_object;
     QDeclarativeAbstractBinding *m_bindings;
 };
 
