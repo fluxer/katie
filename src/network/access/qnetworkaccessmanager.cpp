@@ -1299,7 +1299,7 @@ QNetworkRequest QNetworkAccessManagerPrivate::prepareMultipart(const QNetworkReq
             break;
         }
         // putting the boundary into quotes, recommended in RFC 2046 section 5.1.1
-        contentType += "; boundary=\"" + multiPart->d_func()->boundary + "\"";
+        contentType += QLatin1String("; boundary=\"") + multiPart->d_func()->boundary + QLatin1Char('"');
         newRequest.setHeader(QNetworkRequest::ContentTypeHeader, QVariant(contentType));
     }
 

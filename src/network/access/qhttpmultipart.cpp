@@ -418,7 +418,7 @@ void QHttpPartPrivate::checkHeaderCreated() const
         QList<QPair<QByteArray, QByteArray> > fields = allRawHeaders();
         QList<QPair<QByteArray, QByteArray> >::const_iterator it = fields.constBegin();
         for (; it != fields.constEnd(); ++it)
-            header += it->first + ": " + it->second + "\r\n";
+            header += it->first + QLatin1String(": ") + it->second + QLatin1String("\r\n");
         header += "\r\n";
         headerCreated = true;
     }

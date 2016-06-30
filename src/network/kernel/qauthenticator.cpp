@@ -640,19 +640,19 @@ QByteArray QAuthenticatorPrivate::digestMd5Response(const QByteArray &challenge,
 
 
     QByteArray credentials;
-    credentials += "username=\"" + user.toLatin1() + "\", ";
-    credentials += "realm=\"" + realm.toLatin1() + "\", ";
-    credentials += "nonce=\"" + nonce + "\", ";
-    credentials += "uri=\"" + path + "\", ";
+    credentials += QLatin1String("username=\"") + user.toLatin1() + QLatin1String("\", ");
+    credentials += QLatin1String("realm=\"") + realm.toLatin1() + QLatin1String("\", ");
+    credentials += QLatin1String("nonce=\"") + nonce + QLatin1String("\", ");
+    credentials += QLatin1String("uri=\"") + path + QLatin1String("\", ");
     if (!opaque.isEmpty())
-        credentials += "opaque=\"" + opaque + "\", ";
-    credentials += "response=\"" + response + '\"';
+        credentials += QLatin1String("opaque=\"") + opaque + QLatin1String("\", ");
+    credentials += QLatin1String("response=\"") + response + QLatin1Char('"');
     if (!options.value("algorithm").isEmpty())
-        credentials += ", algorithm=" + options.value("algorithm");
+        credentials += QLatin1String(", algorithm=") + options.value("algorithm");
     if (!options.value("qop").isEmpty()) {
-        credentials += ", qop=" + qop + ", ";
-        credentials += "nc=" + nonceCountString + ", ";
-        credentials += "cnonce=\"" + cnonce + '\"';
+        credentials += QLatin1String(", qop=") + qop + QLatin1String(", ");
+        credentials += QLatin1String("nc=") + nonceCountString + QLatin1String(", ");
+        credentials += QLatin1String("cnonce=\"") + cnonce + QLatin1Char('"');
     }
 
     return credentials;

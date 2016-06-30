@@ -512,14 +512,12 @@ void QHttpSocketEngine::slotSocketConnected()
         data += v.toByteArray();
     else
         data += "Mozilla/5.0";
-    data += "\r\n"
-            "Host: " + peerAddress + "\r\n";
+    data += QLatin1String("\r\nHost: ") + peerAddress + QLatin1String("\r\n");
     QAuthenticatorPrivate *priv = QAuthenticatorPrivate::getPrivate(d->authenticator);
     //qDebug() << "slotSocketConnected: priv=" << priv << (priv ? (int)priv->method : -1);
     if (priv && priv->method != QAuthenticatorPrivate::None) {
         d->credentialsSent = true;
-        data += "Proxy-Authorization: " + priv->calculateResponse(method, path);
-        data += "\r\n";
+        data += QLatin1String("Proxy-Authorization: ") + priv->calculateResponse(method, path) + QLatin1String("\r\n");
     }
     data += "\r\n";
 //     qDebug() << ">>>>>>>> sending request" << this;
