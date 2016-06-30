@@ -7,10 +7,10 @@ if(WITH_DBUS AND DBUS_FOUND)
     target_link_libraries(tst_qdbusperformance KtDBus)
 
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-    add_executable(server
+    add_executable(performance_server
         ${CMAKE_CURRENT_SOURCE_DIR}/server/server.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/serverobject.h
     )
 
-    target_link_libraries(server KtDBus)
+    target_link_libraries(performance_server KtDBus)
 endif()

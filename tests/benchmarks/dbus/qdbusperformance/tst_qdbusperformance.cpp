@@ -89,9 +89,9 @@ void tst_QDBusPerformance::initTestCase()
             &QTestEventLoop::instance(), SLOT(exitLoop()));
 
 #ifdef Q_OS_WIN
-    proc.start("server");
+    proc.start("performance_server");
 #else
-    proc.start("./server");
+    proc.start("./performance_server");
 #endif
     QVERIFY(proc.waitForStarted());
 
