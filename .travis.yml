@@ -10,6 +10,6 @@ before_install:
     - sudo apt-get update -qq
     - sudo apt-get install -qq python-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libasound2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev libgtk2.0-dev libgl1-mesa-dev libwayland-dev unixodbc-dev libpq-dev libmysqld-dev libsqlite3-dev xorg-dev
 script:
-    - cmake -DENABLE_TESTING=TRUE -Wno-dev
+    - cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio"
     - make
     - make test
