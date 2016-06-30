@@ -734,7 +734,7 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
         s->stroker = 0;
     }
 
-    ensureState(); // needed because of tx_noshear...
+    ensureRasterState(); // needed because of tx_noshear...
     s->flags.fast_pen = pen_style > Qt::NoPen
             && s->penData.blend
             && ((pen.isCosmetic() && penWidth <= 1)
@@ -802,7 +802,7 @@ void QRasterPaintEngine::updateOutlineMapper()
     d->outlineMapper->setMatrix(state()->matrix);
 }
 
-void QRasterPaintEngine::updateState()
+void QRasterPaintEngine::updateRasterState()
 {
     QRasterPaintEngineState *s = state();
 
@@ -1449,7 +1449,7 @@ void QRasterPaintEngine::drawRects(const QRect *rects, int rectCount)
     qDebug(" - QRasterPaintEngine::drawRect(), rectCount=%d", rectCount);
 #endif
     Q_D(QRasterPaintEngine);
-    ensureState();
+    ensureRasterState();
     QRasterPaintEngineState *s = state();
 
     // Fill
@@ -1504,7 +1504,7 @@ void QRasterPaintEngine::drawRects(const QRectF *rects, int rectCount)
 #endif
 #ifdef QT_FAST_SPANS
     Q_D(QRasterPaintEngine);
-    ensureState();
+    ensureRasterState();
     QRasterPaintEngineState *s = state();
 
 
@@ -1660,7 +1660,7 @@ void QRasterPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
             fillRect_normalized(toNormalizedFillRect(QRectF(tl, br)), &s->brushData, d);
             return;
         }
-        ensureState();
+        ensureRasterState();
         if (s->flags.tx_noshear) {
             d->initializeRasterizer(&s->brushData);
             // ### Is normalizing really necessary here?
@@ -1717,7 +1717,7 @@ void QRasterPaintEngine::fillRect(const QRectF &r, QSpanData *data)
             return;
         }
     }
-    ensureState();
+    ensureRasterState();
     if (s->flags.tx_noshear) {
         d->initializeRasterizer(data);
         QRectF nr = r.normalized();
@@ -2342,7 +2342,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
         }
 
 #ifdef QT_FAST_SPANS
-        ensureState();
+        ensureRasterState();
         if (s->flags.tx_noshear || s->matrix.type() == QTransform::TxScale) {
             d->initializeRasterizer(&d->image_filler_xform);
             d->rasterizer->setAntialiased(s->flags.antialiased);
@@ -2437,7 +2437,7 @@ void QRasterPaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap,
         d->image_filler_xform.setupMatrix(copy, s->flags.bilinear);
 
 #ifdef QT_FAST_SPANS
-        ensureState();
+        ensureRasterState();
         if (s->flags.tx_noshear || s->matrix.type() == QTransform::TxScale) {
             d->initializeRasterizer(&d->image_filler_xform);
             d->rasterizer->setAntialiased(s->flags.antialiased);
@@ -2957,7 +2957,7 @@ QRasterPaintEnginePrivate::getPenFunc(const QRectF &rect,
 void QRasterPaintEngine::drawStaticTextItem(QStaticTextItem *textItem)
 {
     ensurePen();
-    ensureState();
+    ensureRasterState();
 
     QFontEngine *fontEngine = textItem->fontEngine();
     if (!supportsTransformations(fontEngine)) {
@@ -2984,7 +2984,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 #endif
 
     ensurePen();
-    ensureState();
+    ensureRasterState();
 
 #if defined (Q_WS_WIN) || defined(Q_WS_MAC)
 

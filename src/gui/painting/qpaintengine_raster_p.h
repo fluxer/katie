@@ -269,10 +269,10 @@ private:
     void updateOutlineMapper();
     inline void ensureOutlineMapper();
 
-    void updateState();
-    inline void ensureState() {
+    void updateRasterState();
+    inline void ensureRasterState() {
         if (state()->dirty)
-            updateState();
+            updateRasterState();
     }
 };
 
