@@ -428,7 +428,7 @@ QByteArray &operator+=(QByteArray &a, const QStringBuilder<A, B> &b)
 #ifndef QT_NO_CAST_TO_ASCII
     if (sizeof(typename QConcatenable< QStringBuilder<A, B> >::ConvertTo::value_type) == sizeof(QChar)) {
         //it is not save to optimize as in utf8 it is not possible to compute the size
-        return a += QString(b);
+        return a += QString(b).toUtf8();
     }
 #endif
     int len = a.size() + QConcatenable< QStringBuilder<A, B> >::size(b);
