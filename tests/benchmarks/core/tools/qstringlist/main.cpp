@@ -154,7 +154,7 @@ void tst_QStringList::split_qlist_qbytearray() const
 void tst_QStringList::split_qlist_qstring() const
 {
     QFETCH(QString, input);
-    const QChar splitChar = ':';
+    const QChar splitChar = QLatin1Char(':');
 
     QBENCHMARK {
         input.split(splitChar);

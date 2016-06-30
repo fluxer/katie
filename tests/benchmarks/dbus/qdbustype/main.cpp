@@ -56,7 +56,8 @@ private Q_SLOTS:
 
 static inline void benchmarkAddRow(const char *name, const char *data)
 {
-    QTest::newRow(QByteArray("native-") + name) << data << true;
+    QByteArray nativeName = QByteArray("native-") + name;
+    QTest::newRow(nativeName) << data << true;
     QTest::newRow(name) << data << false;
 }
 

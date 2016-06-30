@@ -221,12 +221,12 @@ void tst_QTraceBench::trace_data()
 {
     QTest::addColumn<QString>("filename");
 
-    QTest::newRow("basicdrawing") << (prefix + "basicdrawing.trace");
-    QTest::newRow("webkit") << (prefix + "webkit.trace");
-    QTest::newRow("creator") << (prefix + "creator.trace");
-    QTest::newRow("textedit") << (prefix + "textedit.trace");
-    QTest::newRow("qmlphoneconcept") << (prefix + "qmlphoneconcept.trace");
-    QTest::newRow("qmlsamegame") << (prefix + "qmlsamegame.trace");
+    QTest::newRow("basicdrawing") << QString(prefix + QLatin1String("basicdrawing.trace"));
+    QTest::newRow("webkit") << QString(prefix + QLatin1String("webkit.trace"));
+    QTest::newRow("creator") << QString(prefix + QLatin1String("creator.trace"));
+    QTest::newRow("textedit") << QString(prefix + QLatin1String("textedit.trace"));
+    QTest::newRow("qmlphoneconcept") << QString(prefix + QLatin1String("qmlphoneconcept.trace"));
+    QTest::newRow("qmlsamegame") << QString(prefix + QLatin1String("qmlsamegame.trace"));
 }
 
 void tst_QTraceBench::trace()

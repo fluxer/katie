@@ -74,7 +74,7 @@ void tst_qiodevice::read_old()
 {
     QFETCH(qint64, size);
 
-    QString name = "tmp" + QString::number(size);
+    QString name = QLatin1String("tmp") + QString::number(size);
 
     {
         QFile file(name);

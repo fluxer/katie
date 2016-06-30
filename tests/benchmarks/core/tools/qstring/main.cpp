@@ -40,6 +40,8 @@
 ****************************************************************************/
 #include <QStringList>
 #include <QFile>
+#include <QDebug>
+#include <QTextCodec>
 #include <QtTest/QtTest>
 
 #if !defined(QWS) && defined(Q_OS_MAC)
@@ -1885,11 +1887,11 @@ static void fromLatin1Alternatives_internal(FromLatin1Function function, QString
         if (!doVerify) {
             (function)(&dst.data()->unicode(), src, len);
         } else {
-            dst.fill(QChar('x'), dst.length());
+            dst.fill(QLatin1Char('x'), dst.length());
 
             (function)(&dst.data()->unicode() + 8, src, len);
 
-            QString zeroes(8, QChar('x'));
+            QString zeroes(8, QLatin1Char('x'));
             QString final = dst.mid(8, len);
             QCOMPARE(final, QString::fromLatin1(src, len));
             QCOMPARE(dst.left(8), zeroes);
@@ -1902,7 +1904,7 @@ void tst_QString::fromLatin1Alternatives() const
 {
     QFETCH(FromLatin1Function, function);
 
-    QString dst(fromLatin1Data.maxLength + 16, QChar('x'));
+    QString dst(fromLatin1Data.maxLength + 16, QLatin1Char('x'));
     fromLatin1Alternatives_internal(function, dst, true);
 
     QBENCHMARK {
@@ -2581,7 +2583,7 @@ static void fromUtf8Alternatives_internal(FromUtf8Function function, QString &ds
         if (!doVerify) {
             (function)(&dst.data()->unicode(), src, len);
         } else {
-            dst.fill(QChar('x'), dst.length());
+            dst.fill(QLatin1Char('x'), dst.length());
 
             int utf8len = (function)(&dst.data()->unicode() + 8, src, len);
 
@@ -2593,7 +2595,7 @@ static void fromUtf8Alternatives_internal(FromUtf8Function function, QString &ds
             QCOMPARE(final, expected);
             QCOMPARE(utf8len, expected.length());
 
-            QString zeroes(8, QChar('x'));
+            QString zeroes(8, QLatin1Char('x'));
             QCOMPARE(dst.left(8), zeroes);
             QCOMPARE(dst.mid(len + 8, 8), zeroes);
         }
@@ -2604,7 +2606,7 @@ void tst_QString::fromUtf8Alternatives() const
 {
     QFETCH(FromUtf8Function, function);
 
-    QString dst(fromUtf8Data.maxLength + 16, QChar('x'));
+    QString dst(fromUtf8Data.maxLength + 16, QLatin1Char('x'));
     fromUtf8Alternatives_internal(function, dst, true);
 
     QBENCHMARK {

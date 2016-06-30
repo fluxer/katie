@@ -58,7 +58,7 @@ enum Numbers { NumFakeCacheObjects   = 200,    //entries in pre-populated cache
                HugeCacheLimit = 50*1024*1024,  // max size for a big cache
                TinyCacheLimit = 1*512*1024}; //  max size for a tiny cache
 
-const QString fakeURLbase = "http://127.0.0.1/fake/";
+const QString fakeURLbase = QLatin1String("http://127.0.0.1/fake/");
 //fake HTTP body aka payload
 const QByteArray payload("Qt rocks!");
 
@@ -122,7 +122,7 @@ void tst_qnetworkdiskcache::timeInsertion()
 
     QFETCH(QString, cacheRootDirectory);
 
-    cacheDir = QString( cacheRootDirectory + QDir::separator() + "man_qndc");
+    cacheDir = QString( cacheRootDirectory + QDir::separator() + QLatin1String("man_qndc"));
     QDir d;
     qDebug() << "Setting cache directory to = " << d.absoluteFilePath(cacheDir);
 
@@ -181,7 +181,7 @@ void tst_qnetworkdiskcache::timeRead()
 
     QFETCH(QString, cacheRootDirectory);
 
-    cacheDir = QString( cacheRootDirectory + QDir::separator() + "man_qndc");
+    cacheDir = QString( cacheRootDirectory + QDir::separator() + QLatin1String("man_qndc"));
     QDir d;
     qDebug() << "Setting cache directory to = " << d.absoluteFilePath(cacheDir);
 
@@ -238,7 +238,7 @@ void tst_qnetworkdiskcache::timeRemoval()
 
     QFETCH(QString, cacheRootDirectory);
 
-    cacheDir = QString( cacheRootDirectory + QDir::separator() + "man_qndc");
+    cacheDir = QString( cacheRootDirectory + QDir::separator() + QLatin1String("man_qndc"));
     QDir d;
     qDebug() << "Setting cache directory to = " << d.absoluteFilePath(cacheDir);
 
@@ -287,7 +287,7 @@ void tst_qnetworkdiskcache::timeExpiration()
 
     QFETCH(QString, cacheRootDirectory);
 
-    cacheDir = QString( cacheRootDirectory + QDir::separator() + "man_qndc");
+    cacheDir = QString( cacheRootDirectory + QDir::separator() + QLatin1String("man_qndc"));
     QDir d;
     qDebug() << "Setting cache directory to = " << d.absoluteFilePath(cacheDir);
 

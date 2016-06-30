@@ -62,7 +62,7 @@ public slots:
         QVERIFY(testdir.cd(subfolder_name));
 
         for (uint i=0; i<10000; ++i) {
-            QFile file(testdir.absolutePath() + "/testfile_" + QString::number(i));
+            QFile file(testdir.absolutePath() + QLatin1String("/testfile_") + QString::number(i));
             file.open(QIODevice::WriteOnly);
         }
     }

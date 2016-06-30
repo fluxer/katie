@@ -274,7 +274,7 @@ protected:
         do {
             if (client->canReadLine()) {
                 QString line = client->readLine();
-                if (line == "\n" || line == "\r\n")
+                if (line == QLatin1String("\n") || line == QLatin1String("\r\n"))
                     break; // empty line
             }
             if (!client->waitForReadyRead(10*1000)) {
@@ -394,9 +394,9 @@ public slots:
         client->readAll();
         client->write("HTTP/1.0 200 OK\n");
         if (serverSendsContentLength)
-            client->write(QString("Content-Length: " + QString::number(dataSize) + "\n").toAscii());
+            client->write(QString(QLatin1String("Content-Length: ") + QString::number(dataSize) + QLatin1String("\n")).toAscii());
         if (chunkedEncoding)
-            client->write(QString("Transfer-Encoding: chunked\n").toAscii());
+            client->write(QString::fromLatin1("Transfer-Encoding: chunked\n").toAscii());
         client->write("Connection: close\n\n");
     }
 
@@ -407,7 +407,7 @@ public slots:
 
             // chunked encoding: we have to send a last "empty" chunk
             if (chunkedEncoding)
-                client->write(QString("0\r\n\r\n").toAscii());
+                client->write(QString::fromLatin1("0\r\n\r\n").toAscii());
 
             client->disconnectFromHost();
             server.close();
@@ -421,9 +421,9 @@ public slots:
             QByteArray data(amount, '@');
 
             if (chunkedEncoding) {
-                client->write(QString(QString("%1").arg(amount,0,16).toUpper() + "\r\n").toAscii());
+                client->write(QString(QString("%1").arg(amount,0,16).toUpper() + QLatin1String("\r\n")).toAscii());
                 client->write(data.constData(), amount);
-                client->write(QString("\r\n").toAscii());
+                client->write(QString::fromLatin1("\r\n").toAscii());
             } else {
                 client->write(data.constData(), amount);
             }
@@ -478,7 +478,7 @@ void tst_qnetworkreply::httpLatency()
 {
     QNetworkAccessManager manager;
     QBENCHMARK{
-        QNetworkRequest request(QUrl("http://" + QtNetworkSettings::serverName() + "/qtest/"));
+        QNetworkRequest request(QUrl(QLatin1String("http://") + QtNetworkSettings::serverName() + QLatin1String("/qtest/")));
         QNetworkReply* reply = manager.get(request);
         connect(reply, SIGNAL(finished()), &QTestEventLoop::instance(), SLOT(exitLoop()), Qt::QueuedConnection);
         QTestEventLoop::instance().enterLoop(5);
@@ -499,7 +499,7 @@ void tst_qnetworkreply::echoPerformance()
 {
     QFETCH(bool, ssl);
     QNetworkAccessManager manager;
-    QNetworkRequest request(QUrl((ssl ? "https://" : "http://") + QtNetworkSettings::serverName() + "/qtest/cgi-bin/echo.cgi"));
+    QNetworkRequest request(QUrl((ssl ? QLatin1String("https://") : QLatin1String("http://")) + QtNetworkSettings::serverName() + QLatin1String("/qtest/cgi-bin/echo.cgi")));
 
     QByteArray data;
     data.resize(1024*1024*10); // 10 MB
@@ -526,7 +526,7 @@ void tst_qnetworkreply::downloadPerformance()
     // unlike the above function, this one tries to send as fast as possible
     // and measures how fast it was.
     TimedSender sender(5000);
-    QNetworkRequest request("debugpipe://127.0.0.1:" + QString::number(sender.serverPort()) + "/?bare=1");
+    QNetworkRequest request(QUrl(QLatin1String("debugpipe://127.0.0.1:") + QString::number(sender.serverPort()) + QLatin1String("/?bare=1")));
     QNetworkReplyPtr reply = manager.get(request);
     DataReader reader(reply, false);
 
@@ -548,7 +548,7 @@ void tst_qnetworkreply::uploadPerformance()
       DataGenerator generator;
 
 
-      QNetworkRequest request("debugpipe://127.0.0.1:" + QString::number(reader.serverPort()) + "/?bare=1");
+      QNetworkRequest request(QUrl(QLatin1String("debugpipe://127.0.0.1:") + QString::number(reader.serverPort()) + QLatin1String("/?bare=1")));
       QNetworkReplyPtr reply = manager.put(request, &generator);
       generator.start();
       connect(&reader, SIGNAL(finished()), &QTestEventLoop::instance(), SLOT(exitLoop()));
@@ -570,7 +570,7 @@ void tst_qnetworkreply::httpUploadPerformance()
       ThreadedDataReaderHttpServer reader;
       FixedSizeDataGenerator generator(UploadSize);
 
-      QNetworkRequest request(QUrl("http://127.0.0.1:" + QString::number(reader.serverPort()) + "/?bare=1"));
+      QNetworkRequest request(QUrl(QLatin1String("http://127.0.0.1:") + QString::number(reader.serverPort()) + QLatin1String("/?bare=1")));
       request.setHeader(QNetworkRequest::ContentLengthHeader,UploadSize);
 
       QNetworkReplyPtr reply = manager.put(request, &generator);
@@ -640,7 +640,7 @@ void tst_qnetworkreply::httpDownloadPerformance()
 #endif
     HttpDownloadPerformanceServer server(UploadSize, serverSendsContentLength, chunkedEncoding);
 
-    QNetworkRequest request(QUrl("http://127.0.0.1:" + QString::number(server.serverPort()) + "/?bare=1"));
+    QNetworkRequest request(QUrl(QLatin1String("http://127.0.0.1:") + QString::number(server.serverPort()) + QLatin1String("/?bare=1")));
     QNetworkReplyPtr reply = manager.get(request);
 
     connect(reply, SIGNAL(finished()), &QTestEventLoop::instance(), SLOT(exitLoop()), Qt::QueuedConnection);
@@ -725,7 +725,7 @@ void tst_qnetworkreply::httpDownloadPerformanceDownloadBuffer()
 
     HttpDownloadPerformanceServer server(UploadSize, true, false);
 
-    QNetworkRequest request(QUrl("http://127.0.0.1:" + QString::number(server.serverPort()) + "/?bare=1"));
+    QNetworkRequest request(QUrl(QLatin1String("http://127.0.0.1:") + QString::number(server.serverPort()) + QLatin1String("/?bare=1")));
     if (testType == JustDownloadBuffer || testType == DownloadBufferButUseRead)
         request.setAttribute(QNetworkRequest::MaximumDownloadBufferSizeAttribute, 1024*1024*128); // 128 MB is max allowed
 

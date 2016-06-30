@@ -110,13 +110,13 @@ void tst_QText::loadHtml_data()
 
     QString parag = QString::fromLatin1("<p>%1</p>").arg(m_lorem);
     QString header = QString::fromLatin1("<html><head><title>test</title></head><body>");
-    QTest::newRow("long") << QString::fromLatin1("<html><head><title>test</title></head><body>") + parag + parag + parag
+    QTest::newRow("long") << QString(QString::fromLatin1("<html><head><title>test</title></head><body>") + parag + parag + parag
         + parag + parag + parag + parag + parag + parag + parag + parag + parag + parag + parag + parag + parag + parag
-        + QString::fromLatin1("</html>");
-    QTest::newRow("table") <<  header + QLatin1String("<table border=\"1\"1><tr><td>xx</td></tr><tr><td colspan=\"2\">")
-        + parag + QLatin1String("</td></tr></table></html");
-    QTest::newRow("crappy") <<  header + QLatin1String("<table border=\"1\"1><tr><td>xx</td></tr><tr><td colspan=\"2\">")
-        + parag;
+        + QString::fromLatin1("</html>"));
+    QTest::newRow("table") <<  QString(header + QLatin1String("<table border=\"1\"1><tr><td>xx</td></tr><tr><td colspan=\"2\">")
+        + parag + QLatin1String("</td></tr></table></html"));
+    QTest::newRow("crappy") <<  QString(header + QLatin1String("<table border=\"1\"1><tr><td>xx</td></tr><tr><td colspan=\"2\">")
+        + parag);
 }
 
 void tst_QText::loadHtml()
