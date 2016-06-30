@@ -102,7 +102,7 @@ class DesignerPropertyManager : public QtVariantPropertyManager
 {
     Q_OBJECT
 public:
-    explicit DesignerPropertyManager(QDesignerFormEditorInterface *core, QObject *parent = 0);
+    explicit DesignerPropertyManager(QObject *parent = 0);
     ~DesignerPropertyManager();
 
     virtual QStringList attributes(int propertyType) const;
@@ -231,7 +231,6 @@ private:
     QMap<QtProperty *, QIcon> m_defaultIcons;
 
     bool m_changingSubValue;
-    QDesignerFormEditorInterface *m_core;
 
     QObject *m_object;
 

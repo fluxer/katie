@@ -697,8 +697,6 @@ QDebug Grid::debug(QDebug str) const
     return str;
 }
 
-static inline QDebug operator<<(QDebug str, const Grid &g) { return g.debug(str); }
-
 void Grid::setCells(const QRect &c, QWidget* w)
 {
     const int bottom = c.top() + c.height();

@@ -926,17 +926,17 @@ static QString elliditide(const QString &text, const QFontMetrics &fontMetrics, 
         QString rightHalf = title.mid(leftHalf.size() + 1);
         while (!leftHalf.isEmpty() && !rightHalf.isEmpty()) {
             leftHalf.chop(1);
-            int width = fontMetrics.width(leftHalf + ellipsis + rightHalf);
-            if (width < rect.width()) {
+            int fontwidth = fontMetrics.width(leftHalf + ellipsis + rightHalf);
+            if (fontwidth < rect.width()) {
                 title = leftHalf + ellipsis + rightHalf;
-                width = width;
+                width = fontwidth;
                 break;
             }
             rightHalf.remove(0, 1);
-            width = fontMetrics.width(leftHalf + ellipsis + rightHalf);
-            if (width < rect.width()) {
+            fontwidth = fontMetrics.width(leftHalf + ellipsis + rightHalf);
+            if (fontwidth < rect.width()) {
                 title = leftHalf + ellipsis + rightHalf;
-                width = width;
+                width = fontwidth;
                 break;
             }
         }

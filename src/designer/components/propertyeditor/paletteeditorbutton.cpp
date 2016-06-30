@@ -48,11 +48,10 @@ QT_BEGIN_NAMESPACE
 
 using namespace qdesigner_internal;
 
-PaletteEditorButton::PaletteEditorButton(QDesignerFormEditorInterface *core, const QPalette &palette, QWidget *parent)
+PaletteEditorButton::PaletteEditorButton(const QPalette &palette, QWidget *parent)
     : QToolButton(parent),
       m_palette(palette)
 {
-    m_core = core;
     setFocusPolicy(Qt::NoFocus);
     setText(tr("Change Palette"));
     setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
@@ -78,7 +77,7 @@ void PaletteEditorButton::showPaletteEditor()
 {
     int result;
     QPalette p = QPalette();
-    QPalette pal = PaletteEditor::getPalette(m_core, 0, m_palette, m_superPalette, &result);
+    QPalette pal = PaletteEditor::getPalette(0, m_palette, m_superPalette, &result);
     if (result == QDialog::Accepted) {
         m_palette = pal;
         emit paletteChanged(m_palette);

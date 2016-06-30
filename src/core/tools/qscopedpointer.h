@@ -48,8 +48,9 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 template <typename T>
-struct QScopedPointerDeleter
+class QScopedPointerDeleter
 {
+public:
     static inline void cleanup(T *pointer)
     {
         // Enforce a complete type.
@@ -63,8 +64,9 @@ struct QScopedPointerDeleter
 };
 
 template <typename T>
-struct QScopedPointerArrayDeleter
+class QScopedPointerArrayDeleter
 {
+public:
     static inline void cleanup(T *pointer)
     {
         // Enforce a complete type.

@@ -139,7 +139,9 @@ private:
 
     QDesignerFormEditorInterface *m_core;
     QPointer<QDesignerFormWindowInterface> m_formWindow;
+#if 0 // ### implement me
     QListWidget *m_actionGroups;
+#endif
 
     ActionView *m_actionView;
 

@@ -1791,7 +1791,7 @@ static QFontEngine *loadRaw(const QFontPrivate *fp, const QFontDef &request)
     return fe;
 }
 
-QFontEngine *QFontDatabase::loadXlfd(int screen, int script, const QFontDef &request, int force_encoding_id)
+QFontEngine *QFontDatabase::loadXlfd(int script, const QFontDef &request, int force_encoding_id)
 {
     QMutexLocker locker(fontDatabaseMutex());
 
@@ -1900,7 +1900,7 @@ QFontEngine *QFontDatabase::loadXlfd(int screen, int script, const QFontDef &req
         }
 #endif
 
-        fe = new QFontEngineMultiXLFD(request, encodings, screen);
+        fe = new QFontEngineMultiXLFD(request, encodings);
     }
     return fe;
 }
@@ -1974,7 +1974,7 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             fe = loadFc(d, script, req);
 #endif
         } else if (mainThread && qt_is_gui_used) {
-            fe = loadXlfd(d->screen, script, req);
+            fe = loadXlfd(script, req);
         }
         if (!fe) {
             fe = new QFontEngineBox(req.pixelSize);

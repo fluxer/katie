@@ -85,7 +85,7 @@ AbstractItemEditor::AbstractItemEditor(QDesignerFormWindowInterface *form, QWidg
       m_updatingBrowser(false)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    m_propertyManager = new DesignerPropertyManager(form->core(), this);
+    m_propertyManager = new DesignerPropertyManager(this);
     m_editorFactory = new DesignerEditorFactory(form->core(), this);
     m_editorFactory->setSpacing(0);
     m_propertyBrowser = new ItemPropertyBrowser;

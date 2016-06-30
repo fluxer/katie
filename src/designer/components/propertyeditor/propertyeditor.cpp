@@ -222,7 +222,7 @@ PropertyEditor::PropertyEditor(QDesignerFormEditorInterface *core, QWidget *pare
     m_propertySheet(0),
     m_currentBrowser(0),
     m_treeBrowser(0),
-    m_propertyManager(new DesignerPropertyManager(m_core, this)),
+    m_propertyManager(new DesignerPropertyManager(this)),
     m_dynamicGroup(0),
     m_updatingBrowser(false),
     m_stackedWidget(new QStackedWidget),

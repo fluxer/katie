@@ -61,21 +61,20 @@ namespace qdesigner_internal {
 
 enum { BrushRole = 33 };
 
-PaletteEditor::PaletteEditor(QDesignerFormEditorInterface *core, QWidget *parent) : 
+PaletteEditor::PaletteEditor(QWidget *parent) :
     QDialog(parent),
     m_currentColorGroup(QPalette::Active),
     m_paletteModel(new PaletteModel(this)),
     m_modelUpdated(false),
     m_paletteUpdated(false),
-    m_compute(true),
-    m_core(core)
+    m_compute(true)
 {
     ui.setupUi(this);
     ui.paletteView->setModel(m_paletteModel);
     updatePreviewPalette();
     updateStyledButton();
     ui.paletteView->setModel(m_paletteModel);
-    ColorDelegate *delegate = new ColorDelegate(core, this);
+    ColorDelegate *delegate = new ColorDelegate(this);
     ui.paletteView->setItemDelegate(delegate);
     ui.paletteView->setEditTriggers(QAbstractItemView::AllEditTriggers);
     connect(m_paletteModel, SIGNAL(paletteChanged(QPalette)),
@@ -214,10 +213,10 @@ void PaletteEditor::updateStyledButton()
     ui.buildButton->setColor(palette().color(QPalette::Active, QPalette::Button));
 }
 
-QPalette PaletteEditor::getPalette(QDesignerFormEditorInterface *core, QWidget* parent, const QPalette &init,
+QPalette PaletteEditor::getPalette(QWidget* parent, const QPalette &init,
             const QPalette &parentPal, int *ok)
 {
-    PaletteEditor dlg(core, parent);
+    PaletteEditor dlg(parent);
     QPalette parentPalette(parentPal);
     uint mask = init.resolve();
     for (int i = 0; i < (int)QPalette::NColorRoles; i++) {
@@ -417,11 +416,10 @@ int PaletteModel::groupToColumn(QPalette::ColorGroup group) const
 
 //////////////////////////
 
-BrushEditor::BrushEditor(QDesignerFormEditorInterface *core, QWidget *parent) :
+BrushEditor::BrushEditor(QWidget *parent) :
     QWidget(parent),
     m_button(new QtColorButton(this)),
-    m_changed(false),
-    m_core(core)    
+    m_changed(false)
 {
     QLayout *layout = new QHBoxLayout(this);
     layout->setMargin(0);
@@ -504,9 +502,8 @@ void RoleEditor::emitResetProperty()
 }
         
 //////////////////////////
-ColorDelegate::ColorDelegate(QDesignerFormEditorInterface *core, QObject *parent) :
-    QItemDelegate(parent),
-    m_core(core)
+ColorDelegate::ColorDelegate(QObject *parent) :
+    QItemDelegate(parent)
 { 
 }
 
@@ -521,7 +518,7 @@ QWidget *ColorDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem
         //editor->installEventFilter(const_cast<ColorDelegate *>(this));
         ed = editor;
     } else {
-        BrushEditor *editor = new BrushEditor(m_core, parent);
+        BrushEditor *editor = new BrushEditor(parent);
         connect(editor, SIGNAL(changed(QWidget*)), this, SIGNAL(commitData(QWidget*)));
         editor->setFocusPolicy(Qt::NoFocus);
         editor->installEventFilter(const_cast<ColorDelegate *>(this));

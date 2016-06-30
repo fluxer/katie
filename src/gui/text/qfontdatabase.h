@@ -152,7 +152,7 @@ private:
     static QString resolveFontFamilyAlias(const QString &family);
     static void load(const QFontPrivate *d, int script);
 #ifdef Q_WS_X11
-    static QFontEngine *loadXlfd(int screen, int script, const QFontDef &request, int force_encoding_id = -1);
+    static QFontEngine *loadXlfd(int script, const QFontDef &request, int force_encoding_id = -1);
 #endif
 
     friend struct QFontDef;

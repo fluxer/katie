@@ -711,10 +711,9 @@ void ResetWidget::slotClicked()
 
 // ------------ DesignerPropertyManager:
 
-DesignerPropertyManager::DesignerPropertyManager(QDesignerFormEditorInterface *core, QObject *parent) :
+DesignerPropertyManager::DesignerPropertyManager(QObject *parent) :
     QtVariantPropertyManager(parent),
     m_changingSubValue(false),
-    m_core(core),
     m_sourceOfChange(0)
 {
     connect(this, SIGNAL(valueChanged(QtProperty*,QVariant)), this, SLOT(slotValueChanged(QtProperty*,QVariant)));
@@ -2438,7 +2437,7 @@ QWidget *DesignerEditorFactory::createEditor(QtVariantPropertyManager *manager, 
     }
         break;
     case QVariant::Palette: {
-        PaletteEditorButton *ed = new PaletteEditorButton(m_core, qvariant_cast<QPalette>(manager->value(property)), parent);
+        PaletteEditorButton *ed = new PaletteEditorButton(qvariant_cast<QPalette>(manager->value(property)), parent);
         ed->setSuperPalette(qvariant_cast<QPalette>(manager->attributeValue(property, QLatin1String(superPaletteAttributeC))));
         m_palettePropertyToEditors[property].append(ed);
         m_editorToPaletteProperty[ed] = property;

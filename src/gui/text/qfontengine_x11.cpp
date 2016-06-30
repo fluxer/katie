@@ -105,8 +105,8 @@ QT_BEGIN_NAMESPACE
 // Multi XLFD engine
 // ------------------------------------------------------------------
 
-QFontEngineMultiXLFD::QFontEngineMultiXLFD(const QFontDef &r, const QList<int> &l, int s)
-    : QFontEngineMulti(l.size()), encodings(l), screen(s), request(r)
+QFontEngineMultiXLFD::QFontEngineMultiXLFD(const QFontDef &r, const QList<int> &l)
+    : QFontEngineMulti(l.size()), encodings(l), request(r)
 {
     loadEngine(0);
     fontDef = engines[0]->fontDef;
@@ -120,7 +120,7 @@ void QFontEngineMultiXLFD::loadEngine(int at)
     Q_ASSERT(at < engines.size());
     Q_ASSERT(engines.at(at) == 0);
     const int encoding = encodings.at(at);
-    QFontEngine *fontEngine = QFontDatabase::loadXlfd(0, QUnicodeTables::Common, request, encoding);
+    QFontEngine *fontEngine = QFontDatabase::loadXlfd(QUnicodeTables::Common, request, encoding);
     Q_ASSERT(fontEngine != 0);
     fontEngine->ref.ref();
     engines[at] = fontEngine;

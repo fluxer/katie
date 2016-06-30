@@ -65,14 +65,13 @@ class QFreetypeFace;
 class QFontEngineMultiXLFD : public QFontEngineMulti
 {
 public:
-    QFontEngineMultiXLFD(const QFontDef &r, const QList<int> &l, int s);
+    QFontEngineMultiXLFD(const QFontDef &r, const QList<int> &l);
     ~QFontEngineMultiXLFD();
 
     void loadEngine(int at);
 
 private:
     QList<int> encodings;
-    int screen;
     QFontDef request;
 };
 
