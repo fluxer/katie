@@ -103,7 +103,7 @@ void tst_QGraphicsLayout::invalidate()
 
     RectWidget *window = new RectWidget(0, Qt::Window);
     window->setGeometryCalls = &setGeometryCalls;
-    window->setData(0, QString(QChar('a')));
+    window->setData(0, QString(QLatin1Char('a')));
 
     scene.addItem(window);
     RectWidget *leaf = 0;

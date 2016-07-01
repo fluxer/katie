@@ -343,13 +343,10 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QImage", "QtGui/qimage.h"},
     { "QIconEngine", "QtGui/qiconengine.h"},
     { "QPicture", "QtGui/qpicture.h"},
-    { "QPictureIO", "QtGui/qpicture.h"},
     { "QImageReader", "QtGui/qimagereader.h"},
     { "QImageIOHandler", "QtGui/qimageiohandler.h"},
     { "QImageIOHandlerFactoryInterface", "QtGui/qimageiohandler.h"},
     { "QImageIOPlugin", "QtGui/qimageiohandler.h"},
-    { "QPictureFormatInterface", "QtGui/qpictureformatplugin.h"},
-    { "QPictureFormatPlugin", "QtGui/qpictureformatplugin.h"},
     { "QBitmap", "QtGui/qbitmap.h"},
     { "QPixmapCache", "QtGui/qpixmapcache.h"},
     { "Key", "QtGui/qpixmapcache.h"},
@@ -787,6 +784,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 781;
+static const int qclass_lib_count = 778;
 
 #endif

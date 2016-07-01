@@ -183,9 +183,6 @@ set(GUI_PUBLIC_HEADERS
     QPanGesture
     QPen
     QPicture
-    QPictureFormatInterface
-    QPictureFormatPlugin
-    QPictureIO
     QPixmap
     QPixmapCache
     QPlainTextDocumentLayout

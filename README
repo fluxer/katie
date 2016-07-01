@@ -24,6 +24,7 @@ There are several things you should be aware before considering Katie:
   - Symbian, QWS and QPA are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
+  - QPictureIO and plugins for it are no longer supported
   - QML debugger and inspector have been removed, potentially dangerous
   - removed non-open source DB2, OCI and TDS database drivers
   - removed 3rd party sources that are very common nowdays
