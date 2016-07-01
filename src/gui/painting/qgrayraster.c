@@ -1061,7 +1061,8 @@
 #ifdef DEBUG_GRAYS
         fprintf( stderr, "y=%3d ", y );
         span = ras.gray_spans;
-        for ( int n = 0; n < count; n++, span++ )
+        int n;
+        for ( n = 0; n < count; n++, span++ )
           fprintf( stderr, "[%d..%d]:%02x ",
                    span->x, span->x + span->len - 1, span->coverage );
         fprintf( stderr, "\n" );
@@ -1089,7 +1090,8 @@
   /* to be called while in the debugger */
   void gray_dump_cells( RAS_ARG )
   {
-    for ( int yindex = 0; yindex < ras.ycount; yindex++ )
+    int yindex;
+    for ( yindex = 0; yindex < ras.ycount; yindex++ )
     {
       PCell  cell;
 
@@ -1350,6 +1352,7 @@
     TPos volatile    min, max, max_y;
     QT_FT_BBox*      clip;
     int              skip;
+    int              yindex;
 
     ras.num_gray_spans = 0;
 
@@ -1471,7 +1474,7 @@
           if ( ras.max_cells < 2 )
             goto ReduceBands;
 
-          for ( int yindex = 0; yindex < ras.ycount; yindex++ )
+          for ( yindex = 0; yindex < ras.ycount; yindex++ )
             ras.ycells[yindex] = NULL;
         }
 
@@ -1494,7 +1497,7 @@
         if ( !error && ras.num_cells != 0)
         {
           /* sweep */
-          for ( int yindex = 0; yindex < ras.ycount; yindex++ )
+          for ( yindex = 0; yindex < ras.ycount; yindex++ )
           {
             PCell   cell  = ras.ycells[yindex];
             TCoord  cover = 0;
