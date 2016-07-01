@@ -67,8 +67,6 @@ QT_BEGIN_NAMESPACE
 
 class QPaintEngine;
 
-extern const char  *qt_mfhdr_tag;
-
 class QPicturePrivate
 {
     friend class QPicturePaintEngine;
@@ -152,8 +150,6 @@ public:
     QBuffer pictb;
     int trecs;
     bool formatOk;
-    int formatMajor;
-    int formatMinor;
     QRect brect;
     QRect override_rect;
     QScopedPointer<QPaintEngine> paintEngine;

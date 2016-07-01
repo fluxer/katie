@@ -63,8 +63,6 @@ class Q_GUI_EXPORT QFontDatabase
     Q_GADGET
     Q_ENUMS(WritingSystem)
 public:
-    // do not re-order or delete entries from this enum without updating the
-    // QPF2 format and makeqpf!!
     enum WritingSystem {
         Any,
 
@@ -160,9 +158,6 @@ private:
     friend class QFontDialog;
     friend class QFontDialogPrivate;
     friend class QFontEngineMultiXLFD;
-    friend class QFontEngineMultiQWS;
-    friend class QFontEngineMultiS60;
-    friend class QFontEngineMultiQPA;
 
     QFontDatabasePrivate *d;
 };

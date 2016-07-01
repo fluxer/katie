@@ -107,8 +107,8 @@ void qt_format_text(const QFont &fnt, const QRectF &_r,
     \sa QMovie
 */
 
-const char  *qt_mfhdr_tag = "QPIC"; // header tag
-static const quint16 mfhdr_maj = 11; // major version #
+// keep in sync with qpaintengine_pic.cpp
+static const char  *qt_mfhdr_tag = "QPIC"; // header tag
 
 /*!
     Constructs an empty picture.
@@ -341,7 +341,6 @@ bool QPicture::play(QPainter *painter)
     QDataStream s;
     s.setDevice(&d->pictb);                        // attach data stream to buffer
     s.device()->seek(10);                        // go directly to the data
-    s.setVersion(mfhdr_maj);
 
     quint8  c, clen;
     quint32 nrecords;
@@ -882,16 +881,6 @@ bool QPicturePrivate::checkFormat()
         return false;
     }
 
-    quint16 major, minor;
-    s >> major >> minor;                        // read version number
-    if (major > mfhdr_maj) {                // new, incompatible version
-        qWarning("QPicturePaintEngine::checkFormat: Incompatible version %d.%d",
-                  major, minor);
-        pictb.close();
-        return false;
-    }
-    s.setVersion(major);
-
     quint8  c, clen;
     s >> c >> clen;
     if (c == QPicturePrivate::PdcBegin) {
@@ -954,7 +943,6 @@ QDataStream &operator>>(QDataStream &s, QPicture &r)
 
     // "init"; this code is similar to the beginning of QPicture::cmd()
     sr.setDevice(&r.d_func()->pictb);
-    sr.setVersion(mfhdr_maj);
     quint32 len;
     s >> len;
     QByteArray data;

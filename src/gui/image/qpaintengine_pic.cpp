@@ -59,6 +59,8 @@
 //#define QT_PICTURE_DEBUG
 #include <qdebug.h>
 
+// keep in sync with qpicture.cpp
+static const char  *qt_mfhdr_tag = "QPIC"; // header tag
 
 QT_BEGIN_NAMESPACE
 
@@ -103,18 +105,14 @@ bool QPicturePaintEngine::begin(QPaintDevice *pd)
     Q_ASSERT(d->pic_d);
 
     d->s.setDevice(&d->pic_d->pictb);
-    d->s.setVersion(d->pic_d->formatMajor);
 
     d->pic_d->pictb.open(QIODevice::WriteOnly | QIODevice::Truncate);
     d->s.writeRawData(qt_mfhdr_tag, 4);
-    d->s << (quint16) 0 << (quint16) d->pic_d->formatMajor << (quint16) d->pic_d->formatMinor;
     d->s << (quint8) QPicturePrivate::PdcBegin << (quint8) sizeof(qint32);
     d->pic_d->brect = QRect();
-    if (d->pic_d->formatMajor >= 4) {
-        QRect r = pic->boundingRect();
-        d->s << (qint32) r.left() << (qint32) r.top() << (qint32) r.width()
-             << (qint32) r.height();
-    }
+    QRect r = pic->boundingRect();
+    d->s << (qint32) r.left() << (qint32) r.top() << (qint32) r.width()
+            << (qint32) r.height();
     d->pic_d->trecs = 0;
     d->s << (quint32)d->pic_d->trecs; // total number of records
     d->pic_d->formatOk = false;
@@ -135,11 +133,11 @@ bool QPicturePaintEngine::end()
     int brect_start = data_start + 2*sizeof(qint16) + 2*sizeof(quint8);
     int pos = d->pic_d->pictb.pos();
     d->pic_d->pictb.seek(brect_start);
-    if (d->pic_d->formatMajor >= 4) { // bounding rectangle
-        QRect r = static_cast<QPicture *>(d->pdev)->boundingRect();
-        d->s << (qint32) r.left() << (qint32) r.top() << (qint32) r.width()
-             << (qint32) r.height();
-    }
+    // bounding rectangle
+    QRect r = static_cast<QPicture *>(d->pdev)->boundingRect();
+    d->s << (qint32) r.left() << (qint32) r.top() << (qint32) r.width()
+            << (qint32) r.height();
+    // end bounding rectangle
     d->s << (quint32) d->pic_d->trecs;                        // write number of records
     d->pic_d->pictb.seek(cs_start);
     QByteArray buf = d->pic_d->pictb.buffer();
@@ -488,33 +486,19 @@ void QPicturePaintEngine::drawTextItem(const QPointF &p , const QTextItem &ti)
     if (si.chars == 0)
         QPaintEngine::drawTextItem(p, ti); // Draw as path
 
-    if (d->pic_d->formatMajor >= 9) {
-        int pos;
-        SERIALIZE_CMD(QPicturePrivate::PdcDrawTextItem);
-        QFont fnt = ti.font();
-        fnt.setUnderline(false);
-        fnt.setStrikeOut(false);
-        fnt.setOverline(false);
+    int pos;
+    SERIALIZE_CMD(QPicturePrivate::PdcDrawTextItem);
+    QFont fnt = ti.font();
+    fnt.setUnderline(false);
+    fnt.setStrikeOut(false);
+    fnt.setOverline(false);
 
-        qreal justificationWidth = 0;
-        if (si.justified)
-            justificationWidth = si.width.toReal();
+    qreal justificationWidth = 0;
+    if (si.justified)
+        justificationWidth = si.width.toReal();
 
-        d->s << p << ti.text() << fnt << ti.renderFlags() << double(fnt.d->dpi)/qt_defaultDpi() << justificationWidth;
-        writeCmdLength(pos, /*brect=*/QRectF(), /*corr=*/false);
-    } else if (d->pic_d->formatMajor >= 8) {
-        // old old (buggy) format
-        int pos;
-        SERIALIZE_CMD(QPicturePrivate::PdcDrawTextItem);
-        d->s << QPointF(p.x(), p.y() - ti.ascent()) << ti.text() << ti.font() << ti.renderFlags();
-        writeCmdLength(pos, /*brect=*/QRectF(), /*corr=*/false);
-    } else {
-        // old (buggy) format
-        int pos;
-        SERIALIZE_CMD(QPicturePrivate::PdcDrawText2);
-        d->s << p << ti.text();
-        writeCmdLength(pos, QRectF(p, QSizeF(1,1)), true);
-    }
+    d->s << p << ti.text() << fnt << ti.renderFlags() << double(fnt.d->dpi)/qt_defaultDpi() << justificationWidth;
+    writeCmdLength(pos, /*brect=*/QRectF(), /*corr=*/false);
 }
 
 void QPicturePaintEngine::updateState(const QPaintEngineState &state)
