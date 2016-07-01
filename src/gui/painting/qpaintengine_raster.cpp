@@ -220,8 +220,19 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate() :
     QPaintEngineExPrivate(),
     cachedLines(0)
 {
+    // The antialiasing raster.
+    grayRaster = new QT_FT_Raster;
+    Q_CHECK_PTR(grayRaster);
+    if (qt_ft_grays_raster.raster_new(grayRaster)) {
+        // an error creating the raster is caused by a bad malloc
+        QT_THROW(std::bad_alloc());
+    }
 }
 
+QRasterPaintEnginePrivate::~QRasterPaintEnginePrivate()
+{
+    free(grayRaster);
+}
 
 /*!
     \class QRasterPaintEngine
@@ -293,13 +304,6 @@ void QRasterPaintEngine::init()
     d->hdc = 0;
 #endif
 
-    // The antialiasing raster.
-    d->grayRaster.reset(new QT_FT_Raster);
-    Q_CHECK_PTR(d->grayRaster.data());
-    if (qt_ft_grays_raster.raster_new(d->grayRaster.data()))
-        QT_THROW(std::bad_alloc()); // an error creating the raster is caused by a bad malloc
-
-
     d->rasterizer.reset(new QRasterizer);
     d->rasterBuffer.reset(new QRasterBuffer());
     d->outlineMapper.reset(new QOutlineMapper);
@@ -364,19 +368,6 @@ void QRasterPaintEngine::init()
     default:
         break;
     }
-}
-
-
-
-
-/*!
-    Destroys this paint engine.
-*/
-QRasterPaintEngine::~QRasterPaintEngine()
-{
-    Q_D(QRasterPaintEngine);
-
-    free(*d->grayRaster.data());
 }
 
 /*!
@@ -3580,7 +3571,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     uchar *rasterPoolBase = alignAddress(rasterPoolOnStack, 0xf);
     uchar *rasterPoolOnHeap = 0;
 
-    qt_ft_grays_raster.raster_reset(*grayRaster.data(), rasterPoolBase, rasterPoolSize);
+    qt_ft_grays_raster.raster_reset(*grayRaster, rasterPoolBase, rasterPoolSize);
 
     void *data = userData;
 
@@ -3604,7 +3595,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     while (!done) {
         rasterParams.gray_spans = callback;
         rasterParams.skip_spans = rendered_spans;
-        error = qt_ft_grays_raster.raster_render(*grayRaster.data(), &rasterParams);
+        error = qt_ft_grays_raster.raster_render(*grayRaster, &rasterParams);
 
         // Out of memory, reallocate some more and try again...
         if (error == -6) { // ErrRaster_OutOfMemory from qgrayraster.c
@@ -3614,7 +3605,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                 break;
             }
 
-            rendered_spans += q_gray_rendered_spans(*grayRaster.data());
+            rendered_spans += q_gray_rendered_spans(*grayRaster);
 
             free(rasterPoolOnHeap);
             rasterPoolOnHeap = (uchar *)malloc(rasterPoolSize + 0xf);
@@ -3623,9 +3614,9 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
 
             rasterPoolBase = alignAddress(rasterPoolOnHeap, 0xf);
 
-            free(*grayRaster.data());
-            qt_ft_grays_raster.raster_new(grayRaster.data());
-            qt_ft_grays_raster.raster_reset(*grayRaster.data(), rasterPoolBase, rasterPoolSize);
+            free(grayRaster);
+            qt_ft_grays_raster.raster_new(grayRaster);
+            qt_ft_grays_raster.raster_reset(*grayRaster, rasterPoolBase, rasterPoolSize);
         } else {
             done = true;
         }

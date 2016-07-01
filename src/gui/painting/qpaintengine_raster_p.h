@@ -134,7 +134,6 @@ class QRasterPaintEngine : public QPaintEngineEx
 public:
 
     QRasterPaintEngine(QPaintDevice *device);
-    ~QRasterPaintEngine();
     bool begin(QPaintDevice *device);
     bool end();
 
@@ -285,6 +284,7 @@ class QRasterPaintEnginePrivate : public QPaintEngineExPrivate
     Q_DECLARE_PUBLIC(QRasterPaintEngine)
 public:
     QRasterPaintEnginePrivate();
+    ~QRasterPaintEnginePrivate();
 
     void rasterizeLine_dashed(QLineF line, qreal width,
                               int *dashIndex, qreal *dashOffset, bool *inDash);
@@ -335,7 +335,7 @@ public:
     QStroker basicStroker;
     QScopedPointer<QDashStroker> dashStroker;
 
-    QScopedPointer<QT_FT_Raster> grayRaster;
+    QT_FT_Raster* grayRaster;
 
     QDataBuffer<QLineF> cachedLines;
     QSpanData image_filler;
