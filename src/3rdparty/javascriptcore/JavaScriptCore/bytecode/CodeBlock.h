@@ -483,7 +483,7 @@ namespace JSC {
 #if !defined(NDEBUG) || ENABLE(OPCODE_SAMPLING)
         void dump(ExecState*, const Vector<Instruction>::const_iterator& begin, Vector<Instruction>::const_iterator&) const;
 
-        CString registerName(ExecState*, int r) const;
+        const char* registerName(ExecState*, int r) const;
         void printUnaryOp(ExecState*, int location, Vector<Instruction>::const_iterator&, const char* op) const;
         void printBinaryOp(ExecState*, int location, Vector<Instruction>::const_iterator&, const char* op) const;
         void printConditionalJump(ExecState*, const Vector<Instruction>::const_iterator&, Vector<Instruction>::const_iterator&, int location, const char* op) const;

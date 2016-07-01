@@ -302,8 +302,6 @@ void* Heap::allocate(size_t s)
     typedef HeapConstants::Block Block;
     typedef HeapConstants::Cell Cell;
     
-    ASSERT(JSLock::lockCount() > 0);
-    ASSERT(JSLock::currentThreadIsHoldingLock());
     ASSERT_UNUSED(s, s <= HeapConstants::cellSize);
 
     ASSERT(m_heap.operationInProgress == NoOperation);
@@ -686,7 +684,7 @@ void Heap::markCurrentThreadConservatively(MarkStack& markStack)
 void Heap::protect(JSValue k)
 {
     ASSERT(k);
-    ASSERT(JSLock::currentThreadIsHoldingLock() || !m_globalData->isSharedInstance);
+    ASSERT(!m_globalData->isSharedInstance);
 
     if (!k.isCell())
         return;
@@ -697,7 +695,7 @@ void Heap::protect(JSValue k)
 void Heap::unprotect(JSValue k)
 {
     ASSERT(k);
-    ASSERT(JSLock::currentThreadIsHoldingLock() || !m_globalData->isSharedInstance);
+    ASSERT(!m_globalData->isSharedInstance);
 
     if (!k.isCell())
         return;
@@ -777,13 +775,6 @@ void Heap::sweep()
 
 void Heap::markRoots()
 {
-#ifndef NDEBUG
-    if (m_globalData->isSharedInstance) {
-        ASSERT(JSLock::lockCount() > 0);
-        ASSERT(JSLock::currentThreadIsHoldingLock());
-    }
-#endif
-
     ASSERT(m_heap.operationInProgress == NoOperation);
     if (m_heap.operationInProgress != NoOperation)
         CRASH();
