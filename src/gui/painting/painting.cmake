@@ -40,7 +40,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtessellator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtextureglyphcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_p.h
@@ -106,7 +105,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qregion.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstroker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qstylepainter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtessellator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtextureglyphcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp
@@ -142,6 +140,7 @@ if(WITH_X11 AND X11_FOUND)
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtessellator_p.h
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}
@@ -149,6 +148,7 @@ if(WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtessellator.cpp
     )
 endif()
 
