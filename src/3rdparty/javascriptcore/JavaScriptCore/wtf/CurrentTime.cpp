@@ -58,8 +58,6 @@ extern "C" time_t mktime(struct tm *t);
 #endif
 namespace WTF {
 
-const double msPerSecond = 1000.0;
-
 #if OS(WINDOWS)
 
 #if USE(QUERY_PERFORMANCE_COUNTER)
