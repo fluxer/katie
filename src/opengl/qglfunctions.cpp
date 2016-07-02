@@ -148,16 +148,7 @@ struct QGLFunctionsPrivateEx : public QGLFunctionsPrivate
     int m_features;
 };
 
-#if QT_VERSION >= 0x040800
 Q_GLOBAL_STATIC(QGLContextGroupResource<QGLFunctionsPrivateEx>, qt_gl_functions_resource)
-#else
-static void qt_gl_functions_free(void *data)
-{
-    delete reinterpret_cast<QGLFunctionsPrivateEx *>(data);
-}
-
-Q_GLOBAL_STATIC_WITH_ARGS(QGLContextResource, qt_gl_functions_resource, (qt_gl_functions_free))
-#endif
 static QGLFunctionsPrivateEx *qt_gl_functions(const QGLContext *context = 0)
 {
     if (!context)
@@ -166,12 +157,6 @@ static QGLFunctionsPrivateEx *qt_gl_functions(const QGLContext *context = 0)
     QGLFunctionsPrivateEx *funcs =
         reinterpret_cast<QGLFunctionsPrivateEx *>
             (qt_gl_functions_resource()->value(context));
-#if QT_VERSION < 0x040800
-    if (!funcs) {
-        funcs = new QGLFunctionsPrivateEx();
-        qt_gl_functions_resource()->insert(context, funcs);
-    }
-#endif
     return funcs;
 }
 

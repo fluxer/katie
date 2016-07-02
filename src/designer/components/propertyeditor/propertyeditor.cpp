@@ -85,9 +85,7 @@
 #include <QtCore/QTextStream>
 
 static const char *SettingsGroupC = "PropertyEditor";
-#if QT_VERSION >= 0x040500
 static const char *ViewKeyC = "View";
-#endif
 static const char *ColorKeyC = "Colored";
 static const char *SortedKeyC = "Sorted";
 static const char *ExpansionKeyC = "ExpandedItems";
@@ -359,9 +357,7 @@ PropertyEditor::PropertyEditor(QDesignerFormEditorInterface *core, QWidget *pare
     // retrieve initial settings
     QDesignerSettingsInterface *settings = m_core->settingsManager();
     settings->beginGroup(QLatin1String(SettingsGroupC));
-#if QT_VERSION >= 0x040500
     const SettingsView view = settings->value(QLatin1String(ViewKeyC), TreeView).toInt() == TreeView ? TreeView :  ButtonView;
-#endif
     // Coloring not available unless treeview and not sorted
     m_sorting = settings->value(QLatin1String(SortedKeyC), false).toBool();
     m_coloring = settings->value(QLatin1String(ColorKeyC), true).toBool();
@@ -372,7 +368,6 @@ PropertyEditor::PropertyEditor(QDesignerFormEditorInterface *core, QWidget *pare
     m_sortingAction->setChecked(m_sorting);
     m_coloringAction->setChecked(m_coloring);
     m_treeBrowser->setSplitterPosition(splitterPosition);
-#if QT_VERSION >= 0x040500
     switch (view) {
     case TreeView:
         m_currentBrowser = m_treeBrowser;
@@ -385,7 +380,6 @@ PropertyEditor::PropertyEditor(QDesignerFormEditorInterface *core, QWidget *pare
         m_buttonAction->setChecked(true);
         break;
     }
-#endif
     // Restore expansionState from QVariant map
     if (!expansionState.empty()) {
         const QVariantMap::const_iterator cend = expansionState.constEnd();
@@ -405,9 +399,7 @@ void PropertyEditor::saveSettings() const
 {
     QDesignerSettingsInterface *settings = m_core->settingsManager();
     settings->beginGroup(QLatin1String(SettingsGroupC));
-#if QT_VERSION >= 0x040500
     settings->setValue(QLatin1String(ViewKeyC), QVariant(m_treeAction->isChecked() ? TreeView : ButtonView));
-#endif
     settings->setValue(QLatin1String(ColorKeyC), QVariant(m_coloring));
     settings->setValue(QLatin1String(SortedKeyC), QVariant(m_sorting));
     // Save last expansionState as QVariant map
