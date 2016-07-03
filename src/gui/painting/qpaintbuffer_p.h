@@ -414,8 +414,7 @@ public:
 
     mutable bool m_begin_detected : 1;
     mutable bool m_save_detected : 1;
-    mutable int m_stream_raw_text_items : 1;
-    mutable int m_unused : 29;
+    mutable bool m_stream_raw_text_items : 1;
 
     mutable QPainterState *m_created_state;
 };

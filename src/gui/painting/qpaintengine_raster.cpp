@@ -59,21 +59,16 @@
 #  include <qfontengine_ft_p.h>
 #endif
 
-//   #include <qdatabuffer_p.h>
-//   #include <qpainter_p.h>
 #include <qmath_p.h>
 #include <qtextengine_p.h>
 #include <qfontengine_p.h>
 #include <qpixmap_raster_p.h>
-//   #include <qpolygonclipper_p.h>
-//   #include <qrasterizer_p.h>
 #include <qimage_p.h>
 #include <qstatictext_p.h>
 #include <qcosmeticstroker_p.h>
 #include "qmemrotate_p.h"
 
 #include "qpaintengine_raster_p.h"
-//   #include "qbezier_p.h"
 #include "qoutlinemapper_p.h"
 
 #if defined(Q_WS_WIN)

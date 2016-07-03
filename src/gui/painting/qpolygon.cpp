@@ -47,7 +47,6 @@
 #include "qpainterpath.h"
 #include "qvariant.h"
 #include "qpainterpath_p.h"
-#include "qbezier_p.h"
 
 #include <stdarg.h>
 

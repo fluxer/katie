@@ -1005,8 +1005,7 @@ QImage qSmoothScaleImage(const QImage &src, int dw, int dh)
 
     int w = src.width();
     int h = src.height();
-    QImageScaleInfo *scaleinfo =
-        qimageCalcScaleInfo(src, w, h, dw, dh, true);
+    QImageScaleInfo *scaleinfo = qimageCalcScaleInfo(src, w, h, dw, dh, true);
     if (!scaleinfo)
         return buffer;
 
