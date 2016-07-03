@@ -95,13 +95,10 @@ QPixmapData::~QPixmapData()
 
 QPixmapData *QPixmapData::createCompatiblePixmapData() const
 {
-    QPixmapData *d;
     QGraphicsSystem *gs = QApplicationPrivate::graphics_system;
     if (gs)
-        d = gs->createPixmapData(pixelType());
-    else
-        d = QGraphicsSystem::createDefaultPixmapData(pixelType());
-    return d;
+        return gs->createPixmapData(pixelType());
+    return QGraphicsSystem::createDefaultPixmapData(pixelType());
 }
 
 static QImage makeBitmapCompliantIfNeeded(QPixmapData *d, const QImage &image, Qt::ImageConversionFlags flags)
