@@ -224,7 +224,7 @@ static inline UString substituteBackreferences(const UString& replacement, const
 
 static inline int localeCompare(const UString& a, const UString& b)
 {
-    return Collator::userDefault()->collate(reinterpret_cast<const ::UChar*>(a.data()), a.size(), reinterpret_cast<const ::UChar*>(b.data()), b.size());
+    return Collator::userDefault()->collate(a.data(), a.size(), b.data(), b.size());
 }
 
 JSValue JSC_HOST_CALL stringProtoFuncReplace(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
