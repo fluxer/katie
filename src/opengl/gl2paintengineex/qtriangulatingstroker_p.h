@@ -48,6 +48,7 @@
 #include <qbezier_p.h>
 #include <qnumeric_p.h>
 #include <qmath_p.h>
+#include <qstroker_p.h>
 
 QT_BEGIN_NAMESPACE
 
