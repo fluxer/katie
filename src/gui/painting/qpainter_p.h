@@ -191,8 +191,7 @@ class QPainterPrivate
 public:
     QPainterPrivate(QPainter *painter)
     : q_ptr(painter), d_ptrs(0), state(0), dummyState(0), txinv(0), inDestructor(false), d_ptrs_size(0),
-        refcount(1), device(0), original_device(0), helper_device(0), engine(0), emulationEngine(0),
-        extended(0)
+        refcount(1), device(0), original_device(0), helper_device(0), engine(0), extended(0)
     {
     }
 
@@ -244,8 +243,6 @@ public:
         return state->pen.style() != Qt::NoPen && state->pen.width() == 0 ? 1 : 0;
     }
 
-    void checkEmulation();
-
     static QPainterPrivate *get(QPainter *painter)
     {
         return painter->d_ptr.data();
@@ -259,7 +256,6 @@ public:
     QPaintDevice *original_device;
     QPaintDevice *helper_device;
     QPaintEngine *engine;
-    QEmulationPaintEngine *emulationEngine;
     QPaintEngineEx *extended;
     QBrush colorBrush;          // for fill with solid color
 };

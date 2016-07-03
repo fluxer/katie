@@ -221,13 +221,6 @@ public:
     // that will be requested, and not just the "type".
     virtual QPixmapFilter *pixmapFilter(int /*type*/, const QPixmapFilter * /*prototype*/) { return 0; }
 
-    // These flags are needed in the implementation of paint buffers.
-    enum Flags
-    {
-        DoNotEmulate = 0x01,        // If set, QPainter will not wrap this engine in an emulation engine.
-        IsEmulationEngine = 0x02    // If set, this object is a QEmulationEngine.
-    };
-    virtual uint flags() const {return 0;}
     virtual bool supportsTransformations(qreal pixelSize, const QTransform &m) const;
 
 protected:

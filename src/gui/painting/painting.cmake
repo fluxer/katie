@@ -7,7 +7,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcosmeticstroker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qemulationpaintengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemex_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.h
@@ -80,7 +79,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcosmeticstroker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcssutil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qemulationpaintengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmemrotate.cpp

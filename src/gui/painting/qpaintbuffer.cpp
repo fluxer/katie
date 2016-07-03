@@ -42,7 +42,6 @@
 #include <qpainterpath_p.h>
 #include <qpaintbuffer_p.h>
 #include <qfontengine_p.h>
-#include <qemulationpaintengine_p.h>
 #include <qimage_p.h>
 #include <qstatictext.h>
 #include <qstatictext_p.h>

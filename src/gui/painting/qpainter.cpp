@@ -66,7 +66,6 @@
 
 #include <qfontengine_p.h>
 #include <qpaintengine_p.h>
-#include <qemulationpaintengine_p.h>
 #include <qpainterpath_p.h>
 #include <qtextengine_p.h>
 #include <qwidget_p.h>
@@ -173,40 +172,9 @@ static bool qt_painter_thread_test(int devType, const char *what, bool extraCond
 }
 #endif
 
-void QPainterPrivate::checkEmulation()
-{
-    Q_ASSERT(extended);
-    if (extended->flags() & QPaintEngineEx::DoNotEmulate)
-        return;
-
-    bool doEmulation = false;
-    if (state->bgMode == Qt::OpaqueMode)
-        doEmulation = true;
-
-    const QGradient *bg = state->brush.gradient();
-    if (bg && bg->coordinateMode() > QGradient::LogicalMode)
-        doEmulation = true;
-
-    const QGradient *pg = qpen_brush(state->pen).gradient();
-    if (pg && pg->coordinateMode() > QGradient::LogicalMode)
-        doEmulation = true;
-
-    if (doEmulation) {
-        if (extended != emulationEngine) {
-            if (!emulationEngine)
-                emulationEngine = new QEmulationPaintEngine(extended);
-            extended = emulationEngine;
-            extended->setState(state);
-        }
-    } else if (emulationEngine == extended) {
-        extended = emulationEngine->real_engine;
-    }
-}
-
 
 QPainterPrivate::~QPainterPrivate()
 {
-    delete emulationEngine;
     for (int i=0; i<states.size(); ++i)
         delete states.at(i);
 
@@ -337,12 +305,6 @@ void QPainterPrivate::detachPainterPrivate(QPainter *q)
     q->restore();
     q->d_ptr.take();
     q->d_ptr.reset(original);
-
-    if (emulationEngine) {
-        extended = emulationEngine->real_engine;
-        delete emulationEngine;
-        emulationEngine = 0;
-    }
 }
 
 
@@ -1638,7 +1600,6 @@ void QPainter::restore()
     d->txinv = false;
 
     if (d->extended) {
-        d->checkEmulation();
         d->extended->setState(d->state);
         delete tmp;
         return;
@@ -1780,8 +1741,6 @@ bool QPainter::begin(QPaintDevice *pd)
     d->device = pd;
 
     d->extended = d->engine->isExtended() ? static_cast<QPaintEngineEx *>(d->engine) : 0;
-    if (d->emulationEngine)
-        d->emulationEngine->real_engine = d->extended;
 
     // Setup new state...
     Q_ASSERT(!d->state);
@@ -1965,11 +1924,6 @@ bool QPainter::end()
 
     if (d->engine->autoDestruct()) {
         delete d->engine;
-    }
-
-    if (d->emulationEngine) {
-        delete d->emulationEngine;
-        d->emulationEngine = 0;
     }
 
     if (d->extended) {
@@ -3886,9 +3840,7 @@ void QPainter::setBackgroundMode(Qt::BGMode mode)
         return;
 
     d->state->bgMode = mode;
-    if (d->extended) {
-        d->checkEmulation();
-    } else {
+    if (!d->extended) {
         d->state->dirtyFlags |= QPaintEngine::DirtyBackgroundMode;
     }
 }
@@ -3972,7 +3924,6 @@ void QPainter::setPen(const QPen &pen)
     d->state->pen = pen;
 
     if (d->extended) {
-        d->checkEmulation();
         d->extended->penChanged();
         return;
     }
@@ -4054,7 +4005,6 @@ void QPainter::setBrush(const QBrush &brush)
 
     if (d->extended) {
         d->state->brush = brush;
-        d->checkEmulation();
         d->extended->brushChanged();
         return;
     }

@@ -409,7 +409,6 @@ public:
     virtual void drawStaticTextItem(QStaticTextItem *staticTextItem);
 
     virtual void setState(QPainterState *s);
-    virtual uint flags() const {return QPaintEngineEx::DoNotEmulate;}
 
     QPaintBufferPrivate *buffer;
 
