@@ -113,10 +113,8 @@ public:
 QWindowSurface::QWindowSurface(QWidget *window, bool setDefaultSurface)
     : d_ptr(new QWindowSurfacePrivate(window))
 {
-    if (!QApplicationPrivate::runtime_graphics_system) {
-        if(setDefaultSurface && window)
-            window->setWindowSurface(this);
-    }
+    if(setDefaultSurface && window)
+        window->setWindowSurface(this);
 }
 
 /*!

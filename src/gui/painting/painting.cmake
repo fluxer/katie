@@ -56,7 +56,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpen_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qfixed_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
@@ -115,7 +114,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_runtime.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp

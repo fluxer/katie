@@ -48,7 +48,6 @@
 #include <qgl_p.h>
 #include <qimagepixmapcleanuphooks_p.h>
 #include <qapplication_p.h>
-#include <qgraphicssystem_runtime_p.h>
 #include <qimage_p.h>
 #include <qeglproperties_p.h>
 #include <qeglcontext_p.h>
@@ -236,20 +235,6 @@ QPixmapData *QMeeGoGraphicsSystem::createPixmapData(QPixmapData *origin)
     return new QRasterPixmapData(origin->pixelType());
 }
 
-QPixmapData* QMeeGoGraphicsSystem::wrapPixmapData(QPixmapData *pmd)
-{
-    QString name = QApplicationPrivate::instance()->graphics_system_name;
-    if (name == "runtime") {
-        QRuntimeGraphicsSystem *rsystem = (QRuntimeGraphicsSystem *) QApplicationPrivate::instance()->graphics_system;
-        QRuntimePixmapData *rt = new QRuntimePixmapData(rsystem, pmd->pixelType());;
-        rt->m_data = pmd;
-        rt->readBackInfo();
-        rsystem->m_pixmapDatas << rt;
-        return rt;
-    } else
-        return pmd;
-}
-
 void QMeeGoGraphicsSystem::setSurfaceFixedSize(int /*width*/, int /*height*/)
 {
     if (QMeeGoGraphicsSystem::surfaceWasCreated) {
@@ -294,7 +279,7 @@ QPixmapData *QMeeGoGraphicsSystem::pixmapDataFromEGLSharedImage(Qt::HANDLE handl
     if (QMeeGoGraphicsSystem::meeGoRunning()) {
         QMeeGoPixmapData *pmd = new QMeeGoPixmapData;
         pmd->fromEGLSharedImage(handle, softImage);
-        return QMeeGoGraphicsSystem::wrapPixmapData(pmd);
+        return pmd;
     } else {
         QRasterPixmapData *pmd = new QRasterPixmapData(QPixmapData::PixmapType);
         pmd->fromImage(softImage, Qt::NoFormatConversion);
@@ -305,7 +290,7 @@ QPixmapData *QMeeGoGraphicsSystem::pixmapDataFromEGLSharedImage(Qt::HANDLE handl
             qFatal("Iternal misalignment of raster data detected. Prolly a QImage copy fail.");
 
         QMeeGoPixmapData::registerSharedImage(handle, softImage);
-        return QMeeGoGraphicsSystem::wrapPixmapData(pmd);
+        return pmd;
     }
 }
 
@@ -324,7 +309,7 @@ QPixmapData *QMeeGoGraphicsSystem::pixmapDataWithGLTexture(int w, int h)
 {
     QGLPixmapData *pmd = new QGLPixmapData(QPixmapData::PixmapType);
     pmd->resize(w, h);
-    return QMeeGoGraphicsSystem::wrapPixmapData(pmd);
+    return pmd;
 }
 
 bool QMeeGoGraphicsSystem::meeGoRunning()

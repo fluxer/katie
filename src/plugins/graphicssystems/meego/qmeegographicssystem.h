@@ -61,7 +61,6 @@ public:
     virtual QPixmapData *createPixmapData(QPixmapData::PixelType) const;
     virtual QPixmapData *createPixmapData(QPixmapData *origin);
 
-    static QPixmapData *wrapPixmapData(QPixmapData *pmd);
     static void setSurfaceFixedSize(int width, int height);
     static void setSurfaceScaling(int x, int y, int width, int height);
     static void setTranslucent(bool translucent);

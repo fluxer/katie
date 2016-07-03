@@ -71,10 +71,6 @@
 #include "qmessagebox.h"
 #include <QtGui/qgraphicsproxywidget.h>
 
-#ifdef QT_GRAPHICSSYSTEM_RUNTIME
-#include "qgraphicssystem_runtime_p.h"
-#endif
-
 #include "qinputcontext.h"
 #include "qkeymapper_p.h"
 
@@ -420,7 +416,6 @@ QPalette *QApplicationPrivate::set_pal = 0;        // default palette set by pro
 
 QGraphicsSystem *QApplicationPrivate::graphics_system = 0; // default graphics system
 QString QApplicationPrivate::graphics_system_name;         // graphics system id - for delayed initialization
-bool QApplicationPrivate::runtime_graphics_system = false;
 
 Q_GLOBAL_STATIC(QMutex, applicationFontMutex)
 QFont *QApplicationPrivate::app_font = 0;        // default application font
@@ -1526,14 +1521,7 @@ QStyle* QApplication::setStyle(const QString& style)
 
 void QApplication::setGraphicsSystem(const QString &system)
 {
-#ifdef QT_GRAPHICSSYSTEM_RUNTIME
-    if (QApplicationPrivate::graphics_system_name == QLatin1String("runtime")) {
-        QRuntimeGraphicsSystem *r =
-                static_cast<QRuntimeGraphicsSystem *>(QApplicationPrivate::graphics_system);
-        r->setGraphicsSystem(system);
-    } else
-#endif
-        QApplicationPrivate::graphics_system_name = system;
+    QApplicationPrivate::graphics_system_name = system;
 }
 
 /*!

@@ -46,7 +46,6 @@
 #include <qwindowsurface_gl_p.h>
 #include <qeglcontext_p.h>
 #include <qapplication_p.h>
-#include <qgraphicssystem_runtime_p.h>
 
 // from dithering.cpp
 extern unsigned short* convertRGB32_to_RGB565(const unsigned char *in, int width, int height, int stride);

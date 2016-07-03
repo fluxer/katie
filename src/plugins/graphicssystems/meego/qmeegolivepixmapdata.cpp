@@ -45,7 +45,6 @@
 #include <qwindowsurface_gl_p.h>
 #include <qeglcontext_p.h>
 #include <qapplication_p.h>
-#include <qgraphicssystem_runtime_p.h>
 #include <qpixmap_x11_p.h>
 #include <stdio.h>
 
