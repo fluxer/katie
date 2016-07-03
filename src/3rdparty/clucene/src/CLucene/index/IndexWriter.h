@@ -120,7 +120,7 @@ class IndexWriter : LUCENE_BASE
 	void _finalize();
 
 	// where this index resides
-	CL_NS(store)::Directory* directory;		
+	CL_NS(store)::Directory* directory;
 		
 		
 	int32_t getSegmentsCounter() { return segmentInfos.counter; }

@@ -151,11 +151,12 @@ CL_NS_DEF(util)
 
 			_itr1 itr1 = val1->begin();
 			_itr2 itr2 = val2->begin();
-			while ( --size >= 0 ){
+			while ( size > 0 || size == 0 ){
 				if ( !comp(*itr1,*itr2) )
 					return false;
 				itr1++;
 				itr2++;
+				--size;
 			}
 			return true;
 		}

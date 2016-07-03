@@ -214,7 +214,7 @@ public:
     // Checks if a segment managed by SegmentInfo si has deletions
     static bool hasDeletions(const SegmentInfo* si);
     bool hasDeletions() const;
-    bool hasNorms(const TCHAR* field) const;
+    bool hasNorms(const TCHAR* field);
 
     // Returns all file names managed by this SegmentReader
     void files(QStringList& retarray);

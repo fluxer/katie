@@ -28,10 +28,10 @@ const QLatin1String IndexWriter::COMMIT_LOCK_NAME("commit.lock");
 
 IndexWriter::IndexWriter(const QString& path, Analyzer* a, const bool create,
     const bool _closeDir)
-    : directory(FSDirectory::getDirectory(path, create))
-    , analyzer(a)
-    , segmentInfos(true)
+    : analyzer(a)
     , closeDir(_closeDir)
+    , directory(FSDirectory::getDirectory(path, create))
+    , segmentInfos(true)
 {
     //Func - Constructor
     //       Constructs an IndexWriter for the index in path.
@@ -51,10 +51,10 @@ IndexWriter::IndexWriter(const QString& path, Analyzer* a, const bool create,
 
 IndexWriter::IndexWriter(Directory* d, Analyzer* a, const bool create,
     const bool _closeDir)
-    : directory(_CL_POINTER(d))
-    , analyzer(a)
-    , segmentInfos(true)
+    : analyzer(a)
     , closeDir(_closeDir)
+    , directory(_CL_POINTER(d))
+    , segmentInfos(true)
 {
     //Func - Constructor
     //       Constructs an IndexWriter for the index in path.

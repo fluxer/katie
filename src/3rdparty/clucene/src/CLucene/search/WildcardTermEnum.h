@@ -28,7 +28,6 @@ CL_NS_DEF(search)
         CL_NS(index)::Term* __term;
         TCHAR* pre;
         int32_t preLen;
-        bool fieldMatch;
         bool _endEnum;
 
         /********************************************
