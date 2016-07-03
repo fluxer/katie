@@ -162,7 +162,6 @@ protected:
     QVariant getProperty(const QString &);
 };
 
-class QConnmanProfileInterfacePrivate;
 class QConnmanProfileInterface : public QDBusAbstractInterface
 {
     Q_OBJECT
@@ -180,8 +179,6 @@ public:
 
 Q_SIGNALS:
     void propertyChanged(const QString &, const QDBusVariant &value);
-private:
-    QConnmanProfileInterfacePrivate *d;
 
 protected:
     void connectNotify(const char *signal);
