@@ -26,7 +26,6 @@ CL_NS_DEF(search)
     WildcardTermEnum::WildcardTermEnum(IndexReader* reader, Term* term):
 	    FilteredTermEnum(),
 		__term(_CL_POINTER(term)),
-		fieldMatch(false),
 		_endEnum(false)
     {
        

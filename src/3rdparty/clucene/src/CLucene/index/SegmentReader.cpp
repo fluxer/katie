@@ -582,7 +582,7 @@ void SegmentReader::getFieldNames(FieldOption fldOption,
     }
 }
 
-bool SegmentReader::hasNorms(const TCHAR* field) const
+bool SegmentReader::hasNorms(const TCHAR* field)
 {
     return _norms.find(field) != _norms.end();
 }

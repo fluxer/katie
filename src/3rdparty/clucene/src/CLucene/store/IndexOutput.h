@@ -19,7 +19,6 @@ CL_NS_DEF(store)
 * @see IndexInput
 */
 class IndexOutput:LUCENE_BASE{
-	bool isclosed;
 public:
 	IndexOutput();
 	virtual ~IndexOutput();

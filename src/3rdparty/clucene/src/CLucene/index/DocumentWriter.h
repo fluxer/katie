@@ -58,7 +58,7 @@ private:
 	// Used to buffer a document before it is written to the index.
 	typedef CL_NS(util)::CLHashtable<Term*, Posting*, Term::Compare,
         Term::Equals> PostingTableType;
-    PostingTableType postingTable;
+        PostingTableType postingTable;
 	int32_t* fieldLengths; //array
 	int32_t* fieldPositions; //array
 	int32_t* fieldOffsets; //array

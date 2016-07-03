@@ -321,23 +321,6 @@ CL_NS_DEF(search)
 			return _CLNEW Hits(this, query, filter, sort);
 		}
 
-		/** Lower-level search API.
-		*
-		* <p>{@link HitCollector#collect(int32_t	,qreal)} is called for every non-zero
-		* scoring document.
-		*
-		* <p>Applications should only use this if they need <i>all</i> of the
-		* matching documents.  The high-level search API ({@link
-		* Searcher#search(Query*)}) is usually more efficient, as it skips
-		* non-high-scoring hits.
-		* <p>Note: The <code>score</code> passed to this method is a raw score.
-		* In other words, the score will not necessarily be a float whose value is
-		* between 0 and 1.
-		*/
-		void _search(Query* query, HitCollector* results) {
-			Searchable::_search(query, NULL, results);
-		}
-
 		/** Expert: Set the Similarity implementation used by this Searcher.
 		*
 		* @see Similarity#setDefault(Similarity)
