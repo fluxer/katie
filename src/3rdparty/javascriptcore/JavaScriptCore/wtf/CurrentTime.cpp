@@ -32,6 +32,7 @@
 
 #include "config.h"
 #include "CurrentTime.h"
+#include "DateMath.h"
 
 #if OS(WINDOWS)
 
