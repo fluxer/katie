@@ -42,7 +42,7 @@ namespace JSC {
         virtual void getOwnPropertyNames(ExecState*, PropertyNameArray&, EnumerationMode mode = ExcludeDontEnumProperties);
 
         virtual const ClassInfo* classInfo() const { return &info; }
-        static const JS_EXPORTDATA ClassInfo info;
+        static const ClassInfo info;
 
         JSString* internalValue() const { return asString(JSWrapperObject::internalValue());}
 

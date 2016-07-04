@@ -107,7 +107,7 @@ public:
         DoubleGreaterThanOrUnordered = ARMv7Assembler::ConditionHI,
         DoubleGreaterThanOrEqualOrUnordered = ARMv7Assembler::ConditionHS,
         DoubleLessThanOrUnordered = ARMv7Assembler::ConditionLT,
-        DoubleLessThanOrEqualOrUnordered = ARMv7Assembler::ConditionLE,
+        DoubleLessThanOrEqualOrUnordered = ARMv7Assembler::ConditionLE
     };
 
     static const RegisterID stackPointerRegister = ARMRegisters::sp;

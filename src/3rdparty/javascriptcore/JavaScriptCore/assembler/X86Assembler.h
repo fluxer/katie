@@ -70,7 +70,7 @@ namespace X86Registers {
         xmm4,
         xmm5,
         xmm6,
-        xmm7,
+        xmm7
     } XMMRegisterID;
 }
 
@@ -99,7 +99,7 @@ public:
         ConditionG,
 
         ConditionC  = ConditionB,
-        ConditionNC = ConditionAE,
+        ConditionNC = ConditionAE
     } Condition;
 
 private:
@@ -155,7 +155,7 @@ private:
         OP_GROUP3_EbIb                  = 0xF6,
         OP_GROUP3_Ev                    = 0xF7,
         OP_GROUP3_EvIz                  = 0xF7, // OP_GROUP3_Ev has an immediate, when instruction is a test. 
-        OP_GROUP5_Ev                    = 0xFF,
+        OP_GROUP5_Ev                    = 0xFF
     } OneByteOpcodeID;
 
     typedef enum {
@@ -176,7 +176,7 @@ private:
         OP2_IMUL_GvEv       = 0xAF,
         OP2_MOVZX_GvEb      = 0xB6,
         OP2_MOVZX_GvEw      = 0xB7,
-        OP2_PEXTRW_GdUdIb   = 0xC5,
+        OP2_PEXTRW_GdUdIb   = 0xC5
     } TwoByteOpcodeID;
 
     TwoByteOpcodeID jccRel32(Condition cond)
@@ -212,7 +212,7 @@ private:
         GROUP5_OP_JMPN  = 4,
         GROUP5_OP_PUSH  = 6,
 
-        GROUP11_MOV = 0,
+        GROUP11_MOV = 0
     } GroupOpcodeID;
     
     class X86InstructionFormatter;
@@ -1943,7 +1943,7 @@ private:
             ModRmMemoryNoDisp,
             ModRmMemoryDisp8,
             ModRmMemoryDisp32,
-            ModRmRegister,
+            ModRmRegister
         };
 
         void putModRm(ModRmMode mode, int reg, RegisterID rm)

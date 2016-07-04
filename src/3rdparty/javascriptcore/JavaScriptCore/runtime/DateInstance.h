@@ -36,7 +36,7 @@ namespace JSC {
 
         double internalNumber() const { return internalValue().uncheckedGetNumber(); }
 
-        static JS_EXPORTDATA const ClassInfo info;
+        static const ClassInfo info;
 
         const GregorianDateTime* gregorianDateTime(ExecState* exec) const
         {

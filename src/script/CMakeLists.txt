@@ -7,8 +7,6 @@ add_definitions(
     -DWTF=QTWTF
     -DQT_NO_USING_NAMESPACE
     -DQLALR_NO_QSCRIPTGRAMMAR_DEBUG_INFO
-    -DWTF_USE_JAVASCRIPTCORE_BINDINGS=1
-    -DWTF_CHANGES=1
     # Avoid JSC C API functions being exported.
     -DJS_NO_EXPORT
     -DBUILDING_QT__

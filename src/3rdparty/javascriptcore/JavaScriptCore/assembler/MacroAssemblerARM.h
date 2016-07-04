@@ -73,7 +73,7 @@ public:
         DoubleGreaterThanOrUnordered = ARMAssembler::HI,
         DoubleGreaterThanOrEqualOrUnordered = ARMAssembler::CS,
         DoubleLessThanOrUnordered = ARMAssembler::LT,
-        DoubleLessThanOrEqualOrUnordered = ARMAssembler::LE,
+        DoubleLessThanOrEqualOrUnordered = ARMAssembler::LE
     };
 
     static const RegisterID stackPointerRegister = ARMRegisters::sp;

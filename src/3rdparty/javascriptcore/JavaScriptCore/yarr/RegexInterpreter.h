@@ -66,7 +66,7 @@ struct ByteTerm {
         TypeParenthesesSubpatternOnceEnd,
         TypeParentheticalAssertionBegin,
         TypeParentheticalAssertionEnd,
-        TypeCheckInput,
+        TypeCheckInput
     } type;
     bool invertOrCapture;
     union {

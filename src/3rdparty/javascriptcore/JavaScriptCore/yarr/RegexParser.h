@@ -41,7 +41,7 @@ enum BuiltInCharacterClassID {
     DigitClassID,
     SpaceClassID,
     WordClassID,
-    NewlineClassID,
+    NewlineClassID
 };
 
 // The Parser class should not be used directly - only via the Yarr::parse() method.
@@ -186,7 +186,7 @@ private:
         enum CharacterClassConstructionState {
             empty,
             cachedCharacter,
-            cachedCharacterHyphen,
+            cachedCharacterHyphen
         } m_state;
         UChar m_character;
     };

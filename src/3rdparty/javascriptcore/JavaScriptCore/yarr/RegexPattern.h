@@ -67,7 +67,7 @@ struct CharacterClass : FastAllocBase {
 enum QuantifierType {
     QuantifierFixedCount,
     QuantifierGreedy,
-    QuantifierNonGreedy,
+    QuantifierNonGreedy
 };
 
 struct PatternTerm {
@@ -80,7 +80,7 @@ struct PatternTerm {
         TypeBackReference,
         TypeForwardReference,
         TypeParenthesesSubpattern,
-        TypeParentheticalAssertion,
+        TypeParentheticalAssertion
     } type;
     bool invertOrCapture;
     union {

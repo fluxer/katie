@@ -57,7 +57,7 @@ namespace JSC {
         inline bool isHostFunction() const;
         FunctionExecutable* jsExecutable() const;
 
-        static JS_EXPORTDATA const ClassInfo info;
+        static const ClassInfo info;
 
         static PassRefPtr<Structure> createStructure(JSValue prototype) 
         { 

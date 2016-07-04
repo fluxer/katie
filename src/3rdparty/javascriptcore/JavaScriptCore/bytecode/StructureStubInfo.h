@@ -48,7 +48,7 @@ namespace JSC {
         access_get_by_id_generic,
         access_put_by_id_generic,
         access_get_array_length,
-        access_get_string_length,
+        access_get_string_length
     };
 
     struct StructureStubInfo {

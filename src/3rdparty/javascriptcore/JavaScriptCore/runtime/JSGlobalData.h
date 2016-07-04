@@ -129,10 +129,10 @@ namespace JSC {
 #endif
 
         static void storeVPtrs();
-        static JS_EXPORTDATA void* jsArrayVPtr;
-        static JS_EXPORTDATA void* jsByteArrayVPtr;
-        static JS_EXPORTDATA void* jsStringVPtr;
-        static JS_EXPORTDATA void* jsFunctionVPtr;
+        static void* jsArrayVPtr;
+        static void* jsByteArrayVPtr;
+        static void* jsStringVPtr;
+        static void* jsFunctionVPtr;
 
         IdentifierTable* identifierTable;
         CommonIdentifiers* propertyNames;

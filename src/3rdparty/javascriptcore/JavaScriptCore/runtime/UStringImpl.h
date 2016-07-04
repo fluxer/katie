@@ -263,8 +263,8 @@ private:
     unsigned m_refCountAndFlags;
     mutable unsigned m_hash;
 
-    JS_EXPORTDATA static UStringImpl* s_null;
-    JS_EXPORTDATA static UStringImpl* s_empty;
+    static UStringImpl* s_null;
+    static UStringImpl* s_empty;
 
     friend class JIT;
     friend class SmallStringsStorage;
