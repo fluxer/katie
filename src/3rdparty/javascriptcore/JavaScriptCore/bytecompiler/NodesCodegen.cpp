@@ -1376,7 +1376,6 @@ RegisterID* IfNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
     generator.emitNode(dst, m_ifBlock);
     generator.emitLabel(afterThen.get());
 
-    // FIXME: This should return the last statement executed so that it can be returned as a Completion.
     return 0;
 }
 
@@ -1407,7 +1406,6 @@ RegisterID* IfElseNode::emitBytecode(BytecodeGenerator& generator, RegisterID* d
 
     generator.emitLabel(afterElse.get());
 
-    // FIXME: This should return the last statement executed so that it can be returned as a Completion.
     return 0;
 }
 
@@ -1460,8 +1458,7 @@ RegisterID* WhileNode::emitBytecode(BytecodeGenerator& generator, RegisterID* ds
     }
 
     generator.emitLabel(scope->breakTarget());
-    
-    // FIXME: This should return the last statement executed so that it can be returned as a Completion
+
     return 0;
 }
 

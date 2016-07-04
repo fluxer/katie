@@ -95,7 +95,7 @@ option(WITH_HARFBUZZ "Build harfbuzz support" OFF)
 add_feature_info(harfbuzz WITH_HARFBUZZ "an open source something")
 
 option(WITH_ODBC "Build ODBC database plugin" ON)
-add_feature_info(postgresql WITH_ODBC "an open source something")
+add_feature_info(odbc WITH_ODBC "an open source something")
 
 option(WITH_PSQL "Build PostgreSQL database plugin" ON)
 add_feature_info(postgresql WITH_PSQL "the world's most advanced open source database")
