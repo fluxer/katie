@@ -28,7 +28,6 @@
 #include "qscriptcontext.h"
 #include "qscriptcontext_p.h"
 #include "qscriptvalue_p.h"
-#include "qscriptactivationobject_p.h"
 #include "qscriptobject_p.h"
 
 #include "JSGlobalObject.h"

@@ -64,7 +64,6 @@
 #include "bridge/qscriptvariant_p.h"
 #include "bridge/qscriptqobject_p.h"
 #include "bridge/qscriptglobalobject_p.h"
-#include "bridge/qscriptactivationobject_p.h"
 #include "bridge/qscriptstaticscopeobject_p.h"
 
 #ifndef QT_NO_QOBJECT

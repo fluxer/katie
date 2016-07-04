@@ -217,19 +217,6 @@ void Arguments::getOwnPropertyNames(ExecState* exec, PropertyNameArray& property
     JSObject::getOwnPropertyNames(exec, propertyNames, mode);
 }
 
-void Arguments::put(ExecState* exec, unsigned i, JSValue value, PutPropertySlot& slot)
-{
-    if (i < d->numArguments && (!d->deletedArguments || !d->deletedArguments[i])) {
-        if (i < d->numParameters)
-            d->registers[d->firstParameterIndex + i] = JSValue(value);
-        else
-            d->extraArguments[i - d->numParameters] = JSValue(value);
-        return;
-    }
-
-    JSObject::put(exec, Identifier(exec, UString::from(i)), value, slot);
-}
-
 void Arguments::put(ExecState* exec, const Identifier& propertyName, JSValue value, PutPropertySlot& slot)
 {
     bool isArrayIndex;

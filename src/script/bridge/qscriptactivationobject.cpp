@@ -118,20 +118,20 @@ bool QScriptActivationObject::deleteProperty(JSC::ExecState* exec, const JSC::Id
     return JSC::JSVariableObject::deleteProperty(exec, propertyName);
 }
 
-void QScriptActivationObject::defineGetter(JSC::ExecState* exec, const JSC::Identifier& propertyName, JSC::JSObject* getterFunction)
+void QScriptActivationObject::defineGetter(JSC::ExecState* exec, const JSC::Identifier& propertyName, JSC::JSObject* getterFunction, unsigned attributes)
 {
     if (d_ptr()->delegate != 0)
-        d_ptr()->delegate->defineGetter(exec, propertyName, getterFunction);
+        d_ptr()->delegate->defineGetter(exec, propertyName, getterFunction, attributes);
     else
-        JSC::JSVariableObject::defineGetter(exec, propertyName, getterFunction);
+        JSC::JSVariableObject::defineGetter(exec, propertyName, getterFunction, attributes);
 }
 
-void QScriptActivationObject::defineSetter(JSC::ExecState* exec, const JSC::Identifier& propertyName, JSC::JSObject* setterFunction)
+void QScriptActivationObject::defineSetter(JSC::ExecState* exec, const JSC::Identifier& propertyName, JSC::JSObject* setterFunction, unsigned attributes)
 {
     if (d_ptr()->delegate != 0)
-        d_ptr()->delegate->defineSetter(exec, propertyName, setterFunction);
+        d_ptr()->delegate->defineSetter(exec, propertyName, setterFunction, attributes);
     else
-        JSC::JSVariableObject::defineSetter(exec, propertyName, setterFunction);
+        JSC::JSVariableObject::defineSetter(exec, propertyName, setterFunction, attributes);
 }
 
 JSC::JSValue QScriptActivationObject::lookupGetter(JSC::ExecState* exec, const JSC::Identifier& propertyName)

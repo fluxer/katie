@@ -60,8 +60,8 @@ public:
 
     virtual bool deleteProperty(JSC::ExecState*, const JSC::Identifier& propertyName);
 
-    virtual void defineGetter(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSObject* getterFunction);
-    virtual void defineSetter(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSObject* setterFunction);
+    virtual void defineGetter(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSObject* getterFunction, unsigned attributes = 0);
+    virtual void defineSetter(JSC::ExecState*, const JSC::Identifier& propertyName, JSC::JSObject* setterFunction, unsigned attributes = 0);
     virtual JSC::JSValue lookupGetter(JSC::ExecState*, const JSC::Identifier& propertyName);
     virtual JSC::JSValue lookupSetter(JSC::ExecState*, const JSC::Identifier& propertyName);
 
