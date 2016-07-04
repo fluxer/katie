@@ -794,8 +794,7 @@ size_t Structure::put(const Identifier& propertyName, unsigned attributes, JSCel
 
     unsigned i = rep->existingHash();
     unsigned k = 0;
-    bool foundDeletedElement = false;
-    unsigned deletedElementIndex = 0; // initialize to make the compiler happy
+    unsigned deletedElementIndex = 0;
 
 #if DUMP_PROPERTYMAP_STATS
     ++numProbes;
@@ -808,8 +807,7 @@ size_t Structure::put(const Identifier& propertyName, unsigned attributes, JSCel
 
         if (entryIndex == deletedSentinelIndex) {
             // If we find a deleted-element sentinel, remember it for use later.
-            if (!foundDeletedElement) {
-                foundDeletedElement = true;
+            if (deletedElementIndex == 0) {
                 deletedElementIndex = i;
             }
         }
@@ -830,7 +828,7 @@ size_t Structure::put(const Identifier& propertyName, unsigned attributes, JSCel
 
     // Figure out which entry to use.
     unsigned entryIndex = m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount + 2;
-    if (foundDeletedElement) {
+    if (deletedElementIndex != 0) {
         i = deletedElementIndex;
         --m_propertyTable->deletedSentinelCount;
 
