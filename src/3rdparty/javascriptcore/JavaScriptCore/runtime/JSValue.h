@@ -214,16 +214,18 @@ namespace JSC {
         JSObject* toObjectSlowCase(ExecState*) const;
         JSObject* toThisObjectSlowCase(ExecState*) const;
 
-        enum { Int32Tag =        0x7fffffff };
-        enum { CellTag =         0x7ffffffe };
-        enum { TrueTag =         0x7ffffffd };
-        enum { FalseTag =        0x7ffffffc };
-        enum { NullTag =         0x7ffffffb };
-        enum { UndefinedTag =    0x7ffffffa };
-        enum { EmptyValueTag =   0x7ffffff9 };
-        enum { DeletedValueTag = 0x7ffffff8 };
+        enum {
+            Int32Tag =        0x7fffffff,
+            CellTag =         0x7ffffffe,
+            TrueTag =         0x7ffffffd,
+            FalseTag =        0x7ffffffc,
+            NullTag =         0x7ffffffb,
+            UndefinedTag =    0x7ffffffa,
+            EmptyValueTag =   0x7ffffff9,
+            DeletedValueTag = 0x7ffffff8,
 
-        enum { LowestTag =  DeletedValueTag };
+            LowestTag = DeletedValueTag
+        };
 
         int32_t tag() const;
         int32_t payload() const;
