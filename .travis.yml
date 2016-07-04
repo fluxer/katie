@@ -16,5 +16,4 @@ before_script:
 script:
     - cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio"
     - make
-    - ctest -V
-#    - make test
+    - make test
