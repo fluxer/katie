@@ -214,18 +214,18 @@ namespace JSC {
         JSObject* toObjectSlowCase(ExecState*) const;
         JSObject* toThisObjectSlowCase(ExecState*) const;
 
-        enum { Int32Tag =        0xffffffff };
-        enum { CellTag =         0xfffffffe };
-        enum { TrueTag =         0xfffffffd };
-        enum { FalseTag =        0xfffffffc };
-        enum { NullTag =         0xfffffffb };
-        enum { UndefinedTag =    0xfffffffa };
-        enum { EmptyValueTag =   0xfffffff9 };
-        enum { DeletedValueTag = 0xfffffff8 };
+        enum { Int32Tag =        0x7fffffff };
+        enum { CellTag =         0x7ffffffe };
+        enum { TrueTag =         0x7ffffffd };
+        enum { FalseTag =        0x7ffffffc };
+        enum { NullTag =         0x7ffffffb };
+        enum { UndefinedTag =    0x7ffffffa };
+        enum { EmptyValueTag =   0x7ffffff9 };
+        enum { DeletedValueTag = 0x7ffffff8 };
 
         enum { LowestTag =  DeletedValueTag };
 
-        uint32_t tag() const;
+        int32_t tag() const;
         int32_t payload() const;
 
         JSObject* synthesizePrototype(ExecState*) const;
@@ -562,7 +562,7 @@ namespace JSC {
         return tag() == FalseTag;
     }
 
-    inline uint32_t JSValue::tag() const
+    inline int32_t JSValue::tag() const
     {
         return u.asBits.tag;
     }
