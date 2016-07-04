@@ -74,26 +74,7 @@ namespace JSC {
 
         RegisterFile& registerFile() { return m_registerFile; }
 
-        Opcode getOpcode(OpcodeID id)
-        {
-            #if HAVE(COMPUTED_GOTO)
-                return m_opcodeTable[id];
-            #else
-                return id;
-            #endif
-        }
-
-        OpcodeID getOpcodeID(Opcode opcode)
-        {
-            #if HAVE(COMPUTED_GOTO)
-                ASSERT(isOpcode(opcode));
-                return m_opcodeIDTable.get(opcode);
-            #else
-                return opcode;
-            #endif
-        }
-
-        bool isOpcode(Opcode);
+        inline bool isOpcode(OpcodeID opcode) { return opcode >= 0 && opcode <= op_end; };
 
         JSValue execute(ProgramExecutable*, CallFrame*, ScopeChainNode*, JSObject* thisObj, JSValue* exception);
         JSValue execute(FunctionExecutable*, CallFrame*, JSFunction*, JSObject* thisObj, const ArgList& args, ScopeChainNode*, JSValue* exception);
@@ -146,7 +127,7 @@ namespace JSC {
         void dumpCallFrame(CallFrame*);
         void dumpRegisters(CallFrame*);
 
-        bool isCallBytecode(Opcode opcode) { return opcode == getOpcode(op_call) || opcode == getOpcode(op_construct) || opcode == getOpcode(op_call_eval); }
+        bool isCallBytecode(OpcodeID opcode) { return opcode == op_call || opcode == op_construct || opcode == op_call_eval; }
 
         void enableSampler();
         int m_sampleEntryDepth;
@@ -155,11 +136,6 @@ namespace JSC {
         int m_reentryDepth;
 
         RegisterFile m_registerFile;
-
-#if HAVE(COMPUTED_GOTO)
-        Opcode m_opcodeTable[numOpcodeIDs]; // Maps OpcodeID => Opcode for compiling
-        HashMap<Opcode, OpcodeID> m_opcodeIDTable; // Maps Opcode => OpcodeID for decompiling
-#endif
     };
     
 } // namespace JSC

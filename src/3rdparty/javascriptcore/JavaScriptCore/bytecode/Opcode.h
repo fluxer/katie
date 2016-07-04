@@ -193,16 +193,6 @@ namespace JSC {
         FOR_EACH_OPCODE_ID(VERIFY_OPCODE_ID)
     #undef VERIFY_OPCODE_ID
 
-#if HAVE(COMPUTED_GOTO)
-#if COMPILER(RVCT) || COMPILER(INTEL)
-    typedef void* Opcode;
-#else
-    typedef const void* Opcode;
-#endif
-#else
-    typedef OpcodeID Opcode;
-#endif
-
 #if ENABLE(OPCODE_SAMPLING) || ENABLE(CODEBLOCK_SAMPLING) || ENABLE(OPCODE_STATS)
 
 #define PADDING_STRING "                                "

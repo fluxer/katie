@@ -208,7 +208,7 @@ static unsigned instructionOffsetForNth(ExecState* exec, const Vector<Instructio
 {
     size_t i = 0;
     while (i < instructions.size()) {
-        OpcodeID currentOpcode = exec->interpreter()->getOpcodeID(instructions[i].u.opcode);
+        OpcodeID currentOpcode = instructions[i].u.opcode;
         if (predicate(currentOpcode)) {
             if (!--nth)
                 return i;
@@ -284,41 +284,41 @@ void CodeBlock::printStructures(const Instruction* vPC) const
     Interpreter* interpreter = m_globalData->interpreter;
     unsigned instructionOffset = vPC - m_instructions.begin();
 
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id)) {
+    if (vPC[0].u.opcode == op_get_by_id) {
         printStructure("get_by_id", vPC, 4);
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_self)) {
+    if (vPC[0].u.opcode == op_get_by_id_self) {
         printStructure("get_by_id_self", vPC, 4);
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_proto)) {
+    if (vPC[0].u.opcode == op_get_by_id_proto) {
         printf("  [%4d] %s: %s, %s\n", instructionOffset, "get_by_id_proto", pointerToSourceString(vPC[4].u.structure).UTF8String(), pointerToSourceString(vPC[5].u.structure).UTF8String());
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_transition)) {
+    if (vPC[0].u.opcode == op_put_by_id_transition) {
         printf("  [%4d] %s: %s, %s, %s\n", instructionOffset, "put_by_id_transition", pointerToSourceString(vPC[4].u.structure).UTF8String(), pointerToSourceString(vPC[5].u.structure).UTF8String(), pointerToSourceString(vPC[6].u.structureChain).UTF8String());
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_chain)) {
+    if (vPC[0].u.opcode == op_get_by_id_chain) {
         printf("  [%4d] %s: %s, %s\n", instructionOffset, "get_by_id_chain", pointerToSourceString(vPC[4].u.structure).UTF8String(), pointerToSourceString(vPC[5].u.structureChain).UTF8String());
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id)) {
+    if (vPC[0].u.opcode == op_put_by_id) {
         printStructure("put_by_id", vPC, 4);
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_replace)) {
+    if (vPC[0].u.opcode == op_put_by_id_replace) {
         printStructure("put_by_id_replace", vPC, 4);
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_resolve_global)) {
+    if (vPC[0].u.opcode == op_resolve_global) {
         printStructure("resolve_global", vPC, 4);
         return;
     }
 
     // These m_instructions doesn't ref Structures.
-    ASSERT(vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_generic) || vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_generic) || vPC[0].u.opcode == interpreter->getOpcode(op_call) || vPC[0].u.opcode == interpreter->getOpcode(op_call_eval) || vPC[0].u.opcode == interpreter->getOpcode(op_construct));
+    ASSERT(vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic || vPC[0].u.opcode == op_call || vPC[0].u.opcode == op_call_eval || vPC[0].u.opcode == op_construct);
 }
 
 void CodeBlock::dump(ExecState* exec) const
@@ -330,7 +330,7 @@ void CodeBlock::dump(ExecState* exec) const
 
     size_t instructionCount = 0;
 
-    for (size_t i = 0; i < m_instructions.size(); i += opcodeLengths[exec->interpreter()->getOpcodeID(m_instructions[i].u.opcode)])
+    for (size_t i = 0; i < m_instructions.size(); i += opcodeLengths[m_instructions[i].u.opcode])
         ++instructionCount;
 
     printf("%lu m_instructions; %lu bytes at %p; %d parameter(s); %d callee register(s)\n\n",
@@ -474,7 +474,7 @@ void CodeBlock::dump(ExecState* exec) const
 void CodeBlock::dump(ExecState* exec, const Vector<Instruction>::const_iterator& begin, Vector<Instruction>::const_iterator& it) const
 {
     int location = it - begin;
-    switch (exec->interpreter()->getOpcodeID(it->u.opcode)) {
+    switch (it->u.opcode) {
         case op_enter: {
             printf("[%4d] enter\n", location);
             break;
@@ -1345,37 +1345,37 @@ void CodeBlock::derefStructures(Instruction* vPC) const
 {
     Interpreter* interpreter = m_globalData->interpreter;
 
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_self)) {
+    if (vPC[0].u.opcode == op_get_by_id_self) {
         vPC[4].u.structure->deref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_proto)) {
+    if (vPC[0].u.opcode == op_get_by_id_proto) {
         vPC[4].u.structure->deref();
         vPC[5].u.structure->deref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_chain)) {
+    if (vPC[0].u.opcode == op_get_by_id_chain) {
         vPC[4].u.structure->deref();
         vPC[5].u.structureChain->deref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_transition)) {
+    if (vPC[0].u.opcode == op_put_by_id_transition) {
         vPC[4].u.structure->deref();
         vPC[5].u.structure->deref();
         vPC[6].u.structureChain->deref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_replace)) {
+    if (vPC[0].u.opcode == op_put_by_id_replace) {
         vPC[4].u.structure->deref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_resolve_global)) {
+    if (vPC[0].u.opcode == op_resolve_global) {
         if(vPC[4].u.structure)
             vPC[4].u.structure->deref();
         return;
     }
-    if ((vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_proto_list))
-        || (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_self_list))) {
+    if ((vPC[0].u.opcode == op_get_by_id_proto_list)
+        || (vPC[0].u.opcode == op_get_by_id_self_list)) {
         PolymorphicAccessStructureList* polymorphicStructures = vPC[4].u.polymorphicStructures;
         polymorphicStructures->derefStructures(vPC[5].u.operand);
         delete polymorphicStructures;
@@ -1383,40 +1383,40 @@ void CodeBlock::derefStructures(Instruction* vPC) const
     }
 
     // These instructions don't ref their Structures.
-    ASSERT(vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id) || vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id) || vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_generic) || vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_generic) || vPC[0].u.opcode == interpreter->getOpcode(op_get_array_length) || vPC[0].u.opcode == interpreter->getOpcode(op_get_string_length));
+    ASSERT(vPC[0].u.opcode == op_get_by_id || vPC[0].u.opcode == op_put_by_id || vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic || vPC[0].u.opcode == op_get_array_length || vPC[0].u.opcode == op_get_string_length);
 }
 
 void CodeBlock::refStructures(Instruction* vPC) const
 {
     Interpreter* interpreter = m_globalData->interpreter;
 
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_self)) {
+    if (vPC[0].u.opcode == op_get_by_id_self) {
         vPC[4].u.structure->ref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_proto)) {
+    if (vPC[0].u.opcode == op_get_by_id_proto) {
         vPC[4].u.structure->ref();
         vPC[5].u.structure->ref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_chain)) {
+    if (vPC[0].u.opcode == op_get_by_id_chain) {
         vPC[4].u.structure->ref();
         vPC[5].u.structureChain->ref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_transition)) {
+    if (vPC[0].u.opcode == op_put_by_id_transition) {
         vPC[4].u.structure->ref();
         vPC[5].u.structure->ref();
         vPC[6].u.structureChain->ref();
         return;
     }
-    if (vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_replace)) {
+    if (vPC[0].u.opcode == op_put_by_id_replace) {
         vPC[4].u.structure->ref();
         return;
     }
     
     // These instructions don't ref their Structures.
-    ASSERT(vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id) || vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id) || vPC[0].u.opcode == interpreter->getOpcode(op_get_by_id_generic) || vPC[0].u.opcode == interpreter->getOpcode(op_put_by_id_generic));
+    ASSERT(vPC[0].u.opcode == op_get_by_id || vPC[0].u.opcode == op_put_by_id || vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic);
 }
 
 void CodeBlock::markAggregate(MarkStack& markStack)

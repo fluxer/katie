@@ -731,10 +731,6 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #define JSC_HOST_CALL
 #endif
 
-#if COMPILER(GCC) && !ENABLE(JIT)
-#define HAVE_COMPUTED_GOTO 1
-#endif
-
 /* Yet Another Regex Runtime. */
 #if !defined(ENABLE_YARR_JIT)
 

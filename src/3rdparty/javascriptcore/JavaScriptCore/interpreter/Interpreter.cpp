@@ -317,13 +317,6 @@ Interpreter::Interpreter()
     : m_sampleEntryDepth(0)
     , m_reentryDepth(0)
 {
-#if HAVE(COMPUTED_GOTO)
-    privateExecute(InitializeAndReturn, 0, 0, 0);
-
-    for (int i = 0; i < numOpcodeIDs; ++i)
-        m_opcodeIDTable.add(m_opcodeTable[i], static_cast<OpcodeID>(i));
-#endif // HAVE(COMPUTED_GOTO)
-
 #if ENABLE(OPCODE_SAMPLING)
     enableSampler();
 #endif
@@ -429,17 +422,6 @@ void Interpreter::dumpRegisters(CallFrame* callFrame)
 }
 
 #endif
-
-bool Interpreter::isOpcode(Opcode opcode)
-{
-#if HAVE(COMPUTED_GOTO)
-    return opcode != HashTraits<Opcode>::emptyValue()
-        && !HashTraits<Opcode>::isDeletedValue(opcode)
-        && m_opcodeIDTable.contains(opcode);
-#else
-    return opcode >= 0 && opcode <= op_end;
-#endif
-}
 
 NEVER_INLINE bool Interpreter::unwindCallFrame(CallFrame*& callFrame, JSValue exceptionValue, unsigned& bytecodeOffset, CodeBlock*& codeBlock)
 {
@@ -873,7 +855,7 @@ NEVER_INLINE ScopeChainNode* Interpreter::createExceptionScope(CallFrame* callFr
 NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* codeBlock, Instruction* vPC, JSValue baseValue, const PutPropertySlot& slot)
 {
     // Recursive invocation may already have specialized this instruction.
-    if (vPC[0].u.opcode != getOpcode(op_put_by_id))
+    if (vPC[0].u.opcode != op_put_by_id)
         return;
 
     if (!baseValue.isCell())
@@ -881,7 +863,7 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
 
     // Uncacheable: give up.
     if (!slot.isCacheable()) {
-        vPC[0] = getOpcode(op_put_by_id_generic);
+        vPC[0] = op_put_by_id_generic;
         return;
     }
     
@@ -889,7 +871,7 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
     Structure* structure = baseCell->structure();
 
     if (structure->isUncacheableDictionary()) {
-        vPC[0] = getOpcode(op_put_by_id_generic);
+        vPC[0] = op_put_by_id_generic;
         return;
     }
 
@@ -903,7 +885,7 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
         }
 
         // Second miss: give up.
-        vPC[0] = getOpcode(op_put_by_id_generic);
+        vPC[0] = op_put_by_id_generic;
         return;
     }
 
@@ -911,21 +893,21 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
 
     // If baseCell != slot.base(), then baseCell must be a proxy for another object.
     if (baseCell != slot.base()) {
-        vPC[0] = getOpcode(op_put_by_id_generic);
+        vPC[0] = op_put_by_id_generic;
         return;
     }
 
     // Structure transition, cache transition info
     if (slot.type() == PutPropertySlot::NewProperty) {
         if (structure->isDictionary()) {
-            vPC[0] = getOpcode(op_put_by_id_generic);
+            vPC[0] = op_put_by_id_generic;
             return;
         }
 
         // put_by_id_transition checks the prototype chain for setters.
         normalizePrototypeChain(callFrame, baseCell);
 
-        vPC[0] = getOpcode(op_put_by_id_transition);
+        vPC[0] = op_put_by_id_transition;
         vPC[4] = structure->previousID();
         vPC[5] = structure;
         vPC[6] = structure->prototypeChain(callFrame);
@@ -934,7 +916,7 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
         return;
     }
 
-    vPC[0] = getOpcode(op_put_by_id_replace);
+    vPC[0] = op_put_by_id_replace;
     vPC[5] = slot.cachedOffset();
     codeBlock->refStructures(vPC);
 }
@@ -942,43 +924,43 @@ NEVER_INLINE void Interpreter::tryCachePutByID(CallFrame* callFrame, CodeBlock* 
 NEVER_INLINE void Interpreter::uncachePutByID(CodeBlock* codeBlock, Instruction* vPC)
 {
     codeBlock->derefStructures(vPC);
-    vPC[0] = getOpcode(op_put_by_id);
+    vPC[0] = op_put_by_id;
     vPC[4] = 0;
 }
 
 NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* codeBlock, Instruction* vPC, JSValue baseValue, const Identifier& propertyName, const PropertySlot& slot)
 {
     // Recursive invocation may already have specialized this instruction.
-    if (vPC[0].u.opcode != getOpcode(op_get_by_id))
+    if (vPC[0].u.opcode != op_get_by_id)
         return;
 
     // FIXME: Cache property access for immediates.
     if (!baseValue.isCell()) {
-        vPC[0] = getOpcode(op_get_by_id_generic);
+        vPC[0] = op_get_by_id_generic;
         return;
     }
 
     JSGlobalData* globalData = &callFrame->globalData();
     if (isJSArray(globalData, baseValue) && propertyName == callFrame->propertyNames().length) {
-        vPC[0] = getOpcode(op_get_array_length);
+        vPC[0] = op_get_array_length;
         return;
     }
 
     if (isJSString(globalData, baseValue) && propertyName == callFrame->propertyNames().length) {
-        vPC[0] = getOpcode(op_get_string_length);
+        vPC[0] = op_get_string_length;
         return;
     }
 
     // Uncacheable: give up.
     if (!slot.isCacheable()) {
-        vPC[0] = getOpcode(op_get_by_id_generic);
+        vPC[0] = op_get_by_id_generic;
         return;
     }
 
     Structure* structure = baseValue.asCell()->structure();
 
     if (structure->isUncacheableDictionary()) {
-        vPC[0] = getOpcode(op_get_by_id_generic);
+        vPC[0] = op_get_by_id_generic;
         return;
     }
 
@@ -992,14 +974,14 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
         }
 
         // Second miss: give up.
-        vPC[0] = getOpcode(op_get_by_id_generic);
+        vPC[0] = op_get_by_id_generic;
         return;
     }
 
     // Cache hit: Specialize instruction and ref Structures.
 
     if (slot.slotBase() == baseValue) {
-        vPC[0] = getOpcode(op_get_by_id_self);
+        vPC[0] = op_get_by_id_self;
         vPC[5] = slot.cachedOffset();
 
         codeBlock->refStructures(vPC);
@@ -1007,7 +989,7 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
     }
 
     if (structure->isDictionary()) {
-        vPC[0] = getOpcode(op_get_by_id_generic);
+        vPC[0] = op_get_by_id_generic;
         return;
     }
 
@@ -1026,7 +1008,7 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
 
         ASSERT(!baseObject->structure()->isUncacheableDictionary());
 
-        vPC[0] = getOpcode(op_get_by_id_proto);
+        vPC[0] = op_get_by_id_proto;
         vPC[5] = baseObject->structure();
         vPC[6] = offset;
 
@@ -1037,11 +1019,11 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
     size_t offset = slot.cachedOffset();
     size_t count = normalizePrototypeChain(callFrame, baseValue, slot.slotBase(), propertyName, offset);
     if (!count) {
-        vPC[0] = getOpcode(op_get_by_id_generic);
+        vPC[0] = op_get_by_id_generic;
         return;
     }
 
-    vPC[0] = getOpcode(op_get_by_id_chain);
+    vPC[0] = op_get_by_id_chain;
     vPC[4] = structure;
     vPC[5] = structure->prototypeChain(callFrame);
     vPC[6] = count;
@@ -1052,7 +1034,7 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
 NEVER_INLINE void Interpreter::uncacheGetByID(CodeBlock* codeBlock, Instruction* vPC)
 {
     codeBlock->derefStructures(vPC);
-    vPC[0] = getOpcode(op_get_by_id);
+    vPC[0] = op_get_by_id;
     vPC[4] = 0;
 }
 
@@ -1061,13 +1043,6 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
     // One-time initialization of our address tables. We have to put this code
     // here because our labels are only in scope inside this function.
     if (UNLIKELY(flag == InitializeAndReturn)) {
-        #if HAVE(COMPUTED_GOTO)
-            #define LIST_OPCODE_LABEL(id, length) &&id,
-                static const Opcode labels[] = { FOR_EACH_OPCODE_ID(LIST_OPCODE_LABEL) };
-                for (size_t i = 0; i < sizeof(labels) / sizeof(Opcode); ++i)
-                    m_opcodeTable[i] = labels[i];
-            #undef LIST_OPCODE_LABEL
-        #endif // HAVE(COMPUTED_GOTO)
         return JSValue();
     }
 
@@ -1111,16 +1086,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
     #define SAMPLE(codeBlock, vPC)
 #endif
 
-#if HAVE(COMPUTED_GOTO)
-    #define NEXT_INSTRUCTION() SAMPLE(callFrame->codeBlock(), vPC); goto *vPC->u.opcode
-#if ENABLE(OPCODE_STATS)
-    #define DEFINE_OPCODE(opcode) opcode: OpcodeStats::recordInstruction(opcode);
-#else
-    #define DEFINE_OPCODE(opcode) opcode:
-#endif
-    NEXT_INSTRUCTION();
-#else
-    #define NEXT_INSTRUCTION() SAMPLE(callFrame->codeBlock(), vPC); goto interpreterLoopStart
+#define NEXT_INSTRUCTION() SAMPLE(callFrame->codeBlock(), vPC); goto interpreterLoopStart
 #if ENABLE(OPCODE_STATS)
     #define DEFINE_OPCODE(opcode) case opcode: OpcodeStats::recordInstruction(opcode);
 #else
@@ -1129,7 +1095,6 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
     while (1) { // iterator loop begins
     interpreterLoopStart:;
     switch (vPC->u.opcode)
-#endif
     {
     DEFINE_OPCODE(op_new_object) {
         /* new_object dst(r)
@@ -3637,10 +3602,6 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         vPC += target;
         NEXT_INSTRUCTION();
     }
-#if HAVE(COMPUTED_GOTO)
-    // Appease GCC
-    goto *(&&skip_new_scope);
-#endif
     DEFINE_OPCODE(op_push_new_scope) {
         /* new_scope dst(r) property(id) value(r)
          
@@ -3653,9 +3614,6 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         vPC += OPCODE_LENGTH(op_push_new_scope);
         NEXT_INSTRUCTION();
     }
-#if HAVE(COMPUTED_GOTO)
-    skip_new_scope:
-#endif
     DEFINE_OPCODE(op_catch) {
         /* catch ex(r)
 
@@ -3844,9 +3802,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         NEXT_INSTRUCTION();
     }
     }
-#if !HAVE(COMPUTED_GOTO)
     } // iterator loop ends
-#endif
     #undef NEXT_INSTRUCTION
     #undef DEFINE_OPCODE
     #undef CHECK_FOR_EXCEPTION

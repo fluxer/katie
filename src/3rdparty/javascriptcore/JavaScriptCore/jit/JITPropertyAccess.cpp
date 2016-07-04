@@ -198,7 +198,7 @@ void JIT::emitSlow_op_put_by_id(Instruction*, Vector<SlowCaseEntry>::iterator&)
 void JIT::emit_op_method_check(Instruction* currentInstruction)
 {
     // Assert that the following instruction is a get_by_id.
-    ASSERT(m_interpreter->getOpcodeID((currentInstruction + OPCODE_LENGTH(op_method_check))->u.opcode) == op_get_by_id);
+    ASSERT((currentInstruction + OPCODE_LENGTH(op_method_check))->u.opcode == op_get_by_id);
 
     currentInstruction += OPCODE_LENGTH(op_method_check);
 
@@ -1231,7 +1231,7 @@ void JIT::emitSlow_op_put_by_id(Instruction*, Vector<SlowCaseEntry>::iterator&)
 void JIT::emit_op_method_check(Instruction* currentInstruction)
 {
     // Assert that the following instruction is a get_by_id.
-    ASSERT(m_interpreter->getOpcodeID((currentInstruction + OPCODE_LENGTH(op_method_check))->u.opcode) == op_get_by_id);
+    ASSERT((currentInstruction + OPCODE_LENGTH(op_method_check))->u.opcode == op_get_by_id);
 
     currentInstruction += OPCODE_LENGTH(op_method_check);
     unsigned resultVReg = currentInstruction[1].u.operand;

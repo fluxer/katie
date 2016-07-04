@@ -189,7 +189,7 @@ void JIT::privateCompileMainPass()
 
         m_labels[m_bytecodeIndex] = label();
 
-        switch (m_interpreter->getOpcodeID(currentInstruction->u.opcode)) {
+        switch (currentInstruction->u.opcode) {
         DEFINE_BINARY_OP(op_del_by_val)
 #if USE(JSVALUE32)
         DEFINE_BINARY_OP(op_div)
@@ -364,7 +364,7 @@ void JIT::privateCompileSlowCases()
 #endif
         Instruction* currentInstruction = instructionsBegin + m_bytecodeIndex;
 
-        switch (m_interpreter->getOpcodeID(currentInstruction->u.opcode)) {
+        switch (currentInstruction->u.opcode) {
         DEFINE_SLOWCASE_OP(op_add)
         DEFINE_SLOWCASE_OP(op_bitand)
         DEFINE_SLOWCASE_OP(op_bitnot)

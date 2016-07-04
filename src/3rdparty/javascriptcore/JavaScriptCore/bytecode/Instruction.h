@@ -123,13 +123,11 @@ namespace JSC {
     };
 
     struct Instruction {
-        Instruction(Opcode opcode)
+        Instruction(OpcodeID opcode)
         {
-#if !HAVE(COMPUTED_GOTO)
             // We have to initialize one of the pointer members to ensure that
             // the entire struct is initialized, when opcode is not a pointer.
             u.jsCell = 0;
-#endif
             u.opcode = opcode;
         }
 
@@ -147,7 +145,7 @@ namespace JSC {
         Instruction(PolymorphicAccessStructureList* polymorphicStructures) { u.polymorphicStructures = polymorphicStructures; }
 
         union {
-            Opcode opcode;
+            OpcodeID opcode;
             int operand;
             Structure* structure;
             StructureChain* structureChain;

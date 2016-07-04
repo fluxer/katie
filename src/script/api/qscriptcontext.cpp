@@ -366,7 +366,7 @@ bool QScriptContext::isCalledAsConstructor() const
     if (!callerFrame)
         return false;
 
-    if (returnPC[-JSC::op_construct_length].u.opcode == frame->interpreter()->getOpcode(JSC::op_construct)) {
+    if (returnPC[-JSC::op_construct_length].u.opcode == JSC::op_construct) {
         //We are maybe called from the op_construct opcode which has 6 opperands.
         //But we need to check we are not called from op_call with 4 opperands
 

@@ -567,7 +567,7 @@ PassRefPtr<Label> BytecodeGenerator::emitLabel(Label* l0)
 
 void BytecodeGenerator::emitOpcode(OpcodeID opcodeID)
 {
-    instructions().append(globalData()->interpreter->getOpcode(opcodeID));
+    instructions().append(opcodeID);
     m_lastOpcodeID = opcodeID;
 }
 
