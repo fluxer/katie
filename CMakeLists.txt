@@ -58,7 +58,7 @@ option(WITH_TIFF "Build tiff support" ON)
 add_feature_info(tiff WITH_TIFF "an open source something")
 
 option(WITH_MNG "Build mng support" ON)
-add_feature_info(tiff WITH_MNG "an open source something")
+add_feature_info(mng WITH_MNG "an open source something")
 
 option(WITH_NAS "Build nas support" ON)
 add_feature_info(nas WITH_NAS "an open source something")
