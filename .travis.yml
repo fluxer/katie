@@ -15,7 +15,7 @@ addons:
     - libc6-dev
     - libpng-dev
     - libjpeg-dev
-    - libtiff5-dev
+    # - libtiff5-dev
     # - libmng-dev
     - libcups2-dev
     - libasound2-dev
