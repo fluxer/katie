@@ -766,8 +766,6 @@ namespace JSC {
     private:
         virtual RegisterID* emitBytecode(BytecodeGenerator&, RegisterID* = 0);
 
-        OpcodeID opcodeID() const { return m_opcodeID; }
-
         ExpressionNode* m_expr;
         OpcodeID m_opcodeID;
     };

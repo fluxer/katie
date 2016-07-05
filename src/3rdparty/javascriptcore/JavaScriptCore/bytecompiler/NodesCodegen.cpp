@@ -776,7 +776,7 @@ RegisterID* PrefixErrorNode::emitBytecode(BytecodeGenerator& generator, Register
 RegisterID* UnaryOpNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
     RegisterID* src = generator.emitNode(m_expr);
-    return generator.emitUnaryOp(opcodeID(), generator.finalDestination(dst), src);
+    return generator.emitUnaryOp(m_opcodeID, generator.finalDestination(dst), src);
 }
 
 
