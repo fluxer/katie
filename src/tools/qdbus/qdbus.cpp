@@ -62,20 +62,26 @@ static bool printArgumentsLiterally = false;
 
 static void showUsage()
 {
-    printf("Usage: qdbus [--system | --address ADDRESS] [--literal] [servicename] [path] [method] [args]\n"
-           "\n"
+    printf("Usage:\n"
+           "    qdbus [options] [servicename] [path] [method] [args]\n\n"
+           "Options:\n"
+           "    --help\n"
+           "           Display this information and exit.\n\n"
+           "    --system\n"
+           "           Connect to the system bus.\n\n"
+           "    --address <address>\n"
+           "           Connect to the given bus.\n\n"
+           "    --literal\n"
+           "           Print replies literally.\n\n"
            "  servicename       the service to connect to (e.g., org.freedesktop.DBus)\n"
            "  path              the path to the object (e.g., /)\n"
            "  method            the method to call, with or without the interface\n"
-           "  args              arguments to pass to the call\n"
-           "With 0 arguments, qdbus will list the services available on the bus\n"
-           "With just the servicename, qdbus will list the object paths available on the service\n"
-           "With service name and object path, qdbus will list the methods, signals and properties available on the object\n"
-           "\n"
-           "Options:\n"
-           "  --system          connect to the system bus\n"
-           "  --address ADDRESS connect to the given bus\n"
-           "  --literal         print replies literally\n");
+           "  args              arguments to pass to the call\n\n"
+           "With 0 arguments, qdbus will list the services available on the bus.\n\n"
+           "With just the servicename, qdbus will list the object paths available on\n"
+           "the service.\n\n"
+           "With service name and object path, qdbus will list the methods, signals\n"
+           "and properties available on the object.\n");
 }
 
 static void printArg(const QVariant &v)

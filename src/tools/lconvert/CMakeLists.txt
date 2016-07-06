@@ -36,3 +36,10 @@ install(
     RUNTIME DESTINATION ${QT_BINARIES_PATH}
     COMPONENT Devel
 )
+
+if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
+    install(
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/lconvert.1
+        DESTINATION ${MAN_INSTALL_PATH}/man1
+    )
+endif()

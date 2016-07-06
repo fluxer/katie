@@ -1,0 +1,55 @@
+=head1 NAME
+
+qdbus - a communication-interface for Qt-based applications
+
+=head1 SYNOPSIS
+
+qdbus [options] [servicename] [path] [method] [args]
+
+=head1 DESCRIPTION
+
+TODO
+
+=head1 OPTIONS
+
+    --help
+           Display this information and exit.
+
+    --system
+           Connect to the system bus.
+
+    --address <address>
+           Connect to the given bus.
+
+    --literal
+           Print replies literally.
+
+  servicename       the service to connect to (e.g., org.freedesktop.DBus)
+  path              the path to the object (e.g., /)
+  method            the method to call, with or without the interface
+  args              arguments to pass to the call
+
+With 0 arguments, qdbus will list the services available on the bus.
+
+With just the servicename, qdbus will list the object paths available on
+the service.
+
+With service name and object path, qdbus will list the methods, signals
+and properties available on the object.
+
+=head1 EXIT STATUS
+
+qdbus returns 0 on success and other on unexcepted failure.
+
+=head1 AUTHORS
+
+The Qt Company Ltd.
+
+Copyright (C) 2015 The Qt Company Ltd.
+
+Licensed through GNU Lesser General Public License/GNU General Public License.
+
+=head1 SEE ALSO
+
+dbus-cleanup-sockets(1), dbus-launch(1), dbus-send(1), dbus-daemon(1),
+dbus-monitor(1), dbus-uuidgen(1)

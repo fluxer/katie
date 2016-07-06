@@ -1,0 +1,51 @@
+=head1 NAME
+
+uic - Qt User Interface Compiler
+
+=head1 SYNOPSIS
+
+uic [options] <user-interface-file>
+
+=head1 DESCRIPTION
+
+TODO
+
+=head1 OPTIONS
+
+    -h
+    -help
+           Display this help and exit.
+
+    -v
+    -version
+           Display version.
+
+    -d
+    -dependencies
+           Display the dependencies.
+
+    -o <file>
+           Place the output into <file>.
+
+    -tr <func>
+           Use func() for i18n.
+
+    -p
+    -no-protection
+           Disable header protection.
+
+    -n
+    -no-implicit-includes
+           Disable generation of #include-directives.
+
+=head1 EXIT STATUS
+
+uic returns 0 on success and other on unexcepted failure.
+
+=head1 AUTHORS
+
+The Qt Company Ltd.
+
+Copyright (C) 2015 The Qt Company Ltd.
+
+Licensed through GNU Lesser General Public License/GNU General Public License.

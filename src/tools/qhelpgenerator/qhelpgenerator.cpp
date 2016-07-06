@@ -111,16 +111,17 @@ int main(int argc, char *argv[])
     if (projectFile.isEmpty() && !showHelp)
         error = QHG::tr("Missing Qt help project file.");
 
-    QString help = QHG::tr("\nUsage:\n\n"
-        "qhelpgenerator <help-project-file> [options]\n\n"
-        "  -o <compressed-file>   Generates a Qt compressed help\n"
-        "                         file called <compressed-file>.\n"
-        "                         If this option is not specified\n"
-        "                         a default name will be used.\n"
-        "  -c                     Checks whether all links in HTML files\n"
-        "                         point to files in this help project.\n"
-        "  -v                     Displays the version of \n"
-        "                         qhelpgenerator.\n\n");
+    QString help = QHG::tr("Usage:\n"
+        "    qhelpgenerator [options] <help-project-file>\n\n"
+        "Options:\n"
+        "    -o <compressed-file>\n"
+        "           Generates a Qt compressed help file called <compressed-file>.\n"
+        "           If this option is not specified a default name will be used.\n\n"
+        "    -c\n"
+        "           Checks whether all links in HTML files point to files in this\n"
+        "           help project.\n\n"
+        "    -v\n"
+        "           Displays the version of qhelpgenerator.\n");
 
     if (showHelp) {
         fputs(qPrintable(help), stdout);

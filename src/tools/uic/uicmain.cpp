@@ -51,21 +51,33 @@ QT_BEGIN_NAMESPACE
 
 static const char *error = 0;
 
-void showHelp(const char *appName)
+void showHelp()
 {
-    fprintf(stderr, "Qt User Interface Compiler version %s\n", QT_VERSION_STR);
     if (error)
-        fprintf(stderr, "%s: %s\n", appName, error);
+        fprintf(stderr, "uic: %s\n", error);
 
-    fprintf(stderr, "Usage: %s [options] <uifile>\n\n"
-            "  -h, -help                 display this help and exit\n"
-            "  -v, -version              display version\n"
-            "  -d, -dependencies         display the dependencies\n"
-            "  -o <file>                 place the output into <file>\n"
-            "  -tr <func>                use func() for i18n\n"
-            "  -p, -no-protection        disable header protection\n"
-            "  -n, -no-implicit-includes disable generation of #include-directives\n"
-            "\n", appName);
+    fprintf(stderr, "Usage:\n"
+            "    uic [options] <user-interface-file>\n\n"
+            "Options:\n"
+            "    -h\n"
+            "    -help\n"
+            "           Display this help and exit.\n\n"
+            "    -v\n"
+            "    -version\n"
+            "           Display version.\n\n"
+            "    -d\n"
+            "    -dependencies\n"
+            "           Display the dependencies.\n\n"
+            "    -o <file>\n"
+            "           Place the output into <file>.\n\n"
+            "    -tr <func>\n"
+            "           Use func() for i18n.\n\n"
+            "    -p\n"
+            "    -no-protection\n"
+            "           Disable header protection.\n\n"
+            "    -n\n"
+            "    -no-implicit-includes\n"
+            "           Disable generation of #include-directives.\n");
 }
 
 int runUic(int argc, char *argv[])
@@ -78,7 +90,7 @@ int runUic(int argc, char *argv[])
     while (arg < argc) {
         QString opt = QString::fromLocal8Bit(argv[arg]);
         if (opt == QLatin1String("-h") || opt == QLatin1String("-help")) {
-            showHelp(argv[0]);
+            showHelp();
             return 0;
         } else if (opt == QLatin1String("-d") || opt == QLatin1String("-dependencies")) {
             driver.option().dependencies = true;
@@ -88,7 +100,7 @@ int runUic(int argc, char *argv[])
         } else if (opt == QLatin1String("-o") || opt == QLatin1String("-output")) {
             ++arg;
             if (!argv[arg]) {
-                showHelp(argv[0]);
+                showHelp();
                 return 1;
             }
             driver.option().outputFile = QFile::decodeName(argv[arg]);
@@ -99,21 +111,21 @@ int runUic(int argc, char *argv[])
         } else if (opt == QLatin1String("-postfix")) {
             ++arg;
             if (!argv[arg]) {
-                showHelp(argv[0]);
+                showHelp();
                 return 1;
             }
             driver.option().postfix = QLatin1String(argv[arg]);
         } else if (opt == QLatin1String("-tr") || opt == QLatin1String("-translate")) {
             ++arg;
             if (!argv[arg]) {
-                showHelp(argv[0]);
+                showHelp();
                 return 1;
             }
             driver.option().translateFunction = QLatin1String(argv[arg]);
         } else if (!fileName) {
             fileName = argv[arg];
         } else {
-            showHelp(argv[0]);
+            showHelp();
             return 1;
         }
 

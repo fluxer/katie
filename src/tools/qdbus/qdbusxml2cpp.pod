@@ -1,0 +1,45 @@
+=head1 NAME
+
+qdbusxml2cpp - a D-Bus interface generator for Qt-based applications
+
+=head1 SYNOPSIS
+
+qdbusxml2cpp [options] [servicename] [path] [method] [args]
+
+=head1 DESCRIPTION
+
+qdbusxml2cpp produces the C++ code to implement the interfaces defined in the
+input file.
+
+=head1 OPTIONS
+
+    -a <filename>    Write the adaptor code to <filename>
+    -c <classname>   Use <classname> as the class name for the generated classes
+    -h               Show this information
+    -i <filename>    Add #include to the output
+    -l <classname>   When generating an adaptor, use <classname> as the parent class
+    -m               Generate #include "filename.moc" statements in the .cpp files
+    -N               Don't use namespaces
+    -p <filename>    Write the proxy code to <filename>
+    -v               Be verbose.
+    -V               Show the program version and quit.
+
+If the file name given to the options -a and -p does not end in .cpp or .h, the
+program will automatically append the suffixes and produce both files.
+You can also use a colon (:) to separate the header name from the source file
+name, as in '-a filename_p.h:filename.cpp'.
+
+If you pass a dash (-) as the argument to either -p or -a, the output is written
+to the standard output.
+
+=head1 EXIT STATUS
+
+qdbusxml2cpp returns 0 on success and other on unexcepted failure.
+
+=head1 AUTHORS
+
+The Qt Company Ltd.
+
+Copyright (C) 2015 The Qt Company Ltd.
+
+Licensed through GNU Lesser General Public License/GNU General Public License.

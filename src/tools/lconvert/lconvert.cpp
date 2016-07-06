@@ -66,7 +66,7 @@ static int usage(const QStringList &args)
         loaders += line.arg(format.extension, -5).arg(format.description);
 
     std::cout << qPrintable(LC::tr("\nUsage:\n"
-        "    lconvert [options] <infile> [<infile>...]\n\n"
+        "    lconvert [options] <infile> [<infile>] ...\n\n"
         "lconvert is part of Qt's Linguist tool chain. It can be used as a\n"
         "stand-alone tool to convert and filter translation data files.\n"
         "The following file formats are supported:\n\n%1\n"
@@ -74,7 +74,8 @@ static int usage(const QStringList &args)
         "translations from later files taking precedence.\n\n"
         "Options:\n"
         "    -h\n"
-        "    --help  Display this information and exit.\n\n"
+        "    --help\n"
+        "           Display this information and exit.\n\n"
         "    -i <infile>\n"
         "    --input-file <infile>\n"
         "           Specify input file. Use if <infile> might start with a dash.\n"
@@ -122,12 +123,7 @@ static int usage(const QStringList &args)
         "           Drop line numbers from references to UI files.\n\n"
         "    --verbose\n"
         "           be a bit more verbose\n\n"
-        "Long options can be specified with only one leading dash, too.\n\n"
-        "Return value:\n"
-        "    0 on success\n"
-        "    1 on command line parse failures\n"
-        "    2 on read failures\n"
-        "    3 on write failures\n").arg(loaders));
+        "Long options can be specified with only one leading dash, too.\n").arg(loaders));
     return 1;
 }
 

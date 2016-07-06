@@ -1,0 +1,34 @@
+=head1 NAME
+
+qdbuscpp2xml - a D-Bus instropection generator for Qt-based applications
+
+=head1 SYNOPSIS
+
+qdbuscpp2xml [options...] [files...]
+
+=head1 DESCRIPTION
+
+qdbuscpp2xml parses the C++ source or header file containing a QObject-derived
+class and produces the D-Bus Introspection XML.
+
+=head1 OPTIONS
+
+    -p|-s|-m       Only parse scriptable Properties, Signals and Methods (slots)
+    -P|-S|-M       Parse all Properties, Signals and Methods (slots)
+    -a             Output all scriptable contents (equivalent to -psm)
+    -A             Output all contents (equivalent to -PSM)
+    -o <filename>  Write the output to file <filename>
+    -h             Show this information
+    -V             Show the program version and quit.
+
+=head1 EXIT STATUS
+
+qdbuscpp2xml returns 0 on success and other on unexcepted failure.
+
+=head1 AUTHORS
+
+The Qt Company Ltd.
+
+Copyright (C) 2015 The Qt Company Ltd.
+
+Licensed through GNU Lesser General Public License/GNU General Public License.

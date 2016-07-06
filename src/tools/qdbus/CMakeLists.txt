@@ -32,7 +32,10 @@ install(
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
     install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.1
+        FILES
+        ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.1
+        ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscpp2xml.1
+        ${CMAKE_CURRENT_SOURCE_DIR}/qdbusxml2cpp.1
         DESTINATION ${MAN_INSTALL_PATH}/man1
     )
 endif()

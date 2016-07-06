@@ -213,7 +213,7 @@ void CollectionConfigReader::readAssistantSettings()
                 readMenuTexts();
             } else if (name() == QLatin1String("aboutDialog")) {
                 readAboutDialog();
-            } else if (name() == "cacheDirectory") {
+            } else if (name() == QLatin1String("cacheDirectory")) {
                 m_cacheDirRelativeToCollection =
                     attributes().value(QLatin1String("base"))
                     == QLatin1String("collection");
@@ -404,14 +404,18 @@ int main(int argc, char *argv[])
     if (configFile.isEmpty() && !showHelp)
         error = QCG::tr("Missing collection config file.");
 
-    QString help = QCG::tr("\nUsage:\n\n"
-        "qcollectiongenerator <collection-config-file> [options]\n\n"
-        "  -o <collection-file>   Generates a collection file\n"
-        "                         called <collection-file>. If\n"
-        "                         this option is not specified\n"
-        "                         a default name will be used.\n"
-        "  -v                     Displays the version of\n"
-        "                         qcollectiongenerator.\n\n");
+    QString help = QCG::tr("Usage:\n"
+        "    qcollectiongenerator [options] <collection-config-file>\n\n"
+        "Options:\n"
+        "    -h\n"
+        "    -help\n"
+        "           Display this information and exit.\n\n"
+        "    -o <collection-file>\n"
+        "           Generates a collection file called\n"
+        "           <collection-file>. If this option is not\n"
+        "           specified a default name will be used.\n\n"
+        "    -v\n"
+        "           Displays the version of qcollectiongenerator and exit.\n");
 
     if (showHelp) {
         fputs(qPrintable(help), stdout);

@@ -1,0 +1,111 @@
+=head1 NAME
+
+lconvert - part of Qt's Linguist tool chain
+
+=head1 SYNOPSIS
+
+lconvert [options] <infile> [<infile>] ...
+
+=head1 DESCRIPTION
+
+lconvert can be used as a stand-alone tool to convert and filter translation
+data files. The following file formats are supported:
+
+    ts11  - Qt translation sources (format 1.1)
+    ts20  - Qt translation sources (format 2.0)
+    pot   - GNU Gettext localization template files
+    ts    - Qt translation sources (latest format)
+    qph   - Qt Linguist 'Phrase Book'
+    po    - GNU Gettext localization files
+    qm    - Compiled Qt translations
+
+If multiple input files are specified, they are merged with translations from
+later files taking precedence.
+
+=head1 OPTIONS
+
+    -h
+    --help
+           Display this information and exit.
+
+    -i <infile>
+    --input-file <infile>
+           Specify input file. Use if <infile> might start with a dash.
+           This option can be used several times to merge inputs.
+           May be '-' (standard input) for use in a pipe.
+
+    -o <outfile>
+    --output-file <outfile>
+           Specify output file. Default is '-' (standard output).
+
+    -if <informat>
+    --input-format <format>
+           Specify input format for subsequent <infile>s.
+           The format is auto-detected from the file name and defaults to 'ts'.
+
+    -of <outformat>
+    --output-format <outformat>
+           Specify output format. See -if.
+
+    --input-codec <codec>
+           Specify encoding for QM and PO input files. Default is 'Latin1'
+           for QM and 'UTF-8' for PO files. UTF-8 is always tried as well for
+           QM, corresponding to the possible use of the trUtf8() function.
+
+    --output-codec <codec>
+           Specify encoding for PO output files. Default is 'UTF-8'.
+
+    --drop-tags <regexp>
+           Drop named extra tags when writing TS or XLIFF files.
+           May be specified repeatedly.
+
+    --drop-translations
+           Drop existing translations and reset the status to 'unfinished'.
+           Note: this implies --no-obsolete.
+
+    --source-language <language>[_<region>]
+           Specify/override the language of the source strings. Defaults to
+           POSIX if not specified and the file does not name it yet.
+
+    --target-language <language>[_<region>]
+           Specify/override the language of the translation.
+           The target language is guessed from the file name if this option
+           is not specified and the file contents name no language yet.
+
+    --no-obsolete
+           Drop obsolete messages.
+
+    --no-finished
+           Drop finished messages.
+
+    --sort-contexts
+           Sort contexts in output TS file alphabetically.
+
+    --locations {absolute|relative|none}
+           Override how source code references are saved in TS files.
+           Default is absolute.
+
+    --no-ui-lines
+           Drop line numbers from references to UI files.
+
+    --verbose
+           be a bit more verbose
+
+Long options can be specified with only one leading dash, too.
+
+=head1 EXIT STATUS
+
+lconvert returns 0 on success, 2 on read failure, 3 on write failure and other
+on unexcepted failure.
+
+=head1 AUTHORS
+
+The Qt Company Ltd.
+
+Copyright (C) 2015 The Qt Company Ltd.
+
+Licensed through GNU Lesser General Public License/GNU General Public License.
+
+=head1 SEE ALSO
+
+lrelease(1) lupdate(1)

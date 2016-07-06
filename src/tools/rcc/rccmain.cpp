@@ -50,27 +50,38 @@
 
 QT_BEGIN_NAMESPACE
 
-void showHelp(const QString &argv0, const QString &error)
+void showHelp( const QString &error)
 {
-    fprintf(stderr, "Qt resource compiler\n");
     if (!error.isEmpty())
-        fprintf(stderr, "%s: %s\n", qPrintable(argv0), qPrintable(error));
-    fprintf(stderr, "Usage: %s  [options] <inputs>\n\n"
+        fprintf(stderr, "rcc: %s\n", qPrintable(error));
+    fprintf(stderr, "Usage:\n"
+        "    rcc [options] <resource-file> [<resource-file>] ...\n\n"
         "Options:\n"
-        "  -o file              write output to file rather than stdout\n"
-        "  -name name           create an external initialization function with name\n"
-        "  -threshold level     threshold to consider compressing files\n"
-        "  -compress level      compress input files by level\n"
-        "  -root path           prefix resource access path with root path\n"
-        "  -no-compress         disable all compression\n"
-        "  -binary              output a binary file for use as a dynamic resource\n"
-        "  -namespace           turn off namespace macros\n"
-        "  -project             Output a resource file containing all\n"
-        "                       files from the current directory\n"
-        "  -list                lists .qrc file entries\n"
-        "  -version             display version\n"
-        "  -help                display this information\n",
-        qPrintable(argv0));
+        "    -o <file>\n"
+        "           Write output to file rather than stdout.\n\n"
+        "    -name <name>\n"
+        "           Create an external initialization function with name.\n\n"
+        "    -threshold <level>\n"
+        "           Threshold to consider compressing files.\n\n"
+        "    -compress <level>\n"
+        "           Compress input files by level.\n\n"
+        "    -root <path>\n"
+        "           Prefix resource access path with root path.\n\n"
+        "    -no-compress\n"
+        "           Disable all compression.\n\n"
+        "    -binary\n"
+        "           Output a binary file for use as a dynamic resource.\n\n"
+        "    -namespace\n"
+        "           Turn off namespace macros.\n\n"
+        "    -project\n"
+        "           Output a resource file containing all files from the\n"
+        "           current directory.\n\n"
+        "    -list\n"
+        "           Lists .qrc file entries.\n\n"
+        "    -version\n"
+        "           Display version.\n\n"
+        "    -help\n"
+        "           Display this information.\n");
 }
 
 void dumpRecursive(const QDir &dir, QTextStream &out)
@@ -210,7 +221,7 @@ int runRcc(int argc, char *argv[])
     }
 
     if (!filenamesIn.size() || !errorMsg.isEmpty() || helpRequested) {
-        showHelp(args[0], errorMsg);
+        showHelp(errorMsg);
         return 1;
     }
     QFile errorDevice;

@@ -76,18 +76,18 @@ static QString outputFile;
 static int flags;
 
 static const char help[] =
-    "Usage: " PROGRAMNAME " [options...] [files...]\n"
+    "Usage:" PROGRAMNAME " [options...] [files...]\n"
     "Parses the C++ source or header file containing a QObject-derived class and\n"
-    "produces the D-Bus Introspection XML."
+    "produces the D-Bus Introspection XML.\n"
     "\n"
     "Options:\n"
-    "  -p|-s|-m       Only parse scriptable Properties, Signals and Methods (slots)\n"
-    "  -P|-S|-M       Parse all Properties, Signals and Methods (slots)\n"
-    "  -a             Output all scriptable contents (equivalent to -psm)\n"
-    "  -A             Output all contents (equivalent to -PSM)\n"
-    "  -o <filename>  Write the output to file <filename>\n"
-    "  -h             Show this information\n"
-    "  -V             Show the program version and quit.\n"
+    "    -p|-s|-m       Only parse scriptable Properties, Signals and Methods (slots)\n"
+    "    -P|-S|-M       Parse all Properties, Signals and Methods (slots)\n"
+    "    -a             Output all scriptable contents (equivalent to -psm)\n"
+    "    -A             Output all contents (equivalent to -PSM)\n"
+    "    -o <filename>  Write the output to file <filename>\n"
+    "    -h             Show this information\n"
+    "    -V             Show the program version and quit.\n"
     "\n";
 
 class MocParser
