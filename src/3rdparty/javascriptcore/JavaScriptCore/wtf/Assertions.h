@@ -78,71 +78,6 @@
 #define ASSERT_ARG_DISABLED ASSERTIONS_DISABLED_DEFAULT
 #endif
 
-#ifndef FATAL_DISABLED
-#if HAVE(VARIADIC_MACRO)
-#define FATAL_DISABLED ASSERTIONS_DISABLED_DEFAULT
-#else
-#define FATAL_DISABLED 1
-#endif
-#endif
-
-#ifndef ERROR_DISABLED
-#if HAVE(VARIADIC_MACRO)
-#define ERROR_DISABLED ASSERTIONS_DISABLED_DEFAULT
-#else
-#define ERROR_DISABLED 1
-#endif
-#endif
-
-#ifndef LOG_DISABLED
-#if HAVE(VARIADIC_MACRO)
-#define LOG_DISABLED ASSERTIONS_DISABLED_DEFAULT
-#else
-#define LOG_DISABLED 1
-#endif
-#endif
-
-#if COMPILER(GCC)
-#define WTF_PRETTY_FUNCTION __PRETTY_FUNCTION__
-#else
-#define WTF_PRETTY_FUNCTION __FUNCTION__
-#endif
-
-/* WTF logging functions can process %@ in the format string to log a NSObject* but the printf format attribute
-   emits a warning when %@ is used in the format string.  Until <rdar://problem/5195437> is resolved we can't include
-   the attribute when being used from Objective-C code in case it decides to use %@. */
-#if COMPILER(GCC) && !defined(__OBJC__)
-#define WTF_ATTRIBUTE_PRINTF(formatStringArgument, extraArguments) __attribute__((__format__(printf, formatStringArgument, extraArguments)))
-#else
-#define WTF_ATTRIBUTE_PRINTF(formatStringArgument, extraArguments) 
-#endif
-
-/* These helper functions are always declared, but not necessarily always defined if the corresponding function is disabled. */
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef enum { WTFLogChannelOff, WTFLogChannelOn } WTFLogChannelState;
-
-typedef struct {
-    unsigned mask;
-    const char *defaultName;
-    WTFLogChannelState state;
-} WTFLogChannel;
-
-void WTFReportAssertionFailure(const char* file, int line, const char* function, const char* assertion);
-void WTFReportAssertionFailureWithMessage(const char* file, int line, const char* function, const char* assertion, const char* format, ...) WTF_ATTRIBUTE_PRINTF(5, 6);
-void WTFReportArgumentAssertionFailure(const char* file, int line, const char* function, const char* argName, const char* assertion);
-void WTFReportFatalError(const char* file, int line, const char* function, const char* format, ...) WTF_ATTRIBUTE_PRINTF(4, 5);
-void WTFReportError(const char* file, int line, const char* function, const char* format, ...) WTF_ATTRIBUTE_PRINTF(4, 5);
-void WTFLog(WTFLogChannel* channel, const char* format, ...) WTF_ATTRIBUTE_PRINTF(2, 3);
-void WTFLogVerbose(const char* file, int line, const char* function, WTFLogChannel* channel, const char* format, ...) WTF_ATTRIBUTE_PRINTF(5, 6);
-
-#ifdef __cplusplus
-}
-#endif
-
 /* CRASH -- gets us into the debugger or the crash reporter -- signals are ignored by the crash reporter so we must do better */
 
 #ifndef CRASH
@@ -236,59 +171,6 @@ while (0)
 #else
 #define COMPILE_ASSERT(exp, name) typedef int dummy##name [(exp) ? 1 : -1]
 #endif
-#endif
-
-/* FATAL */
-
-#if COMPILER(MSVC7)
-#define FATAL() ((void)0)
-#elif COMPILER(WINSCW)
-#define FATAL(arg...) ((void)0)
-#elif FATAL_DISABLED
-#define FATAL(...) ((void)0)
-#else
-#define FATAL(...) do { \
-    WTFReportFatalError(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, __VA_ARGS__); \
-    CRASH(); \
-} while (0)
-#endif
-
-/* LOG_ERROR */
-
-#if COMPILER(MSVC7)
-#define LOG_ERROR() ((void)0)
-#elif COMPILER(WINSCW)
-#define LOG_ERROR(arg...)  ((void)0)
-#elif ERROR_DISABLED
-#define LOG_ERROR(...) ((void)0)
-#else
-#define LOG_ERROR(...) WTFReportError(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, __VA_ARGS__)
-#endif
-
-/* LOG */
-
-#if COMPILER(MSVC7)
-#define LOG() ((void)0)
-#elif COMPILER(WINSCW)
-#define LOG(arg...) ((void)0)
-#elif LOG_DISABLED
-#define LOG(channel, ...) ((void)0)
-#else
-#define LOG(channel, ...) WTFLog(&JOIN_LOG_CHANNEL_WITH_PREFIX(LOG_CHANNEL_PREFIX, channel), __VA_ARGS__)
-#define JOIN_LOG_CHANNEL_WITH_PREFIX(prefix, channel) JOIN_LOG_CHANNEL_WITH_PREFIX_LEVEL_2(prefix, channel)
-#define JOIN_LOG_CHANNEL_WITH_PREFIX_LEVEL_2(prefix, channel) prefix ## channel
-#endif
-
-/* LOG_VERBOSE */
-
-#if COMPILER(MSVC7)
-#define LOG_VERBOSE(channel) ((void)0)
-#elif COMPILER(WINSCW)
-#define LOG_VERBOSE(channel, arg...) ((void)0)
-#elif LOG_DISABLED
-#define LOG_VERBOSE(channel, ...) ((void)0)
-#else
-#define LOG_VERBOSE(channel, ...) WTFLogVerbose(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, &JOIN_LOG_CHANNEL_WITH_PREFIX(LOG_CHANNEL_PREFIX, channel), __VA_ARGS__)
 #endif
 
 #endif /* WTF_Assertions_h */

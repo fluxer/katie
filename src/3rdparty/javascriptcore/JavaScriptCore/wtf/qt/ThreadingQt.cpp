@@ -198,7 +198,7 @@ ThreadIdentifier createThreadInternal(ThreadFunction entryPoint, void* data, con
 {
     ThreadPrivate* thread = new ThreadPrivate(entryPoint, data);
     if (!thread) {
-        LOG_ERROR("Failed to create thread at entry point %p with data %p", entryPoint, data);
+        qCritical("Failed to create thread at entry point %p with data %p", entryPoint, data);
         return 0;
     }
 

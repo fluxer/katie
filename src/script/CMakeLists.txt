@@ -162,7 +162,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/TimeoutChecker.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/UString.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/runtime/UStringImpl.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Assertions.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/ByteArray.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/CurrentTime.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/DateMath.cpp
