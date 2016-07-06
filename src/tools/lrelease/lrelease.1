@@ -71,7 +71,7 @@
 .\" ========================================================================
 .\"
 .IX Title "LRELEASE 1"
-.TH LRELEASE 1 "2016-07-05" "Katie 4.9.0" "Katie Manual"
+.TH LRELEASE 1 "2016-07-06" "Katie 4.9.0" "Katie Manual"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -88,24 +88,32 @@ files in the \s-1TS\s0 format into the 'compiled' \s-1QM\s0 format used by QTran
 objects.
 .SH "OPTIONS"
 .IX Header "OPTIONS"
-.Vb 10
-\&    \-help  Display this information and exit
+.Vb 2
+\&    \-help
+\&           Display this information and exit.
+\&
 \&    \-idbased
-\&           Use IDs instead of source strings for message keying
+\&           Use IDs instead of source strings for message keying.
+\&
 \&    \-compress
-\&           Compress the QM files
+\&           Compress the QM files.
+\&
 \&    \-nounfinished
-\&           Do not include unfinished translations
+\&           Do not include unfinished translations.
+\&
 \&    \-removeidentical
-\&           If the translated text is the same as
-\&           the source text, do not include the message
+\&           If the translated text is the same as the source text,
+\&           do not include the message.
+\&
 \&    \-markuntranslated <prefix>
 \&           If a message has no real translation, use the source text
-\&           prefixed with the given string instead
+\&           prefixed with the given string instead.
+\&
 \&    \-silent
-\&           Do not explain what is being done
+\&           Do not explain what is being done.
+\&
 \&    \-version
-\&           Display the version of lrelease and exit
+\&           Display the version of lrelease and exit.
 .Ve
 .SH "EXIT STATUS"
 .IX Header "EXIT STATUS"

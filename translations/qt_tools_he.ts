@@ -269,28 +269,36 @@ stand-alone tool to convert XML-based translations files in the TS
 format into the &apos;compiled&apos; QM format used by QTranslator objects.
 
 Options:
-    -help  Display this information and exit
+    -help
+           Display this information and exit.
+
     -idbased
-           Use IDs instead of source strings for message keying
+           Use IDs instead of source strings for message keying.
+
     -compress
-           Compress the QM files
+           Compress the QM files.
+
     -nounfinished
-           Do not include unfinished translations
+           Do not include unfinished translations.
+
     -removeidentical
-           If the translated text is the same as
-           the source text, do not include the message
+           If the translated text is the same as the source text,
+           do not include the message.
+
     -markuntranslated &lt;prefix&gt;
            If a message has no real translation, use the source text
-           prefixed with the given string instead
+           prefixed with the given string instead.
+
     -silent
-           Do not explain what is being done
+           Do not explain what is being done.
+
     -version
-           Display the version of lrelease and exit
+           Display the version of lrelease and exit.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+33"/>
         <source>lrelease error: %1</source>
         <translation type="unfinished"></translation>
     </message>
