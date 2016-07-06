@@ -281,7 +281,6 @@ void CodeBlock::printStructure(const char* name, const Instruction* vPC, int ope
 
 void CodeBlock::printStructures(const Instruction* vPC) const
 {
-    Interpreter* interpreter = m_globalData->interpreter;
     unsigned instructionOffset = vPC - m_instructions.begin();
 
     if (vPC[0].u.opcode == op_get_by_id) {
@@ -1343,8 +1342,6 @@ void CodeBlock::unlinkCallers()
 
 void CodeBlock::derefStructures(Instruction* vPC) const
 {
-    Interpreter* interpreter = m_globalData->interpreter;
-
     if (vPC[0].u.opcode == op_get_by_id_self) {
         vPC[4].u.structure->deref();
         return;
@@ -1388,8 +1385,6 @@ void CodeBlock::derefStructures(Instruction* vPC) const
 
 void CodeBlock::refStructures(Instruction* vPC) const
 {
-    Interpreter* interpreter = m_globalData->interpreter;
-
     if (vPC[0].u.opcode == op_get_by_id_self) {
         vPC[4].u.structure->ref();
         return;
