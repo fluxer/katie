@@ -1022,7 +1022,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2209"/>
         <source>Services</source>
         <translation>שירותים</translation>
     </message>
@@ -1160,7 +1160,7 @@
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+915"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+689"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+687"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+664"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -1205,7 +1205,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1254"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1253"/>
         <source>&amp;Step up</source>
         <translation>הע&amp;לה</translation>
     </message>
@@ -1247,7 +1247,7 @@
         <translation>RTL</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation type="unfinished">קובץ הפעלה &quot;%1&quot; דורש את Qt %2, נמצא Qt %3.</translation>
     </message>
@@ -1652,7 +1652,7 @@
 <context>
     <name>QDeclarativeCompiledBindings</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+408"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+345"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>אותרה לולאת קישור עבור תכונה &quot;%1&quot;</translation>
     </message>
@@ -2373,7 +2373,7 @@
 <context>
     <name>QDeclarativeParser</name>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+544"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+540"/>
         <location line="+123"/>
         <location line="+54"/>
         <source>Illegal unicode escape sequence</source>
@@ -2432,17 +2432,17 @@
     </message>
     <message>
         <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
-        <location line="+67"/>
+        <location line="+68"/>
         <source>Syntax error</source>
         <translation>שגיאת תחביר</translation>
     </message>
     <message>
-        <location line="-65"/>
+        <location line="-66"/>
         <source>Unexpected token `%1&apos;</source>
         <translation>סימן לא צפוי `%1&apos;</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <location line="+24"/>
         <source>Expected token `%1&apos;</source>
         <translation>סימן צפוי `%1&apos;</translation>
@@ -3129,7 +3129,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+699"/>
+        <location filename="../src/core/io/qfile.cpp" line="+698"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>קובץ יעד קיים</translation>
@@ -3510,7 +3510,7 @@ Do you want to delete it anyway?</source>
         <translation>תאריך שינוי</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
         <source>My Computer</source>
         <translation type="unfinished">המחשב שלי</translation>
     </message>
@@ -3528,51 +3528,51 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+109"/>
-        <location line="+1386"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
+        <location line="+1205"/>
         <source>Normal</source>
         <translation>רגיל</translation>
     </message>
     <message>
-        <location line="-1383"/>
+        <location line="-1202"/>
         <location line="+12"/>
-        <location line="+1359"/>
+        <location line="+1178"/>
         <source>Bold</source>
         <translation>מודגש</translation>
     </message>
     <message>
-        <location line="-1368"/>
-        <location line="+1370"/>
+        <location line="-1187"/>
+        <location line="+1189"/>
         <source>Demi Bold</source>
         <translation>מודגש למחצה</translation>
     </message>
     <message>
-        <location line="-1367"/>
+        <location line="-1186"/>
         <location line="+18"/>
-        <location line="+1345"/>
+        <location line="+1164"/>
         <source>Black</source>
         <translation>שחור</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1174"/>
         <source>Demi</source>
         <translation>למחצה</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1355"/>
+        <location line="+1174"/>
         <source>Light</source>
         <translation>רזה</translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1188"/>
+        <location line="-1024"/>
+        <location line="+1027"/>
         <source>Italic</source>
         <translation>נטוי</translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1187"/>
+        <location line="-1024"/>
+        <location line="+1026"/>
         <source>Oblique</source>
         <translation>אלכסוני</translation>
     </message>
@@ -3926,7 +3926,7 @@ Do you want to delete it anyway?</source>
     <name>QHostInfoAgent</name>
     <message>
         <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+265"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>מארח לא נמצא</translation>
@@ -4242,7 +4242,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2115"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
@@ -4816,7 +4816,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+382"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+380"/>
         <location line="+817"/>
         <source>OK</source>
         <translation>אישור</translation>
@@ -4837,7 +4837,7 @@ Do you want to delete it anyway?</source>
         <translation>עזרה</translation>
     </message>
     <message>
-        <location line="-1067"/>
+        <location line="-1065"/>
         <source>Show Details...</source>
         <translation>הצג פרטים...</translation>
     </message>
@@ -4847,7 +4847,7 @@ Do you want to delete it anyway?</source>
         <translation>הסתר פרטים...</translation>
     </message>
     <message>
-        <location line="+1552"/>
+        <location line="+1550"/>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6705,7 +6705,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+263"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+262"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: לא ניתן לקבוע מפתח במנעול</translation>
     </message>
@@ -8061,7 +8061,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+833"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
         <source>Unable to write data: %1</source>
         <translation>אין אפשרות לרשום נתונים: %1</translation>
     </message>
@@ -8780,7 +8780,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5680"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -9304,7 +9304,7 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+902"/>
+        <location line="+890"/>
         <source>%1 [read-only]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12128,7 +12128,7 @@ to
 <context>
     <name>WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+813"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+812"/>
         <source>The file contains a custom widget &apos;%1&apos; whose base class (%2) differs from the current entry in the widget database (%3). The widget database is left unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12136,7 +12136,7 @@ to
 <context>
     <name>qdesigner_internal::ActionEditor</name>
     <message>
-        <location filename="../src/designer/shared/actioneditor.cpp" line="+123"/>
+        <location filename="../src/designer/shared/actioneditor.cpp" line="+125"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12602,7 +12602,7 @@ to
 <context>
     <name>qdesigner_internal::DesignerPropertyManager</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+787"/>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+786"/>
         <location line="+6"/>
         <source>AlignLeft</source>
         <translation type="unfinished"></translation>
@@ -12898,7 +12898,7 @@ to
 <context>
     <name>qdesigner_internal::FilterWidget</name>
     <message>
-        <location filename="../src/designer/shared/filterwidget.cpp" line="+165"/>
+        <location filename="../src/designer/shared/filterwidget.cpp" line="+164"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13406,7 +13406,7 @@ to
 <context>
     <name>qdesigner_internal::IconThemeDialog</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1736"/>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1735"/>
         <source>Set Icon From Theme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13881,7 +13881,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PaletteEditorButton</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+57"/>
+        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+56"/>
         <source>Change Palette</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13889,7 +13889,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PaletteModel</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+375"/>
+        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+374"/>
         <source>Color Role</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14216,7 +14216,7 @@ ate the goose who was loose.</source>
 <context>
     <name>qdesigner_internal::PropertyEditor</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+232"/>
+        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+230"/>
         <source>Add Dynamic Property...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14266,7 +14266,7 @@ ate the goose who was loose.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+542"/>
+        <location line="+536"/>
         <source>Object: %1
 Class: %2</source>
         <translation type="unfinished"></translation>

@@ -1026,7 +1026,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2209"/>
         <source>Services</source>
         <translation>Usługi</translation>
     </message>
@@ -1164,7 +1164,7 @@
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+962"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+692"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+690"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+694"/>
         <source>Connection refused</source>
         <translation>Połączenie odrzucone</translation>
@@ -1209,7 +1209,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1256"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1255"/>
         <source>Step &amp;down</source>
         <translation>Krok w &amp;dół</translation>
     </message>
@@ -1255,7 +1255,7 @@
         <translation>Uaktywnia główne okno programu</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Program &apos;%1&apos; wymaga do uruchomienia Qt %2, znaleziono Qt %3.</translation>
     </message>
@@ -1656,7 +1656,7 @@
 <context>
     <name>QDeclarativeCompiledBindings</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+408"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+345"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation>Zapętlenie powiązania dla właściwości &quot;%1&quot;</translation>
     </message>
@@ -2377,7 +2377,7 @@
 <context>
     <name>QDeclarativeParser</name>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+544"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+540"/>
         <location line="+123"/>
         <location line="+54"/>
         <source>Illegal unicode escape sequence</source>
@@ -2436,17 +2436,17 @@
     </message>
     <message>
         <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
-        <location line="+67"/>
+        <location line="+68"/>
         <source>Syntax error</source>
         <translation>Błąd składni</translation>
     </message>
     <message>
-        <location line="-65"/>
+        <location line="-66"/>
         <source>Unexpected token `%1&apos;</source>
         <translation>Nieoczekiwany znak &quot;%1&quot;</translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <location line="+24"/>
         <source>Expected token `%1&apos;</source>
         <translation>Oczekiwany znak &quot;%1&quot;</translation>
@@ -3131,7 +3131,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+699"/>
+        <location filename="../src/core/io/qfile.cpp" line="+698"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Plik wyjściowy już istnieje</translation>
@@ -3512,7 +3512,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Data modyfikacji</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
         <source>My Computer</source>
         <translation>Mój komputer</translation>
     </message>
@@ -3530,53 +3530,53 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+109"/>
-        <location line="+1386"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
+        <location line="+1205"/>
         <source>Normal</source>
         <translation>Normalny</translation>
     </message>
     <message>
-        <location line="-1383"/>
+        <location line="-1202"/>
         <location line="+12"/>
-        <location line="+1359"/>
+        <location line="+1178"/>
         <source>Bold</source>
         <translation>Pogrubiony</translation>
     </message>
     <message>
-        <location line="-1368"/>
-        <location line="+1370"/>
+        <location line="-1187"/>
+        <location line="+1189"/>
         <source>Demi Bold</source>
         <translation>Na wpół pogrubiony</translation>
     </message>
     <message>
-        <location line="-1367"/>
+        <location line="-1186"/>
         <location line="+18"/>
-        <location line="+1345"/>
+        <location line="+1164"/>
         <source>Black</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Bardzo gruby</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1174"/>
         <source>Demi</source>
         <translation>Na wpół</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1355"/>
+        <location line="+1174"/>
         <source>Light</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Cienki</translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1188"/>
+        <location line="-1024"/>
+        <location line="+1027"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1187"/>
+        <location line="-1024"/>
+        <location line="+1026"/>
         <source>Oblique</source>
         <translation>Pochyły</translation>
     </message>
@@ -3930,7 +3930,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QHostInfoAgent</name>
     <message>
         <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+265"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Host nie znaleziony</translation>
@@ -4246,7 +4246,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2142"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2124"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+121"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
@@ -4819,7 +4819,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1715"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1713"/>
         <source>About Qt</source>
         <translation>Informacje o Qt</translation>
     </message>
@@ -4829,12 +4829,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location line="-1067"/>
+        <location line="-1065"/>
         <source>Hide Details...</source>
         <translation>Ukryj szczegóły...</translation>
     </message>
     <message>
-        <location line="+249"/>
+        <location line="+247"/>
         <location line="+817"/>
         <source>OK</source>
         <translation>OK</translation>
@@ -4850,7 +4850,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1552"/>
+        <location line="-1550"/>
         <source>Show Details...</source>
         <translation>Pokaż szczegóły...</translation>
     </message>
@@ -6708,7 +6708,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+347"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+346"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: rozmiar przy tworzeniu mniejszy od 0</translation>
     </message>
@@ -8062,7 +8062,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+833"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
         <source>Unable to write data: %1</source>
         <translation></translation>
     </message>
@@ -8781,7 +8781,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5680"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -9305,7 +9305,7 @@ Czy chcesz zamienić?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+902"/>
+        <location line="+890"/>
         <source>%1 [read-only]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12131,7 +12131,7 @@ to
 <context>
     <name>WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+813"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+812"/>
         <source>The file contains a custom widget &apos;%1&apos; whose base class (%2) differs from the current entry in the widget database (%3). The widget database is left unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12139,7 +12139,7 @@ to
 <context>
     <name>qdesigner_internal::ActionEditor</name>
     <message>
-        <location filename="../src/designer/shared/actioneditor.cpp" line="+123"/>
+        <location filename="../src/designer/shared/actioneditor.cpp" line="+125"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12607,7 +12607,7 @@ to
 <context>
     <name>qdesigner_internal::DesignerPropertyManager</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+787"/>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+786"/>
         <location line="+6"/>
         <source>AlignLeft</source>
         <translation type="unfinished"></translation>
@@ -12904,7 +12904,7 @@ to
 <context>
     <name>qdesigner_internal::FilterWidget</name>
     <message>
-        <location filename="../src/designer/shared/filterwidget.cpp" line="+165"/>
+        <location filename="../src/designer/shared/filterwidget.cpp" line="+164"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13414,7 +13414,7 @@ to
 <context>
     <name>qdesigner_internal::IconThemeDialog</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1736"/>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1735"/>
         <source>Set Icon From Theme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13889,7 +13889,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PaletteEditorButton</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+57"/>
+        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+56"/>
         <source>Change Palette</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13897,7 +13897,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PaletteModel</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+375"/>
+        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+374"/>
         <source>Color Role</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14224,7 +14224,7 @@ ate the goose who was loose.</source>
 <context>
     <name>qdesigner_internal::PropertyEditor</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+232"/>
+        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+230"/>
         <source>Add Dynamic Property...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14274,7 +14274,7 @@ ate the goose who was loose.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+542"/>
+        <location line="+536"/>
         <source>Object: %1
 Class: %2</source>
         <translation type="unfinished"></translation>

@@ -1018,7 +1018,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2347"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2209"/>
         <source>Services</source>
         <translation>Szolgáltatások</translation>
     </message>
@@ -1163,7 +1163,7 @@
     </message>
     <message>
         <location line="-686"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+689"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+687"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+664"/>
         <location line="+26"/>
         <source>Host not found</source>
@@ -1201,7 +1201,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1254"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1253"/>
         <source>&amp;Step up</source>
         <translation>Lépés &amp;felfelé</translation>
     </message>
@@ -1242,7 +1242,7 @@
         <translation>Aktiválás</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+246"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>&apos;%1&apos; program Qt %2-t igényel (Qt %3 van telepítve).</translation>
     </message>
@@ -1648,7 +1648,7 @@
 <context>
     <name>QDeclarativeCompiledBindings</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+408"/>
+        <location filename="../src/declarative/qml/qdeclarativecompiledbindings.cpp" line="+345"/>
         <source>Binding loop detected for property &quot;%1&quot;</source>
         <translation type="unfinished">Kötési hurok észlelhető a(z) &quot;%1&quot; tulajdonságon</translation>
     </message>
@@ -2374,7 +2374,7 @@
 <context>
     <name>QDeclarativeParser</name>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+581"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejslexer.cpp" line="+577"/>
         <source>Illegal character</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2433,17 +2433,17 @@
     </message>
     <message>
         <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
-        <location line="+67"/>
+        <location line="+68"/>
         <source>Syntax error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-65"/>
+        <location line="-66"/>
         <source>Unexpected token `%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <location line="+24"/>
         <source>Expected token `%1&apos;</source>
         <translation type="unfinished"></translation>
@@ -3128,7 +3128,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+699"/>
+        <location filename="../src/core/io/qfile.cpp" line="+698"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>A célfájl már létezik</translation>
@@ -3480,7 +3480,7 @@ Biztosan törölni akarja?</translation>
         <translation>Módosítás dátuma</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+262"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
         <source>My Computer</source>
         <translation>Számítógép</translation>
     </message>
@@ -3527,51 +3527,51 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+109"/>
-        <location line="+1386"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
+        <location line="+1205"/>
         <source>Normal</source>
         <translation>Normál</translation>
     </message>
     <message>
-        <location line="-1383"/>
+        <location line="-1202"/>
         <location line="+12"/>
-        <location line="+1359"/>
+        <location line="+1178"/>
         <source>Bold</source>
         <translation>Kövér</translation>
     </message>
     <message>
-        <location line="-1368"/>
-        <location line="+1370"/>
+        <location line="-1187"/>
+        <location line="+1189"/>
         <source>Demi Bold</source>
         <translation>Félkövér</translation>
     </message>
     <message>
-        <location line="-1367"/>
+        <location line="-1186"/>
         <location line="+18"/>
-        <location line="+1345"/>
+        <location line="+1164"/>
         <source>Black</source>
         <translation>Fekete</translation>
     </message>
     <message>
-        <location line="-1355"/>
+        <location line="-1174"/>
         <source>Demi</source>
         <translation>Félkövér</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1355"/>
+        <location line="+1174"/>
         <source>Light</source>
         <translation>Világos</translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1188"/>
+        <location line="-1024"/>
+        <location line="+1027"/>
         <source>Italic</source>
         <translation>Dőlt</translation>
     </message>
     <message>
-        <location line="-1185"/>
-        <location line="+1187"/>
+        <location line="-1024"/>
+        <location line="+1026"/>
         <source>Oblique</source>
         <translation>Ferde</translation>
     </message>
@@ -3925,7 +3925,7 @@ Biztosan törölni akarja?</translation>
     <name>QHostInfoAgent</name>
     <message>
         <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+265"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>A kiszolgáló nem található</translation>
@@ -4241,7 +4241,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2133"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2115"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+112"/>
         <source>Permission denied</source>
         <translation>Hozzáférés megtagadva</translation>
@@ -4814,7 +4814,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1200"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1198"/>
         <source>Help</source>
         <translation>Súgó</translation>
     </message>
@@ -4835,7 +4835,7 @@ Biztosan törölni akarja?</translation>
         <translation>A Qt névjegye</translation>
     </message>
     <message>
-        <location line="-1582"/>
+        <location line="-1580"/>
         <source>Show Details...</source>
         <translation>Részletek megjelenítése...</translation>
     </message>
@@ -4845,7 +4845,7 @@ Biztosan törölni akarja?</translation>
         <translation>Részletek elrejtése...</translation>
     </message>
     <message>
-        <location line="+1547"/>
+        <location line="+1545"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Qt névjegye&lt;/h3&gt;&lt;p&gt;Ez a program a Qt %1 verzióját használja.&lt;/p&gt;</translation>
     </message>
@@ -6706,7 +6706,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+263"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+262"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1:a kulcs beállítása sikertelen a zároláson</translation>
     </message>
@@ -8069,7 +8069,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+833"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
         <source>Unable to write data: %1</source>
         <translation>Az adat nem írható: %1</translation>
     </message>
@@ -8790,7 +8790,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5773"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5680"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -9314,7 +9314,7 @@ Lecseréli?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+902"/>
+        <location line="+890"/>
         <source>%1 [read-only]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12137,7 +12137,7 @@ to
 <context>
     <name>WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+813"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+812"/>
         <source>The file contains a custom widget &apos;%1&apos; whose base class (%2) differs from the current entry in the widget database (%3). The widget database is left unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12145,7 +12145,7 @@ to
 <context>
     <name>qdesigner_internal::ActionEditor</name>
     <message>
-        <location filename="../src/designer/shared/actioneditor.cpp" line="+123"/>
+        <location filename="../src/designer/shared/actioneditor.cpp" line="+125"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12609,7 +12609,7 @@ to
 <context>
     <name>qdesigner_internal::DesignerPropertyManager</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+787"/>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="+786"/>
         <location line="+6"/>
         <source>AlignLeft</source>
         <translation type="unfinished"></translation>
@@ -12904,7 +12904,7 @@ to
 <context>
     <name>qdesigner_internal::FilterWidget</name>
     <message>
-        <location filename="../src/designer/shared/filterwidget.cpp" line="+165"/>
+        <location filename="../src/designer/shared/filterwidget.cpp" line="+164"/>
         <source>Filter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13410,7 +13410,7 @@ to
 <context>
     <name>qdesigner_internal::IconThemeDialog</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1736"/>
+        <location filename="../src/designer/components/propertyeditor/designerpropertymanager.cpp" line="-1735"/>
         <source>Set Icon From Theme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13885,7 +13885,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PaletteEditorButton</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+57"/>
+        <location filename="../src/designer/components/propertyeditor/paletteeditorbutton.cpp" line="+56"/>
         <source>Change Palette</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13893,7 +13893,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PaletteModel</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+375"/>
+        <location filename="../src/designer/components/propertyeditor/paletteeditor.cpp" line="+374"/>
         <source>Color Role</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14220,7 +14220,7 @@ ate the goose who was loose.</source>
 <context>
     <name>qdesigner_internal::PropertyEditor</name>
     <message>
-        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+232"/>
+        <location filename="../src/designer/components/propertyeditor/propertyeditor.cpp" line="+230"/>
         <source>Add Dynamic Property...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14270,7 +14270,7 @@ ate the goose who was loose.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+542"/>
+        <location line="+536"/>
         <source>Object: %1
 Class: %2</source>
         <translation type="unfinished"></translation>

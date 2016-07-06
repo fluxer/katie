@@ -173,7 +173,7 @@
         <location filename="../src/tools/lconvert/lconvert.cpp" line="+68"/>
         <source>
 Usage:
-    lconvert [options] &lt;infile&gt; [&lt;infile&gt;...]
+    lconvert [options] &lt;infile&gt; [&lt;infile&gt;] ...
 
 lconvert is part of Qt&apos;s Linguist tool chain. It can be used as a
 stand-alone tool to convert and filter translation data files.
@@ -185,7 +185,8 @@ translations from later files taking precedence.
 
 Options:
     -h
-    --help  Display this information and exit.
+    --help
+           Display this information and exit.
 
     -i &lt;infile&gt;
     --input-file &lt;infile&gt;
@@ -251,12 +252,6 @@ Options:
            be a bit more verbose
 
 Long options can be specified with only one leading dash, too.
-
-Return value:
-    0 on success
-    1 on command line parse failures
-    2 on read failures
-    3 on write failures
 </source>
         <translation type="unfinished"></translation>
     </message>
@@ -264,7 +259,7 @@ Return value:
 <context>
     <name>LRelease</name>
     <message>
-        <location filename="../src/tools/lrelease/lrelease.cpp" line="+95"/>
+        <location filename="../src/tools/lrelease/lrelease.cpp" line="+76"/>
         <source>Usage:
     lrelease [options] ts-files [-qm qm-file]
 
@@ -322,7 +317,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+68"/>
         <source>lrelease version %1
 </source>
         <translation type="unfinished"></translation>
@@ -424,7 +419,7 @@ Options:
     </message>
     <message>
         <location line="+67"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+2541"/>
+        <location filename="../src/tools/lupdate/qscript.cpp" line="+2539"/>
         <source>Unexpected character in meta string
 </source>
         <translation type="unfinished"></translation>
@@ -633,53 +628,70 @@ Extracted messages are stored in textual translation source files (typically
 Qt TS XML). New and modified messages can be merged into existing TS files.
 
 Options:
+    -h
     -help  Display this information and exit.
     -no-obsolete
            Drop all obsolete strings.
+
     -extensions &lt;ext&gt;[,&lt;ext&gt;]...
            Process files with the given extensions only.
            The extension list must be separated with commas, not with whitespace.
            Default: &apos;%1&apos;.
+
     -pluralonly
            Only include plural form messages.
+
     -silent
            Do not explain what is being done.
+
     -no-sort
            Do not sort contexts in TS files.
+
     -no-recursive
            Do not recursively scan the following directories.
+
     -recursive
            Recursively scan the following directories (default).
+
     -I &lt;includepath&gt; or -I&lt;includepath&gt;
            Additional location to look for include files.
            May be specified multiple times.
+
     -locations {absolute|relative|none}
            Specify/override how source code references are saved in TS files.
            Default is absolute.
+
     -no-ui-lines
            Do not record line numbers in references to UI files.
+
     -disable-heuristic {sametext|similartext|number}
            Disable the named merge heuristic. Can be specified multiple times.
+
     -source-language &lt;language&gt;[_&lt;region&gt;]
            Specify the language of the source strings for new files.
            Defaults to POSIX if not specified.
+
     -target-language &lt;language&gt;[_&lt;region&gt;]
            Specify the language of the translations for new files.
            Guessed from the file name if not specified.
+
     -ts &lt;ts-file&gt;...
            Specify the output file(s). This will override the TRANSLATIONS
            and nullify the CODECFORTR from possibly specified project files.
+
     -codecfortr &lt;codec&gt;
            Specify the codec assumed for tr() calls. Effective only with -ts.
+
     -version
            Display the version of lupdate and exit.
+
     @lst-file
            Read additional file names (one per line) from lst-file.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+74"/>
         <source>lupdate warning: Codec for tr() &apos;%1&apos; disagrees with existing file&apos;s codec &apos;%2&apos;. Expect trouble.
 </source>
         <translation type="unfinished"></translation>
@@ -984,23 +996,26 @@ Options:
     </message>
     <message>
         <location line="+2"/>
-        <source>
-Usage:
+        <source>Usage:
+    qcollectiongenerator [options] &lt;collection-config-file&gt;
 
-qcollectiongenerator &lt;collection-config-file&gt; [options]
+Options:
+    -h
+    -help
+           Display this information and exit.
 
-  -o &lt;collection-file&gt;   Generates a collection file
-                         called &lt;collection-file&gt;. If
-                         this option is not specified
-                         a default name will be used.
-  -v                     Displays the version of
-                         qcollectiongenerator.
+    -o &lt;collection-file&gt;
+           Generates a collection file called
+           &lt;collection-file&gt;. If this option is not
+           specified a default name will be used.
 
+    -v
+           Displays the version of qcollectiongenerator and exit.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+23"/>
         <source>Could not open %1.
 </source>
         <translation type="unfinished"></translation>
@@ -1659,25 +1674,25 @@ Would you like to retry?</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>
-Usage:
+        <source>Usage:
+    qhelpgenerator [options] &lt;help-project-file&gt;
 
-qhelpgenerator &lt;help-project-file&gt; [options]
+Options:
+    -o &lt;compressed-file&gt;
+           Generates a Qt compressed help file called &lt;compressed-file&gt;.
+           If this option is not specified a default name will be used.
 
-  -o &lt;compressed-file&gt;   Generates a Qt compressed help
-                         file called &lt;compressed-file&gt;.
-                         If this option is not specified
-                         a default name will be used.
-  -c                     Checks whether all links in HTML files
-                         point to files in this help project.
-  -v                     Displays the version of 
-                         qhelpgenerator.
+    -c
+           Checks whether all links in HTML files point to files in this
+           help project.
 
+    -v
+           Displays the version of qhelpgenerator.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+22"/>
         <source>Could not open %1.
 </source>
         <translation type="unfinished"></translation>
