@@ -180,6 +180,10 @@ namespace JSC {
         
         bool isValid(ExecState*, StructureChain* cachedPrototypeChain) const;
 
+#ifndef NDEBUG
+        volatile int m_count;
+#endif
+
         static const unsigned emptyEntryIndex = 0;
     
         static const signed char s_maxTransitionLength = 64;

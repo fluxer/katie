@@ -40,9 +40,3 @@
 #if OS(FREEBSD) || OS(OPENBSD)
 #define HAVE_PTHREAD_NP_H 1
 #endif
-
-#ifdef __cplusplus
-#undef new
-#undef delete
-#include <wtf/FastMalloc.h>
-#endif

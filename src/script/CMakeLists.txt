@@ -172,7 +172,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/qt/MainThreadQt.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/qt/ThreadingQt.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/RandomNumber.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/RefCountedLeakCounter.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/Threading.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/TypeTraits.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/unicode/CollatorDefault.cpp

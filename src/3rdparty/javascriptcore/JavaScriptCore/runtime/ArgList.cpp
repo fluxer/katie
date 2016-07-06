@@ -24,8 +24,6 @@
 #include "JSValue.h"
 #include "JSCell.h"
 
-using std::min;
-
 namespace JSC {
 
 void ArgList::getSlice(int startIndex, ArgList& result) const

@@ -32,7 +32,6 @@
 #include "Lookup.h"
 #include "PropertyNameArray.h"
 #include "StructureChain.h"
-#include <wtf/RefCountedLeakCounter.h>
 #include <wtf/RefPtr.h>
 
 #define DUMP_STRUCTURE_ID_STATISTICS 0
@@ -58,8 +57,6 @@ static const unsigned tinyMapThreshold = 20;
 static const unsigned newTableSize = 16;
 
 #ifndef NDEBUG
-static WTF::RefCountedLeakCounter structureCounter("Structure");
-
 static bool shouldIgnoreLeaks;
 static HashSet<Structure*>& ignoreSet = *(new HashSet<Structure*>);
 #endif
@@ -134,7 +131,7 @@ Structure::Structure(JSValue prototype, const TypeInfo& typeInfo)
     if (shouldIgnoreLeaks)
         ignoreSet.add(this);
     else
-        structureCounter.increment();
+        ++m_count;
 #endif
 
 #if DUMP_STRUCTURE_ID_STATISTICS
@@ -172,11 +169,17 @@ Structure::~Structure()
     if (it != ignoreSet.end())
         ignoreSet.remove(it);
     else
-        structureCounter.decrement();
+        --m_count;
 #endif
 
 #if DUMP_STRUCTURE_ID_STATISTICS
     liveStructureSet.remove(this);
+#endif
+
+#ifndef NDEBUG
+    if (m_count) {
+        qDebug("LEAK: %u Structure", m_count);
+    }
 #endif
 }
 
