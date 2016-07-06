@@ -75,7 +75,7 @@ namespace JSC {
         // Execute the code!
         inline JSValue execute(RegisterFile* registerFile, CallFrame* callFrame, JSGlobalData* globalData, JSValue* exception)
         {
-            return JSValue::decode(ctiTrampoline(m_ref.m_code.executableAddress(), registerFile, callFrame, exception, globalData));
+            return JSValue::decode(ctiTrampoline(m_ref.m_code.executableAddress(), registerFile, callFrame, exception, 0, globalData));
         }
 
         void* start()

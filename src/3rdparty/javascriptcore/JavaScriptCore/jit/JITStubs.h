@@ -50,6 +50,7 @@ namespace JSC {
     class JSPropertyNameIterator;
     class JSValue;
     class JSValueEncodedAsPointer;
+    class Profiler;
     class PropertySlot;
     class PutPropertySlot;
     class RegisterFile;
@@ -84,6 +85,7 @@ namespace JSC {
         RegisterFile* registerFile;
         CallFrame* callFrame;
         JSValue* exception;
+        Profiler** enabledProfilerReference;
         JSGlobalData* globalData;
 
         void* savedRBX;
@@ -119,8 +121,9 @@ namespace JSC {
         RegisterFile* registerFile;
         CallFrame* callFrame;
         JSValue* exception;
+        Profiler** enabledProfilerReference;
         JSGlobalData* globalData;
-        
+
         // When JIT code makes a call, it pushes its return address just below the rest of the stack.
         ReturnAddressPtr* returnAddressSlot() { return reinterpret_cast<ReturnAddressPtr*>(this) - 1; }
     };
@@ -150,6 +153,7 @@ namespace JSC {
         void* padding2;
 
         // These arguments passed on the stack.
+        Profiler** enabledProfilerReference;
         JSGlobalData* globalData;
         
         ReturnAddressPtr* returnAddressSlot() { return &thunkReturnAddress; }
@@ -173,6 +177,7 @@ namespace JSC {
         JSValue* exception;
 
         // These arguments passed on the stack.
+        Profiler** enabledProfilerReference;
         JSGlobalData* globalData;
 
         // When JIT code makes a call, it pushes its return address just below the rest of the stack.
@@ -225,7 +230,7 @@ namespace JSC {
 
     extern "C" void ctiVMThrowTrampoline();
     extern "C" void ctiOpThrowNotCaught();
-    extern "C" EncodedJSValue ctiTrampoline(void* code, RegisterFile*, CallFrame*, JSValue* exception, JSGlobalData*);
+    extern "C" EncodedJSValue ctiTrampoline(void* code, RegisterFile*, CallFrame*, JSValue* exception, Profiler**, JSGlobalData*);
 
     class JITThunks {
     public:
