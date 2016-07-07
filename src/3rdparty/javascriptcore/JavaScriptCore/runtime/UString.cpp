@@ -796,7 +796,7 @@ const char* UString::UTF8String(bool strict) const
 
     // Convert to runs of 8-bit characters.
     char* p = buffer.data();
-    const UChar* d = reinterpret_cast<const UChar*>(&data()[0]);
+    const UChar* d = &data()[0];
     ConversionResult result = convertUTF16ToUTF8(&d, d + length, &p, p + buffer.size(), strict);
     if (result != conversionOK)
         return 0;

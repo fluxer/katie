@@ -28,9 +28,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <wtf/Assertions.h>
-#include <wtf/CrossThreadRefCounted.h>
 #include <wtf/PassRefPtr.h>
-#include <wtf/PtrAndFlags.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 #include <wtf/unicode/Unicode.h>

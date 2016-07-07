@@ -187,7 +187,7 @@ namespace JSC {
             return r;
         }
 
-        RegisterID* emitNode(Node* n)
+        inline RegisterID* emitNode(Node* n)
         {
             return emitNode(0, n);
         }

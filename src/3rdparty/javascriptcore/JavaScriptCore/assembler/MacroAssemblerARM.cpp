@@ -41,27 +41,6 @@
 
 namespace JSC {
 
-static bool isVFPPresent()
-{
-#if OS(LINUX)
-    int fd = open("/proc/self/auxv", O_RDONLY);
-    if (fd > 0) {
-        Elf32_auxv_t aux;
-        while (read(fd, &aux, sizeof(Elf32_auxv_t))) {
-            if (aux.a_type == AT_HWCAP) {
-                close(fd);
-                return aux.a_un.a_val & HWCAP_VFP;
-            }
-        }
-        close(fd);
-    }
-#endif
-
-    return false;
-}
-
-const bool MacroAssemblerARM::s_isVFPPresent = isVFPPresent();
-
 #if CPU(ARMV5_OR_LOWER)
 /* On ARMv5 and below, natural alignment is required. */
 void MacroAssemblerARM::load32WithUnalignedHalfWords(BaseIndex address, RegisterID dest)

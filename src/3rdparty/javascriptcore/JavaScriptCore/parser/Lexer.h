@@ -26,7 +26,6 @@
 #include "ParserArena.h"
 #include "SourceCode.h"
 #include <wtf/ASCIICType.h>
-#include <wtf/SegmentedVector.h>
 #include <wtf/Vector.h>
 #include <wtf/unicode/Unicode.h>
 

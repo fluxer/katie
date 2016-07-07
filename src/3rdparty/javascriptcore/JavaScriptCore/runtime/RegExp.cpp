@@ -26,7 +26,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <wtf/Assertions.h>
-#include <wtf/OwnArrayPtr.h>
 
 
 #if ENABLE(YARR)
@@ -178,7 +177,7 @@ void RegExp::compile(JSGlobalData* globalData)
 
     JSRegExpIgnoreCaseOption ignoreCaseOption = ignoreCase() ? JSRegExpIgnoreCase : JSRegExpDoNotIgnoreCase;
     JSRegExpMultilineOption multilineOption = multiline() ? JSRegExpMultiline : JSRegExpSingleLine;
-    m_regExp = jsRegExpCompile(reinterpret_cast<const UChar*>(m_pattern.data()), m_pattern.size(), ignoreCaseOption, multilineOption, &m_numSubpatterns, &m_constructionError);
+    m_regExp = jsRegExpCompile(m_pattern.data(), m_pattern.size(), ignoreCaseOption, multilineOption, &m_numSubpatterns, &m_constructionError);
 }
 
 int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
@@ -206,7 +205,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             offsetVector = ovector->data();
         }
 
-        int numMatches = jsRegExpExecute(m_regExp, reinterpret_cast<const UChar*>(s.data()), s.size(), startOffset, offsetVector, offsetVectorSize);
+        int numMatches = jsRegExpExecute(m_regExp, s.data(), s.size(), startOffset, offsetVector, offsetVectorSize);
     
         if (numMatches < 0) {
 #ifndef NDEBUG
