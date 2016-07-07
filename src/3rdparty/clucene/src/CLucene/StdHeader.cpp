@@ -24,8 +24,8 @@
 
 CL_NS_USE(util)
 
-TCHAR* _LUCENE_BLANK_STRING = _T("");
-char* _LUCENE_BLANK_ASTRING = "";
+const TCHAR* _LUCENE_BLANK_STRING = _T("");
+const char* _LUCENE_BLANK_ASTRING = "";
 
 #ifndef Q_CC_MIPS
 #if defined(_LUCENE_THREADMUTEX_USINGDEFAULT)

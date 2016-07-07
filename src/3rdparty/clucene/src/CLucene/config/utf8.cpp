@@ -211,14 +211,14 @@ size_t lucene_utf8towcs(wchar_t * result, const char * str, size_t result_length
 
   while (rp < result + result_length && *sp!=0){
     size_t r = lucene_utf8towc(rp,sp,6);
-	if ( r == -1 )
-		return 0;
-	sp += r;
-	rp++;
+      if ( r == -1 )
+        return 0;
+      sp += r;
+      rp++;
   }
 
   if ( sp-str < result_length )
-	*rp = '\0';
+    *rp = '\0';
 
   size_t ret = sp-str;
   return ret;

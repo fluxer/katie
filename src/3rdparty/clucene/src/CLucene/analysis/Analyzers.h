@@ -289,14 +289,14 @@ public:
  */
 class LengthFilter: public TokenFilter {
 private:
-    int _min;
-    int _max;
+    size_t _min;
+    size_t _max;
 public:
     /**
     * Build a filter that removes words that are too long or too
     * short from the text.
     */
-    LengthFilter(TokenStream* in, int _min, int _max);
+    LengthFilter(TokenStream* in, size_t _min, size_t _max);
     
     /**
     * Returns the next input Token whose termText() is the right len

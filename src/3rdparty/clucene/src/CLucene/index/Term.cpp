@@ -92,12 +92,10 @@ void Term::set(const TCHAR* fld, const TCHAR* txt,bool internField)
         textLenBuf = 0;
     }
 
-    if (_text == LUCENE_BLANK_STRING) {
-        _text = LUCENE_BLANK_STRING;
-    } else if (_text == NULL) {
+    if (_text == NULL) {
         if (txt[0] == 0) {
             //if the string is blank and we aren't re-using the buffer...
-            _text = LUCENE_BLANK_STRING;
+            _text = const_cast<TCHAR*>(LUCENE_BLANK_STRING);
         } else {
             //duplicate the text
             _text  = stringDuplicate(txt);
@@ -174,7 +172,7 @@ void Term::init()
 #ifdef LUCENE_TERM_TEXT_LENGTH
     _text[0] = 0;
 #else
-    _text = LUCENE_BLANK_STRING;
+    _text = const_cast<TCHAR*>(LUCENE_BLANK_STRING);
     textLenBuf = 0;
 #endif
 }

@@ -89,7 +89,7 @@ CL_NS_DEF(store)
       if ( _unique ) //todo: does non unique ever occur?
          return stringDuplicate(LUCENE_BLANK_STRING);
       else
-         return LUCENE_BLANK_STRING;
+         return const_cast<TCHAR*>(LUCENE_BLANK_STRING);
     }
 
     TCHAR* ret = _CL_NEWARRAY(TCHAR,len+1);

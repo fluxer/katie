@@ -55,10 +55,10 @@ CL_NS_DEF(queryParser)
 		QueryToken::Types Type;
 
 		// Initializes a new instance of the Token class.
-		QueryToken(TCHAR* value, const int32_t start, const int32_t end, const Types type);
+		QueryToken(const TCHAR* value, const int32_t start, const int32_t end, const Types type);
 
 		// Initializes a new instance of the Token class.
-		QueryToken(TCHAR* value, const Types type);
+		QueryToken(const TCHAR* value, const Types type);
 
 		// Initializes a new instance of the Token class.
 		QueryToken(Types type);
@@ -68,8 +68,8 @@ CL_NS_DEF(queryParser)
 
 		~QueryToken();
 				
-		void set(TCHAR* value, const int32_t start, const int32_t end, const Types type);
-		void set(TCHAR* value, const Types type);
+		void set(const TCHAR* value, const int32_t start, const int32_t end, const Types type);
+		void set(const TCHAR* value, const Types type);
 		void set(Types type);
 	};
 CL_NS_END

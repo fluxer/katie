@@ -364,7 +364,7 @@ bool KeywordTokenizer::next(Token* token){
 }
 
 
-LengthFilter::LengthFilter(TokenStream* in, int _min, int _max):
+LengthFilter::LengthFilter(TokenStream* in, size_t _min, size_t _max):
     TokenFilter(in)
 {
     this->_min = _min;

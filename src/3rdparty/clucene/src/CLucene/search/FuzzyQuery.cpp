@@ -25,7 +25,7 @@ CL_NS_DEF(search)
 	 FuzzyTermEnum::FuzzyTermEnum(const IndexReader* reader, Term* term, qreal minSimilarity, size_t prefixLength): 
         distance(0),
         _endEnum(false),
-		prefix(LUCENE_BLANK_STRING),
+		prefix(const_cast<TCHAR*>(LUCENE_BLANK_STRING)),
 		prefixLength(0),
 		minimumSimilarity(minSimilarity)
 	{

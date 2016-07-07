@@ -291,9 +291,9 @@ size_t lucene_wcstoutf8 (char *,       const wchar_t *, size_t maxslen);
 size_t lucene_utf8charlen(const char *p);
 
 ///a blank string...
-extern TCHAR* _LUCENE_BLANK_STRING;
+extern const TCHAR* _LUCENE_BLANK_STRING;
 #define LUCENE_BLANK_STRING _LUCENE_BLANK_STRING
-extern char* _LUCENE_BLANK_ASTRING;
+extern const char* _LUCENE_BLANK_ASTRING;
 #define LUCENE_BLANK_ASTRING _LUCENE_BLANK_ASTRING
 
 /* Converts a string into a form that is independent of case. The

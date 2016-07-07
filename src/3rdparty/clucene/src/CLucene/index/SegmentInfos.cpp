@@ -199,7 +199,7 @@ void SegmentInfos::write(Directory* directory)
             TCHAR tname[CL_MAX_PATH];
 
             //Iterate through all the SegmentInfo instances
-            for (uint32_t i = 0; i < infos.size(); ++i) {
+            for (int32_t i = 0; i < infos.size(); ++i) {
                 //Retrieve the SegmentInfo
                 SegmentInfo *si = infos.value(i, 0);
                 //Condition check to see if si has been retrieved
