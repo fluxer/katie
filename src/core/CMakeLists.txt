@@ -86,7 +86,6 @@ set(CORE_PUBLIC_HEADERS
     QHashData
     QSharedData
     QReadLocker
-    QTime
     QPointer
     QSetIterator
     QtConcurrentRun
@@ -249,6 +248,8 @@ set(CORE_PUBLIC_HEADERS
     QSizeF
     QRectF
     QWeakPointer
+    QDate
+    QTime
     # obsolete
     QFlags
 )
