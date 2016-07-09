@@ -331,6 +331,7 @@ if(${KATIE_PLATFORM} STREQUAL "linux")
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         dl
+        rt
     )
 elseif(${KATIE_PLATFORM} STREQUAL "win32")
     set(EXTRA_CORE_LIBS
