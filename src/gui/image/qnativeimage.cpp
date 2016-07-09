@@ -48,7 +48,7 @@
 #include "qapplication_p.h"
 #include "qgraphicssystem_p.h"
 
-#if defined(Q_WS_X11) && !defined(QT_NO_MITSHM)
+#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
 #include <qx11info_x11.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
@@ -148,7 +148,7 @@ QImage::Format QNativeImage::systemFormat()
 }
 
 
-#elif defined(Q_WS_X11) && !defined(QT_NO_MITSHM)
+#elif defined(Q_WS_X11) && !defined(QT_NO_XSHM)
 
 QNativeImage::QNativeImage(int width, int height, QImage::Format format,bool /* isTextBuffer */, QWidget *widget)
     : xshmimg(0), xshmpm(0)

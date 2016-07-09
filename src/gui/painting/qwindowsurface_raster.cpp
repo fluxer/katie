@@ -78,7 +78,7 @@ public:
 
 #ifdef Q_WS_X11
     GC gc;
-#ifndef QT_NO_MITSHM
+#ifndef QT_NO_XSHM
     uint needsSync : 1;
 #endif
 #ifndef QT_NO_XRENDER
@@ -97,7 +97,7 @@ QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurfa
     d_ptr->translucentBackground = X11->use_xrender
         && window->x11Info().depth() == 32;
 #endif
-#ifndef QT_NO_MITSHM
+#ifndef QT_NO_XSHM
     d_ptr->needsSync = false;
 #endif
 #endif
@@ -126,7 +126,7 @@ QPaintDevice *QRasterWindowSurface::paintDevice()
     return &d_ptr->image->image;
 }
 
-#if defined(Q_WS_X11) && !defined(QT_NO_MITSHM)
+#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
 void QRasterWindowSurface::syncX()
 {
     // delay writing to the backbuffer until we know for sure X is done reading from it
@@ -139,7 +139,7 @@ void QRasterWindowSurface::syncX()
 
 void QRasterWindowSurface::beginPaint(const QRegion &rgn)
 {
-#if defined(Q_WS_X11) && !defined(QT_NO_MITSHM)
+#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
     syncX();
 #endif
 
@@ -242,7 +242,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     QRect br = rgn.boundingRect().translated(offset).intersected(clipRect);
     QPoint wpos = br.topLeft() - widgetOffset;
 
-#ifndef QT_NO_MITSHM
+#ifndef QT_NO_XSHM
     if (d_ptr->image->xshmpm) {
         XCopyArea(X11->display, d_ptr->image->xshmpm, widget->handle(), d_ptr->gc,
                   br.x(), br.y(), br.width(), br.height(), wpos.x(), wpos.y());
@@ -395,7 +395,7 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
     if (!d->image || d->image->image.isNull())
         return false;
 
-#if defined(Q_WS_X11) && !defined(QT_NO_MITSHM)
+#if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
     syncX();
 #endif
 

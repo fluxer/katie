@@ -206,9 +206,9 @@ extern "C" Bool XUnregisterIMInstantiateCallback(
 #endif // X11R4
 
 
-#ifndef QT_NO_MITSHM
+#ifndef QT_NO_XSHM
 #  include <X11/extensions/XShm.h>
-#endif // QT_NO_MITSHM
+#endif // QT_NO_XSHM
 
 // rename a couple of X defines to get rid of name clashes
 // resolve the conflict between X11's FocusIn and QEvent::FocusIn

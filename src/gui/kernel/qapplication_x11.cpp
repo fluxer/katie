@@ -1955,7 +1955,7 @@ void qt_init(QApplicationPrivate *priv, int,
         }
 #endif // QT_NO_XRENDER
 
-#ifndef QT_NO_MITSHM
+#ifndef QT_NO_XSHM
         int mitshm_minor;
         int mitshm_major;
         int mitshm_eventbase;
@@ -1984,7 +1984,7 @@ void qt_init(QApplicationPrivate *priv, int,
                 X11->use_mitshm_pixmaps = X11->use_mitshm && mitshm_pixmaps;
             }
         }
-#endif // QT_NO_MITSHM
+#endif // QT_NO_XSHM
 
         // initialize the graphics system - order is imporant here - it must be done before
         // the QColormap::initialize() call

@@ -91,13 +91,13 @@
 #endif // Q_OS_VXWORKS
 #include <X11/Xatom.h>
 
-//#define QT_NO_SHAPE
-#ifdef QT_NO_SHAPE
+//#define QT_NO_XSHAPE
+#ifdef QT_NO_XSHAPE
 #  define XShapeCombineRegion(a,b,c,d,e,f,g)
 #  define XShapeCombineMask(a,b,c,d,e,f,g)
 #else
 #  include <X11/extensions/shape.h>
-#endif // QT_NO_SHAPE
+#endif // QT_NO_XSHAPE
 
 
 #if !defined (QT_NO_TABLET)
@@ -300,9 +300,9 @@ extern "C" char *XSetIMValues(XIM /* im */, ...);
 #endif // X11R4
 
 
-#ifndef QT_NO_MITSHM
+#ifndef QT_NO_XSHM
 #  include <X11/extensions/XShm.h>
-#endif // QT_NO_MITSHM
+#endif // QT_NO_XSHM
 
 QT_BEGIN_NAMESPACE
 

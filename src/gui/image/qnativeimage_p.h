@@ -88,7 +88,7 @@ public:
     HBITMAP bitmap;
     HBITMAP null_bitmap;
 
-#elif defined(Q_WS_X11) && !defined(QT_NO_MITSHM)
+#elif defined(Q_WS_X11) && !defined(QT_NO_XSHM)
     XImage *xshmimg;
     Pixmap xshmpm;
     XShmSegmentInfo xshminfo;
