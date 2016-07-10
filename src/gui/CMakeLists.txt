@@ -450,6 +450,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/core/tools
 )
 
+# keep in sync with the top-level CMake file, only libraries setup is needed here
 if(WITH_X11 AND X11_FOUND)
     set(EXTRA_GUI_LIBS
         ${EXTRA_GUI_LIBS}
@@ -459,8 +460,6 @@ if(WITH_X11 AND X11_FOUND)
         ${X11_Xi_LIB}
     )
     include_directories(${X11_INCLUDE_DIR})
-    # in case those may be usefull via KATIE_DEFINITIONS the checks will have to
-    # be moved to the top-level CMake file
     # TODO: xim
     foreach(x11ext Xshape Xinerama Xrandr Xrender XSync Xkb Xfixes Xcursor Xinput XShm)
         if(X11_${x11ext}_FOUND)
@@ -468,20 +467,8 @@ if(WITH_X11 AND X11_FOUND)
                 ${EXTRA_GUI_LIBS}
                 ${X11_${x11ext}_LIB}
             )
-        else()
-            message(WARNING "The X11 ${x11ext} extension was not found")
-            string(TOUPPER "${x11ext}" upperext)
-            add_definitions(-DQT_NO_${upperext})
         endif()
     endforeach()
-    if(NOT X11_Xinput_FOUND)
-        message(WARNING "X11 Xinput extension was not found thus disabling tabled support too")
-        add_definitions(-DQT_NO_TABLET)
-    endif()
-    if(NOT X11_SM_FOUND)
-        message(WARNING "X11 SM was not found thus disabling session manager support")
-        add_definitions(-DQT_NO_SESSIONMANAGER)
-    endif()
 endif()
 
 if(WITH_NIS AND NIS_FOUND)

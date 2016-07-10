@@ -566,6 +566,26 @@ if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
 endif()
 
+# keep in sync with the gui component CMake file, only definitions setup is needed here
+if(WITH_X11 AND X11_FOUND)
+    # TODO: xim
+    foreach(x11ext Xshape Xinerama Xrandr Xrender XSync Xkb Xfixes Xcursor Xinput XShm)
+        if(NOT X11_${x11ext}_FOUND)
+            message(WARNING "The X11 ${x11ext} extension was not found")
+            string(TOUPPER "${x11ext}" upperext)
+            katie_definition(-DQT_NO_${upperext})
+        endif()
+    endforeach()
+    if(NOT X11_Xinput_FOUND)
+        message(WARNING "X11 Xinput extension was not found thus disabling tabled support too")
+        katie_definition(-DQT_NO_TABLET)
+    endif()
+    if(NOT X11_SM_FOUND)
+        message(WARNING "X11 SM was not found thus disabling session manager support")
+        katie_definition(-DQT_NO_SESSIONMANAGER)
+    endif()
+endif()
+
 # semi-shared
 include(src/shared/linguist/linguist.cmake)
 include(src/shared/bootstrap.cmake)
