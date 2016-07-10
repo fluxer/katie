@@ -243,6 +243,7 @@ set(CORE_PUBLIC_HEADERS
     QVariantMap
     QVariantList
     QAbstractListModel
+    QAbstractTableModel
     QProcessEnvironment
     QModelIndex
     QSizeF
