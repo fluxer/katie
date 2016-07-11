@@ -75,7 +75,7 @@ static const int ImperialMeasurementSystemsCount =
 // GENERATED PART STARTS HERE
 
 /*
-    This part of the file was generated on 2015-08-23 from the
+    This part of the file was generated on 2016-07-11 from the
     Common Locale Data Repository v2.0.1
 
     http://www.unicode.org/cldr/

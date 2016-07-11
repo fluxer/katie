@@ -53,8 +53,6 @@ namespace QDeclarativeJS {
 
 class TextWriter
 {
-	QString *string;
-
 	struct Replace {
 		int pos;
 		int length;

@@ -46,11 +46,10 @@ QT_BEGIN_NAMESPACE
 using namespace QDeclarativeJS;
 
 TextWriter::TextWriter()
-        :string(0)
 {
 }
 
-static bool overlaps(int posA, int lengthA, int posB, int lengthB) {
+static inline bool overlaps(int posA, int lengthA, int posB, int lengthB) {
     return (posA < posB + lengthB && posA + lengthA > posB + lengthB)
             || (posA < posB && posA + lengthA > posB);
 }
@@ -81,29 +80,28 @@ void TextWriter::replace(int pos, int length, const QString &replacement)
 
 void TextWriter::write(QString *s)
 {
-    string = s;
     {
         Replace cmd;
         while (!replaceList.isEmpty()) {
             cmd = replaceList.first();
             replaceList.removeFirst();
             int diff = cmd.replacement.size() - cmd.length;
-                {
-                    QMutableListIterator<Replace> i(replaceList);
-                    while (i.hasNext()) {
-                        Replace &c = i.next();
-                        if (cmd.pos < c.pos)
-                            c.pos += diff;
-                        else if (cmd.pos + cmd.length < c.pos + c.length)
-                            c.length += diff;
+            {
+                QMutableListIterator<Replace> i(replaceList);
+                while (i.hasNext()) {
+                    Replace &c = i.next();
+                    if (cmd.pos < c.pos) {
+                        c.pos += diff;
+                    } else if (cmd.pos + cmd.length < c.pos + c.length) {
+                        c.length += diff;
                     }
                 }
-                if (string) {
-                    string->replace(cmd.pos, cmd.length, cmd.replacement);
-                }
+            }
+            if (s) {
+                s->replace(cmd.pos, cmd.length, cmd.replacement);
+            }
         }
     }
-    string = 0;
 }
 
 QT_END_NAMESPACE
