@@ -56,7 +56,7 @@
 
 #include <QStack>
 #include <QStringList>
-#include <QtCore/qdebug.h>
+#include <QDebug>
 #include <QApplication>
 #include <qdeclarativeinfo.h>
 

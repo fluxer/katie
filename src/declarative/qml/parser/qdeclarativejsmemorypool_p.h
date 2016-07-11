@@ -53,10 +53,8 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qshareddata.h>
-
-#include <string.h>
+#include <QtCore/qvector.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -65,60 +63,22 @@ namespace QDeclarativeJS {
 class QML_PARSER_EXPORT MemoryPool : public QSharedData
 {
 public:
-    enum { maxBlockCount = -1 };
-    enum { defaultBlockSize = 1 << 12 };
+    MemoryPool() { }
 
-    MemoryPool() {
-        m_blockIndex = maxBlockCount;
-        m_currentIndex = 0;
-        m_storage = 0;
-        m_currentBlock = 0;
-        m_currentBlockSize = 0;
-    }
-
-    virtual ~MemoryPool() {
-        for (int index = 0; index < m_blockIndex + 1; ++index)
-            free(m_storage[index]);
-
-        free(m_storage);
+    ~MemoryPool() {
+        for (int index = 0; index < m_pool.size(); ++index) {
+            ::free(m_pool.at(index));
+        }
     }
 
     char *allocate(int bytes) {
-        bytes += (8 - bytes) & 7; // ensure multiple of 8 bytes (maintain alignment)
-        if (m_currentBlock == 0 || m_currentBlockSize < m_currentIndex + bytes) {
-            ++m_blockIndex;
-            m_currentBlockSize = defaultBlockSize << m_blockIndex;
-
-            m_storage = reinterpret_cast<char**>(realloc(m_storage, sizeof(char*) * (1 + m_blockIndex)));
-            m_currentBlock = m_storage[m_blockIndex] = reinterpret_cast<char*>(malloc(m_currentBlockSize));
-            ::memset(m_currentBlock, 0, m_currentBlockSize);
-
-            m_currentIndex = (8 - quintptr(m_currentBlock)) & 7; // ensure first chunk is 64-bit aligned
-            Q_ASSERT(m_currentIndex + bytes <= m_currentBlockSize);
-        }
-
-        char *p = reinterpret_cast<char *>
-            (m_currentBlock + m_currentIndex);
-
-        m_currentIndex += bytes;
-
-        return p;
-    }
-
-    int bytesAllocated() const {
-        int bytes = 0;
-        for (int index = 0; index < m_blockIndex; ++index)
-            bytes += (defaultBlockSize << index);
-        bytes += m_currentIndex;
-        return bytes;
+        char *storage = static_cast<char*>(::malloc(bytes));
+        m_pool.append(storage);
+        return storage;
     }
 
 private:
-    int m_blockIndex;
-    int m_currentIndex;
-    char *m_currentBlock;
-    int m_currentBlockSize;
-    char **m_storage;
+    QVector<char*> m_pool;
 
 private:
     Q_DISABLE_COPY(MemoryPool)

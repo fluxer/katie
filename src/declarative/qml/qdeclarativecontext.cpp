@@ -47,7 +47,6 @@
 #include "qdeclarativeengine_p.h"
 #include "qdeclarativeengine.h"
 #include "qdeclarativecompiledbindings_p.h"
-#include "qdeclarativeinfo.h"
 #include "qdeclarativeglobalscriptclass_p.h"
 
 #include <qscriptengine.h>

@@ -86,10 +86,6 @@ NodePool::NodePool(const QString &fileName, Engine *engine)
     m_engine->setNodePool(this);
 }
 
-NodePool::~NodePool()
-{
-}
-
 Code *NodePool::createCompiledCode(AST::Node *, CompilationUnit &)
 {
     Q_ASSERT(0);
