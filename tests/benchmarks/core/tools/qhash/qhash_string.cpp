@@ -95,7 +95,7 @@ extern double s;
 
 QString tst_QHash::data()
 {
-    QFile file("data.txt");
+    QFile file(QLatin1String("data.txt"));
     file.open(QIODevice::ReadOnly);
     return QString::fromLatin1(file.readAll());
 }

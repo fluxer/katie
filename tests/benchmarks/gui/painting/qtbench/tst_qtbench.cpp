@@ -171,7 +171,7 @@ void tst_QtBench::qtBench_data()
     QString longString = makeString(35) + "\n"
                          + makeString(45) + "\n"
                          + makeString(75);
-    QString superLongString = "Lorem ipsum dolor sit am\n"
+    QString superLongString = QLatin1String("Lorem ipsum dolor sit am\n"
                               "et, consectetur adipisci\n"
                               "ng elit. Integer mi leo,\n"
                               "interdum ut congue at, p\n"
@@ -194,7 +194,7 @@ void tst_QtBench::qtBench_data()
                               "odales pharetra, dictum \n"
                               "in enim. Phasellus a nis\n"
                               "i erat, sed pellentesque\n"
-                              "mi. Curabitur sed.";
+                              "mi. Curabitur sed.");
 
     QList<Benchmark *> benchmarks;
     benchmarks << (new DrawText(shortString, DrawText::PainterMode));

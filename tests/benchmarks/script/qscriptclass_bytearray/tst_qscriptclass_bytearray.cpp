@@ -74,7 +74,7 @@ private:
 
 tst_QScriptClass_ByteArray::tst_QScriptClass_ByteArray()
 {
-    testsDir = QDir(":/tests");
+    testsDir = QDir(QLatin1String(":/tests"));
     if (!testsDir.exists())
         qWarning("*** no tests/ dir!");
 }
@@ -82,7 +82,7 @@ tst_QScriptClass_ByteArray::tst_QScriptClass_ByteArray()
 void tst_QScriptClass_ByteArray::benchmark_data()
 {
     QTest::addColumn<QString>("testName");
-    QFileInfoList testFileInfos = testsDir.entryInfoList(QStringList() << "*.js", QDir::Files);
+    QFileInfoList testFileInfos = testsDir.entryInfoList(QStringList() << QLatin1String("*.js"), QDir::Files);
     foreach (QFileInfo tfi, testFileInfos) {
         QString name = tfi.baseName();
         QTest::newRow(name.toLatin1().constData()) << name;
@@ -92,7 +92,7 @@ void tst_QScriptClass_ByteArray::benchmark_data()
 void tst_QScriptClass_ByteArray::benchmark()
 {
     QFETCH(QString, testName);
-    QString testContents = readFile(testsDir.absoluteFilePath(testName + ".js"));
+    QString testContents = readFile(testsDir.absoluteFilePath(testName + QLatin1String(".js")));
     QVERIFY(!testContents.isEmpty());
 
     QScriptEngine eng;

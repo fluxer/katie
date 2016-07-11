@@ -54,10 +54,10 @@ int main(int argc, char *argv[])
     if (!con.isConnected())
         exit(1);
 
-    if (!con.registerService(serviceName))
+    if (!con.registerService(QLatin1String(serviceName)))
         exit(2);
 
-    ServerObject obj(objectPath, con);
+    ServerObject obj(QLatin1String(objectPath), con);
     printf("ready.\n");
     return app.exec();
 }

@@ -44,7 +44,7 @@
 
 #include "./serverobject.h"
 
-static const char serviceName[] = "com.trolltech.autotests.performance";
+static const QString serviceName = QLatin1String("com.trolltech.autotests.performance");
 static const int runTime = 500;
 
 class tst_QDBusPerformance: public QObject
@@ -89,20 +89,22 @@ void tst_QDBusPerformance::initTestCase()
             &QTestEventLoop::instance(), SLOT(exitLoop()));
 
 #ifdef Q_OS_WIN
-    proc.start("performance_server");
+    proc.start(QLatin1String("performance_server"));
 #else
-    proc.start("./performance_server");
+    proc.start(QLatin1String("./performance_server"));
 #endif
     QVERIFY(proc.waitForStarted());
 
     QTestEventLoop::instance().enterLoop(5);
     QVERIFY(con.interface()->isServiceRegistered(serviceName));
 
-    remote = new QDBusInterface(serviceName, "/", "com.trolltech.autotests.Performance", con, this);
+    remote = new QDBusInterface(serviceName, QLatin1String("/"),
+        QLatin1String("com.trolltech.autotests.Performance"), con, this);
     QVERIFY(remote->isValid());
 
-    new ServerObject("/", con, this);
-    local = new QDBusInterface(con.baseService(), "/", "com.trolltech.autotests.Performance", con, this);
+    new ServerObject(QLatin1String("/"), con, this);
+    local = new QDBusInterface(con.baseService(), QLatin1String("/"),
+        QLatin1String("com.trolltech.autotests.Performance"), con, this);
     QVERIFY(local->isValid());
 }
 
@@ -130,7 +132,7 @@ void tst_QDBusPerformance::callSpeed()
     int callCount = 0;
     timer.start();
     while (timer.elapsed() < runTime) {
-        QDBusReply<void> reply = target->call("nothing");
+        QDBusReply<void> reply = target->call(QLatin1String("nothing"));
         QVERIFY(reply.isValid());
 
         ++callCount;
@@ -147,7 +149,7 @@ bool tst_QDBusPerformance::executeTest(const char *funcname, int size, const QVa
     qint64 transferred = 0;
     timer.start();
     while (timer.elapsed() < runTime) {
-        QDBusMessage reply = target->call(funcname, data);
+        QDBusMessage reply = target->call(QLatin1String(funcname), data);
         if (reply.type() != QDBusMessage::ReplyMessage)
             return false;
 

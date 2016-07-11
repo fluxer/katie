@@ -425,7 +425,7 @@ void tst_QScriptValue::strictlyEqualsSelf()
 void tst_QScriptValue::instanceOf()
 {
     newEngine();
-    QScriptValue arrayCtor = m_engine->globalObject().property("Array");
+    QScriptValue arrayCtor = m_engine->globalObject().property(QLatin1String("Array"));
     QScriptValue array = arrayCtor.construct();
     QVERIFY(array.instanceOf(arrayCtor));
     QBENCHMARK {
@@ -968,7 +968,7 @@ void tst_QScriptValue::readMetaProperty()
 {
     newEngine();
     QScriptValue object = m_engine->newQObject(QCoreApplication::instance());
-    QScriptString propertyName = m_engine->toStringHandle("objectName");
+    QScriptString propertyName = m_engine->toStringHandle(QLatin1String("objectName"));
     QBENCHMARK {
         for (int i = 0; i < 10000; ++i)
             object.property(propertyName);
@@ -979,8 +979,8 @@ void tst_QScriptValue::writeMetaProperty()
 {
     newEngine();
     QScriptValue object = m_engine->newQObject(QCoreApplication::instance());
-    QScriptString propertyName = m_engine->toStringHandle("objectName");
-    QScriptValue value(m_engine, "foo");
+    QScriptString propertyName = m_engine->toStringHandle(QLatin1String("objectName"));
+    QScriptValue value(m_engine, QLatin1String("foo"));
     QBENCHMARK {
         for (int i = 0; i < 10000; ++i)
             object.setProperty(propertyName, value);
@@ -991,17 +991,17 @@ void tst_QScriptValue::defineStandardTestValues()
 {
     newEngine();
     QTest::addColumn<QScriptValue>("val");
-    QTest::newRow("bool") << m_engine->evaluate("true");
-    QTest::newRow("number") << m_engine->evaluate("123");
-    QTest::newRow("string") << m_engine->evaluate("'ciao'");
-    QTest::newRow("null") << m_engine->evaluate("null");
-    QTest::newRow("undefined") << m_engine->evaluate("undefined");
-    QTest::newRow("object") << m_engine->evaluate("({foo:123})");
-    QTest::newRow("array") << m_engine->evaluate("[10,20,30]");
-    QTest::newRow("function") << m_engine->evaluate("(function foo(a, b, c) { return a + b + c; })");
-    QTest::newRow("date") << m_engine->evaluate("new Date");
-    QTest::newRow("regexp") << m_engine->evaluate("new RegExp('foo')");
-    QTest::newRow("error") << m_engine->evaluate("new Error");
+    QTest::newRow("bool") << m_engine->evaluate(QLatin1String("true"));
+    QTest::newRow("number") << m_engine->evaluate(QLatin1String("123"));
+    QTest::newRow("string") << m_engine->evaluate(QLatin1String("'ciao'"));
+    QTest::newRow("null") << m_engine->evaluate(QLatin1String("null"));
+    QTest::newRow("undefined") << m_engine->evaluate(QLatin1String("undefined"));
+    QTest::newRow("object") << m_engine->evaluate(QLatin1String("({foo:123})"));
+    QTest::newRow("array") << m_engine->evaluate(QLatin1String("[10,20,30]"));
+    QTest::newRow("function") << m_engine->evaluate(QLatin1String("(function foo(a, b, c) { return a + b + c; })"));
+    QTest::newRow("date") << m_engine->evaluate(QLatin1String("new Date"));
+    QTest::newRow("regexp") << m_engine->evaluate(QLatin1String("new RegExp('foo')"));
+    QTest::newRow("error") << m_engine->evaluate(QLatin1String("new Error"));
 
     QTest::newRow("qobject") << m_engine->newQObject(this);
     QTest::newRow("qmetaobject") << m_engine->newQMetaObject(&QScriptEngine::staticMetaObject);

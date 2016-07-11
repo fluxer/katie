@@ -207,7 +207,7 @@ void tst_QScriptEngine::evaluate()
 void tst_QScriptEngine::connectAndDisconnect()
 {
     newEngine();
-    QScriptValue fun = m_engine->evaluate("(function() { })");
+    QScriptValue fun = m_engine->evaluate(QLatin1String("(function() { })"));
     QBENCHMARK {
         qScriptConnect(m_engine, SIGNAL(destroyed()), QScriptValue(), fun);
         qScriptDisconnect(m_engine, SIGNAL(destroyed()), QScriptValue(), fun);
@@ -340,7 +340,7 @@ void tst_QScriptEngine::newFunction()
 void tst_QScriptEngine::newRegExp()
 {
     newEngine();
-    QRegExp re = QRegExp("foo");
+    QRegExp re = QRegExp(QLatin1String("foo"));
     QBENCHMARK {
         m_engine->newRegExp(re);
     }
@@ -349,8 +349,8 @@ void tst_QScriptEngine::newRegExp()
 void tst_QScriptEngine::newRegExpFromString()
 {
     newEngine();
-    QString pattern("foo");
-    QString flags("gim");
+    QString pattern(QLatin1String("foo"));
+    QString flags(QLatin1String("gim"));
     QBENCHMARK {
         m_engine->newRegExp(pattern, flags);
     }
@@ -426,17 +426,17 @@ void tst_QScriptEngine::toObject_data()
 {
     newEngine();
     QTest::addColumn<QScriptValue>("val");
-    QTest::newRow("bool") << m_engine->evaluate("true");
-    QTest::newRow("number") << m_engine->evaluate("123");
-    QTest::newRow("string") << m_engine->evaluate("'ciao'");
-    QTest::newRow("null") << m_engine->evaluate("null");
-    QTest::newRow("undefined") << m_engine->evaluate("undefined");
-    QTest::newRow("object") << m_engine->evaluate("({foo:123})");
-    QTest::newRow("array") << m_engine->evaluate("[10,20,30]");
-    QTest::newRow("function") << m_engine->evaluate("(function foo(a, b, c) { return a + b + c; })");
-    QTest::newRow("date") << m_engine->evaluate("new Date");
-    QTest::newRow("regexp") << m_engine->evaluate("new RegExp('foo')");
-    QTest::newRow("error") << m_engine->evaluate("new Error");
+    QTest::newRow("bool") << m_engine->evaluate(QLatin1String("true"));
+    QTest::newRow("number") << m_engine->evaluate(QLatin1String("123"));
+    QTest::newRow("string") << m_engine->evaluate(QLatin1String("'ciao'"));
+    QTest::newRow("null") << m_engine->evaluate(QLatin1String("null"));
+    QTest::newRow("undefined") << m_engine->evaluate(QLatin1String("undefined"));
+    QTest::newRow("object") << m_engine->evaluate(QLatin1String("({foo:123})"));
+    QTest::newRow("array") << m_engine->evaluate(QLatin1String("[10,20,30]"));
+    QTest::newRow("function") << m_engine->evaluate(QLatin1String("(function foo(a, b, c) { return a + b + c; })"));
+    QTest::newRow("date") << m_engine->evaluate(QLatin1String("new Date"));
+    QTest::newRow("regexp") << m_engine->evaluate(QLatin1String("new RegExp('foo')"));
+    QTest::newRow("error") << m_engine->evaluate(QLatin1String("new Error"));
 
     QTest::newRow("qobject") << m_engine->newQObject(this);
     QTest::newRow("qmetaobject") << m_engine->newQMetaObject(&QScriptEngine::staticMetaObject);
@@ -484,10 +484,10 @@ static QScriptValue native_function(QScriptContext *, QScriptEngine *)
 void tst_QScriptEngine::nativeCall()
 {
     newEngine();
-    m_engine->globalObject().setProperty("fun", m_engine->newFunction(native_function));
+    m_engine->globalObject().setProperty(QLatin1String("fun"), m_engine->newFunction(native_function));
     QBENCHMARK{
-        m_engine->evaluate("var w = 0; for (i = 0; i < 25000; ++i) {\n"
-                     "  w += fun() + fun(); w -= fun(); fun(); w -= fun(); }");
+        m_engine->evaluate(QLatin1String("var w = 0; for (i = 0; i < 25000; ++i) {\n"
+                     "  w += fun() + fun(); w -= fun(); fun(); w -= fun(); }"));
     }
 }
 
@@ -544,7 +544,7 @@ void tst_QScriptEngine::readScopeProperty()
         scope = QScriptDeclarativeClass::newStaticScopeObject(m_engine);
     else
         scope = m_engine->newObject();
-    scope.setProperty("foo", 123);
+    scope.setProperty(QLatin1String("foo"), 123);
     ctx->pushScope(scope);
 
     if (nestedScope) {
@@ -553,15 +553,15 @@ void tst_QScriptEngine::readScopeProperty()
             scope2 = QScriptDeclarativeClass::newStaticScopeObject(m_engine);
         else
             scope2 = m_engine->newObject();
-        scope2.setProperty("bar", 456); // ensure a miss in inner scope
+        scope2.setProperty(QLatin1String("bar"), 456); // ensure a miss in inner scope
         ctx->pushScope(scope2);
     }
 
-    QScriptValue fun = m_engine->evaluate("(function() {\n"
+    QScriptValue fun = m_engine->evaluate(QLatin1String("(function() {\n"
                                        "  for (var i = 0; i < 10000; ++i) {\n"
                                        "    foo; foo; foo; foo; foo; foo; foo; foo;\n"
                                        "  }\n"
-                                       "})");
+                                       "})"));
     m_engine->popContext();
     QVERIFY(fun.isFunction());
     QBENCHMARK {

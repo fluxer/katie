@@ -78,7 +78,7 @@ private:
 
 tst_V8::tst_V8()
 {
-    testsDir = QDir(":/tests");
+    testsDir = QDir(QLatin1String(":/tests"));
     if (!testsDir.exists())
         qWarning("*** no tests/ dir!");
 }
@@ -98,7 +98,7 @@ void tst_V8::cleanup()
 void tst_V8::benchmark_data()
 {
     QTest::addColumn<QString>("testName");
-    QFileInfoList testFileInfos = testsDir.entryInfoList(QStringList() << "*.js", QDir::Files);
+    QFileInfoList testFileInfos = testsDir.entryInfoList(QStringList() << QLatin1String("*.js"), QDir::Files);
     foreach (QFileInfo tfi, testFileInfos) {
         QString name = tfi.baseName();
         if (name == QString::fromLatin1("base")) {
@@ -113,10 +113,10 @@ void tst_V8::benchmark()
 {
     QFETCH(QString, testName);
 
-    QString baseDotJsContents = readFile(testsDir.filePath("base.js"));
+    QString baseDotJsContents = readFile(testsDir.filePath(QLatin1String("base.js")));
     QVERIFY(!baseDotJsContents.isEmpty());
 
-    QString testContents = readFile(testsDir.filePath(testName + ".js"));
+    QString testContents = readFile(testsDir.filePath(testName + QLatin1String(".js")));
     QVERIFY(!testContents.isEmpty());
 
     QScriptEngine engine;
@@ -126,7 +126,7 @@ void tst_V8::benchmark()
     QVERIFY(!engine.hasUncaughtException());
 
     QBENCHMARK {
-        engine.evaluate("BenchmarkSuite.RunSuites({})");
+        engine.evaluate(QLatin1String("BenchmarkSuite.RunSuites({})"));
     }
     QVERIFY(!engine.hasUncaughtException());
 }

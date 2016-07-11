@@ -79,7 +79,7 @@ public:
         m_boolProperty(false),
         m_intProperty(123),
         m_doubleProperty(123),
-        m_stringProperty("hello"),
+        m_stringProperty(QLatin1String("hello")),
         m_variantProperty(double(123)),
         m_qobjectProperty(this),
         m_enumProperty(SecondEnumValue),
@@ -363,10 +363,10 @@ private:
     void readAllMetaPropertiesHelper(QObject *o);
 
     void readPropertyHelper(QScriptEngine &engine, const QScriptValue &object,
-        const QString &propertyName, const QString &argTemplate = ".%0");
+        const QString &propertyName, const QString &argTemplate = QLatin1String(".%0"));
     void writePropertyHelper(QScriptEngine &engine, const QScriptValue &object,
         const QString &propertyName, const QScriptValue &value,
-        const QString &argTemplate = ".%0");
+        const QString &argTemplate = QLatin1String(".%0"));
 
     void callMethodHelper(QScriptEngine &engine, QObject *object,
                           const QString &propertyName, const QString &arguments);

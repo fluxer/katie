@@ -86,24 +86,24 @@ struct RectRectCombination
 static QList<RectRectCombination> createRectRectCombinations()
 {
     QList<RectRectCombination> result;
-    result << RectRectCombination("null", 0, 0, 0, 0, 0, 0, 0, 0);
-    result << RectRectCombination("null1", 0, 0, 0, 0, 0, 0, 10, 10);
-    result << RectRectCombination("null2", 0, 0, 10, 10, 0, 0, 0, 0);
+    result << RectRectCombination(QLatin1String("null"), 0, 0, 0, 0, 0, 0, 0, 0);
+    result << RectRectCombination(QLatin1String("null1"), 0, 0, 0, 0, 0, 0, 10, 10);
+    result << RectRectCombination(QLatin1String("null2"), 0, 0, 10, 10, 0, 0, 0, 0);
 
-    result << RectRectCombination("miss", 0, 0, 10, 10, 11, 11, 10, 10);
-    result << RectRectCombination("intersect", 0, 0, 10, 10, 5, 5, 10, 10);
-    result << RectRectCombination("contain1", 0, 0, 10, 10, 1, 1, 8, 8);
-    result << RectRectCombination("contain2", 1, 1, 8, 8, 0, 0, 10, 10);
+    result << RectRectCombination(QLatin1String("miss"), 0, 0, 10, 10, 11, 11, 10, 10);
+    result << RectRectCombination(QLatin1String("intersect"), 0, 0, 10, 10, 5, 5, 10, 10);
+    result << RectRectCombination(QLatin1String("contain1"), 0, 0, 10, 10, 1, 1, 8, 8);
+    result << RectRectCombination(QLatin1String("contain2"), 1, 1, 8, 8, 0, 0, 10, 10);
 
-    result << RectRectCombination("miss_flip1", 9, 9, -10, -10, 11, 11, 10, 10);
-    result << RectRectCombination("intersect_flip1", 9, 9, -10, -10, 5, 5, 10, 10);
-    result << RectRectCombination("contain1_flip1", 9, 9, -10, -10, 1, 1, 8, 8);
-    result << RectRectCombination("contain2_flip1", 8, 8, -8, -8, 0, 0, 10, 10);
+    result << RectRectCombination(QLatin1String("miss_flip1"), 9, 9, -10, -10, 11, 11, 10, 10);
+    result << RectRectCombination(QLatin1String("intersect_flip1"), 9, 9, -10, -10, 5, 5, 10, 10);
+    result << RectRectCombination(QLatin1String("contain1_flip1"), 9, 9, -10, -10, 1, 1, 8, 8);
+    result << RectRectCombination(QLatin1String("contain2_flip1"), 8, 8, -8, -8, 0, 0, 10, 10);
 
-    result << RectRectCombination("miss_flip2", 0, 0, 10, 10, 20, 20, -10, -10);
-    result << RectRectCombination("intersect_flip2", 0, 0, 10, 10, 14, 14, -10, -10);
-    result << RectRectCombination("contain1_flip2", 0, 0, 10, 10, 8, 8, -8, -8);
-    result << RectRectCombination("contain2_flip2", 1, 1, 8, 8, 9, 9, -10, -10);
+    result << RectRectCombination(QLatin1String("miss_flip2"), 0, 0, 10, 10, 20, 20, -10, -10);
+    result << RectRectCombination(QLatin1String("intersect_flip2"), 0, 0, 10, 10, 14, 14, -10, -10);
+    result << RectRectCombination(QLatin1String("contain1_flip2"), 0, 0, 10, 10, 8, 8, -8, -8);
+    result << RectRectCombination(QLatin1String("contain2_flip2"), 1, 1, 8, 8, 9, 9, -10, -10);
 
     return result;
 }

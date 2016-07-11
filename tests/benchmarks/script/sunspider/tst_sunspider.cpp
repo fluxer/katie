@@ -78,7 +78,7 @@ private:
 
 tst_SunSpider::tst_SunSpider()
 {
-    testsDir = QDir(":/tests");
+    testsDir = QDir(QLatin1String(":/tests"));
     if (!testsDir.exists())
         qWarning("*** no tests/ dir!");
 }
@@ -98,7 +98,7 @@ void tst_SunSpider::cleanup()
 void tst_SunSpider::benchmark_data()
 {
     QTest::addColumn<QString>("testName");
-    QFileInfoList testFileInfos = testsDir.entryInfoList(QStringList() << "*.js", QDir::Files);
+    QFileInfoList testFileInfos = testsDir.entryInfoList(QStringList() << QLatin1String("*.js"), QDir::Files);
     foreach (QFileInfo tfi, testFileInfos) {
         QString name = tfi.baseName();
         QTest::newRow(name.toLatin1().constData()) << name;
@@ -108,7 +108,7 @@ void tst_SunSpider::benchmark_data()
 void tst_SunSpider::benchmark()
 {
     QFETCH(QString, testName);
-    QString testContents = readFile(testsDir.filePath(testName + ".js"));
+    QString testContents = readFile(testsDir.filePath(testName + QLatin1String(".js")));
     QVERIFY(!testContents.isEmpty());
 
     QScriptEngine engine;

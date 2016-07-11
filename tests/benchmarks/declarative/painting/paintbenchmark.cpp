@@ -246,7 +246,7 @@ void paint_QPixmap63x63_opaque(QPainter &p)
     static bool first = true;
     static QPixmap pm;
     if (first) {
-        pm.load("data/63x63_opaque.png");
+        pm.load(QLatin1String("data/63x63_opaque.png"));
         first = false;
     }
     for (int i = 0; i < count; i++) {
@@ -261,7 +261,7 @@ void paint_QPixmap64x64_opaque(QPainter &p)
     static bool first = true;
     static QPixmap pm;
     if (first) {
-        pm.load("data/64x64_opaque.png");
+        pm.load(QLatin1String("data/64x64_opaque.png"));
         first = false;
     }
     for (int i = 0; i < count; i++) {
@@ -276,7 +276,7 @@ void paint_QPixmap63x63(QPainter &p)
     static bool first = true;
     static QPixmap pm;
     if (first) {
-        pm.load("data/63x63.png");
+        pm.load(QLatin1String("data/63x63.png"));
         first = false;
     }
     for (int i = 0; i < count; i++) {
@@ -291,7 +291,7 @@ void paint_QPixmap64x64(QPainter &p)
     static bool first = true;
     static QPixmap pm;
     if (first) {
-        pm.load("data/64x64.png");
+        pm.load(QLatin1String("data/64x64.png"));
         first = false;
     }
     for (int i = 0; i < count; i++) {
@@ -302,10 +302,12 @@ void paint_QPixmap64x64(QPainter &p)
 }
 typedef void(*PaintFunc)(QPainter &);
 
-struct {
+struct FuncStructure {
     const char *name;
     PaintFunc func;
-} funcs[] = {
+};
+
+static const FuncStructure funcs[] = {
     { "QTextLayoutNoCache", &paint_QTextLayout_noCache },
     { "QTextLayoutWithCache", &paint_QTextLayout_cache },
     { "QStaticTextNoBackendOptimizations", &paint_QStaticText_noOptimizations },
@@ -331,7 +333,7 @@ public:
         int len = strlen(chars);
         for (int i = 0; i < lines; ++i) {
             for (int j = 0; j < 60; j++) {
-                strings[i] += QChar(chars[rand() % len]);
+                strings[i] += QLatin1Char(chars[rand() % len]);
             }
         }
     }
@@ -371,22 +373,22 @@ int main(int argc, char *argv[])
     bool sampleBuffers = false;
 
     for (int i = 1; i < argc; ++i) {
-        QString arg = argv[i];
-        if (arg == "-test") {
+        char* arg = argv[i];
+        if (qstrcmp(arg, "-test") == 0) {
             arg = argv[++i];
             int j = 0;
             while (funcs[j].name) {
-                if (arg == funcs[j].name) {
+                if (qstrcmp(arg, funcs[j].name) == 0) {
                     testFunc = funcs[j].func;
                     qDebug() << "Running test" << arg;
                     break;
                 }
                 ++j;
             }
-        } else if (arg == "-iterations") {
+        } else if (qstrcmp(arg, "-iterations") == 0) {
             arg = argv[++i];
-            iterations = arg.toInt();
-        } else if (arg == "-sampleBuffers") {
+            iterations = QString::fromLatin1(arg).toInt();
+        } else if (qstrcmp(arg, "-sampleBuffers") == 0) {
             sampleBuffers = true;
         }
     }

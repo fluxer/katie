@@ -64,7 +64,7 @@ void tst_qmlgraphicsimage::qmlgraphicsimage()
     int x = 0;
     QUrl url(SRCDIR "/image.png");
     QBENCHMARK {
-        QUrl url2("http://localhost/image" + QString::number(x++) + ".png");
+        QUrl url2(QLatin1String("http://localhost/image") + QString::number(x++) + QLatin1String(".png"));
         QDeclarativeImage *image = new QDeclarativeImage;
         QDeclarativeEngine::setContextForObject(image, engine.rootContext());
         delete image;
@@ -82,7 +82,7 @@ void tst_qmlgraphicsimage::qmlgraphicsimage_file()
         image->setSource(url);
     }
     QBENCHMARK {
-        QUrl url2("http://localhost/image" + QString::number(x++) + ".png");
+        QUrl url2(QLatin1String("http://localhost/image") + QString::number(x++) + QLatin1String(".png"));
         QDeclarativeImage *image = new QDeclarativeImage;
         QDeclarativeEngine::setContextForObject(image, engine.rootContext());
         image->setSource(url);
@@ -95,7 +95,7 @@ void tst_qmlgraphicsimage::qmlgraphicsimage_url()
     int x = 0;
     QUrl url(SRCDIR "/image.png");
     QBENCHMARK {
-        QUrl url2("http://localhost/image" + QString::number(x++) + ".png");
+        QUrl url2(QLatin1String("http://localhost/image") + QString::number(x++) + QLatin1String(".png"));
         QDeclarativeImage *image = new QDeclarativeImage;
         QDeclarativeEngine::setContextForObject(image, engine.rootContext());
         image->setSource(url2);
