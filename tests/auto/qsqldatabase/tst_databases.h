@@ -98,7 +98,8 @@ static QString qGetHostName()
 // "tablename_hostname"
 inline static QString qTableName( const QString& prefix, const char *sourceFileName )
 {
-    return QLatin1String("dbtst")+QString::number(qHash(QLatin1String(sourceFileName) + "_" + qGetHostName().replace( "-", "_" )), 16)+"_"+prefix;
+    return QLatin1String("dbtst") + QString::number(qHash(QLatin1String(sourceFileName)
+        + QLatin1Char('_') + qGetHostName().replace( QLatin1Char('-'), QLatin1Char('_') )), 16) + QLatin1Char('_') + prefix;
 }
 
 inline static QString qTableName( const QString& prefix, QSqlDriver* driver )
@@ -352,7 +353,7 @@ public:
     {
         QString res = db.driverName() + "@";
 
-        if ( db.driverName().startsWith( "QODBC" ) || db.driverName().startsWith( "QOCI" ) ) {
+        if ( db.driverName().startsWith( QLatin1String("QODBC") ) || db.driverName().startsWith( QLatin1String("QOCI") ) ) {
             res += db.databaseName();
         } else {
             res += db.hostName();
@@ -384,9 +385,9 @@ public:
                     if(table2.compare(table.section('.', -1, -1), Qt::CaseInsensitive) == 0) {
                         table=db.driver()->escapeIdentifier(table2, QSqlDriver::TableName);
                         if(isPostgreSQL(db))
-                            wasDropped = q.exec( "drop table " + table + " cascade");
+                            wasDropped = q.exec( QLatin1String("drop table ") + table + QLatin1String(" cascade"));
                         else
-                            wasDropped = q.exec( "drop table " + table);
+                            wasDropped = q.exec( QLatin1String("drop table ") + table);
                         dbtables.removeAll(table2);
                     }
                 }
@@ -449,15 +450,15 @@ public:
     static QString blobTypeName( QSqlDatabase db, int blobSize = 10000 )
     {
         if ( db.driverName().startsWith( "QMYSQL" ) )
-            return "longblob";
+            return QString( "longblob" );
 
         if ( db.driverName().startsWith( "QPSQL" ) )
-            return "bytea";
+            return QString( "bytea" );
 
         if ( db.driverName().startsWith( "QTDS" )
                 || isSqlServer( db )
                 || isMSAccess( db ) )
-            return "image";
+            return QString( "image" );
 
         if ( db.driverName().startsWith( "QDB2" ) )
             return QString( "blob(%1)" ).arg( blobSize );
@@ -467,19 +468,19 @@ public:
 
         if ( db.driverName().startsWith( "QOCI" )
                 || db.driverName().startsWith( "QSQLITE" ) )
-            return "blob";
+            return QString( "blob" );
 
         qDebug() <<  "tst_Databases::blobTypeName: Don't know the blob type for" << dbToString( db );
 
-        return "blob";
+        return QString( "blob" );
     }
 
     static QString autoFieldName( QSqlDatabase db )
     {
         if ( db.driverName().startsWith( "QMYSQL" ) )
-            return "AUTO_INCREMENT";
+            return QString( "AUTO_INCREMENT" );
         if ( db.driverName().startsWith( "QTDS" ) )
-            return "IDENTITY";
+            return QString( "IDENTITY" );
 /*        if ( db.driverName().startsWith( "QPSQL" ) )
             return "SERIAL";*/
 //        if ( db.driverName().startsWith( "QDB2" ) )
@@ -528,16 +529,16 @@ public:
 
     static bool isPostgreSQL( QSqlDatabase db )
     {
-        return db.driverName().startsWith("QPSQL") || (db.driverName().startsWith("QODBC") && ( db.databaseName().contains("PostgreSQL", Qt::CaseInsensitive) || db.databaseName().contains("pgsql", Qt::CaseInsensitive) ) );
+        return db.driverName().startsWith(QLatin1String("QPSQL")) || (db.driverName().startsWith(QLatin1String("QODBC")) && ( db.databaseName().contains(QLatin1String("PostgreSQL"), Qt::CaseInsensitive) || db.databaseName().contains(QLatin1String("pgsql"), Qt::CaseInsensitive) ) );
     }
 
     static bool isMySQL( QSqlDatabase db )
     {
-        return db.driverName().startsWith("QMYSQL") || (db.driverName().startsWith("QODBC") && db.databaseName().contains("MySQL", Qt::CaseInsensitive) );
+        return db.driverName().startsWith(QLatin1String("QMYSQL")) || (db.driverName().startsWith(QLatin1String("QODBC")) && db.databaseName().contains(QLatin1String("MySQL"), Qt::CaseInsensitive) );
     }
     static bool isDB2( QSqlDatabase db )
     {
-        return db.driverName().startsWith("QDB2") || (db.driverName().startsWith("QODBC") && db.databaseName().contains("db2", Qt::CaseInsensitive) );
+        return db.driverName().startsWith(QLatin1String("QDB2")) || (db.driverName().startsWith(QLatin1String("QODBC")) && db.databaseName().contains(QLatin1String("db2"), Qt::CaseInsensitive) );
     }
 
     // -1 on fail, else Oracle version
