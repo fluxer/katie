@@ -126,8 +126,8 @@ void tst_QSqlQuery::cleanup()
         populateTestTables( db );
     }
 
-    if ( QTest::currentTestFailed() && ( db.driverName().startsWith( "QOCI" )
-                                         || db.driverName().startsWith( "QODBC" ) ) ) {
+    if ( QTest::currentTestFailed() && ( db.driverName().startsWith( QLatin1String("QOCI") )
+                                         || db.driverName().startsWith( QLatin1String("QODBC") ) ) ) {
         //since Oracle ODBC totally craps out on error, we init again
         db.close();
         db.open();
@@ -179,13 +179,13 @@ void tst_QSqlQuery::dropTestTables( QSqlDatabase db )
                << qTableName( QLatin1String("test141895"), __FILE__)
                << qTableName( QLatin1String("qtest_oraOCINumber"), __FILE__);
 
-    if ( db.driverName().startsWith("QPSQL") )
+    if ( db.driverName().startsWith( QLatin1String("QPSQL") ) )
         tablenames << qTableName( QLatin1String("task_233829"), __FILE__);
 
-    if ( db.driverName().startsWith("QSQLITE") )
+    if ( db.driverName().startsWith( QLatin1String("QSQLITE") ) )
         tablenames << qTableName( QLatin1String("record_sqlite"), __FILE__ );
 
-    if ( tst_Databases::isSqlServer( db ) || db.driverName().startsWith( "QOCI" ) )
+    if ( tst_Databases::isSqlServer( db ) || db.driverName().startsWith( QLatin1String("QOCI") ) )
         tablenames << qTableName( QLatin1String("qtest_longstr"), __FILE__ );
 
     if (tst_Databases::isSqlServer( db ))
@@ -206,20 +206,20 @@ void tst_QSqlQuery::createTestTables( QSqlDatabase db )
 {
     QSqlQuery q( db );
 
-    if ( db.driverName().startsWith( "QMYSQL" ) )
+    if ( db.driverName().startsWith( QLatin1String("QMYSQL") ) )
         // ### stupid workaround until we find a way to hardcode this
         // in the MySQL server startup script
-        q.exec( "set table_type=innodb" );
+        q.exec(  QLatin1String("set table_type=innodb") );
     else if (tst_Databases::isPostgreSQL(db))
-        QVERIFY_SQL( q, exec("set client_min_messages='warning'"));
+        QVERIFY_SQL( q, exec( QLatin1String("set client_min_messages='warning'") ));
 
     if (tst_Databases::isPostgreSQL(db))
-        QVERIFY_SQL( q, exec( "create table " + qtest + " (id serial NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id)) WITH OIDS" ) );
+        QVERIFY_SQL( q, exec(  QLatin1String("create table ") + qtest +  QLatin1String(" (id serial NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id)) WITH OIDS") ) );
     else
-        QVERIFY_SQL( q, exec( "create table " + qtest + " (id int "+tst_Databases::autoFieldName(db) +" NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id))" ) );
+        QVERIFY_SQL( q, exec(  QLatin1String("create table ") + qtest +  QLatin1String(" (id int ") + tst_Databases::autoFieldName(db) +  QLatin1String(" NOT NULL, t_varchar varchar(20), t_char char(20), primary key(id))") ) );
 
-    if ( tst_Databases::isSqlServer( db ) || db.driverName().startsWith( "QTDS" ) )
-        QVERIFY_SQL( q, exec( QLatin1String("create table ") + qTableName(QLatin1String( "qtest_null"), __FILE__ ) + QLatin1String(" (id int null, t_varchar varchar(20) null)") ) );
+    if ( tst_Databases::isSqlServer( db ) || db.driverName().startsWith( QLatin1String("QTDS") ) )
+        QVERIFY_SQL( q, exec( QLatin1String("create table ") + qTableName( QLatin1String( "qtest_null"), __FILE__ ) + QLatin1String(" (id int null, t_varchar varchar(20) null)") ) );
     else
         QVERIFY_SQL( q, exec( QLatin1String("create table ") + qTableName( QLatin1String("qtest_null"), __FILE__ ) + QLatin1String(" (id int, t_varchar varchar(20))") ) );
 }
@@ -228,18 +228,18 @@ void tst_QSqlQuery::populateTestTables( QSqlDatabase db )
 {
     QSqlQuery q( db );
     const QString qtest_null(qTableName( QLatin1String("qtest_null"), __FILE__ ));
-    q.exec( "delete from " + qtest );
-    QVERIFY_SQL( q, exec( "insert into " + qtest + " values (1, 'VarChar1', 'Char1')" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest + " values (2, 'VarChar2', 'Char2')" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest + " values (3, 'VarChar3', 'Char3')" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest + " values (4, 'VarChar4', 'Char4')" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest + " values (5, 'VarChar5', 'Char5')" ) );
+    q.exec( QLatin1String("delete from ") + qtest );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest + QLatin1String(" values (1, 'VarChar1', 'Char1')") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest + QLatin1String(" values (2, 'VarChar2', 'Char2')") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest + QLatin1String(" values (3, 'VarChar3', 'Char3')") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest + QLatin1String(" values (4, 'VarChar4', 'Char4')") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest + QLatin1String(" values (5, 'VarChar5', 'Char5')") ) );
 
-    q.exec( "delete from " + qtest_null );
-    QVERIFY_SQL( q, exec( "insert into " + qtest_null + " values (0, NULL)" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest_null + " values (1, 'n')" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest_null + " values (2, 'i')" ) );
-    QVERIFY_SQL( q, exec( "insert into " + qtest_null + " values (3, NULL)" ) );
+    q.exec( QLatin1String("delete from ") + qtest_null );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest_null + QLatin1String(" values (0, NULL)") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest_null + QLatin1String(" values (1, 'n')") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest_null + QLatin1String(" values (2, 'i')") ) );
+    QVERIFY_SQL( q, exec( QLatin1String("insert into ") + qtest_null + QLatin1String(" values (3, NULL)") ) );
 }
 
 void tst_QSqlQuery::benchmark()
@@ -255,15 +255,16 @@ void tst_QSqlQuery::benchmark()
 
     tst_Databases::safeDropTable( db, tableName );
 
-    QVERIFY_SQL(q, exec("CREATE TABLE "+tableName+"(\n"
+    QVERIFY_SQL(q, exec(QLatin1String("CREATE TABLE ") + tableName + QLatin1String("(\n"
                         "MainKey INT NOT NULL,\n"
                         "OtherTextCol VARCHAR(45) NOT NULL,\n"
-                        "PRIMARY KEY(`MainKey`))"));
+                        "PRIMARY KEY(`MainKey`))")));
 
     int i=1;
 
     QBENCHMARK {
-        QVERIFY_SQL(q, exec("INSERT INTO "+tableName+" VALUES("+QString::number(i)+", \"Value"+QString::number(i)+"\")"));
+        QVERIFY_SQL(q, exec(QLatin1String("INSERT INTO ") + tableName + QLatin1String(" VALUES(")
+            + QString::number(i) + QLatin1String(", \"Value") + QString::number(i) + QLatin1String("\")")));
         i++;
     }
 
