@@ -194,7 +194,7 @@ void tst_qdiriterator::diriterator()
     QBENCHMARK {
         int c = 0;
 
-        QDirIterator dir(dirpath,
+        QDirIterator dir(QString::fromLatin1(dirpath),
             //QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot,
             //QDir::AllEntries | QDir::Hidden,
             QDir::Files,
@@ -226,7 +226,7 @@ void tst_qdiriterator::fsiterator()
         int c = 0;
 
         dump && printf("\n\n\n\n");
-        QFileSystemIterator dir(dirpath,
+        QFileSystemIterator dir(QString::fromLatin1(dirpath),
             //QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot,
             //QDir::AllEntries | QDir::Hidden,
             //QDir::Files | QDir::NoDotAndDotDot,

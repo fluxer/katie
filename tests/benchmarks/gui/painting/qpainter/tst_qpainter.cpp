@@ -340,14 +340,14 @@ void tst_QPainter::drawLine_data()
          << QPen(QColor(255, 0, 0, 200), 4, Qt::DashDotLine);
 
     QStringList penNames;
-    penNames << "black-0"
-             << "black-0-dashdot"
-             << "black-4"
-             << "black-4-dashdot"
-             << "alpha-0"
-             << "alpha-0-dashdot"
-             << "alpha-4"
-             << "alpha-4-dashdot";
+    penNames << QLatin1String("black-0")
+             << QLatin1String("black-0-dashdot")
+             << QLatin1String("black-4")
+             << QLatin1String("black-4-dashdot")
+             << QLatin1String("alpha-0")
+             << QLatin1String("alpha-0-dashdot")
+             << QLatin1String("alpha-4")
+             << QLatin1String("alpha-4-dashdot");
 
     int i = 0;
     foreach (QPen pen, pens) {
@@ -379,27 +379,27 @@ void tst_QPainter::drawLine_data()
 void tst_QPainter::setupBrushes()
 {
     // Solid brushes...
-    m_brushes["black-brush"] = QBrush(Qt::black);
-    m_brushes["white-brush"] = QBrush(Qt::white);
-    m_brushes["transparent-brush"] = QBrush(QColor(255, 255, 255, 0));
-    m_brushes["alpha1-brush"] = QBrush(QColor(255, 255, 255, 100));
-    m_brushes["alpha2-brush"] = QBrush(QColor(255, 255, 255, 200));
+    m_brushes[QLatin1String("black-brush")] = QBrush(Qt::black);
+    m_brushes[QLatin1String("white-brush")] = QBrush(Qt::white);
+    m_brushes[QLatin1String("transparent-brush")] = QBrush(QColor(255, 255, 255, 0));
+    m_brushes[QLatin1String("alpha1-brush")] = QBrush(QColor(255, 255, 255, 100));
+    m_brushes[QLatin1String("alpha2-brush")] = QBrush(QColor(255, 255, 255, 200));
 
 
     // Patterns
-    m_brushes["dense1-brush"] = QBrush(Qt::Dense1Pattern);
-    m_brushes["dense2-brush"] = QBrush(Qt::Dense2Pattern);
-    m_brushes["dense3-brush"] = QBrush(Qt::Dense3Pattern);
-    m_brushes["dense4-brush"] = QBrush(Qt::Dense4Pattern);
-    m_brushes["dense5-brush"] = QBrush(Qt::Dense5Pattern);
-    m_brushes["dense6-brush"] = QBrush(Qt::Dense6Pattern);
-    m_brushes["dense7-brush"] = QBrush(Qt::Dense7Pattern);
-    m_brushes["hor-brush"] = QBrush(Qt::HorPattern);
-    m_brushes["ver-brush"] = QBrush(Qt::VerPattern);
-    m_brushes["cross-brush"] = QBrush(Qt::CrossPattern);
-    m_brushes["bdiag-brush"] = QBrush(Qt::BDiagPattern);
-    m_brushes["fdiag-brush"] = QBrush(Qt::FDiagPattern);
-    m_brushes["diagcross-brush"] = QBrush(Qt::DiagCrossPattern);
+    m_brushes[QLatin1String("dense1-brush")] = QBrush(Qt::Dense1Pattern);
+    m_brushes[QLatin1String("dense2-brush")] = QBrush(Qt::Dense2Pattern);
+    m_brushes[QLatin1String("dense3-brush")] = QBrush(Qt::Dense3Pattern);
+    m_brushes[QLatin1String("dense4-brush")] = QBrush(Qt::Dense4Pattern);
+    m_brushes[QLatin1String("dense5-brush")] = QBrush(Qt::Dense5Pattern);
+    m_brushes[QLatin1String("dense6-brush")] = QBrush(Qt::Dense6Pattern);
+    m_brushes[QLatin1String("dense7-brush")] = QBrush(Qt::Dense7Pattern);
+    m_brushes[QLatin1String("hor-brush")] = QBrush(Qt::HorPattern);
+    m_brushes[QLatin1String("ver-brush")] = QBrush(Qt::VerPattern);
+    m_brushes[QLatin1String("cross-brush")] = QBrush(Qt::CrossPattern);
+    m_brushes[QLatin1String("bdiag-brush")] = QBrush(Qt::BDiagPattern);
+    m_brushes[QLatin1String("fdiag-brush")] = QBrush(Qt::FDiagPattern);
+    m_brushes[QLatin1String("diagcross-brush")] = QBrush(Qt::DiagCrossPattern);
 
     // Gradients
     QGradientStops gradient_white_black;
@@ -971,8 +971,8 @@ void tst_QPainter::drawPrimitives_data_helper(bool fancypens)
                     for (int type=0; type<Primitive_Last_Primitive; ++type) {
                         QString name = QString::fromLatin1(names[type]);
 
-                        if (aa) name += " aa";
-                        if (dash) name += " dotted";
+                        if (aa) name += QString::fromLatin1(" aa");
+                        if (dash) name += QString::fromLatin1(" dotted");
                         if (width) name += QString::fromLatin1(" width=%1").arg(width);
 
                         QTest::newRow(name.toLatin1()) << type << (bool) aa << (bool) dash << width;
@@ -984,7 +984,7 @@ void tst_QPainter::drawPrimitives_data_helper(bool fancypens)
         for (int aa=0; aa<2; ++aa) {
             for (int type=0; type<Primitive_Last_Primitive; ++type) {
                 QString name = QString::fromLatin1(names[type]);
-                if (aa) name += " aa";
+                if (aa) name += QString::fromLatin1(" aa");
                 QTest::newRow(name.toLatin1()) << type << (bool) aa;
             }
         }

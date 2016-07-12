@@ -214,12 +214,12 @@ public:
         }
 
         // construct a stupid unique name
-        QString cName = QString::number( counter++ ) + "_" + driver + "@";
+        QString cName = QString::number( counter++ ) + QLatin1Char('_') + driver + QLatin1Char('@');
 
         cName += host.isEmpty() ? dbName : host;
 
         if ( port > 0 )
-            cName += ":" + QString::number( port );
+            cName += QLatin1Char(':') + QString::number( port );
 
         db = QSqlDatabase::addDatabase( driver, cName );
 
@@ -291,7 +291,7 @@ public:
 
 //      use in-memory database to prevent local files
 //         addDb("QSQLITE", ":memory:");
-         addDb( "QSQLITE", QDir::toNativeSeparators(sqLiteFileName()));
+         addDb( QLatin1String("QSQLITE"), QDir::toNativeSeparators(sqLiteFileName()));
 //         addDb( "QSQLITE2", QDir::toNativeSeparators(QDir::tempPath()+"/foo2.db") );
 //         addDb( "QODBC3", "DRIVER={SQL SERVER};SERVER=iceblink.nokia.troll.no\\ICEBLINK", "troll", "trond", "" );
 //         addDb( "QODBC3", "DRIVER={SQL Native Client};SERVER=silence.nokia.troll.no\\SQLEXPRESS", "troll", "trond", "" );
@@ -351,7 +351,7 @@ public:
     // for debugging only: outputs the connection as string
     static QString dbToString( const QSqlDatabase db )
     {
-        QString res = db.driverName() + "@";
+        QString res = db.driverName() + QLatin1Char('@');
 
         if ( db.driverName().startsWith( QLatin1String("QODBC") ) || db.driverName().startsWith( QLatin1String("QOCI") ) ) {
             res += db.databaseName();
@@ -360,7 +360,7 @@ public:
         }
 
         if ( db.port() > 0 ) {
-            res += ":" + QString::number( db.port() );
+            res += QLatin1String(":") + QString::number( db.port() );
         }
 
         return res;
@@ -382,7 +382,7 @@ public:
 
             if ( dbtables.contains( table, Qt::CaseInsensitive ) ) {
                 foreach(const QString &table2, dbtables.filter(table, Qt::CaseInsensitive)) {
-                    if(table2.compare(table.section('.', -1, -1), Qt::CaseInsensitive) == 0) {
+                    if(table2.compare(table.section(QLatin1Char('.'), -1, -1), Qt::CaseInsensitive) == 0) {
                         table=db.driver()->escapeIdentifier(table2, QSqlDriver::TableName);
                         if(isPostgreSQL(db))
                             wasDropped = q.exec( QLatin1String("drop table ") + table + QLatin1String(" cascade"));
@@ -424,7 +424,7 @@ public:
 
             if ( dbtables.contains( view, Qt::CaseInsensitive ) ) {
                 foreach(const QString &view2, dbtables.filter(view, Qt::CaseInsensitive)) {
-                    if(view2.compare(view.section('.', -1, -1), Qt::CaseInsensitive) == 0) {
+                    if(view2.compare(view.section(QLatin1Char('.'), -1, -1), Qt::CaseInsensitive) == 0) {
                         view=db.driver()->escapeIdentifier(view2, QSqlDriver::TableName);
                         wasDropped = q.exec( QLatin1String("drop view ") + view);
                         dbtables.removeAll(view);
@@ -503,7 +503,7 @@ public:
 
     static QByteArray printError( const QSqlError& err, const QSqlDatabase& db )
     {
-        QString result(dbToString(db) + ": ");
+        QString result(dbToString(db) + QLatin1String(": "));
         if(err.number() > 0)
             result += QLatin1Char('(') + QString::number(err.number()) + QLatin1String(") ");
         result += QLatin1Char('\'');

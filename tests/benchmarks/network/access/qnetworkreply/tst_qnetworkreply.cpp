@@ -273,7 +273,7 @@ protected:
         // read lines until we read the empty line seperating HTTP request from HTTP request body
         do {
             if (client->canReadLine()) {
-                QString line = client->readLine();
+                QString line = QString::fromLatin1(client->readLine());
                 if (line == QLatin1String("\n") || line == QLatin1String("\r\n"))
                     break; // empty line
             }

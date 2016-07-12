@@ -545,8 +545,8 @@ void tst_qfile::readSmallFiles_data(BenchmarkType type, QIODevice::OpenModeFlag 
 void tst_qfile::createSmallFiles()
 {
     QDir dir = QDir::temp();
-    dir.mkdir("tst");
-    dir.cd("tst");
+    dir.mkdir(QLatin1String("tst"));
+    dir.cd(QLatin1String("tst"));
     tmpDirName = dir.absolutePath();
 
 #if defined(Q_WS_WINCE)  
@@ -568,7 +568,7 @@ void tst_qfile::removeSmallFiles()
     QDirIterator it(tmpDirName, QDirIterator::FollowSymlinks);
     while (it.hasNext())
         QFile::remove(it.next());
-    QDir::temp().rmdir("tst");
+    QDir::temp().rmdir(QLatin1String("tst"));
 }
 
 
@@ -594,7 +594,7 @@ void tst_qfile::readSmallFiles()
         case(QFileBenchmark): {
             QList<QFile*> fileList;
             Q_FOREACH(QString file, files) {
-                QFile *f = new QFile(tmpDirName+ "/" + file);
+                QFile *f = new QFile(tmpDirName + QLatin1Char('/') + file);
                 f->open(QIODevice::ReadOnly|textMode|bufferedMode);
                 fileList.append(f);
             }
@@ -616,7 +616,7 @@ void tst_qfile::readSmallFiles()
         case(QFSFileEngineBenchmark): {
             QList<QFSFileEngine*> fileList;
             Q_FOREACH(QString file, files) {
-                QFSFileEngine *fse = new QFSFileEngine(tmpDirName+ "/" + file);
+                QFSFileEngine *fse = new QFSFileEngine(tmpDirName + QLatin1Char('/') + file);
                 fse->open(QIODevice::ReadOnly|textMode|bufferedMode);
                 fileList.append(fse);
             }
@@ -636,7 +636,7 @@ void tst_qfile::readSmallFiles()
         case(PosixBenchmark): {
             QList<FILE*> fileList;
             Q_FOREACH(QString file, files) {
-                fileList.append(::fopen(QFile::encodeName(tmpDirName+ "/" + file).constData(), "rb"));
+                fileList.append(::fopen(QFile::encodeName(tmpDirName + QLatin1Char('/') + file).constData(), "rb"));
             }
 
             QBENCHMARK {

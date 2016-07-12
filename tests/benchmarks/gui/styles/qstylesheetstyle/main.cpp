@@ -181,7 +181,7 @@ void tst_qstylesheetstyle::grid()
     QApplication::processEvents();
     int i = 0;
     QBENCHMARK {
-        w->setStyleSheet(stylesheet + "/*" + QString::number(i) + "*/");
+        w->setStyleSheet(stylesheet + QLatin1String("/*") + QString::number(i) + QLatin1String("*/"));
         i++; // we want a different string in case we have severals iterations
         if(events)
             qApp->processEvents();
