@@ -276,7 +276,7 @@ void OpenGLBench::textDrawing()
     p.translate(0, 16);
     QBENCHMARK {
         for (int i = 0; i < lines; ++i)
-            p.drawText(0, i, "Hello World!");
+            p.drawText(0, i, QLatin1String("Hello World!"));
     }
 }
 

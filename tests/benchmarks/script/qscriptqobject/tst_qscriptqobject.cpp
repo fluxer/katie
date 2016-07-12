@@ -440,9 +440,7 @@ void tst_QScriptQObject::readAllMetaPropertiesHelper(QObject *o)
             continue; // skip reserved word
         code.append(QString::fromLatin1("    this.%0;\n").arg(prop.name()));
     }
-    code.append(
-        "  }\n"
-        "})");
+    code.append(QLatin1String("  }\n})"));
 
     QScriptEngine engine;
     QScriptValue fun = engine.evaluate(code);

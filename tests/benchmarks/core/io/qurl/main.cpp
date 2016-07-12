@@ -230,7 +230,7 @@ void tst_qurl::equality()
 void tst_qurl::qmlPropertyWriteUseCase()
 {
     QUrl base("file:///home/user/qt/demos/declarative/samegame/SamegameCore/");
-    QString str("pics/redStar.png");
+    QString str(QLatin1String("pics/redStar.png"));
 
     QBENCHMARK {
         QUrl u = QUrl(str);

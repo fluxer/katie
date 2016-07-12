@@ -448,22 +448,22 @@ void tst_QPainter::setupBrushes()
                            .arg(lg.coordinateMode());
 
             lg.setFinalStop(100, 0);
-            m_brushes["hor-lingrad-w/b-brush" + name] = QBrush(lg);
+            m_brushes[QLatin1String("hor-lingrad-w/b-brush") + name] = QBrush(lg);
 
             lg.setFinalStop(0, 100);
-            m_brushes["ver-lingrad-w/b-brush" + name] = QBrush(lg);
+            m_brushes[QLatin1String("ver-lingrad-w/b-brush") + name] = QBrush(lg);
 
             lg.setFinalStop(100, 100);
-            m_brushes["diag-lingrad-w/b-brush" + name] = QBrush(lg);
+            m_brushes[QLatin1String("diag-lingrad-w/b-brush") + name] = QBrush(lg);
 
             rg.setRadius(100);
             rg.setCenter(0, 0);
             rg.setFocalPoint(50, 50);
-            m_brushes["radgrad-brush" + name] = QBrush(rg);
+            m_brushes[QLatin1String("radgrad-brush") + name] = QBrush(rg);
 
             cg.setCenter(0, 0);
             cg.setAngle(40);
-            m_brushes["congrad-brush" + name] = QBrush(cg);
+            m_brushes[QLatin1String("congrad-brush") + name] = QBrush(cg);
         }
     }
 
@@ -1095,12 +1095,12 @@ void tst_QPainter::saveRestore_data()
     QTest::addColumn<int>("change");
 
     for (int i=0; i<16; ++i) {
-        QString change = "change=";
-        if (i == 0) change += " none";
-        if (i & ChangePen) change += " pen";
-        if (i & ChangeBrush) change += " brush";
-        if (i & ChangeClip) change += " clip";
-        if (i & ChangeTransform) change += " xform";
+        QString change = QLatin1String("change=");
+        if (i == 0) change += QLatin1String(" none");
+        if (i & ChangePen) change += QLatin1String(" pen");
+        if (i & ChangeBrush) change += QLatin1String(" brush");
+        if (i & ChangeClip) change += QLatin1String(" clip");
+        if (i & ChangeTransform) change += QLatin1String(" xform");
 
         QTest::newRow(change.toLatin1()) << i;
     }

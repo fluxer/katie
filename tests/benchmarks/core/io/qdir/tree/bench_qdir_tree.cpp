@@ -55,7 +55,7 @@ class bench_QDir_tree
 
 public:
     bench_QDir_tree()
-        : prefix("./test-tree/"),
+        : prefix(QLatin1String("./test-tree/")),
           musicprefix(QLatin1String("music")),
           photoprefix(QLatin1String("photos")),
           sourceprefix(QLatin1String("source")),
@@ -66,7 +66,7 @@ public:
     }
 
 private:
-    QByteArray prefix;
+    QString prefix;
     QString musicprefix;
     QString photoprefix;
     QString sourceprefix;
@@ -106,7 +106,7 @@ private slots:
             line.chop(1);
             stack.push(line);
 
-            line = prefix;
+            line = prefix.toLatin1();
             Q_FOREACH(const QByteArray &pathElement, stack)
                 line += pathElement;
 

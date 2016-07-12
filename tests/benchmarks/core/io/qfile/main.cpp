@@ -226,9 +226,9 @@ void tst_qfile::readBigFile_data(BenchmarkType type, QIODevice::OpenModeFlag t, 
     int bs_entries = sizeof(bs)/sizeof(const int);
 
     QString flagstring;
-    if (t & QIODevice::Text)       flagstring += "textMode ";
-    if (b & QIODevice::Unbuffered) flagstring += "unbuffered ";
-    if (flagstring.isEmpty())      flagstring = "none";
+    if (t & QIODevice::Text)       flagstring += QLatin1String("textMode ");
+    if (b & QIODevice::Unbuffered) flagstring += QLatin1String("unbuffered ");
+    if (flagstring.isEmpty())      flagstring = QLatin1String("none");
 
     for (int i=0; i<bs_entries; ++i)
         QTest::newRow((QString("BS: %1, Flags: %2" )).arg(bs[i]).arg(flagstring).toLatin1().constData()) << type << bs[i] << t << b;
@@ -533,9 +533,9 @@ void tst_qfile::readSmallFiles_data(BenchmarkType type, QIODevice::OpenModeFlag 
     int bs_entries = sizeof(bs)/sizeof(const int);
 
     QString flagstring;
-    if (t & QIODevice::Text)       flagstring += "textMode ";
-    if (b & QIODevice::Unbuffered) flagstring += "unbuffered ";
-    if (flagstring.isEmpty())      flagstring = "none";
+    if (t & QIODevice::Text)       flagstring += QLatin1String("textMode ");
+    if (b & QIODevice::Unbuffered) flagstring += QLatin1String("unbuffered ");
+    if (flagstring.isEmpty())      flagstring = QLatin1String("none");
 
     for (int i=0; i<bs_entries; ++i)
         QTest::newRow((QString("BS: %1, Flags: %2" )).arg(bs[i]).arg(flagstring).toLatin1().constData()) << type << bs[i] << t << b;
@@ -555,7 +555,7 @@ void tst_qfile::createSmallFiles()
     for (int i = 0; i < 1000; ++i)
 #endif
     {
-        QFile f(tmpDirName+"/"+QString::number(i));
+        QFile f(tmpDirName + QLatin1Char('/') + QString::number(i));
         f.open(QIODevice::WriteOnly);
         f.seek(511);
         f.putChar('\n');

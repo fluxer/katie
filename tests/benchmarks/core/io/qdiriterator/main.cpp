@@ -172,7 +172,7 @@ void tst_qdiriterator::posix()
     QFETCH(QByteArray, dirpath);
 
     int count = 0;
-    QString path(dirpath);
+    QString path = QString::fromLatin1(dirpath);
     QBENCHMARK {
 #ifdef Q_OS_WIN
         wchar_t wPath[MAX_PATH];
