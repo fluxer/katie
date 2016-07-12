@@ -67,25 +67,25 @@ QWidget *tst_qstylesheetstyle::buildSimpleWidgets()
     QWidget *w = new QWidget();
     QGridLayout *layout = new QGridLayout(w);
     w->setLayout(layout);
-    layout->addWidget(new QPushButton("pushButton")     ,0,0);
-    layout->addWidget(new QComboBox()                   ,0,1);
-    layout->addWidget(new QCheckBox("checkBox")         ,0,2);
-    layout->addWidget(new QRadioButton("radioButton")   ,0,3);
-    layout->addWidget(new QLineEdit()                   ,1,0);
-    layout->addWidget(new QLabel("label")               ,1,1);
-    layout->addWidget(new QSpinBox()                    ,1,2);
-    layout->addWidget(new QProgressBar()                ,1,3);
+    layout->addWidget(new QPushButton(QLatin1String("pushButton"))     ,0,0);
+    layout->addWidget(new QComboBox()                                  ,0,1);
+    layout->addWidget(new QCheckBox(QLatin1String("checkBox"))         ,0,2);
+    layout->addWidget(new QRadioButton(QLatin1String("radioButton"))   ,0,3);
+    layout->addWidget(new QLineEdit()                                  ,1,0);
+    layout->addWidget(new QLabel(QLatin1String("label"))               ,1,1);
+    layout->addWidget(new QSpinBox()                                   ,1,2);
+    layout->addWidget(new QProgressBar()                               ,1,3);
     return w;
 }
 
 void tst_qstylesheetstyle::empty()
 {
     QWidget *w = buildSimpleWidgets();
-    w->setStyleSheet("/* */");
+    w->setStyleSheet(QLatin1String("/* */"));
     QApplication::processEvents();
     int i = 0;
     QBENCHMARK {
-        w->setStyleSheet("/*" + QString::number(i) + "*/");
+        w->setStyleSheet(QLatin1String("/*") + QString::number(i) + QLatin1String("*/"));
         i++; // we want a different string in case we have severals iterations
     }
     delete w;
@@ -94,11 +94,11 @@ void tst_qstylesheetstyle::empty()
 void tst_qstylesheetstyle::empty_events()
 {
     QWidget *w = buildSimpleWidgets();
-    w->setStyleSheet("/* */");
+    w->setStyleSheet(QLatin1String("/* */"));
     QApplication::processEvents();
     int i = 0;
     QBENCHMARK {
-        w->setStyleSheet("/*" + QString::number(i) + "*/");
+        w->setStyleSheet(QLatin1String("/*") + QString::number(i) + QLatin1String("*/"));
         i++; // we want a different string in case we have severals iterations
         qApp->processEvents();
     }
@@ -113,11 +113,11 @@ static const char *simple_css =
 void tst_qstylesheetstyle::simple()
 {
     QWidget *w = buildSimpleWidgets();
-    w->setStyleSheet("/* */");
+    w->setStyleSheet(QLatin1String("/* */"));
     QApplication::processEvents();
     int i = 0;
     QBENCHMARK {
-        w->setStyleSheet(QString(simple_css) + "/*" + QString::number(i) + "*/");
+        w->setStyleSheet(QLatin1String(simple_css) + QLatin1String("/*") + QString::number(i) + QLatin1String("*/"));
         i++; // we want a different string in case we have severals iterations
     }
     delete w;
@@ -126,11 +126,11 @@ void tst_qstylesheetstyle::simple()
 void tst_qstylesheetstyle::simple_events()
 {
     QWidget *w = buildSimpleWidgets();
-    w->setStyleSheet("/* */");
+    w->setStyleSheet(QLatin1String("/* */"));
     QApplication::processEvents();
     int i = 0;
     QBENCHMARK {
-        w->setStyleSheet(QString(simple_css) + "/*" + QString::number(i) + "*/");
+        w->setStyleSheet(QLatin1String(simple_css) + QLatin1String("/*") + QString::number(i) + QLatin1String("*/"));
         i++; // we want a different string in case we have severals iterations
         qApp->processEvents();
     }
@@ -169,7 +169,7 @@ void tst_qstylesheetstyle::grid()
         stylesheet += QString("#label%1 { background-color: rgb(0,%2,%3); color: rgb(%2,%3,255);  } ").arg(y*N+x).arg(y*255/N).arg(x*255/N);
     }
 
-    w->setStyleSheet("/* */");
+    w->setStyleSheet(QLatin1String("/* */"));
     if(show) {
         w->show();
         QTest::qWaitForWindowShown(w);

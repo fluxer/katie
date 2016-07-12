@@ -168,8 +168,8 @@ void tst_QtBench::qtBench_data()
 
     QString shortString = makeString(5);
     QString middleString = makeString(50);
-    QString longString = makeString(35) + "\n"
-                         + makeString(45) + "\n"
+    QString longString = makeString(35) + QLatin1Char('\n')
+                         + makeString(45) + QLatin1Char('\n')
                          + makeString(75);
     QString superLongString = QLatin1String("Lorem ipsum dolor sit am\n"
                               "et, consectetur adipisci\n"

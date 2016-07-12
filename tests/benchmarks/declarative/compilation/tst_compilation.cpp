@@ -68,7 +68,7 @@ inline QUrl TEST_FILE(const QString &filename)
 
 void tst_compilation::boomblock()
 {
-    QFile f(SRCDIR + QLatin1String("/data/BoomBlock.qml"));
+    QFile f(QLatin1String(SRCDIR) + QLatin1String("/data/BoomBlock.qml"));
     QVERIFY(f.open(QIODevice::ReadOnly));
     QByteArray data = f.readAll();
 

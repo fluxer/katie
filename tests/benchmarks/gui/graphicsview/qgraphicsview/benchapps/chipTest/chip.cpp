@@ -111,8 +111,8 @@ void Chip::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
         painter->save();
         painter->scale(0.1, 0.1);
         painter->drawText(170, 180, QString("Model: VSC-2000 (Very Small Chip) at %1x%2").arg(x).arg(y));
-        painter->drawText(170, 200, QString("Serial number: DLWR-WEER-123L-ZZ33-SDSJ"));
-        painter->drawText(170, 220, QString("Manufacturer: Chip Manufacturer"));
+        painter->drawText(170, 200, QLatin1String("Serial number: DLWR-WEER-123L-ZZ33-SDSJ"));
+        painter->drawText(170, 220, QLatin1String("Manufacturer: Chip Manufacturer"));
         painter->restore();
     }
 

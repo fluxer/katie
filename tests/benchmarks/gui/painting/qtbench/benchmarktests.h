@@ -48,10 +48,7 @@
 #include <QTextLayout>
 #include <QFontMetrics>
 #include <QDebug>
-
-#if QT_VERSION >= QT_VERSION_CHECK(4, 7, 0)
-#  include <QStaticText>
-#endif
+#include <QStaticText>
 
 class Benchmark
 {
@@ -335,7 +332,7 @@ public:
     DrawScaledImage(const QImage &image, qreal scale, bool asPixmap)
         : Benchmark(QSize(image.width(), image.height())),
           m_image(image),
-          m_type(m_as_pixmap ? "Pixmap" : "Image"),
+          m_type(m_as_pixmap ? QLatin1String("Pixmap") : QLatin1String("Image")),
           m_scale(scale),
           m_as_pixmap(asPixmap)
     {
@@ -383,7 +380,7 @@ public:
     DrawTransformedImage(const QImage &image, bool asPixmap)
         : Benchmark(QSize(image.width(), image.height())),
           m_image(image),
-          m_type(m_as_pixmap ? "Pixmap" : "Image"),
+          m_type(m_as_pixmap ? QLatin1String("Pixmap") : QLatin1String("Image")),
           m_as_pixmap(asPixmap)
     {
         m_pixmap = QPixmap::fromImage(m_image);
@@ -429,7 +426,7 @@ public:
     DrawImage(const QImage &image, bool asPixmap)
         : Benchmark(QSize(image.width(), image.height())),
           m_image(image),
-          m_type(m_as_pixmap ? "Pixmap" : "Image"),
+          m_type(m_as_pixmap ? QLatin1String("Pixmap") : QLatin1String("Image")),
           m_as_pixmap(asPixmap)
     {
         m_pixmap = QPixmap::fromImage(image);
@@ -472,13 +469,10 @@ public:
         PainterQPointMode,
         LayoutMode,
         DocumentMode,
-        PixmapMode
-
-#if QT_VERSION >= 0x040700
-        , StaticTextMode,
+        PixmapMode,
+        StaticTextMode,
         StaticTextWithMaximumSizeMode,
         StaticTextBackendOptimizations
-#endif
     };
 
     DrawText(const QString &text, Mode mode)
@@ -487,12 +481,8 @@ public:
     }
 
     virtual void begin(QPainter *p, int iterations) {
-#if QT_VERSION >= 0x040700
         m_staticTexts.clear();
         m_currentStaticText = 0;
-#else
-        Q_UNUSED(iterations);
-#endif
         m_pixmaps.clear();
         m_currentPixmap = 0;
         QRect m_bounds = QRect(0,0,p->device()->width(), p->device()->height());
@@ -516,10 +506,9 @@ public:
                 m_pixmaps.append(pixmap);
             }
             break;
-
         case LayoutMode: {
             QRect r = p->boundingRect(m_bounds, 0, m_text);
-            QStringList lines = m_text.split('\n');
+            QStringList lines = m_text.split(QLatin1Char('\n'));
             int height = 0;
             int leading = p->fontMetrics().leading();
             m_layout.beginLayout();
@@ -536,7 +525,6 @@ public:
             m_size = m_layout.boundingRect().toRect().size();
             break; }
 
-#if QT_VERSION >= 0x040700
         case StaticTextWithMaximumSizeMode: {
             QStaticText staticText;
             m_size = (p->boundingRect(m_bounds, 0, m_text)).size();
@@ -570,7 +558,6 @@ public:
 
             break;
         }
-#endif
 
         case PainterQPointMode: {
             QFontMetrics fm(p->font());
@@ -602,8 +589,6 @@ public:
         case LayoutMode:
             m_layout.draw(p, rect.topLeft());
             break;
-
-#if QT_VERSION >= 0x040700
         case StaticTextWithMaximumSizeMode:
         case StaticTextMode:
             p->drawStaticText(rect.topLeft(), m_staticTexts.at(0));
@@ -612,28 +597,24 @@ public:
             p->drawStaticText(rect.topLeft(), m_staticTexts.at(m_currentStaticText));
             m_currentStaticText = (m_currentStaticText + 1) % m_staticTexts.size();
             break;
-#endif
         }
     }
 
     virtual QString name() const {
         int letters = m_text.length();
-        int lines = m_text.count('\n');
+        int lines = m_text.count(QLatin1Char('\n'));
         if (lines == 0)
             lines = 1;
         QString type;
         switch (m_mode) {
-        case PainterMode: type = "drawText(rect)"; break;
-        case PainterQPointMode: type = "drawText(point)"; break;
-        case LayoutMode: type = "layout.draw()"; break;
-        case DocumentMode: type = "doc.drawContents()"; break;
-        case PixmapMode: type = "pixmap cached text"; break;
-
-#if QT_VERSION >= 0x040700
-        case StaticTextMode: type = "drawStaticText()"; break;
-        case StaticTextWithMaximumSizeMode: type = "drawStaticText() w/ maxsize"; break;
-        case StaticTextBackendOptimizations: type = "drawStaticText() w/ backend optimizations"; break;
-#endif
+        case PainterMode: type = QLatin1String("drawText(rect)"); break;
+        case PainterQPointMode: type = QLatin1String("drawText(point)"); break;
+        case LayoutMode: type = QLatin1String("layout.draw()"); break;
+        case DocumentMode: type = QLatin1String("doc.drawContents()"); break;
+        case PixmapMode: type = QLatin1String("pixmap cached text"); break;
+        case StaticTextMode: type = QLatin1String("drawStaticText()"); break;
+        case StaticTextWithMaximumSizeMode: type = QLatin1String("drawStaticText() w/ maxsize"); break;
+        case StaticTextBackendOptimizations: type = QLatin1String("drawStaticText() w/ backend optimizations"); break;
         }
 
         return QString::fromLatin1("%3, len=%1, lines=%2")
@@ -651,10 +632,8 @@ private:
     QList<QPixmap> m_pixmaps;
     int m_currentPixmap;
 
-#if QT_VERSION >= 0x040700
     int m_currentStaticText;
     QList<QStaticText> m_staticTexts;
-#endif
 };
 
 
@@ -749,28 +728,28 @@ public:
         QString namedType;
         switch (m_type) {
         case RectClip:
-            namedType = "rect";
+            namedType = QLatin1String("rect");
             break;
         case TwoRectRegionClip:
-            namedType = "two-rect-region";
+            namedType = QLatin1String("two-rect-region");
             break;
         case EllipseRegionClip:
-            namedType = "ellipse-region";
+            namedType = QLatin1String("ellipse-region");
             break;
         case TwoRectPathClip:
-            namedType = "two-rect-path";
+            namedType = QLatin1String("two-rect-path");
             break;
         case EllipsePathClip:
-            namedType = "ellipse-path";
+            namedType = QLatin1String("ellipse-path");
             break;
         case AAEllipsePathClip:
-            namedType = "aa-ellipse-path";
+            namedType = QLatin1String("aa-ellipse-path");
             break;
         case EllipseRegionThenRectClip:
-            namedType = "ellipseregion&rect";
+            namedType = QLatin1String("ellipseregion&rect");
             break;
         case EllipsePathThenRectClip:
-            namedType = "ellipsepath&rect";
+            namedType = QLatin1String("ellipsepath&rect");
             break;
         }
         return QString::fromLatin1("%1-clipped-drawRect(%2)").arg(namedType).arg(m_size.width());

@@ -155,7 +155,7 @@ void tst_QImageReader::readImage()
     QFETCH(QByteArray, format);
 
     QBENCHMARK {
-        QImageReader io("images/" + fileName, format);
+        QImageReader io(QLatin1String("images/") + fileName, format);
         QImage image = io.read();
         QVERIFY(!image.isNull());
     }
@@ -186,7 +186,7 @@ void tst_QImageReader::setScaledSize()
     QFETCH(QByteArray, format);
 
     QBENCHMARK {
-        QImageReader reader("images/" + fileName, format);
+        QImageReader reader(QLatin1String("images/") + fileName, format);
         reader.setScaledSize(newSize);
         QImage image = reader.read();
         QCOMPARE(image.size(), newSize);
@@ -213,7 +213,7 @@ void tst_QImageReader::setClipRect()
     QFETCH(QByteArray, format);
 
     QBENCHMARK {
-        QImageReader reader("images/" + fileName, format);
+        QImageReader reader(QLatin1String("images/") + fileName, format);
         reader.setClipRect(newRect);
         QImage image = reader.read();
         QCOMPARE(image.rect(), newRect);
@@ -232,7 +232,7 @@ void tst_QImageReader::setScaledClipRect()
     QFETCH(QByteArray, format);
 
     QBENCHMARK {
-        QImageReader reader("images/" + fileName, format);
+        QImageReader reader(QLatin1String("images/") + fileName, format);
         reader.setScaledSize(QSize(300, 300));
         reader.setScaledClipRect(newRect);
         QImage image = reader.read();
