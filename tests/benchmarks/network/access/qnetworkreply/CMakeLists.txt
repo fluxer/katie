@@ -3,6 +3,3 @@ katie_test(tst_bench_qnetworkreply
 )
 
 target_link_libraries(tst_bench_qnetworkreply KtNetwork)
-
-# FIXME: not an ideal sulution
-set_target_properties(tst_bench_qnetworkreply PROPERTIES TIMEOUT 120)

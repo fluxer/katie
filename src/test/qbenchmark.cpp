@@ -196,7 +196,7 @@ QTest::QBenchmarkIterationController::QBenchmarkIterationController(RunMode runM
 {
     i = 0;
     if (runMode == RunOnce)
-        QBenchmarkTestMethodData::current->runOnce = true;    
+        QBenchmarkTestMethodData::current->runOnce = true;
     QTest::beginBenchmarkMeasurement();
 }
 
