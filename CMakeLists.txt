@@ -405,14 +405,6 @@ set_package_properties(OpenGL PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(Wayland)
-set_package_properties(Wayland PROPERTIES
-    PURPOSE "Required for Wayland support"
-    DESCRIPTION "Wayland is intended as a simpler replacement for X"
-    URL "http://wayland.freedesktop.org/"
-    TYPE OPTIONAL
-)
-
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"

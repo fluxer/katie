@@ -32,7 +32,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/iconengines
     ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods
     ${CMAKE_CURRENT_SOURCE_DIR}/accessible
-    ${CMAKE_CURRENT_SOURCE_DIR}/platforms
     ${CMAKE_CURRENT_SOURCE_DIR}/qmltooling
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
@@ -111,17 +110,6 @@ endif()
 if(NOT ${KATIE_PLATFORM} STREQUAL "mac")
     include(inputmethods/imsw-multi/imsw-multi.cmake)
 endif()
-
-
-if(WITH_WALAND AND WAYLAND_FOUND)
-    include(platforms/wayland/wayland.cmake)
-endif()
-if(${KATIE_PLATFORM} STREQUAL "qnx")
-    include(platforms/blackberry/blackberry.cmake)
-endif()
-#if(WITH_X11 AND X11_FOUND)
-#    include(platforms/xlib/xlib.cmake)
-#endif()
 
 
 if(WITH_DBUS AND DBUS_FOUND)
