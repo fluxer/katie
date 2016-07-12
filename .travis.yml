@@ -4,6 +4,7 @@ language: cpp
 compiler:
     - clang
 #    - gcc
+cache: ccache
 git:
     depth: 3
 before_install:
