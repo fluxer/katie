@@ -16,7 +16,7 @@ if not doxygen:
     sys.exit(1)
 
 sys.stdout.write('Generating API docs for Katie...\n')
-apidir = '%s/apidocs' % cwd
+apidir = '%s/../apidocs' % cwd
 if os.path.isdir(apidir):
     shutil.rmtree(apidir)
 subprocess.check_call((doxygen, '%s/../doxygen.conf' % cwd))
