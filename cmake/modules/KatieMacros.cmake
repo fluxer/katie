@@ -27,24 +27,28 @@ macro(KATIE_RESOURCES RESOURCES)
                 )
                 set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
             elseif("${rscext}" MATCHES "(.h|.cpp)")
-                set(rscout ${rscpath}/moc_${rscname}${rscext})
-                get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                set(mocargs)
-                foreach(ddef ${dirdefs})
-                    # TODO: filter non -D, support -U too
-                    set(mocargs ${mocargs} -D${ddef})
-                endforeach()
-                foreach(incdir ${dirincs})
-                    set(mocargs ${mocargs} -I${incdir})
-                endforeach()
-                add_custom_command(
-                    OUTPUT ${rscout}
-                    COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
-                )
-                set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-                # XXX: this can be troublesome but common sources can cause multiple rules on the same file
-                set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+                file(READ "${resource}" rsccontent)
+                # this can be simpler if continue() was supported by old CMake versions
+                if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
+                    set(rscout ${rscpath}/moc_${rscname}${rscext})
+                    get_directory_property(dirdefs COMPILE_DEFINITIONS)
+                    get_directory_property(dirincs INCLUDE_DIRECTORIES)
+                    set(mocargs)
+                    foreach(ddef ${dirdefs})
+                        # TODO: filter non -D, support -U too
+                        set(mocargs ${mocargs} -D${ddef})
+                    endforeach()
+                    foreach(incdir ${dirincs})
+                        set(mocargs ${mocargs} -I${incdir})
+                    endforeach()
+                    add_custom_command(
+                        OUTPUT ${rscout}
+                        COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
+                    )
+                    set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
+                    # XXX: this can be troublesome but common sources can cause multiple rules on the same file
+                    set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+                endif()
             endif()
         endif()
     endforeach()

@@ -949,5 +949,4 @@ void QtGradientEditor::setSpec(QColor::Spec spec)
 
 QT_END_NAMESPACE
 
-#include "moc_qtgradienteditor.cpp"
 #include <moc_qtgradienteditor.h>

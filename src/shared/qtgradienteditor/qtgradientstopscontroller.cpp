@@ -721,5 +721,4 @@ void QtGradientStopsController::setSpec(QColor::Spec spec)
 
 QT_END_NAMESPACE
 
-#include "moc_qtgradientstopscontroller.cpp"
 #include <moc_qtgradientstopscontroller.h>

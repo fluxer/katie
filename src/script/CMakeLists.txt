@@ -273,21 +273,12 @@ if(KATIE_PLATFORM MATCHES "(win32|wince)")
     )
 endif()
 
-set(SCRIPT_RESOURCES
-    ${SCRIPT_RESOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptextensionplugin.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/api/qscriptengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bridge/qscriptqobject_p.h
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/qt/MainThreadQt.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/wtf/qt/ThreadingQt.cpp
-)
-
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
-katie_resources(${SCRIPT_RESOURCES})
+katie_resources(${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
 katie_setup_flags()
 
-add_library(KtScript ${KATIE_TYPE} ${SCRIPT_SOURCES} ${SCRIPT_RESOURCES})
+add_library(KtScript ${KATIE_TYPE} ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
 target_link_libraries(KtScript ${EXTRA_SCRIPT_LIBS})
 set_target_properties(KtScript PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
