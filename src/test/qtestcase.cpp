@@ -1406,7 +1406,7 @@ static void qInvokeTestMethodDataEntry(char *slot)
         do {
             QTestResult::setCurrentTestLocation(QTestResult::InitFunc);
             invokeMethod(QTest::currentTestObject, "init()");
-            if (QTestResult::skipCurrentTest())
+            if (QTestResult::skipCurrentTest() || QTest::currentTestFailed())
                 break;
 
             QTestResult::setCurrentTestLocation(QTestResult::Func);

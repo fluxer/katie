@@ -44,16 +44,9 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
 )
 
-if(SKIP_NETWORK_TESTS)
-    message(WARNING "Going to skip network related tests")
-endif()
-
 file(GLOB_RECURSE CMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
 foreach(cmakefile ${CMAKEFILES})
     get_filename_component(dirname ${cmakefile} PATH)
-    if(SKIP_NETWORK_TESTS AND "${dirname}" MATCHES "(/network/)")
-        continue()
-    endif()
     # message(STATUS "Adding sub-directory: ${dirname}")
     add_subdirectory(${dirname})
 endforeach()
