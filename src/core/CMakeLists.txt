@@ -251,6 +251,7 @@ set(CORE_PUBLIC_HEADERS
     QWeakPointer
     QDate
     QTime
+    QListIterator
     # obsolete
     QFlags
 )

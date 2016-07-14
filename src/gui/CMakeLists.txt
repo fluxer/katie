@@ -306,7 +306,6 @@ set(GUI_PUBLIC_HEADERS
     QTextEdit
     QTextFormat
     QTextFragment
-    QTextFrame
     QTextFrameFormat
     QTextFrameLayoutData
     QTextImageFormat
@@ -384,6 +383,9 @@ set(GUI_PUBLIC_HEADERS
     QFontMetricsF
     QStyleOptionSlider
     QDoubleValidator
+    QTextFrame
+    QTextListFormat
+    QTextCharFormat
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit
