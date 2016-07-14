@@ -383,6 +383,7 @@ set(GUI_PUBLIC_HEADERS
     QIntValidator
     QFontMetricsF
     QStyleOptionSlider
+    QDoubleValidator
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit
