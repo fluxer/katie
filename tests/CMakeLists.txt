@@ -44,9 +44,15 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
 )
 
+set(TRAVIS_TEST_ENVIRONMENT "$ENV{TRAVIS_TEST_ENVIRONMENT}")
+
 file(GLOB_RECURSE CMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
 foreach(cmakefile ${CMAKEFILES})
     get_filename_component(dirname ${cmakefile} PATH)
-    # message(STATUS "Adding sub-directory: ${dirname}")
-    add_subdirectory(${dirname})
+    if(TRAVIS_TEST_ENVIRONMENT AND EXISTS "${dirname}/.skiptravis")
+        message(WARNING "Skipping test: ${dirname}")
+    else()
+        # message(STATUS "Adding sub-directory: ${dirname}")
+        add_subdirectory(${dirname})
+    endif()
 endforeach()
