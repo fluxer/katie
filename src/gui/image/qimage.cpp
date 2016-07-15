@@ -4636,7 +4636,7 @@ bool QImage::load(QIODevice* device, const char* format)
 }
 
 /*!
-    \fn bool QImage::loadFromData(const uchar *data, int len, const char *format)
+    \fn bool QImage::loadFromData(const char *data, int len, const char *format)
 
     Loads an image from the first \a len bytes of the given binary \a
     data. Returns true if the image was successfully loaded; otherwise
@@ -4649,7 +4649,7 @@ bool QImage::load(QIODevice* device, const char* format)
     \sa {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
 */
 
-bool QImage::loadFromData(const uchar *data, int len, const char *format)
+bool QImage::loadFromData(const char *data, int len, const char *format)
 {
     QImage image = fromData(data, len, format);
     if (!image.isNull()) {
@@ -4668,7 +4668,7 @@ bool QImage::loadFromData(const uchar *data, int len, const char *format)
 */
 
 /*!
-    \fn QImage QImage::fromData(const uchar *data, int size, const char *format)
+    \fn QImage QImage::fromData(const char *data, int size, const char *format)
 
     Constructs a QImage from the first \a size bytes of the given
     binary \a data. The loader attempts to read the image using the
@@ -4687,9 +4687,9 @@ bool QImage::loadFromData(const uchar *data, int len, const char *format)
     \sa load(), save(), {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
  */
 
-QImage QImage::fromData(const uchar *data, int size, const char *format)
+QImage QImage::fromData(const char *data, int size, const char *format)
 {
-    QByteArray a = QByteArray::fromRawData(reinterpret_cast<const char *>(data), size);
+    QByteArray a = QByteArray::fromRawData(data, size);
     QBuffer b;
     b.setData(a);
     b.open(QIODevice::ReadOnly);

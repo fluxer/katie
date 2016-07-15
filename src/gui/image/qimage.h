@@ -235,16 +235,16 @@ public:
 
     bool load(QIODevice *device, const char* format);
     bool load(const QString &fileName, const char* format=0);
-    bool loadFromData(const uchar *buf, int len, const char *format = 0);
+    bool loadFromData(const char *buf, int len, const char *format = 0);
     inline bool loadFromData(const QByteArray &data, const char* aformat=0)
-        { return loadFromData(reinterpret_cast<const uchar *>(data.constData()), data.size(), aformat); }
+        { return loadFromData(data.constData(), data.size(), aformat); }
 
     bool save(const QString &fileName, const char* format=0, int quality=-1) const;
     bool save(QIODevice *device, const char* format=0, int quality=-1) const;
 
-    static QImage fromData(const uchar *data, int size, const char *format = 0);
+    static QImage fromData(const char *data, int size, const char *format = 0);
     inline static QImage fromData(const QByteArray &data, const char *format = 0)
-        { return fromData(reinterpret_cast<const uchar *>(data.constData()), data.size(), format); }
+        { return fromData(data.constData(), data.size(), format); }
 
     qint64 cacheKey() const;
 
