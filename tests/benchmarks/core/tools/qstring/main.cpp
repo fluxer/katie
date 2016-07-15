@@ -1414,7 +1414,7 @@ void tst_QString::ucstrncmp() const
 
 void tst_QString::fromUtf8() const
 {
-    QFile file(SRCDIR "utf-8.txt");
+    QFile file(QLatin1String(SRCDIR "utf-8.txt"));
     if (!file.open(QFile::ReadOnly)) {
         qFatal("Cannot open input file");
         return;

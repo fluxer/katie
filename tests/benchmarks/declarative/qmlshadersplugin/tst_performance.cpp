@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     view.setViewport(glWidget);
     view.show();
 
-    view.setSource(QUrl::fromLocalFile("TestWater.qml"));
+    view.setSource(QUrl::fromLocalFile(QLatin1String("TestWater.qml")));
     BenchmarkItem *benchmarkItem;
 
     qDebug() << "Sea Water benchmark:";
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
     qDebug() << "Average " << benchmarkItem->frameCount() / 5.0 << " frames per second";
 
     qDebug() << "Gaussian drop shadow benchmark:";
-    view.setSource(QUrl::fromLocalFile("TestGaussianDropShadow.qml"));
+    view.setSource(QUrl::fromLocalFile(QLatin1String("TestGaussianDropShadow.qml")));
     benchmarkItem = new BenchmarkItem(dynamic_cast<QDeclarativeItem *>(view.rootObject()));
     QTest::qWait(5000);
     qDebug() << "Rendered " << benchmarkItem->frameCount() << " frames in 5 seconds";

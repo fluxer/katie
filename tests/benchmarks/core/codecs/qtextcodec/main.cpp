@@ -129,7 +129,7 @@ void tst_QTextCodec::fromUnicode_data() const
 void tst_QTextCodec::fromUnicode() const
 {
     QFETCH(QTextCodec*, codec);
-    QFile file(SRCDIR "utf-8.txt");
+    QFile file(QLatin1String(SRCDIR "utf-8.txt"));
     if (!file.open(QFile::ReadOnly)) {
         qFatal("Cannot open input file");
         return;
@@ -156,7 +156,7 @@ void tst_QTextCodec::toUnicode_data() const
 void tst_QTextCodec::toUnicode() const
 {
     QFETCH(QTextCodec*, codec);
-    QFile file(SRCDIR "utf-8.txt");
+    QFile file(QLatin1String(SRCDIR "utf-8.txt"));
     QVERIFY(file.open(QFile::ReadOnly));
     QByteArray data = file.readAll();
     const char *d = data.constData();
