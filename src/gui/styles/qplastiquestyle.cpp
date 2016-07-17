@@ -93,13 +93,9 @@ QT_BEGIN_NAMESPACE
 
 // from windows style
 static const int windowsItemFrame        =  2; // menu item frame width
-static const int windowsSepHeight        =  2; // separator item height
 static const int windowsItemHMargin      =  3; // menu item hor text margin
 static const int windowsItemVMargin      =  2; // menu item ver text margin
-static const int windowsArrowHMargin     =  6; // arrow horizontal margin
-static const int windowsTabSpacing       = 12; // space between text and tab
 static const int windowsRightBorder      = 15; // right border on windows
-static const int windowsCheckMarkWidth   = 12; // checkmarks width on windows
 
 static const char * const qt_plastique_slider_verticalhandle[] = {
     "15 11 6 1",

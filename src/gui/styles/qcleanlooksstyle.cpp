@@ -258,31 +258,6 @@ static const char * const qt_cleanlooks_radiobutton_checked[] = {
     "             ",
     "             "};
 
-
-static const char * const qt_scrollbar_button_arrow_left[] = {
-    "4 7 2 1",
-    "   c None",
-    "*  c #BFBFBF",
-    "   *",
-    "  **",
-    " ***",
-    "****",
-    " ***",
-    "  **",
-    "   *"};
-
-static const char * const qt_scrollbar_button_arrow_right[] = {
-    "4 7 2 1",
-    "   c None",
-    "*  c #BFBFBF",
-    "*   ",
-    "**  ",
-    "*** ",
-    "****",
-    "*** ",
-    "**  ",
-    "*   "};
-
 static const char * const qt_scrollbar_button_arrow_up[] = {
     "7 4 2 1",
     "   c None",
