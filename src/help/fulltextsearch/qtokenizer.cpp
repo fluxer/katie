@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qtokenizer_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/analysis/AnalysisHeader.h>
@@ -73,7 +72,7 @@ bool QCLuceneStandardTokenizer::readApostrophe(const QString &string,
     if (stdTokenizer == 0)
         return false;
 
-    TCHAR* value = QStringToTChar(string);
+    TCHAR* value = QHelp::QStringToTChar(string);
     lucene::util::StringBuffer buffer(value);
     bool retValue = stdTokenizer->ReadApostrophe(&buffer, token.d->token);
     delete [] value;
@@ -89,7 +88,7 @@ bool QCLuceneStandardTokenizer::readAt(const QString &string, QCLuceneToken &tok
     if (stdTokenizer == 0)
         return false;
 
-    TCHAR* value = QStringToTChar(string);
+    TCHAR* value = QHelp::QStringToTChar(string);
     lucene::util::StringBuffer buffer(value);
     bool retValue = stdTokenizer->ReadAt(&buffer, token.d->token);
     delete [] value;
@@ -106,7 +105,7 @@ bool QCLuceneStandardTokenizer::readCompany(const QString &string,
     if (stdTokenizer == 0)
         return false;
 
-    TCHAR* value = QStringToTChar(string);
+    TCHAR* value = QHelp::QStringToTChar(string);
     lucene::util::StringBuffer buffer(value);
     bool retValue = stdTokenizer->ReadCompany(&buffer, token.d->token);
     delete [] value;

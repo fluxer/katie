@@ -42,22 +42,11 @@
 #ifndef QHELP_GLOBAL_H
 #define QHELP_GLOBAL_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/QString>
-#include <QtCore/QObject>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
-
-#if !defined(QT_SHARED) && !defined(QT_DLL)
-#   define QHELP_EXPORT
-#elif defined(QHELP_LIB)
-#   define QHELP_EXPORT Q_DECL_EXPORT
-#else
-#   define QHELP_EXPORT Q_DECL_IMPORT
-#endif
 
 class QHelpGlobal {
 public:

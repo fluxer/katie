@@ -48,40 +48,25 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifdef QTEST_EMBED
-# define Q_TESTLIB_EXPORT
-#elif !defined(QT_SHARED)
-# define Q_TESTLIB_EXPORT
-#else
-# ifdef QTESTLIB_MAKEDLL
-#  define Q_TESTLIB_EXPORT Q_DECL_EXPORT
-# else
-#  define Q_TESTLIB_EXPORT Q_DECL_IMPORT
-# endif
-#endif
-
 #if defined (Q_CC_SUN) || defined (Q_CC_XLC) || (defined (Q_CC_GNU) && (__GNUC__ - 0 < 3)) || defined (Q_CC_NOKIAX86)
 # define QTEST_NO_SPECIALIZATIONS
 #endif
 
 
 #if (defined Q_CC_HPACC) && (defined __ia64)
-# ifdef Q_TESTLIB_EXPORT
-#  undef Q_TESTLIB_EXPORT
+# ifdef Q_TEST_EXPORT
+#  undef Q_TEST_EXPORT
 # endif
-# define Q_TESTLIB_EXPORT
+# define Q_TEST_EXPORT
 #endif
 
-#define QTEST_VERSION     QT_VERSION
-#define QTEST_VERSION_STR QT_VERSION_STR
 
 namespace QTest
 {
     enum SkipMode { SkipSingle = 1, SkipAll = 2 };
     enum TestFailMode { Abort = 1, Continue = 2 };
 
-    int Q_TESTLIB_EXPORT qt_snprintf(char *str, int size, const char *format, ...);
+    int Q_TEST_EXPORT qt_snprintf(char *str, int size, const char *format, ...);
 }
 
 QT_END_NAMESPACE

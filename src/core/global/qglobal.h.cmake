@@ -1437,6 +1437,11 @@ class QDataStream;
 #    else
 #      define Q_GUI_EXPORT Q_DECL_IMPORT
 #    endif
+#    if defined(QT_BUILD_HELP_LIB)
+#      define Q_HELP_EXPORT Q_DECL_EXPORT
+#    else
+#      define Q_HELP_EXPORT Q_DECL_IMPORT
+#    endif
 #    if defined(QT_BUILD_SQL_LIB)
 #      define Q_SQL_EXPORT Q_DECL_EXPORT
 #    else
@@ -1451,6 +1456,11 @@ class QDataStream;
 #      define Q_SVG_EXPORT Q_DECL_EXPORT
 #    else
 #      define Q_SVG_EXPORT Q_DECL_IMPORT
+#    endif
+#    if defined(QT_BUILD_TEST_LIB)
+#      define Q_TEST_EXPORT Q_DECL_EXPORT
+#    else
+#      define Q_TEST_EXPORT Q_DECL_IMPORT
 #    endif
 #    if defined(QT_BUILD_DECLARATIVE_LIB)
 #      define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
@@ -1496,9 +1506,11 @@ class QDataStream;
 #  elif defined(QT_DLL) /* use a Qt DLL library */
 #    define Q_CORE_EXPORT Q_DECL_IMPORT
 #    define Q_GUI_EXPORT Q_DECL_IMPORT
+#    define Q_HELP_EXPORT Q_DECL_IMPORT
 #    define Q_SQL_EXPORT Q_DECL_IMPORT
 #    define Q_NETWORK_EXPORT Q_DECL_IMPORT
 #    define Q_SVG_EXPORT Q_DECL_IMPORT
+#    define Q_TEST_EXPORT Q_DECL_IMPORT
 #    define Q_DECLARATIVE_EXPORT Q_DECL_IMPORT
 #    define Q_OPENGL_EXPORT Q_DECL_IMPORT
 #    define Q_MULTIMEDIA_EXPORT Q_DECL_IMPORT
@@ -1523,9 +1535,11 @@ class QDataStream;
 #  if defined(QT_SHARED)
 #    define Q_CORE_EXPORT Q_DECL_EXPORT
 #    define Q_GUI_EXPORT Q_DECL_EXPORT
+#    define Q_HELP_EXPORT Q_DECL_EXPORT
 #    define Q_SQL_EXPORT Q_DECL_EXPORT
 #    define Q_NETWORK_EXPORT Q_DECL_EXPORT
 #    define Q_SVG_EXPORT Q_DECL_EXPORT
+#    define Q_TEST_EXPORT Q_DECL_EXPORT
 #    define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
 #    define Q_OPENGL_EXPORT Q_DECL_EXPORT
 #    define Q_MULTIMEDIA_EXPORT Q_DECL_EXPORT
@@ -1537,9 +1551,11 @@ class QDataStream;
 #  else
 #    define Q_CORE_EXPORT
 #    define Q_GUI_EXPORT
+#    define Q_HELP_EXPORT
 #    define Q_SQL_EXPORT
 #    define Q_NETWORK_EXPORT
 #    define Q_SVG_EXPORT
+#    define Q_TEST_EXPORT
 #    define Q_DECLARATIVE_EXPORT
 #    define Q_OPENGL_EXPORT
 #    define Q_MULTIMEDIA_EXPORT

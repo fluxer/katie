@@ -32,7 +32,6 @@
 #include "qclucene_global_p.h"
 
 #include <QtCore/QString>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(document)
@@ -45,7 +44,7 @@ QT_BEGIN_NAMESPACE
 class QCLuceneReader;
 class QCLuceneDocument;
 
-class QHELP_EXPORT QCLuceneFieldPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneFieldPrivate : public QSharedData
 {
 public:
     QCLuceneFieldPrivate();
@@ -60,7 +59,7 @@ private:
     QCLuceneFieldPrivate &operator=(const QCLuceneFieldPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneField
+class Q_HELP_EXPORT QCLuceneField
 {
 public:
 	enum Store { 

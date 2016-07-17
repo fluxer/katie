@@ -62,7 +62,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QHELP_EXPORT QHelpDataContentItem
+class Q_HELP_EXPORT QHelpDataContentItem
 {
 public:
     QHelpDataContentItem(QHelpDataContentItem *parent, const QString &title,
@@ -79,7 +79,7 @@ private:
     QList<QHelpDataContentItem*> m_children;
 };
 
-struct QHELP_EXPORT QHelpDataIndexItem {
+struct Q_HELP_EXPORT QHelpDataIndexItem {
     QHelpDataIndexItem() {}
     QHelpDataIndexItem(const QString &n, const QString &id, const QString &r)
         : name(n), identifier(id), reference(r) {}
@@ -105,7 +105,7 @@ public:
     QStringList files;
 };
 
-class QHELP_EXPORT QHelpDataFilterSection
+class Q_HELP_EXPORT QHelpDataFilterSection
 {
 public:
     QHelpDataFilterSection();
@@ -129,12 +129,12 @@ private:
     QSharedDataPointer<QHelpDataFilterSectionData> d;
 };
 
-struct QHELP_EXPORT QHelpDataCustomFilter {
+struct Q_HELP_EXPORT QHelpDataCustomFilter {
     QStringList filterAttributes;
     QString name;
 };
 
-class QHELP_EXPORT QHelpDataInterface
+class Q_HELP_EXPORT QHelpDataInterface
 {
 public:
     QHelpDataInterface() {}

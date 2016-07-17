@@ -33,7 +33,6 @@
 
 #include <QtCore/QSharedData>
 #include <QtCore/QString>
-#include <QtCore/qshareddata.h>
 
 CL_NS_DEF(index)
     class Term;
@@ -48,7 +47,7 @@ class QCLucenePrefixQuery;
 class QCLuceneIndexReader;
 class QCLucenePhraseQuery;
 
-class QHELP_EXPORT QCLuceneTermPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneTermPrivate : public QSharedData
 {
 public:
     QCLuceneTermPrivate();
@@ -63,7 +62,7 @@ private:
     QCLuceneTermPrivate &operator=(const QCLuceneTermPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneTerm
+class Q_HELP_EXPORT QCLuceneTerm
 {
 public:
     QCLuceneTerm();

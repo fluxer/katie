@@ -32,7 +32,6 @@
 #include "qclucene_global_p.h"
 
 #include <QtCore/QString>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(util)
@@ -48,7 +47,7 @@ class QCLuceneDocument;
 class QCLuceneQueryParser;
 class QCLuceneStandardTokenizer;
 
-class QHELP_EXPORT QCLuceneReaderPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneReaderPrivate : public QSharedData
 {
 public:
     QCLuceneReaderPrivate();
@@ -63,7 +62,7 @@ private:
     QCLuceneReaderPrivate &operator=(const QCLuceneReaderPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneReader
+class Q_HELP_EXPORT QCLuceneReader
 {
 public:
     QCLuceneReader();
@@ -91,7 +90,7 @@ private:
     TCHAR *string;
 };
 
-class QHELP_EXPORT QCLuceneFileReader : public QCLuceneReader
+class Q_HELP_EXPORT QCLuceneFileReader : public QCLuceneReader
 {
 public:
     QCLuceneFileReader(const QString &path, const QString &encoding,

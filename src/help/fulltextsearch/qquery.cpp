@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qquery_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/search/PhraseQuery.h>
@@ -68,21 +67,18 @@ qreal QCLuceneQuery::getBoost() const
 
 QString QCLuceneQuery::getQueryName() const
 {
-    return TCharToQString(d->query->getQueryName());
+    return QHelp::TCharToQString(d->query->getQueryName());
 }
 
 bool QCLuceneQuery::instanceOf(const QString &other) const
 {
-	if (other == getQueryName())
-		return true;
-
-	return false;
+    return (other == getQueryName());
 }
 
 QString QCLuceneQuery::toString(const QString &field) const
 {
-    TCHAR *fieldName = QStringToTChar(field);
-    QString retValue = TCharToQString(d->query->toString(fieldName));
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
+    QString retValue = QHelp::TCharToQString(d->query->toString(fieldName));
     delete [] fieldName;
 
     return retValue;
@@ -95,7 +91,7 @@ quint32 QCLuceneQuery::hashCode() const
 
 QString QCLuceneQuery::toString() const
 {
-    return TCharToQString(d->query->toString());
+    return QHelp::TCharToQString(d->query->toString());
 }
 
 bool QCLuceneQuery::equals(const QCLuceneQuery &other) const
@@ -118,7 +114,7 @@ QCLucenePrefixQuery::~QCLucenePrefixQuery()
 
 QString QCLucenePrefixQuery::getClassName()
 {
-    return TCharToQString(lucene::search::PrefixQuery::getClassName());
+    return QHelp::TCharToQString(lucene::search::PrefixQuery::getClassName());
 }
 
 QCLuceneTerm QCLucenePrefixQuery::getPrefix() const
@@ -145,7 +141,7 @@ QCLuceneRangeQuery::~QCLuceneRangeQuery()
 
 QString QCLuceneRangeQuery::getClassName()
 {
-    return TCharToQString(lucene::search::RangeQuery::getClassName());
+    return QHelp::TCharToQString(lucene::search::RangeQuery::getClassName());
 }
 
 QCLuceneTerm QCLuceneRangeQuery::getLowerTerm() const
@@ -177,7 +173,7 @@ QString QCLuceneRangeQuery::getField() const
     if (query == 0)
         return QString();
 
-    return TCharToQString(query->getField());
+    return QHelp::TCharToQString(query->getField());
 }
 
 
@@ -195,7 +191,7 @@ QCLuceneTermQuery::~QCLuceneTermQuery()
 
 QString QCLuceneTermQuery::getClassName()
 {
-    return TCharToQString(lucene::search::TermQuery::getClassName());
+    return QHelp::TCharToQString(lucene::search::TermQuery::getClassName());
 }
 
 QCLuceneTerm QCLuceneTermQuery::getTerm() const
@@ -217,7 +213,7 @@ QCLuceneBooleanQuery::~QCLuceneBooleanQuery()
 
 QString QCLuceneBooleanQuery::getClassName()
 {
-    return TCharToQString(lucene::search::BooleanQuery::getClassName());
+    return QHelp::TCharToQString(lucene::search::BooleanQuery::getClassName());
 }
 
 quint32 QCLuceneBooleanQuery::getClauseCount() const
@@ -289,7 +285,7 @@ QCLucenePhraseQuery::~QCLucenePhraseQuery()
 
 QString QCLucenePhraseQuery::getClassName()
 {
-    return TCharToQString(lucene::search::RangeQuery::getClassName());
+    return QHelp::TCharToQString(lucene::search::RangeQuery::getClassName());
 }
 
 qint32 QCLucenePhraseQuery::getSlop() const
@@ -347,7 +343,7 @@ QString QCLucenePhraseQuery::getFieldName() const
     if (phraseQuery == 0)
         return QString();
 
-    return TCharToQString(phraseQuery->getFieldName());
+    return QHelp::TCharToQString(phraseQuery->getFieldName());
 }
 
 QList<QCLuceneTerm> QCLucenePhraseQuery::getTerms() const

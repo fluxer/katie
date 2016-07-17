@@ -126,7 +126,7 @@ void QTestLogger::stopLogging()
 
         property = new QTestElement(QTest::LET_Property);
         property->addAttribute(QTest::AI_Name, "QTestVersion");
-        property->addAttribute(QTest::AI_PropertyValue, QTEST_VERSION_STR);
+        property->addAttribute(QTest::AI_PropertyValue, QT_VERSION_STR);
         properties->addLogElement(property);
 
         property = new QTestElement(QTest::LET_Property);

@@ -60,7 +60,7 @@ class QHelpSearchQueryWidget;
 class QHelpSearchResultWidget;
 class QHelpSearchEnginePrivate;
 
-class QHELP_EXPORT QHelpSearchQuery
+class Q_HELP_EXPORT QHelpSearchQuery
 {
 public:
     enum FieldName { DEFAULT = 0, FUZZY, WITHOUT, PHRASE, ALL, ATLEAST };
@@ -74,7 +74,7 @@ public:
     QStringList wordList;
 };
 
-class QHELP_EXPORT QHelpSearchEngine : public QObject
+class Q_HELP_EXPORT QHelpSearchEngine : public QObject
 {
     Q_OBJECT
 

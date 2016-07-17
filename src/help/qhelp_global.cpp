@@ -42,7 +42,7 @@
 #include <QtCore/QCoreApplication>
 #include <QtCore/QHash>
 #include <QtCore/QRegExp>
-#include <QtCore/qmutex.h>
+#include <QtCore/QMutex>
 #include <QtGui/QTextDocument>
 
 #include "qhelp_global.h"

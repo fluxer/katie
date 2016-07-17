@@ -62,7 +62,7 @@ QT_BEGIN_NAMESPACE
 
 class QHelpProjectDataPrivate;
 
-class QHELP_EXPORT QHelpProjectData : public QHelpDataInterface
+class Q_HELP_EXPORT QHelpProjectData : public QHelpDataInterface
 {
 public:
     QHelpProjectData();

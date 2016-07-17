@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qindexreader_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/index/IndexReader.h>
@@ -129,7 +128,7 @@ void QCLuceneIndexReader::deleteDocument(qint32 docNum)
 
 bool QCLuceneIndexReader::hasNorms(const QString &field)
 {
-    TCHAR *fieldName = QStringToTChar(field);
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
     bool retValue = d->reader->hasNorms(fieldName);
     delete [] fieldName;
 
@@ -154,14 +153,14 @@ bool QCLuceneIndexReader::document(qint32 index, QCLuceneDocument &document)
 
 void QCLuceneIndexReader::setNorm(qint32 doc, const QString &field, qreal value)
 {
-    TCHAR *fieldName = QStringToTChar(field);
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
     d->reader->setNorm(int32_t(doc), fieldName, qreal(value));
     delete [] fieldName;
 }
 
 void QCLuceneIndexReader::setNorm(qint32 doc, const QString &field, quint8 value)
 {
-    TCHAR *fieldName = QStringToTChar(field);
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
     d->reader->setNorm(int32_t(doc), fieldName, uint8_t(value));
     delete [] fieldName;
 }

@@ -56,7 +56,7 @@ class QHelpIndexWidget;
 class QHelpEnginePrivate;
 class QHelpSearchEngine;
 
-class QHELP_EXPORT QHelpEngine : public QHelpEngineCore
+class Q_HELP_EXPORT QHelpEngine : public QHelpEngineCore
 {
     Q_OBJECT
 

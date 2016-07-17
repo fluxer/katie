@@ -395,12 +395,12 @@ void QPlainTestLogger::startLogging()
         if (hasRandomSeed) {
             QTest::qt_snprintf(buf, sizeof(buf),
                              "********* Start testing of %s *********\n"
-                             "Config: Using QTest library " QTEST_VERSION_STR
+                             "Config: Using QTest library " QT_VERSION_STR
                              ", Qt %s, Random seed %d\n", QTestResult::currentTestObjectName(), qVersion(), randomSeed);
         } else {
             QTest::qt_snprintf(buf, sizeof(buf),
                              "********* Start testing of %s *********\n"
-                             "Config: Using QTest library " QTEST_VERSION_STR
+                             "Config: Using QTest library " QT_VERSION_STR
                              ", Qt %s\n", QTestResult::currentTestObjectName(), qVersion());
         }
     }

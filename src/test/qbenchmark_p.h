@@ -130,7 +130,7 @@ public:
     QBenchmarkGlobalData:current is created at the beginning of qExec()
     and cleared at the end.
 */
-class Q_TESTLIB_EXPORT QBenchmarkGlobalData
+class Q_TEST_EXPORT QBenchmarkGlobalData
 {
 public:
     static QBenchmarkGlobalData *current;
@@ -161,7 +161,7 @@ private:
     created at the beginning of qInvokeTestMethod() and cleared at
     the end.
 */
-class Q_TESTLIB_EXPORT QBenchmarkTestMethodData
+class Q_TEST_EXPORT QBenchmarkTestMethodData
 {
 public:
     static QBenchmarkTestMethodData *current;
@@ -191,8 +191,8 @@ namespace QTest
     void setIterationCountHint(int count);
     void setIterationCount(int count);
 
-    Q_TESTLIB_EXPORT void beginBenchmarkMeasurement();
-    Q_TESTLIB_EXPORT quint64 endBenchmarkMeasurement();
+    Q_TEST_EXPORT void beginBenchmarkMeasurement();
+    Q_TEST_EXPORT quint64 endBenchmarkMeasurement();
 }
 
 QT_END_NAMESPACE

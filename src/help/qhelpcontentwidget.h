@@ -60,7 +60,7 @@ class QHelpContentModelPrivate;
 class QHelpEngine;
 class QHelpContentProvider;
 
-class QHELP_EXPORT QHelpContentItem
+class Q_HELP_EXPORT QHelpContentItem
 {
 public:
     ~QHelpContentItem();
@@ -82,7 +82,7 @@ private:
     friend class QHelpContentProvider;
 };
 
-class QHELP_EXPORT QHelpContentModel : public QAbstractItemModel
+class Q_HELP_EXPORT QHelpContentModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -114,7 +114,7 @@ private:
     friend class QHelpEnginePrivate;
 };
 
-class QHELP_EXPORT QHelpContentWidget : public QTreeView
+class Q_HELP_EXPORT QHelpContentWidget : public QTreeView
 {
     Q_OBJECT
 

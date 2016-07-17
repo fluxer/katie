@@ -17,7 +17,6 @@
 
 #include "qqueryparser_p.h"
 #include "qquery_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/queryParser/QueryParser.h>
@@ -51,7 +50,7 @@ QCLuceneQueryParser::QCLuceneQueryParser(const QString &field,
     , field(field)
     , analyzer(analyzer)
 {
-    TCHAR *fieldName = QStringToTChar(field);
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
 
     d->queryParser = new lucene::queryParser::QueryParser(fieldName,
         analyzer.d->analyzer);
@@ -66,7 +65,7 @@ QCLuceneQueryParser::~QCLuceneQueryParser()
 
 QCLuceneQuery* QCLuceneQueryParser::parse(const QString &query)
 {
-    TCHAR *string = QStringToTChar(query);
+    TCHAR *string = QHelp::QStringToTChar(query);
 
     QCLuceneQuery *retValue = 0;
     lucene::search::Query* q = d->queryParser->parse(string);

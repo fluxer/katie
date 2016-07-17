@@ -30,11 +30,9 @@
 //
 
 #include "qterm_p.h"
-#include "qclucene_global_p.h"
 
 #include <QtCore/QList>
 #include <QtCore/QString>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(search)
@@ -52,7 +50,7 @@ class QCLucenePrefixQuery;
 class QCLuceneBooleanQuery;
 class QCLucenePhraseQuery;
 
-class QHELP_EXPORT QCLuceneQueryPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneQueryPrivate : public QSharedData
 {
 public:
     QCLuceneQueryPrivate();
@@ -67,7 +65,7 @@ private:
     QCLuceneQueryPrivate &operator=(const QCLuceneQueryPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneQuery
+class Q_HELP_EXPORT QCLuceneQuery
 {
 public:
     virtual ~QCLuceneQuery();
@@ -95,7 +93,7 @@ private:
     QCLuceneQuery();
 };
 
-class QHELP_EXPORT QCLucenePrefixQuery : public QCLuceneQuery
+class Q_HELP_EXPORT QCLucenePrefixQuery : public QCLuceneQuery
 {
 public:
     QCLucenePrefixQuery(const QCLuceneTerm &prefix);
@@ -109,7 +107,7 @@ private:
     QCLuceneTerm prefix;
 };
 
-class QHELP_EXPORT QCLuceneRangeQuery : public QCLuceneQuery
+class Q_HELP_EXPORT QCLuceneRangeQuery : public QCLuceneQuery
 {
 public:
     QCLuceneRangeQuery(const QCLuceneTerm &lowerTerm, 
@@ -129,7 +127,7 @@ private:
     QCLuceneTerm upperTerm;
 };
 
-class QHELP_EXPORT QCLuceneTermQuery : public QCLuceneQuery
+class Q_HELP_EXPORT QCLuceneTermQuery : public QCLuceneQuery
 {
 public:
     QCLuceneTermQuery(const QCLuceneTerm &term);
@@ -143,7 +141,7 @@ private:
     QCLuceneTerm term;
 };
 
-class QHELP_EXPORT QCLuceneBooleanQuery : public QCLuceneQuery
+class Q_HELP_EXPORT QCLuceneBooleanQuery : public QCLuceneQuery
 {
 public:
     QCLuceneBooleanQuery();
@@ -162,7 +160,7 @@ private:
     QList<QCLuceneQuery*> queries;
 };
 
-class QHELP_EXPORT QCLucenePhraseQuery : public QCLuceneQuery
+class Q_HELP_EXPORT QCLucenePhraseQuery : public QCLuceneQuery
 {
 public:
     QCLucenePhraseQuery();

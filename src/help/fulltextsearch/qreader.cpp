@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qreader_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/util/Reader.h>
@@ -57,14 +56,14 @@ QCLuceneReader::~QCLuceneReader()
 
 QCLuceneStringReader::QCLuceneStringReader(const QString &value)
     : QCLuceneReader()
-    , string(QStringToTChar(value))
+    , string(QHelp::QStringToTChar(value))
 {
     d->reader = new lucene::util::StringReader(string);
 }
 
 QCLuceneStringReader::QCLuceneStringReader(const QString &value, qint32 length)
     : QCLuceneReader()
-    , string(QStringToTChar(value))
+    , string(QHelp::QStringToTChar(value))
 {
     d->reader = new lucene::util::StringReader(string, int32_t(length));
 }
@@ -72,7 +71,7 @@ QCLuceneStringReader::QCLuceneStringReader(const QString &value, qint32 length)
 QCLuceneStringReader::QCLuceneStringReader(const QString &value, qint32 length,
                                            bool copyData)
     : QCLuceneReader()
-    , string(QStringToTChar(value))
+    , string(QHelp::QStringToTChar(value))
 {
     d->reader = new lucene::util::StringReader(string, int32_t(length), copyData);
 }

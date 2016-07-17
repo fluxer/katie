@@ -55,7 +55,7 @@ QT_BEGIN_NAMESPACE
 class QTestTable;
 class QTestDataPrivate;
 
-class Q_TESTLIB_EXPORT QTestData
+class Q_TEST_EXPORT QTestData
 {
 public:
     ~QTestData();

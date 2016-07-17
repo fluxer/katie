@@ -60,7 +60,7 @@ QT_BEGIN_NAMESPACE
 class QTestData;
 class QTestTablePrivate;
 
-class Q_TESTLIB_EXPORT QTestTable
+class Q_TEST_EXPORT QTestTable
 {
 public:
     QTestTable();

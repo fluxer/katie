@@ -65,7 +65,7 @@ namespace QTest
                               Qt::KeyboardModifiers modifier, QString text, bool repeat, int delay=-1)
     {
         QTEST_ASSERT(widget);
-        extern int Q_TESTLIB_EXPORT defaultKeyDelay();
+        extern int Q_TEST_EXPORT defaultKeyDelay();
 
         if (delay == -1 || delay < defaultKeyDelay())
             delay = defaultKeyDelay();

@@ -59,7 +59,7 @@ QT_BEGIN_NAMESPACE
 class QFocusEvent;
 class QHelpSearchQueryWidgetPrivate;
 
-class QHELP_EXPORT QHelpSearchQueryWidget : public QWidget
+class Q_HELP_EXPORT QHelpSearchQueryWidget : public QWidget
 {
     Q_OBJECT
 

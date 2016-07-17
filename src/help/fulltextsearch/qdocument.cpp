@@ -17,7 +17,6 @@
 
 #include "qdocument_p.h"
 #include "qreader_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/util/Reader.h>
@@ -75,7 +74,7 @@ QCLuceneField* QCLuceneDocument::getField(const QString &name) const
     }
 
     field = 0;
-    TCHAR *fieldName = QStringToTChar(name);
+    TCHAR *fieldName = QHelp::QStringToTChar(name);
     lucene::document::Field *f = d->document->getField(fieldName);
     if (f) {
         field = new QCLuceneField();
@@ -105,7 +104,7 @@ QString QCLuceneDocument::get(const QString &name) const
 
 QString QCLuceneDocument::toString() const
 {
-    return TCharToQString(d->document->toString());
+    return QHelp::TCharToQString(d->document->toString());
 }
 
 void QCLuceneDocument::setBoost(qreal boost)
@@ -120,7 +119,7 @@ qreal QCLuceneDocument::getBoost() const
 
 void QCLuceneDocument::removeField(const QString &name)
 {
-    TCHAR *fieldName = QStringToTChar(name);
+    TCHAR *fieldName = QHelp::QStringToTChar(name);
     d->document->removeField(fieldName);
     delete [] fieldName;
 
@@ -147,20 +146,20 @@ void QCLuceneDocument::removeFields(const QString &name)
             delete fieldList.takeAt(i);
     }
 
-    TCHAR *fieldName = QStringToTChar(name);
+    TCHAR *fieldName = QHelp::QStringToTChar(name);
     d->document->removeFields(fieldName);
     delete [] fieldName;
 }
 
 QStringList QCLuceneDocument::getValues(const QString &name) const
 {
-    TCHAR *fieldName = QStringToTChar(name);
+    TCHAR *fieldName = QHelp::QStringToTChar(name);
     TCHAR **values = d->document->getValues(fieldName);
 
     QStringList retValue;
     if (values) {
         for (qint32 i = 0; 0 != values[i]; ++i) {
-            retValue.append(TCharToQString((const TCHAR*)values[i]));
+            retValue.append(QHelp::TCharToQString((const TCHAR*)values[i]));
             delete [] values[i]; values[i] = 0;
         }
         delete values;

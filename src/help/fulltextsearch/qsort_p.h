@@ -33,7 +33,6 @@
 
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(search)
@@ -46,7 +45,7 @@ QT_BEGIN_NAMESPACE
 class QCLuceneHits;
 class QCLuceneField;
 
-class QHELP_EXPORT QCLuceneSortPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneSortPrivate : public QSharedData
 {
 public:
     QCLuceneSortPrivate();
@@ -61,7 +60,7 @@ private:
     QCLuceneSortPrivate &operator=(const QCLuceneSortPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneSort
+class Q_HELP_EXPORT QCLuceneSort
 {
 public:
     QCLuceneSort();

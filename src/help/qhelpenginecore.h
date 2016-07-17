@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
 
 class QHelpEngineCorePrivate;
 
-class QHELP_EXPORT QHelpEngineCore : public QObject
+class Q_HELP_EXPORT QHelpEngineCore : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool autoSaveFilter READ autoSaveFilter WRITE setAutoSaveFilter)

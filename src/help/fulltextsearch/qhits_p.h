@@ -33,9 +33,7 @@
 #include "qquery_p.h"
 #include "qfilter_p.h"
 #include "qdocument_p.h"
-#include "qclucene_global_p.h"
 
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(search)
@@ -47,7 +45,7 @@ QT_BEGIN_NAMESPACE
 
 class QCLuceneSearcher;
 
-class QHELP_EXPORT QCLuceneHitsPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneHitsPrivate : public QSharedData
 {
 public:
     QCLuceneHitsPrivate();
@@ -62,7 +60,7 @@ private:
     QCLuceneHitsPrivate &operator=(const QCLuceneHitsPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneHits
+class Q_HELP_EXPORT QCLuceneHits
 {
 public:
     QCLuceneHits(const QCLuceneSearcher &searcher, const QCLuceneQuery &query, 

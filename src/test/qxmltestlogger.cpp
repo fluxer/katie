@@ -120,14 +120,14 @@ void QXmlTestLogger::startLogging()
        QTest::qt_asprintf(&buf,
                 "<Environment>\n"
                 "    <QtVersion>%s</QtVersion>\n"
-                "    <QTestVersion>" QTEST_VERSION_STR "</QTestVersion>\n"
+                "    <QTestVersion>" QT_VERSION_STR "</QTestVersion>\n"
                 "    <RandomSeed>%d</RandomSeed>\n"
                 "</Environment>\n", qVersion(), randomSeed);
     } else {
        QTest::qt_asprintf(&buf,
                 "<Environment>\n"
                 "    <QtVersion>%s</QtVersion>\n"
-                "    <QTestVersion>" QTEST_VERSION_STR "</QTestVersion>\n"
+                "    <QTestVersion>" QT_VERSION_STR "</QTestVersion>\n"
                 "</Environment>\n", qVersion());
     }
     outputString(buf.constData());
@@ -261,7 +261,7 @@ void QXmlTestLogger::addBenchmarkResult(const QBenchmarkResult &result)
         QTest::benchmarkResultFormatString(),
         quotedMetric.constData(),
         quotedTag.constData(),
-        QByteArray::number(result.value).constData(),  //no 64-bit qt_snprintf support
+        QByteArray::number(result.value).constData(),  //no 64-bit qsnprintf support
         result.iterations);
     outputString(buf.constData());
 }

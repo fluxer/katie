@@ -31,10 +31,8 @@
 
 #include "qanalyzer_p.h"
 #include "qdocument_p.h"
-#include "qclucene_global_p.h"
 
 #include <QtCore/QString>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(index)
@@ -46,7 +44,7 @@ QT_BEGIN_NAMESPACE
 
 class QCLuceneIndexReader;
 
-class QHELP_EXPORT QCLuceneIndexWriterPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneIndexWriterPrivate : public QSharedData
 {
 public:
     QCLuceneIndexWriterPrivate();
@@ -61,7 +59,7 @@ private:
     QCLuceneIndexWriterPrivate &operator=(const QCLuceneIndexWriterPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneIndexWriter
+class Q_HELP_EXPORT QCLuceneIndexWriter
 {
 public:
     enum {

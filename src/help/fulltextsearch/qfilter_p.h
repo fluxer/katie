@@ -32,7 +32,6 @@
 #include "qclucene_global_p.h"
 
 #include <QtCore/QSharedData>
-#include <QtCore/qshareddata.h>
 
 CL_NS_DEF(search)
     class Filter;
@@ -44,7 +43,7 @@ QT_BEGIN_NAMESPACE
 class QCLuceneHits;
 class QCLuceneSearcher;
 
-class QHELP_EXPORT QCLuceneFilterPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneFilterPrivate : public QSharedData
 {
 public:
     QCLuceneFilterPrivate();
@@ -59,7 +58,7 @@ private:
     QCLuceneFilterPrivate &operator=(const QCLuceneFilterPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneFilter
+class Q_HELP_EXPORT QCLuceneFilter
 {
     QCLuceneFilter();
     virtual ~QCLuceneFilter();

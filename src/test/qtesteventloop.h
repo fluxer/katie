@@ -54,7 +54,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-class Q_TESTLIB_EXPORT QTestEventLoop : public QObject
+class Q_TEST_EXPORT QTestEventLoop : public QObject
 {
     Q_OBJECT
 

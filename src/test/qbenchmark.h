@@ -61,7 +61,7 @@ namespace QTest
 // QTestlib API. It exists purely as an implementation detail.
 //
 //
-class Q_TESTLIB_EXPORT QBenchmarkIterationController
+class Q_TEST_EXPORT QBenchmarkIterationController
 {
 public:
     enum RunMode { RepeatUntilValidMeasurement, RunOnce };
@@ -87,7 +87,7 @@ public:
 
 namespace QTest
 {
-    void Q_TESTLIB_EXPORT setBenchmarkResult(qreal result, QBenchmarkMetric metric);
+    void Q_TEST_EXPORT setBenchmarkResult(qreal result, QBenchmarkMetric metric);
 }
 
 // --- END public API ---

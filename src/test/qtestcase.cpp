@@ -917,7 +917,7 @@ static void invokeMethod(QObject *obj, const char *methodName)
     }
 }
 
-bool Q_TESTLIB_EXPORT defaultKeyVerbose()
+bool Q_TEST_EXPORT defaultKeyVerbose()
 {
     if (keyVerbose == -1) {
         keyVerbose = qgetenv("QTEST_KEYEVENT_VERBOSE").constData() ? 1 : 0;
@@ -936,7 +936,7 @@ int defaultEventDelay()
     return eventDelay;
 }
 
-int Q_TESTLIB_EXPORT defaultMouseDelay()
+int Q_TEST_EXPORT defaultMouseDelay()
 {
     if (mouseDelay == -1) {
         if (qgetenv("QTEST_MOUSEEVENT_DELAY").constData())
@@ -947,7 +947,7 @@ int Q_TESTLIB_EXPORT defaultMouseDelay()
     return mouseDelay;
 }
 
-int Q_TESTLIB_EXPORT defaultKeyDelay()
+int Q_TEST_EXPORT defaultKeyDelay()
 {
     if (keyDelay == -1) {
         if (qgetenv("QTEST_KEYEVENT_DELAY").constData())
@@ -1014,10 +1014,10 @@ static bool isValidSlot(const QMetaMethod &sl)
     return true;
 }
 
-Q_TESTLIB_EXPORT bool printAvailableFunctions = false;
-Q_TESTLIB_EXPORT bool printAvailableTags = false;
-Q_TESTLIB_EXPORT QStringList testFunctions;
-Q_TESTLIB_EXPORT QStringList testTags;
+Q_TEST_EXPORT bool printAvailableFunctions = false;
+Q_TEST_EXPORT bool printAvailableTags = false;
+Q_TEST_EXPORT QStringList testFunctions;
+Q_TEST_EXPORT QStringList testTags;
 
 static void qPrintTestSlots()
 {
@@ -1098,7 +1098,7 @@ static int qToInt(char *str)
     return l;
 }
 
-Q_TESTLIB_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
+Q_TEST_EXPORT void qtest_qParseArgs(int argc, char *argv[], bool qml)
 {
     const char *testOptions =
          " options:\n"
@@ -2223,7 +2223,7 @@ bool QTest::compare_helper(bool success, const char *msg, char *val1, char *val2
 \internal
  */
 template <>
-Q_TESTLIB_EXPORT bool QTest::qCompare<float>(float const &t1, float const &t2, const char *actual, const char *expected,
+Q_TEST_EXPORT bool QTest::qCompare<float>(float const &t1, float const &t2, const char *actual, const char *expected,
                     const char *file, int line)
 {
     return qFuzzyCompare(t1, t2)
@@ -2236,7 +2236,7 @@ Q_TESTLIB_EXPORT bool QTest::qCompare<float>(float const &t1, float const &t2, c
 \internal
  */
 template <>
-Q_TESTLIB_EXPORT bool QTest::qCompare<double>(double const &t1, double const &t2, const char *actual, const char *expected,
+Q_TEST_EXPORT bool QTest::qCompare<double>(double const &t1, double const &t2, const char *actual, const char *expected,
                     const char *file, int line)
 {
     return qFuzzyCompare(t1, t2)
@@ -2246,7 +2246,7 @@ Q_TESTLIB_EXPORT bool QTest::qCompare<double>(double const &t1, double const &t2
 }
 
 #define COMPARE_IMPL2(TYPE, FORMAT) \
-template <> Q_TESTLIB_EXPORT char *QTest::toString<TYPE >(const TYPE &t) \
+template <> Q_TEST_EXPORT char *QTest::toString<TYPE >(const TYPE &t) \
 { \
     char *msg = new char[128]; \
     qt_snprintf(msg, 128, #FORMAT, t); \

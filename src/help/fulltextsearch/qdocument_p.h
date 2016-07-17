@@ -30,12 +30,10 @@
 //
 
 #include "qfield_p.h"
-#include "qclucene_global_p.h"
 
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(document)
@@ -51,7 +49,7 @@ class QCLuceneIndexWriter;
 class QCLuceneIndexSearcher;
 class QCLuceneMultiSearcher;
 
-class QHELP_EXPORT QCLuceneDocumentPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneDocumentPrivate : public QSharedData
 {
 public:
     QCLuceneDocumentPrivate();
@@ -66,7 +64,7 @@ private:
     QCLuceneDocumentPrivate &operator=(const QCLuceneDocumentPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneDocument
+class Q_HELP_EXPORT QCLuceneDocument
 {
 public:
     QCLuceneDocument();

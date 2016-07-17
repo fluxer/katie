@@ -17,7 +17,6 @@
 
 #include "qfield_p.h"
 #include "qreader_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/document/Field.h>
@@ -56,8 +55,8 @@ QCLuceneField::QCLuceneField(const QString &name, const QString &value, int conf
     : d(new QCLuceneFieldPrivate())
     , reader(0)
 {
-    TCHAR* fieldName = QStringToTChar(name);
-    TCHAR* fieldValue = QStringToTChar(value);
+    TCHAR* fieldName = QHelp::QStringToTChar(name);
+    TCHAR* fieldValue = QHelp::QStringToTChar(value);
 
     d->field = new lucene::document::Field(fieldName, fieldValue, configs);
 
@@ -70,7 +69,7 @@ QCLuceneField::QCLuceneField(const QString &name, QCLuceneReader *reader,
     : d(new QCLuceneFieldPrivate())
     , reader(reader)
 {
-    TCHAR* fieldName = QStringToTChar(name);
+    TCHAR* fieldName = QHelp::QStringToTChar(name);
 
     reader->d->deleteCLuceneReader = false; // clucene takes ownership
     d->field = new lucene::document::Field(fieldName, reader->d->reader, configs);
@@ -85,12 +84,12 @@ QCLuceneField::~QCLuceneField()
 
 QString QCLuceneField::name() const
 {
-    return TCharToQString(d->field->name());
+    return QHelp::TCharToQString(d->field->name());
 }
 
 QString QCLuceneField::stringValue() const
 {
-    return TCharToQString((const TCHAR*)d->field->stringValue());
+    return QHelp::TCharToQString((const TCHAR*)d->field->stringValue());
 }
 
 QCLuceneReader* QCLuceneField::readerValue() const
@@ -165,7 +164,7 @@ void QCLuceneField::setOmitNorms(bool omitNorms)
 
 QString QCLuceneField::toString() const
 {
-    return TCharToQString(d->field->toString());
+    return QHelp::TCharToQString(d->field->toString());
 }
 
 QT_END_NAMESPACE

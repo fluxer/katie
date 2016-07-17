@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qanalyzer_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/analysis/AnalysisHeader.h>
@@ -64,7 +63,7 @@ qint32 QCLuceneAnalyzer::positionIncrementGap(const QString &fieldName) const
 QCLuceneTokenStream QCLuceneAnalyzer::tokenStream(const QString &fieldName,
                                                   const QCLuceneReader &reader) const
 {
-    TCHAR *fName = QStringToTChar(fieldName);
+    TCHAR *fName = QHelp::QStringToTChar(fieldName);
     QCLuceneTokenStream tokenStream;
     tokenStream.d->tokenStream = d->analyzer->tokenStream(fName, reader.d->reader);
     delete [] fName;
@@ -89,7 +88,7 @@ QCLuceneStandardAnalyzer::QCLuceneStandardAnalyzer(const QStringList &stopWords)
     const TCHAR **tArray = new const TCHAR*[stopWords.count() +1];
 
     for(int i = 0; i < stopWords.count(); ++i) {
-        TCHAR *stopWord = QStringToTChar(stopWords.at(i));
+        TCHAR *stopWord = QHelp::QStringToTChar(stopWords.at(i));
         tArray[i] = STRDUP_TtoT(stopWord);
         delete [] stopWord;
     }
@@ -145,7 +144,7 @@ QCLuceneStopAnalyzer::QCLuceneStopAnalyzer(const QStringList &stopWords)
     const TCHAR **tArray = new const TCHAR*[stopWords.count() +1];
 
     for(int i = 0; i < stopWords.count(); ++i) {
-        TCHAR *stopWord = QStringToTChar(stopWords.at(i));
+        TCHAR *stopWord = QHelp::QStringToTChar(stopWords.at(i));
         tArray[i] = STRDUP_TtoT(stopWord);
         delete [] stopWord;
     }
@@ -165,7 +164,7 @@ QStringList QCLuceneStopAnalyzer::englishStopWords() const
 
     const TCHAR** stopWords = lucene::analysis::StopAnalyzer::ENGLISH_STOP_WORDS;
     for (qint32 i = 0; stopWords[i] != 0; ++i)
-        stopWordList.append(TCharToQString(stopWords[i]));
+        stopWordList.append(QHelp::TCharToQString(stopWords[i]));
 
     return stopWordList;
 }
@@ -211,7 +210,7 @@ void QCLucenePerFieldAnalyzerWrapper::addAnalyzer(const QString &fieldName,
     analyzers.append(analyzer);
     analyzer->d->deleteCLuceneAnalyzer = false;
 
-    TCHAR *fName = QStringToTChar(fieldName);
+    TCHAR *fName = QHelp::QStringToTChar(fieldName);
     analyzerWrapper->addAnalyzer(fName, analyzer->d->analyzer);
     delete [] fName;
 }

@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
 class QHelpEnginePrivate;
 class QHelpIndexModelPrivate;
 
-class QHELP_EXPORT QHelpIndexModel : public QStringListModel
+class Q_HELP_EXPORT QHelpIndexModel : public QStringListModel
 {
     Q_OBJECT
 
@@ -84,7 +84,7 @@ private:
     friend class QHelpEnginePrivate;
 };
 
-class QHELP_EXPORT QHelpIndexWidget : public QListView
+class Q_HELP_EXPORT QHelpIndexWidget : public QListView
 {
     Q_OBJECT
 

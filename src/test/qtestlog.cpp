@@ -191,7 +191,7 @@ void initLogger()
         }
 }
 
-extern Q_TESTLIB_EXPORT bool printAvailableTags;
+extern Q_TEST_EXPORT bool printAvailableTags;
 
 }
 

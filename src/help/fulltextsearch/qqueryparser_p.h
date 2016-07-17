@@ -31,11 +31,9 @@
 
 #include "qreader_p.h"
 #include "qanalyzer_p.h"
-#include "qclucene_global_p.h"
 
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(queryParser)
@@ -48,7 +46,7 @@ QT_BEGIN_NAMESPACE
 class QCLuceneQuery;
 class QCLuceneMultiFieldQueryParser;
 
-class QHELP_EXPORT QCLuceneQueryParserPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneQueryParserPrivate : public QSharedData
 {
 public:
     QCLuceneQueryParserPrivate();
@@ -63,7 +61,7 @@ private:
     QCLuceneQueryParserPrivate &operator=(const QCLuceneQueryParserPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneQueryParser
+class Q_HELP_EXPORT QCLuceneQueryParser
 {
 public:
     QCLuceneQueryParser(const QString &field, QCLuceneAnalyzer &analyzer);
@@ -85,7 +83,7 @@ private:
     QCLuceneAnalyzer analyzer;
 };
 
-class QHELP_EXPORT QCLuceneMultiFieldQueryParser : public QCLuceneQueryParser
+class Q_HELP_EXPORT QCLuceneMultiFieldQueryParser : public QCLuceneQueryParser
 {
 public:
     enum FieldFlags {

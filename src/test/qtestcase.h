@@ -114,7 +114,7 @@ class QObject;
 class QTestData;
 
 #define QTEST_COMPARE_DECL(KLASS)\
-    template<> Q_TESTLIB_EXPORT char *toString<KLASS >(const KLASS &);
+    template<> Q_TEST_EXPORT char *toString<KLASS >(const KLASS &);
 
 namespace QTest
 {
@@ -125,50 +125,50 @@ namespace QTest
     }
 
 
-    Q_TESTLIB_EXPORT char *toHexRepresentation(const char *ba, int length);
-    Q_TESTLIB_EXPORT char *toString(const char *);
-    Q_TESTLIB_EXPORT char *toString(const void *);
+    Q_TEST_EXPORT char *toHexRepresentation(const char *ba, int length);
+    Q_TEST_EXPORT char *toString(const char *);
+    Q_TEST_EXPORT char *toString(const void *);
 
-    Q_TESTLIB_EXPORT int qExec(QObject *testObject, int argc = 0, char **argv = 0);
-    Q_TESTLIB_EXPORT int qExec(QObject *testObject, const QStringList &arguments);
+    Q_TEST_EXPORT int qExec(QObject *testObject, int argc = 0, char **argv = 0);
+    Q_TEST_EXPORT int qExec(QObject *testObject, const QStringList &arguments);
 
-    Q_TESTLIB_EXPORT bool qVerify(bool statement, const char *statementStr, const char *description,
+    Q_TEST_EXPORT bool qVerify(bool statement, const char *statementStr, const char *description,
                                  const char *file, int line);
-    Q_TESTLIB_EXPORT void qFail(const char *statementStr, const char *file, int line);
-    Q_TESTLIB_EXPORT void qSkip(const char *message, SkipMode mode, const char *file, int line);
-    Q_TESTLIB_EXPORT bool qExpectFail(const char *dataIndex, const char *comment, TestFailMode mode,
+    Q_TEST_EXPORT void qFail(const char *statementStr, const char *file, int line);
+    Q_TEST_EXPORT void qSkip(const char *message, SkipMode mode, const char *file, int line);
+    Q_TEST_EXPORT bool qExpectFail(const char *dataIndex, const char *comment, TestFailMode mode,
                            const char *file, int line);
-    Q_TESTLIB_EXPORT void qWarn(const char *message);
-    Q_TESTLIB_EXPORT void ignoreMessage(QtMsgType type, const char *message);
+    Q_TEST_EXPORT void qWarn(const char *message);
+    Q_TEST_EXPORT void ignoreMessage(QtMsgType type, const char *message);
 
-    Q_TESTLIB_EXPORT void *qData(const char *tagName, int typeId);
-    Q_TESTLIB_EXPORT void *qGlobalData(const char *tagName, int typeId);
-    Q_TESTLIB_EXPORT void *qElementData(const char *elementName, int metaTypeId);
-    Q_TESTLIB_EXPORT QObject *testObject();
+    Q_TEST_EXPORT void *qData(const char *tagName, int typeId);
+    Q_TEST_EXPORT void *qGlobalData(const char *tagName, int typeId);
+    Q_TEST_EXPORT void *qElementData(const char *elementName, int metaTypeId);
+    Q_TEST_EXPORT QObject *testObject();
 
-    Q_TESTLIB_EXPORT const char *currentAppName();
+    Q_TEST_EXPORT const char *currentAppName();
 
-    Q_TESTLIB_EXPORT const char *currentTestFunction();
-    Q_TESTLIB_EXPORT const char *currentDataTag();
-    Q_TESTLIB_EXPORT bool currentTestFailed();
+    Q_TEST_EXPORT const char *currentTestFunction();
+    Q_TEST_EXPORT const char *currentDataTag();
+    Q_TEST_EXPORT bool currentTestFailed();
 
-    Q_TESTLIB_EXPORT Qt::Key asciiToKey(char ascii);
-    Q_TESTLIB_EXPORT char keyToAscii(Qt::Key key);
+    Q_TEST_EXPORT Qt::Key asciiToKey(char ascii);
+    Q_TEST_EXPORT char keyToAscii(Qt::Key key);
 
-    Q_TESTLIB_EXPORT bool compare_helper(bool success, const char *msg, const char *file,
+    Q_TEST_EXPORT bool compare_helper(bool success, const char *msg, const char *file,
                                           int line);
-    Q_TESTLIB_EXPORT bool compare_helper(bool success, const char *msg, char *val1, char *val2,
+    Q_TEST_EXPORT bool compare_helper(bool success, const char *msg, char *val1, char *val2,
                                          const char *expected, const char *actual,
                                          const char *file, int line);
-    Q_TESTLIB_EXPORT void qSleep(int ms);
-    Q_TESTLIB_EXPORT void addColumnInternal(int id, const char *name);
+    Q_TEST_EXPORT void qSleep(int ms);
+    Q_TEST_EXPORT void addColumnInternal(int id, const char *name);
 
     template <typename T>
     inline void addColumn(const char *name, T * = 0)
     {
         addColumnInternal(qMetaTypeId<T>(), name);
     }
-    Q_TESTLIB_EXPORT QTestData &newRow(const char *dataTag);
+    Q_TEST_EXPORT QTestData &newRow(const char *dataTag);
 
     template <typename T>
     inline bool qCompare(T const &t1, T const &t2, const char *actual, const char *expected,
@@ -182,11 +182,11 @@ namespace QTest
 
 
     template <>
-    Q_TESTLIB_EXPORT bool qCompare<float>(float const &t1, float const &t2,
+    Q_TEST_EXPORT bool qCompare<float>(float const &t1, float const &t2,
                     const char *actual, const char *expected, const char *file, int line);
 
     template <>
-    Q_TESTLIB_EXPORT bool qCompare<double>(double const &t1, double const &t2,
+    Q_TEST_EXPORT bool qCompare<double>(double const &t1, double const &t2,
                     const char *actual, const char *expected, const char *file, int line);
 
     inline bool compare_ptr_helper(const void *t1, const void *t2, const char *actual,
@@ -198,7 +198,7 @@ namespace QTest
                              toString(t1), toString(t2), actual, expected, file, line);
     }
 
-    Q_TESTLIB_EXPORT bool compare_string_helper(const char *t1, const char *t2, const char *actual,
+    Q_TEST_EXPORT bool compare_string_helper(const char *t1, const char *t2, const char *actual,
                                       const char *expected, const char *file, int line);
 
     QTEST_COMPARE_DECL(short)

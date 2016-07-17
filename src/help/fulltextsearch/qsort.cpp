@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qsort_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/search/Sort.h>
@@ -71,14 +70,14 @@ QCLuceneSort::~QCLuceneSort()
 
 QString QCLuceneSort::toString() const
 {
-    return TCharToQString(d->sort->toString());
+    return QHelp::TCharToQString(d->sort->toString());
 }
 
 void QCLuceneSort::setSort(const QStringList &fieldNames)
 {
     TCHAR **nameArray = new TCHAR*[fieldNames.count()];
     for (int i = 0; i < fieldNames.count(); ++i)
-        nameArray[i] = QStringToTChar(fieldNames.at(i));
+        nameArray[i] = QHelp::QStringToTChar(fieldNames.at(i));
 
     d->sort->setSort((const TCHAR**)nameArray);
 
@@ -89,7 +88,7 @@ void QCLuceneSort::setSort(const QStringList &fieldNames)
 
 void QCLuceneSort::setSort(const QString &field, bool reverse)
 {
-    TCHAR *name = QStringToTChar(field);
+    TCHAR *name = QHelp::QStringToTChar(field);
     d->sort->setSort(name, reverse);
     delete [] name;
 }

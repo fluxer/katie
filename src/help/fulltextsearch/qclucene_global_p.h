@@ -48,14 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(QT_SHARED) && !defined(QT_DLL)
-#   define QHELP_EXPORT
-#elif defined(QHELP_LIB)
-#   define QHELP_EXPORT Q_DECL_EXPORT
-#else
-#   define QHELP_EXPORT Q_DECL_IMPORT
-#endif
-
 //
 //  W A R N I N G
 //  -------------
@@ -63,9 +55,7 @@ QT_BEGIN_NAMESPACE
 // adjustments here, need to be done in 
 // QTDIR/src/3rdparty/clucene/src/CLucene/StdHeader.h as well
 //
-#if defined(_LUCENE_DONTIMPLEMENT_NS_MACROS)
-
-#elif !defined(DISABLE_NAMESPACE)
+#if !defined(DISABLE_NAMESPACE)
 #   ifdef QT_NAMESPACE
 #       define CL_NS_DEF(sub) namespace QT_NAMESPACE { namespace lucene{ namespace sub{
 #       define CL_NS_DEF2(sub,sub2) namespace QT_NAMESPACE { namespace lucene{ namespace sub{ namespace sub2 {
@@ -102,8 +92,9 @@ QT_BEGIN_NAMESPACE
 #   define CL_NS2(sub,sub2)
 #endif
 
-namespace {
-    TCHAR* QStringToTChar(const QString &str)
+namespace QHelp
+{
+    inline TCHAR* QStringToTChar(const QString &str)
     {
         TCHAR *string = new TCHAR[(str.length() +1) * sizeof(TCHAR)];
         memset(string, 0, (str.length() +1) * sizeof(TCHAR));
@@ -116,7 +107,7 @@ namespace {
         return string;
     }
 
-    QString TCharToQString(const TCHAR *string)
+    inline QString TCharToQString(const TCHAR *string)
     {
         #if defined(UNICODE) || defined(_CL_HAVE_WCHAR_H) && defined(_CL_HAVE_WCHAR_T)
             QString retValue = QString::fromWCharArray(string);

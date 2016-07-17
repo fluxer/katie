@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qtoken_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/analysis/AnalysisHeader.h>
@@ -55,8 +54,8 @@ QCLuceneToken::QCLuceneToken()
 QCLuceneToken::QCLuceneToken(const QString &text, qint32 startOffset, 
                              qint32 endOffset, const QString &defaultTyp)
     : d(new QCLuceneTokenPrivate())
-    , tokenText(QStringToTChar(text))
-    , tokenType(QStringToTChar(defaultTyp))
+    , tokenText(QHelp::QStringToTChar(text))
+    , tokenType(QHelp::QStringToTChar(defaultTyp))
 {
     d->token = new lucene::analysis::Token(tokenText, int32_t(startOffset), 
         int32_t(endOffset), tokenType);
@@ -90,13 +89,13 @@ void QCLuceneToken::setPositionIncrement(qint32 positionIncrement)
 
 QString QCLuceneToken::termText() const
 {
-    return TCharToQString(d->token->termText());
+    return QHelp::TCharToQString(d->token->termText());
 }
 
 void QCLuceneToken::setTermText(const QString &text)
 {
     delete [] tokenText;
-    tokenText = QStringToTChar(text);
+    tokenText = QHelp::QStringToTChar(text);
     d->token->setText(tokenText);
 }
 
@@ -132,19 +131,19 @@ void QCLuceneToken::setEndOffset(qint32 value)
 
 QString QCLuceneToken::type() const
 {
-    return TCharToQString(d->token->type());
+    return QHelp::TCharToQString(d->token->type());
 }
 
 void QCLuceneToken::setType(const QString &type)
 {
     delete [] tokenType;
-    tokenType = QStringToTChar(type);
+    tokenType = QHelp::QStringToTChar(type);
     d->token->setType(tokenType);
 }
 
 QString QCLuceneToken::toString() const
 {
-    return TCharToQString(d->token->toString());
+    return QHelp::TCharToQString(d->token->toString());
 }
 
 QT_END_NAMESPACE

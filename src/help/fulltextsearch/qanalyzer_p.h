@@ -31,12 +31,10 @@
 
 #include "qreader_p.h"
 #include "qtokenstream_p.h"
-#include "qclucene_global_p.h"
 
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(analysis)
@@ -55,7 +53,7 @@ class QCLuceneStandardAnalyzer;
 class QCLuceneWhitespaceAnalyzer;
 class QCLucenePerFieldAnalyzerWrapper;
 
-class QHELP_EXPORT QCLuceneAnalyzerPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneAnalyzerPrivate : public QSharedData
 {
 public:
     QCLuceneAnalyzerPrivate();
@@ -70,7 +68,7 @@ private:
     QCLuceneAnalyzerPrivate &operator=(const QCLuceneAnalyzerPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLuceneAnalyzer
 {
 public:
     virtual ~QCLuceneAnalyzer();
@@ -94,7 +92,7 @@ private:
     QCLuceneAnalyzer();
 };
 
-class QHELP_EXPORT QCLuceneStandardAnalyzer : public QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLuceneStandardAnalyzer : public QCLuceneAnalyzer
 {
 public:
     QCLuceneStandardAnalyzer();
@@ -103,21 +101,21 @@ public:
     ~QCLuceneStandardAnalyzer();
 };
 
-class QHELP_EXPORT QCLuceneWhitespaceAnalyzer : public QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLuceneWhitespaceAnalyzer : public QCLuceneAnalyzer
 {
 public:
     QCLuceneWhitespaceAnalyzer();
     ~QCLuceneWhitespaceAnalyzer();
 };
 
-class QHELP_EXPORT QCLuceneSimpleAnalyzer : public QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLuceneSimpleAnalyzer : public QCLuceneAnalyzer
 {
 public:
     QCLuceneSimpleAnalyzer();
     ~QCLuceneSimpleAnalyzer();
 };
 
-class QHELP_EXPORT QCLuceneStopAnalyzer : public QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLuceneStopAnalyzer : public QCLuceneAnalyzer
 {
 public:
     QCLuceneStopAnalyzer();
@@ -128,14 +126,14 @@ public:
     QStringList englishStopWords() const;
 };
 
-class QHELP_EXPORT QCLuceneKeywordAnalyzer : public QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLuceneKeywordAnalyzer : public QCLuceneAnalyzer
 {
 public:
     QCLuceneKeywordAnalyzer();
     ~QCLuceneKeywordAnalyzer();
 };
 
-class QHELP_EXPORT QCLucenePerFieldAnalyzerWrapper : public QCLuceneAnalyzer
+class Q_HELP_EXPORT QCLucenePerFieldAnalyzerWrapper : public QCLuceneAnalyzer
 {
 public:
     QCLucenePerFieldAnalyzerWrapper(QCLuceneAnalyzer *defaultAnalyzer);

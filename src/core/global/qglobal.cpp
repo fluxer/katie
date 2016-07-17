@@ -1818,29 +1818,29 @@ QSysInfo::WinVersion QSysInfo::windowsVersion()
 
 #ifdef QT_DEBUG
     {
-        QByteArray override = qgetenv("QT_WINVER_OVERRIDE");
-        if (override.isEmpty())
+        QByteArray winver_override = qgetenv("QT_WINVER_OVERRIDE");
+        if (winver_override.isEmpty())
             return winver;
 
-        if (override == "Me")
+        if (winver_override == "Me")
             winver = QSysInfo::WV_Me;
-        if (override == "95")
+        if (winver_override == "95")
             winver = QSysInfo::WV_95;
-        else if (override == "98")
+        else if (winver_override == "98")
             winver = QSysInfo::WV_98;
-        else if (override == "NT")
+        else if (winver_override == "NT")
             winver = QSysInfo::WV_NT;
-        else if (override == "2000")
+        else if (winver_override == "2000")
             winver = QSysInfo::WV_2000;
-        else if (override == "2003")
+        else if (winver_override == "2003")
             winver = QSysInfo::WV_2003;
-        else if (override == "XP")
+        else if (winver_override == "XP")
             winver = QSysInfo::WV_XP;
-        else if (override == "VISTA")
+        else if (winver_override == "VISTA")
             winver = QSysInfo::WV_VISTA;
-        else if (override == "WINDOWS7")
+        else if (winver_override == "WINDOWS7")
             winver = QSysInfo::WV_WINDOWS7;
-        else if (override == "WINDOWS8")
+        else if (winver_override == "WINDOWS8")
             winver = QSysInfo::WV_WINDOWS8;
     }
 #endif

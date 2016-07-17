@@ -207,10 +207,10 @@ void QTestXmlStreamer::output(QTestElement *element) const
 
     if (logger()->hasRandomSeed()) {
         QTest::qt_asprintf(&buf, "<Environment>\n    <QtVersion>%s</QtVersion>\n    <QTestVersion>%s</QTestVersion>\n    <RandomSeed>%d</RandomSeed>\n",
-                           qVersion(), QTEST_VERSION_STR, logger()->randomSeed() );
+                           qVersion(), QT_VERSION_STR, logger()->randomSeed() );
     } else {
         QTest::qt_asprintf(&buf, "<Environment>\n    <QtVersion>%s</QtVersion>\n    <QTestVersion>%s</QTestVersion>\n",
-                           qVersion(), QTEST_VERSION_STR );
+                           qVersion(), QT_VERSION_STR );
     }
     outputString(buf.constData());
 

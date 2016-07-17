@@ -59,7 +59,7 @@ QT_BEGIN_NAMESPACE
 
 class QBenchmarkResult;
 
-class Q_TESTLIB_EXPORT QTestLog
+class Q_TEST_EXPORT QTestLog
 {
 public:
     enum LogMode { Plain = 0, XML, LightXML, XunitXML };

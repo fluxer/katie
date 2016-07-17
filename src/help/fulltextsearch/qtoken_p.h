@@ -32,7 +32,6 @@
 #include "qclucene_global_p.h"
 
 #include <QtCore/QString>
-#include <QtCore/qshareddata.h>
 #include <QtCore/QSharedData>
 
 CL_NS_DEF(analysis)
@@ -46,7 +45,7 @@ class QCLuceneTokenizer;
 class QCLuceneTokenStream;
 class QCLuceneStandardTokenizer;
 
-class QHELP_EXPORT QCLuceneTokenPrivate : public QSharedData
+class Q_HELP_EXPORT QCLuceneTokenPrivate : public QSharedData
 {
 public:
     QCLuceneTokenPrivate();
@@ -61,7 +60,7 @@ private:
     QCLuceneTokenPrivate &operator=(const QCLuceneTokenPrivate &other);
 };
 
-class QHELP_EXPORT QCLuceneToken
+class Q_HELP_EXPORT QCLuceneToken
 {
 public:
     QCLuceneToken();

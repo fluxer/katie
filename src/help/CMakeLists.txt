@@ -1,4 +1,4 @@
-add_definitions(-DQHELP_LIB -DQT_CLUCENE_SUPPORT)
+add_definitions(-DQT_BUILD_HELP_LIB -DQT_CLUCENE_SUPPORT)
 set(EXTRA_HELP_LIBS KtCore KtGui KtNetwork KtSql KtXml)
 
 include(fulltextsearch/fulltextsearch.cmake)

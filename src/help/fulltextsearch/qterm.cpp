@@ -16,7 +16,6 @@
 ****************************************************************************/
 
 #include "qterm_p.h"
-#include "qclucene_global_p.h"
 
 #include <CLucene.h>
 #include <CLucene/index/IndexReader.h>
@@ -53,8 +52,8 @@ QCLuceneTerm::QCLuceneTerm()
 QCLuceneTerm::QCLuceneTerm(const QString &field, const QString &text)
     : d(new QCLuceneTermPrivate())
 {
-    TCHAR *fieldName = QStringToTChar(field);
-    TCHAR *termText = QStringToTChar(text);
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
+    TCHAR *termText = QHelp::QStringToTChar(text);
 
     d->term = new lucene::index::Term(fieldName, termText);
 
@@ -65,7 +64,7 @@ QCLuceneTerm::QCLuceneTerm(const QString &field, const QString &text)
 QCLuceneTerm::QCLuceneTerm(const QCLuceneTerm &fieldTerm, const QString &text)
     : d(new QCLuceneTermPrivate())
 {
-    TCHAR *termText = QStringToTChar(text);
+    TCHAR *termText = QHelp::QStringToTChar(text);
     d->term = new lucene::index::Term(fieldTerm.d->term, termText);
     delete [] termText;
 }
@@ -77,12 +76,12 @@ QCLuceneTerm::~QCLuceneTerm()
 
 QString QCLuceneTerm::field() const
 {
-    return TCharToQString(d->term->field());
+    return QHelp::TCharToQString(d->term->field());
 }
 
 QString QCLuceneTerm::text() const
 {
-    return TCharToQString(d->term->text());
+    return QHelp::TCharToQString(d->term->text());
 }
 
 void QCLuceneTerm::set(const QString &field, const QString &text)
@@ -97,8 +96,8 @@ void QCLuceneTerm::set(const QCLuceneTerm &fieldTerm, const QString &text)
 
 void QCLuceneTerm::set(const QString &field, const QString &text, bool internField)
 {
-    TCHAR *fieldName = QStringToTChar(field);
-    TCHAR *termText = QStringToTChar(text);
+    TCHAR *fieldName = QHelp::QStringToTChar(field);
+    TCHAR *termText = QHelp::QStringToTChar(text);
 
     d->term->set(fieldName, termText, internField);
 
@@ -118,7 +117,7 @@ qint32 QCLuceneTerm::compareTo(const QCLuceneTerm &other) const
 
 QString QCLuceneTerm::toString() const
 {
-    return TCharToQString(d->term->toString());
+    return QHelp::TCharToQString(d->term->toString());
 }
 
 quint32 QCLuceneTerm::hashCode() const

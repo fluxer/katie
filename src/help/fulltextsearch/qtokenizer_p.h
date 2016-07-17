@@ -32,14 +32,13 @@
 #include "qtoken_p.h"
 #include "qreader_p.h"
 #include "qtokenstream_p.h"
-#include "qclucene_global_p.h"
 
 #include <QtCore/QChar>
 #include <QtCore/QString>
 
 QT_BEGIN_NAMESPACE
 
-class QHELP_EXPORT QCLuceneTokenizer : public QCLuceneTokenStream
+class Q_HELP_EXPORT QCLuceneTokenizer : public QCLuceneTokenStream
 {
 public:
     QCLuceneTokenizer(const QCLuceneReader &reader);
@@ -56,7 +55,7 @@ private:
     QCLuceneReader reader;
 };
 
-class QHELP_EXPORT QCLuceneStandardTokenizer : public QCLuceneTokenizer
+class Q_HELP_EXPORT QCLuceneStandardTokenizer : public QCLuceneTokenizer
 {
 public:
     QCLuceneStandardTokenizer(const QCLuceneReader &reader);
