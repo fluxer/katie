@@ -223,7 +223,7 @@ void QAlphaPaintEngine::drawPixmap(const QRectF &r, const QPixmap &pm, const QRe
     }
 }
 
-void QAlphaPaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF &sr)
+void QAlphaPaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF &sr, Qt::ImageConversionFlags flags)
 {
     Q_D(QAlphaPaintEngine);
 
@@ -235,7 +235,7 @@ void QAlphaPaintEngine::drawImage(const QRectF &r, const QImage &image, const QR
         }
 
         if (d->m_picengine)
-            d->m_picengine->drawImage(r, image, sr);
+            d->m_picengine->drawImage(r, image, sr, flags);
 
     } else {
         d->m_continueCall = !d->fullyContained(tr);
