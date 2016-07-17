@@ -188,7 +188,6 @@ set(GUI_PUBLIC_HEADERS
     QPlainTextDocumentLayout
     QPlainTextEdit
     QPlastiqueStyle
-    QPlatformClipboard
     QPlatformCursor
     QPlatformCursorImage
     QPlatformCursorPrivate

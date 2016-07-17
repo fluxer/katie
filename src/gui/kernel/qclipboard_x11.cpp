@@ -857,13 +857,6 @@ static Atom send_selection(QClipboardData *d, Atom target, Window window, Atom p
 }
 
 /*! \internal
-    Internal cleanup for Windows.
-*/
-void QClipboard::ownerDestroyed()
-{ }
-
-
-/*! \internal
     Internal optimization for Windows.
 */
 void QClipboard::connectNotify(const char *)

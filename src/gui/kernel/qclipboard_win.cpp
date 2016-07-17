@@ -411,10 +411,6 @@ bool QClipboard::ownsMode(Mode mode) const
     }
 }
 
-void QClipboard::ownerDestroyed()
-{
-}
-
 QT_END_NAMESPACE
 
 #endif // QT_NO_CLIPBOARD

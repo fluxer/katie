@@ -98,7 +98,6 @@ public:
 private:
     friend class QApplication;
     friend class QApplicationPrivate;
-    friend class QBaseApplication;
 };
 
 QT_END_NAMESPACE

@@ -63,7 +63,6 @@ template <class T> class QList;
 template <class T> class QVector;
 
 struct QImageData;
-class QImageDataMisc; // internal
 #ifndef QT_NO_IMAGE_TEXT
 class Q_GUI_EXPORT QImageTextKeyLang {
 public:
@@ -268,7 +267,6 @@ protected:
     virtual int metric(PaintDeviceMetric metric) const;
 
 private:
-    friend class QWSOnScreenSurface;
     QImageData *d;
 
     friend class QRasterPixmapData;

@@ -73,7 +73,6 @@ QT_BEGIN_NAMESPACE
 
 class QWidget;
 class QFont;
-class QPopupMenu;
 class QInputContextPrivate;
 
 class Q_GUI_EXPORT QInputContext : public QObject

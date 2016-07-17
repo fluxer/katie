@@ -95,8 +95,6 @@ Q_SIGNALS:
     void selectionChanged();
     void findBufferChanged();
     void dataChanged();
-private Q_SLOTS:
-    void ownerDestroyed();
 
 protected:
     void connectNotify(const char *);
@@ -104,10 +102,8 @@ protected:
 
     friend class QApplication;
     friend class QApplicationPrivate;
-    friend class QBaseApplication;
     friend class QDragManager;
     friend class QMimeSource;
-    friend class QPlatformClipboard;
 
 private:
     Q_DISABLE_COPY(QClipboard)

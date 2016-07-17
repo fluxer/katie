@@ -695,7 +695,6 @@ private:
     friend class QWidgetBackingStore;
     friend class QApplication;
     friend class QApplicationPrivate;
-    friend class QBaseApplication;
     friend class QPainter;
     friend class QPainterPrivate;
     friend class QPixmap; // for QPixmap::fill()

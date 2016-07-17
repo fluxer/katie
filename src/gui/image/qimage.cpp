@@ -978,9 +978,6 @@ QImage::QImage(const QString &fileName, const char *format)
 QImage::QImage(const char *fileName, const char *format)
     : QPaintDevice()
 {
-    // ### Qt 5: if you remove the QImage(const QByteArray &) QT3_SUPPORT
-    // constructor, remove this constructor as well. The constructor here
-    // exists so that QImage("foo.png") compiles without ambiguity.
     d = 0;
     load(QString::fromAscii(fileName), format);
 }

@@ -47,7 +47,7 @@
 //  -------------
 //
 // This file is not part of the Qt API.  It exists for the convenience
-// of qeffects.cpp, qcombobox.cpp, qpopupmenu.cpp and qtooltip.cpp.
+// of qeffects.cpp, qcombobox.cpp and qtooltip.cpp.
 // This header file may change from version to version without notice,
 // or even be removed.
 //

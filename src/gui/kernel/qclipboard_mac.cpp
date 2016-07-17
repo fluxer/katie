@@ -105,11 +105,6 @@ void QClipboard::clear(Mode mode)
     setMimeData(0, mode);
 }
 
-void QClipboard::ownerDestroyed()
-{
-}
-
-
 void QClipboard::connectNotify(const char *signal)
 {
     Q_UNUSED(signal);

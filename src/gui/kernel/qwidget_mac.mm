@@ -1385,9 +1385,6 @@ OSStatus QWidgetPrivate::qt_widget_event(EventHandlerCallRef er, EventRef event,
                     qrgn.translate(redirectionOffset);
                     QPaintEvent e(qrgn);
                     widget->d_func()->dirtyOnWidget = QRegion();
-#ifdef QT3_SUPPORT
-                    e.setErased(true);
-#endif
                     QApplication::sendSpontaneousEvent(widget, &e);
                     if (!redirectionOffset.isNull())
                         widget->d_func()->restoreRedirected();
