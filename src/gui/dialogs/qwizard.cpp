@@ -510,13 +510,15 @@ void QWizardPagePrivate::_q_updateCachedCompleteState()
 
 class QWizardAntiFlickerWidget : public QWidget
 {
-    QWizard *wizard;
     QWizardPrivate *wizardPrivate;
 public:
     QWizardAntiFlickerWidget(QWizard *wizard, QWizardPrivate *wizardPrivate)
         : QWidget(wizard)
-        , wizard(wizard)
-        , wizardPrivate(wizardPrivate) {}
+#if !defined(QT_NO_STYLE_WINDOWSVISTA)
+        , wizardPrivate(wizardPrivate)
+#endif
+    {}
+
 #if !defined(QT_NO_STYLE_WINDOWSVISTA)
 protected:
     void paintEvent(QPaintEvent *);
@@ -677,11 +679,8 @@ public:
     int maximumHeight;
 };
 
-static QString buttonDefaultText(int wstyle, int which, const QWizardPrivate *wizardPrivate)
+static QString buttonDefaultText(int wstyle, int which, const QWizardPrivate *wizard)
 {
-#if defined(QT_NO_STYLE_WINDOWSVISTA)
-    Q_UNUSED(wizardPrivate);
-#endif
     const bool macStyle = (wstyle == QWizard::MacStyle);
     switch (which) {
     case QWizard::BackButton:
@@ -690,7 +689,11 @@ static QString buttonDefaultText(int wstyle, int which, const QWizardPrivate *wi
         if (macStyle)
             return QWizard::tr("Continue");
         else
+#if defined(QT_NO_STYLE_WINDOWSVISTA)
+            return wizard->isVistaThemeEnabled()
+#else
             return wizardPrivate->isVistaThemeEnabled()
+#endif
                 ? QWizard::tr("&Next") : QWizard::tr("&Next >");
     case QWizard::CommitButton:
         return QWizard::tr("Commit");
