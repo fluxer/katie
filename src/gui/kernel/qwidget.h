@@ -697,7 +697,7 @@ private:
     friend class QApplicationPrivate;
     friend class QPainter;
     friend class QPainterPrivate;
-    friend class QPixmap; // for QPixmap::fill()
+    friend class QPixmap; // for QPixmap::grabWidget()
     friend class QFontMetrics;
     friend class QFontInfo;
     friend class QETWidget;
