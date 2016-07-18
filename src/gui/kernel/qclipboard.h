@@ -51,17 +51,13 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_CLIPBOARD
 
-class QMimeSource;
 class QMimeData;
 class QImage;
 class QPixmap;
 
-class QClipboardPrivate;
-
 class Q_GUI_EXPORT QClipboard : public QObject
 {
     Q_OBJECT
-    Q_DECLARE_PRIVATE(QClipboard)
 private:
     QClipboard(QObject *parent);
     ~QClipboard();
@@ -103,7 +99,6 @@ protected:
     friend class QApplication;
     friend class QApplicationPrivate;
     friend class QDragManager;
-    friend class QMimeSource;
 
 private:
     Q_DISABLE_COPY(QClipboard)

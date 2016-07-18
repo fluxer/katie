@@ -46,7 +46,6 @@
 #include "qapplication.h"
 #include "qapplication_p.h"
 #include "qpixmap.h"
-#include "qclipboard_p.h"
 #include "qvariant.h"
 #include "qbuffer.h"
 #include "qimage.h"
@@ -156,7 +155,7 @@ QT_BEGIN_NAMESPACE
 */
 
 QClipboard::QClipboard(QObject *parent)
-    : QObject(*new QClipboardPrivate, parent)
+    : QObject(parent)
 {
     // nothing
 }
@@ -572,55 +571,6 @@ void QClipboard::emitChanged(Mode mode)
         break;
     }
     emit changed(mode);
-}
-
-const char* QMimeDataWrapper::format(int n) const
-{
-    if (formats.isEmpty()) {
-        QStringList fmts = data->formats();
-        for (int i = 0; i < fmts.size(); ++i)
-            formats.append(fmts.at(i).toLatin1());
-    }
-    if (n < 0 || n >= formats.size())
-        return 0;
-    return formats.at(n).data();
-}
-
-QByteArray QMimeDataWrapper::encodedData(const char *format) const
-{
-    if (QLatin1String(format) != QLatin1String("application/x-qt-image")){
-        return data->data(QLatin1String(format));
-    } else{
-        QVariant variant = data->imageData();
-        QImage img = qvariant_cast<QImage>(variant);
-        QByteArray ba;
-        QBuffer buffer(&ba);
-        buffer.open(QIODevice::WriteOnly);
-        img.save(&buffer, "PNG");
-        return ba;
-    }
-}
-
-QVariant QMimeSourceWrapper::retrieveData(const QString &mimetype, QVariant::Type) const
-{
-    return source->encodedData(mimetype.toLatin1());
-}
-
-bool QMimeSourceWrapper::hasFormat(const QString &mimetype) const
-{
-    return source->provides(mimetype.toLatin1());
-}
-
-QStringList QMimeSourceWrapper::formats() const
-{
-    QStringList fmts;
-    int i = 0;
-    const char *fmt;
-    while ((fmt = source->format(i))) {
-        fmts.append(QLatin1String(fmt));
-        ++i;
-    }
-    return fmts;
 }
 
 #endif // QT_NO_CLIPBOARD

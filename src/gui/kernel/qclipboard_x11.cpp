@@ -57,7 +57,6 @@
 #include "qplatformdefs.h"
 
 #include "qclipboard.h"
-#include "qclipboard_p.h"
 
 #ifndef QT_NO_CLIPBOARD
 
@@ -428,7 +427,7 @@ static Bool qt_init_timestamp_scanner(Display*, XEvent *event, XPointer arg)
 #endif
 
 QClipboard::QClipboard(QObject *parent)
-    : QObject(*new QClipboardPrivate, parent)
+    : QObject(parent)
 {
     // create desktop widget since we need it to get PropertyNotify or
     // XFixesSelectionNotify events when someone changes the
