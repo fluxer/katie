@@ -48,17 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class Q_GUI_EXPORT QMimeSource
-{
-public:
-    virtual ~QMimeSource();
-    virtual const char* format(int n = 0) const = 0;
-    virtual bool provides(const char*) const;
-    virtual QByteArray encodedData(const char*) const = 0;
-};
-
-
 #if defined(Q_WS_WIN)
 
 QT_BEGIN_INCLUDE_NAMESPACE

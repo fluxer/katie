@@ -567,7 +567,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QTouchEvent", "QtGui/qevent.h"},
     { "TouchPoint", "QtGui/qevent.h"},
     { "QGestureEvent", "QtGui/qevent.h"},
-    { "QMimeSource", "QtGui/qmime.h"},
     { "QWindowsMime", "QtGui/qmime.h"},
     { "QMacMime", "QtGui/qmime.h"},
     { "QMacPasteboardMime", "QtGui/qmime.h"},
@@ -784,6 +783,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 778;
+static const int qclass_lib_count = 777;
 
 #endif

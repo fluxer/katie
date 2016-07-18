@@ -65,7 +65,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayoutengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayoutitem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmime.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpalette.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qshortcut.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qshortcutmap.cpp

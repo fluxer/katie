@@ -1030,7 +1030,7 @@ QString QMacPasteboardMime::flavorToMime(uchar t, QString flav)
     MimeList *mimes = globalMimeList();
     for(MimeList::const_iterator it = mimes->constBegin(); it != mimes->constEnd(); ++it) {
 #ifdef DEBUG_MIME_MAPS
-        qDebug("QMacMIme::flavorToMime: attempting %s (%d) for flavor %d[%c%c%c%c] [%s]",
+        qDebug("QMacPasteboardMime::flavorToMime: attempting %s (%d) for flavor %d[%c%c%c%c] [%s]",
                (*it)->convertorName().toLatin1().constData(),
                (*it)->type & t, flav, (flav >> 24) & 0xFF, (flav >> 16) & 0xFF, (flav >> 8) & 0xFF, (flav) & 0xFF,
                (*it)->mimeFor(flav).toLatin1().constData());
