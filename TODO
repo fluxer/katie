@@ -1,5 +1,4 @@
 use system harfbuzz and clucene (optionally) and unbundle
-QT_MOC_CPP seems unused but checked for in two headers
 QCache must implement begin() and end() for qDeleteAll()
 
 Also: https://github.com/fluxer/katie/issues

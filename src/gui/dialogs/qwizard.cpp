@@ -689,11 +689,7 @@ static QString buttonDefaultText(int wstyle, int which, const QWizardPrivate *wi
         if (macStyle)
             return QWizard::tr("Continue");
         else
-#if defined(QT_NO_STYLE_WINDOWSVISTA)
             return wizard->isVistaThemeEnabled()
-#else
-            return wizardPrivate->isVistaThemeEnabled()
-#endif
                 ? QWizard::tr("&Next") : QWizard::tr("&Next >");
     case QWizard::CommitButton:
         return QWizard::tr("Commit");
