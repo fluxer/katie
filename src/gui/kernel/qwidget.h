@@ -63,7 +63,6 @@ QT_BEGIN_NAMESPACE
 
 
 class QLayout;
-class QWSRegionManager;
 class QStyle;
 class QAction;
 class QVariant;
@@ -92,7 +91,6 @@ class QInputContext;
 #endif
 class QIcon;
 class QWindowSurface;
-class QPlatformWindow;
 class QLocale;
 class QGraphicsProxyWidget;
 class QGraphicsEffect;
@@ -106,19 +104,17 @@ class QWidgetData
 {
 public:
     WId winid;
-    uint widget_attributes;
     Qt::WindowFlags window_flags;
-    uint window_state : 4;
-    uint focus_policy : 4;
-    uint sizehint_forced :1;
+    Qt::WindowModality window_modality;
+    Qt::WindowStates window_state;
+    Qt::FocusPolicy focus_policy;
+    Qt::ContextMenuPolicy context_menu_policy;
+    uint widget_attributes;
     uint is_closing :1;
     uint in_show : 1;
-    uint in_set_window_state : 1;
     mutable uint fstrut_dirty : 1;
-    uint context_menu_policy : 3;
-    uint window_modality : 2;
     uint in_destructor : 1;
-    uint unused : 13;
+
     QRect crect;
     mutable QPalette pal;
     QFont fnt;

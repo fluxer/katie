@@ -199,8 +199,6 @@ set(GUI_PUBLIC_HEADERS
     QPlatformIntegrationPlugin
     QPlatformNativeInterface
     QPlatformScreen
-    QPlatformWindow
-    QPlatformWindowFormat
     QPolygon
     QPoolEntry
     QPrintDialog

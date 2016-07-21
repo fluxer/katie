@@ -1085,7 +1085,6 @@ void QDialog::setSizeGripEnabled(bool enabled)
 }
 
 
-
 /*! \reimp */
 void QDialog::resizeEvent(QResizeEvent *)
 {

@@ -60,8 +60,6 @@
 #include "qbackingstore_p.h"
 #include "qwindowsurface_x11_p.h"
 
-//extern bool qt_sendSpontaneousEvent(QObject *, QEvent *); //qapplication_x11.cpp
-
 #include <qpixmap_x11_p.h>
 #include <qpaintengine_x11_p.h>
 #include "qt_x11_p.h"
@@ -2515,7 +2513,7 @@ void QWidgetPrivate::setGeometry_sys(int x, int y, int w, int h, bool isMove)
         if (QTLWExtra *topData = maybeTopData())
             topData->normalGeometry = QRect(0,0,-1,-1);
     } else {
-        uint s = data.window_state;
+        Qt::WindowStates s = data.window_state;
         s &= ~(Qt::WindowMaximized | Qt::WindowFullScreen);
         data.window_state = s;
     }

@@ -487,7 +487,7 @@ public:
     void        repolishStyle(QStyle &style);
     inline void showChildren(bool spontaneous) { d_func()->showChildren(spontaneous); }
     inline void hideChildren(bool spontaneous) { d_func()->hideChildren(spontaneous); }
-    inline uint testWindowState(uint teststate){ return dataPtr()->window_state & teststate; }
+    inline Qt::WindowStates testWindowState(Qt::WindowStates teststate){ return dataPtr()->window_state & teststate; }
     inline void setWindowTitle_helper(const QString &title) { d_func()->setWindowTitle_helper(title); }
     inline void forceUpdate() {
         QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
@@ -1915,7 +1915,7 @@ extern "C" LRESULT QT_WIN_CALLBACK QtWndProc(HWND hwnd, UINT message, WPARAM wPa
         case WM_SYSCOMMAND: {
 #ifndef Q_WS_WINCE
             bool window_state_change = false;
-            Qt::WindowStates oldstate = Qt::WindowStates(widget->dataPtr()->window_state);
+            Qt::WindowStates oldstate = widget->dataPtr()->window_state;
             // MSDN:In WM_SYSCOMMAND messages, the four low-order bits of the wParam parameter are
             // used internally by the system. To obtain the correct result when testing the value of
             // wParam, an application must combine the value 0xFFF0 with the wParam value by using
@@ -3865,7 +3865,7 @@ bool QETWidget::translateConfigEvent(const MSG &msg)
                 }
             } else if (msg.wParam != SIZE_MINIMIZED) {
                 bool window_state_changed = false;
-                Qt::WindowStates oldstate = Qt::WindowStates(dataPtr()->window_state);
+                Qt::WindowStates oldstate = dataPtr()->window_state;
                 if (isMinimized()) {
 #ifndef Q_WS_WINCE
                     const QString title = windowTitle();

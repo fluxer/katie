@@ -883,7 +883,7 @@ OSStatus QWidgetPrivate::qt_window_event(EventHandlerCallRef er, EventRef event,
             if (transitionAction == kWindowHideTransitionAction)
                 widget->hide();
         } else if(ekind == kEventWindowExpanded) {
-            Qt::WindowStates currState = Qt::WindowStates(widget->data->window_state);
+            Qt::WindowStates currState = widget->data->window_state;
             Qt::WindowStates newState = currState;
             if (currState & Qt::WindowMinimized)
                 newState &= ~Qt::WindowMinimized;
@@ -910,19 +910,18 @@ OSStatus QWidgetPrivate::qt_window_event(EventHandlerCallRef er, EventRef event,
             if(windowPart == inZoomIn && widget->isMaximized()) {
 
                 widget->data->window_state = widget->data->window_state & ~Qt::WindowMaximized;
-                QWindowStateChangeEvent e(Qt::WindowStates(widget->data->window_state | Qt::WindowMaximized));
+                QWindowStateChangeEvent e(widget->data->window_state | Qt::WindowMaximized);
                 QApplication::sendSpontaneousEvent(widget, &e);
             } else if(windowPart == inZoomOut && !widget->isMaximized()) {
                 widget->data->window_state = widget->data->window_state | Qt::WindowMaximized;
-                QWindowStateChangeEvent e(Qt::WindowStates(widget->data->window_state
-                                                           & ~Qt::WindowMaximized));
+                QWindowStateChangeEvent e(widget->data->window_state & ~Qt::WindowMaximized);
                 QApplication::sendSpontaneousEvent(widget, &e);
             }
             qt_button_down = 0;
         } else if(ekind == kEventWindowCollapsed) {
             if (!widget->isMinimized()) {
                 widget->data->window_state = widget->data->window_state | Qt::WindowMinimized;
-                QWindowStateChangeEvent e(Qt::WindowStates(widget->data->window_state & ~Qt::WindowMinimized));
+                QWindowStateChangeEvent e(widget->data->window_state & ~Qt::WindowMinimized);
                 QApplication::sendSpontaneousEvent(widget, &e);
             }
 
@@ -1013,8 +1012,7 @@ OSStatus QWidgetPrivate::qt_window_event(EventHandlerCallRef er, EventRef event,
                 if((widget->data->window_state & Qt::WindowMaximized) &&
                    IsWindowInStandardState(wid, 0, 0)) {
                     widget->data->window_state &= ~Qt::WindowMaximized;
-                    QWindowStateChangeEvent e(Qt::WindowStates(widget->data->window_state
-                                                | Qt::WindowMaximized));
+                    QWindowStateChangeEvent e(widget->data->window_state | Qt::WindowMaximized);
                     QApplication::sendSpontaneousEvent(widget, &e);
 
                 }

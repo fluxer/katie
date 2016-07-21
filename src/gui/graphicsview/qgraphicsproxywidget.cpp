@@ -1252,7 +1252,6 @@ void QGraphicsProxyWidget::wheelEvent(QGraphicsSceneWheelEvent *event)
     QWheelEvent wheelEvent(pos.toPoint(), event->screenPos(), event->delta(),
                            event->buttons(), event->modifiers(), event->orientation());
     QPointer<QWidget> focusWidget = d->widget->focusWidget();
-    extern bool qt_sendSpontaneousEvent(QObject *, QEvent *);
     qt_sendSpontaneousEvent(receiver, &wheelEvent);
     event->setAccepted(wheelEvent.isAccepted());
 

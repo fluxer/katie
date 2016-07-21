@@ -153,7 +153,6 @@ static inline bool hasBackingStoreSupport()
 #  define QT_NO_PAINT_DEBUG
 #endif
 
-extern bool qt_sendSpontaneousEvent(QObject*, QEvent*); // qapplication.cpp
 extern QDesktopWidget *qt_desktopWidget; // qapplication.cpp
 
 /*!
@@ -1266,14 +1265,12 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     data.widget_attributes = 0;
     data.window_flags = f;
     data.window_state = 0;
-    data.focus_policy = 0;
+    data.focus_policy = Qt::NoFocus;
     data.context_menu_policy = Qt::DefaultContextMenu;
     data.window_modality = Qt::NonModal;
 
-    data.sizehint_forced = 0;
     data.is_closing = 0;
     data.in_show = 0;
-    data.in_set_window_state = 0;
     data.in_destructor = false;
 
     // Widgets with Qt::MSWindowsOwnDC (typically QGLWidget) must have a window handle.
@@ -2740,7 +2737,7 @@ void QWidgetPrivate::inheritStyle()
 
 Qt::WindowModality QWidget::windowModality() const
 {
-    return static_cast<Qt::WindowModality>(data->window_modality);
+    return data->window_modality;
 }
 
 void QWidget::setWindowModality(Qt::WindowModality windowModality)
@@ -2827,7 +2824,7 @@ bool QWidget::isMaximized() const
  */
 Qt::WindowStates QWidget::windowState() const
 {
-    return Qt::WindowStates(data->window_state);
+    return data->window_state;
 }
 
 /*!\internal
@@ -2839,7 +2836,7 @@ Qt::WindowStates QWidget::windowState() const
  */
 void QWidget::overrideWindowState(Qt::WindowStates newstate)
 {
-    QWindowStateChangeEvent e(Qt::WindowStates(data->window_state), true);
+    QWindowStateChangeEvent e(data->window_state, true);
     data->window_state  = newstate;
     QApplication::sendEvent(this, &e);
 }
@@ -6941,12 +6938,12 @@ QRect QWidget::contentsRect() const
 
 Qt::ContextMenuPolicy QWidget::contextMenuPolicy() const
 {
-    return (Qt::ContextMenuPolicy)data->context_menu_policy;
+    return data->context_menu_policy;
 }
 
 void QWidget::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
 {
-    data->context_menu_policy = (uint) policy;
+    data->context_menu_policy = policy;
 }
 
 /*!
@@ -6973,12 +6970,12 @@ void QWidget::setContextMenuPolicy(Qt::ContextMenuPolicy policy)
 
 Qt::FocusPolicy QWidget::focusPolicy() const
 {
-    return (Qt::FocusPolicy)data->focus_policy;
+    return data->focus_policy;
 }
 
 void QWidget::setFocusPolicy(Qt::FocusPolicy policy)
 {
-    data->focus_policy = (uint) policy;
+    data->focus_policy = policy;
     Q_D(QWidget);
     if (d->extra && d->extra->focus_proxy)
         d->extra->focus_proxy->setFocusPolicy(policy);

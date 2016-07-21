@@ -63,7 +63,6 @@ class QRect;
 class QPoint;
 class QImage;
 class QWindowSurfacePrivate;
-class QPlatformWindow;
 
 class Q_GUI_EXPORT QWindowSurface
 {

@@ -188,7 +188,7 @@ static void cleanupCocoaWindowDelegate()
     if (!qwidget->isMinimized()) {
         QWidgetData *widgetData = qt_qwidget_data(qwidget);
         widgetData->window_state = widgetData->window_state | Qt::WindowMinimized;
-        QWindowStateChangeEvent e(Qt::WindowStates(widgetData->window_state & ~Qt::WindowMinimized));
+        QWindowStateChangeEvent e(widgetData->window_state & ~Qt::WindowMinimized);
         qt_sendSpontaneousEvent(qwidget, &e);
     }
     // Send hide to match Qt on X11 and Windows
@@ -203,13 +203,11 @@ static void cleanupCocoaWindowDelegate()
     QWidgetData *widgetData = qt_qwidget_data(qwidget);
     if (!(qwidget->windowState() & (Qt::WindowMaximized | Qt::WindowFullScreen)) && [window isZoomed]) {
         widgetData->window_state = widgetData->window_state | Qt::WindowMaximized;
-        QWindowStateChangeEvent e(Qt::WindowStates(widgetData->window_state
-                                                   & ~Qt::WindowMaximized));
+        QWindowStateChangeEvent e(widgetData->window_state & ~Qt::WindowMaximized);
         qt_sendSpontaneousEvent(qwidget, &e);
     } else {
         widgetData->window_state = widgetData->window_state & ~Qt::WindowMaximized;
-        QWindowStateChangeEvent e(Qt::WindowStates(widgetData->window_state
-                                                   | Qt::WindowMaximized));
+        QWindowStateChangeEvent e(widgetData->window_state | Qt::WindowMaximized);
         qt_sendSpontaneousEvent(qwidget, &e);
     }
     NSRect rect = [[window contentView] frame];
@@ -277,7 +275,7 @@ static void cleanupCocoaWindowDelegate()
 {
     QWidget *qwidget = m_windowHash->value([notification object]);
     QWidgetData *widgetData = qt_qwidget_data(qwidget);
-    Qt::WindowStates currState = Qt::WindowStates(widgetData->window_state);
+    Qt::WindowStates currState = widgetData->window_state;
     Qt::WindowStates newState = currState;
     if (currState & Qt::WindowMinimized)
         newState &= ~Qt::WindowMinimized;

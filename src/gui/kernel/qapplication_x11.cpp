@@ -4902,7 +4902,7 @@ bool QETWidget::translatePropertyEvent(const XEvent *event)
     } else if (event->xproperty.atom == ATOM(_NET_WM_STATE)) {
         bool max = false;
         bool full = false;
-        Qt::WindowStates oldState = Qt::WindowStates(this->data->window_state);
+        Qt::WindowStates oldState = this->data->window_state;
 
         if (event->xproperty.state == PropertyNewValue) {
             // using length of 1024 should be safe for all current and
@@ -5025,7 +5025,7 @@ bool QETWidget::translatePropertyEvent(const XEvent *event)
                     if (!isMinimized()) {
                         // window was minimized
                         this->data->window_state = this->data->window_state | Qt::WindowMinimized;
-                        QWindowStateChangeEvent e(Qt::WindowStates(this->data->window_state & ~Qt::WindowMinimized));
+                        QWindowStateChangeEvent e(this->data->window_state & ~Qt::WindowMinimized);
                         QApplication::sendSpontaneousEvent(this, &e);
                     }
                     break;
@@ -5035,7 +5035,7 @@ bool QETWidget::translatePropertyEvent(const XEvent *event)
                     if (isMinimized()) {
                         // window was un-minimized
                         this->data->window_state &= ~Qt::WindowMinimized;
-                        QWindowStateChangeEvent e(Qt::WindowStates(this->data->window_state | Qt::WindowMinimized));
+                        QWindowStateChangeEvent e(this->data->window_state | Qt::WindowMinimized);
                         QApplication::sendSpontaneousEvent(this, &e);
                     }
                     break;
@@ -5286,7 +5286,7 @@ bool QETWidget::translateConfigEvent(const XEvent *event)
             cr.setSize(newSize);
             data->crect = cr;
 
-            uint old_state = data->window_state;
+            Qt::WindowStates old_state = data->window_state;
             if (!X11->isSupportedByWM(ATOM(_NET_WM_STATE_MAXIMIZED_VERT))
                 && !X11->isSupportedByWM(ATOM(_NET_WM_STATE_MAXIMIZED_HORZ)))
                 data->window_state &= ~Qt::WindowMaximized;
