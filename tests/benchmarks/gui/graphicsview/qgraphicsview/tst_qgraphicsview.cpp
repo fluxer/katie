@@ -446,7 +446,6 @@ static void addChildHelper(QGraphicsItem *parent, int n, bool rotate)
 void tst_QGraphicsView::deepNesting_data()
 {
     QTest::addColumn<bool>("rotate");
-    QTest::addColumn<bool>("sortCache");
     QTest::addColumn<bool>("bsp");
 
     QTest::newRow("bsp, no transform") << false << false << true;
@@ -462,7 +461,6 @@ void tst_QGraphicsView::deepNesting_data()
 void tst_QGraphicsView::deepNesting()
 {
     QFETCH(bool, rotate);
-    QFETCH(bool, sortCache);
     QFETCH(bool, bsp);
 
     QGraphicsScene scene;
@@ -475,7 +473,6 @@ void tst_QGraphicsView::deepNesting()
         }
     }
     scene.setItemIndexMethod(bsp ? QGraphicsScene::BspTreeIndex : QGraphicsScene::NoIndex);
-    scene.setSortCacheEnabled(sortCache);
     scene.setSceneRect(scene.sceneRect());
 
     mView.setRenderHint(QPainter::Antialiasing);

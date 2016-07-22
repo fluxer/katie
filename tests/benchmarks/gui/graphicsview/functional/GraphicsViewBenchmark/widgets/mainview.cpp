@@ -265,7 +265,6 @@ void MainView::construct()
 #ifndef QT_NO_OPENGL
     if (m_enableOpenGL) {
         qDebug() << "OpenGL enabled";
-        m_scene->setSortCacheEnabled(false);        
         setViewport(new QGLWidget);
 
         // Qt doc says: This is the preferred update mode for
