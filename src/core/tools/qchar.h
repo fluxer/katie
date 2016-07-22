@@ -316,11 +316,7 @@ private:
     QChar(uchar c);
 #endif
     ushort ucs;
-}
-#if (defined(__arm__) && defined(QT_NO_ARM_EABI))
-    Q_PACKED
-#endif
-;
+};
 
 Q_DECLARE_TYPEINFO(QChar, Q_MOVABLE_TYPE);
 

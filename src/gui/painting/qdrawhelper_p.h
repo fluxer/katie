@@ -712,7 +712,7 @@ public:
 private:
     quint32p() {}
     quint32 data;
-} Q_PACKED;
+};
 
 class qabgr8888
 {
@@ -726,7 +726,7 @@ public:
 
 private:
     quint32 data;
-} Q_PACKED;
+};
 
 class qrgb565;
 
@@ -762,9 +762,8 @@ public:
 
 private:
     friend class qrgb565;
-
     quint8 data[3];
-} Q_PACKED;
+};
 
 class qrgb565
 {
@@ -794,9 +793,8 @@ public:
 
 private:
     friend class qargb8565;
-
     quint16 data;
-} Q_PACKED;
+};
 
 qargb8565::qargb8565(quint32 v)
 {
@@ -958,7 +956,7 @@ public:
 
 private:
     quint16 data;
-} Q_PACKED;
+};
 
 class qrgb555;
 
@@ -990,7 +988,7 @@ public:
 private:
     friend class qrgb555;
     quint8 data[3];
-} Q_PACKED;
+};
 
 class qrgb555
 {
@@ -1056,8 +1054,7 @@ private:
     friend class qargb8555;
     friend class qbgr555;
     quint16 data;
-
-} Q_PACKED;
+};
 
 qrgb555::qrgb555(const qargb8555 &v)
 {
@@ -1100,7 +1097,7 @@ public:
 
 private:
     quint16 data;
-} Q_PACKED;
+};
 
 qargb8555::qargb8555(quint32 v)
 {
@@ -1217,8 +1214,7 @@ public:
 private:
     friend class qrgb666;
     quint8 data[3];
-
-} Q_PACKED;
+};
 
 class qrgb666
 {
@@ -1249,9 +1245,8 @@ public:
 
 private:
     friend class qargb6666;
-
     quint8 data[3];
-} Q_PACKED;
+};
 
 qrgb666::qrgb666(quint32 v)
 {
@@ -1411,8 +1406,7 @@ public:
 
 private:
     uchar data[3];
-
-} Q_PACKED;
+};
 
 qrgb888::qrgb888(quint32 v)
 {
@@ -1501,7 +1495,7 @@ public:
 
 private:
     uchar data[3];
-} Q_PACKED;
+};
 
 template <>
 inline quint24 qt_colorConvert(quint32 color, quint24 dummy)
@@ -1535,7 +1529,7 @@ public:
 
 private:
     uchar data[3];
-} Q_PACKED;
+};
 
 template <>
 inline quint18 qt_colorConvert(quint32 color, quint18 dummy)
@@ -1574,8 +1568,7 @@ public:
 private:
     friend class qrgb444;
     quint16 data;
-
-} Q_PACKED;
+};
 
 class qrgb444
 {
@@ -1604,8 +1597,7 @@ public:
 private:
     friend class qargb4444;
     quint16 data;
-
-} Q_PACKED;
+};
 
 
 qargb4444::qargb4444(quint32p color)

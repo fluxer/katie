@@ -785,11 +785,7 @@ public:
     struct Data {
         quint16 index;
         quint16 numberOptions;
-    }
-#if (defined(__arm__) || defined(QT_NO_ARM_EABI))
-    Q_PACKED
-#endif
-    ;
+    };
 
 private:
     friend struct QLocalePrivate;

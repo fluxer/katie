@@ -572,7 +572,7 @@ public:
 
 private:
     quint32 data;
-} Q_PACKED;
+};
 
 void Q_GUI_EXPORT qt_memrotate90_gl(const quint32 *src, int srcWidth, int srcHeight, int srcStride,
                                     quint32 *dest, int dstStride)
