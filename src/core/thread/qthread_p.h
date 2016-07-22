@@ -199,8 +199,6 @@ public:
 
 class QThreadData
 {
-    QAtomicInt _ref;
-
 public:
     QThreadData(int initialRefCount = 1);
     ~QThreadData();
@@ -248,18 +246,21 @@ public:
         }
     };
 
-    QThread *thread;
-    Qt::HANDLE threadId;
+private:
+    QAtomicInt _ref;
+
+public:
     bool quitNow;
-    int loopLevel;
-    QAbstractEventDispatcher *eventDispatcher;
-    QStack<QEventLoop *> eventLoops;
-    QPostEventList postEventList;
     bool canWait;
-    QVector<void *> tls;
     bool isAdopted;
+    int loopLevel;
 
-
+    Qt::HANDLE threadId;
+    QStack<QEventLoop *> eventLoops;
+    QVector<void *> tls;
+    QThread *thread;
+    QAbstractEventDispatcher *eventDispatcher;
+    QPostEventList postEventList;
     FlaggedDebugSignatures flaggedSignatures;
 };
 

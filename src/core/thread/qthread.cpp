@@ -77,8 +77,8 @@ QT_BEGIN_NAMESPACE
 */
 
 QThreadData::QThreadData(int initialRefCount)
-    : _ref(initialRefCount), thread(0), threadId(0),
-      quitNow(false), loopLevel(0), eventDispatcher(0), canWait(true), isAdopted(false)
+    : _ref(initialRefCount), quitNow(false), canWait(true), isAdopted(false),
+        loopLevel(0), threadId(0), thread(0), eventDispatcher(0)
 {
     // fprintf(stderr, "QThreadData %p created\n", this);
 }
@@ -597,33 +597,6 @@ void QThread::quit()
 void QThread::run()
 {
     (void) exec();
-}
-
-/*! \internal
-    Initializes the QThread system.
-*/
-#if defined (Q_OS_WIN)
-void qt_create_tls();
-#endif
-
-void QThread::initialize()
-{
-    if (qt_global_mutexpool)
-        return;
-    qt_global_mutexpool = QMutexPool::instance();
-
-#if defined (Q_OS_WIN)
-    qt_create_tls();
-#endif
-}
-
-
-/*! \internal
-    Cleans up the QThread system.
-*/
-void QThread::cleanup()
-{
-    qt_global_mutexpool = 0;
 }
 
 /*!

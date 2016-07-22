@@ -121,9 +121,6 @@ private:
     Q_OBJECT
     Q_DECLARE_PRIVATE(QThread)
 
-    static void initialize();
-    static void cleanup();
-
     friend class QCoreApplication;
     friend class QThreadData;
 };
