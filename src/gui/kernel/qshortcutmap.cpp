@@ -337,7 +337,7 @@ bool QShortcutMap::tryShortcutEvent(QObject *o, QKeyEvent *e)
     bool wasAccepted = e->isAccepted();
     bool wasSpontaneous = e->spont;
     if (d->currentState == QKeySequence::NoMatch) {
-        ushort orgType = e->t;
+        QEvent::Type orgType = e->t;
         e->t = QEvent::ShortcutOverride;
         e->ignore();
         QApplication::sendEvent(o, e);

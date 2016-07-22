@@ -101,7 +101,6 @@ QT_BEGIN_NAMESPACE
     \value ActionRemoved                    An action has been removed (QActionEvent).
     \value ActivationChange                 A widget's top-level window activation state has changed.
     \value ApplicationActivate              The application has been made available to the user.
-    \value ApplicationActivated             This enum has been deprecated. Use ApplicationActivate instead.
     \value ApplicationDeactivate            The application has been suspended, and is unavailable to the user.
     \value ApplicationFontChange            The default application font has changed.
     \value ApplicationLayoutDirectionChange The default application layout direction has changed.
@@ -169,7 +168,6 @@ QT_BEGIN_NAMESPACE
     \value NonClientAreaMouseButtonRelease  A mouse button release occurred outside the client area.
     \value NonClientAreaMouseMove           A mouse move occurred outside the client area.
     \value MacSizeChange                    The user changed his widget sizes (Mac OS X only).
-    \value MenubarUpdated                   The window's menu bar has been updated.
     \value MetaCall                         An asynchronous method invocation via QMetaObject::invokeMethod().
     \value ModifiedChange                   Widgets modification state has been changed.
     \value MouseButtonDblClick              Mouse press again (QMouseEvent).
