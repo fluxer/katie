@@ -51,17 +51,8 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-class QColor;
 class QColormap;
 class QVariant;
-
-#ifndef QT_NO_DEBUG_STREAM
-Q_GUI_EXPORT QDebug operator<<(QDebug, const QColor &);
-#endif
-#ifndef QT_NO_DATASTREAM
-Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QColor &);
-Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QColor &);
-#endif
 
 class Q_GUI_EXPORT QColor
 {
@@ -280,6 +271,14 @@ inline QColor QColor::lighter(int f) const
 
 inline QColor QColor::darker(int f) const 
 { return dark(f); }
+
+#ifndef QT_NO_DEBUG_STREAM
+Q_GUI_EXPORT QDebug operator<<(QDebug, const QColor &);
+#endif
+#ifndef QT_NO_DATASTREAM
+Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QColor &);
+Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QColor &);
+#endif
 
 QT_END_NAMESPACE
 
