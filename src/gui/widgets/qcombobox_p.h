@@ -390,7 +390,6 @@ public:
     uint autoCompletion : 1;
     uint duplicatesEnabled : 1;
     uint frame : 1;
-    uint padding : 26;
     int maxVisibleItems;
     int maxCount;
     int modelColumn;

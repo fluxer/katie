@@ -77,8 +77,8 @@ public:
           layout(0),
           inheritedPaletteResolveMask(0),
           inheritedFontResolveMask(0),
-          inSetGeometry(0),
           polished(0),
+          inSetGeometry(0),
           inSetPos(0),
           autoFillBackground(0),
           refCountInvokeRelayout(0),
@@ -183,12 +183,11 @@ public:
     }
     // 32 bits
     quint32 attributes : 10;
-    quint32 inSetGeometry : 1;
     quint32 polished: 1;
+    quint32 inSetGeometry : 1;
     quint32 inSetPos : 1;
     quint32 autoFillBackground : 1;
     quint32 refCountInvokeRelayout : 16;
-    quint32 padding : 2;    // feel free to use
 
     // Focus
     Qt::FocusPolicy focusPolicy;

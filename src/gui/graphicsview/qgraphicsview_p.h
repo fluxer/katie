@@ -93,7 +93,6 @@ public:
     quint32 mustResizeBackgroundPixmap : 1;
     quint32 fullUpdatePending : 1;
     quint32 hasUpdateClip : 1;
-    quint32 padding : 18;
 
     QRectF sceneRect;
     void updateLastCenterPoint();

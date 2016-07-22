@@ -113,9 +113,7 @@ public:
     quint32 allItemsIgnoreHoverEvents : 1;
     quint32 allItemsUseDefaultCursor : 1;
     quint32 painterStateProtection : 1;
-    quint32 sortCacheEnabled : 1; // for compatibility
     quint32 allItemsIgnoreTouchEvents : 1;
-    quint32 padding : 15;
 
     QRectF growingItemsBoundingRect;
 

@@ -304,7 +304,6 @@ QGraphicsScenePrivate::QGraphicsScenePrivate()
       allItemsIgnoreHoverEvents(true),
       allItemsUseDefaultCursor(true),
       painterStateProtection(true),
-      sortCacheEnabled(false),
       allItemsIgnoreTouchEvents(true),
       selectionChanging(0),
       rectAdjust(2),
@@ -1895,27 +1894,6 @@ void QGraphicsScene::setBspTreeDepth(int depth)
         return;
     }
     bspTree->setBspTreeDepth(depth);
-}
-
-/*!
-    \property QGraphicsScene::sortCacheEnabled
-    \brief whether sort caching is enabled
-    \since 4.5
-    \obsolete
-
-    Since Qt 4.6, this property has no effect.
-*/
-bool QGraphicsScene::isSortCacheEnabled() const
-{
-    Q_D(const QGraphicsScene);
-    return d->sortCacheEnabled;
-}
-void QGraphicsScene::setSortCacheEnabled(bool enabled)
-{
-    Q_D(QGraphicsScene);
-    if (d->sortCacheEnabled == enabled)
-        return;
-    d->sortCacheEnabled = enabled;
 }
 
 /*!
