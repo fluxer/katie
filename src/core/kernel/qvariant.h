@@ -210,7 +210,6 @@ class Q_CORE_EXPORT QVariant
 #ifndef QT_BOOTSTRAPPED
     QVariant(const QEasingCurve &easing);
 #endif
-    QVariant(Qt::GlobalColor color);
 
     QVariant& operator=(const QVariant &other);
 #ifdef Q_COMPILER_RVALUE_REFS
