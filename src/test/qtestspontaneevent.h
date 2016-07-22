@@ -82,7 +82,6 @@ public:
         // Fixing the warnings about unused variables
         Q_UNUSED(posted);
         Q_UNUSED(m_accept);
-        Q_UNUSED(reserved);
     }
 #endif
 
@@ -101,13 +100,12 @@ public:
 
 protected:
     void *d;
-    ushort t;
+    QEvent::Type t;
 
 private:
-    ushort posted : 1;
-    ushort spont : 1;
-    ushort m_accept : 1;
-    ushort reserved : 13;
+    bool posted : 1;
+    bool spont : 1;
+    bool m_accept : 1;
 };
 
 QT_END_NAMESPACE
