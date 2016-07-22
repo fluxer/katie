@@ -109,22 +109,14 @@ void error(const char *msg = "Invalid argument")
     exit(1);
 }
 
-
-static inline bool hasNext(const Symbols &symbols, int i)
-{ return (i < symbols.size()); }
-
-static inline const Symbol &next(const Symbols &symbols, int &i)
-{ return symbols.at(i++); }
-
-
 QByteArray composePreprocessorOutput(const Symbols &symbols) {
     QByteArray output;
     int lineNum = 1;
     Token last = PP_NOTOKEN;
     Token secondlast = last;
     int i = 0;
-    while (hasNext(symbols, i)) {
-        Symbol sym = next(symbols, i);
+    while (i < symbols.size()) {
+        Symbol sym = symbols.at(i++);
         switch (sym.token) {
         case PP_NEWLINE:
         case PP_WHITESPACE:
