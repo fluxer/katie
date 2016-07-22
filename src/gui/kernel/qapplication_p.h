@@ -66,7 +66,6 @@
 #include "QtCore/qpointer.h"
 #include "qcoreapplication_p.h"
 #include "QtGui/qshortcutmap_p.h"
-#include <qthread_p.h>
 #include "QtCore/qpoint.h"
 #include "QtCore/qdatetime.h"
 
