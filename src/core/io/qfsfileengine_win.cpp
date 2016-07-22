@@ -48,7 +48,6 @@
 
 #include "qfile.h"
 #include "qdir.h"
-#include "qmutexpool_p.h"
 #include "qvarlengtharray.h"
 #include "qdatetime.h"
 #include "qt_windows.h"
