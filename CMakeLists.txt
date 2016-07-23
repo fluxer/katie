@@ -547,7 +547,7 @@ if(NOT WITH_NAS OR NOT NAS_FOUND)
     katie_definition(-DQT_NO_NAS)
 endif()
 
-if(NOT WITH_PNG OR NOT PNG_FOUND)
+if(NOT WITH_PNG)
     katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
