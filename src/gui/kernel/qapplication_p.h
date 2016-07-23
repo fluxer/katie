@@ -54,6 +54,7 @@
 // We mean it.
 //
 
+#include "qplatformdefs.h"
 #include "QtGui/qapplication.h"
 #include "QtGui/qevent.h"
 #include "QtGui/qfont.h"
