@@ -1381,39 +1381,9 @@ Q_GLOBAL_STATIC(KnownPointers, knownPointers)
 QT_BEGIN_NAMESPACE
 
 namespace QtSharedPointer {
-    Q_CORE_EXPORT void internalSafetyCheckAdd(const volatile void *);
-    Q_CORE_EXPORT void internalSafetyCheckRemove(const volatile void *);
+#ifdef QT_BUILD_INTERNAL
     Q_AUTOTEST_EXPORT void internalSafetyCheckCleanCheck();
-}
-
-/*!
-    \internal
-*/
-void QtSharedPointer::internalSafetyCheckAdd(const volatile void *)
-{
-    // Qt 4.5 compatibility
-    // this function is broken by design, so it was replaced with internalSafetyCheckAdd2
-    //
-    // it's broken because we tracked the pointers added and
-    // removed from QSharedPointer, converted to void*.
-    // That is, this is supposed to track the "top-of-object" pointer in
-    // case of multiple inheritance.
-    //
-    // However, it doesn't work well in some compilers:
-    // if you create an object with a class of type A and the last reference
-    // is dropped of type B, then the value passed to internalSafetyCheckRemove could
-    // be different than was added. That would leave dangling addresses.
-    //
-    // So instead, we track the pointer by the d-pointer instead.
-}
-
-/*!
-    \internal
-*/
-void QtSharedPointer::internalSafetyCheckRemove(const volatile void *)
-{
-    // Qt 4.5 compatibility
-    // see comments above
+#endif
 }
 
 /*!
@@ -1480,13 +1450,13 @@ void QtSharedPointer::internalSafetyCheckRemove2(const void *d_ptr)
     Q_ASSERT(kp->dPointers.size() == kp->dataPointers.size());
 }
 
+#ifdef QT_BUILD_INTERNAL
 /*!
     \internal
     Called by the QSharedPointer autotest
 */
 void QtSharedPointer::internalSafetyCheckCleanCheck()
 {
-#  ifdef QT_BUILD_INTERNAL
     KnownPointers *const kp = knownPointers();
     Q_ASSERT_X(kp, "internalSafetyCheckSelfCheck()", "Called after global statics deletion!");
 
@@ -1495,7 +1465,7 @@ void QtSharedPointer::internalSafetyCheckCleanCheck()
 
     if (!kp->dPointers.isEmpty())
         qFatal("Pointer cleaning failed: %d entries remaining", kp->dPointers.size());
-#  endif
 }
+#endif
 
 QT_END_NAMESPACE

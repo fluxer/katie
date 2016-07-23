@@ -41,9 +41,6 @@
 
 #include "qabstractfileengine.h"
 #include "qabstractfileengine_p.h"
-#ifdef QT_BUILD_CORE_LIB
-#include "qresource_p.h"
-#endif
 #include "qdatetime.h"
 #include "qreadwritelock.h"
 #include "qvariant.h"

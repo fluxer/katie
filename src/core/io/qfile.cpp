@@ -48,9 +48,6 @@
 #include "qfileinfo.h"
 #include "qiodevice_p.h"
 #include "qfile_p.h"
-#if defined(QT_BUILD_CORE_LIB)
-# include "qcoreapplication.h"
-#endif
 
 #ifdef QT_NO_QOBJECT
 #define tr(X) QString::fromLatin1(X)
