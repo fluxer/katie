@@ -109,6 +109,7 @@ if(WITH_PNG)
             ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwtran.c
             ${CMAKE_SOURCE_DIR}/src/3rdparty/libpng/pngwutil.c
         )
+        include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/libpng)
         add_definitions(-DPNG_ARM_NEON_OPT=0)
     endif()
 endif()
