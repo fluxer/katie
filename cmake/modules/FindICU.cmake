@@ -39,7 +39,21 @@ find_library(ICU_LIBRARIES
     ${LIB_INSTALL_DIR}
 )
 
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(ICU DEFAULT_MSG ICU_INCLUDES ICU_LIBRARIES)
+find_library(ICUUC_LIBRARIES
+    icuuc
+    HINTS
+    $ENV{ICUDIR}/lib
+    ${PC_ICU_LIBDIR}
+    /usr/lib
+    /usr/local/lib
+    ${LIB_INSTALL_DIR}
+)
 
-mark_as_advanced(ICU_INCLUDES ICU_LIBRARIES)
+if(ICU_LIBRARIES AND ICUUC_LIBRARIES)
+    set(ICU_LIBRARIES ${ICU_LIBRARIES} ${ICUUC_LIBRARIES})
+endif()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(ICU DEFAULT_MSG ICU_INCLUDES ICU_LIBRARIES ICUUC_LIBRARIES)
+
+mark_as_advanced(ICU_INCLUDES ICU_LIBRARIES ICUUC_LIBRARIES)
