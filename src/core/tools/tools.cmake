@@ -134,6 +134,10 @@ if(WITH_ICU AND ICU_FOUND)
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_icu.cpp
     )
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${ICU_LIBRARIES}
+    )
     add_definitions(-DQT_USE_ICU)
     include_directories(${ICU_INCLUDES})
 endif()
@@ -143,9 +147,7 @@ if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
         ${EXTRA_CORE_LIBS}
         ${HARFBUZZ_LIBRARIES}
     )
-    include_directories(
-        ${HARFBUZZ_INCLUDE_DIRS}
-    )
+    include_directories(${HARFBUZZ_INCLUDE_DIRS})
 else()
     # TODO: move to main CMakeLists?
     add_definitions(-DHB_EXPORT=Q_CORE_EXPORT)
