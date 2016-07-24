@@ -280,20 +280,10 @@
   {
     void*    buffer;
     long     buffer_size;
-    long     buffer_allocated_size;
     int      band_size;
-    void*    memory;
     PWorker  worker;
 
   } TRaster, *PRaster;
-
-  int q_gray_rendered_spans(TRaster *raster)
-  {
-    if ( raster && raster->worker )
-      return raster->worker->skip_spans > 0 ? 0 : -raster->worker->skip_spans;
-    return 0;
-  }
-
 
   /*************************************************************************/
   /*                                                                       */
@@ -657,127 +647,6 @@
 
 
   static void
-  gray_render_conic( RAS_ARG_ const QT_FT_Vector*  control,
-                              const QT_FT_Vector*  to )
-  {
-    TPos        dx, dy;
-    int         top, level;
-    int*        levels;
-    QT_FT_Vector*  arc;
-
-
-    dx = DOWNSCALE( ras.x ) + to->x - ( control->x << 1 );
-    if ( dx < 0 )
-      dx = -dx;
-    dy = DOWNSCALE( ras.y ) + to->y - ( control->y << 1 );
-    if ( dy < 0 )
-      dy = -dy;
-    if ( dx < dy )
-      dx = dy;
-
-    level = 1;
-    dx = dx / ras.conic_level;
-    while ( dx > 0 )
-    {
-      dx >>= 2;
-      level++;
-    }
-
-    /* a shortcut to speed things up */
-    if ( level <= 1 )
-    {
-      /* compute the mid-point directly */
-      TPos  to_x, to_y, mid_x, mid_y;
-
-
-      to_x  = UPSCALE( to->x );
-      to_y  = UPSCALE( to->y );
-      mid_x = ( ras.x + to_x + 2 * UPSCALE( control->x ) ) / 4;
-      mid_y = ( ras.y + to_y + 2 * UPSCALE( control->y ) ) / 4;
-
-      gray_render_line( RAS_VAR_ mid_x, mid_y );
-      gray_render_line( RAS_VAR_ to_x, to_y );
-
-      return;
-    }
-
-    arc       = ras.bez_stack;
-    levels    = ras.lev_stack;
-    top       = 0;
-    levels[0] = level;
-
-    arc[0].x = UPSCALE( to->x );
-    arc[0].y = UPSCALE( to->y );
-    arc[1].x = UPSCALE( control->x );
-    arc[1].y = UPSCALE( control->y );
-    arc[2].x = ras.x;
-    arc[2].y = ras.y;
-
-    while ( top >= 0 )
-    {
-      level = levels[top];
-      if ( level > 1 )
-      {
-        /* check that the arc crosses the current band */
-        TPos  min, max, y;
-
-
-        min = max = arc[0].y;
-
-        y = arc[1].y;
-        if ( y < min ) min = y;
-        if ( y > max ) max = y;
-
-        y = arc[2].y;
-        if ( y < min ) min = y;
-        if ( y > max ) max = y;
-
-        if ( TRUNC( min ) >= ras.max_ey || TRUNC( max ) < ras.min_ey )
-          goto Draw;
-
-        /* split conic */
-        TPos  a, b;
-
-        arc[4].x = arc[2].x;
-        b = arc[1].x;
-        a = arc[3].x = ( arc[2].x + b ) / 2;
-        b = arc[1].x = ( arc[0].x + b ) / 2;
-        arc[2].x = ( a + b ) / 2;
-
-        arc[4].y = arc[2].y;
-        b = arc[1].y;
-        a = arc[3].y = ( arc[2].y + b ) / 2;
-        b = arc[1].y = ( arc[0].y + b ) / 2;
-        arc[2].y = ( a + b ) / 2;
-
-        arc += 2;
-        top++;
-        levels[top] = levels[top - 1] = level - 1;
-        continue;
-      }
-
-    Draw:
-      {
-        TPos  to_x, to_y, mid_x, mid_y;
-
-
-        to_x  = arc[0].x;
-        to_y  = arc[0].y;
-        mid_x = ( ras.x + to_x + 2 * arc[1].x ) / 4;
-        mid_y = ( ras.y + to_y + 2 * arc[1].y ) / 4;
-
-        gray_render_line( RAS_VAR_ mid_x, mid_y );
-        gray_render_line( RAS_VAR_ to_x, to_y );
-
-        top--;
-        arc -= 2;
-      }
-    }
-
-    return;
-  }
-
-  static void
   gray_render_cubic( RAS_ARG_ const QT_FT_Vector*  control1,
                               const QT_FT_Vector*  control2,
                               const QT_FT_Vector*  to )
@@ -921,8 +790,7 @@
   }
 
 
-  /* TODO: manually inline */
-  static void
+  static inline void
   gray_move_to( const QT_FT_Vector*  to,
                 PWorker           worker )
   {
@@ -964,16 +832,6 @@
                 PWorker           worker )
   {
     gray_render_line( worker, UPSCALE( to->x ), UPSCALE( to->y ) );
-    return 0;
-  }
-
-
-  static inline int
-  gray_conic_to( const QT_FT_Vector*  control,
-                 const QT_FT_Vector*  to,
-                 PWorker           worker )
-  {
-    gray_render_conic( worker, control, to );
     return 0;
   }
 
@@ -1183,30 +1041,6 @@
       if ( tag == QT_FT_CURVE_TAG_CUBIC )
         goto Invalid_Outline;
 
-      /* check first point to determine origin */
-      if ( tag == QT_FT_CURVE_TAG_CONIC )
-      {
-        /* first point is conic control.  Yes, this happens. */
-        if ( QT_FT_CURVE_TAG( outline->tags[last] ) == QT_FT_CURVE_TAG_ON )
-        {
-          /* start at last point if it is on the curve */
-          v_start = v_last;
-          limit--;
-        }
-        else
-        {
-          /* if both first and last points are conic,         */
-          /* start at their middle and record its position    */
-          /* for closure                                      */
-          v_start.x = ( v_start.x + v_last.x ) / 2;
-          v_start.y = ( v_start.y + v_last.y ) / 2;
-
-          v_last = v_start;
-        }
-        point--;
-        tags--;
-      }
-
       gray_move_to( &v_start, user );
 
       while ( point < limit )
@@ -1229,54 +1063,6 @@
             if ( error )
               goto Exit;
             continue;
-          }
-
-        case QT_FT_CURVE_TAG_CONIC:  /* consume conic arcs */
-          {
-            v_control.x = SCALED( point->x );
-            v_control.y = SCALED( point->y );
-
-          Do_Conic:
-            if ( point < limit )
-            {
-              QT_FT_Vector  vec;
-              QT_FT_Vector  v_middle;
-
-
-              point++;
-              tags++;
-              tag = QT_FT_CURVE_TAG( tags[0] );
-
-              vec.x = SCALED( point->x );
-              vec.y = SCALED( point->y );
-
-              if ( tag == QT_FT_CURVE_TAG_ON )
-              {
-                error = gray_conic_to( &v_control, &vec,
-                                                  user );
-                if ( error )
-                  goto Exit;
-                continue;
-              }
-
-              if ( tag != QT_FT_CURVE_TAG_CONIC )
-                goto Invalid_Outline;
-
-              v_middle.x = ( v_control.x + vec.x ) / 2;
-              v_middle.y = ( v_control.y + vec.y ) / 2;
-
-              error = gray_conic_to( &v_control, &v_middle,
-                                                user );
-              if ( error )
-                goto Exit;
-
-              v_control = vec;
-              goto Do_Conic;
-            }
-
-            error = gray_conic_to( &v_control, &v_start,
-                                              user );
-            goto Close;
           }
 
         default:  /* QT_FT_CURVE_TAG_CUBIC */
@@ -1406,8 +1192,7 @@
     ras.count_ey = ras.max_ey - ras.min_ey;
 
     /* simple heuristic used to speed-up the bezier decomposition -- see */
-    /* the code in gray_render_conic() and gray_render_cubic() for more  */
-    /* details                                                           */
+    /* the code in gray_render_cubic() for more  details                 */
     ras.conic_level = 32;
     ras.cubic_level = 16;
 
@@ -1590,12 +1375,6 @@
     if ( raster->worker )
       raster->worker->skip_spans = params->skip_spans;
 
-    /* If raster object and raster buffer are allocated, but  */
-    /* raster size isn't of the minimum size, indicate out of */
-    /* memory.                                                */
-    if (raster->buffer_allocated_size < MINIMUM_POOL_SIZE )
-      return ErrRaster_OutOfMemory;
-
     /* return immediately if the outline is empty */
     if ( !outline || outline->n_points == 0 || outline->n_contours <= 0 )
       return 0;
@@ -1675,20 +1454,12 @@
         rast->band_size   = (int)( rast->buffer_size /
                                      ( sizeof ( TCell ) * 8 ) );
       }
-      else if ( pool_base)
-      { /* Case when there is a raster pool allocated, but it                */
-        /* doesn't have the minimum size (and so memory will be reallocated) */
-          rast->buffer = pool_base;
-          rast->worker = NULL;
-          rast->buffer_size = pool_size;
-      }
       else
       {
         rast->buffer      = NULL;
         rast->buffer_size = 0;
         rast->worker      = NULL;
       }
-      rast->buffer_allocated_size = pool_size;
     }
   }
 

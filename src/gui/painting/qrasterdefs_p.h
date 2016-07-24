@@ -337,20 +337,10 @@ QT_FT_BEGIN_HEADER
 #define QT_FT_CURVE_TAG( flag )  ( flag & 3 )
 
 #define QT_FT_CURVE_TAG_ON           1
-#define QT_FT_CURVE_TAG_CONIC        0
 #define QT_FT_CURVE_TAG_CUBIC        2
 
-#define QT_FT_CURVE_TAG_TOUCH_X      8  /* reserved for the TrueType hinter */
-#define QT_FT_CURVE_TAG_TOUCH_Y     16  /* reserved for the TrueType hinter */
-
-#define QT_FT_CURVE_TAG_TOUCH_BOTH  ( QT_FT_CURVE_TAG_TOUCH_X | \
-                                   QT_FT_CURVE_TAG_TOUCH_Y )
-
 #define  QT_FT_Curve_Tag_On       QT_FT_CURVE_TAG_ON
-#define  QT_FT_Curve_Tag_Conic    QT_FT_CURVE_TAG_CONIC
 #define  QT_FT_Curve_Tag_Cubic    QT_FT_CURVE_TAG_CUBIC
-#define  QT_FT_Curve_Tag_Touch_X  QT_FT_CURVE_TAG_TOUCH_X
-#define  QT_FT_Curve_Tag_Touch_Y  QT_FT_CURVE_TAG_TOUCH_Y
 
   /*************************************************************************/
   /*                                                                       */
@@ -852,26 +842,16 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Raster_NewFunc                                                  */
+  /*    QT_FT_Raster_NewFunc                                               */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function used to create a new raster object.                     */
-  /*                                                                       */
-  /* <Input>                                                               */
-  /*    memory :: A handle to the memory allocator.                        */
   /*                                                                       */
   /* <Output>                                                              */
   /*    raster :: A handle to the new raster object.                       */
   /*                                                                       */
   /* <Return>                                                              */
   /*    Error code.  0 means success.                                      */
-  /*                                                                       */
-  /* <Note>                                                                */
-  /*    The `memory' parameter is a typeless pointer in order to avoid     */
-  /*    un-wanted dependencies on the rest of the FreeType code.  In       */
-  /*    practice, it is a QT_FT_Memory, i.e., a handle to the standard        */
-  /*    FreeType memory allocator.  However, this field can be completely  */
-  /*    ignored by a given raster implementation.                          */
   /*                                                                       */
   typedef int
   (*QT_FT_Raster_NewFunc)( QT_FT_Raster*  raster );
@@ -881,7 +861,7 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <FuncType>                                                            */
-  /*    QT_FT_Raster_ResetFunc                                                */
+  /*    QT_FT_Raster_ResetFunc                                             */
   /*                                                                       */
   /* <Description>                                                         */
   /*    FreeType provides an area of memory called the `render pool',      */
@@ -907,8 +887,8 @@ QT_FT_BEGIN_HEADER
   /*                                                                       */
   typedef void
   (*QT_FT_Raster_ResetFunc)( QT_FT_Raster       raster,
-                          unsigned char*  pool_base,
-                          unsigned long   pool_size );
+                          char*  pool_base,
+                          long   pool_size );
 
 #define  QT_FT_Raster_Reset_Func   QT_FT_Raster_ResetFunc
 
