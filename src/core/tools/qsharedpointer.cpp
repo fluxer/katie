@@ -111,28 +111,6 @@
     cases, since they have the same functionality. See
     \l{QWeakPointer#tracking-qobject} for more information.
 
-    \section1 Optional pointer tracking
-
-    A feature of QSharedPointer that can be enabled at compile-time for
-    debugging purposes is a pointer tracking mechanism. When enabled,
-    QSharedPointer registers in a global set all the pointers that it tracks.
-    This allows one to catch mistakes like assigning the same pointer to two
-    QSharedPointer objects.
-
-    This function is enabled by defining the \tt{QT_SHAREDPOINTER_TRACK_POINTERS}
-    macro before including the QSharedPointer header.
-
-    It is safe to use this feature even with code compiled without the
-    feature. QSharedPointer will ensure that the pointer is removed from the
-    tracker even from code compiled without pointer tracking.
-
-    Note, however, that the pointer tracking feature has limitations on
-    multiple- or virtual-inheritance (that is, in cases where two different
-    pointer addresses can refer to the same object). In that case, if a
-    pointer is cast to a different type and its value changes,
-    QSharedPointer's pointer tracking mechanism may fail to detect that the
-    object being tracked is the same.
-
     \omit
     \secton1 QSharedPointer internals
 
@@ -332,25 +310,6 @@
     resolved at module load-time, per module where these classes are used.
     (In the Itanium C++ ABI, there would be more relocations, due to the
     RTTI)
-
-    \section3 Modifications due to pointer-tracking
-
-    To ensure that pointers created with pointer-tracking enabled get
-    un-tracked when destroyed, even if destroyed by code compiled without the
-    feature, QSharedPointer modifies slightly the instructions of the
-    previous sections.
-
-    When ExternalRefCountWithCustomDeleter or
-    ExternalRefCountWithContiguousData are used, their create() functions
-    will set the ExternalRefCountDataWithDestroyFn::destroyer function
-    pointer to safetyCheckDeleter() instead. These static member functions
-    simply call internalSafetyCheckRemove2() before passing control to the
-    normal deleter() function.
-
-    If neither custom deleter nor QSharedPointer::create() are used, then
-    QSharedPointer uses a custom deleter of its own: the normalDeleter()
-    function, which simply calls \tt delete. By using a custom deleter, the
-    safetyCheckDeleter() procedure described above kicks in.
 
     \endomit
 
@@ -1220,9 +1179,11 @@
 
 #if !defined(QT_NO_QOBJECT)
 #include "qobject_p.h"
+#endif
 
 QT_BEGIN_NAMESPACE
 
+#if !defined(QT_NO_QOBJECT)
 /*!
     \internal
     This function is called for a just-created QObject \a obj, to enable
@@ -1233,7 +1194,7 @@ QT_BEGIN_NAMESPACE
     the deleteLater() and parent-child relationship in QObject only decrease
     the strong reference count, instead of deleting the object.
 */
-void QtSharedPointer::ExternalRefCountData::setQObjectShared(const QObject *obj, bool)
+void QtSharedPointer::ExternalRefCountData::setQObjectShared(const QObject *obj)
 {
     Q_ASSERT(obj);
     QObjectPrivate *d = QObjectPrivate::get(const_cast<QObject *>(obj));
@@ -1267,204 +1228,6 @@ QtSharedPointer::ExternalRefCountData *QtSharedPointer::ExternalRefCountData::ge
         d->sharedRefcount->weakref.ref();
     }
     return d->sharedRefcount;
-}
-
-QT_END_NAMESPACE
-
-#endif
-
-
-
-//#  define QT_SHARED_POINTER_BACKTRACE_SUPPORT
-#  ifdef QT_SHARED_POINTER_BACKTRACE_SUPPORT
-#    if defined(__GLIBC__) && (__GLIBC__ >= 2) && !defined(__UCLIBC__) && !defined(QT_LINUXBASE)
-#      define BACKTRACE_SUPPORTED
-#    elif defined(Q_OS_MACX)
-#      define BACKTRACE_SUPPORTED
-#    endif
-#  endif
-
-#  if defined(BACKTRACE_SUPPORTED)
-#    include <sys/types.h>
-#    include <execinfo.h>
-#    include <stdio.h>
-#    include <unistd.h>
-#    include <sys/wait.h>
-
-QT_BEGIN_NAMESPACE
-
-static inline QByteArray saveBacktrace() __attribute__((always_inline));
-static inline QByteArray saveBacktrace()
-{
-    static const int maxFrames = 32;
-
-    QByteArray stacktrace;
-    stacktrace.resize(sizeof(void*) * maxFrames);
-    int stack_size = backtrace((void**)stacktrace.data(), maxFrames);
-    stacktrace.resize(sizeof(void*) * stack_size);
-
-    return stacktrace;
-}
-
-static void printBacktrace(QByteArray stacktrace)
-{
-    void *const *stack = (void *const *)stacktrace.constData();
-    int stack_size = stacktrace.size() / sizeof(void*);
-    char **stack_symbols = backtrace_symbols(stack, stack_size);
-
-    int filter[2];
-    pid_t child = -1;
-    if (pipe(filter) != -1)
-        child = fork();
-    if (child == 0) {
-        // child process
-        dup2(fileno(stderr), fileno(stdout));
-        dup2(filter[0], fileno(stdin));
-        close(filter[0]);
-        close(filter[1]);
-        execlp("c++filt", "c++filt", "-n", NULL);
-
-        // execlp failed
-        execl("/bin/cat", "/bin/cat", NULL);
-        _exit(127);
-    }
-
-    // parent process
-    close(filter[0]);
-    FILE *output;
-    if (child == -1) {
-        // failed forking
-        close(filter[1]);
-        output = stderr;
-    } else {
-        output = fdopen(filter[1], "w");
-    }
-
-    fprintf(stderr, "Backtrace of the first creation (most recent frame first):\n");
-    for (int i = 0; i < stack_size; ++i) {
-        if (strlen(stack_symbols[i]))
-            fprintf(output, "#%-2d %s\n", i, stack_symbols[i]);
-        else
-            fprintf(output, "#%-2d %p\n", i, stack[i]);
-    }
-
-    if (child != -1) {
-        fclose(output);
-        waitpid(child, 0, 0);
-    }
-}
-
-QT_END_NAMESPACE
-
-#  endif  // BACKTRACE_SUPPORTED
-
-namespace {
-    QT_USE_NAMESPACE
-    struct Data {
-        const volatile void *pointer;
-#  ifdef BACKTRACE_SUPPORTED
-        QByteArray backtrace;
-#  endif
-    };
-
-    class KnownPointers
-    {
-    public:
-        QMutex mutex;
-        QHash<const void *, Data> dPointers;
-        QHash<const volatile void *, const void *> dataPointers;
-    };
-}
-
-Q_GLOBAL_STATIC(KnownPointers, knownPointers)
-
-QT_BEGIN_NAMESPACE
-
-namespace QtSharedPointer {
-#ifdef QT_BUILD_INTERNAL
-    Q_AUTOTEST_EXPORT void internalSafetyCheckCleanCheck();
-#endif
-}
-
-/*!
-    \internal
-*/
-void QtSharedPointer::internalSafetyCheckAdd2(const void *d_ptr, const volatile void *ptr)
-{
-    // see comments above for the rationale for this function
-    KnownPointers *const kp = knownPointers();
-    if (!kp)
-        return;                 // end-game: the application is being destroyed already
-
-    QMutexLocker lock(&kp->mutex);
-    Q_ASSERT(!kp->dPointers.contains(d_ptr));
-
-    //qDebug("Adding d=%p value=%p", d_ptr, ptr);
-
-    const void *other_d_ptr = kp->dataPointers.value(ptr, 0);
-    if (other_d_ptr) {
-#  ifdef BACKTRACE_SUPPORTED
-        printBacktrace(knownPointers()->dPointers.value(other_d_ptr).backtrace);
-#  endif
-        qFatal("QSharedPointer: internal self-check failed: pointer %p was already tracked "
-               "by another QSharedPointer object %p", ptr, other_d_ptr);
-    }
-
-    Data data;
-    data.pointer = ptr;
-#  ifdef BACKTRACE_SUPPORTED
-    data.backtrace = saveBacktrace();
-#  endif
-
-    kp->dPointers.insert(d_ptr, data);
-    kp->dataPointers.insert(ptr, d_ptr);
-    Q_ASSERT(kp->dPointers.size() == kp->dataPointers.size());
-}
-
-/*!
-    \internal
-*/
-void QtSharedPointer::internalSafetyCheckRemove2(const void *d_ptr)
-{
-    KnownPointers *const kp = knownPointers();
-    if (!kp)
-        return;                 // end-game: the application is being destroyed already
-
-    QMutexLocker lock(&kp->mutex);
-
-    QHash<const void *, Data>::iterator it = kp->dPointers.find(d_ptr);
-    if (it == kp->dPointers.end()) {
-        qFatal("QSharedPointer: internal self-check inconsistency: pointer %p was not tracked. "
-               "To use QT_SHAREDPOINTER_TRACK_POINTERS, you have to enable it throughout "
-               "in your code.", d_ptr);
-    }
-
-    QHash<const volatile void *, const void *>::iterator it2 = kp->dataPointers.find(it->pointer);
-    Q_ASSERT(it2 != kp->dataPointers.end());
-
-    //qDebug("Removing d=%p value=%p", d_ptr, it->pointer);
-
-    // remove entries
-    kp->dataPointers.erase(it2);
-    kp->dPointers.erase(it);
-    Q_ASSERT(kp->dPointers.size() == kp->dataPointers.size());
-}
-
-#ifdef QT_BUILD_INTERNAL
-/*!
-    \internal
-    Called by the QSharedPointer autotest
-*/
-void QtSharedPointer::internalSafetyCheckCleanCheck()
-{
-    KnownPointers *const kp = knownPointers();
-    Q_ASSERT_X(kp, "internalSafetyCheckSelfCheck()", "Called after global statics deletion!");
-
-    if (kp->dPointers.size() != kp->dataPointers.size())
-        qFatal("Internal consistency error: the number of pointers is not equal!");
-
-    if (!kp->dPointers.isEmpty())
-        qFatal("Pointer cleaning failed: %d entries remaining", kp->dPointers.size());
 }
 #endif
 
