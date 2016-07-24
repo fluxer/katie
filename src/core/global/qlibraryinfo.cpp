@@ -66,71 +66,6 @@ extern void qDumpCPUFeatures(); // in qsimd.cpp
 
 #ifndef QT_NO_SETTINGS
 
-struct QLibrarySettings
-{
-    QLibrarySettings();
-    QScopedPointer<QSettings> settings;
-};
-Q_GLOBAL_STATIC(QLibrarySettings, qt_library_settings)
-
-class QLibraryInfoPrivate
-{
-public:
-    static QSettings *findConfiguration();
-    static void cleanup()
-    {
-        QLibrarySettings *ls = qt_library_settings();
-        if (ls)
-            ls->settings.reset(0);
-    }
-    static QSettings *configuration()
-    {
-        QLibrarySettings *ls = qt_library_settings();
-        return ls ? ls->settings.data() : 0;
-    }
-};
-
-QLibrarySettings::QLibrarySettings()
-    : settings(QLibraryInfoPrivate::findConfiguration())
-{
-#ifndef QT_BOOTSTRAPPED
-    qAddPostRoutine(QLibraryInfoPrivate::cleanup);
-#endif
-}
-
-QSettings *QLibraryInfoPrivate::findConfiguration()
-{
-    QString qtconfig = QLatin1String(":/qt/etc/qt.conf");
-#ifdef QT_BOOTSTRAPPED
-    if(!QFile::exists(qtconfig))
-        qtconfig = qmake_libraryInfoFile();
-#else
-    if (!QFile::exists(qtconfig) && QCoreApplication::instance()) {
-#ifdef Q_OS_MAC
-	CFBundleRef bundleRef = CFBundleGetMainBundle();
-        if (bundleRef) {
-	    QCFType<CFURLRef> urlRef = CFBundleCopyResourceURL(bundleRef,
-							       QCFString(QLatin1String("qt.conf")),
-							       0,
-							       0);
-	    if (urlRef) {
-	        QCFString path = CFURLCopyFileSystemPath(urlRef, kCFURLPOSIXPathStyle);
-		qtconfig = QDir::cleanPath(path);
-	    }
-	}
-	if (qtconfig.isEmpty())
-#endif
-            {
-                QDir pwd(QCoreApplication::applicationDirPath());
-                qtconfig = pwd.filePath(QLatin1String("qt.conf"));
-	    }
-    }
-#endif
-    if (QFile::exists(qtconfig))
-        return new QSettings(qtconfig, QSettings::IniFormat);
-    return 0;     //no luck
-}
-
 /*!
     \class QLibraryInfo
     \brief The QLibraryInfo class provides information about the Qt library.
@@ -177,8 +112,7 @@ QLibraryInfo::QLibraryInfo()
 QString
 QLibraryInfo::licensee()
 {
-    const char *str = QT_CONFIGURE_LICENSEE;
-    return QString::fromLocal8Bit(str);
+    return QString::fromLocal8Bit(qt_configure_licensee_str);
 }
 
 /*!
@@ -190,8 +124,7 @@ QLibraryInfo::licensee()
 QString
 QLibraryInfo::licensedProducts()
 {
-    const char *str = QT_CONFIGURE_LICENSED_PRODUCTS;
-    return QString::fromLatin1(str);
+    return QString::fromLatin1(qt_configure_licensed_products_str);
 }
 
 /*!
@@ -218,7 +151,7 @@ QLibraryInfo::buildKey()
 QDate
 QLibraryInfo::buildDate()
 {
-    return QDate::fromString(QString::fromLatin1(qt_configure_installation + 12), Qt::ISODate);
+    return QDate::fromString(QString::fromLatin1(qt_configure_installation), Qt::ISODate);
 }
 #endif //QT_NO_DATESTRING
 
@@ -231,207 +164,45 @@ QString
 QLibraryInfo::location(LibraryLocation loc)
 {
     QString ret;
-    if(!QLibraryInfoPrivate::configuration()) {
-        const char *path = 0;
-        switch (loc) {
-#ifdef QT_CONFIGURE_PREFIX_PATH
+    switch (loc) {
         case PrefixPath:
-            path = QT_CONFIGURE_PREFIX_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_DOCUMENTATION_PATH
-        case DocumentationPath:
-            path = QT_CONFIGURE_DOCUMENTATION_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_HEADERS_PATH
-        case HeadersPath:
-            path = QT_CONFIGURE_HEADERS_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_LIBRARIES_PATH
-        case LibrariesPath:
-            path = QT_CONFIGURE_LIBRARIES_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_BINARIES_PATH
-        case BinariesPath:
-            path = QT_CONFIGURE_BINARIES_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_PLUGINS_PATH
-        case PluginsPath:
-            path = QT_CONFIGURE_PLUGINS_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_IMPORTS_PATH
-        case ImportsPath:
-            path = QT_CONFIGURE_IMPORTS_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_DATA_PATH
-        case DataPath:
-            path = QT_CONFIGURE_DATA_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_TRANSLATIONS_PATH
-        case TranslationsPath:
-            path = QT_CONFIGURE_TRANSLATIONS_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_SETTINGS_PATH
-        case SettingsPath:
-            path = QT_CONFIGURE_SETTINGS_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_EXAMPLES_PATH
-        case ExamplesPath:
-            path = QT_CONFIGURE_EXAMPLES_PATH;
-            break;
-#endif
-#ifdef QT_CONFIGURE_DEMOS_PATH
-        case DemosPath:
-            path = QT_CONFIGURE_DEMOS_PATH;
-            break;
-#endif
-        default:
-            break;
-        }
-
-        if (path)
-            ret = QString::fromLocal8Bit(path);
-    } else {
-        QString key;
-        QString defaultValue;
-        switch(loc) {
-        case PrefixPath:
-            key = QLatin1String("Prefix");
-            break;
-        case DocumentationPath:
-            key = QLatin1String("Documentation");
-            defaultValue = QLatin1String("doc");
+            ret = QString::fromLocal8Bit(qt_configure_prefix_path_str);
             break;
         case HeadersPath:
-            key = QLatin1String("Headers");
-            defaultValue = QLatin1String("include");
+            ret = QString::fromLocal8Bit(qt_configure_headers_path_str);
             break;
         case LibrariesPath:
-            key = QLatin1String("Libraries");
-            defaultValue = QLatin1String("lib");
+            ret = QString::fromLocal8Bit(qt_configure_libraries_path_str);
             break;
         case BinariesPath:
-            key = QLatin1String("Binaries");
-            defaultValue = QLatin1String("bin");
+            ret = QString::fromLocal8Bit(qt_configure_binaries_path_str);
             break;
         case PluginsPath:
-            key = QLatin1String("Plugins");
-            defaultValue = QLatin1String("plugins");
+            ret = QString::fromLocal8Bit(qt_configure_plugins_path_str);
             break;
         case ImportsPath:
-            key = QLatin1String("Imports");
-            defaultValue = QLatin1String("imports");
+            ret = QString::fromLocal8Bit(qt_configure_imports_path_str);
             break;
         case DataPath:
-            key = QLatin1String("Data");
+            ret = QString::fromLocal8Bit(qt_configure_data_path_str);
             break;
         case TranslationsPath:
-            key = QLatin1String("Translations");
-            defaultValue = QLatin1String("translations");
+            ret = QString::fromLocal8Bit(qt_configure_translations_path_str);
             break;
         case SettingsPath:
-            key = QLatin1String("Settings");
+            ret = QString::fromLocal8Bit(qt_configure_settings_path_str);
+            break;
+        case DocumentationPath:
+            ret = QString::fromLocal8Bit(qt_configure_documentation_path_str);
             break;
         case ExamplesPath:
-            key = QLatin1String("Examples");
+            ret = QString::fromLocal8Bit(qt_configure_examples_path_str);
             break;
         case DemosPath:
-            key = QLatin1String("Demos");
+            ret = QString::fromLocal8Bit(qt_configure_demos_path_str);
             break;
         default:
             break;
-        }
-
-        if(!key.isNull()) {
-            QSettings *config = QLibraryInfoPrivate::configuration();
-            config->beginGroup(QLatin1String("Paths"));
-
-            QString subKey;
-            {
-                /*
-                  find the child group whose version number is closest
-                  to the library version.  for example and we have the
-                  following groups:
-
-                  Paths
-                  Paths/4.0
-                  Paths/4.1.2
-                  Paths/4.2.5
-                  Paths/5
-
-                  if QT_VERSION is 4.0.1, then we use 'Paths/4.0'
-                  if QT_VERSION is 4.1.5, then we use 'Paths/4.1.2'
-                  if QT_VERSION is 4.6.3, then we use 'Paths/4.2.5'
-                  if QT_VERSION is 6.0.2, then we use 'Paths/5'
-
-                  note: any of the trailing version numbers may be
-                  omitted (in which case, they default to zero),
-                  i.e. 4 == 4.0.0, 4.1 == 4.1.0, and so on
-                */
-                enum {
-                    QT_MAJOR = ((QT_VERSION >> 16) & 0xFF),
-                    QT_MINOR = ((QT_VERSION >> 8) & 0xFF),
-                    QT_PATCH = (QT_VERSION & 0xFF)
-                };
-                int maj = 0, min = 0, pat = 0;
-                QStringList children = config->childGroups();
-                for(int child = 0; child < children.size(); ++child) {
-                    QString cver = children.at(child);
-                    QStringList cver_list = cver.split(QLatin1Char('.'));
-                    if(cver_list.size() > 0 && cver_list.size() < 4) {
-                        bool ok;
-                        int cmaj = -1, cmin = -1, cpat = -1;
-                        cmaj = cver_list[0].toInt(&ok);
-                        if(!ok || cmaj < 0)
-                            continue;
-                        if(cver_list.size() >= 2) {
-                            cmin = cver_list[1].toInt(&ok);
-                            if(!ok)
-                                continue;
-                            if(cmin < 0)
-                                cmin = -1;
-                        }
-                        if(cver_list.size() >= 3) {
-                            cpat = cver_list[2].toInt(&ok);
-                            if(!ok)
-                                continue;
-                            if(cpat < 0)
-                                cpat = -1;
-                        }
-                        if((cmaj >= maj && cmaj <= QT_MAJOR) &&
-                           (cmin == -1 || (cmin >= min && cmin <= QT_MINOR)) &&
-                           (cpat == -1 || (cpat >= pat && cpat <= QT_PATCH)) &&
-                           config->contains(cver + QLatin1Char('/') + key)) {
-                            subKey = cver + QLatin1Char('/');
-                            maj = cmaj;
-                            min = cmin;
-                            pat = cpat;
-                        }
-                    }
-                }
-            }
-            ret = config->value(subKey + key, defaultValue).toString();
-            // expand environment variables in the form $(ENVVAR)
-            int rep;
-            QRegExp reg_var(QLatin1String("\\$\\(.*\\)"));
-            reg_var.setMinimal(true);
-            while((rep = reg_var.indexIn(ret)) != -1) {
-                ret.replace(rep, reg_var.matchedLength(),
-                            QString::fromLocal8Bit(qgetenv(ret.mid(rep + 2,
-                                reg_var.matchedLength() - 3).toLatin1().constData()).constData()));
-            }
-
-            config->endGroup();
-        }
     }
 
     if (QDir::isRelativePath(ret)) {
@@ -514,10 +285,10 @@ void qt_core_boilerplate()
            "Installation prefix: %s\n"
            "Library path:        %s\n"
            "Include path:        %s\n",
-           qt_configure_installation + 12,
-           qt_configure_prefix_path_str + 12,
-           qt_configure_libraries_path_str + 12,
-           qt_configure_headers_path_str + 12);
+           qt_configure_installation,
+           qt_configure_prefix_path_str,
+           qt_configure_libraries_path_str,
+           qt_configure_headers_path_str);
 
     QT_PREPEND_NAMESPACE(qDumpCPUFeatures)();
 

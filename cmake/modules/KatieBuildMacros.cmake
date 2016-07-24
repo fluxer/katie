@@ -83,14 +83,6 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     endif()
 endmacro()
 
-function(KATIE_GENERATE_STRING INSTR OUTSTR)
-    if("${INSTR}" GREATER "536")
-        message(FATAL_ERROR "${OUTSTR} is greater than 536")
-    endif()
-    # qt used to do some magic, adding trailing \0 in a weird way via padstring script
-    set(${OUTSTR} "${INSTR}\\0" PARENT_SCOPE)
-endfunction()
-
 # the purpose of this function is to ensure that (1) the output string is not
 # null so that when it is passed to another function/macro it does not complain
 # about inproper number of arguments and (2) it joins the input which if quoted

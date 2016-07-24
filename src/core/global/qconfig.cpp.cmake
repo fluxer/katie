@@ -40,37 +40,21 @@
 ****************************************************************************/
 
 /* Installation date */
-static const char qt_configure_installation          [12+11]    = "${KATIE_DATE}";
+static const char* qt_configure_installation           = "${KATIE_DATE}";
 
 /* License Info */
-static const char qt_configure_licensee_str          [256 + 12] = "${QT_LICENSE_STR}";
-static const char qt_configure_licensed_products_str [256 + 12] = "${QT_PRODUCT_STR}";
+static const char* qt_configure_licensee_str           = "${QT_LICENSE}\\0";
+static const char* qt_configure_licensed_products_str  = "${QT_PRODUCT}\\0";
 
-static const char qt_configure_prefix_path_str       [256 + 12] = "${QT_PREFIX_PATH_STR}";
-static const char qt_configure_headers_path_str      [256 + 12] = "${QT_HEADERS_PATH_STR}";
-static const char qt_configure_libraries_path_str    [256 + 12] = "${QT_LIBRARIES_PATH_STR}";
-static const char qt_configure_binaries_path_str     [256 + 12] = "${QT_BINARIES_PATH_STR}";
-static const char qt_configure_plugins_path_str      [256 + 12] = "${QT_PLUGINS_PATH_STR}";
-static const char qt_configure_imports_path_str      [256 + 12] = "${QT_IMPORTS_PATH_STR}";
-static const char qt_configure_data_path_str         [256 + 12] = "${QT_DATA_PATH_STR}";
-static const char qt_configure_translations_path_str [256 + 12] = "${QT_TRANSLATIONS_PATH_STR}";
-static const char qt_configure_settings_path_str     [256 + 12] = "${QT_SETTINGS_PATH_STR}";
-static const char qt_configure_documentation_path_str[256 + 12] = "${QT_DOCUMENTATION_PATH_STR}";
-static const char qt_configure_examples_path_str     [256 + 12] = "${QT_EXAMPLES_PATH_STR}";
-static const char qt_configure_demos_path_str        [256 + 12] = "${QT_DEMOS_PATH_STR}";
-
-/* strlen( "qt_lcnsxxxx" ) == 12 */
-#define QT_CONFIGURE_LICENSEE qt_configure_licensee_str + 12;
-#define QT_CONFIGURE_LICENSED_PRODUCTS qt_configure_licensed_products_str + 12;
-#define QT_CONFIGURE_PREFIX_PATH qt_configure_prefix_path_str + 12;
-#define QT_CONFIGURE_HEADERS_PATH qt_configure_headers_path_str + 12;
-#define QT_CONFIGURE_LIBRARIES_PATH qt_configure_libraries_path_str + 12;
-#define QT_CONFIGURE_BINARIES_PATH qt_configure_binaries_path_str + 12;
-#define QT_CONFIGURE_PLUGINS_PATH qt_configure_plugins_path_str + 12;
-#define QT_CONFIGURE_IMPORTS_PATH qt_configure_imports_path_str + 12;
-#define QT_CONFIGURE_DATA_PATH qt_configure_data_path_str + 12;
-#define QT_CONFIGURE_TRANSLATIONS_PATH qt_configure_translations_path_str + 12;
-#define QT_CONFIGURE_SETTINGS_PATH qt_configure_settings_path_str + 12;
-#define QT_CONFIGURE_DOCUMENTATION_PATH qt_configure_documentation_path_str + 12;
-#define QT_CONFIGURE_EXAMPLES_PATH qt_configure_examples_path_str + 12;
-#define QT_CONFIGURE_DEMOS_PATH qt_configure_demos_path_str + 12;
+static const char* qt_configure_prefix_path_str        = "${QT_PREFIX_PATH}\\0";
+static const char* qt_configure_headers_path_str       = "${QT_HEADERS_PATH}\\0";
+static const char* qt_configure_libraries_path_str     = "${QT_LIBRARIES_PATH}\\0";
+static const char* qt_configure_binaries_path_str      = "${QT_BINARIES_PATH}\\0";
+static const char* qt_configure_plugins_path_str       = "${QT_PLUGINS_PATH}\\0";
+static const char* qt_configure_imports_path_str       = "${QT_IMPORTS_PATH}\\0";
+static const char* qt_configure_data_path_str          = "${QT_DATA_PATH}\\0";
+static const char* qt_configure_translations_path_str  = "${QT_TRANSLATIONS_PATH}\\0";
+static const char* qt_configure_settings_path_str      = "${QT_SETTINGS_PATH}\\0";
+static const char* qt_configure_documentation_path_str = "${QT_DOCUMENTATION_PATH}\\0";
+static const char* qt_configure_examples_path_str      = "${QT_EXAMPLES_PATH}\\0";
+static const char* qt_configure_demos_path_str         = "${QT_DEMOS_PATH}\\0";
