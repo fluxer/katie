@@ -106,7 +106,6 @@ public:
 
     struct Flags {
         uint has_clip_ownership : 1;        // should delete the clip member..
-        uint fast_pen : 1;                  // cosmetic 1-width pens, using midpoint drawlines
         uint non_complex_pen : 1;           // can use rasterizer, rather than stroker
         uint antialiased : 1;
         uint bilinear : 1;

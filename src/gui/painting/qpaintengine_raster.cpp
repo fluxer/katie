@@ -65,7 +65,6 @@
 #include <qpixmap_raster_p.h>
 #include <qimage_p.h>
 #include <qstatictext_p.h>
-#include <qcosmeticstroker_p.h>
 #include "qmemrotate_p.h"
 
 #include "qpaintengine_raster_p.h"
@@ -135,21 +134,6 @@ struct ClipData
     QClipData *oldClip;
     QClipData *newClip;
     Qt::ClipOperation operation;
-};
-
-enum LineDrawMode {
-    LineDrawClipped,
-    LineDrawNormal,
-    LineDrawIncludeLastPixel
-};
-
-static void drawEllipse_midpoint_i(const QRect &rect, const QRect &clip,
-                                   ProcessSpans pen_func, ProcessSpans brush_func,
-                                   QSpanData *pen_data, QSpanData *brush_data);
-
-struct QRasterFloatPoint {
-    qreal x;
-    qreal y;
 };
 
 #ifdef QT_DEBUG_DRAW
@@ -577,7 +561,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
 
     txscale = 1.;
 
-    flags.fast_pen = true;
     flags.antialiased = false;
     flags.bilinear = false;
     flags.fast_text = true;
@@ -721,10 +704,6 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
     }
 
     ensureRasterState(); // needed because of tx_noshear...
-    s->flags.fast_pen = pen_style > Qt::NoPen
-            && s->penData.blend
-            && ((pen.isCosmetic() && penWidth <= 1)
-                || (!pen.isCosmetic() && s->flags.tx_noshear && penWidth * s->txscale <= 1));
 
     s->flags.non_complex_pen = qpen_capStyle(s->lastPen) <= Qt::SquareCap && s->flags.tx_noshear;
 
@@ -1465,17 +1444,9 @@ void QRasterPaintEngine::drawRects(const QRect *rects, int rectCount)
     ensurePen();
     if (s->penData.blend) {
         QRectVectorPath path;
-        if (s->flags.fast_pen) {
-            QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-            for (int i = 0; i < rectCount; ++i) {
-                path.set(rects[i]);
-                stroker.drawPath(path);
-            }
-        } else {
-            for (int i = 0; i < rectCount; ++i) {
-                path.set(rects[i]);
-                stroke(path, s->pen);
-            }
+        for (int i = 0; i < rectCount; ++i) {
+            path.set(rects[i]);
+            stroke(path, s->pen);
         }
     }
 }
@@ -1511,17 +1482,9 @@ void QRasterPaintEngine::drawRects(const QRectF *rects, int rectCount)
         ensurePen();
         if (s->penData.blend) {
             QRectVectorPath path;
-            if (s->flags.fast_pen) {
-                QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-                for (int i = 0; i < rectCount; ++i) {
-                    path.set(rects[i]);
-                    stroker.drawPath(path);
-                }
-            } else {
-                for (int i = 0; i < rectCount; ++i) {
-                    path.set(rects[i]);
-                    QPaintEngineEx::stroke(path, s->lastPen);
-                }
+            for (int i = 0; i < rectCount; ++i) {
+                path.set(rects[i]);
+                QPaintEngineEx::stroke(path, s->lastPen);
             }
         }
 
@@ -1537,17 +1500,13 @@ void QRasterPaintEngine::drawRects(const QRectF *rects, int rectCount)
 */
 void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
 {
-    Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
     ensurePen(pen);
     if (!s->penData.blend)
         return;
 
-    if (s->flags.fast_pen) {
-        QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-        stroker.drawPath(path);
-    } else if (s->flags.non_complex_pen && path.shape() == QVectorPath::LinesHint) {
+    if (s->flags.non_complex_pen && path.shape() == QVectorPath::LinesHint) {
         qreal width = s->lastPen.isCosmetic()
                       ? (qpen_widthf(s->lastPen) == 0 ? 1 : qpen_widthf(s->lastPen))
                       : qpen_widthf(s->lastPen) * s->txscale;
@@ -1596,9 +1555,9 @@ void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
                                         &dashIndex, &dashOffset, &inDash);
             }
         }
-    }
-    else
+    } else {
         QPaintEngineEx::stroke(path, pen);
+    }
 }
 
 static inline QRect toNormalizedFillRect(const QRectF &rect)
@@ -1855,7 +1814,6 @@ void QRasterPaintEngine::fillPolygon(const QPointF *points, int pointCount, Poly
 */
 void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDrawMode mode)
 {
-    Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
 #ifdef QT_DEBUG_DRAW
@@ -1882,12 +1840,7 @@ void QRasterPaintEngine::drawPolygon(const QPointF *points, int pointCount, Poly
     // Do the outline...
     if (s->penData.blend) {
         QVectorPath vp((qreal *) points, pointCount, 0, QVectorPath::polygonFlags(mode));
-        if (s->flags.fast_pen) {
-            QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-            stroker.drawPath(vp);
-        } else {
-            QPaintEngineEx::stroke(vp, s->lastPen);
-        }
+        QPaintEngineEx::stroke(vp, s->lastPen);
     }
 }
 
@@ -1953,12 +1906,7 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
     #endif
         QVectorPath vp((qreal *) fpoints.data(), pointCount, 0, QVectorPath::polygonFlags(mode));
 
-        if (s->flags.fast_pen) {
-            QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-            stroker.drawPath(vp);
-        } else {
-            QPaintEngineEx::stroke(vp, s->lastPen);
-        }
+        QPaintEngineEx::stroke(vp, s->lastPen);
     }
 }
 
@@ -2931,9 +2879,9 @@ QRasterPaintEnginePrivate::getPenFunc(const QRectF &rect,
     Q_Q(const QRasterPaintEngine);
     const QRasterPaintEngineState *s = q->state();
 
-    if (!s->flags.fast_pen && s->matrix.type() > QTransform::TxTranslate)
+    if (s->matrix.type() > QTransform::TxTranslate)
         return data->blend;
-    const int penWidth = s->flags.fast_pen ? 1 : qCeil(s->lastPen.widthF());
+    const int penWidth = qCeil(s->lastPen.widthF());
     return isUnclipped(rect, penWidth) ? data->unclipped_blend : data->blend;
 }
 
@@ -3025,39 +2973,25 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 */
 void QRasterPaintEngine::drawPoints(const QPointF *points, int pointCount)
 {
-    Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
     ensurePen();
     if (!s->penData.blend)
         return;
 
-    if (!s->flags.fast_pen) {
-        QPaintEngineEx::drawPoints(points, pointCount);
-        return;
-    }
-
-    QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-    stroker.drawPoints(points, pointCount);
+    QPaintEngineEx::drawPoints(points, pointCount);
 }
 
 
 void QRasterPaintEngine::drawPoints(const QPoint *points, int pointCount)
 {
-    Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
     ensurePen();
     if (!s->penData.blend)
         return;
 
-    if (!s->flags.fast_pen) {
-        QPaintEngineEx::drawPoints(points, pointCount);
-        return;
-    }
-
-    QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-    stroker.drawPoints(points, pointCount);
+    QPaintEngineEx::drawPoints(points, pointCount);
 }
 
 /*!
@@ -3068,22 +3002,13 @@ void QRasterPaintEngine::drawLines(const QLine *lines, int lineCount)
 #ifdef QT_DEBUG_DRAW
     qDebug() << " - QRasterPaintEngine::drawLines(QLine*)" << lineCount;
 #endif
-    Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
     ensurePen();
     if (!s->penData.blend)
         return;
 
-    if (s->flags.fast_pen) {
-        QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-        for (int i=0; i<lineCount; ++i) {
-            const QLine &l = lines[i];
-            stroker.drawLine(l.p1(), l.p2());
-        }
-    } else {
-        QPaintEngineEx::drawLines(lines, lineCount);
-    }
+    QPaintEngineEx::drawLines(lines, lineCount);
 }
 
 void QRasterPaintEnginePrivate::rasterizeLine_dashed(QLineF line,
@@ -3140,21 +3065,13 @@ void QRasterPaintEngine::drawLines(const QLineF *lines, int lineCount)
 #ifdef QT_DEBUG_DRAW
     qDebug() << " - QRasterPaintEngine::drawLines(QLineF *)" << lineCount;
 #endif
-    Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
     ensurePen();
     if (!s->penData.blend)
         return;
-    if (s->flags.fast_pen) {
-        QCosmeticStroker stroker(s, d->deviceRect, d->deviceRectUnclipped);
-        for (int i=0; i<lineCount; ++i) {
-            QLineF line = lines[i];
-            stroker.drawLine(line.p1(), line.p2());
-        }
-    } else {
-        QPaintEngineEx::drawLines(lines, lineCount);
-    }
+
+    QPaintEngineEx::drawLines(lines, lineCount);
 }
 
 
@@ -3163,30 +3080,8 @@ void QRasterPaintEngine::drawLines(const QLineF *lines, int lineCount)
 */
 void QRasterPaintEngine::drawEllipse(const QRectF &rect)
 {
-    Q_D(QRasterPaintEngine);
-    QRasterPaintEngineState *s = state();
-
     ensurePen();
-    if (((qpen_style(s->lastPen) == Qt::SolidLine && s->flags.fast_pen)
-           || (qpen_style(s->lastPen) == Qt::NoPen))
-        && !s->flags.antialiased
-        && qMax(rect.width(), rect.height()) < QT_RASTER_COORD_LIMIT
-        && !rect.isEmpty()
-        && s->matrix.type() <= QTransform::TxScale) // no shear
-    {
-        ensureBrush();
-        const QRectF r = s->matrix.mapRect(rect);
-        ProcessSpans penBlend = d->getPenFunc(r, &s->penData);
-        ProcessSpans brushBlend = d->getBrushFunc(r, &s->brushData);
-        const QRect brect = QRect(int(r.x()), int(r.y()),
-                                  int_dim(r.x(), r.width()),
-                                  int_dim(r.y(), r.height()));
-        if (brect == r) {
-            drawEllipse_midpoint_i(brect, d->deviceRect, penBlend, brushBlend,
-                                   &s->penData, &s->brushData);
-            return;
-        }
-    }
+
     QPaintEngineEx::drawEllipse(rect);
 }
 
@@ -4681,54 +4576,6 @@ static inline void drawEllipsePoints(int x, int y, int length,
         n = qt_intersect_spans(outline, n, clip);
         if (n > 0)
             pen_func(n, outline, pen_data);
-    }
-}
-
-/*!
-    \internal
-    Draws an ellipse using the integer point midpoint algorithm.
-*/
-static void drawEllipse_midpoint_i(const QRect &rect, const QRect &clip,
-                                   ProcessSpans pen_func, ProcessSpans brush_func,
-                                   QSpanData *pen_data, QSpanData *brush_data)
-{
-    const qreal a = qreal(rect.width()) / 2;
-    const qreal b = qreal(rect.height()) / 2;
-    qreal d = b*b - (a*a*b) + qreal(0.25)*a*a;
-
-    int x = 0;
-    int y = (rect.height() + 1) / 2;
-    int startx = x;
-
-    // region 1
-    while (a*a*(2*y - 1) > 2*b*b*(x + 1)) {
-        if (d < 0) { // select E
-            d += b*b*(2*x + 3);
-            ++x;
-        } else {     // select SE
-            d += b*b*(2*x + 3) + a*a*(-2*y + 2);
-            drawEllipsePoints(startx, y, x - startx + 1, rect, clip,
-                              pen_func, brush_func, pen_data, brush_data);
-            startx = ++x;
-            --y;
-        }
-    }
-    drawEllipsePoints(startx, y, x - startx + 1, rect, clip,
-                      pen_func, brush_func, pen_data, brush_data);
-
-    // region 2
-    d = b*b*(x + qreal(0.5))*(x + qreal(0.5)) + a*a*((y - 1)*(y - 1) - b*b);
-    const int miny = rect.height() & 0x1;
-    while (y > miny) {
-        if (d < 0) { // select SE
-            d += b*b*(2*x + 2) + a*a*(-2*y + 3);
-            ++x;
-        } else {     // select S
-            d += a*a*(-2*y + 3);
-        }
-        --y;
-        drawEllipsePoints(x, y, 1, rect, clip,
-                          pen_func, brush_func, pen_data, brush_data);
     }
 }
 
