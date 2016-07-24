@@ -780,8 +780,7 @@ void Generator::generateMetacall()
                 "        _id -= %d;\n"
                 "    }", cdef->propertyList.count());
 
-        fprintf(out, " else ");
-        fprintf(out, "if (_c == QMetaObject::QueryPropertyScriptable) {\n");
+        fprintf(out, " else if (_c == QMetaObject::QueryPropertyScriptable) {\n");
         if (needScriptable) {
             fprintf(out, "        bool *_b = reinterpret_cast<bool*>(_a[0]);\n");
             fprintf(out, "        switch (_id) {\n");
@@ -798,8 +797,7 @@ void Generator::generateMetacall()
                 "        _id -= %d;\n"
                 "    }", cdef->propertyList.count());
 
-        fprintf(out, " else ");
-        fprintf(out, "if (_c == QMetaObject::QueryPropertyStored) {\n");
+        fprintf(out, " else if (_c == QMetaObject::QueryPropertyStored) {\n");
         if (needStored) {
             fprintf(out, "        bool *_b = reinterpret_cast<bool*>(_a[0]);\n");
             fprintf(out, "        switch (_id) {\n");
@@ -816,8 +814,7 @@ void Generator::generateMetacall()
                 "        _id -= %d;\n"
                 "    }", cdef->propertyList.count());
 
-        fprintf(out, " else ");
-        fprintf(out, "if (_c == QMetaObject::QueryPropertyEditable) {\n");
+        fprintf(out, " else if (_c == QMetaObject::QueryPropertyEditable) {\n");
         if (needEditable) {
             fprintf(out, "        bool *_b = reinterpret_cast<bool*>(_a[0]);\n");
             fprintf(out, "        switch (_id) {\n");
@@ -835,8 +832,7 @@ void Generator::generateMetacall()
                 "    }", cdef->propertyList.count());
 
 
-        fprintf(out, " else ");
-        fprintf(out, "if (_c == QMetaObject::QueryPropertyUser) {\n");
+        fprintf(out, " else if (_c == QMetaObject::QueryPropertyUser) {\n");
         if (needUser) {
             fprintf(out, "        bool *_b = reinterpret_cast<bool*>(_a[0]);\n");
             fprintf(out, "        switch (_id) {\n");
