@@ -52,13 +52,6 @@ QT_BEGIN_NAMESPACE
 
 class QVariant;
 class QPenPrivate;
-class QBrush;
-class QPen;
-
-#ifndef QT_NO_DATASTREAM
-Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPen &);
-Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPen &);
-#endif
 
 class Q_GUI_EXPORT QPen
 {
@@ -136,6 +129,11 @@ Q_DECLARE_SHARED(QPen)
 #ifndef QT_NO_DEBUG_STREAM
 Q_GUI_EXPORT QDebug operator<<(QDebug, const QPen &);
 #endif
+#ifndef QT_NO_DATASTREAM
+Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPen &);
+Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QPen &);
+#endif
+
 
 QT_END_NAMESPACE
 
