@@ -643,7 +643,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QPageSetupDialog", "QtGui/qpagesetupdialog.h"},
     { "QDialog", "QtGui/qdialog.h"},
     { "QFontDialog", "QtGui/qfontdialog.h"},
-    { "QUnixPrintWidget", "QtGui/qprintdialog.h"},
     { "QPrintDialog", "QtGui/qprintdialog.h"},
     { "QFileSystemModel", "QtGui/qfilesystemmodel.h"},
     { "QAbstractPageSetupDialog", "QtGui/qabstractpagesetupdialog.h"},
@@ -792,6 +791,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 786;
+static const int qclass_lib_count = 785;
 
 #endif

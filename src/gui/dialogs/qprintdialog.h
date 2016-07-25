@@ -52,30 +52,9 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_PRINTDIALOG
 
 class QPrintDialogPrivate;
+class QUnixPrintWidget;
 class QPushButton;
 class QPrinter;
-
-#if defined (Q_OS_UNIX) && !defined(Q_WS_MAC)
-class QUnixPrintWidgetPrivate;
-
-class Q_GUI_EXPORT QUnixPrintWidget : public QWidget
-{
-    Q_OBJECT
-
-public:
-    QUnixPrintWidget(QPrinter *printer, QWidget *parent = 0);
-    ~QUnixPrintWidget();
-    void updatePrinter();
-
-private:
-    friend class QPrintDialogPrivate;
-    friend class QUnixPrintWidgetPrivate;
-    QUnixPrintWidgetPrivate *d;
-    Q_PRIVATE_SLOT(d, void _q_printerChanged(int))
-    Q_PRIVATE_SLOT(d, void _q_btnBrowseClicked())
-    Q_PRIVATE_SLOT(d, void _q_btnPropertiesClicked())
-};
-#endif
 
 class Q_GUI_EXPORT QPrintDialog : public QAbstractPrintDialog
 {

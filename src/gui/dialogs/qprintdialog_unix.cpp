@@ -179,7 +179,25 @@ private:
     const ppd_file_t* cupsPPD;
 #endif
 };
-#endif
+
+class QUnixPrintWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    QUnixPrintWidget(QPrinter *printer, QWidget *parent = 0);
+    ~QUnixPrintWidget();
+    void updatePrinter();
+
+private:
+    friend class QPrintDialogPrivate;
+    friend class QUnixPrintWidgetPrivate;
+    QUnixPrintWidgetPrivate *d;
+    Q_PRIVATE_SLOT(d, void _q_printerChanged(int))
+    Q_PRIVATE_SLOT(d, void _q_btnBrowseClicked())
+    Q_PRIVATE_SLOT(d, void _q_btnPropertiesClicked())
+};
+#endif // Q_OS_UNIX
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
 class QOptionTreeItem
