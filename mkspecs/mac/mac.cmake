@@ -11,7 +11,8 @@ elseif("${KATIE_ARCHITECTURE}" STREQUAL "x86_64")
     set(KATIE_CXXFLAGS
         ${KATIE_CXXFLAGS}
         -arch i386
-        -Xarch_x86_64 -mmacosx-version-min=10.5
+        -Xarch_x86_64
+        -mmacosx-version-min=10.5
     )
 elseif("${KATIE_ARCHITECTURE}" STREQUAL "ppc")
     set(KATIE_CXXFLAGS
@@ -22,7 +23,8 @@ elseif("${KATIE_ARCHITECTURE}" STREQUAL "ppc64")
     set(KATIE_CXXFLAGS
         ${KATIE_CXXFLAGS}
         -arch ppc64
-        -Xarch_ppc64 -mmacosx-version-min=10.5
+        -Xarch_ppc64
+        -mmacosx-version-min=10.5
     )
 endif()
 
@@ -37,7 +39,6 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
     )
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
-        -Wl,-O1
         -Wl,--no-undefined
         -Wl,-Bsymbolic-functions
         # -Wl,--dynamic-list
