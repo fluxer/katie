@@ -170,7 +170,7 @@ if(KATIE_PLATFORM STREQUAL "win32")
 elseif(KATIE_PLATFORM STREQUAL "mac")
     set(GUI_HEADERS
         ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_mac_p.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_mac_p.h
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}

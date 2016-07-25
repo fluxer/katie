@@ -41,7 +41,7 @@ katie_resources(${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_flags()
 
 add_executable(qdbusviewer
-    WIN32 MACOSX_BUNDLE
+    WIN32 # TODO: MACOSX_BUNDLE
     ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS}
 )
 target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})

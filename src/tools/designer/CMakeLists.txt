@@ -99,7 +99,7 @@ katie_resources(${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 katie_setup_flags()
 
 add_executable(designer
-    WIN32 MACOSX_BUNDLE
+    WIN32 # TODO: MACOSX_BUNDLE
     $<TARGET_OBJECTS:shareddeviceskin>
     ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS}
 )
