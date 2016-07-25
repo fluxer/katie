@@ -43,6 +43,7 @@
 #include <qpixmap_mac_p.h>
 #include <qnativeimage_p.h>
 #include <qdebug.h>
+#include <qfont.h>
 
 QT_BEGIN_NAMESPACE
 #ifdef QT_MAC_USE_COCOA
