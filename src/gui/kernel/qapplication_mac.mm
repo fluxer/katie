@@ -123,6 +123,7 @@
 #include <qdesktopwidget_mac_p.h>
 #include <qeventdispatcher_mac_p.h>
 #include <qvarlengtharray.h>
+#include <qthread_p.h>
 
 #ifndef QT_NO_ACCESSIBILITY
 #  include "qaccessible.h"
