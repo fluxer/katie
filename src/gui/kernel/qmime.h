@@ -104,6 +104,7 @@ private:
 */
 
 class Q_GUI_EXPORT QMacMime { //Obsolete
+    char type;
 public:
     enum QMacMimeType { MIME_DND=0x01, MIME_CLIP=0x02, MIME_QT_CONVERTOR=0x04, MIME_ALL=MIME_DND|MIME_CLIP };
     explicit QMacMime(char) { }
@@ -126,11 +127,11 @@ public:
 };
 
 class Q_GUI_EXPORT QMacPasteboardMime {
+    char type;
 public:
     enum QMacPasteboardMimeType { MIME_DND=0x01,
                                   MIME_CLIP=0x02,
                                   MIME_QT_CONVERTOR=0x04,
-                                  MIME_QT3_CONVERTOR=0x08,
                                   MIME_ALL=MIME_DND|MIME_CLIP
     };
     explicit QMacPasteboardMime(char);
