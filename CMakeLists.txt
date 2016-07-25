@@ -29,7 +29,7 @@ include(KatieBuildMacros)
 set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Multimedia Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer")
 
-# optional package features
+# optional package
 option(WITH_THREADS "Build threads support" ON)
 add_feature_info(threads WITH_THREADS "an open source something")
 
@@ -109,7 +109,7 @@ add_feature_info(sqlite WITH_SQLITE "the world's most popular open source databa
 option(WITH_X11 "Build X11/X.Org support" ON)
 add_feature_info(x11 WITH_X11 "an open source something")
 
-# katie features
+# optional features
 option(KATIE_BOOTSTRAP "Build only core tools" OFF)
 add_feature_info(bootstrap KATIE_BOOTSTRAP "internal build option")
 
@@ -471,6 +471,7 @@ if(ENABLE_TESTING)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
+# optional packages
 if(NOT WITH_THREADS OR NOT THREADS_FOUND)
     katie_definition(-DQT_NO_THREAD)
 endif()
@@ -511,10 +512,6 @@ if(NOT WITH_NIS OR NOT NIS_FOUND)
     katie_definition(-DQT_NO_NIS)
 endif()
 
-if(NOT WITH_DIRECTWRITE)
-    katie_definition(-DQT_NO_DIRECTWRITE)
-endif()
-
 if(NOT WITH_OPENGL OR NOT OPENGL_FOUND)
     katie_definition(-DQT_NO_OPENGL)
 else()
@@ -523,10 +520,6 @@ endif()
 
 if(NOT WITH_NAS OR NOT NAS_FOUND)
     katie_definition(-DQT_NO_NAS)
-endif()
-
-if(NOT WITH_PNG)
-    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
@@ -539,6 +532,32 @@ endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
+endif()
+
+
+# conditional features
+if(NOT WITH_ACCESSIBILITY)
+    katie_definition(-DQT_NO_ACCESSIBILITY)
+endif()
+
+if(NOT WITH_DIRECTWRITE)
+    katie_definition(-DQT_NO_DIRECTWRITE)
+endif()
+
+if(WITH_OPENGLES1)
+    katie_definition(-DQT_OPENGL_ES_1)
+endif()
+
+if(WITH_OPENGLES2)
+    katie_definition(-DQT_OPENGL_ES_2)
+endif()
+
+# keep in sucn with multimedia audio component CMake file, only definitions setup is needed here
+if(KATIE_PLATFORM MATCHES "(mac|win32|wince)" OR (UNIX AND WITH_ALSA AND ALSA_FOUND))
+    # NOTE: CMake's logical OR does not stop at the first met condition and
+    # I'd rather not have a AND condition here with negatives
+else()
+    katie_definition(-DQT_NO_AUDIO_BACKEND)
 endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here
@@ -559,6 +578,11 @@ if(WITH_X11 AND X11_FOUND)
         message(WARNING "X11 SM was not found thus disabling session manager support")
         katie_definition(-DQT_NO_SESSIONMANAGER)
     endif()
+endif()
+
+# kinda optional package
+if(NOT WITH_PNG)
+    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
 # semi-shared

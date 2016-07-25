@@ -22,7 +22,7 @@ set(MULTIMEDIA_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiodevicefactory.cpp
 )
 
-if(BUILD_PLATFORM STREQUAL "mac")
+if(KATIE_PLATFORM STREQUAL "mac")
     set(MULTIMEDIA_HEADERS
         ${MULTIMEDIA_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_mac_p.h
@@ -44,7 +44,7 @@ if(BUILD_PLATFORM STREQUAL "mac")
         -framework AudioUnit
         -framework AudioToolbox
     )
-elseif(BUILD_PLATFORM MATCHES "(win32|wince)")
+elseif(KATIE_PLATFORM MATCHES "(win32|wince)")
     set(MULTIMEDIA_HEADERS
         ${MULTIMEDIA_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_win32_p.h
@@ -57,7 +57,7 @@ elseif(BUILD_PLATFORM MATCHES "(win32|wince)")
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiooutput_win32_p.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_win32_p.cpp
     )
-    if(BUILD_PLATFORM STREQUAL "wince")
+    if(KATIE_PLATFORM STREQUAL "wince")
         set(EXTRA_MULTIMEDIA_LIBS
             ${EXTRA_MULTIMEDIA_LIBS}
             coredll
@@ -87,7 +87,5 @@ elseif(UNIX AND WITH_ALSA AND ALSA_FOUND)
     )
     include_directories(${ALSA_INCLUDE_DIRS})
     add_definitions(-DHAS_ALSA)
-else()
-    katie_definition(-DQT_NO_AUDIO_BACKEND)
 endif()
 

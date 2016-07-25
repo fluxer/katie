@@ -107,8 +107,6 @@ if(NOT WITH_OPENGLES1)
         ${CMAKE_CURRENT_SOURCE_DIR}/gl2paintengineex/qtriangulator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/gl2paintengineex/qtextureglyphcache_gl.cpp
     )
-else()
-    katie_definition(-DQT_OPENGL_ES_1)
 endif()
 
 if(NOT WITH_OPENGLES2)
@@ -120,8 +118,6 @@ if(NOT WITH_OPENGLES2)
         ${OPENGL_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/qpaintengine_opengl.cpp
     )
-else()
-    katie_definition(-DQT_OPENGL_ES_2)
 endif()
 
 if(WITH_X11 AND X11_FOUND)

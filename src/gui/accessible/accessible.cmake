@@ -43,7 +43,4 @@ if(WITH_ACCESSIBILITY)
             ${CMAKE_CURRENT_SOURCE_DIR}/accessible/qaccessiblebridge.cpp
         )
     endif()
-else()
-    # FIXME: move to global scope
-    katie_definition(-DQT_NO_ACCESSIBILITY)
 endif()
