@@ -52,8 +52,6 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_PRINTDIALOG
 
 class QPrintDialogPrivate;
-class QUnixPrintWidget;
-class QPushButton;
 class QPrinter;
 
 class Q_GUI_EXPORT QPrintDialog : public QAbstractPrintDialog
