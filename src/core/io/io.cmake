@@ -89,7 +89,6 @@ if(KATIE_PLATFORM STREQUAL "win32")
 elseif(UNIX)
     set(CORE_SOURCES
         ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
@@ -106,6 +105,11 @@ elseif(UNIX)
             ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings_mac.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_mac.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_fsevents.cpp
+        )
+    else()
+        set(CORE_SOURCES
+            ${CORE_SOURCES}
+            ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_unix.cpp
         )
     endif()
 
