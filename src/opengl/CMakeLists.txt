@@ -76,7 +76,6 @@ if(NOT WITH_OPENGLES1)
         ${OPENGL_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/qglshaderprogram.h
         ${CMAKE_CURRENT_SOURCE_DIR}/qglpixmapfilter_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicsshadereffect_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicssystem_gl_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/qwindowsurface_gl_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/qpixmapdata_gl_p.h
@@ -96,7 +95,6 @@ if(NOT WITH_OPENGLES1)
         ${OPENGL_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/qglshaderprogram.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/qglpixmapfilter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicsshadereffect.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicssystem_gl.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/qwindowsurface_gl.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/qpixmapdata_gl.cpp
