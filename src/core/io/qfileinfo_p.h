@@ -143,10 +143,10 @@ public:
     mutable QString fileNames[QAbstractFileEngine::NFileNames];
     mutable QString fileOwners[2];
 
-    mutable uint cachedFlags : 30;
     bool const isDefaultConstructed : 1; // QFileInfo is a default constructed instance
     bool cache_enabled : 1;
     mutable uint fileFlags;
+    mutable uint cachedFlags : 1;
     mutable qint64 fileSize;
     mutable QDateTime fileTimes[3];
     inline bool getCachedFlag(uint c) const
