@@ -213,7 +213,7 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmacgesturerecognizer_mac.mm
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmultitouch_mac.mm
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcocoaintrospection_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/mac/macresources.qrc
+        ${CMAKE_CURRENT_SOURCE_DIR}/mac/macresources.qrc
     )
 
     # TODO: mac MENU_NIB
