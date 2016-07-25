@@ -107,6 +107,7 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
     set(BOOTSTRAP_SOURCES
         ${BOOTSTRAP_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_mac.mm
+        ${CMAKE_SOURCE_DIR}/src/core/kernel/qcore_mac.cpp
     )
 endif()
 
