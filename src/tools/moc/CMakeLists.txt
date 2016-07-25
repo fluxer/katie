@@ -19,25 +19,12 @@ set(MOC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/token.cpp
 )
 
-set(MOC_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/moc.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/preprocessor.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/parser.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/symbols.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/token.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/utils.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/generator.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/outputrevision.h
-    ${BOOTSTRAP_HEADERS}
-)
-
-# katie_resources("${MOC_SOURCES}")
 katie_setup_flags()
 
-add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES} ${MOC_HEADERS})
+add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
-add_executable(moc ${MOC_SOURCES} ${MOC_HEADERS})
+add_executable(moc ${MOC_SOURCES})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
 
 install(

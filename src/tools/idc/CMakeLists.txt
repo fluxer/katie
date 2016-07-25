@@ -7,7 +7,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${BOOTSTRAP_INCLUDES}
 )
 
 set(IDC_SOURCES

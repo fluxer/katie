@@ -1,16 +1,16 @@
-# bootstraped
-if(KATIE_PLATFORM MATCHES "(win32|wince)")
-    add_subdirectory(idc)
-endif()
+# semi-bootstraped
 add_subdirectory(moc)
+
 add_subdirectory(rcc)
 add_subdirectory(uic)
-
-# semi-bootstraped
 add_subdirectory(lrelease)
 add_subdirectory(lupdate)
 add_subdirectory(lconvert)
+
 if(NOT KATIE_BOOTSTRAP)
+    if(KATIE_PLATFORM MATCHES "(win32|wince)")
+        add_subdirectory(idc)
+    endif()
     if(WITH_DBUS AND DBUS_FOUND)
         add_subdirectory(qdbus)
         add_subdirectory(qdbusviewer)
