@@ -70,13 +70,13 @@ public:
         { return !o; }
 
     inline T* operator->() const
-        { return static_cast<T*>(const_cast<QObject*>(o)); }
+        { return static_cast<T*>(o); }
     inline T& operator*() const
-        { return *static_cast<T*>(const_cast<QObject*>(o)); }
+        { return *static_cast<T*>(o); }
     inline operator T*() const
-        { return static_cast<T*>(const_cast<QObject*>(o)); }
+        { return static_cast<T*>(o); }
     inline T* data() const
-        { return static_cast<T*>(const_cast<QObject*>(o)); }
+        { return static_cast<T*>(o); }
 };
 
 
