@@ -19,6 +19,15 @@ set(MOC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/token.cpp
 )
 
+# this is done because of bootstrap_moc
+if(KATIE_PLATFORM STREQUAL "mac")
+    set(KATIE_CXXFLAGS
+        ${KATIE_CXXFLAGS}
+        -framework CoreFoundation
+        -lObjC
+    )
+endif()
+
 katie_setup_flags()
 
 add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES})
