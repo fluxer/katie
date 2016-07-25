@@ -293,6 +293,7 @@ struct QGLWindowSurfacePrivate
     bool destructive_swap_buffers : 1;
     bool geometry_updated : 1;
     bool did_paint : 1;
+    bool swap_region_support : 1;
 
     QGLContext *ctx;
 
@@ -306,8 +307,6 @@ struct QGLWindowSurfacePrivate
     QList<QImage> buffers;
     QGLWindowSurfaceGLPaintDevice glDevice;
     QGLWindowSurface* q_ptr;
-
-    bool swap_region_support;
 };
 
 QGLFormat QGLWindowSurface::surfaceFormat;
