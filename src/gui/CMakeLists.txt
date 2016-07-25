@@ -368,6 +368,7 @@ set(GUI_PUBLIC_HEADERS
     QX11Info
     QX11EmbedContainer
     QX11EmbedWidget
+    QMacStyle
     # mixed
     QListWidgetItem
     QTreeWidgetItem
