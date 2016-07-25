@@ -188,6 +188,7 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcocoasharedwindowmethods_mac_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcocoaintrospection_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmacdefines_mac.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_mac_p.h
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}
