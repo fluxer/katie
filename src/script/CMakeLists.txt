@@ -7,11 +7,7 @@ add_definitions(
     -DWTF=QTWTF
     -DQT_NO_USING_NAMESPACE
     -DQLALR_NO_QSCRIPTGRAMMAR_DEBUG_INFO
-    # Avoid JSC C API functions being exported.
-    -DJS_NO_EXPORT
     -DBUILDING_QT__
-    -DBUILDING_JavaScriptCore
-    -DBUILDING_WTF
 )
 set(EXTRA_SCRIPT_LIBS KtCore)
 # TODO: fix std::auto_ptr warnings
