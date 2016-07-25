@@ -4,16 +4,20 @@ language: cpp
 compiler:
     - clang
 #    - gcc
+os:
+    - linux
+    - osx
 cache: ccache
 git:
     depth: 3
 before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq python-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libasound2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev libgtk2.0-dev libgl1-mesa-dev libwayland-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libsqlite3-dev xorg-dev
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                  ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq    ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq python-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libasound2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev libgtk2.0-dev libgl1-mesa-dev libwayland-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libsqlite3-dev xorg-dev ; fi
 before_script:
-    - "export DISPLAY=:99.0"
-    - "sh -e /etc/init.d/xvfb start"
-    - sleep 3 # give xvfb some time to start
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0         ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3                      ; fi
 script:
     - cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio"
     - make
