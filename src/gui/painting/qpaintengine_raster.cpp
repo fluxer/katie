@@ -3420,11 +3420,6 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     rasterize(outline, callback, (void *)spanData, rasterBuffer);
 }
 
-static inline uchar *alignAddress(uchar *address, quintptr alignmentMask)
-{
-    return (uchar *)(((quintptr)address + alignmentMask) & ~alignmentMask);
-}
-
 void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                                           ProcessSpans callback,
                                           void *userData, QRasterBuffer *)
@@ -4505,78 +4500,6 @@ void QSpanData::initTexture(const QImage *image, int alpha, QTextureData::Type _
     texture.type = _type;
 
     adjustSpanMethods();
-}
-
-/*!
-    \internal
-    \a x and \a y is relative to the midpoint of \a rect.
-*/
-static inline void drawEllipsePoints(int x, int y, int length,
-                                     const QRect &rect,
-                                     const QRect &clip,
-                                     ProcessSpans pen_func, ProcessSpans brush_func,
-                                     QSpanData *pen_data, QSpanData *brush_data)
-{
-    if (length == 0)
-        return;
-
-    QT_FT_Span outline[4];
-    const int midx = rect.x() + (rect.width() + 1) / 2;
-    const int midy = rect.y() + (rect.height() + 1) / 2;
-
-    x = x + midx;
-    y = midy - y;
-
-    // topleft
-    outline[0].x = midx + (midx - x) - (length - 1) - (rect.width() & 0x1);
-    outline[0].len = qMin(length, x - outline[0].x);
-    outline[0].y = y;
-    outline[0].coverage = 255;
-
-    // topright
-    outline[1].x = x;
-    outline[1].len = length;
-    outline[1].y = y;
-    outline[1].coverage = 255;
-
-    // bottomleft
-    outline[2].x = outline[0].x;
-    outline[2].len = outline[0].len;
-    outline[2].y = midy + (midy - y) - (rect.height() & 0x1);
-    outline[2].coverage = 255;
-
-    // bottomright
-    outline[3].x = x;
-    outline[3].len = length;
-    outline[3].y = outline[2].y;
-    outline[3].coverage = 255;
-
-    if (brush_func && outline[0].x + outline[0].len < outline[1].x) {
-        QT_FT_Span fill[2];
-
-        // top fill
-        fill[0].x = outline[0].x + outline[0].len - 1;
-        fill[0].len = qMax(0, outline[1].x - fill[0].x);
-        fill[0].y = outline[1].y;
-        fill[0].coverage = 255;
-
-        // bottom fill
-        fill[1].x = outline[2].x + outline[2].len - 1;
-        fill[1].len = qMax(0, outline[3].x - fill[1].x);
-        fill[1].y = outline[3].y;
-        fill[1].coverage = 255;
-
-        int n = (fill[0].y >= fill[1].y ? 1 : 2);
-        n = qt_intersect_spans(fill, n, clip);
-        if (n > 0)
-            brush_func(n, fill, brush_data);
-    }
-    if (pen_func) {
-        int n = (outline[1].y >= outline[2].y ? 2 : 4);
-        n = qt_intersect_spans(outline, n, clip);
-        if (n > 0)
-            pen_func(n, outline, pen_data);
-    }
 }
 
 /*!
