@@ -94,7 +94,9 @@ if(UNIX)
         ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_unix.cpp
         ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "win32")
+endif()
+
+if(KATIE_PLATFORM STREQUAL "win32")
     set(BOOTSTRAP_SOURCES
         ${BOOTSTRAP_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine_win.cpp
@@ -103,9 +105,7 @@ elseif(KATIE_PLATFORM STREQUAL "win32")
         ${CMAKE_SOURCE_DIR}/src/core/plugin/qsystemlibrary.cpp
         ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_win.cpp
     )
-endif()
-
-if(KATIE_PLATFORM STREQUAL "mac")
+elseif(KATIE_PLATFORM STREQUAL "mac")
     set(BOOTSTRAP_SOURCES
         ${BOOTSTRAP_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_mac.mm
