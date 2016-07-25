@@ -99,6 +99,13 @@ public:
 
     inline QPrintDialog *printDialog() { return q_func(); }
 
+    // stubs for the private signals
+    inline void _q_collapseOrExpandDialog() {}
+    inline void _q_chbPrintLastFirstToggled(bool) {}
+#ifndef QT_NO_MESSAGEBOX
+    inline void _q_checkFields() {}
+#endif
+
     QMacPrintEnginePrivate *ep;
     NSPrintPanel *printPanel;
 #ifndef QT_MAC_USE_COCOA

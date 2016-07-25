@@ -74,6 +74,13 @@ public:
 
     int openWindowsPrintDialogModally();
 
+    // stubs for the private signals
+    inline void _q_collapseOrExpandDialog() {}
+    inline void _q_chbPrintLastFirstToggled(bool) {}
+#ifndef QT_NO_MESSAGEBOX
+    inline void _q_checkFields() {}
+#endif
+
     QWin32PrintEnginePrivate *ep;
 };
 
