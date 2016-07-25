@@ -95,6 +95,7 @@
 #include "qfocusframe.h"
 #include "qdebug.h"
 #include <qmainwindowlayout_p.h>
+#include <qthread_p.h>
 
 #include <qabstractscrollarea_p.h>
 #include <qabstractscrollarea.h>
