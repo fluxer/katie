@@ -48,6 +48,7 @@
 #include <qdebug.h>
 #include <qapplication_p.h>
 #include <qkeymapper_p.h>
+#include <qthread_p.h>
 
 QT_BEGIN_NAMESPACE
 
