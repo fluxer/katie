@@ -108,7 +108,7 @@ if(NOT WITH_OPENGLES1)
         ${CMAKE_CURRENT_SOURCE_DIR}/gl2paintengineex/qtextureglyphcache_gl.cpp
     )
 else()
-    add_definitions(-DQT_OPENGL_ES)
+    katie_definition(-DQT_OPENGL_ES_1)
 endif()
 
 if(NOT WITH_OPENGLES2)
@@ -121,7 +121,7 @@ if(NOT WITH_OPENGLES2)
         ${CMAKE_CURRENT_SOURCE_DIR}/qpaintengine_opengl.cpp
     )
 else()
-    add_definitions(-DQT_OPENGL_ES_2)
+    katie_definition(-DQT_OPENGL_ES_2)
 endif()
 
 if(WITH_X11 AND X11_FOUND)
