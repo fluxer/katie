@@ -41,6 +41,15 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "ConverterState", "QtCore/qtextcodec.h"},
     { "QTextEncoder", "QtCore/qtextcodec.h"},
     { "QTextDecoder", "QtCore/qtextcodec.h"},
+    { "QXmlStreamStringRef", "QtCore/qxmlstream.h"},
+    { "QXmlStreamAttribute", "QtCore/qxmlstream.h"},
+    { "QXmlStreamAttributes", "QtCore/qxmlstream.h"},
+    { "QXmlStreamNamespaceDeclaration", "QtCore/qxmlstream.h"},
+    { "QXmlStreamNotationDeclaration", "QtCore/qxmlstream.h"},
+    { "QXmlStreamEntityDeclaration", "QtCore/qxmlstream.h"},
+    { "QXmlStreamEntityResolver", "QtCore/qxmlstream.h"},
+    { "QXmlStreamReader", "QtCore/qxmlstream.h"},
+    { "QXmlStreamWriter", "QtCore/qxmlstream.h"},
     { "QFutureWatcherBase", "QtCore/qfuturewatcher.h"},
     { "QThreadPool", "QtCore/qthreadpool.h"},
     { "BlockSizeManager", "QtCore/qtconcurrentiteratekernel.h"},
@@ -783,6 +792,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 777;
+static const int qclass_lib_count = 786;
 
 #endif
