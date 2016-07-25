@@ -5,7 +5,7 @@ compiler:
     - clang
 #    - gcc
 os:
-    - linux
+#    - linux
     - osx
 cache: ccache
 git:
