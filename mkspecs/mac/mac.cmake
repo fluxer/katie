@@ -61,3 +61,6 @@ set(QT_EXAMPLES_PATH "${QT_DATA_PATH}/examples")
 set(QT_DEMOS_PATH "${QT_DATA_PATH}/demos")
 # FIXME: that's incorrect, probably irrelevant once QStandardPaths are used
 set(QT_SETTINGS_PATH "${QT_DATA_PATH}/settings")
+
+# FIXME: at least on OS X 10.9 iconv() takes const argument
+set(WITH_ICONV OFF)
