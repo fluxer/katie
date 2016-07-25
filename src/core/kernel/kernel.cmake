@@ -121,6 +121,10 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_mac.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_mac.cpp
     )
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_mac_p.h
+    )
 elseif(KATIE_PLATFORM STREQUAL "vxworks")
     set(CORE_SOURCES
         ${CORE_SOURCES}
