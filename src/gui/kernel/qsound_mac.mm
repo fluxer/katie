@@ -185,6 +185,6 @@ QAuServer* qt_new_audio_server()
 
 QT_END_NAMESPACE
 
-#include "qsound_mac.moc"
+#include "moc_qsound_mac.mm"
 
 #endif // QT_NO_SOUND

@@ -26,7 +26,7 @@ macro(KATIE_RESOURCES RESOURCES)
                     MAIN_DEPENDENCY ${resource}
                 )
                 set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-            elseif("${rscext}" MATCHES "(.h|.cpp)")
+            elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
                 file(READ "${resource}" rsccontent)
                 # this can be simpler if continue() was supported by old CMake versions
                 if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
