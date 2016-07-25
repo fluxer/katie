@@ -21,7 +21,6 @@ before_script:
 script:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DENABLE_TESTING=TRUE -Wno-dev ; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then make VERBOSE=1                 ; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then make                         ; fi
+    - make
     - ctest -V
 #    - make test
