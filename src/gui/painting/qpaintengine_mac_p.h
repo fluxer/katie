@@ -53,12 +53,13 @@
 // We mean it.
 //
 
-#include "QtGui/qpaintengine.h"
+#include "qpaintengine.h"
+#include "qpen.h"
 #include "qt_mac_p.h"
 #include "qpaintengine_p.h"
 #include "qpolygonclipper_p.h"
 #include "qfont_p.h"
-#include "QtCore/qhash.h"
+#include "qhash.h"
 
 typedef struct CGColorSpace *CGColorSpaceRef;
 QT_BEGIN_NAMESPACE
