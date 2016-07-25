@@ -99,17 +99,6 @@ public:
 
     inline QPrintDialog *printDialog() { return q_func(); }
 
-    inline void _q_printToFileChanged(int) {}
-    inline void _q_rbPrintRangeToggled(bool) {}
-    inline void _q_printerChanged(int) {}
-#ifndef QT_NO_MESSAGEBOX
-    inline void _q_checkFields() {}
-#endif
-    inline void _q_chbPrintLastFirstToggled(bool) {}
-    inline void _q_paperSizeChanged(int) {}
-    inline void _q_btnBrowseClicked() {}
-    inline void _q_btnPropertiesClicked() {}
-
     QMacPrintEnginePrivate *ep;
     NSPrintPanel *printPanel;
 #ifndef QT_MAC_USE_COCOA

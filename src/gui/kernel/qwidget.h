@@ -94,8 +94,6 @@ class QWindowSurface;
 class QLocale;
 class QGraphicsProxyWidget;
 class QGraphicsEffect;
-class QRasterWindowSurface;
-class QUnifiedToolbarSurface;
 #if defined(Q_WS_X11)
 class QX11Info;
 #endif
@@ -112,8 +110,8 @@ public:
     uint widget_attributes;
     uint is_closing :1;
     uint in_show : 1;
-    mutable uint fstrut_dirty : 1;
     uint in_destructor : 1;
+    mutable uint fstrut_dirty : 1;
 
     QRect crect;
     mutable QPalette pal;

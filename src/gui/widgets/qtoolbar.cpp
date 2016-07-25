@@ -65,7 +65,6 @@
 #include <qmainwindowlayout_p.h>
 
 #include "qtoolbar_p.h"
-#include "qtoolbarseparator_p.h"
 #include "qtoolbarlayout_p.h"
 
 #include  "qdebug.h"

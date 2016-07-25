@@ -119,7 +119,6 @@ private:
     Q_DISABLE_COPY(QDialog)
 
 
-
 #ifdef Q_WS_WINCE_WM
     Q_PRIVATE_SLOT(d_func(), void _q_doneAction())
 #endif
