@@ -103,7 +103,9 @@ elseif(KATIE_PLATFORM STREQUAL "win32")
         ${CMAKE_SOURCE_DIR}/src/core/plugin/qsystemlibrary.cpp
         ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_win.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "mac")
+endif()
+
+if(KATIE_PLATFORM STREQUAL "mac")
     set(BOOTSTRAP_SOURCES
         ${BOOTSTRAP_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_mac.mm
