@@ -24,6 +24,8 @@ if(KATIE_PLATFORM STREQUAL "mac")
     set(KATIE_LDFLAGS
         ${KATIE_LDFLAGS}
         -framework CoreFoundation
+        -framework Security
+        -framework ApplicationServices
         -lObjC
     )
 endif()
