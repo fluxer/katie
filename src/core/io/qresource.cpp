@@ -929,110 +929,36 @@ public:
     }
 };
 
-#if defined(Q_OS_UNIX) && !defined (Q_OS_NACL) && !defined(Q_OS_INTEGRITY)
-#define QT_USE_MMAP
-#endif
-
-// most of the headers below are already included in qplatformdefs.h
-// also this lacks Large File support but that's probably irrelevant
-#if defined(QT_USE_MMAP)
-// for mmap
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <sys/mman.h>
-#include <errno.h>
-QT_END_INCLUDE_NAMESPACE
-#endif
-
-
 
 class QDynamicFileResourceRoot: public QDynamicBufferResourceRoot
 {
     QString fileName;
-    // for mmap'ed files, this is what needs to be unmapped.
-    uchar *unmapPointer;
-    unsigned int unmapLength;
 
 public:
-    inline QDynamicFileResourceRoot(const QString &_root) : QDynamicBufferResourceRoot(_root), unmapPointer(0), unmapLength(0) { }
+    inline QDynamicFileResourceRoot(const QString &_root) : QDynamicBufferResourceRoot(_root) { }
     ~QDynamicFileResourceRoot() {
-#if defined(QT_USE_MMAP)
-        if (unmapPointer) {
-            munmap((char*)unmapPointer, unmapLength);
-            unmapPointer = 0;
-            unmapLength = 0;
-        } else
-#endif
-        {
-            delete [] (uchar *)mappingBuffer();
-        }
+        delete [] (uchar *)mappingBuffer();
     }
     QString mappingFile() const { return fileName; }
     virtual ResourceRootType type() const { return Resource_File; }
 
     bool registerSelf(const QString &f) {
-        bool fromMM = false;
-        uchar *data = 0;
-        unsigned int data_len = 0;
+        QFile file(f);
+        if (!file.exists())
+            return false;
+        unsigned int data_len = file.size();
+        uchar *data = new uchar[data_len];
 
-#ifdef QT_USE_MMAP
-
-#ifndef MAP_FILE
-#define MAP_FILE 0
-#endif
-#ifndef MAP_FAILED
-#define MAP_FAILED -1
-#endif
-
-        int fd = QT_OPEN(QFile::encodeName(f), O_RDONLY,
-#if defined(Q_OS_WIN)
-                         _S_IREAD | _S_IWRITE
-#else
-                         0666
-#endif
-            );
-        if (fd >= 0) {
-            QT_STATBUF st;
-            if (!QT_FSTAT(fd, &st)) {
-                uchar *ptr;
-                ptr = reinterpret_cast<uchar *>(
-                    mmap(0, st.st_size,             // any address, whole file
-                         PROT_READ,                 // read-only memory
-                         MAP_FILE | MAP_PRIVATE,    // swap-backed map from file
-                         fd, 0));                   // from offset 0 of fd
-                if (ptr && ptr != reinterpret_cast<uchar *>(MAP_FAILED)) {
-                    data = ptr;
-                    data_len = st.st_size;
-                    fromMM = true;
-                }
-            }
-            ::close(fd);
-        }
-#endif // QT_USE_MMAP
-        if(!data) {
-            QFile file(f);
-            if (!file.exists())
-                return false;
-            data_len = file.size();
-            data = new uchar[data_len];
-
-            bool ok = false;
-            if (file.open(QIODevice::ReadOnly))
-                ok = (data_len == (uint)file.read((char*)data, data_len));
-            if (!ok) {
+        if (file.open(QIODevice::ReadOnly)) {
+            if (data_len != (uint)file.read((char*)data, data_len)) {
                 delete [] data;
                 data = 0;
                 data_len = 0;
                 return false;
+            } else if (QDynamicBufferResourceRoot::registerSelf(data)) {
+                fileName = f;
+                return true;
             }
-            fromMM = false;
-        }
-        if(data && QDynamicBufferResourceRoot::registerSelf(data)) {
-            if(fromMM) {
-                unmapPointer = data;
-                unmapLength = data_len;
-            }
-            fileName = f;
-            return true;
         }
         return false;
     }

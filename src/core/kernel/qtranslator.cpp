@@ -60,20 +60,6 @@
 #include "qlocale.h"
 #include "qresource.h"
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_INTEGRITY)
-#define QT_USE_MMAP
-#include "qcore_unix_p.h"
-#endif
-
-
-// most of the headers below are already included in qplatformdefs.h
-// also this lacks Large File support but that's probably irrelevant
-#if defined(QT_USE_MMAP)
-// for mmap
-#include <sys/mman.h>
-#include <errno.h>
-#endif
-
 #include <stdlib.h>
 
 #include "qobject_p.h"
@@ -222,14 +208,12 @@ public:
     enum { Contexts = 0x2f, Hashes = 0x42, Messages = 0x69, NumerusRules = 0x88 };
 
     QTranslatorPrivate()
-        : used_mmap(0), unmapPointer(0), unmapLength(0), resource(0),
+        : dataPointer(0), dataLength(0), resource(0),
           messageArray(0), offsetArray(0), contextArray(0), numerusRulesArray(0),
           messageLength(0), offsetLength(0), contextLength(0), numerusRulesLength(0) {}
 
-    // for mmap'ed files, this is what needs to be unmapped.
-    bool used_mmap : 1;
-    char *unmapPointer;
-    unsigned int unmapLength;
+    uchar *dataPointer;
+    unsigned int dataLength;
 
     // The resource object in case we loaded the translations from a resource
     QResource *resource;
@@ -455,9 +439,8 @@ bool QTranslatorPrivate::do_load(const QString &realname)
         Q_ASSERT(!d->resource);
         d->resource = new QResource(realname);
         if (d->resource->isValid() && !d->resource->isCompressed()) {
-            d->unmapLength = d->resource->size();
-            d->unmapPointer = reinterpret_cast<char *>(const_cast<uchar *>(d->resource->data()));
-            d->used_mmap = false;
+            d->dataLength = d->resource->size();
+            d->dataPointer = const_cast<uchar *>(d->resource->data());
             ok = true;
         } else {
             delete d->resource;
@@ -465,64 +448,24 @@ bool QTranslatorPrivate::do_load(const QString &realname)
         }
     }
 
-#ifdef QT_USE_MMAP
-
-#ifndef MAP_FILE
-#define MAP_FILE 0
-#endif
-#ifndef MAP_FAILED
-#define MAP_FAILED -1
-#endif
-
-    else {
-        int fd = QT_OPEN(QFile::encodeName(realname), O_RDONLY,
-#if defined(Q_OS_WIN)
-                     _S_IREAD | _S_IWRITE
-#else
-                     0666
-#endif
-            );
-
-        if (fd >= 0) {
-            QT_STATBUF st;
-            if (!QT_FSTAT(fd, &st)) {
-                char *ptr;
-                ptr = reinterpret_cast<char *>(
-                    mmap(0, st.st_size,             // any address, whole file
-                         PROT_READ,                 // read-only memory
-                         MAP_FILE | MAP_PRIVATE,    // swap-backed map from file
-                         fd, 0));                   // from offset 0 of fd
-                if (ptr && ptr != reinterpret_cast<char *>(MAP_FAILED)) {
-                    d->used_mmap = true;
-                    d->unmapPointer = ptr;
-                    d->unmapLength = st.st_size;
-                    ok = true;
-                }
-            }
-            ::close(fd);
-        }
-    }
-#endif // QT_USE_MMAP
-
     if (!ok) {
         QFile file(realname);
-        d->unmapLength = file.size();
-        if (!d->unmapLength)
+        d->dataLength = file.size();
+        if (!d->dataLength)
             return false;
-        d->unmapPointer = new char[d->unmapLength];
+        d->dataPointer = new uchar[d->dataLength];
 
-        if (file.open(QIODevice::ReadOnly))
-            ok = (d->unmapLength == (uint)file.read(d->unmapPointer, d->unmapLength));
-
-        if (!ok) {
-            delete [] d->unmapPointer;
-            d->unmapPointer = 0;
-            d->unmapLength = 0;
-            return false;
+        if (file.open(QIODevice::ReadOnly)) {
+            if (d->dataLength != (uint)file.read(reinterpret_cast<char*>(d->dataPointer), d->dataLength)) {
+                delete [] d->dataPointer;
+                d->dataPointer = 0;
+                d->dataLength = 0;
+                return false;
+            }
         }
     }
 
-    return d->do_load(reinterpret_cast<const uchar *>(d->unmapPointer), d->unmapLength);
+    return d->do_load(d->dataPointer, d->dataLength);
 }
 
 static QString find_translation(const QLocale & locale,
@@ -908,20 +851,15 @@ QString QTranslatorPrivate::do_translate(const char *context, const char *source
 void QTranslatorPrivate::clear()
 {
     Q_Q(QTranslator);
-    if (unmapPointer && unmapLength) {
-#if defined(QT_USE_MMAP)
-        if (used_mmap)
-            munmap(unmapPointer, unmapLength);
-        else
-#endif
+    if (dataPointer && dataLength) {
         if (!resource)
-            delete [] unmapPointer;
+            delete [] dataPointer;
     }
 
     delete resource;
     resource = 0;
-    unmapPointer = 0;
-    unmapLength = 0;
+    dataPointer = 0;
+    dataLength = 0;
     messageArray = 0;
     contextArray = 0;
     offsetArray = 0;
@@ -960,7 +898,7 @@ QString QTranslator::translate(const char *context, const char *sourceText, cons
 bool QTranslator::isEmpty() const
 {
     Q_D(const QTranslator);
-    return !d->unmapPointer && !d->unmapLength && !d->messageArray &&
+    return !d->dataPointer && !d->dataLength && !d->messageArray &&
            !d->offsetArray && !d->contextArray;
 }
 
