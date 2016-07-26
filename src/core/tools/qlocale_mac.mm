@@ -290,6 +290,7 @@ static QString macToQtFormat(const QString &sys_fmt)
     return result;
 }
 
+#ifndef QT_NO_SYSTEMLOCALE
 QString getMacDateFormat(CFDateFormatterStyle style)
 {
     QCFType<CFLocaleRef> l = CFLocaleCopyCurrent();
@@ -324,7 +325,6 @@ static QLocale::MeasurementSystem macMeasurementSystem()
     }
 }
 
-
 static quint8 macFirstDayOfWeek()
 {
     QCFType<CFCalendarRef> calendar = CFCalendarCopyCurrent();
@@ -353,7 +353,6 @@ static QString macCurrencySymbol(QLocale::CurrencySymbolFormat format)
     return QString();
 }
 
-#ifndef QT_NO_SYSTEMLOCALE
 static QString macFormatCurrency(const QSystemLocale::CurrencyToStringArgument &arg)
 {
     QCFType<CFNumberRef> value;
@@ -413,9 +412,6 @@ static QVariant macQuoteString(QSystemLocale::QueryType type, const QStringRef &
 #endif
     return QVariant();
 }
-#endif //QT_NO_SYSTEMLOCALE
-
-#ifndef QT_NO_SYSTEMLOCALE
 
 QLocale QSystemLocale::fallbackLocale() const
 {
