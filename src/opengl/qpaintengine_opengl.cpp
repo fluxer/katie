@@ -99,10 +99,6 @@ static bool DEBUG_TEMP_FLAG;
 #define DEBUG_ONCE_STR(str) DEBUG_ONCE qDebug() << (str);
 #endif
 
-#ifdef Q_WS_X11
-static bool qt_nvidiaFboNeedsFinish = false;
-#endif
-
 static inline void qt_glColor4ubv(unsigned char *col)
 {
     glColor4f(col[0]/255.0f, col[1]/255.0f, col[2]/255.0f, col[3]/255.0f);
@@ -416,12 +412,6 @@ inline void QGLOffscreen::release()
     if (!offscreen || !bound)
         return;
 
-#ifdef Q_WS_X11
-    // workaround for bug in nvidia driver versions 9x.xx
-    if (qt_nvidiaFboNeedsFinish)
-        glFinish();
-#endif
-
     DEBUG_ONCE_STR("QGLOffscreen: releasing offscreen");
 
     if (drawable_fbo)
@@ -650,7 +640,6 @@ public:
         , composition_mode(QPainter::CompositionMode_SourceOver)
         , has_pen(false)
         , has_brush(false)
-        , has_fast_pen(false)
         , use_stencil_method(false)
         , dirty_drawable_texture(false)
         , has_stencil_face_ext(false)
@@ -701,7 +690,6 @@ public:
 
     void drawFastRect(const QRectF &rect);
     void strokePath(const QPainterPath &path, bool use_cache);
-    void strokePathFastPen(const QPainterPath &path, bool needsResolving);
     void strokeLines(const QPainterPath &path);
 
     void updateDepthClip();
@@ -710,16 +698,6 @@ public:
     void cleanupGLContextRefs(const QGLContext *context) {
         if (context == shader_ctx)
             shader_ctx = 0;
-    }
-
-    inline void updateFastPen() {
-        qreal pen_width = cpen.widthF();
-        has_fast_pen =
-            ((pen_width == 0 || (pen_width <= 1 && matrix.type() <= QTransform::TxTranslate))
-             || cpen.isCosmetic())
-            && cpen.style() == Qt::SolidLine
-            && cpen.isSolid();
-
     }
 
     void disableClipping();
@@ -738,7 +716,6 @@ public:
 
     uint has_pen : 1;
     uint has_brush : 1;
-    uint has_fast_pen : 1;
     uint use_stencil_method : 1;
     uint dirty_drawable_texture : 1;
     uint has_stencil_face_ext : 1;
@@ -1246,7 +1223,6 @@ bool QOpenGLPaintEngine::begin(QPaintDevice *pdev)
         return false;
 
     d->offscreen.setDevice(pdev);
-    d->has_fast_pen = false;
     d->inverseScale = 1;
     d->opacity = 1;
     d->device->beginPaint();
@@ -1280,22 +1256,6 @@ bool QOpenGLPaintEngine::begin(QPaintDevice *pdev)
     if (d->device->format().directRendering()
         && (d->use_stencil_method && QGLExtensions::glExtensions() & QGLExtensions::StencilTwoSide))
         d->has_stencil_face_ext = qt_resolve_stencil_face_extension(ctx);
-
-#ifdef Q_WS_X11
-    static bool nvidia_workaround_needs_init = true;
-    if (nvidia_workaround_needs_init) {
-        // nvidia 9x.xx unix drivers contain a bug which requires us to
-        // call glFinish before releasing an fbo to avoid painting
-        // artifacts
-        const QByteArray versionString(reinterpret_cast<const char*>(glGetString(GL_VERSION)));
-        const int pos = versionString.indexOf("NVIDIA");
-        if (pos >= 0) {
-            const float nvidiaDriverVersion = versionString.mid(pos + strlen("NVIDIA")).toFloat();
-            qt_nvidiaFboNeedsFinish = nvidiaDriverVersion >= 90.0 && nvidiaDriverVersion < 100.0;
-        }
-        nvidia_workaround_needs_init = false;
-    }
-#endif
 
 #ifndef QT_OPENGL_ES
     if (!ctx->d_ptr->internal_context) {
@@ -1459,10 +1419,7 @@ void QOpenGLPaintEngine::updateState(const QPaintEngineState &state)
     Q_D(QOpenGLPaintEngine);
     QPaintEngine::DirtyFlags flags = state.state();
 
-    bool update_fast_pen = false;
-
     if (flags & DirtyOpacity) {
-        update_fast_pen = true;
         d->opacity = state.opacity();
         if (d->opacity > 1.0f)
             d->opacity = 1.0f;
@@ -1474,7 +1431,6 @@ void QOpenGLPaintEngine::updateState(const QPaintEngineState &state)
     }
 
     if (flags & DirtyTransform) {
-        update_fast_pen = true;
         updateMatrix(state.transform());
         // brush setup depends on transform state
         if (state.brush().style() != Qt::NoBrush)
@@ -1482,7 +1438,6 @@ void QOpenGLPaintEngine::updateState(const QPaintEngineState &state)
     }
 
     if (flags & DirtyPen) {
-        update_fast_pen = true;
         updatePen(state.pen());
     }
 
@@ -1517,16 +1472,6 @@ void QOpenGLPaintEngine::updateState(const QPaintEngineState &state)
 
     if (flags & DirtyCompositionMode) {
         updateCompositionMode(state.compositionMode());
-    }
-
-    if (update_fast_pen) {
-        Q_D(QOpenGLPaintEngine);
-        qreal pen_width = d->cpen.widthF();
-        d->has_fast_pen =
-            ((pen_width == 0 || (pen_width <= 1 && d->txop <= QTransform::TxTranslate))
-             || d->cpen.isCosmetic())
-            && d->cpen.style() == Qt::SolidLine
-            && d->cpen.isSolid();
     }
 }
 
@@ -2151,8 +2096,6 @@ void QOpenGLPaintEngine::updatePen(const QPen &pen)
     } else {
         d->setGLPen(pen.color());
     }
-
-    d->updateFastPen();
 }
 
 void QOpenGLPaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
@@ -2204,7 +2147,6 @@ void QOpenGLPaintEngine::updateMatrix(const QTransform &mtx)
                            qreal(0.0001));
 
     d->updateGLMatrix();
-    d->updateFastPen();
 }
 
 void QOpenGLPaintEnginePrivate::updateGLMatrix() const
@@ -3428,33 +3370,21 @@ void QOpenGLPaintEnginePrivate::drawFastRect(const QRectF &r)
     }
 
     if (has_pen) {
-        if (has_fast_pen && !high_quality_antialiasing) {
-            setGradientOps(cpen.brush(), r);
+        QPainterPath path;
+        path.setFillRule(Qt::WindingFill);
 
-            vertexArray[8] = vertexArray[0];
-            vertexArray[9] = vertexArray[1];
+        qreal left = r.left();
+        qreal right = r.right();
+        qreal top = r.top();
+        qreal bottom = r.bottom();
 
-            glVertexPointer(2, GL_FLOAT, 0, vertexArray);
-            glEnableClientState(GL_VERTEX_ARRAY);
-            glDrawArrays(GL_LINE_STRIP, 0, 5);
-            glDisableClientState(GL_VERTEX_ARRAY);
-        } else {
-            QPainterPath path;
-            path.setFillRule(Qt::WindingFill);
+        path.moveTo(left, top);
+        path.lineTo(right, top);
+        path.lineTo(right, bottom);
+        path.lineTo(left, bottom);
+        path.lineTo(left, top);
 
-            qreal left = r.left();
-            qreal right = r.right();
-            qreal top = r.top();
-            qreal bottom = r.bottom();
-
-            path.moveTo(left, top);
-            path.lineTo(right, top);
-            path.lineTo(right, bottom);
-            path.lineTo(left, bottom);
-            path.lineTo(left, top);
-
-            strokePath(path, false);
-        }
+        strokePath(path, false);
 
         QOpenGLCoordinateOffset::disableOffset(this);
     }
@@ -3532,34 +3462,10 @@ void QOpenGLPaintEngine::drawRects(const QRectF *rects, int rectCount)
             }
 
             if (d->has_pen) {
-                if (d->has_fast_pen)
-                    d->strokeLines(path);
-                else
-                    d->strokePath(path, false);
+                d->strokePath(path, false);
             }
         }
     }
-}
-
-static void addQuadAsTriangle(GLfloat *quad, GLfloat *triangle)
-{
-    triangle[0] = quad[0];
-    triangle[1] = quad[1];
-
-    triangle[2] = quad[2];
-    triangle[3] = quad[3];
-
-    triangle[4] = quad[4];
-    triangle[5] = quad[5];
-
-    triangle[6] = quad[4];
-    triangle[7] = quad[5];
-
-    triangle[8] = quad[6];
-    triangle[9] = quad[7];
-
-    triangle[10] = quad[0];
-    triangle[11] = quad[1];
 }
 
 void QOpenGLPaintEngine::drawPoints(const QPoint *points, int pointCount)
@@ -3600,41 +3506,6 @@ void QOpenGLPaintEngine::drawPoints(const QPointF *points, int pointCount)
     }
 
     d->flushDrawQueue();
-
-    if (d->has_fast_pen) {
-        QVarLengthArray<GLfloat> vertexArray(6 * pointCount);
-
-        glMatrixMode(GL_MODELVIEW);
-        glPushMatrix();
-        glLoadIdentity();
-
-        int j = 0;
-        for (int i = 0; i < pointCount; ++i) {
-            QPointF mapped = d->matrix.map(points[i]);
-
-            GLfloat x = GLfloat(qRound(mapped.x()));
-            GLfloat y = GLfloat(qRound(mapped.y()));
-
-            vertexArray[j++] = x;
-            vertexArray[j++] = y - 0.5f;
-
-            vertexArray[j++] = x + 1.5f;
-            vertexArray[j++] = y + 1.0f;
-
-            vertexArray[j++] = x;
-            vertexArray[j++] = y + 1.0f;
-        }
-
-        glEnableClientState(GL_VERTEX_ARRAY);
-
-        glVertexPointer(2, GL_FLOAT, 0, vertexArray.constData());
-        glDrawArrays(GL_TRIANGLES, 0, pointCount*3);
-
-        glDisableClientState(GL_VERTEX_ARRAY);
-
-        glPopMatrix();
-        return;
-    }
 
     const qreal *vertexArray = reinterpret_cast<const qreal*>(&points[0]);
 
@@ -3690,122 +3561,24 @@ void QOpenGLPaintEngine::drawLines(const QLineF *lines, int lineCount)
     }
 
     if (d->has_pen) {
-        QOpenGLCoordinateOffset offset(d);
-        if (d->has_fast_pen && !d->high_quality_antialiasing) {
-            //### gradient resolving on lines isn't correct
-            d->setGradientOps(d->cpen.brush(), QRectF());
+        QPainterPath path;
+        path.setFillRule(Qt::WindingFill);
+        for (int i=0; i<lineCount; ++i) {
+            const QLineF &l = lines[i];
 
-            bool useRects = false;
-            // scale or 90 degree rotation?
-            if (d->matrix.type() <= QTransform::TxTranslate
-                || (!d->cpen.isCosmetic()
-                    && (d->matrix.type() <= QTransform::TxScale
-                        || (d->matrix.type() == QTransform::TxRotate
-                            && d->matrix.m11() == 0 && d->matrix.m22() == 0)))) {
-                useRects = true;
-                for (int i = 0; i < lineCount; ++i) {
-                    if (lines[i].p1().x() != lines[i].p2().x()
-                        && lines[i].p1().y() != lines[i].p2().y()) {
-                        useRects = false;
-                        break;
-                    }
+            if (l.p1() == l.p2()) {
+                if (d->cpen.capStyle() != Qt::FlatCap) {
+                    QPointF p = l.p1();
+                    drawPoints(&p, 1);
                 }
+                continue;
             }
 
-            GLfloat endCap = d->cpen.capStyle() == Qt::FlatCap ? 0.0f : 0.5f;
-            if (useRects) {
-                QVarLengthArray<GLfloat> vertexArray(12 * lineCount);
-
-                GLfloat quad[8];
-                for (int i = 0; i < lineCount; ++i) {
-                    GLfloat x1 = lines[i].x1();
-                    GLfloat x2 = lines[i].x2();
-                    GLfloat y1 = lines[i].y1();
-                    GLfloat y2 = lines[i].y2();
-
-                    if (x1 == x2) {
-                        if (y1 > y2)
-                            qSwap(y1, y2);
-
-                        quad[0] = x1 - 0.5f;
-                        quad[1] = y1 - endCap;
-
-                        quad[2] = x1 + 0.5f;
-                        quad[3] = y1 - endCap;
-
-                        quad[4] = x1 + 0.5f;
-                        quad[5] = y2 + endCap;
-
-                        quad[6] = x1 - 0.5f;
-                        quad[7] = y2 + endCap;
-                    } else {
-                        if (x1 > x2)
-                            qSwap(x1, x2);
-
-                        quad[0] = x1 - endCap;
-                        quad[1] = y1 + 0.5f;
-
-                        quad[2] = x1 - endCap;
-                        quad[3] = y1 - 0.5f;
-
-                        quad[4] = x2 + endCap;
-                        quad[5] = y1 - 0.5f;
-
-                        quad[6] = x2 + endCap;
-                        quad[7] = y1 + 0.5f;
-                    }
-
-                    addQuadAsTriangle(quad, &vertexArray[12*i]);
-                }
-
-                glEnableClientState(GL_VERTEX_ARRAY);
-
-                glVertexPointer(2, GL_FLOAT, 0, vertexArray.constData());
-                glDrawArrays(GL_TRIANGLES, 0, lineCount*6);
-
-                glDisableClientState(GL_VERTEX_ARRAY);
-            } else {
-                QVarLengthArray<GLfloat> vertexArray(4 * lineCount);
-                for (int i = 0; i < lineCount; ++i) {
-                    vertexArray[4*i]   = lines[i].x1();
-                    vertexArray[4*i+1] = lines[i].y1();
-                    vertexArray[4*i+2] = lines[i].x2();
-                    vertexArray[4*i+3] = lines[i].y2();
-                }
-
-                glEnableClientState(GL_VERTEX_ARRAY);
-
-                glVertexPointer(2, GL_FLOAT, 0, vertexArray.constData());
-                glDrawArrays(GL_LINES, 0, lineCount*2);
-
-                glVertexPointer(2, GL_FLOAT, 4*sizeof(GLfloat), vertexArray.constData() + 2);
-                glDrawArrays(GL_POINTS, 0, lineCount);
-
-                glDisableClientState(GL_VERTEX_ARRAY);
-            }
-        } else {
-            QPainterPath path;
-            path.setFillRule(Qt::WindingFill);
-            for (int i=0; i<lineCount; ++i) {
-                const QLineF &l = lines[i];
-
-                if (l.p1() == l.p2()) {
-                    if (d->cpen.capStyle() != Qt::FlatCap) {
-                        QPointF p = l.p1();
-                        drawPoints(&p, 1);
-                    }
-                    continue;
-                }
-
-                path.moveTo(l.x1(), l.y1());
-                path.lineTo(l.x2(), l.y2());
-            }
-
-            if (d->has_fast_pen && d->high_quality_antialiasing)
-                d->strokeLines(path);
-            else
-                d->strokePath(path, false);
+            path.moveTo(l.x1(), l.y1());
+            path.lineTo(l.x2(), l.y2());
         }
+
+        d->strokePath(path, false);
     }
 }
 
@@ -3832,8 +3605,7 @@ void QOpenGLPaintEngine::drawPolygon(const QPointF *points, int pointCount, Poly
     }
 
     QRectF bounds;
-    if ((mode == ConvexMode && !d->high_quality_antialiasing && state()->brushNeedsResolving()) ||
-        ((d->has_fast_pen && !d->high_quality_antialiasing) && state()->penNeedsResolving())) {
+    if (mode == ConvexMode && !d->high_quality_antialiasing && state()->brushNeedsResolving()) {
         qreal minx = points[0].x(), miny = points[0].y(),
               maxx = points[0].x(), maxy = points[0].y();
         for (int i = 1; i < pointCount; ++i) {
@@ -3882,38 +3654,13 @@ void QOpenGLPaintEngine::drawPolygon(const QPointF *points, int pointCount, Poly
     }
 
     if (d->has_pen) {
-        if (d->has_fast_pen && !d->high_quality_antialiasing) {
-            d->setGradientOps(d->cpen.brush(), bounds);
-            QVarLengthArray<GLfloat> vertexArray(pointCount*2 + 2);
-            glVertexPointer(2, GL_FLOAT, 0, vertexArray.constData());
-            int i;
-            for (i=0; i<pointCount; ++i) {
-                vertexArray[i*2] = points[i].x();
-                vertexArray[i*2+1] = points[i].y();
-            }
+        QPainterPath path(points[0]);
+        for (int i = 1; i < pointCount; ++i)
+            path.lineTo(points[i]);
+        if (mode != PolylineMode)
+            path.lineTo(points[0]);
 
-            glEnableClientState(GL_VERTEX_ARRAY);
-            if (mode != PolylineMode) {
-                vertexArray[i*2] = vertexArray[0];
-                vertexArray[i*2+1] = vertexArray[1];
-                glDrawArrays(GL_LINE_STRIP, 0, pointCount+1);
-            } else {
-                glDrawArrays(GL_LINE_STRIP, 0, pointCount);
-                glDrawArrays(GL_POINTS, pointCount-1, 1);
-            }
-            glDisableClientState(GL_VERTEX_ARRAY);
-        } else {
-            QPainterPath path(points[0]);
-            for (int i = 1; i < pointCount; ++i)
-                path.lineTo(points[i]);
-            if (mode != PolylineMode)
-                path.lineTo(points[0]);
-
-            if (d->has_fast_pen)
-                d->strokeLines(path);
-            else
-                d->strokePath(path, true);
-        }
+        d->strokePath(path, true);
     }
 }
 
@@ -3985,140 +3732,6 @@ void QOpenGLPaintEnginePrivate::strokePath(const QPainterPath &path, bool use_ca
     }
 
     cbrush = old_brush;
-}
-
-void QOpenGLPaintEnginePrivate::strokePathFastPen(const QPainterPath &path, bool needsResolving)
-{
-#ifndef QT_OPENGL_ES
-    QRectF bounds;
-    if (needsResolving)
-        bounds = path.controlPointRect();
-    setGradientOps(cpen.brush(), bounds);
-
-    QBezier beziers[32];
-    for (int i=0; i<path.elementCount(); ++i) {
-        const QPainterPath::Element &e = path.elementAt(i);
-        switch (e.type) {
-        case QPainterPath::MoveToElement:
-            if (i != 0)
-                glEnd(); // GL_LINE_STRIP
-            glBegin(GL_LINE_STRIP);
-            glVertex2d(e.x, e.y);
-
-            break;
-        case QPainterPath::LineToElement:
-            glVertex2d(e.x, e.y);
-            break;
-
-        case QPainterPath::CurveToElement:
-        {
-            QPointF sp = path.elementAt(i-1);
-            QPointF cp2 = path.elementAt(i+1);
-            QPointF ep = path.elementAt(i+2);
-            i+=2;
-
-            qreal inverseScaleHalf = inverseScale / 2;
-            beziers[0] = QBezier::fromPoints(sp, e, cp2, ep);
-            QBezier *b = beziers;
-            while (b >= beziers) {
-                // check if we can pop the top bezier curve from the stack
-                qreal l = qAbs(b->x4 - b->x1) + qAbs(b->y4 - b->y1);
-                qreal d;
-                if (l > inverseScale) {
-                    d = qAbs( (b->x4 - b->x1)*(b->y1 - b->y2)
-                              - (b->y4 - b->y1)*(b->x1 - b->x2) )
-                        + qAbs( (b->x4 - b->x1)*(b->y1 - b->y3)
-                                - (b->y4 - b->y1)*(b->x1 - b->x3) );
-                    d /= l;
-                } else {
-                    d = qAbs(b->x1 - b->x2) + qAbs(b->y1 - b->y2) +
-                        qAbs(b->x1 - b->x3) + qAbs(b->y1 - b->y3);
-                }
-                if (d < inverseScaleHalf || b == beziers + 31) {
-                    // good enough, we pop it off and add the endpoint
-                    glVertex2d(b->x4, b->y4);
-                    --b;
-                } else {
-                    // split, second half of the polygon goes lower into the stack
-                    b->split(b+1, b);
-                    ++b;
-                }
-            }
-        } // case CurveToElement
-        default:
-            break;
-        } // end of switch
-    }
-    glEnd(); // GL_LINE_STRIP
-#else
-    // have to use vertex arrays on embedded
-    QRectF bounds;
-    if (needsResolving)
-        bounds = path.controlPointRect();
-    setGradientOps(cpen.brush(), bounds);
-
-    glEnableClientState(GL_VERTEX_ARRAY);
-    tess_points.reset();
-    QBezier beziers[32];
-    for (int i=0; i<path.elementCount(); ++i) {
-        const QPainterPath::Element &e = path.elementAt(i);
-        switch (e.type) {
-        case QPainterPath::MoveToElement:
-            if (i != 0) {
-                glVertexPointer(2, GL_FLOAT, 0, tess_points.data());
-                glDrawArrays(GL_LINE_STRIP, 0, tess_points.size());
-                tess_points.reset();
-            }
-            tess_points.add(QPointF(e.x, e.y));
-
-            break;
-        case QPainterPath::LineToElement:
-            tess_points.add(QPointF(e.x, e.y));
-            break;
-
-        case QPainterPath::CurveToElement:
-        {
-            QPointF sp = path.elementAt(i-1);
-            QPointF cp2 = path.elementAt(i+1);
-            QPointF ep = path.elementAt(i+2);
-            i+=2;
-
-            qreal inverseScaleHalf = inverseScale / 2;
-            beziers[0] = QBezier::fromPoints(sp, e, cp2, ep);
-            QBezier *b = beziers;
-            while (b >= beziers) {
-                // check if we can pop the top bezier curve from the stack
-                qreal l = qAbs(b->x4 - b->x1) + qAbs(b->y4 - b->y1);
-                qreal d;
-                if (l > inverseScale) {
-                    d = qAbs( (b->x4 - b->x1)*(b->y1 - b->y2)
-                              - (b->y4 - b->y1)*(b->x1 - b->x2) )
-                        + qAbs( (b->x4 - b->x1)*(b->y1 - b->y3)
-                                - (b->y4 - b->y1)*(b->x1 - b->x3) );
-                    d /= l;
-                } else {
-                    d = qAbs(b->x1 - b->x2) + qAbs(b->y1 - b->y2) +
-                        qAbs(b->x1 - b->x3) + qAbs(b->y1 - b->y3);
-                }
-                if (d < inverseScaleHalf || b == beziers + 31) {
-                    // good enough, we pop it off and add the endpoint
-                    tess_points.add(QPointF(b->x4, b->y4));
-                    --b;
-                } else {
-                    // split, second half of the polygon goes lower into the stack
-                    b->split(b+1, b);
-                    ++b;
-                }
-            }
-        } // case CurveToElement
-        default:
-            break;
-        } // end of switch
-    }
-    glVertexPointer(2, GL_FLOAT, 0, tess_points.data());
-    glDrawArrays(GL_LINE_STRIP, 0, tess_points.size());
-    glDisableClientState(GL_VERTEX_ARRAY);
-#endif
 }
 
 static bool pathClosed(const QPainterPath &path)
@@ -4198,10 +3811,7 @@ void QOpenGLPaintEngine::drawPath(const QPainterPath &path)
     }
 
     if (d->has_pen) {
-        if (d->has_fast_pen && !d->high_quality_antialiasing)
-            d->strokePathFastPen(path, state()->penNeedsResolving());
-        else
-            d->strokePath(path, true);
+        d->strokePath(path, true);
     }
 }
 
@@ -5434,18 +5044,6 @@ void QOpenGLPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
     }
 
     updateBrush(old_brush, state()->brushOrigin);
-}
-
-template <typename T> static inline bool isRect(const T *pts, int elementCount) {
-    return (elementCount == 5 // 5-point polygon, check for closed rect
-            && pts[0] == pts[8] && pts[1] == pts[9] // last point == first point
-            && pts[0] == pts[6] && pts[2] == pts[4] // x values equal
-            && pts[1] == pts[3] && pts[5] == pts[7] // y values equal...
-            ) ||
-           (elementCount == 4 // 4-point polygon, check for unclosed rect
-            && pts[0] == pts[6] && pts[2] == pts[4] // x values equal
-            && pts[1] == pts[3] && pts[5] == pts[7] // y values equal...
-            );
 }
 
 void QOpenGLPaintEngine::clip(const QVectorPath &path, Qt::ClipOperation op)
