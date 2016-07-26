@@ -57,7 +57,7 @@ extern "C" { // Otherwise it won't find CWKeychain* symbols at link time
 #import <CoreWLAN/CoreWLAN.h>
 }
 
-#include "private/qcore_mac_p.h"
+#include "qcore_mac_p.h"
 
 #include <net/if.h>
 #include <ifaddrs.h>
