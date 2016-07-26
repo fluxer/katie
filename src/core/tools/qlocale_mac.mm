@@ -56,6 +56,7 @@ QT_BEGIN_NAMESPACE
 ** Wrappers for Mac locale system functions
 */
 
+#ifndef QT_NO_SYSTEMLOCALE
 static QByteArray envVarLocale()
 {
     static QByteArray lang = 0;
@@ -290,7 +291,6 @@ static QString macToQtFormat(const QString &sys_fmt)
     return result;
 }
 
-#ifndef QT_NO_SYSTEMLOCALE
 QString getMacDateFormat(CFDateFormatterStyle style)
 {
     QCFType<CFLocaleRef> l = CFLocaleCopyCurrent();
