@@ -876,7 +876,7 @@ NSPoint flipPoint(const QPointF &p)
     return NSMakePoint(p.x(), flipYCoordinate(p.y()));
 }
 
-#ifdef QT_MAC_USE_COCOA && __OBJC__
+#if defined(QT_MAC_USE_COCOA) && defined(__OBJC__)
 
 void qt_mac_handleNonClientAreaMouseEvent(NSWindow *window, NSEvent *event)
 {
