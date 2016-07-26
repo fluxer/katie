@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 #include <qconfig.h>
-#import <private/qcocoaview_mac_p.h>
+#import <qcocoaview_mac_p.h>
 #ifdef QT_MAC_USE_COCOA
 
 #include <qwidget_p.h>

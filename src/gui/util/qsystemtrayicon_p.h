@@ -66,8 +66,6 @@
 QT_BEGIN_NAMESPACE
 
 class QSystemTrayIconSys;
-class QToolButton;
-class QLabel;
 
 class QSystemTrayIconPrivate : public QObjectPrivate
 {

@@ -50,7 +50,7 @@
 #else
 #include <quuid.h>
 #include <qcocoatoolbardelegate_mac_p.h>
-#import  <private/qcocoawindowdelegate_mac_p.h>
+#import  <qcocoawindowdelegate_mac_p.h>
 #endif
 
 QT_BEGIN_NAMESPACE

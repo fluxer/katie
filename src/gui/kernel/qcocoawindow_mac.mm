@@ -41,14 +41,14 @@
 
 #include "qmacdefines_mac.h"
 #ifdef QT_MAC_USE_COCOA
-#import <private/qcocoawindow_mac_p.h>
-#import <private/qcocoawindowdelegate_mac_p.h>
-#import <private/qcocoaview_mac_p.h>
-#import <private/qt_cocoa_helpers_mac_p.h>
-#import <private/qcocoawindowcustomthemeframe_mac_p.h>
-#import <private/qcocoaapplication_mac_p.h>
-#import <private/qdnd_p.h>
-#import <private/qmultitouch_mac_p.h>
+#import <qcocoawindow_mac_p.h>
+#import <qcocoawindowdelegate_mac_p.h>
+#import <qcocoaview_mac_p.h>
+#import <qt_cocoa_helpers_mac_p.h>
+#import <qcocoawindowcustomthemeframe_mac_p.h>
+#import <qcocoaapplication_mac_p.h>
+#import <qdnd_p.h>
+#import <qmultitouch_mac_p.h>
 
 #include <QtGui/QWidget>
 

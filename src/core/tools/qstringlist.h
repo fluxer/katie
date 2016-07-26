@@ -42,7 +42,6 @@
 #ifndef QSTRINGLIST_H
 #define QSTRINGLIST_H
 
-#include <QtCore/qalgorithms.h>
 #include <QtCore/qdatastream.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qregexp.h>

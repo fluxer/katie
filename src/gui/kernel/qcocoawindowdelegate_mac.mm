@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#import "private/qcocoawindowdelegate_mac_p.h"
+#import "qcocoawindowdelegate_mac_p.h"
 #ifdef QT_MAC_USE_COCOA
 #include <qwidget_p.h>
 #include <qapplication_p.h>

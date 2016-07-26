@@ -57,7 +57,6 @@
 #include "QtCore/qbytearray.h"
 #include "QtCore/qobjectdefs.h"
 #include "QtCore/qstring.h"
-#include "qringbuffer_p.h"
 #ifndef QT_NO_QOBJECT
 #include "qobject_p.h"
 #endif

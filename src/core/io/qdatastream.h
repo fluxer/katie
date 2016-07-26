@@ -54,7 +54,6 @@ QT_BEGIN_NAMESPACE
 
 
 class QByteArray;
-class QIODevice;
 
 template <typename T> class QList;
 template <typename T> class QLinkedList;

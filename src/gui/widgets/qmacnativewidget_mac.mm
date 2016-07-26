@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #import <Cocoa/Cocoa.h>
-#import <private/qcocoaview_mac_p.h>
+#import <qcocoaview_mac_p.h>
 #include "qmacnativewidget_mac.h"
 #include <qwidget_p.h>
 

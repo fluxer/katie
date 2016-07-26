@@ -57,8 +57,6 @@
 # include "QtCore/qt_windows.h"
 #endif
 #include "QtCore/qlibrary.h"
-#include "QtCore/qpointer.h"
-#include "QtCore/qstringlist.h"
 #include "QtCore/qplugin.h"
 #include "QtCore/qsharedpointer.h"
 
@@ -114,7 +112,6 @@ private:
     QAtomicInt libraryUnloadCount;
 
     enum {IsAPlugin, IsNotAPlugin, MightBeAPlugin } pluginState;
-    friend class QLibraryPrivateHasFriends;
 };
 
 QT_END_NAMESPACE

@@ -43,8 +43,8 @@
 
 #ifdef QT_MAC_USE_COCOA
 
-#import "private/qcocoawindowcustomthemeframe_mac_p.h"
-#import "private/qcocoawindow_mac_p.h"
+#import "qcocoawindowcustomthemeframe_mac_p.h"
+#import "qcocoawindow_mac_p.h"
 #include "qt_cocoa_helpers_mac_p.h"
 #include "qwidget.h"
 

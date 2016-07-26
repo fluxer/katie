@@ -42,7 +42,6 @@
 #ifndef QPLUGIN_H
 #define QPLUGIN_H
 
-#include <QtCore/qobject.h>
 #include <QtCore/qpointer.h>
 
 QT_BEGIN_HEADER

@@ -54,7 +54,8 @@
 //
 
 #include "QtCore/qabstractfileengine.h"
-#include "qiodevice_p.h"
+#include "QtCore/qiodevice_p.h"
+#include "QtCore/qringbuffer_p.h"
 
 QT_BEGIN_NAMESPACE
 

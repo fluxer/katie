@@ -42,7 +42,8 @@
 #include "qplatformdefs.h"
 
 #include <qfile.h>
-#include "qlibrary_p.h"
+#include <qstringlist.h>
+#include <qlibrary_p.h>
 #include <qcoreapplication.h>
 #include <qfilesystementry_p.h>
 

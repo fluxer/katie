@@ -39,18 +39,18 @@
 **
 ****************************************************************************/
 
-#import <private/qcocoapanel_mac_p.h>
+#import <qcocoapanel_mac_p.h>
 #ifdef QT_MAC_USE_COCOA
-#import <private/qt_cocoa_helpers_mac_p.h>
-#import <private/qcocoawindow_mac_p.h>
-#import <private/qcocoawindowdelegate_mac_p.h>
-#import <private/qcocoaview_mac_p.h>
-#import <private/qcocoawindowcustomthemeframe_mac_p.h>
-#import <private/qcocoaapplication_mac_p.h>
-#import <private/qmultitouch_mac_p.h>
-#import <private/qapplication_p.h>
-#import <private/qbackingstore_p.h>
-#import <private/qdnd_p.h>
+#import <qt_cocoa_helpers_mac_p.h>
+#import <qcocoawindow_mac_p.h>
+#import <qcocoawindowdelegate_mac_p.h>
+#import <qcocoaview_mac_p.h>
+#import <qcocoawindowcustomthemeframe_mac_p.h>
+#import <qcocoaapplication_mac_p.h>
+#import <qmultitouch_mac_p.h>
+#import <qapplication_p.h>
+#import <qbackingstore_p.h>
+#import <qdnd_p.h>
 
 #include <QtGui/QWidget>
 

@@ -76,9 +76,9 @@
 #include "qmacdefines_mac.h"
 #ifdef QT_MAC_USE_COCOA
 
-#import <private/qcocoaapplicationdelegate_mac_p.h>
-#import <private/qcocoamenuloader_mac_p.h>
-#import <private/qcocoaapplication_mac_p.h>
+#import <qcocoaapplicationdelegate_mac_p.h>
+#import <qcocoamenuloader_mac_p.h>
+#import <qcocoaapplication_mac_p.h>
 #include <qapplication_p.h>
 #include <qt_mac_p.h>
 #include <qt_cocoa_helpers_mac_p.h>

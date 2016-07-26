@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#import <private/qcocoatoolbardelegate_mac_p.h>
+#import <qcocoatoolbardelegate_mac_p.h>
 #ifdef QT_MAC_USE_COCOA
 #include <qmainwindowlayout_p.h>
 #include <qt_mac_p.h>

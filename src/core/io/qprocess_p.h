@@ -55,6 +55,7 @@
 
 #include "QtCore/qprocess.h"
 #include "QtCore/qiodevice_p.h"
+#include "QtCore/qringbuffer_p.h"
 #ifdef Q_OS_UNIX
 #include <qorderedmutexlocker_p.h>
 #endif

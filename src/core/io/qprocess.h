@@ -42,7 +42,6 @@
 #ifndef QPROCESS_H
 #define QPROCESS_H
 
-#include <QtCore/qiodevice.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qshareddata.h>
 

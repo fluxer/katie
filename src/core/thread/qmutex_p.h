@@ -54,7 +54,6 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qnamespace.h>
 #include <QtCore/qmutex.h>
 
