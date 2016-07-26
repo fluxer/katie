@@ -55,10 +55,7 @@
 #include <qbitmap.h>
 #include <qmath.h>
 
-#if defined (Q_WS_X11)
-#  include <qfontengine_ft_p.h>
-#endif
-
+#include <qfontengine_ft_p.h>
 #include <qmath_p.h>
 #include <qtextengine_p.h>
 #include <qfontengine_p.h>
