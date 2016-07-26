@@ -324,7 +324,7 @@ bool qt_mac_set_drawer_preferred_edge(QWidget *w, Qt::DockWidgetArea where) //us
     if(!qt_mac_is_macdrawer(w))
         return false;
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     NSDrawer *drawer = qt_mac_drawer_for(w);
     if (!drawer)
         return false;
@@ -3936,7 +3936,7 @@ void QWidgetPrivate::raise_sys()
     if((q->windowType() == Qt::Desktop))
         return;
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     QMacCocoaAutoReleasePool pool;
     if (isRealWindow()) {
         // With the introduction of spaces it is not as simple as just raising the window.
@@ -5001,7 +5001,7 @@ void QWidgetPrivate::updateFrameStrut()
     that->data.fstrut_dirty = false;
     QTLWExtra *top = that->topData();
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     // 1 Get the window frame
     OSWindowRef oswnd = qt_mac_window_for(q);
     NSRect frameW = [oswnd frame];
@@ -5107,7 +5107,7 @@ void QWidgetPrivate::setWindowOpacity_sys(qreal level)
         return;
 
     OSWindowRef oswindow = qt_mac_window_for(q);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     [oswindow setAlphaValue:level];
 #else
     SetWindowAlpha(oswindow, level);
@@ -5409,7 +5409,7 @@ void QWidgetPrivate::macUpdateMetalAttribute()
         return;
 
     if (realWindow) {
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
         // Cocoa doesn't let us change the style mask once it's been changed
         // So, that means we need to recreate the window.
         OSWindowRef cocoaWindow = qt_mac_window_for(q);

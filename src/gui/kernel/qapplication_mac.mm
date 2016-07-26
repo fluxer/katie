@@ -3065,7 +3065,7 @@ bool QApplicationPrivate::canQuit()
 
 void onApplicationWindowChangedActivation(QWidget *widget, bool activated)
 {
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     if (!widget)
         return;
 
@@ -3091,7 +3091,7 @@ void onApplicationWindowChangedActivation(QWidget *widget, bool activated)
 
 void onApplicationChangedActivation( bool activated )
 {
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     QApplication    *app    = qApp;
 
 //NSLog(@"App Changed Activation\n");

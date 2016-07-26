@@ -120,7 +120,7 @@ void QMacWindowFader::performFade()
 {
     const QWidgetList myWidgetsToFade = m_windowsToFade;
     const int widgetCount = myWidgetsToFade.count();
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     QMacCocoaAutoReleasePool pool;
     [NSAnimationContext beginGrouping];
     [[NSAnimationContext currentContext] setDuration:NSTimeInterval(m_duration)];
@@ -129,7 +129,7 @@ void QMacWindowFader::performFade()
     for (int i = 0; i < widgetCount; ++i) {
         QWidget *widget = m_windowsToFade.at(i);
         OSWindowRef window = qt_mac_window_for(widget);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
         [[window animator] setAlphaValue:0.0];
         QTimer::singleShot(qRound(m_duration * 1000), widget, SLOT(hide()));
 #else
@@ -138,7 +138,7 @@ void QMacWindowFader::performFade()
                                     0, 1, &options);
 #endif
     }
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     [NSAnimationContext endGrouping];
 #endif
     m_duration = 0.250;
@@ -160,7 +160,7 @@ void macWindowFade(void * /*OSWindowRef*/ window, float durationSeconds)
     OSWindowRef wnd = static_cast<OSWindowRef>(window);
     if (wnd) {
         QWidget *widget;
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
         widget = [wnd QT_MANGLE_NAMESPACE(qt_qwidget)];
 #else
     const UInt32 kWidgetCreatorQt = kEventClassQt;
@@ -245,19 +245,19 @@ DnDParams *macCurrentDnDParameters()
 bool macWindowIsTextured( void * /*OSWindowRef*/ window )
 {
     OSWindowRef wnd = static_cast<OSWindowRef>(window);
-#if QT_MAC_USE_COCOA
-	return ( [wnd styleMask] & NSTexturedBackgroundWindowMask ) ? true : false;
+#ifdef QT_MAC_USE_COCOA
+    return ( [wnd styleMask] & NSTexturedBackgroundWindowMask ) ? true : false;
 #else
-	WindowAttributes currentAttributes;
-	GetWindowAttributes(wnd, &currentAttributes);
-	return (currentAttributes & kWindowMetalAttribute) ? true : false;
+    WindowAttributes currentAttributes;
+    GetWindowAttributes(wnd, &currentAttributes);
+    return (currentAttributes & kWindowMetalAttribute) ? true : false;
 #endif
 }
 
 void macWindowToolbarShow(const QWidget *widget, bool show )
 {
     OSWindowRef wnd = qt_mac_window_for(widget);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     if (NSToolbar *toolbar = [wnd toolbar]) {
         QMacCocoaAutoReleasePool pool;
         if (show != [toolbar isVisible]) {
@@ -277,7 +277,7 @@ void macWindowToolbarShow(const QWidget *widget, bool show )
 void macWindowToolbarSet( void * /*OSWindowRef*/ window, void *toolbarRef  )
 {
     OSWindowRef wnd = static_cast<OSWindowRef>(window);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     [wnd setToolbar:static_cast<NSToolbar *>(toolbarRef)];
 #else
     SetWindowToolbar(wnd, static_cast<HIToolbarRef>(toolbarRef));
@@ -287,7 +287,7 @@ void macWindowToolbarSet( void * /*OSWindowRef*/ window, void *toolbarRef  )
 bool macWindowToolbarIsVisible( void * /*OSWindowRef*/ window )
 {
     OSWindowRef wnd = static_cast<OSWindowRef>(window);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     if (NSToolbar *toolbar = [wnd toolbar])
         return [toolbar isVisible];
     return false;
@@ -299,7 +299,7 @@ bool macWindowToolbarIsVisible( void * /*OSWindowRef*/ window )
 void macWindowSetHasShadow( void * /*OSWindowRef*/ window, bool hasShadow  )
 {
     OSWindowRef wnd = static_cast<OSWindowRef>(window);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     [wnd setHasShadow:BOOL(hasShadow)];
 #else
     if (hasShadow)
@@ -312,7 +312,7 @@ void macWindowSetHasShadow( void * /*OSWindowRef*/ window, bool hasShadow  )
 void macWindowFlush(void * /*OSWindowRef*/ window)
 {
     OSWindowRef wnd = static_cast<OSWindowRef>(window);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
     [wnd flushWindowIfNeeded];
 #else
     HIWindowFlush(wnd);
@@ -420,7 +420,6 @@ Qt::MouseButton qt_mac_get_button(EventMouseButton button)
 #ifdef DEBUG_MOUSE_MAPS
     qDebug("Qt: internal: **Mapping button: %d (0x%04x)", button, button);
 #endif
-    Qt::MouseButtons ret = 0;
     for(int i = 0; qt_mac_mouse_symbols[i].qt_code; i++) {
         if (button == qt_mac_mouse_symbols[i].mac_code) {
 #ifdef DEBUG_MOUSE_MAPS
@@ -649,7 +648,9 @@ static const KeyPair entries[NumEntries] = {
     { NSMenuFunctionKey, Qt::Key_Menu },
     { NSHelpFunctionKey, Qt::Key_Help },
 };
+#ifdef QT_MAC_USE_COCOA
 static const KeyPair * const end = entries + NumEntries;
+#endif
 
 QChar qtKey2CocoaKey(Qt::Key key)
 {
@@ -875,7 +876,7 @@ NSPoint flipPoint(const QPointF &p)
     return NSMakePoint(p.x(), flipYCoordinate(p.y()));
 }
 
-#if QT_MAC_USE_COCOA && __OBJC__
+#ifdef QT_MAC_USE_COCOA && __OBJC__
 
 void qt_mac_handleNonClientAreaMouseEvent(NSWindow *window, NSEvent *event)
 {
@@ -1407,7 +1408,7 @@ void qt_mac_updateContentBorderMetricts(void * /*OSWindowRef */window, const ::H
 #endif
 }
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
 void qt_mac_replaceDrawRect(void * /*OSWindowRef */window, QWidgetPrivate *widget)
 {
     QMacCocoaAutoReleasePool pool;
@@ -1472,7 +1473,7 @@ void qt_mac_replaceDrawRectOriginal(void * /*OSWindowRef */window, QWidgetPrivat
 }
 #endif // QT_MAC_USE_COCOA
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
 void qt_mac_showBaseLineSeparator(void * /*OSWindowRef */window, bool show)
 {
     if(!window)
@@ -1502,7 +1503,7 @@ void *qt_mac_QStringListToNSMutableArrayVoid(const QStringList &list)
     return result;
 }
 
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
 void qt_syncCocoaTitleBarButtons(OSWindowRef window, QWidget *widgetForWindow)
 {
     if (!widgetForWindow)

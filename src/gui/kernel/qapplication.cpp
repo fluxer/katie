@@ -5641,7 +5641,7 @@ QGestureManager* QGestureManager::instance()
 // These pixmaps approximate the images in the Windows User Interface Guidelines.
 
 // XPM
-
+#if defined(Q_WS_X11) || defined(Q_WS_WIN)
 static const char * const move_xpm[] = {
 "11 20 3 1",
 ".        c None",
@@ -5831,6 +5831,7 @@ static const char * const link_xpm[] = {
 ".............aXXXaXXXXXa",
 ".............aXXXXXXXXXa",
 ".............aaaaaaaaaaa"};
+#endif // defined(Q_WS_X11) || defined(Q_WS_WIN)
 
 QPixmap QApplicationPrivate::getPixmapCursor(Qt::CursorShape cshape)
 {

@@ -561,7 +561,9 @@ bool QEventDispatcherMac::processEvents(QEventLoop::ProcessEventsFlags flags)
     wakeUp();
     emit awake();
 
+#ifdef QT_MAC_USE_COCOA
     bool excludeUserEvents = flags & QEventLoop::ExcludeUserInputEvents;
+#endif
     bool retVal = false;
     forever {
         if (d->interrupt)

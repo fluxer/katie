@@ -361,13 +361,8 @@ namespace QT_NAMESPACE {}
 #  endif
 #endif
 
-#ifdef QT_AUTODETECT_COCOA
-#  ifdef Q_OS_MAC64
-#    define QT_MAC_USE_COCOA 1
-#    define QT_BUILD_KEY QT_BUILD_KEY_COCOA
-#  else
-#    define QT_BUILD_KEY QT_BUILD_KEY_CARBON
-#  endif
+#ifdef Q_OS_MAC64
+#  define QT_MAC_USE_COCOA 1
 #endif
 
 #if defined(Q_WS_MAC64) && !defined(QT_MAC_USE_COCOA) && !defined(QT_BOOTSTRAPPED)

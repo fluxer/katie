@@ -217,8 +217,8 @@ inline void QCoreGraphicsPaintEnginePrivate::restoreGraphicsState()
 class QMacQuartzPaintDevice : public QPaintDevice
 {
 public:
-    QMacQuartzPaintDevice(CGContextRef cg, int width, int height, int bytesPerLine)
-        : mCG(cg), mWidth(width), mHeight(height), mBytesPerLine(bytesPerLine)
+    QMacQuartzPaintDevice(CGContextRef cg, int width, int height)
+        : mCG(cg), mWidth(width), mHeight(height)
     { }
     int devType() const { return QInternal::MacQuartz; }
     CGContextRef cgContext() const { return mCG; }
@@ -250,7 +250,6 @@ private:
     CGContextRef mCG;
     int mWidth;
     int mHeight;
-    int mBytesPerLine;
 };
 
 QT_END_NAMESPACE

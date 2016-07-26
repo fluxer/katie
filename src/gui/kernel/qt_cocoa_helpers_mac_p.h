@@ -163,7 +163,7 @@ QPixmap qt_mac_convert_iconref(const IconRef icon, int width, int height);
 void qt_mac_constructQIconFromIconRef(const IconRef icon, const IconRef overlayIcon, QIcon *retIcon,
                                       QStyle::StandardPixmap standardIcon = QStyle::SP_CustomBase);
 
-#if QT_MAC_USE_COCOA && __OBJC__
+#ifdef QT_MAC_USE_COCOA && __OBJC__
 struct DnDParams
 {
     NSView *view;

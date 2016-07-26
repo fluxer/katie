@@ -147,27 +147,6 @@ CGImageRef qt_mac_image_to_cgimage(const QImage &image)
   QPixmap member functions
  *****************************************************************************/
 
-static inline QRgb qt_conv16ToRgb(ushort c) {
-    static const int qt_rbits = (565/100);
-    static const int qt_gbits = (565/10%10);
-    static const int qt_bbits = (565%10);
-    static const int qt_red_shift = qt_bbits+qt_gbits-(8-qt_rbits);
-    static const int qt_green_shift = qt_bbits-(8-qt_gbits);
-    static const int qt_neg_blue_shift = 8-qt_bbits;
-    static const int qt_blue_mask = (1<<qt_bbits)-1;
-    static const int qt_green_mask = (1<<(qt_gbits+qt_bbits))-((1<<qt_bbits)-1);
-    static const int qt_red_mask = (1<<(qt_rbits+qt_gbits+qt_bbits))-(1<<(qt_gbits+qt_bbits));
-
-    const int r=(c & qt_red_mask);
-    const int g=(c & qt_green_mask);
-    const int b=(c & qt_blue_mask);
-    const int tr = r >> qt_red_shift;
-    const int tg = g >> qt_green_shift;
-    const int tb = b << qt_neg_blue_shift;
-
-    return qRgb(tr,tg,tb);
-}
-
 QSet<QMacPixmapData*> QMacPixmapData::validDataPointers;
 
 QMacPixmapData::QMacPixmapData(PixelType type)
@@ -880,7 +859,7 @@ static void qt_mac_grabDisplayRect(CGDirectDisplayID display, const QRect &displ
     ptrCGLDestroyContext(glContextObj); // and destroy the context
 }
 
-#if (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6)
+#ifdef QT_MAC_USE_COCOA && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6)
 // Returns a pixmap containing the screen contents at rect.
 static QPixmap qt_mac_grabScreenRect_10_6(const QRect &rect)
 {

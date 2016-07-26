@@ -1092,17 +1092,6 @@ static OSStatus setAttributeValue(EventRef event, const QList<QAElement> &elemen
 #endif //QT_MAC_USE_COCOA
 
 /*
-    Gets the AccessibleObject parameter from an event.
-*/
-static inline AXUIElementRef getAccessibleObjectParameter(EventRef event)
-{
-    AXUIElementRef element;
-    GetEventParameter(event, kEventParamAccessibleObject, typeCFTypeRef, 0,
-                        sizeof(element), 0, &element);
-    return element;
-}
-
-/*
     The application event handler makes sure that all top-level qt windows are registered
     before any accessibility events are handeled.
 */

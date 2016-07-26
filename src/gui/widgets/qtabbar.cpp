@@ -96,7 +96,7 @@ void QTabBarPrivate::updateMacBorderMetrics()
         metrics.left = 0;
         metrics.right = 0;
         qt_mac_updateContentBorderMetricts(window, metrics);
-#if QT_MAC_USE_COCOA
+#ifdef QT_MAC_USE_COCOA
         // In Cocoa we need to keep track of the drawRect method.
         // If documentMode is enabled we need to change it, unless
         // a toolbar is present.
