@@ -440,8 +440,8 @@ static inline ThemeTabDirection getTabDirection(QTabBar::Shape shape)
 }
 
 QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qmacstyle_mac.cpp"
-#include "moc_qmacstyle_mac_p.cpp"
+#include "moc_qmacstyle_mac.h"
+#include "moc_qmacstyle_mac_p.h"
 QT_END_INCLUDE_NAMESPACE
 
 /*****************************************************************************
