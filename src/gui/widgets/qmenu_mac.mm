@@ -52,6 +52,7 @@
 #include "qstyle.h"
 #include "qwidgetaction.h"
 #include "qmacnativewidget_mac.h"
+#include "qthread_p.h"
 
 #include <qapplication_p.h>
 #include <qcocoaapplication_mac_p.h>
