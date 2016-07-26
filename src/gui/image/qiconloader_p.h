@@ -58,7 +58,6 @@
 #include <QtGui/QIconEngine>
 #include <QtGui/QPixmapCache>
 #include <qicon_p.h>
-#include <qfactoryloader_p.h>
 #include <QtCore/QHash>
 
 QT_BEGIN_NAMESPACE

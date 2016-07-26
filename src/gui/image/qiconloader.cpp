@@ -39,11 +39,12 @@
 **
 ****************************************************************************/
 #ifndef QT_NO_ICON
-#include <qiconloader_p.h>
 
+#include <qiconloader_p.h>
 #include <qapplication_p.h>
 #include <qicon_p.h>
 #include <qguiplatformplugin_p.h>
+#include <qfactoryloader_p.h>
 
 #include <QtGui/QIconEnginePlugin>
 #include <QtGui/QPixmapCache>
