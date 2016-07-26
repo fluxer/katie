@@ -122,7 +122,7 @@ void QImagePixmapCleanupHooks::enableCleanupHooks(QPixmapData *pixmapData)
 
 void QImagePixmapCleanupHooks::enableCleanupHooks(const QPixmap &pixmap)
 {
-    enableCleanupHooks(const_cast<QPixmap &>(pixmap).data_ptr().data());
+    const_cast<QPixmap &>(pixmap).data_ptr().data()->is_cached = true;
 }
 
 void QImagePixmapCleanupHooks::enableCleanupHooks(const QImage &image)
