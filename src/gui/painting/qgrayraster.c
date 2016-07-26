@@ -1000,7 +1000,6 @@
 #define SCALED( x )  (x)
 
     QT_FT_Vector   v_last;
-    QT_FT_Vector   v_control;
     QT_FT_Vector   v_start;
 
     QT_FT_Vector*  point;
@@ -1030,8 +1029,6 @@
 
       v_last.x  = SCALED( v_last.x );
       v_last.y  = SCALED( v_last.y );
-
-      v_control = v_start;
 
       point = outline->points + first;
       tags  = outline->tags  + first;
