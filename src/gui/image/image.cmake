@@ -21,7 +21,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdatafactory_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagepixmapcleanuphooks_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qvolatileimage_p.h
@@ -48,7 +47,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdatafactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp

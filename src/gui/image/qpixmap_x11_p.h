@@ -54,7 +54,6 @@
 //
 
 #include <QtGui/qpixmapdata_p.h>
-#include <QtGui/qpixmapdatafactory_p.h>
 
 #include "QtGui/qx11info_x11.h"
 

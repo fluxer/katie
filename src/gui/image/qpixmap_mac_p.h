@@ -54,7 +54,6 @@
 //
 
 #include <QtGui/qpixmapdata_p.h>
-#include <QtGui/qpixmapdatafactory_p.h>
 #include <QtGui/qt_mac_p.h>
 
 QT_BEGIN_NAMESPACE

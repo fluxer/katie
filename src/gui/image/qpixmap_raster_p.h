@@ -54,7 +54,6 @@
 //
 
 #include <QtGui/qpixmapdata_p.h>
-#include <QtGui/qpixmapdatafactory_p.h>
 
 #ifdef Q_WS_WIN
 # include "qt_windows.h"
