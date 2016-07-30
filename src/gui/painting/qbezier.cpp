@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "qbezier_p.h"
+#include "qpainterpath_p.h"
 #include <qdebug.h>
 #include <qline.h>
 #include <qpolygon.h>
@@ -305,12 +306,6 @@ static ShiftResult shift(const QBezier *orig, QBezier *shifted, qreal offset, qr
 
     return good_offset(orig, shifted, offset, threshold);
 }
-
-// This value is used to determine the length of control point vectors
-// when approximating arc segments as curves. The factor is multiplied
-// with the radius of the circle.
-#define KAPPA qreal(0.5522847498)
-
 
 static bool addCircle(const QBezier *b, qreal offset, QBezier *o)
 {

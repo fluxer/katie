@@ -7,7 +7,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemex_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmemrotate_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qoutlinemapper_p.h

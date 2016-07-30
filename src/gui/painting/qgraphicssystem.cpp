@@ -50,7 +50,6 @@
 #ifdef Q_WS_MAC
 # include <qpixmap_mac_p.h>
 #endif
-# include <qgraphicssystemex_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -75,12 +74,6 @@ QPixmapData *QGraphicsSystem::createDefaultPixmapData(QPixmapData::PixelType typ
 QPixmapData *QGraphicsSystem::createPixmapData(QPixmapData *origin)
 {
     return createPixmapData(origin->pixelType());
-}
-
-
-QGraphicsSystemEx* QGraphicsSystem::platformExtension()
-{
-    return 0;
 }
 
 QT_END_NAMESPACE

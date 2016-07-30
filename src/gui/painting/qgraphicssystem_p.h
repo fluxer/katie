@@ -61,7 +61,6 @@
 QT_BEGIN_NAMESPACE
 
 class QPixmapFilter;
-class QGraphicsSystemEx;
 
 class Q_GUI_EXPORT QGraphicsSystem
 {
@@ -75,8 +74,6 @@ public:
     //### Remove this & change qpixmap.cpp & qbitmap.cpp once every platform is gaurenteed
     //    to have a graphics system.
     static QPixmapData *createDefaultPixmapData(QPixmapData::PixelType type);
-
-    virtual QGraphicsSystemEx* platformExtension();
 };
 
 QT_END_NAMESPACE

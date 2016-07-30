@@ -55,7 +55,7 @@
 
 #include "qstatictext.h"
 
-#include <qtextureglyphcache_p.h>
+#include "qfontengine_p.h"
 #include <QtGui/qcolor.h>
 
 QT_BEGIN_NAMESPACE
