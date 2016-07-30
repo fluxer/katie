@@ -168,12 +168,11 @@ public:
     uint VxF:1;                 // View transformation
     uint clipEnabled:1;
 
+    uint changeFlags;
     Qt::BGMode bgMode;
     QPainter *painter;
     Qt::LayoutDirection layoutDirection;
     QPainter::CompositionMode composition_mode;
-    uint emulationSpecifier;
-    uint changeFlags;
 };
 
 struct QPainterDummyState
@@ -222,7 +221,6 @@ public:
         return dummyState;
     }
 
-    void updateEmulationSpecifier(QPainterState *s);
     void updateStateImpl(QPainterState *state);
     void updateState(QPainterState *state);
 

@@ -78,9 +78,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#define QGradient_StretchToDevice 0x10000000
-#define QPaintEngine_OpaqueBackground 0x40000000
-
 // #define QT_DEBUG_DRAW
 #ifdef QT_DEBUG_DRAW
 bool qt_show_painter_debug_output = true;
@@ -128,21 +125,6 @@ static inline bool is_brush_transparent(const QBrush &brush) {
 
 static inline bool is_pen_transparent(const QPen &pen) {
     return pen.style() > Qt::SolidLine || is_brush_transparent(pen.brush());
-}
-
-/* Discards the emulation flags that are not relevant for line drawing
-   and returns the result
-*/
-static inline uint line_emulation(uint emulation)
-{
-    return emulation & (QPaintEngine::PrimitiveTransform
-                        | QPaintEngine::AlphaBlend
-                        | QPaintEngine::Antialiasing
-                        | QPaintEngine::BrushStroke
-                        | QPaintEngine::ConstantOpacity
-                        | QGradient_StretchToDevice
-                        | QPaintEngine::ObjectBoundingModeGradients
-                        | QPaintEngine_OpaqueBackground);
 }
 
 #ifndef QT_NO_DEBUG
@@ -319,20 +301,8 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
     if (originalPath.isEmpty())
         return;
 
-    QPaintEngine::PaintEngineFeatures gradientStretch =
-        QPaintEngine::PaintEngineFeatures(QGradient_StretchToDevice
-                                          | QPaintEngine::ObjectBoundingModeGradients);
-
-    const bool mustEmulateObjectBoundingModeGradients = extended
-                                                        || ((state->emulationSpecifier & QPaintEngine::ObjectBoundingModeGradients)
-                                                            && !engine->hasFeature(QPaintEngine::PatternTransform));
-
-    if (!(state->emulationSpecifier & ~gradientStretch)
-        && !mustEmulateObjectBoundingModeGradients) {
+    if (!extended) {
         drawStretchedGradient(originalPath, op);
-        return;
-    } else if (state->emulationSpecifier & QPaintEngine_OpaqueBackground) {
-        drawOpaqueBackground(originalPath, op);
         return;
     }
 
@@ -640,213 +610,6 @@ void QPainterPrivate::updateInvMatrix()
     invMatrix = state->matrix.inverted();
 }
 
-Q_GUI_EXPORT bool qt_isExtendedRadialGradient(const QBrush &brush);
-
-void QPainterPrivate::updateEmulationSpecifier(QPainterState *s)
-{
-    bool alpha = false;
-    bool linearGradient = false;
-    bool radialGradient = false;
-    bool extendedRadialGradient = false;
-    bool conicalGradient = false;
-    bool patternBrush = false;
-    bool xform = false;
-    bool complexXform = false;
-
-    bool skip = true;
-
-    // Pen and brush properties (we have to check both if one changes because the
-    // one that's unchanged can still be in a state which requires emulation)
-    if (s->state() & (QPaintEngine::DirtyPen | QPaintEngine::DirtyBrush | QPaintEngine::DirtyHints)) {
-        // Check Brush stroke emulation
-        if (!s->pen.isSolid() && !engine->hasFeature(QPaintEngine::BrushStroke))
-            s->emulationSpecifier |= QPaintEngine::BrushStroke;
-        else
-            s->emulationSpecifier &= ~QPaintEngine::BrushStroke;
-
-        skip = false;
-
-        QBrush penBrush = (qpen_style(s->pen) == Qt::NoPen) ? QBrush(Qt::NoBrush) : qpen_brush(s->pen);
-        Qt::BrushStyle brushStyle = qbrush_style(s->brush);
-        Qt::BrushStyle penBrushStyle = qbrush_style(penBrush);
-        alpha = (penBrushStyle != Qt::NoBrush
-                 && (penBrushStyle < Qt::LinearGradientPattern && penBrush.color().alpha() != 255)
-                 && !penBrush.isOpaque())
-                || (brushStyle != Qt::NoBrush
-                    && (brushStyle < Qt::LinearGradientPattern && s->brush.color().alpha() != 255)
-                    && !s->brush.isOpaque());
-        linearGradient = ((penBrushStyle == Qt::LinearGradientPattern) ||
-                           (brushStyle == Qt::LinearGradientPattern));
-        radialGradient = ((penBrushStyle == Qt::RadialGradientPattern) ||
-                           (brushStyle == Qt::RadialGradientPattern));
-        extendedRadialGradient = radialGradient && (qt_isExtendedRadialGradient(penBrush) || qt_isExtendedRadialGradient(s->brush));
-        conicalGradient = ((penBrushStyle == Qt::ConicalGradientPattern) ||
-                            (brushStyle == Qt::ConicalGradientPattern));
-        patternBrush = (((penBrushStyle > Qt::SolidPattern
-                           && penBrushStyle < Qt::LinearGradientPattern)
-                          || penBrushStyle == Qt::TexturePattern) ||
-                         ((brushStyle > Qt::SolidPattern
-                           && brushStyle < Qt::LinearGradientPattern)
-                          || brushStyle == Qt::TexturePattern));
-
-        bool penTextureAlpha = false;
-        if (penBrush.style() == Qt::TexturePattern)
-            penTextureAlpha = qHasPixmapTexture(penBrush)
-                              ? (penBrush.texture().depth() > 1) && penBrush.texture().hasAlpha()
-                              : penBrush.textureImage().hasAlphaChannel();
-        bool brushTextureAlpha = false;
-        if (s->brush.style() == Qt::TexturePattern) {
-            brushTextureAlpha = qHasPixmapTexture(s->brush)
-                                ? (s->brush.texture().depth() > 1) && s->brush.texture().hasAlpha()
-                                : s->brush.textureImage().hasAlphaChannel();
-        }
-        if (((penBrush.style() == Qt::TexturePattern && penTextureAlpha)
-             || (s->brush.style() == Qt::TexturePattern && brushTextureAlpha))
-            && !engine->hasFeature(QPaintEngine::MaskedBrush))
-            s->emulationSpecifier |= QPaintEngine::MaskedBrush;
-        else
-            s->emulationSpecifier &= ~QPaintEngine::MaskedBrush;
-    }
-
-    if (s->state() & (QPaintEngine::DirtyHints
-                      | QPaintEngine::DirtyOpacity
-                      | QPaintEngine::DirtyBackgroundMode)) {
-        skip = false;
-    }
-
-    if (skip)
-        return;
-
-#if 0
-    qDebug("QPainterPrivate::updateEmulationSpecifier, state=%p\n"
-           " - alpha: %d\n"
-           " - linearGradient: %d\n"
-           " - radialGradient: %d\n"
-           " - conicalGradient: %d\n"
-           " - patternBrush: %d\n"
-           " - hints: %x\n"
-           " - xform: %d\n",
-           s,
-           alpha,
-           linearGradient,
-           radialGradient,
-           conicalGradient,
-           patternBrush,
-           uint(s->renderHints),
-           xform);
-#endif
-
-    // XForm properties
-    if (s->state() & QPaintEngine::DirtyTransform) {
-        xform = !s->matrix.isIdentity();
-        complexXform = !s->matrix.isAffine();
-    } else if (s->matrix.type() >= QTransform::TxTranslate) {
-        xform = true;
-        complexXform = !s->matrix.isAffine();
-    }
-
-    const bool brushXform = (s->brush.transform().type() != QTransform::TxNone);
-    const bool penXform = (s->pen.brush().transform().type() != QTransform::TxNone);
-
-    const bool patternXform = patternBrush && (xform || brushXform || penXform);
-
-    // Check alphablending
-    if (alpha && !engine->hasFeature(QPaintEngine::AlphaBlend))
-        s->emulationSpecifier |= QPaintEngine::AlphaBlend;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::AlphaBlend;
-
-    // Linear gradient emulation
-    if (linearGradient && !engine->hasFeature(QPaintEngine::LinearGradientFill))
-        s->emulationSpecifier |= QPaintEngine::LinearGradientFill;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::LinearGradientFill;
-
-    // Radial gradient emulation
-    if (extendedRadialGradient || (radialGradient && !engine->hasFeature(QPaintEngine::RadialGradientFill)))
-        s->emulationSpecifier |= QPaintEngine::RadialGradientFill;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::RadialGradientFill;
-
-    // Conical gradient emulation
-    if (conicalGradient && !engine->hasFeature(QPaintEngine::ConicalGradientFill))
-        s->emulationSpecifier |= QPaintEngine::ConicalGradientFill;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::ConicalGradientFill;
-
-    // Pattern brushes
-    if (patternBrush && !engine->hasFeature(QPaintEngine::PatternBrush))
-        s->emulationSpecifier |= QPaintEngine::PatternBrush;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::PatternBrush;
-
-    // Pattern XForms
-    if (patternXform && !engine->hasFeature(QPaintEngine::PatternTransform))
-        s->emulationSpecifier |= QPaintEngine::PatternTransform;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::PatternTransform;
-
-    // Primitive XForms
-    if (xform && !engine->hasFeature(QPaintEngine::PrimitiveTransform))
-        s->emulationSpecifier |= QPaintEngine::PrimitiveTransform;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::PrimitiveTransform;
-
-    // Perspective XForms
-    if (complexXform && !engine->hasFeature(QPaintEngine::PerspectiveTransform))
-        s->emulationSpecifier |= QPaintEngine::PerspectiveTransform;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::PerspectiveTransform;
-
-    // Constant opacity
-    if (state->opacity != 1 && !engine->hasFeature(QPaintEngine::ConstantOpacity))
-        s->emulationSpecifier |= QPaintEngine::ConstantOpacity;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::ConstantOpacity;
-
-    bool gradientStretch = false;
-    bool objectBoundingMode = false;
-    if (linearGradient || conicalGradient || radialGradient) {
-        QGradient::CoordinateMode brushMode = coordinateMode(s->brush);
-        QGradient::CoordinateMode penMode = coordinateMode(s->pen.brush());
-
-        gradientStretch |= (brushMode == QGradient::StretchToDeviceMode);
-        gradientStretch |= (penMode == QGradient::StretchToDeviceMode);
-
-        objectBoundingMode |= (brushMode == QGradient::ObjectBoundingMode);
-        objectBoundingMode |= (penMode == QGradient::ObjectBoundingMode);
-    }
-    if (gradientStretch)
-        s->emulationSpecifier |= QGradient_StretchToDevice;
-    else
-        s->emulationSpecifier &= ~QGradient_StretchToDevice;
-
-    if (objectBoundingMode && !engine->hasFeature(QPaintEngine::ObjectBoundingModeGradients))
-        s->emulationSpecifier |= QPaintEngine::ObjectBoundingModeGradients;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::ObjectBoundingModeGradients;
-
-    // Opaque backgrounds...
-    if (s->bgMode == Qt::OpaqueMode &&
-        (is_pen_transparent(s->pen) || is_brush_transparent(s->brush)))
-        s->emulationSpecifier |= QPaintEngine_OpaqueBackground;
-    else
-        s->emulationSpecifier &= ~QPaintEngine_OpaqueBackground;
-
-#if 0
-    //won't be correct either way because the device can already have
-    // something rendered to it in which case subsequent emulation
-    // on a fully transparent qimage and then blitting the results
-    // won't produce correct results
-    // Blend modes
-    if (state->composition_mode > QPainter::CompositionMode_Xor &&
-        !engine->hasFeature(QPaintEngine::BlendModes))
-        s->emulationSpecifier |= QPaintEngine::BlendModes;
-    else
-        s->emulationSpecifier &= ~QPaintEngine::BlendModes;
-#endif
-}
-
 void QPainterPrivate::updateStateImpl(QPainterState *newState)
 {
     // ### we might have to call QPainter::begin() here...
@@ -866,8 +629,6 @@ void QPainterPrivate::updateStateImpl(QPainterState *newState)
     // We need to store all changes made so that restore can deal with them
     else
         newState->changeFlags |= newState->dirtyFlags;
-
-    updateEmulationSpecifier(newState);
 
     // Unset potential dirty background mode
     newState->dirtyFlags &= ~(QPaintEngine::DirtyBackgroundMode
@@ -1869,8 +1630,6 @@ bool QPainter::begin(QPaintDevice *pd)
     Q_ASSERT(d->engine->isActive());
     d->state->renderHints = QPainter::TextAntialiasing;
     ++d->device->painters;
-
-    d->state->emulationSpecifier = 0;
 
     return true;
 }
@@ -3400,11 +3159,7 @@ void QPainter::drawPath(const QPainterPath &path)
     }
     d->updateState(d->state);
 
-    if (d->engine->hasFeature(QPaintEngine::PainterPaths) && d->state->emulationSpecifier == 0) {
-        d->engine->drawPath(path);
-    } else {
-        d->draw_helper(path);
-    }
+    d->draw_helper(path);
 }
 
 /*!
@@ -3517,34 +3272,7 @@ void QPainter::drawRects(const QRectF *rects, int rectCount)
 
     d->updateState(d->state);
 
-    if (!d->state->emulationSpecifier) {
-        d->engine->drawRects(rects, rectCount);
-        return;
-    }
-
-    if (d->state->emulationSpecifier == QPaintEngine::PrimitiveTransform
-        && d->state->matrix.type() == QTransform::TxTranslate) {
-        for (int i=0; i<rectCount; ++i) {
-            QRectF r(rects[i].x() + d->state->matrix.dx(),
-                     rects[i].y() + d->state->matrix.dy(),
-                     rects[i].width(),
-                     rects[i].height());
-            d->engine->drawRects(&r, 1);
-        }
-    } else {
-        if (d->state->brushNeedsResolving() || d->state->penNeedsResolving()) {
-            for (int i=0; i<rectCount; ++i) {
-                QPainterPath rectPath;
-                rectPath.addRect(rects[i]);
-                d->draw_helper(rectPath, QPainterPrivate::StrokeAndFillDraw);
-            }
-        } else {
-            QPainterPath rectPath;
-            for (int i=0; i<rectCount; ++i)
-                rectPath.addRect(rects[i]);
-            d->draw_helper(rectPath, QPainterPrivate::StrokeAndFillDraw);
-        }
-    }
+    d->engine->drawRects(rects, rectCount);
 }
 
 /*!
@@ -3577,36 +3305,7 @@ void QPainter::drawRects(const QRect *rects, int rectCount)
 
     d->updateState(d->state);
 
-    if (!d->state->emulationSpecifier) {
-        d->engine->drawRects(rects, rectCount);
-        return;
-    }
-
-    if (d->state->emulationSpecifier == QPaintEngine::PrimitiveTransform
-        && d->state->matrix.type() == QTransform::TxTranslate) {
-        for (int i=0; i<rectCount; ++i) {
-            QRectF r(rects[i].x() + d->state->matrix.dx(),
-                     rects[i].y() + d->state->matrix.dy(),
-                     rects[i].width(),
-                     rects[i].height());
-
-            d->engine->drawRects(&r, 1);
-        }
-    } else {
-        if (d->state->brushNeedsResolving() || d->state->penNeedsResolving()) {
-            for (int i=0; i<rectCount; ++i) {
-                QPainterPath rectPath;
-                rectPath.addRect(rects[i]);
-                d->draw_helper(rectPath, QPainterPrivate::StrokeAndFillDraw);
-            }
-        } else {
-            QPainterPath rectPath;
-            for (int i=0; i<rectCount; ++i)
-                rectPath.addRect(rects[i]);
-
-            d->draw_helper(rectPath, QPainterPrivate::StrokeAndFillDraw);
-        }
-    }
+    d->engine->drawRects(rects, rectCount);
 }
 
 /*!
@@ -3677,36 +3376,7 @@ void QPainter::drawPoints(const QPointF *points, int pointCount)
 
     d->updateState(d->state);
 
-    if (!d->state->emulationSpecifier) {
-        d->engine->drawPoints(points, pointCount);
-        return;
-    }
-
-    if (d->state->emulationSpecifier == QPaintEngine::PrimitiveTransform
-        && d->state->matrix.type() == QTransform::TxTranslate) {
-        // ### use drawPoints function
-        for (int i=0; i<pointCount; ++i) {
-            QPointF pt(points[i].x() + d->state->matrix.dx(),
-                       points[i].y() + d->state->matrix.dy());
-            d->engine->drawPoints(&pt, 1);
-        }
-    } else {
-        QPen pen = d->state->pen;
-        bool flat_pen = pen.capStyle() == Qt::FlatCap;
-        if (flat_pen) {
-            save();
-            pen.setCapStyle(Qt::SquareCap);
-            setPen(pen);
-        }
-        QPainterPath path;
-        for (int i=0; i<pointCount; ++i) {
-            path.moveTo(points[i].x(), points[i].y());
-            path.lineTo(points[i].x() + 0.0001, points[i].y());
-        }
-        d->draw_helper(path, QPainterPrivate::StrokeDraw);
-        if (flat_pen)
-            restore();
-    }
+    d->engine->drawPoints(points, pointCount);
 }
 
 /*!
@@ -3739,36 +3409,7 @@ void QPainter::drawPoints(const QPoint *points, int pointCount)
 
     d->updateState(d->state);
 
-    if (!d->state->emulationSpecifier) {
-        d->engine->drawPoints(points, pointCount);
-        return;
-    }
-
-    if (d->state->emulationSpecifier == QPaintEngine::PrimitiveTransform
-        && d->state->matrix.type() == QTransform::TxTranslate) {
-        // ### use drawPoints function
-        for (int i=0; i<pointCount; ++i) {
-            QPointF pt(points[i].x() + d->state->matrix.dx(),
-                       points[i].y() + d->state->matrix.dy());
-            d->engine->drawPoints(&pt, 1);
-        }
-    } else {
-        QPen pen = d->state->pen;
-        bool flat_pen = (pen.capStyle() == Qt::FlatCap);
-        if (flat_pen) {
-            save();
-            pen.setCapStyle(Qt::SquareCap);
-            setPen(pen);
-        }
-        QPainterPath path;
-        for (int i=0; i<pointCount; ++i) {
-            path.moveTo(points[i].x(), points[i].y());
-            path.lineTo(points[i].x() + 0.0001, points[i].y());
-        }
-        d->draw_helper(path, QPainterPrivate::StrokeDraw);
-        if (flat_pen)
-            restore();
-    }
+    d->engine->drawPoints(points, pointCount);
 }
 
 /*!
@@ -4275,17 +3916,6 @@ void QPainter::drawEllipse(const QRectF &r)
     }
 
     d->updateState(d->state);
-    if (d->state->emulationSpecifier) {
-        if (d->state->emulationSpecifier == QPaintEngine::PrimitiveTransform
-            && d->state->matrix.type() == QTransform::TxTranslate) {
-            rect.translate(QPointF(d->state->matrix.dx(), d->state->matrix.dy()));
-        } else {
-            QPainterPath path;
-            path.addEllipse(rect);
-            d->draw_helper(path, QPainterPrivate::StrokeAndFillDraw);
-            return;
-        }
-    }
 
     d->engine->drawEllipse(rect);
 }
@@ -4316,18 +3946,6 @@ void QPainter::drawEllipse(const QRect &r)
     }
 
     d->updateState(d->state);
-
-    if (d->state->emulationSpecifier) {
-        if (d->state->emulationSpecifier == QPaintEngine::PrimitiveTransform
-            && d->state->matrix.type() == QTransform::TxTranslate) {
-            rect.translate(QPoint(qRound(d->state->matrix.dx()), qRound(d->state->matrix.dy())));
-        } else {
-            QPainterPath path;
-            path.addEllipse(rect);
-            d->draw_helper(path, QPainterPrivate::StrokeAndFillDraw);
-            return;
-        }
-    }
 
     d->engine->drawEllipse(rect);
 }
@@ -4581,26 +4199,6 @@ void QPainter::drawLines(const QLineF *lines, int lineCount)
 
     d->updateState(d->state);
 
-    uint lineEmulation = line_emulation(d->state->emulationSpecifier);
-
-    if (lineEmulation) {
-        if (lineEmulation == QPaintEngine::PrimitiveTransform
-            && d->state->matrix.type() == QTransform::TxTranslate) {
-            for (int i = 0; i < lineCount; ++i) {
-                QLineF line = lines[i];
-                line.translate(d->state->matrix.dx(), d->state->matrix.dy());
-                d->engine->drawLines(&line, 1);
-            }
-        } else {
-            QPainterPath linePath;
-            for (int i = 0; i < lineCount; ++i) {
-                linePath.moveTo(lines[i].p1());
-                linePath.lineTo(lines[i].p2());
-            }
-            d->draw_helper(linePath, QPainterPrivate::StrokeDraw);
-        }
-        return;
-    }
     d->engine->drawLines(lines, lineCount);
 }
 
@@ -4630,26 +4228,6 @@ void QPainter::drawLines(const QLine *lines, int lineCount)
 
     d->updateState(d->state);
 
-    uint lineEmulation = line_emulation(d->state->emulationSpecifier);
-
-    if (lineEmulation) {
-        if (lineEmulation == QPaintEngine::PrimitiveTransform
-            && d->state->matrix.type() == QTransform::TxTranslate) {
-            for (int i = 0; i < lineCount; ++i) {
-                QLineF line = lines[i];
-                line.translate(d->state->matrix.dx(), d->state->matrix.dy());
-                d->engine->drawLines(&line, 1);
-            }
-        } else {
-            QPainterPath linePath;
-            for (int i = 0; i < lineCount; ++i) {
-                linePath.moveTo(lines[i].p1());
-                linePath.lineTo(lines[i].p2());
-            }
-            d->draw_helper(linePath, QPainterPrivate::StrokeDraw);
-        }
-        return;
-    }
     d->engine->drawLines(lines, lineCount);
 }
 
@@ -4748,21 +4326,7 @@ void QPainter::drawPolyline(const QPointF *points, int pointCount)
 
     d->updateState(d->state);
 
-    uint lineEmulation = line_emulation(d->state->emulationSpecifier);
-
-    if (lineEmulation) {
-        // ###
-//         if (lineEmulation == QPaintEngine::PrimitiveTransform
-//             && d->state->matrix.type() == QTransform::TxTranslate) {
-//         } else {
-        QPainterPath polylinePath(points[0]);
-        for (int i=1; i<pointCount; ++i)
-            polylinePath.lineTo(points[i]);
-        d->draw_helper(polylinePath, QPainterPrivate::StrokeDraw);
-//         }
-    } else {
-        d->engine->drawPolygon(points, pointCount, QPaintEngine::PolylineMode);
-    }
+    d->engine->drawPolygon(points, pointCount, QPaintEngine::PolylineMode);
 }
 
 /*!
@@ -4789,21 +4353,7 @@ void QPainter::drawPolyline(const QPoint *points, int pointCount)
 
     d->updateState(d->state);
 
-    uint lineEmulation = line_emulation(d->state->emulationSpecifier);
-
-    if (lineEmulation) {
-        // ###
-//         if (lineEmulation == QPaintEngine::PrimitiveTransform
-//             && d->state->matrix.type() == QTransform::TxTranslate) {
-//         } else {
-        QPainterPath polylinePath(points[0]);
-        for (int i=1; i<pointCount; ++i)
-            polylinePath.lineTo(points[i]);
-        d->draw_helper(polylinePath, QPainterPrivate::StrokeDraw);
-//         }
-    } else {
-        d->engine->drawPolygon(points, pointCount, QPaintEngine::PolylineMode);
-    }
+    d->engine->drawPolygon(points, pointCount, QPaintEngine::PolylineMode);
 }
 
 /*!
@@ -4888,18 +4438,6 @@ void QPainter::drawPolygon(const QPointF *points, int pointCount, Qt::FillRule f
 
     d->updateState(d->state);
 
-    uint emulationSpecifier = d->state->emulationSpecifier;
-
-    if (emulationSpecifier) {
-        QPainterPath polygonPath(points[0]);
-        for (int i=1; i<pointCount; ++i)
-            polygonPath.lineTo(points[i]);
-        polygonPath.closeSubpath();
-        polygonPath.setFillRule(fillRule);
-        d->draw_helper(polygonPath);
-        return;
-    }
-
     d->engine->drawPolygon(points, pointCount, QPaintEngine::PolygonDrawMode(fillRule));
 }
 
@@ -4926,18 +4464,6 @@ void QPainter::drawPolygon(const QPoint *points, int pointCount, Qt::FillRule fi
     }
 
     d->updateState(d->state);
-
-    uint emulationSpecifier = d->state->emulationSpecifier;
-
-    if (emulationSpecifier) {
-        QPainterPath polygonPath(points[0]);
-        for (int i=1; i<pointCount; ++i)
-            polygonPath.lineTo(points[i]);
-        polygonPath.closeSubpath();
-        polygonPath.setFillRule(fillRule);
-        d->draw_helper(polygonPath);
-        return;
-    }
 
     d->engine->drawPolygon(points, pointCount, QPaintEngine::PolygonDrawMode(fillRule));
 }
@@ -5107,18 +4633,6 @@ void QPainter::drawConvexPolygon(const QPoint *points, int pointCount)
 
     d->updateState(d->state);
 
-    uint emulationSpecifier = d->state->emulationSpecifier;
-
-    if (emulationSpecifier) {
-        QPainterPath polygonPath(points[0]);
-        for (int i=1; i<pointCount; ++i)
-            polygonPath.lineTo(points[i]);
-        polygonPath.closeSubpath();
-        polygonPath.setFillRule(Qt::WindingFill);
-        d->draw_helper(polygonPath);
-        return;
-    }
-
     d->engine->drawPolygon(points, pointCount, QPaintEngine::ConvexMode);
 }
 
@@ -5140,18 +4654,6 @@ void QPainter::drawConvexPolygon(const QPointF *points, int pointCount)
     }
 
     d->updateState(d->state);
-
-    uint emulationSpecifier = d->state->emulationSpecifier;
-
-    if (emulationSpecifier) {
-        QPainterPath polygonPath(points[0]);
-        for (int i=1; i<pointCount; ++i)
-            polygonPath.lineTo(points[i]);
-        polygonPath.closeSubpath();
-        polygonPath.setFillRule(Qt::WindingFill);
-        d->draw_helper(polygonPath);
-        return;
-    }
 
     d->engine->drawPolygon(points, pointCount, QPaintEngine::ConvexMode);
 }
@@ -7887,10 +7389,11 @@ QPainterState::QPainterState(const QPainterState *s)
       wx(s->wx), wy(s->wy), ww(s->ww), wh(s->wh),
       vx(s->vx), vy(s->vy), vw(s->vw), vh(s->vh),
       opacity(s->opacity), WxF(s->WxF), VxF(s->VxF),
-      clipEnabled(s->clipEnabled), bgMode(s->bgMode), painter(s->painter),
+      clipEnabled(s->clipEnabled),
+      changeFlags(0),
+      bgMode(s->bgMode), painter(s->painter),
       layoutDirection(s->layoutDirection),
-      composition_mode(s->composition_mode),
-      emulationSpecifier(s->emulationSpecifier), changeFlags(0)
+      composition_mode(s->composition_mode)
 {
     dirtyFlags = s->dirtyFlags;
 }
@@ -7900,10 +7403,10 @@ QPainterState::QPainterState()
       renderHints(0),
       wx(0), wy(0), ww(0), wh(0), vx(0), vy(0), vw(0), vh(0),
       opacity(1), WxF(false), VxF(false), clipEnabled(true),
+      changeFlags(0),
       bgMode(Qt::TransparentMode), painter(0),
       layoutDirection(QApplication::layoutDirection()),
-      composition_mode(QPainter::CompositionMode_SourceOver),
-      emulationSpecifier(0), changeFlags(0)
+      composition_mode(QPainter::CompositionMode_SourceOver)
 {
     dirtyFlags = 0;
 }
@@ -7933,7 +7436,6 @@ void QPainterState::init(QPainter *p) {
     matrix.reset();
     layoutDirection = QApplication::layoutDirection();
     composition_mode = QPainter::CompositionMode_SourceOver;
-    emulationSpecifier = 0;
     dirtyFlags = 0;
     changeFlags = 0;
     renderHints = 0;
