@@ -23,8 +23,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapfilter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagepixmapcleanuphooks_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qvolatileimage_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qvolatileimagedata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qnativeimagehandleprovider_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbmphandler_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler_p.h
@@ -54,8 +52,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qnativeimage.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagepixmapcleanuphooks.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qvolatileimage.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qvolatileimagedata.cpp
     # Built-in image format support
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbmphandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp

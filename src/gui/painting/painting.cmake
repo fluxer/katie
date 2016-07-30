@@ -168,7 +168,6 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_mac_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qunifiedtoolbarsurface_mac_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_mac_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_mac_p.h
     )
     set(GUI_SOURCES
@@ -178,7 +177,6 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_mac.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_mac.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_mac.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_mac.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_mac.mm
     )
