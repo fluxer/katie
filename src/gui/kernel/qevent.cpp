@@ -2721,7 +2721,7 @@ QShowEvent::~QShowEvent()
     This event is only used to notify the application of a request.
     It may be safely ignored.
 
-    \note This class is currently supported for Mac OS X and Symbian only.
+    \note This class is currently supported for Mac OS X only.
 */
 
 QFileOpenEventPrivate::~QFileOpenEventPrivate()

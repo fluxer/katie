@@ -150,23 +150,6 @@
            Command+C on the keyboard regardless of the value set, though what is output for
            QKeySequence::toString(QKeySequence::PortableText) will be different).
 
-    \value AA_S60DontConstructApplicationPanes Stops Qt from initializing the S60 status
-           pane and softkey pane on Symbian. This is useful to save memory and reduce
-           startup time for applications that will run in fullscreen mode during their
-           whole lifetime. This attribute must be set before QApplication is
-           constructed.
-
-    \value AA_S60DisablePartialScreenInputMode By default in Symbian^3, a separate
-           editing window is opened on top of an application. This is exactly like
-           editing on previous versions of Symbian behave. When this attribute is false,
-           a non-fullscreen virtual keyboard window is shown on top of application and
-           it is ensured that the focused text input widget is visible.
-           The auto-translation of input widget is only supported for applications
-           based on QGraphicsView, but the non-fullscreen virtual keyboard will
-           work for any kind of application (i.e. QWidgets-based). By default this
-           attribute is true. This attribute must be set after QApplication is
-           constructed. This is only supported in Symbian^3 and later Symbian releases.
-
     \value AA_X11InitThreads Calls XInitThreads() as part of the QApplication
            construction in order to make Xlib calls thread-safe. This
            attribute must be set before QApplication is constructed.
@@ -1202,17 +1185,6 @@
     \value WA_TouchPadAcceptSingleTouchEvents Allows touchpad single
     touch events to be sent to the widget.
 
-    \value WA_MergeSoftkeys Allows widget to merge softkeys with parent widget,
-    i.e. widget can set only one softkeys and request softkey implementation
-    to take rest of the softkeys from the parent. Note parents are traversed until
-    WA_MergeSoftkeys is not set. See also Qt::WA_MergeSoftkeysRecursively
-    This attribute currently has effect only on Symbian platforms
-
-    \value WA_MergeSoftkeysRecursively Allows widget to merge softkeys recursively
-    with all parents. If this attribute is set, the widget parents are traversed until
-    window boundary (widget without parent or dialog) is found.
-    This attribute currently has effect only on Symbian platforms
-
     \value WA_X11DoNotAcceptFocus Asks the window manager to not give focus
     to this top level window. This attribute has no effect on non-X11
     platforms.
@@ -1257,7 +1229,6 @@
     \omitvalue WA_SetWindowModality
     \omitvalue WA_WState_WindowOpacitySet
     \omitvalue WA_WState_AcceptedTouchBeginEvent
-    \omitvalue WA_SymbianNoSystemRotation
 */
 
 /*! \typedef Qt::HANDLE

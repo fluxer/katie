@@ -242,9 +242,6 @@ public:
     void wceRefresh();
     bool wceEmitSignals(QList<QWceMenuAction*> actions, uint command);
 #endif
-#ifdef QT_SOFTKEYS_ENABLED
-    QAction *menuBarAction;
-#endif
 
 #ifdef Q_WS_X11
     void updateCornerWidgetToolBar();

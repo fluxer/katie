@@ -415,28 +415,12 @@ public:
         WA_WState_AcceptedTouchBeginEvent = 122,
         WA_TouchPadAcceptSingleTouchEvents = 123,
 
-        WA_MergeSoftkeys =  124,
-        WA_MergeSoftkeysRecursively =  125,
+        WA_LockPortraitOrientation = 124,
+        WA_LockLandscapeOrientation = 125,
+        WA_AutoOrientation = 126,
 
-#if 0 // these values are reserved for Maemo5 - do not re-use them
-        WA_Maemo5NonComposited = 126,
-        WA_Maemo5StackedWindow = 127,
-#endif
-
-        WA_LockPortraitOrientation = 128,
-        WA_LockLandscapeOrientation = 129,
-        WA_AutoOrientation = 130,
-
-#if 0 // these values are reserved for Maemo5 - do not re-use them
-        WA_Maemo5PortraitOrientation = WA_LockPortraitOrientation,
-        WA_Maemo5LandscapeOrientation = WA_LockLandscapeOrientation,
-        WA_Maemo5AutoOrientation = WA_AutoOrientation,
-        WA_Maemo5ShowProgressIndicator = 131,
-#endif
-
-        WA_X11DoNotAcceptFocus = 132,
-        WA_SymbianNoSystemRotation = 133,
-        WA_MacNoShadow = 134,
+        WA_X11DoNotAcceptFocus = 127,
+        WA_MacNoShadow = 128,
 
         // Add new attributes before this line
         WA_AttributeCount
@@ -452,10 +436,8 @@ public:
         AA_MacPluginApplication = 5,
         AA_DontUseNativeMenuBar = 6,
         AA_MacDontSwapCtrlAndMeta = 7,
-        AA_S60DontConstructApplicationPanes = 8,
-        AA_S60DisablePartialScreenInputMode = 9,
-        AA_X11InitThreads = 10,
-        AA_CaptureMultimediaKeys = 11,
+        AA_X11InitThreads = 8,
+        AA_CaptureMultimediaKeys = 9,
 
         // Add new attributes before this line
         AA_AttributeCount

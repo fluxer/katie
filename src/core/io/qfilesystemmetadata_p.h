@@ -147,12 +147,6 @@ public:
                             | QFileSystemMetaData::Times
                             | QFileSystemMetaData::OwnerIds,
 
-        SymbianTEntryFlags  = QFileSystemMetaData::Permissions
-                            | QFileSystemMetaData::FileType
-                            | QFileSystemMetaData::DirectoryType
-                            | QFileSystemMetaData::SequentialType
-                            | QFileSystemMetaData::Attributes
-                            | QFileSystemMetaData::Times,
 #if defined(Q_OS_WIN)
         WinStatFlags        = QFileSystemMetaData::FileType
                             | QFileSystemMetaData::DirectoryType

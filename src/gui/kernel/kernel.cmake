@@ -40,8 +40,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qstandardgestures_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturerecognizer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsoftkeymanager_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsoftkeymanager_common_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.h
@@ -79,7 +77,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qstandardgestures.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturerecognizer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsoftkeymanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.cpp

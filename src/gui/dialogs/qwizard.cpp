@@ -75,10 +75,6 @@ extern bool qt_wince_is_mobile();     //defined in qguifunctions_wce.cpp
 
 #include <string.h>     // for memset()
 
-#ifdef QT_SOFTKEYS_ENABLED
-#include "qaction.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // These fudge terms were needed a few places to obtain pixel-perfect results
@@ -569,9 +565,6 @@ public:
     {
         for (int i = 0; i < QWizard::NButtons; ++i) {
             btns[i] = 0;
-#ifdef QT_SOFTKEYS_ENABLED
-            softKeys[i] = 0;
-#endif
         }
 #if !defined(QT_NO_STYLE_WINDOWSVISTA)
         if (QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based))
@@ -658,9 +651,6 @@ public:
     QLabel *titleLabel;
     QLabel *subTitleLabel;
     QWizardRuler *bottomRuler;
-#ifdef QT_SOFTKEYS_ENABLED
-    mutable QAction *softKeys[QWizard::NButtons];
-#endif
 
     QVBoxLayout *pageVBoxLayout;
     QHBoxLayout *buttonLayout;
@@ -1400,28 +1390,6 @@ bool QWizardPrivate::ensureButton(QWizard::WizardButton which) const
         if (which < QWizard::NStandardButtons)
             pushButton->setText(buttonDefaultText(wizStyle, which, this));
 
-#ifdef QT_SOFTKEYS_ENABLED
-        QAction *softKey = new QAction(pushButton->text(), pushButton);
-        QAction::SoftKeyRole softKeyRole;
-        switch(which) {
-        case QWizard::NextButton:
-        case QWizard::FinishButton:
-        case QWizard::CancelButton:
-            softKeyRole = QAction::NegativeSoftKey;
-            break;
-        case QWizard::BackButton:
-        case QWizard::CommitButton:
-        case QWizard::HelpButton:
-        case QWizard::CustomButton1:
-        case QWizard::CustomButton2:
-        case QWizard::CustomButton3:
-        default:
-            softKeyRole = QAction::PositiveSoftKey;
-            break;
-        }
-        softKey->setSoftKeyRole(softKeyRole);
-        softKeys[which] = softKey;
-#endif
         connectButton(which);
     }
     return true;
@@ -1435,10 +1403,6 @@ void QWizardPrivate::connectButton(QWizard::WizardButton which) const
     } else {
         QObject::connect(btns[which], SIGNAL(clicked()), q, SLOT(_q_emitCustomButtonClicked()));
     }
-
-#ifdef QT_SOFTKEYS_ENABLED
-    QObject::connect(softKeys[which], SIGNAL(triggered()), btns[which], SIGNAL(clicked()));
-#endif
 }
 
 void QWizardPrivate::updateButtonTexts()
@@ -1452,9 +1416,6 @@ void QWizardPrivate::updateButtonTexts()
                 btns[i]->setText(buttonCustomTexts.value(i));
             else if (i < QWizard::NStandardButtons)
                 btns[i]->setText(buttonDefaultText(wizStyle, i, this));
-#ifdef QT_SOFTKEYS_ENABLED
-            softKeys[i]->setText(btns[i]->text());
-#endif
         }
     }
 }
@@ -1696,19 +1657,6 @@ void QWizardPrivate::_q_updateButtonStates()
         vistaHelper->backButton()->setEnabled(btn.back->isEnabled());
         vistaHelper->backButton()->setVisible(backButtonVisible);
         btn.back->setVisible(false);
-    }
-#endif
-
-#ifdef QT_SOFTKEYS_ENABLED
-    QAbstractButton *wizardButton;
-    for (int i = 0; i < QWizard::NButtons; ++i) {
-        wizardButton = btns[i];
-        if (wizardButton && !wizardButton->testAttribute(Qt::WA_WState_Hidden)) {
-            wizardButton->hide();
-            q->addAction(softKeys[i]);
-        } else {
-            q->removeAction(softKeys[i]);
-        }
     }
 #endif
 

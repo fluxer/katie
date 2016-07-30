@@ -81,9 +81,7 @@ static QString qt_strippedText(QString s)
 
 QActionPrivate::QActionPrivate() : group(0), enabled(1), forceDisabled(0),
                                    visible(1), forceInvisible(0), checkable(0), checked(0), separator(0), fontSet(false),
-                                   forceEnabledInSoftkeys(false), menuActionSoftkeys(false),
-                                   iconVisibleInMenu(-1),
-                                   menuRole(QAction::TextHeuristicRole), softKeyRole(QAction::NoSoftKey),
+                                   menuRole(QAction::TextHeuristicRole),
                                    priority(QAction::NormalPriority)
 {
 #ifndef QT_NO_SHORTCUT
@@ -280,26 +278,6 @@ void QActionPrivate::setShortcutEnabled(bool enable, QShortcutMap &map)
     File menu in your menubar and the File menu has a submenu, setting the
     MenuRole for the actions in that submenu have no effect. They will never be moved.
 */
-
-/*! \since 4.6
-
-    \enum QAction::SoftKeyRole
-
-    This enum describes how an action should be placed in the softkey bar. Currently this enum only
-    has an effect on the Symbian platform.
-
-    \value NoSoftKey This action should not be used as a softkey
-    \value PositiveSoftKey This action is used to describe a softkey with a positive or non-destructive
-           role such as Ok, Select, or Options.
-    \value NegativeSoftKey This action is used to describe a soft ey with a negative or destructive role
-           role such as Cancel, Discard, or Close.
-    \value SelectSoftKey This action is used to describe a role that selects a particular item or widget
-           in the application.
-
-    Actions with a softkey role defined are only visible in the softkey bar when the widget containing
-    the action has focus. If no widget currently has focus, the softkey framework will traverse up the
-    widget parent hierarchy looking for a widget containing softkey actions.
- */
 
 /*!
     Constructs an action with \a parent. If \a parent is an action
@@ -661,10 +639,6 @@ QActionGroup *QAction::actionGroup() const
     In toolbars, the icon is used as the tool button icon; in menus,
     it is displayed to the left of the menu text. There is no default
     icon.
-
-    On Symbian the icons which are passed to softkeys, i.e. to actions with
-    softkey role, need to have pixmap alpha channel correctly set otherwise
-    drawing artifacts will appear when softkey is pressed down.
 
     If a null icon (QIcon::isNull() is passed into this function,
     the icon of the action is cleared.
@@ -1386,33 +1360,6 @@ QAction::MenuRole QAction::menuRole() const
 }
 
 /*!
-    \property QAction::softKeyRole
-    \brief the action's softkey role
-    \since 4.6
-
-    This indicates what type of role this action describes in the softkey framework
-    on platforms where such a framework is supported. Currently this is only
-    supported on the Symbian platform.
-
-    The softkey role can be changed any time.
-*/
-void QAction::setSoftKeyRole(SoftKeyRole softKeyRole)
-{
-    Q_D(QAction);
-    if (d->softKeyRole == softKeyRole)
-        return;
-
-    d->softKeyRole = softKeyRole;
-    d->sendDataChanged();
-}
-
-QAction::SoftKeyRole QAction::softKeyRole() const
-{
-    Q_D(const QAction);
-    return d->softKeyRole;
-}
-
-/*!
     \property QAction::iconVisibleInMenu
     \brief Whether or not an action should show an icon in a menu
     \since 4.4
@@ -1433,25 +1380,15 @@ QAction::SoftKeyRole QAction::softKeyRole() const
 void QAction::setIconVisibleInMenu(bool visible)
 {
     Q_D(QAction);
-    if (d->iconVisibleInMenu == -1 || visible != bool(d->iconVisibleInMenu)) {
-        int oldValue = d->iconVisibleInMenu;
-        d->iconVisibleInMenu = visible;
-        // Only send data changed if we really need to.
-        if (oldValue != -1
-            || (oldValue == -1
-                && visible == !QApplication::instance()->testAttribute(Qt::AA_DontShowIconsInMenus))) {
-            d->sendDataChanged();
-        }
+    // Only send data changed if we really need to.
+    if (visible == !QApplication::instance()->testAttribute(Qt::AA_DontShowIconsInMenus)) {
+        d->sendDataChanged();
     }
 }
 
 bool QAction::isIconVisibleInMenu() const
 {
-    Q_D(const QAction);
-    if (d->iconVisibleInMenu == -1) {
-        return !QApplication::instance()->testAttribute(Qt::AA_DontShowIconsInMenus);
-    }
-    return d->iconVisibleInMenu;
+    return !QApplication::instance()->testAttribute(Qt::AA_DontShowIconsInMenus);
 }
 
 QT_END_NAMESPACE

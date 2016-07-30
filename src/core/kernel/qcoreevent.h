@@ -255,15 +255,13 @@ public:
         RequestSoftwareInputPanel = 150,
         CloseSoftwareInputPanel = 151,
 
-        UpdateSoftKeys = 152,                   // Internal for compressing soft key updates
-
-        WinIdChange = 153,
+        WinIdChange = 152,
 #ifndef QT_NO_GESTURES
-        Gesture = 154,
-        GestureOverride = 155,
+        Gesture = 153,
+        GestureOverride = 154,
 #endif
 
-        PlatformPanel = 156,
+        PlatformPanel = 155,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id

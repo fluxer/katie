@@ -78,7 +78,6 @@
 #include "qstyle_p.h"
 #include "qinputcontext_p.h"
 #include "qfileinfo.h"
-#include "qsoftkeymanager_p.h"
 
 #if defined (Q_WS_WIN)
 # include <qwininputcontext_p.h>
@@ -1018,31 +1017,8 @@ void QWidget::setAutoFillBackground(bool enabled)
             (this implies 3).
     \endlist
 
-    \sa QEvent, QPainter, QGridLayout, QBoxLayout
-
-    \section1 Softkeys
-
-    Since Qt 4.6, Softkeys are usually physical keys on a device that have a corresponding label or
-    other visual representation on the screen that is generally located next to its
-    physical counterpart. They are most often found on mobile phone platforms. In
-    modern touch based user interfaces it is also possible to have softkeys that do
-    not correspond to any physical keys. Softkeys differ from other onscreen labels
-    in that they are contextual.
-
-    In Qt, contextual softkeys are added to a widget by calling addAction() and
-    passing a \c QAction with a softkey role set on it. When the widget
-    containing the softkey actions has focus, its softkeys should appear in
-    the user interface. Softkeys are discovered by traversing the widget
-    hierarchy so it is possible to define a single set of softkeys that are
-    present at all times by calling addAction() for a given top level widget.
-
-    On some platforms, this concept overlaps with \c QMenuBar such that if no
-    other softkeys are found and the top level widget is a QMainWindow containing
-    a QMenuBar, the menubar actions may appear on one of the softkeys.
-
-    Note: Currently softkeys are only supported on the Symbian Platform.
-
-    \sa addAction(), QAction, QMenuBar
+    \sa QEvent, QPainter, QGridLayout, QBoxLayout, addAction(), QAction,
+    QMenuBar
 
 */
 
@@ -8063,9 +8039,6 @@ bool QWidget::event(QEvent *event)
         }
         break;
     case QEvent::FocusIn:
-#ifdef QT_SOFTKEYS_ENABLED
-        QSoftKeyManager::updateSoftKeys();
-#endif
         focusInEvent((QFocusEvent*)event);
         break;
 
@@ -8212,12 +8185,6 @@ bool QWidget::event(QEvent *event)
             if (w && w->isVisible() && !w->isWindow())
                 QApplication::sendEvent(w, event);
         }
-
-#ifdef QT_SOFTKEYS_ENABLED
-        if (isWindow())
-            QSoftKeyManager::updateSoftKeys();
-#endif
-
         break; }
 
     case QEvent::LanguageChange:
@@ -8323,9 +8290,6 @@ bool QWidget::event(QEvent *event)
     case QEvent::ActionAdded:
     case QEvent::ActionRemoved:
     case QEvent::ActionChanged:
-#ifdef QT_SOFTKEYS_ENABLED
-        QSoftKeyManager::updateSoftKeys();
-#endif
         actionEvent((QActionEvent*)event);
         break;
 #endif

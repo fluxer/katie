@@ -68,9 +68,6 @@ extern bool qt_wince_is_high_dpi();  //defined in qguifunctions_wince.cpp
 #include "qguifunctions_wince.h"
 #endif
 
-#if defined(QT_SOFTKEYS_ENABLED)
-#include <qaction.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -82,9 +79,6 @@ public:
     QCheckBox * again;
     QTextEdit * errors;
     QLabel * icon;
-#ifdef QT_SOFTKEYS_ENABLED
-    QAction *okAction;
-#endif
     QQueue<QPair<QString, QString> > pending;
     QSet<QString> doNotShow;
     QSet<QString> doNotShowType;
@@ -249,13 +243,6 @@ QErrorMessage::QErrorMessage(QWidget * parent)
     d->again->setChecked(true);
     grid->addWidget(d->again, 1, preferredTextColumn, Qt::AlignTop);
     d->ok = new QPushButton(this);
-#ifdef QT_SOFTKEYS_ENABLED
-    d->okAction = new QAction(d->ok);
-    d->okAction->setSoftKeyRole(QAction::PositiveSoftKey);
-    connect(d->okAction, SIGNAL(triggered()), this, SLOT(accept()));
-    addAction(d->okAction);
-#endif
-
 
 #if defined(Q_WS_WINCE) || defined(Q_WS_S60)
     d->ok->setFixedSize(0,0);
@@ -406,9 +393,6 @@ void QErrorMessagePrivate::retranslateStrings()
 {
     again->setText(QErrorMessage::tr("&Show this message again"));
     ok->setText(QErrorMessage::tr("&OK"));
-#ifdef QT_SOFTKEYS_ENABLED
-    okAction->setText(ok->text());
-#endif
 }
 
 /*!

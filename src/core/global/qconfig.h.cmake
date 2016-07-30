@@ -53,6 +53,7 @@
 #define QT_NO_COP
 #define QT_NO_BLITTABLE
 #define QT_NO_PICTUREIO
+#define QT_NO_SOFTKEYMANAGER
 
 /* Qt build specs */
 #ifndef QT_EDITION
