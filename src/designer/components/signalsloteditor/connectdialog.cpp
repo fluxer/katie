@@ -238,17 +238,12 @@ void ConnectDialog::populateSlotList(const QString &signal)
     const QMap<QString, QString>::ConstIterator itMemberEnd = memberToClassName.constEnd();
     while (itMember != itMemberEnd) {
         const QString member = itMember.key();
-        const bool qt3Slot = isQt3Slot(m_formWindow->core(), m_destination, member);
 
         QListWidgetItem *item = new QListWidgetItem(m_ui.slotList);
         item->setText(member);
         if (member == selectedName)
             curr = item;
 
-        if (qt3Slot) {
-            item->setData(Qt::FontRole, variantFont);
-            item->setData(Qt::ForegroundRole, Qt::red);
-        }
         ++itMember;
     }
 
@@ -278,17 +273,12 @@ void ConnectDialog::populateSignalList()
     const QMap<QString, QString>::ConstIterator itMemberEnd = memberToClassName.constEnd();
     while (itMember != itMemberEnd) {
         const QString member = itMember.key();
-        const bool qt3Signal = isQt3Signal(m_formWindow->core(), m_source, member);
 
         QListWidgetItem *item = new QListWidgetItem(m_ui.signalList);
         item->setText(member);
         if (!selectedName.isEmpty() && member == selectedName)
             curr = item;
 
-        if (qt3Signal) {
-            item->setData(Qt::FontRole, variantFont);
-            item->setData(Qt::ForegroundRole, Qt::red);
-        }
         ++itMember;
     }
 

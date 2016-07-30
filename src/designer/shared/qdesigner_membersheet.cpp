@@ -46,75 +46,6 @@
 
 #include <QtGui/QWidget>
 
-namespace {
-
-class Qt3Members
-  {
-  public:
-      static Qt3Members *instance();
-      QMap<QString, QStringList> getSignals() const { return m_classNameToSignals; }
-      QMap<QString, QStringList> getSlots() const { return m_classNameToSlots; }
-  private:
-      Qt3Members();
-      static Qt3Members *m_instance;
-      QMap<QString, QStringList> m_classNameToSignals;
-      QMap<QString, QStringList> m_classNameToSlots;
-  };
-
-Qt3Members *Qt3Members::m_instance = 0;
-
-Qt3Members::Qt3Members()
-{
-    m_classNameToSignals[QLatin1String("QTextEdit")].append(QLatin1String("currentFontChanged(QFont)"));
-    m_classNameToSignals[QLatin1String("QTextEdit")].append(QLatin1String("currentColorChanged(QColor)"));
-    m_classNameToSignals[QLatin1String("QTabWidget")].append(QLatin1String("currentChanged(QWidget*)"));
-    m_classNameToSignals[QLatin1String("QTabWidget")].append(QLatin1String("selected(QString)"));
-    m_classNameToSignals[QLatin1String("QTabBar")].append(QLatin1String("selected(int)"));
-    m_classNameToSignals[QLatin1String("QMenuBar")].append(QLatin1String("activated(int)"));
-    m_classNameToSignals[QLatin1String("QMenuBar")].append(QLatin1String("highlighted(int)"));
-    m_classNameToSignals[QLatin1String("QMenu")].append(QLatin1String("activated(int)"));
-    m_classNameToSignals[QLatin1String("QMenu")].append(QLatin1String("highlighted(int)"));
-    m_classNameToSignals[QLatin1String("QLineEdit")].append(QLatin1String("lostFocus()"));
-    m_classNameToSignals[QLatin1String("QDial")].append(QLatin1String("dialPressed()"));
-    m_classNameToSignals[QLatin1String("QDial")].append(QLatin1String("dialMoved(int)"));
-    m_classNameToSignals[QLatin1String("QDial")].append(QLatin1String("dialReleased()"));
-    m_classNameToSignals[QLatin1String("QComboBox")].append(QLatin1String("textChanged(QString)"));
-    m_classNameToSignals[QLatin1String("QActionGroup")].append(QLatin1String("selected(QAction*)"));
-    m_classNameToSignals[QLatin1String("QAction")].append(QLatin1String("activated(int)"));
-    m_classNameToSignals[QLatin1String("QAbstractSocket")].append(QLatin1String("connectionClosed()"));
-    m_classNameToSignals[QLatin1String("QAbstractSocket")].append(QLatin1String("delayedCloseFinished()"));
-
-    m_classNameToSlots[QLatin1String("QWidget")].append(QLatin1String("setShown(bool)"));
-    m_classNameToSlots[QLatin1String("QToolButton")].append(QLatin1String("setTextPosition(QToolButton::TextPosition)"));
-    m_classNameToSlots[QLatin1String("QToolButton")].append(QLatin1String("setUsesBigPixmap(bool)"));
-    m_classNameToSlots[QLatin1String("QToolButton")].append(QLatin1String("setUsesTextLabel(bool)"));
-    m_classNameToSlots[QLatin1String("QTextEdit")].append(QLatin1String("setModified(bool)"));
-    m_classNameToSlots[QLatin1String("QTextEdit")].append(QLatin1String("setColor(QColor)"));
-    m_classNameToSlots[QLatin1String("QTabWidget")].append(QLatin1String("setCurrentPage(int)"));
-    m_classNameToSlots[QLatin1String("QTabWidget")].append(QLatin1String("showPage(QWidget*)"));
-    m_classNameToSlots[QLatin1String("QTabWidget")].append(QLatin1String("removePage(QWidget*)"));
-    m_classNameToSlots[QLatin1String("QTabBar")].append(QLatin1String("setCurrentTab(int)"));
-    m_classNameToSlots[QLatin1String("QStatusBar")].append(QLatin1String("message(QString,int)"));
-    m_classNameToSlots[QLatin1String("QStatusBar")].append(QLatin1String("clear()"));
-    m_classNameToSlots[QLatin1String("QSplashScreen")].append(QLatin1String("message(QString,int)"));
-    m_classNameToSlots[QLatin1String("QSplashScreen")].append(QLatin1String("clear()"));
-    m_classNameToSlots[QLatin1String("QSlider")].append(QLatin1String("addStep()"));
-    m_classNameToSlots[QLatin1String("QSlider")].append(QLatin1String("subtractStep()"));
-    m_classNameToSlots[QLatin1String("QAbstractButton")].append(QLatin1String("setOn(bool)"));
-    m_classNameToSlots[QLatin1String("QAction")].append(QLatin1String("setOn(bool)"));
-    m_classNameToSlots[QLatin1String("QErrorMessage")].append(QLatin1String("message(QString)"));
-    m_classNameToSlots[QLatin1String("QTimer")].append(QLatin1String("changeInterval(int)"));
-    m_classNameToSlots[QLatin1String("QTimer")].append(QLatin1String("start(int,bool)"));
-}
-
-Qt3Members *Qt3Members::instance()
-{
-    if (!m_instance)
-        m_instance = new Qt3Members();
-    return m_instance;
-}
-}
-
 QT_BEGIN_NAMESPACE
 
 static QList<QByteArray> stringListToByteArray(const QStringList &l)
@@ -319,37 +250,6 @@ bool QDesignerMemberSheet::signalMatchesSlot(const QString &signal, const QStrin
     } while (false);
 
     return result;
-}
-
-bool QDesignerMemberSheet::isQt3Signal(int index) const
-{
-    if (!isSignal(index))
-        return false;
-
-    const QString className = declaredInClass(index);
-    const QString signalSignature = signature(index);
-
-    QMap<QString, QStringList> qt3signals = Qt3Members::instance()->getSignals();
-    QMap<QString, QStringList>::const_iterator it = qt3signals.constFind(className);
-    if (it != qt3signals.constEnd() && (*it).contains(signalSignature))
-        return true;
-
-    return false;
-}
-
-bool QDesignerMemberSheet::isQt3Slot(int index) const
-{
-    if (!isSlot(index))
-        return false;
-
-    const QString className = declaredInClass(index);
-    const QString slotSignature = signature(index);
-
-    QMap<QString, QStringList> qt3slots = Qt3Members::instance()->getSlots();
-    QMap<QString, QStringList>::const_iterator it = qt3slots.constFind(className);
-    if (it != qt3slots.constEnd() && (*it).contains(slotSignature))
-        return true;
-    return false;
 }
 
 // ------------ QDesignerMemberSheetFactory
