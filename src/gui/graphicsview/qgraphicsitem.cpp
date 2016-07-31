@@ -8105,14 +8105,6 @@ void QAbstractGraphicsShapeItem::setBrush(const QBrush &brush)
 /*!
     \reimp
 */
-bool QAbstractGraphicsShapeItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QGraphicsItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
 QPainterPath QAbstractGraphicsShapeItem::opaqueArea() const
 {
     Q_D(const QAbstractGraphicsShapeItem);
@@ -8270,22 +8262,6 @@ void QGraphicsPathItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
     if (option->state & QStyle::State_Selected)
         qt_graphicsItem_highlightSelected(this, painter, option);
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsPathItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QAbstractGraphicsShapeItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsPathItem::opaqueArea() const
-{
-    return QAbstractGraphicsShapeItem::opaqueArea();
 }
 
 /*!
@@ -8514,22 +8490,6 @@ void QGraphicsRectItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
     if (option->state & QStyle::State_Selected)
         qt_graphicsItem_highlightSelected(this, painter, option);
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsRectItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QAbstractGraphicsShapeItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsRectItem::opaqueArea() const
-{
-    return QAbstractGraphicsShapeItem::opaqueArea();
 }
 
 /*!
@@ -8834,22 +8794,6 @@ void QGraphicsEllipseItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 /*!
     \reimp
 */
-bool QGraphicsEllipseItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QAbstractGraphicsShapeItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsEllipseItem::opaqueArea() const
-{
-    return QAbstractGraphicsShapeItem::opaqueArea();
-}
-
-/*!
-    \reimp
-*/
 int QGraphicsEllipseItem::type() const
 {
     return Type;
@@ -9063,22 +9007,6 @@ void QGraphicsPolygonItem::paint(QPainter *painter, const QStyleOptionGraphicsIt
 
     if (option->state & QStyle::State_Selected)
         qt_graphicsItem_highlightSelected(this, painter, option);
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsPolygonItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QAbstractGraphicsShapeItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsPolygonItem::opaqueArea() const
-{
-    return QAbstractGraphicsShapeItem::opaqueArea();
 }
 
 /*!
@@ -9326,22 +9254,6 @@ void QGraphicsLineItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
     if (option->state & QStyle::State_Selected)
         qt_graphicsItem_highlightSelected(this, painter, option);
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsLineItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QGraphicsItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsLineItem::opaqueArea() const
-{
-    return QGraphicsItem::opaqueArea();
 }
 
 /*!
@@ -9667,14 +9579,6 @@ void QGraphicsPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 
     if (option->state & QStyle::State_Selected)
         qt_graphicsItem_highlightSelected(this, painter, option);
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsPixmapItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QGraphicsItem::isObscuredBy(item);
 }
 
 /*!
@@ -10015,22 +9919,6 @@ void QGraphicsTextItem::paint(QPainter *painter, const QStyleOptionGraphicsItem 
 
     if (option->state & (QStyle::State_Selected | QStyle::State_HasFocus))
         qt_graphicsItem_highlightSelected(this, painter, option);
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsTextItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QGraphicsItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsTextItem::opaqueArea() const
-{
-    return QGraphicsItem::opaqueArea();
 }
 
 /*!
@@ -10854,22 +10742,6 @@ void QGraphicsSimpleTextItem::paint(QPainter *painter, const QStyleOptionGraphic
 /*!
     \reimp
 */
-bool QGraphicsSimpleTextItem::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QAbstractGraphicsShapeItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsSimpleTextItem::opaqueArea() const
-{
-    return QAbstractGraphicsShapeItem::opaqueArea();
-}
-
-/*!
-    \reimp
-*/
 int QGraphicsSimpleTextItem::type() const
 {
     return Type;
@@ -11127,22 +10999,6 @@ void QGraphicsItemGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem
         painter->setBrush(Qt::NoBrush);
         painter->drawRect(d->itemsBoundingRect);
     }
-}
-
-/*!
-    \reimp
-*/
-bool QGraphicsItemGroup::isObscuredBy(const QGraphicsItem *item) const
-{
-    return QGraphicsItem::isObscuredBy(item);
-}
-
-/*!
-    \reimp
-*/
-QPainterPath QGraphicsItemGroup::opaqueArea() const
-{
-    return QGraphicsItem::opaqueArea();
 }
 
 /*!
