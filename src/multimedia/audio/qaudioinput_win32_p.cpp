@@ -632,3 +632,5 @@ void InputPrivate::trigger()
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qaudioinput_win32_p.h"
