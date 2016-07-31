@@ -5847,36 +5847,12 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     int sbpl = bytesPerLine();
     const uchar *sptr = bits();
 
-    QImage::Format target_format = d->format;
-
-    if (complex_xform || mode == Qt::SmoothTransformation) {
-        if (d->format < QImage::Format_RGB32 || !hasAlphaChannel()) {
-            switch(d->format) {
-            case QImage::Format_RGB16:
-                target_format = Format_ARGB8565_Premultiplied;
-                break;
-            case QImage::Format_RGB555:
-                target_format = Format_ARGB8555_Premultiplied;
-                break;
-            case QImage::Format_RGB666:
-                target_format = Format_ARGB6666_Premultiplied;
-                break;
-            case QImage::Format_RGB444:
-                target_format = Format_ARGB4444_Premultiplied;
-                break;
-            default:
-                target_format = Format_ARGB32_Premultiplied;
-                break;
-            }
-        }
-    }
-
-    QImage dImage(wd, hd, target_format);
+    QImage dImage(wd, hd, d->format);
     QIMAGE_SANITYCHECK_MEMORY(dImage);
 
-    if (target_format == QImage::Format_MonoLSB
-        || target_format == QImage::Format_Mono
-        || target_format == QImage::Format_Indexed8) {
+    if (d->format == QImage::Format_MonoLSB
+        || d->format == QImage::Format_Mono
+        || d->format == QImage::Format_Indexed8) {
         dImage.d->colortable = d->colortable;
         dImage.d->has_alpha_clut = d->has_alpha_clut | complex_xform;
     }
@@ -5903,11 +5879,10 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             break;
     }
 
-    if (target_format >= QImage::Format_RGB32) {
+    if (d->format >= QImage::Format_RGB32) {
         QPainter p(&dImage);
         if (mode == Qt::SmoothTransformation) {
-            p.setRenderHint(QPainter::Antialiasing);
-            p.setRenderHint(QPainter::SmoothPixmapTransform);
+            p.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
         }
         p.setTransform(mat);
         p.drawImage(QPoint(0, 0), *this);
