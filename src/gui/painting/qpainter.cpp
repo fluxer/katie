@@ -109,21 +109,6 @@ static inline QGradient::CoordinateMode coordinateMode(const QBrush &brush)
     return QGradient::LogicalMode;
 }
 
-extern bool qHasPixmapTexture(const QBrush &);
-
-static inline bool is_brush_transparent(const QBrush &brush) {
-    Qt::BrushStyle s = brush.style();
-    bool brushBitmap = qHasPixmapTexture(brush)
-                       ? brush.texture().isQBitmap()
-                       : (brush.textureImage().depth() == 1);
-    return ((s >= Qt::Dense1Pattern && s <= Qt::DiagCrossPattern)
-            || (s == Qt::TexturePattern && brushBitmap));
-}
-
-static inline bool is_pen_transparent(const QPen &pen) {
-    return pen.style() > Qt::SolidLine || is_brush_transparent(pen.brush());
-}
-
 #ifndef QT_NO_DEBUG
 static bool qt_painter_thread_test(int devType, const char *what, bool extraCondition = false)
 {
