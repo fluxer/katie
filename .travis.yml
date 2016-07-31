@@ -11,8 +11,7 @@ cache: ccache
 git:
     depth: 3
 before_install:
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                    ; fi
-    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libpng jpeg-turbo libtiff ; fi
+#    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update                    ; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -qq      ; fi
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq python-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libasound2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev libgtk2.0-dev libgl1-mesa-dev libwayland-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libsqlite3-dev xorg-dev ; fi
 before_script:
@@ -21,7 +20,7 @@ before_script:
     - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3                      ; fi
 script:
     - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DENABLE_TESTING=TRUE -Wno-dev ; fi
-    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" -DCMAKE_INSTALL_PREFIX=/usr/local/opt; fi
     - make
     - ctest -V
 #    - make test
