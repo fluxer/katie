@@ -225,6 +225,9 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${KATIE_LDFLAGS}
         -framework AppKit
         -framework Carbon
-        -lz
+    )
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${ZLIB_LIBRARIES}
     )
 endif()

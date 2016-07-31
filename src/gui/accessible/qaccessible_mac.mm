@@ -2455,4 +2455,6 @@ void QAccessible::updateAccessibility(QObject *object, int child, Event reason)
 
 QT_END_NAMESPACE
 
+#include "moc_qaccessible_mac_p.h"
+
 #endif // QT_NO_ACCESSIBILITY

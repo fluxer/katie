@@ -12157,8 +12157,6 @@ void QWidgetPrivate::syncUnifiedMode() {
 
 QT_END_NAMESPACE
 
-
-
 #include "moc_qwidget.h"
 
 
