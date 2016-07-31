@@ -179,7 +179,7 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
 endif()
 
 if(UNIX)
-    if(NOT NOT KATIE_PLATFORM STREQUAL "mac")
+    if(NOT KATIE_PLATFORM STREQUAL "mac")
         set(GUI_HEADERS
             ${GUI_HEADERS}
             ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
