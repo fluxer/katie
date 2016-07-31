@@ -5187,9 +5187,7 @@ QPaintEngine *QWidget::paintEngine() const
     if (!pe)
         pe = new QCoreGraphicsPaintEngine();
     if (pe->isActive()) {
-        QPaintEngine *engine = new QCoreGraphicsPaintEngine();
-        engine->setAutoDestruct(true);
-        return engine;
+        return new QCoreGraphicsPaintEngine();
     }
     return pe;
 }

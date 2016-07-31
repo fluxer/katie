@@ -677,7 +677,6 @@ QPaintEngine::QPaintEngine(PaintEngineFeatures caps)
     : state(0),
       gccaps(caps),
       active(0),
-      selfDestruct(false),
       extended(false),
       d_ptr(new QPaintEnginePrivate)
 {
@@ -692,7 +691,6 @@ QPaintEngine::QPaintEngine(QPaintEnginePrivate &dptr, PaintEngineFeatures caps)
     : state(0),
       gccaps(caps),
       active(0),
-      selfDestruct(false),
       extended(false),
       d_ptr(&dptr)
 {

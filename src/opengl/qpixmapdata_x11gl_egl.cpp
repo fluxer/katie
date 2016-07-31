@@ -354,9 +354,6 @@ QPaintEngine* QX11GLPixmapData::paintEngine() const
         else
             engine = new QOpenGLPaintEngine;
 #endif
-
-        engine->setAutoDestruct(true);
-        return engine;
     }
 
     return engine;

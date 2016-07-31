@@ -5217,10 +5217,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
             if (q->paintingActive() && !q->testAttribute(Qt::WA_PaintOutsidePaintEvent))
                 qWarning("QWidget::repaint: It is dangerous to leave painters active on a widget outside of the PaintEvent");
 
-            if (paintEngine && paintEngine->autoDestruct()) {
-                delete paintEngine;
-            }
-
 #ifndef QT_NO_PAINT_DEBUG
             if (flushed)
                 QWidgetBackingStore::unflushPaint(q, toBePainted);
@@ -5235,9 +5231,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
                     p.drawTiledPixmap(q->rect(), bg.texture());
                 else
                     p.fillRect(q->rect(), bg);
-
-                if (engine->autoDestruct())
-                    delete engine;
             }
         }
     }

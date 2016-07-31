@@ -144,6 +144,8 @@ QPainterPrivate::~QPainterPrivate()
 
     if (dummyState)
         delete dummyState;
+
+    delete engine;
 }
 
 
@@ -1655,10 +1657,6 @@ bool QPainter::end()
     if (d->states.size() > 1) {
         qWarning("QPainter::end: Painter ended with %d saved states",
                  d->states.size());
-    }
-
-    if (d->engine->autoDestruct()) {
-        delete d->engine;
     }
 
     if (d->extended) {

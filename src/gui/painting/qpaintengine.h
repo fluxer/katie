@@ -231,14 +231,11 @@ protected:
     PaintEngineFeatures gccaps;
 
     uint active : 1;
-    uint selfDestruct : 1;
     uint extended : 1;
 
     QScopedPointer<QPaintEnginePrivate> d_ptr;
 
 private:
-    void setAutoDestruct(bool autoDestr) { selfDestruct = autoDestr; }
-    bool autoDestruct() const { return selfDestruct; }
     Q_DISABLE_COPY(QPaintEngine)
 
     friend class QPainterReplayer;
