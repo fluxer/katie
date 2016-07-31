@@ -79,9 +79,9 @@ public:
         qreal y;
         ElementType type;
 
-        bool isMoveTo() const { return type == MoveToElement; }
-        bool isLineTo() const { return type == LineToElement; }
-        bool isCurveTo() const { return type == CurveToElement; }
+        inline bool isMoveTo() const { return type == MoveToElement; }
+        inline bool isLineTo() const { return type == LineToElement; }
+        inline bool isCurveTo() const { return type == CurveToElement; }
 
         operator QPointF () const { return QPointF(x, y); }
 

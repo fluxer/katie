@@ -57,7 +57,6 @@
 #include <qdrawhelper_p.h>
 #include <qmemrotate_p.h>
 #include <qpixmapdata_p.h>
-#include <qimagescale_p.h>
 #include <qsimd_p.h>
 
 #include <qhash.h>
@@ -5663,20 +5662,6 @@ int QImage::bitPlaneCount() const
     Use scaledToHeight() instead.
 */
 
-static QImage smoothScaled(const QImage &source, int w, int h) {
-    QImage src = source;
-    if (src.format() == QImage::Format_ARGB32)
-        src = src.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-    else if (src.depth() < 32) {
-        if (src.hasAlphaChannel())
-            src = src.convertToFormat(QImage::Format_ARGB32_Premultiplied);
-        else
-            src = src.convertToFormat(QImage::Format_RGB32);
-    }
-
-    return qSmoothScaleImage(src, w, h);
-}
-
 
 static QImage rotated90(const QImage &image) {
     QImage out(image.height(), image.width(), image.format());
@@ -5825,7 +5810,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
     // compute size of target image
     QTransform mat = trueMatrix(matrix, ws, hs);
     bool complex_xform = false;
-    bool scale_xform = false;
     if (mat.type() <= QTransform::TxScale) {
         if (mat.type() == QTransform::TxNone) // identity matrix
             return *this;
@@ -5839,7 +5823,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
             hd = int(qAbs(mat.m22()) * hs + 0.9999);
             wd = int(qAbs(mat.m11()) * ws + 0.9999);
         }
-        scale_xform = true;
     } else {
         if (mat.type() <= QTransform::TxRotate && mat.m11() == 0 && mat.m22() == 0) {
             if (mat.m12() == 1. && mat.m21() == -1.)
@@ -5858,19 +5841,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
 
     if (wd == 0 || hd == 0)
         return QImage();
-
-    // Make use of the optimized algorithm when we're scaling
-    if (scale_xform && mode == Qt::SmoothTransformation) {
-        if (mat.m11() < 0.0F && mat.m22() < 0.0F) { // horizontal/vertical flip
-            return smoothScaled(mirrored(true, true), wd, hd);
-        } else if (mat.m11() < 0.0F) { // horizontal flip
-            return smoothScaled(mirrored(true, false), wd, hd);
-        } else if (mat.m22() < 0.0F) { // vertical flip
-            return smoothScaled(mirrored(false, true), wd, hd);
-        } else { // no flipping
-            return smoothScaled(*this, wd, hd);
-        }
-    }
 
     int bpp = depth();
 

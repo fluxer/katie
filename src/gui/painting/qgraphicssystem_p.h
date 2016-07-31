@@ -56,11 +56,7 @@
 #include "qpixmapdata_p.h"
 #include "qwindowsurface_p.h"
 
-#include <qdebug.h>
-
 QT_BEGIN_NAMESPACE
-
-class QPixmapFilter;
 
 class Q_GUI_EXPORT QGraphicsSystem
 {

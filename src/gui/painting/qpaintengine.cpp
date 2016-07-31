@@ -309,10 +309,6 @@ void QPaintEngine::syncState()
 }
 
 static QPaintEngine *qt_polygon_recursion = 0;
-struct QT_Point {
-    int x;
-    int y;
-};
 
 /*!
     \fn void QPaintEngine::drawPolygon(const QPointF *points, int pointCount,
@@ -329,20 +325,14 @@ void QPaintEngine::drawPolygon(const QPointF *points, int pointCount, PolygonDra
     Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
                "At least one drawPolygon function must be implemented");
     qt_polygon_recursion = this;
-    Q_ASSERT(sizeof(QT_Point) == sizeof(QPoint));
-    QVarLengthArray<QT_Point> p(pointCount);
+    QPoint fp[pointCount];
     for (int i = 0; i < pointCount; ++i) {
-        p[i].x = qRound(points[i].x());
-        p[i].y = qRound(points[i].y());
+        fp[i] = points[i].toPoint();
     }
-    drawPolygon((QPoint *)p.data(), pointCount, mode);
+    drawPolygon(fp, pointCount, mode);
     qt_polygon_recursion = 0;
 }
 
-struct QT_PointF {
-    qreal x;
-    qreal y;
-};
 /*!
     \overload
 
@@ -356,13 +346,11 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     Q_ASSERT_X(qt_polygon_recursion != this, "QPaintEngine::drawPolygon",
                "At least one drawPolygon function must be implemented");
     qt_polygon_recursion = this;
-    Q_ASSERT(sizeof(QT_PointF) == sizeof(QPointF));
-    QVarLengthArray<QT_PointF> p(pointCount);
+    QPointF fp[pointCount];
     for (int i=0; i<pointCount; ++i) {
-        p[i].x = points[i].x();
-        p[i].y = points[i].y();
+        fp[i] = points[i];
     }
-    drawPolygon((QPointF *)p.data(), pointCount, mode);
+    drawPolygon(fp, pointCount, mode);
     qt_polygon_recursion = 0;
 }
 
@@ -475,16 +463,14 @@ void QPaintEngine::drawPoints(const QPointF *points, int pointCount)
 */
 void QPaintEngine::drawPoints(const QPoint *points, int pointCount)
 {
-    Q_ASSERT(sizeof(QT_PointF) == sizeof(QPointF));
-    QT_PointF fp[256];
-    while (pointCount) {
+    QPointF fp[256];
+    while(pointCount) {
         int i = 0;
         while (i < pointCount && i < 256) {
-            fp[i].x = points[i].x();
-            fp[i].y = points[i].y();
+            fp[i] = points[i];
             ++i;
         }
-        drawPoints((QPointF *)(void *)fp, i);
+        drawPoints(fp, i);
         points += i;
         pointCount -= i;
     }

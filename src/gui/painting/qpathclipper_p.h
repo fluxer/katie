@@ -96,8 +96,8 @@ private:
         CheckMode // for contains/intersects (only interested in whether the result path is non-empty)
     };
 
-    bool handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode mode);
-    bool doClip(QWingedEdge &list, ClipperMode mode);
+    bool handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode mode) const;
+    bool doClip(QWingedEdge &list, ClipperMode mode) const;
 
     QPainterPath subjectPath;
     QPainterPath clipPath;
@@ -285,8 +285,6 @@ private:
 
     QDataBuffer<QPathEdge> m_edges;
     QDataBuffer<QPathVertex> m_vertices;
-
-    QVector<qreal> m_splitPoints;
 
     QPathSegments m_segments;
 };

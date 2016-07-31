@@ -42,7 +42,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwmatrix.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintbuffer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblendfunctions_p.h
@@ -104,10 +103,8 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtextureglyphcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintbuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qimagescale.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp

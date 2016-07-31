@@ -87,7 +87,6 @@ endif()
 if(WITH_OPENGL AND OPENGL_FOUND)
     include(graphicssystems/opengl/opengl.cmake)
 endif()
-include(graphicssystems/trace/trace.cmake)
 
 
 include(iconengines/svgiconengine/svgiconengine.cmake)

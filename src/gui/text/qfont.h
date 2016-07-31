@@ -318,7 +318,6 @@ private:
     friend class QTextItemInt;
     friend class QPicturePaintEngine;
     friend class QPainterReplayer;
-    friend class QPaintBufferEngine;
     friend class QCommandLinkButtonPrivate;
     friend class QFontEngine;
 

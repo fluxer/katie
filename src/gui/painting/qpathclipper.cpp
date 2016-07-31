@@ -1225,7 +1225,7 @@ int QWingedEdge::addEdge(int fi, int si)
             vp->edge = ei;
             ep->setNext(dirs[i], ei);
         } else {
-            int vi = ep->vertex(dirs[i]);
+            const int vi = ep->vertex(dirs[i]);
             Q_ASSERT(vertex(vi) == vertices[i]);
 
             TraversalStatus os = findInsertStatus(vi, ei);
@@ -1637,7 +1637,7 @@ QPainterPath QPathClipper::clip(Operation operation)
     return path;
 }
 
-bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode)
+bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode) const
 {
     QVector<qreal> y_coords;
     y_coords.reserve(list.vertexCount());
@@ -1666,8 +1666,8 @@ bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode)
             if ((edge->flag & 0x3) == 0x3)
                 continue;
 
-            QPathVertex *a = list.vertex(edge->first);
-            QPathVertex *b = list.vertex(edge->second);
+            const QPathVertex *a = list.vertex(edge->first);
+            const QPathVertex *b = list.vertex(edge->second);
 
             if (qFuzzyCompare(a->y, b->y))
                 continue;
@@ -1684,8 +1684,8 @@ bool QPathClipper::doClip(QWingedEdge &list, ClipperMode mode)
         if (found) {
             QPathEdge *edge = list.edge(index);
 
-            QPathVertex *a = list.vertex(edge->first);
-            QPathVertex *b = list.vertex(edge->second);
+            const QPathVertex *a = list.vertex(edge->first);
+            const QPathVertex *b = list.vertex(edge->second);
 
             // FIXME: this can be optimized by using binary search
             const int first = qFuzzyFind(y_coords.begin(), y_coords.end(), qMin(a->y, b->y)) - y_coords.begin();
@@ -1784,8 +1784,8 @@ bool QWingedEdge::isInside(qreal x, qreal y) const
         if (!w)
             continue;
 
-        QPointF a = *vertex(ep->first);
-        QPointF b = *vertex(ep->second);
+        const QPointF a = *vertex(ep->first);
+        const QPointF b = *vertex(ep->second);
 
         if ((a.y() < y && b.y() > y) || (a.y() > y && b.y() < y)) {
             qreal intersectionX = a.x() + (b.x() - a.x()) * (y - a.y()) / (b.y() - a.y());
@@ -1803,8 +1803,8 @@ static QVector<QCrossingEdge> findCrossings(const QWingedEdge &list, qreal y)
     QVector<QCrossingEdge> crossings;
     for (int i = 0; i < list.edgeCount(); ++i) {
         const QPathEdge *edge = list.edge(i);
-        QPointF a = *list.vertex(edge->first);
-        QPointF b = *list.vertex(edge->second);
+        const QPointF a = *list.vertex(edge->first);
+        const QPointF b = *list.vertex(edge->second);
 
         if ((a.y() < y && b.y() > y) || (a.y() > y && b.y() < y)) {
             const qreal intersection = a.x() + (b.x() - a.x()) * (y - a.y()) / (b.y() - a.y());
@@ -1815,7 +1815,7 @@ static QVector<QCrossingEdge> findCrossings(const QWingedEdge &list, qreal y)
     return crossings;
 }
 
-bool QPathClipper::handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode mode)
+bool QPathClipper::handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode mode) const
 {
     QVector<QCrossingEdge> crossings = findCrossings(list, y);
 
@@ -1850,15 +1850,15 @@ bool QPathClipper::handleCrossingEdges(QWingedEdge &list, qreal y, ClipperMode m
         const bool add = inD ^ inside;
 
 #ifdef QDEBUG_CLIPPER
-        printf("y %f, x %f, inA: %d, inB: %d, inD: %d, inside: %d, flag: %x, bezier: %p, edge: %d\n", y, crossings.at(i).x, inA, inB, inD, inside, edge->flag, edge->bezier, ei);
+        printf("y %f, x %f, inA: %d, inB: %d, inD: %d, inside: %d, flag: %x, edge: %d\n", y, crossings.at(i).x, inA, inB, inD, inside, edge->flag, ei);
 #endif
 
         if (add) {
             if (mode == CheckMode)
                 return true;
 
-            qreal y0 = list.vertex(edge->first)->y;
-            qreal y1 = list.vertex(edge->second)->y;
+            const qreal y0 = list.vertex(edge->first)->y;
+            const qreal y1 = list.vertex(edge->second)->y;
 
             if (y0 < y1) {
                 if (!(edge->flag & 1))
