@@ -444,7 +444,7 @@ public:
 */
 class Q_AUTOTEST_EXPORT QAccessibleHierarchyManager : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     ~QAccessibleHierarchyManager() { reset(); }
     static QAccessibleHierarchyManager *instance();

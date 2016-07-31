@@ -445,3 +445,5 @@ QByteArray QAudioDeviceInfoInternal::defaultInputDevice()
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qaudiodeviceinfo_win32_p.h"

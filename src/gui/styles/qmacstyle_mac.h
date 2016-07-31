@@ -52,17 +52,10 @@ QT_BEGIN_NAMESPACE
 #if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
 
 class QPalette;
-
-#if defined(QT_PLUGIN)
-#define Q_GUI_EXPORT_STYLE_MAC
-#else
-#define Q_GUI_EXPORT_STYLE_MAC Q_GUI_EXPORT
-#endif
-
 class QPushButton;
 class QStyleOptionButton;
 class QMacStylePrivate;
-class Q_GUI_EXPORT_STYLE_MAC QMacStyle : public QWindowsStyle
+class Q_GUI_EXPORT QMacStyle : public QWindowsStyle
 {
     Q_OBJECT
 public:

@@ -188,3 +188,5 @@ void QMacCocoaViewContainer::setCocoaView(void *cocoaViewToWrap)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qmaccocoaviewcontainer_mac.h"
