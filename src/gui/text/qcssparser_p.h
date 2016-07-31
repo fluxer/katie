@@ -560,11 +560,6 @@ struct Q_AUTOTEST_EXPORT Selector
     QString pseudoElement() const;
 };
 
-struct StyleRule;
-struct MediaRule;
-struct PageRule;
-struct ImportRule;
-
 struct Q_AUTOTEST_EXPORT ValueExtractor
 {
     ValueExtractor(const QVector<Declaration> &declarations, const QPalette & = QPalette());

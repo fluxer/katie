@@ -6561,16 +6561,7 @@ void QPainter::fillRect(const QRectF &r, const QColor &color)
 */
 void QPainter::setRenderHint(RenderHint hint, bool on)
 {
-#ifdef QT_DEBUG_DRAW
-    printf("QPainter::setRenderHint: hint=%x, %s\n", hint, on ? "on" : "off");
-#endif
-
-#ifndef QT_NO_DEBUG
-    static const bool antialiasingDisabled = qgetenv("QT_NO_ANTIALIASING").toInt();
-    if (hint == QPainter::Antialiasing && antialiasingDisabled)
-        return;
-#endif
-
+    // ### possibly inline
     setRenderHints(hint, on);
 }
 
