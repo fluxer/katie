@@ -131,3 +131,5 @@ bool QMacNativeWidget::event(QEvent *ev)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qmacnativewidget_mac.h"

@@ -3137,4 +3137,6 @@ void QApplicationPrivate::initializeMultitouch_sys()
 void QApplicationPrivate::cleanupMultitouch_sys()
 { }
 
+#include "moc_qsessionmanager.h"
+
 QT_END_NAMESPACE

@@ -1201,3 +1201,4 @@ void QtMacInterruptDispatcherHelp::interruptLater()
 
 QT_END_NAMESPACE
 
+#include "moc_qeventdispatcher_mac_p.h"

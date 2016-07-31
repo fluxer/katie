@@ -749,5 +749,8 @@ bool QCocoaDropData::hasFormat_sys(const QString &mimeType) const
     return has;
 }
 
+#include "moc_qdnd_p.h"
+
 #endif // QT_NO_DRAGANDDROP
+
 QT_END_NAMESPACE

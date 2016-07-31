@@ -687,3 +687,5 @@ void QCursorData::update()
 }
 
 QT_END_NAMESPACE
+
+#include "qrc_macresources.cpp"

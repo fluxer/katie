@@ -381,4 +381,7 @@ QMacInputContext::globalEventProcessor(EventHandlerCallRef, EventRef event, void
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qmacinputcontext_p.h"
+
 #endif // QT_NO_IM
