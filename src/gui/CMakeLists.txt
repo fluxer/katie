@@ -431,6 +431,7 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/text
     ${CMAKE_CURRENT_SOURCE_DIR}/util
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets
+    ${CMAKE_CURRENT_SOURCE_DIR}/mac
     ${CMAKE_CURRENT_BINARY_DIR}/accessible
     ${CMAKE_CURRENT_BINARY_DIR}/animation
     ${CMAKE_CURRENT_BINARY_DIR}/dialogs
@@ -448,6 +449,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/text
     ${CMAKE_CURRENT_BINARY_DIR}/util
     ${CMAKE_CURRENT_BINARY_DIR}/widgets
+    ${CMAKE_CURRENT_BINARY_DIR}/mac
     ${CMAKE_SOURCE_DIR}/src/core/tools
 )
 
