@@ -1715,63 +1715,6 @@ void QRasterPaintEngine::fillRect(const QRectF &r, const QColor &color)
     fillRect(r, &d->solid_color_filler);
 }
 
-static inline bool isAbove(const QPointF *a, const QPointF *b)
-{
-    return a->y() < b->y();
-}
-
-static bool splitPolygon(const QPointF *points, int pointCount, QVector<QPointF> *upper, QVector<QPointF> *lower)
-{
-    Q_ASSERT(upper);
-    Q_ASSERT(lower);
-
-    Q_ASSERT(pointCount >= 2);
-
-    QVector<const QPointF *> sorted;
-    sorted.reserve(pointCount);
-
-    upper->reserve(pointCount * 3 / 4);
-    lower->reserve(pointCount * 3 / 4);
-
-    for (int i = 0; i < pointCount; ++i)
-        sorted << points + i;
-
-    qSort(sorted.begin(), sorted.end(), isAbove);
-
-    qreal splitY = sorted.at(sorted.size() / 2)->y();
-
-    const QPointF *end = points + pointCount;
-    const QPointF *last = end - 1;
-
-    QVector<QPointF> *bin[2] = { upper, lower };
-
-    for (const QPointF *p = points; p < end; ++p) {
-        int side = p->y() < splitY;
-        int lastSide = last->y() < splitY;
-
-        if (side != lastSide) {
-            if (qFuzzyCompare(p->y(), splitY)) {
-                bin[!side]->append(*p);
-            } else if (qFuzzyCompare(last->y(), splitY)) {
-                bin[side]->append(*last);
-            } else {
-                QPointF delta = *p - *last;
-                QPointF intersection(p->x() + delta.x() * (splitY - p->y()) / delta.y(), splitY);
-
-                bin[0]->append(intersection);
-                bin[1]->append(intersection);
-            }
-        }
-
-        bin[side]->append(*p);
-
-        last = p;
-    }
-
-    // give up if we couldn't reduce the point count
-    return upper->size() < pointCount && lower->size() < pointCount;
-}
-
 /*!
   \internal
  */
@@ -1780,18 +1723,10 @@ void QRasterPaintEngine::fillPolygon(const QPointF *points, int pointCount, Poly
     Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
 
-    const int maxPoints = 0xffff;
-
     // max amount of points that raster engine can reliably handle
-    if (pointCount > maxPoints) {
-        QVector<QPointF> upper, lower;
-
-        if (splitPolygon(points, pointCount, &upper, &lower)) {
-            fillPolygon(upper.constData(), upper.size(), mode);
-            fillPolygon(lower.constData(), lower.size(), mode);
-        } else
-            qWarning("Polygon too complex for filling.");
-
+    const int maxPoints = 0xffff;
+    if (Q_UNLIKELY(pointCount > maxPoints)) {
+        qWarning("Polygon too complex for filling.");
         return;
     }
 
