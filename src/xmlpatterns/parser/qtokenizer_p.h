@@ -54,7 +54,6 @@
 
 #include <QPair>
 #include <QSharedData>
-#include <QString>
 #include <QUrl>
 
 #include "qparsercontext_p.h"

@@ -51,12 +51,6 @@
 #ifndef Patternist_XQueryTokenizer_H
 #define Patternist_XQueryTokenizer_H
 
-#include <QHash>
-#include <QSet>
-#include <QStack>
-#include <QString>
-#include <QUrl>
-
 #include "qtokenizer_p.h"
 
 QT_BEGIN_HEADER

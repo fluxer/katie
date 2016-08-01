@@ -52,11 +52,9 @@
 #ifndef Patternist_ParserContext_H
 #define Patternist_ParserContext_H
 
-#include <qglobal.h>
 #include <QSharedData>
 #include <QStack>
 #include <QStringList>
-#include <QtGlobal>
 #include <QXmlQuery>
 
 #include "qbuiltintypes_p.h"
