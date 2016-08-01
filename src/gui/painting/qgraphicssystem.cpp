@@ -71,7 +71,7 @@ QPixmapData *QGraphicsSystem::createDefaultPixmapData(QPixmapData::PixelType typ
     return 0;
 }
 
-QPixmapData *QGraphicsSystem::createPixmapData(QPixmapData *origin)
+QPixmapData *QGraphicsSystem::createPixmapData(QPixmapData *origin) const
 {
     return createPixmapData(origin->pixelType());
 }

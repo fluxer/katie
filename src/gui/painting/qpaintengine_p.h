@@ -60,6 +60,7 @@
 
 QT_BEGIN_NAMESPACE
 
+class QTextItemInt;
 class QPaintDevice;
 
 class QPaintEnginePrivate

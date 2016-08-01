@@ -51,17 +51,12 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QFontEngine;
 class QLineF;
 class QPaintDevice;
 class QPaintEnginePrivate;
 class QPainterPath;
 class QPointF;
-class QPolygonF;
 class QRectF;
-struct QGlyphLayout;
-class QTextItemInt;
 class QPaintEngineState;
 
 class Q_GUI_EXPORT QTextItem {

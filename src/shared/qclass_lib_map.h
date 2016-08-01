@@ -636,6 +636,7 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QStyleHintReturn", "QtGui/qstyleoption.h"},
     { "QStyleHintReturnMask", "QtGui/qstyleoption.h"},
     { "QStyleHintReturnVariant", "QtGui/qstyleoption.h"},
+    { "QMacStyle", "QtGui/qmacstyle_mac.h"},
     { "QProxyStyle", "QtGui/qproxystyle.h"},
     { "QGtkStyle", "QtGui/qgtkstyle.h"},
     { "QCommonStyle", "QtGui/qcommonstyle.h"},
@@ -791,6 +792,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslError", "QtNetwork/qsslerror.h"},
     { "QSslCertificate", "QtNetwork/qsslcertificate.h"},
 };
-static const int qclass_lib_count = 785;
+static const int qclass_lib_count = 786;
 
 #endif
