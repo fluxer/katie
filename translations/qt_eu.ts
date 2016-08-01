@@ -597,12 +597,12 @@
 <context>
     <name>ConnectionDelegate</name>
     <message>
-        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="+645"/>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="+631"/>
         <source>&lt;object&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
         <source>&lt;signal&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1022,7 +1022,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2209"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
         <source>Services</source>
         <translation>Zerbitzuak</translation>
     </message>
@@ -1265,14 +1265,6 @@
         <location line="+2"/>
         <source>Incompatible Qt Library Error</source>
         <translation>Bateraezintasun Qt Liburutegi Akatsa</translation>
-    </message>
-</context>
-<context>
-    <name>QBBInputContext</name>
-    <message>
-        <location filename="../src/plugins/platforms/blackberry/qbbinputcontext_imf.cpp" line="+893"/>
-        <source>PlayBook IMF</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2915,7 +2907,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+570"/>
         <source>OK</source>
         <translation>Ongi</translation>
     </message>
@@ -3099,7 +3091,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+199"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+193"/>
         <source>Debug Message:</source>
         <translation>Garbiketa  Mezua:</translation>
     </message>
@@ -3114,7 +3106,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Akats Larria:</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+195"/>
         <source>&amp;Show this message again</source>
         <translation>&amp;Erakutsi mezu hau berriro</translation>
     </message>
@@ -3127,7 +3119,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+698"/>
+        <location filename="../src/core/io/qfile.cpp" line="+695"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Helmuga agiria badago</translation>
@@ -3526,7 +3518,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+99"/>
         <location line="+1205"/>
         <source>Normal</source>
         <translation>Arrunta</translation>
@@ -4408,7 +4400,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Akats ezezaguna</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+240"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
         <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>Ezin da liburutegia gertatu %1: %2</translation>
@@ -4805,7 +4797,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1802"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
         <source>Corner Toolbar</source>
         <translation>Bazterreko Tresnabarra</translation>
     </message>
@@ -5359,7 +5351,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1213"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
         <source>Name</source>
         <translation>Izena</translation>
     </message>
@@ -6124,7 +6116,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+195"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
         <source>Cancel</source>
         <translation>Ezeztatu</translation>
     </message>
@@ -8013,34 +8005,6 @@ Gainidaztea nahi duzu?</translation>
     </message>
 </context>
 <context>
-    <name>QSoftKeyManager</name>
-    <message>
-        <location filename="../src/gui/kernel/qsoftkeymanager.cpp" line="+60"/>
-        <source>OK</source>
-        <translation>Ongi</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select</source>
-        <translation>Hautatu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Done</source>
-        <translation>Eginda</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Options</source>
-        <translation>Aukerak</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cancel</source>
-        <translation>Ezeztatu</translation>
-    </message>
-</context>
-<context>
     <name>QSpinBox</name>
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-562"/>
@@ -8775,7 +8739,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5680"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5646"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8783,7 +8747,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+688"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+677"/>
         <source>Go Back</source>
         <translation>Joan Atzera</translation>
     </message>
@@ -12480,7 +12444,7 @@ to
 <context>
     <name>qdesigner_internal::ConnectionModel</name>
     <message>
-        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="-469"/>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="-449"/>
         <source>Sender</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12500,7 +12464,7 @@ to
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+76"/>
         <source>&lt;sender&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13039,7 +13003,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindowManager</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindowmanager.cpp" line="+366"/>
+        <location filename="../src/designer/components/formeditor/formwindowmanager.cpp" line="+365"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">&amp;Ebaki</translation>
     </message>

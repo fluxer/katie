@@ -601,12 +601,12 @@
 <context>
     <name>ConnectionDelegate</name>
     <message>
-        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="+645"/>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="+631"/>
         <source>&lt;object&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+16"/>
         <source>&lt;signal&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1026,7 +1026,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2209"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
         <source>Services</source>
         <translation>Služby</translation>
     </message>
@@ -1269,14 +1269,6 @@
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
-    </message>
-</context>
-<context>
-    <name>QBBInputContext</name>
-    <message>
-        <location filename="../src/plugins/platforms/blackberry/qbbinputcontext_imf.cpp" line="+893"/>
-        <source>PlayBook IMF</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2919,7 +2911,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+658"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+570"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -3103,22 +3095,22 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+408"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+395"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location line="-203"/>
+        <location line="-196"/>
         <source>Fatal Error:</source>
         <translation>Osudová chyba:</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+195"/>
         <source>&amp;Show this message again</source>
         <translation>Toto hlášení &amp;ukázat ještě jednou</translation>
     </message>
     <message>
-        <location line="-208"/>
+        <location line="-201"/>
         <source>Debug Message:</source>
         <translation>Hlášení o odladění:</translation>
     </message>
@@ -3131,7 +3123,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+908"/>
+        <location filename="../src/core/io/qfile.cpp" line="+905"/>
         <source>Cannot create %1 for output</source>
         <translation>%1 se nepodařilo zřídit pro výstup</translation>
     </message>
@@ -3530,7 +3522,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+2029"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+2030"/>
         <source>Any</source>
         <translation>Všechna</translation>
     </message>
@@ -4380,7 +4372,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+257"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+258"/>
         <location filename="../src/core/plugin/qlibrary_win.cpp" line="+158"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
@@ -4809,7 +4801,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1802"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
         <source>Corner Toolbar</source>
         <translation>Rohový nástrojový pruh</translation>
     </message>
@@ -5363,7 +5355,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1213"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -6128,7 +6120,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+195"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -8017,34 +8009,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     </message>
 </context>
 <context>
-    <name>QSoftKeyManager</name>
-    <message>
-        <location filename="../src/gui/kernel/qsoftkeymanager.cpp" line="+60"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Select</source>
-        <translation>Vybrat</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Done</source>
-        <translation>Hotovo</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Options</source>
-        <translation>Volby</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
-    </message>
-</context>
-<context>
     <name>QSpinBox</name>
     <message>
         <location filename="../src/plugins/accessible/widgets/rangecontrols.cpp" line="-555"/>
@@ -8779,7 +8743,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5680"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5646"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8787,7 +8751,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+698"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+687"/>
         <source>Done</source>
         <translation>Hotovo</translation>
     </message>
@@ -12488,7 +12452,7 @@ to
 <context>
     <name>qdesigner_internal::ConnectionModel</name>
     <message>
-        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="-469"/>
+        <location filename="../src/designer/components/signalsloteditor/signalsloteditorwindow.cpp" line="-449"/>
         <source>Sender</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12508,7 +12472,7 @@ to
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+76"/>
         <source>&lt;sender&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13050,7 +13014,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindowManager</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindowmanager.cpp" line="+366"/>
+        <location filename="../src/designer/components/formeditor/formwindowmanager.cpp" line="+365"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished"></translation>
     </message>
