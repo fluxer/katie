@@ -1,0 +1,35 @@
+=head1 NAME
+
+qtscript - stand-alone Qt scripts interpreter
+
+=head1 SYNOPSIS
+
+qtscript [script-file]
+
+=head1 OPTIONS
+
+    -i
+           Run interactive.
+
+    -
+           Read from standard-input.
+
+=head1 DESCRIPTION
+
+qtscript can be used as a stand-alone tool to run Qt scripts which could be
+usefull when testing. Since the scripts are basicly ECMAScript you should see
+the ECMA-262 specification for more details about built-in objects, functions
+and properties supported.
+
+=head1 EXIT STATUS
+
+qtscript returns 0 on success, 1 on wrong usage and other on unexpected
+failure.
+
+=head1 AUTHORS
+
+The Qt Company Ltd.
+
+Copyright (C) 2015 The Qt Company Ltd.
+
+Licensed through GNU Lesser General Public License/GNU General Public License.

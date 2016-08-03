@@ -70,63 +70,36 @@
 .rr rF
 .\" ========================================================================
 .\"
-.IX Title "RCC 1"
-.TH RCC 1 "2016-08-01" "Katie 4.9.0" "Katie Manual"
+.IX Title "QSCRIPT 1"
+.TH QSCRIPT 1 "2016-08-03" "Katie 4.9.0" "Katie Manual"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-rcc \- Qt resource compiler
+qtscript \- stand\-alone Qt scripts interpreter
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
-rcc [options] <resource\-file> [<resource\-file>] ...
-.SH "DESCRIPTION"
-.IX Header "DESCRIPTION"
-\&\s-1TODO\s0
+qtscript [script\-file]
 .SH "OPTIONS"
 .IX Header "OPTIONS"
 .Vb 2
-\&    \-o <file>
-\&           Write output to file rather than stdout.
+\&    \-i
+\&           Run interactive.
 \&
-\&    \-name <name>
-\&           Create an external initialization function with name.
-\&
-\&    \-threshold <level>
-\&           Threshold to consider compressing files.
-\&
-\&    \-compress <level>
-\&           Compress input files by level.
-\&
-\&    \-root <path>
-\&           Prefix resource access path with root path.
-\&
-\&    \-no\-compress
-\&           Disable all compression.
-\&
-\&    \-binary
-\&           Output a binary file for use as a dynamic resource.
-\&
-\&    \-namespace
-\&           Turn off namespace macros.
-\&
-\&    \-project
-\&           Output a resource file containing all files from the
-\&           current directory.
-\&
-\&    \-list
-\&           Lists .qrc file entries.
-\&
-\&    \-version
-\&           Display version.
-\&
-\&    \-help
-\&           Display this information.
+\&    \-
+\&           Read from standard\-input.
 .Ve
+.SH "DESCRIPTION"
+.IX Header "DESCRIPTION"
+qtscript can be used as a stand-alone tool to run Qt scripts which could be
+usefull when testing. Since the scripts are basicly ECMAScript you should see
+the \s-1ECMA\-262\s0 specification for more details about built-in objects, functions
+and properties supported.
 .SH "EXIT STATUS"
 .IX Header "EXIT STATUS"
-rcc returns 0 on success and other on unexcepted failure.
+qtscript returns 0 on success, 1 on wrong usage and other on unexpected
+failure.
 .SH "AUTHORS"
 .IX Header "AUTHORS"
 The Qt Company Ltd.
