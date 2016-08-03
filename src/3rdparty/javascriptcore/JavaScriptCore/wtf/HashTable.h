@@ -1029,7 +1029,7 @@ namespace WTF {
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     void HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::invalidateIterators()
     {
-        MutexLocker lock(m_mutex);
+        QMutexLocker lock(m_mutex);
         const_iterator* next;
         for (const_iterator* p = m_iterators; p; p = next) {
             next = p->m_next;
@@ -1051,7 +1051,7 @@ namespace WTF {
         if (!table) {
             it->m_next = 0;
         } else {
-            MutexLocker lock(table->m_mutex);
+            QMutexLocker lock(table->m_mutex);
             ASSERT(table->m_iterators != it);
             it->m_next = table->m_iterators;
             table->m_iterators = it;
@@ -1073,7 +1073,7 @@ namespace WTF {
             ASSERT(!it->m_next);
             ASSERT(!it->m_previous);
         } else {
-            MutexLocker lock(it->m_table->m_mutex);
+            QMutexLocker lock(it->m_table->m_mutex);
             if (it->m_next) {
                 ASSERT(it->m_next->m_previous == it);
                 it->m_next->m_previous = it->m_previous;

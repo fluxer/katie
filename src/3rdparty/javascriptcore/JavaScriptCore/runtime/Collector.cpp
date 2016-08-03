@@ -492,8 +492,8 @@ static inline void* currentThreadStackBase()
     pthread_t thread = pthread_self();
     return pthread_get_stackaddr_np(thread);
 #elif OS(WINCE)
-    AtomicallyInitializedStatic(Mutex&, mutex = *new Mutex);
-    MutexLocker locker(mutex);
+    AtomicallyInitializedStatic(QMutex*, mutex = new QMutex);
+    QMutexLocker locker(mutex);
     if (g_stackBase)
         return g_stackBase;
     else {
@@ -551,8 +551,8 @@ static inline void* currentThreadStackBase()
     get_thread_info(find_thread(NULL), &threadInfo);
     return threadInfo.stack_end;
 #elif OS(UNIX)
-    AtomicallyInitializedStatic(Mutex&, mutex = *new Mutex);
-    MutexLocker locker(mutex);
+    AtomicallyInitializedStatic(QMutex*, mutex = new QMutex);
+    QMutexLocker locker(mutex);
     static void* stackBase = 0;
     static size_t stackSize = 0;
     static pthread_t stackThread;

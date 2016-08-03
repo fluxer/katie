@@ -21,9 +21,7 @@
 #ifndef WTF_dtoa_h
 #define WTF_dtoa_h
 
-namespace WTF {
-    class Mutex;
-}
+#include "Threading.h"
 
 namespace WTF {
 

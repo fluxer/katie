@@ -57,7 +57,7 @@ HashTableStats::~HashTableStats()
 
 void HashTableStats::recordCollisionAtCount(int count)
 {
-    MutexLocker lock(hashTableStatsMutex());
+    QMutexLocker lock(hashTableStatsMutex());
     if (count > maxCollisions)
         maxCollisions = count;
     numCollisions++;

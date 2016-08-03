@@ -66,7 +66,6 @@
 #endif
 
 #include <wtf/Assertions.h>
-#include <wtf/Locker.h>
 #include <wtf/Noncopyable.h>
 
 #if OS(WINDOWS) && !OS(WINCE)
@@ -81,10 +80,7 @@
 
 #include <QThread>
 #include <QCoreApplication>
-QT_BEGIN_NAMESPACE
-class QMutex;
-class QWaitCondition;
-QT_END_NAMESPACE
+#include <QMutex>
 
 #include <stdint.h>
 
@@ -106,51 +102,13 @@ ThreadIdentifier createThread(ThreadFunction, void*, const char* threadName);
 // Internal platform-specific createThread implementation.
 ThreadIdentifier createThreadInternal(ThreadFunction, void*, const char* threadName);
 
-// Called in the thread during initialization.
-// Helpful for platforms where the thread name must be set from within the thread.
-void initializeCurrentThreadInternal(const char* threadName);
-
 ThreadIdentifier currentThread();
 inline bool isMainThread()
 { return QThread::currentThread() == QCoreApplication::instance()->thread(); }
 int waitForThreadCompletion(ThreadIdentifier, void**);
 void detachThread(ThreadIdentifier);
 
-typedef QT_PREPEND_NAMESPACE(QMutex)* PlatformMutex;
-typedef QT_PREPEND_NAMESPACE(QWaitCondition)* PlatformCondition;
-    
-class Mutex : public Noncopyable {
-public:
-    Mutex();
-    ~Mutex();
-
-    void lock();
-    bool tryLock();
-    void unlock();
-
-public:
-    PlatformMutex& impl() { return m_mutex; }
-private:
-    PlatformMutex m_mutex;
-};
-
-typedef Locker<Mutex> MutexLocker;
-
-class ThreadCondition : public Noncopyable {
-public:
-    ThreadCondition();
-    ~ThreadCondition();
-    
-    void wait(Mutex& mutex);
-    // Returns true if the condition was signaled before absoluteTime, false if the absoluteTime was reached or is in the past.
-    // The absoluteTime is in seconds, starting on January 1, 1970. The time is assumed to use the same time zone as WTF::currentTime().
-    bool timedWait(Mutex&, double absoluteTime);
-    void signal();
-    void broadcast();
-    
-private:
-    PlatformCondition m_condition;
-};
+typedef QT_PREPEND_NAMESPACE(QMutex) Mutex;
 
 #if OS(WINDOWS)
 #define WTF_USE_LOCKFREE_THREADSAFESHARED 1
@@ -200,7 +158,7 @@ public:
 #if USE(LOCKFREE_THREADSAFESHARED)
         atomicIncrement(&m_refCount);
 #else
-        MutexLocker locker(m_mutex);
+        QMutexLocker locker(m_mutex);
         ++m_refCount;
 #endif
     }
@@ -213,7 +171,7 @@ public:
     int refCount() const
     {
 #if !USE(LOCKFREE_THREADSAFESHARED)
-        MutexLocker locker(m_mutex);
+        QMutexLocker locker(m_mutex);
 #endif
         return static_cast<int const volatile &>(m_refCount);
     }
@@ -228,7 +186,7 @@ protected:
 #else
         int refCount;
         {
-            MutexLocker locker(m_mutex);
+            QMutexLocker locker(m_mutex);
             --m_refCount;
             refCount = m_refCount;
         }
@@ -272,8 +230,6 @@ void unlockAtomicallyInitializedStaticMutex();
 } // namespace WTF
 
 using WTF::Mutex;
-using WTF::MutexLocker;
-using WTF::ThreadCondition;
 using WTF::ThreadIdentifier;
 using WTF::ThreadSafeShared;
 

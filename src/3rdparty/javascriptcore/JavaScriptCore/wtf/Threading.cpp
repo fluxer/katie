@@ -35,6 +35,7 @@ struct NewThreadContext : FastAllocBase {
         : entryPoint(entryPoint)
         , data(data)
         , name(name)
+        , creationMutex(new Mutex)
     {
     }
 
@@ -42,7 +43,7 @@ struct NewThreadContext : FastAllocBase {
     void* data;
     const char* name;
 
-    Mutex creationMutex;
+    Mutex* creationMutex;
 };
 
 static void* threadEntryPoint(void* contextData)
@@ -52,10 +53,8 @@ static void* threadEntryPoint(void* contextData)
     // Block until our creating thread has completed any extra setup work, including
     // establishing ThreadIdentifier.
     {
-        MutexLocker locker(context->creationMutex);
+        QMutexLocker locker(context->creationMutex);
     }
-
-    initializeCurrentThreadInternal(context->name);
 
     // Grab the info that we need out of the context, then deallocate it.
     ThreadFunction entryPoint = context->entryPoint;
@@ -75,7 +74,7 @@ ThreadIdentifier createThread(ThreadFunction entryPoint, void* data, const char*
     NewThreadContext* context = new NewThreadContext(entryPoint, data, name);
 
     // Prevent the thread body from executing until we've established the thread identifier.
-    MutexLocker locker(context->creationMutex);
+    QMutexLocker locker(context->creationMutex);
 
     return createThreadInternal(threadEntryPoint, context, name);
 }
