@@ -415,12 +415,13 @@ set_package_properties(Sqlite PROPERTIES
     TYPE RECOMMENDED
 )
 
+# TODO: make it optional, Qt4 was prepping for it I believe (QT_NO_THREAD)
 find_package(Threads)
 set_package_properties(Threads PROPERTIES
     PURPOSE "Required for threads support"
     DESCRIPTION "Platform dependent threads implementation"
     URL ""
-    TYPE RECOMMENDED
+    TYPE REQUIRED
 )
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)" AND NOT KATIE_BOOTSTRAP)

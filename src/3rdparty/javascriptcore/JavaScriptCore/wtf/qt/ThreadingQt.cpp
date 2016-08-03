@@ -29,7 +29,7 @@
 #include "config.h"
 #include "Threading.h"
 
-#if ENABLE(SINGLE_THREADED)
+#ifdef QT_NO_THREAD
 
 namespace WTF {
 
@@ -44,7 +44,7 @@ void unlockAtomicallyInitializedStaticMutex() { }
 
 } // namespace WTF
 
-#else // SINGLE_THREADED
+#else // QT_NO_THREAD
 
 #include "CurrentTime.h"
 #include "HashMap.h"

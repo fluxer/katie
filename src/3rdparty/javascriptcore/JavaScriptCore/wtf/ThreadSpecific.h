@@ -69,14 +69,14 @@ private:
         ThreadSpecific<T>* owner;
     };
 
-#if ENABLE(SINGLE_THREADED)
+#ifdef QT_NO_THREAD
     T* m_value;
 #else
     QThreadStorage<Data*> m_key;
 #endif
 };
 
-#if ENABLE(SINGLE_THREADED)
+#ifdef QT_NO_THREAD
 template<typename T>
 inline ThreadSpecific<T>::ThreadSpecific()
     : m_value(0)
@@ -131,7 +131,7 @@ inline void ThreadSpecific<T>::set(T* ptr)
 template<typename T>
 inline void ThreadSpecific<T>::destroy(void* ptr)
 {
-#if !ENABLE(SINGLE_THREADED)
+#ifndef QT_NO_THREAD
     Data* data = static_cast<Data*>(ptr);
 
     // See comment as above
