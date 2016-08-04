@@ -123,8 +123,8 @@ namespace JSC {
             // The Rope is constructed in an uninitialized state - initialize must be called for each Fiber in the Rope.
             static PassRefPtr<Rope> createOrNull(unsigned ropeLength)
             {
-                void* allocation;
-                if (tryFastMalloc(sizeof(Rope) + (ropeLength - 1) * sizeof(Fiber)).getValue(allocation))
+                void* allocation = tryFastMalloc(sizeof(Rope) + (ropeLength - 1) * sizeof(Fiber));
+                if (allocation)
                     return adoptRef(new (allocation) Rope(ropeLength));
                 return 0;
             }

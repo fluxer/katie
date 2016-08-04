@@ -111,28 +111,17 @@ void fastMallocAllow()
 
 namespace WTF {
 
-void* fastZeroedMalloc(size_t n) 
+void* fastZeroedMalloc(size_t n)
 {
     void* result = fastMalloc(n);
     memset(result, 0, n);
     return result;
 }
 
-char* fastStrDup(const char* src)
+void* tryFastZeroedMalloc(size_t n)
 {
-    int len = strlen(src) + 1;
-    char* dup = static_cast<char*>(fastMalloc(len));
-
-    if (dup)
-        memcpy(dup, src, len);
-
-    return dup;
-}
-    
-TryMallocReturnValue tryFastZeroedMalloc(size_t n) 
-{
-    void* result;
-    if (!tryFastMalloc(n).getValue(result))
+    void* result = tryFastMalloc(n);
+    if (!result)
         return 0;
     memset(result, 0, n);
     return result;
@@ -142,14 +131,14 @@ TryMallocReturnValue tryFastZeroedMalloc(size_t n)
 
 namespace WTF {
 
-TryMallocReturnValue tryFastMalloc(size_t n) 
+void* tryFastMalloc(size_t n)
 {
     ASSERT(!isForbidden());
 
     return malloc(n);
 }
 
-void* fastMalloc(size_t n) 
+void* fastMalloc(size_t n)
 {
     ASSERT(!isForbidden());
 
@@ -159,7 +148,7 @@ void* fastMalloc(size_t n)
     return result;
 }
 
-TryMallocReturnValue tryFastCalloc(size_t n_elements, size_t element_size)
+void* tryFastCalloc(size_t n_elements, size_t element_size)
 {
     ASSERT(!isForbidden());
 
@@ -183,7 +172,7 @@ void fastFree(void* p)
     free(p);
 }
 
-TryMallocReturnValue tryFastRealloc(void* p, size_t n)
+void* tryFastRealloc(void* p, size_t n)
 {
     ASSERT(!isForbidden());
 

@@ -29,7 +29,6 @@
 #include <limits>
 #include <wtf/CrossThreadRefCounted.h>
 #include <wtf/OwnFastMallocPtr.h>
-#include <wtf/PossiblyNull.h>
 #include <wtf/StringHashFunctions.h>
 #include <wtf/Vector.h>
 #include <wtf/unicode/Unicode.h>
@@ -95,8 +94,8 @@ public:
 
         if (length > ((std::numeric_limits<size_t>::max() - sizeof(UStringImpl)) / sizeof(UChar)))
             return 0;
-        UStringImpl* resultImpl;
-        if (!tryFastMalloc(sizeof(UChar) * length + sizeof(UStringImpl)).getValue(resultImpl))
+        UStringImpl* resultImpl = static_cast<UStringImpl*>(tryFastMalloc(sizeof(UChar) * length + sizeof(UStringImpl)));
+        if (!resultImpl)
             return 0;
         output = reinterpret_cast<UChar*>(resultImpl + 1);
         return adoptRef(new(resultImpl) UStringImpl(output, length, BufferInternal));
