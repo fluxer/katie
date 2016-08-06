@@ -72,7 +72,7 @@ QGraphicsSystem *QGraphicsSystemFactory::create(const QString& key)
 
     if (system == QLatin1String("raster"))
         return new QRasterGraphicsSystem;
-    else if (system.isEmpty() || system == QLatin1String("native"))
+    else if (system.isEmpty())
         return 0;
 
 #ifndef QT_NO_LIBRARY

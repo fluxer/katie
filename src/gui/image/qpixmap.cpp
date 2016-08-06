@@ -1691,16 +1691,6 @@ void QPixmap::detach()
     if (data->is_cached && data->ref == 1)
         QImagePixmapCleanupHooks::executePixmapDataModificationHooks(data.data());
 
-#if defined(Q_WS_MAC)
-    QMacPixmapData *macData = id == QPixmapData::MacClass ? static_cast<QMacPixmapData*>(pd) : 0;
-    if (macData) {
-        if (macData->cg_mask) {
-            CGImageRelease(macData->cg_mask);
-            macData->cg_mask = 0;
-        }
-    }
-#endif
-
     if (data->ref != 1) {
         *this = copy();
     }
@@ -1716,11 +1706,6 @@ void QPixmap::detach()
             XFreePixmap(X11->display, d->hd2);
             d->hd2 = 0;
         }
-    }
-#elif defined(Q_WS_MAC)
-    if (macData) {
-        macData->macReleaseCGImageRef();
-        macData->uninit = false;
     }
 #endif
 }

@@ -53,8 +53,13 @@
 // We mean it.
 //
 
-#include "qpixmapdata_p.h"
 #include "qwindowsurface_p.h"
+#if defined(Q_WS_X11) || defined(Q_WS_WIN) || defined(Q_WS_MAC)
+# include <qpixmap_raster_p.h>
+#else
+#error QGraphicsSystem::createDefaultPixmapData() not implemented
+#endif
+
 
 QT_BEGIN_NAMESPACE
 
@@ -67,9 +72,8 @@ public:
 
     virtual ~QGraphicsSystem();
 
-    //### Remove this & change qpixmap.cpp & qbitmap.cpp once every platform is gaurenteed
-    //    to have a graphics system.
-    static QPixmapData *createDefaultPixmapData(QPixmapData::PixelType type);
+    static inline QPixmapData *createDefaultPixmapData(QPixmapData::PixelType type)
+        { return new QRasterPixmapData(type); };
 };
 
 QT_END_NAMESPACE

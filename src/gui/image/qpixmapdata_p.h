@@ -69,9 +69,7 @@ public:
         // Must match QPixmap::Type
         PixmapType, BitmapType
     };
-    enum ClassId { RasterClass, X11Class, MacClass,
-                   OpenGLClass,
-                   CustomClass = 1024 };
+    enum ClassId { RasterClass, X11Class, OpenGLClass };
 
     QPixmapData(PixelType pixelType, int classId);
     virtual ~QPixmapData();

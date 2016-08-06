@@ -732,18 +732,6 @@ void QApplicationPrivate::construct(
     if (graphics_system_name.isEmpty())
         graphics_system_name = QString::fromLocal8Bit(qgetenv("QT_GRAPHICSSYSTEM"));
 
-#if defined(Q_WS_X11) && !defined(QT_NO_EGL)
-    if (graphics_system_name.isEmpty()) {
-        bool linksWithMeeGoTouch = dl_iterate_phdr(qt_matchLibraryName, const_cast<char *>("libmeegotouchcore"));
-        bool linksWithMeeGoGraphicsSystemHelper = dl_iterate_phdr(qt_matchLibraryName, const_cast<char *>("libQtMeeGoGraphicsSystemHelper"));
-
-        if (linksWithMeeGoTouch && !linksWithMeeGoGraphicsSystemHelper) {
-            qWarning("Running non-meego graphics system enabled  MeeGo touch, forcing native graphicssystem\n");
-            graphics_system_name = QLatin1String("native");
-        }
-    }
-#endif
-
     // Must be called before initialize()
     qt_init(this, qt_appType
 #ifdef Q_WS_X11
@@ -1496,8 +1484,8 @@ QStyle* QApplication::setStyle(const QString& style)
     \since 4.5
 
     Sets the default graphics backend to \a system, which will be used for
-    on-screen widgets and QPixmaps. The available systems are \c{"native"},
-    \c{"raster"} and \c{"opengl"}.
+    on-screen widgets and QPixmaps. The available systems are \c{"raster"}
+    and \c{"opengl"}.
 
     There are several ways to set the graphics backend, in order of decreasing
     precedence:
@@ -1675,9 +1663,7 @@ void QApplicationPrivate::setPalette_helper(const QPalette &palette, const char*
     the "color", "background-color", "selection-color",
     "selection-background-color" and "alternate-background-color".
 
-    \note Some styles do not use the palette for all drawing, for instance, if
-    they make use of native theme engines. This is the case for the Windows XP,
-    Windows Vista, and Mac OS X styles.
+    \note Some styles do not use the palette for all drawing.
 
     \sa QWidget::setPalette(), palette(), QStyle::polish()
 */

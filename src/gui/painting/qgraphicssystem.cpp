@@ -41,34 +41,10 @@
 
 #include "qgraphicssystem_p.h"
 
-#ifdef Q_WS_X11
-# include <qpixmap_x11_p.h>
-#endif
-#if defined(Q_WS_WIN)
-# include <qpixmap_raster_p.h>
-#endif
-#ifdef Q_WS_MAC
-# include <qpixmap_mac_p.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 QGraphicsSystem::~QGraphicsSystem()
 {
-}
-
-QPixmapData *QGraphicsSystem::createDefaultPixmapData(QPixmapData::PixelType type)
-{
-#if defined(Q_WS_X11)
-    return new QX11PixmapData(type);
-#elif defined(Q_WS_WIN)
-    return new QRasterPixmapData(type);
-#elif defined(Q_WS_MAC)
-    return new QMacPixmapData(type);
-#else
-#error QGraphicsSystem::createDefaultPixmapData() not implemented
-#endif
-    return 0;
 }
 
 QPixmapData *QGraphicsSystem::createPixmapData(QPixmapData *origin) const
