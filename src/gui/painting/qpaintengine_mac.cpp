@@ -63,7 +63,6 @@
 #include <qnumeric_p.h>
 #include <qpainter_p.h>
 #include <qpainterpath_p.h>
-#include <qpixmap_mac_p.h>
 #include <qt_mac_p.h>
 #include <qtextengine_p.h>
 #include <qwidget_p.h>

@@ -76,7 +76,6 @@
 #  endif
 #elif defined(Q_WS_MAC)
 #  include <qt_mac_p.h>
-#  include <qpixmap_mac_p.h>
 #  include <qpaintengine_mac_p.h>
 #endif
 

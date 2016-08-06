@@ -48,7 +48,6 @@
 #include <qdebug.h>
 #include <qt_mac_p.h>
 #include <qprintengine_mac_p.h>
-#include <qpixmap_mac_p.h>
 #include <qpixmap_raster_p.h>
 
 QT_BEGIN_NAMESPACE

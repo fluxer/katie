@@ -68,7 +68,6 @@
 
 #ifdef Q_WS_MAC
 # include "qt_mac_p.h"
-# include "qpixmap_mac_p.h"
 #endif
 
 #if defined(Q_WS_X11)

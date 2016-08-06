@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include <qcursor_p.h>
-#include <qpixmap_mac_p.h>
 #include <qapplication.h>
 #include <qbitmap.h>
 #include <qcursor.h>

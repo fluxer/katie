@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include <qt_mac_p.h>
-#include <qpixmap_mac_p.h>
 #include <qnativeimage_p.h>
 #include <qdebug.h>
 #include <qfont.h>

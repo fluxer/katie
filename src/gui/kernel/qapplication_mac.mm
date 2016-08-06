@@ -119,7 +119,6 @@
 #include <qcocoaapplicationdelegate_mac_p.h>
 #include <qt_cocoa_helpers_mac_p.h>
 #include <qcocoawindow_mac_p.h>
-#include <qpixmap_mac_p.h>
 #include <qdesktopwidget_mac_p.h>
 #include <qeventdispatcher_mac_p.h>
 #include <qvarlengtharray.h>
