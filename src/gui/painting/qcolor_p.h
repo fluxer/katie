@@ -53,7 +53,6 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
 #include "QtGui/qrgb.h"
 #include "QtCore/qstringlist.h"
 

@@ -109,7 +109,6 @@
 #include "qpaintengine_mac_p.h"
 #include "qcursor_p.h"
 #include "qapplication_p.h"
-#include "qcolor_p.h"
 #include "qwidget_p.h"
 #include "qkeymapper_p.h"
 #include "qeventdispatcher_mac_p.h"

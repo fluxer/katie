@@ -235,8 +235,6 @@ static bool qt_create_mitshm_buffer(const QPaintDevice* dev, int w, int h)
   Internal functions
  *****************************************************************************/
 
-extern const uchar *qt_get_bitflip_array();                // defined in qimage.cpp
-
 // Returns position of highest bit set or -1 if none
 static int highest_bit(uint v)
 {
