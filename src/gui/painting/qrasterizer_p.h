@@ -61,8 +61,6 @@
 
 QT_BEGIN_NAMESPACE
 
-struct QSpanData;
-class QRasterBuffer;
 class QRasterizerPrivate;
 
 class QRasterizer

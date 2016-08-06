@@ -442,11 +442,9 @@ inline void QClipData::appendSpans(const QSpan *s, int num)
 class QRasterBuffer
 {
 public:
-    QRasterBuffer() : m_width(0), m_height(0), m_buffer(0) { init(); }
+    QRasterBuffer();
 
     ~QRasterBuffer();
-
-    void init();
 
     QImage::Format prepare(QImage *image);
     QImage::Format prepare(QPixmap *pix);

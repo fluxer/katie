@@ -3442,7 +3442,8 @@ QRasterBuffer::~QRasterBuffer()
 {
 }
 
-void QRasterBuffer::init()
+QRasterBuffer::QRasterBuffer()
+    : m_width(0), m_height(0), m_buffer(0)
 {
     compositionMode = QPainter::CompositionMode_SourceOver;
     monoDestinationWithClut = false;
