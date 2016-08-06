@@ -2177,9 +2177,9 @@ bool QX11PixmapData::hasAlphaChannel() const
 
 const QX11Info &QPixmap::x11Info() const
 {
-    if (data && data->classId() == QPixmapData::X11Class)
+    if (data && data->classId() == QPixmapData::X11Class) {
         return static_cast<QX11PixmapData*>(data.data())->xinfo;
-    else {
+    } else {
         static QX11Info nullX11Info;
         return nullX11Info;
     }

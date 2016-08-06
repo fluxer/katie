@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#define Q_TEST_QPIXMAPCACHE
+// #define Q_TEST_QPIXMAPCACHE
 #include "qpixmapcache.h"
 #include "qobject.h"
 #include "qdebug.h"
@@ -190,8 +190,6 @@ public:
 
     static inline QPixmapCache::KeyData *get(const QPixmapCache::Key &key)
     {return key.d;}
-
-    static QPixmapCache::KeyData* getKeyData(QPixmapCache::Key *key);
 
     QList< QPair<QString,QPixmap> > allPixmaps() const;
     bool flushDetachedPixmaps(bool nt);
@@ -401,8 +399,8 @@ QPixmapCache::Key QPMCache::createKey()
     int id = freeKey;
     freeKey = keyArray[id];
     QPixmapCache::Key key;
-    QPixmapCache::KeyData *d = QPMCache::getKeyData(&key);
-    d->key = ++id;
+    key.d = new QPixmapCache::KeyData;
+    key.d->key = ++id;
     return key;
 }
 
@@ -428,13 +426,6 @@ void QPMCache::clear()
     for (int i = 0; i < keys.size(); ++i)
         keys.at(i).d->isValid = false;
     QCache<QPixmapCache::Key, QPixmapCacheEntry>::clear();
-}
-
-QPixmapCache::KeyData* QPMCache::getKeyData(QPixmapCache::Key *key)
-{
-    if (!key->d)
-        key->d = new QPixmapCache::KeyData;
-    return key->d;
 }
 
 QList< QPair<QString,QPixmap> > QPMCache::allPixmaps() const
@@ -658,6 +649,7 @@ void QPixmapCache::clear()
     }
 }
 
+#ifdef Q_TEST_QPIXMAPCACHE
 void QPixmapCache::flushDetachedPixmaps()
 {
     pm_cache()->flushDetachedPixmaps(true);
@@ -672,6 +664,7 @@ QList< QPair<QString,QPixmap> > QPixmapCache::allPixmaps()
 {
     return pm_cache()->allPixmaps();
 }
+#endif // Q_TEST_QPIXMAPCACHE
 
 QT_END_NAMESPACE
 

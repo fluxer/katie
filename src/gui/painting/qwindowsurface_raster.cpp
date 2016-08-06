@@ -218,7 +218,6 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
 
 #ifdef Q_WS_X11
     extern void *qt_getClipRects(const QRegion &r, int &num); // in qpaintengine_x11.cpp
-    extern QWidgetData* qt_widget_data(QWidget *);
     QPoint wOffset = qt_qwidget_data(widget)->wrect.topLeft();
 
     if (widget->window() != window()) {
@@ -274,7 +273,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
 
     if (wrgn.rectCount() != 1)
         XSetClipMask(X11->display, d_ptr->gc, XNone);
-#endif // FALCON
+#endif // Q_WS_X11
 
 #ifdef Q_WS_MAC
 

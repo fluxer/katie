@@ -1803,10 +1803,8 @@ QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionF
 */
 QPixmapData* QPixmap::pixmapData() const
 {
-    if (data) {
-        QPixmapData* pm = data.data();
-        return pm->runtimeData() ? pm->runtimeData() : pm;
-    }
+    if (data)
+        return data.data();
 
     return 0;
 }
