@@ -91,6 +91,7 @@ katie_generate_misc("${HELP_HEADERS}" QtHelp)
 katie_generate_public("${HELP_PUBLIC_HEADERS}" QtHelp)
 katie_resources(${HELP_SOURCES} ${HELP_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtHelp ${KATIE_TYPE} ${HELP_SOURCES} ${HELP_HEADERS})
 target_link_libraries(KtHelp ${EXTRA_HELP_LIBS})

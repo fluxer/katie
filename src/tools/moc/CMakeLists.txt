@@ -31,6 +31,7 @@ if(KATIE_PLATFORM STREQUAL "mac")
 endif()
 
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})

@@ -23,6 +23,7 @@ set(QSCRIPT_HEADERS
 
 katie_resources(${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(qscript ${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
 target_link_libraries(qscript ${EXTRA_QTSCRIPT_LIBS})

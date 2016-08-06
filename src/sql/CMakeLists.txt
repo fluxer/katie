@@ -38,6 +38,8 @@ set(SQL_PUBLIC_HEADERS
     QTDSResult
 )
 
+# exception because drivers are installed from sub-directories
+katie_setup_paths()
 include(kernel/kernel.cmake)
 # TODO: include(drivers/ibase/ibase.cmake)
 if(WITH_MYSQL AND MYSQL_FOUND)
@@ -78,6 +80,7 @@ katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)
 katie_resources(${SQL_SOURCES} ${SQL_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtSql ${KATIE_TYPE} ${SQL_SOURCES} ${SQL_HEADERS})
 target_link_libraries(KtSql ${EXTRA_SQL_LIBS})

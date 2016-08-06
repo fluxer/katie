@@ -28,6 +28,7 @@ set(UIC_SOURCES
 )
 
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(uic ${UIC_SOURCES})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})

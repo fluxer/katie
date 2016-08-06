@@ -131,6 +131,7 @@ katie_generate_misc("${TEST_HEADERS}" QtTest)
 katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
 katie_resources(${TEST_SOURCES} ${TEST_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtTest ${KATIE_TYPE} ${TEST_SOURCES} ${TEST_HEADERS})
 target_link_libraries(KtTest ${EXTRA_TEST_LIBS})

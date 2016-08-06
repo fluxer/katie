@@ -14,6 +14,7 @@ set(MAIN_SOURCES
 
 katie_resources(${MAIN_SOURCES})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtMain ${MAIN_SOURCES} ${MAIN_HEADERS})
 target_link_libraries(KtMain ${EXTRA_MAIN_LIBS})

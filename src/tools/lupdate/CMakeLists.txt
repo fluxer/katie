@@ -27,6 +27,7 @@ set(LUPDATE_HEADERS
 )
 
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(lupdate $<TARGET_OBJECTS:sharedlinguist> ${LUPDATE_SOURCES} ${LUPDATE_HEADERS})
 target_link_libraries(lupdate ${EXTRA_LUPDATE_LIBS})

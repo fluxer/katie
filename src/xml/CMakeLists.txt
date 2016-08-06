@@ -74,6 +74,7 @@ katie_generate_misc("${XML_HEADERS}" QtXml)
 katie_generate_public("${XML_PUBLIC_HEADERS}" QtXml)
 katie_resources(${XML_SOURCES} ${XML_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtXml ${KATIE_TYPE} ${XML_SOURCES} ${XML_HEADERS})
 target_link_libraries(KtXml ${EXTRA_XML_LIBS})

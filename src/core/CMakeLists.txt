@@ -365,6 +365,7 @@ katie_generate_misc("${CORE_HEADERS}" QtCore)
 katie_generate_public("${CORE_PUBLIC_HEADERS}" QtCore)
 katie_resources(${CORE_SOURCES} ${CORE_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtCore ${KATIE_TYPE} ${CORE_SOURCES} ${CORE_HEADERS})
 target_link_libraries(KtCore ${EXTRA_CORE_LIBS})

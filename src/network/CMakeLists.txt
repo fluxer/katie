@@ -85,6 +85,7 @@ katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
 katie_resources(${NETWORK_SOURCES} ${NETWORK_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtNetwork ${KATIE_TYPE} ${NETWORK_SOURCES} ${NETWORK_HEADERS})
 target_link_libraries(KtNetwork ${EXTRA_NETWORK_LIBS})

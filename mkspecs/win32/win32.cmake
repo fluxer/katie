@@ -24,8 +24,6 @@ set(QT_DEMOS_PATH "${QT_DATA_PATH}/demos")
 # FIXME: that's incorrect, probably irrelevant once QStandardPaths are used
 set(QT_SETTINGS_PATH "${QT_DATA_PATH}/settings")
 
-set(CMAKE_INSTALL_PATH "${QT_DATA_PATH}")
-
 set(WITH_FREETYPE OFF)
 set(WITH_FONTCONFIG OFF)
 # set(WITH_ICD ON)

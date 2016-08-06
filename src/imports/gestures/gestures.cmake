@@ -10,9 +10,9 @@ set(GESTURES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/gestures/qdeclarativegesturearea_p.h
 )
 
-katie_resources("${GESTURES_SOURCES}")
-katie_resources("${GESTURES_HEADERS}")
+katie_resources(${GESTURES_SOURCES} ${GESTURES_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(qmlgesturesplugin ${KATIE_TYPE} ${GESTURES_SOURCES} ${GESTURES_HEADERS})
 target_link_libraries(qmlgesturesplugin ${EXTRA_GESTURES_LIBS})

@@ -22,6 +22,7 @@ set(RCC_HEADERS
 )
 
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(rcc ${RCC_SOURCES} ${RCC_HEADERS})
 target_link_libraries(rcc ${EXTRA_RCC_LIBS})
