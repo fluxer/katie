@@ -167,7 +167,6 @@ public:
     static QIconLoader *instance();
     void updateSystemTheme();
     void invalidateKey() { m_themeKey++; }
-    void ensureInitialized();
 
 private:
     QThemeIconEntries findIconHelper(const QString &themeName,
@@ -175,7 +174,6 @@ private:
                                      QStringList &visited) const;
     uint m_themeKey;
     bool m_supportsSvg;
-    bool m_initialized;
 
     mutable QString m_userTheme;
     mutable QString m_systemTheme;

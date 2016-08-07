@@ -69,6 +69,10 @@
 QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
+#ifndef QT_NO_LIBRARY
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+    (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
+#endif
 
 /* Theme to use in last resort, if the theme does not have the icon, neither the parents  */
 static QString fallbackTheme()
@@ -88,30 +92,17 @@ static QString fallbackTheme()
 }
 
 QIconLoader::QIconLoader() :
-        m_themeKey(1), m_supportsSvg(false), m_initialized(false)
+        m_themeKey(1), m_supportsSvg(false)
 {
-}
+    Q_ASSERT(qApp);
 
-// We lazily initialize the loader to make static icons
-// work. Though we do not officially support this.
-void QIconLoader::ensureInitialized()
-{
-    if (!m_initialized) {
-        m_initialized = true;
-
-        Q_ASSERT(qApp);
-
-        m_systemTheme = qt_guiPlatformPlugin()->systemIconThemeName();
-        if (m_systemTheme.isEmpty())
-            m_systemTheme = fallbackTheme();
+    m_systemTheme = qt_guiPlatformPlugin()->systemIconThemeName();
+    if (m_systemTheme.isEmpty())
+        m_systemTheme = fallbackTheme();
 #ifndef QT_NO_LIBRARY
-        QFactoryLoader iconFactoryLoader(QIconEngineFactoryInterface_iid,
-                                         QLatin1String("/iconengines"),
-                                         Qt::CaseInsensitive);
-        if (iconFactoryLoader.keys().contains(QLatin1String("svg")))
-            m_supportsSvg = true;
+    if (loader()->keys().contains(QLatin1String("svg")))
+        m_supportsSvg = true;
 #endif //QT_NO_LIBRARY
-    }
 }
 
 QIconLoader *QIconLoader::instance()
@@ -352,9 +343,6 @@ bool QIconLoaderEngine::hasIcon() const
 // Lazily load the icon
 void QIconLoaderEngine::ensureLoaded()
 {
-
-    iconLoaderInstance()->ensureInitialized();
-
     if (!(iconLoaderInstance()->themeKey() == m_key)) {
 
         while (!m_entries.isEmpty())
