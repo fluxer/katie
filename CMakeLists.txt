@@ -731,6 +731,18 @@ configure_file(
     @ONLY
 )
 
+configure_file(
+    ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
+    ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+    @ONLY
+)
+
+configure_file(
+    ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
+    ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+    @ONLY
+)
+
 # translations
 katie_setup_paths()
 file(GLOB TRANSLATIONS "translations/*.ts")
@@ -766,20 +778,9 @@ install(
 )
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    configure_file(
-        ${CMAKE_SOURCE_DIR}/cmake/ld.so.conf.cmake
-        ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-        @ONLY
-    )
     install(
         FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
         DESTINATION ${LDCONF_INSTALL_PATH}
-    )
-
-    configure_file(
-        ${CMAKE_SOURCE_DIR}/cmake/profile.sh.cmake
-        ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
-        @ONLY
     )
     install(
         FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
