@@ -79,8 +79,8 @@ static QString qt_strippedText(QString s)
 }
 
 
-QActionPrivate::QActionPrivate() : group(0), enabled(1), forceDisabled(0),
-                                   visible(1), forceInvisible(0), checkable(0), checked(0), separator(0), fontSet(false),
+QActionPrivate::QActionPrivate() : group(0), enabled(1),
+                                   visible(1), checkable(0), checked(0), separator(0), fontSet(false),
                                    menuRole(QAction::TextHeuristicRole),
                                    priority(QAction::NormalPriority)
 {
@@ -544,7 +544,7 @@ bool QAction::autoRepeat() const
     \brief the action's font
 
     The font property is used to render the text set on the
-    QAction. The font will can be considered a hint as it will not be
+    QAction. The font can be considered a hint as it will not be
     consulted in all cases based upon application and style.
 
     By default, this property contains the application's default font.
@@ -1030,9 +1030,8 @@ bool QAction::isChecked() const
 void QAction::setEnabled(bool b)
 {
     Q_D(QAction);
-    if (b == d->enabled && b != d->forceDisabled)
+    if (b == d->enabled)
         return;
-    d->forceDisabled = !b;
     if (b && (!d->visible || (d->group && !d->group->isEnabled())))
         return;
     QAPP_CHECK("setEnabled");
@@ -1065,12 +1064,11 @@ bool QAction::isEnabled() const
 void QAction::setVisible(bool b)
 {
     Q_D(QAction);
-    if (b == d->visible && b != d->forceInvisible)
+    if (b == d->visible)
         return;
     QAPP_CHECK("setVisible");
-    d->forceInvisible = !b;
     d->visible = b;
-    d->enabled = b && !d->forceDisabled && (!d->group || d->group->isEnabled()) ;
+    d->enabled = b && d->enabled && (!d->group || d->group->isEnabled()) ;
 #ifndef QT_NO_SHORTCUT
     d->setShortcutEnabled(d->enabled, qApp->d_func()->shortcutMap);
 #endif
@@ -1146,7 +1144,8 @@ QAction::setData(const QVariant &data)
 bool
 QAction::showStatusText(QWidget *widget)
 {
-    return d_func()->showStatusText(widget, statusTip());
+    Q_D(QAction);
+    return d->showStatusText(widget, d->statustip);
 }
 
 /*!

@@ -182,14 +182,8 @@ QAction *QActionGroup::addAction(QAction* a)
         QObject::connect(a, SIGNAL(changed()), this, SLOT(_q_actionChanged()));
         QObject::connect(a, SIGNAL(hovered()), this, SLOT(_q_actionHovered()));
     }
-    if(!a->d_func()->forceDisabled) {
-        a->setEnabled(d->enabled);
-        a->d_func()->forceDisabled = false;
-    }
-    if(!a->d_func()->forceInvisible) {
-        a->setVisible(d->visible);
-        a->d_func()->forceInvisible = false;
-    }
+    a->setEnabled(d->enabled);
+    a->setVisible(d->visible);
     if(a->isChecked())
         d->current = a;
     QActionGroup *oldGroup = a->d_func()->group;
@@ -302,10 +296,7 @@ void QActionGroup::setEnabled(bool b)
     Q_D(QActionGroup);
     d->enabled = b;
     for(QList<QAction*>::const_iterator it = d->actions.constBegin(); it != d->actions.constEnd(); ++it) {
-        if(!(*it)->d_func()->forceDisabled) {
-            (*it)->setEnabled(b);
-            (*it)->d_func()->forceDisabled = false;
-        }
+        (*it)->setEnabled(b);
     }
 }
 
@@ -339,10 +330,7 @@ void QActionGroup::setVisible(bool b)
     Q_D(QActionGroup);
     d->visible = b;
     for(QList<QAction*>::Iterator it = d->actions.begin(); it != d->actions.end(); ++it) {
-        if(!(*it)->d_func()->forceInvisible) {
-            (*it)->setVisible(b);
-            (*it)->d_func()->forceInvisible = false;
-        }
+        (*it)->setVisible(b);
     }
 }
 

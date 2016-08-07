@@ -72,11 +72,6 @@ public:
     QActionPrivate();
     ~QActionPrivate();
 
-    static QActionPrivate *get(QAction *q)
-    {
-        return q->d_func();
-    }
-
     bool showStatusText(QWidget *w, const QString &str);
 
     QPointer<QActionGroup> group;
@@ -97,15 +92,15 @@ public:
     Qt::ShortcutContext shortcutContext;
     uint autorepeat : 1;
 #endif
-    QFont font;
-    QPointer<QMenu> menu;
-    uint enabled : 1, forceDisabled : 1;
-    uint visible : 1, forceInvisible : 1;
+    uint enabled : 1;
+    uint visible : 1;
     uint checkable : 1;
     uint checked : 1;
     uint separator : 1;
     uint fontSet : 1;
 
+    QFont font;
+    QPointer<QMenu> menu;
     QAction::MenuRole menuRole;
     QAction::Priority priority;
 
@@ -117,8 +112,6 @@ public:
     void redoGrab(QShortcutMap &map);
     void redoGrabAlternate(QShortcutMap &map);
     void setShortcutEnabled(bool enable, QShortcutMap &map);
-
-    static QShortcutMap *globalMap;
 #endif // QT_NO_SHORTCUT
 
     void sendDataChanged();

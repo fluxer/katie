@@ -155,9 +155,7 @@ public:
     void setData(const QVariant &var);
 
     bool isChecked() const;
-
     bool isEnabled() const;
-
     bool isVisible() const;
 
     enum ActionEvent { Trigger, Hover };
