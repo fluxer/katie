@@ -3,12 +3,12 @@
 
 pkgname=mingw-w64-katie-git
 pkgver=4.9.0.8cb3f33
-pkgrel=1
+pkgrel=2
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework (mingw-w64)'
 arch=('i686' 'x86_64')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
-depends=('mingw-w64-openssl' 'mingw-w64-crt' 'mingw-w64-libpng')
+depends=('mingw-w64-openssl' 'mingw-w64-crt')
 makedepends=('cmake' 'git' 'python' 'unifdef' 'mingw-w64-gcc')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
