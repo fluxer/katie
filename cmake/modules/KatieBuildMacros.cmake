@@ -190,31 +190,26 @@ endfunction()
 # they are null even quoting them will not help and CMake will complain that
 # not enought arguments have been passed to install() for DESTINATION
 function(KATIE_SETUP_PATHS)
-    if(KATIE_PLATFORM MATCHES "(win32|wince)")
-        set(CPACK_SET_DESTDIR FALSE)
-        set(instpaths
-            _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
-            _TRANSLATIONS _DOCUMENTATION _EXAMPLES _DEMOS _SETTINGS
-        )
-        set(miscpaths
-            CMAKE_
-        )
-        foreach(instpath ${instpaths})
-            string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${QT${instpath}_PATH}")
-            string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
-            set(QT${instpath}_PATH "${modpath}" PARENT_SCOPE)
-            # message(STATUS "QT${instpath}_PATH: ${modpath}")
-        endforeach()
+    set(instpaths
+        _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
+        _TRANSLATIONS _DOCUMENTATION _EXAMPLES _DEMOS _SETTINGS
+    )
+    set(miscpaths
+        CMAKE_ LDCONF_ PROFILE_ MAN_ APPLICATIONS_ PIXMAPS_
+    )
+    foreach(instpath ${instpaths})
+        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${QT${instpath}_PATH}")
+        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
+        set(QT${instpath}_PATH "${modpath}" PARENT_SCOPE)
+        # message(STATUS "QT${instpath}_PATH: ${modpath}")
+    endforeach()
 
-        foreach(instpath ${miscpaths})
-            string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${${instpath}INSTALL_PATH}")
-            string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
-            set(${instpath}INSTALL_PATH "${modpath}" PARENT_SCOPE)
-            # message(STATUS "${instpath}INSTALL_PATH: ${modpath}")
-        endforeach()
-    else()
-        set(CPACK_SET_DESTDIR TRUE)
-    endif()
+    foreach(instpath ${miscpaths})
+        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${${instpath}INSTALL_PATH}")
+        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
+        set(${instpath}INSTALL_PATH "${modpath}" PARENT_SCOPE)
+        # message(STATUS "${instpath}INSTALL_PATH: ${modpath}")
+    endforeach()
 endfunction()
 
 macro(KATIE_OPTIMIZE_HEADERS DIR)
