@@ -27,9 +27,9 @@ set(QCOLLECTIONGENERATOR_HEADERS
     ${SHAREDHELP_HEADERS}
 )
 
-katie_resources("${QCOLLECTIONGENERATOR_SOURCES}")
-katie_resources("${QCOLLECTIONGENERATOR_HEADERS}")
+katie_resources(${QCOLLECTIONGENERATOR_SOURCES} ${QCOLLECTIONGENERATOR_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(qcollectiongenerator $<TARGET_OBJECTS:sharedhelp> ${QCOLLECTIONGENERATOR_SOURCES} ${QCOLLECTIONGENERATOR_HEADERS})
 target_link_libraries(qcollectiongenerator ${EXTRA_QCOLLECTIONGENERATOR_LIBS})

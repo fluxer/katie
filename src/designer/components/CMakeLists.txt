@@ -79,9 +79,9 @@ endif()
 # headers go in one place!
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
-katie_resources(${DESIGNERCOMPONENTS_SOURCES})
-katie_resources(${DESIGNERCOMPONENTS_HEADERS})
+katie_resources(${DESIGNERCOMPONENTS_SOURCES} ${DESIGNERCOMPONENTS_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtDesignerComponents ${KATIE_TYPE}
     $<TARGET_OBJECTS:sharedfindwidget>

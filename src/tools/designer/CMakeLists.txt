@@ -97,6 +97,7 @@ endif()
 
 katie_resources(${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(designer
     WIN32 # TODO: MACOSX_BUNDLE

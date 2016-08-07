@@ -191,6 +191,7 @@ katie_generate_misc("${OPENGL_HEADERS}" QtOpenGL)
 katie_generate_public("${OPENGL_PUBLIC_HEADERS}" QtOpenGL)
 katie_resources(${OPENGL_SOURCES} ${OPENGL_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtOpenGL ${KATIE_TYPE} ${OPENGL_SOURCES} ${OPENGL_HEADERS})
 target_link_libraries(KtOpenGL ${EXTRA_OPENGL_LIBS})

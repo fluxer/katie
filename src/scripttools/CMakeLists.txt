@@ -27,6 +27,7 @@ katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)
 katie_generate_public("${SCRIPTTOOLS_PUBLIC_HEADERS}" QtScriptTools)
 katie_resources(${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtScriptTools ${KATIE_TYPE} ${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
 target_link_libraries(KtScriptTools ${EXTRA_SCRIPTTOOLS_LIBS})

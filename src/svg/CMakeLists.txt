@@ -72,6 +72,7 @@ katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
 katie_resources(${SVG_SOURCES} ${SVG_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtSvg ${KATIE_TYPE} ${SVG_SOURCES} ${SVG_HEADERS})
 target_link_libraries(KtSvg ${EXTRA_SVG_LIBS})

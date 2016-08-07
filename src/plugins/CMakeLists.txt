@@ -2,6 +2,7 @@ add_definitions(-DQT_PLUGIN)
 set(EXTRA_PLUGINS_LIBS KtCore)
 
 katie_setup_flags()
+katie_setup_paths()
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

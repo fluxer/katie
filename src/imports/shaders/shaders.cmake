@@ -24,6 +24,7 @@ include_directories(${OPENGL_INCLUDE_DIR})
 
 katie_resources(${SHADERS_SOURCES} ${SHADERS_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(qmlshadersplugin ${KATIE_TYPE} ${SHADERS_SOURCES} ${SHADERS_HEADERS})
 target_link_libraries(qmlshadersplugin ${EXTRA_SHADERS_LIBS})

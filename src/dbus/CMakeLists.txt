@@ -125,6 +125,7 @@ katie_generate_misc("${DBUS_HEADERS}" QtDBus)
 katie_generate_public("${DBUS_PUBLIC_HEADERS}" QtDBus)
 katie_resources(${DBUS_SOURCES} ${DBUS_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtDBus ${KATIE_TYPE} ${DBUS_SOURCES} ${DBUS_HEADERS})
 target_link_libraries(KtDBus ${EXTRA_DBUS_LIBS})

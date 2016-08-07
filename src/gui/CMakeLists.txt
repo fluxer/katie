@@ -494,6 +494,7 @@ katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_resources(${GUI_SOURCES} ${GUI_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtGui ${KATIE_TYPE} ${GUI_SOURCES} ${GUI_HEADERS})
 target_link_libraries(KtGui ${EXTRA_GUI_LIBS})

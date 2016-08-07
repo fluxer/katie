@@ -59,6 +59,7 @@ katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)
 katie_generate_public("${UITOOLS_PUBLIC_HEADERS}" QtUiTools)
 katie_resources(${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtUiTools ${KATIE_TYPE} ${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
 target_link_libraries(KtUiTools ${EXTRA_UITOOLS_LIBS})

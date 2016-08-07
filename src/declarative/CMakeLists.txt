@@ -73,9 +73,9 @@ endif()
 
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
-katie_resources("${DECLARATIVE_SOURCES}")
-katie_resources("${DECLARATIVE_HEADERS}")
+katie_resources(${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_library(KtDeclarative ${KATIE_TYPE} ${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
 target_link_libraries(KtDeclarative ${EXTRA_DECLARATIVE_LIBS})

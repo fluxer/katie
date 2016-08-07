@@ -13,6 +13,7 @@ include_directories(
 )
 
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(qdbus ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.cpp)
 target_link_libraries(qdbus ${EXTRA_QDBUS_LIBS})

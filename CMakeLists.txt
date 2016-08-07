@@ -145,7 +145,6 @@ set(CPACK_PACKAGE_VERSION_MINOR ${KATIE_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${KATIE_MICRO})
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Katie")
 set(CPACK_SOURCE_IGNORE_FILES "/build/;/mingw/;/.git;${CPACK_SOURCE_IGNORE_FILES}")
-set(CPACK_SET_DESTDIR TRUE)
 set(CPACK_STRIP_FILES TRUE)
 if(WIN32 AND CMAKE_CROSSCOMPILING)
     # Windows build on non-Windows host, NSIS is not manditory on such
@@ -718,10 +717,6 @@ katie_generate_obsolete(qttestgui.h QtTest qtest_gui.h)
 katie_generate_obsolete(customwidget.h QtDesginer ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
-# translations
-file(GLOB TRANSLATIONS "translations/*.ts")
-katie_translations(${TRANSLATIONS})
-
 katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
 
 configure_file(
@@ -735,6 +730,11 @@ configure_file(
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     @ONLY
 )
+
+# translations
+katie_setup_paths()
+file(GLOB TRANSLATIONS "translations/*.ts")
+katie_translations(${TRANSLATIONS})
 
 install(
     DIRECTORY mkspecs

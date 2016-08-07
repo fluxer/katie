@@ -39,6 +39,7 @@ endif()
 
 katie_resources(${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_flags()
+katie_setup_paths()
 
 add_executable(qdbusviewer
     WIN32 # TODO: MACOSX_BUNDLE
