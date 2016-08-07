@@ -421,8 +421,8 @@ void JIT::privateCompileSlowCases()
             ASSERT_NOT_REACHED();
         }
 
-        Q_ASSERT_X(iter == m_slowCases.end() || firstTo != iter->to, "JIT::privateCompileSlowCases", "Not enough jumps linked in slow case codegen.");
-        Q_ASSERT_X(firstTo == (iter - 1)->to, "JIT::privateCompileSlowCases", "Too many jumps linked in slow case codegen.");
+        Q_ASSERT_X(iter == m_slowCases.end() || firstTo != iter->to, "JIT::privateCompileSlowCases", "Not enough jumps linked in slow case codegen");
+        Q_ASSERT_X(firstTo == (iter - 1)->to, "JIT::privateCompileSlowCases", "Too many jumps linked in slow case codegen");
 
         emitJumpSlowToHot(jump(), 0);
     }

@@ -71,7 +71,7 @@
 
 #else
 
-#define ASSERT_NOT_REACHED() Q_ASSERT_X(false, 0, "SHOULD NEVER BE REACHED\n")
+#define ASSERT_NOT_REACHED() Q_ASSERT_X(false, 0, "SHOULD NEVER BE REACHED")
 #define ASSERT_UNUSED(variable, assertion) Q_ASSERT(assertion); Q_UNUSED(variable)
 
 #endif
