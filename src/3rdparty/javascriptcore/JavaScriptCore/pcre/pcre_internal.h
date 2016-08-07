@@ -119,14 +119,14 @@ capturing parenthesis numbers in back references. */
 
 static inline void put2ByteValue(unsigned char* opcodePtr, int value)
 {
-    ASSERT(value >= 0 && value <= 0xFFFF);
+    Q_ASSERT(value >= 0 && value <= 0xFFFF);
     opcodePtr[0] = value >> 8;
     opcodePtr[1] = value;
 }
 
 static inline void put3ByteValue(unsigned char* opcodePtr, int value)
 {
-    ASSERT(value >= 0 && value <= 0xFFFFFF);
+    Q_ASSERT(value >= 0 && value <= 0xFFFFFF);
     opcodePtr[0] = value >> 16;
     opcodePtr[1] = value >> 8;
     opcodePtr[2] = value;
@@ -181,14 +181,14 @@ COMPILE_ASSERT(MAX_PATTERN_SIZE < (1 << (8 * LINK_SIZE)), pcre_max_pattern_fits_
 
 static inline void putLinkValue(unsigned char* opcodePtr, int value)
 {
-    ASSERT(value);
+    Q_ASSERT(value);
     putLinkValueAllowZero(opcodePtr, value);
 }
 
 static inline int getLinkValue(const unsigned char* opcodePtr)
 {
     int value = getLinkValueAllowZero(opcodePtr);
-    ASSERT(value);
+    Q_ASSERT(value);
     return value;
 }
 
@@ -435,7 +435,7 @@ static inline bool isBracketStartOpcode(unsigned char opcode)
 
 static inline void advanceToEndOfBracket(const unsigned char*& opcodePtr)
 {
-    ASSERT(isBracketStartOpcode(*opcodePtr) || *opcodePtr == OP_ALT);
+    Q_ASSERT(isBracketStartOpcode(*opcodePtr) || *opcodePtr == OP_ALT);
     do
         opcodePtr += getLinkValue(opcodePtr + 1);
     while (*opcodePtr == OP_ALT);

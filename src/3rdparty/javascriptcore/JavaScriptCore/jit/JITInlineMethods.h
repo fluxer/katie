@@ -72,7 +72,7 @@ ALWAYS_INLINE bool JIT::isOperandConstantImmediateDouble(unsigned src)
 
 ALWAYS_INLINE JSValue JIT::getConstantOperand(unsigned src)
 {
-    ASSERT(m_codeBlock->isConstantRegisterIndex(src));
+    Q_ASSERT(m_codeBlock->isConstantRegisterIndex(src));
     return m_codeBlock->getConstant(src);
 }
 
@@ -104,7 +104,7 @@ ALWAYS_INLINE void JIT::emitGetFromCallFrameHeader32(RegisterFile::CallFrameHead
 
 ALWAYS_INLINE JIT::Call JIT::emitNakedCall(CodePtr function)
 {
-    ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
+    Q_ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
 
     Call nakedCall = nearCall();
     m_calls.append(CallRecord(nakedCall, m_bytecodeIndex, function.executableAddress()));
@@ -137,8 +137,8 @@ ALWAYS_INLINE void JIT::beginUninterruptedSequence(int insnSpace, int constSpace
 ALWAYS_INLINE void JIT::endUninterruptedSequence(int insnSpace, int constSpace)
 {
 #if defined(ASSEMBLER_HAS_CONSTANT_POOL) && ASSEMBLER_HAS_CONSTANT_POOL
-    ASSERT(differenceBetween(m_uninterruptedInstructionSequenceBegin, label()) == insnSpace);
-    ASSERT(sizeOfConstantPool() - m_uninterruptedConstantSequenceBegin == constSpace);
+    Q_ASSERT(differenceBetween(m_uninterruptedInstructionSequenceBegin, label()) == insnSpace);
+    Q_ASSERT(sizeOfConstantPool() - m_uninterruptedConstantSequenceBegin == constSpace);
 #endif
 }
 
@@ -217,14 +217,14 @@ ALWAYS_INLINE void JIT::linkSlowCaseIfNotJSCell(Vector<SlowCaseEntry>::iterator&
 
 ALWAYS_INLINE void JIT::addSlowCase(Jump jump)
 {
-    ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
+    Q_ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
 
     m_slowCases.append(SlowCaseEntry(jump, m_bytecodeIndex));
 }
 
 ALWAYS_INLINE void JIT::addSlowCase(JumpList jumpList)
 {
-    ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
+    Q_ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
 
     const JumpList::JumpVector& jumpVector = jumpList.jumps();
     size_t size = jumpVector.size();
@@ -234,14 +234,14 @@ ALWAYS_INLINE void JIT::addSlowCase(JumpList jumpList)
 
 ALWAYS_INLINE void JIT::addJump(Jump jump, int relativeOffset)
 {
-    ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
+    Q_ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
 
     m_jmpTable.append(JumpTable(jump, m_bytecodeIndex + relativeOffset));
 }
 
 ALWAYS_INLINE void JIT::emitJumpSlowToHot(Jump jump, int relativeOffset)
 {
-    ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
+    Q_ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
 
     jump.linkTo(m_labels[m_bytecodeIndex + relativeOffset], this);
 }
@@ -249,15 +249,15 @@ ALWAYS_INLINE void JIT::emitJumpSlowToHot(Jump jump, int relativeOffset)
 #if ENABLE(SAMPLING_FLAGS)
 ALWAYS_INLINE void JIT::setSamplingFlag(int32_t flag)
 {
-    ASSERT(flag >= 1);
-    ASSERT(flag <= 32);
+    Q_ASSERT(flag >= 1);
+    Q_ASSERT(flag <= 32);
     or32(Imm32(1u << (flag - 1)), AbsoluteAddress(&SamplingFlags::s_flags));
 }
 
 ALWAYS_INLINE void JIT::clearSamplingFlag(int32_t flag)
 {
-    ASSERT(flag >= 1);
-    ASSERT(flag <= 32);
+    Q_ASSERT(flag >= 1);
+    Q_ASSERT(flag <= 32);
     and32(Imm32(~(1u << (flag - 1))), AbsoluteAddress(&SamplingFlags::s_flags));
 }
 #endif
@@ -370,10 +370,10 @@ inline void JIT::emitLoad(const JSValue& v, RegisterID tag, RegisterID payload)
 
 inline void JIT::emitLoad(unsigned index, RegisterID tag, RegisterID payload, RegisterID base)
 {
-    ASSERT(tag != payload);
+    Q_ASSERT(tag != payload);
 
     if (base == callFrameRegister) {
-        ASSERT(payload != base);
+        Q_ASSERT(payload != base);
         emitLoadPayload(index, payload);
         emitLoadTag(index, tag);
         return;
@@ -616,7 +616,7 @@ ALWAYS_INLINE void JIT::killLastResultRegister()
 // get arg puts an arg from the SF register array into a h/w register
 ALWAYS_INLINE void JIT::emitGetVirtualRegister(int src, RegisterID dst)
 {
-    ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
+    Q_ASSERT(m_bytecodeIndex != (unsigned)-1); // This method should only be called during hot/cold path generation, so that m_bytecodeIndex is set.
 
     // TODO: we want to reuse values that are already in registers if we can - add a register allocator!
     if (m_codeBlock->isConstantRegisterIndex(src)) {

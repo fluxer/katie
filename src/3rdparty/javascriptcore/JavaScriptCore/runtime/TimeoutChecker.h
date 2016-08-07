@@ -54,7 +54,7 @@ namespace JSC {
 
         void stop()
         {
-            ASSERT(m_startCount);
+            Q_ASSERT(m_startCount);
             --m_startCount;
         }
 

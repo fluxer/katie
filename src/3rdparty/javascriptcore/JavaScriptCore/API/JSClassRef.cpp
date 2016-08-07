@@ -85,12 +85,12 @@ OpaqueJSClass::OpaqueJSClass(const JSClassDefinition* definition, OpaqueJSClass*
 
 OpaqueJSClass::~OpaqueJSClass()
 {
-    ASSERT(!m_className.rep()->isIdentifier());
+    Q_ASSERT(!m_className.rep()->isIdentifier());
 
     if (m_staticValues) {
         OpaqueJSClassStaticValuesTable::const_iterator end = m_staticValues->end();
         for (OpaqueJSClassStaticValuesTable::const_iterator it = m_staticValues->begin(); it != end; ++it) {
-            ASSERT(!it->first->isIdentifier());
+            Q_ASSERT(!it->first->isIdentifier());
             delete it->second;
         }
         delete m_staticValues;
@@ -99,7 +99,7 @@ OpaqueJSClass::~OpaqueJSClass()
     if (m_staticFunctions) {
         OpaqueJSClassStaticFunctionsTable::const_iterator end = m_staticFunctions->end();
         for (OpaqueJSClassStaticFunctionsTable::const_iterator it = m_staticFunctions->begin(); it != end; ++it) {
-            ASSERT(!it->first->isIdentifier());
+            Q_ASSERT(!it->first->isIdentifier());
             delete it->second;
         }
         delete m_staticFunctions;
@@ -117,7 +117,7 @@ PassRefPtr<OpaqueJSClass> OpaqueJSClass::createNoAutomaticPrototype(const JSClas
 static void clearReferenceToPrototype(JSObjectRef prototype)
 {
     OpaqueJSClassContextData* jsClassData = static_cast<OpaqueJSClassContextData*>(JSObjectGetPrivate(prototype));
-    ASSERT(jsClassData);
+    Q_ASSERT(jsClassData);
     jsClassData->cachedPrototype = 0;
 }
 
@@ -142,7 +142,7 @@ OpaqueJSClassContextData::OpaqueJSClassContextData(OpaqueJSClass* jsClass)
         staticValues = new OpaqueJSClassStaticValuesTable;
         OpaqueJSClassStaticValuesTable::const_iterator end = jsClass->m_staticValues->end();
         for (OpaqueJSClassStaticValuesTable::const_iterator it = jsClass->m_staticValues->begin(); it != end; ++it) {
-            ASSERT(!it->first->isIdentifier());
+            Q_ASSERT(!it->first->isIdentifier());
             // Use a local variable here to sidestep an RVCT compiler bug.
             StaticValueEntry* entry = new StaticValueEntry(it->second->getProperty, it->second->setProperty, it->second->attributes);
             staticValues->add(UString::Rep::create(it->first->data(), it->first->size()), entry);
@@ -157,7 +157,7 @@ OpaqueJSClassContextData::OpaqueJSClassContextData(OpaqueJSClass* jsClass)
         staticFunctions = new OpaqueJSClassStaticFunctionsTable;
         OpaqueJSClassStaticFunctionsTable::const_iterator end = jsClass->m_staticFunctions->end();
         for (OpaqueJSClassStaticFunctionsTable::const_iterator it = jsClass->m_staticFunctions->begin(); it != end; ++it) {
-            ASSERT(!it->first->isIdentifier());
+            Q_ASSERT(!it->first->isIdentifier());
             // Use a local variable here to sidestep an RVCT compiler bug.
             StaticFunctionEntry* entry = new StaticFunctionEntry(it->second->callAsFunction, it->second->attributes);
             staticFunctions->add(UString::Rep::create(it->first->data(), it->first->size()), entry);

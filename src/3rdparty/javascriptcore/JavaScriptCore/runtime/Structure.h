@@ -109,7 +109,7 @@ namespace JSC {
         size_t get(const UString::Rep* rep, unsigned& attributes, JSCell*& specificValue);
         size_t get(const Identifier& propertyName, unsigned& attributes, JSCell*& specificValue)
         {
-            ASSERT(!propertyName.isNull());
+            Q_ASSERT(!propertyName.isNull());
             return get(propertyName.ustring().rep(), attributes, specificValue);
         }
         bool transitionedFor(const JSCell* specificValue)
@@ -229,7 +229,7 @@ namespace JSC {
 
     inline size_t Structure::get(const Identifier& propertyName)
     {
-        ASSERT(!propertyName.isNull());
+        Q_ASSERT(!propertyName.isNull());
 
         materializePropertyMapIfNecessary();
         if (!m_propertyTable)
@@ -316,7 +316,7 @@ namespace JSC {
     
     void StructureTransitionTable::reifySingleTransition()
     {
-        ASSERT(usingSingleTransitionSlot());
+        Q_ASSERT(usingSingleTransitionSlot());
         Structure* existingTransition = singleTransition();
         TransitionTable* transitionTable = new TransitionTable;
         setTransitionTable(transitionTable);

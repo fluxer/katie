@@ -97,7 +97,7 @@ inline T* ThreadSpecific<T>::get()
 template<typename T>
 inline void ThreadSpecific<T>::set(T* ptr)
 {
-    ASSERT(!get());
+    Q_ASSERT(!get());
     m_value = ptr;
 }
 #else
@@ -122,7 +122,7 @@ inline T* ThreadSpecific<T>::get()
 template<typename T>
 inline void ThreadSpecific<T>::set(T* ptr)
 {
-    ASSERT(!get());
+    Q_ASSERT(!get());
     Data* data = new Data(ptr, this);
     m_key.setLocalData(data);
 }

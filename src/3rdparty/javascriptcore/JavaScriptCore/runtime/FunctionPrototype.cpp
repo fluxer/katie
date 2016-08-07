@@ -69,8 +69,8 @@ CallType FunctionPrototype::getCallData(CallData& callData)
 // Compatibility hack for the Optimost JavaScript library. (See <rdar://problem/6595040>.)
 static inline void insertSemicolonIfNeeded(UString& functionBody)
 {
-    ASSERT(functionBody[0] == '{');
-    ASSERT(functionBody[functionBody.size() - 1] == '}');
+    Q_ASSERT(functionBody[0] == '{');
+    Q_ASSERT(functionBody[functionBody.size() - 1] == '}');
 
     for (size_t i = functionBody.size() - 2; i > 0; --i) {
         UChar ch = functionBody[i];

@@ -253,7 +253,7 @@ public:
             : m_offset(offset)
             , m_used(false)
         {
-            ASSERT(m_offset == offset);
+            Q_ASSERT(m_offset == offset);
         }
 
         int m_offset : 31;
@@ -1485,8 +1485,8 @@ public:
 
     void linkJump(JmpSrc from, JmpDst to)
     {
-        ASSERT(from.m_offset != -1);
-        ASSERT(to.m_offset != -1);
+        Q_ASSERT(from.m_offset != -1);
+        Q_ASSERT(to.m_offset != -1);
 
         char* code = reinterpret_cast<char*>(m_formatter.data());
         setRel32(code + from.m_offset, code + to.m_offset);
@@ -1494,21 +1494,21 @@ public:
     
     static void linkJump(void* code, JmpSrc from, void* to)
     {
-        ASSERT(from.m_offset != -1);
+        Q_ASSERT(from.m_offset != -1);
 
         setRel32(reinterpret_cast<char*>(code) + from.m_offset, to);
     }
 
     static void linkCall(void* code, JmpSrc from, void* to)
     {
-        ASSERT(from.m_offset != -1);
+        Q_ASSERT(from.m_offset != -1);
 
         setRel32(reinterpret_cast<char*>(code) + from.m_offset, to);
     }
 
     static void linkPointer(void* code, JmpDst where, void* value)
     {
-        ASSERT(where.m_offset != -1);
+        Q_ASSERT(where.m_offset != -1);
 
         setPointer(reinterpret_cast<char*>(code) + where.m_offset, value);
     }
@@ -1545,20 +1545,20 @@ public:
     
     static unsigned getCallReturnOffset(JmpSrc call)
     {
-        ASSERT(call.m_offset >= 0);
+        Q_ASSERT(call.m_offset >= 0);
         return call.m_offset;
     }
 
     static void* getRelocatedAddress(void* code, JmpSrc jump)
     {
-        ASSERT(jump.m_offset != -1);
+        Q_ASSERT(jump.m_offset != -1);
 
         return reinterpret_cast<void*>(reinterpret_cast<ptrdiff_t>(code) + jump.m_offset);
     }
     
     static void* getRelocatedAddress(void* code, JmpDst destination)
     {
-        ASSERT(destination.m_offset != -1);
+        Q_ASSERT(destination.m_offset != -1);
 
         return reinterpret_cast<void*>(reinterpret_cast<ptrdiff_t>(code) + destination.m_offset);
     }
@@ -1581,7 +1581,7 @@ public:
     void* executableCopy(ExecutablePool* allocator)
     {
         void* copy = m_formatter.executableCopy(allocator);
-        ASSERT(copy);
+        Q_ASSERT(copy);
         return copy;
     }
 
@@ -1600,7 +1600,7 @@ private:
     static void setRel32(void* from, void* to)
     {
         intptr_t offset = reinterpret_cast<intptr_t>(to) - reinterpret_cast<intptr_t>(from);
-        ASSERT(offset == static_cast<int32_t>(offset));
+        Q_ASSERT(offset == static_cast<int32_t>(offset));
 
         setInt32(from, offset);
     }
@@ -1953,7 +1953,7 @@ private:
 
         void putModRmSib(ModRmMode mode, int reg, RegisterID base, RegisterID index, int scale)
         {
-            ASSERT(mode != ModRmRegister);
+            Q_ASSERT(mode != ModRmRegister);
 
             putModRm(mode, reg, hasSib);
             m_buffer.putByteUnchecked((scale << 6) | ((index & 7) << 3) | (base & 7));
@@ -2016,7 +2016,7 @@ private:
     
         void memoryModRM(int reg, RegisterID base, RegisterID index, int scale, int offset)
         {
-            ASSERT(index != noIndex);
+            Q_ASSERT(index != noIndex);
 
 #if CPU(X86_64)
             if (!offset && (base != noBase) && (base != noBase2))

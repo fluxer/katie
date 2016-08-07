@@ -225,8 +225,8 @@ private:
     template<bool inCharacterClass, class EscapeDelegate>
     bool parseEscape(EscapeDelegate& delegate)
     {
-        ASSERT(!m_err);
-        ASSERT(peek() == '\\');
+        Q_ASSERT(!m_err);
+        Q_ASSERT(peek() == '\\');
         consume();
 
         if (atEndOfPattern()) {
@@ -412,8 +412,8 @@ private:
      */
     void parseCharacterClass()
     {
-        ASSERT(!m_err);
-        ASSERT(peek() == '[');
+        Q_ASSERT(!m_err);
+        Q_ASSERT(peek() == '[');
         consume();
 
         CharacterClassParserDelegate characterClassConstructor(m_delegate, m_err);
@@ -449,8 +449,8 @@ private:
      */
     void parseParenthesesBegin()
     {
-        ASSERT(!m_err);
-        ASSERT(peek() == '(');
+        Q_ASSERT(!m_err);
+        Q_ASSERT(peek() == '(');
         consume();
 
         if (tryConsume('?')) {
@@ -488,8 +488,8 @@ private:
      */
     void parseParenthesesEnd()
     {
-        ASSERT(!m_err);
-        ASSERT(peek() == ')');
+        Q_ASSERT(!m_err);
+        Q_ASSERT(peek() == ')');
         consume();
 
         if (m_parenthesesNestingDepth > 0)
@@ -507,8 +507,8 @@ private:
      */
     void parseQuantifier(bool lastTokenWasAnAtom, unsigned min, unsigned max)
     {
-        ASSERT(!m_err);
-        ASSERT(min <= max);
+        Q_ASSERT(!m_err);
+        Q_ASSERT(min <= max);
 
         if (lastTokenWasAnAtom)
             m_delegate.quantifyAtom(min, max, !tryConsume('?'));
@@ -644,7 +644,7 @@ private:
             m_err = PatternTooLarge;
         else
             parseTokens();
-        ASSERT(atEndOfPattern() || m_err);
+        Q_ASSERT(atEndOfPattern() || m_err);
 
         if (m_err)
             m_delegate.regexError();
@@ -685,13 +685,13 @@ private:
 
     bool atEndOfPattern()
     {
-        ASSERT(m_index <= m_size);
+        Q_ASSERT(m_index <= m_size);
         return m_index == m_size;
     }
 
     int peek()
     {
-        ASSERT(m_index < m_size);
+        Q_ASSERT(m_index < m_size);
         return m_data[m_index];
     }
 
@@ -702,19 +702,19 @@ private:
 
     unsigned peekDigit()
     {
-        ASSERT(peekIsDigit());
+        Q_ASSERT(peekIsDigit());
         return peek() - '0';
     }
 
     int consume()
     {
-        ASSERT(m_index < m_size);
+        Q_ASSERT(m_index < m_size);
         return m_data[m_index++];
     }
 
     unsigned consumeDigit()
     {
-        ASSERT(peekIsDigit());
+        Q_ASSERT(peekIsDigit());
         return consume() - '0';
     }
 
@@ -731,7 +731,7 @@ private:
 
     unsigned consumeOctal()
     {
-        ASSERT(WTF::isASCIIOctalDigit(peek()));
+        Q_ASSERT(WTF::isASCIIOctalDigit(peek()));
 
         unsigned n = consumeDigit();
         while (n < 32 && !atEndOfPattern() && WTF::isASCIIOctalDigit(peek()))

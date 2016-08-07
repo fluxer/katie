@@ -78,7 +78,7 @@ namespace JSC {
 
     inline RegExpObject* asRegExpObject(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&RegExpObject::info));
+        Q_ASSERT(asObject(value)->inherits(&RegExpObject::info));
         return static_cast<RegExpObject*>(asObject(value));
     }
 

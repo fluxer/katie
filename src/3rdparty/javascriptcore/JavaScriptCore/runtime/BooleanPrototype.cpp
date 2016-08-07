@@ -65,7 +65,7 @@ JSValue JSC_HOST_CALL booleanProtoFuncToString(ExecState* exec, JSObject*, JSVal
     if (asBooleanObject(thisValue)->internalValue() == jsBoolean(false))
         return jsNontrivialString(exec, "false");
 
-    ASSERT(asBooleanObject(thisValue)->internalValue() == jsBoolean(true));
+    Q_ASSERT(asBooleanObject(thisValue)->internalValue() == jsBoolean(true));
     return jsNontrivialString(exec, "true");
 }
 

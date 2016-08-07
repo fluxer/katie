@@ -189,13 +189,13 @@ struct PatternAlternative : FastAllocBase {
 
     PatternTerm& lastTerm()
     {
-        ASSERT(m_terms.size());
+        Q_ASSERT(m_terms.size());
         return m_terms[m_terms.size() - 1];
     }
     
     void removeLastTerm()
     {
-        ASSERT(m_terms.size());
+        Q_ASSERT(m_terms.size());
         m_terms.shrink(m_terms.size() - 1);
     }
 

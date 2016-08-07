@@ -96,7 +96,7 @@ inline JSPropertyNameIterator::JSPropertyNameIterator(ExecState* exec, PropertyN
 
 inline void Structure::setEnumerationCache(JSPropertyNameIterator* enumerationCache)
 {
-    ASSERT(!isDictionary());
+    Q_ASSERT(!isDictionary());
     m_enumerationCache = enumerationCache;
 }
 

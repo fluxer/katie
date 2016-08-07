@@ -598,7 +598,7 @@ static ALWAYS_INLINE void pow5mult(BigInt& b, int k)
 
         if (++p5s_used == p5s_count_local) {
             if (p5s_used == p5s_count) {
-                ASSERT(!p5->next);
+                Q_ASSERT(!p5->next);
                 p5->next = new P5Node;
                 p5->next->next = 0;
                 p5->next->val = p5->val;
@@ -641,7 +641,7 @@ static ALWAYS_INLINE void lshift(BigInt& b, int k)
             hiSubword = *src << k;
         }
         *dst = hiSubword;
-        ASSERT(dst == dstStart + n);
+        Q_ASSERT(dst == dstStart + n);
 
         b.resize(origSize + n + (b.words()[n1 - 1] != 0));
     }
@@ -654,7 +654,7 @@ static ALWAYS_INLINE void lshift(BigInt& b, int k)
             hiSubword = (*src << k) & 0xffff;
         }
         *dst = hiSubword;
-        ASSERT(dst == dstStart + n);
+        Q_ASSERT(dst == dstStart + n);
         result->wds = b->wds + n + (result->x[n1 - 1] != 0);
      }
  #endif
@@ -666,7 +666,7 @@ static ALWAYS_INLINE void lshift(BigInt& b, int k)
     for (dst = dstStart + n; dst != dstStart; )
         *--dst = 0;
 
-    ASSERT(b.size() <= 1 || b.words()[b.size() - 1]);
+    Q_ASSERT(b.size() <= 1 || b.words()[b.size() - 1]);
 }
 
 static int cmp(const BigInt& a, const BigInt& b)
@@ -676,8 +676,8 @@ static int cmp(const BigInt& a, const BigInt& b)
 
     i = a.size();
     j = b.size();
-    ASSERT(i <= 1 || a.words()[i - 1]);
-    ASSERT(j <= 1 || b.words()[j - 1]);
+    Q_ASSERT(i <= 1 || a.words()[i - 1]);
+    Q_ASSERT(j <= 1 || b.words()[j - 1]);
     if (i -= j)
         return i;
     xa0 = a.words();
@@ -819,7 +819,7 @@ static double b2d(const BigInt& a, int* e)
     xa0 = a.words();
     xa = xa0 + a.size();
     y = *--xa;
-    ASSERT(y);
+    Q_ASSERT(y);
     k = hi0bits(y);
     *e = 32 - k;
 #ifdef Pack_32
@@ -1726,11 +1726,11 @@ static ALWAYS_INLINE int quorem(BigInt& b, BigInt& S)
     uint32_t si, z, zs;
 #endif
 #endif
-    ASSERT(b.size() <= 1 || b.words()[b.size() - 1]);
-    ASSERT(S.size() <= 1 || S.words()[S.size() - 1]);
+    Q_ASSERT(b.size() <= 1 || b.words()[b.size() - 1]);
+    Q_ASSERT(S.size() <= 1 || S.words()[S.size() - 1]);
 
     n = S.size();
-    ASSERT_WITH_MESSAGE(b.size() <= n, "oversize b in quorem");
+    Q_ASSERT_X(b.size() <= n, "quorem", "oversize b in quorem");
     if (b.size() < n)
         return 0;
     sx = S.words();
@@ -1738,7 +1738,7 @@ static ALWAYS_INLINE int quorem(BigInt& b, BigInt& S)
     bx = b.words();
     bxe = bx + n;
     q = *bxe / (*sxe + 1);    /* ensure q <= true quotient */
-    ASSERT_WITH_MESSAGE(q <= 9, "oversized quotient in quorem");
+    Q_ASSERT_X(q <= 9, "quorem", "oversized quotient in quorem");
     if (q) {
         borrow = 0;
         carry = 0;
@@ -2376,7 +2376,7 @@ static ALWAYS_INLINE void append(char*& next, const char* src, unsigned size)
 
 void doubleToStringInJavaScriptFormat(double d, DtoaBuffer buffer, unsigned* resultLength)
 {
-    ASSERT(buffer);
+    Q_ASSERT(buffer);
 
     // avoid ever printing -NaN, in JS conceptually there is only one NaN value
     if (isnan(d)) {

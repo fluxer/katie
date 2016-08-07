@@ -71,7 +71,7 @@ namespace JSC {
                 : symbolTable(symbolTable)
                 , registers(registers)
             {
-                ASSERT(symbolTable);
+                Q_ASSERT(symbolTable);
             }
 
             SymbolTable* symbolTable; // Maps name -> offset from "r" in register file.
@@ -124,7 +124,7 @@ namespace JSC {
 
     inline bool JSVariableObject::symbolTablePut(const Identifier& propertyName, JSValue value)
     {
-        ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+        Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
         SymbolTableEntry entry = symbolTable().inlineGet(propertyName.ustring().rep());
         if (entry.isNull())
@@ -137,13 +137,13 @@ namespace JSC {
 
     inline bool JSVariableObject::symbolTablePutWithAttributes(const Identifier& propertyName, JSValue value, unsigned attributes)
     {
-        ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+        Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
         SymbolTable::iterator iter = symbolTable().find(propertyName.ustring().rep());
         if (iter == symbolTable().end())
             return false;
         SymbolTableEntry& entry = iter->second;
-        ASSERT(!entry.isNull());
+        Q_ASSERT(!entry.isNull());
         entry.setAttributes(attributes);
         registerAt(entry.getIndex()) = value;
         return true;
@@ -159,7 +159,7 @@ namespace JSC {
 
     inline void JSVariableObject::setRegisters(Register* registers, Register* registerArray)
     {
-        ASSERT(registerArray != d->registerArray.get());
+        Q_ASSERT(registerArray != d->registerArray.get());
         d->registerArray.set(registerArray);
         d->registers = registers;
     }

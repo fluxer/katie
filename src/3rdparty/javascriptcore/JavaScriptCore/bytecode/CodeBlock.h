@@ -238,12 +238,12 @@ namespace JSC {
             }
 
             // 'size' should never reach zero.
-            ASSERT(size);
+            Q_ASSERT(size);
         }
         
         // If we reach this point we've chopped down to one element, no need to check it matches
-        ASSERT(size == 1);
-        ASSERT(key == valueAtPosition(&array[0]));
+        Q_ASSERT(size == 1);
+        Q_ASSERT(key == valueAtPosition(&array[0]));
         return &array[0];
     }
 #endif
@@ -412,21 +412,21 @@ namespace JSC {
 
         size_t numberOfExceptionHandlers() const { return m_rareData ? m_rareData->m_exceptionHandlers.size() : 0; }
         void addExceptionHandler(const HandlerInfo& hanler) { createRareDataIfNecessary(); return m_rareData->m_exceptionHandlers.append(hanler); }
-        HandlerInfo& exceptionHandler(int index) { ASSERT(m_rareData); return m_rareData->m_exceptionHandlers[index]; }
+        HandlerInfo& exceptionHandler(int index) { Q_ASSERT(m_rareData); return m_rareData->m_exceptionHandlers[index]; }
 
         bool hasExceptionInfo() const { return m_exceptionInfo; }
         void clearExceptionInfo() { m_exceptionInfo.clear(); }
-        ExceptionInfo* extractExceptionInfo() { ASSERT(m_exceptionInfo); return m_exceptionInfo.release(); }
+        ExceptionInfo* extractExceptionInfo() { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo.release(); }
 
-        void addExpressionInfo(const ExpressionRangeInfo& expressionInfo) { ASSERT(m_exceptionInfo); m_exceptionInfo->m_expressionInfo.append(expressionInfo); }
-        void addGetByIdExceptionInfo(const GetByIdExceptionInfo& info) { ASSERT(m_exceptionInfo); m_exceptionInfo->m_getByIdExceptionInfo.append(info); }
+        void addExpressionInfo(const ExpressionRangeInfo& expressionInfo) { Q_ASSERT(m_exceptionInfo); m_exceptionInfo->m_expressionInfo.append(expressionInfo); }
+        void addGetByIdExceptionInfo(const GetByIdExceptionInfo& info) { Q_ASSERT(m_exceptionInfo); m_exceptionInfo->m_getByIdExceptionInfo.append(info); }
 
-        size_t numberOfLineInfos() const { ASSERT(m_exceptionInfo); return m_exceptionInfo->m_lineInfo.size(); }
-        void addLineInfo(const LineInfo& lineInfo) { ASSERT(m_exceptionInfo); m_exceptionInfo->m_lineInfo.append(lineInfo); }
-        LineInfo& lastLineInfo() { ASSERT(m_exceptionInfo); return m_exceptionInfo->m_lineInfo.last(); }
+        size_t numberOfLineInfos() const { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo->m_lineInfo.size(); }
+        void addLineInfo(const LineInfo& lineInfo) { Q_ASSERT(m_exceptionInfo); m_exceptionInfo->m_lineInfo.append(lineInfo); }
+        LineInfo& lastLineInfo() { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo->m_lineInfo.last(); }
 
 #if ENABLE(JIT)
-        Vector<CallReturnOffsetToBytecodeIndex>& callReturnIndexVector() { ASSERT(m_exceptionInfo); return m_exceptionInfo->m_callReturnIndexVector; }
+        Vector<CallReturnOffsetToBytecodeIndex>& callReturnIndexVector() { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo->m_callReturnIndexVector; }
 #endif
 
         // Constant Pool
@@ -448,26 +448,26 @@ namespace JSC {
         FunctionExecutable* functionExpr(int index) { return m_functionExprs[index].get(); }
 
         unsigned addRegExp(RegExp* r) { createRareDataIfNecessary(); unsigned size = m_rareData->m_regexps.size(); m_rareData->m_regexps.append(r); return size; }
-        RegExp* regexp(int index) const { ASSERT(m_rareData); return m_rareData->m_regexps[index].get(); }
+        RegExp* regexp(int index) const { Q_ASSERT(m_rareData); return m_rareData->m_regexps[index].get(); }
 
 
         // Jump Tables
 
         size_t numberOfImmediateSwitchJumpTables() const { return m_rareData ? m_rareData->m_immediateSwitchJumpTables.size() : 0; }
         SimpleJumpTable& addImmediateSwitchJumpTable() { createRareDataIfNecessary(); m_rareData->m_immediateSwitchJumpTables.append(SimpleJumpTable()); return m_rareData->m_immediateSwitchJumpTables.last(); }
-        SimpleJumpTable& immediateSwitchJumpTable(int tableIndex) { ASSERT(m_rareData); return m_rareData->m_immediateSwitchJumpTables[tableIndex]; }
+        SimpleJumpTable& immediateSwitchJumpTable(int tableIndex) { Q_ASSERT(m_rareData); return m_rareData->m_immediateSwitchJumpTables[tableIndex]; }
 
         size_t numberOfCharacterSwitchJumpTables() const { return m_rareData ? m_rareData->m_characterSwitchJumpTables.size() : 0; }
         SimpleJumpTable& addCharacterSwitchJumpTable() { createRareDataIfNecessary(); m_rareData->m_characterSwitchJumpTables.append(SimpleJumpTable()); return m_rareData->m_characterSwitchJumpTables.last(); }
-        SimpleJumpTable& characterSwitchJumpTable(int tableIndex) { ASSERT(m_rareData); return m_rareData->m_characterSwitchJumpTables[tableIndex]; }
+        SimpleJumpTable& characterSwitchJumpTable(int tableIndex) { Q_ASSERT(m_rareData); return m_rareData->m_characterSwitchJumpTables[tableIndex]; }
 
         size_t numberOfStringSwitchJumpTables() const { return m_rareData ? m_rareData->m_stringSwitchJumpTables.size() : 0; }
         StringJumpTable& addStringSwitchJumpTable() { createRareDataIfNecessary(); m_rareData->m_stringSwitchJumpTables.append(StringJumpTable()); return m_rareData->m_stringSwitchJumpTables.last(); }
-        StringJumpTable& stringSwitchJumpTable(int tableIndex) { ASSERT(m_rareData); return m_rareData->m_stringSwitchJumpTables[tableIndex]; }
+        StringJumpTable& stringSwitchJumpTable(int tableIndex) { Q_ASSERT(m_rareData); return m_rareData->m_stringSwitchJumpTables[tableIndex]; }
 
 
         SymbolTable* symbolTable() { return m_symbolTable; }
-        SharedSymbolTable* sharedSymbolTable() { ASSERT(m_codeType == FunctionCode); return static_cast<SharedSymbolTable*>(m_symbolTable); }
+        SharedSymbolTable* sharedSymbolTable() { Q_ASSERT(m_codeType == FunctionCode); return static_cast<SharedSymbolTable*>(m_symbolTable); }
 
         EvalCodeCache& evalCodeCache() { createRareDataIfNecessary(); return m_rareData->m_evalCodeCache; }
 
@@ -609,7 +609,7 @@ namespace JSC {
         unsigned numVariables() { return m_variables.size(); }
         void adoptVariables(Vector<Identifier>& variables)
         {
-            ASSERT(m_variables.isEmpty());
+            Q_ASSERT(m_variables.isEmpty());
             m_variables.swap(variables);
         }
 

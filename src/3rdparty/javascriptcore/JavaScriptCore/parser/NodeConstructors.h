@@ -725,7 +725,7 @@ namespace JSC {
         , m_expr3(expr3)
         , m_statement(statement)
     {
-        ASSERT(statement);
+        Q_ASSERT(statement);
     }
 
     inline ContinueNode::ContinueNode(JSGlobalData* globalData)

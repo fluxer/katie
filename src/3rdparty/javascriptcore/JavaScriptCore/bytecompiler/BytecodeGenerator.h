@@ -144,7 +144,7 @@ namespace JSC {
         {
             if (originalDst && originalDst != ignoredResult())
                 return originalDst;
-            ASSERT(tempDst != ignoredResult());
+            Q_ASSERT(tempDst != ignoredResult());
             if (tempDst && tempDst->isTemporary())
                 return tempDst;
             return newTemporary();
@@ -174,7 +174,7 @@ namespace JSC {
         RegisterID* emitNode(RegisterID* dst, Node* n)
         {
             // Node::emitCode assumes that dst, if provided, is either a local or a referenced temporary.
-            ASSERT(!dst || dst == ignoredResult() || !dst->isTemporary() || dst->refCount());
+            Q_ASSERT(!dst || dst == ignoredResult() || !dst->isTemporary() || dst->refCount());
             if (!m_codeBlock->numberOfLineInfos() || m_codeBlock->lastLineInfo().lineNumber != n->lineNo()) {
                 LineInfo info = { static_cast<uint32_t>(instructions().size()), n->lineNo() };
                 m_codeBlock->addLineInfo(info);
@@ -238,7 +238,7 @@ namespace JSC {
         {
             // Only op_construct and op_instanceof need exception info for
             // a preceding op_get_by_id.
-            ASSERT(opcodeID == op_construct || opcodeID == op_instanceof);
+            Q_ASSERT(opcodeID == op_construct || opcodeID == op_instanceof);
             GetByIdExceptionInfo info;
             info.bytecodeOffset = instructions().size();
             info.isOpConstruct = (opcodeID == op_construct);
@@ -437,7 +437,7 @@ namespace JSC {
                 return m_argumentsRegister;
 
             if (m_parameters.size()) {
-                ASSERT(!m_globals.size());
+                Q_ASSERT(!m_globals.size());
                 return m_parameters[index + m_parameters.size() + RegisterFile::CallFrameHeaderSize];
             }
 

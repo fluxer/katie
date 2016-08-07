@@ -170,7 +170,7 @@ JSObject* createNotAnObjectError(ExecState* exec, JSNotAnObjectErrorStub* error,
     // thrown by these instances op_get_by_id need to reflect this.
     OpcodeID followingOpcodeID;
     if (codeBlock->getByIdExceptionInfoForBytecodeOffset(exec, bytecodeOffset, followingOpcodeID)) {
-        ASSERT(followingOpcodeID == op_construct || followingOpcodeID == op_instanceof);
+        Q_ASSERT(followingOpcodeID == op_construct || followingOpcodeID == op_instanceof);
         if (followingOpcodeID == op_construct)
             return createNotAConstructorError(exec, error->isNull() ? jsNull() : jsUndefined(), bytecodeOffset, codeBlock);
         return createInvalidParamError(exec, "instanceof", error->isNull() ? jsNull() : jsUndefined(), bytecodeOffset, codeBlock);

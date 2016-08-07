@@ -308,7 +308,7 @@ struct MatchStack {
         , currentFrame(frames)
         , size(1) // match() creates accesses the first frame w/o calling pushNewFrame
     {
-        ASSERT((sizeof(frames) / sizeof(frames[0])) == numFramesOnStack);
+        Q_ASSERT((sizeof(frames) / sizeof(frames[0])) == numFramesOnStack);
     }
     
     MatchFrame frames[numFramesOnStack];
@@ -402,8 +402,8 @@ static inline void repeatInformationFromInstructionOffset(short instructionOffse
     static const char minimumRepeatsFromInstructionOffset[] = { 0, 0, 1, 1, 0, 0 };
     static const int maximumRepeatsFromInstructionOffset[] = { INT_MAX, INT_MAX, INT_MAX, INT_MAX, 1, 1 };
 
-    ASSERT(instructionOffset >= 0);
-    ASSERT(instructionOffset <= (OP_CRMINQUERY - OP_CRSTAR));
+    Q_ASSERT(instructionOffset >= 0);
+    Q_ASSERT(instructionOffset <= (OP_CRMINQUERY - OP_CRSTAR));
 
     minimize = (instructionOffset & 1); // this assumes ordering: Instruction, MinimizeInstruction, Instruction2, MinimizeInstruction2
     minimumRepeats = minimumRepeatsFromInstructionOffset[instructionOffset];
@@ -1679,7 +1679,7 @@ RECURSE:
                  non-capturing bracket. Don't worry about setting the flag for the error case
                  here; that is handled in the code for KET. */
                 
-                ASSERT(*stack.currentFrame->args.instructionPtr > OP_BRA);
+                Q_ASSERT(*stack.currentFrame->args.instructionPtr > OP_BRA);
                 
                 stack.currentFrame->locals.number = *stack.currentFrame->args.instructionPtr - OP_BRA;
                 
@@ -1884,10 +1884,10 @@ int jsRegExpExecute(const JSRegExp* re,
                     const UChar* subject, int length, int start_offset, int* offsets,
                     int offsetCount)
 {
-    ASSERT(re);
-    ASSERT(subject || !length);
-    ASSERT(offsetCount >= 0);
-    ASSERT(offsets || offsetCount == 0);
+    Q_ASSERT(re);
+    Q_ASSERT(subject || !length);
+    Q_ASSERT(offsetCount >= 0);
+    Q_ASSERT(offsets || offsetCount == 0);
 
     HistogramTimeLogger logger(re);
 
@@ -2008,7 +2008,7 @@ int jsRegExpExecute(const JSRegExp* re,
         }
 
         if (returnCode != 1) {
-            ASSERT(returnCode == JSRegExpErrorHitLimit || returnCode == JSRegExpErrorNoMemory);
+            Q_ASSERT(returnCode == JSRegExpErrorHitLimit || returnCode == JSRegExpErrorNoMemory);
             DPRINTF((">>>> error: returning %d\n", returnCode));
             return returnCode;
         }

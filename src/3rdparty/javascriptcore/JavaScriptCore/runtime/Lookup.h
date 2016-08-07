@@ -67,13 +67,13 @@ namespace JSC {
 
         unsigned char attributes() const { return m_attributes; }
 
-        NativeFunction function() const { ASSERT(m_attributes & Function); return m_u.function.functionValue; }
-        unsigned char functionLength() const { ASSERT(m_attributes & Function); return static_cast<unsigned char>(m_u.function.length); }
+        NativeFunction function() const { Q_ASSERT(m_attributes & Function); return m_u.function.functionValue; }
+        unsigned char functionLength() const { Q_ASSERT(m_attributes & Function); return static_cast<unsigned char>(m_u.function.length); }
 
-        GetFunction propertyGetter() const { ASSERT(!(m_attributes & Function)); return m_u.property.get; }
-        PutFunction propertyPutter() const { ASSERT(!(m_attributes & Function)); return m_u.property.put; }
+        GetFunction propertyGetter() const { Q_ASSERT(!(m_attributes & Function)); return m_u.property.get; }
+        PutFunction propertyPutter() const { Q_ASSERT(!(m_attributes & Function)); return m_u.property.put; }
 
-        intptr_t lexerValue() const { ASSERT(!m_attributes); return m_u.lexer.value; }
+        intptr_t lexerValue() const { Q_ASSERT(!m_attributes); return m_u.lexer.value; }
 
         void setNext(HashEntry *next) { m_next = next; }
         HashEntry* next() const { return m_next; }
@@ -142,7 +142,7 @@ namespace JSC {
     private:
         ALWAYS_INLINE const HashEntry* entry(const Identifier& identifier) const
         {
-            ASSERT(table);
+            Q_ASSERT(table);
 
             const HashEntry* entry = &table[identifier.ustring().rep()->existingHash() & compactHashSizeMask];
 
@@ -256,7 +256,7 @@ namespace JSC {
         if (!entry) // not found, forward to parent
             return thisObj->ParentImp::getOwnPropertySlot(exec, propertyName, slot);
 
-        ASSERT(!(entry->attributes() & Function));
+        Q_ASSERT(!(entry->attributes() & Function));
 
         slot.setCustom(thisObj, entry->propertyGetter());
         return true;
@@ -274,7 +274,7 @@ namespace JSC {
         if (!entry) // not found, forward to parent
             return thisObj->ParentImp::getOwnPropertyDescriptor(exec, propertyName, descriptor);
         
-        ASSERT(!(entry->attributes() & Function));
+        Q_ASSERT(!(entry->attributes() & Function));
         PropertySlot slot;
         slot.setCustom(thisObj, entry->propertyGetter());
         descriptor.setDescriptor(slot.getValue(exec, propertyName), entry->attributes());

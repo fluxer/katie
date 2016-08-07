@@ -36,7 +36,7 @@ GlobalEvalFunction::GlobalEvalFunction(ExecState* exec, NonNullPassRefPtr<Struct
     : PrototypeFunction(exec, structure, len, name, function)
     , m_cachedGlobalObject(cachedGlobalObject)
 {
-    ASSERT_ARG(cachedGlobalObject, cachedGlobalObject);
+    Q_ASSERT_X(cachedGlobalObject, "GlobalEvalFunction::GlobalEvalFunction", "cachedGlobalObject");
 }
 
 void GlobalEvalFunction::markChildren(MarkStack& markStack)

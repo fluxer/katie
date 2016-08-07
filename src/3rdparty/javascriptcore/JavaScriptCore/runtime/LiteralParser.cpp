@@ -40,7 +40,7 @@ LiteralParser::TokenType LiteralParser::Lexer::lex(LiteralParserToken& token)
     while (m_ptr < m_end && isASCIISpace(*m_ptr))
         ++m_ptr;
 
-    ASSERT(m_ptr <= m_end);
+    Q_ASSERT(m_ptr <= m_end);
     if (m_ptr >= m_end) {
         token.type = TokEnd;
         token.start = token.end = m_ptr;
@@ -270,13 +270,13 @@ LiteralParser::TokenType LiteralParser::Lexer::lexNumber(LiteralParserToken& tok
     Vector<char, 64> buffer(token.end - token.start + 1);
     int i;
     for (i = 0; i < token.end - token.start; i++) {
-        ASSERT(static_cast<char>(token.start[i]) == token.start[i]);
+        Q_ASSERT(static_cast<char>(token.start[i]) == token.start[i]);
         buffer[i] = static_cast<char>(token.start[i]);
     }
     buffer[i] = 0;
     char* end;
     token.numberToken = WTF::strtod(buffer.data(), &end);
-    ASSERT(buffer.data() + (token.end - token.start) == end);
+    Q_ASSERT(buffer.data() + (token.end - token.start) == end);
     return TokNumber;
 }
 
@@ -434,7 +434,7 @@ JSValue LiteralParser::parse(ParserState initialState)
                 }
             }
             case StartParseStatementEndStatement: {
-                ASSERT(stateStack.isEmpty());
+                Q_ASSERT(stateStack.isEmpty());
                 if (m_lexer.currentToken().type != TokRParen)
                     return JSValue();
                 if (m_lexer.next() == TokEnd)

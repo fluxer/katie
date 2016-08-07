@@ -317,7 +317,7 @@ void CodeBlock::printStructures(const Instruction* vPC) const
     }
 
     // These m_instructions doesn't ref Structures.
-    ASSERT(vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic || vPC[0].u.opcode == op_call || vPC[0].u.opcode == op_call_eval || vPC[0].u.opcode == op_construct);
+    Q_ASSERT(vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic || vPC[0].u.opcode == op_call || vPC[0].u.opcode == op_call_eval || vPC[0].u.opcode == op_construct);
 }
 
 void CodeBlock::dump(ExecState* exec) const
@@ -445,7 +445,7 @@ void CodeBlock::dump(ExecState* exec) const
             for (Vector<int32_t>::const_iterator iter = m_rareData->m_characterSwitchJumpTables[i].branchOffsets.begin(); iter != end; ++iter, ++entry) {
                 if (!*iter)
                     continue;
-                ASSERT(!((i + m_rareData->m_characterSwitchJumpTables[i].min) & ~0xFFFF));
+                Q_ASSERT(!((i + m_rareData->m_characterSwitchJumpTables[i].min) & ~0xFFFF));
                 UChar ch = static_cast<UChar>(entry + m_rareData->m_characterSwitchJumpTables[i].min);
                 printf("\t\t\"%s\" => %04d\n", UString(&ch, 1).ascii(), *iter);
         }
@@ -1277,7 +1277,7 @@ CodeBlock::CodeBlock(ScriptExecutable* ownerExecutable, CodeType codeType, PassR
     , m_symbolTable(symTab)
     , m_exceptionInfo(new ExceptionInfo)
 {
-    ASSERT(m_source);
+    Q_ASSERT(m_source);
 
 #if DUMP_CODE_BLOCK_STATISTICS
     liveCodeBlockSet.add(this);
@@ -1311,7 +1311,7 @@ CodeBlock::~CodeBlock()
         if (Structure* structure = m_methodCallLinkInfos[i].cachedStructure) {
             structure->deref();
             // Both members must be filled at the same time
-            ASSERT(!!m_methodCallLinkInfos[i].cachedPrototypeStructure);
+            Q_ASSERT(!!m_methodCallLinkInfos[i].cachedPrototypeStructure);
             m_methodCallLinkInfos[i].cachedPrototypeStructure->deref();
         }
     }
@@ -1380,7 +1380,7 @@ void CodeBlock::derefStructures(Instruction* vPC) const
     }
 
     // These instructions don't ref their Structures.
-    ASSERT(vPC[0].u.opcode == op_get_by_id || vPC[0].u.opcode == op_put_by_id || vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic || vPC[0].u.opcode == op_get_array_length || vPC[0].u.opcode == op_get_string_length);
+    Q_ASSERT(vPC[0].u.opcode == op_get_by_id || vPC[0].u.opcode == op_put_by_id || vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic || vPC[0].u.opcode == op_get_array_length || vPC[0].u.opcode == op_get_string_length);
 }
 
 void CodeBlock::refStructures(Instruction* vPC) const
@@ -1411,7 +1411,7 @@ void CodeBlock::refStructures(Instruction* vPC) const
     }
     
     // These instructions don't ref their Structures.
-    ASSERT(vPC[0].u.opcode == op_get_by_id || vPC[0].u.opcode == op_put_by_id || vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic);
+    Q_ASSERT(vPC[0].u.opcode == op_get_by_id || vPC[0].u.opcode == op_put_by_id || vPC[0].u.opcode == op_get_by_id_generic || vPC[0].u.opcode == op_put_by_id_generic);
 }
 
 void CodeBlock::markAggregate(MarkStack& markStack)
@@ -1437,7 +1437,7 @@ void CodeBlock::reparseForExceptionInfoIfNecessary(CallFrame* callFrame)
             scopeDelta -= static_cast<EvalCodeBlock*>(this)->baseScopeDepth();
         else if (m_codeType == FunctionCode)
             scopeDelta++; // Compilation of function code assumes activation is not on the scope chain yet.
-        ASSERT(scopeDelta >= 0);
+        Q_ASSERT(scopeDelta >= 0);
         while (scopeDelta--)
             scopeChain = scopeChain->next;
     }
@@ -1447,7 +1447,7 @@ void CodeBlock::reparseForExceptionInfoIfNecessary(CallFrame* callFrame)
 
 HandlerInfo* CodeBlock::handlerForBytecodeOffset(unsigned bytecodeOffset)
 {
-    ASSERT(bytecodeOffset < m_instructionCount);
+    Q_ASSERT(bytecodeOffset < m_instructionCount);
 
     if (!m_rareData)
         return 0;
@@ -1465,10 +1465,10 @@ HandlerInfo* CodeBlock::handlerForBytecodeOffset(unsigned bytecodeOffset)
 
 int CodeBlock::lineNumberForBytecodeOffset(CallFrame* callFrame, unsigned bytecodeOffset)
 {
-    ASSERT(bytecodeOffset < m_instructionCount);
+    Q_ASSERT(bytecodeOffset < m_instructionCount);
 
     reparseForExceptionInfoIfNecessary(callFrame);
-    ASSERT(m_exceptionInfo);
+    Q_ASSERT(m_exceptionInfo);
 
     if (!m_exceptionInfo->m_lineInfo.size())
         return m_ownerExecutable->source().firstLine(); // Empty function
@@ -1490,10 +1490,10 @@ int CodeBlock::lineNumberForBytecodeOffset(CallFrame* callFrame, unsigned byteco
 
 int CodeBlock::expressionRangeForBytecodeOffset(CallFrame* callFrame, unsigned bytecodeOffset, int& divot, int& startOffset, int& endOffset)
 {
-    ASSERT(bytecodeOffset < m_instructionCount);
+    Q_ASSERT(bytecodeOffset < m_instructionCount);
 
     reparseForExceptionInfoIfNecessary(callFrame);
-    ASSERT(m_exceptionInfo);
+    Q_ASSERT(m_exceptionInfo);
 
     if (!m_exceptionInfo->m_expressionInfo.size()) {
         // We didn't think anything could throw.  Apparently we were wrong.
@@ -1513,7 +1513,7 @@ int CodeBlock::expressionRangeForBytecodeOffset(CallFrame* callFrame, unsigned b
             high = mid;
     }
     
-    ASSERT(low);
+    Q_ASSERT(low);
     if (!low) {
         startOffset = 0;
         endOffset = 0;
@@ -1529,10 +1529,10 @@ int CodeBlock::expressionRangeForBytecodeOffset(CallFrame* callFrame, unsigned b
 
 bool CodeBlock::getByIdExceptionInfoForBytecodeOffset(CallFrame* callFrame, unsigned bytecodeOffset, OpcodeID& opcodeID)
 {
-    ASSERT(bytecodeOffset < m_instructionCount);
+    Q_ASSERT(bytecodeOffset < m_instructionCount);
 
     reparseForExceptionInfoIfNecessary(callFrame);
-    ASSERT(m_exceptionInfo);        
+    Q_ASSERT(m_exceptionInfo);        
 
     if (!m_exceptionInfo->m_getByIdExceptionInfo.size())
         return false;
@@ -1557,7 +1557,7 @@ bool CodeBlock::getByIdExceptionInfoForBytecodeOffset(CallFrame* callFrame, unsi
 #if ENABLE(JIT)
 bool CodeBlock::functionRegisterForBytecodeOffset(unsigned bytecodeOffset, int& functionRegisterIndex)
 {
-    ASSERT(bytecodeOffset < m_instructionCount);
+    Q_ASSERT(bytecodeOffset < m_instructionCount);
 
     if (!m_rareData || !m_rareData->m_functionRegisterInfos.size())
         return false;

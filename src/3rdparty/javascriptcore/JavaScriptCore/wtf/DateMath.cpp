@@ -313,7 +313,7 @@ double dateToDaysFrom1970(int year, int month, int day)
     }
 
     double yearday = floor(daysFrom1970ToYear(year));
-    ASSERT((year >= 1970 && yearday >= 0) || (year < 1970 && yearday < 0));
+    Q_ASSERT((year >= 1970 && yearday >= 0) || (year < 1970 && yearday < 0));
     int monthday = monthToDayInYear(month, isLeapYear(year));
 
     return yearday + monthday + day - 1;
@@ -365,7 +365,7 @@ int equivalentYearForDST(int year)
     int product = (quotient) * 28;
 
     year += product;
-    ASSERT((year >= minYear && year <= maxYear) || (product - year == static_cast<int>(NaN)));
+    Q_ASSERT((year >= minYear && year <= maxYear) || (product - year == static_cast<int>(NaN)));
     return year;
 }
 
@@ -476,7 +476,7 @@ void initializeDates()
 {
 #ifndef NDEBUG
     static bool alreadyInitialized;
-    ASSERT(!alreadyInitialized);
+    Q_ASSERT(!alreadyInitialized);
     alreadyInitialized = true;
 #endif
 
@@ -534,7 +534,7 @@ inline static void skipSpacesAndComments(const char*& s)
 // returns 0-11 (Jan-Dec); -1 on failure
 static int findMonth(const char* monthStr)
 {
-    ASSERT(monthStr);
+    Q_ASSERT(monthStr);
     char needle[4];
     for (int i = 0; i < 3; ++i) {
         if (!*monthStr)
@@ -962,7 +962,7 @@ void msToGregorianDateTime(ExecState* exec, double ms, bool outputIsUTC, Gregori
 
 double parseDateFromNullTerminatedCharacters(ExecState* exec, const char* dateString)
 {
-    ASSERT(exec);
+    Q_ASSERT(exec);
     bool haveTZ;
     int offset;
     double ms = WTF::parseDateFromNullTerminatedCharacters(dateString, haveTZ, offset);

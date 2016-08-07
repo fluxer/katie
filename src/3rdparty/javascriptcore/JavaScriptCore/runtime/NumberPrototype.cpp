@@ -84,7 +84,7 @@ static UString integerPartNoExp(double d)
         Vector<char, 1024> buf(decimalPoint + 1);
 
         if (static_cast<int>(length) <= decimalPoint) {
-            ASSERT(decimalPoint < 1024);
+            Q_ASSERT(decimalPoint < 1024);
             memcpy(buf.data(), result, length);
             memset(buf.data() + length, '0', decimalPoint - length);
         } else
@@ -179,7 +179,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToString(ExecState* exec, JSObject*, JSValu
     if (isNegative)
         *--p = '-';
     char* startOfResultString = p;
-    ASSERT(s <= startOfResultString);
+    Q_ASSERT(s <= startOfResultString);
 
     d = x - integerPart;
     p = decimalPoint;
@@ -195,7 +195,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToString(ExecState* exec, JSObject*, JSValu
         } while ((d < -epsilon || d > epsilon) && p < lastCharInString);
     }
     *p = '\0';
-    ASSERT(p < s + sizeof(s));
+    Q_ASSERT(p < s + sizeof(s));
 
     return jsString(exec, startOfResultString);
 }
@@ -264,7 +264,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToFixed(ExecState* exec, JSObject*, JSValue
         z.append(m);
         m = z.release();
         k = f + 1;
-        ASSERT(k == m.size());
+        Q_ASSERT(k == m.size());
     }
     int kMinusf = k - f;
 
@@ -285,7 +285,7 @@ static void fractionalPartToString(char* buf, int& i, const char* result, int re
             strncpy(buf + i, result + 1, fractionalDigits);
             i += fractionalDigits;
         } else {
-            ASSERT(i + resultLength - 1 < 80);
+            Q_ASSERT(i + resultLength - 1 < 80);
             memcpy(buf + i, result + 1, resultLength - 1);
             i += static_cast<int>(resultLength) - 1;
         }
@@ -365,7 +365,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToExponential(ExecState* exec, JSObject*, J
 
     // ? 9999 is the magical "result is Inf or NaN" value.  what's 999??
     if (decimalPoint == 999) {
-        ASSERT(i + resultLength < 80);
+        Q_ASSERT(i + resultLength < 80);
         memcpy(buf + i, result, resultLength);
         buf[i + resultLength] = '\0';
     } else {
@@ -378,7 +378,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToExponential(ExecState* exec, JSObject*, J
         exponentialPartToString(buf, i, decimalPoint);
         buf[i++] = '\0';
     }
-    ASSERT(i <= 80);
+    Q_ASSERT(i <= 80);
 
     return jsString(exec, buf);
 }
@@ -424,8 +424,8 @@ JSValue JSC_HOST_CALL numberProtoFuncToPrecision(ExecState* exec, JSObject*, JSV
             n /= 10.0;
             e += 1;
         }
-        ASSERT(intPow10(precision - 1) <= n);
-        ASSERT(n < intPow10(precision));
+        Q_ASSERT(intPow10(precision - 1) <= n);
+        Q_ASSERT(n < intPow10(precision));
 
         m = integerPartNoExp(n);
         if (e < -6 || e >= precision) {

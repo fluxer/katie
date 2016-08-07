@@ -118,9 +118,9 @@ PassRefPtr<ProgramNode> ProgramNode::create(JSGlobalData* globalData, SourceElem
 {
     RefPtr<ProgramNode> node = new ProgramNode(globalData, children, varStack, funcStack, source, features, numConstants);
 
-    ASSERT(node->data()->m_arena.last() == node);
+    Q_ASSERT(node->data()->m_arena.last() == node);
     node->data()->m_arena.removeLast();
-    ASSERT(!node->data()->m_arena.contains(node.get()));
+    Q_ASSERT(!node->data()->m_arena.contains(node.get()));
 
     return node.release();
 }
@@ -136,9 +136,9 @@ PassRefPtr<EvalNode> EvalNode::create(JSGlobalData* globalData, SourceElements* 
 {
     RefPtr<EvalNode> node = new EvalNode(globalData, children, varStack, funcStack, source, features, numConstants);
 
-    ASSERT(node->data()->m_arena.last() == node);
+    Q_ASSERT(node->data()->m_arena.last() == node);
     node->data()->m_arena.removeLast();
-    ASSERT(!node->data()->m_arena.contains(node.get()));
+    Q_ASSERT(!node->data()->m_arena.contains(node.get()));
 
     return node.release();
 }
@@ -169,7 +169,7 @@ void FunctionBodyNode::finishParsing(const SourceCode& source, ParameterNode* fi
 
 void FunctionBodyNode::finishParsing(PassRefPtr<FunctionParameters> parameters, const Identifier& ident)
 {
-    ASSERT(!source().isNull());
+    Q_ASSERT(!source().isNull());
     m_parameters = parameters;
     m_ident = ident;
 }
@@ -183,9 +183,9 @@ PassRefPtr<FunctionBodyNode> FunctionBodyNode::create(JSGlobalData* globalData, 
 {
     RefPtr<FunctionBodyNode> node = new FunctionBodyNode(globalData, children, varStack, funcStack, sourceCode, features, numConstants);
 
-    ASSERT(node->data()->m_arena.last() == node);
+    Q_ASSERT(node->data()->m_arena.last() == node);
     node->data()->m_arena.removeLast();
-    ASSERT(!node->data()->m_arena.contains(node.get()));
+    Q_ASSERT(!node->data()->m_arena.contains(node.get()));
 
     return node.release();
 }

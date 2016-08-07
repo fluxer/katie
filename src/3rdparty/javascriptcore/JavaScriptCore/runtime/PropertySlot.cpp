@@ -36,7 +36,7 @@ JSValue PropertySlot::functionGetter(ExecState* exec, const Identifier&, const P
     CallType callType = slot.m_data.getterFunc->getCallData(callData);
     if (callType == CallTypeHost)
         return callData.native.function(exec, slot.m_data.getterFunc, slot.slotBase(), exec->emptyList());
-    ASSERT(callType == CallTypeJS);
+    Q_ASSERT(callType == CallTypeJS);
     // FIXME: Can this be done more efficiently using the callData?
     return asFunction(slot.m_data.getterFunc)->call(exec, slot.slotBase(), exec->emptyList());
 }

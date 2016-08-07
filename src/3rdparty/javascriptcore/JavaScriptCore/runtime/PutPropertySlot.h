@@ -63,7 +63,7 @@ namespace JSC {
 
         bool isCacheable() const { return m_type != Uncachable; }
         size_t cachedOffset() const {
-            ASSERT(isCacheable());
+            Q_ASSERT(isCacheable());
             return m_offset;
         }
     private:

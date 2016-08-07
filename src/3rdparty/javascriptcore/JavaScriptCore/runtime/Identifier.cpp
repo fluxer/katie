@@ -210,7 +210,7 @@ PassRefPtr<UString::Rep> Identifier::add(ExecState* exec, const UChar* s, int le
 
 PassRefPtr<UString::Rep> Identifier::addSlowCase(JSGlobalData* globalData, UString::Rep* r)
 {
-    ASSERT(!r->isIdentifier());
+    Q_ASSERT(!r->isIdentifier());
     if (r->size() == 1) {
         UChar c = r->data()[0];
         if (c <= 0xFF)
@@ -267,7 +267,7 @@ ThreadSpecific<ThreadIdentifierTableData>* g_identifierTableSpecific = 0;
 
 void createIdentifierTableSpecific()
 {
-    ASSERT(!g_identifierTableSpecific);
+    Q_ASSERT(!g_identifierTableSpecific);
     g_identifierTableSpecific = new ThreadSpecific<ThreadIdentifierTableData>();
 }
 

@@ -27,7 +27,7 @@ namespace JSC {
 
 void HashTable::createTable(JSGlobalData* globalData) const
 {
-    ASSERT(!table);
+    Q_ASSERT(!table);
     int linkIndex = compactHashSizeMask + 1;
     HashEntry* entries = new HashEntry[compactSize];
     for (int i = 0; i < compactSize; ++i)
@@ -41,7 +41,7 @@ void HashTable::createTable(JSGlobalData* globalData) const
             while (entry->next()) {
                 entry = entry->next();
             }
-            ASSERT(linkIndex < compactSize);
+            Q_ASSERT(linkIndex < compactSize);
             entry->setNext(&entries[linkIndex++]);
             entry = entry->next();
         }
@@ -66,7 +66,7 @@ void HashTable::deleteTable() const
 
 void setUpStaticFunctionSlot(ExecState* exec, const HashEntry* entry, JSObject* thisObj, const Identifier& propertyName, PropertySlot& slot)
 {
-    ASSERT(entry->attributes() & Function);
+    Q_ASSERT(entry->attributes() & Function);
     JSValue* location = thisObj->getDirectLocation(propertyName);
 
     if (!location) {

@@ -55,13 +55,13 @@ double JSValue::toIntegerPreserveNaN(ExecState* exec) const
 
 JSObject* JSValue::toObjectSlowCase(ExecState* exec) const
 {
-    ASSERT(!isCell());
+    Q_ASSERT(!isCell());
 
     if (isInt32() || isDouble())
         return constructNumber(exec, asValue());
     if (isTrue() || isFalse())
         return constructBooleanFromImmediateBoolean(exec, asValue());
-    ASSERT(isUndefinedOrNull());
+    Q_ASSERT(isUndefinedOrNull());
     JSNotAnObjectErrorStub* exception = createNotAnObjectErrorStub(exec, isNull());
     exec->setException(exception);
     return new (exec) JSNotAnObject(exec, exception);
@@ -69,19 +69,19 @@ JSObject* JSValue::toObjectSlowCase(ExecState* exec) const
 
 JSObject* JSValue::toThisObjectSlowCase(ExecState* exec) const
 {
-    ASSERT(!isCell());
+    Q_ASSERT(!isCell());
 
     if (isInt32() || isDouble())
         return constructNumber(exec, asValue());
     if (isTrue() || isFalse())
         return constructBooleanFromImmediateBoolean(exec, asValue());
-    ASSERT(isUndefinedOrNull());
+    Q_ASSERT(isUndefinedOrNull());
     return exec->globalThisValue();
 }
 
 JSObject* JSValue::synthesizeObject(ExecState* exec) const
 {
-    ASSERT(!isCell());
+    Q_ASSERT(!isCell());
     if (isNumber())
         return constructNumber(exec, asValue());
     if (isBoolean())
@@ -94,7 +94,7 @@ JSObject* JSValue::synthesizeObject(ExecState* exec) const
 
 JSObject* JSValue::synthesizePrototype(ExecState* exec) const
 {
-    ASSERT(!isCell());
+    Q_ASSERT(!isCell());
     if (isNumber())
         return exec->lexicalGlobalObject()->numberPrototype();
     if (isBoolean())
@@ -126,7 +126,7 @@ char* JSValue::description()
     else if (isNull())
         snprintf(description, size, "Null");
     else {
-        ASSERT(isUndefined());
+        Q_ASSERT(isUndefined());
         snprintf(description, size, "Undefined");
     }
 

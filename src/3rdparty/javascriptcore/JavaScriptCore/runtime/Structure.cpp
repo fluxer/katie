@@ -124,8 +124,8 @@ Structure::Structure(JSValue prototype, const TypeInfo& typeInfo)
     , m_attributesInPrevious(0)
     , m_specificFunctionThrashCount(0)
 {
-    ASSERT(m_prototype);
-    ASSERT(m_prototype.isObject() || m_prototype.isNull());
+    Q_ASSERT(m_prototype);
+    Q_ASSERT(m_prototype.isObject() || m_prototype.isNull());
 
 #ifndef NDEBUG
     if (shouldIgnoreLeaks)
@@ -236,7 +236,7 @@ static unsigned sizeForKeyCount(size_t keyCount)
 
 void Structure::materializePropertyMap()
 {
-    ASSERT(!m_propertyTable);
+    Q_ASSERT(!m_propertyTable);
 
     Vector<Structure*, 8> structures;
     structures.append(this);
@@ -246,8 +246,8 @@ void Structure::materializePropertyMap()
     // Search for the last Structure with a property table. 
     while ((structure = structure->previousID())) {
         if (structure->m_isPinnedPropertyTable) {
-            ASSERT(structure->m_propertyTable);
-            ASSERT(!structure->m_previous);
+            Q_ASSERT(structure->m_propertyTable);
+            Q_ASSERT(!structure->m_previous);
 
             m_propertyTable = structure->copyPropertyTable();
             break;
@@ -289,8 +289,8 @@ void Structure::despecifyDictionaryFunction(const Identifier& propertyName)
 
     materializePropertyMapIfNecessary();
 
-    ASSERT(isDictionary());
-    ASSERT(m_propertyTable);
+    Q_ASSERT(isDictionary());
+    Q_ASSERT(m_propertyTable);
 
     unsigned i = rep->existingHash();
 
@@ -299,7 +299,7 @@ void Structure::despecifyDictionaryFunction(const Identifier& propertyName)
 #endif
 
     unsigned entryIndex = m_propertyTable->entryIndices[i & m_propertyTable->sizeMask];
-    ASSERT(entryIndex != emptyEntryIndex);
+    Q_ASSERT(entryIndex != emptyEntryIndex);
 
     if (rep == m_propertyTable->entries()[entryIndex - 1].key) {
         m_propertyTable->entries()[entryIndex - 1].specificValue = 0;
@@ -320,7 +320,7 @@ void Structure::despecifyDictionaryFunction(const Identifier& propertyName)
 #endif
 
         entryIndex = m_propertyTable->entryIndices[i & m_propertyTable->sizeMask];
-        ASSERT(entryIndex != emptyEntryIndex);
+        Q_ASSERT(entryIndex != emptyEntryIndex);
 
         if (rep == m_propertyTable->entries()[entryIndex - 1].key) {
             m_propertyTable->entries()[entryIndex - 1].specificValue = 0;
@@ -331,11 +331,11 @@ void Structure::despecifyDictionaryFunction(const Identifier& propertyName)
 
 PassRefPtr<Structure> Structure::addPropertyTransitionToExistingStructure(Structure* structure, const Identifier& propertyName, unsigned attributes, JSCell* specificValue, size_t& offset)
 {
-    ASSERT(!structure->isDictionary());
-    ASSERT(structure->typeInfo().type() == ObjectType);
+    Q_ASSERT(!structure->isDictionary());
+    Q_ASSERT(structure->typeInfo().type() == ObjectType);
 
     if (Structure* existingTransition = structure->table.get(StructureTransitionTableHash::Key(RefPtr<UString::Rep>(propertyName.ustring().rep()), attributes), specificValue)) {
-        ASSERT(existingTransition->m_offset != noOffset);
+        Q_ASSERT(existingTransition->m_offset != noOffset);
         offset = existingTransition->m_offset;
         return existingTransition;
     }
@@ -345,16 +345,16 @@ PassRefPtr<Structure> Structure::addPropertyTransitionToExistingStructure(Struct
 
 PassRefPtr<Structure> Structure::addPropertyTransition(Structure* structure, const Identifier& propertyName, unsigned attributes, JSCell* specificValue, size_t& offset)
 {
-    ASSERT(!structure->isDictionary());
-    ASSERT(structure->typeInfo().type() == ObjectType);
-    ASSERT(!Structure::addPropertyTransitionToExistingStructure(structure, propertyName, attributes, specificValue, offset));
+    Q_ASSERT(!structure->isDictionary());
+    Q_ASSERT(structure->typeInfo().type() == ObjectType);
+    Q_ASSERT(!Structure::addPropertyTransitionToExistingStructure(structure, propertyName, attributes, specificValue, offset));
     
     if (structure->m_specificFunctionThrashCount == maxSpecificFunctionThrashCount)
         specificValue = 0;
 
     if (structure->transitionCount() > s_maxTransitionLength) {
         RefPtr<Structure> transition = toCacheableDictionaryTransition(structure);
-        ASSERT(structure != transition);
+        Q_ASSERT(structure != transition);
         offset = transition->put(propertyName, attributes, specificValue);
         if (transition->propertyStorageSize() > transition->propertyStorageCapacity())
             transition->growPropertyStorageCapacity();
@@ -399,7 +399,7 @@ PassRefPtr<Structure> Structure::addPropertyTransition(Structure* structure, con
 
 PassRefPtr<Structure> Structure::removePropertyTransition(Structure* structure, const Identifier& propertyName, size_t& offset)
 {
-    ASSERT(!structure->isUncacheableDictionary());
+    Q_ASSERT(!structure->isUncacheableDictionary());
 
     RefPtr<Structure> transition = toUncacheableDictionaryTransition(structure);
 
@@ -428,7 +428,7 @@ PassRefPtr<Structure> Structure::changePrototypeTransition(Structure* structure,
 
 PassRefPtr<Structure> Structure::despecifyFunctionTransition(Structure* structure, const Identifier& replaceFunction)
 {
-    ASSERT(structure->m_specificFunctionThrashCount < maxSpecificFunctionThrashCount);
+    Q_ASSERT(structure->m_specificFunctionThrashCount < maxSpecificFunctionThrashCount);
     RefPtr<Structure> transition = create(structure->storedPrototype(), structure->typeInfo());
 
     transition->m_propertyStorageCapacity = structure->m_propertyStorageCapacity;
@@ -455,11 +455,11 @@ PassRefPtr<Structure> Structure::despecifyFunctionTransition(Structure* structur
 PassRefPtr<Structure> Structure::addAnonymousSlotsTransition(Structure* structure, unsigned count)
 {
     if (Structure* transition = structure->table.getAnonymousSlotTransition(count)) {
-        ASSERT(transition->storedPrototype() == structure->storedPrototype());
+        Q_ASSERT(transition->storedPrototype() == structure->storedPrototype());
         return transition;
     }
-    ASSERT(count);
-    ASSERT(count < ((1<<6) - 2));
+    Q_ASSERT(count);
+    Q_ASSERT(count < ((1<<6) - 2));
     RefPtr<Structure> transition = create(structure->m_prototype, structure->typeInfo());
     
     transition->m_cachedPrototypeChain = structure->m_cachedPrototypeChain;
@@ -514,7 +514,7 @@ PassRefPtr<Structure> Structure::getterSetterTransition(Structure* structure)
 
 PassRefPtr<Structure> Structure::toDictionaryTransition(Structure* structure, DictionaryKind kind)
 {
-    ASSERT(!structure->isUncacheableDictionary());
+    Q_ASSERT(!structure->isUncacheableDictionary());
     
     RefPtr<Structure> transition = create(structure->m_prototype, structure->typeInfo());
     transition->m_dictionaryKind = kind;
@@ -542,9 +542,9 @@ PassRefPtr<Structure> Structure::toUncacheableDictionaryTransition(Structure* st
 
 PassRefPtr<Structure> Structure::flattenDictionaryStructure(JSObject* object)
 {
-    ASSERT(isDictionary());
+    Q_ASSERT(isDictionary());
     if (isUncacheableDictionary()) {
-        ASSERT(m_propertyTable);
+        Q_ASSERT(m_propertyTable);
         Vector<PropertyMapEntry*> sortedPropertyEntries(m_propertyTable->keyCount);
         PropertyMapEntry** p = sortedPropertyEntries.data();
         unsigned entryCount = m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount;
@@ -585,7 +585,7 @@ PassRefPtr<Structure> Structure::flattenDictionaryStructure(JSObject* object)
 
 size_t Structure::addPropertyWithoutTransition(const Identifier& propertyName, unsigned attributes, JSCell* specificValue)
 {
-    ASSERT(!m_enumerationCache);
+    Q_ASSERT(!m_enumerationCache);
 
     if (m_specificFunctionThrashCount == maxSpecificFunctionThrashCount)
         specificValue = 0;
@@ -602,8 +602,8 @@ size_t Structure::addPropertyWithoutTransition(const Identifier& propertyName, u
 
 size_t Structure::removePropertyWithoutTransition(const Identifier& propertyName)
 {
-    ASSERT(isUncacheableDictionary());
-    ASSERT(!m_enumerationCache);
+    Q_ASSERT(isUncacheableDictionary());
+    Q_ASSERT(!m_enumerationCache);
 
     materializePropertyMapIfNecessary();
 
@@ -718,7 +718,7 @@ size_t Structure::get(const UString::Rep* rep, unsigned& attributes, JSCell*& sp
 
 bool Structure::despecifyFunction(const Identifier& propertyName)
 {
-    ASSERT(!propertyName.isNull());
+    Q_ASSERT(!propertyName.isNull());
 
     materializePropertyMapIfNecessary();
     if (!m_propertyTable)
@@ -737,7 +737,7 @@ bool Structure::despecifyFunction(const Identifier& propertyName)
         return false;
 
     if (rep == m_propertyTable->entries()[entryIndex - 1].key) {
-        ASSERT(m_propertyTable->entries()[entryIndex - 1].specificValue);
+        Q_ASSERT(m_propertyTable->entries()[entryIndex - 1].specificValue);
         m_propertyTable->entries()[entryIndex - 1].specificValue = 0;
         return true;
     }
@@ -760,7 +760,7 @@ bool Structure::despecifyFunction(const Identifier& propertyName)
             return false;
 
         if (rep == m_propertyTable->entries()[entryIndex - 1].key) {
-            ASSERT(m_propertyTable->entries()[entryIndex - 1].specificValue);
+            Q_ASSERT(m_propertyTable->entries()[entryIndex - 1].specificValue);
             m_propertyTable->entries()[entryIndex - 1].specificValue = 0;
             return true;
         }
@@ -780,8 +780,8 @@ void Structure::despecifyAllFunctions()
 
 size_t Structure::put(const Identifier& propertyName, unsigned attributes, JSCell* specificValue)
 {
-    ASSERT(!propertyName.isNull());
-    ASSERT(get(propertyName) == notFound);
+    Q_ASSERT(!propertyName.isNull());
+    Q_ASSERT(get(propertyName) == notFound);
 
     checkConsistency();
 
@@ -881,7 +881,7 @@ bool Structure::hasTransition(UString::Rep* rep, unsigned attributes)
 
 size_t Structure::remove(const Identifier& propertyName)
 {
-    ASSERT(!propertyName.isNull());
+    Q_ASSERT(!propertyName.isNull());
 
     checkConsistency();
 
@@ -939,7 +939,7 @@ size_t Structure::remove(const Identifier& propertyName)
         m_propertyTable->deletedOffsets = new Vector<unsigned>;
     m_propertyTable->deletedOffsets->append(offset);
 
-    ASSERT(m_propertyTable->keyCount >= 1);
+    Q_ASSERT(m_propertyTable->keyCount >= 1);
     --m_propertyTable->keyCount;
     ++m_propertyTable->deletedSentinelCount;
 
@@ -952,7 +952,7 @@ size_t Structure::remove(const Identifier& propertyName)
 
 void Structure::insertIntoPropertyMapHashTable(const PropertyMapEntry& entry)
 {
-    ASSERT(m_propertyTable);
+    Q_ASSERT(m_propertyTable);
 
     unsigned i = entry.key->existingHash();
     unsigned k = 0;
@@ -989,14 +989,14 @@ void Structure::insertIntoPropertyMapHashTable(const PropertyMapEntry& entry)
 
 void Structure::createPropertyMapHashTable()
 {
-    ASSERT(sizeForKeyCount(7) == newTableSize);
+    Q_ASSERT(sizeForKeyCount(7) == newTableSize);
     createPropertyMapHashTable(newTableSize);
 }
 
 void Structure::createPropertyMapHashTable(unsigned newTableSize)
 {
-    ASSERT(!m_propertyTable);
-    ASSERT(isPowerOf2(newTableSize));
+    Q_ASSERT(!m_propertyTable);
+    Q_ASSERT(isPowerOf2(newTableSize));
 
     checkConsistency();
 
@@ -1009,21 +1009,21 @@ void Structure::createPropertyMapHashTable(unsigned newTableSize)
 
 void Structure::expandPropertyMapHashTable()
 {
-    ASSERT(m_propertyTable);
+    Q_ASSERT(m_propertyTable);
     rehashPropertyMapHashTable(m_propertyTable->size * 2);
 }
 
 void Structure::rehashPropertyMapHashTable()
 {
-    ASSERT(m_propertyTable);
-    ASSERT(m_propertyTable->size);
+    Q_ASSERT(m_propertyTable);
+    Q_ASSERT(m_propertyTable->size);
     rehashPropertyMapHashTable(m_propertyTable->size);
 }
 
 void Structure::rehashPropertyMapHashTable(unsigned newTableSize)
 {
-    ASSERT(m_propertyTable);
-    ASSERT(isPowerOf2(newTableSize));
+    Q_ASSERT(m_propertyTable);
+    Q_ASSERT(isPowerOf2(newTableSize));
 
     checkConsistency();
 
@@ -1072,7 +1072,7 @@ void Structure::getPropertyNames(PropertyNameArray& propertyNames, EnumerationMo
         int i = 0;
         unsigned entryCount = m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount;
         for (unsigned k = 1; k <= entryCount; k++) {
-            ASSERT(m_hasNonEnumerableProperties || !(m_propertyTable->entries()[k].attributes & DontEnum));
+            Q_ASSERT(m_hasNonEnumerableProperties || !(m_propertyTable->entries()[k].attributes & DontEnum));
             if (m_propertyTable->entries()[k].key && (!(m_propertyTable->entries()[k].attributes & DontEnum) || (mode == IncludeDontEnumProperties))) {
                 PropertyMapEntry* value = &m_propertyTable->entries()[k];
                 int j;
@@ -1126,15 +1126,15 @@ void Structure::checkConsistency()
     if (!m_propertyTable)
         return;
 
-    ASSERT(m_propertyTable->size >= newTableSize);
-    ASSERT(m_propertyTable->sizeMask);
-    ASSERT(m_propertyTable->size == m_propertyTable->sizeMask + 1);
-    ASSERT(!(m_propertyTable->size & m_propertyTable->sizeMask));
+    Q_ASSERT(m_propertyTable->size >= newTableSize);
+    Q_ASSERT(m_propertyTable->sizeMask);
+    Q_ASSERT(m_propertyTable->size == m_propertyTable->sizeMask + 1);
+    Q_ASSERT(!(m_propertyTable->size & m_propertyTable->sizeMask));
 
-    ASSERT(m_propertyTable->keyCount <= m_propertyTable->size / 2);
-    ASSERT(m_propertyTable->deletedSentinelCount <= m_propertyTable->size / 4);
+    Q_ASSERT(m_propertyTable->keyCount <= m_propertyTable->size / 2);
+    Q_ASSERT(m_propertyTable->deletedSentinelCount <= m_propertyTable->size / 4);
 
-    ASSERT(m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount <= m_propertyTable->size / 2);
+    Q_ASSERT(m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount <= m_propertyTable->size / 2);
 
     unsigned indexCount = 0;
     unsigned deletedIndexCount = 0;
@@ -1146,21 +1146,21 @@ void Structure::checkConsistency()
             ++deletedIndexCount;
             continue;
         }
-        ASSERT(entryIndex > deletedSentinelIndex);
-        ASSERT(entryIndex - 1 <= m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount);
+        Q_ASSERT(entryIndex > deletedSentinelIndex);
+        Q_ASSERT(entryIndex - 1 <= m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount);
         ++indexCount;
 
         for (unsigned b = a + 1; b != m_propertyTable->size; ++b)
-            ASSERT(m_propertyTable->entryIndices[b] != entryIndex);
+            Q_ASSERT(m_propertyTable->entryIndices[b] != entryIndex);
     }
-    ASSERT(indexCount == m_propertyTable->keyCount);
-    ASSERT(deletedIndexCount == m_propertyTable->deletedSentinelCount);
+    Q_ASSERT(indexCount == m_propertyTable->keyCount);
+    Q_ASSERT(deletedIndexCount == m_propertyTable->deletedSentinelCount);
 
-    ASSERT(m_propertyTable->entries()[0].key == 0);
+    Q_ASSERT(m_propertyTable->entries()[0].key == 0);
 
     unsigned nonEmptyEntryCount = 0;
     for (unsigned c = 1; c <= m_propertyTable->keyCount + m_propertyTable->deletedSentinelCount; ++c) {
-        ASSERT(m_hasNonEnumerableProperties || !(m_propertyTable->entries()[c].attributes & DontEnum));
+        Q_ASSERT(m_hasNonEnumerableProperties || !(m_propertyTable->entries()[c].attributes & DontEnum));
         UString::Rep* rep = m_propertyTable->entries()[c].key;
         if (!rep)
             continue;
@@ -1170,17 +1170,17 @@ void Structure::checkConsistency()
         unsigned entryIndex;
         while (1) {
             entryIndex = m_propertyTable->entryIndices[i & m_propertyTable->sizeMask];
-            ASSERT(entryIndex != emptyEntryIndex);
+            Q_ASSERT(entryIndex != emptyEntryIndex);
             if (rep == m_propertyTable->entries()[entryIndex - 1].key)
                 break;
             if (k == 0)
                 k = 1 | doubleHash(rep->existingHash());
             i += k;
         }
-        ASSERT(entryIndex == c + 1);
+        Q_ASSERT(entryIndex == c + 1);
     }
 
-    ASSERT(nonEmptyEntryCount == m_propertyTable->keyCount);
+    Q_ASSERT(nonEmptyEntryCount == m_propertyTable->keyCount);
 }
 
 #endif // DO_PROPERTYMAP_CONSTENCY_CHECK

@@ -397,7 +397,7 @@ void JIT::emit_op_end(Instruction* currentInstruction)
 {
     if (m_codeBlock->needsFullScopeChain())
         JITStubCall(this, cti_op_end).call();
-    ASSERT(returnValueRegister != callFrameRegister);
+    Q_ASSERT(returnValueRegister != callFrameRegister);
     emitLoad(currentInstruction[1].u.operand, regT1, regT0);
     restoreReturnAddressBeforeReturn(Address(callFrameRegister, RegisterFile::ReturnPC * static_cast<int>(sizeof(Register))));
     ret();
@@ -532,7 +532,7 @@ void JIT::emit_op_get_global_var(Instruction* currentInstruction)
 {
     int dst = currentInstruction[1].u.operand;
     JSGlobalObject* globalObject = static_cast<JSGlobalObject*>(currentInstruction[2].u.jsCell);
-    ASSERT(globalObject->isGlobalObject());
+    Q_ASSERT(globalObject->isGlobalObject());
     int index = currentInstruction[3].u.operand;
 
     loadPtr(&globalObject->d()->registers, regT2);
@@ -545,7 +545,7 @@ void JIT::emit_op_get_global_var(Instruction* currentInstruction)
 void JIT::emit_op_put_global_var(Instruction* currentInstruction)
 {
     JSGlobalObject* globalObject = static_cast<JSGlobalObject*>(currentInstruction[1].u.jsCell);
-    ASSERT(globalObject->isGlobalObject());
+    Q_ASSERT(globalObject->isGlobalObject());
     int index = currentInstruction[2].u.operand;
     int value = currentInstruction[3].u.operand;
 
@@ -1843,7 +1843,7 @@ void JIT::emit_op_end(Instruction* currentInstruction)
 {
     if (m_codeBlock->needsFullScopeChain())
         JITStubCall(this, cti_op_end).call();
-    ASSERT(returnValueRegister != callFrameRegister);
+    Q_ASSERT(returnValueRegister != callFrameRegister);
     emitGetVirtualRegister(currentInstruction[1].u.operand, returnValueRegister);
     restoreReturnAddressBeforeReturn(Address(callFrameRegister, RegisterFile::ReturnPC * static_cast<int>(sizeof(Register))));
     ret();
@@ -2030,9 +2030,9 @@ void JIT::emit_op_ret(Instruction* currentInstruction)
     if (m_codeBlock->needsFullScopeChain())
         JITStubCall(this, cti_op_ret_scopeChain).call();
 
-    ASSERT(callFrameRegister != regT1);
-    ASSERT(regT1 != returnValueRegister);
-    ASSERT(returnValueRegister != callFrameRegister);
+    Q_ASSERT(callFrameRegister != regT1);
+    Q_ASSERT(regT1 != returnValueRegister);
+    Q_ASSERT(returnValueRegister != callFrameRegister);
 
     // Return the result in %eax.
     emitGetVirtualRegister(currentInstruction[1].u.operand, returnValueRegister);
@@ -2332,7 +2332,7 @@ void JIT::emit_op_throw(Instruction* currentInstruction)
     JITStubCall stubCall(this, cti_op_throw);
     stubCall.addArgument(currentInstruction[1].u.operand, regT2);
     stubCall.call();
-    ASSERT(regT0 == returnValueRegister);
+    Q_ASSERT(regT0 == returnValueRegister);
 #ifndef NDEBUG
     // cti_op_throw always changes it's return address,
     // this point in the code should never be reached.

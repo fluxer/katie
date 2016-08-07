@@ -36,7 +36,7 @@ PrototypeFunction::PrototypeFunction(ExecState* exec, int length, const Identifi
     : InternalFunction(&exec->globalData(), exec->lexicalGlobalObject()->prototypeFunctionStructure(), name)
     , m_function(function)
 {
-    ASSERT_ARG(function, function);
+    Q_ASSERT_X(function, "PrototypeFunction::PrototypeFunction", "function");
     putDirect(exec->propertyNames().length, jsNumber(exec, length), DontDelete | ReadOnly | DontEnum);
 }
 
@@ -44,7 +44,7 @@ PrototypeFunction::PrototypeFunction(ExecState* exec, NonNullPassRefPtr<Structur
     : InternalFunction(&exec->globalData(), prototypeFunctionStructure, name)
     , m_function(function)
 {
-    ASSERT_ARG(function, function);
+    Q_ASSERT_X(function, "PrototypeFunction::PrototypeFunction", "function");
     putDirect(exec->propertyNames().length, jsNumber(exec, length), DontDelete | ReadOnly | DontEnum);
 }
     

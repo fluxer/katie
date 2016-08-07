@@ -81,14 +81,14 @@ JSFunction::JSFunction(ExecState* exec, NonNullPassRefPtr<FunctionExecutable> ex
 
 JSFunction::~JSFunction()
 {
-    ASSERT(vptr() == JSGlobalData::jsFunctionVPtr);
+    Q_ASSERT(vptr() == JSGlobalData::jsFunctionVPtr);
 
     // JIT code for other functions may have had calls linked directly to the code for this function; these links
     // are based on a check for the this pointer value for this JSFunction - which will no longer be valid once
     // this memory is freed and may be reused (potentially for another, different JSFunction).
     if (!isHostFunction()) {
 #if ENABLE(JIT_OPTIMIZE_CALL)
-        ASSERT(m_executable);
+        Q_ASSERT(m_executable);
         if (jsExecutable()->isGenerated())
             jsExecutable()->generatedBytecode().unlinkCallers();
 #endif
@@ -118,28 +118,28 @@ CallType JSFunction::getCallData(CallData& callData)
 
 JSValue JSFunction::call(ExecState* exec, JSValue thisValue, const ArgList& args)
 {
-    ASSERT(!isHostFunction());
+    Q_ASSERT(!isHostFunction());
     return exec->interpreter()->execute(jsExecutable(), exec, this, thisValue.toThisObject(exec), args, scopeChain().node(), exec->exceptionSlot());
 }
 
 JSValue JSFunction::argumentsGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
     JSFunction* thisObj = asFunction(slot.slotBase());
-    ASSERT(!thisObj->isHostFunction());
+    Q_ASSERT(!thisObj->isHostFunction());
     return exec->interpreter()->retrieveArguments(exec, thisObj);
 }
 
 JSValue JSFunction::callerGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
     JSFunction* thisObj = asFunction(slot.slotBase());
-    ASSERT(!thisObj->isHostFunction());
+    Q_ASSERT(!thisObj->isHostFunction());
     return exec->interpreter()->retrieveCaller(exec, thisObj);
 }
 
 JSValue JSFunction::lengthGetter(ExecState* exec, const Identifier&, const PropertySlot& slot)
 {
     JSFunction* thisObj = asFunction(slot.slotBase());
-    ASSERT(!thisObj->isHostFunction());
+    Q_ASSERT(!thisObj->isHostFunction());
     return jsNumber(exec, thisObj->jsExecutable()->parameterCount());
 }
 
@@ -251,7 +251,7 @@ ConstructType JSFunction::getConstructData(ConstructData& constructData)
 
 JSObject* JSFunction::construct(ExecState* exec, const ArgList& args)
 {
-    ASSERT(!isHostFunction());
+    Q_ASSERT(!isHostFunction());
     Structure* structure;
     JSValue prototype = get(exec, exec->propertyNames().prototype);
     if (prototype.isObject())

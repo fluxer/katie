@@ -49,15 +49,15 @@ namespace JSC {
 #if ENABLE(SAMPLING_FLAGS)
         static void setFlag(unsigned flag)
         {
-            ASSERT(flag >= 1);
-            ASSERT(flag <= 32);
+            Q_ASSERT(flag >= 1);
+            Q_ASSERT(flag <= 32);
             s_flags |= 1u << (flag - 1);
         }
 
         static void clearFlag(unsigned flag)
         {
-            ASSERT(flag >= 1);
-            ASSERT(flag <= 32);
+            Q_ASSERT(flag >= 1);
+            Q_ASSERT(flag <= 32);
             s_flags &= ~(1u << (flag - 1));
         }
 
@@ -220,7 +220,7 @@ namespace JSC {
 
         void sample(CodeBlock* codeBlock, Instruction* vPC)
         {
-            ASSERT(!(reinterpret_cast<intptr_t>(vPC) & 0x3));
+            Q_ASSERT(!(reinterpret_cast<intptr_t>(vPC) & 0x3));
             m_codeBlock = codeBlock;
             m_sample = reinterpret_cast<intptr_t>(vPC);
         }
@@ -230,7 +230,7 @@ namespace JSC {
 
         void* encodeSample(Instruction* vPC, bool inCTIFunction = false, bool inHostFunction = false)
         {
-            ASSERT(!(reinterpret_cast<intptr_t>(vPC) & 0x3));
+            Q_ASSERT(!(reinterpret_cast<intptr_t>(vPC) & 0x3));
             return reinterpret_cast<void*>(reinterpret_cast<intptr_t>(vPC) | (static_cast<intptr_t>(inCTIFunction) << 1) | static_cast<intptr_t>(inHostFunction));
         }
 
@@ -404,8 +404,8 @@ namespace JSC {
                 fprintf(stderr, "DeletableSamplingCounter \"%s\" deleted early (with count %lld)\n", m_name, m_counter);
             // Our m_referer pointer should know where the pointer to this node is,
             // and m_next should know that this node is the previous node in the list.
-            ASSERT(*m_referer == this);
-            ASSERT(m_next->m_referer == &m_next);
+            Q_ASSERT(*m_referer == this);
+            Q_ASSERT(m_next->m_referer == &m_next);
             // Remove this node from the list, and inform m_next that we have done so.
             m_next->m_referer = m_referer;
             *m_referer = m_next;

@@ -203,7 +203,7 @@ JSValue JSC_HOST_CALL arrayProtoFuncToString(ExecState* exec, JSObject*, JSValue
         if (RefPtr<UString::Rep> rep = strBuffer[i])
             buffer.append(rep->data(), rep->size());
     }
-    ASSERT(buffer.size() == totalSize);
+    Q_ASSERT(buffer.size() == totalSize);
     return jsString(exec, UString::adopt(buffer));
 }
 

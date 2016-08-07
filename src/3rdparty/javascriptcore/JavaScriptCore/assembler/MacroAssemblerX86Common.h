@@ -365,79 +365,79 @@ public:
 
     void loadDouble(ImplicitAddress address, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.movsd_mr(address.offset, address.base, dest);
     }
 
     void storeDouble(FPRegisterID src, ImplicitAddress address)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.movsd_rm(src, address.offset, address.base);
     }
 
     void addDouble(FPRegisterID src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.addsd_rr(src, dest);
     }
 
     void addDouble(Address src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.addsd_mr(src.offset, src.base, dest);
     }
 
     void divDouble(FPRegisterID src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.divsd_rr(src, dest);
     }
 
     void divDouble(Address src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.divsd_mr(src.offset, src.base, dest);
     }
 
     void subDouble(FPRegisterID src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.subsd_rr(src, dest);
     }
 
     void subDouble(Address src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.subsd_mr(src.offset, src.base, dest);
     }
 
     void mulDouble(FPRegisterID src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.mulsd_rr(src, dest);
     }
 
     void mulDouble(Address src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.mulsd_mr(src.offset, src.base, dest);
     }
 
     void convertInt32ToDouble(RegisterID src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.cvtsi2sd_rr(src, dest);
     }
 
     void convertInt32ToDouble(Address src, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.cvtsi2sd_mr(src.offset, src.base, dest);
     }
 
     Jump branchDouble(DoubleCondition cond, FPRegisterID left, FPRegisterID right)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
 
         if (cond & DoubleConditionBitInvert)
             m_assembler.ucomisd_rr(left, right);
@@ -458,7 +458,7 @@ public:
             return result;
         }
 
-        ASSERT(!(cond & DoubleConditionBitSpecial));
+        Q_ASSERT(!(cond & DoubleConditionBitSpecial));
         return Jump(m_assembler.jCC(static_cast<X86Assembler::Condition>(cond & ~DoubleConditionBits)));
     }
 
@@ -468,7 +468,7 @@ public:
     // (specifically, in this case, INT_MIN).
     Jump branchTruncateDoubleToInt32(FPRegisterID src, RegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.cvttsd2si_rr(src, dest);
         return branch32(Equal, dest, Imm32(0x80000000));
     }
@@ -479,7 +479,7 @@ public:
     // (specifically, in this case, 0).
     void branchConvertDoubleToInt32(FPRegisterID src, RegisterID dest, JumpList& failureCases, FPRegisterID fpTemp)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.cvttsd2si_rr(src, dest);
 
         // If the result is zero, it might have been -0.0, and the double comparison won't catch this!
@@ -494,7 +494,7 @@ public:
 
     void zeroDouble(FPRegisterID srcDest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.xorpd_rr(srcDest, srcDest);
     }
 
@@ -672,7 +672,7 @@ public:
 
     Jump branch16(Condition cond, BaseIndex left, Imm32 right)
     {
-        ASSERT(!(right.m_value & 0xFFFF0000));
+        Q_ASSERT(!(right.m_value & 0xFFFF0000));
 
         m_assembler.cmpw_im(right.m_value, left.offset, left.base, left.index, left.scale);
         return Jump(m_assembler.jCC(x86Condition(cond)));
@@ -680,14 +680,14 @@ public:
 
     Jump branchTest32(Condition cond, RegisterID reg, RegisterID mask)
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         m_assembler.testl_rr(reg, mask);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchTest32(Condition cond, RegisterID reg, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         // if we are only interested in the low seven bits, this can be tested with a testb
         if (mask.m_value == -1)
             m_assembler.testl_rr(reg, reg);
@@ -700,7 +700,7 @@ public:
 
     Jump branchTest32(Condition cond, Address address, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         if (mask.m_value == -1)
             m_assembler.cmpl_im(0, address.offset, address.base);
         else
@@ -710,7 +710,7 @@ public:
 
     Jump branchTest32(Condition cond, BaseIndex address, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         if (mask.m_value == -1)
             m_assembler.cmpl_im(0, address.offset, address.base, address.index, address.scale);
         else
@@ -747,105 +747,105 @@ public:
     
     Jump branchAdd32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         add32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchAdd32(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         add32(imm, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
     
     Jump branchAdd32(Condition cond, Imm32 src, Address dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         add32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchAdd32(Condition cond, RegisterID src, Address dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         add32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchAdd32(Condition cond, Address src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         add32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchMul32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT(cond == Overflow);
+        Q_ASSERT(cond == Overflow);
         mul32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchMul32(Condition cond, Address src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         mul32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
     
     Jump branchMul32(Condition cond, Imm32 imm, RegisterID src, RegisterID dest)
     {
-        ASSERT(cond == Overflow);
+        Q_ASSERT(cond == Overflow);
         mul32(imm, src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
     
     Jump branchSub32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         sub32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
     
     Jump branchSub32(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         sub32(imm, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchSub32(Condition cond, Imm32 imm, Address dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         sub32(imm, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchSub32(Condition cond, RegisterID src, Address dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         sub32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchSub32(Condition cond, Address src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         sub32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchNeg32(Condition cond, RegisterID srcDest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         neg32(srcDest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchOr32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Signed) || (cond == Zero) || (cond == NonZero));
         or32(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
@@ -996,7 +996,7 @@ private:
             s_sse2CheckState = (flags & SSE2FeatureBit) ? HasSSE2 : NoSSE2;
         }
         // Only check once.
-        ASSERT(s_sse2CheckState != NotCheckedSSE2);
+        Q_ASSERT(s_sse2CheckState != NotCheckedSSE2);
 
         return s_sse2CheckState == HasSSE2;
     }

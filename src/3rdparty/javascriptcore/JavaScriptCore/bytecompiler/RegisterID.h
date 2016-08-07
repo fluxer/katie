@@ -58,7 +58,7 @@ namespace JSC {
 
         void setIndex(int index)
         {
-            ASSERT(!m_refCount);
+            Q_ASSERT(!m_refCount);
 #ifndef NDEBUG
             m_didSetIndex = true;
 #endif
@@ -72,7 +72,7 @@ namespace JSC {
 
         int index() const
         {
-            ASSERT(m_didSetIndex);
+            Q_ASSERT(m_didSetIndex);
             return m_index;
         }
 
@@ -89,7 +89,7 @@ namespace JSC {
         void deref()
         {
             --m_refCount;
-            ASSERT(m_refCount >= 0);
+            Q_ASSERT(m_refCount >= 0);
         }
 
         int refCount() const

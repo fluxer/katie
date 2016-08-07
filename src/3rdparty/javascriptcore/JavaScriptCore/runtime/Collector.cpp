@@ -106,7 +106,7 @@ Heap::Heap(JSGlobalData* globalData)
     : m_markListSet(0)
     , m_globalData(globalData)
 {
-    ASSERT(globalData);
+    Q_ASSERT(globalData);
     memset(&m_heap, 0, sizeof(CollectorHeap));
     allocateBlock();
 }
@@ -114,7 +114,7 @@ Heap::Heap(JSGlobalData* globalData)
 Heap::~Heap()
 {
     // The destroy function must already have been called, so assert this.
-    ASSERT(!m_globalData);
+    Q_ASSERT(!m_globalData);
 }
 
 void Heap::destroy()
@@ -122,8 +122,8 @@ void Heap::destroy()
     if (!m_globalData)
         return;
 
-    ASSERT(!m_globalData->dynamicGlobalObject);
-    ASSERT(!isBusy());
+    Q_ASSERT(!m_globalData->dynamicGlobalObject);
+    Q_ASSERT(!isBusy());
     
     // The global object is not GC protected at this point, so sweeping may delete it
     // (and thus the global data) before other objects that may use the global data.
@@ -259,7 +259,7 @@ void Heap::freeBlocks()
     for ( ; it != end; ++it)
         (*it)->~JSCell();
 
-    ASSERT(!protectedObjectCount());
+    Q_ASSERT(!protectedObjectCount());
 
     protectedValuesEnd = protectedValuesCopy.end();
     for (ProtectCountSet::iterator it = protectedValuesCopy.begin(); it != protectedValuesEnd; ++it)
@@ -304,11 +304,11 @@ void* Heap::allocate(size_t s)
     
     ASSERT_UNUSED(s, s <= HeapConstants::cellSize);
 
-    ASSERT(m_heap.operationInProgress == NoOperation);
+    Q_ASSERT(m_heap.operationInProgress == NoOperation);
 
 #if COLLECT_ON_EVERY_ALLOCATION
     collectAllGarbage();
-    ASSERT(m_heap.operationInProgress == NoOperation);
+    Q_ASSERT(m_heap.operationInProgress == NoOperation);
 #endif
 
 allocate:
@@ -316,10 +316,10 @@ allocate:
     // Fast case: find the next garbage cell and recycle it.
 
     do {
-        ASSERT(m_heap.nextBlock < m_heap.usedBlocks);
+        Q_ASSERT(m_heap.nextBlock < m_heap.usedBlocks);
         Block* block = reinterpret_cast<Block*>(m_heap.blocks[m_heap.nextBlock]);
         do {
-            ASSERT(m_heap.nextCell < HeapConstants::cellsPerBlock);
+            Q_ASSERT(m_heap.nextCell < HeapConstants::cellsPerBlock);
             if (!block->marked.get(m_heap.nextCell)) { // Always false for the last cell in the block
                 Cell* cell = block->cells + m_heap.nextCell;
 
@@ -360,14 +360,14 @@ void Heap::resizeBlocks()
 
 void Heap::growBlocks(size_t neededBlocks)
 {
-    ASSERT(m_heap.usedBlocks < neededBlocks);
+    Q_ASSERT(m_heap.usedBlocks < neededBlocks);
     while (m_heap.usedBlocks < neededBlocks)
         allocateBlock();
 }
 
 void Heap::shrinkBlocks(size_t neededBlocks)
 {
-    ASSERT(m_heap.usedBlocks > neededBlocks);
+    Q_ASSERT(m_heap.usedBlocks > neededBlocks);
     
     // Clear the always-on last bit, so isEmpty() isn't fooled by it.
     for (size_t i = 0; i < m_heap.usedBlocks; ++i)
@@ -569,7 +569,7 @@ static inline void* currentThreadStackBase()
 #endif
         int rc = pthread_attr_getstack(&sattr, &stackBase, &stackSize);
         (void)rc; // FIXME: Deal with error code somehow? Seems fatal.
-        ASSERT(stackBase);
+        Q_ASSERT(stackBase);
         pthread_attr_destroy(&sattr);
         stackThread = thread;
     }
@@ -619,9 +619,9 @@ void Heap::markConservatively(MarkStack& markStack, void* start, void* end)
         end = tmp;
     }
 
-    ASSERT((static_cast<char*>(end) - static_cast<char*>(start)) < 0x1000000);
-    ASSERT(isPointerAligned(start));
-    ASSERT(isPointerAligned(end));
+    Q_ASSERT((static_cast<char*>(end) - static_cast<char*>(start)) < 0x1000000);
+    Q_ASSERT(isPointerAligned(start));
+    Q_ASSERT(isPointerAligned(end));
 
     char** p = static_cast<char**>(start);
     char** e = static_cast<char**>(end);
@@ -683,8 +683,8 @@ void Heap::markCurrentThreadConservatively(MarkStack& markStack)
 
 void Heap::protect(JSValue k)
 {
-    ASSERT(k);
-    ASSERT(!m_globalData->isSharedInstance);
+    Q_ASSERT(k);
+    Q_ASSERT(!m_globalData->isSharedInstance);
 
     if (!k.isCell())
         return;
@@ -694,8 +694,8 @@ void Heap::protect(JSValue k)
 
 void Heap::unprotect(JSValue k)
 {
-    ASSERT(k);
-    ASSERT(!m_globalData->isSharedInstance);
+    Q_ASSERT(k);
+    Q_ASSERT(!m_globalData->isSharedInstance);
 
     if (!k.isCell())
         return;
@@ -727,8 +727,8 @@ void Heap::clearMarkBits(CollectorBlock* block)
 
 size_t Heap::markedCells(size_t startBlock, size_t startCell) const
 {
-    ASSERT(startBlock <= m_heap.usedBlocks);
-    ASSERT(startCell < HeapConstants::cellsPerBlock);
+    Q_ASSERT(startBlock <= m_heap.usedBlocks);
+    Q_ASSERT(startCell < HeapConstants::cellsPerBlock);
 
     if (startBlock >= m_heap.usedBlocks)
         return 0;
@@ -743,7 +743,7 @@ size_t Heap::markedCells(size_t startBlock, size_t startCell) const
 
 void Heap::sweep()
 {
-    ASSERT(m_heap.operationInProgress == NoOperation);
+    Q_ASSERT(m_heap.operationInProgress == NoOperation);
     if (m_heap.operationInProgress != NoOperation)
         CRASH();
     m_heap.operationInProgress = Collection;
@@ -775,7 +775,7 @@ void Heap::sweep()
 
 void Heap::markRoots()
 {
-    ASSERT(m_heap.operationInProgress == NoOperation);
+    Q_ASSERT(m_heap.operationInProgress == NoOperation);
     if (m_heap.operationInProgress != NoOperation)
         CRASH();
 
@@ -881,7 +881,7 @@ static const char* typeName(JSCell* cell)
         return "value wrapper";
     if (cell->isPropertyNameIterator())
         return "for-in iterator";
-    ASSERT(cell->isObject());
+    Q_ASSERT(cell->isObject());
     const ClassInfo* info = cell->classInfo();
     return info ? info->className : "Object";
 }

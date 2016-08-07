@@ -189,7 +189,7 @@ namespace JSC {
 #if USE(JSVALUE32_64)
         JIT::Call call(unsigned dst) // dst is a virtual register.
         {
-            ASSERT(m_returnType == Value || m_returnType == Cell);
+            Q_ASSERT(m_returnType == Value || m_returnType == Cell);
             JIT::Call call = this->call();
             if (m_returnType == Value)
                 m_jit->emitStore(dst, JIT::regT1, JIT::regT0);

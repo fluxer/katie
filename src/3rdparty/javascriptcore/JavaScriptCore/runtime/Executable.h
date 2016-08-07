@@ -65,7 +65,7 @@ namespace JSC {
     public:
         JITCode& generatedJITCode()
         {
-            ASSERT(m_jitCode);
+            Q_ASSERT(m_jitCode);
             return m_jitCode;
         }
 
@@ -267,7 +267,7 @@ namespace JSC {
 
         CodeBlock& bytecode(ExecState* exec, ScopeChainNode* scopeChainNode) 
         {
-            ASSERT(scopeChainNode);
+            Q_ASSERT(scopeChainNode);
             if (!m_codeBlock)
                 compile(exec, scopeChainNode);
             return *m_codeBlock;
@@ -280,7 +280,7 @@ namespace JSC {
 
         CodeBlock& generatedBytecode()
         {
-            ASSERT(m_codeBlock);
+            Q_ASSERT(m_codeBlock);
             return *m_codeBlock;
         }
 
@@ -344,13 +344,13 @@ namespace JSC {
 
     inline FunctionExecutable* JSFunction::jsExecutable() const
     {
-        ASSERT(!isHostFunctionNonInline());
+        Q_ASSERT(!isHostFunctionNonInline());
         return static_cast<FunctionExecutable*>(m_executable.get());
     }
 
     inline bool JSFunction::isHostFunction() const
     {
-        ASSERT(m_executable);
+        Q_ASSERT(m_executable);
         return m_executable->isHostFunction();
     }
 

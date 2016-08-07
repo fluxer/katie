@@ -109,7 +109,7 @@ namespace JSC {
             for (int i = 0; i < count; ++i) {
                 PolymorphicStubInfo& info = list[i];
 
-                ASSERT(info.base);
+                Q_ASSERT(info.base);
                 info.base->deref();
 
                 if (info.u.proto) {

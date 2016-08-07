@@ -134,12 +134,12 @@ namespace WTF {
 #endif
     inline int toASCIIUpper(int c) { return static_cast<int>(c & ~((c >= 'a' && c <= 'z') << 5)); }
 
-    inline int toASCIIHexValue(char c) { ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
-    inline int toASCIIHexValue(unsigned short c) { ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
+    inline int toASCIIHexValue(char c) { Q_ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
+    inline int toASCIIHexValue(unsigned short c) { Q_ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
 #if !COMPILER(MSVC) || defined(_NATIVE_WCHAR_T_DEFINED)
-    inline int toASCIIHexValue(wchar_t c) { ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
+    inline int toASCIIHexValue(wchar_t c) { Q_ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
 #endif
-    inline int toASCIIHexValue(int c) { ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
+    inline int toASCIIHexValue(int c) { Q_ASSERT(isASCIIHexDigit(c)); return c < 'A' ? c - '0' : (c - 'A' + 10) & 0xF; }
 
     inline bool isASCIIPrintable(char c) { return c >= ' ' && c <= '~'; }
     inline bool isASCIIPrintable(unsigned short c) { return c >= ' ' && c <= '~'; }

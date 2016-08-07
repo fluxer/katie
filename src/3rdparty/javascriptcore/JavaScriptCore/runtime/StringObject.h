@@ -60,7 +60,7 @@ namespace JSC {
 
     inline StringObject* asStringObject(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&StringObject::info));
+        Q_ASSERT(asObject(value)->inherits(&StringObject::info));
         return static_cast<StringObject*>(asObject(value));
     }
 

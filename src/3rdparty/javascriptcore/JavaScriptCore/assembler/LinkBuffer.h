@@ -74,14 +74,14 @@ public:
 
     ~LinkBuffer()
     {
-        ASSERT(m_completed);
+        Q_ASSERT(m_completed);
     }
 
     // These methods are used to link or set values at code generation time.
 
     void link(Call call, FunctionPtr function)
     {
-        ASSERT(call.isFlagSet(Call::Linkable));
+        Q_ASSERT(call.isFlagSet(Call::Linkable));
         MacroAssembler::linkCall(m_code, call, function);
     }
     
@@ -110,15 +110,15 @@ public:
 
     CodeLocationCall locationOf(Call call)
     {
-        ASSERT(call.isFlagSet(Call::Linkable));
-        ASSERT(!call.isFlagSet(Call::Near));
+        Q_ASSERT(call.isFlagSet(Call::Linkable));
+        Q_ASSERT(!call.isFlagSet(Call::Near));
         return CodeLocationCall(MacroAssembler::getLinkerAddress(m_code, call.m_jmp));
     }
 
     CodeLocationNearCall locationOfNearCall(Call call)
     {
-        ASSERT(call.isFlagSet(Call::Linkable));
-        ASSERT(call.isFlagSet(Call::Near));
+        Q_ASSERT(call.isFlagSet(Call::Linkable));
+        Q_ASSERT(call.isFlagSet(Call::Near));
         return CodeLocationNearCall(MacroAssembler::getLinkerAddress(m_code, call.m_jmp));
     }
 
@@ -158,7 +158,7 @@ private:
     void performFinalization()
     {
 #ifndef NDEBUG
-        ASSERT(!m_completed);
+        Q_ASSERT(!m_completed);
         m_completed = true;
 #endif
 

@@ -97,7 +97,7 @@ NEVER_INLINE bool Interpreter::resolve(CallFrame* callFrame, Instruction* vPC, J
     ScopeChainNode* scopeChain = callFrame->scopeChain();
     ScopeChainIterator iter = scopeChain->begin();
     ScopeChainIterator end = scopeChain->end();
-    ASSERT(iter != end);
+    Q_ASSERT(iter != end);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
     Identifier& ident = codeBlock->identifier(property);
@@ -128,10 +128,10 @@ NEVER_INLINE bool Interpreter::resolveSkip(CallFrame* callFrame, Instruction* vP
     ScopeChainNode* scopeChain = callFrame->scopeChain();
     ScopeChainIterator iter = scopeChain->begin();
     ScopeChainIterator end = scopeChain->end();
-    ASSERT(iter != end);
+    Q_ASSERT(iter != end);
     while (skip--) {
         ++iter;
-        ASSERT(iter != end);
+        Q_ASSERT(iter != end);
     }
     Identifier& ident = codeBlock->identifier(property);
     do {
@@ -154,7 +154,7 @@ NEVER_INLINE bool Interpreter::resolveGlobal(CallFrame* callFrame, Instruction* 
 {
     int dst = vPC[1].u.operand;
     JSGlobalObject* globalObject = static_cast<JSGlobalObject*>(vPC[2].u.jsCell);
-    ASSERT(globalObject->isGlobalObject());
+    Q_ASSERT(globalObject->isGlobalObject());
     int property = vPC[3].u.operand;
     Structure* structure = vPC[4].u.structure;
     int offset = vPC[5].u.operand;
@@ -209,7 +209,7 @@ NEVER_INLINE bool Interpreter::resolveBaseAndProperty(CallFrame* callFrame, Inst
 
     // FIXME: add scopeDepthIsZero optimization
 
-    ASSERT(iter != end);
+    Q_ASSERT(iter != end);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
     Identifier& ident = codeBlock->identifier(property);
@@ -543,7 +543,7 @@ NEVER_INLINE HandlerInfo* Interpreter::throwException(CallFrame*& callFrame, JSV
     ScopeChainNode* scopeChain = callFrame->scopeChain();
     ScopeChain sc(scopeChain);
     int scopeDelta = depth(codeBlock, sc) - handler->scopeDepth;
-    ASSERT(scopeDelta >= 0);
+    Q_ASSERT(scopeDelta >= 0);
     while (scopeDelta--)
         scopeChain = scopeChain->pop();
     callFrame->setScopeChain(scopeChain);
@@ -553,7 +553,7 @@ NEVER_INLINE HandlerInfo* Interpreter::throwException(CallFrame*& callFrame, JSV
 
 JSValue Interpreter::execute(ProgramExecutable* program, CallFrame* callFrame, ScopeChainNode* scopeChain, JSObject* thisObj, JSValue* exception)
 {
-    ASSERT(!scopeChain->globalData->exception);
+    Q_ASSERT(!scopeChain->globalData->exception);
 
     if (m_reentryDepth >= MaxSecondaryThreadReentryDepth) {
         if (!isMainThread() || m_reentryDepth >= MaxMainThreadReentryDepth) {
@@ -607,7 +607,7 @@ JSValue Interpreter::execute(ProgramExecutable* program, CallFrame* callFrame, S
 
 JSValue Interpreter::execute(FunctionExecutable* functionExecutable, CallFrame* callFrame, JSFunction* function, JSObject* thisObj, const ArgList& args, ScopeChainNode* scopeChain, JSValue* exception)
 {
-    ASSERT(!scopeChain->globalData->exception);
+    Q_ASSERT(!scopeChain->globalData->exception);
 
     if (m_reentryDepth >= MaxSecondaryThreadReentryDepth) {
         if (!isMainThread() || m_reentryDepth >= MaxMainThreadReentryDepth) {
@@ -662,7 +662,7 @@ JSValue Interpreter::execute(FunctionExecutable* functionExecutable, CallFrame* 
 
 CallFrameClosure Interpreter::prepareForRepeatCall(FunctionExecutable* FunctionExecutable, CallFrame* callFrame, JSFunction* function, int argCount, ScopeChainNode* scopeChain, JSValue* exception)
 {
-    ASSERT(!scopeChain->globalData->exception);
+    Q_ASSERT(!scopeChain->globalData->exception);
     
     if (m_reentryDepth >= MaxSecondaryThreadReentryDepth) {
         if (!isMainThread() || m_reentryDepth >= MaxMainThreadReentryDepth) {
@@ -733,7 +733,7 @@ JSValue Interpreter::execute(EvalExecutable* eval, CallFrame* callFrame, JSObjec
 
 JSValue Interpreter::execute(EvalExecutable* eval, CallFrame* callFrame, JSObject* thisObj, int globalRegisterOffset, ScopeChainNode* scopeChain, JSValue* exception)
 {
-    ASSERT(!scopeChain->globalData->exception);
+    Q_ASSERT(!scopeChain->globalData->exception);
 
     if (m_reentryDepth >= MaxSecondaryThreadReentryDepth) {
         if (!isMainThread() || m_reentryDepth >= MaxMainThreadReentryDepth) {
@@ -748,7 +748,7 @@ JSValue Interpreter::execute(EvalExecutable* eval, CallFrame* callFrame, JSObjec
 
     JSVariableObject* variableObject;
     for (ScopeChainNode* node = scopeChain; ; node = node->next) {
-        ASSERT(node);
+        Q_ASSERT(node);
         if (node->object->isVariableObject()) {
             variableObject = static_cast<JSVariableObject*>(node->object);
             break;
@@ -994,7 +994,7 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
     }
 
     if (slot.slotBase() == structure->prototypeForLookup(callFrame)) {
-        ASSERT(slot.slotBase().isObject());
+        Q_ASSERT(slot.slotBase().isObject());
 
         JSObject* baseObject = asObject(slot.slotBase());
         size_t offset = slot.cachedOffset();
@@ -1006,7 +1006,7 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
             offset = baseObject->structure()->get(propertyName);
         }
 
-        ASSERT(!baseObject->structure()->isUncacheableDictionary());
+        Q_ASSERT(!baseObject->structure()->isUncacheableDictionary());
 
         vPC[0] = op_get_by_id_proto;
         vPC[5] = baseObject->structure();
@@ -1491,7 +1491,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         if (dividend.isInt32() && divisor.isInt32() && divisor.asInt32() != 0) {
             JSValue result = jsNumber(callFrame, dividend.asInt32() % divisor.asInt32());
-            ASSERT(result);
+            Q_ASSERT(result);
             callFrame->r(dst) = result;
             vPC += OPCODE_LENGTH(op_mod);
             NEXT_INSTRUCTION();
@@ -1898,7 +1898,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
          */
         int dst = vPC[1].u.operand;
         JSGlobalObject* scope = static_cast<JSGlobalObject*>(vPC[2].u.jsCell);
-        ASSERT(scope->isGlobalObject());
+        Q_ASSERT(scope->isGlobalObject());
         int index = vPC[3].u.operand;
 
         callFrame->r(dst) = scope->registerAt(index);
@@ -1911,7 +1911,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
            Puts value into global slot index.
          */
         JSGlobalObject* scope = static_cast<JSGlobalObject*>(vPC[1].u.jsCell);
-        ASSERT(scope->isGlobalObject());
+        Q_ASSERT(scope->isGlobalObject());
         int index = vPC[2].u.operand;
         int value = vPC[3].u.operand;
         
@@ -1931,16 +1931,16 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         ScopeChainNode* scopeChain = callFrame->scopeChain();
         ScopeChainIterator iter = scopeChain->begin();
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
         ScopeChainIterator end = scopeChain->end();
 #endif
-        ASSERT(iter != end);
+        Q_ASSERT(iter != end);
         while (skip--) {
             ++iter;
-            ASSERT(iter != end);
+            Q_ASSERT(iter != end);
         }
 
-        ASSERT((*iter)->isVariableObject());
+        Q_ASSERT((*iter)->isVariableObject());
         JSVariableObject* scope = static_cast<JSVariableObject*>(*iter);
         callFrame->r(dst) = scope->registerAt(index);
         vPC += OPCODE_LENGTH(op_get_scoped_var);
@@ -1956,16 +1956,16 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         ScopeChainNode* scopeChain = callFrame->scopeChain();
         ScopeChainIterator iter = scopeChain->begin();
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
         ScopeChainIterator end = scopeChain->end();
 #endif
-        ASSERT(iter != end);
+        Q_ASSERT(iter != end);
         while (skip--) {
             ++iter;
-            ASSERT(iter != end);
+            Q_ASSERT(iter != end);
         }
 
-        ASSERT((*iter)->isVariableObject());
+        Q_ASSERT((*iter)->isVariableObject());
         JSVariableObject* scope = static_cast<JSVariableObject*>(*iter);
         scope->registerAt(index) = JSValue(callFrame->r(value).jsValue());
         vPC += OPCODE_LENGTH(op_put_scoped_var);
@@ -2040,12 +2040,12 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {
-                ASSERT(baseCell->isObject());
+                Q_ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
                 int dst = vPC[1].u.operand;
                 int offset = vPC[5].u.operand;
 
-                ASSERT(baseObject->get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == baseObject->getDirectOffset(offset));
+                Q_ASSERT(baseObject->get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == baseObject->getDirectOffset(offset));
                 callFrame->r(dst) = JSValue(baseObject->getDirectOffset(offset));
 
                 vPC += OPCODE_LENGTH(op_get_by_id_self);
@@ -2071,7 +2071,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {
-                ASSERT(structure->prototypeForLookup(callFrame).isObject());
+                Q_ASSERT(structure->prototypeForLookup(callFrame).isObject());
                 JSObject* protoObject = asObject(structure->prototypeForLookup(callFrame));
                 Structure* prototypeStructure = vPC[5].u.structure;
 
@@ -2079,8 +2079,8 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
                     int dst = vPC[1].u.operand;
                     int offset = vPC[6].u.operand;
 
-                    ASSERT(protoObject->get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == protoObject->getDirectOffset(offset));
-                    ASSERT(baseValue.get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == protoObject->getDirectOffset(offset));
+                    Q_ASSERT(protoObject->get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == protoObject->getDirectOffset(offset));
+                    Q_ASSERT(baseValue.get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == protoObject->getDirectOffset(offset));
                     callFrame->r(dst) = JSValue(protoObject->getDirectOffset(offset));
 
                     vPC += OPCODE_LENGTH(op_get_by_id_proto);
@@ -2135,8 +2135,8 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
                         int dst = vPC[1].u.operand;
                         int offset = vPC[7].u.operand;
 
-                        ASSERT(baseObject->get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == baseObject->getDirectOffset(offset));
-                        ASSERT(baseValue.get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == baseObject->getDirectOffset(offset));
+                        Q_ASSERT(baseObject->get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == baseObject->getDirectOffset(offset));
+                        Q_ASSERT(baseValue.get(callFrame, callFrame->codeBlock()->identifier(vPC[3].u.operand)) == baseObject->getDirectOffset(offset));
                         callFrame->r(dst) = JSValue(baseObject->getDirectOffset(offset));
 
                         vPC += OPCODE_LENGTH(op_get_by_id_chain);
@@ -2258,7 +2258,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             Structure* newStructure = vPC[5].u.structure;
             
             if (LIKELY(baseCell->structure() == oldStructure)) {
-                ASSERT(baseCell->isObject());
+                Q_ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
 
                 RefPtr<Structure>* it = vPC[6].u.structureChain->head();
@@ -2277,7 +2277,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
                 int value = vPC[3].u.operand;
                 unsigned offset = vPC[7].u.operand;
-                ASSERT(baseObject->offsetForLocation(baseObject->getDirectLocation(callFrame->codeBlock()->identifier(vPC[2].u.operand))) == offset);
+                Q_ASSERT(baseObject->offsetForLocation(baseObject->getDirectLocation(callFrame->codeBlock()->identifier(vPC[2].u.operand))) == offset);
                 baseObject->putDirectOffset(offset, callFrame->r(value).jsValue());
 
                 vPC += OPCODE_LENGTH(op_put_by_id_transition);
@@ -2307,12 +2307,12 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             Structure* structure = vPC[4].u.structure;
 
             if (LIKELY(baseCell->structure() == structure)) {
-                ASSERT(baseCell->isObject());
+                Q_ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
                 int value = vPC[3].u.operand;
                 unsigned offset = vPC[5].u.operand;
                 
-                ASSERT(baseObject->offsetForLocation(baseObject->getDirectLocation(callFrame->codeBlock()->identifier(vPC[2].u.operand))) == offset);
+                Q_ASSERT(baseObject->offsetForLocation(baseObject->getDirectLocation(callFrame->codeBlock()->identifier(vPC[2].u.operand))) == offset);
                 baseObject->putDirectOffset(offset, callFrame->r(value).jsValue());
 
                 vPC += OPCODE_LENGTH(op_put_by_id_replace);
@@ -3037,7 +3037,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             NEXT_INSTRUCTION();
         }
 
-        ASSERT(callType == CallTypeNone);
+        Q_ASSERT(callType == CallTypeNone);
 
         exceptionValue = createNotAFunctionError(callFrame, v, vPC - callFrame->codeBlock()->instructions().begin(), callFrame->codeBlock());
         goto vm_throw;
@@ -3056,7 +3056,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
                 exceptionValue = createStackOverflowError(callFrame);
                 goto vm_throw;
             }
-            ASSERT(!asFunction(callFrame->callee())->isHostFunction());
+            Q_ASSERT(!asFunction(callFrame->callee())->isHostFunction());
             int32_t expectedParams = static_cast<JSFunction*>(callFrame->callee())->jsExecutable()->parameterCount();
             int32_t inplaceArgs = min(argCount, expectedParams);
             int32_t i = 0;
@@ -3192,7 +3192,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             NEXT_INSTRUCTION();
         }
         
-        ASSERT(callType == CallTypeNone);
+        Q_ASSERT(callType == CallTypeNone);
         
         exceptionValue = createNotAFunctionError(callFrame, v, vPC - callFrame->codeBlock()->instructions().begin(), callFrame->codeBlock());
         goto vm_throw;
@@ -3211,7 +3211,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         */
 
         int src = vPC[1].u.operand;
-        ASSERT(callFrame->codeBlock()->needsFullScopeChain());
+        Q_ASSERT(callFrame->codeBlock()->needsFullScopeChain());
 
         asActivation(callFrame->r(src).jsValue())->copyRegisters(callFrame->optionalCalleeArguments());
 
@@ -3231,7 +3231,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
            This opcode should only be used immediately before op_ret.
         */
 
-        ASSERT(callFrame->codeBlock()->usesArguments() && !callFrame->codeBlock()->needsFullScopeChain());
+        Q_ASSERT(callFrame->codeBlock()->usesArguments() && !callFrame->codeBlock()->needsFullScopeChain());
 
         if (callFrame->optionalCalleeArguments())
             callFrame->optionalCalleeArguments()->copyRegisters();
@@ -3450,7 +3450,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             NEXT_INSTRUCTION();
         }
 
-        ASSERT(constructType == ConstructTypeNone);
+        Q_ASSERT(constructType == ConstructTypeNone);
 
         exceptionValue = createNotAConstructorError(callFrame, v, vPC - callFrame->codeBlock()->instructions().begin(), callFrame->codeBlock());
         goto vm_throw;
@@ -3621,8 +3621,8 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
            ex. This is only valid after an exception has been raised,
            and usually forms the beginning of an exception handler.
         */
-        ASSERT(exceptionValue);
-        ASSERT(!globalData->exception);
+        Q_ASSERT(exceptionValue);
+        Q_ASSERT(!globalData->exception);
 
         CodeBlock* codeBlock = callFrame->codeBlock();
         Debugger* debugger = callFrame->dynamicGlobalObject()->debugger();
@@ -3688,7 +3688,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         if (callFrame->codeBlock()->needsFullScopeChain()) {
             ScopeChainNode* scopeChain = callFrame->scopeChain();
-            ASSERT(scopeChain->refCount > 1);
+            Q_ASSERT(scopeChain->refCount > 1);
             scopeChain->deref();
         }
         int result = vPC[1].u.operand;
@@ -3709,10 +3709,10 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int property = vPC[2].u.operand;
         int function = vPC[3].u.operand;
 
-        ASSERT(callFrame->r(base).jsValue().isObject());
+        Q_ASSERT(callFrame->r(base).jsValue().isObject());
         JSObject* baseObj = asObject(callFrame->r(base).jsValue());
         Identifier& ident = callFrame->codeBlock()->identifier(property);
-        ASSERT(callFrame->r(function).jsValue().isObject());
+        Q_ASSERT(callFrame->r(function).jsValue().isObject());
         baseObj->defineGetter(callFrame, ident, asObject(callFrame->r(function).jsValue()));
 
         vPC += OPCODE_LENGTH(op_put_getter);
@@ -3733,10 +3733,10 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int property = vPC[2].u.operand;
         int function = vPC[3].u.operand;
 
-        ASSERT(callFrame->r(base).jsValue().isObject());
+        Q_ASSERT(callFrame->r(base).jsValue().isObject());
         JSObject* baseObj = asObject(callFrame->r(base).jsValue());
         Identifier& ident = callFrame->codeBlock()->identifier(property);
-        ASSERT(callFrame->r(function).jsValue().isObject());
+        Q_ASSERT(callFrame->r(function).jsValue().isObject());
         baseObj->defineSetter(callFrame, ident, asObject(callFrame->r(function).jsValue()), 0);
 
         vPC += OPCODE_LENGTH(op_put_setter);
@@ -3817,7 +3817,7 @@ JSValue Interpreter::retrieveArguments(CallFrame* callFrame, JSFunction* functio
 
     CodeBlock* codeBlock = functionCallFrame->codeBlock();
     if (codeBlock->usesArguments()) {
-        ASSERT(codeBlock->codeType() == FunctionCode);
+        Q_ASSERT(codeBlock->codeType() == FunctionCode);
         SymbolTable& symbolTable = *codeBlock->symbolTable();
         int argumentsIndex = symbolTable.get(functionCallFrame->propertyNames().arguments.ustring().rep()).getIndex();
         if (!functionCallFrame->r(argumentsIndex).jsValue()) {

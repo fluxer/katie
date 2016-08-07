@@ -846,7 +846,7 @@ void JIT::emitBinaryDoubleOp(OpcodeID opcodeID, unsigned dst, unsigned op1, unsi
         // Double case 1: Op1 is not int32; Op2 is unknown.
         notInt32Op1.link(this);
 
-        ASSERT(op1IsInRegisters);
+        Q_ASSERT(op1IsInRegisters);
 
         // Verify Op1 is double.
         if (!types.first().definitelyIsNumber())
@@ -914,7 +914,7 @@ void JIT::emitBinaryDoubleOp(OpcodeID opcodeID, unsigned dst, unsigned op1, unsi
         // Double case 2: Op1 is int32; Op2 is not int32.
         notInt32Op2.link(this);
 
-        ASSERT(op2IsInRegisters);
+        Q_ASSERT(op2IsInRegisters);
 
         if (!op1IsInRegisters)
             emitLoadPayload(op1, regT0);
@@ -2167,7 +2167,7 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned, unsigned op1, unsign
     else if (opcodeID == op_sub)
         addSlowCase(branchSub32(Overflow, regT1, regT0));
     else {
-        ASSERT(opcodeID == op_mul);
+        Q_ASSERT(opcodeID == op_mul);
         addSlowCase(branchMul32(Overflow, regT1, regT0));
         addSlowCase(branchTest32(Zero, regT0));
     }
@@ -2253,7 +2253,7 @@ void JIT::compileBinaryArithOpSlowCase(OpcodeID opcodeID, Vector<SlowCaseEntry>:
     else if (opcodeID == op_mul)
         mulDouble(fpRegT2, fpRegT1);
     else {
-        ASSERT(opcodeID == op_div);
+        Q_ASSERT(opcodeID == op_div);
         divDouble(fpRegT2, fpRegT1);
     }
     moveDoubleToPtr(fpRegT1, regT0);
@@ -2459,7 +2459,7 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, u
     emitGetVirtualRegisters(src1, regT0, src2, regT1);
 
     if (types.second().isReusable() && supportsFloatingPoint()) {
-        ASSERT(types.second().mightBeNumber());
+        Q_ASSERT(types.second().mightBeNumber());
 
         // Check op2 is a number
         Jump op2imm = emitJumpIfImmediateInteger(regT1);
@@ -2490,7 +2490,7 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, u
         else if (opcodeID == op_sub)
             subDouble(Address(regT1, OBJECT_OFFSETOF(JSNumberCell, m_value)), fpRegT0);
         else {
-            ASSERT(opcodeID == op_mul);
+            Q_ASSERT(opcodeID == op_mul);
             mulDouble(Address(regT1, OBJECT_OFFSETOF(JSNumberCell, m_value)), fpRegT0);
         }
 
@@ -2505,7 +2505,7 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, u
         op2imm.link(this);
         emitJumpSlowCaseIfNotImmediateInteger(regT0);
     } else if (types.first().isReusable() && supportsFloatingPoint()) {
-        ASSERT(types.first().mightBeNumber());
+        Q_ASSERT(types.first().mightBeNumber());
 
         // Check op1 is a number
         Jump op1imm = emitJumpIfImmediateInteger(regT0);
@@ -2537,7 +2537,7 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, u
         else if (opcodeID == op_sub)
             subDouble(fpRegT1, fpRegT0);
         else {
-            ASSERT(opcodeID == op_mul);
+            Q_ASSERT(opcodeID == op_mul);
             mulDouble(fpRegT1, fpRegT0);
         }
         storeDouble(fpRegT0, Address(regT0, OBJECT_OFFSETOF(JSNumberCell, m_value)));
@@ -2563,7 +2563,7 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, u
         signExtend32ToPtr(regT0, regT0);
         emitFastArithReTagImmediate(regT0, regT0);
     } else {
-        ASSERT(opcodeID == op_mul);
+        Q_ASSERT(opcodeID == op_mul);
         // convert eax & edx from JSImmediates to ints, and check if either are zero
         emitFastArithImmToInt(regT1);
         Jump op1Zero = emitFastArithDeTagImmediateJumpIfZero(regT0);
@@ -2683,7 +2683,7 @@ void JIT::emitSlow_op_add(Instruction* currentInstruction, Vector<SlowCaseEntry>
         stubCall.call(result);
     } else {
         OperandTypes types = OperandTypes::fromInt(currentInstruction[4].u.operand);
-        ASSERT(types.first().mightBeNumber() && types.second().mightBeNumber());
+        Q_ASSERT(types.first().mightBeNumber() && types.second().mightBeNumber());
         compileBinaryArithOpSlowCase(op_add, iter, result, op1, op2, types);
     }
 }

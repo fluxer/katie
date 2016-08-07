@@ -142,7 +142,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             offsetVector = nonReturnedOvector.data();
         }
 
-        ASSERT(offsetVector);
+        Q_ASSERT(offsetVector);
         for (int j = 0; j < offsetVectorSize; ++j)
             offsetVector[j] = -1;
 

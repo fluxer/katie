@@ -52,7 +52,7 @@ JSValue call(ExecState* exec, JSValue functionObject, CallType callType, const C
 {
     if (callType == CallTypeHost)
         return callData.native.function(exec, asObject(functionObject), thisValue, args);
-    ASSERT(callType == CallTypeJS);
+    Q_ASSERT(callType == CallTypeJS);
     // FIXME: Can this be done more efficiently using the callData?
     return asFunction(functionObject)->call(exec, thisValue, args);
 }

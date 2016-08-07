@@ -68,7 +68,7 @@ namespace JSC {
         void deref()
         {
             --m_refCount;
-            ASSERT(m_refCount >= 0);
+            Q_ASSERT(m_refCount >= 0);
         }
         int refCount() const { return m_refCount; }
 

@@ -327,7 +327,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned ca
     END_UNINTERRUPTED_SEQUENCE(sequenceOpCall);
 
     addSlowCase(jumpToSlow);
-    ASSERT(differenceBetween(addressOfLinkedFunctionCheck, jumpToSlow) == patchOffsetOpCallCompareToJump);
+    Q_ASSERT(differenceBetween(addressOfLinkedFunctionCheck, jumpToSlow) == patchOffsetOpCallCompareToJump);
     m_callStructureStubCompilationInfo[callLinkInfoIndex].hotPathBegin = addressOfLinkedFunctionCheck;
 
     addSlowCase(branch32(NotEqual, regT1, Imm32(JSValue::CellTag)));
@@ -411,7 +411,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
     sampleCodeBlock(m_codeBlock);
 
     // If not, we need an extra case in the if below!
-    ASSERT(OPCODE_LENGTH(op_call) == OPCODE_LENGTH(op_call_eval));
+    Q_ASSERT(OPCODE_LENGTH(op_call) == OPCODE_LENGTH(op_call_eval));
 
     // Done! - return back to the hot path.
     if (opcodeID == op_construct)
@@ -702,7 +702,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
     sampleCodeBlock(m_codeBlock);
 
     // If not, we need an extra case in the if below!
-    ASSERT(OPCODE_LENGTH(op_call) == OPCODE_LENGTH(op_call_eval));
+    Q_ASSERT(OPCODE_LENGTH(op_call) == OPCODE_LENGTH(op_call_eval));
 
     // Done! - return back to the hot path.
     if (opcodeID == op_construct)

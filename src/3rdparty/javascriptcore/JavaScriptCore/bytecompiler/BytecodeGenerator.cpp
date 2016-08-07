@@ -463,10 +463,10 @@ bool BytecodeGenerator::willResolveToArguments(const Identifier& ident)
 
 RegisterID* BytecodeGenerator::uncheckedRegisterForArguments()
 {
-    ASSERT(willResolveToArguments(propertyNames().arguments));
+    Q_ASSERT(willResolveToArguments(propertyNames().arguments));
 
     SymbolTableEntry entry = symbolTable().get(propertyNames().arguments.ustring().rep());
-    ASSERT(!entry.isNull());
+    Q_ASSERT(!entry.isNull());
     return &registerFor(entry.getIndex());
 }
 
@@ -551,7 +551,7 @@ PassRefPtr<Label> BytecodeGenerator::emitLabel(Label* l0)
 
     if (m_codeBlock->numberOfJumpTargets()) {
         unsigned lastLabelIndex = m_codeBlock->lastJumpTarget();
-        ASSERT(lastLabelIndex <= newLabelIndex);
+        Q_ASSERT(lastLabelIndex <= newLabelIndex);
         if (newLabelIndex == lastLabelIndex) {
             // Peephole optimizations have already been disabled by emitting the last label
             return l0;
@@ -573,7 +573,7 @@ void BytecodeGenerator::emitOpcode(OpcodeID opcodeID)
 
 void BytecodeGenerator::retrieveLastBinaryOp(int& dstIndex, int& src1Index, int& src2Index)
 {
-    ASSERT(instructions().size() >= 4);
+    Q_ASSERT(instructions().size() >= 4);
     size_t size = instructions().size();
     dstIndex = instructions().at(size - 3).u.operand;
     src1Index = instructions().at(size - 2).u.operand;
@@ -582,7 +582,7 @@ void BytecodeGenerator::retrieveLastBinaryOp(int& dstIndex, int& src1Index, int&
 
 void BytecodeGenerator::retrieveLastUnaryOp(int& dstIndex, int& srcIndex)
 {
-    ASSERT(instructions().size() >= 3);
+    Q_ASSERT(instructions().size() >= 3);
     size_t size = instructions().size();
     dstIndex = instructions().at(size - 2).u.operand;
     srcIndex = instructions().at(size - 1).u.operand;
@@ -590,13 +590,13 @@ void BytecodeGenerator::retrieveLastUnaryOp(int& dstIndex, int& srcIndex)
 
 void ALWAYS_INLINE BytecodeGenerator::rewindBinaryOp()
 {
-    ASSERT(instructions().size() >= 4);
+    Q_ASSERT(instructions().size() >= 4);
     instructions().shrink(instructions().size() - 4);
 }
 
 void ALWAYS_INLINE BytecodeGenerator::rewindUnaryOp()
 {
-    ASSERT(instructions().size() >= 3);
+    Q_ASSERT(instructions().size() >= 3);
     instructions().shrink(instructions().size() - 3);
 }
 
@@ -994,7 +994,7 @@ bool BytecodeGenerator::findScopedProperty(const Identifier& property, int& inde
         if (shouldOptimizeLocals() && m_codeType == GlobalCode) {
             ScopeChainIterator iter = m_scopeChain->begin();
             globalObject = *iter;
-            ASSERT((++iter) == m_scopeChain->end());
+            Q_ASSERT((++iter) == m_scopeChain->end());
         }
         return false;
     }
@@ -1335,7 +1335,7 @@ RegisterID* BytecodeGenerator::emitNewArray(RegisterID* dst, ElementNode* elemen
             break;
         argv.append(newTemporary());
         // op_new_array requires the initial values to be a sequential range of registers
-        ASSERT(argv.size() == 1 || argv[argv.size() - 1]->index() == argv[argv.size() - 2]->index() + 1);
+        Q_ASSERT(argv.size() == 1 || argv[argv.size() - 1]->index() == argv[argv.size() - 2]->index() + 1);
         emitNode(argv.last().get(), n->value());
     }
     emitOpcode(op_new_array);
@@ -1394,9 +1394,9 @@ RegisterID* BytecodeGenerator::emitCallEval(RegisterID* dst, RegisterID* func, R
 
 RegisterID* BytecodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, RegisterID* func, RegisterID* thisRegister, ArgumentsNode* argumentsNode, unsigned divot, unsigned startOffset, unsigned endOffset)
 {
-    ASSERT(opcodeID == op_call || opcodeID == op_call_eval);
-    ASSERT(func->refCount());
-    ASSERT(thisRegister->refCount());
+    Q_ASSERT(opcodeID == op_call || opcodeID == op_call_eval);
+    Q_ASSERT(func->refCount());
+    Q_ASSERT(thisRegister->refCount());
 
     RegisterID* originalFunc = func;
 
@@ -1406,7 +1406,7 @@ RegisterID* BytecodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, Regi
     for (ArgumentListNode* n = argumentsNode->m_listNode; n; n = n->m_next) {
         argv.append(newTemporary());
         // op_call requires the arguments to be a sequential range of registers
-        ASSERT(argv[argv.size() - 1]->index() == argv[argv.size() - 2]->index() + 1);
+        Q_ASSERT(argv[argv.size() - 1]->index() == argv[argv.size() - 2]->index() + 1);
         emitNode(argv.last().get(), n);
     }
 
@@ -1433,7 +1433,7 @@ RegisterID* BytecodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, Regi
 
 RegisterID* BytecodeGenerator::emitLoadVarargs(RegisterID* argCountDst, RegisterID* arguments)
 {
-    ASSERT(argCountDst->index() < arguments->index());
+    Q_ASSERT(argCountDst->index() < arguments->index());
     emitOpcode(op_load_varargs);
     instructions().append(argCountDst->index());
     instructions().append(arguments->index());
@@ -1442,9 +1442,9 @@ RegisterID* BytecodeGenerator::emitLoadVarargs(RegisterID* argCountDst, Register
 
 RegisterID* BytecodeGenerator::emitCallVarargs(RegisterID* dst, RegisterID* func, RegisterID* thisRegister, RegisterID* argCountRegister, unsigned divot, unsigned startOffset, unsigned endOffset)
 {
-    ASSERT(func->refCount());
-    ASSERT(thisRegister->refCount());
-    ASSERT(dst != func);
+    Q_ASSERT(func->refCount());
+    Q_ASSERT(thisRegister->refCount());
+    Q_ASSERT(dst != func);
     
     emitExpressionInfo(divot, startOffset, endOffset);
     
@@ -1478,7 +1478,7 @@ RegisterID* BytecodeGenerator::emitUnaryNoDstOp(OpcodeID opcodeID, RegisterID* s
 
 RegisterID* BytecodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, ArgumentsNode* argumentsNode, unsigned divot, unsigned startOffset, unsigned endOffset)
 {
-    ASSERT(func->refCount());
+    Q_ASSERT(func->refCount());
 
     RegisterID* originalFunc = func;
 
@@ -1490,7 +1490,7 @@ RegisterID* BytecodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, 
     for (ArgumentListNode* n = argumentsNode ? argumentsNode->m_listNode : 0; n; n = n->m_next) {
         argv.append(newTemporary());
         // op_construct requires the arguments to be a sequential range of registers
-        ASSERT(argv[argv.size() - 1]->index() == argv[argv.size() - 2]->index() + 1);
+        Q_ASSERT(argv[argv.size() - 1]->index() == argv[argv.size() - 2]->index() + 1);
         emitNode(argv.last().get(), n);
     }
 
@@ -1544,7 +1544,7 @@ void BytecodeGenerator::emitToPrimitive(RegisterID* dst, RegisterID* src)
 
 RegisterID* BytecodeGenerator::emitPushScope(RegisterID* scope)
 {
-    ASSERT(scope->isTemporary());
+    Q_ASSERT(scope->isTemporary());
     ControlFlowContext context;
     context.isFinallyBlock = false;
     m_scopeContextStack.append(context);
@@ -1556,8 +1556,8 @@ RegisterID* BytecodeGenerator::emitPushScope(RegisterID* scope)
 
 void BytecodeGenerator::emitPopScope()
 {
-    ASSERT(m_scopeContextStack.size());
-    ASSERT(!m_scopeContextStack.last().isFinallyBlock);
+    Q_ASSERT(m_scopeContextStack.size());
+    Q_ASSERT(!m_scopeContextStack.last().isFinallyBlock);
 
     emitOpcode(op_pop_scope);
 
@@ -1587,9 +1587,9 @@ void BytecodeGenerator::pushFinallyContext(Label* target, RegisterID* retAddrDst
 
 void BytecodeGenerator::popFinallyContext()
 {
-    ASSERT(m_scopeContextStack.size());
-    ASSERT(m_scopeContextStack.last().isFinallyBlock);
-    ASSERT(m_finallyDepth > 0);
+    Q_ASSERT(m_scopeContextStack.size());
+    Q_ASSERT(m_scopeContextStack.last().isFinallyBlock);
+    Q_ASSERT(m_finallyDepth > 0);
     m_scopeContextStack.removeLast();
     m_finallyDepth--;
 }
@@ -1619,7 +1619,7 @@ LabelScope* BytecodeGenerator::breakTarget(const Identifier& name)
         for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
             LabelScope* scope = &m_labelScopes[i];
             if (scope->type() != LabelScope::NamedLabel) {
-                ASSERT(scope->breakTarget());
+                Q_ASSERT(scope->breakTarget());
                 return scope;
             }
         }
@@ -1629,7 +1629,7 @@ LabelScope* BytecodeGenerator::breakTarget(const Identifier& name)
     for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
         LabelScope* scope = &m_labelScopes[i];
         if (scope->name() && *scope->name() == name) {
-            ASSERT(scope->breakTarget());
+            Q_ASSERT(scope->breakTarget());
             return scope;
         }
     }
@@ -1649,7 +1649,7 @@ LabelScope* BytecodeGenerator::continueTarget(const Identifier& name)
         for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
             LabelScope* scope = &m_labelScopes[i];
             if (scope->type() == LabelScope::Loop) {
-                ASSERT(scope->continueTarget());
+                Q_ASSERT(scope->continueTarget());
                 return scope;
             }
         }
@@ -1662,7 +1662,7 @@ LabelScope* BytecodeGenerator::continueTarget(const Identifier& name)
     for (int i = m_labelScopes.size() - 1; i >= 0; --i) {
         LabelScope* scope = &m_labelScopes[i];
         if (scope->type() == LabelScope::Loop) {
-            ASSERT(scope->continueTarget());
+            Q_ASSERT(scope->continueTarget());
             result = scope;
         }
         if (scope->name() && *scope->name() == name)
@@ -1716,11 +1716,11 @@ PassRefPtr<Label> BytecodeGenerator::emitComplexJumpScopes(Label* target, Contro
 
 PassRefPtr<Label> BytecodeGenerator::emitJumpScopes(Label* target, int targetScopeDepth)
 {
-    ASSERT(scopeDepth() - targetScopeDepth >= 0);
-    ASSERT(target->isForward());
+    Q_ASSERT(scopeDepth() - targetScopeDepth >= 0);
+    Q_ASSERT(target->isForward());
 
     size_t scopeDelta = scopeDepth() - targetScopeDepth;
-    ASSERT(scopeDelta <= m_scopeContextStack.size());
+    Q_ASSERT(scopeDelta <= m_scopeContextStack.size());
     if (!scopeDelta)
         return emitJump(target);
 
@@ -1847,12 +1847,12 @@ void BytecodeGenerator::beginSwitch(RegisterID* scrutineeRegister, SwitchInfo::S
 static int32_t keyForImmediateSwitch(ExpressionNode* node, int32_t min, int32_t max)
 {
     UNUSED_PARAM(max);
-    ASSERT(node->isNumber());
+    Q_ASSERT(node->isNumber());
     double value = static_cast<NumberNode*>(node)->value();
     int32_t key = static_cast<int32_t>(value);
-    ASSERT(key == value);
-    ASSERT(key >= min);
-    ASSERT(key <= max);
+    Q_ASSERT(key == value);
+    Q_ASSERT(key >= min);
+    Q_ASSERT(key <= max);
     return key - min;
 }
 
@@ -1864,7 +1864,7 @@ static void prepareJumpTableForImmediateSwitch(SimpleJumpTable& jumpTable, int32
     for (uint32_t i = 0; i < clauseCount; ++i) {
         // We're emitting this after the clause labels should have been fixed, so 
         // the labels should not be "forward" references
-        ASSERT(!labels[i]->isForward());
+        Q_ASSERT(!labels[i]->isForward());
         jumpTable.add(keyForImmediateSwitch(nodes[i], min, max), labels[i]->bind(switchAddress, switchAddress + 3)); 
     }
 }
@@ -1872,13 +1872,13 @@ static void prepareJumpTableForImmediateSwitch(SimpleJumpTable& jumpTable, int32
 static int32_t keyForCharacterSwitch(ExpressionNode* node, int32_t min, int32_t max)
 {
     UNUSED_PARAM(max);
-    ASSERT(node->isString());
+    Q_ASSERT(node->isString());
     UString::Rep* clause = static_cast<StringNode*>(node)->value().ustring().rep();
-    ASSERT(clause->size() == 1);
+    Q_ASSERT(clause->size() == 1);
     
     int32_t key = clause->data()[0];
-    ASSERT(key >= min);
-    ASSERT(key <= max);
+    Q_ASSERT(key >= min);
+    Q_ASSERT(key <= max);
     return key - min;
 }
 
@@ -1890,7 +1890,7 @@ static void prepareJumpTableForCharacterSwitch(SimpleJumpTable& jumpTable, int32
     for (uint32_t i = 0; i < clauseCount; ++i) {
         // We're emitting this after the clause labels should have been fixed, so 
         // the labels should not be "forward" references
-        ASSERT(!labels[i]->isForward());
+        Q_ASSERT(!labels[i]->isForward());
         jumpTable.add(keyForCharacterSwitch(nodes[i], min, max), labels[i]->bind(switchAddress, switchAddress + 3)); 
     }
 }
@@ -1900,9 +1900,9 @@ static void prepareJumpTableForStringSwitch(StringJumpTable& jumpTable, int32_t 
     for (uint32_t i = 0; i < clauseCount; ++i) {
         // We're emitting this after the clause labels should have been fixed, so 
         // the labels should not be "forward" references
-        ASSERT(!labels[i]->isForward());
+        Q_ASSERT(!labels[i]->isForward());
         
-        ASSERT(nodes[i]->isString());
+        Q_ASSERT(nodes[i]->isString());
         UString::Rep* clause = static_cast<StringNode*>(nodes[i])->value().ustring().rep();
         OffsetLocation location;
         location.branchOffset = labels[i]->bind(switchAddress, switchAddress + 3);
@@ -1927,7 +1927,7 @@ void BytecodeGenerator::endSwitch(uint32_t clauseCount, RefPtr<Label>* labels, E
         SimpleJumpTable& jumpTable = m_codeBlock->addCharacterSwitchJumpTable();
         prepareJumpTableForCharacterSwitch(jumpTable, switchInfo.bytecodeOffset, clauseCount, labels, nodes, min, max);
     } else {
-        ASSERT(switchInfo.switchType == SwitchInfo::SwitchString);
+        Q_ASSERT(switchInfo.switchType == SwitchInfo::SwitchString);
         instructions()[switchInfo.bytecodeOffset + 1] = m_codeBlock->numberOfStringSwitchJumpTables();
         instructions()[switchInfo.bytecodeOffset + 2] = defaultLabel->bind(switchInfo.bytecodeOffset, switchInfo.bytecodeOffset + 3);
 

@@ -36,13 +36,13 @@
 namespace WTF {
     template<class T, typename FlagEnum> class PtrAndFlagsBase {
     public:
-        bool isFlagSet(FlagEnum flagNumber) const { ASSERT(flagNumber < 2); return m_ptrAndFlags & (1 << flagNumber); }
-        void setFlag(FlagEnum flagNumber) { ASSERT(flagNumber < 2); m_ptrAndFlags |= (1 << flagNumber);}
-        void clearFlag(FlagEnum flagNumber) { ASSERT(flagNumber < 2); m_ptrAndFlags &= ~(1 << flagNumber);}
+        bool isFlagSet(FlagEnum flagNumber) const { Q_ASSERT(flagNumber < 2); return m_ptrAndFlags & (1 << flagNumber); }
+        void setFlag(FlagEnum flagNumber) { Q_ASSERT(flagNumber < 2); m_ptrAndFlags |= (1 << flagNumber);}
+        void clearFlag(FlagEnum flagNumber) { Q_ASSERT(flagNumber < 2); m_ptrAndFlags &= ~(1 << flagNumber);}
         T* get() const { return reinterpret_cast<T*>(m_ptrAndFlags & ~3); }
         void set(T* ptr)
         {
-            ASSERT(!(reinterpret_cast<intptr_t>(ptr) & 3));
+            Q_ASSERT(!(reinterpret_cast<intptr_t>(ptr) & 3));
             m_ptrAndFlags = reinterpret_cast<intptr_t>(ptr) | (m_ptrAndFlags & 3);
 #ifndef NDEBUG
             m_leaksPtr = ptr;

@@ -49,11 +49,11 @@ namespace WTF {
         // Only prefix ++ operator supported
         Iterator& operator++()
         {
-            ASSERT(m_index != SegmentSize);
+            Q_ASSERT(m_index != SegmentSize);
             ++m_index;
             if (m_index >= m_vector.m_segments.at(m_segment)->size())  {
                 if (m_segment + 1 < m_vector.m_segments.size()) {
-                    ASSERT(m_vector.m_segments.at(m_segment)->size() > 0);
+                    Q_ASSERT(m_vector.m_segments.at(m_segment)->size() > 0);
                     ++m_segment;
                     m_index = 0;
                 } else {
@@ -166,7 +166,7 @@ namespace WTF {
 
         void grow(size_t size)
         {
-            ASSERT(size > m_size);
+            Q_ASSERT(size > m_size);
             ensureSegmentsFor(size);
             m_size = size;
         }
@@ -237,7 +237,7 @@ namespace WTF {
 
         void ensureSegment(size_t segmentIndex, size_t size)
         {
-            ASSERT(segmentIndex <= m_segments.size());
+            Q_ASSERT(segmentIndex <= m_segments.size());
             if (segmentIndex == m_segments.size())
                 m_segments.append(new Segment);
             m_segments[segmentIndex]->grow(size);

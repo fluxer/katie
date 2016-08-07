@@ -37,7 +37,7 @@ ASSERT_CLASS_FITS_IN_CELL(JSPropertyNameIterator);
 
 JSPropertyNameIterator* JSPropertyNameIterator::create(ExecState* exec, JSObject* o)
 {
-    ASSERT(!o->structure()->enumerationCache() ||
+    Q_ASSERT(!o->structure()->enumerationCache() ||
             o->structure()->enumerationCache()->cachedStructure() != o->structure() ||
             o->structure()->enumerationCache()->cachedPrototypeChain() != o->structure()->prototypeChain(exec));
 

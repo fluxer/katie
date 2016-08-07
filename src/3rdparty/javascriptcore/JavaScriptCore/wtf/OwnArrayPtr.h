@@ -35,13 +35,13 @@ namespace WTF {
         T* get() const { return m_ptr; }
         T* release() { T* ptr = m_ptr; m_ptr = 0; return ptr; }
 
-        void set(T* ptr) { ASSERT(m_ptr != ptr); safeDelete(); m_ptr = ptr; }
+        void set(T* ptr) { Q_ASSERT(m_ptr != ptr); safeDelete(); m_ptr = ptr; }
         void clear() { safeDelete(); m_ptr = 0; }
 
-        T& operator*() const { ASSERT(m_ptr); return *m_ptr; }
-        T* operator->() const { ASSERT(m_ptr); return m_ptr; }
+        T& operator*() const { Q_ASSERT(m_ptr); return *m_ptr; }
+        T* operator->() const { Q_ASSERT(m_ptr); return m_ptr; }
 
-        T& operator[](std::ptrdiff_t i) const { ASSERT(m_ptr); ASSERT(i >= 0); return m_ptr[i]; }
+        T& operator[](std::ptrdiff_t i) const { Q_ASSERT(m_ptr); Q_ASSERT(i >= 0); return m_ptr[i]; }
 
         bool operator!() const { return !m_ptr; }
 

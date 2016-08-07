@@ -42,7 +42,7 @@ namespace JSC {
 
     inline BooleanObject* asBooleanObject(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&BooleanObject::info));
+        Q_ASSERT(asObject(value)->inherits(&BooleanObject::info));
         return static_cast<BooleanObject*>(asObject(value));
     }
 

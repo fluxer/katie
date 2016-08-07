@@ -51,20 +51,20 @@ typedef struct OpaqueJSValue* JSObjectRef;
 
 inline JSC::ExecState* toJS(JSContextRef c)
 {
-    ASSERT(c);
+    Q_ASSERT(c);
     return reinterpret_cast<JSC::ExecState*>(const_cast<OpaqueJSContext*>(c));
 }
 
 inline JSC::ExecState* toJS(JSGlobalContextRef c)
 {
-    ASSERT(c);
+    Q_ASSERT(c);
     return reinterpret_cast<JSC::ExecState*>(c);
 }
 
 inline JSC::JSValue toJS(JSC::ExecState* exec, JSValueRef v)
 {
     ASSERT_UNUSED(exec, exec);
-    ASSERT(v);
+    Q_ASSERT(v);
 #if USE(JSVALUE32_64)
     JSC::JSCell* jsCell = reinterpret_cast<JSC::JSCell*>(const_cast<OpaqueJSValue*>(v));
     if (!jsCell)
@@ -80,7 +80,7 @@ inline JSC::JSValue toJS(JSC::ExecState* exec, JSValueRef v)
 inline JSC::JSValue toJSForGC(JSC::ExecState* exec, JSValueRef v)
 {
     ASSERT_UNUSED(exec, exec);
-    ASSERT(v);
+    Q_ASSERT(v);
 #if USE(JSVALUE32_64)
     JSC::JSCell* jsCell = reinterpret_cast<JSC::JSCell*>(const_cast<OpaqueJSValue*>(v));
     if (!jsCell)
@@ -137,7 +137,7 @@ inline JSContextRef toRef(JSC::ExecState* e)
 
 inline JSGlobalContextRef toGlobalRef(JSC::ExecState* e)
 {
-    ASSERT(e == e->lexicalGlobalObject()->globalExec());
+    Q_ASSERT(e == e->lexicalGlobalObject()->globalExec());
     return reinterpret_cast<JSGlobalContextRef>(e);
 }
 

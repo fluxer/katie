@@ -43,10 +43,10 @@ JSByteArray::JSByteArray(ExecState* exec, NonNullPassRefPtr<Structure> structure
     putDirect(exec->globalData().propertyNames->length, jsNumber(exec, m_storage->length()), ReadOnly | DontDelete);
 }
 
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
 JSByteArray::~JSByteArray()
 {
-    ASSERT(vptr() == JSGlobalData::jsByteArrayVPtr);
+    Q_ASSERT(vptr() == JSGlobalData::jsByteArrayVPtr);
 }
 #endif
 

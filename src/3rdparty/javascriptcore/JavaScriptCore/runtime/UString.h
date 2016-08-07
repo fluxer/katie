@@ -167,7 +167,7 @@ namespace JSC {
         UString(PassRefPtr<Rep> r)
             : m_rep(r)
         {
-            ASSERT(m_rep);
+            Q_ASSERT(m_rep);
         }
 
         size_t cost() const { return m_rep->cost(); }

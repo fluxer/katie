@@ -66,14 +66,14 @@ namespace JSC {
         bool canGetIndex(unsigned i) { return i < m_vectorLength && m_storage->m_vector[i]; }
         JSValue getIndex(unsigned i)
         {
-            ASSERT(canGetIndex(i));
+            Q_ASSERT(canGetIndex(i));
             return m_storage->m_vector[i];
         }
 
         bool canSetIndex(unsigned i) { return i < m_vectorLength; }
         void setIndex(unsigned i, JSValue v)
         {
-            ASSERT(canSetIndex(i));
+            Q_ASSERT(canSetIndex(i));
             JSValue& x = m_storage->m_vector[i];
             if (!x) {
                 ++m_storage->m_numValuesInVector;
@@ -123,7 +123,7 @@ namespace JSC {
 
     inline JSArray* asArray(JSCell* cell)
     {
-        ASSERT(cell->inherits(&JSArray::info));
+        Q_ASSERT(cell->inherits(&JSArray::info));
         return static_cast<JSArray*>(cell);
     }
 
@@ -156,15 +156,15 @@ namespace JSC {
 
     inline void MarkStack::markChildren(JSCell* cell)
     {
-        ASSERT(Heap::isCellMarked(cell));
+        Q_ASSERT(Heap::isCellMarked(cell));
         if (!cell->structure()->typeInfo().overridesMarkChildren()) {
 #ifdef NDEBUG
             asObject(cell)->markChildrenDirect(*this);
 #else
-            ASSERT(!m_isCheckingForDefaultMarkViolation);
+            Q_ASSERT(!m_isCheckingForDefaultMarkViolation);
             m_isCheckingForDefaultMarkViolation = true;
             cell->markChildren(*this);
-            ASSERT(m_isCheckingForDefaultMarkViolation);
+            Q_ASSERT(m_isCheckingForDefaultMarkViolation);
             m_isCheckingForDefaultMarkViolation = false;
 #endif
             return;
@@ -180,14 +180,14 @@ namespace JSC {
     {
         while (!m_markSets.isEmpty() || !m_values.isEmpty()) {
             while (!m_markSets.isEmpty() && m_values.size() < 50) {
-                ASSERT(!m_markSets.isEmpty());
+                Q_ASSERT(!m_markSets.isEmpty());
                 MarkSet& current = m_markSets.last();
-                ASSERT(current.m_values);
+                Q_ASSERT(current.m_values);
                 JSValue* end = current.m_end;
-                ASSERT(current.m_values);
-                ASSERT(current.m_values != end);
+                Q_ASSERT(current.m_values);
+                Q_ASSERT(current.m_values != end);
             findNextUnmarkedNullValue:
-                ASSERT(current.m_values != end);
+                Q_ASSERT(current.m_values != end);
                 JSValue value = *current.m_values;
                 current.m_values++;
 

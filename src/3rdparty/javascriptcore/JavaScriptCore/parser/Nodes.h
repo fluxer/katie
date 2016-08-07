@@ -116,7 +116,7 @@ namespace JSC {
     public:
         virtual ~ParserArenaRefCounted()
         {
-            ASSERT(deletionHasBegun());
+            Q_ASSERT(deletionHasBegun());
         }
     };
 
@@ -292,7 +292,7 @@ namespace JSC {
 
         void setSubexpressionInfo(uint32_t subexpressionDivot, uint16_t subexpressionOffset)
         {
-            ASSERT(subexpressionDivot <= divot());
+            Q_ASSERT(subexpressionDivot <= divot());
             if ((divot() - subexpressionDivot) & ~0xFFFF) // Overflow means we can't do this safely, so just point at the primary divot
                 return;
             m_subexpressionDivotOffset = divot() - subexpressionDivot;
@@ -321,7 +321,7 @@ namespace JSC {
 
         void setSubexpressionInfo(uint32_t subexpressionDivot, uint16_t subexpressionOffset)
         {
-            ASSERT(subexpressionDivot >= divot());
+            Q_ASSERT(subexpressionDivot >= divot());
             if ((subexpressionDivot - divot()) & ~0xFFFF) // Overflow means we can't do this safely, so just point at the primary divot
                 return;
             m_subexpressionDivotOffset = subexpressionDivot - divot();
@@ -1383,8 +1383,8 @@ namespace JSC {
 
         void adoptData(std::auto_ptr<ScopeNodeData> data)
         {
-            ASSERT(!data->m_arena.contains(this));
-            ASSERT(!m_data);
+            Q_ASSERT(!data->m_arena.contains(this));
+            Q_ASSERT(!m_data);
             m_data.adopt(data);
         }
         ScopeNodeData* data() const { return m_data.get(); }
@@ -1403,12 +1403,12 @@ namespace JSC {
         bool usesThis() const { return m_features & ThisFeature; }
         bool needsActivation() const { return m_features & (EvalFeature | ClosureFeature | WithFeature | CatchFeature); }
 
-        VarStack& varStack() { ASSERT(m_data); return m_data->m_varStack; }
-        FunctionStack& functionStack() { ASSERT(m_data); return m_data->m_functionStack; }
+        VarStack& varStack() { Q_ASSERT(m_data); return m_data->m_varStack; }
+        FunctionStack& functionStack() { Q_ASSERT(m_data); return m_data->m_functionStack; }
 
         int neededConstants()
         {
-            ASSERT(m_data);
+            Q_ASSERT(m_data);
             // We may need 2 more constants than the count given by the parser,
             // because of the various uses of jsUndefined() and jsNull().
             return m_data->m_numConstants + 2;

@@ -374,14 +374,14 @@ public:
 
     Jump branchAddPtr(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         addPtr(src, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }
 
     Jump branchSubPtr(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Zero) || (cond == NonZero));
         subPtr(imm, dest);
         return Jump(m_assembler.jCC(x86Condition(cond)));
     }

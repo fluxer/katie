@@ -164,7 +164,7 @@ namespace WTF {
         const_iterator& operator++()
         {
             checkValidity();
-            ASSERT(m_position != m_endPosition);
+            Q_ASSERT(m_position != m_endPosition);
             ++m_position;
             skipEmptyBuckets();
             return *this;
@@ -188,7 +188,7 @@ namespace WTF {
         void checkValidity() const
         {
 #if CHECK_HASHTABLE_ITERATORS
-            ASSERT(m_table);
+            Q_ASSERT(m_table);
 #endif
         }
 
@@ -196,9 +196,9 @@ namespace WTF {
 #if CHECK_HASHTABLE_ITERATORS
         void checkValidity(const const_iterator& other) const
         {
-            ASSERT(m_table);
+            Q_ASSERT(m_table);
             ASSERT_UNUSED(other, other.m_table);
-            ASSERT(m_table == other.m_table);
+            Q_ASSERT(m_table == other.m_table);
         }
 #else
         void checkValidity(const const_iterator&) const { }
@@ -410,7 +410,7 @@ namespace WTF {
     public:
         // All access to m_iterators should be guarded with m_mutex.
         mutable const_iterator* m_iterators;
-        mutable Mutex m_mutex;
+        mutable Mutex* m_mutex;
 #endif
     };
 
@@ -423,6 +423,7 @@ namespace WTF {
         , m_deletedCount(0)
 #if CHECK_HASHTABLE_ITERATORS
         , m_iterators(0)
+        , m_mutex(new QMutex)
 #endif
     {
     }
@@ -437,7 +438,7 @@ namespace WTF {
         return key;
     }
 
-#if ASSERT_DISABLED
+#ifdef QT_NO_DEBUG
 
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     template<typename T, typename HashTranslator>
@@ -453,11 +454,11 @@ namespace WTF {
     {
         if (!HashFunctions::safeToCompareToEmptyOrDeleted)
             return;
-        ASSERT(!HashTranslator::equal(KeyTraits::emptyValue(), key));
+        Q_ASSERT(!HashTranslator::equal(KeyTraits::emptyValue(), key));
         ValueType deletedValue = Traits::emptyValue();
         deletedValue.~ValueType();
         Traits::constructDeletedValue(deletedValue);
-        ASSERT(!HashTranslator::equal(Extractor::extract(deletedValue), key));
+        Q_ASSERT(!HashTranslator::equal(Extractor::extract(deletedValue), key));
         new (&deletedValue) ValueType(Traits::emptyValue());
     }
 
@@ -514,7 +515,7 @@ namespace WTF {
     template<typename T, typename HashTranslator>
     inline typename HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::LookupType HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::lookupForWriting(const T& key)
     {
-        ASSERT(m_table);
+        Q_ASSERT(m_table);
         checkKey<T, HashTranslator>(key);
 
         int k = 0;
@@ -566,7 +567,7 @@ namespace WTF {
     template<typename T, typename HashTranslator>
     inline typename HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::FullLookupType HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::fullLookupForWriting(const T& key)
     {
-        ASSERT(m_table);
+        Q_ASSERT(m_table);
         checkKey<T, HashTranslator>(key);
 
         int k = 0;
@@ -627,7 +628,7 @@ namespace WTF {
 
         checkTableConsistency();
 
-        ASSERT(m_table);
+        Q_ASSERT(m_table);
 
         int k = 0;
         ValueType* table = m_table;
@@ -690,7 +691,7 @@ namespace WTF {
             KeyType enteredKey = Extractor::extract(*entry);
             expand();
             pair<iterator, bool> p = std::make_pair(find(enteredKey), true);
-            ASSERT(p.first != end());
+            Q_ASSERT(p.first != end());
             return p;
         }
         
@@ -735,7 +736,7 @@ namespace WTF {
             KeyType enteredKey = Extractor::extract(*entry);
             expand();
             pair<iterator, bool> p = std::make_pair(find(enteredKey), true);
-            ASSERT(p.first != end());
+            Q_ASSERT(p.first != end());
             return p;
         }
 
@@ -747,9 +748,9 @@ namespace WTF {
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     inline void HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::reinsert(ValueType& entry)
     {
-        ASSERT(m_table);
-        ASSERT(!lookupForWriting(Extractor::extract(entry)).second);
-        ASSERT(!isDeletedBucket(*(lookupForWriting(Extractor::extract(entry)).first)));
+        Q_ASSERT(m_table);
+        Q_ASSERT(!lookupForWriting(Extractor::extract(entry)).second);
+        Q_ASSERT(!isDeletedBucket(*(lookupForWriting(Extractor::extract(entry)).first)));
 #if DUMP_HASHTABLE_STATS
         atomicIncrement(&HashTableStats::numReinserts);
 #endif
@@ -988,8 +989,8 @@ namespace WTF {
     void HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::checkTableConsistency() const
     {
         checkTableConsistencyExceptSize();
-        ASSERT(!shouldExpand());
-        ASSERT(!shouldShrink());
+        Q_ASSERT(!shouldExpand());
+        Q_ASSERT(!shouldShrink());
     }
 
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
@@ -1011,15 +1012,15 @@ namespace WTF {
             }
 
             const_iterator it = find(Extractor::extract(*entry));
-            ASSERT(entry == it.m_position);
+            Q_ASSERT(entry == it.m_position);
             ++count;
         }
 
-        ASSERT(count == m_keyCount);
-        ASSERT(deletedCount == m_deletedCount);
-        ASSERT(m_tableSize >= m_minTableSize);
-        ASSERT(m_tableSizeMask);
-        ASSERT(m_tableSize == m_tableSizeMask + 1);
+        Q_ASSERT(count == m_keyCount);
+        Q_ASSERT(deletedCount == m_deletedCount);
+        Q_ASSERT(m_tableSize >= m_minTableSize);
+        Q_ASSERT(m_tableSizeMask);
+        Q_ASSERT(m_tableSize == m_tableSizeMask + 1);
     }
 
 #endif // CHECK_HASHTABLE_CONSISTENCY
@@ -1052,11 +1053,11 @@ namespace WTF {
             it->m_next = 0;
         } else {
             QMutexLocker lock(table->m_mutex);
-            ASSERT(table->m_iterators != it);
+            Q_ASSERT(table->m_iterators != it);
             it->m_next = table->m_iterators;
             table->m_iterators = it;
             if (it->m_next) {
-                ASSERT(!it->m_next->m_previous);
+                Q_ASSERT(!it->m_next->m_previous);
                 it->m_next->m_previous = it;
             }
         }
@@ -1070,20 +1071,20 @@ namespace WTF {
 
         // Delete iterator from doubly-linked list of iterators.
         if (!it->m_table) {
-            ASSERT(!it->m_next);
-            ASSERT(!it->m_previous);
+            Q_ASSERT(!it->m_next);
+            Q_ASSERT(!it->m_previous);
         } else {
             QMutexLocker lock(it->m_table->m_mutex);
             if (it->m_next) {
-                ASSERT(it->m_next->m_previous == it);
+                Q_ASSERT(it->m_next->m_previous == it);
                 it->m_next->m_previous = it->m_previous;
             }
             if (it->m_previous) {
-                ASSERT(it->m_table->m_iterators != it);
-                ASSERT(it->m_previous->m_next == it);
+                Q_ASSERT(it->m_table->m_iterators != it);
+                Q_ASSERT(it->m_previous->m_next == it);
                 it->m_previous->m_next = it->m_next;
             } else {
-                ASSERT(it->m_table->m_iterators == it);
+                Q_ASSERT(it->m_table->m_iterators == it);
                 it->m_table->m_iterators = it->m_next;
             }
         }

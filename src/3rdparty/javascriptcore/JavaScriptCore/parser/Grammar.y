@@ -105,14 +105,14 @@ template <typename T> inline NodeDeclarationInfo<T> createNodeDeclarationInfo(T 
     ParserArenaData<DeclarationStacks::FunctionStack>* funcDecls,
     CodeFeatures info, int numConstants) 
 {
-    ASSERT((info & ~AllFeatures) == 0);
+    Q_ASSERT((info & ~AllFeatures) == 0);
     NodeDeclarationInfo<T> result = { node, varDecls, funcDecls, info, numConstants };
     return result;
 }
 
 template <typename T> inline NodeInfo<T> createNodeInfo(T node, CodeFeatures info, int numConstants)
 {
-    ASSERT((info & ~AllFeatures) == 0);
+    Q_ASSERT((info & ~AllFeatures) == 0);
     NodeInfo<T> result = { node, info, numConstants };
     return result;
 }
@@ -1870,7 +1870,7 @@ static ExpressionNode* makeAssignNode(JSGlobalData* globalData, ExpressionNode* 
             return node;
         }
     }
-    ASSERT(loc->isDotAccessorNode());
+    Q_ASSERT(loc->isDotAccessorNode());
     DotAccessorNode* dot = static_cast<DotAccessorNode*>(loc);
     if (op == OpEqual)
         return new (globalData) AssignDotNode(globalData, dot->base(), dot->identifier(), expr, exprHasAssignments, dot->divot(), dot->divot() - start, end - dot->divot());
@@ -1895,7 +1895,7 @@ static ExpressionNode* makePrefixNode(JSGlobalData* globalData, ExpressionNode* 
         node->setSubexpressionInfo(bracket->divot(), bracket->startOffset());
         return node;
     }
-    ASSERT(expr->isDotAccessorNode());
+    Q_ASSERT(expr->isDotAccessorNode());
     DotAccessorNode* dot = static_cast<DotAccessorNode*>(expr);
     PrefixDotNode* node = new (globalData) PrefixDotNode(globalData, dot->base(), dot->identifier(), op, divot, divot - start, end - divot);
     node->setSubexpressionInfo(dot->divot(), dot->startOffset());
@@ -1918,7 +1918,7 @@ static ExpressionNode* makePostfixNode(JSGlobalData* globalData, ExpressionNode*
         return node;
         
     }
-    ASSERT(expr->isDotAccessorNode());
+    Q_ASSERT(expr->isDotAccessorNode());
     DotAccessorNode* dot = static_cast<DotAccessorNode*>(expr);
     PostfixDotNode* node = new (globalData) PostfixDotNode(globalData, dot->base(), dot->identifier(), op, divot, divot - start, end - divot);
     node->setSubexpressionInfo(dot->divot(), dot->endOffset());
@@ -1944,7 +1944,7 @@ static ExpressionNodeInfo makeFunctionCallNode(JSGlobalData* globalData, Express
         node->setSubexpressionInfo(bracket->divot(), bracket->endOffset());
         return createNodeInfo<ExpressionNode*>(node, features, numConstants);
     }
-    ASSERT(func.m_node->isDotAccessorNode());
+    Q_ASSERT(func.m_node->isDotAccessorNode());
     DotAccessorNode* dot = static_cast<DotAccessorNode*>(func.m_node);
     FunctionCallDotNode* node;
     if (dot->identifier() == globalData->propertyNames->call)
@@ -1978,7 +1978,7 @@ static ExpressionNode* makeDeleteNode(JSGlobalData* globalData, ExpressionNode* 
         BracketAccessorNode* bracket = static_cast<BracketAccessorNode*>(expr);
         return new (globalData) DeleteBracketNode(globalData, bracket->base(), bracket->subscript(), divot, divot - start, end - divot);
     }
-    ASSERT(expr->isDotAccessorNode());
+    Q_ASSERT(expr->isDotAccessorNode());
     DotAccessorNode* dot = static_cast<DotAccessorNode*>(expr);
     return new (globalData) DeleteDotNode(globalData, dot->base(), dot->identifier(), divot, divot - start, end - divot);
 }

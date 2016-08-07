@@ -112,7 +112,7 @@ namespace JSC {
 
     inline Arguments* asArguments(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&Arguments::info));
+        Q_ASSERT(asObject(value)->inherits(&Arguments::info));
         return static_cast<Arguments*>(asObject(value));
     }
 
@@ -182,7 +182,7 @@ namespace JSC {
         , d(new ArgumentsData)
     {
         if (callFrame->callee() && callFrame->callee()->inherits(&JSC::JSFunction::info))
-            ASSERT(!asFunction(callFrame->callee())->jsExecutable()->parameterCount());
+            Q_ASSERT(!asFunction(callFrame->callee())->jsExecutable()->parameterCount());
 
         unsigned numArguments = callFrame->argumentCount() - 1;
 
@@ -211,7 +211,7 @@ namespace JSC {
 
     inline void Arguments::copyRegisters()
     {
-        ASSERT(!isTornOff());
+        Q_ASSERT(!isTornOff());
 
         if (!d->numParameters)
             return;
@@ -228,7 +228,7 @@ namespace JSC {
     // This JSActivation function is defined here so it can get at Arguments::setRegisters.
     inline void JSActivation::copyRegisters(Arguments* arguments)
     {
-        ASSERT(!d()->registerArray);
+        Q_ASSERT(!d()->registerArray);
 
         size_t numParametersMinusThis = d()->functionExecutable->generatedBytecode().m_numParameters - 1;
         size_t numVars = d()->functionExecutable->generatedBytecode().m_numVars;

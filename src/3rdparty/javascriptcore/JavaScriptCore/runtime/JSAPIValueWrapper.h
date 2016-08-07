@@ -48,7 +48,7 @@ namespace JSC {
             : JSCell(exec->globalData().apiWrapperStructure.get())
             , m_value(value)
         {
-            ASSERT(!value.isCell());
+            Q_ASSERT(!value.isCell());
         }
 
         JSValue m_value;

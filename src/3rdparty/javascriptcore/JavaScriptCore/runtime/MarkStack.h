@@ -65,8 +65,8 @@ namespace JSC {
 
         ~MarkStack()
         {
-            ASSERT(m_markSets.isEmpty());
-            ASSERT(m_values.isEmpty());
+            Q_ASSERT(m_markSets.isEmpty());
+            Q_ASSERT(m_values.isEmpty());
         }
 
     private:
@@ -78,7 +78,7 @@ namespace JSC {
                 , m_end(end)
                 , m_properties(properties)
             {
-                ASSERT(values);
+                Q_ASSERT(values);
             }
             JSValue* m_values;
             JSValue* m_end;
@@ -130,13 +130,13 @@ namespace JSC {
 
             inline T removeLast()
             {
-                ASSERT(m_top);
+                Q_ASSERT(m_top);
                 return m_data[--m_top];
             }
             
             inline T& last()
             {
-                ASSERT(m_top);
+                Q_ASSERT(m_top);
                 return m_data[m_top - 1];
             }
 
@@ -149,8 +149,8 @@ namespace JSC {
 
             inline void shrinkAllocation(size_t size)
             {
-                ASSERT(size <= m_allocated);
-                ASSERT(0 == (size % MarkStack::pageSize()));
+                Q_ASSERT(size <= m_allocated);
+                Q_ASSERT(0 == (size % MarkStack::pageSize()));
                 if (size == m_allocated)
                     return;
 #if OS(WINDOWS) || PLATFORM(BREWMP)

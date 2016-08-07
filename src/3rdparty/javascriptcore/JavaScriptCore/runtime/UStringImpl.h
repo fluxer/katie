@@ -61,7 +61,7 @@ public:
 
     static PassRefPtr<UStringImpl> create(PassRefPtr<UStringImpl> rep, int offset, int length)
     {
-        ASSERT(rep);
+        Q_ASSERT(rep);
         rep->checkConsistency();
         return adoptRef(new UStringImpl(rep->m_data + offset, length, rep->bufferOwnerString()));
     }
@@ -116,8 +116,8 @@ public:
         return m_length;
     }
     unsigned hash() const { if (!m_hash) m_hash = computeHash(data(), m_length); return m_hash; }
-    unsigned existingHash() const { ASSERT(m_hash); return m_hash; } // fast path for Identifiers
-    void setHash(unsigned hash) { ASSERT(hash == computeHash(data(), m_length)); m_hash = hash; } // fast path for Identifiers
+    unsigned existingHash() const { Q_ASSERT(m_hash); return m_hash; } // fast path for Identifiers
+    void setHash(unsigned hash) { Q_ASSERT(hash == computeHash(data(), m_length)); m_hash = hash; } // fast path for Identifiers
     bool isIdentifier() const { return m_refCountAndFlags & s_refCountFlagIsIdentifier; }
     void setIsIdentifier(bool isIdentifier)
     {
@@ -139,8 +139,8 @@ public:
             memcpy(destination, source, numCharacters * sizeof(UChar));
     }
 
-    static unsigned computeHash(const UChar* s, int length) { ASSERT(length >= 0); return WTF::stringHash(s, length); }
-    static unsigned computeHash(const char* s, int length) { ASSERT(length >= 0); return WTF::stringHash(s, length); }
+    static unsigned computeHash(const UChar* s, int length) { Q_ASSERT(length >= 0); return WTF::stringHash(s, length); }
+    static unsigned computeHash(const char* s, int length) { Q_ASSERT(length >= 0); return WTF::stringHash(s, length); }
     static unsigned computeHash(const char* s) { return WTF::stringHash(s); }
 
     static UStringImpl& null() { return *s_null; }
@@ -149,9 +149,9 @@ public:
     ALWAYS_INLINE void checkConsistency() const
     {
         // There is no recursion of substrings.
-        ASSERT(bufferOwnerString()->bufferOwnership() != BufferSubstring);
+        Q_ASSERT(bufferOwnerString()->bufferOwnership() != BufferSubstring);
         // Static strings cannot be put in identifier tables, because they are globally shared.
-        ASSERT(!isStatic() || !isIdentifier());
+        Q_ASSERT(!isStatic() || !isIdentifier());
     }
 
 private:
@@ -173,7 +173,7 @@ private:
         , m_refCountAndFlags(s_refCountIncrement | ownership)
         , m_hash(0)
     {
-        ASSERT((ownership == BufferInternal) || (ownership == BufferOwned));
+        Q_ASSERT((ownership == BufferInternal) || (ownership == BufferOwned));
         checkConsistency();
     }
 
@@ -202,8 +202,8 @@ private:
         // Do use static strings as a base for substrings; UntypedPtrAndBitfield assumes
         // that all pointers will be at least 8-byte aligned, we cannot guarantee that of
         // UStringImpls that are not heap allocated.
-        ASSERT(m_bufferSubstring->size());
-        ASSERT(!m_bufferSubstring->isStatic());
+        Q_ASSERT(m_bufferSubstring->size());
+        Q_ASSERT(!m_bufferSubstring->isStatic());
         checkConsistency();
     }
 

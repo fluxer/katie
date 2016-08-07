@@ -37,7 +37,7 @@ namespace JSC {
  
 SharedUChar* UStringImpl::baseSharedBuffer()
 {
-    ASSERT((bufferOwnership() == BufferShared)
+    Q_ASSERT((bufferOwnership() == BufferShared)
         || ((bufferOwnership() == BufferOwned) && !m_buffer));
 
     if (bufferOwnership() != BufferShared) {
@@ -52,7 +52,7 @@ SharedUChar* UStringImpl::sharedBuffer()
 {
     if (m_length < s_minLengthToShare)
         return 0;
-    ASSERT(!isStatic());
+    Q_ASSERT(!isStatic());
 
     UStringImpl* owner = bufferOwnerString();
     if (owner->bufferOwnership() == BufferInternal)
@@ -63,7 +63,7 @@ SharedUChar* UStringImpl::sharedBuffer()
 
 UStringImpl::~UStringImpl()
 {
-    ASSERT(!isStatic());
+    Q_ASSERT(!isStatic());
     checkConsistency();
 
     if (isIdentifier())
@@ -75,7 +75,7 @@ UStringImpl::~UStringImpl()
         else if (bufferOwnership() == BufferSubstring)
             m_bufferSubstring->deref();
         else {
-            ASSERT(bufferOwnership() == BufferShared);
+            Q_ASSERT(bufferOwnership() == BufferShared);
             m_bufferShared->deref();
         }
     }

@@ -38,13 +38,13 @@ namespace JSC {
         bool canAccessIndex(unsigned i) { return i < m_storage->length(); }
         JSValue getIndex(ExecState* exec, unsigned i)
         {
-            ASSERT(canAccessIndex(i));
+            Q_ASSERT(canAccessIndex(i));
             return jsNumber(exec, m_storage->data()[i]);
         }
 
         void setIndex(unsigned i, int value)
         {
-            ASSERT(canAccessIndex(i));
+            Q_ASSERT(canAccessIndex(i));
             if (value & ~0xFF) {
                 if (value < 0)
                     value = 0;
@@ -56,7 +56,7 @@ namespace JSC {
         
         void setIndex(unsigned i, double value)
         {
-            ASSERT(canAccessIndex(i));
+            Q_ASSERT(canAccessIndex(i));
             if (!(value > 0)) // Clamp NaN to 0
                 value = 0;
             else if (value > 255)
@@ -91,7 +91,7 @@ namespace JSC {
 
         WTF::ByteArray* storage() const { return m_storage.get(); }
 
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
         virtual ~JSByteArray();
 #endif
 

@@ -105,7 +105,7 @@ namespace JSC {
 
     inline JSNumberCell* asNumberCell(JSValue v)
     {
-        ASSERT(isNumberCell(v));
+        Q_ASSERT(isNumberCell(v));
         return static_cast<JSNumberCell*>(v.asCell());
     }
 
@@ -191,7 +191,7 @@ namespace JSC {
 
     inline double JSValue::uncheckedGetNumber() const
     {
-        ASSERT(isNumber());
+        Q_ASSERT(isNumber());
         return JSImmediate::isImmediate(asValue()) ? JSImmediate::toDouble(asValue()) : asDouble();
     }
 
@@ -206,70 +206,70 @@ namespace JSC {
     inline JSValue::JSValue(ExecState*, double d)
     {
         JSValue v = JSImmediate::from(d);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(ExecState*, int i)
     {
         JSValue v = JSImmediate::from(i);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(ExecState*, unsigned i)
     {
         JSValue v = JSImmediate::from(i);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(ExecState*, long i)
     {
         JSValue v = JSImmediate::from(i);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(ExecState*, unsigned long i)
     {
         JSValue v = JSImmediate::from(i);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(ExecState*, long long i)
     {
         JSValue v = JSImmediate::from(static_cast<double>(i));
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(ExecState*, unsigned long long i)
     {
         JSValue v = JSImmediate::from(static_cast<double>(i));
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(JSGlobalData*, double d)
     {
         JSValue v = JSImmediate::from(d);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(JSGlobalData*, int i)
     {
         JSValue v = JSImmediate::from(i);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
     inline JSValue::JSValue(JSGlobalData*, unsigned i)
     {
         JSValue v = JSImmediate::from(i);
-        ASSERT(v);
+        Q_ASSERT(v);
         *this = v;
     }
 
@@ -290,7 +290,7 @@ namespace JSC {
 
     inline double JSValue::uncheckedGetNumber() const
     {
-        ASSERT(isNumber());
+        Q_ASSERT(isNumber());
         return JSImmediate::toDouble(asValue());
     }
 
@@ -300,25 +300,25 @@ namespace JSC {
 
     inline JSValue::JSValue(ExecState*, char i)
     {
-        ASSERT(JSImmediate::from(i));
+        Q_ASSERT(JSImmediate::from(i));
         *this = JSImmediate::from(i);
     }
 
     inline JSValue::JSValue(ExecState*, unsigned char i)
     {
-        ASSERT(JSImmediate::from(i));
+        Q_ASSERT(JSImmediate::from(i));
         *this = JSImmediate::from(i);
     }
 
     inline JSValue::JSValue(ExecState*, short i)
     {
-        ASSERT(JSImmediate::from(i));
+        Q_ASSERT(JSImmediate::from(i));
         *this = JSImmediate::from(i);
     }
 
     inline JSValue::JSValue(ExecState*, unsigned short i)
     {
-        ASSERT(JSImmediate::from(i));
+        Q_ASSERT(JSImmediate::from(i));
         *this = JSImmediate::from(i);
     }
 
@@ -346,7 +346,7 @@ namespace JSC {
         else if (LIKELY(isDouble()))
             result = asDouble();
         else {
-            ASSERT(!isNumber());
+            Q_ASSERT(!isNumber());
             return false;
         }
         return true;

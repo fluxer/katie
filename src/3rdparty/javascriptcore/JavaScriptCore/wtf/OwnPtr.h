@@ -56,14 +56,14 @@ namespace WTF {
         PtrType release() { PtrType ptr = m_ptr; m_ptr = 0; return ptr; }
 
         // FIXME: This should be renamed to adopt. 
-        void set(PtrType ptr) { ASSERT(!ptr || m_ptr != ptr); deleteOwnedPtr(m_ptr); m_ptr = ptr; }
+        void set(PtrType ptr) { Q_ASSERT(!ptr || m_ptr != ptr); deleteOwnedPtr(m_ptr); m_ptr = ptr; }
 
-        void adopt(std::auto_ptr<ValueType> autoPtr) { ASSERT(!autoPtr.get() || m_ptr != autoPtr.get()); deleteOwnedPtr(m_ptr); m_ptr = autoPtr.release(); }
+        void adopt(std::auto_ptr<ValueType> autoPtr) { Q_ASSERT(!autoPtr.get() || m_ptr != autoPtr.get()); deleteOwnedPtr(m_ptr); m_ptr = autoPtr.release(); }
 
         void clear() { deleteOwnedPtr(m_ptr); m_ptr = 0; }
 
-        ValueType& operator*() const { ASSERT(m_ptr); return *m_ptr; }
-        PtrType operator->() const { ASSERT(m_ptr); return m_ptr; }
+        ValueType& operator*() const { Q_ASSERT(m_ptr); return *m_ptr; }
+        PtrType operator->() const { Q_ASSERT(m_ptr); return m_ptr; }
 
         bool operator!() const { return !m_ptr; }
 

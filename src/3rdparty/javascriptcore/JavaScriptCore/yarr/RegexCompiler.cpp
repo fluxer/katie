@@ -118,7 +118,7 @@ public:
                     // (if so we won't re-enter the loop, since the loop condition above
                     // will definitely fail) - but this does mean we cannot use a UChar
                     // to represent unicodeCurr, we must use a 32-bit value instead.
-                    ASSERT(unicodeCurr <= 0xffff);
+                    Q_ASSERT(unicodeCurr <= 0xffff);
 
                     if (isUnicodeUpper(unicodeCurr)) {
                         UChar lowerCaseRangeBegin = Unicode::toLower(unicodeCurr);
@@ -410,7 +410,7 @@ public:
 
     void atomCharacterClassBuiltIn(BuiltInCharacterClassID classID, bool invert)
     {
-        ASSERT(classID != NewlineClassID);
+        Q_ASSERT(classID != NewlineClassID);
 
         switch (classID) {
         case DigitClassID:
@@ -459,8 +459,8 @@ public:
 
     void atomParenthesesEnd()
     {
-        ASSERT(m_alternative->m_parent);
-        ASSERT(m_alternative->m_parent->m_parent);
+        Q_ASSERT(m_alternative->m_parent);
+        Q_ASSERT(m_alternative->m_parent->m_parent);
         m_alternative = m_alternative->m_parent->m_parent;
         
         m_alternative->lastTerm().parentheses.lastSubpatternId = m_pattern.m_numSubpatterns;
@@ -468,7 +468,7 @@ public:
 
     void atomBackReference(unsigned subpatternId)
     {
-        ASSERT(subpatternId);
+        Q_ASSERT(subpatternId);
         m_pattern.m_maxBackReference = std::max(m_pattern.m_maxBackReference, subpatternId);
 
         if (subpatternId > m_pattern.m_numSubpatterns) {
@@ -477,12 +477,12 @@ public:
         }
 
         PatternAlternative* currentAlternative = m_alternative;
-        ASSERT(currentAlternative);
+        Q_ASSERT(currentAlternative);
 
         // Note to self: if we waited until the AST was baked, we could also remove forwards refs 
         while ((currentAlternative = currentAlternative->m_parent->m_parent)) {
             PatternTerm& term = currentAlternative->lastTerm();
-            ASSERT((term.type == PatternTerm::TypeParenthesesSubpattern) || (term.type == PatternTerm::TypeParentheticalAssertion));
+            Q_ASSERT((term.type == PatternTerm::TypeParenthesesSubpattern) || (term.type == PatternTerm::TypeParentheticalAssertion));
 
             if ((term.type == PatternTerm::TypeParenthesesSubpattern) && term.invertOrCapture && (subpatternId == term.subpatternId)) {
                 m_alternative->m_terms.append(PatternTerm::ForwardReference());
@@ -521,8 +521,8 @@ public:
 
     void quantifyAtom(unsigned min, unsigned max, bool greedy)
     {
-        ASSERT(min <= max);
-        ASSERT(m_alternative->m_terms.size());
+        Q_ASSERT(min <= max);
+        Q_ASSERT(m_alternative->m_terms.size());
 
         if (!max) {
             m_alternative->removeLastTerm();
@@ -530,8 +530,8 @@ public:
         }
 
         PatternTerm& term = m_alternative->lastTerm();
-        ASSERT(term.type > PatternTerm::TypeAssertionWordBoundary);
-        ASSERT((term.quantityCount == 1) && (term.quantityType == QuantifierFixedCount));
+        Q_ASSERT(term.type > PatternTerm::TypeAssertionWordBoundary);
+        Q_ASSERT((term.quantityCount == 1) && (term.quantityType == QuantifierFixedCount));
 
         // For any assertion with a zero minimum, not matching is valid and has no effect,
         // remove it.  Otherwise, we need to match as least once, but there is no point
@@ -671,8 +671,8 @@ public:
             hasFixedSize &= alternative->m_hasFixedSize;
         }
         
-        ASSERT(minimumInputSize != UINT_MAX);
-        ASSERT(maximumCallFrameSize >= initialCallFrameSize);
+        Q_ASSERT(minimumInputSize != UINT_MAX);
+        Q_ASSERT(maximumCallFrameSize >= initialCallFrameSize);
 
         disjunction->m_hasFixedSize = hasFixedSize;
         disjunction->m_minimumSize = minimumInputSize;
@@ -708,13 +708,13 @@ const char* compileRegex(const UString& patternString, RegexPattern& pattern)
         unsigned numSubpatterns = pattern.m_numSubpatterns;
 
         constructor.reset();
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
         const char* error =
 #endif
             parse(constructor, patternString, numSubpatterns);
 
-        ASSERT(!error);
-        ASSERT(numSubpatterns == pattern.m_numSubpatterns);
+        Q_ASSERT(!error);
+        Q_ASSERT(numSubpatterns == pattern.m_numSubpatterns);
     }
 
     constructor.setupOffsets();

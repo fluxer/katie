@@ -68,7 +68,7 @@ namespace JSC {
         unsigned offsetOf(void* pointerIntoCode)
         {
             intptr_t result = reinterpret_cast<intptr_t>(pointerIntoCode) - reinterpret_cast<intptr_t>(m_ref.m_code.executableAddress());
-            ASSERT(static_cast<intptr_t>(static_cast<unsigned>(result)) == result);
+            Q_ASSERT(static_cast<intptr_t>(static_cast<unsigned>(result)) == result);
             return static_cast<unsigned>(result);
         }
 
@@ -85,7 +85,7 @@ namespace JSC {
 
         size_t size()
         {
-            ASSERT(m_ref.m_code.executableAddress());
+            Q_ASSERT(m_ref.m_code.executableAddress());
             return m_ref.m_size;
         }
 

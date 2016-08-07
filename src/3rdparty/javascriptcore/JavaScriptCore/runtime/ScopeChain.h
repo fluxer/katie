@@ -41,8 +41,8 @@ namespace JSC {
             , globalThis(globalThis)
             , refCount(1)
         {
-            ASSERT(globalData);
-            ASSERT(globalObject);
+            Q_ASSERT(globalData);
+            Q_ASSERT(globalObject);
         }
 #ifndef NDEBUG
         // Due to the number of subtle and timing dependent bugs that have occurred due
@@ -65,8 +65,8 @@ namespace JSC {
         JSObject* globalThis;
         int refCount;
 
-        void deref() { ASSERT(refCount); if (--refCount == 0) { release();} }
-        void ref() { ASSERT(refCount); ++refCount; }
+        void deref() { Q_ASSERT(refCount); if (--refCount == 0) { release();} }
+        void ref() { Q_ASSERT(refCount); ++refCount; }
         void release();
 
         // Before calling "push" on a bare ScopeChainNode, a client should
@@ -93,13 +93,13 @@ namespace JSC {
 
     inline ScopeChainNode* ScopeChainNode::push(JSObject* o)
     {
-        ASSERT(o);
+        Q_ASSERT(o);
         return new ScopeChainNode(this, o, globalData, globalObject, globalThis);
     }
 
     inline ScopeChainNode* ScopeChainNode::pop()
     {
-        ASSERT(next);
+        Q_ASSERT(next);
         ScopeChainNode* result = next;
 
         if (--refCount != 0)
@@ -114,7 +114,7 @@ namespace JSC {
     {
         // This function is only called by deref(),
         // Deref ensures these conditions are true.
-        ASSERT(refCount == 0);
+        Q_ASSERT(refCount == 0);
         ScopeChainNode* n = this;
         do {
             ScopeChainNode* next = n->next;

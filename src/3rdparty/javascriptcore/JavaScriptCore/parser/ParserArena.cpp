@@ -40,7 +40,7 @@ ParserArena::ParserArena()
 
 inline void* ParserArena::freeablePool()
 {
-    ASSERT(m_freeablePoolEnd);
+    Q_ASSERT(m_freeablePoolEnd);
     return m_freeablePoolEnd - freeablePoolSize;
 }
 
@@ -105,7 +105,7 @@ void ParserArena::allocateFreeablePool()
     char* pool = static_cast<char*>(fastMalloc(freeablePoolSize));
     m_freeableMemory = pool;
     m_freeablePoolEnd = pool + freeablePoolSize;
-    ASSERT(freeablePool() == pool);
+    Q_ASSERT(freeablePool() == pool);
 }
 
 bool ParserArena::isEmpty() const

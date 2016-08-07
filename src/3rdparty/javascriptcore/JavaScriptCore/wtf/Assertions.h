@@ -50,34 +50,6 @@
 #include <inttypes.h>
 #endif
 
-#ifdef NDEBUG
-#define ASSERTIONS_DISABLED_DEFAULT 1
-#else
-#define ASSERTIONS_DISABLED_DEFAULT 0
-#endif
-
-#if COMPILER(MSVC7) || COMPILER(WINSCW)
-#define HAVE_VARIADIC_MACRO 0
-#else
-#define HAVE_VARIADIC_MACRO 1
-#endif
-
-#ifndef ASSERT_DISABLED
-#define ASSERT_DISABLED ASSERTIONS_DISABLED_DEFAULT
-#endif
-
-#ifndef ASSERT_MSG_DISABLED
-#if HAVE(VARIADIC_MACRO)
-#define ASSERT_MSG_DISABLED ASSERTIONS_DISABLED_DEFAULT
-#else
-#define ASSERT_MSG_DISABLED 1
-#endif
-#endif
-
-#ifndef ASSERT_ARG_DISABLED
-#define ASSERT_ARG_DISABLED ASSERTIONS_DISABLED_DEFAULT
-#endif
-
 /* CRASH -- gets us into the debugger or the crash reporter -- signals are ignored by the crash reporter so we must do better */
 
 #ifndef CRASH
@@ -87,77 +59,20 @@
 } while(false)
 #endif
 
-/* ASSERT, ASSERT_NOT_REACHED, ASSERT_UNUSED */
+// TODO: get rid of those assert macros?
+/* ASSERT_NOT_REACHED, ASSERT_UNUSED */
 
-#if OS(WINCE) && !PLATFORM(TORCHMOBILE)
-/* FIXME: We include this here only to avoid a conflict with the ASSERT macro. */
-#include <windows.h>
-#undef min
-#undef max
-#undef ERROR
-#endif
+#include <qglobal.h>
 
-#if OS(WINDOWS)
-/* FIXME: Change to use something other than ASSERT to avoid this conflict with the underlying platform */
-#undef ASSERT
-#endif
+#ifdef QT_NO_DEBUG
 
-#if ASSERT_DISABLED
-
-#define ASSERT(assertion) ((void)0)
 #define ASSERT_NOT_REACHED() ((void)0)
 #define ASSERT_UNUSED(variable, assertion) ((void)variable)
 
 #else
 
-#define ASSERT(assertion) do \
-    if (!(assertion)) { \
-        WTFReportAssertionFailure(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, #assertion); \
-        CRASH(); \
-    } \
-while (0)
-
-#define ASSERT_NOT_REACHED() do { \
-    WTFReportAssertionFailure(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, 0); \
-    CRASH(); \
-} while (0)
-
-#define ASSERT_UNUSED(variable, assertion) ASSERT(assertion)
-
-#endif
-
-/* ASSERT_WITH_MESSAGE */
-
-#if COMPILER(MSVC7)
-#define ASSERT_WITH_MESSAGE(assertion) ((void)0)
-#elif COMPILER(WINSCW)
-#define ASSERT_WITH_MESSAGE(assertion, arg...) ((void)0)
-#elif ASSERT_MSG_DISABLED
-#define ASSERT_WITH_MESSAGE(assertion, ...) ((void)0)
-#else
-#define ASSERT_WITH_MESSAGE(assertion, ...) do \
-    if (!(assertion)) { \
-        WTFReportAssertionFailureWithMessage(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, #assertion, __VA_ARGS__); \
-        CRASH(); \
-    } \
-while (0)
-#endif
-                        
-                        
-/* ASSERT_ARG */
-
-#if ASSERT_ARG_DISABLED
-
-#define ASSERT_ARG(argName, assertion) ((void)0)
-
-#else
-
-#define ASSERT_ARG(argName, assertion) do \
-    if (!(assertion)) { \
-        WTFReportArgumentAssertionFailure(__FILE__, __LINE__, WTF_PRETTY_FUNCTION, #argName, #assertion); \
-        CRASH(); \
-    } \
-while (0)
+#define ASSERT_NOT_REACHED() Q_ASSERT_X(false, 0, "SHOULD NEVER BE REACHED\n")
+#define ASSERT_UNUSED(variable, assertion) Q_ASSERT(assertion); Q_UNUSED(variable)
 
 #endif
 

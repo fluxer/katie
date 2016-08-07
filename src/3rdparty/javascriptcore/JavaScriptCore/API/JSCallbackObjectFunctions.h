@@ -42,7 +42,7 @@ namespace JSC {
 template <class Base>
 inline JSCallbackObject<Base>* JSCallbackObject<Base>::asCallbackObject(JSValue value)
 {
-    ASSERT(asObject(value)->inherits(&info));
+    Q_ASSERT(asObject(value)->inherits(&info));
     return static_cast<JSCallbackObject*>(asObject(value));
 }
 
@@ -61,14 +61,14 @@ JSCallbackObject<Base>::JSCallbackObject(JSClassRef jsClass)
     : Base()
     , m_callbackObjectData(new JSCallbackObjectData(0, jsClass))
 {
-    ASSERT(Base::isGlobalObject());
+    Q_ASSERT(Base::isGlobalObject());
     init(static_cast<JSGlobalObject*>(this)->globalExec());
 }
 
 template <class Base>
 void JSCallbackObject<Base>::init(ExecState* exec)
 {
-    ASSERT(exec);
+    Q_ASSERT(exec);
     
     Vector<JSObjectInitializeCallback, 16> initRoutines;
     JSClassRef jsClass = classRef();

@@ -133,14 +133,14 @@ namespace WTF {
 
 void* tryFastMalloc(size_t n)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     return malloc(n);
 }
 
 void* fastMalloc(size_t n)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     void* result = malloc(n);
     if (!result)
@@ -150,14 +150,14 @@ void* fastMalloc(size_t n)
 
 void* tryFastCalloc(size_t n_elements, size_t element_size)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     return calloc(n_elements, element_size);
 }
 
 void* fastCalloc(size_t n_elements, size_t element_size)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     void* result = calloc(n_elements, element_size);
     if (!result)
@@ -167,21 +167,21 @@ void* fastCalloc(size_t n_elements, size_t element_size)
 
 void fastFree(void* p)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     free(p);
 }
 
 void* tryFastRealloc(void* p, size_t n)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     return realloc(p, n);
 }
 
 void* fastRealloc(void* p, size_t n)
 {
-    ASSERT(!isForbidden());
+    Q_ASSERT(!isForbidden());
 
     void* result = realloc(p, n);
     if (!result)

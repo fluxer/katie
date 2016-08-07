@@ -105,7 +105,7 @@ namespace JSC {
     ALWAYS_INLINE Register::Register(const JSValue& v)
     {
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!v.isZombie());
+        Q_ASSERT(!v.isZombie());
 #endif
         u.value = JSValue::encode(v);
     }
@@ -113,7 +113,7 @@ namespace JSC {
     ALWAYS_INLINE Register& Register::operator=(const JSValue& v)
     {
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!v.isZombie());
+        Q_ASSERT(!v.isZombie());
 #endif
         u.value = JSValue::encode(v);
         return *this;

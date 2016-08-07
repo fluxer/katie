@@ -90,21 +90,21 @@ const ClassInfo JSArray::info = {"Array", 0, 0, 0};
 
 static inline size_t storageSize(unsigned vectorLength)
 {
-    ASSERT(vectorLength <= MAX_STORAGE_VECTOR_LENGTH);
+    Q_ASSERT(vectorLength <= MAX_STORAGE_VECTOR_LENGTH);
 
     // MAX_STORAGE_VECTOR_LENGTH is defined such that provided (vectorLength <= MAX_STORAGE_VECTOR_LENGTH)
     // - as asserted above - the following calculation cannot overflow.
     size_t size = (sizeof(ArrayStorage) - sizeof(JSValue)) + (vectorLength * sizeof(JSValue));
     // Assertion to detect integer overflow in previous calculation (should not be possible, provided that
     // MAX_STORAGE_VECTOR_LENGTH is correctly defined).
-    ASSERT(((size - (sizeof(ArrayStorage) - sizeof(JSValue))) / sizeof(JSValue) == vectorLength) && (size >= (sizeof(ArrayStorage) - sizeof(JSValue))));
+    Q_ASSERT(((size - (sizeof(ArrayStorage) - sizeof(JSValue))) / sizeof(JSValue) == vectorLength) && (size >= (sizeof(ArrayStorage) - sizeof(JSValue))));
 
     return size;
 }
 
 static inline unsigned increasedVectorLength(unsigned newLength)
 {
-    ASSERT(newLength <= MAX_STORAGE_VECTOR_LENGTH);
+    Q_ASSERT(newLength <= MAX_STORAGE_VECTOR_LENGTH);
 
     // Mathematically equivalent to:
     //   increasedLength = (newLength * 3 + 1) / 2;
@@ -112,7 +112,7 @@ static inline unsigned increasedVectorLength(unsigned newLength)
     //   increasedLength = (unsigned)ceil(newLength * 1.5));
     // This form is not prone to internal overflow.
     unsigned increasedLength = newLength + (newLength >> 1) + (newLength & 1);
-    ASSERT(increasedLength >= newLength);
+    Q_ASSERT(increasedLength >= newLength);
 
     return min(increasedLength, MAX_STORAGE_VECTOR_LENGTH);
 }
@@ -188,7 +188,7 @@ JSArray::JSArray(NonNullPassRefPtr<Structure> structure, const ArgList& list)
 
 JSArray::~JSArray()
 {
-    ASSERT(vptr() == JSGlobalData::jsArrayVPtr);
+    Q_ASSERT(vptr() == JSGlobalData::jsArrayVPtr);
     checkConsistency(DestructorConsistencyCheck);
 
     delete m_storage->m_sparseValueMap;
@@ -504,8 +504,8 @@ bool JSArray::increaseVectorLength(unsigned newLength)
     ArrayStorage* storage = m_storage;
 
     unsigned vectorLength = m_vectorLength;
-    ASSERT(newLength > vectorLength);
-    ASSERT(newLength <= MAX_STORAGE_VECTOR_INDEX);
+    Q_ASSERT(newLength > vectorLength);
+    Q_ASSERT(newLength <= MAX_STORAGE_VECTOR_INDEX);
     unsigned newVectorLength = increasedVectorLength(newLength);
 
     storage = static_cast<ArrayStorage*>(tryFastRealloc(storage, storageSize(newVectorLength)));
@@ -709,7 +709,7 @@ void JSArray::sort(ExecState* exec)
 
     for (size_t i = 0; i < lengthNotIncludingUndefined; i++) {
         JSValue value = m_storage->m_vector[i];
-        ASSERT(!value.isUndefined());
+        Q_ASSERT(!value.isUndefined());
         values[i].first = value;
     }
 
@@ -796,8 +796,8 @@ struct AVLTreeAbstractorForArrayCompare {
 
     int compare_key_key(key va, key vb)
     {
-        ASSERT(!va.isUndefined());
-        ASSERT(!vb.isUndefined());
+        Q_ASSERT(!va.isUndefined());
+        Q_ASSERT(!vb.isUndefined());
 
         if (m_exec->hadException())
             return 1;
@@ -831,7 +831,7 @@ void JSArray::sort(ExecState* exec, JSValue compareFunction, CallType callType, 
 
     // The maximum tree depth is compiled in - but the caller is clearly up to no good
     // if a larger array is passed.
-    ASSERT(m_storage->m_length <= static_cast<unsigned>(std::numeric_limits<int>::max()));
+    Q_ASSERT(m_storage->m_length <= static_cast<unsigned>(std::numeric_limits<int>::max()));
     if (m_storage->m_length > static_cast<unsigned>(std::numeric_limits<int>::max()))
         return;
 
@@ -906,7 +906,7 @@ void JSArray::sort(ExecState* exec, JSValue compareFunction, CallType callType, 
         m_storage->m_sparseValueMap = 0;
     }
 
-    ASSERT(tree.abstractor().m_nodes.size() >= numDefined);
+    Q_ASSERT(tree.abstractor().m_nodes.size() >= numDefined);
 
     // FIXME: If the compare function changed the length of the array, the following might be
     // modifying the vector incorrectly.
@@ -1037,33 +1037,33 @@ void JSArray::setLazyCreationData(void* d)
 
 void JSArray::checkConsistency(ConsistencyCheckType type)
 {
-    ASSERT(m_storage);
+    Q_ASSERT(m_storage);
     if (type == SortConsistencyCheck)
-        ASSERT(!m_storage->m_sparseValueMap);
+        Q_ASSERT(!m_storage->m_sparseValueMap);
 
     unsigned numValuesInVector = 0;
     for (unsigned i = 0; i < m_vectorLength; ++i) {
         if (JSValue value = m_storage->m_vector[i]) {
-            ASSERT(i < m_storage->m_length);
+            Q_ASSERT(i < m_storage->m_length);
             if (type != DestructorConsistencyCheck)
                 value->type(); // Likely to crash if the object was deallocated.
             ++numValuesInVector;
         } else {
             if (type == SortConsistencyCheck)
-                ASSERT(i >= m_storage->m_numValuesInVector);
+                Q_ASSERT(i >= m_storage->m_numValuesInVector);
         }
     }
-    ASSERT(numValuesInVector == m_storage->m_numValuesInVector);
-    ASSERT(numValuesInVector <= m_storage->m_length);
+    Q_ASSERT(numValuesInVector == m_storage->m_numValuesInVector);
+    Q_ASSERT(numValuesInVector <= m_storage->m_length);
 
     if (m_storage->m_sparseValueMap) {
         SparseArrayValueMap::iterator end = m_storage->m_sparseValueMap->end();
         for (SparseArrayValueMap::iterator it = m_storage->m_sparseValueMap->begin(); it != end; ++it) {
             unsigned index = it->first;
-            ASSERT(index < m_storage->m_length);
-            ASSERT(index >= m_vectorLength);
-            ASSERT(index <= MAX_ARRAY_INDEX);
-            ASSERT(it->second);
+            Q_ASSERT(index < m_storage->m_length);
+            Q_ASSERT(index >= m_vectorLength);
+            Q_ASSERT(index <= MAX_ARRAY_INDEX);
+            Q_ASSERT(it->second);
             if (type != DestructorConsistencyCheck)
                 it->second->type(); // Likely to crash if the object was deallocated.
         }

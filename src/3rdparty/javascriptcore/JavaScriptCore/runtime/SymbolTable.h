@@ -49,13 +49,13 @@ namespace JSC {
 
         SymbolTableEntry(int index)
         {
-            ASSERT(isValidIndex(index));
+            Q_ASSERT(isValidIndex(index));
             pack(index, false, false);
         }
 
         SymbolTableEntry(int index, unsigned attributes)
         {
-            ASSERT(isValidIndex(index));
+            Q_ASSERT(isValidIndex(index));
             pack(index, attributes & ReadOnly, attributes & DontEnum);
         }
         

@@ -767,16 +767,16 @@ JITThunks::JITThunks(JSGlobalData* globalData)
     // Unfortunate the arm compiler does not like the use of offsetof on JITStackFrame (since it contains non POD types),
     // and the OBJECT_OFFSETOF macro does not appear constantish enough for it to be happy with its use in COMPILE_ASSERT
     // macros.
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedReturnAddress) == 0x20);
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedR4) == 0x24);
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedR5) == 0x28);
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedR6) == 0x2c);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedReturnAddress) == 0x20);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedR4) == 0x24);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedR5) == 0x28);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, preservedR6) == 0x2c);
 
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, registerFile) == 0x30);
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, callFrame) == 0x34);
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, exception) == 0x38);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, registerFile) == 0x30);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, callFrame) == 0x34);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, exception) == 0x38);
 
-    ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, thunkReturnAddress) == 0x1C);
+    Q_ASSERT(OBJECT_OFFSETOF(struct JITStackFrame, thunkReturnAddress) == 0x1C);
 #endif
 }
 
@@ -887,7 +887,7 @@ NEVER_INLINE void JITThunks::tryCacheGetByID(CallFrame* callFrame, CodeBlock* co
     }
 
     if (slot.slotBase() == structure->prototypeForLookup(callFrame)) {
-        ASSERT(slot.slotBase().isObject());
+        Q_ASSERT(slot.slotBase().isObject());
 
         JSObject* slotBaseObject = asObject(slot.slotBase());
         size_t offset = slot.cachedOffset();
@@ -901,8 +901,8 @@ NEVER_INLINE void JITThunks::tryCacheGetByID(CallFrame* callFrame, CodeBlock* co
         
         stubInfo->initGetByIdProto(structure, slotBaseObject->structure());
 
-        ASSERT(!structure->isDictionary());
-        ASSERT(!slotBaseObject->structure()->isDictionary());
+        Q_ASSERT(!structure->isDictionary());
+        Q_ASSERT(!slotBaseObject->structure()->isDictionary());
         JIT::compileGetByIdProto(callFrame->scopeChain()->globalData, callFrame, codeBlock, stubInfo, structure, slotBaseObject->structure(), offset, returnAddress);
         return;
     }
@@ -975,7 +975,7 @@ struct StackHack {
 // handling code out of line as possible.
 static NEVER_INLINE void returnToThrowTrampoline(JSGlobalData* globalData, ReturnAddressPtr exceptionLocation, ReturnAddressPtr& returnAddressSlot)
 {
-    ASSERT(globalData->exception);
+    Q_ASSERT(globalData->exception);
     globalData->exceptionLocation = exceptionLocation;
     returnAddressSlot = ReturnAddressPtr(FunctionPtr(ctiVMThrowTrampoline));
 }
@@ -1109,7 +1109,7 @@ DEFINE_STUB_FUNCTION(void, op_end)
     STUB_INIT_STACK_FRAME(stackFrame);
 
     ScopeChainNode* scopeChain = stackFrame.callFrame->scopeChain();
-    ASSERT(scopeChain->refCount > 1);
+    Q_ASSERT(scopeChain->refCount > 1);
     scopeChain->deref();
 }
 
@@ -1274,7 +1274,7 @@ DEFINE_STUB_FUNCTION(JSObject*, op_put_by_id_transition_realloc)
     int32_t oldSize = stackFrame.args[3].int32();
     int32_t newSize = stackFrame.args[4].int32();
 
-    ASSERT(baseValue.isObject());
+    Q_ASSERT(baseValue.isObject());
     JSObject* base = asObject(baseValue);
     base->allocatePropertyStorage(oldSize, newSize);
 
@@ -1304,7 +1304,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_id_method_check)
     // If we successfully got something, then the base from which it is being accessed must
     // be an object.  (Assertion to ensure asObject() call below is safe, which comes after
     // an isCacheable() chceck.
-    ASSERT(!slot.isCacheable() || slot.slotBase().isObject());
+    Q_ASSERT(!slot.isCacheable() || slot.slotBase().isObject());
 
     // Check that:
     //   * We're dealing with a JSCell,
@@ -1329,7 +1329,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_id_method_check)
             slotBaseObject->flattenDictionaryObject();
 
         // The result fetched should always be the callee!
-        ASSERT(result == JSValue(callee));
+        Q_ASSERT(result == JSValue(callee));
 
         // Check to see if the function is on the object's prototype.  Patch up the code to optimize.
         if (slot.slotBase() == structure->prototypeForLookup(callFrame)) {
@@ -1396,13 +1396,13 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_id_self_fail)
         CodeBlock* codeBlock = callFrame->codeBlock();
         StructureStubInfo* stubInfo = &codeBlock->getStubInfo(STUB_RETURN_ADDRESS);
 
-        ASSERT(slot.slotBase().isObject());
+        Q_ASSERT(slot.slotBase().isObject());
 
         PolymorphicAccessStructureList* polymorphicStructureList;
         int listIndex = 1;
 
         if (stubInfo->accessType == access_get_by_id_self) {
-            ASSERT(!stubInfo->stubRoutine);
+            Q_ASSERT(!stubInfo->stubRoutine);
             polymorphicStructureList = new PolymorphicAccessStructureList(CodeLocationLabel(), stubInfo->u.getByIdSelf.baseObjectStructure);
             stubInfo->initGetByIdSelfList(polymorphicStructureList, 2);
         } else {
@@ -1445,7 +1445,7 @@ static PolymorphicAccessStructureList* getPolymorphicAccessStructureListSlot(Str
         ASSERT_NOT_REACHED();
     }
     
-    ASSERT(listIndex < POLYMORPHIC_LIST_CACHE_SIZE);
+    Q_ASSERT(listIndex < POLYMORPHIC_LIST_CACHE_SIZE);
     return prototypeStructureList;
 }
 
@@ -1471,7 +1471,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_id_proto_list)
     CodeBlock* codeBlock = callFrame->codeBlock();
     StructureStubInfo* stubInfo = &codeBlock->getStubInfo(STUB_RETURN_ADDRESS);
 
-    ASSERT(slot.slotBase().isObject());
+    Q_ASSERT(slot.slotBase().isObject());
     JSObject* slotBaseObject = asObject(slot.slotBase());
     
     size_t offset = slot.cachedOffset();
@@ -1479,7 +1479,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_id_proto_list)
     if (slot.slotBase() == baseValue)
         ctiPatchCallByReturnAddress(codeBlock, STUB_RETURN_ADDRESS, FunctionPtr(cti_op_get_by_id_proto_fail));
     else if (slot.slotBase() == baseValue.asCell()->structure()->prototypeForLookup(callFrame)) {
-        ASSERT(!baseValue.asCell()->structure()->isDictionary());
+        Q_ASSERT(!baseValue.asCell()->structure()->isDictionary());
         // Since we're accessing a prototype in a loop, it's a good bet that it
         // should not be treated as a dictionary.
         if (slotBaseObject->structure()->isDictionary()) {
@@ -1495,7 +1495,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_id_proto_list)
         if (listIndex == (POLYMORPHIC_LIST_CACHE_SIZE - 1))
             ctiPatchCallByReturnAddress(codeBlock, STUB_RETURN_ADDRESS, FunctionPtr(cti_op_get_by_id_proto_list_full));
     } else if (size_t count = normalizePrototypeChain(callFrame, baseValue, slot.slotBase(), propertyName, offset)) {
-        ASSERT(!baseValue.asCell()->structure()->isDictionary());
+        Q_ASSERT(!baseValue.asCell()->structure()->isDictionary());
         int listIndex;
         PolymorphicAccessStructureList* prototypeStructureList = getPolymorphicAccessStructureListSlot(stubInfo, listIndex);
 
@@ -1570,7 +1570,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_instanceof)
     JSValue proto = stackFrame.args[2].jsValue();
 
     // At least one of these checks must have failed to get to the slow case.
-    ASSERT(!value.isCell() || !baseVal.isCell() || !proto.isCell()
+    Q_ASSERT(!value.isCell() || !baseVal.isCell() || !proto.isCell()
            || !value.isObject() || !baseVal.isObject() || !proto.isObject() 
            || (asObject(baseVal)->structure()->typeInfo().flags() & (ImplementsHasInstance | OverridesHasInstance)) != ImplementsHasInstance);
 
@@ -1585,7 +1585,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_instanceof)
         stackFrame.globalData->exception = createInvalidParamError(callFrame, "instanceof", baseVal, vPCIndex, codeBlock);
         VM_THROW_EXCEPTION();
     }
-    ASSERT(typeInfo.type() != UnspecifiedType);
+    Q_ASSERT(typeInfo.type() != UnspecifiedType);
 
     if (!typeInfo.overridesHasInstance()) {
         if (!value.isObject())
@@ -1645,13 +1645,13 @@ DEFINE_STUB_FUNCTION(void*, op_call_JSFunction)
 {
     STUB_INIT_STACK_FRAME(stackFrame);
 
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
     CallData callData;
-    ASSERT(stackFrame.args[0].jsValue().getCallData(callData) == CallTypeJS);
+    Q_ASSERT(stackFrame.args[0].jsValue().getCallData(callData) == CallTypeJS);
 #endif
 
     JSFunction* function = asFunction(stackFrame.args[0].jsValue());
-    ASSERT(!function->isHostFunction());
+    Q_ASSERT(!function->isHostFunction());
     FunctionExecutable* executable = function->jsExecutable();
     ScopeChainNode* callDataScopeChain = function->scope().node();
     executable->jitCode(stackFrame.callFrame, callDataScopeChain);
@@ -1665,11 +1665,11 @@ DEFINE_STUB_FUNCTION(VoidPtrPair, op_call_arityCheck)
 
     CallFrame* callFrame = stackFrame.callFrame;
     JSFunction* callee = asFunction(stackFrame.args[0].jsValue());
-    ASSERT(!callee->isHostFunction());
+    Q_ASSERT(!callee->isHostFunction());
     CodeBlock* newCodeBlock = &callee->jsExecutable()->generatedBytecode();
     int argCount = stackFrame.args[2].int32();
 
-    ASSERT(argCount != newCodeBlock->m_numParameters);
+    Q_ASSERT(argCount != newCodeBlock->m_numParameters);
 
     CallFrame* oldCallFrame = callFrame->callerFrame();
 
@@ -1746,7 +1746,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_call_NotJSFunction)
     CallData callData;
     CallType callType = funcVal.getCallData(callData);
 
-    ASSERT(callType != CallTypeJS);
+    Q_ASSERT(callType != CallTypeJS);
 
     if (callType == CallTypeHost) {
         int registerOffset = stackFrame.args[1].int32();
@@ -1777,7 +1777,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_call_NotJSFunction)
         return JSValue::encode(returnValue);
     }
 
-    ASSERT(callType == CallTypeNone);
+    Q_ASSERT(callType == CallTypeNone);
 
     CallFrame* callFrame = stackFrame.callFrame;
     CodeBlock* codeBlock = callFrame->codeBlock();
@@ -1808,7 +1808,7 @@ DEFINE_STUB_FUNCTION(void, op_tear_off_activation)
 {
     STUB_INIT_STACK_FRAME(stackFrame);
 
-    ASSERT(stackFrame.callFrame->codeBlock()->needsFullScopeChain());
+    Q_ASSERT(stackFrame.callFrame->codeBlock()->needsFullScopeChain());
     asActivation(stackFrame.args[0].jsValue())->copyRegisters(stackFrame.callFrame->optionalCalleeArguments());
 }
 
@@ -1816,7 +1816,7 @@ DEFINE_STUB_FUNCTION(void, op_tear_off_arguments)
 {
     STUB_INIT_STACK_FRAME(stackFrame);
 
-    ASSERT(stackFrame.callFrame->codeBlock()->usesArguments() && !stackFrame.callFrame->codeBlock()->needsFullScopeChain());
+    Q_ASSERT(stackFrame.callFrame->codeBlock()->usesArguments() && !stackFrame.callFrame->codeBlock()->needsFullScopeChain());
     if (stackFrame.callFrame->optionalCalleeArguments())
         stackFrame.callFrame->optionalCalleeArguments()->copyRegisters();
 }
@@ -1825,7 +1825,7 @@ DEFINE_STUB_FUNCTION(void, op_ret_scopeChain)
 {
     STUB_INIT_STACK_FRAME(stackFrame);
 
-    ASSERT(stackFrame.callFrame->codeBlock()->needsFullScopeChain());
+    Q_ASSERT(stackFrame.callFrame->codeBlock()->needsFullScopeChain());
     stackFrame.callFrame->scopeChain()->deref();
 }
 
@@ -1846,7 +1846,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_resolve)
 
     ScopeChainIterator iter = scopeChain->begin();
     ScopeChainIterator end = scopeChain->end();
-    ASSERT(iter != end);
+    Q_ASSERT(iter != end);
 
     Identifier& ident = stackFrame.args[0].identifier();
     do {
@@ -1878,9 +1878,9 @@ DEFINE_STUB_FUNCTION(JSObject*, op_construct_JSConstruct)
         VM_THROW_EXCEPTION();
     }
 
-#if !ASSERT_DISABLED
+#ifndef QT_NO_DEBUG
     ConstructData constructData;
-    ASSERT(constructor->getConstructData(constructData) == ConstructTypeJS);
+    Q_ASSERT(constructor->getConstructData(constructData) == ConstructTypeJS);
 #endif
 
     Structure* structure;
@@ -1917,7 +1917,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_construct_NotJSConstruct)
         return JSValue::encode(returnValue);
     }
 
-    ASSERT(constructType == ConstructTypeNone);
+    Q_ASSERT(constructType == ConstructTypeNone);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
     unsigned vPCIndex = codeBlock->getBytecodeIndex(callFrame, STUB_RETURN_ADDRESS);
@@ -2267,10 +2267,10 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_resolve_skip)
 
     ScopeChainIterator iter = scopeChain->begin();
     ScopeChainIterator end = scopeChain->end();
-    ASSERT(iter != end);
+    Q_ASSERT(iter != end);
     while (skip--) {
         ++iter;
-        ASSERT(iter != end);
+        Q_ASSERT(iter != end);
     }
     Identifier& ident = stackFrame.args[0].identifier();
     do {
@@ -2297,7 +2297,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_resolve_global)
     JSGlobalObject* globalObject = stackFrame.args[0].globalObject();
     Identifier& ident = stackFrame.args[1].identifier();
     unsigned globalResolveInfoIndex = stackFrame.args[2].int32();
-    ASSERT(globalObject->isGlobalObject());
+    Q_ASSERT(globalObject->isGlobalObject());
 
     PropertySlot slot(globalObject);
     if (globalObject->getPropertySlot(callFrame, ident, slot)) {
@@ -2527,8 +2527,8 @@ DEFINE_STUB_FUNCTION(int, op_eq_strings)
     JSString* string1 = stackFrame.args[0].jsString();
     JSString* string2 = stackFrame.args[1].jsString();
 
-    ASSERT(string1->isString());
-    ASSERT(string2->isString());
+    Q_ASSERT(string1->isString());
+    Q_ASSERT(string2->isString());
     return string1->value(stackFrame.callFrame) == string2->value(stackFrame.callFrame);
 }
 
@@ -2554,7 +2554,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_bitand)
     JSValue src1 = stackFrame.args[0].jsValue();
     JSValue src2 = stackFrame.args[1].jsValue();
 
-    ASSERT(!src1.isInt32() || !src2.isInt32());
+    Q_ASSERT(!src1.isInt32() || !src2.isInt32());
     CallFrame* callFrame = stackFrame.callFrame;
     JSValue result = jsNumber(stackFrame.globalData, src1.toInt32(callFrame) & src2.toInt32(callFrame));
     CHECK_FOR_EXCEPTION_AT_END();
@@ -2581,7 +2581,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_bitnot)
 
     JSValue src = stackFrame.args[0].jsValue();
 
-    ASSERT(!src.isInt32());
+    Q_ASSERT(!src.isInt32());
     CallFrame* callFrame = stackFrame.callFrame;
     JSValue result = jsNumber(stackFrame.globalData, ~src.toInt32(callFrame));
     CHECK_FOR_EXCEPTION_AT_END();
@@ -2600,7 +2600,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_resolve_with_base)
 
     // FIXME: add scopeDepthIsZero optimization
 
-    ASSERT(iter != end);
+    Q_ASSERT(iter != end);
 
     Identifier& ident = stackFrame.args[0].identifier();
     JSObject* base;
@@ -2775,7 +2775,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_throw)
     unsigned vPCIndex = codeBlock->getBytecodeIndex(callFrame, STUB_RETURN_ADDRESS);
 
     JSValue exceptionValue = stackFrame.args[0].jsValue();
-    ASSERT(exceptionValue);
+    Q_ASSERT(exceptionValue);
 
     HandlerInfo* handler = stackFrame.globalData->interpreter->throwException(callFrame, exceptionValue, vPCIndex, true);
 
@@ -2787,7 +2787,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_throw)
 
     stackFrame.callFrame = callFrame;
     void* catchRoutine = handler->nativeCode.executableAddress();
-    ASSERT(catchRoutine);
+    Q_ASSERT(catchRoutine);
     STUB_SET_RETURN_ADDRESS(catchRoutine);
     return JSValue::encode(exceptionValue);
 }
@@ -3081,9 +3081,9 @@ DEFINE_STUB_FUNCTION(void, op_put_getter)
 
     CallFrame* callFrame = stackFrame.callFrame;
 
-    ASSERT(stackFrame.args[0].jsValue().isObject());
+    Q_ASSERT(stackFrame.args[0].jsValue().isObject());
     JSObject* baseObj = asObject(stackFrame.args[0].jsValue());
-    ASSERT(stackFrame.args[2].jsValue().isObject());
+    Q_ASSERT(stackFrame.args[2].jsValue().isObject());
     baseObj->defineGetter(callFrame, stackFrame.args[1].identifier(), asObject(stackFrame.args[2].jsValue()));
 }
 
@@ -3093,9 +3093,9 @@ DEFINE_STUB_FUNCTION(void, op_put_setter)
 
     CallFrame* callFrame = stackFrame.callFrame;
 
-    ASSERT(stackFrame.args[0].jsValue().isObject());
+    Q_ASSERT(stackFrame.args[0].jsValue().isObject());
     JSObject* baseObj = asObject(stackFrame.args[0].jsValue());
-    ASSERT(stackFrame.args[2].jsValue().isObject());
+    Q_ASSERT(stackFrame.args[2].jsValue().isObject());
     baseObj->defineSetter(callFrame, stackFrame.args[1].identifier(), asObject(stackFrame.args[2].jsValue()));
 }
 
@@ -3159,7 +3159,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, vm_throw)
     unsigned vPCIndex = codeBlock->getBytecodeIndex(callFrame, globalData->exceptionLocation);
 
     JSValue exceptionValue = globalData->exception;
-    ASSERT(exceptionValue);
+    Q_ASSERT(exceptionValue);
     globalData->exception = JSValue();
 
     HandlerInfo* handler = globalData->interpreter->throwException(callFrame, exceptionValue, vPCIndex, false);
@@ -3171,7 +3171,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, vm_throw)
 
     stackFrame.callFrame = callFrame;
     void* catchRoutine = handler->nativeCode.executableAddress();
-    ASSERT(catchRoutine);
+    Q_ASSERT(catchRoutine);
     STUB_SET_RETURN_ADDRESS(catchRoutine);
     return JSValue::encode(exceptionValue);
 }

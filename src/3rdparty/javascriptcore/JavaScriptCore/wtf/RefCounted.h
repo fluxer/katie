@@ -33,13 +33,13 @@ class RefCountedBase {
 public:
     void ref()
     {
-        ASSERT(!m_deletionHasBegun);
+        Q_ASSERT(!m_deletionHasBegun);
         ++m_refCount;
     }
 
     bool hasOneRef() const
     {
-        ASSERT(!m_deletionHasBegun);
+        Q_ASSERT(!m_deletionHasBegun);
         return m_refCount == 1;
     }
 
@@ -64,8 +64,8 @@ protected:
     // Returns whether the pointer should be freed or not.
     bool derefBase()
     {
-        ASSERT(!m_deletionHasBegun);
-        ASSERT(m_refCount > 0);
+        Q_ASSERT(!m_deletionHasBegun);
+        Q_ASSERT(m_refCount > 0);
         if (m_refCount == 1) {
 #ifndef NDEBUG
             m_deletionHasBegun = true;

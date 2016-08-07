@@ -74,13 +74,13 @@ namespace JSC {
         bool isCacheable() const { return m_offset != WTF::notFound; }
         size_t cachedOffset() const
         {
-            ASSERT(isCacheable());
+            Q_ASSERT(isCacheable());
             return m_offset;
         }
 
         void setValueSlot(JSValue* valueSlot) 
         {
-            ASSERT(valueSlot);
+            Q_ASSERT(valueSlot);
             clearBase();
             clearOffset();
             m_getValue = JSC_VALUE_SLOT_MARKER;
@@ -89,7 +89,7 @@ namespace JSC {
         
         void setValueSlot(JSValue slotBase, JSValue* valueSlot)
         {
-            ASSERT(valueSlot);
+            Q_ASSERT(valueSlot);
             m_getValue = JSC_VALUE_SLOT_MARKER;
             m_slotBase = slotBase;
             m_data.valueSlot = valueSlot;
@@ -97,7 +97,7 @@ namespace JSC {
         
         void setValueSlot(JSValue slotBase, JSValue* valueSlot, size_t offset)
         {
-            ASSERT(valueSlot);
+            Q_ASSERT(valueSlot);
             m_getValue = JSC_VALUE_SLOT_MARKER;
             m_slotBase = slotBase;
             m_data.valueSlot = valueSlot;
@@ -106,7 +106,7 @@ namespace JSC {
         
         void setValue(JSValue value)
         {
-            ASSERT(value);
+            Q_ASSERT(value);
             clearBase();
             clearOffset();
             m_getValue = JSC_VALUE_SLOT_MARKER;
@@ -116,7 +116,7 @@ namespace JSC {
 
         void setRegisterSlot(Register* registerSlot)
         {
-            ASSERT(registerSlot);
+            Q_ASSERT(registerSlot);
             clearBase();
             clearOffset();
             m_getValue = JSC_REGISTER_SLOT_MARKER;
@@ -125,16 +125,16 @@ namespace JSC {
 
         void setCustom(JSValue slotBase, GetValueFunc getValue)
         {
-            ASSERT(slotBase);
-            ASSERT(getValue);
+            Q_ASSERT(slotBase);
+            Q_ASSERT(getValue);
             m_getValue = getValue;
             m_slotBase = slotBase;
         }
 
         void setCustomIndex(JSValue slotBase, unsigned index, GetValueFunc getValue)
         {
-            ASSERT(slotBase);
-            ASSERT(getValue);
+            Q_ASSERT(slotBase);
+            Q_ASSERT(getValue);
             m_getValue = getValue;
             m_slotBase = slotBase;
             m_data.index = index;
@@ -142,7 +142,7 @@ namespace JSC {
         
         void setGetterSlot(JSObject* getterFunc)
         {
-            ASSERT(getterFunc);
+            Q_ASSERT(getterFunc);
             m_getValue = functionGetter;
             m_data.getterFunc = getterFunc;
         }
@@ -159,8 +159,8 @@ namespace JSC {
 
         void setBase(JSValue base)
         {
-            ASSERT(m_slotBase);
-            ASSERT(base);
+            Q_ASSERT(m_slotBase);
+            Q_ASSERT(base);
             m_slotBase = base;
         }
 

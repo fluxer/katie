@@ -116,7 +116,7 @@ namespace JSC {
     {
         do {
             advance(HeapConstants::cellsPerBlock);
-            ASSERT(m_block > m_heap.nextBlock || (m_block == m_heap.nextBlock && m_cell >= m_heap.nextCell));
+            Q_ASSERT(m_block > m_heap.nextBlock || (m_block == m_heap.nextBlock && m_cell >= m_heap.nextCell));
         } while (m_block < m_heap.usedBlocks && m_heap.blocks[m_block]->marked.get(m_cell));
         return *this;
     }

@@ -203,11 +203,11 @@ namespace JSC {
             , m_stringLength(s1->length() + s2->length())
             , m_ropeLength(ropeLength)
         {
-            ASSERT(ropeLength <= s_maxInternalRopeLength);
+            Q_ASSERT(ropeLength <= s_maxInternalRopeLength);
             unsigned index = 0;
             appendStringInConstruct(index, s1);
             appendStringInConstruct(index, s2);
-            ASSERT(ropeLength == index);
+            Q_ASSERT(ropeLength == index);
         }
         // This constructor constructs a new string by concatenating s1 & s2.
         // This should only be called with ropeLength <= 3.
@@ -216,11 +216,11 @@ namespace JSC {
             , m_stringLength(s1->length() + u2.size())
             , m_ropeLength(ropeLength)
         {
-            ASSERT(ropeLength <= s_maxInternalRopeLength);
+            Q_ASSERT(ropeLength <= s_maxInternalRopeLength);
             unsigned index = 0;
             appendStringInConstruct(index, s1);
             appendStringInConstruct(index, u2);
-            ASSERT(ropeLength == index);
+            Q_ASSERT(ropeLength == index);
         }
         // This constructor constructs a new string by concatenating s1 & s2.
         // This should only be called with ropeLength <= 3.
@@ -229,11 +229,11 @@ namespace JSC {
             , m_stringLength(u1.size() + s2->length())
             , m_ropeLength(ropeLength)
         {
-            ASSERT(ropeLength <= s_maxInternalRopeLength);
+            Q_ASSERT(ropeLength <= s_maxInternalRopeLength);
             unsigned index = 0;
             appendStringInConstruct(index, u1);
             appendStringInConstruct(index, s2);
-            ASSERT(ropeLength == index);
+            Q_ASSERT(ropeLength == index);
         }
         // This constructor constructs a new string by concatenating v1, v2 & v3.
         // This should only be called with ropeLength <= 3 ... which since every
@@ -248,7 +248,7 @@ namespace JSC {
             appendValueInConstructAndIncrementLength(exec, index, v1);
             appendValueInConstructAndIncrementLength(exec, index, v2);
             appendValueInConstructAndIncrementLength(exec, index, v3);
-            ASSERT(index == s_maxInternalRopeLength);
+            Q_ASSERT(index == s_maxInternalRopeLength);
         }
 
         JSString(JSGlobalData* globalData, const UString& value, JSStringFinalizerCallback finalizer, void* context)
@@ -265,7 +265,7 @@ namespace JSC {
 
         ~JSString()
         {
-            ASSERT(vptr() == JSGlobalData::jsStringVPtr);
+            Q_ASSERT(vptr() == JSGlobalData::jsStringVPtr);
             for (unsigned i = 0; i < m_ropeLength; ++i)
                 m_fibers[i].deref();
 
@@ -325,9 +325,9 @@ namespace JSC {
         void appendValueInConstructAndIncrementLength(ExecState* exec, unsigned& index, JSValue v)
         {
             if (v.isString()) {
-                ASSERT(v.asCell()->isString());
+                Q_ASSERT(v.asCell()->isString());
                 JSString* s = static_cast<JSString*>(v.asCell());
-                ASSERT(s->ropeLength() == 1);
+                Q_ASSERT(s->ropeLength() == 1);
                 appendStringInConstruct(index, s);
                 m_stringLength += s->length();
             } else {
@@ -362,7 +362,7 @@ namespace JSC {
         mutable Rope::Fiber m_fibers[s_maxInternalRopeLength];
 
         bool isRope() const { return m_ropeLength; }
-        UString& string() { ASSERT(!isRope()); return m_value; }
+        UString& string() { Q_ASSERT(!isRope()); return m_value; }
         unsigned ropeLength() { return m_ropeLength ? m_ropeLength : 1; }
 
         friend JSValue jsString(ExecState* exec, JSString* s1, JSString* s2);
@@ -377,7 +377,7 @@ namespace JSC {
 
     inline JSString* asString(JSValue value)
     {
-        ASSERT(value.asCell()->isString());
+        Q_ASSERT(value.asCell()->isString());
         return static_cast<JSString*>(value.asCell());
     }
 
@@ -395,7 +395,7 @@ namespace JSC {
 
     inline JSString* jsSingleCharacterSubstring(JSGlobalData* globalData, const UString& s, unsigned offset)
     {
-        ASSERT(offset < static_cast<unsigned>(s.size()));
+        Q_ASSERT(offset < static_cast<unsigned>(s.size()));
         UChar c = s.data()[offset];
         if (c <= 0xFF)
             return globalData->smallStrings.singleCharacterString(globalData, c);
@@ -404,21 +404,21 @@ namespace JSC {
 
     inline JSString* jsNontrivialString(JSGlobalData* globalData, const char* s)
     {
-        ASSERT(s);
-        ASSERT(s[0]);
-        ASSERT(s[1]);
+        Q_ASSERT(s);
+        Q_ASSERT(s[0]);
+        Q_ASSERT(s[1]);
         return new (globalData) JSString(globalData, s);
     }
 
     inline JSString* jsNontrivialString(JSGlobalData* globalData, const UString& s)
     {
-        ASSERT(s.size() > 1);
+        Q_ASSERT(s.size() > 1);
         return new (globalData) JSString(globalData, s);
     }
 
     inline JSString* JSString::getIndex(ExecState* exec, unsigned i)
     {
-        ASSERT(canGetIndex(i));
+        Q_ASSERT(canGetIndex(i));
         return jsSingleCharacterSubstring(&exec->globalData(), value(exec), i);
     }
 
@@ -437,16 +437,16 @@ namespace JSC {
 
     inline JSString* jsStringWithFinalizer(ExecState* exec, const UString& s, JSStringFinalizerCallback callback, void* context)
     {
-        ASSERT(s.size() && (s.size() > 1 || s.data()[0] > 0xFF));
+        Q_ASSERT(s.size() && (s.size() > 1 || s.data()[0] > 0xFF));
         JSGlobalData* globalData = &exec->globalData();
         return new (globalData) JSString(globalData, s, callback, context);
     }
 
     inline JSString* jsSubstring(JSGlobalData* globalData, const UString& s, unsigned offset, unsigned length)
     {
-        ASSERT(offset <= static_cast<unsigned>(s.size()));
-        ASSERT(length <= static_cast<unsigned>(s.size()));
-        ASSERT(offset + length <= static_cast<unsigned>(s.size()));
+        Q_ASSERT(offset <= static_cast<unsigned>(s.size()));
+        Q_ASSERT(length <= static_cast<unsigned>(s.size()));
+        Q_ASSERT(offset + length <= static_cast<unsigned>(s.size()));
         if (!length)
             return globalData->smallStrings.emptyString(globalData);
         if (length == 1) {
@@ -531,7 +531,7 @@ namespace JSC {
             return "null";
         if (isUndefined())
             return "undefined";
-        ASSERT(isCell());
+        Q_ASSERT(isCell());
         return asCell()->toString(exec);
     }
 
@@ -551,7 +551,7 @@ namespace JSC {
             return "null";
         if (isUndefined())
             return "undefined";
-        ASSERT(isCell());
+        Q_ASSERT(isCell());
         return asCell()->toPrimitive(exec, NoPreference).toString(exec);
     }
 

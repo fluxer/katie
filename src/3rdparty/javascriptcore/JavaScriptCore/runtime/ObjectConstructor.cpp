@@ -252,8 +252,8 @@ JSValue JSC_HOST_CALL objectConstructorDefineProperty(ExecState* exec, JSObject*
     PropertyDescriptor descriptor;
     if (!toPropertyDescriptor(exec, args.at(2), descriptor))
         return jsNull();
-    ASSERT((descriptor.attributes() & (Getter | Setter)) || (!descriptor.isAccessorDescriptor()));
-    ASSERT(!exec->hadException());
+    Q_ASSERT((descriptor.attributes() & (Getter | Setter)) || (!descriptor.isAccessorDescriptor()));
+    Q_ASSERT(!exec->hadException());
     O->defineOwnProperty(exec, Identifier(exec, propertyName), descriptor, true);
     return O;
 }

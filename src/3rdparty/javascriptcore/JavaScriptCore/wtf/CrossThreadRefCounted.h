@@ -103,7 +103,7 @@ namespace WTF {
     template<class T>
     void CrossThreadRefCounted<T>::ref()
     {
-        ASSERT(isOwnedByCurrentThread());
+        Q_ASSERT(isOwnedByCurrentThread());
         m_refCounter.ref();
 #ifndef NDEBUG
         // Store the threadId as soon as the ref count gets to 2.
@@ -119,7 +119,7 @@ namespace WTF {
     template<class T>
     void CrossThreadRefCounted<T>::deref()
     {
-        ASSERT(isOwnedByCurrentThread());
+        Q_ASSERT(isOwnedByCurrentThread());
         if (m_refCounter.derefBase()) {
             threadSafeDeref();
             delete this;
@@ -136,7 +136,7 @@ namespace WTF {
     template<class T>
     T* CrossThreadRefCounted<T>::release()
     {
-        ASSERT(!isShared());
+        Q_ASSERT(!isShared());
 
         T* data = m_data;
         m_data = 0;
@@ -146,7 +146,7 @@ namespace WTF {
     template<class T>
     PassRefPtr<CrossThreadRefCounted<T> > CrossThreadRefCounted<T>::crossThreadCopy()
     {
-        ASSERT(isOwnedByCurrentThread());
+        Q_ASSERT(isOwnedByCurrentThread());
         if (m_threadSafeRefCounter)
             m_threadSafeRefCounter->ref();
         else

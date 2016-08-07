@@ -47,7 +47,7 @@ void MacroAssemblerARM::load32WithUnalignedHalfWords(BaseIndex address, Register
 {
     ARMWord op2;
 
-    ASSERT(address.scale >= 0 && address.scale <= 3);
+    Q_ASSERT(address.scale >= 0 && address.scale <= 3);
     op2 = m_assembler.lsl(address.index, static_cast<int>(address.scale));
 
     if (address.offset >= 0 && address.offset + 0x2 <= 0xff) {

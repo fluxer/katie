@@ -76,7 +76,7 @@ namespace JSC {
 static void substitute(UString& string, const UString& substring)
 {
     int position = string.find("%s");
-    ASSERT(position != -1);
+    Q_ASSERT(position != -1);
     string = makeString(string.substr(0, position), substring, string.substr(position + 2));
 }
 
@@ -225,7 +225,7 @@ bool ArrayNode::isSimpleArray() const
 
 ArgumentListNode* ArrayNode::toArgumentList(JSGlobalData* globalData) const
 {
-    ASSERT(!m_elision && !m_optional);
+    Q_ASSERT(!m_elision && !m_optional);
     ElementNode* ptr = m_element;
     if (!ptr)
         return 0;
@@ -233,7 +233,7 @@ ArgumentListNode* ArrayNode::toArgumentList(JSGlobalData* globalData) const
     ArgumentListNode* tail = head;
     ptr = ptr->next();
     for (; ptr; ptr = ptr->next()) {
-        ASSERT(!ptr->elision());
+        Q_ASSERT(!ptr->elision());
         tail = new (globalData) ArgumentListNode(globalData, tail, ptr->value());
     }
     return head;
@@ -306,7 +306,7 @@ RegisterID* DotAccessorNode::emitBytecode(BytecodeGenerator& generator, Register
 
 RegisterID* ArgumentListNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
-    ASSERT(m_expr);
+    Q_ASSERT(m_expr);
     return generator.emitNode(dst, m_expr);
 }
 
@@ -450,8 +450,8 @@ RegisterID* ApplyFunctionCallDotNode::emitBytecode(BytecodeGenerator& generator,
                 generator.emitNode(thisRegister.get(), m_args->m_listNode->m_expr);
                 m_args->m_listNode = m_args->m_listNode->m_next;
                 if (m_args->m_listNode) {
-                    ASSERT(m_args->m_listNode->m_expr->isSimpleArray());
-                    ASSERT(!m_args->m_listNode->m_next);
+                    Q_ASSERT(m_args->m_listNode->m_expr->isSimpleArray());
+                    Q_ASSERT(!m_args->m_listNode->m_next);
                     m_args->m_listNode = static_cast<ArrayNode*>(m_args->m_listNode->m_expr)->toArgumentList(generator.globalData());
                 }
             } else
@@ -459,7 +459,7 @@ RegisterID* ApplyFunctionCallDotNode::emitBytecode(BytecodeGenerator& generator,
             generator.emitCall(finalDestination.get(), realFunction.get(), thisRegister.get(), m_args, divot(), startOffset(), endOffset());
             m_args->m_listNode = oldList;
         } else {
-            ASSERT(m_args->m_listNode && m_args->m_listNode->m_next);
+            Q_ASSERT(m_args->m_listNode && m_args->m_listNode->m_next);
             RefPtr<RegisterID> realFunction = generator.emitMove(generator.newTemporary(), base.get());
             RefPtr<RegisterID> argsCountRegister = generator.newTemporary();
             RefPtr<RegisterID> thisRegister = generator.newTemporary();
@@ -783,7 +783,7 @@ RegisterID* UnaryOpNode::emitBytecode(BytecodeGenerator& generator, RegisterID* 
 
 void LogicalNotNode::emitBytecodeInConditionContext(BytecodeGenerator& generator, Label* trueTarget, Label* falseTarget, bool fallThroughMeansTrue)
 {
-    ASSERT(expr()->hasConditionContextCodegen());
+    Q_ASSERT(expr()->hasConditionContextCodegen());
 
     // reverse the true and false targets
     generator.emitNodeInConditionContext(expr(), falseTarget, trueTarget, !fallThroughMeansTrue);
@@ -822,8 +822,8 @@ void LogicalNotNode::emitBytecodeInConditionContext(BytecodeGenerator& generator
 //
 RegisterID* BinaryOpNode::emitStrcat(BytecodeGenerator& generator, RegisterID* dst, RegisterID* lhs, ReadModifyResolveNode* emitExpressionInfoForMe)
 {
-    ASSERT(isAdd());
-    ASSERT(resultDescriptor().definitelyIsString());
+    Q_ASSERT(isAdd());
+    Q_ASSERT(resultDescriptor().definitelyIsString());
 
     // Create a list of expressions for all the adds in the tree of nodes we can convert into
     // a string concatenation.  The rightmost node (c) is added first.  The rightmost node is
@@ -895,7 +895,7 @@ RegisterID* BinaryOpNode::emitStrcat(BytecodeGenerator& generator, RegisterID* d
         if (!node->isString())
             generator.emitToPrimitive(temporaryRegisters.last().get(), temporaryRegisters.last().get());
     }
-    ASSERT(temporaryRegisters.size() >= 3);
+    Q_ASSERT(temporaryRegisters.size() >= 3);
 
     // Certain read-modify nodes require expression info to be emitted *after* m_right has been generated.
     // If this is required the node is passed as 'emitExpressionInfoForMe'; do so now.
@@ -1244,7 +1244,7 @@ RegisterID* ReadModifyBracketNode::emitBytecode(BytecodeGenerator& generator, Re
 
 RegisterID* CommaNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
-    ASSERT(m_expressions.size() > 1);
+    Q_ASSERT(m_expressions.size() > 1);
     for (size_t i = 0; i < m_expressions.size() - 1; i++)
         generator.emitNode(generator.ignoredResult(), m_expressions[i]);
     return generator.emitNode(dst, m_expressions.last());
@@ -1341,7 +1341,7 @@ RegisterID* DebuggerStatementNode::emitBytecode(BytecodeGenerator& generator, Re
 
 RegisterID* ExprStatementNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
-    ASSERT(m_expr);
+    Q_ASSERT(m_expr);
     generator.emitDebugHook(WillExecuteStatement, firstLine(), lastLine()); 
     return generator.emitNode(dst, m_expr);
 }
@@ -1350,7 +1350,7 @@ RegisterID* ExprStatementNode::emitBytecode(BytecodeGenerator& generator, Regist
 
 RegisterID* VarStatementNode::emitBytecode(BytecodeGenerator& generator, RegisterID*)
 {
-    ASSERT(m_expr);
+    Q_ASSERT(m_expr);
     generator.emitDebugHook(WillExecuteStatement, firstLine(), lastLine());
     return generator.emitNode(m_expr);
 }
@@ -1551,7 +1551,7 @@ RegisterID* ForInNode::emitBytecode(BytecodeGenerator& generator, RegisterID* ds
         generator.emitExpressionInfo(assignNode->divot(), assignNode->startOffset(), assignNode->endOffset());
         generator.emitPutById(base, ident, propertyName);
     } else {
-        ASSERT(m_lexpr->isBracketAccessorNode());
+        Q_ASSERT(m_lexpr->isBracketAccessorNode());
         BracketAccessorNode* assignNode = static_cast<BracketAccessorNode*>(m_lexpr);
         propertyName = generator.newTemporary();
         RefPtr<RegisterID> protect = propertyName;
@@ -1724,7 +1724,7 @@ SwitchInfo::SwitchType CaseBlockNode::tryOptimizedSwitch(Vector<ExpressionNode*,
         return SwitchInfo::SwitchNone;
     } 
     
-    ASSERT(typeForTable == SwitchString);
+    Q_ASSERT(typeForTable == SwitchString);
     
     if (singleCharacterSwitch) {
         int32_t range = max_num - min_num;
@@ -1791,9 +1791,9 @@ RegisterID* CaseBlockNode::emitBytecodeForBlock(BytecodeGenerator& generator, Re
     if (!m_defaultClause)
         generator.emitLabel(defaultLabel.get());
 
-    ASSERT(i == labelVector.size());
+    Q_ASSERT(i == labelVector.size());
     if (switchType != SwitchInfo::SwitchNone) {
-        ASSERT(labelVector.size() == literalVector.size());
+        Q_ASSERT(labelVector.size() == literalVector.size());
         generator.endSwitch(labelVector.size(), labelVector.data(), literalVector.data(), defaultLabel.get(), min_num, max_num);
     }
     return result;

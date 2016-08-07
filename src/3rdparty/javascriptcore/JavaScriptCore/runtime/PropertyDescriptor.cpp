@@ -37,7 +37,7 @@ unsigned PropertyDescriptor::defaultAttributes = (DontDelete << 1) - 1;
 
 bool PropertyDescriptor::writable() const
 {
-    ASSERT(!isAccessorDescriptor());
+    Q_ASSERT(!isAccessorDescriptor());
     return !(m_attributes & ReadOnly);
 }
 
@@ -74,25 +74,25 @@ void PropertyDescriptor::setUndefined()
 
 JSValue PropertyDescriptor::getter() const
 {
-    ASSERT(isAccessorDescriptor());
+    Q_ASSERT(isAccessorDescriptor());
     return m_getter;
 }
 
 JSValue PropertyDescriptor::setter() const
 {
-    ASSERT(isAccessorDescriptor());
+    Q_ASSERT(isAccessorDescriptor());
     return m_setter;
 }
 
 void PropertyDescriptor::setDescriptor(JSValue value, unsigned attributes)
 {
-    ASSERT(value);
+    Q_ASSERT(value);
     m_attributes = attributes;
     if (attributes & (Getter | Setter)) {
         GetterSetter* accessor = asGetterSetter(value);
         m_getter = accessor->getter();
         m_setter = accessor->setter();
-        ASSERT(m_getter || m_setter);
+        Q_ASSERT(m_getter || m_setter);
         m_seenAttributes = EnumerablePresent | ConfigurablePresent;
         m_attributes &= ~ReadOnly;
     } else {
@@ -103,8 +103,8 @@ void PropertyDescriptor::setDescriptor(JSValue value, unsigned attributes)
 
 void PropertyDescriptor::setAccessorDescriptor(JSValue getter, JSValue setter, unsigned attributes)
 {
-    ASSERT(attributes & (Getter | Setter));
-    ASSERT(getter || setter);
+    Q_ASSERT(attributes & (Getter | Setter));
+    Q_ASSERT(getter || setter);
     m_attributes = attributes;
     m_getter = getter;
     m_setter = setter;

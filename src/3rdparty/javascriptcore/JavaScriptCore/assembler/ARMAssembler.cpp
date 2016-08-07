@@ -40,10 +40,10 @@ void ARMAssembler::patchConstantPoolLoad(void* loadAddr, void* constPoolAddr)
     ARMWord diff = reinterpret_cast<ARMWord*>(constPoolAddr) - ldr;
     ARMWord index = (*ldr & 0xfff) >> 1;
 
-    ASSERT(diff >= 1);
+    Q_ASSERT(diff >= 1);
     if (diff >= 2 || index > 0) {
         diff = (diff + index - 2) * sizeof(ARMWord);
-        ASSERT(diff <= 0xfff);
+        Q_ASSERT(diff <= 0xfff);
         *ldr = (*ldr & ~0xfff) | diff;
     } else
         *ldr = (*ldr & ~(0xfff | ARMAssembler::DT_UP)) | sizeof(ARMWord);
@@ -126,7 +126,7 @@ int ARMAssembler::genInt(int reg, ARMWord imm, bool positive)
         }
     }
 
-    ASSERT((imm & 0xff) == 0);
+    Q_ASSERT((imm & 0xff) == 0);
 
     if ((imm & 0xff000000) == 0) {
         imm1 = OP2_IMM | ((imm >> 16) & 0xff) | (((rol + 4) & 0xf) << 8);
@@ -292,7 +292,7 @@ void ARMAssembler::baseIndexTransfer32(bool isLoad, RegisterID srcDst, RegisterI
 {
     ARMWord op2;
 
-    ASSERT(scale >= 0 && scale <= 3);
+    Q_ASSERT(scale >= 0 && scale <= 3);
     op2 = lsl(index, scale);
 
     if (offset >= 0 && offset <= 0xfff) {

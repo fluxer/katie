@@ -78,8 +78,8 @@ public:
 
     static inline void popParenthesesDisjunctionContext(BackTrackInfoParentheses* backTrack)
     {
-        ASSERT(backTrack->matchAmount);
-        ASSERT(backTrack->lastContext);
+        Q_ASSERT(backTrack->matchAmount);
+        Q_ASSERT(backTrack->lastContext);
         backTrack->lastContext = backTrack->lastContext->next;
         --backTrack->matchAmount;
     }
@@ -174,13 +174,13 @@ public:
 
         void rewind(unsigned amount)
         {
-            ASSERT(pos >= amount);
+            Q_ASSERT(pos >= amount);
             pos -= amount;
         }
 
         int read()
         {
-            ASSERT(pos < length);
+            Q_ASSERT(pos < length);
             if (pos < length)
                 return input[pos];
             return -1;
@@ -188,22 +188,22 @@ public:
 
         int readChecked(int position)
         {
-            ASSERT(position < 0);
-            ASSERT((unsigned)-position <= pos);
+            Q_ASSERT(position < 0);
+            Q_ASSERT((unsigned)-position <= pos);
             unsigned p = pos + position;
-            ASSERT(p < length);
+            Q_ASSERT(p < length);
             return input[p];
         }
 
         int reread(unsigned from)
         {
-            ASSERT(from < length);
+            Q_ASSERT(from < length);
             return input[from];
         }
 
         int prev()
         {
-            ASSERT(!(pos > length));
+            Q_ASSERT(!(pos > length));
             if (pos && length)
                 return input[pos - 1];
             return -1;
@@ -431,7 +431,7 @@ public:
 
     bool matchCharacterClass(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeCharacterClass);
+        Q_ASSERT(term.type == ByteTerm::TypeCharacterClass);
         BackTrackInfoPatternCharacter* backTrack = reinterpret_cast<BackTrackInfoPatternCharacter*>(context->frame + term.frameLocation);
 
         switch (term.atom.quantityType) {
@@ -468,7 +468,7 @@ public:
 
     bool backtrackCharacterClass(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeCharacterClass);
+        Q_ASSERT(term.type == ByteTerm::TypeCharacterClass);
         BackTrackInfoPatternCharacter* backTrack = reinterpret_cast<BackTrackInfoPatternCharacter*>(context->frame + term.frameLocation);
 
         switch (term.atom.quantityType) {
@@ -498,13 +498,13 @@ public:
 
     bool matchBackReference(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeBackReference);
+        Q_ASSERT(term.type == ByteTerm::TypeBackReference);
         BackTrackInfoBackReference* backTrack = reinterpret_cast<BackTrackInfoBackReference*>(context->frame + term.frameLocation);
 
         int matchBegin = output[(term.atom.subpatternId << 1)];
         int matchEnd = output[(term.atom.subpatternId << 1) + 1];
-        ASSERT((matchBegin == -1) == (matchEnd == -1));
-        ASSERT(matchBegin <= matchEnd);
+        Q_ASSERT((matchBegin == -1) == (matchEnd == -1));
+        Q_ASSERT(matchBegin <= matchEnd);
 
         if (matchBegin == matchEnd)
             return true;
@@ -541,13 +541,13 @@ public:
 
     bool backtrackBackReference(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeBackReference);
+        Q_ASSERT(term.type == ByteTerm::TypeBackReference);
         BackTrackInfoBackReference* backTrack = reinterpret_cast<BackTrackInfoBackReference*>(context->frame + term.frameLocation);
 
         int matchBegin = output[(term.atom.subpatternId << 1)];
         int matchEnd = output[(term.atom.subpatternId << 1) + 1];
-        ASSERT((matchBegin == -1) == (matchEnd == -1));
-        ASSERT(matchBegin <= matchEnd);
+        Q_ASSERT((matchBegin == -1) == (matchEnd == -1));
+        Q_ASSERT(matchBegin <= matchEnd);
 
         if (matchBegin == matchEnd)
             return false;
@@ -617,8 +617,8 @@ public:
 
     bool matchParenthesesOnceBegin(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceBegin);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceBegin);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         BackTrackInfoParenthesesOnce* backTrack = reinterpret_cast<BackTrackInfoParenthesesOnce*>(context->frame + term.frameLocation);
 
@@ -647,8 +647,8 @@ public:
 
     bool matchParenthesesOnceEnd(ByteTerm& term, DisjunctionContext*)
     {
-        ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceEnd);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceEnd);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         if (term.capture()) {
             unsigned subpatternId = term.atom.subpatternId;
@@ -659,8 +659,8 @@ public:
 
     bool backtrackParenthesesOnceBegin(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceBegin);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceBegin);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         BackTrackInfoParenthesesOnce* backTrack = reinterpret_cast<BackTrackInfoParenthesesOnce*>(context->frame + term.frameLocation);
 
@@ -673,12 +673,12 @@ public:
         switch (term.atom.quantityType) {
         case QuantifierGreedy:
             // if we backtrack to this point, there is another chance - try matching nothing.
-            ASSERT(backTrack->inParentheses);
+            Q_ASSERT(backTrack->inParentheses);
             backTrack->inParentheses = 0;
             context->term += term.atom.parenthesesWidth;
             return true;
         case QuantifierNonGreedy:
-            ASSERT(backTrack->inParentheses);
+            Q_ASSERT(backTrack->inParentheses);
         case QuantifierFixedCount:
             break;
         }
@@ -688,8 +688,8 @@ public:
 
     bool backtrackParenthesesOnceEnd(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceEnd);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParenthesesSubpatternOnceEnd);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         BackTrackInfoParenthesesOnce* backTrack = reinterpret_cast<BackTrackInfoParenthesesOnce*>(context->frame + term.frameLocation);
 
@@ -719,8 +719,8 @@ public:
 
     bool matchParentheticalAssertionBegin(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParentheticalAssertionBegin);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParentheticalAssertionBegin);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         BackTrackInfoParentheticalAssertion* backTrack = reinterpret_cast<BackTrackInfoParentheticalAssertion*>(context->frame + term.frameLocation);
 
@@ -730,8 +730,8 @@ public:
 
     bool matchParentheticalAssertionEnd(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParentheticalAssertionEnd);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParentheticalAssertionEnd);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         BackTrackInfoParentheticalAssertion* backTrack = reinterpret_cast<BackTrackInfoParentheticalAssertion*>(context->frame + term.frameLocation);
 
@@ -748,8 +748,8 @@ public:
 
     bool backtrackParentheticalAssertionBegin(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParentheticalAssertionBegin);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParentheticalAssertionBegin);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         // We've failed to match parens; if they are inverted, this is win!
         if (term.invert()) {
@@ -762,8 +762,8 @@ public:
 
     bool backtrackParentheticalAssertionEnd(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParentheticalAssertionEnd);
-        ASSERT(term.atom.quantityCount == 1);
+        Q_ASSERT(term.type == ByteTerm::TypeParentheticalAssertionEnd);
+        Q_ASSERT(term.atom.quantityCount == 1);
 
         BackTrackInfoParentheticalAssertion* backTrack = reinterpret_cast<BackTrackInfoParentheticalAssertion*>(context->frame + term.frameLocation);
 
@@ -775,7 +775,7 @@ public:
 
     bool matchParentheses(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParenthesesSubpattern);
+        Q_ASSERT(term.type == ByteTerm::TypeParenthesesSubpattern);
 
         BackTrackInfoParentheses* backTrack = reinterpret_cast<BackTrackInfoParentheses*>(context->frame + term.frameLocation);
 
@@ -805,7 +805,7 @@ public:
                 }
             }
 
-            ASSERT(backTrack->matchAmount == term.atom.quantityCount);
+            Q_ASSERT(backTrack->matchAmount == term.atom.quantityCount);
             ParenthesesDisjunctionContext* context = backTrack->lastContext;
             recordParenthesesMatch(term, context);
             return true;
@@ -850,7 +850,7 @@ public:
     //
     bool backtrackParentheses(ByteTerm& term, DisjunctionContext* context)
     {
-        ASSERT(term.type == ByteTerm::TypeParenthesesSubpattern);
+        Q_ASSERT(term.type == ByteTerm::TypeParenthesesSubpattern);
 
         BackTrackInfoParentheses* backTrack = reinterpret_cast<BackTrackInfoParentheses*>(context->frame + term.frameLocation);
 
@@ -864,7 +864,7 @@ public:
 
         switch (term.atom.quantityType) {
         case QuantifierFixedCount: {
-            ASSERT(backTrack->matchAmount == term.atom.quantityCount);
+            Q_ASSERT(backTrack->matchAmount == term.atom.quantityCount);
 
             ParenthesesDisjunctionContext* context = 0;
 
@@ -886,7 +886,7 @@ public:
                 }
             }
 
-            ASSERT(backTrack->matchAmount == term.atom.quantityCount);
+            Q_ASSERT(backTrack->matchAmount == term.atom.quantityCount);
             context = backTrack->lastContext;
             recordParenthesesMatch(term, context);
             return true;
@@ -973,7 +973,7 @@ public:
         context->term = 0;
 
     matchAgain:
-        ASSERT(context->term < static_cast<int>(disjunction->terms.size()));
+        Q_ASSERT(context->term < static_cast<int>(disjunction->terms.size()));
 
         switch (currentTerm().type) {
         case ByteTerm::TypeSubpatternBegin:
@@ -1108,7 +1108,7 @@ public:
         ASSERT_NOT_REACHED();
 
     backtrack:
-        ASSERT(context->term < static_cast<int>(disjunction->terms.size()));
+        Q_ASSERT(context->term < static_cast<int>(disjunction->terms.size()));
 
         switch (currentTerm().type) {
         case ByteTerm::TypeSubpatternBegin:
@@ -1325,7 +1325,7 @@ public:
 
     void atomBackReference(unsigned subpatternId, int inputPosition, unsigned frameLocation, unsigned quantityCount, QuantifierType quantityType)
     {
-        ASSERT(subpatternId);
+        Q_ASSERT(subpatternId);
 
         m_bodyDisjunction->terms.append(ByteTerm::BackReference(subpatternId, inputPosition));
 
@@ -1362,14 +1362,14 @@ public:
 
     unsigned popParenthesesStack()
     {
-        ASSERT(m_parenthesesStack.size());
+        Q_ASSERT(m_parenthesesStack.size());
         int stackEnd = m_parenthesesStack.size() - 1;
         unsigned beginTerm = m_parenthesesStack[stackEnd].beginTerm;
         m_currentAlternativeIndex = m_parenthesesStack[stackEnd].savedAlternativeIndex;
         m_parenthesesStack.shrink(stackEnd);
 
-        ASSERT(beginTerm < m_bodyDisjunction->terms.size());
-        ASSERT(m_currentAlternativeIndex < m_bodyDisjunction->terms.size());
+        Q_ASSERT(beginTerm < m_bodyDisjunction->terms.size());
+        Q_ASSERT(m_currentAlternativeIndex < m_bodyDisjunction->terms.size());
 
         return beginTerm;
     }
@@ -1387,7 +1387,7 @@ public:
     void closeAlternative(int beginTerm)
     {
         int origBeginTerm = beginTerm;
-        ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeAlternativeBegin);
+        Q_ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeAlternativeBegin);
         int endIndex = m_bodyDisjunction->terms.size();
 
         unsigned frameLocation = m_bodyDisjunction->terms[beginTerm].frameLocation;
@@ -1397,7 +1397,7 @@ public:
         else {
             while (m_bodyDisjunction->terms[beginTerm].alternative.next) {
                 beginTerm += m_bodyDisjunction->terms[beginTerm].alternative.next;
-                ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeAlternativeDisjunction);
+                Q_ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeAlternativeDisjunction);
                 m_bodyDisjunction->terms[beginTerm].alternative.end = endIndex - beginTerm;
                 m_bodyDisjunction->terms[beginTerm].frameLocation = frameLocation;
             }
@@ -1413,14 +1413,14 @@ public:
     {
         int beginTerm = 0;
         int origBeginTerm = 0;
-        ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeBodyAlternativeBegin);
+        Q_ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeBodyAlternativeBegin);
         int endIndex = m_bodyDisjunction->terms.size();
 
         unsigned frameLocation = m_bodyDisjunction->terms[beginTerm].frameLocation;
 
         while (m_bodyDisjunction->terms[beginTerm].alternative.next) {
             beginTerm += m_bodyDisjunction->terms[beginTerm].alternative.next;
-            ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeBodyAlternativeDisjunction);
+            Q_ASSERT(m_bodyDisjunction->terms[beginTerm].type == ByteTerm::TypeBodyAlternativeDisjunction);
             m_bodyDisjunction->terms[beginTerm].alternative.end = endIndex - beginTerm;
             m_bodyDisjunction->terms[beginTerm].frameLocation = frameLocation;
         }
@@ -1453,7 +1453,7 @@ public:
             m_bodyDisjunction->terms[endTerm].atom.quantityType = quantityType;
         } else {
             ByteTerm& parenthesesBegin = m_bodyDisjunction->terms[beginTerm];
-            ASSERT(parenthesesBegin.type == ByteTerm::TypeParenthesesSubpatternOnceBegin);
+            Q_ASSERT(parenthesesBegin.type == ByteTerm::TypeParenthesesSubpatternOnceBegin);
 
             bool invertOrCapture = parenthesesBegin.invertOrCapture;
             unsigned subpatternId = parenthesesBegin.atom.subpatternId;
@@ -1523,7 +1523,7 @@ public:
             PatternAlternative* alternative = disjunction->m_alternatives[alt];
             unsigned minimumSize = alternative->m_minimumSize;
 
-            ASSERT(minimumSize >= parenthesesInputCountAlreadyChecked);
+            Q_ASSERT(minimumSize >= parenthesesInputCountAlreadyChecked);
             unsigned countToCheck = minimumSize - parenthesesInputCountAlreadyChecked;
             if (countToCheck)
                 checkInput(countToCheck);

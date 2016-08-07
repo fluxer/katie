@@ -50,7 +50,7 @@ static inline void getClassPropertyNames(ExecState* exec, const ClassInfo* class
         if (!table)
             continue;
         table->initializeIfNeeded(exec);
-        ASSERT(table->table);
+        Q_ASSERT(table->table);
 
         int hashSizeMask = table->compactSize - 1;
         const HashEntry* entry = table->table;
@@ -96,8 +96,8 @@ static void throwSetterError(ExecState* exec)
 // ECMA 8.6.2.2
 void JSObject::put(ExecState* exec, const Identifier& propertyName, JSValue value, PutPropertySlot& slot)
 {
-    ASSERT(value);
-    ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+    Q_ASSERT(value);
+    Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
     if (propertyName == exec->propertyNames().underscoreProto) {
         // Setting __proto__ to a non-object, non-null value is silently ignored to match Mozilla.
@@ -245,7 +245,7 @@ static ALWAYS_INLINE JSValue callDefaultValueFunction(ExecState* exec, const JSO
         return exec->exception();
 
     JSValue result = call(exec, function, callType, callData, const_cast<JSObject*>(object), exec->emptyList());
-    ASSERT(!result.isGetterSetter());
+    Q_ASSERT(!result.isGetterSetter());
     if (exec->hadException())
         return exec->exception();
     if (result.isObject())
@@ -280,7 +280,7 @@ JSValue JSObject::defaultValue(ExecState* exec, PreferredPrimitiveType hint) con
             return value;
     }
 
-    ASSERT(!exec->hadException());
+    Q_ASSERT(!exec->hadException());
 
     return throwError(exec, TypeError, "No default value");
 }
@@ -300,7 +300,7 @@ void JSObject::defineGetter(ExecState* exec, const Identifier& propertyName, JSO
 {
     JSValue object = getDirect(propertyName);
     if (object && object.isGetterSetter()) {
-        ASSERT(m_structure->hasGetterSetterProperties());
+        Q_ASSERT(m_structure->hasGetterSetterProperties());
         asGetterSetter(object)->setGetter(getterFunction);
         return;
     }
@@ -327,7 +327,7 @@ void JSObject::defineSetter(ExecState* exec, const Identifier& propertyName, JSO
 {
     JSValue object = getDirect(propertyName);
     if (object && object.isGetterSetter()) {
-        ASSERT(m_structure->hasGetterSetterProperties());
+        Q_ASSERT(m_structure->hasGetterSetterProperties());
         asGetterSetter(object)->setSetter(setterFunction);
         return;
     }
@@ -652,7 +652,7 @@ bool JSObject::defineOwnProperty(ExecState* exec, const Identifier& propertyName
     }
 
     // Changing the accessor functions of an existing accessor property
-    ASSERT(descriptor.isAccessorDescriptor());
+    Q_ASSERT(descriptor.isAccessorDescriptor());
     if (!current.configurable()) {
         if (descriptor.setterPresent() && !(current.setter() && JSValue::strictEqual(exec, current.setter(), descriptor.setter()))) {
             if (throwException)

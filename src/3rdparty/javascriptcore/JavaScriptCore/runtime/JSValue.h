@@ -438,7 +438,7 @@ namespace JSC {
         JSValue v;
         v.u.asEncodedJSValue = encodedJSValue;
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!v.isZombie());
+        Q_ASSERT(!v.isZombie());
 #endif
         return v;
     }
@@ -487,7 +487,7 @@ namespace JSC {
             u.asBits.tag = EmptyValueTag;
         u.asBits.payload = reinterpret_cast<int32_t>(ptr);
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!isZombie());
+        Q_ASSERT(!isZombie());
 #endif
     }
 
@@ -499,13 +499,13 @@ namespace JSC {
             u.asBits.tag = EmptyValueTag;
         u.asBits.payload = reinterpret_cast<int32_t>(const_cast<JSCell*>(ptr));
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!isZombie());
+        Q_ASSERT(!isZombie());
 #endif
     }
 
     inline JSValue::operator bool() const
     {
-        ASSERT(tag() != DeletedValueTag);
+        Q_ASSERT(tag() != DeletedValueTag);
         return tag() != EmptyValueTag;
     }
 
@@ -576,25 +576,25 @@ namespace JSC {
     
     inline int32_t JSValue::asInt32() const
     {
-        ASSERT(isInt32());
+        Q_ASSERT(isInt32());
         return u.asBits.payload;
     }
     
     inline uint32_t JSValue::asUInt32() const
     {
-        ASSERT(isUInt32());
+        Q_ASSERT(isUInt32());
         return u.asBits.payload;
     }
     
     inline double JSValue::asDouble() const
     {
-        ASSERT(isDouble());
+        Q_ASSERT(isDouble());
         return u.asDouble;
     }
     
     ALWAYS_INLINE JSCell* JSValue::asCell() const
     {
-        ASSERT(isCell());
+        Q_ASSERT(isCell());
         return reinterpret_cast<JSCell*>(u.asBits.payload);
     }
 
@@ -743,13 +743,13 @@ namespace JSC {
 
     inline bool JSValue::getBoolean() const
     {
-        ASSERT(isBoolean());
+        Q_ASSERT(isBoolean());
         return tag() == TrueTag;
     }
 
     inline double JSValue::uncheckedGetNumber() const
     {
-        ASSERT(isNumber());
+        Q_ASSERT(isNumber());
         return isInt32() ? asInt32() : asDouble();
     }
 
@@ -810,7 +810,7 @@ namespace JSC {
         : m_ptr(ptr)
     {
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!isZombie());
+        Q_ASSERT(!isZombie());
 #endif
     }
 
@@ -818,7 +818,7 @@ namespace JSC {
         : m_ptr(const_cast<JSCell*>(ptr))
     {
 #if ENABLE(JSC_ZOMBIES)
-        ASSERT(!isZombie());
+        Q_ASSERT(!isZombie());
 #endif
     }
 

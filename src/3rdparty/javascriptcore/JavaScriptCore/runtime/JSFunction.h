@@ -97,22 +97,22 @@ namespace JSC {
         RefPtr<ExecutableBase> m_executable;
         ScopeChain& scopeChain()
         {
-            ASSERT(!isHostFunctionNonInline());
+            Q_ASSERT(!isHostFunctionNonInline());
             return *WTF::bitwise_cast<ScopeChain*>(m_data);
         }
         void clearScopeChain()
         {
-            ASSERT(!isHostFunctionNonInline());
+            Q_ASSERT(!isHostFunctionNonInline());
             new (m_data) ScopeChain(NoScopeChain());
         }
         void setScopeChain(ScopeChainNode* sc)
         {
-            ASSERT(!isHostFunctionNonInline());
+            Q_ASSERT(!isHostFunctionNonInline());
             new (m_data) ScopeChain(sc);
         }
         void setScopeChain(const ScopeChain& sc)
         {
-            ASSERT(!isHostFunctionNonInline());
+            Q_ASSERT(!isHostFunctionNonInline());
             *WTF::bitwise_cast<ScopeChain*>(m_data) = sc;
         }
         void setNativeFunction(NativeFunction func)
@@ -126,7 +126,7 @@ namespace JSC {
 
     inline JSFunction* asFunction(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&JSFunction::info));
+        Q_ASSERT(asObject(value)->inherits(&JSFunction::info));
         return static_cast<JSFunction*>(asObject(value));
     }
 

@@ -175,7 +175,7 @@ void JIT::privateCompileMainPass()
 
     for (m_bytecodeIndex = 0; m_bytecodeIndex < instructionCount; ) {
         Instruction* currentInstruction = instructionsBegin + m_bytecodeIndex;
-        ASSERT_WITH_MESSAGE(m_interpreter->isOpcode(currentInstruction->u.opcode), "privateCompileMainPass gone bad @ %d", m_bytecodeIndex);
+        Q_ASSERT_X(m_interpreter->isOpcode(currentInstruction->u.opcode), "JIT::privateCompileMainPass", "privateCompileMainPass gone bad");
 
 #if ENABLE(OPCODE_SAMPLING)
         if (m_bytecodeIndex > 0) // Avoid the overhead of sampling op_enter twice.
@@ -325,8 +325,8 @@ void JIT::privateCompileMainPass()
         }
     }
 
-    ASSERT(m_propertyAccessInstructionIndex == m_codeBlock->numberOfStructureStubInfos());
-    ASSERT(m_callLinkInfoIndex == m_codeBlock->numberOfCallLinkInfos());
+    Q_ASSERT(m_propertyAccessInstructionIndex == m_codeBlock->numberOfStructureStubInfos());
+    Q_ASSERT(m_callLinkInfoIndex == m_codeBlock->numberOfCallLinkInfos());
 
 #ifndef NDEBUG
     // Reset this, in order to guard its use with ASSERTs.
@@ -421,16 +421,16 @@ void JIT::privateCompileSlowCases()
             ASSERT_NOT_REACHED();
         }
 
-        ASSERT_WITH_MESSAGE(iter == m_slowCases.end() || firstTo != iter->to,"Not enough jumps linked in slow case codegen.");
-        ASSERT_WITH_MESSAGE(firstTo == (iter - 1)->to, "Too many jumps linked in slow case codegen.");
+        Q_ASSERT_X(iter == m_slowCases.end() || firstTo != iter->to, "JIT::privateCompileSlowCases", "Not enough jumps linked in slow case codegen.");
+        Q_ASSERT_X(firstTo == (iter - 1)->to, "JIT::privateCompileSlowCases", "Too many jumps linked in slow case codegen.");
 
         emitJumpSlowToHot(jump(), 0);
     }
 
 #if ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
-    ASSERT(m_propertyAccessInstructionIndex == m_codeBlock->numberOfStructureStubInfos());
+    Q_ASSERT(m_propertyAccessInstructionIndex == m_codeBlock->numberOfStructureStubInfos());
 #endif
-    ASSERT(m_callLinkInfoIndex == m_codeBlock->numberOfCallLinkInfos());
+    Q_ASSERT(m_callLinkInfoIndex == m_codeBlock->numberOfCallLinkInfos());
 
 #ifndef NDEBUG
     // Reset this, in order to guard its use with ASSERTs.
@@ -476,7 +476,7 @@ JITCode JIT::privateCompile()
         jump(afterRegisterFileCheck);
     }
 
-    ASSERT(m_jmpTable.isEmpty());
+    Q_ASSERT(m_jmpTable.isEmpty());
 
     LinkBuffer patchBuffer(this, m_globalData->executableAllocator.poolForSize(m_assembler.size()));
 
@@ -486,8 +486,8 @@ JITCode JIT::privateCompile()
         unsigned bytecodeIndex = record.bytecodeIndex;
 
         if (record.type != SwitchRecord::String) {
-            ASSERT(record.type == SwitchRecord::Immediate || record.type == SwitchRecord::Character); 
-            ASSERT(record.jumpTable.simpleJumpTable->branchOffsets.size() == record.jumpTable.simpleJumpTable->ctiOffsets.size());
+            Q_ASSERT(record.type == SwitchRecord::Immediate || record.type == SwitchRecord::Character); 
+            Q_ASSERT(record.jumpTable.simpleJumpTable->branchOffsets.size() == record.jumpTable.simpleJumpTable->ctiOffsets.size());
 
             record.jumpTable.simpleJumpTable->ctiDefault = patchBuffer.locationOf(m_labels[bytecodeIndex + record.defaultOffset]);
 
@@ -496,7 +496,7 @@ JITCode JIT::privateCompile()
                 record.jumpTable.simpleJumpTable->ctiOffsets[j] = offset ? patchBuffer.locationOf(m_labels[bytecodeIndex + offset]) : record.jumpTable.simpleJumpTable->ctiDefault;
             }
         } else {
-            ASSERT(record.type == SwitchRecord::String);
+            Q_ASSERT(record.type == SwitchRecord::String);
 
             record.jumpTable.stringJumpTable->ctiDefault = patchBuffer.locationOf(m_labels[bytecodeIndex + record.defaultOffset]);
 
@@ -589,7 +589,7 @@ void JIT::linkCall(JSFunction* callee, CodeBlock* callerCodeBlock, CodeBlock* ca
     // Currently we only link calls with the exact number of arguments.
     // If this is a native call calleeCodeBlock is null so the number of parameters is unimportant
     if (!calleeCodeBlock || (callerArgCount == calleeCodeBlock->m_numParameters)) {
-        ASSERT(!callLinkInfo->isLinked());
+        Q_ASSERT(!callLinkInfo->isLinked());
     
         if (calleeCodeBlock)
             calleeCodeBlock->addCaller(callLinkInfo);

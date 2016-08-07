@@ -162,7 +162,7 @@ void Lexer::setCode(const SourceCode& source, ParserArena& arena)
 
     // Read the first characters into the 4-character buffer.
     shift4();
-    ASSERT(currentOffset() == source.startOffset());
+    Q_ASSERT(currentOffset() == source.startOffset());
 }
 
 void Lexer::copyCodeWithoutBOMs()
@@ -186,7 +186,7 @@ void Lexer::copyCodeWithoutBOMs()
 
 void Lexer::shiftLineTerminator()
 {
-    ASSERT(isLineTerminator(m_current));
+    Q_ASSERT(isLineTerminator(m_current));
 
     // Allow both CRLF and LFCR.
     if (m_current + m_next1 == '\n' + '\r')
@@ -250,8 +250,8 @@ static inline int singleEscape(int c)
 
 inline void Lexer::record8(int c)
 {
-    ASSERT(c >= 0);
-    ASSERT(c <= 0xFF);
+    Q_ASSERT(c >= 0);
+    Q_ASSERT(c <= 0xFF);
     m_buffer8.append(static_cast<char>(c));
 }
 
@@ -262,16 +262,16 @@ inline void Lexer::record16(UChar c)
 
 inline void Lexer::record16(int c)
 {
-    ASSERT(c >= 0);
-    ASSERT(c <= USHRT_MAX);
+    Q_ASSERT(c >= 0);
+    Q_ASSERT(c <= USHRT_MAX);
     record16(UChar(static_cast<unsigned short>(c)));
 }
 
 int Lexer::lex(void* p1, void* p2)
 {
-    ASSERT(!m_error);
-    ASSERT(m_buffer8.isEmpty());
-    ASSERT(m_buffer16.isEmpty());
+    Q_ASSERT(!m_error);
+    Q_ASSERT(m_buffer8.isEmpty());
+    Q_ASSERT(m_buffer16.isEmpty());
 
     YYSTYPE* lvalp = static_cast<YYSTYPE*>(p1);
     YYLTYPE* llocp = static_cast<YYLTYPE*>(p2);
@@ -899,15 +899,15 @@ returnError:
 
 bool Lexer::scanRegExp(const Identifier*& pattern, const Identifier*& flags, UChar patternPrefix)
 {
-    ASSERT(m_buffer16.isEmpty());
+    Q_ASSERT(m_buffer16.isEmpty());
 
     bool lastWasEscape = false;
     bool inBrackets = false;
 
     if (patternPrefix) {
-        ASSERT(!isLineTerminator(patternPrefix));
-        ASSERT(patternPrefix != '/');
-        ASSERT(patternPrefix != '[');
+        Q_ASSERT(!isLineTerminator(patternPrefix));
+        Q_ASSERT(patternPrefix != '/');
+        Q_ASSERT(patternPrefix != '[');
         record16(patternPrefix);
     }
 
@@ -1021,7 +1021,7 @@ SourceCode Lexer::sourceCode(int openBrace, int closeBrace, int firstLine)
 
     const UChar* data = m_source->provider()->data();
 
-    ASSERT(openBrace < closeBrace);
+    Q_ASSERT(openBrace < closeBrace);
 
     int numBOMsBeforeOpenBrace = 0;
     int numBOMsBetweenBraces = 0;

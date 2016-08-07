@@ -170,8 +170,8 @@ namespace JSC {
         , m_globalObject(0)
     {
         // Verify that our values will play nice with mmap and VirtualAlloc.
-        ASSERT(isPageAligned(maxGlobals));
-        ASSERT(isPageAligned(capacity));
+        Q_ASSERT(isPageAligned(maxGlobals));
+        Q_ASSERT(isPageAligned(capacity));
 
         size_t bufferLength = (capacity + maxGlobals) * sizeof(Register);
     #if OS(QNX)

@@ -2626,7 +2626,7 @@ JSRegExp* jsRegExpCompile(const UChar* pattern, int patternLength,
     
     *code++ = OP_END;
 
-    ASSERT(code - codeStart <= length);
+    Q_ASSERT(code - codeStart <= length);
     if (code - codeStart > length)
         errorcode = ERR7;
     

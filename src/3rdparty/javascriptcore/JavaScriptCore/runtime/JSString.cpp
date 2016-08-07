@@ -78,7 +78,7 @@ JSString::Rope::~Rope()
 // rope-of-ropes.)
 void JSString::resolveRope(ExecState* exec) const
 {
-    ASSERT(isRope());
+    Q_ASSERT(isRope());
 
     // Allocate the buffer to hold the final string, position initially points to the end.
     UChar* buffer;
@@ -90,8 +90,8 @@ void JSString::resolveRope(ExecState* exec) const
             m_fibers[i] = static_cast<void*>(0);
         }
         m_ropeLength = 0;
-        ASSERT(!isRope());
-        ASSERT(m_value == UString());
+        Q_ASSERT(!isRope());
+        Q_ASSERT(m_value == UString());
         throwOutOfMemoryError(exec);
         return;
     }
@@ -121,14 +121,14 @@ void JSString::resolveRope(ExecState* exec) const
             // Was this the last item in the work queue?
             if (workQueue.isEmpty()) {
                 // Create a string from the UChar buffer, clear the rope RefPtr.
-                ASSERT(buffer == position);
+                Q_ASSERT(buffer == position);
                 for (unsigned i = 0; i < m_ropeLength; ++i) {
                     m_fibers[i].deref();
                     m_fibers[i] = static_cast<void*>(0);
                 }
                 m_ropeLength = 0;
 
-                ASSERT(!isRope());
+                Q_ASSERT(!isRope());
                 return;
             }
 

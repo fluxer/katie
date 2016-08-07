@@ -99,7 +99,7 @@ namespace JSC {
 
     inline JSActivation* asActivation(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&JSActivation::info));
+        Q_ASSERT(asObject(value)->inherits(&JSActivation::info));
         return static_cast<JSActivation*>(asObject(value));
     }
 

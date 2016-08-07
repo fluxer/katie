@@ -65,7 +65,7 @@ namespace WTF {
 template<unsigned maxDepth>
 class AVLTreeDefaultBSet {
 public:
-    bool& operator[](unsigned i) { ASSERT(i < maxDepth); return m_data[i]; }
+    bool& operator[](unsigned i) { Q_ASSERT(i < maxDepth); return m_data[i]; }
     void set() { for (unsigned i = 0; i < maxDepth; ++i) m_data[i] = true; }
     void reset() { for (unsigned i = 0; i < maxDepth; ++i) m_data[i] = false; }
 

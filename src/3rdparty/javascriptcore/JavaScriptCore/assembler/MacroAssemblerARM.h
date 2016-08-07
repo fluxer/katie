@@ -121,7 +121,7 @@ public:
     void lshift32(RegisterID shift_amount, RegisterID dest)
     {
         ARMWord w = ARMAssembler::getOp2(0x1f);
-        ASSERT(w != ARMAssembler::INVALID_IMM);
+        Q_ASSERT(w != ARMAssembler::INVALID_IMM);
         m_assembler.and_r(ARMRegisters::S0, shift_amount, w);
 
         m_assembler.movs_r(dest, m_assembler.lsl_r(dest, ARMRegisters::S0));
@@ -170,7 +170,7 @@ public:
     void rshift32(RegisterID shift_amount, RegisterID dest)
     {
         ARMWord w = ARMAssembler::getOp2(0x1f);
-        ASSERT(w != ARMAssembler::INVALID_IMM);
+        Q_ASSERT(w != ARMAssembler::INVALID_IMM);
         m_assembler.and_r(ARMRegisters::S0, shift_amount, w);
 
         m_assembler.movs_r(dest, m_assembler.asr_r(dest, ARMRegisters::S0));
@@ -424,14 +424,14 @@ public:
 
     Jump branchTest32(Condition cond, RegisterID reg, RegisterID mask)
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         m_assembler.tst_r(reg, mask);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }
 
     Jump branchTest32(Condition cond, RegisterID reg, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         ARMWord w = m_assembler.getImm(mask.m_value, ARMRegisters::S0, true);
         if (w & ARMAssembler::OP2_INV_IMM)
             m_assembler.bics_r(ARMRegisters::S0, reg, w & ~ARMAssembler::OP2_INV_IMM);
@@ -469,14 +469,14 @@ public:
 
     Jump branchAdd32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         add32(src, dest);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }
 
     Jump branchAdd32(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         add32(imm, dest);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }
@@ -493,7 +493,7 @@ public:
 
     Jump branchMul32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         if (cond == Overflow) {
             mull32(src, dest, dest);
             cond = NonZero;
@@ -505,7 +505,7 @@ public:
 
     Jump branchMul32(Condition cond, Imm32 imm, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         if (cond == Overflow) {
             move(imm, ARMRegisters::S0);
             mull32(ARMRegisters::S0, src, dest);
@@ -518,28 +518,28 @@ public:
 
     Jump branchSub32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         sub32(src, dest);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }
 
     Jump branchSub32(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         sub32(imm, dest);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }
 
     Jump branchNeg32(Condition cond, RegisterID srcDest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         neg32(srcDest);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }
 
     Jump branchOr32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Signed) || (cond == Zero) || (cond == NonZero));
         or32(src, dest);
         return Jump(m_assembler.jmp(ARMCondition(cond)));
     }

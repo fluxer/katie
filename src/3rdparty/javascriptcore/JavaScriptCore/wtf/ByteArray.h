@@ -62,7 +62,7 @@ namespace WTF {
 
         unsigned char get(unsigned index) const
         {
-            ASSERT(index < m_size);
+            Q_ASSERT(index < m_size);
             return m_data[index];
         }
 

@@ -72,7 +72,7 @@ JSObject* EvalExecutable::compile(ExecState* exec, ScopeChainNode* scopeChainNod
     ScopeChain scopeChain(scopeChainNode);
     JSGlobalObject* globalObject = scopeChain.globalObject();
 
-    ASSERT(!m_evalCodeBlock);
+    Q_ASSERT(!m_evalCodeBlock);
     m_evalCodeBlock = new EvalCodeBlock(this, globalObject, source().provider(), scopeChain.localDepth());
     OwnPtr<BytecodeGenerator> generator(new BytecodeGenerator(evalNode.get(), globalObject->debugger(), scopeChain, m_evalCodeBlock->symbolTable(), m_evalCodeBlock));
     generator->generate();
@@ -103,7 +103,7 @@ JSObject* ProgramExecutable::compile(ExecState* exec, ScopeChainNode* scopeChain
     ScopeChain scopeChain(scopeChainNode);
     JSGlobalObject* globalObject = scopeChain.globalObject();
     
-    ASSERT(!m_programCodeBlock);
+    Q_ASSERT(!m_programCodeBlock);
     m_programCodeBlock = new ProgramCodeBlock(this, GlobalCode, globalObject, source().provider());
     OwnPtr<BytecodeGenerator> generator(new BytecodeGenerator(programNode.get(), globalObject->debugger(), scopeChain, &globalObject->symbolTable(), m_programCodeBlock));
     generator->generate();
@@ -124,12 +124,12 @@ void FunctionExecutable::compile(ExecState*, ScopeChainNode* scopeChainNode)
     ScopeChain scopeChain(scopeChainNode);
     JSGlobalObject* globalObject = scopeChain.globalObject();
 
-    ASSERT(!m_codeBlock);
+    Q_ASSERT(!m_codeBlock);
     m_codeBlock = new FunctionCodeBlock(this, FunctionCode, source().provider(), source().startOffset());
     OwnPtr<BytecodeGenerator> generator(new BytecodeGenerator(body.get(), globalObject->debugger(), scopeChain, m_codeBlock->symbolTable(), m_codeBlock));
     generator->generate();
     m_numParameters = m_codeBlock->m_numParameters;
-    ASSERT(m_numParameters);
+    Q_ASSERT(m_numParameters);
     m_numVariables = m_codeBlock->m_numVars;
 
     body->destroyData();
@@ -195,11 +195,11 @@ ExceptionInfo* FunctionExecutable::reparseExceptionInfo(JSGlobalData* globalData
     generator->setRegeneratingForExceptionInfo(static_cast<FunctionCodeBlock*>(codeBlock));
     generator->generate();
 
-    ASSERT(newCodeBlock->instructionCount() == codeBlock->instructionCount());
+    Q_ASSERT(newCodeBlock->instructionCount() == codeBlock->instructionCount());
 
 #if ENABLE(JIT)
     JITCode newJITCode = JIT::compile(globalData, newCodeBlock.get());
-    ASSERT(newJITCode.size() == generatedJITCode().size());
+    Q_ASSERT(newJITCode.size() == generatedJITCode().size());
 #endif
 
     globalData->functionCodeBlockBeingReparsed = 0;
@@ -220,11 +220,11 @@ ExceptionInfo* EvalExecutable::reparseExceptionInfo(JSGlobalData* globalData, Sc
     generator->setRegeneratingForExceptionInfo(static_cast<EvalCodeBlock*>(codeBlock));
     generator->generate();
 
-    ASSERT(newCodeBlock->instructionCount() == codeBlock->instructionCount());
+    Q_ASSERT(newCodeBlock->instructionCount() == codeBlock->instructionCount());
 
 #if ENABLE(JIT)
     JITCode newJITCode = JIT::compile(globalData, newCodeBlock.get());
-    ASSERT(newJITCode.size() == generatedJITCode().size());
+    Q_ASSERT(newJITCode.size() == generatedJITCode().size());
 #endif
 
     return newCodeBlock->extractExceptionInfo();
@@ -247,19 +247,19 @@ PassRefPtr<FunctionExecutable> FunctionExecutable::fromGlobalCode(const Identifi
         return 0;
 
     StatementNode* exprStatement = program->singleStatement();
-    ASSERT(exprStatement);
-    ASSERT(exprStatement->isExprStatement());
+    Q_ASSERT(exprStatement);
+    Q_ASSERT(exprStatement->isExprStatement());
     if (!exprStatement || !exprStatement->isExprStatement())
         return 0;
 
     ExpressionNode* funcExpr = static_cast<ExprStatementNode*>(exprStatement)->expr();
-    ASSERT(funcExpr);
-    ASSERT(funcExpr->isFuncExprNode());
+    Q_ASSERT(funcExpr);
+    Q_ASSERT(funcExpr->isFuncExprNode());
     if (!funcExpr || !funcExpr->isFuncExprNode())
         return 0;
 
     FunctionBodyNode* body = static_cast<FuncExprNode*>(funcExpr)->body();
-    ASSERT(body);
+    Q_ASSERT(body);
     return FunctionExecutable::create(&exec->globalData(), functionName, body->source(), body->usesArguments(), body->parameters(), body->lineNo(), body->lastLine());
 }
 

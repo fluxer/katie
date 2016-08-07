@@ -61,7 +61,7 @@ using namespace JSC;
         return kJSTypeNumber;
     if (jsValue.isString())
         return kJSTypeString;
-    ASSERT(jsValue.isObject());
+    Q_ASSERT(jsValue.isObject());
     return kJSTypeObject;
 }
 

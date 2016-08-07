@@ -218,7 +218,7 @@ namespace JSC {
                 : m_offset(offset)
                 , m_used(false)
             {
-                ASSERT(m_offset == offset);
+                Q_ASSERT(m_offset == offset);
             }
 
             int m_offset : 31;
@@ -346,13 +346,13 @@ namespace JSC {
 #if WTF_ARM_ARCH_AT_LEAST(7)
         void movw_r(int rd, ARMWord op2, Condition cc = AL)
         {
-            ASSERT((op2 | 0xf0fff) == 0xf0fff);
+            Q_ASSERT((op2 | 0xf0fff) == 0xf0fff);
             m_buffer.putInt(static_cast<ARMWord>(cc) | MOVW | RD(rd) | op2);
         }
 
         void movt_r(int rd, ARMWord op2, Condition cc = AL)
         {
-            ASSERT((op2 | 0xf0fff) == 0xf0fff);
+            Q_ASSERT((op2 | 0xf0fff) == 0xf0fff);
             m_buffer.putInt(static_cast<ARMWord>(cc) | MOVT | RD(rd) | op2);
         }
 #endif
@@ -474,25 +474,25 @@ namespace JSC {
 
         void fdtr_u(bool isLoad, int rd, int rb, ARMWord op2, Condition cc = AL)
         {
-            ASSERT(op2 <= 0xff);
+            Q_ASSERT(op2 <= 0xff);
             emitInst(static_cast<ARMWord>(cc) | FDTR | DT_UP | (isLoad ? DT_LOAD : 0), rd, rb, op2);
         }
 
         void fdtr_d(bool isLoad, int rd, int rb, ARMWord op2, Condition cc = AL)
         {
-            ASSERT(op2 <= 0xff);
+            Q_ASSERT(op2 <= 0xff);
             emitInst(static_cast<ARMWord>(cc) | FDTR | (isLoad ? DT_LOAD : 0), rd, rb, op2);
         }
 
         void push_r(int reg, Condition cc = AL)
         {
-            ASSERT(ARMWord(reg) <= 0xf);
+            Q_ASSERT(ARMWord(reg) <= 0xf);
             m_buffer.putInt(cc | DTR | DT_WB | RN(ARMRegisters::sp) | RD(reg) | 0x4);
         }
 
         void pop_r(int reg, Condition cc = AL)
         {
-            ASSERT(ARMWord(reg) <= 0xf);
+            Q_ASSERT(ARMWord(reg) <= 0xf);
             m_buffer.putInt(cc | (DTR ^ DT_PRE) | DT_LOAD | DT_UP | RN(ARMRegisters::sp) | RD(reg) | 0x4);
         }
 
@@ -550,43 +550,43 @@ namespace JSC {
 
         static ARMWord lsl(int reg, ARMWord value)
         {
-            ASSERT(reg <= ARMRegisters::pc);
-            ASSERT(value <= 0x1f);
+            Q_ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(value <= 0x1f);
             return reg | (value << 7) | 0x00;
         }
 
         static ARMWord lsr(int reg, ARMWord value)
         {
-            ASSERT(reg <= ARMRegisters::pc);
-            ASSERT(value <= 0x1f);
+            Q_ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(value <= 0x1f);
             return reg | (value << 7) | 0x20;
         }
 
         static ARMWord asr(int reg, ARMWord value)
         {
-            ASSERT(reg <= ARMRegisters::pc);
-            ASSERT(value <= 0x1f);
+            Q_ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(value <= 0x1f);
             return reg | (value << 7) | 0x40;
         }
 
         static ARMWord lsl_r(int reg, int shiftReg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
-            ASSERT(shiftReg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(shiftReg <= ARMRegisters::pc);
             return reg | (shiftReg << 8) | 0x10;
         }
 
         static ARMWord lsr_r(int reg, int shiftReg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
-            ASSERT(shiftReg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(shiftReg <= ARMRegisters::pc);
             return reg | (shiftReg << 8) | 0x30;
         }
 
         static ARMWord asr_r(int reg, int shiftReg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
-            ASSERT(shiftReg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(shiftReg <= ARMRegisters::pc);
             return reg | (shiftReg << 8) | 0x50;
         }
 
@@ -636,7 +636,7 @@ namespace JSC {
         static ARMWord* getLdrImmAddress(ARMWord* insn)
         {
             // Must be an ldr ..., [pc +/- imm]
-            ASSERT((*insn & 0x0f7f0000) == 0x051f0000);
+            Q_ASSERT((*insn & 0x0f7f0000) == 0x051f0000);
 
             ARMWord addr = reinterpret_cast<ARMWord>(insn) + DefaultPrefetching * sizeof(ARMWord);
             if (*insn & DT_UP)
@@ -647,7 +647,7 @@ namespace JSC {
         static ARMWord* getLdrImmAddressOnPool(ARMWord* insn, uint32_t* constPool)
         {
             // Must be an ldr ..., [pc +/- imm]
-            ASSERT((*insn & 0x0f7f0000) == 0x051f0000);
+            Q_ASSERT((*insn & 0x0f7f0000) == 0x051f0000);
 
             if (*insn & 0x1)
                 return reinterpret_cast<ARMWord*>(constPool + ((*insn & SDT_OFFSET_MASK) >> 1));
@@ -664,7 +664,7 @@ namespace JSC {
         static ARMWord patchConstantPoolLoad(ARMWord load, ARMWord value)
         {
             value = (value << 1) + 1;
-            ASSERT(!(value & ~0xfff));
+            Q_ASSERT(!(value & ~0xfff));
             return (load & ~0xfff) | value;
         }
 
@@ -692,7 +692,7 @@ namespace JSC {
             // On arm, this is a patch from LDR to ADD. It is restricted conversion,
             // from special case to special case, altough enough for its purpose
             ARMWord* insn = reinterpret_cast<ARMWord*>(from);
-            ASSERT((*insn & 0x0ff00f00) == 0x05900000);
+            Q_ASSERT((*insn & 0x0ff00f00) == 0x05900000);
 
             *insn = (*insn & 0xf00ff0ff) | 0x02800000;
             ExecutableAllocator::cacheFlush(insn, sizeof(ARMWord));
@@ -760,7 +760,7 @@ namespace JSC {
 
         static ARMWord getOp2Byte(ARMWord imm)
         {
-            ASSERT(imm <= 0xff);
+            Q_ASSERT(imm <= 0xff);
             return OP2_IMMh | (imm & 0x0f) | ((imm & 0xf0) << 4) ;
         }
 
@@ -789,32 +789,32 @@ namespace JSC {
         static ARMWord placeConstantPoolBarrier(int offset)
         {
             offset = (offset - sizeof(ARMWord)) >> 2;
-            ASSERT((offset <= BOFFSET_MAX && offset >= BOFFSET_MIN));
+            Q_ASSERT((offset <= BOFFSET_MAX && offset >= BOFFSET_MIN));
             return AL | B | (offset & BRANCH_MASK);
         }
 
     private:
         ARMWord RM(int reg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
             return reg;
         }
 
         ARMWord RS(int reg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
             return reg << 8;
         }
 
         ARMWord RD(int reg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
             return reg << 12;
         }
 
         ARMWord RN(int reg)
         {
-            ASSERT(reg <= ARMRegisters::pc);
+            Q_ASSERT(reg <= ARMRegisters::pc);
             return reg << 16;
         }
 

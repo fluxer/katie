@@ -126,7 +126,7 @@ static ThreadIdentifier identifierByQthreadHandle(QThread*& thread)
 
 static ThreadIdentifier establishIdentifierForThread(QThread*& thread)
 {
-    ASSERT(!identifierByQthreadHandle(thread));
+    Q_ASSERT(!identifierByQthreadHandle(thread));
 
     QMutexLocker locker(threadMapMutex());
 
@@ -141,7 +141,7 @@ static void clearThreadForIdentifier(ThreadIdentifier id)
 {
     QMutexLocker locker(threadMapMutex());
 
-    ASSERT(threadMap().contains(id));
+    Q_ASSERT(threadMap().contains(id));
 
     threadMap().remove(id);
 }
@@ -168,7 +168,7 @@ void initializeThreading()
 
 void lockAtomicallyInitializedStaticMutex()
 {
-    ASSERT(atomicallyInitializedStaticMutex);
+    Q_ASSERT(atomicallyInitializedStaticMutex);
     atomicallyInitializedStaticMutex->lock();
 }
 
@@ -196,7 +196,7 @@ ThreadIdentifier createThreadInternal(ThreadFunction entryPoint, void* data, con
 
 int waitForThreadCompletion(ThreadIdentifier threadID, void** result)
 {
-    ASSERT(threadID);
+    Q_ASSERT(threadID);
 
     QThread* thread = threadForIdentifier(threadID);
 
@@ -211,7 +211,7 @@ int waitForThreadCompletion(ThreadIdentifier threadID, void** result)
 
 void detachThread(ThreadIdentifier threadID)
 {
-    ASSERT(threadID);
+    Q_ASSERT(threadID);
     clearThreadForIdentifier(threadID);
 }
 

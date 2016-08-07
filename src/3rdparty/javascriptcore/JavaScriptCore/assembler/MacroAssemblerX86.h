@@ -91,7 +91,7 @@ public:
 
     void loadDouble(void* address, FPRegisterID dest)
     {
-        ASSERT(isSSE2Present());
+        Q_ASSERT(isSSE2Present());
         m_assembler.movsd_mr(address, dest);
     }
 

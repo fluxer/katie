@@ -97,33 +97,33 @@ namespace WTF {
         NonNullPassRefPtr(T* ptr)
             : m_ptr(ptr)
         {
-            ASSERT(m_ptr);
+            Q_ASSERT(m_ptr);
             m_ptr->ref();
         }
 
         template <class U> NonNullPassRefPtr(const RefPtr<U>& o)
             : m_ptr(o.get())
         {
-            ASSERT(m_ptr);
+            Q_ASSERT(m_ptr);
             m_ptr->ref();
         }
 
         NonNullPassRefPtr(const NonNullPassRefPtr& o)
             : m_ptr(o.releaseRef())
         {
-            ASSERT(m_ptr);
+            Q_ASSERT(m_ptr);
         }
 
         template <class U> NonNullPassRefPtr(const NonNullPassRefPtr<U>& o)
             : m_ptr(o.releaseRef())
         {
-            ASSERT(m_ptr);
+            Q_ASSERT(m_ptr);
         }
 
         template <class U> NonNullPassRefPtr(const PassRefPtr<U>& o)
             : m_ptr(o.releaseRef())
         {
-            ASSERT(m_ptr);
+            Q_ASSERT(m_ptr);
         }
 
         ALWAYS_INLINE ~NonNullPassRefPtr() { derefIfNotNull(m_ptr); }

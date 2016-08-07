@@ -76,10 +76,10 @@ namespace JSC {
 
         void* allocateFreeable(size_t size)
         {
-            ASSERT(size);
-            ASSERT(size <= freeablePoolSize);
+            Q_ASSERT(size);
+            Q_ASSERT(size <= freeablePoolSize);
             size_t alignedSize = alignSize(size);
-            ASSERT(alignedSize <= freeablePoolSize);
+            Q_ASSERT(alignedSize <= freeablePoolSize);
             if (UNLIKELY(static_cast<size_t>(m_freeablePoolEnd - m_freeableMemory) < alignedSize))
                 allocateFreeablePool();
             void* block = m_freeableMemory;

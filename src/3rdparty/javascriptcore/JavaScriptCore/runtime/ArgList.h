@@ -68,8 +68,8 @@ namespace JSC {
 
         void initialize(Register* buffer, size_t size)
         {
-            ASSERT(!m_markSet);
-            ASSERT(isEmpty());
+            Q_ASSERT(!m_markSet);
+            Q_ASSERT(isEmpty());
 
             m_buffer = buffer;
             m_size = size;
@@ -103,10 +103,10 @@ namespace JSC {
 
         void append(JSValue v)
         {
-            ASSERT(!m_isReadOnly);
+            Q_ASSERT(!m_isReadOnly);
 
 #if ENABLE(JSC_ZOMBIES)
-            ASSERT(!v.isZombie());
+            Q_ASSERT(!v.isZombie());
 #endif
 
             if (m_isUsingInlineBuffer && m_size < inlineCapacity) {
@@ -123,14 +123,14 @@ namespace JSC {
 
         void removeLast()
         { 
-            ASSERT(m_size);
+            Q_ASSERT(m_size);
             m_size--;
             m_vector.removeLast();
         }
 
         JSValue last() 
         {
-            ASSERT(m_size);
+            Q_ASSERT(m_size);
             return m_buffer[m_size - 1].jsValue();
         }
         
@@ -193,7 +193,7 @@ namespace JSC {
         {
 #if ENABLE(JSC_ZOMBIES)
             for (size_t i = 0; i < argCount; i++)
-                ASSERT(!m_args[i].isZombie());
+                Q_ASSERT(!m_args[i].isZombie());
 #endif
         }
         
@@ -201,7 +201,7 @@ namespace JSC {
             : m_args(reinterpret_cast<JSValue*>(args))
             , m_argCount(argCount)
         {
-            ASSERT(argCount >= 0);
+            Q_ASSERT(argCount >= 0);
         }
 
         ArgList(const MarkedArgumentBuffer& args)

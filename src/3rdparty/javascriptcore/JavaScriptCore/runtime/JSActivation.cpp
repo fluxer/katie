@@ -86,14 +86,14 @@ bool JSActivation::getOwnPropertySlot(ExecState* exec, const Identifier& propert
 
     // We don't call through to JSObject because there's no way to give an 
     // activation object getter properties or a prototype.
-    ASSERT(!hasGetterSetterProperties());
-    ASSERT(prototype().isNull());
+    Q_ASSERT(!hasGetterSetterProperties());
+    Q_ASSERT(prototype().isNull());
     return false;
 }
 
 void JSActivation::put(ExecState*, const Identifier& propertyName, JSValue value, PutPropertySlot& slot)
 {
-    ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+    Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
     if (symbolTablePut(propertyName, value))
         return;
@@ -101,14 +101,14 @@ void JSActivation::put(ExecState*, const Identifier& propertyName, JSValue value
     // We don't call through to JSObject because __proto__ and getter/setter 
     // properties are non-standard extensions that other implementations do not
     // expose in the activation object.
-    ASSERT(!hasGetterSetterProperties());
+    Q_ASSERT(!hasGetterSetterProperties());
     putDirect(propertyName, value, 0, true, slot);
 }
 
 // FIXME: Make this function honor ReadOnly (const) and DontEnum
 void JSActivation::putWithAttributes(ExecState* exec, const Identifier& propertyName, JSValue value, unsigned attributes)
 {
-    ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+    Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
     if (symbolTablePutWithAttributes(propertyName, value, attributes))
         return;
@@ -116,7 +116,7 @@ void JSActivation::putWithAttributes(ExecState* exec, const Identifier& property
     // We don't call through to JSObject because __proto__ and getter/setter 
     // properties are non-standard extensions that other implementations do not
     // expose in the activation object.
-    ASSERT(!hasGetterSetterProperties());
+    Q_ASSERT(!hasGetterSetterProperties());
     PutPropertySlot slot;
     JSObject::putWithAttributes(exec, propertyName, value, attributes, true, slot);
 }
@@ -156,7 +156,7 @@ JSValue JSActivation::argumentsGetter(ExecState* exec, const Identifier&, const 
         arguments->copyRegisters();
         callFrame->setCalleeArguments(arguments);
     }
-    ASSERT(arguments->inherits(&Arguments::info));
+    Q_ASSERT(arguments->inherits(&Arguments::info));
 
     return arguments;
 }

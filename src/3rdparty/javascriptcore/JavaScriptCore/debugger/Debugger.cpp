@@ -41,14 +41,14 @@ Debugger::~Debugger()
 
 void Debugger::attach(JSGlobalObject* globalObject)
 {
-    ASSERT(!globalObject->debugger());
+    Q_ASSERT(!globalObject->debugger());
     globalObject->setDebugger(this);
     m_globalObjects.add(globalObject);
 }
 
 void Debugger::detach(JSGlobalObject* globalObject)
 {
-    ASSERT(m_globalObjects.contains(globalObject));
+    Q_ASSERT(m_globalObjects.contains(globalObject));
     m_globalObjects.remove(globalObject);
     globalObject->setDebugger(0);
 }
@@ -57,7 +57,7 @@ void Debugger::recompileAllJSFunctions(JSGlobalData* globalData)
 {
     // If JavaScript is running, it's not safe to recompile, since we'll end
     // up throwing away code that is live on the stack.
-    ASSERT(!globalData->dynamicGlobalObject);
+    Q_ASSERT(!globalData->dynamicGlobalObject);
     if (globalData->dynamicGlobalObject)
         return;
 

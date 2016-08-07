@@ -100,7 +100,7 @@ namespace JSC {
 
     inline RegExpConstructor* asRegExpConstructor(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&RegExpConstructor::info));
+        Q_ASSERT(asObject(value)->inherits(&RegExpConstructor::info));
         return static_cast<RegExpConstructor*>(asObject(value));
     }
 
@@ -117,7 +117,7 @@ namespace JSC {
             *ovector = d->tempOvector().data();
 
         if (position != -1) {
-            ASSERT(!d->tempOvector().isEmpty());
+            Q_ASSERT(!d->tempOvector().isEmpty());
 
             length = d->tempOvector()[1] - d->tempOvector()[0];
 

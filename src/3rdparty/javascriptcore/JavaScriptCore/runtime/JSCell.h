@@ -227,7 +227,7 @@ namespace JSC {
 #if !USE(JSVALUE32_64)
     ALWAYS_INLINE JSCell* JSValue::asCell() const
     {
-        ASSERT(isCell());
+        Q_ASSERT(isCell());
         return m_ptr;
     }
 #endif // !USE(JSVALUE32_64)
@@ -261,7 +261,7 @@ namespace JSC {
             value = *this;
             return true;
         }
-        ASSERT(isUndefined());
+        Q_ASSERT(isUndefined());
         number = nonInlineNaN();
         value = *this;
         return true;
@@ -324,8 +324,8 @@ namespace JSC {
 
     ALWAYS_INLINE void MarkStack::append(JSCell* cell)
     {
-        ASSERT(!m_isCheckingForDefaultMarkViolation);
-        ASSERT(cell);
+        Q_ASSERT(!m_isCheckingForDefaultMarkViolation);
+        Q_ASSERT(cell);
         if (Heap::isCellMarked(cell))
             return;
         Heap::markCell(cell);
@@ -335,7 +335,7 @@ namespace JSC {
 
     ALWAYS_INLINE void MarkStack::append(JSValue value)
     {
-        ASSERT(value);
+        Q_ASSERT(value);
         if (value.isCell())
             append(value.asCell());
     }

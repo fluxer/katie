@@ -313,34 +313,34 @@ class RegexGenerator : private MacroAssembler {
 
         void resetTerm()
         {
-            ASSERT(alternativeValid());
+            Q_ASSERT(alternativeValid());
             t = 0;
         }
         bool termValid()
         {
-            ASSERT(alternativeValid());
+            Q_ASSERT(alternativeValid());
             return t < alternative()->m_terms.size();
         }
         void nextTerm()
         {
-            ASSERT(alternativeValid());
+            Q_ASSERT(alternativeValid());
             ++t;
         }
         PatternTerm& term()
         {
-            ASSERT(alternativeValid());
+            Q_ASSERT(alternativeValid());
             return alternative()->m_terms[t];
         }
 
         PatternTerm& lookaheadTerm()
         {
-            ASSERT(alternativeValid());
-            ASSERT((t + 1) < alternative()->m_terms.size());
+            Q_ASSERT(alternativeValid());
+            Q_ASSERT((t + 1) < alternative()->m_terms.size());
             return alternative()->m_terms[t + 1];
         }
         bool isSinglePatternCharacterLookaheadTerm()
         {
-            ASSERT(alternativeValid());
+            Q_ASSERT(alternativeValid());
             return ((t + 1) < alternative()->m_terms.size())
                 && (lookaheadTerm().type == PatternTerm::TypePatternCharacter)
                 && (lookaheadTerm().quantityType == QuantifierFixedCount)
@@ -527,7 +527,7 @@ class RegexGenerator : private MacroAssembler {
             or32(Imm32(32), character);
             state.jumpToBacktrack(branch32(NotEqual, character, Imm32(Unicode::toLower(ch))), this);
         } else {
-            ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
             state.jumpToBacktrack(jumpIfCharNotEquals(ch, state.inputOffset()), this);
         }
     }
@@ -572,7 +572,7 @@ class RegexGenerator : private MacroAssembler {
             or32(Imm32(32), character);
             state.jumpToBacktrack(branch32(NotEqual, character, Imm32(Unicode::toLower(ch))), this);
         } else {
-            ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
             state.jumpToBacktrack(branch16(NotEqual, BaseIndex(input, countRegister, TimesTwo, (state.inputOffset() + term.quantityCount) * sizeof(UChar)), Imm32(ch)), this);
         }
         add32(Imm32(1), countRegister);
@@ -596,7 +596,7 @@ class RegexGenerator : private MacroAssembler {
             or32(Imm32(32), character);
             failures.append(branch32(NotEqual, character, Imm32(Unicode::toLower(ch))));
         } else {
-            ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
             failures.append(jumpIfCharNotEquals(ch, state.inputOffset()));
         }
         add32(Imm32(1), countRegister);
@@ -642,7 +642,7 @@ class RegexGenerator : private MacroAssembler {
             or32(Imm32(32), character);
             branch32(NotEqual, character, Imm32(Unicode::toLower(ch))).linkTo(hardFail, this);
         } else {
-            ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
             jumpIfCharNotEquals(ch, state.inputOffset()).linkTo(hardFail, this);
         }
 
@@ -780,21 +780,21 @@ class RegexGenerator : private MacroAssembler {
 
     void generateParenthesesDisjunction(PatternTerm& parenthesesTerm, TermGenerationState& state, unsigned alternativeFrameLocation)
     {
-        ASSERT((parenthesesTerm.type == PatternTerm::TypeParenthesesSubpattern) || (parenthesesTerm.type == PatternTerm::TypeParentheticalAssertion));
-        ASSERT(parenthesesTerm.quantityCount == 1);
+        Q_ASSERT((parenthesesTerm.type == PatternTerm::TypeParenthesesSubpattern) || (parenthesesTerm.type == PatternTerm::TypeParentheticalAssertion));
+        Q_ASSERT(parenthesesTerm.quantityCount == 1);
     
         PatternDisjunction* disjunction = parenthesesTerm.parentheses.disjunction;
         unsigned preCheckedCount = ((parenthesesTerm.quantityType == QuantifierFixedCount) && (parenthesesTerm.type != PatternTerm::TypeParentheticalAssertion)) ? disjunction->m_minimumSize : 0;
 
         if (disjunction->m_alternatives.size() == 1) {
             state.resetAlternative();
-            ASSERT(state.alternativeValid());
+            Q_ASSERT(state.alternativeValid());
             PatternAlternative* alternative = state.alternative();
             optimizeAlternative(alternative);
 
             int countToCheck = alternative->m_minimumSize - preCheckedCount;
             if (countToCheck) {
-                ASSERT((parenthesesTerm.type == PatternTerm::TypeParentheticalAssertion) || (parenthesesTerm.quantityType != QuantifierFixedCount));
+                Q_ASSERT((parenthesesTerm.type == PatternTerm::TypeParentheticalAssertion) || (parenthesesTerm.quantityType != QuantifierFixedCount));
 
                 // FIXME: This is quite horrible.  The call to 'plantJumpToBacktrackIfExists'
                 // will be forced to always trampoline into here, just to decrement the index.
@@ -825,7 +825,7 @@ class RegexGenerator : private MacroAssembler {
                 PatternAlternative* alternative = state.alternative();
                 optimizeAlternative(alternative);
 
-                ASSERT(alternative->m_minimumSize >= preCheckedCount);
+                Q_ASSERT(alternative->m_minimumSize >= preCheckedCount);
                 int countToCheck = alternative->m_minimumSize - preCheckedCount;
                 if (countToCheck) {
                     state.addBacktrackJump(jumpIfNoAvailableInput(countToCheck));
@@ -878,7 +878,7 @@ class RegexGenerator : private MacroAssembler {
         const RegisterID indexTemporary = regT0;
         PatternTerm& term = state.term();
         PatternDisjunction* disjunction = term.parentheses.disjunction;
-        ASSERT(term.quantityCount == 1);
+        Q_ASSERT(term.quantityCount == 1);
 
         unsigned preCheckedCount = ((term.quantityCount == 1) && (term.quantityType == QuantifierFixedCount)) ? disjunction->m_minimumSize : 0;
 
@@ -971,8 +971,8 @@ class RegexGenerator : private MacroAssembler {
     {
         PatternTerm& term = state.term();
         PatternDisjunction* disjunction = term.parentheses.disjunction;
-        ASSERT(term.quantityCount == 1);
-        ASSERT(term.quantityType == QuantifierFixedCount);
+        Q_ASSERT(term.quantityCount == 1);
+        Q_ASSERT(term.quantityType == QuantifierFixedCount);
 
         unsigned parenthesesFrameLocation = term.frameLocation;
         unsigned alternativeFrameLocation = parenthesesFrameLocation + RegexStackSpaceForBackTrackInfoParentheticalAssertion;
@@ -1140,7 +1140,7 @@ class RegexGenerator : private MacroAssembler {
             if (m_pattern.m_body->m_callFrameSize)
                 addPtr(Imm32(m_pattern.m_body->m_callFrameSize * sizeof(void*)), stackPointerRegister);
             
-            ASSERT(index != returnRegister);
+            Q_ASSERT(index != returnRegister);
             if (m_pattern.m_body->m_hasFixedSize) {
                 move(index, returnRegister);
                 if (alternative->m_minimumSize)
@@ -1187,7 +1187,7 @@ class RegexGenerator : private MacroAssembler {
                     state.linkAlternativeBacktracks(this);
                     notEnoughInputForPreviousAlternative.append(jumpIfNoAvailableInput(countToCheckForNextAlternative - countCheckedForCurrentAlternative));
                 } else { // CASE 3: Both alternatives are the same length.
-                    ASSERT(countCheckedForCurrentAlternative == countToCheckForNextAlternative);
+                    Q_ASSERT(countCheckedForCurrentAlternative == countToCheckForNextAlternative);
 
                     // If the next alterative is the same length as this one, then no need to check the input -
                     // if there was sufficent input to run the current alternative then there is sufficient

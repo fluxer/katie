@@ -201,7 +201,7 @@ public:
     {
         // Clamp the shift to the range 0..31
         ARMThumbImmediate armImm = ARMThumbImmediate::makeEncodedImm(0x1f);
-        ASSERT(armImm.isValid());
+        Q_ASSERT(armImm.isValid());
         m_assembler.ARM_and(dataTempRegister, shift_amount, armImm);
 
         m_assembler.lsl(dest, dest, dataTempRegister);
@@ -248,7 +248,7 @@ public:
     {
         // Clamp the shift to the range 0..31
         ARMThumbImmediate armImm = ARMThumbImmediate::makeEncodedImm(0x1f);
-        ASSERT(armImm.isValid());
+        Q_ASSERT(armImm.isValid());
         m_assembler.ARM_and(dataTempRegister, shift_amount, armImm);
 
         m_assembler.asr(dest, dest, dataTempRegister);
@@ -346,10 +346,10 @@ private:
             m_assembler.ldr(dest, address.base, address.u.index, address.u.scale);
         else if (address.u.offset >= 0) {
             ARMThumbImmediate armImm = ARMThumbImmediate::makeUInt12(address.u.offset);
-            ASSERT(armImm.isValid());
+            Q_ASSERT(armImm.isValid());
             m_assembler.ldr(dest, address.base, armImm);
         } else {
-            ASSERT(address.u.offset >= -255);
+            Q_ASSERT(address.u.offset >= -255);
             m_assembler.ldr(dest, address.base, address.u.offset, true, false);
         }
     }
@@ -360,10 +360,10 @@ private:
             m_assembler.ldrh(dest, address.base, address.u.index, address.u.scale);
         else if (address.u.offset >= 0) {
             ARMThumbImmediate armImm = ARMThumbImmediate::makeUInt12(address.u.offset);
-            ASSERT(armImm.isValid());
+            Q_ASSERT(armImm.isValid());
             m_assembler.ldrh(dest, address.base, armImm);
         } else {
-            ASSERT(address.u.offset >= -255);
+            Q_ASSERT(address.u.offset >= -255);
             m_assembler.ldrh(dest, address.base, address.u.offset, true, false);
         }
     }
@@ -374,10 +374,10 @@ private:
             m_assembler.str(src, address.base, address.u.index, address.u.scale);
         else if (address.u.offset >= 0) {
             ARMThumbImmediate armImm = ARMThumbImmediate::makeUInt12(address.u.offset);
-            ASSERT(armImm.isValid());
+            Q_ASSERT(armImm.isValid());
             m_assembler.str(src, address.base, armImm);
         } else {
-            ASSERT(address.u.offset >= -255);
+            Q_ASSERT(address.u.offset >= -255);
             m_assembler.str(src, address.base, address.u.offset, true, false);
         }
     }
@@ -795,21 +795,21 @@ public:
 
     Jump branchTest32(Condition cond, RegisterID reg, RegisterID mask)
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         m_assembler.tst(reg, mask);
         return Jump(makeBranch(cond));
     }
 
     Jump branchTest32(Condition cond, RegisterID reg, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         test32(reg, mask);
         return Jump(makeBranch(cond));
     }
 
     Jump branchTest32(Condition cond, Address address, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         // use addressTempRegister incase the branchTest32 we call uses dataTempRegister. :-/
         load32(address, addressTempRegister);
         return branchTest32(cond, addressTempRegister, mask);
@@ -817,7 +817,7 @@ public:
 
     Jump branchTest32(Condition cond, BaseIndex address, Imm32 mask = Imm32(-1))
     {
-        ASSERT((cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Zero) || (cond == NonZero));
         // use addressTempRegister incase the branchTest32 we call uses dataTempRegister. :-/
         load32(address, addressTempRegister);
         return branchTest32(cond, addressTempRegister, mask);
@@ -853,14 +853,14 @@ public:
     
     Jump branchAdd32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         m_assembler.add_S(dest, dest, src);
         return Jump(makeBranch(cond));
     }
 
     Jump branchAdd32(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         ARMThumbImmediate armImm = ARMThumbImmediate::makeEncodedImm(imm.m_value);
         if (armImm.isValid())
             m_assembler.add_S(dest, dest, armImm);
@@ -873,7 +873,7 @@ public:
 
     Jump branchMul32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT(cond == Overflow);
+        Q_ASSERT(cond == Overflow);
         m_assembler.smull(dest, dataTempRegister, dest, src);
         m_assembler.asr(addressTempRegister, dest, 31);
         return branch32(NotEqual, addressTempRegister, dataTempRegister);
@@ -881,7 +881,7 @@ public:
 
     Jump branchMul32(Condition cond, Imm32 imm, RegisterID src, RegisterID dest)
     {
-        ASSERT(cond == Overflow);
+        Q_ASSERT(cond == Overflow);
         move(imm, dataTempRegister);
         m_assembler.smull(dest, dataTempRegister, src, dataTempRegister);
         m_assembler.asr(addressTempRegister, dest, 31);
@@ -890,14 +890,14 @@ public:
 
     Jump branchSub32(Condition cond, RegisterID src, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         m_assembler.sub_S(dest, dest, src);
         return Jump(makeBranch(cond));
     }
 
     Jump branchSub32(Condition cond, Imm32 imm, RegisterID dest)
     {
-        ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
+        Q_ASSERT((cond == Overflow) || (cond == Signed) || (cond == Zero) || (cond == NonZero));
         ARMThumbImmediate armImm = ARMThumbImmediate::makeEncodedImm(imm.m_value);
         if (armImm.isValid())
             m_assembler.sub_S(dest, dest, armImm);

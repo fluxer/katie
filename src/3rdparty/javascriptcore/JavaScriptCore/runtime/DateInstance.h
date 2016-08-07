@@ -72,7 +72,7 @@ namespace JSC {
 
     inline DateInstance* asDateInstance(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&DateInstance::info));
+        Q_ASSERT(asObject(value)->inherits(&DateInstance::info));
         return static_cast<DateInstance*>(asObject(value));
     }
 

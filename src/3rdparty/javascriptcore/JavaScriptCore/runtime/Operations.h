@@ -54,7 +54,7 @@ namespace JSC {
             return throwOutOfMemoryError(exec);
         rope->append(index, s1);
         rope->append(index, s2);
-        ASSERT(index == ropeLength);
+        Q_ASSERT(index == ropeLength);
         return new (globalData) JSString(globalData, rope.release());
     }
 
@@ -72,7 +72,7 @@ namespace JSC {
             return throwOutOfMemoryError(exec);
         rope->append(index, u1);
         rope->append(index, s2);
-        ASSERT(index == ropeLength);
+        Q_ASSERT(index == ropeLength);
         return new (globalData) JSString(globalData, rope.release());
     }
 
@@ -90,13 +90,13 @@ namespace JSC {
             return throwOutOfMemoryError(exec);
         rope->append(index, s1);
         rope->append(index, u2);
-        ASSERT(index == ropeLength);
+        Q_ASSERT(index == ropeLength);
         return new (globalData) JSString(globalData, rope.release());
     }
 
     ALWAYS_INLINE JSValue jsString(ExecState* exec, Register* strings, unsigned count)
     {
-        ASSERT(count >= 3);
+        Q_ASSERT(count >= 3);
 
         unsigned ropeLength = 0;
         for (unsigned i = 0; i < count; ++i) {
@@ -124,7 +124,7 @@ namespace JSC {
                 rope->append(index, v.toString(exec));
         }
 
-        ASSERT(index == ropeLength);
+        Q_ASSERT(index == ropeLength);
         return new (globalData) JSString(globalData, rope.release());
     }
 
@@ -159,7 +159,7 @@ namespace JSC {
             else
                 rope->append(index, v.toString(exec));
         }
-        ASSERT(index == ropeLength);
+        Q_ASSERT(index == ropeLength);
 
         JSGlobalData* globalData = &exec->globalData();
         return new (globalData) JSString(globalData, rope.release());
@@ -242,7 +242,7 @@ namespace JSC {
     // ECMA 11.9.3
     ALWAYS_INLINE bool JSValue::strictEqualSlowCaseInline(ExecState* exec, JSValue v1, JSValue v2)
     {
-        ASSERT(v1.isCell() && v2.isCell());
+        Q_ASSERT(v1.isCell() && v2.isCell());
 
         if (v1.asCell()->isString() && v2.asCell()->isString())
             return asString(v1)->value(exec) == asString(v2)->value(exec);
@@ -366,7 +366,7 @@ namespace JSC {
             ++count;
         }
         
-        ASSERT(count);
+        Q_ASSERT(count);
         return count;
     }
 
@@ -395,7 +395,7 @@ namespace JSC {
         ScopeChainIterator next = iter;
         ++next;
         ScopeChainIterator end = scopeChain->end();
-        ASSERT(iter != end);
+        Q_ASSERT(iter != end);
 
         PropertySlot slot;
         JSObject* base;

@@ -124,7 +124,7 @@ RegExpMatchesArray::~RegExpMatchesArray()
 void RegExpMatchesArray::fillArrayInstance(ExecState* exec)
 {
     RegExpConstructorPrivate* d = static_cast<RegExpConstructorPrivate*>(lazyCreationData());
-    ASSERT(d);
+    Q_ASSERT(d);
 
     unsigned lastNumSubpatterns = d->lastNumSubPatterns;
 
@@ -163,7 +163,7 @@ JSValue RegExpConstructor::getLastParen(ExecState* exec) const
 {
     unsigned i = d->lastNumSubPatterns;
     if (i > 0) {
-        ASSERT(!d->lastOvector().isEmpty());
+        Q_ASSERT(!d->lastOvector().isEmpty());
         int start = d->lastOvector()[2 * i];
         if (start >= 0)
             return jsSubstring(exec, d->lastInput, start, d->lastOvector()[2 * i + 1] - start);

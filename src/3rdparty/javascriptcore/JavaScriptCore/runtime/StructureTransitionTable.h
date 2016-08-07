@@ -74,7 +74,7 @@ namespace JSC {
 
             void addSlotTransition(unsigned count, Structure* structure)
             {
-                ASSERT(!getSlotTransition(count));
+                Q_ASSERT(!getSlotTransition(count));
                 if (!m_anonymousSlotTable)
                     m_anonymousSlotTable.set(new AnonymousSlotMap);
                 m_anonymousSlotTable->add(count, structure);
@@ -82,7 +82,7 @@ namespace JSC {
 
             void removeSlotTransition(unsigned count)
             {
-                ASSERT(getSlotTransition(count));
+                Q_ASSERT(getSlotTransition(count));
                 m_anonymousSlotTable->remove(count);
             }
 
@@ -119,7 +119,7 @@ namespace JSC {
         void remove(const StructureTransitionTableHash::Key& key, JSCell* specificValue)
         {
             if (usingSingleTransitionSlot()) {
-                ASSERT(contains(key, specificValue));
+                Q_ASSERT(contains(key, specificValue));
                 setSingleTransition(0);
                 return;
             }
@@ -149,7 +149,7 @@ namespace JSC {
             } else {
                 // If we're adding a transition to a specific value, then there cannot be
                 // an existing transition
-                ASSERT(!table()->contains(key));
+                Q_ASSERT(!table()->contains(key));
                 table()->add(key, Transition((Structure*)0, structure));
             }
         }
@@ -165,37 +165,37 @@ namespace JSC {
         {
             if (usingSingleTransitionSlot())
                 reifySingleTransition();
-            ASSERT(!table()->getSlotTransition(count));
+            Q_ASSERT(!table()->getSlotTransition(count));
             table()->addSlotTransition(count, structure);
         }
         
         void removeAnonymousSlotTransition(unsigned count)
         {
-            ASSERT(!usingSingleTransitionSlot());
+            Q_ASSERT(!usingSingleTransitionSlot());
             table()->removeSlotTransition(count);
         }
     private:
-        TransitionTable* table() const { ASSERT(!usingSingleTransitionSlot()); return m_transitions.m_table; }
+        TransitionTable* table() const { Q_ASSERT(!usingSingleTransitionSlot()); return m_transitions.m_table; }
         Structure* singleTransition() const {
-            ASSERT(usingSingleTransitionSlot());
+            Q_ASSERT(usingSingleTransitionSlot());
             return m_transitions.m_singleTransition.get();
         }
         bool usingSingleTransitionSlot() const { return m_transitions.m_singleTransition.isFlagSet(usingSingleSlot); }
         void setSingleTransition(Structure* structure)
         { 
-            ASSERT(usingSingleTransitionSlot());
+            Q_ASSERT(usingSingleTransitionSlot());
             m_transitions.m_singleTransition.set(structure);
         }
 
         void setTransitionTable(TransitionTable* table)
         {
-            ASSERT(usingSingleTransitionSlot());
+            Q_ASSERT(usingSingleTransitionSlot());
 #ifndef NDEBUG
             setSingleTransition(0);
 #endif
             m_transitions.m_table = table;
             // This implicitly clears the flag that indicates we're using a single transition
-            ASSERT(!usingSingleTransitionSlot());
+            Q_ASSERT(!usingSingleTransitionSlot());
         }
         inline void reifySingleTransition();
 

@@ -56,8 +56,8 @@ namespace JSC {
 
     inline void JSWrapperObject::setInternalValue(JSValue value)
     {
-        ASSERT(value);
-        ASSERT(!value.isObject());
+        Q_ASSERT(value);
+        Q_ASSERT(!value.isObject());
         m_internalValue = value;
         putAnonymousValue(0, value);
     }

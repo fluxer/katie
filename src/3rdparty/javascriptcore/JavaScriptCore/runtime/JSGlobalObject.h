@@ -298,7 +298,7 @@ namespace JSC {
 
     inline JSGlobalObject* asGlobalObject(JSValue value)
     {
-        ASSERT(asObject(value)->isGlobalObject());
+        Q_ASSERT(asObject(value)->isGlobalObject());
         return static_cast<JSGlobalObject*>(asObject(value));
     }
 
@@ -319,7 +319,7 @@ namespace JSC {
 
         for (int i = 0, index = -static_cast<int>(oldSize) - 1; i < count; ++i, --index) {
             GlobalPropertyInfo& global = globals[i];
-            ASSERT(global.attributes & DontDelete);
+            Q_ASSERT(global.attributes & DontDelete);
             SymbolTableEntry newEntry(index, global.attributes);
             symbolTable().add(global.identifier.ustring().rep(), newEntry);
             registerAt(index) = global.value;
@@ -358,10 +358,10 @@ namespace JSC {
         if (typeInfo().type() == StringType)
             return exec->lexicalGlobalObject()->stringPrototype();
 
-        ASSERT(typeInfo().type() == NumberType);
+        Q_ASSERT(typeInfo().type() == NumberType);
         return exec->lexicalGlobalObject()->numberPrototype();
 #else
-        ASSERT(typeInfo().type() == StringType);
+        Q_ASSERT(typeInfo().type() == StringType);
         return exec->lexicalGlobalObject()->stringPrototype();
 #endif
     }
@@ -399,7 +399,7 @@ namespace JSC {
 
         // For any ExecState that's not a globalExec, the 
         // dynamic global object must be set since code is running
-        ASSERT(globalData().dynamicGlobalObject);
+        Q_ASSERT(globalData().dynamicGlobalObject);
         return globalData().dynamicGlobalObject;
     }
 

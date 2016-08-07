@@ -40,14 +40,14 @@ namespace JSC {
             , m_exception(exception)
             , m_globalObjectScope(callFrame, function->scope().globalObject())
         {
-            ASSERT(!function->isHostFunction());
+            Q_ASSERT(!function->isHostFunction());
             m_closure = m_interpreter->prepareForRepeatCall(function->jsExecutable(), callFrame, function, argCount, function->scope().node(), exception);
             m_valid = !*exception;
         }
         
         JSValue call()
         { 
-            ASSERT(m_valid);
+            Q_ASSERT(m_valid);
             return m_interpreter->execute(m_closure, m_exception);
         }
         void setThis(JSValue v) { m_closure.setArgument(0, v); }

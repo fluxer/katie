@@ -51,7 +51,7 @@ JSObject* construct(ExecState* exec, JSValue object, ConstructType constructType
 {
     if (constructType == ConstructTypeHost)
         return constructData.native.function(exec, asObject(object), args);
-    ASSERT(constructType == ConstructTypeJS);
+    Q_ASSERT(constructType == ConstructTypeJS);
     // FIXME: Can this be done more efficiently using the constructData?
     return asFunction(object)->construct(exec, args);
 }

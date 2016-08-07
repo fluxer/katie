@@ -134,7 +134,7 @@ void JSGlobalObject::init(JSObject* thisValue)
 
 void JSGlobalObject::put(ExecState* exec, const Identifier& propertyName, JSValue value, PutPropertySlot& slot)
 {
-    ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+    Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
     if (symbolTablePut(propertyName, value))
         return;
@@ -143,7 +143,7 @@ void JSGlobalObject::put(ExecState* exec, const Identifier& propertyName, JSValu
 
 void JSGlobalObject::putWithAttributes(ExecState* exec, const Identifier& propertyName, JSValue value, unsigned attributes)
 {
-    ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
+    Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
     if (symbolTablePutWithAttributes(propertyName, value, attributes))
         return;
@@ -413,8 +413,8 @@ bool JSGlobalObject::isDynamicScope() const
 
 void JSGlobalObject::copyGlobalsFrom(RegisterFile& registerFile)
 {
-    ASSERT(!d()->registerArray);
-    ASSERT(!d()->registerArraySize);
+    Q_ASSERT(!d()->registerArray);
+    Q_ASSERT(!d()->registerArraySize);
 
     int numGlobals = registerFile.numGlobals();
     if (!numGlobals) {

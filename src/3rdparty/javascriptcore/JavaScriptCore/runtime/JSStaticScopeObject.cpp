@@ -65,7 +65,7 @@ bool JSStaticScopeObject::isDynamicScope() const
 
 JSStaticScopeObject::~JSStaticScopeObject()
 {
-    ASSERT(d());
+    Q_ASSERT(d());
     delete d();
 }
 

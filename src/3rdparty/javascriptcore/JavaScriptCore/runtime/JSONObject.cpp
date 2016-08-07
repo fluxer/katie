@@ -240,7 +240,7 @@ Stringifier::Stringifier(ExecState* exec, JSValue replacer, JSValue space)
 
 Stringifier::~Stringifier()
 {
-    ASSERT(m_exec->globalData().firstStringifierToMark == this);
+    Q_ASSERT(m_exec->globalData().firstStringifierToMark == this);
     m_exec->globalData().firstStringifierToMark = m_nextStringifierToMark;
 }
 
@@ -335,7 +335,7 @@ void Stringifier::appendQuotedString(StringBuilder& builder, const UString& valu
 
 inline JSValue Stringifier::toJSON(JSValue value, const PropertyNameForFunctionCall& propertyName)
 {
-    ASSERT(!m_exec->hadException());
+    Q_ASSERT(!m_exec->hadException());
     if (!value.isObject() || !asObject(value)->hasProperty(m_exec, m_exec->globalData().propertyNames->toJSON))
         return value;
 
@@ -469,13 +469,13 @@ inline void Stringifier::indent()
     int newSize = m_indent.size() + m_gap.size();
     if (newSize > m_repeatedGap.size())
         m_repeatedGap = makeString(m_repeatedGap, m_gap);
-    ASSERT(newSize <= m_repeatedGap.size());
+    Q_ASSERT(newSize <= m_repeatedGap.size());
     m_indent = m_repeatedGap.substr(0, newSize);
 }
 
 inline void Stringifier::unindent()
 {
-    ASSERT(m_indent.size() >= m_gap.size());
+    Q_ASSERT(m_indent.size() >= m_gap.size());
     m_indent = m_repeatedGap.substr(0, m_indent.size() - m_gap.size());
 }
 
@@ -496,7 +496,7 @@ inline Stringifier::Holder::Holder(JSObject* object)
 
 bool Stringifier::Holder::appendNextProperty(Stringifier& stringifier, StringBuilder& builder)
 {
-    ASSERT(m_index <= m_size);
+    Q_ASSERT(m_index <= m_size);
 
     ExecState* exec = stringifier.m_exec;
 
@@ -681,8 +681,8 @@ NEVER_INLINE JSValue Walker::walk(JSValue unfiltered)
         switch (state) {
             arrayStartState:
             case ArrayStartState: {
-                ASSERT(inValue.isObject());
-                ASSERT(isJSArray(&m_exec->globalData(), asObject(inValue)) || asObject(inValue)->inherits(&JSArray::info));
+                Q_ASSERT(inValue.isObject());
+                Q_ASSERT(isJSArray(&m_exec->globalData(), asObject(inValue)) || asObject(inValue)->inherits(&JSArray::info));
                 if (objectStack.size() + arrayStack.size() > maximumFilterRecursion) {
                     m_exec->setException(createStackOverflowError(m_exec));
                     return jsUndefined();
@@ -746,8 +746,8 @@ NEVER_INLINE JSValue Walker::walk(JSValue unfiltered)
             }
             objectStartState:
             case ObjectStartState: {
-                ASSERT(inValue.isObject());
-                ASSERT(!isJSArray(&m_exec->globalData(), asObject(inValue)) && !asObject(inValue)->inherits(&JSArray::info));
+                Q_ASSERT(inValue.isObject());
+                Q_ASSERT(!isJSArray(&m_exec->globalData(), asObject(inValue)) && !asObject(inValue)->inherits(&JSArray::info));
                 if (objectStack.size() + arrayStack.size() > maximumFilterRecursion) {
                     m_exec->setException(createStackOverflowError(m_exec));
                     return jsUndefined();

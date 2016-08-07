@@ -41,7 +41,7 @@ namespace JSC  {
         CodeBlock* codeBlock() const { return this[RegisterFile::CodeBlock].Register::codeBlock(); }
         ScopeChainNode* scopeChain() const
         {
-            ASSERT(this[RegisterFile::ScopeChain].Register::scopeChain());
+            Q_ASSERT(this[RegisterFile::ScopeChain].Register::scopeChain());
             return this[RegisterFile::ScopeChain].Register::scopeChain();
         }
         int argumentCount() const { return this[RegisterFile::ArgumentCount].i(); }
@@ -70,7 +70,7 @@ namespace JSC  {
         // or a pointer everywhere.
         JSGlobalData& globalData() const
         {
-            ASSERT(scopeChain()->globalData);
+            Q_ASSERT(scopeChain()->globalData);
             return *scopeChain()->globalData;
         }
 
@@ -117,7 +117,7 @@ namespace JSC  {
         ALWAYS_INLINE void init(CodeBlock* codeBlock, Instruction* vPC, ScopeChainNode* scopeChain,
             CallFrame* callerFrame, int returnValueRegister, int argc, JSObject* callee)
         {
-            ASSERT(callerFrame); // Use noCaller() rather than 0 for the outer host call frame caller.
+            Q_ASSERT(callerFrame); // Use noCaller() rather than 0 for the outer host call frame caller.
 
             setCodeBlock(codeBlock);
             setScopeChain(scopeChain);

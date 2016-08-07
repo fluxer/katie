@@ -59,7 +59,7 @@ namespace JSC {
 
     inline InternalFunction* asInternalFunction(JSValue value)
     {
-        ASSERT(asObject(value)->inherits(&InternalFunction::info));
+        Q_ASSERT(asObject(value)->inherits(&InternalFunction::info));
         return static_cast<InternalFunction*>(asObject(value));
     }
 

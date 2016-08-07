@@ -124,7 +124,7 @@ void* SamplingThread::threadStartFunc(void*)
 
 void SamplingThread::start(unsigned hertz)
 {
-    ASSERT(!s_running);
+    Q_ASSERT(!s_running);
     s_running = true;
     s_hertz = hertz;
 
@@ -133,7 +133,7 @@ void SamplingThread::start(unsigned hertz)
 
 void SamplingThread::stop()
 {
-    ASSERT(s_running);
+    Q_ASSERT(s_running);
     s_running = false;
     waitForThreadCompletion(s_samplingThread, 0);
 }
@@ -180,7 +180,7 @@ void SamplingTool::doRun()
     if (CodeBlock* codeBlock = sample.codeBlock()) {
         QMutexLocker locker(m_scriptSampleMapMutex);
         ScriptSampleRecord* record = m_scopeSampleMap->get(codeBlock->ownerExecutable());
-        ASSERT(record);
+        Q_ASSERT(record);
         record->sample(codeBlock, sample.vPC());
     }
 #endif

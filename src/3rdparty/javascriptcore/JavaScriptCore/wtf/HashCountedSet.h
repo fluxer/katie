@@ -162,7 +162,7 @@ namespace WTF {
             return;
 
         unsigned oldVal = it->second;
-        ASSERT(oldVal != 0);
+        Q_ASSERT(oldVal != 0);
         unsigned newVal = oldVal - 1;
         if (newVal == 0)
             m_impl.remove(it);
