@@ -68,7 +68,6 @@
 QT_BEGIN_NAMESPACE
 
 class QPaintEngine;
-class QEmulationPaintEngine;
 class QPaintEngineEx;
 struct QFixedPoint;
 

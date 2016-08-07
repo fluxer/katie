@@ -80,8 +80,6 @@ class QTransform;
 class QStaticText;
 class QGlyphRun;
 
-class QPainterPrivateDeleter;
-
 class Q_GUI_EXPORT QPainter
 {
     Q_DECLARE_PRIVATE(QPainter)

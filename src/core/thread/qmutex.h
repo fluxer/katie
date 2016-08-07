@@ -42,7 +42,6 @@
 #ifndef QMUTEX_H
 #define QMUTEX_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qatomic.h>
 #include <new>
 
@@ -53,7 +52,6 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_THREAD
 
-class QAtomicInt;
 class QMutexData;
 
 class Q_CORE_EXPORT QMutex
