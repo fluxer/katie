@@ -54,7 +54,6 @@
 //
 
 #include "qdeclarativeerror.h"
-#include "qbitfield_p.h"
 
 #include <QtCore/QString>
 #include <QtCore/QStack>
@@ -75,8 +74,7 @@ public:
     QDeclarativeVME();
 
     QObject *run(QDeclarativeContextData *, QDeclarativeCompiledData *, 
-                 int start = -1, int count = -1, 
-                 const QBitField & = QBitField());
+                 int start = -1, int count = -1);
     void runDeferred(QObject *);
 
     bool isError() const;
@@ -85,8 +83,7 @@ public:
 private:
     QObject *run(QDeclarativeVMEObjectStack &, 
                  QDeclarativeContextData *, QDeclarativeCompiledData *, 
-                 int start, int count, 
-                 const QBitField &);
+                 int start, int count);
     QList<QDeclarativeError> vmeErrors;
 };
 

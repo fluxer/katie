@@ -123,14 +123,14 @@ struct ListInstance
 Q_DECLARE_TYPEINFO(ListInstance, Q_PRIMITIVE_TYPE  | Q_MOVABLE_TYPE);
 
 QObject *QDeclarativeVME::run(QDeclarativeContextData *ctxt, QDeclarativeCompiledData *comp, 
-                              int start, int count, const QBitField &bindingSkipList)
+                              int start, int count)
 {
     QDeclarativeVMEObjectStack stack;
 
     if (start == -1) start = 0;
     if (count == -1) count = comp->bytecode.count();
 
-    return run(stack, ctxt, comp, start, count, bindingSkipList);
+    return run(stack, ctxt, comp, start, count);
 }
 
 void QDeclarativeVME::runDeferred(QObject *object)
@@ -147,7 +147,7 @@ void QDeclarativeVME::runDeferred(QObject *object)
     QDeclarativeVMEObjectStack stack;
     stack.push(object);
 
-    run(stack, ctxt, comp, start, count, QBitField());
+    run(stack, ctxt, comp, start, count);
 }
 
 inline bool fastHasBinding(QObject *o, int index) 
@@ -169,8 +169,7 @@ static void removeBindingOnProperty(QObject *o, int index)
 QObject *QDeclarativeVME::run(QDeclarativeVMEObjectStack &stack, 
                               QDeclarativeContextData *ctxt, 
                               QDeclarativeCompiledData *comp, 
-                              int start, int count, 
-                              const QBitField &bindingSkipList)
+                              int start, int count)
 {
     Q_ASSERT(comp);
     Q_ASSERT(ctxt);
@@ -215,17 +214,7 @@ QObject *QDeclarativeVME::run(QDeclarativeVMEObjectStack &stack,
 
         case QDeclarativeInstruction::CreateObject:
             {
-                QBitField bindings;
-                if (instr.create.bindingBits != -1) {
-                    const QByteArray &bits = datas.at(instr.create.bindingBits);
-                    bindings = QBitField((const quint32*)bits.constData(),
-                                         bits.size() * 8);
-                }
-                if (stack.isEmpty())
-                    bindings = bindings.united(bindingSkipList);
-
-                QObject *o = 
-                    types.at(instr.create.type).createInstance(ctxt, bindings, &vmeErrors);
+                QObject *o = types.at(instr.create.type).createInstance(ctxt, &vmeErrors);
 
                 if (!o) {
                     VME_EXCEPTION(QCoreApplication::translate("QDeclarativeVME","Unable to create object of type %1").arg(QString::fromLatin1(types.at(instr.create.type).className)));
@@ -767,9 +756,6 @@ QObject *QDeclarativeVME::run(QDeclarativeVMEObjectStack &stack,
 
                 int coreIndex = mp.index();
 
-                if ((stack.count() - instr.assignBinding.owner) == 1 && bindingSkipList.testBit(coreIndex)) 
-                    break;
-
                 QDeclarativeBinding *bind = new QDeclarativeBinding((void *)datas.at(instr.assignBinding.value).constData(), comp, context, ctxt, comp->name, instr.line, 0);
                 bindValues.append(bind);
                 bind->m_mePtr = &bindValues.values[bindValues.count - 1];
@@ -792,8 +778,6 @@ QObject *QDeclarativeVME::run(QDeclarativeVMEObjectStack &stack,
                     stack.at(stack.count() - 1 - instr.assignBinding.context);
 
                 int property = instr.assignBinding.property;
-                if (stack.count() == 1 && bindingSkipList.testBit(property & 0xFFFF))  
-                    break;
 
                 QDeclarativeAbstractBinding *binding = 
                     ctxt->optimizedBindings->configBinding(instr.assignBinding.value, target, scope, property);
@@ -1053,7 +1037,6 @@ QList<QDeclarativeError> QDeclarativeVME::errors() const
 
 QObject *
 QDeclarativeCompiledData::TypeReference::createInstance(QDeclarativeContextData *ctxt,
-                                                        const QBitField &bindings,
                                                         QList<QDeclarativeError> *errors) const
 {
     if (type) {
@@ -1073,7 +1056,7 @@ QDeclarativeCompiledData::TypeReference::createInstance(QDeclarativeContextData 
         return rv;
     } else {
         Q_ASSERT(component);
-        return QDeclarativeComponentPrivate::begin(ctxt, 0, component, -1, -1, 0, errors, bindings);
+        return QDeclarativeComponentPrivate::begin(ctxt, 0, component, -1, -1, 0, errors);
     } 
 }
 

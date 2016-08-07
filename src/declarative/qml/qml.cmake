@@ -22,8 +22,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeexpression_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeprivate.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativedom_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativedom_p_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativerefcount_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativemetatype_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeengine.h
@@ -42,7 +40,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativescriptparser_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativerewrite_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qpodvector_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qbitfield_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativevaluetype_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecompiledbindings_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativefastproperties_p.h
@@ -104,7 +101,6 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecompiler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativecompileddata.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativeboundsignal.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativedom.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativerefcount.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativemetatype.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qml/qdeclarativestringconverters.cpp

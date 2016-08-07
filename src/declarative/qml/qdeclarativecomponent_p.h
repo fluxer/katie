@@ -57,7 +57,6 @@
 
 #include "qdeclarativeengine_p.h"
 #include "qdeclarativetypeloader_p.h"
-#include "qbitfield_p.h"
 #include "qdeclarativeerror.h"
 #include "qdeclarative.h"
 
@@ -81,7 +80,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeComponentPrivate : public QObjectPrivate, pu
 public:
     QDeclarativeComponentPrivate() : typeData(0), progress(0.), start(-1), count(-1), cc(0), engine(0), creationContext(0) {}
 
-    QObject *beginCreate(QDeclarativeContextData *, const QBitField &);
+    QObject *beginCreate(QDeclarativeContextData *);
     void completeCreate();
 
     QDeclarativeTypeData *typeData;
@@ -110,8 +109,7 @@ public:
 
     static QObject *begin(QDeclarativeContextData *parentContext, QDeclarativeContextData *componentCreationContext,
                           QDeclarativeCompiledData *component, int start, int count, 
-                          ConstructionState *state, QList<QDeclarativeError> *errors, 
-                          const QBitField &bindings = QBitField());
+                          ConstructionState *state, QList<QDeclarativeError> *errors);
     static void beginDeferred(QDeclarativeEnginePrivate *enginePriv, QObject *object, 
                               ConstructionState *state);
     static void complete(QDeclarativeEnginePrivate *enginePriv, ConstructionState *state);

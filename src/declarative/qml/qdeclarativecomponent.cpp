@@ -761,7 +761,7 @@ QObject *QDeclarativeComponent::create(QDeclarativeContext *context)
 QObject *QDeclarativeComponent::beginCreate(QDeclarativeContext *context)
 {
     Q_D(QDeclarativeComponent);
-    QObject *rv = d->beginCreate(context?QDeclarativeContextData::get(context):0, QBitField());
+    QObject *rv = d->beginCreate(context ? QDeclarativeContextData::get(context) : 0);
     if (rv) {
         QDeclarativeData *ddata = QDeclarativeData::get(rv);
         Q_ASSERT(ddata);
@@ -771,7 +771,7 @@ QObject *QDeclarativeComponent::beginCreate(QDeclarativeContext *context)
 }
 
 QObject *
-QDeclarativeComponentPrivate::beginCreate(QDeclarativeContextData *context, const QBitField &bindings)
+QDeclarativeComponentPrivate::beginCreate(QDeclarativeContextData *context)
 {
     Q_Q(QDeclarativeComponent);
     if (!context) {
@@ -799,14 +799,13 @@ QDeclarativeComponentPrivate::beginCreate(QDeclarativeContextData *context, cons
         return 0;
     }
 
-    return begin(context, creationContext, cc, start, count, &state, 0, bindings);
+    return begin(context, creationContext, cc, start, count, &state, 0);
 }
 
 QObject * QDeclarativeComponentPrivate::begin(QDeclarativeContextData *parentContext, 
                                               QDeclarativeContextData *componentCreationContext,
                                               QDeclarativeCompiledData *component, int start, int count,
-                                              ConstructionState *state, QList<QDeclarativeError> *errors,
-                                              const QBitField &bindings)
+                                              ConstructionState *state, QList<QDeclarativeError> *errors)
 {
     QDeclarativeEnginePrivate *enginePriv = QDeclarativeEnginePrivate::get(parentContext->engine);
     bool isRoot = !enginePriv->inBeginCreate;
@@ -829,7 +828,7 @@ QObject * QDeclarativeComponentPrivate::begin(QDeclarativeContextData *parentCon
     enginePriv->inBeginCreate = true;
 
     QDeclarativeVME vme;
-    QObject *rv = vme.run(ctxt, component, start, count, bindings);
+    QObject *rv = vme.run(ctxt, component, start, count);
 
     if (vme.isError()) {
        if(errors) *errors = vme.errors();

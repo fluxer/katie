@@ -58,7 +58,6 @@
 #include "qdeclarativeinstruction_p.h"
 #include "qdeclarativeparser_p.h"
 #include "qdeclarativeengine_p.h"
-#include "qbitfield_p.h"
 #include "qdeclarativepropertycache_p.h"
 #include "qdeclarativeintegercache_p.h"
 #include "qdeclarativetypenamecache_p.h"
@@ -96,7 +95,7 @@ public:
         QDeclarativePropertyCache *typePropertyCache;
         QDeclarativeCompiledData *component;
 
-        QObject *createInstance(QDeclarativeContextData *, const QBitField &, QList<QDeclarativeError> *) const;
+        QObject *createInstance(QDeclarativeContextData *, QList<QDeclarativeError> *) const;
         const QMetaObject *metaObject() const;
         QDeclarativePropertyCache *propertyCache() const;
         QDeclarativePropertyCache *createPropertyCache(QDeclarativeEngine *);
