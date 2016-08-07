@@ -61,7 +61,7 @@
 
 #ifdef QT_BUILD_CORE_LIB
 #  include "qresource.h"
-#  include "qcoreglobaldata_p.h"
+#  include "qreadwritelock.h"
 #endif
 
 #include <stdlib.h>
@@ -80,6 +80,15 @@ static QString driveSpec(const QString &path)
         return QString();
     return path.mid(0, 2);
 }
+#endif
+
+#ifdef QT_BUILD_CORE_LIB
+struct QCoreGlobalData {
+    QMap<QString, QStringList> dirSearchPaths;
+    QReadWriteLock dirSearchPathsLock;
+};
+
+Q_GLOBAL_STATIC(QCoreGlobalData, globalData)
 #endif
 
 //************* QDirPrivate
@@ -972,8 +981,8 @@ void QDir::setSearchPaths(const QString &prefix, const QStringList &searchPaths)
         }
     }
 
-    QWriteLocker lock(&QCoreGlobalData::instance()->dirSearchPathsLock);
-    QMap<QString, QStringList> &paths = QCoreGlobalData::instance()->dirSearchPaths;
+    QWriteLocker lock(&globalData()->dirSearchPathsLock);
+    QMap<QString, QStringList> &paths = globalData()->dirSearchPaths;
     if (searchPaths.isEmpty()) {
         paths.remove(prefix);
     } else {
@@ -993,8 +1002,8 @@ void QDir::addSearchPath(const QString &prefix, const QString &path)
     if (path.isEmpty())
         return;
 
-    QWriteLocker lock(&QCoreGlobalData::instance()->dirSearchPathsLock);
-    QCoreGlobalData::instance()->dirSearchPaths[prefix] += path;
+    QWriteLocker lock(&globalData()->dirSearchPathsLock);
+    globalData()->dirSearchPaths[prefix] += path;
 }
 
 /*!
@@ -1006,8 +1015,8 @@ void QDir::addSearchPath(const QString &prefix, const QString &path)
 */
 QStringList QDir::searchPaths(const QString &prefix)
 {
-    QReadLocker lock(&QCoreGlobalData::instance()->dirSearchPathsLock);
-    return QCoreGlobalData::instance()->dirSearchPaths.value(prefix);
+    QReadLocker lock(&globalData()->dirSearchPathsLock);
+    return globalData()->dirSearchPaths.value(prefix);
 }
 
 #endif // QT_BUILD_CORE_LIB

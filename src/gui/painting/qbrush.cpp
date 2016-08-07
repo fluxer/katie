@@ -116,53 +116,33 @@ class QBrushPatternImageCache
 {
 public:
     QBrushPatternImageCache()
-        : m_initialized(false)
-    {
-        init();
-    }
-
-    void init()
     {
         for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
             int i = style - Qt::Dense1Pattern;
             m_images[i][0] = QImage(qt_patternForBrush(style, 0), 8, 8, 1, QImage::Format_MonoLSB);
             m_images[i][1] = QImage(qt_patternForBrush(style, 1), 8, 8, 1, QImage::Format_MonoLSB);
         }
-        m_initialized = true;
     }
 
-    QImage getImage(int brushStyle, bool invert) const
-    {
-        Q_ASSERT(brushStyle >= Qt::Dense1Pattern && brushStyle <= Qt::DiagCrossPattern);
-        if (!m_initialized)
-            const_cast<QBrushPatternImageCache*>(this)->init();
-        return m_images[brushStyle - Qt::Dense1Pattern][invert];
-    }
-
-    void cleanup() {
+    ~QBrushPatternImageCache() {
         for (int style = Qt::Dense1Pattern; style <= Qt::DiagCrossPattern; ++style) {
             int i = style - Qt::Dense1Pattern;
             m_images[i][0] = QImage();
             m_images[i][1] = QImage();
         }
-        m_initialized = false;
+    }
+
+    QImage getImage(int brushStyle, bool invert) const
+    {
+        Q_ASSERT(brushStyle >= Qt::Dense1Pattern && brushStyle <= Qt::DiagCrossPattern);
+        return m_images[brushStyle - Qt::Dense1Pattern][invert];
     }
 
 private:
     QImage m_images[Qt::DiagCrossPattern - Qt::Dense1Pattern + 1][2];
-    bool m_initialized;
 };
 
-static void qt_cleanup_brush_pattern_image_cache();
-Q_GLOBAL_STATIC_WITH_INITIALIZER(QBrushPatternImageCache, qt_brushPatternImageCache,
-                                 {
-                                     qAddPostRoutine(qt_cleanup_brush_pattern_image_cache);
-                                 })
-
-static void qt_cleanup_brush_pattern_image_cache()
-{
-    qt_brushPatternImageCache()->cleanup();
-}
+Q_GLOBAL_STATIC(QBrushPatternImageCache, qt_brushPatternImageCache)
 
 Q_GUI_EXPORT QImage qt_imageForBrush(int brushStyle, bool invert)
 {

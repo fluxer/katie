@@ -26,7 +26,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmetaobject_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qobject_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreglobaldata_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.h
@@ -54,7 +53,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtimer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qtranslator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qvariant.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreglobaldata.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.cpp

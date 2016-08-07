@@ -175,9 +175,6 @@ void QOpenUrlHandlerRegistry::handlerDestroyed(QObject *handler)
     Unicode-aware, the user may have configured their client without these features.
     Also, certain e-mail clients (e.g., Lotus Notes) have problems with long URLs.
 
-    \note On Symbian OS, \c SwEvent capability is required to open the given \a url
-    if the Web browser is already running.
-
     \sa setUrlHandler()
 */
 bool QDesktopServices::openUrl(const QUrl &url)
@@ -196,13 +193,10 @@ bool QDesktopServices::openUrl(const QUrl &url)
         }
     }
 
-    bool result;
     if (url.scheme() == QLatin1String("file"))
-        result = openDocument(url);
-    else
-        result = launchWebBrowser(url);
+        return openDocument(url);
 
-    return result;
+    return launchWebBrowser(url);
 }
 
 /*!
