@@ -1504,6 +1504,11 @@ QStyle* QApplication::setStyle(const QString& style)
     \note The \c{"opengl"} option is currently experimental.
 */
 
+QString QApplication::graphicsSystem()
+{
+    return QApplicationPrivate::graphics_system_name;
+}
+
 void QApplication::setGraphicsSystem(const QString &system)
 {
     if (system == QLatin1String("native")) {
