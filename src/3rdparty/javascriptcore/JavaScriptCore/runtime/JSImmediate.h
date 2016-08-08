@@ -46,18 +46,6 @@ namespace JSC {
     class JSObject;
     class UString;
 
-#if USE(JSVALUE64)
-    inline intptr_t reinterpretDoubleToIntptr(double value)
-    {
-        return WTF::bitwise_cast<intptr_t>(value);
-    }
-
-    inline double reinterpretIntptrToDouble(intptr_t value)
-    {
-        return WTF::bitwise_cast<double>(value);
-    }
-#endif
-
     /*
      * A JSValue* is either a pointer to a cell (a heap-allocated object) or an immediate (a type-tagged 
      * value masquerading as a pointer). The low two bits in a JSValue* are available for type tagging
@@ -314,7 +302,7 @@ namespace JSC {
 #if USE(JSVALUE64)
         static ALWAYS_INLINE JSValue makeDouble(double value)
         {
-            return makeValue(reinterpretDoubleToIntptr(value) + DoubleEncodeOffset);
+            return makeValue(reinterpret_cast<intptr_t>(value) + DoubleEncodeOffset);
         }
 #endif
         
@@ -339,7 +327,7 @@ namespace JSC {
 #if USE(JSVALUE64)
         static ALWAYS_INLINE double doubleValue(JSValue v)
         {
-            return reinterpretIntptrToDouble(rawValue(v) - DoubleEncodeOffset);
+            return reinterpret_cast<double>(rawValue(v) - DoubleEncodeOffset);
         }
 #endif
 
