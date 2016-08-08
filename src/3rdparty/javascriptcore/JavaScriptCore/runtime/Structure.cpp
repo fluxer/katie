@@ -446,7 +446,8 @@ PassRefPtr<Structure> Structure::despecifyFunctionTransition(Structure* structur
         transition->despecifyAllFunctions();
     else {
         bool removed = transition->despecifyFunction(replaceFunction);
-        ASSERT_UNUSED(removed, removed);
+        Q_UNUSED(removed);
+        Q_ASSERT(removed);
     }
 
     return transition.release();

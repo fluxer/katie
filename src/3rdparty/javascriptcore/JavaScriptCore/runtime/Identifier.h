@@ -95,7 +95,7 @@ namespace JSC {
         {
             if (r->isIdentifier()) {
 #ifndef NDEBUG
-                checkSameIdentifierTable(exec, r);
+                checkSameIdentifierTable(exec);
 #endif
                 return r;
             }
@@ -105,7 +105,7 @@ namespace JSC {
         {
             if (r->isIdentifier()) {
 #ifndef NDEBUG
-                checkSameIdentifierTable(globalData, r);
+                checkSameIdentifierTable(globalData);
 #endif
                 return r;
             }
@@ -115,8 +115,10 @@ namespace JSC {
         static PassRefPtr<UString::Rep> addSlowCase(ExecState*, UString::Rep* r);
         static PassRefPtr<UString::Rep> addSlowCase(JSGlobalData*, UString::Rep* r);
 
-        static void checkSameIdentifierTable(ExecState*, UString::Rep*);
-        static void checkSameIdentifierTable(JSGlobalData*, UString::Rep*);
+#ifndef NDEBUG
+        static void checkSameIdentifierTable(ExecState*);
+        static void checkSameIdentifierTable(JSGlobalData*);
+#endif
     };
     
     inline bool operator==(const Identifier& a, const Identifier& b)

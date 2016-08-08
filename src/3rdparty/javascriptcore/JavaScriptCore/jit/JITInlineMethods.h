@@ -815,7 +815,7 @@ ALWAYS_INLINE void JIT::emitFastArithReTagImmediate(RegisterID src, RegisterID d
 ALWAYS_INLINE void JIT::emitFastArithImmToInt(RegisterID reg)
 {
 #if USE(JSVALUE64)
-    UNUSED_PARAM(reg);
+    Q_UNUSED(reg);
 #else
     rshift32(Imm32(JSImmediate::IntegerPayloadShift), reg);
 #endif

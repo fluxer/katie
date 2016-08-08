@@ -66,8 +66,8 @@ JSFunction::JSFunction(ExecState* exec, NonNullPassRefPtr<Structure> structure, 
     setNativeFunction(func);
     putDirect(exec->propertyNames().length, jsNumber(exec, length), DontDelete | ReadOnly | DontEnum);
 #else
-    UNUSED_PARAM(length);
-    UNUSED_PARAM(func);
+    Q_UNUSED(length);
+    Q_UNUSED(func);
     ASSERT_NOT_REACHED();
 #endif
 }

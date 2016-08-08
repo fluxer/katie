@@ -239,7 +239,8 @@ class ARMThumbImmediate {
         // Make sure this constructor is only reached with type TypeUInt16;
         // this extra parameter makes the code a little clearer by making it
         // explicit at call sites which type is being constructed
-        ASSERT_UNUSED(type, type == TypeUInt16);
+        Q_UNUSED(type);
+        Q_ASSERT(type == TypeUInt16);
 
         m_value.asInt = value;
     }

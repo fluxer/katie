@@ -370,12 +370,12 @@ void JIT::privateCompileCTIMachineTrampolines(RefPtr<ExecutablePool>* executable
 #if ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
     *ctiStringLengthTrampoline = trampolineAt(finalCode, stringLengthBegin);
 #else
-    UNUSED_PARAM(ctiStringLengthTrampoline);
+    Q_UNUSED(ctiStringLengthTrampoline);
 #endif
 #if ENABLE(JIT_OPTIMIZE_CALL)
     *ctiVirtualCallLink = trampolineAt(finalCode, virtualCallLinkBegin);
 #else
-    UNUSED_PARAM(ctiVirtualCallLink);
+    Q_UNUSED(ctiVirtualCallLink);
 #endif
 }
 
@@ -1814,7 +1814,7 @@ void JIT::privateCompileCTIMachineTrampolines(RefPtr<ExecutablePool>* executable
 #if ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
     *ctiStringLengthTrampoline = trampolineAt(finalCode, stringLengthBegin);
 #else
-    UNUSED_PARAM(ctiStringLengthTrampoline);
+    Q_UNUSED(ctiStringLengthTrampoline);
 #endif
 }
 

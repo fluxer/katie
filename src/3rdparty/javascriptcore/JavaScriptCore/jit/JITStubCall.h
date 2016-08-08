@@ -200,7 +200,8 @@ namespace JSC {
 #else
         JIT::Call call(unsigned dst) // dst is a virtual register.
         {
-            ASSERT_UNUSED(m_returnType, m_returnType == VoidPtr || m_returnType == Cell);
+            Q_UNUSED(m_returnType);
+            Q_ASSERT(m_returnType == VoidPtr || m_returnType == Cell);
             JIT::Call call = this->call();
             m_jit->emitPutVirtualRegister(dst);
             return call;
@@ -209,10 +210,11 @@ namespace JSC {
 
         JIT::Call call(JIT::RegisterID dst) // dst is a machine register.
         {
+            Q_UNUSED(m_returnType);
 #if USE(JSVALUE32_64)
-            ASSERT_UNUSED(m_returnType, m_returnType == Value || m_returnType == VoidPtr || m_returnType == Int || m_returnType == Cell);
+            Q_ASSERT(m_returnType == Value || m_returnType == VoidPtr || m_returnType == Int || m_returnType == Cell);
 #else
-            ASSERT_UNUSED(m_returnType, m_returnType == VoidPtr || m_returnType == Int || m_returnType == Cell);
+            Q_ASSERT(m_returnType == VoidPtr || m_returnType == Int || m_returnType == Cell);
 #endif
             JIT::Call call = this->call();
             if (dst != JIT::returnValueRegister)

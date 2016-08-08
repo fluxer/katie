@@ -407,9 +407,9 @@ public:
 
     Jump branch16(Condition cond, BaseIndex left, RegisterID right)
     {
-        UNUSED_PARAM(cond);
-        UNUSED_PARAM(left);
-        UNUSED_PARAM(right);
+        Q_UNUSED(cond);
+        Q_UNUSED(left);
+        Q_UNUSED(right);
         ASSERT_NOT_REACHED();
         return jump();
     }
@@ -824,8 +824,8 @@ public:
     // (specifically, in this case, INT_MIN).
     Jump branchTruncateDoubleToInt32(FPRegisterID src, RegisterID dest)
     {
-        UNUSED_PARAM(src);
-        UNUSED_PARAM(dest);
+        Q_UNUSED(src);
+        Q_UNUSED(dest);
         ASSERT_NOT_REACHED();
         return jump();
     }

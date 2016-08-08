@@ -31,7 +31,6 @@
 #include <wtf/Assertions.h>
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefCounted.h>
-#include <wtf/UnusedParam.h>
 #include <wtf/Vector.h>
 
 #if OS(IPHONE_OS)

@@ -76,7 +76,7 @@ static ALWAYS_INLINE unsigned bytecodeOffsetForPC(CallFrame* callFrame, CodeBloc
 #if ENABLE(JIT)
     return codeBlock->getBytecodeIndex(callFrame, ReturnAddressPtr(pc));
 #else
-    UNUSED_PARAM(callFrame);
+    Q_UNUSED(callFrame);
     return static_cast<Instruction*>(pc) - codeBlock->instructions().begin();
 #endif
 }
@@ -3900,7 +3900,7 @@ void Interpreter::dumpSampleData(ExecState* exec)
     if (m_sampler)
         m_sampler->dump(exec);
 #else
-    UNUSED_PARAM(exec);
+    Q_UNUSED(exec);
 #endif
 }
 void Interpreter::startSampling()

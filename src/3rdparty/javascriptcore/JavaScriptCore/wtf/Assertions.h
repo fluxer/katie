@@ -59,20 +59,18 @@
 } while(false)
 #endif
 
-// TODO: get rid of those assert macros?
-/* ASSERT_NOT_REACHED, ASSERT_UNUSED */
+// TODO: get rid of that assert macro?
+/* ASSERT_NOT_REACHED */
 
 #include <qglobal.h>
 
 #ifdef QT_NO_DEBUG
 
 #define ASSERT_NOT_REACHED() ((void)0)
-#define ASSERT_UNUSED(variable, assertion) ((void)variable)
 
 #else
 
-#define ASSERT_NOT_REACHED() Q_ASSERT_X(false, 0, "SHOULD NEVER BE REACHED\n")
-#define ASSERT_UNUSED(variable, assertion) Q_ASSERT(assertion); Q_UNUSED(variable)
+#define ASSERT_NOT_REACHED() Q_ASSERT_X(false, 0, "SHOULD NEVER BE REACHED")
 
 #endif
 

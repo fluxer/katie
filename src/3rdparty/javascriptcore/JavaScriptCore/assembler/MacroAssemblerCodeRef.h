@@ -31,7 +31,6 @@
 #include "ExecutableAllocator.h"
 #include "PassRefPtr.h"
 #include "RefPtr.h"
-#include "UnusedParam.h"
 
 #if ENABLE(ASSEMBLER)
 

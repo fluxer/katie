@@ -113,7 +113,7 @@ namespace JSC {
             if (SamplingTool* sampler = globalData->interpreter->sampler())
                 sampler->notifyOfScope(this);
 #else
-            UNUSED_PARAM(globalData);
+            Q_UNUSED(globalData);
 #endif
         }
 
@@ -126,7 +126,7 @@ namespace JSC {
             if (SamplingTool* sampler = exec->globalData().interpreter->sampler())
                 sampler->notifyOfScope(this);
 #else
-            UNUSED_PARAM(exec);
+            Q_UNUSED(exec);
 #endif
         }
 
@@ -165,7 +165,8 @@ namespace JSC {
         {
             if (!m_evalCodeBlock) {
                 JSObject* error = compile(exec, scopeChainNode);
-                ASSERT_UNUSED(!error, error);
+                Q_UNUSED(error);
+                Q_ASSERT(!error);
             }
             return *m_evalCodeBlock;
         }
@@ -212,7 +213,8 @@ namespace JSC {
         {
             if (!m_programCodeBlock) {
                 JSObject* error = compile(exec, scopeChainNode);
-                ASSERT_UNUSED(!error, error);
+                Q_UNUSED(error);
+                Q_ASSERT(!error);
             }
             return *m_programCodeBlock;
         }

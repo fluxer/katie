@@ -217,7 +217,7 @@ PassRefPtr<UString::Rep> Identifier::addSlowCase(JSGlobalData* globalData, UStri
             r = globalData->smallStrings.singleCharacterStringRep(c);
             if (r->isIdentifier()) {
 #ifndef NDEBUG
-                checkSameIdentifierTable(globalData, r);
+                checkSameIdentifierTable(globalData);
 #endif
                 return r;
             }
@@ -240,27 +240,17 @@ void Identifier::remove(UString::Rep* r)
 }
 
 #ifndef NDEBUG
-
-void Identifier::checkSameIdentifierTable(ExecState* exec, UString::Rep*)
+void Identifier::checkSameIdentifierTable(ExecState* exec)
 {
-    ASSERT_UNUSED(exec, exec->globalData().identifierTable == currentIdentifierTable());
+    Q_UNUSED(exec);
+    Q_ASSERT(exec->globalData().identifierTable == currentIdentifierTable());
 }
 
-void Identifier::checkSameIdentifierTable(JSGlobalData* globalData, UString::Rep*)
+void Identifier::checkSameIdentifierTable(JSGlobalData* globalData)
 {
-    ASSERT_UNUSED(globalData, globalData->identifierTable == currentIdentifierTable());
+    Q_UNUSED(globalData);
+    Q_ASSERT(globalData->identifierTable == currentIdentifierTable());
 }
-
-#else
-
-void Identifier::checkSameIdentifierTable(ExecState*, UString::Rep*)
-{
-}
-
-void Identifier::checkSameIdentifierTable(JSGlobalData*, UString::Rep*)
-{
-}
-
 #endif
 
 ThreadSpecific<ThreadIdentifierTableData>* g_identifierTableSpecific = 0;

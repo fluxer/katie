@@ -214,7 +214,9 @@ namespace JSC {
         }
 
         void setup();
+#if ENABLE(OPCODE_SAMPLING)
         void dump(ExecState*);
+#endif
 
         void notifyOfScope(ScriptExecutable* scope);
 

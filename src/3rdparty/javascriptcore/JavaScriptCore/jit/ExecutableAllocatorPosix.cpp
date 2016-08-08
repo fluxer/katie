@@ -52,7 +52,8 @@ ExecutablePool::Allocation ExecutablePool::systemAlloc(size_t n)
 void ExecutablePool::systemRelease(const ExecutablePool::Allocation& alloc)
 { 
     int result = munmap(alloc.pages, alloc.size);
-    ASSERT_UNUSED(result, !result);
+    Q_UNUSED(result)
+    Q_ASSERT(!result);
 }
 
 }

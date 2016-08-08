@@ -41,7 +41,6 @@
 #include <wtf/DateMath.h>
 #include <wtf/MathExtras.h>
 #include <wtf/StringExtras.h>
-#include <wtf/UnusedParam.h>
 
 #if HAVE(SYS_PARAM_H)
 #include <sys/param.h>
@@ -770,13 +769,13 @@ static JSValue setNewValueFromDateArgs(ExecState* exec, JSValue thisValue, const
             return jsNaN(exec);
         gregorianDateTime.copyFrom(*other);
     }
-    
+
     if (!fillStructuresUsingDateArgs(exec, args, numArgsToUse, &ms, &gregorianDateTime)) {
         JSValue result = jsNaN(exec);
         thisDateObj->setInternalValue(result);
         return result;
     } 
-           
+
     JSValue result = jsNumber(exec, gregorianDateTimeToMS(exec, gregorianDateTime, ms, inputIsUTC));
     thisDateObj->setInternalValue(result);
     return result;

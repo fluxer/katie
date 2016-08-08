@@ -124,7 +124,7 @@ void BytecodeGenerator::setDumpsGeneratedCode(bool dumpsGeneratedCode)
 #ifndef NDEBUG
     s_dumpsGeneratedCode = dumpsGeneratedCode;
 #else
-    UNUSED_PARAM(dumpsGeneratedCode);
+    Q_UNUSED(dumpsGeneratedCode);
 #endif
 }
 
@@ -1846,7 +1846,7 @@ void BytecodeGenerator::beginSwitch(RegisterID* scrutineeRegister, SwitchInfo::S
 
 static int32_t keyForImmediateSwitch(ExpressionNode* node, int32_t min, int32_t max)
 {
-    UNUSED_PARAM(max);
+    Q_UNUSED(max);
     Q_ASSERT(node->isNumber());
     double value = static_cast<NumberNode*>(node)->value();
     int32_t key = static_cast<int32_t>(value);
@@ -1871,7 +1871,7 @@ static void prepareJumpTableForImmediateSwitch(SimpleJumpTable& jumpTable, int32
 
 static int32_t keyForCharacterSwitch(ExpressionNode* node, int32_t min, int32_t max)
 {
-    UNUSED_PARAM(max);
+    Q_UNUSED(max);
     Q_ASSERT(node->isString());
     UString::Rep* clause = static_cast<StringNode*>(node)->value().ustring().rep();
     Q_ASSERT(clause->size() == 1);

@@ -1230,8 +1230,8 @@ void JIT::emitSlow_op_lshift(Instruction* currentInstruction, Vector<SlowCaseEnt
     unsigned op2 = currentInstruction[3].u.operand;
 
 #if USE(JSVALUE64)
-    UNUSED_PARAM(op1);
-    UNUSED_PARAM(op2);
+    Q_UNUSED(op1);
+    Q_UNUSED(op2);
     linkSlowCase(iter);
     linkSlowCase(iter);
 #else

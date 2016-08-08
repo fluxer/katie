@@ -197,7 +197,8 @@ namespace WTF {
         void checkValidity(const const_iterator& other) const
         {
             Q_ASSERT(m_table);
-            ASSERT_UNUSED(other, other.m_table);
+            Q_UNUSED(other);
+            Q_ASSERT(other.m_table);
             Q_ASSERT(m_table == other.m_table);
         }
 #else
@@ -1066,9 +1067,6 @@ namespace WTF {
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     void removeIterator(HashTableConstIterator<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>* it)
     {
-        typedef HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits> HashTableType;
-        typedef HashTableConstIterator<Key, Value, Extractor, HashFunctions, Traits, KeyTraits> const_iterator;
-
         // Delete iterator from doubly-linked list of iterators.
         if (!it->m_table) {
             Q_ASSERT(!it->m_next);

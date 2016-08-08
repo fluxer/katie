@@ -41,7 +41,6 @@
 #include <stdlib.h>
 #include <wtf/FastMalloc.h>
 #include <wtf/HashCountedSet.h>
-#include <wtf/UnusedParam.h>
 #include <wtf/VMTags.h>
 
 #if OS(DARWIN)
@@ -301,8 +300,9 @@ void* Heap::allocate(size_t s)
 {
     typedef HeapConstants::Block Block;
     typedef HeapConstants::Cell Cell;
-    
-    ASSERT_UNUSED(s, s <= HeapConstants::cellSize);
+
+    Q_UNUSED(s);
+    Q_ASSERT(s <= HeapConstants::cellSize);
 
     Q_ASSERT(m_heap.operationInProgress == NoOperation);
 

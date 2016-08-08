@@ -398,6 +398,4 @@ namespace WTF {
 
 using WTF::HashMap;
 
-#include "RefPtrHashMap.h"
-
 #endif /* WTF_HashMap_h */

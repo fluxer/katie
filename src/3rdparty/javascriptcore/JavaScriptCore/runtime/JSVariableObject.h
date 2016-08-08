@@ -32,9 +32,7 @@
 #include "JSObject.h"
 #include "Register.h"
 #include "SymbolTable.h"
-#include "UnusedParam.h"
 #include <wtf/OwnArrayPtr.h>
-#include <wtf/UnusedParam.h>
 
 namespace JSC {
 
@@ -50,7 +48,7 @@ namespace JSC {
 
         virtual bool deleteProperty(ExecState*, const Identifier&);
         virtual void getOwnPropertyNames(ExecState*, PropertyNameArray&, EnumerationMode mode = ExcludeDontEnumProperties);
-        
+
         virtual bool isVariableObject() const;
         virtual bool isDynamicScope() const = 0;
 
@@ -60,7 +58,7 @@ namespace JSC {
         {
             return Structure::create(prototype, TypeInfo(ObjectType, StructureFlags));
         }
-        
+
     protected:
         static const unsigned StructureFlags = OverridesGetPropertyNames | JSObject::StructureFlags;
         // Subclasses of JSVariableObject can subclass this struct to add data
@@ -103,7 +101,7 @@ namespace JSC {
 
     inline bool JSVariableObject::symbolTableGet(const Identifier& propertyName, PropertySlot& slot)
     {
-        SymbolTableEntry entry = symbolTable().inlineGet(propertyName.ustring().rep());
+        SymbolTableEntry entry = symbolTable().get(propertyName.ustring().rep());
         if (!entry.isNull()) {
             slot.setRegisterSlot(&registerAt(entry.getIndex()));
             return true;
@@ -113,7 +111,7 @@ namespace JSC {
 
     inline bool JSVariableObject::symbolTableGet(const Identifier& propertyName, PropertySlot& slot, bool& slotIsWriteable)
     {
-        SymbolTableEntry entry = symbolTable().inlineGet(propertyName.ustring().rep());
+        SymbolTableEntry entry = symbolTable().get(propertyName.ustring().rep());
         if (!entry.isNull()) {
             slot.setRegisterSlot(&registerAt(entry.getIndex()));
             slotIsWriteable = !entry.isReadOnly();
@@ -126,7 +124,7 @@ namespace JSC {
     {
         Q_ASSERT(!Heap::heap(value) || Heap::heap(value) == Heap::heap(this));
 
-        SymbolTableEntry entry = symbolTable().inlineGet(propertyName.ustring().rep());
+        SymbolTableEntry entry = symbolTable().get(propertyName.ustring().rep());
         if (entry.isNull())
             return false;
         if (entry.isReadOnly())

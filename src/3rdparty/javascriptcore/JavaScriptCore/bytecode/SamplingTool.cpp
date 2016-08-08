@@ -197,7 +197,7 @@ void SamplingTool::notifyOfScope(ScriptExecutable* script)
     QMutexLocker locker(m_scriptSampleMapMutex);
     m_scopeSampleMap->set(script, new ScriptSampleRecord(script));
 #else
-    UNUSED_PARAM(script);
+    Q_UNUSED(script);
 #endif
 }
 
@@ -250,7 +250,7 @@ void SamplingTool::dump(ExecState* exec)
     // Tidies up SunSpider output by removing short scripts - such a small number of samples would likely not be useful anyhow.
     if (m_sampleCount < 10)
         return;
-    
+
     // (1) Build and sort 'opcodeSampleInfo' array.
 
     OpcodeSampleInfo opcodeSampleInfo[numOpcodeIDs];
@@ -275,7 +275,7 @@ void SamplingTool::dump(ExecState* exec)
             continue;
 
         OpcodeID opcodeID = opcodeSampleInfo[i].opcode;
-        
+
         const char* opcodeName = opcodeNames[opcodeID];
         const char* opcodePadding = padOpcodeName(opcodeID, 28);
         double percentOfVM = (static_cast<double>(count) * 100) / m_opcodeSampleCount;
@@ -356,17 +356,10 @@ void SamplingTool::dump(ExecState* exec)
         }
     }
 #else
-    UNUSED_PARAM(exec);
-#endif
+    Q_UNUSED(exec);
+#endif // ENABLE(CODEBLOCK_SAMPLING)
 }
-
-#else
-
-void SamplingTool::dump(ExecState*)
-{
-}
-
-#endif
+#endif // ENABLE(OPCODE_SAMPLING)
 
 void AbstractSamplingCounter::dump()
 {

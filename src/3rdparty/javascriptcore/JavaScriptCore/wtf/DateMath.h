@@ -47,7 +47,6 @@
 #include <time.h>
 #include <wtf/CurrentTime.h>
 #include <wtf/Noncopyable.h>
-#include <wtf/UnusedParam.h>
 
 namespace WTF {
 

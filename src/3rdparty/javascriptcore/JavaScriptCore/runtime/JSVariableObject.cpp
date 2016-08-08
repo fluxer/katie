@@ -60,7 +60,7 @@ bool JSVariableObject::isVariableObject() const
 
 bool JSVariableObject::symbolTableGet(const Identifier& propertyName, PropertyDescriptor& descriptor)
 {
-    SymbolTableEntry entry = symbolTable().inlineGet(propertyName.ustring().rep());
+    SymbolTableEntry entry = symbolTable().get(propertyName.ustring().rep());
     if (!entry.isNull()) {
         descriptor.setDescriptor(registerAt(entry.getIndex()).jsValue(), entry.getAttributes() | DontDelete);
         return true;

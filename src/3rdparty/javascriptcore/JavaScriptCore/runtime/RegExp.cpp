@@ -111,7 +111,7 @@ void RegExp::compile(JSGlobalData* globalData)
 #if ENABLE(YARR_JIT)
     Yarr::jitCompileRegex(globalData, m_regExpJITCode, m_pattern, m_numSubpatterns, m_constructionError, ignoreCase(), multiline());
 #else
-    UNUSED_PARAM(globalData);
+    Q_UNUSED(globalData);
     m_regExpBytecode.set(Yarr::byteCompileRegex(m_pattern, m_numSubpatterns, m_constructionError, ignoreCase(), multiline()));
 #endif
 }
@@ -173,7 +173,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 void RegExp::compile(JSGlobalData* globalData)
 {
     m_regExp = 0;
-    UNUSED_PARAM(globalData);
+    Q_UNUSED(globalData);
 
     JSRegExpIgnoreCaseOption ignoreCaseOption = ignoreCase() ? JSRegExpIgnoreCase : JSRegExpDoNotIgnoreCase;
     JSRegExpMultilineOption multilineOption = multiline() ? JSRegExpMultiline : JSRegExpSingleLine;

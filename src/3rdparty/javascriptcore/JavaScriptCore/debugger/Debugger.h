@@ -43,45 +43,45 @@ namespace JSC {
 
         virtual void scriptUnload(QT_PREPEND_NAMESPACE(qint64) id)
         {
-            UNUSED_PARAM(id);
+            Q_UNUSED(id);
         };
         virtual void scriptLoad(QT_PREPEND_NAMESPACE(qint64) id, const UString &program,
                             const UString &fileName, int baseLineNumber)
         {
-            UNUSED_PARAM(id);
-            UNUSED_PARAM(program);
-            UNUSED_PARAM(fileName);
-            UNUSED_PARAM(baseLineNumber);
+            Q_UNUSED(id);
+            Q_UNUSED(program);
+            Q_UNUSED(fileName);
+            Q_UNUSED(baseLineNumber);
         };
         virtual void contextPush() {};
         virtual void contextPop() {};
 
         virtual void evaluateStart(intptr_t sourceID)
         {
-            UNUSED_PARAM(sourceID);
+            Q_UNUSED(sourceID);
         }
         virtual void evaluateStop(const JSC::JSValue& returnValue, intptr_t sourceID)
         {
-            UNUSED_PARAM(sourceID);
-            UNUSED_PARAM(returnValue);
+            Q_UNUSED(sourceID);
+            Q_UNUSED(returnValue);
         }
 
         virtual void exceptionThrow(const JSC::DebuggerCallFrame& frame, intptr_t sourceID, bool hasHandler)
         {
-            UNUSED_PARAM(frame);
-            UNUSED_PARAM(sourceID);
-            UNUSED_PARAM(hasHandler);
+            Q_UNUSED(frame);
+            Q_UNUSED(sourceID);
+            Q_UNUSED(hasHandler);
         };
         virtual void exceptionCatch(const JSC::DebuggerCallFrame& frame, intptr_t sourceID)
         {
-            UNUSED_PARAM(frame);
-            UNUSED_PARAM(sourceID);
+            Q_UNUSED(frame);
+            Q_UNUSED(sourceID);
         };
 
         virtual void functionExit(const JSC::JSValue& returnValue, intptr_t sourceID)
         {
-            UNUSED_PARAM(returnValue);
-            UNUSED_PARAM(sourceID);
+            Q_UNUSED(returnValue);
+            Q_UNUSED(sourceID);
         };
 
         virtual void sourceParsed(ExecState*, const SourceCode&, int errorLineNumber, const UString& errorMessage) = 0;

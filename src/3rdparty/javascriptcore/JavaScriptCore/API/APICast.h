@@ -30,7 +30,6 @@
 #include "JSGlobalObject.h"
 #include "JSValue.h"
 #include <wtf/Platform.h>
-#include <wtf/UnusedParam.h>
 
 namespace JSC {
     class ExecState;
@@ -63,7 +62,7 @@ inline JSC::ExecState* toJS(JSGlobalContextRef c)
 
 inline JSC::JSValue toJS(JSC::ExecState* exec, JSValueRef v)
 {
-    ASSERT_UNUSED(exec, exec);
+    Q_UNUSED(exec);
     Q_ASSERT(v);
 #if USE(JSVALUE32_64)
     JSC::JSCell* jsCell = reinterpret_cast<JSC::JSCell*>(const_cast<OpaqueJSValue*>(v));
@@ -79,7 +78,7 @@ inline JSC::JSValue toJS(JSC::ExecState* exec, JSValueRef v)
 
 inline JSC::JSValue toJSForGC(JSC::ExecState* exec, JSValueRef v)
 {
-    ASSERT_UNUSED(exec, exec);
+    Q_UNUSED(exec);
     Q_ASSERT(v);
 #if USE(JSVALUE32_64)
     JSC::JSCell* jsCell = reinterpret_cast<JSC::JSCell*>(const_cast<OpaqueJSValue*>(v));
@@ -115,7 +114,7 @@ inline JSValueRef toRef(JSC::ExecState* exec, JSC::JSValue v)
         return reinterpret_cast<JSValueRef>(JSC::jsAPIValueWrapper(exec, v).asCell());
     return reinterpret_cast<JSValueRef>(v.asCell());
 #else
-    UNUSED_PARAM(exec);
+    Q_UNUSED(exec);
     return reinterpret_cast<JSValueRef>(JSC::JSValue::encode(v));
 #endif
 }
