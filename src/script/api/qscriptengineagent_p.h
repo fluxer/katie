@@ -59,8 +59,8 @@ public:
     QScriptEngineAgentPrivate(){}
     virtual ~QScriptEngineAgentPrivate(){}
 
-    void attach();
-    void detach();
+    void attachAgent();
+    void detachAgent();
 
     //scripts
     virtual void sourceParsed(JSC::ExecState*, const JSC::SourceCode&, int /*errorLine*/, const JSC::UString& /*errorMsg*/) {}

@@ -506,14 +506,16 @@ void QWizardPagePrivate::_q_updateCachedCompleteState()
 
 class QWizardAntiFlickerWidget : public QWidget
 {
+#if !defined(QT_NO_STYLE_WINDOWSVISTA)
     QWizardPrivate *wizardPrivate;
+#endif
 public:
     QWizardAntiFlickerWidget(QWizard *wizard, QWizardPrivate *wizardPrivate)
         : QWidget(wizard)
 #if !defined(QT_NO_STYLE_WINDOWSVISTA)
         , wizardPrivate(wizardPrivate)
 #endif
-    {}
+    { Q_UNUSED(wizardPrivate); }
 
 #if !defined(QT_NO_STYLE_WINDOWSVISTA)
 protected:

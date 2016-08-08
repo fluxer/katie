@@ -1341,7 +1341,7 @@ void QScriptEnginePrivate::agentDeleted(QScriptEngineAgent *agent)
 {
     ownedAgents.removeOne(agent);
     if (activeAgent == agent) {
-        QScriptEngineAgentPrivate::get(agent)->detach();
+        QScriptEngineAgentPrivate::get(agent)->detachAgent();
         activeAgent = 0;
     }
 }
@@ -4325,10 +4325,10 @@ void QScriptEngine::setAgent(QScriptEngineAgent *agent)
     }
     QScript::APIShim shim(d);
     if (d->activeAgent)
-        QScriptEngineAgentPrivate::get(d->activeAgent)->detach();
+        QScriptEngineAgentPrivate::get(d->activeAgent)->detachAgent();
     d->activeAgent = agent;
     if (agent) {
-        QScriptEngineAgentPrivate::get(agent)->attach();
+        QScriptEngineAgentPrivate::get(agent)->attachAgent();
     }
 }
 

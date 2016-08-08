@@ -112,7 +112,7 @@ QT_BEGIN_NAMESPACE
 */
 
 
-void QScriptEngineAgentPrivate::attach()
+void QScriptEngineAgentPrivate::attachAgent()
 {
     if (engine->originalGlobalObject()->debugger())
         engine->originalGlobalObject()->setDebugger(0);
@@ -121,7 +121,7 @@ void QScriptEngineAgentPrivate::attach()
         JSC::Debugger::recompileAllJSFunctions(engine->globalData);
 }
 
-void QScriptEngineAgentPrivate::detach()
+void QScriptEngineAgentPrivate::detachAgent()
 {
     JSC::Debugger::detach(engine->originalGlobalObject());
 }
