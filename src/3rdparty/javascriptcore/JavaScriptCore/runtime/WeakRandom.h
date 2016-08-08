@@ -51,7 +51,6 @@
 #define WeakRandom_h
 
 #include <limits.h>
-#include <wtf/StdLibExtras.h>
 
 namespace JSC {
 

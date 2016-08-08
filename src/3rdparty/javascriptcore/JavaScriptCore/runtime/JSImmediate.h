@@ -29,7 +29,6 @@
 #include <wtf/Assertions.h>
 #include <wtf/AlwaysInline.h>
 #include <wtf/MathExtras.h>
-#include <wtf/StdLibExtras.h>
 #include "JSValue.h"
 #include <limits>
 #include <limits.h>
@@ -302,7 +301,7 @@ namespace JSC {
 #if USE(JSVALUE64)
         static ALWAYS_INLINE JSValue makeDouble(double value)
         {
-            return makeValue(reinterpret_cast<intptr_t>(value) + DoubleEncodeOffset);
+            return makeValue(static_cast<intptr_t>(value) + DoubleEncodeOffset);
         }
 #endif
         
@@ -327,7 +326,7 @@ namespace JSC {
 #if USE(JSVALUE64)
         static ALWAYS_INLINE double doubleValue(JSValue v)
         {
-            return reinterpret_cast<double>(rawValue(v) - DoubleEncodeOffset);
+            return static_cast<double>(rawValue(v) - DoubleEncodeOffset);
         }
 #endif
 

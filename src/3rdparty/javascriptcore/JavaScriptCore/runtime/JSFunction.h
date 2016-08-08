@@ -119,7 +119,7 @@ namespace JSC {
         {
             *reinterpret_cast<NativeFunction*>(m_data) = func;
         }
-        void* m_data;
+        unsigned char m_data[sizeof(void*)];
     };
 
     JSFunction* asFunction(JSValue);

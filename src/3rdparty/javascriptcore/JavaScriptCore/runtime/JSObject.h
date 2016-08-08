@@ -35,7 +35,6 @@
 #include "ScopeChain.h"
 #include "Structure.h"
 #include "JSGlobalData.h"
-#include <wtf/StdLibExtras.h>
 
 namespace JSC {
 

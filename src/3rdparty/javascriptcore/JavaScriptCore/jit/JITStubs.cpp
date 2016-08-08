@@ -55,7 +55,6 @@
 #include "RegExpPrototype.h"
 #include "Register.h"
 #include "SamplingTool.h"
-#include <wtf/StdLibExtras.h>
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -1051,9 +1050,9 @@ COMPILE_ASSERT(offsetof(struct JITStackFrame, thunkReturnAddress) == THUNK_RETUR
         ".globl " SYMBOL_STRING(cti_##op) "\n" \
         HIDE_SYMBOL(cti_##op) "\n"             \
         SYMBOL_STRING(cti_##op) ":" "\n" \
-        "str lr, [sp, #" STRINGIZE_VALUE_OF(THUNK_RETURN_ADDRESS_OFFSET) "]" "\n" \
+        "str lr, [sp, #" #THUNK_RETURN_ADDRESS_OFFSET) "]" "\n" \
         "bl " SYMBOL_STRING(JITStubThunked_##op) "\n" \
-        "ldr lr, [sp, #" STRINGIZE_VALUE_OF(THUNK_RETURN_ADDRESS_OFFSET) "]" "\n" \
+        "ldr lr, [sp, #" #THUNK_RETURN_ADDRESS_OFFSET) "]" "\n" \
         "mov pc, lr" "\n" \
         ); \
     rtype JITStubThunked_##op(STUB_ARGS_DECLARATION)
