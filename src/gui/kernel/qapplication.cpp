@@ -1506,7 +1506,12 @@ QStyle* QApplication::setStyle(const QString& style)
 
 void QApplication::setGraphicsSystem(const QString &system)
 {
-    QApplicationPrivate::graphics_system_name = system;
+    if (system == QLatin1String("native")) {
+        qWarning() << "Attempt to set native graphicssystem";
+        QApplicationPrivate::graphics_system_name = QLatin1String("raster");
+    } else {
+        QApplicationPrivate::graphics_system_name = system;
+    }
 }
 
 /*!
