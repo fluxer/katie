@@ -26,7 +26,6 @@
 #ifndef QJSONVALUE_H
 #define QJSONVALUE_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qstring.h>
 

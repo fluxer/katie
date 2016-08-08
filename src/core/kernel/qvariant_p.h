@@ -56,7 +56,6 @@
 // takes a type, returns the internal void* pointer cast
 // to a pointer of the input type
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qvariant.h>
 
 QT_BEGIN_NAMESPACE

@@ -42,7 +42,6 @@
 #ifndef QFUTUREINTERFACE_H
 #define QFUTUREINTERFACE_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qrunnable.h>
 
 #ifndef QT_NO_QFUTURE

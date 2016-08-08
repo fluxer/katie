@@ -54,7 +54,6 @@
 //
 
 #include "qplatformdefs.h"
-#include <QtCore/qglobal.h>
 #include <QtCore/qdatetime.h>
 #include <QtCore/qabstractfileengine.h>
 
