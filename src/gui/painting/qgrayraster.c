@@ -996,10 +996,6 @@
   int  QT_FT_Outline_Decompose( const QT_FT_Outline*        outline,
                              void*                    user )
   {
-#undef SCALED
-#define SCALED( x )  (x)
-
-    QT_FT_Vector   v_last;
     QT_FT_Vector   v_start;
 
     QT_FT_Vector*  point;
@@ -1022,13 +1018,6 @@
       limit = outline->points + last;
 
       v_start = outline->points[first];
-      v_last  = outline->points[last];
-
-      v_start.x = SCALED( v_start.x );
-      v_start.y = SCALED( v_start.y );
-
-      v_last.x  = SCALED( v_last.x );
-      v_last.y  = SCALED( v_last.y );
 
       point = outline->points + first;
       tags  = outline->tags  + first;
@@ -1053,8 +1042,8 @@
             QT_FT_Vector  vec;
 
 
-            vec.x = SCALED( point->x );
-            vec.y = SCALED( point->y );
+            vec.x = point->x;
+            vec.y = point->y;
 
             error = gray_line_to( &vec, user );
             if ( error )
@@ -1067,26 +1056,26 @@
             QT_FT_Vector  vec1, vec2;
 
 
-            if ( point + 1 > limit                             ||
+            if ( point + 1 > limit ||
                  QT_FT_CURVE_TAG( tags[1] ) != QT_FT_CURVE_TAG_CUBIC )
               goto Invalid_Outline;
 
             point += 2;
             tags  += 2;
 
-            vec1.x = SCALED( point[-2].x );
-            vec1.y = SCALED( point[-2].y );
+            vec1.x = point[-2].x;
+            vec1.y = point[-2].y;
 
-            vec2.x = SCALED( point[-1].x );
-            vec2.y = SCALED( point[-1].y );
+            vec2.x = point[-1].x;
+            vec2.y = point[-1].y;
 
             if ( point <= limit )
             {
               QT_FT_Vector  vec;
 
 
-              vec.x = SCALED( point->x );
-              vec.y = SCALED( point->y );
+              vec.x = point->x;
+              vec.y = point->y;
 
               error = gray_cubic_to( &vec1, &vec2, &vec, user );
               if ( error )
