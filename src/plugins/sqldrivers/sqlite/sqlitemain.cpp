@@ -41,40 +41,41 @@
 
 #include <qsqldriverplugin.h>
 #include <qstringlist.h>
-#include "../../../sql/drivers/ibase/qsql_ibase.h"
+#include "qsql_sqlite.h"
 
 QT_BEGIN_NAMESPACE
 
-class QIBaseDriverPlugin : public QSqlDriverPlugin
+class QSQLiteDriverPlugin : public QSqlDriverPlugin
 {
 public:
-    QIBaseDriverPlugin();
+    QSQLiteDriverPlugin();
 
     QSqlDriver* create(const QString &);
     QStringList keys() const;
 };
 
-QIBaseDriverPlugin::QIBaseDriverPlugin()
+QSQLiteDriverPlugin::QSQLiteDriverPlugin()
     : QSqlDriverPlugin()
 {
 }
 
-QSqlDriver* QIBaseDriverPlugin::create(const QString &name)
+QSqlDriver* QSQLiteDriverPlugin::create(const QString &name)
 {
-    if (name == QLatin1String("QIBASE")) {
-        QIBaseDriver* driver = new QIBaseDriver();
+    if (name == QLatin1String("QSQLITE")) {
+        QSQLiteDriver* driver = new QSQLiteDriver();
         return driver;
     }
     return 0;
 }
 
-QStringList QIBaseDriverPlugin::keys() const
+QStringList QSQLiteDriverPlugin::keys() const
 {
-    const QStringList list(QLatin1String("QIBASE"));
+    const QStringList list(QLatin1String("QSQLITE"));
     return list;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QIBaseDriverPlugin)
-Q_EXPORT_PLUGIN2(qsqlibase, QIBaseDriverPlugin)
+Q_EXPORT_STATIC_PLUGIN(QSQLiteDriverPlugin)
+Q_EXPORT_PLUGIN2(qsqlite, QSQLiteDriverPlugin)
 
 QT_END_NAMESPACE
+

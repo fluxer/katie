@@ -41,41 +41,42 @@
 
 #include <qsqldriverplugin.h>
 #include <qstringlist.h>
-#include "../../../../src/sql/drivers/sqlite/qsql_sqlite.h"
+#include "qsql_mysql.h"
 
 QT_BEGIN_NAMESPACE
 
-class QSQLiteDriverPlugin : public QSqlDriverPlugin
+class QMYSQLDriverPlugin : public QSqlDriverPlugin
 {
 public:
-    QSQLiteDriverPlugin();
+    QMYSQLDriverPlugin();
 
     QSqlDriver* create(const QString &);
     QStringList keys() const;
 };
 
-QSQLiteDriverPlugin::QSQLiteDriverPlugin()
+QMYSQLDriverPlugin::QMYSQLDriverPlugin()
     : QSqlDriverPlugin()
 {
 }
 
-QSqlDriver* QSQLiteDriverPlugin::create(const QString &name)
+QSqlDriver* QMYSQLDriverPlugin::create(const QString &name)
 {
-    if (name == QLatin1String("QSQLITE")) {
-        QSQLiteDriver* driver = new QSQLiteDriver();
+    if (name == QLatin1String("QMYSQL") || name == QLatin1String("QMYSQL3")) {
+        QMYSQLDriver* driver = new QMYSQLDriver();
         return driver;
     }
     return 0;
 }
 
-QStringList QSQLiteDriverPlugin::keys() const
+QStringList QMYSQLDriverPlugin::keys() const
 {
-    const QStringList list(QLatin1String("QSQLITE"));
+    QStringList list;
+    list << QLatin1String("QMYSQL3");
+    list << QLatin1String("QMYSQL");
     return list;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QSQLiteDriverPlugin)
-Q_EXPORT_PLUGIN2(qsqlite, QSQLiteDriverPlugin)
+Q_EXPORT_STATIC_PLUGIN(QMYSQLDriverPlugin)
+Q_EXPORT_PLUGIN2(qsqlmysql, QMYSQLDriverPlugin)
 
 QT_END_NAMESPACE
-

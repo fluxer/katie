@@ -117,4 +117,18 @@ if(WITH_DBUS AND DBUS_FOUND)
 endif()
 
 
+if(WITH_MYSQL AND MYSQL_FOUND)
+    include(sqldrivers/mysql/mysql.cmake)
+endif()
+if(WITH_ODBC AND ODBC_FOUND)
+    include(sqldrivers/odbc/odbc.cmake)
+endif()
+if(WITH_PSQL AND PostgreSQL_FOUND)
+    include(sqldrivers/psql/psql.cmake)
+endif()
+if(WITH_SQLITE OR SQLITE_FOUND)
+    include(sqldrivers/sqlite/sqlite.cmake)
+endif()
+
+
 include(designer/qdeclarativeview/qdeclarativeview.cmake)

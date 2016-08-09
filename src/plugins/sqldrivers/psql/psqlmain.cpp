@@ -41,42 +41,42 @@
 
 #include <qsqldriverplugin.h>
 #include <qstringlist.h>
-#include "../../../sql/drivers/odbc/qsql_odbc.h"
+#include "qsql_psql.h"
 
 QT_BEGIN_NAMESPACE
 
-class QODBCDriverPlugin : public QSqlDriverPlugin
+class QPSQLDriverPlugin : public QSqlDriverPlugin
 {
 public:
-    QODBCDriverPlugin();
+    QPSQLDriverPlugin();
 
     QSqlDriver* create(const QString &);
     QStringList keys() const;
 };
 
-QODBCDriverPlugin::QODBCDriverPlugin()
+QPSQLDriverPlugin::QPSQLDriverPlugin()
     : QSqlDriverPlugin()
 {
 }
 
-QSqlDriver* QODBCDriverPlugin::create(const QString &name)
+QSqlDriver* QPSQLDriverPlugin::create(const QString &name)
 {
-    if (name == QLatin1String("QODBC") || name == QLatin1String("QODBC3")) {
-        QODBCDriver* driver = new QODBCDriver();
+    if (name == QLatin1String("QPSQL") || name == QLatin1String("QPSQL7")) {
+        QPSQLDriver* driver = new QPSQLDriver();
         return driver;
     }
     return 0;
 }
 
-QStringList QODBCDriverPlugin::keys() const
+QStringList QPSQLDriverPlugin::keys() const
 {
     QStringList list;
-    list.append(QLatin1String("QODBC3"));
-    list.append(QLatin1String("QODBC"));
+    list.append(QLatin1String("QPSQL7"));
+    list.append(QLatin1String("QPSQL"));
     return list;
 }
 
-Q_EXPORT_STATIC_PLUGIN(QODBCDriverPlugin)
-Q_EXPORT_PLUGIN2(qsqlodbc, QODBCDriverPlugin)
+Q_EXPORT_STATIC_PLUGIN(QPSQLDriverPlugin)
+Q_EXPORT_PLUGIN2(qsqlpsql, QPSQLDriverPlugin)
 
 QT_END_NAMESPACE

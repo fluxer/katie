@@ -27,7 +27,7 @@ There are several things you should be aware before considering Katie:
   - Blitter is no longer supported painting engine
   - QPictureIO and plugins for it are no longer supported
   - QML debugger and inspector have been removed, potentially dangerous
-  - removed non-open source DB2, OCI and TDS database drivers
+  - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
 
  - some additions have been made: 

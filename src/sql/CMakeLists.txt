@@ -38,22 +38,7 @@ set(SQL_PUBLIC_HEADERS
     QTDSResult
 )
 
-# exception because drivers are installed from sub-directories
-katie_setup_paths()
 include(kernel/kernel.cmake)
-# TODO: include(drivers/ibase/ibase.cmake)
-if(WITH_MYSQL AND MYSQL_FOUND)
-    include(drivers/mysql/mysql.cmake)
-endif()
-if(WITH_ODBC AND ODBC_FOUND)
-    include(drivers/odbc/odbc.cmake)
-endif()
-if(WITH_PSQL AND PostgreSQL_FOUND)
-    include(drivers/psql/psql.cmake)
-endif()
-if(WITH_SQLITE OR SQLITE_FOUND)
-    include(drivers/sqlite/sqlite.cmake)
-endif()
 include(models/models.cmake)
 
 include_directories(
