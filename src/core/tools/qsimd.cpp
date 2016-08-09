@@ -387,7 +387,9 @@ uint qDetectCPUFeatures()
 
     uint f = detectProcessorFeatures();
     QByteArray disable = qgetenv("QT_NO_CPU_FEATURE");
-    if (!disable.isEmpty()) {
+    if (disable == "all") {
+        f = 0;
+    } else if (!disable.isEmpty()) {
         disable.prepend(' ');
         for (int i = 0; i < features_count; ++i) {
             if (disable.contains(features_string + features_indices[i]))
