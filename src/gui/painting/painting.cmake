@@ -41,7 +41,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtextureglyphcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qtransform.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwmatrix.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblendfunctions_p.h
@@ -56,14 +55,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_x86_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawingprimitive_sse2_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon_p.h
-
-    # XXX: obsolete?
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrgb.h
 )
 
@@ -111,20 +102,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
-)
-
-katie_setup_sources(
-    GUI_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_mmx3dnow.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse3dnow.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_sse2.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_ssse3.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_iwmmxt.cpp
-    # TODO: link to pixman for arm-neon?
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_neon_asm.S
 )
 
 if(WITH_X11 AND X11_FOUND)
