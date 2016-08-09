@@ -18,7 +18,7 @@ endif()
 find_path(ODBC_INCLUDES
     NAMES
     sql.h
-    PATH_SUFFIXES iodbc
+    PATH_SUFFIXES iodbc libiodbc
     HINTS
     $ENV{ODBCDIR}/include
     /usr/include
