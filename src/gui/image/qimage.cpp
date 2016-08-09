@@ -57,7 +57,6 @@
 #include <qdrawhelper_p.h>
 #include <qmemrotate_p.h>
 #include <qpixmapdata_p.h>
-#include <qsimd_p.h>
 
 #include <qhash.h>
 

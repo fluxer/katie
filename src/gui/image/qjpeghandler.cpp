@@ -45,7 +45,6 @@
 #include <qvariant.h>
 #include <qvector.h>
 #include <qbuffer.h>
-#include <qsimd_p.h>
 
 #include <stdio.h>      // jpeglib needs this to be pre-included
 #include <setjmp.h>

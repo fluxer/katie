@@ -40,22 +40,18 @@
 ****************************************************************************/
 
 #include "qpixmap.h"
-
-#include <qfont_p.h>
-
+#include "qfont_p.h"
 #include "qpixmap_raster_p.h"
 #include "qnativeimage_p.h"
 #include "qimage_p.h"
 #include "qpaintengine.h"
-
 #include "qbitmap.h"
 #include "qimage.h"
-#include <QBuffer>
-#include <QImageReader>
-#include <qimage_p.h>
-#include <qsimd_p.h>
-#include <qwidget_p.h>
-#include <qdrawhelper_p.h>
+#include "qbuffer.h"
+#include "qimagereader.h"
+#include "qimage_p.h"
+#include "qwidget_p.h"
+#include "qdrawhelper_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -163,7 +159,6 @@ void QRasterPixmapData::fill(const QColor &color)
         if (alpha != 255) {
             if (!image.hasAlphaChannel()) {
                 QImage::Format toFormat;
-#if !(defined(QT_HAVE_NEON) || defined(QT_ALWAYS_HAVE_SSE2))
                 if (image.format() == QImage::Format_RGB16)
                     toFormat = QImage::Format_ARGB8565_Premultiplied;
                 else if (image.format() == QImage::Format_RGB666)
@@ -173,7 +168,6 @@ void QRasterPixmapData::fill(const QColor &color)
                 else if (image.format() == QImage::Format_RGB444)
                     toFormat = QImage::Format_ARGB4444_Premultiplied;
                 else
-#endif
                     toFormat = QImage::Format_ARGB32_Premultiplied;
 
                 if (!image.isNull() && qt_depthForFormat(image.format()) == qt_depthForFormat(toFormat)) {
@@ -364,7 +358,6 @@ void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConve
             QImage::Format opaqueFormat = QNativeImage::systemFormat();
             QImage::Format alphaFormat = QImage::Format_ARGB32_Premultiplied;
 
-#if !defined(QT_HAVE_NEON) && !defined(QT_ALWAYS_HAVE_SSE2)
             switch (opaqueFormat) {
             case QImage::Format_RGB16:
                 alphaFormat = QImage::Format_ARGB8565_Premultiplied;
@@ -372,7 +365,6 @@ void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConve
             default: // We don't care about the others...
                 break;
             }
-#endif
 
             if (!sourceImage.hasAlphaChannel()) {
                 format = opaqueFormat;
