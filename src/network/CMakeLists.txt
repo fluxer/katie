@@ -83,6 +83,7 @@ endif()
 
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
+katie_generate_package(KtNetwork "KtCore")
 katie_resources(${NETWORK_SOURCES} ${NETWORK_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -94,8 +95,6 @@ set_target_properties(KtNetwork PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Network
 )
-
-katie_generate_package(KtNetwork "KtCore")
 
 install(
     TARGETS KtNetwork

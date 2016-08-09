@@ -39,6 +39,7 @@ include_directories(
 
 katie_generate_misc("${MULTIMEDIA_HEADERS}" QtMultimedia)
 katie_generate_public("${MULTIMEDIA_PUBLIC_HEADERS}" QtMultimedia)
+katie_generate_package(KtMultimedia "KtCore KtGui")
 katie_resources(${MULTIMEDIA_SOURCES} ${MULTIMEDIA_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -50,8 +51,6 @@ set_target_properties(KtMultimedia PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Multimedia
 )
-
-katie_generate_package(KtMultimedia "KtCore KtGui")
 
 install(
     TARGETS KtMultimedia

@@ -72,6 +72,7 @@ endif()
 
 katie_generate_misc("${XML_HEADERS}" QtXml)
 katie_generate_public("${XML_PUBLIC_HEADERS}" QtXml)
+katie_generate_package(KtXml "KtCore")
 katie_resources(${XML_SOURCES} ${XML_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -83,8 +84,6 @@ set_target_properties(KtXml PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Xml
 )
-
-katie_generate_package(KtXml "KtCore")
 
 install(
     TARGETS KtXml

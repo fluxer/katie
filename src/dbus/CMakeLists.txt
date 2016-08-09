@@ -123,6 +123,7 @@ endif()
 
 katie_generate_misc("${DBUS_HEADERS}" QtDBus)
 katie_generate_public("${DBUS_PUBLIC_HEADERS}" QtDBus)
+katie_generate_package(KtDBus "KtCore KtXml")
 katie_resources(${DBUS_SOURCES} ${DBUS_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -134,8 +135,6 @@ set_target_properties(KtDBus PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME DBus
 )
-
-katie_generate_package(KtDBus "KtCore KtXml")
 
 install(
     TARGETS KtDBus

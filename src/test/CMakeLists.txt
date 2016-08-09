@@ -129,6 +129,7 @@ endif()
 
 katie_generate_misc("${TEST_HEADERS}" QtTest)
 katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
+katie_generate_package(KtTest "KtCore")
 katie_resources(${TEST_SOURCES} ${TEST_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -140,8 +141,6 @@ set_target_properties(KtTest PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Test
 )
-
-katie_generate_package(KtTest "KtCore")
 
 install(
     TARGETS KtTest
