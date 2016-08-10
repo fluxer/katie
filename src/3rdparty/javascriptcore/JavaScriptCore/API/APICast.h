@@ -63,6 +63,7 @@ inline JSC::ExecState* toJS(JSGlobalContextRef c)
 inline JSC::JSValue toJS(JSC::ExecState* exec, JSValueRef v)
 {
     Q_UNUSED(exec);
+    Q_ASSERT(exec);
     Q_ASSERT(v);
 #if USE(JSVALUE32_64)
     JSC::JSCell* jsCell = reinterpret_cast<JSC::JSCell*>(const_cast<OpaqueJSValue*>(v));
@@ -79,6 +80,7 @@ inline JSC::JSValue toJS(JSC::ExecState* exec, JSValueRef v)
 inline JSC::JSValue toJSForGC(JSC::ExecState* exec, JSValueRef v)
 {
     Q_UNUSED(exec);
+    Q_ASSERT(exec);
     Q_ASSERT(v);
 #if USE(JSVALUE32_64)
     JSC::JSCell* jsCell = reinterpret_cast<JSC::JSCell*>(const_cast<OpaqueJSValue*>(v));
