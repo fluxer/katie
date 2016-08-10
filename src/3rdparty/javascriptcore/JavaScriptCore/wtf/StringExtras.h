@@ -76,16 +76,6 @@ inline char* strdup(const char* strSource)
 
 #endif
 
-inline int strncasecmp(const char* s1, const char* s2, size_t len)
-{
-    return _strnicmp(s1, s2, len);
-}
-
-inline int strcasecmp(const char* s1, const char* s2)
-{
-    return _stricmp(s1, s2);
-}
-
 #endif
 
 #if OS(WINDOWS) || OS(LINUX) || OS(SOLARIS)
@@ -102,13 +92,6 @@ inline char* strnstr(const char* buffer, const char* target, size_t bufferLength
     }
     return 0;
 }
-
-#endif
-
-#if COMPILER(RVCT) && __ARMCC_VERSION < 400000
-
-int strcasecmp(const char* s1, const char* s2);
-int strncasecmp(const char* s1, const char* s2, size_t len);
 
 #endif
 
