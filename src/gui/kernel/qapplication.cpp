@@ -824,7 +824,6 @@ QApplication::QApplication(Display *dpy, int &argc, char **argv,
 #endif // Q_WS_X11
 
 extern void qInitDrawhelperAsm();
-extern void qInitImageConversions();
 extern int qRegisterGuiVariant();
 extern int qUnregisterGuiVariant();
 #ifndef QT_NO_STATEMACHINE
@@ -881,8 +880,6 @@ void QApplicationPrivate::initialize()
 
     // Set up which span functions should be used in raster engine...
     qInitDrawhelperAsm();
-    // and QImage conversion functions
-    qInitImageConversions();
 
 #ifndef QT_NO_WHEELEVENT
     QApplicationPrivate::wheel_scroll_lines = 3;

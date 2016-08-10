@@ -37,7 +37,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsharedpointer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsharedpointer_impl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qset.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsimd_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsize.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstack.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstring.h
@@ -80,7 +79,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qregexp.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qshareddata.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsharedpointer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsimd.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsize.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstring.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringbuilder.cpp

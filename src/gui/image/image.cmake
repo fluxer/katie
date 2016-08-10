@@ -61,13 +61,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qgifhandler.cpp
 )
 
-katie_setup_sources(
-    GUI_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_neon.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_sse2.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qimage_ssse3.cpp
-)
-
 if(WITH_PNG)
     set(GUI_HEADERS
         ${GUI_HEADERS}

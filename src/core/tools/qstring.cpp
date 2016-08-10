@@ -46,7 +46,6 @@
 #include <qtextcodec.h>
 #endif
 #include <qutfcodec_p.h>
-#include "qsimd_p.h"
 #include <qdatastream.h>
 #include <qlist.h>
 #include "qlocale.h"
@@ -3535,61 +3534,6 @@ bool QString::endsWith(const QChar &c, Qt::CaseSensitivity cs) const
     Use toLocal8Bit() instead.
 */
 
-#if defined(QT_ALWAYS_HAVE_SSE2)
-static inline __m128i mergeQuestionMarks(__m128i chunk)
-{
-    const __m128i questionMark = _mm_set1_epi16('?');
-
-# ifdef __SSE4_2__
-    // compare the unsigned shorts for the range 0x0100-0xFFFF
-    // note on the use of _mm_cmpestrm:
-    //  The MSDN documentation online (http://technet.microsoft.com/en-us/library/bb514080.aspx)
-    //  says for range search the following:
-    //    For each character c in a, determine whether b0 <= c <= b1 or b2 <= c <= b3
-    //
-    //  However, all examples on the Internet, including from Intel
-    //  (see http://software.intel.com/en-us/articles/xml-parsing-accelerator-with-intel-streaming-simd-extensions-4-intel-sse4/)
-    //  put the range to be searched first
-    //
-    //  Disassembly and instruction-level debugging with GCC and ICC show
-    //  that they are doing the right thing. Inverting the arguments in the
-    //  instruction does cause a bunch of test failures.
-
-    const int mode = _SIDD_UWORD_OPS | _SIDD_CMP_RANGES | _SIDD_UNIT_MASK;
-    const __m128i rangeMatch = _mm_cvtsi32_si128(0xffff0100);
-    const __m128i offLimitMask = _mm_cmpestrm(rangeMatch, 2, chunk, 8, mode);
-
-    // replace the non-Latin 1 characters in the chunk with question marks
-    chunk = _mm_blendv_epi8(chunk, questionMark, offLimitMask);
-# else
-    // SSE has no compare instruction for unsigned comparison.
-    // The variables must be shiffted + 0x8000 to be compared
-    const __m128i signedBitOffset = _mm_set1_epi16(short(0x8000));
-    const __m128i thresholdMask = _mm_set1_epi16(short(0xff + 0x8000));
-
-    const __m128i signedChunk = _mm_add_epi16(chunk, signedBitOffset);
-    const __m128i offLimitMask = _mm_cmpgt_epi16(signedChunk, thresholdMask);
-
-#  ifdef __SSE4_1__
-    // replace the non-Latin 1 characters in the chunk with question marks
-    chunk = _mm_blendv_epi8(chunk, questionMark, offLimitMask);
-#  else
-    // offLimitQuestionMark contains '?' for each 16 bits that was off-limit
-    // the 16 bits that were correct contains zeros
-    const __m128i offLimitQuestionMark = _mm_and_si128(offLimitMask, questionMark);
-
-    // correctBytes contains the bytes that were in limit
-    // the 16 bits that were off limits contains zeros
-    const __m128i correctBytes = _mm_andnot_si128(offLimitMask, chunk);
-
-    // merge offLimitQuestionMark and correctBytes to have the result
-    chunk = _mm_or_si128(correctBytes, offLimitQuestionMark);
-#  endif
-# endif
-    return chunk;
-}
-#endif
-
 static QByteArray toLatin1_helper(const QChar *data, int length)
 {
     QByteArray ba;
@@ -3597,51 +3541,6 @@ static QByteArray toLatin1_helper(const QChar *data, int length)
         ba.resize(length);
         const ushort *src = reinterpret_cast<const ushort *>(data);
         uchar *dst = (uchar*) ba.data();
-#if defined(QT_ALWAYS_HAVE_SSE2)
-        if (length >= 16) {
-            const int chunkCount = length >> 4; // divided by 16
-
-            for (int i = 0; i < chunkCount; ++i) {
-                __m128i chunk1 = _mm_loadu_si128((__m128i*)src); // load
-                chunk1 = mergeQuestionMarks(chunk1);
-                src += 8;
-
-                __m128i chunk2 = _mm_loadu_si128((__m128i*)src); // load
-                chunk2 = mergeQuestionMarks(chunk2);
-                src += 8;
-
-                // pack the two vector to 16 x 8bits elements
-                const __m128i result = _mm_packus_epi16(chunk1, chunk2);
-
-                _mm_storeu_si128((__m128i*)dst, result); // store
-                dst += 16;
-            }
-            length = length % 16;
-        }
-#elif defined(QT_ALWAYS_HAVE_NEON)
-        // Refer to the documentation of the SSE2 implementation
-        // this use eactly the same method as for SSE except:
-        // 1) neon has unsigned comparison
-        // 2) packing is done to 64 bits (8 x 8bits component).
-        if (length >= 16) {
-            const int chunkCount = length >> 3; // divided by 8
-            const uint16x8_t questionMark = vdupq_n_u16('?'); // set
-            const uint16x8_t thresholdMask = vdupq_n_u16(0xff); // set
-            for (int i = 0; i < chunkCount; ++i) {
-                uint16x8_t chunk = vld1q_u16((uint16_t *)src); // load
-                src += 8;
-
-                const uint16x8_t offLimitMask = vcgtq_u16(chunk, thresholdMask); // chunk > thresholdMask
-                const uint16x8_t offLimitQuestionMark = vandq_u16(offLimitMask, questionMark); // offLimitMask & questionMark
-                const uint16x8_t correctBytes = vbicq_u16(chunk, offLimitMask); // !offLimitMask & chunk
-                chunk = vorrq_u16(correctBytes, offLimitQuestionMark); // correctBytes | offLimitQuestionMark
-                const uint8x8_t result = vmovn_u16(chunk); // narrowing move->packing
-                vst1_u8(dst, result); // store
-                dst += 8;
-            }
-            length = length % 8;
-        }
-#endif
         while (length--) {
             *dst++ = (*src>0xff) ? '?' : (uchar) *src;
             ++src;
@@ -3783,31 +3682,6 @@ QString::Data *QString::fromLatin1_helper(const char *str, int size)
         d->data = d->array;
         d->array[size] = '\0';
         ushort *dst = d->data;
-        /* SIMD:
-         * Unpacking with SSE has been shown to improve performance on recent CPUs
-         * The same method gives no improvement with NEON.
-         */
-#if defined(QT_ALWAYS_HAVE_SSE2)
-        if (size >= 16) {
-            int chunkCount = size >> 4; // divided by 16
-            const __m128i nullMask = _mm_set1_epi32(0);
-            for (int i = 0; i < chunkCount; ++i) {
-                const __m128i chunk = _mm_loadu_si128((__m128i*)str); // load
-                str += 16;
-
-                // unpack the first 8 bytes, padding with zeros
-                const __m128i firstHalf = _mm_unpacklo_epi8(chunk, nullMask);
-                _mm_storeu_si128((__m128i*)dst, firstHalf); // store
-                dst += 8;
-
-                // unpack the last 8 bytes, padding with zeros
-                const __m128i secondHalf = _mm_unpackhi_epi8 (chunk, nullMask);
-                _mm_storeu_si128((__m128i*)dst, secondHalf); // store
-                dst += 8;
-            }
-            size = size % 16;
-        }
-#endif
         while (size--)
             *dst++ = (uchar)*str++;
     }
