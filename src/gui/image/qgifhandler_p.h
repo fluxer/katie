@@ -37,11 +37,6 @@
 **
 ** $QT_END_LICENSE$
 **
-** WARNING:
-**      A separate license from Unisys may be required to use the gif
-**      reader. See http://www.unisys.com/about__unisys/lzw/
-**      for information from Unisys
-**
 ****************************************************************************/
 
 #ifndef QGIFHANDLER_P_H
