@@ -887,8 +887,7 @@ QT_FT_BEGIN_HEADER
   /*                                                                       */
   typedef void
   (*QT_FT_Raster_ResetFunc)( QT_FT_Raster       raster,
-                          char*  pool_base,
-                          long   pool_size );
+                          char*  pool_base);
 
 #define  QT_FT_Raster_Reset_Func   QT_FT_Raster_ResetFunc
 

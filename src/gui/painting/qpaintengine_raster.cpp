@@ -171,12 +171,12 @@ template <typename T> static inline bool isRect(const T *pts, int elementCount) 
 
 static void qt_ft_outline_move_to(qfixed x, qfixed y, void *data)
 {
-    ((QOutlineMapper *) data)->moveTo(QPointF(qt_fixed_to_real(x), qt_fixed_to_real(y)));
+    ((QOutlineMapper *) data)->moveTo(QPointF(x, y));
 }
 
 static void qt_ft_outline_line_to(qfixed x, qfixed y, void *data)
 {
-    ((QOutlineMapper *) data)->lineTo(QPointF(qt_fixed_to_real(x), qt_fixed_to_real(y)));
+    ((QOutlineMapper *) data)->lineTo(QPointF(x, y));
 }
 
 static void qt_ft_outline_cubic_to(qfixed c1x, qfixed c1y,
@@ -184,9 +184,9 @@ static void qt_ft_outline_cubic_to(qfixed c1x, qfixed c1y,
                              qfixed ex, qfixed ey,
                              void *data)
 {
-    ((QOutlineMapper *) data)->curveTo(QPointF(qt_fixed_to_real(c1x), qt_fixed_to_real(c1y)),
-                                       QPointF(qt_fixed_to_real(c2x), qt_fixed_to_real(c2y)),
-                                       QPointF(qt_fixed_to_real(ex), qt_fixed_to_real(ey)));
+    ((QOutlineMapper *) data)->curveTo(QPointF(c1x, c1y),
+                                       QPointF(c2x, c2y),
+                                       QPointF(ex, ey));
 }
 
 
@@ -212,7 +212,6 @@ QRasterPaintEnginePrivate::~QRasterPaintEnginePrivate()
 /*!
     \class QRasterPaintEngine
     \preliminary
-    \ingroup qws
     \since 4.2
 
     \brief The QRasterPaintEngine class enables hardware acceleration
@@ -3374,10 +3373,10 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
         return;
     }
 
-    // Initial size for raster pool has to be MINIMUM_POOL_SIZE at least, obviously
-    char rasterPoolBase[MINIMUM_POOL_SIZE];
+    // Initial size for raster pool has to be RASTER_POOL_SIZE, obviously
+    char rasterPoolBase[RASTER_POOL_SIZE];
 
-    qt_ft_grays_raster.raster_reset(*grayRaster, rasterPoolBase, MINIMUM_POOL_SIZE);
+    qt_ft_grays_raster.raster_reset(*grayRaster, rasterPoolBase);
 
     QT_FT_BBox clip_box = { deviceRect.x(),
                             deviceRect.y(),

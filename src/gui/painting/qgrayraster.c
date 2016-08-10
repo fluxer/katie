@@ -1011,10 +1011,8 @@
 
     for ( n = 0; n < outline->n_contours; n++ )
     {
-      int  last;  /* index of last point in contour */
-
-
-      last  = outline->contours[n];
+      /* index of last point in contour */
+      const int last  = outline->contours[n];
       limit = outline->points + last;
 
       v_start = outline->points[first];
@@ -1179,20 +1177,20 @@
 
     /* simple heuristic used to speed-up the bezier decomposition -- see */
     /* the code in gray_render_cubic() for more  details                 */
-    ras.conic_level = 32;
-    ras.cubic_level = 16;
-
+    if ( ras.count_ex > 120 || ras.count_ey > 120 )
     {
-      int level = 0;
-
-
-      if ( ras.count_ex > 24 || ras.count_ey > 24 )
-        level++;
-      if ( ras.count_ex > 120 || ras.count_ey > 120 )
-        level++;
-
-      ras.conic_level <<= level;
-      ras.cubic_level <<= level;
+      ras.conic_level = 128;
+      ras.cubic_level = 64;
+    }
+    else if ( ras.count_ex > 24 || ras.count_ey > 24 )
+    {
+      ras.conic_level = 64;
+      ras.cubic_level = 32;
+    }
+    else
+    {
+      ras.conic_level = 32;
+      ras.cubic_level = 16;
     }
 
     /* setup vertical bands */
@@ -1418,14 +1416,13 @@
 
   static void
   gray_raster_reset( QT_FT_Raster  raster,
-                     char*      pool_base,
-                     long       pool_size )
+                     char*      pool_base )
   {
     PRaster  rast = (PRaster)raster;
 
     if ( raster )
     {
-      if ( pool_base && ( pool_size >= MINIMUM_POOL_SIZE ) )
+      if ( pool_base )
       {
         PWorker  worker = (PWorker)pool_base;
 
@@ -1434,7 +1431,7 @@
         rast->buffer      = pool_base +
                               ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
                                 ~( sizeof ( TCell ) - 1 ) );
-        rast->buffer_size = (long)( ( pool_base + pool_size ) -
+        rast->buffer_size = (long)( ( pool_base + RASTER_POOL_SIZE ) -
                                     (char*)rast->buffer ) &
                                       ~( sizeof ( TCell ) - 1 );
         rast->band_size   = (int)( rast->buffer_size /

@@ -59,56 +59,15 @@
 
 QT_BEGIN_NAMESPACE
 
-// #define QFIXED_IS_26_6
-
-#if defined QFIXED_IS_26_6
-typedef int qfixed;
-#define qt_real_to_fixed(real) qfixed(real * 64)
-#define qt_int_to_fixed(real) qfixed(int(real) << 6)
-#define qt_fixed_to_real(fixed) qreal(fixed / qreal(64))
-#define qt_fixed_to_int(fixed) int(fixed >> 6)
-struct qfixed2d
-{
-    qfixed x;
-    qfixed y;
-
-    bool operator==(const qfixed2d &other) const { return x == other.x && y == other.y; }
-};
-#elif defined QFIXED_IS_32_32
-typedef qint64 qfixed;
-#define qt_real_to_fixed(real) qfixed(real * double(qint64(1) << 32))
-#define qt_fixed_to_real(fixed) qreal(fixed / double(qint64(1) << 32))
-struct qfixed2d
-{
-    qfixed x;
-    qfixed y;
-
-    bool operator==(const qfixed2d &other) const { return x == other.x && y == other.y; }
-};
-#elif defined QFIXED_IS_16_16
-typedef int qfixed;
-#define qt_real_to_fixed(real) qfixed(real * qreal(1 << 16))
-#define qt_fixed_to_real(fixed) qreal(fixed / qreal(1 << 16))
-struct qfixed2d
-{
-    qfixed x;
-    qfixed y;
-
-    bool operator==(const qfixed2d &other) const { return x == other.x && y == other.y; }
-};
-#else
 typedef qreal qfixed;
-#define qt_real_to_fixed(real) qfixed(real)
-#define qt_fixed_to_real(fixed) fixed
 struct qfixed2d
 {
-    qfixed x;
-    qfixed y;
+    qreal x;
+    qreal y;
 
     bool operator==(const qfixed2d &other) const { return qFuzzyCompare(x, other.x)
                                                        && qFuzzyCompare(y, other.y); }
 };
-#endif
 
 #define QT_PATH_KAPPA 0.5522847498
 
@@ -117,11 +76,11 @@ QPointF qt_curves_for_arc(const QRectF &rect, qreal startAngle, qreal sweepLengt
 
 qreal qt_t_for_arc_angle(qreal angle);
 
-typedef void (*qStrokerMoveToHook)(qfixed x, qfixed y, void *data);
-typedef void (*qStrokerLineToHook)(qfixed x, qfixed y, void *data);
-typedef void (*qStrokerCubicToHook)(qfixed c1x, qfixed c1y,
-                                    qfixed c2x, qfixed c2y,
-                                    qfixed ex, qfixed ey,
+typedef void (*qStrokerMoveToHook)(qreal x, qreal y, void *data);
+typedef void (*qStrokerLineToHook)(qreal x, qreal y, void *data);
+typedef void (*qStrokerCubicToHook)(qreal c1x, qreal c1y,
+                                    qreal c2x, qreal c2y,
+                                    qreal ex, qreal ey,
                                     void *data);
 
 // qtransform.cpp
@@ -132,8 +91,8 @@ class Q_GUI_EXPORT QStrokerOps
 public:
     struct Element {
         QPainterPath::ElementType type;
-        qfixed x;
-        qfixed y;
+        qreal x;
+        qreal y;
 
         inline bool isMoveTo() const { return type == QPainterPath::MoveToElement; }
         inline bool isLineTo() const { return type == QPainterPath::LineToElement; }
@@ -152,9 +111,9 @@ public:
     virtual void begin(void *customData);
     virtual void end();
 
-    inline void moveTo(qfixed x, qfixed y);
-    inline void lineTo(qfixed x, qfixed y);
-    inline void cubicTo(qfixed x1, qfixed y1, qfixed x2, qfixed y2, qfixed ex, qfixed ey);
+    inline void moveTo(qreal x, qreal y);
+    inline void lineTo(qreal x, qreal y);
+    inline void cubicTo(qreal x1, qreal y1, qreal x2, qreal y2, qreal ex, qreal ey);
 
     void strokePath(const QPainterPath &path, void *data, const QTransform &matrix);
     void strokePolygon(const QPointF *points, int pointCount, bool implicit_close,
@@ -171,20 +130,20 @@ public:
         m_dashThreshold = scale == 0 ? qreal(0.5) : (qreal(0.5) / scale);
     }
 
-    void setCurveThreshold(qfixed threshold) { m_curveThreshold = threshold; }
-    qfixed curveThreshold() const { return m_curveThreshold; }
+    void setCurveThreshold(qreal threshold) { m_curveThreshold = threshold; }
+    qreal curveThreshold() const { return m_curveThreshold; }
 
 protected:
-    inline void emitMoveTo(qfixed x, qfixed y);
-    inline void emitLineTo(qfixed x, qfixed y);
-    inline void emitCubicTo(qfixed c1x, qfixed c1y, qfixed c2x, qfixed c2y, qfixed ex, qfixed ey);
+    inline void emitMoveTo(qreal x, qreal y);
+    inline void emitLineTo(qreal x, qreal y);
+    inline void emitCubicTo(qreal c1x, qreal c1y, qreal c2x, qreal c2y, qreal ex, qreal ey);
 
     virtual void processCurrentSubpath() = 0;
     QDataBuffer<Element> m_elements;
 
     QRectF m_clip_rect;
-    qfixed m_curveThreshold;
-    qfixed m_dashThreshold;
+    qreal m_curveThreshold;
+    qreal m_dashThreshold;
 
     void *m_customData;
     qStrokerMoveToHook m_moveTo;
@@ -209,8 +168,8 @@ public:
     QStroker();
     ~QStroker();
 
-    void setStrokeWidth(qfixed width) { m_strokeWidth = width; }
-    qfixed strokeWidth() const { return m_strokeWidth; }
+    void setStrokeWidth(qreal width) { m_strokeWidth = width; }
+    qreal strokeWidth() const { return m_strokeWidth; }
 
     void setCapStyle(Qt::PenCapStyle capStyle) { m_capStyle = joinModeForCap(capStyle); }
     Qt::PenCapStyle capStyle() const { return capForJoinMode(m_capStyle); }
@@ -220,13 +179,13 @@ public:
     Qt::PenJoinStyle joinStyle() const { return joinForJoinMode(m_joinStyle); }
     LineJoinMode joinStyleMode() const { return m_joinStyle; }
 
-    void setMiterLimit(qfixed length) { m_miterLimit = length; }
-    qfixed miterLimit() const { return m_miterLimit; }
+    void setMiterLimit(qreal length) { m_miterLimit = length; }
+    qreal miterLimit() const { return m_miterLimit; }
 
-    void joinPoints(qfixed x, qfixed y, const QLineF &nextLine, LineJoinMode join);
-    inline void emitMoveTo(qfixed x, qfixed y);
-    inline void emitLineTo(qfixed x, qfixed y);
-    inline void emitCubicTo(qfixed c1x, qfixed c1y, qfixed c2x, qfixed c2y, qfixed ex, qfixed ey);
+    void joinPoints(qreal x, qreal y, const QLineF &nextLine, LineJoinMode join);
+    inline void emitMoveTo(qreal x, qreal y);
+    inline void emitLineTo(qreal x, qreal y);
+    inline void emitCubicTo(qreal c1x, qreal c1y, qreal c2x, qreal c2y, qreal ex, qreal ey);
 
 protected:
     static Qt::PenCapStyle capForJoinMode(LineJoinMode mode);
@@ -237,17 +196,17 @@ protected:
 
     virtual void processCurrentSubpath();
 
-    qfixed m_strokeWidth;
-    qfixed m_miterLimit;
+    qreal m_strokeWidth;
+    qreal m_miterLimit;
 
     LineJoinMode m_capStyle;
     LineJoinMode m_joinStyle;
 
-    qfixed m_back1X;
-    qfixed m_back1Y;
+    qreal m_back1X;
+    qreal m_back1Y;
 
-    qfixed m_back2X;
-    qfixed m_back2Y;
+    qreal m_back2X;
+    qreal m_back2Y;
 };
 
 class Q_GUI_EXPORT QDashStroker : public QStrokerOps
@@ -257,10 +216,10 @@ public:
 
     QStroker *stroker() const { return m_stroker; }
 
-    static QVector<qfixed> patternForStyle(Qt::PenStyle style);
+    static QVector<qreal> patternForStyle(Qt::PenStyle style);
 
-    void setDashPattern(const QVector<qfixed> &dashPattern) { m_dashPattern = dashPattern; }
-    QVector<qfixed> dashPattern() const { return m_dashPattern; }
+    void setDashPattern(const QVector<qreal> &dashPattern) { m_dashPattern = dashPattern; }
+    QVector<qreal> dashPattern() const { return m_dashPattern; }
 
     void setDashOffset(qreal offset) { m_dashOffset = offset; }
     qreal dashOffset() const { return m_dashOffset; }
@@ -275,7 +234,7 @@ protected:
     virtual void processCurrentSubpath();
 
     QStroker *m_stroker;
-    QVector<qfixed> m_dashPattern;
+    QVector<qreal> m_dashPattern;
     qreal m_dashOffset;
 
     qreal m_stroke_width;
@@ -287,25 +246,25 @@ protected:
  * QStrokerOps inline membmers
  */
 
-inline void QStrokerOps::emitMoveTo(qfixed x, qfixed y)
+inline void QStrokerOps::emitMoveTo(qreal x, qreal y)
 {
     Q_ASSERT(m_moveTo);
     m_moveTo(x, y, m_customData);
 }
 
-inline void QStrokerOps::emitLineTo(qfixed x, qfixed y)
+inline void QStrokerOps::emitLineTo(qreal x, qreal y)
 {
     Q_ASSERT(m_lineTo);
     m_lineTo(x, y, m_customData);
 }
 
-inline void QStrokerOps::emitCubicTo(qfixed c1x, qfixed c1y, qfixed c2x, qfixed c2y, qfixed ex, qfixed ey)
+inline void QStrokerOps::emitCubicTo(qreal c1x, qreal c1y, qreal c2x, qreal c2y, qreal ex, qreal ey)
 {
     Q_ASSERT(m_cubicTo);
     m_cubicTo(c1x, c1y, c2x, c2y, ex, ey, m_customData);
 }
 
-inline void QStrokerOps::moveTo(qfixed x, qfixed y)
+inline void QStrokerOps::moveTo(qreal x, qreal y)
 {
     if (m_elements.size()>1)
         processCurrentSubpath();
@@ -314,13 +273,13 @@ inline void QStrokerOps::moveTo(qfixed x, qfixed y)
     m_elements.add(e);
 }
 
-inline void QStrokerOps::lineTo(qfixed x, qfixed y)
+inline void QStrokerOps::lineTo(qreal x, qreal y)
 {
     Element e = { QPainterPath::LineToElement, x, y };
     m_elements.add(e);
 }
 
-inline void QStrokerOps::cubicTo(qfixed x1, qfixed y1, qfixed x2, qfixed y2, qfixed ex, qfixed ey)
+inline void QStrokerOps::cubicTo(qreal x1, qreal y1, qreal x2, qreal y2, qreal ex, qreal ey)
 {
     Element c1 = { QPainterPath::CurveToElement, x1, y1 };
     Element c2 = { QPainterPath::CurveToDataElement, x2, y2 };
@@ -333,7 +292,7 @@ inline void QStrokerOps::cubicTo(qfixed x1, qfixed y1, qfixed x2, qfixed y2, qfi
 /*******************************************************************************
  * QStroker inline members
  */
-inline void QStroker::emitMoveTo(qfixed x, qfixed y)
+inline void QStroker::emitMoveTo(qreal x, qreal y)
 {
     m_back2X = m_back1X;
     m_back2Y = m_back1Y;
@@ -342,7 +301,7 @@ inline void QStroker::emitMoveTo(qfixed x, qfixed y)
     QStrokerOps::emitMoveTo(x, y);
 }
 
-inline void QStroker::emitLineTo(qfixed x, qfixed y)
+inline void QStroker::emitLineTo(qreal x, qreal y)
 {
     m_back2X = m_back1X;
     m_back2Y = m_back1Y;
@@ -351,9 +310,9 @@ inline void QStroker::emitLineTo(qfixed x, qfixed y)
     QStrokerOps::emitLineTo(x, y);
 }
 
-inline void QStroker::emitCubicTo(qfixed c1x, qfixed c1y,
-                                  qfixed c2x, qfixed c2y,
-                                  qfixed ex, qfixed ey)
+inline void QStroker::emitCubicTo(qreal c1x, qreal c1y,
+                                  qreal c2x, qreal c2y,
+                                  qreal ex, qreal ey)
 {
     if (c2x == ex && c2y == ey) {
         if (c1x == ex && c1y == ey) {

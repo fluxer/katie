@@ -2420,12 +2420,12 @@ QDataStream &operator>>(QDataStream &s, QPainterPath &p)
 
 void qt_path_stroke_move_to(qfixed x, qfixed y, void *data)
 {
-    ((QPainterPath *) data)->moveTo(qt_fixed_to_real(x), qt_fixed_to_real(y));
+    ((QPainterPath *) data)->moveTo(x, y);
 }
 
 void qt_path_stroke_line_to(qfixed x, qfixed y, void *data)
 {
-    ((QPainterPath *) data)->lineTo(qt_fixed_to_real(x), qt_fixed_to_real(y));
+    ((QPainterPath *) data)->lineTo(x, y);
 }
 
 void qt_path_stroke_cubic_to(qfixed c1x, qfixed c1y,
@@ -2433,9 +2433,9 @@ void qt_path_stroke_cubic_to(qfixed c1x, qfixed c1y,
                              qfixed ex, qfixed ey,
                              void *data)
 {
-    ((QPainterPath *) data)->cubicTo(qt_fixed_to_real(c1x), qt_fixed_to_real(c1y),
-                                     qt_fixed_to_real(c2x), qt_fixed_to_real(c2y),
-                                     qt_fixed_to_real(ex), qt_fixed_to_real(ey));
+    ((QPainterPath *) data)->cubicTo(c1x, c1y,
+                                     c2x, c2y,
+                                     ex, ey);
 }
 
 /*!
@@ -2555,7 +2555,7 @@ void QPainterPathStroker::setWidth(qreal width)
     Q_D(QPainterPathStroker);
     if (width <= 0)
         width = 1;
-    d->stroker.setStrokeWidth(qt_real_to_fixed(width));
+    d->stroker.setStrokeWidth(width);
 }
 
 /*!
@@ -2563,7 +2563,7 @@ void QPainterPathStroker::setWidth(qreal width)
 */
 qreal QPainterPathStroker::width() const
 {
-    return qt_fixed_to_real(d_func()->stroker.strokeWidth());
+    return d_func()->stroker.strokeWidth();
 }
 
 
@@ -2614,7 +2614,7 @@ Qt::PenJoinStyle QPainterPathStroker::joinStyle() const
 */
 void QPainterPathStroker::setMiterLimit(qreal limit)
 {
-    d_func()->stroker.setMiterLimit(qt_real_to_fixed(limit));
+    d_func()->stroker.setMiterLimit(limit);
 }
 
 /*!
@@ -2622,7 +2622,7 @@ void QPainterPathStroker::setMiterLimit(qreal limit)
 */
 qreal QPainterPathStroker::miterLimit() const
 {
-    return qt_fixed_to_real(d_func()->stroker.miterLimit());
+    return d_func()->stroker.miterLimit();
 }
 
 
@@ -2636,7 +2636,7 @@ qreal QPainterPathStroker::miterLimit() const
 */
 void QPainterPathStroker::setCurveThreshold(qreal threshold)
 {
-    d_func()->stroker.setCurveThreshold(qt_real_to_fixed(threshold));
+    d_func()->stroker.setCurveThreshold(threshold);
 }
 
 /*!
@@ -2645,7 +2645,7 @@ void QPainterPathStroker::setCurveThreshold(qreal threshold)
 */
 qreal QPainterPathStroker::curveThreshold() const
 {
-    return qt_fixed_to_real(d_func()->stroker.curveThreshold());
+    return d_func()->stroker.curveThreshold();
 }
 
 /*!
@@ -2676,7 +2676,7 @@ void QPainterPathStroker::setDashPattern(const QVector<qreal> &dashPattern)
 {
     d_func()->dashPattern.clear();
     for (int i=0; i<dashPattern.size(); ++i)
-        d_func()->dashPattern << qt_real_to_fixed(dashPattern.at(i));
+        d_func()->dashPattern << dashPattern.at(i);
 }
 
 /*!

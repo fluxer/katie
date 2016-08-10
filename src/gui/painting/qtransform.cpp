@@ -1548,8 +1548,35 @@ static inline bool lineTo_clipped(QPainterPath &path, const QTransform &transfor
 
     return true;
 }
-Q_GUI_EXPORT bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
 
+
+// returns true if the transform is uniformly scaling
+// (same scale in x and y direction)
+// scale is set to the max of x and y scaling factors
+Q_GUI_EXPORT
+bool qt_scaleForTransform(const QTransform &transform, qreal *scale)
+{
+    const QTransform::TransformationType type = transform.type();
+    if (type <= QTransform::TxTranslate) {
+        if (scale)
+            *scale = 1;
+        return true;
+    } else if (type == QTransform::TxScale) {
+        const qreal xScale = qAbs(transform.m11());
+        const qreal yScale = qAbs(transform.m22());
+        if (scale)
+            *scale = qMax(xScale, yScale);
+        return qFuzzyCompare(xScale, yScale);
+    }
+
+    const qreal xScale = transform.m11() * transform.m11()
+                         + transform.m21() * transform.m21();
+    const qreal yScale = transform.m12() * transform.m12()
+                         + transform.m22() * transform.m22();
+    if (scale)
+        *scale = qSqrt(qMax(xScale, yScale));
+    return type == QTransform::TxRotate && qFuzzyCompare(xScale, yScale);
+}
 static inline bool cubicTo_clipped(QPainterPath &path, const QTransform &transform, const QPointF &a, const QPointF &b, const QPointF &c, const QPointF &d, bool needsMoveTo)
 {
     // Convert projective xformed curves to line
@@ -2268,35 +2295,6 @@ QTransform::operator QVariant() const
     Returns true if \a t1 and \a t2 are equal, allowing for a small
     fuzziness factor for floating-point comparisons; false otherwise.
 */
-
-
-// returns true if the transform is uniformly scaling
-// (same scale in x and y direction)
-// scale is set to the max of x and y scaling factors
-Q_GUI_EXPORT
-bool qt_scaleForTransform(const QTransform &transform, qreal *scale)
-{
-    const QTransform::TransformationType type = transform.type();
-    if (type <= QTransform::TxTranslate) {
-        if (scale)
-            *scale = 1;
-        return true;
-    } else if (type == QTransform::TxScale) {
-        const qreal xScale = qAbs(transform.m11());
-        const qreal yScale = qAbs(transform.m22());
-        if (scale)
-            *scale = qMax(xScale, yScale);
-        return qFuzzyCompare(xScale, yScale);
-    }
-
-    const qreal xScale = transform.m11() * transform.m11()
-                         + transform.m21() * transform.m21();
-    const qreal yScale = transform.m12() * transform.m12()
-                         + transform.m22() * transform.m22();
-    if (scale)
-        *scale = qSqrt(qMax(xScale, yScale));
-    return type == QTransform::TxRotate && qFuzzyCompare(xScale, yScale);
-}
 
 QT_END_NAMESPACE
 
