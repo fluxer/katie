@@ -1018,7 +1018,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2199"/>
         <source>Services</source>
         <translation>服务</translation>
     </message>
@@ -2597,7 +2597,7 @@
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+231"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
         <source>Unable to create object of type %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2622,7 +2622,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+149"/>
         <source>Cannot assign object to list</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4113,119 +4113,6 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
-    <name>QIBaseDriver</name>
-    <message>
-        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1486"/>
-        <source>Error opening database</source>
-        <translation>打开数据库错误</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Could not start transaction</source>
-        <translation>不能开始事务</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to commit transaction</source>
-        <translation>不能提交事务</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to rollback transaction</source>
-        <translation>不能回滚事务</translation>
-    </message>
-</context>
-<context>
-    <name>QIBaseResult</name>
-    <message>
-        <location line="-1144"/>
-        <source>Unable to create BLOB</source>
-        <translation>不能创建BLOB</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Unable to write BLOB</source>
-        <translation>不能写入BLOB</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Unable to open BLOB</source>
-        <translation>不能打开BLOB</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unable to read BLOB</source>
-        <translation>不能读取BLOB</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <location line="+187"/>
-        <source>Could not find array</source>
-        <translation>不能找到数组</translation>
-    </message>
-    <message>
-        <location line="-155"/>
-        <source>Could not get array data</source>
-        <translation>不能得到数组数据</translation>
-    </message>
-    <message>
-        <location line="+210"/>
-        <source>Could not get query info</source>
-        <translation>不能得到查询信息</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Could not start transaction</source>
-        <translation>不能开始事务</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Unable to commit transaction</source>
-        <translation>不能提交事务</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Could not allocate statement</source>
-        <translation>不能分配语句</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Could not prepare statement</source>
-        <translation>不能准备语句</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+11"/>
-        <source>Could not describe input statement</source>
-        <translation>不能描述输入语句</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Could not describe statement</source>
-        <translation>不能描述语句</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Unable to close statement</source>
-        <translation>不能关闭语句</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unable to execute query</source>
-        <translation>不能执行查询</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Could not fetch next item</source>
-        <translation>不能获取下一项</translation>
-    </message>
-    <message>
-        <location line="+197"/>
-        <source>Could not get statement info</source>
-        <translation>不能得到语句信息</translation>
-    </message>
-</context>
-<context>
     <name>QIODevice</name>
     <message>
         <location filename="../src/core/global/qglobal.cpp" line="+2115"/>
@@ -4580,7 +4467,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1292"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1292"/>
         <source>Unable to open database &apos;</source>
         <translation>不能打开数据库</translation>
     </message>
@@ -5194,7 +5081,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>不能连接</translation>
     </message>
@@ -5360,7 +5247,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+866"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+866"/>
         <source>Unable to connect</source>
         <translation>不能连接</translation>
     </message>
@@ -6199,7 +6086,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
         <source>Error opening database</source>
         <translation>打开数据库错误</translation>
     </message>
@@ -8743,7 +8630,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+677"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
         <source>Go Back</source>
         <translation>返回</translation>
     </message>

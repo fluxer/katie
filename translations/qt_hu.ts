@@ -1018,7 +1018,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2199"/>
         <source>Services</source>
         <translation>Szolgáltatások</translation>
     </message>
@@ -2602,7 +2602,7 @@
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+231"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
         <source>Unable to create object of type %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2627,7 +2627,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+149"/>
         <source>Cannot assign object to list</source>
         <translation type="unfinished">Nem lehet objektumot listához rendelni</translation>
     </message>
@@ -4118,119 +4118,6 @@ Biztosan törölni akarja?</translation>
     </message>
 </context>
 <context>
-    <name>QIBaseDriver</name>
-    <message>
-        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1486"/>
-        <source>Error opening database</source>
-        <translation>Adatbázis megnyitási hiba</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Could not start transaction</source>
-        <translation>A tranzakció nem indítható</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to commit transaction</source>
-        <translation>A tranzakció nem véglegesíthető</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to rollback transaction</source>
-        <translation>A tranzakció nem görgethető vissza</translation>
-    </message>
-</context>
-<context>
-    <name>QIBaseResult</name>
-    <message>
-        <location line="-1144"/>
-        <source>Unable to create BLOB</source>
-        <translation>A BLOB nem hozható létre </translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Unable to write BLOB</source>
-        <translation>A BLOB nem írható</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Unable to open BLOB</source>
-        <translation>A BLOB nem nyitható meg</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unable to read BLOB</source>
-        <translation>A BLOB nem olvasható</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <location line="+187"/>
-        <source>Could not find array</source>
-        <translation>A tömb nem található</translation>
-    </message>
-    <message>
-        <location line="-155"/>
-        <source>Could not get array data</source>
-        <translation>A tömbbeli adatok nem érhetők el</translation>
-    </message>
-    <message>
-        <location line="+210"/>
-        <source>Could not get query info</source>
-        <translation>A lekérdezés-információ nem érhető el</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Could not start transaction</source>
-        <translation>A tranzakció nem indítható</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Unable to commit transaction</source>
-        <translation>A tranzakció nem véglegesíthető</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Could not allocate statement</source>
-        <translation>A művelet helyfoglalása sikertelen</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Could not prepare statement</source>
-        <translation>A művelet előkészítése sikertelen</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+11"/>
-        <source>Could not describe input statement</source>
-        <translation>A bemeneti művelet leírása sikertelen</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Could not describe statement</source>
-        <translation>A művelet leírása sikertelen</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Unable to close statement</source>
-        <translation>A művelet lezárása sikertelen</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unable to execute query</source>
-        <translation>A művelet nem hajtható végre</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Could not fetch next item</source>
-        <translation>A következő adat nem olvasható ki</translation>
-    </message>
-    <message>
-        <location line="+197"/>
-        <source>Could not get statement info</source>
-        <translation>A következő művelet információi nem érhetők el</translation>
-    </message>
-</context>
-<context>
     <name>QIODevice</name>
     <message>
         <location filename="../src/core/global/qglobal.cpp" line="+2115"/>
@@ -4585,7 +4472,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1292"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1292"/>
         <source>Unable to open database &apos;</source>
         <translation>Az adatbázis nem nyitható meg: &apos;</translation>
     </message>
@@ -5200,7 +5087,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>Nem sikerült kapcsolódni</translation>
     </message>
@@ -5367,7 +5254,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+866"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+866"/>
         <source>Unable to connect</source>
         <translation>Nem sikerült kapcsolódni</translation>
     </message>
@@ -6206,7 +6093,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
         <source>Error opening database</source>
         <translation>Adatbázis megnyitási hiba</translation>
     </message>
@@ -8762,7 +8649,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+677"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
         <source>Go Back</source>
         <translation>Visszalépés</translation>
     </message>

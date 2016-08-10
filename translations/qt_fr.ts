@@ -1022,7 +1022,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2199"/>
         <source>Services</source>
         <translation>Services</translation>
     </message>
@@ -2608,7 +2608,7 @@
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+231"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
         <source>Unable to create object of type %1</source>
         <translation>Impossible de créer un objet de type %1</translation>
     </message>
@@ -2634,7 +2634,7 @@
         <translation>Impossible d&apos;assigner un objet à la propriété %1 d&apos;un signal</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+149"/>
         <source>Cannot assign object to list</source>
         <translation>Impossible d&apos;assigner un objet à une liste</translation>
     </message>
@@ -4126,119 +4126,6 @@ Voulez-vous quand même le supprimer ?</translation>
     </message>
 </context>
 <context>
-    <name>QIBaseDriver</name>
-    <message>
-        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1486"/>
-        <source>Error opening database</source>
-        <translation>Erreur d&apos;ouverture de la base de données</translation>
-    </message>
-    <message>
-        <location line="+54"/>
-        <source>Could not start transaction</source>
-        <translation>La transaction n&apos;a pas pu être démarrée</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to commit transaction</source>
-        <translation>Incapable de soumettre la transaction</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to rollback transaction</source>
-        <translation>Incapable d&apos;annuler la transaction</translation>
-    </message>
-</context>
-<context>
-    <name>QIBaseResult</name>
-    <message>
-        <location line="-1144"/>
-        <source>Unable to create BLOB</source>
-        <translation>Impossible de créer un BLOB</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Unable to write BLOB</source>
-        <translation>Impossible d&apos;écrire le BLOB</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Unable to open BLOB</source>
-        <translation>Impossible d&apos;ouvrir le BLOB</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unable to read BLOB</source>
-        <translation>Impossible de lire le BLOB</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <location line="+187"/>
-        <source>Could not find array</source>
-        <translation>Impossible de trouver le tableau</translation>
-    </message>
-    <message>
-        <location line="-155"/>
-        <source>Could not get array data</source>
-        <translation>Impossible de trouver le tableau de données</translation>
-    </message>
-    <message>
-        <location line="+210"/>
-        <source>Could not get query info</source>
-        <translation>Impossible d&apos;avoir les informations sur la requête</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Could not start transaction</source>
-        <translation>Impossible de démarrer la transaction</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Unable to commit transaction</source>
-        <translation>Incapable de soumettre la transaction</translation>
-    </message>
-    <message>
-        <location line="+42"/>
-        <source>Could not allocate statement</source>
-        <translation>Impossible d&apos;allouer la requête</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Could not prepare statement</source>
-        <translation>Impossible de préparer la requête</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+11"/>
-        <source>Could not describe input statement</source>
-        <translation>Impossible de décrire la requête</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Could not describe statement</source>
-        <translation>Impossible de décrire la requête</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Unable to close statement</source>
-        <translation>Impossible de fermer la requête</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unable to execute query</source>
-        <translation>Impossible d&apos;exécuter la requête</translation>
-    </message>
-    <message>
-        <location line="+46"/>
-        <source>Could not fetch next item</source>
-        <translation>Impossible de récuperer l&apos;élément suivant</translation>
-    </message>
-    <message>
-        <location line="+197"/>
-        <source>Could not get statement info</source>
-        <translation>Impossible d&apos;avoir les informations sur la requête</translation>
-    </message>
-</context>
-<context>
     <name>QIODevice</name>
     <message>
         <location filename="../src/core/global/qglobal.cpp" line="+2115"/>
@@ -4593,7 +4480,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1292"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1292"/>
         <source>Unable to open database &apos;</source>
         <translation>Impossible d&apos;ouvrir la base de données &apos;</translation>
     </message>
@@ -5207,7 +5094,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
         <source>Unable to connect</source>
         <translation>Incapable d&apos;établir une connexion</translation>
     </message>
@@ -5373,7 +5260,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+866"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+866"/>
         <source>Unable to connect</source>
         <translation>Impossible d&apos;établir une connexion</translation>
     </message>
@@ -6212,7 +6099,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
         <source>Error opening database</source>
         <translation>Erreur lors de l&apos;ouverture de la base de données</translation>
     </message>
@@ -8757,7 +8644,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+677"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
         <source>Go Back</source>
         <translation>Précédent</translation>
     </message>

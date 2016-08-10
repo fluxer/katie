@@ -1026,7 +1026,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2199"/>
         <source>Services</source>
         <translation>Služby</translation>
     </message>
@@ -2605,7 +2605,7 @@
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+231"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
         <source>Unable to create object of type %1</source>
         <translation>Nepodařilo se vytvořit žádný objekt typu %1</translation>
     </message>
@@ -2630,7 +2630,7 @@
         <translation>Vlastnosti signálu %1 nelze přiřadit žádný objekt</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+149"/>
         <source>Cannot assign object to list</source>
         <translation>Přiřazení objektu k seznamům není přípustné</translation>
     </message>
@@ -4121,119 +4121,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
 </context>
 <context>
-    <name>QIBaseDriver</name>
-    <message>
-        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1553"/>
-        <source>Unable to commit transaction</source>
-        <translation>Transakci se nepodařilo zapsat</translation>
-    </message>
-    <message>
-        <location line="-13"/>
-        <source>Could not start transaction</source>
-        <translation>Nepodařilo se spustit žádnou transakci</translation>
-    </message>
-    <message>
-        <location line="-54"/>
-        <source>Error opening database</source>
-        <translation>Nepodařilo se otevřít spojení s databází</translation>
-    </message>
-    <message>
-        <location line="+80"/>
-        <source>Unable to rollback transaction</source>
-        <translation>Transakci se nepodařilo zvrátit</translation>
-    </message>
-</context>
-<context>
-    <name>QIBaseResult</name>
-    <message>
-        <location line="-702"/>
-        <source>Unable to commit transaction</source>
-        <translation>Transakci se nepodařilo zapsat</translation>
-    </message>
-    <message>
-        <location line="-422"/>
-        <source>Unable to open BLOB</source>
-        <translation>Nepodařilo se otevřít BLOB</translation>
-    </message>
-    <message>
-        <location line="+499"/>
-        <source>Could not describe statement</source>
-        <translation>Nepodařilo se získat žádný popis příkazu</translation>
-    </message>
-    <message>
-        <location line="-25"/>
-        <location line="+11"/>
-        <source>Could not describe input statement</source>
-        <translation>Nepodařilo se získat žádný popis vstupního příkazu</translation>
-    </message>
-    <message>
-        <location line="-21"/>
-        <source>Could not allocate statement</source>
-        <translation>Přidělení příkazu se nezdařilo</translation>
-    </message>
-    <message>
-        <location line="-478"/>
-        <source>Unable to write BLOB</source>
-        <translation>Nepodařilo se zapsat BLOB</translation>
-    </message>
-    <message>
-        <location line="+417"/>
-        <source>Could not start transaction</source>
-        <translation>Nepodařilo se spustit žádnou transakci</translation>
-    </message>
-    <message>
-        <location line="+211"/>
-        <source>Unable to close statement</source>
-        <translation>Příkaz se nepodařilo zavřít</translation>
-    </message>
-    <message>
-        <location line="-231"/>
-        <source>Could not get query info</source>
-        <translation>Požadované informace k vyhledávání nejsou k dispozici</translation>
-    </message>
-    <message>
-        <location line="-242"/>
-        <location line="+187"/>
-        <source>Could not find array</source>
-        <translation>Nepodařilo se najít pole</translation>
-    </message>
-    <message>
-        <location line="-155"/>
-        <source>Could not get array data</source>
-        <translation>Nepodařilo se přečíst data pole</translation>
-    </message>
-    <message>
-        <location line="+449"/>
-        <source>Unable to execute query</source>
-        <translation>Dotaz se nepodařilo provést</translation>
-    </message>
-    <message>
-        <location line="-153"/>
-        <source>Could not prepare statement</source>
-        <translation>Příkaz se nepodařilo připravit</translation>
-    </message>
-    <message>
-        <location line="+199"/>
-        <source>Could not fetch next item</source>
-        <translation>Další prvek se nepodařilo vyzvednout</translation>
-    </message>
-    <message>
-        <location line="+197"/>
-        <source>Could not get statement info</source>
-        <translation>K dispozici není žádná informace k příkazu</translation>
-    </message>
-    <message>
-        <location line="-885"/>
-        <source>Unable to create BLOB</source>
-        <translation>Nepodařilo se vytvořit žádný BLOB</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Unable to read BLOB</source>
-        <translation>BLOB se nepodařilo přečíst</translation>
-    </message>
-</context>
-<context>
     <name>QIODevice</name>
     <message>
         <location filename="../src/core/global/qglobal.cpp" line="+2121"/>
@@ -4588,7 +4475,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1474"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1474"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -5202,7 +5089,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+2187"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+2187"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -5368,7 +5255,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+1350"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+1350"/>
         <source>Unable to subscribe</source>
         <translation>Registrace se nezdařila</translation>
     </message>
@@ -6207,7 +6094,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+625"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+625"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -8751,7 +8638,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+687"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+689"/>
         <source>Done</source>
         <translation>Hotovo</translation>
     </message>

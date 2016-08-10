@@ -1026,7 +1026,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2206"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2199"/>
         <source>Services</source>
         <translation>Usługi</translation>
     </message>
@@ -2605,7 +2605,7 @@
 <context>
     <name>QDeclarativeVME</name>
     <message>
-        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+231"/>
+        <location filename="../src/declarative/qml/qdeclarativevme.cpp" line="+220"/>
         <source>Unable to create object of type %1</source>
         <translation>Nie można utworzyć obiektu typu %1</translation>
     </message>
@@ -2630,7 +2630,7 @@
         <translation>Nie można przypisać obiektu do właściwości sygnału %1</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+149"/>
         <source>Cannot assign object to list</source>
         <translation>Nie można przypisać obiektu do listy</translation>
     </message>
@@ -4123,119 +4123,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
 </context>
 <context>
-    <name>QIBaseDriver</name>
-    <message>
-        <location filename="../src/sql/drivers/ibase/qsql_ibase.cpp" line="+1540"/>
-        <source>Could not start transaction</source>
-        <translation>Nie można rozpocząć transakcji</translation>
-    </message>
-    <message>
-        <location line="-54"/>
-        <source>Error opening database</source>
-        <translation>Błąd otwierania bazy danych</translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Unable to commit transaction</source>
-        <translation>Nie można dokonać transakcji</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Unable to rollback transaction</source>
-        <translation>Nie można wycofać transakcji</translation>
-    </message>
-</context>
-<context>
-    <name>QIBaseResult</name>
-    <message>
-        <location line="-660"/>
-        <source>Could not allocate statement</source>
-        <translation>Nie można zaallokować polecenia</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Could not describe input statement</source>
-        <translation>Nie można opisać polecenia wejściowego</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Could not describe statement</source>
-        <translation>Nie można opisać polecenia</translation>
-    </message>
-    <message>
-        <location line="+169"/>
-        <source>Could not fetch next item</source>
-        <translation>Nie można pobrać kolejnego elementu</translation>
-    </message>
-    <message>
-        <location line="-527"/>
-        <location line="+187"/>
-        <source>Could not find array</source>
-        <translation>Nie można odnaleźć tablicy</translation>
-    </message>
-    <message>
-        <location line="-155"/>
-        <source>Could not get array data</source>
-        <translation>Nie można pobrać danych z tablicy</translation>
-    </message>
-    <message>
-        <location line="+210"/>
-        <source>Could not get query info</source>
-        <translation>Nie można pobrać informacji o zapytaniu</translation>
-    </message>
-    <message>
-        <location line="+482"/>
-        <source>Could not get statement info</source>
-        <translation>Nie można pobrać informacji o poleceniu</translation>
-    </message>
-    <message>
-        <location line="-396"/>
-        <source>Could not prepare statement</source>
-        <translation>Nie można przygotować polecenia</translation>
-    </message>
-    <message>
-        <location line="-66"/>
-        <source>Could not start transaction</source>
-        <translation>Nie można rozpocząć transakcji</translation>
-    </message>
-    <message>
-        <location line="+211"/>
-        <source>Unable to close statement</source>
-        <translation>Nie można zamknąć polecenia</translation>
-    </message>
-    <message>
-        <location line="-192"/>
-        <source>Unable to commit transaction</source>
-        <translation>Nie można dokonać transakcji</translation>
-    </message>
-    <message>
-        <location line="-442"/>
-        <source>Unable to create BLOB</source>
-        <translation>Nie można utworzyć obiektu typu BLOB</translation>
-    </message>
-    <message>
-        <location line="+642"/>
-        <source>Unable to execute query</source>
-        <translation>Nie można wykonać zapytania</translation>
-    </message>
-    <message>
-        <location line="-622"/>
-        <source>Unable to open BLOB</source>
-        <translation>Nie można otworzyć obiektu typu BLOB</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unable to read BLOB</source>
-        <translation>Nie można odczytać obiektu typu BLOB</translation>
-    </message>
-    <message>
-        <location line="-30"/>
-        <source>Unable to write BLOB</source>
-        <translation>Nie można zapisać obiektu typu BLOB</translation>
-    </message>
-</context>
-<context>
     <name>QIODevice</name>
     <message>
         <location filename="../src/core/global/qglobal.cpp" line="+2124"/>
@@ -4590,7 +4477,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMYSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/mysql/qsql_mysql.cpp" line="+1457"/>
+        <location filename="../src/plugins/sqldrivers/mysql/qsql_mysql.cpp" line="+1457"/>
         <source>Unable to begin transaction</source>
         <translation>Nie można rozpocząć transakcji</translation>
     </message>
@@ -5204,7 +5091,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/sql/drivers/odbc/qsql_odbc.cpp" line="+2187"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+2187"/>
         <source>Unable to commit transaction</source>
         <translation>Nie można dokonać transakcji</translation>
     </message>
@@ -5370,7 +5257,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QPSQLDriver</name>
     <message>
-        <location filename="../src/sql/drivers/psql/qsql_psql.cpp" line="+915"/>
+        <location filename="../src/plugins/sqldrivers/psql/qsql_psql.cpp" line="+915"/>
         <source>Could not begin transaction</source>
         <translation>Nie można rozpocząć transakcji</translation>
     </message>
@@ -6209,7 +6096,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/sql/drivers/sqlite/qsql_sqlite.cpp" line="+590"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+590"/>
         <source>Error closing database</source>
         <translation>Błąd zamykania bazy danych</translation>
     </message>
@@ -8753,7 +8640,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+677"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
         <source>Go Back</source>
         <translation>Wróć</translation>
     </message>
