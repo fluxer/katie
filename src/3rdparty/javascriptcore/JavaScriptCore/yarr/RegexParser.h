@@ -770,7 +770,7 @@ private:
     unsigned m_index;
     unsigned m_parenthesesNestingDepth;
 
-    // Derived by empirical testing of compile time in PCRE and WREC.
+    // Derived by empirical testing of compile time in PCRE.
     static const unsigned MAX_PATTERN_SIZE = 1024 * 1024;
 };
 

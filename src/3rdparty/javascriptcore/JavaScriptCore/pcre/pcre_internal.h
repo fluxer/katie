@@ -176,7 +176,7 @@ static inline int getLinkValueAllowZero(const unsigned char* opcodePtr)
 #endif
 }
 
-#define MAX_PATTERN_SIZE 1024 * 1024 // Derived by empirical testing of compile time in PCRE and WREC.
+#define MAX_PATTERN_SIZE 1024 * 1024 // Derived by empirical testing of compile time in PCRE.
 COMPILE_ASSERT(MAX_PATTERN_SIZE < (1 << (8 * LINK_SIZE)), pcre_max_pattern_fits_in_bytecode);
 
 static inline void putLinkValue(unsigned char* opcodePtr, int value)
