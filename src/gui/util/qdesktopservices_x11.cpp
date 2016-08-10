@@ -71,20 +71,9 @@ static bool openDocument(const QUrl &url)
     if (launch(url, QLatin1String("xdg-open")))
         return true;
 
-    // Use the X11->desktopEnvironment value if X11 is non-NULL,
-    //  otherwise just attempt to launch command regardless of the desktop environment
-    if ((!X11 || (X11 && X11->desktopEnvironment == DE_GNOME)) && launch(url, QLatin1String("gnome-open"))) {
-        return true;
-    } else {
-        if ((!X11 || (X11 && X11->desktopEnvironment == DE_KDE)) && launch(url, QLatin1String("kfmclient exec")))
-            return true;
-    }
-
     if (launch(url, QLatin1String("firefox")))
         return true;
-    if (launch(url, QLatin1String("mozilla")))
-        return true;
-    if (launch(url, QLatin1String("netscape")))
+    if (launch(url, QLatin1String("chromium")))
         return true;
     if (launch(url, QLatin1String("opera")))
         return true;
@@ -101,24 +90,14 @@ static bool launchWebBrowser(const QUrl &url)
 
     if (launch(url, QLatin1String("xdg-open")))
         return true;
-    if (launch(url, QString::fromLocal8Bit(getenv("DEFAULT_BROWSER"))))
+    if (launch(url, QString::fromLocal8Bit(qgetenv("DEFAULT_BROWSER"))))
         return true;
-    if (launch(url, QString::fromLocal8Bit(getenv("BROWSER"))))
+    if (launch(url, QString::fromLocal8Bit(qgetenv("BROWSER"))))
         return true;
-
-    // Use the X11->desktopEnvironment value if X11 is non-NULL,
-    //  otherwise just attempt to launch command regardless of the desktop environment
-    if ((!X11 || (X11 && X11->desktopEnvironment == DE_GNOME)) && launch(url, QLatin1String("gnome-open"))) {
-        return true;
-    } else if ((!X11 || (X11 && X11->desktopEnvironment == DE_KDE)) && launch(url, QLatin1String("kfmclient openURL"))) {
-        return true;
-    }
 
     if (launch(url, QLatin1String("firefox")))
         return true;
-    if (launch(url, QLatin1String("mozilla")))
-        return true;
-    if (launch(url, QLatin1String("netscape")))
+    if (launch(url, QLatin1String("chromium")))
         return true;
     if (launch(url, QLatin1String("opera")))
         return true;
