@@ -56,11 +56,8 @@ QT_BEGIN_NAMESPACE
 
 inline static bool launch(const QUrl &url, const QString &client)
 {
-#if !defined(QT_NO_PROCESS)
-    return (QProcess::startDetached(client + QLatin1Char(' ') + QString::fromLatin1(url.toEncoded().constData())));
-#else
-    return (::system((client + QLatin1Char(' ') + QString::fromLatin1(url.toEncoded().constData())).toLocal8Bit().constData()) != -1);
-#endif
+    QString command = client + QLatin1Char(' ') + url.toEncoded();
+    return (::system(command.toLocal8Bit().constData()) != -1);
 }
 
 static bool openDocument(const QUrl &url)
@@ -90,9 +87,9 @@ static bool launchWebBrowser(const QUrl &url)
 
     if (launch(url, QLatin1String("xdg-open")))
         return true;
-    if (launch(url, QString::fromLocal8Bit(qgetenv("DEFAULT_BROWSER"))))
+    if (launch(url, QLatin1String(qgetenv("DEFAULT_BROWSER"))))
         return true;
-    if (launch(url, QString::fromLocal8Bit(qgetenv("BROWSER"))))
+    if (launch(url, QLatin1String(qgetenv("BROWSER"))))
         return true;
 
     if (launch(url, QLatin1String("firefox")))
