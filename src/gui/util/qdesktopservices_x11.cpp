@@ -57,7 +57,11 @@ QT_BEGIN_NAMESPACE
 inline static bool launch(const QUrl &url, const QString &client)
 {
     QString command = client + QLatin1Char(' ') + url.toEncoded();
+#if !defined(QT_NO_PROCESS)
+    return (QProcess::startDetached(command));
+#else
     return (::system(command.toLocal8Bit().constData()) != -1);
+#endif
 }
 
 static bool openDocument(const QUrl &url)
