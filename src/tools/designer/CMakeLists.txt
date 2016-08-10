@@ -95,6 +95,12 @@ if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac")
     )
 endif()
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/designer.desktop.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
+    @ONLY
+)
+
 katie_resources(${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -113,11 +119,6 @@ install(
 )
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/designer.desktop.cmake
-        ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
-        @ONLY
-    )
     install(
         PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
         DESTINATION ${APPLICATIONS_INSTALL_PATH}

@@ -37,6 +37,12 @@ if(KATIE_PLATFORM MATCHES "(win32|wince)")
     )
 endif()
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.desktop.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
+    @ONLY
+)
+
 katie_resources(${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
@@ -55,11 +61,6 @@ install(
 )
 
 if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    configure_file(
-        ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.desktop.cmake
-        ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
-        @ONLY
-    )
     install(
         PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
         DESTINATION ${APPLICATIONS_INSTALL_PATH}
