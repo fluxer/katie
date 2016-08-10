@@ -2878,7 +2878,7 @@ bool QDomNode::isNotation() const
 
     If this function returns true, it does not imply that this object
     is a QDomProcessingInstruction; you can get the
-    QProcessingInstruction with toProcessingInstruction().
+    QDomProcessingInstruction with toProcessingInstruction().
 
     \sa toProcessingInstruction()
 */

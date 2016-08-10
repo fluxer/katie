@@ -84,7 +84,6 @@ static const int blueFrameWidth =  2;  // with of line edit focus frame
 #include <qtoolbox.h>
 #include <qtoolbutton.h>
 #include <qworkspace.h>
-#include <qprocess.h>
 #include <qvarlengtharray.h>
 #include <limits.h>
 #include <qstylehelper_p.h>
