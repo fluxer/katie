@@ -916,6 +916,8 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 #ifndef QT_NO_XSYNC
             if (topData->syncUpdateCounter)
                 XSyncDestroyCounter(dpy, topData->syncUpdateCounter);
+#else
+            Q_UNUSED(topData);
 #endif
             // we destroyed our old window - reset the top-level state
             createTLSysExtra();
