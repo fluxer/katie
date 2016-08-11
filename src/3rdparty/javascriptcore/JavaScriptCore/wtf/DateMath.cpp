@@ -749,14 +749,14 @@ static double parseDateFromNullTerminatedCharacters(const char* dateString, bool
 
             skipSpacesAndComments(dateString);
 
-            if (strncasecmp(dateString, "AM", 2) == 0) {
+            if (qstrnicmp(dateString, "AM", 2) == 0) {
                 if (hour > 12)
                     return NaN;
                 if (hour == 12)
                     hour = 0;
                 dateString += 2;
                 skipSpacesAndComments(dateString);
-            } else if (strncasecmp(dateString, "PM", 2) == 0) {
+            } else if (qstrnicmp(dateString, "PM", 2) == 0) {
                 if (hour > 12)
                     return NaN;
                 if (hour != 12)
@@ -770,7 +770,7 @@ static double parseDateFromNullTerminatedCharacters(const char* dateString, bool
     // Don't fail if the time zone is missing. 
     // Some websites omit the time zone (4275206).
     if (*dateString) {
-        if (strncasecmp(dateString, "GMT", 3) == 0 || strncasecmp(dateString, "UTC", 3) == 0) {
+        if (qstrnicmp(dateString, "GMT", 3) == 0 || qstrnicmp(dateString, "UTC", 3) == 0) {
             dateString += 3;
             haveTZ = true;
         }
@@ -798,7 +798,7 @@ static double parseDateFromNullTerminatedCharacters(const char* dateString, bool
             haveTZ = true;
         } else {
             for (int i = 0; i < int(sizeof(known_zones) / sizeof(KnownZone)); i++) {
-                if (0 == strncasecmp(dateString, known_zones[i].tzName, strlen(known_zones[i].tzName))) {
+                if (0 == qstrnicmp(dateString, known_zones[i].tzName, strlen(known_zones[i].tzName))) {
                     offset = known_zones[i].tzOffset;
                     dateString += strlen(known_zones[i].tzName);
                     haveTZ = true;

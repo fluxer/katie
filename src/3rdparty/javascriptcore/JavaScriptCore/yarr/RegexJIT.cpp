@@ -1207,13 +1207,13 @@ class RegexGenerator : private MacroAssembler {
 
         // How much more input need there be to be able to retry from the first alternative?
         // examples:
-        //   /yarr_jit/ or /wrec|pcre/
+        //   /yarr_jit/ or /pcre/
         //     In these examples we need check for one more input before looping.
         //   /yarr_jit|pcre/
         //     In this case we need check for 5 more input to loop (+4 to allow for the first alterative
         //     being four longer than the last alternative checked, and another +1 to effectively move
         //     the start position along by one).
-        //   /yarr|rules/ or /wrec|notsomuch/
+        //   /yarr|rules/ or /notsomuch/
         //     In these examples, provided that there was sufficient input to have just been matching for
         //     the second alternative we can loop without checking for available input (since the second
         //     alternative is longer than the first).  In the latter example we need to decrement index
