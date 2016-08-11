@@ -564,7 +564,8 @@ endif()
 if(WITH_X11 AND X11_FOUND)
     # TODO: xim
     foreach(x11ext Xshape Xinerama Xrandr Xrender XSync Xkb Xfixes Xcursor Xinput XShm)
-        if(NOT X11_${x11ext}_FOUND)
+        # X11_${x11ext}_FOUND is set depending on the headers only
+        if(NOT X11_${x11ext}_FOUND OR NOT X11_${x11ext}_LIB)
             message(WARNING "The X11 ${x11ext} extension was not found")
             string(TOUPPER "${x11ext}" upperext)
             katie_definition(-DQT_NO_${upperext})
