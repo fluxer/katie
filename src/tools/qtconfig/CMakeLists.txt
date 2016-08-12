@@ -55,7 +55,7 @@ if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
         COMPONENT Devel
     )
     install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qtconfig.png
         DESTINATION ${PIXMAPS_INSTALL_PATH}
         COMPONENT Devel
     )
