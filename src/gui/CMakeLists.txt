@@ -376,6 +376,10 @@ set(GUI_PUBLIC_HEADERS
     QCloseEvent
     QResizeEvent
     QShowEvent
+    QMouseEvent
+    QKeyEvent
+    QWheelEvent
+    QDragEnterEvent
     QItemSelection
     QIntValidator
     QFontMetricsF
