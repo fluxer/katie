@@ -27,7 +27,7 @@ include(KatieBuildMacros)
 
 # components and tools that will be build, changed depending on the requirements availability
 set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Multimedia Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
-set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer")
+set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer qscript qtconfig")
 
 # optional package
 option(WITH_THREADS "Build threads support" ON)
