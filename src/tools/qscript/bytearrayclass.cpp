@@ -85,7 +85,7 @@ ByteArrayClass::ByteArrayClass(QScriptEngine *engine)
                                | QScriptEngine::ExcludeSuperClassMethods
                                | QScriptEngine::ExcludeSuperClassProperties);
     QScriptValue global = engine->globalObject();
-    proto.setPrototype(global.property("Object").property("prototype"));
+    proto.setPrototype(global.property(QLatin1String("Object")).property(QLatin1String("prototype")));
 
     ctor = engine->newFunction(construct, proto);
     ctor.setData(engine->toScriptValue(this));
@@ -225,7 +225,7 @@ QScriptValue ByteArrayClass::construct(QScriptContext *ctx, QScriptEngine *)
 
 QScriptValue ByteArrayClass::toScriptValue(QScriptEngine *eng, const QByteArray &ba)
 {
-    QScriptValue ctor = eng->globalObject().property("ByteArray");
+    QScriptValue ctor = eng->globalObject().property(QLatin1String("ByteArray"));
     ByteArrayClass *cls = qscriptvalue_cast<ByteArrayClass*>(ctor.data());
     if (!cls)
         return eng->newVariant(QVariant::fromValue(ba));
