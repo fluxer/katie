@@ -387,11 +387,7 @@ void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConve
         }
     }
 
-    if (inPlace && sourceImage.d->convertInPlace(format, flags)) {
-        image = sourceImage;
-    } else {
-        image = sourceImage.convertToFormat(format);
-    }
+    image = sourceImage.convertToFormat(format);
 
     if (image.d) {
         w = image.d->width;

@@ -470,7 +470,6 @@ void QGLPixmapData::createPixmapForImage(QImage &image, Qt::ImageConversionFlags
 
     if (pixelType() == BitmapType) {
         m_source = image.convertToFormat(QImage::Format_MonoLSB);
-
     } else {
         QImage::Format format = QImage::Format_RGB32;
         if (qApp->desktop()->depth() == 16)
@@ -478,18 +477,14 @@ void QGLPixmapData::createPixmapForImage(QImage &image, Qt::ImageConversionFlags
 
         if (image.hasAlphaChannel()
             && ((flags & Qt::NoOpaqueDetection)
-                || const_cast<QImage &>(image).data_ptr()->checkForAlphaPixels()))
+                || image.data_ptr()->checkForAlphaPixels()))
             format = QImage::Format_ARGB32_Premultiplied;;
 
-        if (inPlace && image.data_ptr()->convertInPlace(format, flags)) {
-            m_source = image;
-        } else {
-            m_source = image.convertToFormat(format);
+        m_source = image.convertToFormat(format);
 
-            // convertToFormat won't detach the image if format stays the same.
-            if (image.format() == format)
-                m_source.detach();
-        }
+        // convertToFormat won't detach the image if format stays the same.
+        if (image.format() == format)
+            m_source.detach();
     }
 
     m_dirty = true;
