@@ -124,7 +124,6 @@ void QWindowsCEStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
 
             painter->setPen(QPen(tab->palette.light(), qreal(.8)));
             painter->setBrush(tab->palette.background());
-            painter->setRenderHint(QPainter::Antialiasing);
             painter->drawPath(path);
         }
         break;

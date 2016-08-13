@@ -5162,7 +5162,6 @@ QRegion QGraphicsItem::boundingRegion(const QTransform &itemToDeviceTransform) c
     QImage mask(bitmapSize, QImage::Format_ARGB32_Premultiplied);
     mask.fill(0);
     QPainter p(&mask);
-    p.setRenderHints(QPainter::Antialiasing);
 
     // Transform painter (### this code is from QGraphicsScene::drawItemHelper
     // and doesn't work properly with perspective transformations).
@@ -9310,14 +9309,6 @@ QVariant QGraphicsLineItem::extension(const QVariant &variant) const
     The pixmap is drawn at the item's (0, 0) coordinate, as returned by
     offset(). You can change the drawing offset by calling setOffset().
 
-    You can set the pixmap's transformation mode by calling
-    setTransformationMode(). By default, Qt::FastTransformation is used, which
-    provides fast, non-smooth scaling. Qt::SmoothTransformation enables
-    QPainter::SmoothPixmapTransform on the painter, and the quality depends on
-    the platform and viewport. The result is usually not as good as calling
-    QPixmap::scale() directly. Call transformationMode() to get the current
-    transformation mode for the item.
-
     \sa QGraphicsPathItem, QGraphicsRectItem, QGraphicsEllipseItem,
     QGraphicsTextItem, QGraphicsPolygonItem, QGraphicsLineItem,
     {Graphics View Framework}
@@ -9351,13 +9342,11 @@ class QGraphicsPixmapItemPrivate : public QGraphicsItemPrivate
     Q_DECLARE_PUBLIC(QGraphicsPixmapItem)
 public:
     QGraphicsPixmapItemPrivate()
-        : transformationMode(Qt::FastTransformation),
-        shapeMode(QGraphicsPixmapItem::MaskShape),
+        : shapeMode(QGraphicsPixmapItem::MaskShape),
         hasShape(false)
     {}
 
     QPixmap pixmap;
-    Qt::TransformationMode transformationMode;
     QPointF offset;
     QGraphicsPixmapItem::ShapeMode shapeMode;
     QPainterPath shape;
@@ -9457,39 +9446,6 @@ QPixmap QGraphicsPixmapItem::pixmap() const
 }
 
 /*!
-    Returns the transformation mode of the pixmap. The default mode is
-    Qt::FastTransformation, which provides quick transformation with no
-    smoothing.
-
-    \sa setTransformationMode()
-*/
-Qt::TransformationMode QGraphicsPixmapItem::transformationMode() const
-{
-    Q_D(const QGraphicsPixmapItem);
-    return d->transformationMode;
-}
-
-/*!
-    Sets the pixmap item's transformation mode to \a mode, and toggles an
-    update of the item. The default mode is Qt::FastTransformation, which
-    provides quick transformation with no smoothing.
-
-    Qt::SmoothTransformation enables QPainter::SmoothPixmapTransform on the
-    painter, and the quality depends on the platform and viewport. The result
-    is usually not as good as calling QPixmap::scale() directly.
-
-    \sa transformationMode()
-*/
-void QGraphicsPixmapItem::setTransformationMode(Qt::TransformationMode mode)
-{
-    Q_D(QGraphicsPixmapItem);
-    if (mode != d->transformationMode) {
-        d->transformationMode = mode;
-        update();
-    }
-}
-
-/*!
     Returns the pixmap item's \e offset, which defines the point of the
     top-left corner of the pixmap, in local coordinates.
 
@@ -9571,9 +9527,6 @@ void QGraphicsPixmapItem::paint(QPainter *painter, const QStyleOptionGraphicsIte
 {
     Q_D(QGraphicsPixmapItem);
     Q_UNUSED(widget);
-
-    painter->setRenderHint(QPainter::SmoothPixmapTransform,
-                           (d->transformationMode == Qt::SmoothTransformation));
 
     painter->drawPixmap(d->offset, d->pixmap);
 

@@ -523,7 +523,6 @@ bool QGLPixmapBlurFilter::processGL(QPainter *painter, const QPointF &pos, const
             GL_UNSIGNED_BYTE, const_cast<const QImage &>(subImage).bits());
 
     QGL2PaintEngineEx *engine = static_cast<QGL2PaintEngineEx *>(painter->paintEngine());
-    painter->setRenderHint(QPainter::SmoothPixmapTransform);
 
     // texture is flipped on the y-axis
     targetRectF = QRectF(targetRectF.x(), targetRectF.bottom(), targetRectF.width(), -targetRectF.height());
@@ -594,7 +593,6 @@ bool QGLPixmapDropShadowFilter::processGL(QPainter *painter, const QPointF &pos,
     filter->setOnPainter(painter);
 
     QGL2PaintEngineEx *engine = static_cast<QGL2PaintEngineEx *>(painter->paintEngine());
-    painter->setRenderHint(QPainter::SmoothPixmapTransform);
 
     engine->drawTexture(targetRect, texture, info->paddedImage().size(), info->paddedImage().rect());
 

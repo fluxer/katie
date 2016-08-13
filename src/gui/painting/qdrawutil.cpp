@@ -840,13 +840,6 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
     xTarget.resize(columns + 1);
     yTarget.resize(rows + 1);
 
-    bool oldAA = painter->testRenderHint(QPainter::Antialiasing);
-    if (painter->paintEngine()->type() != QPaintEngine::OpenGL
-        && painter->paintEngine()->type() != QPaintEngine::OpenGL2
-        && oldAA && painter->combinedTransform().type() != QTransform::TxNone) {
-        painter->setRenderHint(QPainter::Antialiasing, false);
-    }
-
     xTarget[0] = targetRect.left();
     xTarget[1] = targetCenterLeft;
     xTarget[columns - 1] = targetCenterRight;
@@ -981,9 +974,6 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
         if (sourceData[i].size())
             painter->drawPixmapFragments(targetData[i].data(), sourceData[i].data(), sourceData[i].size(), pixmap, i == 1 ? QPainter::OpaqueHint : QPainter::PixmapFragmentHint(0));
     }
-
-    if (oldAA)
-        painter->setRenderHint(QPainter::Antialiasing, true);
 }
 
 QT_END_NAMESPACE

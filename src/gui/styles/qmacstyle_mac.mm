@@ -151,7 +151,6 @@ static bool isVerticalTabs(const QTabBar::Shape shape) {
 void drawTabCloseButton(QPainter *p, bool hover, bool active, bool selected)
 {
     // draw background circle
-    p->setRenderHints(QPainter::Antialiasing);
     QRect rect(0, 0, closeButtonSize, closeButtonSize);
     QColor background;
     if (hover) {
@@ -269,7 +268,6 @@ void drawTabShape(QPainter *p, const QStyleOptionTabV3 *tabOpt)
         QRectF rectangleRight(width - 2, height - 1, w, w);
         int startAngle = 180 * 16;
         int spanAngle = 90 * 16;
-        p->setRenderHint(QPainter::Antialiasing);
         p->drawArc(rectangleLeft, startAngle, spanAngle);
         p->drawArc(rectangleRight, startAngle, -spanAngle);
     } else {
@@ -2684,7 +2682,6 @@ void QMacStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPai
     case PE_IndicatorArrowRight:
     case PE_IndicatorArrowLeft: {
         p->save();
-        p->setRenderHint(QPainter::Antialiasing);
         int xOffset = opt->direction == Qt::LeftToRight ? 2 : -1;
         QMatrix matrix;
         matrix.translate(opt->rect.center().x() + xOffset, opt->rect.center().y() + 2);
@@ -2870,7 +2867,6 @@ void QMacStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPai
             p->setPen(QPen(QColor(100, 100, 100), 3));
         }
         p->save();
-        p->setRenderHint(QPainter::Antialiasing);
         p->drawLines(a);
         p->restore();
         break; }
@@ -4097,7 +4093,6 @@ void QMacStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPainter
             QPen metalHighlight = QColor(5, 5, 5, 192);
             lineColor.setWidth(1);
             p->save();
-            p->setRenderHint(QPainter::Antialiasing);
             p->setPen(lineColor);
             const Qt::LayoutDirection layoutDirection = w ? w->layoutDirection() : qApp->layoutDirection();
             const int NumLines = metal ? 4 : 3;
@@ -4114,9 +4109,7 @@ void QMacStyle::drawControl(ControlElement ce, const QStyleOption *opt, QPainter
                 p->drawLine(start, end);
                 if (metal) {
                     p->setPen(metalHighlight);
-                    p->setRenderHint(QPainter::Antialiasing, false);
                     p->drawLine(start + QPoint(0, -1), end + QPoint(0, -1));
-                    p->setRenderHint(QPainter::Antialiasing, true);
                     p->setPen(lineColor);
                 }
             }
@@ -4979,7 +4972,6 @@ void QMacStyle::drawComplexControl(ComplexControl cc, const QStyleOptionComplex 
                 if (tb->state & State_On) {
                     if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_5) {
                         static QPixmap pm(QLatin1String(":/trolltech/mac/style/images/leopard-unified-toolbar-on.png"));
-                        p->setRenderHint(QPainter::SmoothPixmapTransform);
                         QStyleHelper::drawBorderPixmap(pm, p, tb->rect, 2, 2, 2, 2);
                     } else {
                         QPen oldPen = p->pen();

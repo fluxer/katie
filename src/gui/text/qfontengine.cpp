@@ -656,7 +656,6 @@ QImage QFontEngine::alphaMapForGlyph(glyph_t glyph)
     QImage im(glyph_width + 4, glyph_height, QImage::Format_ARGB32_Premultiplied);
     im.fill(Qt::transparent);
     QPainter p(&im);
-    p.setRenderHint(QPainter::Antialiasing);
     addGlyphsToPath(&glyph, &pt, 1, &path, 0);
     p.setPen(Qt::NoPen);
     p.setBrush(Qt::black);

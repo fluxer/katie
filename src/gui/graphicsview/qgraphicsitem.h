@@ -861,9 +861,6 @@ public:
     QPixmap pixmap() const;
     void setPixmap(const QPixmap &pixmap);
 
-    Qt::TransformationMode transformationMode() const;
-    void setTransformationMode(Qt::TransformationMode mode);
-
     QPointF offset() const;
     void setOffset(const QPointF &offset);
     inline void setOffset(qreal x, qreal y);

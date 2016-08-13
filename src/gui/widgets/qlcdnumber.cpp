@@ -720,7 +720,6 @@ void QLCDNumber::paintEvent(QPaintEvent *)
     Q_D(QLCDNumber);
     QPainter p(this);
     drawFrame(&p);
-    p.setRenderHint(QPainter::Antialiasing);
     if (d->shadow)
         p.translate(0.5, 0.5);
 

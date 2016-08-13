@@ -279,7 +279,6 @@ void QDeclarativePaintedItem::paint(QPainter *p, const QStyleOptionGraphicsItem 
 
     topaint &= content;
     QRegion uncached(content);
-    p->setRenderHints(QPainter::SmoothPixmapTransform, d->smooth);
 
     int cachesize=0;
     for (int i=0; i<d->imagecache.count(); ++i) {
@@ -296,7 +295,6 @@ void QDeclarativePaintedItem::paint(QPainter *p, const QStyleOptionGraphicsItem 
 #ifdef Q_WS_MAC
                     qt_applefontsmoothing_enabled = oldSmooth;
 #endif
-                    qp.setRenderHints(QPainter::HighQualityAntialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, d->smoothCache);
                     qp.translate(-area.x(), -area.y());
                     qp.scale(d->contentsScale,d->contentsScale);
                     QRect clip = d->imagecache[i]->dirty;
@@ -365,8 +363,6 @@ void QDeclarativePaintedItem::paint(QPainter *p, const QStyleOptionGraphicsItem 
 #ifdef Q_WS_MAC
                     qt_applefontsmoothing_enabled = oldSmooth;
 #endif
-                    qp.setRenderHints(QPainter::HighQualityAntialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform, d->smoothCache);
-
                     qp.translate(-r.x(),-r.y());
                     qp.scale(d->contentsScale,d->contentsScale);
                     QRect sclip(qFloor(r.x()/d->contentsScale),
@@ -469,30 +465,6 @@ QColor QDeclarativePaintedItem::fillColor() const
     return d->fillColor;
 }
 
-/*!
-    \qmlproperty bool PaintedItem::smoothCache
-
-    Controls whether the cached tiles of which the item is composed are
-    rendered smoothly when they are generated.
-
-    This is in addition toe Item::smooth, which controls the smooth painting of
-    the already-painted cached tiles under transformation.
-*/
-bool QDeclarativePaintedItem::smoothCache() const
-{
-    Q_D(const QDeclarativePaintedItem);
-    return d->smoothCache;
-}
-
-void QDeclarativePaintedItem::setSmoothCache(bool on)
-{
-    Q_D(QDeclarativePaintedItem);
-    if (d->smoothCache != on) {
-        d->smoothCache = on;
-        clearCache();
-    }
-}
-
-
 QT_END_NAMESPACE
-#include <moc_qdeclarativepainteditem_p.h>
+
+#include "moc_qdeclarativepainteditem_p.h"

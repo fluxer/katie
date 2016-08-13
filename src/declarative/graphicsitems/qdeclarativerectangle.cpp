@@ -480,12 +480,7 @@ void QDeclarativeRectangle::paint(QPainter *p, const QStyleOptionGraphicsItem *,
         drawRect(*p);
     }
     else {
-        bool oldAA = p->testRenderHint(QPainter::Antialiasing);
-        if (d->smooth)
-            p->setRenderHints(QPainter::Antialiasing, true);
         p->fillRect(QRectF(0, 0, width(), height()), d->color);
-        if (d->smooth)
-            p->setRenderHint(QPainter::Antialiasing, oldAA);
     }
 }
 
@@ -497,9 +492,6 @@ void QDeclarativeRectangle::drawRect(QPainter &p)
         || width() < 3 || height() < 3) {
         // XXX This path is still slower than the image path
         // Image path won't work for gradients or invalid radius though
-        bool oldAA = p.testRenderHint(QPainter::Antialiasing);
-        if (d->smooth)
-            p.setRenderHint(QPainter::Antialiasing);
         if (d->pen && d->pen->isValid()) {
             QPen pn(QColor(d->pen->color()), d->pen->width());
             pn.setJoinStyle(Qt::MiterJoin);
@@ -524,14 +516,7 @@ void QDeclarativeRectangle::drawRect(QPainter &p)
             p.drawRoundedRect(rect, radius, radius);
         else
             p.drawRect(rect);
-        if (d->smooth)
-            p.setRenderHint(QPainter::Antialiasing, oldAA);
     } else {
-        bool oldAA = p.testRenderHint(QPainter::Antialiasing);
-        bool oldSmooth = p.testRenderHint(QPainter::SmoothPixmapTransform);
-        if (d->smooth)
-            p.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform, d->smooth);
-
         const int pw = d->pen && d->pen->isValid() ? (d->pen->width()+1)/2*2 : 0;
 
         if (d->radius > 0)
@@ -554,11 +539,6 @@ void QDeclarativeRectangle::drawRect(QPainter &p)
         QTileRules rules(Qt::StretchTile, Qt::StretchTile);
         //NOTE: even though our item may have qreal-based width and height, qDrawBorderPixmap only supports QRects
         qDrawBorderPixmap(&p, QRect(-pw/2, -pw/2, width()+pw, height()+pw), margins, d->rectImage, d->rectImage.rect(), margins, rules);
-
-        if (d->smooth) {
-            p.setRenderHint(QPainter::Antialiasing, oldAA);
-            p.setRenderHint(QPainter::SmoothPixmapTransform, oldSmooth);
-        }
     }
 }
 

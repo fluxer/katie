@@ -819,9 +819,6 @@ void QTextDocumentLayoutPrivate::drawBorder(QPainter *painter, const QRectF &rec
     QCss::BorderStyle cssStyle = static_cast<QCss::BorderStyle>(style + 1);
 #endif //QT_NO_CSSPARSER
 
-    bool turn_off_antialiasing = !(painter->renderHints() & QPainter::Antialiasing);
-    painter->setRenderHint(QPainter::Antialiasing);
-
     for (int i = topPage; i <= bottomPage; ++i) {
         QRectF clipped = rect.toRect();
 
@@ -848,8 +845,6 @@ void QTextDocumentLayoutPrivate::drawBorder(QPainter *painter, const QRectF &rec
         painter->restore();
 #endif //QT_NO_CSSPARSER
     }
-    if (turn_off_antialiasing)
-        painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
 void QTextDocumentLayoutPrivate::drawFrameDecoration(QPainter *painter, QTextFrame *frame, QTextFrameData *fd, const QRectF &clip, const QRectF &rect) const
@@ -1420,8 +1415,6 @@ void QTextDocumentLayoutPrivate::drawListItem(const QPointF &offset, QPainter *p
     }
 
     painter->save();
-
-    painter->setRenderHint(QPainter::Antialiasing);
 
     if (selectionFormat) {
         painter->setPen(QPen(selectionFormat->foreground(), 0));

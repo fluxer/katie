@@ -1530,11 +1530,6 @@ void QDeclarativeText::paint(QPainter *p, const QStyleOptionGraphicsItem *, QWid
         if (d->imageCache.isNull())
             return;
 
-        bool oldAA = p->testRenderHint(QPainter::Antialiasing);
-        bool oldSmooth = p->testRenderHint(QPainter::SmoothPixmapTransform);
-        if (d->smooth)
-            p->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform, d->smooth);
-
         QRect br = boundingRect().toRect();
 
         bool needClip = clip() && (d->imageCache.width() > width() ||
@@ -1544,11 +1539,6 @@ void QDeclarativeText::paint(QPainter *p, const QStyleOptionGraphicsItem *, QWid
             p->drawPixmap(0, 0, width(), height(), d->imageCache, -br.x(), -br.y(), width(), height());
         else
             p->drawPixmap(br.x(), br.y(), d->imageCache);
-
-        if (d->smooth) {
-            p->setRenderHint(QPainter::Antialiasing, oldAA);
-            p->setRenderHint(QPainter::SmoothPixmapTransform, oldSmooth);
-        }
     } else {
         QRectF bounds = boundingRect();
 

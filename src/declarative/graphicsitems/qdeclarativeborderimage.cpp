@@ -580,11 +580,7 @@ void QDeclarativeBorderImage::paint(QPainter *p, const QStyleOptionGraphicsItem 
     if (d->pix.isNull() || d->width() <= 0.0 || d->height() <= 0.0)
         return;
 
-    bool oldAA = p->testRenderHint(QPainter::Antialiasing);
-    bool oldSmooth = p->testRenderHint(QPainter::SmoothPixmapTransform);
     QTransform oldTransform;
-    if (d->smooth)
-        p->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform, d->smooth);
     if (d->mirror) {
         oldTransform = p->transform();
         QTransform mirror;
@@ -612,10 +608,6 @@ void QDeclarativeBorderImage::paint(QPainter *p, const QStyleOptionGraphicsItem 
     QMargins margins(left, top, right, bottom);
     QTileRules rules((Qt::TileRule)d->horizontalTileMode, (Qt::TileRule)d->verticalTileMode);
     qDrawBorderPixmap(p, QRect(0, 0, (int)d->width(), (int)d->height()), margins, d->pix, d->pix.rect(), margins, rules);
-    if (d->smooth) {
-        p->setRenderHint(QPainter::Antialiasing, oldAA);
-        p->setRenderHint(QPainter::SmoothPixmapTransform, oldSmooth);
-    }
     if (d->mirror)
         p->setWorldTransform(oldTransform);
 }

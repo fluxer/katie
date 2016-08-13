@@ -3199,7 +3199,8 @@ void QDeclarativeItem::setSmooth(bool smooth)
     Q_D(QDeclarativeItem);
     if (d->smooth == smooth)
         return;
-    d->smooth = smooth;
+    // this is just a stub for now because - QML
+    d->smooth = false;
     emit smoothChanged(smooth);
     update();
 }

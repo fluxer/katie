@@ -1414,7 +1414,6 @@ void QDesignerActions::printPreviewImage()
     const double suggestedScaling = static_cast<double>(m_printer->physicalDpiX()) /  static_cast<double>(fw->physicalDpiX());
 
     QPainter painter(m_printer);
-    painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
     // Clamp to page
     const QRectF page =  painter.viewport();

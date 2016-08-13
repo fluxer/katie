@@ -5851,9 +5851,6 @@ QImage QImage::transformed(const QTransform &matrix, Qt::TransformationMode mode
 
     if (d->format >= QImage::Format_RGB32) {
         QPainter p(&dImage);
-        if (mode == Qt::SmoothTransformation) {
-            p.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-        }
         p.setTransform(mat);
         p.drawImage(QPoint(0, 0), *this);
     } else {

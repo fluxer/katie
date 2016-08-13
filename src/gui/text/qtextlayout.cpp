@@ -2449,7 +2449,6 @@ void QTextLine::draw(QPainter *p, const QPointF &pos, const QTextLayout::FormatR
                 }
 
                 p->save();
-                p->setRenderHint(QPainter::Antialiasing);
                 //Currently QPen with a Qt::NoPen style still returns a default
                 //QBrush which != Qt::NoBrush so we need this specialcase to reset it
                 if (p->pen().style() == Qt::NoPen)

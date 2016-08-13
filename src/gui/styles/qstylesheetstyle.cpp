@@ -1130,12 +1130,9 @@ void QRenderRule::drawBorderImage(QPainter *p, const QRect& rect)
     QMargins targetMargins(targetBorders[LeftEdge], targetBorders[TopEdge],
                            targetBorders[RightEdge], targetBorders[BottomEdge]);
 
-    bool wasSmoothPixmapTransform = p->renderHints() & QPainter::SmoothPixmapTransform;
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
     qDrawBorderPixmap(p, rect, targetMargins, borderImageData->pixmap,
                       QRect(QPoint(), borderImageData->pixmap.size()), sourceMargins,
                       QTileRules(tileMode2TileRule[borderImageData->horizStretch], tileMode2TileRule[borderImageData->vertStretch]));
-    p->setRenderHint(QPainter::SmoothPixmapTransform, wasSmoothPixmapTransform);
     unsetClip(p);
 }
 

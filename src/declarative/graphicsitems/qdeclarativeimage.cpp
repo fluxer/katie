@@ -539,10 +539,6 @@ void QDeclarativeImage::paint(QPainter *p, const QStyleOptionGraphicsItem *, QWi
     }
 
     QTransform oldTransform;
-    bool oldAA = p->testRenderHint(QPainter::Antialiasing);
-    bool oldSmooth = p->testRenderHint(QPainter::SmoothPixmapTransform);
-    if (d->smooth)
-        p->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform, d->smooth);
     if (doClip) {
         p->save();
         p->setClipRect(QRectF(0, 0, d->mWidth, d->mHeight), Qt::IntersectClip);
@@ -559,10 +555,6 @@ void QDeclarativeImage::paint(QPainter *p, const QStyleOptionGraphicsItem *, QWi
     else
         p->drawPixmap(QRectF(0, 0, drawWidth, drawHeight), d->pix, QRectF(0, 0, drawWidth, drawHeight));
 
-    if (d->smooth) {
-        p->setRenderHint(QPainter::Antialiasing, oldAA);
-        p->setRenderHint(QPainter::SmoothPixmapTransform, oldSmooth);
-    }
     if (doClip)
         p->restore();
     if (!transform.isIdentity())

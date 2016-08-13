@@ -957,7 +957,6 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
     case PE_IndicatorRadioButton:
         painter->save();
         {
-            painter->setRenderHint(QPainter::SmoothPixmapTransform);
             QRect checkRect = rect.adjusted(0, 0, 0, 0);
             if (state & (State_On )) {
                 painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
@@ -966,7 +965,6 @@ void QCleanlooksStyle::drawPrimitive(PrimitiveElement elem,
             else if (state & State_Sunken) {
                 painter->drawImage(rect, QImage(qt_cleanlooks_radiobutton));
                 QColor bgc = buttonShadow;
-                painter->setRenderHint(QPainter::Antialiasing);
                 painter->setBrush(bgc);
                 painter->setPen(Qt::NoPen);
                 painter->drawEllipse(rect.adjusted(1, 1, -1, -1));                }
@@ -1903,7 +1901,6 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                     if (menuItem->checkType & QStyleOptionMenuItem::Exclusive) {
                         // Radio button
                         if (checked || sunken) {
-                            painter->setRenderHint(QPainter::Antialiasing);
                             painter->setPen(Qt::NoPen);
 
                             QPalette::ColorRole textRole = !enabled ? QPalette::Text:
@@ -2870,7 +2867,6 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     alpha.setAlpha(128);
                     image.setColor(1, textColor.rgba());
                     image.setColor(2, alpha.rgba());
-                    painter->setRenderHint(QPainter::SmoothPixmapTransform);
                     painter->drawImage(contextHelpButtonRect.adjusted(4, 4, -4, -4), image);
                 }
             }
@@ -3517,7 +3513,6 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     handlePainter.drawLine(QPoint(r.left() + 3, r.bottom()), QPoint(r.right() - 3, r.bottom()));
 
                     handlePainter.save();
-                    handlePainter.setRenderHint(QPainter::Antialiasing);
                     handlePainter.translate(0.5, 0.5);
                     const QLine lines[4] = {
                         QLine(QPoint(r.left(), r.bottom() - 2), QPoint(r.left() + 2, r.bottom())),

@@ -57,7 +57,6 @@ class Q_AUTOTEST_EXPORT QDeclarativePaintedItem : public QDeclarativeItem
     Q_PROPERTY(QSize contentsSize READ contentsSize WRITE setContentsSize NOTIFY contentsSizeChanged)
     Q_PROPERTY(QColor fillColor READ fillColor WRITE setFillColor NOTIFY fillColorChanged)
     Q_PROPERTY(int pixelCacheSize READ pixelCacheSize WRITE setPixelCacheSize)
-    Q_PROPERTY(bool smoothCache READ smoothCache WRITE setSmoothCache)
     Q_PROPERTY(qreal contentsScale READ contentsScale WRITE setContentsScale NOTIFY contentsScaleChanged)
 
 
@@ -73,9 +72,6 @@ public:
 
     int pixelCacheSize() const;
     void setPixelCacheSize(int pixels);
-
-    bool smoothCache() const;
-    void setSmoothCache(bool on);
 
     QColor fillColor() const;
     void setFillColor(const QColor&);

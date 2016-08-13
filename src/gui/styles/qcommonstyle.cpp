@@ -561,7 +561,6 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
 
             p->setPen(QPen(tab->palette.light(), qreal(.8)));
             p->setBrush(tab->palette.background());
-            p->setRenderHint(QPainter::Antialiasing);
             p->drawPath(path);
         }
         break;
@@ -1638,7 +1637,6 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
                         a.setPoint(i, a.point(i).x(), rect.height() - 1 - a.point(i).y());
 
                 a.translate(rect.left(), rect.top());
-                p->setRenderHint(QPainter::Antialiasing);
                 p->translate(0, 0.5);
 
                 QPainterPath path;
@@ -1663,7 +1661,6 @@ void QCommonStyle::drawControl(ControlElement element, const QStyleOption *opt,
                     for (i = 0; i < 10; ++i)
                         a.setPoint(i, rect.width() - 1 - a.point(i).x(), a.point(i).y());
                 a.translate(rect.left(), rect.top());
-                p->setRenderHint(QPainter::Antialiasing);
                 p->translate(0.5, 0);
                 QPainterPath path;
                 path.addPolygon(a);
@@ -3407,10 +3404,6 @@ void QCommonStyle::drawComplexControl(ComplexControl cc, const QStyleOptionCompl
         if (const QStyleOptionSlider *dial = qstyleoption_cast<const QStyleOptionSlider *>(opt)) {
             // OK, this is more a port of things over
             p->save();
-
-            // avoid dithering
-            if (p->paintEngine()->hasFeature(QPaintEngine::Antialiasing))
-                p->setRenderHint(QPainter::Antialiasing);
 
             int width = dial->rect.width();
             int height = dial->rect.height();

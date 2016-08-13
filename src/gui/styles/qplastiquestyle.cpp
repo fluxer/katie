@@ -1435,12 +1435,7 @@ void QPlastiqueStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
         break;
 #endif // QT_NO_MAINWINDOW
     case PE_IndicatorHeaderArrow: {
-        bool usedAntialiasing = painter->renderHints() & QPainter::Antialiasing;
-        if (!usedAntialiasing)
-            painter->setRenderHint(QPainter::Antialiasing);
         QWindowsStyle::drawPrimitive(element, option, painter, widget);
-        if (!usedAntialiasing)
-            painter->setRenderHint(QPainter::Antialiasing, false);
         break;
     }
     case PE_PanelButtonTool:
@@ -1706,7 +1701,6 @@ void QPlastiqueStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
             bool unchanged = button->state & State_NoChange;
             bool enabled = button->state & State_Enabled;
             if (on || (enabled && sunken) || unchanged) {
-                p->setRenderHint(QPainter::Antialiasing);
                 QBrush pointBrush = qMapBrushToRect(button->palette.text(), rect);
                 if (sunken)
                     qBrushSetAlphaF(&pointBrush, qreal(0.5));
@@ -1728,7 +1722,6 @@ void QPlastiqueStyle::drawPrimitive(PrimitiveElement element, const QStyleOption
             BEGIN_STYLE_PIXMAPCACHE(QLatin1String("radiobutton"))
 
             p->save();
-            p->setRenderHint(QPainter::Antialiasing);
 
             // The the filled ellipse
             QBrush border = qMapBrushToRect(option->palette.shadow(), rect);

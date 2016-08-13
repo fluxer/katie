@@ -892,7 +892,6 @@ Q_GUI_EXPORT void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, boo
 
     if (p) {
         p->scale(scale, scale);
-        p->setRenderHint(QPainter::SmoothPixmapTransform);
         p->drawImage(QRect(0, 0, blurImage.width(), blurImage.height()), blurImage);
     }
 }

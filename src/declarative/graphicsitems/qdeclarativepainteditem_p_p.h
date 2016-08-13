@@ -63,7 +63,7 @@ class QDeclarativePaintedItemPrivate : public QDeclarativeItemPrivate
 
 public:
     QDeclarativePaintedItemPrivate()
-      : max_imagecache_size(100000), contentsScale(1.0), fillColor(Qt::transparent), cachefrozen(false), smoothCache(true)
+      : max_imagecache_size(100000), contentsScale(1.0), fillColor(Qt::transparent), cachefrozen(false)
     {
     }
 
@@ -83,7 +83,6 @@ public:
     qreal contentsScale;
     QColor fillColor;
     bool cachefrozen;
-    bool smoothCache;
 };
 
 QT_END_NAMESPACE

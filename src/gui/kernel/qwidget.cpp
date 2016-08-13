@@ -5034,13 +5034,7 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
             pixmap.fill(Qt::transparent);
         q->render(&pixmap, QPoint(), toBePainted, renderFlags);
 
-        const bool restore = !(painter->renderHints() & QPainter::SmoothPixmapTransform);
-        painter->setRenderHints(QPainter::SmoothPixmapTransform, true);
-
         painter->drawPixmap(targetOffset, pixmap);
-
-        if (restore)
-            painter->setRenderHints(QPainter::SmoothPixmapTransform, false);
 
 #ifndef Q_WS_MAC
     } else {

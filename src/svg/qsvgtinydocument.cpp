@@ -250,7 +250,6 @@ void QSvgTinyDocument::draw(QPainter *p, const QRectF &bounds)
     pen.setMiterLimit(4);
     p->setPen(pen);
     p->setBrush(Qt::black);
-    p->setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
     QList<QSvgNode*>::iterator itr = m_renderers.begin();
     applyStyle(p, m_states);
     while (itr != m_renderers.end()) {
@@ -292,8 +291,6 @@ void QSvgTinyDocument::draw(QPainter *p, const QString &id,
     pen.setMiterLimit(4);
     p->setPen(pen);
     p->setBrush(Qt::black);
-    p->setRenderHint(QPainter::Antialiasing);
-    p->setRenderHint(QPainter::SmoothPixmapTransform);
 
     QStack<QSvgNode*> parentApplyStack;
     QSvgNode *parent = node->parent();

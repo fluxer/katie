@@ -223,7 +223,6 @@ void drawDial(const QStyleOptionSlider *option, QPainter *painter)
     const qreal penSize = r/20.0;
 
     painter->save();
-    painter->setRenderHint(QPainter::Antialiasing);
 
     // Draw notches
     if (option->subControls & QStyle::SC_DialTickmarks) {
@@ -233,7 +232,6 @@ void drawDial(const QStyleOptionSlider *option, QPainter *painter)
 
     // Cache dial background
     BEGIN_STYLE_PIXMAPCACHE(QString::fromLatin1("qdial"));
-    p->setRenderHint(QPainter::Antialiasing);
 
     const qreal d_ = r / 6;
     const qreal dx = option->rect.x() + d_ + (width - 2 * r) / 2 + 1;
@@ -326,7 +324,6 @@ void drawBorderPixmap(const QPixmap &pixmap, QPainter *painter, const QRect &rec
                      int bottom)
 {
     QSize size = pixmap.size();
-    //painter->setRenderHint(QPainter::SmoothPixmapTransform);
 
     //top
     if (top > 0) {
