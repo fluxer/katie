@@ -31,6 +31,12 @@ set(QTCONFIG_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/paletteeditoradvanced.h
 )
 
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtconfig.desktop.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/qtconfig.desktop
+    @ONLY
+)
+
 katie_resources(${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS})
 katie_setup_flags()
 katie_setup_paths()
