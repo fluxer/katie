@@ -104,6 +104,9 @@ public:
     QBitmap mask() const;
     void setMask(const QBitmap &);
 
+    QPixmap alphaChannel() const;
+    void setAlphaChannel(const QPixmap &);
+
     bool hasAlpha() const;
     bool hasAlphaChannel() const;
 

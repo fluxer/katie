@@ -1610,6 +1610,77 @@ int QPixmap::metric(PaintDeviceMetric metric) const
     return data ? data->metric(metric) : 0;
 }
 
+
+/*!
+    \fn void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
+
+    Sets the alpha channel of this pixmap to the given \a alphaChannel
+    by converting the \a alphaChannel into 32 bit and using the
+    intensity of the RGB pixel values.
+
+    The effect of this function is undefined when the pixmap is being
+    painted on.
+
+    \warning This is potentially an expensive operation. Most usecases
+    for this function are covered by QPainter and compositionModes
+    which will normally execute faster.
+
+    \sa alphaChannel(), {QPixmap#Pixmap Transformations}{Pixmap
+    Transformations}
+ */
+void QPixmap::setAlphaChannel(const QPixmap &alphaChannel)
+{
+    if (alphaChannel.isNull())
+        return;
+
+    if (paintingActive()) {
+        qWarning("QPixmap::setAlphaChannel: "
+                 "Cannot set alpha channel while pixmap is being painted on");
+        return;
+    }
+
+    if (width() != alphaChannel.width() && height() != alphaChannel.height()) {
+        qWarning("QPixmap::setAlphaChannel: "
+                 "The pixmap and the alpha channel pixmap must have the same size");
+        return;
+    }
+
+    detach();
+    data->setAlphaChannel(alphaChannel);
+}
+
+/*!
+
+    Returns the alpha channel of the pixmap as a new grayscale QPixmap in which
+    each pixel's red, green, and blue values are given the alpha value of the
+    original pixmap. The color depth of the returned pixmap is the system depth
+    on X11 and 8-bit on Windows and Mac OS X.
+
+    You can use this function while debugging
+    to get a visible image of the alpha channel. If the pixmap doesn't have an
+    alpha channel, i.e., the alpha channel's value for all pixels equals
+    0xff), a null pixmap is returned. You can check this with the \c isNull()
+    function.
+
+    We show an example:
+
+    \snippet doc/src/snippets/alphachannel.cpp 0
+
+    \image alphachannelimage.png The pixmap and channelImage QPixmaps
+
+    \warning This is an expensive operation. The alpha channel of the
+    pixmap is extracted dynamically from the pixeldata. Most usecases of this
+    function are covered by QPainter and compositionModes which will normally
+    execute faster.
+
+    \sa setAlphaChannel(), {QPixmap#Pixmap Information}{Pixmap
+    Information}
+*/
+QPixmap QPixmap::alphaChannel() const
+{
+    return data ? data->alphaChannel() : QPixmap();
+}
+
 /*!
     \internal
 */
