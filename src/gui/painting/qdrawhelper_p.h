@@ -158,11 +158,6 @@ struct DrawHelper {
     RectFillFunc fillRect;
 };
 
-extern SrcOverBlendFunc qBlendFunctions[QImage::NImageFormats][QImage::NImageFormats];
-extern SrcOverScaleFunc qScaleFunctions[QImage::NImageFormats][QImage::NImageFormats];
-extern SrcOverTransformFunc qTransformFunctions[QImage::NImageFormats][QImage::NImageFormats];
-extern MemRotateFunc qMemRotateFunctions[QImage::NImageFormats][3];
-
 extern DrawHelper qDrawHelper[QImage::NImageFormats];
 
 void qBlendTexture(int count, const QSpan *spans, void *userData);

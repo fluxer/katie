@@ -561,7 +561,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
     flags.fast_text = true;
     flags.int_xform = true;
     flags.tx_noshear = true;
-    flags.fast_images = true;
 
     clip = 0;
     flags.has_clip_ownership = false;
@@ -817,8 +816,6 @@ void QRasterPaintEngine::compositionModeChanged()
 
     s->strokeFlags |= DirtyCompositionMode;
     d->rasterBuffer->compositionMode = s->composition_mode;
-
-    d->recalculateFastImages();
 }
 
 /*!
@@ -845,9 +842,6 @@ void QRasterPaintEngine::renderHintsChanged()
         s->strokeFlags |= DirtyPen;
         s->fillFlags |= DirtyBrush;
     }
-
-    Q_D(QRasterPaintEngine);
-    d->recalculateFastImages();
 }
 
 /*!
@@ -865,9 +859,6 @@ void QRasterPaintEngine::transformChanged()
     s->strokeFlags |= DirtyTransform;
 
     s->dirty |= DirtyTransform;
-
-    Q_D(QRasterPaintEngine);
-    d->recalculateFastImages();
 }
 
 /*!
@@ -1969,21 +1960,6 @@ void QRasterPaintEngine::drawImage(const QPointF &p, const QImage &img)
         const QClipData *clip = d->clip();
         QPointF pt(p.x() + s->matrix.dx(), p.y() + s->matrix.dy());
 
-        if (d->canUseFastImageBlending(d->rasterBuffer->compositionMode, img)) {
-            SrcOverBlendFunc func = qBlendFunctions[d->rasterBuffer->format][img.format()];
-            if (func) {
-                if (!clip) {
-                    d->drawImage(pt, img, func, d->deviceRect, s->intOpacity);
-                    return;
-                } else if (clip->hasRectClip) {
-                    d->drawImage(pt, img, func, clip->clipRect, s->intOpacity);
-                    return;
-                }
-            }
-        }
-
-
-
         d->image_filler.clip = clip;
         d->image_filler.initTexture(&img, s->intOpacity, QTextureData::Plain, img.rect());
         if (!d->image_filler.blend)
@@ -2098,83 +2074,7 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
 
     const QClipData *clip = d->clip();
 
-    if (s->matrix.type() > QTransform::TxTranslate
-        && !stretch_sr
-        && (!clip || clip->hasRectClip)
-        && s->intOpacity == 256
-        && (d->rasterBuffer->compositionMode == QPainter::CompositionMode_SourceOver
-            || d->rasterBuffer->compositionMode == QPainter::CompositionMode_Source)
-        && d->rasterBuffer->format == img.format()
-        && (d->rasterBuffer->format == QImage::Format_RGB16
-            || d->rasterBuffer->format == QImage::Format_RGB32
-            || (d->rasterBuffer->format == QImage::Format_ARGB32_Premultiplied
-                && d->rasterBuffer->compositionMode == QPainter::CompositionMode_Source)))
-    {
-        RotationType rotationType = qRotationType(s->matrix);
-
-        if (rotationType != NoRotation && qMemRotateFunctions[d->rasterBuffer->format][rotationType] && img.rect().contains(sr.toAlignedRect())) {
-            QRectF transformedTargetRect = s->matrix.mapRect(r);
-
-            if ((!(s->renderHints & QPainter::SmoothPixmapTransform) && !(s->renderHints & QPainter::Antialiasing))
-                || (isPixelAligned(transformedTargetRect) && isPixelAligned(sr)))
-            {
-                QRect clippedTransformedTargetRect = transformedTargetRect.toRect().intersected(clip ? clip->clipRect : d->deviceRect);
-                if (clippedTransformedTargetRect.isNull())
-                    return;
-
-                QRectF clippedTargetRect = s->matrix.inverted().mapRect(QRectF(clippedTransformedTargetRect));
-
-                QRect clippedSourceRect
-                    = QRectF(sr.x() + clippedTargetRect.x() - r.x(), sr.y() + clippedTargetRect.y() - r.y(),
-                            clippedTargetRect.width(), clippedTargetRect.height()).toRect();
-
-                uint dbpl = d->rasterBuffer->bytesPerLine();
-                uint sbpl = img.bytesPerLine();
-
-                uchar *dst = d->rasterBuffer->buffer();
-                uint bpp = img.depth() >> 3;
-
-                const uchar *srcBase = img.bits() + clippedSourceRect.y() * sbpl + clippedSourceRect.x() * bpp;
-                uchar *dstBase = dst + clippedTransformedTargetRect.y() * dbpl + clippedTransformedTargetRect.x() * bpp;
-
-                uint cw = clippedSourceRect.width();
-                uint ch = clippedSourceRect.height();
-
-                qMemRotateFunctions[d->rasterBuffer->format][rotationType](srcBase, cw, ch, sbpl, dstBase, dbpl);
-
-                return;
-            }
-        }
-    }
-
     if (s->matrix.type() > QTransform::TxTranslate || stretch_sr) {
-
-        QRectF targetBounds = s->matrix.mapRect(r);
-        bool exceedsPrecision = targetBounds.width() > 0xffff
-                                || targetBounds.height() > 0xffff;
-
-        if (!exceedsPrecision && d->canUseFastImageBlending(d->rasterBuffer->compositionMode, img)) {
-            if (s->matrix.type() > QTransform::TxScale) {
-                SrcOverTransformFunc func = qTransformFunctions[d->rasterBuffer->format][img.format()];
-                if (func && (!clip || clip->hasRectClip)) {
-                    func(d->rasterBuffer->buffer(), d->rasterBuffer->bytesPerLine(), img.bits(),
-                         img.bytesPerLine(), r, sr, !clip ? d->deviceRect : clip->clipRect,
-                         s->matrix, s->intOpacity);
-                    return;
-                }
-            } else {
-                SrcOverScaleFunc func = qScaleFunctions[d->rasterBuffer->format][img.format()];
-                if (func && (!clip || clip->hasRectClip)) {
-                    func(d->rasterBuffer->buffer(), d->rasterBuffer->bytesPerLine(),
-                         img.bits(), img.bytesPerLine(), img.height(),
-                         qt_mapRect_non_normalizing(r, s->matrix), sr,
-                         !clip ? d->deviceRect : clip->clipRect,
-                         s->intOpacity);
-                    return;
-                }
-            }
-        }
-
         QTransform copy = s->matrix;
         copy.translate(r.x(), r.y());
         if (stretch_sr)
@@ -2234,20 +2134,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
         fillPath(path, &d->image_filler_xform);
         s->matrix = m;
     } else {
-        if (d->canUseFastImageBlending(d->rasterBuffer->compositionMode, img)) {
-            SrcOverBlendFunc func = qBlendFunctions[d->rasterBuffer->format][img.format()];
-            if (func) {
-                QPointF pt(r.x() + s->matrix.dx(), r.y() + s->matrix.dy());
-                if (!clip) {
-                    d->drawImage(pt, img, func, d->deviceRect, s->intOpacity, sr.toRect());
-                    return;
-                } else if (clip->hasRectClip) {
-                    d->drawImage(pt, img, func, clip->clipRect, s->intOpacity, sr.toRect());
-                    return;
-                }
-            }
-        }
-
         d->image_filler.clip = clip;
         d->image_filler.initTexture(&img, s->intOpacity, QTextureData::Plain, toAlignedRect_positive(sr));
         if (!d->image_filler.blend)
@@ -3391,26 +3277,6 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     rasterParams.gray_spans = callback;
     rasterParams.skip_spans = 0;
     qt_ft_grays_raster.raster_render(*grayRaster, &rasterParams);
-}
-
-void QRasterPaintEnginePrivate::recalculateFastImages()
-{
-    Q_Q(QRasterPaintEngine);
-    QRasterPaintEngineState *s = q->state();
-
-    s->flags.fast_images = !(s->renderHints & QPainter::SmoothPixmapTransform)
-                           && s->matrix.type() <= QTransform::TxShear;
-}
-
-bool QRasterPaintEnginePrivate::canUseFastImageBlending(QPainter::CompositionMode mode, const QImage &image) const
-{
-    Q_Q(const QRasterPaintEngine);
-    const QRasterPaintEngineState *s = q->state();
-
-    return s->flags.fast_images
-           && (mode == QPainter::CompositionMode_SourceOver
-               || (mode == QPainter::CompositionMode_Source
-                   && !image.hasAlphaChannel()));
 }
 
 QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)

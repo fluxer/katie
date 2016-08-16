@@ -112,7 +112,6 @@ public:
         uint fast_text : 1;
         uint int_xform : 1;
         uint tx_noshear : 1;
-        uint fast_images : 1;
     };
 
     union {
@@ -314,9 +313,6 @@ public:
     inline const QClipData *clip() const;
 
     void initializeRasterizer(QSpanData *data);
-
-    void recalculateFastImages();
-    bool canUseFastImageBlending(QPainter::CompositionMode mode, const QImage &image) const;
 
     QPaintDevice *device;
     QScopedPointer<QOutlineMapper> outlineMapper;

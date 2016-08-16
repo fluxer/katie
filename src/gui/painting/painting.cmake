@@ -43,7 +43,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblendfunctions_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrasterdefs_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore_p.h
@@ -61,7 +60,6 @@ set(GUI_HEADERS
 set(GUI_SOURCES
     ${GUI_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbezier.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qblendfunctions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbrush.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor_p.cpp

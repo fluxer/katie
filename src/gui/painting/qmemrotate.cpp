@@ -610,27 +610,6 @@ void qt_memrotate270_32(const uchar *srcPixels, int w, int h, int sbpl, uchar *d
     qt_memrotate270((const uint *)srcPixels, w, h, sbpl, (uint *)destPixels, dbpl);
 }
 
-MemRotateFunc qMemRotateFunctions[QImage::NImageFormats][3] =
-// 90, 180, 270
-{
-    { 0, 0, 0 },      // Format_Invalid,
-    { 0, 0, 0 },      // Format_Mono,
-    { 0, 0, 0 },      // Format_MonoLSB,
-    { 0, 0, 0 },      // Format_Indexed8,
-    { qt_memrotate90_32, qt_memrotate180_32, qt_memrotate270_32 },      // Format_RGB32,
-    { qt_memrotate90_32, qt_memrotate180_32, qt_memrotate270_32 },      // Format_ARGB32,
-    { qt_memrotate90_32, qt_memrotate180_32, qt_memrotate270_32 },      // Format_ARGB32_Premultiplied,
-    { qt_memrotate90_16, qt_memrotate180_16, qt_memrotate270_16 },      // Format_RGB16,
-    { 0, 0, 0 },      // Format_ARGB8565_Premultiplied,
-    { 0, 0, 0 },      // Format_RGB666,
-    { 0, 0, 0 },      // Format_ARGB6666_Premultiplied,
-    { 0, 0, 0 },      // Format_RGB555,
-    { 0, 0, 0 },      // Format_ARGB8555_Premultiplied,
-    { 0, 0, 0 },      // Format_RGB888,
-    { 0, 0, 0 },      // Format_RGB444,
-    { 0, 0, 0 }       // Format_ARGB4444_Premultiplied,
-};
-
 QT_END_NAMESPACE
 
 
