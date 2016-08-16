@@ -43,7 +43,6 @@
 #ifndef QT_NO_GROUPBOX
 #include "qapplication.h"
 #include "qbitmap.h"
-#include "qdrawutil.h"
 #include "qevent.h"
 #include "qlayout.h"
 #include "qradiobutton.h"

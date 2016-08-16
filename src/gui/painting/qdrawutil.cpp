@@ -572,14 +572,6 @@ void qDrawPlainRect(QPainter *p, int x, int y, int w, int h, const QColor &c,
     \sa qDrawShadeRect(), qDrawShadePanel(), QStyle
 */
 
-void qDrawShadeLine(QPainter *p, const QPoint &p1, const QPoint &p2,
-                     const QPalette &pal, bool sunken,
-                     int lineWidth, int midLineWidth)
-{
-    qDrawShadeLine(p, p1.x(), p1.y(), p2.x(), p2.y(), pal, sunken,
-                    lineWidth, midLineWidth);
-}
-
 /*!
     \fn void qDrawShadeRect(QPainter *painter, const QRect &rect, const QPalette &palette,
              bool sunken, int lineWidth, int midLineWidth, const QBrush *fill)
@@ -611,15 +603,6 @@ void qDrawShadeLine(QPainter *p, const QPoint &p1, const QPoint &p2,
     \sa qDrawShadeLine(), qDrawShadePanel(), qDrawPlainRect(), QStyle
 */
 
-void qDrawShadeRect(QPainter *p, const QRect &r,
-                     const QPalette &pal, bool sunken,
-                     int lineWidth, int midLineWidth,
-                     const QBrush *fill)
-{
-    qDrawShadeRect(p, r.x(), r.y(), r.width(), r.height(), pal, sunken,
-                    lineWidth, midLineWidth, fill);
-}
-
 /*!
     \fn void qDrawShadePanel(QPainter *painter, const QRect &rect, const QPalette &palette,
              bool sunken, int lineWidth, const QBrush *fill)
@@ -648,14 +631,6 @@ void qDrawShadeRect(QPainter *p, const QRect &r,
     \sa qDrawWinPanel(), qDrawShadeLine(), qDrawShadeRect(), QStyle
 */
 
-void qDrawShadePanel(QPainter *p, const QRect &r,
-                      const QPalette &pal, bool sunken,
-                      int lineWidth, const QBrush *fill)
-{
-    qDrawShadePanel(p, r.x(), r.y(), r.width(), r.height(), pal, sunken,
-                     lineWidth, fill);
-}
-
 /*!
     \fn void qDrawWinButton(QPainter *painter, const QRect &rect, const QPalette &palette,
              bool sunken, const QBrush *fill)
@@ -678,12 +653,6 @@ void qDrawShadePanel(QPainter *p, const QRect &r,
 
     \sa qDrawWinPanel(), QStyle
 */
-
-void qDrawWinButton(QPainter *p, const QRect &r,
-                     const QPalette &pal, bool sunken, const QBrush *fill)
-{
-    qDrawWinButton(p, r.x(), r.y(), r.width(), r.height(), pal, sunken, fill);
-}
 
 /*!
     \fn void qDrawWinPanel(QPainter *painter, const QRect &rect, const QPalette &palette,
@@ -709,12 +678,6 @@ void qDrawWinButton(QPainter *p, const QRect &r,
     \sa qDrawShadePanel(), qDrawWinButton(), QStyle
 */
 
-void qDrawWinPanel(QPainter *p, const QRect &r,
-                    const QPalette &pal, bool sunken, const QBrush *fill)
-{
-    qDrawWinPanel(p, r.x(), r.y(), r.width(), r.height(), pal, sunken, fill);
-}
-
 /*!
     \fn void qDrawPlainRect(QPainter *painter, const QRect &rect, const QColor &lineColor, int lineWidth, const QBrush *fill)
     \relates <qdrawutil.h>
@@ -735,19 +698,6 @@ void qDrawWinPanel(QPainter *p, const QRect &r,
 
     \sa qDrawShadeRect(), QStyle
 */
-
-void qDrawPlainRect(QPainter *p, const QRect &r, const QColor &c,
-                     int lineWidth, const QBrush *fill)
-{
-    qDrawPlainRect(p, r.x(), r.y(), r.width(), r.height(), c,
-                    lineWidth, fill);
-}
-
-
-#if defined(Q_CC_MSVC)
-#pragma warning(disable: 4244)
-#endif
-
 
 /*!
     \class QTileRules

@@ -41,7 +41,6 @@
 
 #include "qpainter.h"
 #include "qevent.h"
-#include "qdrawutil.h"
 #include "qapplication.h"
 #include "qabstractbutton.h"
 #include "qstyle.h"

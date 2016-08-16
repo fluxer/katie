@@ -45,7 +45,6 @@
 
 #include "qshortcut.h"
 #include "qpainter.h"
-#include "qdrawutil.h"
 #include "qlabel.h"
 #include "qprogressbar.h"
 #include "qapplication.h"

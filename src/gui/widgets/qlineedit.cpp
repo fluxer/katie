@@ -47,7 +47,6 @@
 #include "qapplication.h"
 #include "qclipboard.h"
 #include "qdrag.h"
-#include "qdrawutil.h"
 #include "qevent.h"
 #include "qfontmetrics.h"
 #include "qmenu.h"

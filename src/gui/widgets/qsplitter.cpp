@@ -44,7 +44,6 @@
 
 #include "qapplication.h"
 #include "qcursor.h"
-#include "qdrawutil.h"
 #include "qevent.h"
 #include "qlayout.h"
 #include "qlist.h"

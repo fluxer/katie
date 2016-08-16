@@ -44,7 +44,6 @@
 
 #include <qapplication.h>
 #include <qdesktopwidget.h>
-#include <qdrawutil.h>
 #include <qevent.h>
 #include <qicon.h>
 #include <qmenu.h>

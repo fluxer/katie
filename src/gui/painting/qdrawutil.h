@@ -66,50 +66,71 @@ Q_GUI_EXPORT void qDrawShadeLine(QPainter *p, int x1, int y1, int x2, int y2,
                               const QPalette &pal, bool sunken = true,
                               int lineWidth = 1, int midLineWidth = 0);
 
-Q_GUI_EXPORT void qDrawShadeLine(QPainter *p, const QPoint &p1, const QPoint &p2,
+inline void qDrawShadeLine(QPainter *p, const QPoint &p1, const QPoint &p2,
                               const QPalette &pal, bool sunken = true,
-                              int lineWidth = 1, int midLineWidth = 0);
+                              int lineWidth = 1, int midLineWidth = 0)
+{
+    qDrawShadeLine(p, p1.x(), p1.y(), p2.x(), p2.y(), pal, sunken,
+                    lineWidth, midLineWidth);
+}
 
 Q_GUI_EXPORT void qDrawShadeRect(QPainter *p, int x, int y, int w, int h,
                               const QPalette &pal, bool sunken = false,
                               int lineWidth = 1, int midLineWidth = 0,
                               const QBrush *fill = 0);
 
-Q_GUI_EXPORT void qDrawShadeRect(QPainter *p, const QRect &r,
+inline void qDrawShadeRect(QPainter *p, const QRect &r,
                               const QPalette &pal, bool sunken = false,
                               int lineWidth = 1, int midLineWidth = 0,
-                              const QBrush *fill = 0);
+                              const QBrush *fill = 0)
+{
+    qDrawShadeRect(p, r.x(), r.y(), r.width(), r.height(), pal, sunken,
+                    lineWidth, midLineWidth, fill);
+}
 
 Q_GUI_EXPORT void qDrawShadePanel(QPainter *p, int x, int y, int w, int h,
                                const QPalette &pal, bool sunken = false,
                                int lineWidth = 1, const QBrush *fill = 0);
 
-Q_GUI_EXPORT void qDrawShadePanel(QPainter *p, const QRect &r,
+inline void qDrawShadePanel(QPainter *p, const QRect &r,
                                const QPalette &pal, bool sunken = false,
-                               int lineWidth = 1, const QBrush *fill = 0);
+                               int lineWidth = 1, const QBrush *fill = 0)
+{
+    qDrawShadePanel(p, r.x(), r.y(), r.width(), r.height(), pal, sunken,
+                     lineWidth, fill);
+}
 
 Q_GUI_EXPORT void qDrawWinButton(QPainter *p, int x, int y, int w, int h,
                               const QPalette &pal, bool sunken = false,
                               const QBrush *fill = 0);
 
-Q_GUI_EXPORT void qDrawWinButton(QPainter *p, const QRect &r,
+inline void qDrawWinButton(QPainter *p, const QRect &r,
                               const QPalette &pal, bool sunken = false,
-                              const QBrush *fill = 0);
+                              const QBrush *fill = 0)
+{
+    qDrawWinButton(p, r.x(), r.y(), r.width(), r.height(), pal, sunken, fill);
+}
 
 Q_GUI_EXPORT void qDrawWinPanel(QPainter *p, int x, int y, int w, int h,
                               const QPalette &pal, bool sunken = false,
                              const QBrush *fill = 0);
 
-Q_GUI_EXPORT void qDrawWinPanel(QPainter *p, const QRect &r,
+inline void qDrawWinPanel(QPainter *p, const QRect &r,
                               const QPalette &pal, bool sunken = false,
-                             const QBrush *fill = 0);
+                             const QBrush *fill = 0)
+{
+    qDrawWinPanel(p, r.x(), r.y(), r.width(), r.height(), pal, sunken, fill);
+}
 
-Q_GUI_EXPORT void qDrawPlainRect(QPainter *p, int x, int y, int w, int h, const QColor &,
+Q_GUI_EXPORT void qDrawPlainRect(QPainter *p, int x, int y, int w, int h,
+                              const QColor &c,
                               int lineWidth = 1, const QBrush *fill = 0);
 
-Q_GUI_EXPORT void qDrawPlainRect(QPainter *p, const QRect &r, const QColor &,
-                              int lineWidth = 1, const QBrush *fill = 0);
-
+inline void qDrawPlainRect(QPainter *p, const QRect &r, const QColor &c,
+                              int lineWidth = 1, const QBrush *fill = 0)
+{
+    qDrawPlainRect(p, r.x(), r.y(), r.width(), r.height(), c, lineWidth, fill);
+}
 
 
 struct QTileRules

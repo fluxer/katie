@@ -41,7 +41,6 @@
 
 #include "qframe.h"
 #include "qbitmap.h"
-#include "qdrawutil.h"
 #include "qevent.h"
 #include "qpainter.h"
 #include "qstyle.h"

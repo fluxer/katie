@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "qtcolorline.h"
-#include "qdrawutil.h"
 
 #include <QtGui/QPainter>
 #include <QtGui/qevent.h>

@@ -43,8 +43,13 @@
 
 #ifndef QT_NO_STYLE_STYLESHEET
 
+#include "qcssparser_p.h"
+#include "qmath_p.h"
 #include "qstylesheetstyle_p.h"
 #include "qcssutil_p.h"
+#include "qabstractscrollarea_p.h"
+#include "qwindowsstyle_p.h"
+#include "qwidget_p.h"
 #include <qdebug.h>
 #include <qapplication.h>
 #include <qmenu.h>
@@ -54,12 +59,8 @@
 #include <qlineedit.h>
 #include <qwindowsstyle.h>
 #include <qcombobox.h>
-#include <qwindowsstyle.h>
 #include <qplastiquestyle.h>
-#include "qcssparser_p.h"
-#include "qmath_p.h"
 #include <qabstractscrollarea.h>
-#include "qabstractscrollarea_p.h"
 #include <qtooltip.h>
 #include <qshareddata.h>
 #include <qradiobutton.h>
@@ -71,20 +72,18 @@
 #include <qstatusbar.h>
 #include <qheaderview.h>
 #include <qprogressbar.h>
-#include <qwindowsstyle_p.h>
 #include <qtabbar.h>
 #include <qmetaobject.h>
 #include <qmainwindow.h>
 #include <qdockwidget.h>
 #include <qmdisubwindow.h>
 #include <qdialog.h>
-#include <qwidget_p.h>
-#include <QAbstractSpinBox>
-#include <QLabel>
-#include "qdrawutil.h"
+#include <qabstractspinbox.h>
+#include <qlabel.h>
+#include <qdrawutil.h>
+#include <qtoolbar.h>
 
 #include <limits.h>
-#include <QtGui/qtoolbar.h>
 
 QT_BEGIN_NAMESPACE
 
