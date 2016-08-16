@@ -752,15 +752,15 @@ typedef QVarLengthArray<QRectF, 16> QRectFArray;
 
 void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargins &targetMargins,
                        const QPixmap &pixmap, const QRect &sourceRect,const QMargins &sourceMargins,
-                       const QTileRules &rules, QDrawBorderPixmap::DrawingHints hints)
+                       const QTileRules &rules)
 {
     if (!painter->isActive()) {
         qWarning("qDrawBorderPixmap: Painter not active");
         return;
     }
 
-    QRectFArray sourceData[2];
-    QRectFArray targetData[2];
+    QRectFArray sourceData;
+    QRectFArray targetData;
 
     // source center
     const int sourceCenterTop = sourceRect.top() + sourceMargins.top();
@@ -835,48 +835,42 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
 
     // corners
     if (targetMargins.top() > 0 && targetMargins.left() > 0 && sourceMargins.top() > 0 && sourceMargins.left() > 0) { // top left
-        int index = bool(hints & QDrawBorderPixmap::OpaqueTopLeft);
-        sourceData[index].append(QRectF(sourceRect.topLeft(), QSizeF(sourceMargins.left(), sourceMargins.top())));
-        targetData[index].append(QRectF(QPointF(xTarget[0], yTarget[0]), QPointF(xTarget[1], yTarget[1])));
+        sourceData.append(QRectF(sourceRect.topLeft(), QSizeF(sourceMargins.left(), sourceMargins.top())));
+        targetData.append(QRectF(QPointF(xTarget[0], yTarget[0]), QPointF(xTarget[1], yTarget[1])));
     }
     if (targetMargins.top() > 0 && targetMargins.right() > 0 && sourceMargins.top() > 0 && sourceMargins.right() > 0) { // top right
-        int index = bool(hints & QDrawBorderPixmap::OpaqueTopRight);
-        sourceData[index].append(QRectF(QPointF(sourceCenterRight, sourceRect.top()), QSizeF(sourceMargins.right(), sourceMargins.top())));
-        targetData[index].append(QRectF(QPointF(xTarget[columns-1], yTarget[0]), QPointF(xTarget[columns], yTarget[1])));
+        sourceData.append(QRectF(QPointF(sourceCenterRight, sourceRect.top()), QSizeF(sourceMargins.right(), sourceMargins.top())));
+        targetData.append(QRectF(QPointF(xTarget[columns-1], yTarget[0]), QPointF(xTarget[columns], yTarget[1])));
     }
     if (targetMargins.bottom() > 0 && targetMargins.left() > 0 && sourceMargins.bottom() > 0 && sourceMargins.left() > 0) { // bottom left
-        int index = bool(hints & QDrawBorderPixmap::OpaqueBottomLeft);
-        sourceData[index].append(QRectF(QPointF(sourceRect.left(), sourceCenterBottom), QSizeF(sourceMargins.left(), sourceMargins.bottom())));
-        targetData[index].append(QRectF(QPointF(xTarget[0], yTarget[rows - 1]), QPointF(xTarget[1], yTarget[rows])));
+        sourceData.append(QRectF(QPointF(sourceRect.left(), sourceCenterBottom), QSizeF(sourceMargins.left(), sourceMargins.bottom())));
+        targetData.append(QRectF(QPointF(xTarget[0], yTarget[rows - 1]), QPointF(xTarget[1], yTarget[rows])));
     }
     if (targetMargins.bottom() > 0 && targetMargins.right() > 0 && sourceMargins.bottom() > 0 && sourceMargins.right() > 0) { // bottom right
-        int index = bool(hints & QDrawBorderPixmap::OpaqueBottomRight);
-        sourceData[index].append(QRectF(QPointF(sourceCenterRight, sourceCenterBottom), QSizeF(sourceMargins.right(), sourceMargins.bottom())));
-        targetData[index].append(QRectF(QPointF(xTarget[columns - 1], yTarget[rows - 1]), QPointF(xTarget[columns], yTarget[rows])));
+        sourceData.append(QRectF(QPointF(sourceCenterRight, sourceCenterBottom), QSizeF(sourceMargins.right(), sourceMargins.bottom())));
+        targetData.append(QRectF(QPointF(xTarget[columns - 1], yTarget[rows - 1]), QPointF(xTarget[columns], yTarget[rows])));
     }
 
     // horizontal edges
     if (targetCenterWidth > 0 && sourceCenterWidth > 0) {
         if (targetMargins.top() > 0 && sourceMargins.top() > 0) { // top
-            int index = bool(hints & QDrawBorderPixmap::OpaqueTop);
             for (int i = 1; i < columns - 1; ++i) {
                 if (rules.horizontal == Qt::RepeatTile && i == columns - 2) {
-                    sourceData[index].append(QRectF(QPointF(sourceCenterLeft, sourceRect.top()), QSizeF(xTarget[i + 1] - xTarget[i], sourceMargins.top())));
+                    sourceData.append(QRectF(QPointF(sourceCenterLeft, sourceRect.top()), QSizeF(xTarget[i + 1] - xTarget[i], sourceMargins.top())));
                 } else {
-                    sourceData[index].append(QRectF(QPointF(sourceCenterLeft, sourceRect.top()), QSizeF(sourceCenterWidth, sourceMargins.top())));
+                    sourceData.append(QRectF(QPointF(sourceCenterLeft, sourceRect.top()), QSizeF(sourceCenterWidth, sourceMargins.top())));
                 }
-                targetData[index].append(QRectF(QPointF(xTarget[i], yTarget[0]), QPointF(xTarget[i + 1], yTarget[1])));
+                targetData.append(QRectF(QPointF(xTarget[i], yTarget[0]), QPointF(xTarget[i + 1], yTarget[1])));
             }
         }
         if (targetMargins.bottom() > 0 && sourceMargins.bottom() > 0) { // bottom
-            int index = bool(hints & QDrawBorderPixmap::OpaqueBottom);
             for (int i = 1; i < columns - 1; ++i) {
                 if (rules.horizontal == Qt::RepeatTile && i == columns - 2) {
-                    sourceData[index].append(QRectF(QPointF(sourceCenterLeft, sourceCenterBottom), QSizeF(xTarget[i + 1] - xTarget[i], sourceMargins.bottom())));
+                    sourceData.append(QRectF(QPointF(sourceCenterLeft, sourceCenterBottom), QSizeF(xTarget[i + 1] - xTarget[i], sourceMargins.bottom())));
                 } else {
-                    sourceData[index].append(QRectF(QPointF(sourceCenterLeft, sourceCenterBottom), QSizeF(sourceCenterWidth, sourceMargins.bottom())));
+                    sourceData.append(QRectF(QPointF(sourceCenterLeft, sourceCenterBottom), QSizeF(sourceCenterWidth, sourceMargins.bottom())));
                 }
-                targetData[index].append(QRectF(QPointF(xTarget[i], yTarget[rows - 1]), QPointF(xTarget[i + 1], yTarget[rows])));
+                targetData.append(QRectF(QPointF(xTarget[i], yTarget[rows - 1]), QPointF(xTarget[i + 1], yTarget[rows])));
             }
         }
     }
@@ -884,46 +878,41 @@ void qDrawBorderPixmap(QPainter *painter, const QRect &targetRect, const QMargin
     // vertical edges
     if (targetCenterHeight > 0 && sourceCenterHeight > 0) {
         if (targetMargins.left() > 0 && sourceMargins.left() > 0) { // left
-            int index = bool(hints & QDrawBorderPixmap::OpaqueLeft);
             for (int i = 1; i < rows - 1; ++i) {
                 if (rules.vertical == Qt::RepeatTile && i == rows - 2) {
-                    sourceData[index].append(QRectF(QPointF(sourceRect.left(), sourceCenterTop), QSizeF(sourceMargins.left(), yTarget[i + 1] - yTarget[i])));
+                    sourceData.append(QRectF(QPointF(sourceRect.left(), sourceCenterTop), QSizeF(sourceMargins.left(), yTarget[i + 1] - yTarget[i])));
                 } else {
-                    sourceData[index].append(QRectF(QPointF(sourceRect.left(), sourceCenterTop), QSizeF(sourceMargins.left(), sourceCenterHeight)));
+                    sourceData.append(QRectF(QPointF(sourceRect.left(), sourceCenterTop), QSizeF(sourceMargins.left(), sourceCenterHeight)));
                 }
-                targetData[index].append(QRectF(QPointF(xTarget[0], yTarget[i]), QPointF(xTarget[1], yTarget[i + 1])));
+                targetData.append(QRectF(QPointF(xTarget[0], yTarget[i]), QPointF(xTarget[1], yTarget[i + 1])));
             }
         }
         if (targetMargins.right() > 0 && sourceMargins.right() > 0) { // right
-            int index = bool(hints & QDrawBorderPixmap::OpaqueRight);
             for (int i = 1; i < rows - 1; ++i) {
                 if (rules.vertical == Qt::RepeatTile && i == rows - 2) {
-                    sourceData[index].append(QRectF(QPointF(sourceCenterRight, sourceCenterTop), QSizeF(sourceMargins.right(), yTarget[i + 1] - yTarget[i])));
+                    sourceData.append(QRectF(QPointF(sourceCenterRight, sourceCenterTop), QSizeF(sourceMargins.right(), yTarget[i + 1] - yTarget[i])));
                 } else {
-                    sourceData[index].append(QRectF(QPointF(sourceCenterRight, sourceCenterTop), QSizeF(sourceMargins.right(), sourceCenterHeight)));
+                    sourceData.append(QRectF(QPointF(sourceCenterRight, sourceCenterTop), QSizeF(sourceMargins.right(), sourceCenterHeight)));
                 }
-                targetData[index].append(QRectF(QPointF(xTarget[columns - 1], yTarget[i]), QPointF(xTarget[columns], yTarget[i + 1])));
+                targetData.append(QRectF(QPointF(xTarget[columns - 1], yTarget[i]), QPointF(xTarget[columns], yTarget[i + 1])));
             }
         }
     }
 
     // center
     if (targetCenterWidth > 0 && targetCenterHeight > 0 && sourceCenterWidth > 0 && sourceCenterHeight > 0) {
-        int index = bool(hints & QDrawBorderPixmap::OpaqueCenter);
         for (int j = 1; j < rows - 1; ++j) {
             qreal sourceHeight = (rules.vertical == Qt::RepeatTile && j == rows - 2) ? yTarget[j + 1] - yTarget[j] : sourceCenterHeight;
             for (int i = 1; i < columns - 1; ++i) {
                 qreal sourceWidth = (rules.horizontal == Qt::RepeatTile && i == columns - 2) ? xTarget[i + 1] - xTarget[i] : sourceCenterWidth;
-                sourceData[index].append(QRectF(QPointF(sourceCenterLeft, sourceCenterTop), QSizeF(sourceWidth, sourceHeight)));
-                targetData[index].append(QRectF(QPointF(xTarget[i], yTarget[j]), QPointF(xTarget[i + 1], yTarget[j + 1])));
+                sourceData.append(QRectF(QPointF(sourceCenterLeft, sourceCenterTop), QSizeF(sourceWidth, sourceHeight)));
+                targetData.append(QRectF(QPointF(xTarget[i], yTarget[j]), QPointF(xTarget[i + 1], yTarget[j + 1])));
             }
         }
     }
 
-    for (int i = 0; i < 2; ++i) {
-        if (sourceData[i].size())
-            painter->drawPixmapFragments(targetData[i].data(), sourceData[i].data(), sourceData[i].size(), pixmap, i == 1 ? QPainter::OpaqueHint : QPainter::PixmapFragmentHint(0));
-    }
+    if (sourceData.size())
+        painter->drawPixmapFragments(targetData.data(), sourceData.data(), sourceData.size(), pixmap);
 }
 
 QT_END_NAMESPACE

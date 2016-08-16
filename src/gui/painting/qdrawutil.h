@@ -143,37 +143,13 @@ struct QTileRules
     Qt::TileRule vertical;
 };
 
-// For internal use only.
-namespace QDrawBorderPixmap
-{
-    enum DrawingHint
-    {
-        OpaqueTopLeft = 0x0001,
-        OpaqueTop = 0x0002,
-        OpaqueTopRight = 0x0004,
-        OpaqueLeft = 0x0008,
-        OpaqueCenter = 0x0010,
-        OpaqueRight = 0x0020,
-        OpaqueBottomLeft = 0x0040,
-        OpaqueBottom = 0x0080,
-        OpaqueBottomRight = 0x0100,
-        OpaqueCorners = OpaqueTopLeft | OpaqueTopRight | OpaqueBottomLeft | OpaqueBottomRight,
-        OpaqueEdges = OpaqueTop | OpaqueLeft | OpaqueRight | OpaqueBottom,
-        OpaqueFrame = OpaqueCorners | OpaqueEdges,
-        OpaqueAll = OpaqueCenter | OpaqueFrame
-    };
-
-    Q_DECLARE_FLAGS(DrawingHints, DrawingHint)
-}
-
 Q_GUI_EXPORT void qDrawBorderPixmap(QPainter *painter,
                                     const QRect &targetRect,
                                     const QMargins &targetMargins,
                                     const QPixmap &pixmap,
                                     const QRect &sourceRect,
                                     const QMargins &sourceMargins,
-                                    const QTileRules &rules = QTileRules(),
-                                    QDrawBorderPixmap::DrawingHints hints = 0
+                                    const QTileRules &rules = QTileRules()
                                     );
 
 inline void qDrawBorderPixmap(QPainter *painter,
