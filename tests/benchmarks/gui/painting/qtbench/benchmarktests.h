@@ -426,7 +426,7 @@ public:
     DrawImage(const QImage &image, bool asPixmap)
         : Benchmark(QSize(image.width(), image.height())),
           m_image(image),
-          m_type(m_as_pixmap ? QLatin1String("Pixmap") : QLatin1String("Image")),
+          m_type(asPixmap ? QLatin1String("Pixmap") : QLatin1String("Image")),
           m_as_pixmap(asPixmap)
     {
         m_pixmap = QPixmap::fromImage(image);
