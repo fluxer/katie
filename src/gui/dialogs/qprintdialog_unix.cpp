@@ -44,10 +44,11 @@
 #ifndef QT_NO_PRINTDIALOG
 
 #include "qabstractprintdialog_p.h"
-#include <QtGui/qmessagebox.h>
 #include "qprintdialog.h"
 #include "qfiledialog.h"
+#include "qcompleter.h"
 #include <QtCore/qdir.h>
+#include <QtGui/qmessagebox.h>
 #include <QtGui/qevent.h>
 #include <QtGui/qfilesystemmodel.h>
 #include <QtGui/qstyleditemdelegate.h>
@@ -55,7 +56,6 @@
 
 #include <QtGui/qdialogbuttonbox.h>
 
-#include "qfscompleter_p.h"
 #include "ui_qprintpropertieswidget.h"
 #include "ui_qprintsettingsoutput.h"
 #include "ui_qprintwidget.h"

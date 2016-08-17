@@ -122,9 +122,6 @@ public:
     uint inDrag : 1;
     uint clickCausedFocus : 1;
 
-    // Qt3 COMPAT only, for setText
-    Qt::TextFormat textFormat;
-
     QString anchorToScrollToWhenVisible;
 
 #ifdef QT_KEYPAD_NAVIGATION

@@ -6569,7 +6569,6 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
 };
 
 
-#if defined(Q_CC_MSVC) && !defined(_MIPS_)
 template <class DST, class SRC>
 inline void qt_memfill_template(DST *dest, SRC color, int count)
 {
@@ -6577,50 +6576,6 @@ inline void qt_memfill_template(DST *dest, SRC color, int count)
     while (count--)
         *dest++ = c;
 }
-
-#else
-
-template <class DST, class SRC>
-inline void qt_memfill_template(DST *dest, SRC color, int count)
-{
-    const DST c = qt_colorConvert<DST, SRC>(color, 0);
-    int n = (count + 7) / 8;
-    switch (count & 0x07)
-    {
-    case 0: do { *dest++ = c;
-    case 7:      *dest++ = c;
-    case 6:      *dest++ = c;
-    case 5:      *dest++ = c;
-    case 4:      *dest++ = c;
-    case 3:      *dest++ = c;
-    case 2:      *dest++ = c;
-    case 1:      *dest++ = c;
-    } while (--n > 0);
-    }
-}
-
-template <>
-inline void qt_memfill_template(quint16 *dest, quint16 value, int count)
-{
-    if (count < 3) {
-        switch (count) {
-        case 2: *dest++ = value;
-        case 1: *dest = value;
-        }
-        return;
-    }
-
-    const int align = (quintptr)(dest) & 0x3;
-    switch (align) {
-    case 2: *dest++ = value; --count;
-    }
-
-    const quint32 value32 = (value << 16) | value;
-    qt_memfill(reinterpret_cast<quint32*>(dest), value32, count / 2);
-    if (count & 0x1)
-        dest[count - 1] = value;
-}
-#endif
 
 static void qt_memfill_quint16(quint16 *dest, quint16 color, int count)
 {

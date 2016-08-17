@@ -69,9 +69,7 @@
 QT_BEGIN_NAMESPACE
 
 class QMimeData;
-
 class QPlainTextEdit;
-class ExtraArea;
 
 class QPlainTextEditControl : public QTextControl
 {
