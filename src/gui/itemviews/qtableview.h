@@ -164,9 +164,6 @@ protected:
     int sizeHintForRow(int row) const;
     int sizeHintForColumn(int column) const;
 
-    void verticalScrollbarAction(int action);
-    void horizontalScrollbarAction(int action);
-
     bool isIndexHidden(const QModelIndex &index) const;
 
     void selectionChanged(const QItemSelection &selected,

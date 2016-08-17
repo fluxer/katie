@@ -2181,7 +2181,7 @@ int QTableView::sizeHintForRow(int row) const
             option.rect.setX(columnViewportPosition(index.column()));
             option.rect.setWidth(columnWidth(index.column()));
         }
-        
+
         QWidget *editor = d->editorForIndex(index).widget.data();
         if (editor && d->persistent.contains(editor)) {
             hint = qMax(hint, editor->sizeHint().height());
@@ -2189,7 +2189,7 @@ int QTableView::sizeHintForRow(int row) const
             int max = editor->maximumSize().height();
             hint = qBound(min, hint, max);
         }
-        
+
         hint = qMax(hint, itemDelegate(index)->sizeHint(option, index).height());
     }
 
@@ -2234,7 +2234,7 @@ int QTableView::sizeHintForColumn(int column) const
         if (d->verticalHeader->isSectionHidden(logicalRow))
             continue;
         index = d->model->index(logicalRow, column, d->root);
-        
+
         QWidget *editor = d->editorForIndex(index).widget.data();
         if (editor && d->persistent.contains(editor)) {
             hint = qMax(hint, editor->sizeHint().width());
@@ -2242,7 +2242,7 @@ int QTableView::sizeHintForColumn(int column) const
             int max = editor->maximumSize().width();
             hint = qBound(min, hint, max);
         }
-        
+
         hint = qMax(hint, itemDelegate(index)->sizeHint(option, index).width());
     }
 
@@ -2979,22 +2979,6 @@ void QTableView::sortByColumn(int column, Qt::SortOrder order)
     Q_D(QTableView);
     d->horizontalHeader->setSortIndicator(column, order);
     sortByColumn(column);
-}
-
-/*!
-    \internal
-*/
-void QTableView::verticalScrollbarAction(int action)
-{
-    QAbstractItemView::verticalScrollbarAction(action);
-}
-
-/*!
-    \internal
-*/
-void QTableView::horizontalScrollbarAction(int action)
-{
-    QAbstractItemView::horizontalScrollbarAction(action);
 }
 
 /*!
