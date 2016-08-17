@@ -48,7 +48,6 @@ void unlockAtomicallyInitializedStaticMutex() { }
 
 #include "CurrentTime.h"
 #include "HashMap.h"
-#include "RandomNumberSeed.h"
 
 namespace WTF {
 
@@ -158,7 +157,6 @@ void initializeThreading()
     if (!atomicallyInitializedStaticMutex) {
         atomicallyInitializedStaticMutex = new Mutex;
         threadMapMutex();
-        initializeRandomNumberGenerator();
         QThread* mainThread = QCoreApplication::instance()->thread();
         mainThreadIdentifier = identifierByQthreadHandle(mainThread);
         if (!mainThreadIdentifier)
