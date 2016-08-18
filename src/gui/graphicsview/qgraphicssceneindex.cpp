@@ -61,7 +61,6 @@
 #include "qgraphicsscene_p.h"
 #include "qgraphicswidget.h"
 #include "qgraphicssceneindex_p.h"
-#include "qgraphicsscenebsptreeindex_p.h"
 
 #ifndef QT_NO_GRAPHICSVIEW
 

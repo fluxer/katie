@@ -55,7 +55,6 @@
 
 #include "qpaintengineex_p.h"
 #include "QtGui/qpainterpath.h"
-#include "qdatabuffer_p.h"
 #include "qdrawhelper_p.h"
 #include "qpaintengine_p.h"
 #include "qrasterizer_p.h"
@@ -68,7 +67,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QOutlineMapper;
 class QRasterPaintEnginePrivate;
 class QRasterBuffer;
 class QClipData;
@@ -286,8 +284,8 @@ public:
 
     void rasterizeLine_dashed(QLineF line, qreal width,
                               int *dashIndex, qreal *dashOffset, bool *inDash);
-    void rasterize(QT_FT_Outline *outline, ProcessSpans callback, QSpanData *spanData, QRasterBuffer *rasterBuffer);
-    void rasterize(QT_FT_Outline *outline, ProcessSpans callback, void *userData, QRasterBuffer *rasterBuffer);
+    void rasterize(QT_FT_Outline *outline, ProcessSpans callback, QSpanData *spanData);
+    void rasterize(QT_FT_Outline *outline, ProcessSpans callback, void *userData);
     void updateMatrixData(QSpanData *spanData, const QBrush &brush, const QTransform &brushMatrix);
 
     void systemStateChanged();
@@ -332,7 +330,6 @@ public:
 
     QT_FT_Raster* grayRaster;
 
-    QDataBuffer<QLineF> cachedLines;
     QSpanData image_filler;
     QSpanData image_filler_xform;
     QSpanData solid_color_filler;

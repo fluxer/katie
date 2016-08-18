@@ -94,7 +94,6 @@ public:
         m_points(0),
         m_tags(0),
         m_contours(0),
-        m_polygon_dev(0),
         m_in_clip_elements(false)
     {
     }
@@ -212,7 +211,6 @@ public:
     QDataBuffer<int> m_contours;
 
     QRect m_clip_rect;
-    QDataBuffer<QPointF> m_polygon_dev;
 
     QRectF controlPointRect; // only valid after endOutline()
 

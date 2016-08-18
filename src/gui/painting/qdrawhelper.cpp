@@ -2818,7 +2818,7 @@ void QT_FASTCALL rasterop_SourceAndNotDestination(uint *dest,
     }
 }
 
-static const CompositionFunctionSolid functionForModeSolid_C[] = {
+static const CompositionFunctionSolid functionForModeSolid[] = {
         comp_func_solid_SourceOver,
         comp_func_solid_DestinationOver,
         comp_func_solid_Clear,
@@ -2854,9 +2854,7 @@ static const CompositionFunctionSolid functionForModeSolid_C[] = {
         rasterop_solid_SourceAndNotDestination
 };
 
-static const CompositionFunctionSolid *functionForModeSolid = functionForModeSolid_C;
-
-static const CompositionFunction functionForMode_C[] = {
+static const CompositionFunction functionForMode[] = {
         comp_func_SourceOver,
         comp_func_DestinationOver,
         comp_func_Clear,
@@ -2891,8 +2889,6 @@ static const CompositionFunction functionForMode_C[] = {
         rasterop_NotSourceAndDestination,
         rasterop_SourceAndNotDestination
 };
-
-static const CompositionFunction *functionForMode = functionForMode_C;
 
 static TextureBlendType getBlendType(const QSpanData *data)
 {
@@ -6136,42 +6132,6 @@ static void qt_alphamapblit_quint16(QRasterBuffer *rasterBuffer,
     }
 }
 
-void qt_build_pow_tables() {
-    qreal smoothing = qreal(1.7);
-
-#ifdef Q_WS_MAC
-    // decided by testing a few things on an iMac, should probably get this from the
-    // system...
-    smoothing = qreal(2.0);
-#endif
-
-#ifdef Q_WS_WIN
-    extern qreal qt_fontsmoothing_gamma; // qapplication_win.cpp
-    smoothing = qt_fontsmoothing_gamma;
-#endif
-
-#ifdef Q_WS_X11
-    Q_UNUSED(smoothing);
-    for (int i=0; i<256; ++i) {
-        qt_pow_rgb_gamma[i] = uchar(i);
-        qt_pow_rgb_invgamma[i] = uchar(i);
-    }
-#else
-    for (int i=0; i<256; ++i) {
-        qt_pow_rgb_gamma[i] = uchar(qRound(qPow(i / qreal(255.0), smoothing) * 255));
-        qt_pow_rgb_invgamma[i] = uchar(qRound(qPow(i / qreal(255.), 1 / smoothing) * 255));
-    }
-#endif
-
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    const qreal gray_gamma = 2.31;
-    for (int i=0; i<256; ++i)
-        qt_pow_gamma[i] = uint(qRound(qPow(i / qreal(255.), gray_gamma) * 2047));
-    for (int i=0; i<2048; ++i)
-        qt_pow_invgamma[i] = uchar(qRound(qPow(i / qreal(2047.0), 1 / gray_gamma) * 255));
-#endif
-}
-
 static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int sb)
 {
     // Do a gray alphablend...
@@ -6568,47 +6528,41 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     }
 };
 
-
-template <class DST, class SRC>
-inline void qt_memfill_template(DST *dest, SRC color, int count)
-{
-    const DST c = qt_colorConvert<DST, SRC>(color, 0);
-    while (count--)
-        *dest++ = c;
-}
-
-static void qt_memfill_quint16(quint16 *dest, quint16 color, int count)
-{
-    qt_memfill_template<quint16, quint16>(dest, color, count);
-}
-
-typedef void (*qt_memfill32_func)(quint32 *dest, quint32 value, int count);
-typedef void (*qt_memfill16_func)(quint16 *dest, quint16 value, int count);
-static void qt_memfill32_setup(quint32 *dest, quint32 value, int count);
-static void qt_memfill16_setup(quint16 *dest, quint16 value, int count);
-
-qt_memfill32_func qt_memfill32 = qt_memfill32_setup;
-qt_memfill16_func qt_memfill16 = qt_memfill16_setup;
-
 void qInitDrawhelperAsm()
 {
+    qreal smoothing = qreal(1.7);
 
-    qt_memfill32 = qt_memfill_template<quint32, quint32>;
-    qt_memfill16 = qt_memfill_quint16; //qt_memfill_template<quint16, quint16>;
+#ifdef Q_WS_MAC
+    // decided by testing a few things on an iMac, should probably get this from the
+    // system...
+    smoothing = qreal(2.0);
+#endif
 
-    qt_build_pow_tables();
-}
+#ifdef Q_WS_WIN
+    extern qreal qt_fontsmoothing_gamma; // qapplication_win.cpp
+    smoothing = qt_fontsmoothing_gamma;
+#endif
 
-static void qt_memfill32_setup(quint32 *dest, quint32 value, int count)
-{
-    qInitDrawhelperAsm();
-    qt_memfill32(dest, value, count);
-}
+#ifdef Q_WS_X11
+    Q_UNUSED(smoothing);
+    for (int i=0; i<256; ++i) {
+        qt_pow_rgb_gamma[i] = uchar(i);
+        qt_pow_rgb_invgamma[i] = uchar(i);
+    }
+#else
+    for (int i=0; i<256; ++i) {
+        qt_pow_rgb_gamma[i] = uchar(qRound(qPow(i / qreal(255.0), smoothing) * 255));
+        qt_pow_rgb_invgamma[i] = uchar(qRound(qPow(i / qreal(255.), 1 / smoothing) * 255));
+    }
+#endif
 
-static void qt_memfill16_setup(quint16 *dest, quint16 value, int count)
-{
-    qInitDrawhelperAsm();
-    qt_memfill16(dest, value, count);
+#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
+    const qreal gray_gamma = 2.31;
+    for (int i=0; i<256; ++i)
+        qt_pow_gamma[i] = uint(qRound(qPow(i / qreal(255.), gray_gamma) * 2047));
+    for (int i=0; i<2048; ++i)
+        qt_pow_invgamma[i] = uchar(qRound(qPow(i / qreal(2047.0), 1 / gray_gamma) * 255));
+#endif
 }
 
 QT_END_NAMESPACE

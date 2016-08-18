@@ -192,8 +192,7 @@ static void qt_ft_outline_cubic_to(qfixed c1x, qfixed c1y,
 
 
 QRasterPaintEnginePrivate::QRasterPaintEnginePrivate() :
-    QPaintEngineExPrivate(),
-    cachedLines(0)
+    QPaintEngineExPrivate()
 {
     // The antialiasing raster.
     grayRaster = new QT_FT_Raster;
@@ -892,9 +891,9 @@ void QRasterPaintEnginePrivate::drawImage(const QPointF &pt,
 
     Q_ASSERT(img.depth() >= 8);
 
-    int srcBPL = img.bytesPerLine();
+    const int srcBPL = img.bytesPerLine();
     const uchar *srcBits = img.bits();
-    int srcSize = img.depth() >> 3; // This is the part that is incompatible with lower than 8-bit..
+    const int srcSize = img.depth() >> 3; // This is the part that is incompatible with lower than 8-bit..
     int iw = img.width();
     int ih = img.height();
 
@@ -985,26 +984,24 @@ void QRasterPaintEnginePrivate::updateMatrixData(QSpanData *spanData, const QBru
 
     if (b.d->transform.type() > QTransform::TxNone) { // FALCON: optimize
         spanData->setupMatrix(b.transform() * m, bilinear);
+    } else if (m.type() <= QTransform::TxTranslate) {
+        // specialize setupMatrix for translation matrices
+        // to avoid needless matrix inversion
+        spanData->m11 = 1;
+        spanData->m12 = 0;
+        spanData->m13 = 0;
+        spanData->m21 = 0;
+        spanData->m22 = 1;
+        spanData->m23 = 0;
+        spanData->m33 = 1;
+        spanData->dx = -m.dx();
+        spanData->dy = -m.dy();
+        spanData->txop = m.type();
+        spanData->bilinear = bilinear;
+        spanData->fast_matrix = qAbs(m.dx()) < 1e4 && qAbs(m.dy()) < 1e4;
+        spanData->adjustSpanMethods();
     } else {
-        if (m.type() <= QTransform::TxTranslate) {
-            // specialize setupMatrix for translation matrices
-            // to avoid needless matrix inversion
-            spanData->m11 = 1;
-            spanData->m12 = 0;
-            spanData->m13 = 0;
-            spanData->m21 = 0;
-            spanData->m22 = 1;
-            spanData->m23 = 0;
-            spanData->m33 = 1;
-            spanData->dx = -m.dx();
-            spanData->dy = -m.dy();
-            spanData->txop = m.type();
-            spanData->bilinear = bilinear;
-            spanData->fast_matrix = qAbs(m.dx()) < 1e4 && qAbs(m.dy()) < 1e4;
-            spanData->adjustSpanMethods();
-        } else {
-            spanData->setupMatrix(m, bilinear);
-        }
+        spanData->setupMatrix(m, bilinear);
     }
 }
 
@@ -1036,7 +1033,7 @@ static void checkClipRatios(QRasterPaintEnginePrivate *d)
 }
 #endif
 
-static void qrasterpaintengine_state_setNoClip(QRasterPaintEngineState *s)
+static inline void qrasterpaintengine_state_setNoClip(QRasterPaintEngineState *s)
 {
     if (s->flags.has_clip_ownership)
         delete s->clip;
@@ -1128,7 +1125,7 @@ void QRasterPaintEngine::clip(const QVectorPath &path, Qt::ClipOperation op)
         newClip->initialize();
         ClipData clipData = { base, newClip, isectOp };
         ensureOutlineMapper();
-        d->rasterize(d->outlineMapper->convertPath(path), qt_span_clip, &clipData, 0);
+        d->rasterize(d->outlineMapper->convertPath(path), qt_span_clip, &clipData);
 
         newClip->fixup();
 
@@ -1317,7 +1314,7 @@ void QRasterPaintEngine::fillPath(const QPainterPath &path, QSpanData *fillData)
     }
 
     ensureOutlineMapper();
-    d->rasterize(d->outlineMapper->convertPath(path), blend, fillData, d->rasterBuffer.data());
+    d->rasterize(d->outlineMapper->convertPath(path), blend, fillData);
 }
 
 static void fillRect_normalized(const QRect &r, QSpanData *data,
@@ -1625,7 +1622,7 @@ void QRasterPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
 //         }
 
     ensureOutlineMapper();
-    d->rasterize(d->outlineMapper->convertPath(path), blend, &s->brushData, d->rasterBuffer.data());
+    d->rasterize(d->outlineMapper->convertPath(path), blend, &s->brushData);
 }
 
 void QRasterPaintEngine::fillRect(const QRectF &r, QSpanData *data)
@@ -1727,7 +1724,7 @@ void QRasterPaintEngine::fillPolygon(const QPointF *points, int pointCount, Poly
     // scanconvert.
     ProcessSpans brushBlend = d->getBrushFunc(d->outlineMapper->controlPointRect,
                                               &s->brushData);
-    d->rasterize(outline, brushBlend, &s->brushData, d->rasterBuffer.data());
+    d->rasterize(outline, brushBlend, &s->brushData);
 }
 
 /*!
@@ -1808,7 +1805,7 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
             // scanconvert.
             ProcessSpans brushBlend = d->getBrushFunc(d->outlineMapper->controlPointRect,
                                                       &s->brushData);
-            d->rasterize(d->outlineMapper->outline(), brushBlend, &s->brushData, d->rasterBuffer.data());
+            d->rasterize(d->outlineMapper->outline(), brushBlend, &s->brushData);
         }
     }
 
@@ -3214,7 +3211,7 @@ void QRasterPaintEnginePrivate::initializeRasterizer(QSpanData *data)
 
 void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                                           ProcessSpans callback,
-                                          QSpanData *spanData, QRasterBuffer *rasterBuffer)
+                                          QSpanData *spanData)
 {
     if (!callback || !outline)
         return;
@@ -3233,12 +3230,12 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
         return;
     }
 
-    rasterize(outline, callback, (void *)spanData, rasterBuffer);
+    rasterize(outline, callback, (void *)spanData);
 }
 
 void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                                           ProcessSpans callback,
-                                          void *userData, QRasterBuffer *)
+                                          void *userData)
 {
     if (!callback || !outline)
         return;

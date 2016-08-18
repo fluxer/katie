@@ -299,9 +299,9 @@ struct QSpanData
         RadialGradient,
         ConicalGradient,
         Texture
-    } type : 8;
-    int txop : 8;
-    int fast_matrix : 1;
+    } type;
+    int txop;
+    int fast_matrix;
     bool bilinear;
     QImage *tempImage;
     union {
@@ -353,14 +353,16 @@ static inline qreal qRadialDeterminant(qreal a, qreal b, qreal c)
     return (b * b) - (4 * a * c);
 }
 
+template <class DST, class SRC>
+void qt_memfill(DST *dest, SRC value, int count);
+
 template <class RadialFetchFunc>
 const uint * QT_FASTCALL qt_fetch_radial_gradient_template(uint *buffer, const Operator *op, const QSpanData *data,
                                                            int y, int x, int length)
 {
     // avoid division by zero
     if (qFuzzyIsNull(op->radial.a)) {
-        extern void (*qt_memfill32)(quint32 *dest, quint32 value, int count);
-        qt_memfill32(buffer, 0, length);
+        qt_memfill(buffer, 0, length);
         return buffer;
     }
 
@@ -444,90 +446,6 @@ const uint * QT_FASTCALL qt_fetch_radial_gradient_template(uint *buffer, const O
 
     return b;
 }
-
-template <class Simd>
-class QRadialFetchSimd
-{
-public:
-    static void fetch(uint *buffer, uint *end, const Operator *op, const QSpanData *data, qreal det,
-                      qreal delta_det, qreal delta_delta_det, qreal b, qreal delta_b)
-    {
-        typename Simd::Vect_buffer_f det_vec;
-        typename Simd::Vect_buffer_f delta_det4_vec;
-        typename Simd::Vect_buffer_f b_vec;
-
-        for (int i = 0; i < 4; ++i) {
-            det_vec.f[i] = det;
-            delta_det4_vec.f[i] = 4 * delta_det;
-            b_vec.f[i] = b;
-
-            det += delta_det;
-            delta_det += delta_delta_det;
-            b += delta_b;
-        }
-
-        const typename Simd::Float32x4 v_delta_delta_det16 = Simd::v_dup(16 * delta_delta_det);
-        const typename Simd::Float32x4 v_delta_delta_det6 = Simd::v_dup(6 * delta_delta_det);
-        const typename Simd::Float32x4 v_delta_b4 = Simd::v_dup(4 * delta_b);
-
-        const typename Simd::Float32x4 v_r0 = Simd::v_dup(data->gradient.radial.focal.radius);
-        const typename Simd::Float32x4 v_dr = Simd::v_dup(op->radial.dr);
-
-        const typename Simd::Float32x4 v_min = Simd::v_dup(0.0f);
-        const typename Simd::Float32x4 v_max = Simd::v_dup(float(GRADIENT_STOPTABLE_SIZE-1));
-        const typename Simd::Float32x4 v_half = Simd::v_dup(0.5f);
-
-        const typename Simd::Int32x4 v_repeat_mask = Simd::v_dup(~(uint(0xffffff) << GRADIENT_STOPTABLE_SIZE_SHIFT));
-        const typename Simd::Int32x4 v_reflect_mask = Simd::v_dup(~(uint(0xffffff) << (GRADIENT_STOPTABLE_SIZE_SHIFT+1)));
-
-        const typename Simd::Int32x4 v_reflect_limit = Simd::v_dup(2 * GRADIENT_STOPTABLE_SIZE - 1);
-
-        const int extended_mask = op->radial.extended ? 0x0 : ~0x0;
-
-#define FETCH_RADIAL_LOOP_PROLOGUE \
-        while (buffer < end) { \
-            typename Simd::Vect_buffer_i v_buffer_mask; \
-            v_buffer_mask.v = Simd::v_greaterOrEqual(det_vec.v, v_min); \
-            const typename Simd::Float32x4 v_index_local = Simd::v_sub(Simd::v_sqrt(Simd::v_max(v_min, det_vec.v)), b_vec.v); \
-            const typename Simd::Float32x4 v_index = Simd::v_add(Simd::v_mul(v_index_local, v_max), v_half); \
-            v_buffer_mask.v = Simd::v_and(v_buffer_mask.v, Simd::v_greaterOrEqual(Simd::v_add(v_r0, Simd::v_mul(v_dr, v_index_local)), v_min)); \
-            typename Simd::Vect_buffer_i index_vec;
-#define FETCH_RADIAL_LOOP_CLAMP_REPEAT \
-            index_vec.v = Simd::v_and(v_repeat_mask, Simd::v_toInt(v_index));
-#define FETCH_RADIAL_LOOP_CLAMP_REFLECT \
-            const typename Simd::Int32x4 v_index_i = Simd::v_and(v_reflect_mask, Simd::v_toInt(v_index)); \
-            const typename Simd::Int32x4 v_index_i_inv = Simd::v_sub(v_reflect_limit, v_index_i); \
-            index_vec.v = Simd::v_min_16(v_index_i, v_index_i_inv);
-#define FETCH_RADIAL_LOOP_CLAMP_PAD \
-            index_vec.v = Simd::v_toInt(Simd::v_min(v_max, Simd::v_max(v_min, v_index)));
-#define FETCH_RADIAL_LOOP_EPILOGUE \
-            det_vec.v = Simd::v_add(Simd::v_add(det_vec.v, delta_det4_vec.v), v_delta_delta_det6); \
-            delta_det4_vec.v = Simd::v_add(delta_det4_vec.v, v_delta_delta_det16); \
-            b_vec.v = Simd::v_add(b_vec.v, v_delta_b4); \
-            for (int i = 0; i < 4; ++i) \
-                *buffer++ = (extended_mask | v_buffer_mask.i[i]) & data->gradient.colorTable[index_vec.i[i]]; \
-        }
-
-#define FETCH_RADIAL_LOOP(FETCH_RADIAL_LOOP_CLAMP) \
-        FETCH_RADIAL_LOOP_PROLOGUE \
-        FETCH_RADIAL_LOOP_CLAMP \
-        FETCH_RADIAL_LOOP_EPILOGUE
-
-        switch (data->gradient.spread) {
-        case QGradient::RepeatSpread:
-            FETCH_RADIAL_LOOP(FETCH_RADIAL_LOOP_CLAMP_REPEAT)
-            break;
-        case QGradient::ReflectSpread:
-            FETCH_RADIAL_LOOP(FETCH_RADIAL_LOOP_CLAMP_REFLECT)
-            break;
-        case QGradient::PadSpread:
-            FETCH_RADIAL_LOOP(FETCH_RADIAL_LOOP_CLAMP_PAD)
-            break;
-        default:
-            Q_ASSERT(false);
-        }
-    }
-};
 
 #if defined(Q_CC_RVCT)
 #  pragma push
@@ -1688,26 +1606,6 @@ qrgb444 qrgb444::byte_mul(quint8 a) const
 }
 
 template <class T>
-void qt_memfill(T *dest, T value, int count);
-
-template<> inline void qt_memfill(quint32 *dest, quint32 color, int count)
-{
-    extern void (*qt_memfill32)(quint32 *dest, quint32 value, int count);
-    qt_memfill32(dest, color, count);
-}
-
-template<> inline void qt_memfill(quint16 *dest, quint16 color, int count)
-{
-    extern void (*qt_memfill16)(quint16 *dest, quint16 value, int count);
-    qt_memfill16(dest, color, count);
-}
-
-template<> inline void qt_memfill(quint8 *dest, quint8 color, int count)
-{
-    memset(dest, color, count);
-}
-
-template <class T>
 inline void qt_memfill(T *dest, T value, int count)
 {
     if (!count)
@@ -1726,6 +1624,29 @@ inline void qt_memfill(T *dest, T value, int count)
     case 1:      *dest++ = value;
     } while (--n > 0);
     }
+}
+
+template <class DST, class SRC>
+inline void qt_memfill(DST *dest, SRC color, int count)
+{
+    const DST c = qt_colorConvert<DST, SRC>(color, 0);
+    while (count--)
+        *dest++ = c;
+}
+
+template<> inline void qt_memfill(quint32 *dest, quint32 color, int count)
+{
+    qt_memfill<quint32,quint32>(dest, color, count);
+}
+
+template<> inline void qt_memfill(quint16 *dest, quint16 color, int count)
+{
+    qt_memfill<quint16,quint16>(dest, color, count);
+}
+
+template<> inline void qt_memfill(quint8 *dest, quint8 color, int count)
+{
+    memset(dest, color, count);
 }
 
 template <class T>
