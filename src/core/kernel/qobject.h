@@ -99,7 +99,6 @@ public:
     uint sendChildEvents : 1;
     uint receiveChildEvents : 1;
     uint inThreadChangeEvent : 1;
-    uint hasGuards : 1; //true if there is one or more QPointer attached to this object
     int postedEvents;
     QMetaObject *metaObject; // assert dynamic
 };

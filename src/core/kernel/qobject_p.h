@@ -162,7 +162,6 @@ public:
     static inline void resetCurrentSender(QObject *receiver,
                                    Sender *currentSender,
                                    Sender *previousSender);
-    static void clearGuards(QObject *);
 
     static QObjectPrivate *get(QObject *o) {
         return o->d_func();
