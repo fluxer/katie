@@ -707,14 +707,6 @@ QApplication::QApplication(int &argc, char **argv, Type type , int _internal)
     : QCoreApplication(*new QApplicationPrivate(argc, argv, type, _internal))
 { Q_D(QApplication); d->construct(); }
 
-#if defined(Q_WS_X11) && !defined(QT_NO_EGL)
-static int qt_matchLibraryName(dl_phdr_info *info, size_t, void *data)
-{
-    const char *name = static_cast<const char *>(data);
-    return strstr(info->dlpi_name, name) != 0;
-}
-#endif
-
 /*!
     \internal
 */

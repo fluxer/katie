@@ -40,9 +40,8 @@
 ****************************************************************************/
 
 #include "qgl.h"
-#include <qt_x11_p.h>
-#include <qpixmap_x11_p.h>
 #include <qgl_p.h>
+#include <qpixmap_x11_p.h>
 #include <qpaintengine_opengl_p.h>
 #include "qgl_egl_p.h"
 #include "qcolormap.h"

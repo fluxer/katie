@@ -55,6 +55,11 @@
 
 QT_BEGIN_INCLUDE_NAMESPACE
 
+#if defined(Q_WS_X11)
+#   include <qtextstream.h>
+#   include <qt_x11_p.h>
+#endif
+
 #ifndef QT_NO_EGL
 #if defined(QT_OPENGL_ES_2)
 #   include <GLES2/gl2.h>
