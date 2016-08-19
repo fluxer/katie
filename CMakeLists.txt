@@ -476,7 +476,7 @@ if(NOT WITH_THREADS OR NOT THREADS_FOUND)
     katie_definition(-DQT_NO_THREAD)
 endif()
 
-if(NOT WTIH_EGL OR NOT EGL_FOUND)
+if(NOT WITH_EGL OR NOT EGL_FOUND)
     katie_definition(-DQT_NO_EGL)
 endif()
 
