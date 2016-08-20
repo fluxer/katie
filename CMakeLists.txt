@@ -681,6 +681,7 @@ katie_generate_obsolete(qtalgorithms.h QtCore qalgorithms.h)
 katie_generate_obsolete(qdbuspendingcallwatcher.h QtDBus qdbuspendingcall.h)
 # mixed headers
 katie_generate_obsolete(qmetaenum.h QtCore qmetaobject.h)
+katie_generate_obsolete(qmetamethod.h QtCore qmetaobject.h)
 katie_generate_obsolete(qlistiterator.h QtCore qlist.h)
 katie_generate_obsolete(qvariantmap.h QtCore qvariant.h)
 katie_generate_obsolete(qvariantlist.h QtCore qvariant.h)

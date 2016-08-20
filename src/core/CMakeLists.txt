@@ -80,7 +80,6 @@ set(CORE_PUBLIC_HEADERS
     QPoint
     QVariantHash
     QXmlStreamEntityDeclarations
-    QMetaMethod
     QByteArray
     QWriteLocker
     QHashData
@@ -252,6 +251,7 @@ set(CORE_PUBLIC_HEADERS
     QDate
     QTime
     QListIterator
+    QMetaMethod
     # obsolete
     QFlags
 )
