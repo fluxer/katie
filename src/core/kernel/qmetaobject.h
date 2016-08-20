@@ -49,9 +49,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-template <typename T> class QList;
-
 class Q_CORE_EXPORT QMetaMethod
 {
 public:
