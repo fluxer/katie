@@ -55,7 +55,6 @@ set(GUI_PUBLIC_HEADERS
     QDialogButtonBox
     QDirModel
     QDockWidget
-    QDoubleSpinBox
     QDrag
     QDragResponseEvent
     QErrorMessage
@@ -111,7 +110,6 @@ set(GUI_PUBLIC_HEADERS
     QGridLayout
     QGroupBox
     QGtkStyle
-    QHBoxLayout
     QHeaderView
     QIcon
     QIconDragEvent
@@ -237,7 +235,6 @@ set(GUI_PUBLIC_HEADERS
     QSlider
     QSortFilterProxyModel
     QSound
-    QSpacerItem
     QSpinBox
     QSplashScreen
     QSplitter
@@ -335,7 +332,6 @@ set(GUI_PUBLIC_HEADERS
     QUnixPrintWidget
     QUpdateLaterEvent
     QValidator
-    QVBoxLayout
     QVector2D
     QVector3D
     QVector4D
@@ -379,6 +375,7 @@ set(GUI_PUBLIC_HEADERS
     QMouseEvent
     QKeyEvent
     QWheelEvent
+    QTouchEvent
     QDragEnterEvent
     QItemSelection
     QIntValidator
@@ -388,6 +385,10 @@ set(GUI_PUBLIC_HEADERS
     QTextFrame
     QTextListFormat
     QTextCharFormat
+    QSpacerItem
+    QVBoxLayout
+    QHBoxLayout
+    QDoubleSpinBox
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit

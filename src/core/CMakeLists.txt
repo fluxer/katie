@@ -78,7 +78,6 @@ set(CORE_PUBLIC_HEADERS
     QHashDummyValue
     QFutureWatcherBase
     QPoint
-    QVariantHash
     QXmlStreamEntityDeclarations
     QByteArray
     QWriteLocker
@@ -90,9 +89,7 @@ set(CORE_PUBLIC_HEADERS
     QtConcurrentRun
     QSignalMapper
     QEventLoop
-    QMetaEnum
     QHashNode
-    QMutexLocker
     QDataStream
     QPointF
     QAbstractFileEngineIterator
@@ -153,7 +150,6 @@ set(CORE_PUBLIC_HEADERS
     QXmlStreamReader
     QForeachContainer
     QtCleanUpFunction
-    QScopedArrayPointer
     QSharedPointer
     QInternal
     QSize
@@ -241,6 +237,7 @@ set(CORE_PUBLIC_HEADERS
     # mixed
     QVariantMap
     QVariantList
+    QVariantHash
     QAbstractListModel
     QAbstractTableModel
     QProcessEnvironment
@@ -252,6 +249,9 @@ set(CORE_PUBLIC_HEADERS
     QTime
     QListIterator
     QMetaMethod
+    QMetaEnum
+    QMutexLocker
+    QScopedArrayPointer
     # obsolete
     QFlags
 )

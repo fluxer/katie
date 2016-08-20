@@ -3,6 +3,11 @@ set(EXTRA_XML_LIBS KtCore)
 
 set(XML_PUBLIC_HEADERS
     ${XML_PUBLIC_HEADERS}
+    # mixed
+    QDomDocument
+    QDomElement
+    QDomNode
+    QDomNodeList
     QDomCDATASection
     QDomCharacterData
     QDomComment
@@ -12,7 +17,6 @@ set(XML_PUBLIC_HEADERS
     QDomEntityReference
     QDomImplementation
     QDomNamedNodeMap
-    QDomNodeList
     QDomNotation
     QDomProcessingInstruction
     QDomText
@@ -24,21 +28,7 @@ set(XML_PUBLIC_HEADERS
     QXmlLocator
     QXmlNamespaceSupport
     QXmlReader
-    QXmlStreamAttributes
-    QXmlStreamEntityDeclaration
-    QXmlStreamEntityDeclarations
-    QXmlStreamEntityResolver
-    QXmlStreamNamespaceDeclaration
-    QXmlStreamNamespaceDeclarations
-    QXmlStreamNotationDeclaration
-    QXmlStreamNotationDeclarations
-    QXmlStreamReader
-    QXmlStreamStringRef
-    QXmlStreamWriter
-    # mixed
-    QDomDocument
-    QDomElement
-    QDomNode
+    # TODO: figure out what to do with QXmlStream, the classes are now in core
 )
 
 include(dom/dom.cmake)

@@ -10,26 +10,17 @@ set(NETWORK_PUBLIC_HEADERS
     QHostAddress
     QHostInfo
     QHttp
-    QHttpHeader
-    QHttpMultiPart
-    QHttpPart
-    QHttpRequestHeader
-    QHttpResponseHeader
     Q_IPV6ADDR
     QIPv6Address
     QLocalServer
     QLocalSocket
     QNetworkAccessManager
-    QNetworkCacheMetaData
     QNetworkConfiguration
-    QNetworkConfigurationManager
     QNetworkCookie
     QNetworkCookieJar
     QNetworkDiskCache
     QNetworkInterface
     QNetworkProxy
-    QNetworkProxyFactory
-    QNetworkProxyQuery
     QNetworkReply
     QNetworkRequest
     QNetworkSession
@@ -44,8 +35,17 @@ set(NETWORK_PUBLIC_HEADERS
     QTcpSocket
     QUdpSocket
     QUrlInfo
+    QHttpMultiPart
     # mixed
     QNetworkAddressEntry
+    QNetworkConfigurationManager
+    QNetworkCacheMetaData
+    QHttpHeader
+    QHttpPart
+    QHttpRequestHeader
+    QHttpResponseHeader
+    QNetworkProxyFactory
+    QNetworkProxyQuery
 )
 
 include(access/access.cmake)
