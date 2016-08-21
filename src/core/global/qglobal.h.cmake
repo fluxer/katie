@@ -888,6 +888,7 @@ namespace QT_NAMESPACE {}
  *  N2118 N2844 N3053 Q_COMPILER_RVALUE_REFS            __cpp_rvalue_references = 200610
  *  N2442           Q_COMPILER_UNICODE_STRINGS          __cpp_unicode_literals = 200710
  *  N2242 N2555     Q_COMPILER_VARIADIC_TEMPLATES       __cpp_variadic_templates = 200704
+ *  N2431           Q_COMPILER_NULLPTR
  *
  * For any future version of the C++ standard, we use only the SD-6 macro.
  * For full listing, see
@@ -909,6 +910,9 @@ namespace QT_NAMESPACE {}
 #      define Q_COMPILER_DEFAULT_DELETE_MEMBERS
 #      define Q_COMPILER_CLASS_ENUM
 #      define Q_COMPILER_LAMBDA
+#    endif
+#    if __INTEL_COMPILER >= 1210
+#      define Q_COMPILER_NULLPTR
 #    endif
 #  endif
 #endif
@@ -947,6 +951,9 @@ namespace QT_NAMESPACE {}
 #    if __has_feature(cxx_variadic_templates)
 #      define Q_COMPILER_VARIADIC_TEMPLATES
 #    endif
+#    if __has_feature(cxx_nullptr)
+#      define Q_COMPILER_NULLPTR
+#    endif
     /* Features that have no __has_feature() check */
 #    if ((__clang_major__ * 100) + __clang_minor__) >= 209 /* since clang 2.9 */
 #      define Q_COMPILER_EXTERN_TEMPLATES
@@ -979,6 +986,7 @@ namespace QT_NAMESPACE {}
 #    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 406
        /* C++0x features supported in GCC 4.6: */
 #      define Q_COMPILER_CONSTEXPR
+#      define Q_COMPILER_NULLPTR
 #    endif
 #  endif
 #endif
@@ -992,10 +1000,23 @@ namespace QT_NAMESPACE {}
 #      define Q_COMPILER_DECLTYPE
 #      define Q_COMPILER_LAMBDA
 #      define Q_COMPILER_RVALUE_REFS
+#      define Q_COMPILER_NULLPTR
 //  MSVC's library has std::initializer_list, but the compiler does not support the braces initialization
 //#      define Q_COMPILER_INITIALIZER_LISTS
 #    endif
 #  endif
+#endif
+
+#ifdef Q_COMPILER_CONSTEXPR
+# define Q_DECL_CONSTEXPR constexpr
+#else
+# define Q_DECL_CONSTEXPR
+#endif
+
+#ifdef Q_COMPILER_NULLPTR
+# define Q_NULLPTR nullptr
+#else
+# define Q_NULLPTR NULL
 #endif
 
 #ifndef Q_PACKED
@@ -1291,12 +1312,6 @@ redefine to built-in booleans to make autotests work properly */
 #  endif
 #else
 #  define QT_FASTCALL
-#endif
-
-#ifdef Q_COMPILER_CONSTEXPR
-# define Q_DECL_CONSTEXPR constexpr
-#else
-# define Q_DECL_CONSTEXPR
 #endif
 
 //defines the type for the WNDPROC on windows
