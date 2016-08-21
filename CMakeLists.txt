@@ -974,7 +974,20 @@ if(KATIE_PLATFORM STREQUAL "mac")
     katie_generate_obsolete(qmaccocoaviewcontainer.h QtGui qmaccocoaviewcontainer_mac.h)
 endif()
 katie_generate_obsolete(qttestgui.h QtTest qtest_gui.h)
-# those have shuffled from QtDesginer to QtUiTools
+# those have shuffled from QtXml to QtCore
+katie_generate_obsolete(qxmlstreamattribute.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamattributes.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamstringref.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamnotationdeclaration.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamnotationdeclarations.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamentitydeclaration.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamentitydeclarations.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamnamespacedeclaration.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamnamespacedeclarations.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamentityresolver.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamreader.h QtXml ../QtCore/qxmlstream.h)
+katie_generate_obsolete(qxmlstreamwriter.h QtXml ../QtCore/qxmlstream.h)
+# and those from QtDesginer to QtUiTools
 katie_generate_obsolete(customwidget.h QtDesginer ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 

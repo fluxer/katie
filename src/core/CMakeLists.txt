@@ -12,7 +12,6 @@ set(CORE_PUBLIC_HEADERS
     QTextDecoder
     QVectorData
     QBuffer
-    QXmlStreamStringRef
     QStringMatcher
     QFutureIterator
     QScopedPointer
@@ -24,7 +23,6 @@ set(CORE_PUBLIC_HEADERS
     QThreadStorage
     QTextStreamManipulator
     QMutableMapIterator
-    QXmlStreamNotationDeclaration
     QLinkedListNode
     QFutureInterfaceBase
     QLibrary
@@ -78,7 +76,6 @@ set(CORE_PUBLIC_HEADERS
     QHashDummyValue
     QFutureWatcherBase
     QPoint
-    QXmlStreamEntityDeclarations
     QByteArray
     QWriteLocker
     QHashData
@@ -131,7 +128,6 @@ set(CORE_PUBLIC_HEADERS
     QMutableListIterator
     QScopedPointerPodDeleter
     QTemporaryFile
-    QXmlStreamNamespaceDeclaration
     QQueue
     QMutex
     QMargins
@@ -143,11 +139,8 @@ set(CORE_PUBLIC_HEADERS
     QAbstractConcatenable
     QReadWriteLock
     QFileSystemWatcher
-    QXmlStreamEntityResolver
     QObjectList
-    QXmlStreamNotationDeclarations
     QContiguousCacheTypedData
-    QXmlStreamReader
     QForeachContainer
     QtCleanUpFunction
     QSharedPointer
@@ -163,7 +156,6 @@ set(CORE_PUBLIC_HEADERS
     QBasicAtomicPointer
     QPauseAnimation
     QMapData
-    QXmlStreamWriter
     QByteRef
     QIntegerForSize
     QStringRef
@@ -193,7 +185,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaType
     QVariant
     QFile
-    QXmlStreamEntityDeclaration
     QtConcurrentFilter
     QCache
     QLatin1String
@@ -219,7 +210,6 @@ set(CORE_PUBLIC_HEADERS
     QMutexData
     QSystemLocale
     QVectorTypedData
-    QXmlStreamNamespaceDeclarations
     QMapPayloadNode
     QBasicTimer
     QThread
@@ -254,6 +244,19 @@ set(CORE_PUBLIC_HEADERS
     QScopedArrayPointer
     # obsolete
     QFlags
+    # both in core and xml
+    QXmlStreamAttribute
+    QXmlStreamAttributes
+    QXmlStreamStringRef
+    QXmlStreamNotationDeclaration
+    QXmlStreamNotationDeclarations
+    QXmlStreamEntityDeclaration
+    QXmlStreamEntityDeclarations
+    QXmlStreamNamespaceDeclaration
+    QXmlStreamNamespaceDeclarations
+    QXmlStreamEntityResolver
+    QXmlStreamReader
+    QXmlStreamWriter
 )
 
 include(animation/animation.cmake)

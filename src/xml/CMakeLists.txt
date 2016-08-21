@@ -28,7 +28,19 @@ set(XML_PUBLIC_HEADERS
     QXmlLocator
     QXmlNamespaceSupport
     QXmlReader
-    # TODO: figure out what to do with QXmlStream, the classes are now in core
+    # both in core and xml
+    QXmlStreamAttribute
+    QXmlStreamAttributes
+    QXmlStreamStringRef
+    QXmlStreamNotationDeclaration
+    QXmlStreamNotationDeclarations
+    QXmlStreamEntityDeclaration
+    QXmlStreamEntityDeclarations
+    QXmlStreamNamespaceDeclaration
+    QXmlStreamNamespaceDeclarations
+    QXmlStreamEntityResolver
+    QXmlStreamReader
+    QXmlStreamWriter
 )
 
 include(dom/dom.cmake)
