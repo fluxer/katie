@@ -975,6 +975,7 @@ if(KATIE_PLATFORM STREQUAL "mac")
 endif()
 katie_generate_obsolete(qttestgui.h QtTest qtest_gui.h)
 # those have shuffled from QtXml to QtCore
+katie_generate_obsolete(qxmlstream.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamattribute.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamattributes.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamstringref.h QtXml ../QtCore/qxmlstream.h)
