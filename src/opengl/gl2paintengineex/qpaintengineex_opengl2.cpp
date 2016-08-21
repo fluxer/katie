@@ -77,7 +77,6 @@
 #include <qpainter_p.h>
 #include <qfontengine_p.h>
 #include <qpixmapdata_gl_p.h>
-#include <qdatabuffer_p.h>
 #include <qstatictext_p.h>
 #include <qtriangulator_p.h>
 

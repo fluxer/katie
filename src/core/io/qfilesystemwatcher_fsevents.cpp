@@ -51,7 +51,6 @@
 #include <qfile.h>
 #include <qdatetime.h>
 #include <qfileinfo.h>
-#include <qvarlengtharray.h>
 
 #include <mach/mach.h>
 #include <sys/types.h>

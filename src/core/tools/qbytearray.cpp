@@ -135,10 +135,10 @@ char *qstrcpy(char *dst, const char *src)
         return 0;
 #if defined(_MSC_VER) && _MSC_VER >= 1400
     int len = qstrlen(src);
-	// This is actually not secure!!! It will be fixed
-	// properly in a later release!
+    // This is actually not secure!!! It will be fixed
+    // properly in a later release!
     if (len >= 0 && strcpy_s(dst, len+1, src) == 0)
-	    return dst;
+        return dst;
     return 0;
 #else
     return strcpy(dst, src);

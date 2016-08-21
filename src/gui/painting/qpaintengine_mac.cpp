@@ -50,7 +50,6 @@
 #include <qstack.h>
 #include <qtextcodec.h>
 #include <qwidget.h>
-#include <qvarlengtharray.h>
 #include <qdebug.h>
 #include <qcoreapplication.h>
 #include <qmath.h>

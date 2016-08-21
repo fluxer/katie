@@ -78,8 +78,6 @@ protected:
     void onEntry(QEvent *event);
     void onExit(QEvent *event);
 
-    bool event(QEvent *e);
-
 private:
     Q_DISABLE_COPY(QHistoryState)
     Q_DECLARE_PRIVATE(QHistoryState)

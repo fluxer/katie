@@ -56,7 +56,6 @@
 
 #include "QtCore/qglobal.h"
 #include "QtCore/qatomic.h"
-#include <QtCore/qvarlengtharray.h>
 #include "qfont_p.h"
 
 #ifdef Q_WS_WIN

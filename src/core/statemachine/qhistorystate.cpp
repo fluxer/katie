@@ -217,14 +217,6 @@ void QHistoryState::onExit(QEvent *event)
     Q_UNUSED(event);
 }
 
-/*!
-  \reimp
-*/
-bool QHistoryState::event(QEvent *e)
-{
-    return QAbstractState::event(e);
-}
-
 #include "moc_qhistorystate.h"
 
 QT_END_NAMESPACE

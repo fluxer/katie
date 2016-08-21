@@ -64,7 +64,6 @@
 #include <QtCore/qpointer.h>
 #include <QtCore/qreadwritelock.h>
 #include <QtCore/qstringlist.h>
-#include <QtCore/qvarlengtharray.h>
 #include <QtCore/qvector.h>
 
 #include <qdbusmessage.h>

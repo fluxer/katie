@@ -44,7 +44,6 @@
 #include "qdebug.h"
 #include "qalgorithms.h"
 #include "qapplication.h"
-#include "qvarlengtharray.h" // here or earlier - workaround for VC++6
 #include "qthread.h"
 #include "qmutex.h"
 #include "qunicodetables_p.h"

@@ -46,7 +46,6 @@
 #include "qpainter.h"
 #include "qpixmap.h"
 #include "qpixmapfilter_p.h"
-#include "qvarlengtharray.h"
 
 #include "qapplication_p.h"
 #include "qgraphicssystem_p.h"

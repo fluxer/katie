@@ -201,7 +201,6 @@
 #include "qstring.h"
 #include "qstringlist.h"
 #include "qstack.h"
-#include "qvarlengtharray.h"
 #include "qdebug.h"
 #include "qlocale_tools_p.h"
 #ifndef QT_BOOTSTRAPPED

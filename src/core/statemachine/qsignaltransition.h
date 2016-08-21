@@ -73,8 +73,6 @@ protected:
     bool eventTest(QEvent *event);
     void onTransition(QEvent *event);
 
-    bool event(QEvent *e);
-
 private:
     Q_DISABLE_COPY(QSignalTransition)
     Q_DECLARE_PRIVATE(QSignalTransition)

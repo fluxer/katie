@@ -64,7 +64,6 @@
 
 #include <qpainter_p.h>
 #include "qpaintengine.h"
-#include "qvarlengtharray.h"
 #include <qpaintengine_raster_p.h>
 #include <qnativeimage_p.h>
 

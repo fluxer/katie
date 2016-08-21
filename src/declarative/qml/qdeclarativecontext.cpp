@@ -50,8 +50,7 @@
 #include "qdeclarativeglobalscriptclass_p.h"
 
 #include <qscriptengine.h>
-#include <QtCore/qvarlengtharray.h>
-#include <QtCore/qdebug.h>
+#include <qdebug.h>
 
 #include <qscriptdeclarativeclass_p.h>
 

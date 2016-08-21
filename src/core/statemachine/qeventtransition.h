@@ -73,8 +73,6 @@ protected:
     bool eventTest(QEvent *event);
     void onTransition(QEvent *event);
 
-    bool event(QEvent *e);
-
 protected:
     QEventTransition(QEventTransitionPrivate &dd, QState *parent);
     QEventTransition(QEventTransitionPrivate &dd, QObject *object,

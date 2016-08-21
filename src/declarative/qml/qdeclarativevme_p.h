@@ -57,7 +57,6 @@
 
 #include <QtCore/QString>
 #include <QtCore/QStack>
-#include <QtCore/QVarLengthArray>
 
 QT_BEGIN_NAMESPACE
 

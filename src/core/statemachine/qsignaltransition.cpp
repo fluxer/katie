@@ -236,14 +236,6 @@ void QSignalTransition::onTransition(QEvent *event)
     Q_UNUSED(event);
 }
 
-/*!
-  \reimp
-*/
-bool QSignalTransition::event(QEvent *e)
-{
-    return QAbstractTransition::event(e);
-}
-
 void QSignalTransitionPrivate::callOnTransition(QEvent *e)
 {
     Q_Q(QSignalTransition);

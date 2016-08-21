@@ -42,7 +42,6 @@
 #include "qdbuserror.h"
 
 #include <qdebug.h>
-#include <qvarlengtharray.h>
 
 #include "qdbusmessage.h"
 #include "qdbusmessage_p.h"

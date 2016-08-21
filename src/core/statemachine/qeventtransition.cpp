@@ -247,14 +247,6 @@ void QEventTransition::onTransition(QEvent *event)
     Q_UNUSED(event);
 }
 
-/*!
-  \reimp
-*/
-bool QEventTransition::event(QEvent *e)
-{
-    return QAbstractTransition::event(e);
-}
-
 QT_END_NAMESPACE
 
 #include "moc_qeventtransition.h"

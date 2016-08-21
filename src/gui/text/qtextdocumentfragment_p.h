@@ -61,7 +61,6 @@
 #include "QtCore/qlist.h"
 #include "QtCore/qmap.h"
 #include "QtCore/qpointer.h"
-#include "QtCore/qvarlengtharray.h"
 #include "QtCore/qdatastream.h"
 
 QT_BEGIN_NAMESPACE

@@ -127,14 +127,6 @@ void QFinalState::onExit(QEvent *event)
     Q_UNUSED(event);
 }
 
-/*!
-  \reimp
-*/
-bool QFinalState::event(QEvent *e)
-{
-    return QAbstractState::event(e);
-}
-
 #include "moc_qfinalstate.h"
 
 QT_END_NAMESPACE

@@ -47,7 +47,6 @@
 #include "qwidget.h"
 #include "qpointer.h"
 #include "qmetaobject.h"
-#include "qvarlengtharray.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -188,8 +188,7 @@ private:
 
     QDataBuffer<Line *> m_active;
 
-    template <typename T>
-    friend void qScanConvert(QScanConverter &d, T allVertical);
+    friend void qScanConvert(QScanConverter &d, bool allVertical);
 };
 
 class QRasterizerPrivate
@@ -271,7 +270,7 @@ void QScanConverter::emitSpans(int chunk)
 
 // split control points b[0] ... b[3] into
 // left (b[0] ... b[3]) and right (b[3] ... b[6])
-static void split(QT_FT_Vector *b)
+static inline void split(QT_FT_Vector *b)
 {
     b[6] = b[3];
 
@@ -305,18 +304,8 @@ static inline bool xOrder(const QScanConverter::Line *a, const QScanConverter::L
     return a->x < b->x;
 }
 
-template <bool B>
-struct QBoolToType
-{
-    inline bool operator()() const
-    {
-        return B;
-    }
-};
-
 // should be a member function but VC6 doesn't support member template functions
-template <typename T>
-void qScanConvert(QScanConverter &d, T allVertical)
+void qScanConvert(QScanConverter &d, bool allVertical)
 {
     if (!d.m_lines.size()) {
         d.m_active.reset();
@@ -327,7 +316,7 @@ void qScanConvert(QScanConverter &d, T allVertical)
     for (int y = d.m_lines.first().top; y <= d.m_bottom; ++y) {
         for (; line < d.m_lines.size() && d.m_lines.at(line).top == y; ++line) {
             // add node to active list
-            if (allVertical()) {
+            if (allVertical) {
                 QScanConverter::Line *l = &d.m_lines.at(line);
                 d.m_active.resize(d.m_active.size() + 1);
                 int j;
@@ -340,7 +329,7 @@ void qScanConvert(QScanConverter &d, T allVertical)
         }
 
         int numActive = d.m_active.size();
-        if (!allVertical()) {
+        if (!allVertical) {
         // use insertion sort instead of qSort, as the active edge list is quite small
         // and in the average case already sorted
             for (int i = 1; i < numActive; ++i) {
@@ -371,7 +360,7 @@ void qScanConvert(QScanConverter &d, T allVertical)
 
                 d.m_active.resize(--numActive);
                 --i;
-            } else if (!allVertical())
+            } else if (!allVertical)
                 node->x += node->delta;
         }
     }
@@ -391,10 +380,7 @@ void QScanConverter::end()
                 break;
             }
         }
-        if (allVertical)
-            qScanConvert(*this, QBoolToType<true>());
-        else
-            qScanConvert(*this, QBoolToType<false>());
+        qScanConvert(*this, allVertical);
     } else {
         for (int chunkTop = m_top; chunkTop <= m_bottom; chunkTop += CHUNK_SIZE) {
             prepareChunk();

@@ -202,14 +202,6 @@ QStateMachine *QAbstractState::machine() const
   been called).
 */
 
-/*!
-  \reimp
-*/
-bool QAbstractState::event(QEvent *e)
-{
-    return QObject::event(e);
-}
-
 #include "moc_qabstractstate.h"
 
 QT_END_NAMESPACE

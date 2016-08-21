@@ -51,7 +51,6 @@
 #include "qfile.h"
 #include "qdir.h"
 #include "qdatetime.h"
-#include "qvarlengtharray.h"
 
 #include <sys/mman.h>
 #include <stdlib.h>

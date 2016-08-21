@@ -59,7 +59,6 @@
 #include <qstringlist.h>
 #include <qaction.h>
 #include <qtextcodec.h>
-#include <qvarlengtharray.h>
 #include <qdesktopwidget.h>
 #include <stdlib.h>
 #include <qabstracteventdispatcher.h>

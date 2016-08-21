@@ -42,7 +42,6 @@
 #include "qpathclipper_p.h"
 
 #include <qbezier_p.h>
-#include <qdatabuffer_p.h>
 #include <qnumeric_p.h>
 #include <qmath.h>
 

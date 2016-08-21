@@ -50,7 +50,6 @@
 #include <qdebug.h>
 #include <qfile.h>
 #include <qsocketnotifier.h>
-#include <qvarlengtharray.h>
 
 #include <sys/types.h>
 #include <sys/event.h>

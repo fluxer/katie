@@ -59,7 +59,6 @@
 #include <qstatusbar.h>
 #include <qstring.h>
 #include <qstyle.h>
-#include <qvarlengtharray.h>
 #include <qstack.h>
 #include <qmap.h>
 #include <qtimer.h>

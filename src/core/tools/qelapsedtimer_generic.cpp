@@ -159,8 +159,7 @@ qint64 QElapsedTimer::msecsSinceReference() const
 */
 qint64 QElapsedTimer::msecsTo(const QElapsedTimer &other) const
 {
-    qint64 diff = other.t1 - t1;
-    return diff;
+    return other.t1 - t1;
 }
 
 /*!

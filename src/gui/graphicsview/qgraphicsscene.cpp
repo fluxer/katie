@@ -227,7 +227,6 @@
 #include <QtCore/qset.h>
 #include <QtCore/qstack.h>
 #include <QtCore/qtimer.h>
-#include <QtCore/qvarlengtharray.h>
 #include <QtCore/qmetaobject.h>
 #include <QtGui/qapplication.h>
 #include <QtGui/qdesktopwidget.h>

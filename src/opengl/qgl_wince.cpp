@@ -47,7 +47,6 @@
 #include <qevent.h>
 #include <qgl_p.h>
 #include <qcolormap.h>
-#include <qvarlengtharray.h>
 #include <qdebug.h>
 #include <qapplication.h>
 #include <qdesktopwidget>

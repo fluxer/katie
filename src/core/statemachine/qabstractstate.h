@@ -76,8 +76,6 @@ protected:
     virtual void onEntry(QEvent *event) = 0;
     virtual void onExit(QEvent *event) = 0;
 
-    bool event(QEvent *e);
-
 protected:
     QAbstractState(QAbstractStatePrivate &dd, QState *parent);
 

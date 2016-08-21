@@ -46,8 +46,7 @@
 #include <QtGui/qpainter.h>
 #include <QtGui/qpainterpath.h>
 #include <QtGui/qbezier_p.h>
-// FIXME: generate <QtGui/qdatabuffer_p.h>
-#include <qdatabuffer_p.h>
+#include <QtGui/qdatabuffer_p.h>
 #include <QtCore/qbitarray.h>
 #include <QtCore/qvarlengtharray.h>
 #include <QtCore/qqueue.h>
