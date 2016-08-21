@@ -461,7 +461,6 @@ void Generator::generateFunctions(QList<FunctionDef>& list, const char *functype
             flags |= AccessPublic;
         else if (f.access == FunctionDef::Protected)
             flags |= AccessProtected;
-            flags |= AccessProtected;
         if (f.wasCloned)
             flags |= MethodCloned;
         if (f.isScriptable)
