@@ -2486,6 +2486,11 @@ inline const QForeachContainer<T> *qForeachContainer(const QForeachContainerBase
 #  endif
 #endif
 
+#define Q_UNREACHABLE() \
+    do {\
+        Q_ASSERT_X(false, "Q_UNREACHABLE()", "Q_UNREACHABLE was reached");\
+    } while (0)
+
 #if 0
 /* tell gcc to use its built-in methods for some common functions */
 #if defined(QT_NO_DEBUG) && defined(Q_CC_GNU)
