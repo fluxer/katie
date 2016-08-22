@@ -39,14 +39,7 @@
 **
 ****************************************************************************/
 
-// ### 4.0: examine Q_EXPORT's below. The respective symbols had all
-// been in use (e.g. in the KDE wm) before the introduction of a version
-// map. One might want to turn some of them into proper public API and
-// provide a proper alternative for others. See also the exports in
-// qapplication_win.cpp, which suggest a unification.
-
 #include "qplatformdefs.h"
-
 #include "qcolormap.h"
 #include "qdesktopwidget.h"
 #include "qapplication.h"
@@ -86,7 +79,7 @@
 #include "qkde_p.h"
 #include "qthread_p.h"
 
-#if !defined (QT_NO_TABLET)
+#if !defined(QT_NO_TABLET)
 extern "C" {
 #   define class c_class  //XIproto.h has a name member named 'class' which the c++ compiler doesn't like
 #   include <wacomcfg.h>
@@ -5643,25 +5636,7 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
     // tell the session manager about our program in best POSIX style
     sm_setProperty(QString::fromLatin1(SmProgram), argument0);
     // tell the session manager about our user as well.
-    struct passwd *entryPtr = 0;
-#if defined(_POSIX_THREAD_SAFE_FUNCTIONS) && (_POSIX_THREAD_SAFE_FUNCTIONS - 0 > 0)
-    QVarLengthArray<char, 1024> buf(qMax<long>(sysconf(_SC_GETPW_R_SIZE_MAX), 1024L));
-    struct passwd entry;
-    while (getpwuid_r(geteuid(), &entry, buf.data(), buf.size(), &entryPtr) == ERANGE) {
-        if (buf.size() >= 32768) {
-            // too big already, fail
-            static char badusername[] = "";
-            entryPtr = &entry;
-            entry.pw_name = badusername;
-            break;
-        }
-
-        // retry with a bigger buffer
-        buf.resize(buf.size() * 2);
-    }
-#else
-    entryPtr = getpwuid(geteuid());
-#endif
+    struct passwd *entryPtr = getpwuid(geteuid());
     if (entryPtr)
         sm_setProperty(QString::fromLatin1(SmUserID), QString::fromLatin1(entryPtr->pw_name));
 
