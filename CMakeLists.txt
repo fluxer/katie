@@ -988,8 +988,8 @@ katie_generate_obsolete(qxmlstreamnamespacedeclarations.h QtXml ../QtCore/qxmlst
 katie_generate_obsolete(qxmlstreamentityresolver.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamreader.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamwriter.h QtXml ../QtCore/qxmlstream.h)
-# and those from QtDesginer to QtUiTools
-katie_generate_obsolete(customwidget.h QtDesginer ../QtUiTools/customwidget.h)
+# and those from QtDesigner to QtUiTools
+katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
 katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
