@@ -114,7 +114,6 @@ set(CORE_PUBLIC_HEADERS
     QEvent
     QVectorIterator
     QAnimationGroup
-    QLineF
     QGenericArgument
     QObjectData
     QTextEncoder
@@ -234,6 +233,7 @@ set(CORE_PUBLIC_HEADERS
     QModelIndex
     QSizeF
     QRectF
+    QLineF
     QWeakPointer
     QDate
     QTime

@@ -366,6 +366,7 @@ set(GUI_PUBLIC_HEADERS
     QX11EmbedWidget
     QMacStyle
     # mixed
+    QTextBlock
     QListWidgetItem
     QTreeWidgetItem
     QStandardItem

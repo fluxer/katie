@@ -30,6 +30,7 @@ incmap = {
         'QAtomicInt': 'qatomic.h',
         'QRectF': 'qrect.h',
         'QSizeF': 'qsize.h',
+        'QLineF': 'qline.h',
         'QBitRef': 'qbitarray.h',
         'QtAlgorithms': 'qalgorithms.h',
         'QAbstractListModel': 'qabstractitemmodel.h',
