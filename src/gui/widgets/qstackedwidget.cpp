@@ -330,12 +330,6 @@ int QStackedWidget::count() const
     return d_func()->layout->count();
 }
 
-/*! \reimp */
-bool QStackedWidget::event(QEvent *e)
-{
-    return QFrame::event(e);
-}
-
 QT_END_NAMESPACE
 
 
