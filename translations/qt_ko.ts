@@ -642,7 +642,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/qdesigner_utils.cpp" line="+788"/>
+        <location filename="../src/designer/shared/qdesigner_utils.cpp" line="+786"/>
         <source>Unable to launch %1.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -721,7 +721,7 @@
 <context>
     <name>DesignerMetaEnum</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_utils.cpp" line="-618"/>
+        <location filename="../src/designer/shared/qdesigner_utils.cpp" line="-616"/>
         <source>%1 is not a valid enumeration value of &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1018,7 +1018,7 @@
 <context>
     <name>MAC_APPLICATION_MENU</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2199"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
         <source>Services</source>
         <translation>서비스</translation>
     </message>
@@ -1237,7 +1237,7 @@
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+374"/>
+        <location filename="../src/gui/accessible/qaccessibleobject.cpp" line="+373"/>
         <source>Activate</source>
         <translation>활성화</translation>
     </message>
@@ -3514,7 +3514,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+99"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
         <location line="+1205"/>
         <source>Normal</source>
         <translation>일반</translation>
@@ -4329,7 +4329,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1984"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1983"/>
         <source>&amp;Undo</source>
         <translation>실행 취소(&amp;U)</translation>
     </message>
@@ -5999,7 +5999,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProgressDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+184"/>
+        <location filename="../src/gui/dialogs/qprogressdialog.cpp" line="+183"/>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
@@ -8622,7 +8622,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5646"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
         <source>*</source>
         <translation>*</translation>
     </message>

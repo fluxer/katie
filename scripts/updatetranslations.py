@@ -7,7 +7,7 @@ components = ('core', 'declarative', 'gui', 'multimedia', 'network', 'opengl',
     'designer')
 tools = ('lrelease', 'uic', 'moc', 'lupdate', 'idc', 'qcollectiongenerator',
     'rcc', 'lconvert', 'qhelpgenerator', 'qdbus', 'designer', 'qdbusviewer',
-    'qscript')
+    'qscript', 'qtconfig')
 cfiles = []
 tfiles = []
 
