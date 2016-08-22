@@ -1000,7 +1000,7 @@
 
     QT_FT_Vector*  point;
     QT_FT_Vector*  limit;
-    char*       tags;
+    char*          tags;
 
     int   n;         /* index of contour in outline     */
     int   first;     /* index of first point in contour */
@@ -1345,6 +1345,45 @@
   }
 
 
+  /**** RASTER OBJECT CREATION: In standalone mode, we simply use *****/
+  /****                         a static object.                  *****/
+
+  static int
+  gray_raster_new( QT_FT_Raster*  araster )
+  {
+    *araster = malloc(sizeof(TRaster));
+    if (!*araster) {
+        *araster = 0;
+        return ErrRaster_Memory_Overflow;
+    }
+    qt_ft_memset(*araster, 0, sizeof(TRaster));
+
+    return 0;
+  }
+
+
+  static void
+  gray_raster_reset( QT_FT_Raster  raster, char* pool_base )
+  {
+    PRaster  rast = (PRaster)raster;
+    if ( raster && pool_base )
+    {
+      rast->worker      = (PWorker)pool_base;
+      rast->buffer      = pool_base +
+                            ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
+                            ~( sizeof ( TCell ) - 1 ) );
+      rast->buffer_size = ( ( pool_base + RASTER_POOL_SIZE ) -
+                            rast->buffer ) & ~( sizeof ( TCell ) - 1 );
+      rast->band_size   = rast->buffer_size / ( sizeof ( TCell ) * 8 );
+    }
+    else
+    {
+      rast->buffer      = NULL;
+      rast->buffer_size = 0;
+      rast->worker      = NULL;
+    }
+  }
+
   static int
   gray_raster_render( QT_FT_Raster                  raster,
                       const QT_FT_Raster_Params*  params )
@@ -1394,45 +1433,6 @@
     ras.render_span_data = params->user;
 
     return gray_convert_glyph( worker );
-  }
-
-
-  /**** RASTER OBJECT CREATION: In standalone mode, we simply use *****/
-  /****                         a static object.                  *****/
-
-  static int
-  gray_raster_new( QT_FT_Raster*  araster )
-  {
-    *araster = malloc(sizeof(TRaster));
-    if (!*araster) {
-        *araster = 0;
-        return ErrRaster_Memory_Overflow;
-    }
-    qt_ft_memset(*araster, 0, sizeof(TRaster));
-
-    return 0;
-  }
-
-
-  static void
-  gray_raster_reset( QT_FT_Raster  raster )
-  {
-    PRaster  rast = (PRaster)raster;
-
-    if ( raster )
-    {
-      char pool_base[RASTER_POOL_SIZE];
-      PWorker  worker = (PWorker)pool_base;
-
-
-      rast->worker      = worker;
-      rast->buffer      = pool_base +
-                            ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
-                              ~( sizeof ( TCell ) - 1 ) );
-      rast->buffer_size = ( ( pool_base + RASTER_POOL_SIZE ) -
-                            rast->buffer ) & ~( sizeof ( TCell ) - 1 );
-      rast->band_size   = rast->buffer_size / ( sizeof ( TCell ) * 8 );
-    }
   }
 
   const QT_FT_Raster_Funcs  qt_ft_grays_raster =

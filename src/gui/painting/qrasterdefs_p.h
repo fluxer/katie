@@ -458,6 +458,7 @@ QT_FT_BEGIN_HEADER
   /* <Input>                                                               */
   /*    raster    :: A handle to the new raster object.                    */
   /*                                                                       */
+  /*    pool_base :: The address in memory of the render pool.             */
   /*                                                                       */
   /* <Note>                                                                */
   /*    Rasters can ignore the render pool and rely on dynamic memory      */
@@ -466,7 +467,7 @@ QT_FT_BEGIN_HEADER
   /*    recommended for efficiency purposes.                               */
   /*                                                                       */
   typedef void
-  (*QT_FT_Raster_ResetFunc)( QT_FT_Raster       raster);
+  (*QT_FT_Raster_ResetFunc)( QT_FT_Raster       raster, char*  pool);
 
 #define  QT_FT_Raster_Reset_Func   QT_FT_Raster_ResetFunc
 
