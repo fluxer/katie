@@ -3256,10 +3256,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
         return;
     }
 
-    // Initial size for raster pool has to be RASTER_POOL_SIZE, obviously
-    char rasterPoolBase[RASTER_POOL_SIZE];
-
-    qt_ft_grays_raster.raster_reset(*grayRaster, rasterPoolBase);
+    qt_ft_grays_raster.raster_reset(*grayRaster);
 
     QT_FT_BBox clip_box = { deviceRect.x(),
                             deviceRect.y(),

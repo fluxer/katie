@@ -266,8 +266,8 @@
 
     qt_ft_jmp_buf  jump_buffer;
 
-    void*       buffer;
-    long        buffer_size;
+    char*       buffer;
+    int         buffer_size;
 
     PCell*     ycells;
     int        ycount;
@@ -278,8 +278,8 @@
 
   typedef struct TRaster_
   {
-    void*    buffer;
-    long     buffer_size;
+    char*    buffer;
+    int      buffer_size;
     int      band_size;
     PWorker  worker;
 
@@ -1234,8 +1234,8 @@
           cell_end  = ras.buffer_size;
           cell_end -= cell_end % sizeof( TCell );
 
-          cells_max = (PCell)( (char*)ras.buffer + cell_end );
-          ras.cells = (PCell)( (char*)ras.buffer + cell_start );
+          cells_max = (PCell)( ras.buffer + cell_end );
+          ras.cells = (PCell)( ras.buffer + cell_start );
           if ( ras.cells >= cells_max )
             goto ReduceBands;
 
@@ -1415,41 +1415,28 @@
 
 
   static void
-  gray_raster_reset( QT_FT_Raster  raster,
-                     char*      pool_base )
+  gray_raster_reset( QT_FT_Raster  raster )
   {
     PRaster  rast = (PRaster)raster;
 
     if ( raster )
     {
-      if ( pool_base )
-      {
-        PWorker  worker = (PWorker)pool_base;
+      char pool_base[RASTER_POOL_SIZE];
+      PWorker  worker = (PWorker)pool_base;
 
 
-        rast->worker      = worker;
-        rast->buffer      = pool_base +
-                              ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
-                                ~( sizeof ( TCell ) - 1 ) );
-        rast->buffer_size = (long)( ( pool_base + RASTER_POOL_SIZE ) -
-                                    (char*)rast->buffer ) &
-                                      ~( sizeof ( TCell ) - 1 );
-        rast->band_size   = (int)( rast->buffer_size /
-                                     ( sizeof ( TCell ) * 8 ) );
-      }
-      else
-      {
-        rast->buffer      = NULL;
-        rast->buffer_size = 0;
-        rast->worker      = NULL;
-      }
+      rast->worker      = worker;
+      rast->buffer      = pool_base +
+                            ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
+                              ~( sizeof ( TCell ) - 1 ) );
+      rast->buffer_size = ( ( pool_base + RASTER_POOL_SIZE ) -
+                            rast->buffer ) & ~( sizeof ( TCell ) - 1 );
+      rast->band_size   = rast->buffer_size / ( sizeof ( TCell ) * 8 );
     }
   }
 
   const QT_FT_Raster_Funcs  qt_ft_grays_raster =
   {
-    QT_FT_GLYPH_FORMAT_OUTLINE,
-
     (QT_FT_Raster_New_Func)     gray_raster_new,
     (QT_FT_Raster_Reset_Func)   gray_raster_reset,
     (QT_FT_Raster_Render_Func)  gray_raster_render,

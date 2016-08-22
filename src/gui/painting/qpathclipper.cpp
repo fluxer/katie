@@ -1930,13 +1930,12 @@ enum Edge
     Left, Top, Right, Bottom
 };
 
-static bool isVertical(Edge edge)
+static inline bool isVertical(Edge edge)
 {
     return edge == Left || edge == Right;
 }
 
-template <Edge edge>
-bool compare(const QPointF &p, qreal t)
+static inline bool compare(const QPointF &p, qreal t, Edge edge)
 {
     switch (edge)
     {
@@ -1951,8 +1950,7 @@ bool compare(const QPointF &p, qreal t)
     }
 }
 
-template <Edge edge>
-QPointF intersectLine(const QPointF &a, const QPointF &b, qreal t)
+static inline QPointF intersectLine(const QPointF &a, const QPointF &b, qreal t, Edge edge)
 {
     QLineF line(a, b);
     switch (edge) {
@@ -1964,7 +1962,7 @@ QPointF intersectLine(const QPointF &a, const QPointF &b, qreal t)
     }
 }
 
-void addLine(QPainterPath &path, const QLineF &line)
+static inline void addLine(QPainterPath &path, const QLineF &line)
 {
     if (path.elementCount() > 0)
         path.lineTo(line.p1());
@@ -1974,23 +1972,22 @@ void addLine(QPainterPath &path, const QLineF &line)
     path.lineTo(line.p2());
 }
 
-template <Edge edge>
-void clipLine(const QPointF &a, const QPointF &b, qreal t, QPainterPath &result)
+static inline void clipLine(const QPointF &a, const QPointF &b, qreal t, QPainterPath &result, Edge edge)
 {
-    bool outA = compare<edge>(a, t);
-    bool outB = compare<edge>(b, t);
+    bool outA = compare(a, t, edge);
+    bool outB = compare(b, t, edge);
     if (outA && outB)
         return;
 
     if (outA)
-        addLine(result, QLineF(intersectLine<edge>(a, b, t), b));
+        addLine(result, QLineF(intersectLine(a, b, t, edge), b));
     else if(outB)
-        addLine(result, QLineF(a, intersectLine<edge>(a, b, t)));
+        addLine(result, QLineF(a, intersectLine(a, b, t, edge)));
     else
         addLine(result, QLineF(a, b));
 }
 
-void addBezier(QPainterPath &path, const QBezier &bezier)
+static inline void addBezier(QPainterPath &path, const QBezier &bezier)
 {
     if (path.elementCount() > 0)
         path.lineTo(bezier.pt1());
@@ -2000,15 +1997,14 @@ void addBezier(QPainterPath &path, const QBezier &bezier)
     path.cubicTo(bezier.pt2(), bezier.pt3(), bezier.pt4());
 }
 
-template <Edge edge>
-void clipBezier(const QPointF &a, const QPointF &b, const QPointF &c, const QPointF &d, qreal t, QPainterPath &result)
+static inline void clipBezier(const QPointF &a, const QPointF &b, const QPointF &c, const QPointF &d, qreal t, QPainterPath &result, Edge edge)
 {
     QBezier bezier = QBezier::fromPoints(a, b, c, d);
 
-    bool outA = compare<edge>(a, t);
-    bool outB = compare<edge>(b, t);
-    bool outC = compare<edge>(c, t);
-    bool outD = compare<edge>(d, t);
+    bool outA = compare(a, t, edge);
+    bool outB = compare(b, t, edge);
+    bool outC = compare(c, t, edge);
+    bool outD = compare(d, t, edge);
 
     int outCount = int(outA) + int(outB) + int(outC) + int(outD);
 
@@ -2049,8 +2045,8 @@ void clipBezier(const QPointF &a, const QPointF &b, const QPointF &c, const QPoi
 
     qreal lastIntersection = 0;
     for (int i = 0; i < segmentCount; ++i) {
-        outA = compare<edge>(points[i], t);
-        outB = compare<edge>(points[i+1], t);
+        outA = compare(points[i], t, edge);
+        outB = compare(points[i+1], t, edge);
 
         if (outA != outB) {
             qreal intersection = flipped.tForY(segments[i], segments[i+1], t);
@@ -2067,29 +2063,28 @@ void clipBezier(const QPointF &a, const QPointF &b, const QPointF &c, const QPoi
 }
 
 // clips a single subpath against a single edge
-template <Edge edge>
-QPainterPath clip(const QPainterPath &path, qreal t)
+static inline QPainterPath clip(const QPainterPath &path, qreal t, Edge edge)
 {
     QPainterPath result;
     for (int i = 1; i < path.elementCount(); ++i) {
         const QPainterPath::Element &element = path.elementAt(i);
         Q_ASSERT(!element.isMoveTo());
         if (element.isLineTo()) {
-            clipLine<edge>(path.elementAt(i-1), path.elementAt(i), t, result);
+            clipLine(path.elementAt(i-1), path.elementAt(i), t, result, edge);
         } else {
-            clipBezier<edge>(path.elementAt(i-1), path.elementAt(i), path.elementAt(i+1), path.elementAt(i+2), t, result);
+            clipBezier(path.elementAt(i-1), path.elementAt(i), path.elementAt(i+1), path.elementAt(i+2), t, result, edge);
             i += 2;
         }
     }
 
     int last = path.elementCount() - 1;
     if (QPointF(path.elementAt(last)) != QPointF(path.elementAt(0)))
-        clipLine<edge>(path.elementAt(last), path.elementAt(0), t, result);
+        clipLine(path.elementAt(last), path.elementAt(0), t, result, edge);
 
     return result;
 }
 
-QPainterPath intersectPath(const QPainterPath &path, const QRectF &rect)
+static inline QPainterPath intersectPath(const QPainterPath &path, const QRectF &rect)
 {
     QList<QPainterPath> subpaths = toSubpaths(path);
 
@@ -2100,16 +2095,16 @@ QPainterPath intersectPath(const QPainterPath &path, const QRectF &rect)
         QRectF bounds = subPath.boundingRect();
         if (bounds.intersects(rect)) {
             if (bounds.left() < rect.left())
-                subPath = clip<Left>(subPath, rect.left());
+                subPath = clip(subPath, rect.left(), Left);
             if (bounds.right() > rect.right())
-                subPath = clip<Right>(subPath, rect.right());
+                subPath = clip(subPath, rect.right(), Right);
 
             bounds = subPath.boundingRect();
 
             if (bounds.top() < rect.top())
-                subPath = clip<Top>(subPath, rect.top());
+                subPath = clip(subPath, rect.top(), Top);
             if (bounds.bottom() > rect.bottom())
-                subPath = clip<Bottom>(subPath, rect.bottom());
+                subPath = clip(subPath, rect.bottom(), Bottom);
 
             if (subPath.elementCount() > 1)
                 result.addPath(subPath);

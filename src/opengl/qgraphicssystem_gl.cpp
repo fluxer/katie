@@ -79,9 +79,7 @@ QWindowSurface *QGLGraphicsSystem::createWindowSurface(QWidget *widget) const
         // provide proper buffer flipping, which should be faster than QX11GL's
         // blitting approach:
         QGraphicsView* qgv = qobject_cast<QGraphicsView*>(widget);
-        if (qgv && qgv->viewportUpdateMode() == QGraphicsView::FullViewportUpdate)
-            return new QGLWindowSurface(widget);
-        else
+        if (!qgv || qgv->viewportUpdateMode() != QGraphicsView::FullViewportUpdate)
             return new QX11GLWindowSurface(widget);
     }
 #endif
