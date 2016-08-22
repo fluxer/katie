@@ -13,7 +13,7 @@ incmap = {
         'QObjectList': 'qobject.h',
         'QMapIterator': 'qmap.h',
         'QMutexLocker': 'qmutex.h',
-        'QScopeArrayPointer': 'qscopedpointer.h',
+        'QScopedArrayPointer': 'qscopedpointer.h',
         'QWeakPointer': 'qsharedpointer.h',
         'QArgument': 'qobjectdefs.h',
         'QByteRef': 'qbytearray.h',
