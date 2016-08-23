@@ -253,7 +253,7 @@ static int ucstrcmp(const QChar *a, int alen, const QChar *b, int blen)
 }
 
 // Unicode case-insensitive compare two same-sized strings
-static int ucstrnicmp(const ushort *a, const ushort *b, int l)
+static inline int ucstrnicmp(const ushort *a, const ushort *b, int l)
 {
     return ucstricmp(a, a + l, b, b + l);
 }
@@ -3427,7 +3427,7 @@ bool QString::endsWith(const QString& s, Qt::CaseSensitivity cs) const
 {
     return qt_ends_with(isNull() ? 0 : unicode(), size(),
                         s.isNull() ? 0 : s.unicode(), s.size(), cs);
-    }
+}
 
 /*!
     \since 4.8
