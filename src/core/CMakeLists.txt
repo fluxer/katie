@@ -190,7 +190,6 @@ set(CORE_PUBLIC_HEADERS
     QAbstractState
     QAbstractEventDispatcher
     QResource
-    QModelIndexList
     QRunnable
     QtEndian
     QArgument
@@ -231,6 +230,7 @@ set(CORE_PUBLIC_HEADERS
     QAbstractTableModel
     QProcessEnvironment
     QModelIndex
+    QModelIndexList
     QSizeF
     QRectF
     QLineF

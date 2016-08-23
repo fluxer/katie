@@ -5,6 +5,7 @@ import sys, os, re
 incmap = {
     'QtCore': {
         'QtGlobal': 'qglobal.h',
+        'QModelIndex': 'qabstractitemmodel.h',
         'QModelIndexList': 'qabstractitemmodel.h',
         'QGenericArgument': 'qobjectdefs.h',
         'QProcessEnvironment': 'qprocess.h',
