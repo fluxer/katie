@@ -47,13 +47,32 @@
 #define QT_NO_STYLE_S60
 #define QT_NO_PHONON
 #define QT_NO_WIN_ACTIVEQT
-#define QT_NO_QWS_QPF2
 #define QT_NO_STYLE_WINDOWSMOBILE
 #define QT_NO_DIRECTPAINTER
 #define QT_NO_COP
 #define QT_NO_BLITTABLE
 #define QT_NO_PICTUREIO
 #define QT_NO_SOFTKEYMANAGER
+#define QT_NO_SXE
+#define QT_NO_QWS_QPF2
+#define QT_NO_QWS_INPUTMETHODS
+#define QT_NO_QWSEMBEDWIDGET
+#define QT_NO_QWS_CURSOR
+#define QT_NO_QWS_DECORATION_DEFAULT
+#define QT_NO_QWS_DECORATION_STYLED
+#define QT_NO_QWS_DECORATION_WINDOWS
+#define QT_NO_QWS_MANAGER
+#define QT_NO_QWS_KEYBOARD
+#define QT_NO_QWS_MOUSE
+#define QT_NO_QWS_MOUSE_AUTO
+#define QT_NO_QWS_MOUSE_MANUAL
+#define QT_NO_QWS_MULTIPROCESS
+#define QT_NO_QWS_SOUNDSERVER
+#define QT_NO_QWS_PROPERTIES
+#define QT_NO_QWS_PROXYSCREEN
+#define QT_NO_QWS_DYNAMICSCREENTRANSFORMATION
+#define QT_NO_QWS_TRANSFORMED
+#define QT_NO_QWS_VNC
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -117,7 +136,6 @@
 
 /* Internationalization */
 #cmakedefine QT_NO_BIG_CODECS
-#cmakedefine QT_NO_QWS_INPUTMETHODS
 #cmakedefine QT_NO_TEXTCODEC
 #cmakedefine QT_NO_CODECS
 #cmakedefine QT_NO_TEXTCODECPLUGIN
@@ -175,24 +193,6 @@
 #cmakedefine QT_NO_PICTURE
 #cmakedefine QT_NO_PRINTER
 #cmakedefine QT_NO_CUPS
-
-/* Qt for Embedded Linux */
-#cmakedefine QT_NO_QWSEMBEDWIDGET
-#cmakedefine QT_NO_QWS_CURSOR
-#cmakedefine QT_NO_QWS_DECORATION_DEFAULT
-#cmakedefine QT_NO_QWS_DECORATION_STYLED
-#cmakedefine QT_NO_QWS_DECORATION_WINDOWS
-#cmakedefine QT_NO_QWS_MANAGER
-#cmakedefine QT_NO_QWS_KEYBOARD
-#cmakedefine QT_NO_QWS_MOUSE
-#cmakedefine QT_NO_QWS_MOUSE_AUTO
-#cmakedefine QT_NO_QWS_MOUSE_MANUAL
-#cmakedefine QT_NO_QWS_MULTIPROCESS
-#cmakedefine QT_NO_QWS_SOUNDSERVER
-#cmakedefine QT_NO_SXE
-#cmakedefine QT_NO_QWS_PROPERTIES
-#cmakedefine QT_NO_QWS_PROXYSCREEN
-#cmakedefine QT_NO_QWS_DYNAMICSCREENTRANSFORMATION
 
 /* SVG */
 #cmakedefine QT_NO_SVG

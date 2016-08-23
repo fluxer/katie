@@ -141,7 +141,7 @@ public:
 
     inline int count() const { return Count; }
 
-#if defined(Q_QDOC) || defined(Q_NO_USING_KEYWORD)
+#if defined(Q_NO_USING_KEYWORD)
     inline QVariant argumentAt(int index) const
     { return QDBusPendingReplyData::argumentAt(index); }
 #else

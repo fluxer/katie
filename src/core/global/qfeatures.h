@@ -172,33 +172,6 @@
 //  Universally Unique Identifier Convertion
 //#define QT_NO_QUUID_STRING
 
-// QWSEmbedWidget
-//#define QT_NO_QWSEMBEDWIDGET
-
-// Decoration
-//#define QT_NO_QWS_DECORATION_DEFAULT
-
-// Keyboard
-//#define QT_NO_QWS_KEYBOARD
-
-// Mouse
-//#define QT_NO_QWS_MOUSE
-
-// Mouse (Auto)
-//#define QT_NO_QWS_MOUSE_AUTO
-
-// Mouse (Non-Auto)
-//#define QT_NO_QWS_MOUSE_MANUAL
-
-// Multi-Process
-//#define QT_NO_QWS_MULTIPROCESS
-
-// Properties
-//#define QT_NO_QWS_PROPERTIES
-
-// QProxyScreen
-//#define QT_NO_QWS_PROXYSCREEN
-
 // Raster Paint Engine callback functions
 //#define QT_NO_RASTERCALLBACKS
 
@@ -317,11 +290,6 @@
 #define QT_NO_BUTTONGROUP
 #endif
 
-// QClipboard
-#if !defined(QT_NO_CLIPBOARD) && (defined(QT_NO_QWS_PROPERTIES))
-#define QT_NO_CLIPBOARD
-#endif
-
 // Codecs
 #if !defined(QT_NO_CODECS) && (defined(QT_NO_TEXTCODEC))
 #define QT_NO_CODECS
@@ -392,41 +360,6 @@
 #define QT_NO_PROGRESSDIALOG
 #endif
 
-// Cursor
-#if !defined(QT_NO_QWS_CURSOR) && (defined(QT_NO_CURSOR))
-#define QT_NO_QWS_CURSOR
-#endif
-
-// Decoration (Styled)
-#if !defined(QT_NO_QWS_DECORATION_STYLED) && (defined(QT_NO_QWS_DECORATION_DEFAULT))
-#define QT_NO_QWS_DECORATION_STYLED
-#endif
-
-// Decoration (Windows Style)
-#if !defined(QT_NO_QWS_DECORATION_WINDOWS) && (defined(QT_NO_QWS_DECORATION_DEFAULT))
-#define QT_NO_QWS_DECORATION_WINDOWS
-#endif
-
-// Dynamic screen transformation.
-#if !defined(QT_NO_QWS_DYNAMICSCREENTRANSFORMATION) && (defined(QT_NO_QWS_PROXYSCREEN))
-#define QT_NO_QWS_DYNAMICSCREENTRANSFORMATION
-#endif
-
-// Manager
-#if !defined(QT_NO_QWS_MANAGER) && (defined(QT_NO_QWS_DECORATION_DEFAULT))
-#define QT_NO_QWS_MANAGER
-#endif
-
-// QVncTransformed
-#if !defined(QT_NO_QWS_TRANSFORMED) && (defined(QT_NO_QWS_PROXYSCREEN))
-#define QT_NO_QWS_TRANSFORMED
-#endif
-
-// QVncScreen
-#if !defined(QT_NO_QWS_VNC) && (defined(QT_NO_QWS_PROXYSCREEN))
-#define QT_NO_QWS_VNC
-#endif
-
 // QScrollBar
 #if !defined(QT_NO_SCROLLBAR) && (defined(QT_NO_SLIDER))
 #define QT_NO_SCROLLBAR
@@ -455,11 +388,6 @@
 // QWindowsXPStyle
 #if !defined(QT_NO_STYLE_WINDOWSXP) && (defined(QT_NO_STYLE_WINDOWS))
 #define QT_NO_STYLE_WINDOWSXP
-#endif
-
-// SXE
-#if !defined(QT_NO_SXE) && (defined(QT_NO_QWS_MULTIPROCESS))
-#define QT_NO_SXE
 #endif
 
 // QToolButton
@@ -553,7 +481,7 @@
 #endif
 
 // Drag and drop
-#if !defined(QT_NO_DRAGANDDROP) && (defined(QT_NO_QWS_PROPERTIES) || defined(QT_NO_IMAGEFORMAT_XPM))
+#if !defined(QT_NO_DRAGANDDROP) && defined(QT_NO_IMAGEFORMAT_XPM)
 #define QT_NO_DRAGANDDROP
 #endif
 
@@ -580,11 +508,6 @@
 // QPrinter
 #if !defined(QT_NO_PRINTER) && (defined(QT_NO_TEXTSTREAM) || defined(QT_NO_PICTURE) || defined(QT_NO_TEMPORARYFILE))
 #define QT_NO_PRINTER
-#endif
-
-// QWSInputMethod
-#if !defined(QT_NO_QWS_INPUTMETHODS) && (defined(QT_NO_IM))
-#define QT_NO_QWS_INPUTMETHODS
 #endif
 
 // QSpinBox
@@ -645,11 +568,6 @@
 // QMenuBar
 #if !defined(QT_NO_MENUBAR) && (defined(QT_NO_MENU) || defined(QT_NO_TOOLBUTTON))
 #define QT_NO_MENUBAR
-#endif
-
-// Sound Server
-#if !defined(QT_NO_QWS_SOUNDSERVER) && (defined(QT_NO_SOUND) || defined(QT_NO_HOSTINFO) || defined(QT_NO_QWS_MULTIPROCESS))
-#define QT_NO_QWS_SOUNDSERVER
 #endif
 
 // QSvgGenerator
@@ -875,10 +793,6 @@
 //Input Method
 #if !defined(QT_NO_XIM) && defined(QT_NO_IM)
 #define QT_NO_XIM
-#endif
-
-#if !defined(QT_NO_QWS_INPUTMETHODS) && defined(QT_NO_IM)
-#define QT_NO_QWS_INPUTMETHODS
 #endif
 
 #endif

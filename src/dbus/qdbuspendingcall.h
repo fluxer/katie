@@ -68,7 +68,6 @@ public:
     ~QDBusPendingCall();
     QDBusPendingCall &operator=(const QDBusPendingCall &other);
 
-#ifndef Q_QDOC
     // pretend that they aren't here
     bool isFinished() const;
     void waitForFinished();
@@ -77,7 +76,6 @@ public:
     bool isValid() const;
     QDBusError error() const;
     QDBusMessage reply() const;
-#endif
 
     static QDBusPendingCall fromError(const QDBusError &error);
     static QDBusPendingCall fromCompletedCall(const QDBusMessage &message);

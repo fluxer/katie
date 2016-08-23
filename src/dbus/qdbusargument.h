@@ -146,22 +146,14 @@ protected:
     mutable QDBusArgumentPrivate *d;
 };
 
-template<typename T> inline T qdbus_cast(const QDBusArgument &arg
-#ifndef Q_QDOC
-, T * = 0
-#endif
-    )
+template<typename T> inline T qdbus_cast(const QDBusArgument &arg, T * = 0)
 {
     T item;
     arg >> item;
     return item;
 }
 
-template<typename T> inline T qdbus_cast(const QVariant &v
-#ifndef Q_QDOC
-, T * = 0
-#endif
-    )
+template<typename T> inline T qdbus_cast(const QVariant &v, T * = 0)
 {
     int id = v.userType();
     if (id == qMetaTypeId<QDBusArgument>())

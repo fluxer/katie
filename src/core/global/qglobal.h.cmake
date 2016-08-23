@@ -84,7 +84,6 @@
      !WINDOWS   - ...
      !WINDOWSCE - ...
      X86_64    - ...
-     !SYMBIAN   - ...
      SH        - ...
      !SH4A      - ...
      NACL      - ...
@@ -229,7 +228,6 @@ namespace QT_NAMESPACE {}
    The operating system, must be one of: (Q_OS_x)
 
      DARWIN   - Darwin OS (synonym for Q_OS_MAC)
-     SYMBIAN  - Symbian
      MSDOS    - MS-DOS and Windows
      OS2      - OS/2
      OS2EMX   - XFree86 on OS/2 (not PM)
@@ -267,10 +265,6 @@ namespace QT_NAMESPACE {}
 #  else
 #    define Q_OS_DARWIN32
 #  endif
-#elif defined(__SYMBIAN32__) || defined(SYMBIAN)
-#  define Q_OS_SYMBIAN
-#  define Q_NO_POSIX_SIGNALS
-#  define QT_NO_GETIFADDRS
 #elif defined(__CYGWIN__)
 #  define Q_OS_CYGWIN
 #elif defined(MSDOS) || defined(_MSDOS)
@@ -478,9 +472,7 @@ namespace QT_NAMESPACE {}
      HIGHC    - MetaWare High C/C++
      PGI      - Portland Group C++
      GHS      - Green Hills Optimizing C++ Compilers
-     GCCE     - GCCE (Symbian GCCE builds)
      RVCT     - ARM Realview Compiler Suite
-     NOKIAX86 - Nokia x86 (Symbian WINSCW builds)
      CLANG    - C++ front-end for the LLVM compiler
 
 
@@ -515,9 +507,6 @@ namespace QT_NAMESPACE {}
 
 #elif defined(__MWERKS__)
 #  define Q_CC_MWERKS
-#  if defined(__EMU_SYMBIAN_OS__)
-#    define Q_CC_NOKIAX86
-#  endif
 /* "explicit" recognized since 4.0d1 */
 
 #elif defined(_MSC_VER)
@@ -550,14 +539,6 @@ namespace QT_NAMESPACE {}
 
 #elif defined(__WATCOMC__)
 #  define Q_CC_WAT
-
-/* Symbian GCCE */
-#elif defined(__GCCE__)
-#  define Q_CC_GCCE
-#  define QT_VISIBILITY_AVAILABLE
-#  if defined(__ARM_ARCH_6__) || defined(__ARM_ARCH_7__) || defined(__ARM_ARCH_7A__)
-#    define QT_HAVE_ARMV6
-#  endif
 
 /* ARM Realview Compiler Suite
    RVCT compiler also defines __EDG__ and __GNUC__ (if --gnu flag is given),
@@ -865,9 +846,6 @@ namespace QT_NAMESPACE {}
 #  endif
 #  define Q_NO_USING_KEYWORD /* ### check "using" status */
 
-#elif defined(__WINSCW__) && !defined(Q_CC_NOKIAX86)
-#  define Q_CC_NOKIAX86
-
 #else
 #  error "Qt has not been tested with this compiler - talk to qt-bugs@trolltech.com"
 #endif
@@ -1074,10 +1052,8 @@ namespace QT_NAMESPACE {}
 
      MACX     - Mac OS X
      MAC9     - Mac OS 9
-     QWS      - Qt for Embedded Linux
      WIN32    - Windows
      X11      - X Window System
-     S60      - Symbian S60
      PM       - unsupported
      WIN16    - unsupported
 */
@@ -1148,14 +1124,6 @@ typedef unsigned long long quint64; /* 64 bit unsigned */
 
 typedef qint64 qlonglong;
 typedef quint64 qulonglong;
-
-#ifndef QT_POINTER_SIZE
-#  if defined(Q_OS_WIN64)
-#   define QT_POINTER_SIZE 8
-#  elif defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-#   define QT_POINTER_SIZE 4
-#  endif
-#endif
 
 #define Q_INIT_RESOURCE_EXTERN(name) \
     extern int QT_MANGLE_NAMESPACE(qInitResources_ ## name) ();
@@ -1373,10 +1341,6 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 
 class QDataStream;
 
-#ifndef QT_BUILD_KEY
-#define QT_BUILD_KEY "unspecified"
-#endif
-
 #if defined(Q_WS_MAC)
 #  ifndef QMAC_QMENUBAR_NO_EVENT
 #    define QMAC_QMENUBAR_NO_EVENT
@@ -1389,7 +1353,6 @@ class QDataStream;
 #  define QT_NO_LPR
 #  define QT_NO_SHAREDMEMORY     // only POSIX, no SysV and in the end...
 #  define QT_NO_SYSTEMSEMAPHORE  // not needed at all in a flat address space
-#  define QT_NO_QWS_MULTIPROCESS // no processes
 #endif
 
 # include <QtCore/qfeatures.h>
@@ -1403,7 +1366,7 @@ class QDataStream;
 #endif
 
 #ifndef Q_DECL_EXPORT
-#  if defined(Q_OS_WIN) || defined(Q_CC_NOKIAX86) || defined(Q_CC_RVCT)
+#  if defined(Q_OS_WIN) || defined(Q_CC_RVCT)
 #    define Q_DECL_EXPORT __declspec(dllexport)
 #  elif defined(QT_VISIBILITY_AVAILABLE)
 #    define Q_DECL_EXPORT __attribute__((visibility("default")))
@@ -1414,7 +1377,7 @@ class QDataStream;
 #  endif
 #endif
 #ifndef Q_DECL_IMPORT
-#  if defined(Q_OS_WIN) || defined(Q_CC_NOKIAX86) || defined(Q_CC_RVCT)
+#  if defined(Q_OS_WIN) || defined(Q_CC_RVCT)
 #    define Q_DECL_IMPORT __declspec(dllimport)
 #  else
 #    define Q_DECL_IMPORT
@@ -1787,12 +1750,6 @@ inline void qUnused(T &x) { (void)x; }
    Debugging and error handling
 */
 
-/*
-   On Symbian we do not know beforehand whether we are compiling in
-   release or debug mode, so check the Symbian build define here,
-   and set the QT_NO_DEBUG define appropriately.
-*/
-
 #if !defined(QT_NO_DEBUG) && !defined(QT_DEBUG)
 #  define QT_DEBUG
 #endif
@@ -1920,7 +1877,7 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #   endif
     /* The MIPSpro and RVCT compilers postpones macro expansion,
        and therefore macros must be in scope when being used. */
-#   if !defined(Q_CC_MIPS) && !defined(Q_CC_RVCT) && !defined(Q_CC_NOKIAX86)
+#   if !defined(Q_CC_MIPS) && !defined(Q_CC_RVCT)
 #       undef QT_STRINGIFY2
 #       undef QT_STRINGIFY
 #   endif
@@ -2486,18 +2443,7 @@ inline const QForeachContainer<T> *qForeachContainer(const QForeachContainerBase
 #  endif
 #endif
 
-#define Q_UNREACHABLE() \
-    do {\
-        Q_ASSERT_X(false, "Q_UNREACHABLE()", "Q_UNREACHABLE was reached");\
-    } while (0)
-
-#if 0
-/* tell gcc to use its built-in methods for some common functions */
-#if defined(QT_NO_DEBUG) && defined(Q_CC_GNU)
-#  define qMemCopy __builtin_memcpy
-#  define qMemSet __builtin_memset
-#endif
-#endif
+#define Q_UNREACHABLE() Q_ASSERT_X(false, "Q_UNREACHABLE()", "Q_UNREACHABLE was reached");
 
 template <typename T> static inline T *qGetPtrHelper(T *ptr) { return ptr; }
 template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelper(const Wrapper &p) { return p.data(); }
