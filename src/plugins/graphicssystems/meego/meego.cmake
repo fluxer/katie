@@ -24,10 +24,10 @@ set(QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/dithering.cpp
 )
 
-katie_resources(${QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS} ${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES})
-
 add_library(qmeegographicssystemplugin MODULE ${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES} ${QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS})
 set_target_properties(qmeegographicssystemplugin PROPERTIES OUTPUT_NAME qmeegographicssystem)
+
+katie_setup_target(qmeegographicssystemplugin)
 
 install(
     TARGETS qmeegographicssystemplugin

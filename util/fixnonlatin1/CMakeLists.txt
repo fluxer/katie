@@ -13,8 +13,7 @@ set(FIXONLATIN1_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-katie_resources(${FIXONLATIN1_SOURCES})
-katie_setup_flags()
-
 add_executable(fixonlatin1 EXCLUDE_FROM_ALL ${FIXONLATIN1_SOURCES})
 target_link_libraries(fixonlatin1 ${EXTRA_FIXONLATIN1_LIBS})
+
+katie_setup_target(fixonlatin1)

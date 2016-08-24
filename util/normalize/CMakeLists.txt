@@ -13,8 +13,7 @@ set(NORMALIZE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-katie_resources(${NORMALIZE_SOURCES})
-katie_setup_flags()
-
 add_executable(normalize EXCLUDE_FROM_ALL ${NORMALIZE_SOURCES})
 target_link_libraries(normalize ${EXTRA_NORMALIZE_LIBS})
+
+katie_setup_target(normalize)

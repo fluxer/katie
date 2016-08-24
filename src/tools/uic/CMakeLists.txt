@@ -27,11 +27,12 @@ set(UIC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp/cppwriteinitialization.cpp
 )
 
-katie_setup_flags()
 katie_setup_paths()
 
 add_executable(uic ${UIC_SOURCES})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})
+
+katie_setup_target(uic)
 
 install(
     TARGETS uic

@@ -75,8 +75,6 @@ include_directories(
 katie_generate_misc("${XMLPATTERNS_HEADERS}" QtXmlPatterns)
 katie_generate_public("${XMLPATTERNS_PUBLIC_HEADERS}" QtXmlPatterns)
 katie_generate_package(KtXmlPatterns "KtCore KtNetwork")
-katie_resources(${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 # the component requires exceptions
@@ -91,6 +89,8 @@ set_target_properties(KtXmlPatterns PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME XmlPatterns
 )
+
+katie_setup_target(KtXmlPatterns)
 
 install(
     TARGETS KtXmlPatterns

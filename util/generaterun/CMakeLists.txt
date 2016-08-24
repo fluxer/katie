@@ -15,8 +15,7 @@ set(GENERATERUN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codegenerator.h
 )
 
-katie_resources(${GENERATERUN_SOURCES})
-katie_setup_flags()
-
 add_executable(generaterun EXCLUDE_FROM_ALL ${GENERATERUN_SOURCES})
 target_link_libraries(generaterun ${EXTRA_GENERATERUN_LIBS})
+
+katie_setup_target(generaterun)

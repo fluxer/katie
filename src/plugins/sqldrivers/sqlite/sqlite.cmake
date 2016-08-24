@@ -21,8 +21,6 @@ else()
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/sqlite3)
 endif()
 
-katie_resources(${SQLDRIVER_SOURCES} ${SQLDRIVER_HEADERS})
-
 add_library(qsqliteplugin MODULE ${SQLDRIVER_SOURCES} ${SQLDRIVER_HEADERS})
 if(SQLITE_FOUND)
     target_link_libraries(qsqliteplugin KtSql ${SQLITE_LIBRARIES})
@@ -30,6 +28,8 @@ else()
     target_link_libraries(qsqliteplugin KtSql)
 endif()
 set_target_properties(qsqliteplugin PROPERTIES OUTPUT_NAME qsqlite)
+
+katie_setup_target(qsqliteplugin)
 
 install(
     TARGETS qsqliteplugin

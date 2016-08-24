@@ -58,8 +58,6 @@ include_directories(
 katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)
 katie_generate_public("${UITOOLS_PUBLIC_HEADERS}" QtUiTools)
 katie_generate_package(KtUiTools "KtCore KtGui KtXml KtScript")
-katie_resources(${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtUiTools ${KATIE_TYPE} ${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
@@ -69,6 +67,8 @@ set_target_properties(KtUiTools PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME UiTools
 )
+
+katie_setup_target(KtUiTools)
 
 install(
     TARGETS KtUiTools

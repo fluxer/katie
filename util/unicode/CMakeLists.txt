@@ -13,8 +13,7 @@ set(UNICODE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-katie_resources(${UNICODE_SOURCES})
-katie_setup_flags()
-
 add_executable(unicode EXCLUDE_FROM_ALL ${UNICODE_SOURCES})
 target_link_libraries(unicode ${EXTRA_UNICODE_LIBS})
+
+katie_setup_target(unicode)

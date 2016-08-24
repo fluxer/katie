@@ -80,8 +80,6 @@ endif()
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
 katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript")
-katie_resources(${DESIGNERCOMPONENTS_SOURCES} ${DESIGNERCOMPONENTS_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtDesignerComponents ${KATIE_TYPE}
@@ -97,6 +95,7 @@ set_target_properties(KtDesignerComponents PROPERTIES
     EXPORT_NAME DesignerComponents
 )
 
+katie_setup_target(KtDesignerComponents)
 katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser sharedqtgradienteditor)
 
 install(

@@ -10,13 +10,12 @@ set(PARTICLES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/particles/qdeclarativeparticles_p.h
 )
 
-katie_resources("${PARTICLES_SOURCES}")
-katie_resources("${PARTICLES_HEADERS}")
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(qmlparticlesplugin ${KATIE_TYPE} ${PARTICLES_SOURCES} ${PARTICLES_HEADERS})
 target_link_libraries(qmlparticlesplugin ${EXTRA_PARTICLES_LIBS})
+
+katie_setup_target(qmlparticlesplugin)
 
 install(
     TARGETS qmlparticlesplugin

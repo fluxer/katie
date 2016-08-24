@@ -499,8 +499,6 @@ endif()
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_package(KtGui "KtCore")
-katie_resources(${GUI_SOURCES} ${GUI_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtGui ${KATIE_TYPE} ${GUI_SOURCES} ${GUI_HEADERS})
@@ -510,6 +508,8 @@ set_target_properties(KtGui PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Gui
 )
+
+katie_setup_target(KtGui)
 
 install(
     TARGETS KtGui

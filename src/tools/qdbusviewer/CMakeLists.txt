@@ -43,8 +43,6 @@ configure_file(
     @ONLY
 )
 
-katie_resources(${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_executable(qdbusviewer
@@ -52,6 +50,8 @@ add_executable(qdbusviewer
     ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS}
 )
 target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
+
+katie_setup_target(qdbusviewer)
 
 install(
     TARGETS qdbusviewer

@@ -113,6 +113,9 @@ add_feature_info(x11 WITH_X11 "an open source something")
 option(KATIE_BOOTSTRAP "Build only core tools" OFF)
 add_feature_info(bootstrap KATIE_BOOTSTRAP "internal build option")
 
+option(KATIE_ALLINONE "Build targets from single source file" OFF)
+add_feature_info(allinone KATIE_ALLINONE "experimental build option")
+
 option(WITH_OPENGLES1 "Build opengles1 support" OFF)
 add_feature_info(opengles1 WITH_OPENGLES1 "an open source something")
 

@@ -269,8 +269,6 @@ endif()
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
 katie_generate_package(KtScript "KtCore")
-katie_resources(${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtScript ${KATIE_TYPE} ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
@@ -280,6 +278,8 @@ set_target_properties(KtScript PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Script
 )
+
+katie_setup_target(KtScript)
 
 install(
     TARGETS KtScript

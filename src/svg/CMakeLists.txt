@@ -71,8 +71,6 @@ endif()
 katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
 katie_generate_package(KtSvg "KtCore KtGui")
-katie_resources(${SVG_SOURCES} ${SVG_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtSvg ${KATIE_TYPE} ${SVG_SOURCES} ${SVG_HEADERS})
@@ -82,6 +80,8 @@ set_target_properties(KtSvg PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Svg
 )
+
+katie_setup_target(KtSvg)
 
 install(
     TARGETS KtSvg

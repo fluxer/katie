@@ -1,8 +1,6 @@
 # add_definitions()
 set(EXTRA_IMPORTS_LIBS KtCore)
 
-katie_setup_flags()
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude

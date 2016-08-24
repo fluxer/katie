@@ -39,11 +39,8 @@ set(SHAREDPROPERTYBROWSER_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qtpropertybrowserutils_p.h
 )
 
-katie_resources(${SHAREDPROPERTYBROWSER_SOURCES})
-katie_resources(${SHAREDPROPERTYBROWSER_HEADERS})
-
 add_library(sharedqtpropertybrowser OBJECT ${SHAREDPROPERTYBROWSER_SOURCES} ${SHAREDPROPERTYBROWSER_HEADERS})
 target_compile_definitions(sharedqtpropertybrowser PRIVATE ${SHAREDPROPERTYBROWSER_DEFINITIONS})
 target_include_directories(sharedqtpropertybrowser PRIVATE ${SHAREDPROPERTYBROWSER_INCLUDES})
 
-katie_setup_flags(sharedqtpropertybrowser)
+katie_setup_target(sharedqtpropertybrowser)

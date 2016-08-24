@@ -18,11 +18,11 @@ set(QNATIVEWIFIPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-katie_resources(${QNATIVEWIFIPLUGIN_HEADERS} ${QNATIVEWIFIPLUGIN_SOURCES})
-
 add_library(qnativewifibearerplugin MODULE ${QNATIVEWIFIPLUGIN_SOURCES} ${QNATIVEWIFIPLUGIN_HEADERS})
 target_link_libraries(qnativewifibearerplugin KtCore KtNetwork)
 set_target_properties(qnativewifibearerplugin PROPERTIES OUTPUT_NAME qnativewifibearer)
+
+katie_setup_target(qnativewifibearerplugin)
 
 install(
     TARGETS qnativewifibearerplugin

@@ -3674,7 +3674,7 @@ uint qHash(const QRegExpEngineKey &key)
 
 typedef QCache<QRegExpEngineKey, QRegExpEngine> EngineCache;
 Q_GLOBAL_STATIC(EngineCache, globalEngineCache)
-Q_GLOBAL_STATIC(QMutex, mutex)
+Q_GLOBAL_STATIC(QMutex, regexpMutex)
 #endif // QT_NO_REGEXP_OPTIM
 
 static void derefEngine(QRegExpEngine *eng, const QRegExpEngineKey &key)
@@ -3682,7 +3682,7 @@ static void derefEngine(QRegExpEngine *eng, const QRegExpEngineKey &key)
     if (!eng->ref.deref()) {
 #if !defined(QT_NO_REGEXP_OPTIM)
         if (globalEngineCache()) {
-            QMutexLocker locker(mutex());
+            QMutexLocker locker(regexpMutex());
             QT_TRY {
                 globalEngineCache()->insert(key, eng, 4 + key.pattern.length() / 4);
             } QT_CATCH(const std::bad_alloc &) {
@@ -3704,7 +3704,7 @@ static void prepareEngine_helper(QRegExpPrivate *priv)
     bool initMatchState = !priv->eng;
 #if !defined(QT_NO_REGEXP_OPTIM)
     if (!priv->eng && globalEngineCache()) {
-        QMutexLocker locker(mutex());
+        QMutexLocker locker(regexpMutex());
         priv->eng = globalEngineCache()->take(priv->engineKey);
         if (priv->eng != 0)
             priv->eng->ref.ref();

@@ -96,6 +96,7 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QCharRef", "QtCore/qstring.h"},
     { "QStringRef", "QtCore/qstring.h"},
     { "QAbstractConcatenable", "QtCore/qstringbuilder.h"},
+    { "QStringList", "QtCore/qstringlist.h"},
     { "QStringMatcher", "QtCore/qstringmatcher.h"},
     { "QTextBoundaryFinder", "QtCore/qtextboundaryfinder.h"},
     { "QTimeLine", "QtCore/qtimeline.h"},
@@ -781,6 +782,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 775;
+static const int qclass_lib_count = 776;
 
 #endif

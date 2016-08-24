@@ -5,11 +5,11 @@ set(QGLGRAPHICSSYSTEMPLUGIN_SOURCES
 
 include_directories(${OPENGL_INCLUDE_DIR})
 
-katie_resources(${QGLGRAPHICSSYSTEMPLUGIN_SOURCES})
-
 add_library(qglgraphicssystemplugin MODULE ${QGLGRAPHICSSYSTEMPLUGIN_SOURCES})
 target_link_libraries(qglgraphicssystemplugin KtCore KtGui KtOpenGL)
 set_target_properties(qglgraphicssystemplugin PROPERTIES OUTPUT_NAME qglgraphicssystem)
+
+katie_setup_target(qglgraphicssystemplugin)
 
 install(
     TARGETS qglgraphicssystemplugin

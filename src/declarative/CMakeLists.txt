@@ -74,8 +74,6 @@ endif()
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
 katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql")
-katie_resources(${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtDeclarative ${KATIE_TYPE} ${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
@@ -85,6 +83,8 @@ set_target_properties(KtDeclarative PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Declarative
 )
+
+katie_setup_target(KtDeclarative)
 
 install(
     TARGETS KtDeclarative

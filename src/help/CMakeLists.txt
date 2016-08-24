@@ -90,8 +90,6 @@ include_directories(
 katie_generate_misc("${HELP_HEADERS}" QtHelp)
 katie_generate_public("${HELP_PUBLIC_HEADERS}" QtHelp)
 katie_generate_package(KtHelp "KtCore KtGui KtNetwork KtSql KtXml")
-katie_resources(${HELP_SOURCES} ${HELP_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtHelp ${KATIE_TYPE} ${HELP_SOURCES} ${HELP_HEADERS})
@@ -101,6 +99,8 @@ set_target_properties(KtHelp PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Help
 )
+
+katie_setup_target(KtHelp)
 
 install(
     TARGETS KtHelp

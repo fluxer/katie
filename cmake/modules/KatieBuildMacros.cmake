@@ -107,37 +107,115 @@ function(KATIE_FIXUP_STRING INSTR OUTSTR)
     endif()
 endfunction()
 
-# since KATIE_SETUP_FLAGS() applies KATIE_CXXFLAGS and some compilers choke
-# on them just filter them instead of using KATIE_CFLAGS
-function(KATIE_FILTER_FLAGS INSTR OUTSTR)
-    set(KATIE_CFILTER "-fvisibility-inlines-hidden" CACHE STRING "C flags to filter from the C++ flags")
-    set(modstring "${INSTR}")
-    foreach(cxxflag ${KATIE_CFILTER})
-        string(REPLACE "${cxxflag}" " " modstring "${modstring}")
-    endforeach()
-    set(${OUTSTR} "${modstring}" PARENT_SCOPE)
-endfunction()
-
-function(KATIE_SETUP_FLAGS)
+macro(KATIE_SETUP_FLAGS FORTARGET)
     katie_fixup_string("${KATIE_CXXFLAGS}" KATIE_CXXFLAGS)
     katie_fixup_string("${KATIE_LDFLAGS}" KATIE_LDFLAGS)
-    katie_filter_flags("${KATIE_CXXFLAGS}" KATIE_CFLAGS)
 
-    if(ARGN)
-        foreach(target ${ARGN})
-            set_target_properties(${target} PROPERTIES
-                COMPILE_FLAGS "${KATIE_CXXFLAGS}"
-                LINK_FLAGS "${KATIE_LDFLAGS}"
-            )
-        endforeach()
-    else()
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${KATIE_CFLAGS}" PARENT_SCOPE)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${KATIE_CXXFLAGS}" PARENT_SCOPE)
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${KATIE_LDFLAGS}" PARENT_SCOPE)
-        set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${KATIE_LDFLAGS}" PARENT_SCOPE)
-        set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${KATIE_LDFLAGS}" PARENT_SCOPE)
+    # since some compilers choke CXX flags when building C sources just filter
+    # the C++-specific flags instead of using KATIE_CFLAGS due to lack of
+    # per-language properties (e.g. CXX_COMPILE_FLAGS)
+    set(KATIE_CFILTER "-fvisibility-inlines-hidden" CACHE STRING "C flags to filter from the C++ flags")
+    set(modflags "${KATIE_CXXFLAGS}")
+    foreach(cxxflag ${KATIE_CFILTER})
+        string(REPLACE "${cxxflag}" " " modflags "${modflags}")
+    endforeach()
+
+    set_target_properties(${FORTARGET} PROPERTIES
+        COMPILE_FLAGS "${modflags}"
+        LINK_FLAGS "${KATIE_LDFLAGS}"
+    )
+endmacro()
+
+macro(KATIE_SETUP_TARGET FORTARGET)
+    # targets which use TARGET_OBJECTS are not supported as all-in-one targets
+    cmake_policy(PUSH)
+    if(NOT CMAKE_VERSION VERSION_LESS "3.0.0")
+        cmake_policy(SET CMP0051 OLD)
     endif()
-endfunction()
+
+    set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
+    if(NOT EXISTS "${resourcesdep}")
+        file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
+    endif()
+    get_target_property(targetsources ${FORTARGET} SOURCES)
+    set(targetresources)
+    foreach(tmpres ${targetsources} ${ARGN})
+        get_filename_component(resource ${tmpres} ABSOLUTE)
+        get_source_file_property(skip ${resource} SKIP_RESOURCE)
+        if(NOT skip)
+            get_filename_component(rscext ${resource} EXT)
+            get_filename_component(rscname ${resource} NAME_WE)
+            get_filename_component(rscpath ${resource} PATH)
+            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
+            make_directory(${rscpath})
+            if("${rscext}" STREQUAL ".ui")
+                set(rscout "${rscpath}/ui_${rscname}.h")
+                add_custom_command(
+                    OUTPUT "${rscout}"
+                    COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
+                )
+                set(targetresources ${targetresources} ${rscout})
+            elseif("${rscext}" STREQUAL ".qrc")
+                set(rscout "${rscpath}/qrc_${rscname}.cpp")
+                add_custom_command(
+                    OUTPUT "${rscout}"
+                    COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                )
+                set(targetresources ${targetresources} ${rscout})
+            elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
+                file(READ "${resource}" rsccontent)
+                # this can be simpler if continue() was supported by old CMake versions
+                if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
+                    set(rscout "${rscpath}/moc_${rscname}${rscext}")
+                    get_directory_property(dirdefs COMPILE_DEFINITIONS)
+                    get_directory_property(dirincs INCLUDE_DIRECTORIES)
+                    set(mocargs)
+                    foreach(ddef ${dirdefs})
+                        # TODO: filter non -D, support -U too
+                        set(mocargs ${mocargs} -D${ddef})
+                    endforeach()
+                    foreach(incdir ${dirincs})
+                        set(mocargs ${mocargs} -I${incdir})
+                    endforeach()
+                    add_custom_command(
+                        OUTPUT "${rscout}"
+                        COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    )
+                    set(targetresources ${targetresources} ${rscout})
+                    # NOTE: this can be troublesome but common sources can cause multiple
+                    # rules on the same file
+                    set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+                endif()
+            endif()
+        endif()
+    endforeach()
+    set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
+
+    if(NOT KATIE_ALLINONE)
+        set_target_properties(${FORTARGET} PROPERTIES SOURCES "${resourcesdep};${targetsources}")
+    # NOTE: blacklisted targets are either failing and too important for other components
+    # (KtCore and KtGui) or use TARGET_OBJECTS expressions which this macro cannot handle
+    elseif("${FORTARGET}" MATCHES "(KtCore|KtGui|KtDesigner|KtDesignerComponents|designer|lconvert|lrelease|lupdate|qcollectiongenerator|qhelpgenerator)")
+        katie_warning("All-in-one build not yet support for: ${FORTARGET}")
+        set_target_properties(${FORTARGET} PROPERTIES SOURCES "${resourcesdep};${targetsources}")
+    else()
+        set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
+        set(allinonedata)
+        set(targetobjects)
+        foreach(srcstring ${targetsources})
+            get_filename_component(srcname ${srcstring} EXT)
+            if(NOT "${srcname}" MATCHES "(.h|.qrc|.ui)")
+                set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
+            endif()
+        endforeach()
+        file(WRITE ${allinonesource} "${allinonedata}")
+        set_target_properties(${FORTARGET} PROPERTIES SOURCES "${resourcesdep};${allinonesource}")
+    endif()
+
+    katie_setup_flags(${FORTARGET})
+
+    cmake_policy(POP)
+endmacro()
 
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(targets_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
@@ -193,9 +271,8 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
 endmacro()
 
 macro(KATIE_TEST TESTNAME TESTSOURCES)
-    katie_resources(${TESTSOURCES} ${ARGN})
-
     add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
+    katie_resources(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     # TODO: make GUI access optional, it is required by many tests so it should still be default
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)

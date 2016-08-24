@@ -15,8 +15,7 @@ set(GENCMAP_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/gencmap.cpp
 )
 
-katie_resources(${GENCMAP_SOURCES})
-katie_setup_flags()
-
 add_executable(gencmap EXCLUDE_FROM_ALL ${GENCMAP_SOURCES})
 target_link_libraries(gencmap ${EXTRA_GENCMAP_LIBS})
+
+katie_setup_target(gencmap)

@@ -13,14 +13,14 @@ set(ODBCDRIVER_SOURCES
 
 include_directories(${ODBC_INCLUDES})
 
-katie_resources(${ODBCDRIVER_SOURCES} ${ODBCDRIVER_HEADERS})
-
 add_library(qsqlodbcplugin MODULE ${ODBCDRIVER_SOURCES} ${ODBCDRIVER_HEADERS})
 target_link_libraries(qsqlodbcplugin KtSql ${ODBC_LIBRARIES})
 set_target_properties(qsqlodbcplugin PROPERTIES OUTPUT_NAME qsqlodbc)
 if(UNIX)
     target_compile_definitions(qsqlodbcplugin PRIVATE -DUNICODE)
 endif()
+
+katie_setup_target(qsqlodbcplugin)
 
 install(
     TARGETS qsqlodbcplugin

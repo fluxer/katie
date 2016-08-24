@@ -2231,11 +2231,6 @@ QByteArray QByteArray::repeated(int times) const
     return result;
 }
 
-#define REHASH(a) \
-    if (ol_minus_1 < sizeof(uint) * CHAR_BIT) \
-        hashHaystack -= (a) << ol_minus_1; \
-    hashHaystack <<= 1
-
 /*!
     Returns the index position of the first occurrence of the byte
     array \a ba in this byte array, searching forward from index
@@ -2331,6 +2326,10 @@ int QByteArray::indexOf(char ch, int from) const
     return -1;
 }
 
+#define REHASH(a) \
+    if (ol_minus_1 < sizeof(uint) * CHAR_BIT) \
+        hashHaystack -= (a) << ol_minus_1; \
+    hashHaystack <<= 1
 
 static int lastIndexOfHelper(const char *haystack, int l, const char *needle, int ol, int from)
 {
@@ -2364,6 +2363,7 @@ static int lastIndexOfHelper(const char *haystack, int l, const char *needle, in
     return -1;
 
 }
+#undef REHASH
 
 /*!
     \fn int QByteArray::lastIndexOf(const QByteArray &ba, int from) const

@@ -29,8 +29,7 @@ set(QLALR_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/grammar_p.h
 )
 
-katie_resources(${QLALR_SOURCES} ${QLALR_HEADERS})
-katie_setup_flags()
-
 add_executable(qlalr EXCLUDE_FROM_ALL ${QLALR_SOURCES} ${QLALR_HEADERS})
 target_link_libraries(qlalr ${EXTRA_QLALR_LIBS})
+
+katie_setup_target(qlalr)

@@ -37,8 +37,6 @@ configure_file(
     @ONLY
 )
 
-katie_resources(${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_executable(qtconfig
@@ -46,6 +44,8 @@ add_executable(qtconfig
     ${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS}
 )
 target_link_libraries(qtconfig ${EXTRA_QTCONFIG_LIBS})
+
+katie_setup_target(qtconfig)
 
 install(
     TARGETS qtconfig

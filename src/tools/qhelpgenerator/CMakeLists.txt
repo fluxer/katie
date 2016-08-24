@@ -25,12 +25,16 @@ set(QHELPGENERATOR_HEADERS
     ${SHAREDHELP_HEADERS}
 )
 
-katie_resources(${QHELPGENERATOR_SOURCES} ${QHELPGENERATOR_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
-add_executable(qhelpgenerator $<TARGET_OBJECTS:sharedhelp> ${QHELPGENERATOR_SOURCES} ${QHELPGENERATOR_HEADERS})
+add_executable(qhelpgenerator
+    $<TARGET_OBJECTS:sharedhelp>
+    ${QHELPGENERATOR_SOURCES}
+    ${QHELPGENERATOR_HEADERS}
+)
 target_link_libraries(qhelpgenerator ${EXTRA_QHELPGENERATOR_LIBS})
+
+katie_setup_target(qhelpgenerator)
 
 install(
     TARGETS qhelpgenerator

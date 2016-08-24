@@ -38,4 +38,4 @@ add_library(sharedlinguist OBJECT ${SHAREDLINGUIST_SOURCES})
 target_compile_definitions(sharedlinguist PRIVATE ${SHAREDLINGUIST_DEFINITIONS})
 target_include_directories(sharedlinguist PRIVATE ${SHAREDLINGUIST_INCLUDES})
 
-katie_setup_flags(sharedlinguist)
+katie_setup_target(sharedlinguist)

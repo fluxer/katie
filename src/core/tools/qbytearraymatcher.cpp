@@ -313,5 +313,6 @@ int qFindByteArray(
     }
     return -1;
 }
+#undef REHASH
 
 QT_END_NAMESPACE

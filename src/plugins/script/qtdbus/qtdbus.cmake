@@ -12,12 +12,12 @@ set(QTDBUSPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/script/qtdbus/dbmain.cpp
 )
 
-katie_resources(${QTDBUSPLUGIN_HEADERS})
-
 add_library(qtscriptdbusplugin MODULE ${QTDBUSPLUGIN_SOURCES} ${QTDBUSPLUGIN_HEADERS})
 target_link_libraries(qtscriptdbusplugin KtCore KtDBus KtScript)
 set_target_properties(qtscriptdbusplugin PROPERTIES OUTPUT_NAME qtscriptdbus)
 target_include_directories(qtscriptdbusplugin PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/script/qtdbus)
+
+katie_setup_target(qtscriptdbusplugin)
 
 install(
     TARGETS qtscriptdbusplugin

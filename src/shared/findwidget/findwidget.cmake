@@ -29,11 +29,8 @@ set(SHAREDFINDWIDGET_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/findwidget/itemviewfindwidget.h
 )
 
-katie_resources(${SHAREDFINDWIDGET_SOURCES})
-katie_resources(${SHAREDFINDWIDGET_HEADERS})
-
 add_library(sharedfindwidget OBJECT ${SHAREDFINDWIDGET_SOURCES} ${SHAREDFINDWIDGET_HEADERS})
 target_compile_definitions(sharedfindwidget PRIVATE ${SHAREDFINDWIDGET_DEFINITIONS})
 target_include_directories(sharedfindwidget PRIVATE ${SHAREDFINDWIDGET_INCLUDES})
 
-katie_setup_flags(sharedfindwidget)
+katie_setup_target(sharedfindwidget)

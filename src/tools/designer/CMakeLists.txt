@@ -101,8 +101,6 @@ configure_file(
     @ONLY
 )
 
-katie_resources(${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_executable(designer
@@ -111,6 +109,8 @@ add_executable(designer
     ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS}
 )
 target_link_libraries(designer ${EXTRA_DESIGNERBIN_LIBS})
+
+katie_setup_target(designer)
 
 install(
     TARGETS designer

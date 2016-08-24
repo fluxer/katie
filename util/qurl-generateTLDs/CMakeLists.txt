@@ -13,8 +13,7 @@ set(QURLGENERATE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-katie_resources(${QURLGENERATE_SOURCES})
-katie_setup_flags()
-
 add_executable(qurl-generateTLDs EXCLUDE_FROM_ALL ${QURLGENERATE_SOURCES})
 target_link_libraries(qurl-generateTLDs ${EXTRA_QURLGENERATE_LIBS})
+
+katie_setup_target(qurl-generateTLDs)

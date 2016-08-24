@@ -193,7 +193,7 @@ Insignificant whitespace is allowed before or after any of the six
 structural characters.
 
 ws = *(
-          %x20 /              ; Space
+          %x20 /              ; WhiteSpace
           %x09 /              ; Horizontal tab
           %x0A /              ; Line feed or New line
           %x0D                ; Carriage return
@@ -202,7 +202,7 @@ ws = *(
 */
 
 enum {
-   Space = 0x20,
+   WhiteSpace = 0x20,
    Tab = 0x09,
    LineFeed = 0x0a,
    Return = 0x0d,
@@ -230,10 +230,10 @@ void Parser::eatBOM()
 bool Parser::eatSpace()
 {
    while (json < end) {
-      if (*json > Space) {
+      if (*json > WhiteSpace) {
          break;
       }
-      if (*json != Space &&
+      if (*json != WhiteSpace &&
             *json != Tab &&
             *json != LineFeed &&
             *json != Return) {

@@ -367,8 +367,6 @@ endif()
 katie_generate_misc("${CORE_HEADERS}" QtCore)
 katie_generate_public("${CORE_PUBLIC_HEADERS}" QtCore)
 katie_generate_package(KtCore "")
-katie_resources(${CORE_SOURCES} ${CORE_HEADERS})
-katie_setup_flags()
 katie_setup_paths()
 
 add_library(KtCore ${KATIE_TYPE} ${CORE_SOURCES} ${CORE_HEADERS})
@@ -378,6 +376,8 @@ set_target_properties(KtCore PROPERTIES
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Core
 )
+
+katie_setup_target(KtCore)
 
 install(
     TARGETS KtCore

@@ -12,17 +12,17 @@ set(MAIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qtmain_win.cpp
 )
 
-katie_resources(${MAIN_SOURCES})
-katie_setup_flags()
 katie_setup_paths()
 
-add_library(KtMain ${MAIN_SOURCES} ${MAIN_HEADERS})
+add_library(KtMain ${KATIE_TYPE} ${MAIN_SOURCES} ${MAIN_HEADERS})
 target_link_libraries(KtMain ${EXTRA_MAIN_LIBS})
 set_target_properties(KtMain PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Main
 )
+
+katie_setup_target(KtMain)
 
 install(
     TARGETS KtMain
