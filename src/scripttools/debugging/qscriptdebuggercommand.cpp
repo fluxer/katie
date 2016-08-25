@@ -42,13 +42,11 @@
 #include "qscriptdebuggercommand_p.h"
 #include "qscriptbreakpointdata_p.h"
 #include "qscriptdebuggervalue_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include <QtCore/qhash.h>
 #include <QtCore/qdatastream.h>
 #include <QtCore/qstringlist.h>
-
-Q_DECLARE_METATYPE(QScriptBreakpointData)
-Q_DECLARE_METATYPE(QScriptDebuggerValue)
 
 QT_BEGIN_NAMESPACE
 

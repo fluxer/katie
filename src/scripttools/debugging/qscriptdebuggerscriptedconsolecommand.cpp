@@ -47,6 +47,7 @@
 #include "qscriptdebuggerconsoleglobalobject_p.h"
 #include "qscriptdebuggerresponse_p.h"
 #include "qscriptdebuggercommandschedulerinterface_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
@@ -55,8 +56,6 @@
 #include <QtScript/qscriptvalueiterator.h>
 #include <QtScript/qscriptcontextinfo.h>
 #include <QtCore/qdebug.h>
-
-Q_DECLARE_METATYPE(QScriptDebuggerResponse)
 
 QT_BEGIN_NAMESPACE
 

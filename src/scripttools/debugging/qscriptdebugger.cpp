@@ -74,6 +74,7 @@
 #include "qscriptdebuggercommandschedulerjob_p.h"
 #include "qscriptdebuggerjob_p_p.h"
 #include "qscriptxmlparser_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include "qobject_p.h"
 
@@ -95,15 +96,8 @@
 #include <QtGui/qtooltip.h>
 
 QT_BEGIN_NAMESPACE
-typedef QPair<QList<qint64>, QList<qint64> > QScriptScriptsDelta;
-typedef QPair<QList<qint64>, QList<qint64> > QScriptContextsDelta;
-QT_END_NAMESPACE
 
-Q_DECLARE_METATYPE(QScriptScriptsDelta)
-
-QT_BEGIN_NAMESPACE
-
-Q_SCRIPT_EXPORT QString qt_scriptToXml(const QString &program, int lineNumber = 1);
+// Q_SCRIPT_EXPORT QString qt_scriptToXml(const QString &program, int lineNumber = 1);
 
 namespace {
 

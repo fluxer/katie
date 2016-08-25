@@ -48,6 +48,7 @@
 #include "qscriptscriptdata_p.h"
 #include "qscriptbreakpointdata_p.h"
 #include "qscriptobjectsnapshot_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include <QtScript/qscriptengine.h>
 #include <QtScript/qscriptcontextinfo.h>
@@ -55,9 +56,6 @@
 
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qdebug.h>
-
-Q_DECLARE_METATYPE(QScriptDebuggerValue)
-Q_DECLARE_METATYPE(QScriptDebuggerBackendPrivate*)
 
 QT_BEGIN_NAMESPACE
 

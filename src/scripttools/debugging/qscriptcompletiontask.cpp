@@ -48,6 +48,7 @@
 #include "qscriptdebuggercommandschedulerfrontend_p.h"
 #include "qscriptdebuggerjobschedulerinterface_p.h"
 #include "qscriptdebuggerresponse_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include "qobject_p.h"
 
@@ -113,22 +114,6 @@ private:
     QScriptCompletionTaskPrivate *m_task;
 };
 
-namespace {
-
-static bool isIdentChar(const QChar &ch)
-{
-    static QChar underscore = QLatin1Char('_');
-    return ch.isLetterOrNumber() || (ch == underscore);
-}
-
-static bool isPrefixOf(const QString &prefix, const QString &what)
-{
-    return ((what.length() > prefix.length())
-            && what.startsWith(prefix));
-}
-
-} // namespace
-
 class QScriptCompleteScriptsJob : public QScriptDebuggerCommandSchedulerJob
 {
 public:
@@ -169,10 +154,10 @@ void QScriptCompletionTaskPrivate::completeScriptExpression()
         return;
     }
 
-    while ((pos > 0) && isIdentChar(contents.at(pos-1)))
+    while ((pos > 0) && isAlmostIdentChar(contents.at(pos-1)))
         --pos;
     int pos2 = cursorPosition - 1;
-    while ((pos2+1 < contents.size()) && isIdentChar(contents.at(pos2+1)))
+    while ((pos2+1 < contents.size()) && isAlmostIdentChar(contents.at(pos2+1)))
         ++pos2;
     QString ident = contents.mid(pos, pos2 - pos + 1);
     position = pos;
@@ -182,7 +167,7 @@ void QScriptCompletionTaskPrivate::completeScriptExpression()
     while ((pos > 0) && (contents.at(pos-1) == QLatin1Char('.'))) {
         --pos;
         pos2 = pos;
-        while ((pos > 0) && isIdentChar(contents.at(pos-1)))
+        while ((pos > 0) && isAlmostIdentChar(contents.at(pos-1)))
             --pos;
         path.prepend(contents.mid(pos, pos2 - pos));
     }

@@ -49,6 +49,7 @@
 #include "qscriptdebuggercommandschedulerfrontend_p.h"
 #include "qscriptdebuggerjobschedulerinterface_p.h"
 #include "qscriptdebuggerobjectsnapshotdelta_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include "qabstractitemmodel_p.h"
 
@@ -57,8 +58,6 @@
 #include <QtCore/qpointer.h>
 #include <QtGui/qbrush.h>
 #include <QtGui/qfont.h>
-
-Q_DECLARE_METATYPE(QScriptDebuggerObjectSnapshotDelta)
 
 QT_BEGIN_NAMESPACE
 

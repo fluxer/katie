@@ -41,19 +41,10 @@
 
 #include "qscriptdebuggerresponse_p.h"
 #include "qscriptdebuggervalue_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include <QtScript/qscriptcontextinfo.h>
 #include <QtCore/qdatastream.h>
-
-Q_DECLARE_METATYPE(QScriptBreakpointData)
-Q_DECLARE_METATYPE(QScriptBreakpointMap)
-Q_DECLARE_METATYPE(QScriptScriptData)
-Q_DECLARE_METATYPE(QScriptScriptMap)
-Q_DECLARE_METATYPE(QScriptDebuggerValue)
-Q_DECLARE_METATYPE(QScriptDebuggerValueList)
-Q_DECLARE_METATYPE(QScriptDebuggerValueProperty)
-Q_DECLARE_METATYPE(QScriptDebuggerValuePropertyList)
-Q_DECLARE_METATYPE(QScriptContextInfo)
 
 QT_BEGIN_NAMESPACE
 

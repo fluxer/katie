@@ -23,6 +23,11 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/debugging
 )
 
+set(SCRIPTTOOLS_HEADERS
+    ${SCRIPTTOOLS_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qscripttoolscommon_p.h
+)
+
 katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)
 katie_generate_public("${SCRIPTTOOLS_PUBLIC_HEADERS}" QtScriptTools)
 katie_setup_paths()

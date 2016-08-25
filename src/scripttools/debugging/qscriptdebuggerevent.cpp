@@ -41,11 +41,10 @@
 
 #include "qscriptdebuggerevent_p.h"
 #include "qscriptdebuggervalue_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include <QtCore/qhash.h>
 #include <QtCore/qdatastream.h>
-
-Q_DECLARE_METATYPE(QScriptDebuggerValue)
 
 QT_BEGIN_NAMESPACE
 

@@ -41,6 +41,7 @@
 
 #include "qscriptdebuggercodeview_p.h"
 #include "qscriptdebuggercodeviewinterface_p_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include "qscriptedit_p.h"
 
@@ -184,16 +185,6 @@ void QScriptDebuggerCodeView::setBreakpointEnabled(int lineNumber, bool enable)
     Q_D(QScriptDebuggerCodeView);
     d->editor->setBreakpointEnabled(lineNumber, enable);
 }
-
-namespace {
-
-static bool isIdentChar(const QChar &ch)
-{
-    static QChar underscore = QLatin1Char('_');
-    return ch.isLetter() || (ch == underscore);
-}
-
-} // namespace
 
 /*!
   \reimp

@@ -49,17 +49,13 @@
 #include "qscriptbreakpointdata_p.h"
 #include "qscriptobjectsnapshot_p.h"
 #include "qscriptdebuggerobjectsnapshotdelta_p.h"
+#include "qscripttoolscommon_p.h"
 
 #include <QtCore/qstringlist.h>
 #include <QtScript/qscriptengine.h>
 #include <QtScript/qscriptcontextinfo.h>
 #include <QtScript/qscriptvalueiterator.h>
 #include <QtCore/qdebug.h>
-
-Q_DECLARE_METATYPE(QScriptScriptsDelta)
-Q_DECLARE_METATYPE(QScriptDebuggerValueProperty)
-Q_DECLARE_METATYPE(QScriptDebuggerValuePropertyList)
-Q_DECLARE_METATYPE(QScriptDebuggerObjectSnapshotDelta)
 
 QT_BEGIN_NAMESPACE
 
@@ -98,12 +94,6 @@ QScriptDebuggerCommandExecutor::QScriptDebuggerCommandExecutor()
 
 QScriptDebuggerCommandExecutor::~QScriptDebuggerCommandExecutor()
 {
-}
-
-static bool isPrefixOf(const QString &prefix, const QString &what)
-{
-    return ((what.length() > prefix.length())
-            && what.startsWith(prefix));
 }
 
 /*!
