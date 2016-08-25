@@ -73,9 +73,9 @@ endif()
 
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
+katie_setup_paths()
 katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql")
 katie_setup_target(KtDeclarative ${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
-katie_setup_paths()
 
 add_library(KtDeclarative ${KATIE_TYPE} ${KtDeclarative_SOURCES})
 target_link_libraries(KtDeclarative ${EXTRA_DECLARATIVE_LIBS})

@@ -189,9 +189,9 @@ endif()
 
 katie_generate_misc("${OPENGL_HEADERS}" QtOpenGL)
 katie_generate_public("${OPENGL_PUBLIC_HEADERS}" QtOpenGL)
+katie_setup_paths()
 katie_generate_package(KtOpenGL "KtCore KtGui")
 katie_setup_target(KtOpenGL ${OPENGL_SOURCES} ${OPENGL_HEADERS})
-katie_setup_paths()
 
 add_library(KtOpenGL ${KATIE_TYPE} ${KtOpenGL_SOURCES})
 target_link_libraries(KtOpenGL ${EXTRA_OPENGL_LIBS})

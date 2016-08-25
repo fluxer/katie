@@ -271,9 +271,9 @@ endif()
 
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
+katie_setup_paths()
 katie_generate_package(KtScript "KtCore")
 katie_setup_target(KtScript ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
-katie_setup_paths()
 
 add_library(KtScript ${KATIE_TYPE} ${KtScript_SOURCES})
 target_link_libraries(KtScript ${EXTRA_SCRIPT_LIBS})

@@ -70,9 +70,9 @@ endif()
 
 katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
+katie_setup_paths()
 katie_generate_package(KtSvg "KtCore KtGui")
 katie_setup_target(KtSvg ${SVG_SOURCES} ${SVG_HEADERS})
-katie_setup_paths()
 
 add_library(KtSvg ${KATIE_TYPE} ${KtSvg_SOURCES})
 target_link_libraries(KtSvg ${EXTRA_SVG_LIBS})
