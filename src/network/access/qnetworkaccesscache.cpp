@@ -46,6 +46,7 @@
 #include "qnetworkaccessmanager_p.h"
 #include "qnetworkreply_p.h"
 #include "qnetworkrequest.h"
+#include "qnetworkcommon_p.h"
 
 QT_BEGIN_NAMESPACE
 

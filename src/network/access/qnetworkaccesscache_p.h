@@ -125,6 +125,4 @@ private:
 
 QT_END_NAMESPACE
 
-Q_DECLARE_METATYPE(QNetworkAccessCache::CacheableObject*)
-
 #endif

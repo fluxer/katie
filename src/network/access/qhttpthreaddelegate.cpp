@@ -50,6 +50,7 @@
 #include "qhttpnetworkreply_p.h"
 #include "qnetworkaccesscache_p.h"
 #include "qnoncontiguousbytedevice_p.h"
+#include "qnetworkcommon_p.h"
 
 #ifndef QT_NO_HTTP
 
@@ -503,11 +504,6 @@ void QHttpThreadDelegate::synchronousFinishedWithErrorSlot(QNetworkReply::Networ
     QMetaObject::invokeMethod(httpReply, "deleteLater", Qt::QueuedConnection);
     QMetaObject::invokeMethod(synchronousRequestLoop, "quit", Qt::QueuedConnection);
     httpReply = 0;
-}
-
-static void downloadBufferDeleter(char *ptr)
-{
-    delete[] ptr;
 }
 
 void QHttpThreadDelegate::headerChangedSlot()

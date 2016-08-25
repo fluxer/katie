@@ -41,6 +41,7 @@
 
 #include "qnetworksession.h"
 #include "qbearerengine_p.h"
+#include "qnetworkcommon_p.h"
 
 #include <QEventLoop>
 #include <QTimer>

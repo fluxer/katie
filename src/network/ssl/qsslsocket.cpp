@@ -300,6 +300,7 @@
 #include "qsslsocket.h"
 #include "qsslsocket_openssl_p.h"
 #include "qsslconfiguration_p.h"
+#include "qnetworkcommon_p.h"
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qdir.h>
@@ -309,19 +310,6 @@
 #include <QtNetwork/qhostinfo.h>
 
 QT_BEGIN_NAMESPACE
-
-/*
-   Returns the difference between msecs and elapsed. If msecs is -1,
-   however, -1 is returned.
-*/
-static int qt_timeout_value(int msecs, int elapsed)
-{
-    if (msecs == -1)
-        return -1;
-
-    int timeout = msecs - elapsed;
-    return timeout < 0 ? 0 : timeout;
-}
 
 class QSslSocketGlobalData
 {
@@ -2328,10 +2316,6 @@ QList<QByteArray> QSslSocketPrivate::unixRootCertDirectories()
 }
 
 QT_END_NAMESPACE
-
-// For private slots
-#define d d_ptr
-
 
 #endif // QT_NO_OPENSSL
 

@@ -81,6 +81,11 @@ if(NOT WITH_ZLIB OR NOT ZLIB_FOUND)
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
 endif()
 
+set(NETWORK_HEADERS
+    ${NETWORK_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qnetworkcommon_p.h
+)
+
 katie_generate_misc("${NETWORK_HEADERS}" QtNetwork)
 katie_generate_public("${NETWORK_PUBLIC_HEADERS}" QtNetwork)
 katie_setup_paths()

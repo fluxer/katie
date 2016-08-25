@@ -380,6 +380,7 @@
 #include <qtimer.h>
 #include <qelapsedtimer.h>
 #include <qscopedvaluerollback.h>
+#include "qnetworkcommon_p.h"
 
 #ifndef QT_NO_OPENSSL
 #include <QtNetwork/qsslsocket.h>
@@ -1708,20 +1709,6 @@ QVariant QAbstractSocket::socketOption(QAbstractSocket::SocketOption option)
         return QVariant();
     else
         return QVariant(ret);
-}
-
-
-/*
-   Returns the difference between msecs and elapsed. If msecs is -1,
-   however, -1 is returned.
-*/
-static int qt_timeout_value(int msecs, int elapsed)
-{
-    if (msecs == -1)
-        return -1;
-
-    int timeout = msecs - elapsed;
-    return timeout < 0 ? 0 : timeout;
 }
 
 /*!

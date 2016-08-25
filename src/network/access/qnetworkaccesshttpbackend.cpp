@@ -55,12 +55,11 @@
 #include "QtNetwork/qsslconfiguration.h"
 #include "qhttpthreaddelegate_p.h"
 #include "qthread.h"
+#include "qnetworkcommon_p.h"
 
 #ifndef QT_NO_HTTP
 
 #include <string.h>             // for strchr
-
-Q_DECLARE_METATYPE(QSharedPointer<char>)
 
 QT_BEGIN_NAMESPACE
 

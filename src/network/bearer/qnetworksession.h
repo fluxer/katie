@@ -44,8 +44,9 @@
 
 #include <QtCore/qobject.h>
 #include <QtCore/qstring.h>
-#include <QtNetwork/qnetworkinterface.h>
 #include <QtCore/qvariant.h>
+#include <QtCore/qshareddata.h>
+#include <QtNetwork/qnetworkinterface.h>
 #include <QtNetwork/qnetworkconfiguration.h>
 
 #ifndef QT_NO_BEARERMANAGEMENT
@@ -56,18 +57,10 @@
 
 QT_BEGIN_HEADER
 
-#ifndef QT_MOBILITY_BEARER
-#include <QtCore/qshareddata.h>
 QT_BEGIN_NAMESPACE
-#define QNetworkSessionExport Q_NETWORK_EXPORT
-#else
-#include "qmobilityglobal.h"
-QTM_BEGIN_NAMESPACE
-#define QNetworkSessionExport Q_BEARER_EXPORT
-#endif
 
 class QNetworkSessionPrivate;
-class QNetworkSessionExport QNetworkSession : public QObject
+class Q_NETWORK_EXPORT QNetworkSession : public QObject
 {
     Q_OBJECT
 
@@ -139,12 +132,11 @@ private:
     QNetworkSessionPrivate *d;
 };
 
-#ifndef QT_MOBILITY_BEARER
 QT_END_NAMESPACE
+
+#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QNetworkSession::State)
 Q_DECLARE_METATYPE(QNetworkSession::SessionError)
-#else
-QTM_END_NAMESPACE
 #endif
 
 QT_END_HEADER

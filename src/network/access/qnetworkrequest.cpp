@@ -44,6 +44,7 @@
 #include "qnetworkcookie.h"
 #include "qnetworkrequest_p.h"
 #include "qsslconfiguration.h"
+#include "qnetworkcommon_p.h"
 #include "QtCore/qshareddata.h"
 #include "QtCore/qlocale.h"
 #include "QtCore/qdatetime.h"

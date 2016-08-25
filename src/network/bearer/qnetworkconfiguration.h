@@ -42,12 +42,6 @@
 #ifndef QNETWORKCONFIGURATION_H
 #define QNETWORKCONFIGURATION_H
 
-#ifndef QT_MOBILITY_BEARER
-# include <QtCore/qglobal.h>
-#else
-# include "qmobilityglobal.h"
-#endif
-
 #include <QtCore/qshareddata.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qlist.h>
@@ -58,16 +52,10 @@
 
 QT_BEGIN_HEADER
 
-#ifndef QT_MOBILITY_BEARER
 QT_BEGIN_NAMESPACE
-#define QNetworkConfigurationExport Q_NETWORK_EXPORT
-#else
-QTM_BEGIN_NAMESPACE
-#define QNetworkConfigurationExport Q_BEARER_EXPORT
-#endif
 
 class QNetworkConfigurationPrivate;
-class QNetworkConfigurationExport QNetworkConfiguration
+class Q_NETWORK_EXPORT QNetworkConfiguration
 {
 public:
     QNetworkConfiguration();
@@ -101,7 +89,6 @@ public:
     };
     Q_DECLARE_FLAGS(StateFlags, StateFlag)
 
-#ifndef QT_MOBILITY_BEARER
     enum BearerType {
         BearerUnknown,
         BearerEthernet,
@@ -113,18 +100,13 @@ public:
         BearerBluetooth,
         BearerWiMAX
     };
-#endif
 
     StateFlags state() const;
     Type type() const;
     Purpose purpose() const;
 
-#ifndef QT_MOBILITY_BEARER
     BearerType bearerType() const;
     QString bearerTypeName() const;
-#else
-    QString bearerName() const;
-#endif
 
     QString identifier() const;
     bool isRoamingAvailable() const;
@@ -141,11 +123,7 @@ private:
     QExplicitlySharedDataPointer<QNetworkConfigurationPrivate> d;
 };
 
-#ifndef QT_MOBILITY_BEARER
 QT_END_NAMESPACE
-#else
-QTM_END_NAMESPACE
-#endif
 
 QT_END_HEADER
 

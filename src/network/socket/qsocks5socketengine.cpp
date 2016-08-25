@@ -55,8 +55,9 @@
 #include "qcoreapplication.h"
 #include "qurl.h"
 #include "qauthenticator.h"
-#include <qendian.h>
-#include <qnetworkinterface.h>
+#include "qendian.h"
+#include "qnetworkinterface.h"
+#include "qnetworkcommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -273,19 +274,6 @@ static bool qt_socks5_get_host_address_and_port(const QByteArray &buf, QHostAddr
     }
 
     return ret;
-}
-
-/*
-   Returns the difference between msecs and elapsed. If msecs is -1,
-   however, -1 is returned.
-*/
-static int qt_timeout_value(int msecs, int elapsed)
-{
-    if (msecs == -1)
-        return -1;
-
-    int timeout = msecs - elapsed;
-    return timeout < 0 ? 0 : timeout;
 }
 
 struct QSocks5Data

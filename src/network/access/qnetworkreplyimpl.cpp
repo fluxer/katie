@@ -49,10 +49,9 @@
 #include "QtNetwork/qnetworksession.h"
 #include "qnetworkaccesshttpbackend_p.h"
 #include "qnetworkaccessmanager_p.h"
+#include "qnetworkcommon_p.h"
 
 #include <QtCore/QCoreApplication>
-
-Q_DECLARE_METATYPE(QSharedPointer<char>)
 
 QT_BEGIN_NAMESPACE
 
@@ -671,11 +670,6 @@ void QNetworkReplyImplPrivate::appendDownstreamData(const QByteArray &data)
     // TODO call
 
     qFatal("QNetworkReplyImplPrivate::appendDownstreamData not implemented");
-}
-
-static void downloadBufferDeleter(char *ptr)
-{
-    delete[] ptr;
 }
 
 char* QNetworkReplyImplPrivate::getDownloadBuffer(qint64 size)

@@ -46,6 +46,7 @@
 #include "qhttp.h"
 #include "qelapsedtimer.h"
 #include "qnetworkinterface.h"
+#include "qnetworkcommon_p.h"
 
 #if !defined(QT_NO_NETWORKPROXY) && !defined(QT_NO_HTTP)
 #include <qdebug.h>
@@ -335,19 +336,6 @@ bool QHttpSocketEngine::setOption(SocketOption option, int value)
         return true;
     }
     return false;
-}
-
-/*
-   Returns the difference between msecs and elapsed. If msecs is -1,
-   however, -1 is returned.
-*/
-static int qt_timeout_value(int msecs, int elapsed)
-{
-    if (msecs == -1)
-        return -1;
-
-    int timeout = msecs - elapsed;
-    return timeout < 0 ? 0 : timeout;
 }
 
 bool QHttpSocketEngine::waitForRead(int msecs, bool *timedOut)

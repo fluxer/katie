@@ -150,7 +150,9 @@ private:
 
 QT_END_NAMESPACE
 
+#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QNetworkRequest)
+#endif // QT_ALLINONE
 
 QT_END_HEADER
 

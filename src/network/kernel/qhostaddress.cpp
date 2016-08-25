@@ -45,6 +45,7 @@
 #include "qplatformdefs.h"
 #include "qstringlist.h"
 #include "qendian.h"
+#include "qnativesocketengine_p.h"
 #ifndef QT_NO_DATASTREAM
 #include <qdatastream.h>
 #endif
@@ -63,44 +64,6 @@ QT_BEGIN_NAMESPACE
         if (!(a)->d->isParsed) \
             (a)->d->parse(); \
     } while (0)
-
-#ifdef Q_OS_WIN
-#    if !defined (QT_NO_IPV6)
-// sockaddr_in6 size changed between old and new SDK
-// Only the new version is the correct one, so always
-// use this structure.
-#if defined(Q_OS_WINCE)
-#  if !defined(u_char)
-#    define u_char unsigned char
-#  endif
-#  if !defined(u_short)
-#    define u_short unsigned short
-#  endif
-#  if !defined(u_long)
-#    define u_long unsigned long
-#  endif
-#endif
-struct qt_in6_addr {
-    u_char qt_s6_addr[16];
-};
-typedef struct {
-    short   sin6_family;            /* AF_INET6 */
-    u_short sin6_port;              /* Transport level port number */
-    u_long  sin6_flowinfo;          /* IPv6 flow information */
-    struct  qt_in6_addr sin6_addr;  /* IPv6 address */
-    u_long  sin6_scope_id;          /* set of interfaces for a scope */
-} qt_sockaddr_in6;
-#    else
-typedef void * qt_sockaddr_in6 ;
-#    endif
-#    ifndef AF_INET6
-#        define AF_INET6        23  /* Internetwork Version 6 */
-#    endif
-#else
-#define qt_sockaddr_in6 sockaddr_in6
-#define qt_s6_addr s6_addr
-#endif
-
 
 class QHostAddressPrivate
 {
