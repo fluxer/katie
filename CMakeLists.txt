@@ -168,6 +168,10 @@ include(CPack)
 # does a lot of tests and can (and sometimes it does) take more then 10min.
 set(CTEST_TEST_TIMEOUT 540)
 
+if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
+    cmake_policy(SET CMP0063 NEW)
+endif()
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 add_definitions(
