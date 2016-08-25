@@ -26,17 +26,16 @@ include_directories(
 katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)
 katie_generate_public("${SCRIPTTOOLS_PUBLIC_HEADERS}" QtScriptTools)
 katie_generate_package(KtScriptTools "KtCore KtGui KtScript")
+katie_setup_target(KtScriptTools ${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
 katie_setup_paths()
 
-add_library(KtScriptTools ${KATIE_TYPE} ${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
+add_library(KtScriptTools ${KATIE_TYPE} ${KtScriptTools_SOURCES})
 target_link_libraries(KtScriptTools ${EXTRA_SCRIPTTOOLS_LIBS})
 set_target_properties(KtScriptTools PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME ScriptTools
 )
-
-katie_setup_target(KtScriptTools)
 
 install(
     TARGETS KtScriptTools

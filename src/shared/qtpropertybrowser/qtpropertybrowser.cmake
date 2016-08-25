@@ -1,9 +1,6 @@
-set(SHAREDPROPERTYBROWSER_DEFINITIONS
-    ${SHAREDPROPERTYBROWSER_DEFINITIONS}
-)
+set(SHAREDPROPERTYBROWSER_DEFINITIONS)
 
 set(SHAREDPROPERTYBROWSER_INCLUDES
-    ${SHAREDPROPERTYBROWSER_INCLUDES}
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
@@ -15,7 +12,6 @@ set(SHAREDPROPERTYBROWSER_INCLUDES
 )
 
 set(SHAREDPROPERTYBROWSER_SOURCES
-    ${SHAREDPROPERTYBROWSER_SOURCES}
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qtpropertybrowser.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qtpropertymanager.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qteditorfactory.cpp
@@ -28,7 +24,6 @@ set(SHAREDPROPERTYBROWSER_SOURCES
 )
 
 set(SHAREDPROPERTYBROWSER_HEADERS
-    ${SHAREDPROPERTYBROWSER_HEADERS}
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qtpropertybrowser.h
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qtpropertymanager.h
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qteditorfactory.h
@@ -39,8 +34,8 @@ set(SHAREDPROPERTYBROWSER_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/qtpropertybrowser/qtpropertybrowserutils_p.h
 )
 
-add_library(sharedqtpropertybrowser OBJECT ${SHAREDPROPERTYBROWSER_SOURCES} ${SHAREDPROPERTYBROWSER_HEADERS})
+katie_setup_target(sharedqtpropertybrowser ${SHAREDPROPERTYBROWSER_SOURCES} ${SHAREDPROPERTYBROWSER_HEADERS})
+
+add_library(sharedqtpropertybrowser OBJECT ${sharedqtpropertybrowser_SOURCES})
 target_compile_definitions(sharedqtpropertybrowser PRIVATE ${SHAREDPROPERTYBROWSER_DEFINITIONS})
 target_include_directories(sharedqtpropertybrowser PRIVATE ${SHAREDPROPERTYBROWSER_INCLUDES})
-
-katie_setup_target(sharedqtpropertybrowser)

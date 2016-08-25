@@ -13,12 +13,11 @@ set(IDC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
+katie_setup_target(idc ${IDC_SOURCES})
 katie_setup_paths()
 
-add_executable(idc ${IDC_SOURCES})
+add_executable(idc ${idc_SOURCES})
 target_link_libraries(idc ${EXTRA_IDC_LIBS})
-
-katie_setup_target(idc)
 
 install(
     TARGETS idc

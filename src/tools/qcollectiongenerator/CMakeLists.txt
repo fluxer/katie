@@ -18,25 +18,20 @@ include_directories(
 )
 
 set(QCOLLECTIONGENERATOR_SOURCES
-    ${QCOLLECTIONGENERATOR_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qcollectiongenerator.cpp
 )
 
 set(QCOLLECTIONGENERATOR_HEADERS
-    ${QCOLLECTIONGENERATOR_HEADERS}
     ${SHAREDHELP_HEADERS}
 )
 
+katie_setup_target(qcollectiongenerator ${QCOLLECTIONGENERATOR_SOURCES} ${QCOLLECTIONGENERATOR_HEADERS})
 katie_setup_paths()
 
-add_executable(qcollectiongenerator
+add_executable(qcollectiongenerator ${qcollectiongenerator_SOURCES}
     $<TARGET_OBJECTS:sharedhelp>
-    ${QCOLLECTIONGENERATOR_SOURCES}
-    ${QCOLLECTIONGENERATOR_HEADERS}
 )
 target_link_libraries(qcollectiongenerator ${EXTRA_QCOLLECTIONGENERATOR_LIBS})
-
-katie_setup_target(qcollectiongenerator)
 
 install(
     TARGETS qcollectiongenerator

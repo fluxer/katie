@@ -124,17 +124,16 @@ endif()
 katie_generate_misc("${DBUS_HEADERS}" QtDBus)
 katie_generate_public("${DBUS_PUBLIC_HEADERS}" QtDBus)
 katie_generate_package(KtDBus "KtCore KtXml")
+katie_setup_target(KtDBus ${DBUS_SOURCES} ${DBUS_HEADERS})
 katie_setup_paths()
 
-add_library(KtDBus ${KATIE_TYPE} ${DBUS_SOURCES} ${DBUS_HEADERS})
+add_library(KtDBus ${KATIE_TYPE} ${KtDBus_SOURCES})
 target_link_libraries(KtDBus ${EXTRA_DBUS_LIBS})
 set_target_properties(KtDBus PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME DBus
 )
-
-katie_setup_target(KtDBus)
 
 install(
     TARGETS KtDBus

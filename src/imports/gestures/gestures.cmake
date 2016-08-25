@@ -10,12 +10,11 @@ set(GESTURES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/gestures/qdeclarativegesturearea_p.h
 )
 
+katie_setup_target(qmlgesturesplugin ${GESTURES_SOURCES} ${GESTURES_HEADERS})
 katie_setup_paths()
 
-add_library(qmlgesturesplugin ${KATIE_TYPE} ${GESTURES_SOURCES} ${GESTURES_HEADERS})
+add_library(qmlgesturesplugin ${KATIE_TYPE} ${qmlgesturesplugin_SOURCES})
 target_link_libraries(qmlgesturesplugin ${EXTRA_GESTURES_LIBS})
-
-katie_setup_target(qmlgesturesplugin)
 
 install(
     TARGETS qmlgesturesplugin

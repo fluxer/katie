@@ -15,10 +15,10 @@ set(QBBBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-add_library(qbbbearerplugin MODULE ${QBBBEARERPLUGIN_SOURCES} ${QBBBEARER_HEADERS})
-set_target_properties(qbbbearerplugin PROPERTIES OUTPUT_NAME qbbbearer)
+katie_setup_target(qbbbearerplugin ${QBBBEARERPLUGIN_SOURCES} ${QBBBEARER_HEADERS})
 
-katie_setup_target(qbbbearerplugin)
+add_library(qbbbearerplugin MODULE ${qbbbearerplugin_SOURCES})
+set_target_properties(qbbbearerplugin PROPERTIES OUTPUT_NAME qbbbearer)
 
 install(
     TARGETS qbbbearerplugin

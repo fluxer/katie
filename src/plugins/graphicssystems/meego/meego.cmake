@@ -1,5 +1,4 @@
 set(QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS
-    ${QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/qmeegographicssystem.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/qmeegopixmapdata.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/qmeegoextensions.h
@@ -14,7 +13,6 @@ set(QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS
 )
 
 set(QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES
-    ${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/qmeegographicssystem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/qmeegographicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/qmeegopixmapdata.cpp
@@ -24,10 +22,10 @@ set(QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicssystems/meego/dithering.cpp
 )
 
-add_library(qmeegographicssystemplugin MODULE ${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES} ${QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS})
-set_target_properties(qmeegographicssystemplugin PROPERTIES OUTPUT_NAME qmeegographicssystem)
+katie_setup_target(qmeegographicssystemplugin ${QMEEGOGRAPHICSSYSTEMPLUGIN_SOURCES} ${QMEEGOGRAPHICSSYSTEMPLUGIN_HEADERS})
 
-katie_setup_target(qmeegographicssystemplugin)
+add_library(qmeegographicssystemplugin MODULE ${qmeegographicssystemplugin_SOURCES})
+set_target_properties(qmeegographicssystemplugin PROPERTIES OUTPUT_NAME qmeegographicssystem)
 
 install(
     TARGETS qmeegographicssystemplugin

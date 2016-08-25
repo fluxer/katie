@@ -37,15 +37,14 @@ configure_file(
     @ONLY
 )
 
+katie_setup_target(qtconfig ${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS})
 katie_setup_paths()
 
 add_executable(qtconfig
     WIN32 # TODO: MACOSX_BUNDLE
-    ${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS}
+    ${qtconfig_SOURCES}
 )
 target_link_libraries(qtconfig ${EXTRA_QTCONFIG_LIBS})
-
-katie_setup_target(qtconfig)
 
 install(
     TARGETS qtconfig

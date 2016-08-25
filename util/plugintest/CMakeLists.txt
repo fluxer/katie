@@ -13,7 +13,7 @@ set(PLUGINTEST_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-add_executable(plugintest EXCLUDE_FROM_ALL ${PLUGINTEST_SOURCES})
-target_link_libraries(plugintest ${EXTRA_PLUGINTEST_LIBS})
+katie_setup_target(plugintest ${PLUGINTEST_SOURCES})
 
-katie_setup_target(plugintest)
+add_executable(plugintest EXCLUDE_FROM_ALL ${plugintest_SOURCES})
+target_link_libraries(plugintest ${EXTRA_PLUGINTEST_LIBS})

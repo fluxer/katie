@@ -3,7 +3,6 @@ include_directories(
 )
 
 set(QNMBEARERPLUGIN_HEADERS
-    ${QNMBEARERPLUGIN_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/networkmanager/qnmdbushelper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/networkmanager/qnetworkmanagerservice.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/networkmanager/qnetworkmanagerengine.h
@@ -12,7 +11,6 @@ set(QNMBEARERPLUGIN_HEADERS
 )
 
 set(QNMBEARERPLUGIN_SOURCES
-    ${QNMBEARERPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/networkmanager/nmmain.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/networkmanager/qnmdbushelper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/networkmanager/qnetworkmanagerservice.cpp
@@ -20,11 +18,11 @@ set(QNMBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-add_library(qnmbearerplugin MODULE ${QNMBEARERPLUGIN_SOURCES} ${QNMBEARERPLUGIN_HEADERS})
+katie_setup_target(qnmbearerplugin ${QNMBEARERPLUGIN_SOURCES} ${QNMBEARERPLUGIN_HEADERS})
+
+add_library(qnmbearerplugin MODULE ${qnmbearerplugin_SOURCES})
 target_link_libraries(qnmbearerplugin KtCore KtNetwork KtDBus)
 set_target_properties(qnmbearerplugin PROPERTIES OUTPUT_NAME qnmbearer)
-
-katie_setup_target(qnmbearerplugin)
 
 install(
     TARGETS qnmbearerplugin

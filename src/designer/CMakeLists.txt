@@ -115,14 +115,15 @@ endif()
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
 katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
+katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
 katie_setup_paths()
 
-add_library(KtDesigner ${KATIE_TYPE}
+add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}
     $<TARGET_OBJECTS:sharedqtgradienteditor>
     $<TARGET_OBJECTS:sharedqtpropertybrowser>
     $<TARGET_OBJECTS:shareddeviceskin>
     $<TARGET_OBJECTS:sharedfindwidget>
-    ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
+)
 target_link_libraries(KtDesigner ${EXTRA_DESIGNER_LIBS})
 set_target_properties(KtDesigner PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
@@ -130,7 +131,6 @@ set_target_properties(KtDesigner PROPERTIES
     EXPORT_NAME Designer
 )
 
-katie_setup_target(KtDesigner)
 katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser shareddeviceskin sharedfindwidget)
 
 install(

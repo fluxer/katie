@@ -16,25 +16,20 @@ include_directories(
 )
 
 set(QHELPGENERATOR_SOURCES
-    ${QHELPGENERATOR_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qhelpgenerator.cpp
 )
 
 set(QHELPGENERATOR_HEADERS
-    ${QHELPGENERATOR_HEADERS}
     ${SHAREDHELP_HEADERS}
 )
 
+katie_setup_target(qhelpgenerator ${QHELPGENERATOR_SOURCES} ${QHELPGENERATOR_HEADERS})
 katie_setup_paths()
 
-add_executable(qhelpgenerator
+add_executable(qhelpgenerator ${qhelpgenerator_SOURCES}
     $<TARGET_OBJECTS:sharedhelp>
-    ${QHELPGENERATOR_SOURCES}
-    ${QHELPGENERATOR_HEADERS}
 )
 target_link_libraries(qhelpgenerator ${EXTRA_QHELPGENERATOR_LIBS})
-
-katie_setup_target(qhelpgenerator)
 
 install(
     TARGETS qhelpgenerator

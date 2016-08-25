@@ -1,8 +1,5 @@
-set(SHAREDDEVICESKIN_DEFINITIONS
-    ${SHAREDDEVICESKIN_DEFINITIONS}
-)
+set(SHAREDDEVICESKIN_DEFINITIONS)
 set(SHAREDDEVICESKIN_INCLUDES
-    ${SHAREDDEVICESKIN_INCLUDES}
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
@@ -14,7 +11,6 @@ set(SHAREDDEVICESKIN_INCLUDES
 )
 
 set(SHAREDDEVICESKIN_RESOURCES
-    ${SHAREDDEVICESKIN_RESOURCES}
     ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/skins/ClamshellPhone.qrc
     ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/skins/SmartPhone2.qrc
     ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/skins/SmartPhone.qrc
@@ -26,23 +22,21 @@ set(SHAREDDEVICESKIN_RESOURCES
 )
 
 set(SHAREDDEVICESKIN_SOURCES
-    ${SHAREDDEVICESKIN_SOURCES}
     ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/deviceskin.cpp
 )
 
 set(SHAREDDEVICESKIN_HEADERS
-    ${SHAREDDEVICESKIN_HEADERS}
     ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/deviceskin.h
 )
 
+
+katie_setup_target(shareddeviceskin ${SHAREDDEVICESKIN_SOURCES} ${SHAREDDEVICESKIN_HEADERS})
 katie_resource(
     ${CMAKE_SOURCE_DIR}/src/shared/deviceskin/deviceskin.cpp
     "${SHAREDDEVICESKIN_RESOURCES}"
     deviceskin
 )
 
-add_library(shareddeviceskin OBJECT ${SHAREDDEVICESKIN_SOURCES} ${SHAREDDEVICESKIN_HEADERS})
+add_library(shareddeviceskin OBJECT ${shareddeviceskin_SOURCES})
 target_compile_definitions(shareddeviceskin PRIVATE ${SHAREDDEVICESKIN_DEFINITIONS})
 target_include_directories(shareddeviceskin PRIVATE ${SHAREDDEVICESKIN_INCLUDES})
-
-katie_setup_target(shareddeviceskin)

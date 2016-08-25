@@ -64,17 +64,16 @@ include_directories(
 katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)
 katie_generate_package(KtSql "KtCore")
+katie_setup_target(KtSql ${SQL_SOURCES} ${SQL_HEADERS})
 katie_setup_paths()
 
-add_library(KtSql ${KATIE_TYPE} ${SQL_SOURCES} ${SQL_HEADERS})
+add_library(KtSql ${KATIE_TYPE} ${KtSql_SOURCES})
 target_link_libraries(KtSql ${EXTRA_SQL_LIBS})
 set_target_properties(KtSql PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Sql
 )
-
-katie_setup_target(KtSql)
 
 install(
     TARGETS KtSql

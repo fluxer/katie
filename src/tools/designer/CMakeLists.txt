@@ -1,6 +1,4 @@
-add_definitions(
-    ${SHAREDDEVICESKIN_DEFINITIONS}
-)
+add_definitions(${SHAREDDEVICESKIN_DEFINITIONS})
 set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtNetwork KtDesigner KtDesignerComponents)
 
 include(fontpanel/fontpanel.cmake)
@@ -101,16 +99,16 @@ configure_file(
     @ONLY
 )
 
+
+katie_setup_target(designer ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 katie_setup_paths()
 
 add_executable(designer
     WIN32 # TODO: MACOSX_BUNDLE
+    ${designer_SOURCES}
     $<TARGET_OBJECTS:shareddeviceskin>
-    ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS}
 )
 target_link_libraries(designer ${EXTRA_DESIGNERBIN_LIBS})
-
-katie_setup_target(designer)
 
 install(
     TARGETS designer

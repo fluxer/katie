@@ -10,8 +10,11 @@ add_definitions(
     -DBUILDING_QT__
 )
 set(EXTRA_SCRIPT_LIBS KtCore)
+
 # TODO: fix std::auto_ptr warnings
-set(KATIE_CXXFLAGS "${KATIE_CXXFLAGS} -Wno-deprecated-declarations")
+if(KATIE_COMPILER MATCHES "(gcc|clang)")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+endif()
 
 include(api/api.cmake)
 include(bridge/bridge.cmake)
@@ -269,17 +272,16 @@ endif()
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
 katie_generate_package(KtScript "KtCore")
+katie_setup_target(KtScript ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
 katie_setup_paths()
 
-add_library(KtScript ${KATIE_TYPE} ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
+add_library(KtScript ${KATIE_TYPE} ${KtScript_SOURCES})
 target_link_libraries(KtScript ${EXTRA_SCRIPT_LIBS})
 set_target_properties(KtScript PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Script
 )
-
-katie_setup_target(KtScript)
 
 install(
     TARGETS KtScript

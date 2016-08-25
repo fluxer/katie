@@ -499,17 +499,16 @@ endif()
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_package(KtGui "KtCore")
+katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
 katie_setup_paths()
 
-add_library(KtGui ${KATIE_TYPE} ${GUI_SOURCES} ${GUI_HEADERS})
+add_library(KtGui ${KATIE_TYPE} ${KtGui_SOURCES})
 target_link_libraries(KtGui ${EXTRA_GUI_LIBS})
 set_target_properties(KtGui PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Gui
 )
-
-katie_setup_target(KtGui)
 
 install(
     TARGETS KtGui

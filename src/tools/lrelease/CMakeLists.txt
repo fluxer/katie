@@ -25,12 +25,13 @@ set(LRELEASE_HEADERS
     ${SHAREDLINGUIST_HEADERS}
 )
 
+katie_setup_target(lrelease ${LRELEASE_SOURCES} ${LRELEASE_HEADERS})
 katie_setup_paths()
 
-add_executable(lrelease $<TARGET_OBJECTS:sharedlinguist> ${LRELEASE_SOURCES} ${LRELEASE_HEADERS})
+add_executable(lrelease ${lrelease_SOURCES}
+    $<TARGET_OBJECTS:sharedlinguist>
+)
 target_link_libraries(lrelease ${EXTRA_LRELEASE_LIBS})
-
-katie_setup_target(lrelease)
 
 install(
     TARGETS lrelease

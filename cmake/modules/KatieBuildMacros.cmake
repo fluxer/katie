@@ -126,20 +126,13 @@ macro(KATIE_SETUP_FLAGS FORTARGET)
     )
 endmacro()
 
-macro(KATIE_SETUP_TARGET FORTARGET)
-    # targets which use TARGET_OBJECTS are not supported as all-in-one targets
-    cmake_policy(PUSH)
-    if(NOT CMAKE_VERSION VERSION_LESS "3.0.0")
-        cmake_policy(SET CMP0051 OLD)
-    endif()
-
+function(KATIE_SETUP_TARGET FORTARGET)
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
     if(NOT EXISTS "${resourcesdep}")
         file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
     endif()
-    get_target_property(targetsources ${FORTARGET} SOURCES)
     set(targetresources)
-    foreach(tmpres ${targetsources} ${ARGN})
+    foreach(tmpres ${ARGN})
         get_filename_component(resource ${tmpres} ABSOLUTE)
         get_source_file_property(skip ${resource} SKIP_RESOURCE)
         if(NOT skip)
@@ -165,57 +158,54 @@ macro(KATIE_SETUP_TARGET FORTARGET)
             elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
                 file(READ "${resource}" rsccontent)
                 # this can be simpler if continue() was supported by old CMake versions
-                if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
-                    set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                    get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                    get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                    set(mocargs)
-                    foreach(ddef ${dirdefs})
-                        # TODO: filter non -D, support -U too
-                        set(mocargs ${mocargs} -D${ddef})
-                    endforeach()
-                    foreach(incdir ${dirincs})
-                        set(mocargs ${mocargs} -I${incdir})
-                    endforeach()
-                    add_custom_command(
-                        OUTPUT "${rscout}"
-                        COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
-                    )
-                    set(targetresources ${targetresources} ${rscout})
-                    # NOTE: this can be troublesome but common sources can cause multiple
-                    # rules on the same file
-                    set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+                if(NOT "${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
+                    continue()
                 endif()
+
+                set(rscout "${rscpath}/moc_${rscname}${rscext}")
+                get_directory_property(dirdefs COMPILE_DEFINITIONS)
+                get_directory_property(dirincs INCLUDE_DIRECTORIES)
+                set(mocargs)
+                foreach(ddef ${dirdefs})
+                    # TODO: filter non -D, support -U too
+                    set(mocargs ${mocargs} -D${ddef})
+                endforeach()
+                foreach(incdir ${dirincs})
+                    set(mocargs ${mocargs} -I${incdir})
+                endforeach()
+                add_custom_command(
+                    OUTPUT "${rscout}"
+                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                )
+                set(targetresources ${targetresources} ${rscout})
+                # this can be troublesome but common sources can cause multiple
+                # rules on the same file
+                set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
             endif()
         endif()
     endforeach()
     set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
 
     if(NOT KATIE_ALLINONE)
-        set_target_properties(${FORTARGET} PROPERTIES SOURCES "${resourcesdep};${targetsources}")
-    # NOTE: blacklisted targets are either failing and too important for other components
-    # (KtCore and KtGui) or use TARGET_OBJECTS expressions which this macro cannot handle
-    elseif("${FORTARGET}" MATCHES "(KtCore|KtGui|KtDesigner|KtDesignerComponents|designer|lconvert|lrelease|lupdate|qcollectiongenerator|qhelpgenerator)")
+        set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
+    # blacklisted targets are failing and too important for other components
+    elseif("${FORTARGET}" MATCHES "(KtCore|KtGui)")
         katie_warning("All-in-one build not yet support for: ${FORTARGET}")
-        set_target_properties(${FORTARGET} PROPERTIES SOURCES "${resourcesdep};${targetsources}")
+        set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     else()
         set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
         set(allinonedata)
         set(targetobjects)
-        foreach(srcstring ${targetsources})
+        foreach(srcstring ${ARGN})
             get_filename_component(srcname ${srcstring} EXT)
             if(NOT "${srcname}" MATCHES "(.h|.qrc|.ui)")
                 set(allinonedata "${allinonedata}#include \"${srcstring}\"\n")
             endif()
         endforeach()
         file(WRITE ${allinonesource} "${allinonedata}")
-        set_target_properties(${FORTARGET} PROPERTIES SOURCES "${resourcesdep};${allinonesource}")
+        set(${FORTARGET}_SOURCES ${resourcesdep} ${allinonesource} PARENT_SCOPE)
     endif()
-
-    katie_setup_flags(${FORTARGET})
-
-    cmake_policy(POP)
-endmacro()
+endfunction()
 
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(targets_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)

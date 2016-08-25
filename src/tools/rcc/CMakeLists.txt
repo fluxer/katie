@@ -21,12 +21,11 @@ set(RCC_HEADERS
     ${CMAKE_SOURCE_DIR}/src/core/kernel/qcorecmdlineargs_p.h
 )
 
+katie_setup_target(rcc ${RCC_SOURCES} ${RCC_HEADERS})
 katie_setup_paths()
 
-add_executable(rcc ${RCC_SOURCES} ${RCC_HEADERS})
+add_executable(rcc ${rcc_SOURCES})
 target_link_libraries(rcc ${EXTRA_RCC_LIBS})
-
-katie_setup_target(rcc)
 
 install(
     TARGETS rcc

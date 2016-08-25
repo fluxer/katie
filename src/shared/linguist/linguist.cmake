@@ -1,11 +1,9 @@
 set(SHAREDLINGUIST_DEFINITIONS
-    ${SHAREDLINGUIST_DEFINITIONS}
     -DPROEVALUATOR_CUMULATIVE
     -DPROEVALUATOR_INIT_PROPS
 )
 
 set(SHAREDLINGUIST_INCLUDES
-    ${SHAREDLINGUIST_INCLUDES}
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
@@ -16,7 +14,6 @@ set(SHAREDLINGUIST_INCLUDES
 )
 
 set(SHAREDLINGUIST_SOURCES
-    ${SHAREDLINGUIST_SOURCES}
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/simtexth.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/numerus.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translator.cpp
@@ -28,14 +25,13 @@ set(SHAREDLINGUIST_SOURCES
 )
 
 set(SHAREDLINGUIST_HEADERS
-    ${SHAREDLINGUIST_HEADERS}
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/simtexth.h
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translator.h
     ${CMAKE_SOURCE_DIR}/src/shared/linguist/translatormessage.h
-) 
+)
 
-add_library(sharedlinguist OBJECT ${SHAREDLINGUIST_SOURCES})
+katie_setup_target(sharedlinguist ${SHAREDLINGUIST_SOURCES} ${SHAREDLINGUIST_HEADERS})
+
+add_library(sharedlinguist OBJECT ${sharedlinguist_SOURCES})
 target_compile_definitions(sharedlinguist PRIVATE ${SHAREDLINGUIST_DEFINITIONS})
 target_include_directories(sharedlinguist PRIVATE ${SHAREDLINGUIST_INCLUDES})
-
-katie_setup_target(sharedlinguist)

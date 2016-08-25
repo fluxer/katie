@@ -38,9 +38,6 @@ target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 add_executable(moc ${MOC_SOURCES})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
 
-katie_setup_flags(bootstrap_moc)
-katie_setup_flags(moc)
-
 install(
     TARGETS moc
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

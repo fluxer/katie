@@ -75,6 +75,7 @@ include_directories(
 katie_generate_misc("${XMLPATTERNS_HEADERS}" QtXmlPatterns)
 katie_generate_public("${XMLPATTERNS_PUBLIC_HEADERS}" QtXmlPatterns)
 katie_generate_package(KtXmlPatterns "KtCore KtNetwork")
+katie_setup_target(KtXmlPatterns ${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
 katie_setup_paths()
 
 # the component requires exceptions
@@ -82,15 +83,13 @@ if(NOT KATIE_PLATFORM STREQUAL "win32")
     set_source_files_properties(${XMLPATTERNS_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
 endif()
 
-add_library(KtXmlPatterns ${KATIE_TYPE} ${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
+add_library(KtXmlPatterns ${KATIE_TYPE} ${KtXmlPatterns_SOURCES})
 target_link_libraries(KtXmlPatterns ${EXTRA_XMLPATTERNS_LIBS})
 set_target_properties(KtXmlPatterns PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME XmlPatterns
 )
-
-katie_setup_target(KtXmlPatterns)
 
 install(
     TARGETS KtXmlPatterns

@@ -15,7 +15,7 @@ set(XKBDATAGEN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
-add_executable(xkbdatagen EXCLUDE_FROM_ALL ${XKBDATAGEN_SOURCES})
-target_link_libraries(xkbdatagen ${EXTRA_XKBDATAGEN_LIBS})
+katie_setup_target(xkbdatagen ${XKBDATAGEN_SOURCES})
 
-katie_setup_target(xkbdatagen)
+add_executable(xkbdatagen EXCLUDE_FROM_ALL ${xkbdatagen_SOURCES})
+target_link_libraries(xkbdatagen ${EXTRA_XKBDATAGEN_LIBS})

@@ -3,22 +3,20 @@ include_directories(
 )
 
 set(QIMSWMULTIPLUGIN_HEADERS
-    ${QIMSWMULTIPLUGIN_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods/imsw-multi/qmultiinputcontext.h
     ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods/imsw-multi/qmultiinputcontextplugin.h
 )
 
 set(QIMSWMULTIPLUGIN_SOURCES
-    ${QIMSWMULTIPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods/imsw-multi/qmultiinputcontext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods/imsw-multi/qmultiinputcontextplugin.cpp
 )
 
-add_library(qimsw-multiplugin MODULE ${QIMSWMULTIPLUGIN_SOURCES} ${QIMSWMULTIPLUGIN_HEADERS})
+katie_setup_target(qimsw-multiplugin ${QIMSWMULTIPLUGIN_SOURCES} ${QIMSWMULTIPLUGIN_HEADERS})
+
+add_library(qimsw-multiplugin MODULE ${qimsw-multiplugin_SOURCES})
 target_link_libraries(qimsw-multiplugin KtCore KtGui)
 set_target_properties(qimsw-multiplugin PROPERTIES OUTPUT_NAME qimsw-multi)
-
-katie_setup_target(qimsw-multiplugin)
 
 install(
     TARGETS qimsw-multiplugin

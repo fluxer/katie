@@ -43,15 +43,15 @@ configure_file(
     @ONLY
 )
 
+
+katie_setup_target(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_paths()
 
 add_executable(qdbusviewer
     WIN32 # TODO: MACOSX_BUNDLE
-    ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS}
+    ${qdbusviewer_SOURCES}
 )
 target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
-
-katie_setup_target(qdbusviewer)
 
 install(
     TARGETS qdbusviewer

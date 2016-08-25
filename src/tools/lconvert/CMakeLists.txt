@@ -25,12 +25,13 @@ set(LCONVERT_HEADERS
     ${SHAREDLINGUIST_HEADERS}
 )
 
+katie_setup_target(lconvert ${LCONVERT_SOURCES} ${LCONVERT_HEADERS})
 katie_setup_paths()
 
-add_executable(lconvert $<TARGET_OBJECTS:sharedlinguist> ${LCONVERT_SOURCES} ${LCONVERT_HEADERS})
+add_executable(lconvert ${lconvert_SOURCES}
+    $<TARGET_OBJECTS:sharedlinguist>
+)
 target_link_libraries(lconvert ${EXTRA_LCONVERT_LIBS})
-
-katie_setup_target(lconvert)
 
 install(
     TARGETS lconvert

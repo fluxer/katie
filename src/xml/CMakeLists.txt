@@ -57,35 +57,19 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/sax
 )
 
-if(${KATIE_PLATFORM} MATCHES "win32" AND MSVC)
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -w-use
-    )
-endif()
-
-# The platforms that require the symbol to be present in QtXml
-if(${KATIE_TYPE} STREQUAL SHARED AND ${KATIE_PLATFORM} MATCHES "(win32|mac|aix)")
-    set(XML_SOURCES
-        ${XML_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/core/xml/qxmlstream.cpp
-    )
-endif()
-
 katie_generate_misc("${XML_HEADERS}" QtXml)
 katie_generate_public("${XML_PUBLIC_HEADERS}" QtXml)
 katie_generate_package(KtXml "KtCore")
+katie_setup_target(KtXml ${XML_SOURCES} ${XML_HEADERS})
 katie_setup_paths()
 
-add_library(KtXml ${KATIE_TYPE} ${XML_SOURCES} ${XML_HEADERS})
+add_library(KtXml ${KATIE_TYPE} ${KtXml_SOURCES})
 target_link_libraries(KtXml ${EXTRA_XML_LIBS})
 set_target_properties(KtXml PROPERTIES
     VERSION ${KATIE_MAJOR}.${KATIE_MINOR}
     SOVERSION ${KATIE_VERSION}
     EXPORT_NAME Xml
 )
-
-katie_setup_target(KtXml)
 
 install(
     TARGETS KtXml

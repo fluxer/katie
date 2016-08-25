@@ -21,12 +21,11 @@ set(QSCRIPT_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/bytearrayprototype.h
 )
 
+katie_setup_target(qscript ${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
 katie_setup_paths()
 
-add_executable(qscript ${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
+add_executable(qscript ${qscript_SOURCES})
 target_link_libraries(qscript ${EXTRA_QTSCRIPT_LIBS})
-
-katie_setup_target(qscript)
 
 install(
     TARGETS qscript

@@ -23,10 +23,6 @@ target_link_libraries(qdbuscpp2xml ${EXTRA_QDBUS_LIBS})
 add_executable(qdbusxml2cpp ${CMAKE_CURRENT_SOURCE_DIR}/qdbusxml2cpp.cpp)
 target_link_libraries(qdbusxml2cpp ${EXTRA_QDBUS_LIBS})
 
-katie_setup_target(qdbus)
-katie_setup_target(qdbuscpp2xml)
-katie_setup_target(qdbusxml2cpp)
-
 install(
     TARGETS qdbus qdbuscpp2xml qdbusxml2cpp
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}

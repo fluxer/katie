@@ -25,7 +25,7 @@ set(LEXGEN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/re2nfa.h
 )
 
-add_executable(lexgen EXCLUDE_FROM_ALL ${LEXGEN_SOURCES} ${LEXGEN_HEADERS})
-target_link_libraries(lexgen ${EXTRA_LEXGEN_LIBS})
+katie_setup_target(lexgen ${LEXGEN_SOURCES} ${LEXGEN_HEADERS})
 
-katie_setup_target(lexgen)
+add_executable(lexgen EXCLUDE_FROM_ALL ${lexgen_SOURCES})
+target_link_libraries(lexgen ${EXTRA_LEXGEN_LIBS})

@@ -1,7 +1,6 @@
 set(SHAREDGRADIENDEDITOR_DEFINITIONS)
 
 set(SHAREDGRADIENDEDITOR_INCLUDES
-    ${SHAREDGRADIENDEDITOR_INCLUDES}
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
@@ -16,7 +15,6 @@ set(SHAREDGRADIENDEDITOR_INCLUDES
 )
 
 set(SHAREDGRADIENDEDITOR_SOURCES
-    ${SHAREDGRADIENDEDITOR_SOURCES}
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradienteditor.ui
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientdialog.ui
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientview.ui
@@ -38,7 +36,6 @@ set(SHAREDGRADIENDEDITOR_SOURCES
 )
 
 set(SHAREDGRADIENDEDITOR_HEADERS
-    ${SHAREDGRADIENDEDITOR_HEADERS}
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientstopsmodel.h
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientstopswidget.h
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientstopscontroller.h
@@ -54,8 +51,8 @@ set(SHAREDGRADIENDEDITOR_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtcolorbutton.h
 )
 
-add_library(sharedqtgradienteditor OBJECT ${SHAREDGRADIENDEDITOR_SOURCES} ${SHAREDGRADIENDEDITOR_HEADERS})
+katie_setup_target(sharedqtgradienteditor ${SHAREDGRADIENDEDITOR_SOURCES} ${SHAREDGRADIENDEDITOR_HEADERS})
+
+add_library(sharedqtgradienteditor OBJECT ${sharedqtgradienteditor_SOURCES})
 target_compile_definitions(sharedqtgradienteditor PRIVATE ${SHAREDGRADIENDEDITOR_DEFINITIONS})
 target_include_directories(sharedqtgradienteditor PRIVATE ${SHAREDGRADIENDEDITOR_INCLUDES})
-
-katie_setup_target(sharedqtgradienteditor)
