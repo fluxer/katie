@@ -273,7 +273,7 @@ If this function returns false, the conversion request forwards to object's pare
 This function is only invoked when converting an object to number or string. An object converted to boolean is 'true.' An object converted to object is itself.
 */
 typedef JSValueRef
-(*JSObjectConvertToTypeCallback) (JSContextRef ctx, JSObjectRef object, JSType type, JSValueRef* exception);
+(*JSObjectConvertToTypeCallback) (JSContextRef ctx, JSObjectRef object, JSC::JSType type, JSValueRef* exception);
 
 /*! 
 @struct JSStaticValue

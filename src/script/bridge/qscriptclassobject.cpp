@@ -34,9 +34,11 @@
 #include "Error.h"
 #include "PropertyNameArray.h"
 
+#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QScriptContext*)
 Q_DECLARE_METATYPE(QScriptValue)
 Q_DECLARE_METATYPE(QScriptValueList)
+#endif
 
 QT_BEGIN_NAMESPACE
 

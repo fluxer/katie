@@ -193,6 +193,11 @@ if(NOT KATIE_PLATFORM STREQUAL "integrity" AND NOT MINGW)
     )
 endif()
 
+# some things just cannot be done right
+if(KATIE_ALLINONE)
+    add_definitions(-DQT_ALLINONE)
+endif()
+
 # for 3rd party source used in help and test components
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
 if(HAVE_SYS_TIME_H)

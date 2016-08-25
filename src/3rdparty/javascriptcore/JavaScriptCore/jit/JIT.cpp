@@ -437,6 +437,7 @@ void JIT::privateCompileSlowCases()
     m_bytecodeIndex = (unsigned)-1;
 #endif
 }
+#undef NEXT_OPCODE
 
 JITCode JIT::privateCompile()
 {

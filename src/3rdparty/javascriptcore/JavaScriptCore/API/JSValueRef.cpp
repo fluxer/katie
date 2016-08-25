@@ -52,17 +52,17 @@ using namespace JSC;
     JSValue jsValue = toJS(exec, value);
 
     if (jsValue.isUndefined())
-        return kJSTypeUndefined;
+        return UndefinedType;
     if (jsValue.isNull())
-        return kJSTypeNull;
+        return NullType;
     if (jsValue.isBoolean())
-        return kJSTypeBoolean;
+        return BooleanType;
     if (jsValue.isNumber())
-        return kJSTypeNumber;
+        return NumberType;
     if (jsValue.isString())
-        return kJSTypeString;
+        return StringType;
     Q_ASSERT(jsValue.isObject());
-    return kJSTypeObject;
+    return ObjectType;
 }
 
 bool JSValueIsUndefined(JSContextRef ctx, JSValueRef value)

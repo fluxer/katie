@@ -37,7 +37,9 @@
 #include <QtCore/qstringlist.h>
 
 Q_DECLARE_METATYPE(QScriptContext*)
+#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QScriptValue)
+#endif
 Q_DECLARE_METATYPE(QScriptValueList)
 
 QT_BEGIN_NAMESPACE

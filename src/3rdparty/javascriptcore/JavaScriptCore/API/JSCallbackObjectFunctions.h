@@ -452,7 +452,7 @@ double JSCallbackObject<Base>::toNumber(ExecState* exec) const
             JSValueRef value;
             {
                 APICallbackShim callbackShim(exec);
-                value = convertToType(ctx, thisRef, kJSTypeNumber, &exception);
+                value = convertToType(ctx, thisRef, NumberType, &exception);
             }
             if (exception) {
                 exec->setException(toJS(exec, exception));
@@ -479,7 +479,7 @@ UString JSCallbackObject<Base>::toString(ExecState* exec) const
             JSValueRef value;
             {
                 APICallbackShim callbackShim(exec);
-                value = convertToType(ctx, thisRef, kJSTypeString, &exception);
+                value = convertToType(ctx, thisRef, StringType, &exception);
             }
             if (exception) {
                 exec->setException(toJS(exec, exception));

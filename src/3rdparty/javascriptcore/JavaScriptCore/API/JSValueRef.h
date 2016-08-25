@@ -27,25 +27,21 @@
 #define JSValueRef_h
 
 #include <JSBase.h>
+#include <JSType.h>
 
 /*!
 @enum JSType
 @abstract     A constant identifying the type of a JSValue.
-@constant     kJSTypeUndefined  The unique undefined value.
-@constant     kJSTypeNull       The unique null value.
-@constant     kJSTypeBoolean    A primitive boolean value, one of true or false.
-@constant     kJSTypeNumber     A primitive number value.
-@constant     kJSTypeString     A primitive string value.
-@constant     kJSTypeObject     An object value (meaning that this JSValueRef is a JSObjectRef).
+@constant     UnspecifiedType
+@constant     UndefinedType  The unique undefined value.
+@constant     BooleanType    A primitive boolean value, one of true or false.
+@constant     NumberType     A primitive number value.
+@constant     NullType       The unique null value.
+@constant     StringType     A primitive string value.
+@constant     CompoundType
+@constant     ObjectType     An object value (meaning that this JSValueRef is a JSObjectRef).
+@constant     GetterSetterType
 */
-typedef enum {
-    kJSTypeUndefined,
-    kJSTypeNull,
-    kJSTypeBoolean,
-    kJSTypeNumber,
-    kJSTypeString,
-    kJSTypeObject
-} JSType;
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,7 +54,7 @@ extern "C" {
 @param value    The JSValue whose type you want to obtain.
 @result         A value of type JSType that identifies value's type.
 */
-JS_EXPORT JSType JSValueGetType(JSContextRef ctx, JSValueRef value);
+JS_EXPORT JSC::JSType JSValueGetType(JSContextRef ctx, JSValueRef value);
 
 /*!
 @function
