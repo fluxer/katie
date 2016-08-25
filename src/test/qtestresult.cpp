@@ -69,7 +69,7 @@ namespace QTest
     static const char *expectFailComment = 0;
     static int expectFailMode = 0;
 
-    static const char *currentAppName = 0;
+    static const char *currentApplicationName = 0;
 }
 
 void QTestResult::reset()
@@ -351,13 +351,13 @@ bool QTestResult::skipCurrentTest()
     return QTest::skipCurrentTest;
 }
 
-void QTestResult::setCurrentAppName(const char *appName)
+void QTestResult::setCurrentApplicationName(const char *appName)
 {
-    QTest::currentAppName = appName;
+    QTest::currentApplicationName = appName;
 }
-const char *QTestResult::currentAppName()
+const char *QTestResult::currentApplicationName()
 {
-    return QTest::currentAppName;
+    return QTest::currentApplicationName;
 }
 
 QT_END_NAMESPACE

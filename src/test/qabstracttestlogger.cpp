@@ -42,11 +42,10 @@
 #include "QtTest/qabstracttestlogger_p.h"
 #include "QtTest/qtestlog_p.h"
 #include "QtTest/qtestassert.h"
+#include "qtestcommon_p.h"
 
 #include "QtCore/qbytearray.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdarg.h>
 
 #ifndef Q_OS_WIN
@@ -54,11 +53,6 @@
 #endif
 
 QT_BEGIN_NAMESPACE
-
-namespace QTest
-{
-    static FILE *stream = 0;
-}
 
 void QAbstractTestLogger::outputString(const char *msg)
 {

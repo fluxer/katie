@@ -1887,7 +1887,7 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
 
     QTestResult::setCurrentTestObject(metaObject->className());
     if (argc > 0)
-        QTestResult::setCurrentAppName(argv[0]);
+        QTestResult::setCurrentApplicationName(argv[0]);
 
     qtest_qParseArgs(argc, argv, false);
     if (QTest::randomOrder) {
@@ -2136,7 +2136,7 @@ QTestData &QTest::newRow(const char *dataTag)
 */
 const char *QTest::currentAppName()
 {
-    return QTestResult::currentAppName();
+    return QTestResult::currentApplicationName();
 }
 
 /*!

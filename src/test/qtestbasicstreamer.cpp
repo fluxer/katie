@@ -45,20 +45,13 @@
 #include "qtestelementattribute.h"
 #include "QtTest/qtestlog_p.h"
 #include "qtestassert.h"
-
-#include <stdio.h>
-#include <stdlib.h>
+#include "qtestcommon_p.h"
 
 #ifndef Q_OS_WIN
 #include <unistd.h>
 #endif
 
 QT_BEGIN_NAMESPACE
-
-namespace QTest
-{
-    static FILE *stream = 0;
-}
 
 QTestBasicStreamer::QTestBasicStreamer()
     :testLogger(0)

@@ -66,6 +66,7 @@ set(TEST_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qabstracttestlogger_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qplaintestlogger_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qxmltestlogger_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtestcommon_p.h
 )
 
 set(TEST_SOURCES

@@ -41,20 +41,12 @@
 
 #include "qtestfilelogger.h"
 #include "qtestassert.h"
+#include "qtestcommon_p.h"
 #include "QtTest/qtestlog_p.h"
 #include "QtTest/qtestresult_p.h"
-
 #include <QtCore/qdir.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-
 QT_BEGIN_NAMESPACE
-
-namespace QTest
-{
-    static FILE *stream = 0;
-}
 
 QTestFileLogger::QTestFileLogger()
 {
