@@ -127,7 +127,7 @@ static bool loadQPH(Translator &translator, QIODevice &dev, ConversionData &)
     return reader.read(translator);
 }
 
-static QString protect(const QString &str)
+static QString protectQph(const QString &str)
 {
     QString result;
     result.reserve(str.length() * 12 / 10);
@@ -173,14 +173,14 @@ static bool saveQPH(const Translator &translator, QIODevice &dev, ConversionData
     t << ">\n";
     foreach (const TranslatorMessage &msg, translator.messages()) {
         t << "<phrase>\n";
-        t << "    <source>" << protect(msg.sourceText()) << "</source>\n";
+        t << "    <source>" << protectQph(msg.sourceText()) << "</source>\n";
         QString str = msg.translations().join(QLatin1String("@"));
         str.replace(QChar(Translator::BinaryVariantSeparator),
                     QChar(Translator::TextVariantSeparator));
-        t << "    <target>" << protect(str)
+        t << "    <target>" << protectQph(str)
             << "</target>\n";
         if (!msg.comment().isEmpty())
-            t << "    <definition>" << protect(msg.comment()) << "</definition>\n";
+            t << "    <definition>" << protectQph(msg.comment()) << "</definition>\n";
         t << "</phrase>\n";
     }
     t << "</QPH>\n";

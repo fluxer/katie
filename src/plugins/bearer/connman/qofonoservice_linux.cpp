@@ -74,7 +74,7 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, ObjectPathPropert
 }
 
 QT_BEGIN_NAMESPACE
-static QDBusConnection dbusConnection = QDBusConnection::systemBus();
+static QDBusConnection ofonoConnection = QDBusConnection::systemBus();
 
 
 QOfonoManagerInterface::QOfonoManagerInterface( QObject *parent)
@@ -133,11 +133,11 @@ void QOfonoManagerInterface::connectNotify(const char *signal)
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               QLatin1String(OFONO_MANAGER_PATH),
-                               QLatin1String(OFONO_MANAGER_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                QLatin1String(OFONO_MANAGER_PATH),
+                                QLatin1String(OFONO_MANAGER_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -283,11 +283,11 @@ void QOfonoModemInterface::connectNotify(const char *signal)
             QOfonoDBusHelper *helper;
             helper = new QOfonoDBusHelper(this);
 
-            dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                                   this->path(),
-                                   QLatin1String(OFONO_MODEM_INTERFACE),
-                                   QLatin1String("PropertyChanged"),
-                                   helper,SLOT(propertyChanged(QString,QDBusVariant)));
+            ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                    this->path(),
+                                    QLatin1String(OFONO_MODEM_INTERFACE),
+                                    QLatin1String("PropertyChanged"),
+                                    helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
             QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -414,11 +414,11 @@ if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               this->path(),
-                               QLatin1String(OFONO_NETWORK_REGISTRATION_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                this->path(),
+                                QLatin1String(OFONO_NETWORK_REGISTRATION_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -512,11 +512,11 @@ if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               this->path(),
-                               QLatin1String(OFONO_NETWORK_OPERATOR_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                this->path(),
+                                QLatin1String(OFONO_NETWORK_OPERATOR_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -615,11 +615,11 @@ if (signal == SIGNAL(propertyChanged(QString,QDBusVariant))) {
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               this->path(),
-                               QLatin1String(OFONO_SIM_MANAGER_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                this->path(),
+                                QLatin1String(OFONO_SIM_MANAGER_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -712,11 +712,11 @@ void QOfonoDataConnectionManagerInterface::connectNotify(const char *signal)
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               this->path(),
-                               QLatin1String(OFONO_DATA_CONNECTION_MANAGER_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                this->path(),
+                                QLatin1String(OFONO_DATA_CONNECTION_MANAGER_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -831,11 +831,11 @@ void QOfonoPrimaryDataContextInterface::connectNotify(const char *signal)
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               this->path(),
-                               QLatin1String(OFONO_DATA_CONTEXT_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                this->path(),
+                                QLatin1String(OFONO_DATA_CONTEXT_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),
@@ -913,11 +913,11 @@ void QOfonoSmsInterface::connectNotify(const char *signal)
         QOfonoDBusHelper *helper;
         helper = new QOfonoDBusHelper(this);
 
-        dbusConnection.connect(QLatin1String(OFONO_SERVICE),
-                               this->path(),
-                               QLatin1String(OFONO_SMS_MANAGER_INTERFACE),
-                               QLatin1String("PropertyChanged"),
-                               helper,SLOT(propertyChanged(QString,QDBusVariant)));
+        ofonoConnection.connect(QLatin1String(OFONO_SERVICE),
+                                this->path(),
+                                QLatin1String(OFONO_SMS_MANAGER_INTERFACE),
+                                QLatin1String("PropertyChanged"),
+                                helper,SLOT(propertyChanged(QString,QDBusVariant)));
 
 
         QObject::connect(helper,SIGNAL(propertyChangedContext(QString,QString,QDBusVariant)),

@@ -750,6 +750,9 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QTcpServer", "QtNetwork/qtcpserver.h"},
     { "QTcpSocket", "QtNetwork/qtcpsocket.h"},
     { "QUdpSocket", "QtNetwork/qudpsocket.h"},
+    { "QNetworkConfigurationManager", "QtNetwork/qnetworkconfigmanager.h"},
+    { "QNetworkConfiguration", "QtNetwork/qnetworkconfiguration.h"},
+    { "QNetworkSession", "QtNetwork/qnetworksession.h"},
     { "QAuthenticator", "QtNetwork/qauthenticator.h"},
     { "QIPv6Address", "QtNetwork/qhostaddress.h"},
     { "QHostAddress", "QtNetwork/qhostaddress.h"},
@@ -782,6 +785,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 776;
+static const int qclass_lib_count = 779;
 
 #endif

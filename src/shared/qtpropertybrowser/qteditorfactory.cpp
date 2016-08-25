@@ -1977,7 +1977,7 @@ void QtEnumEditorFactory::disconnectPropertyManager(QtEnumPropertyManager *manag
 
 // QtCursorEditorFactory
 
-Q_GLOBAL_STATIC(QtCursorDatabase, cursorDatabase)
+Q_GLOBAL_STATIC(QtCursorDatabase, editorCursorDatabase)
 
 class QtCursorEditorFactoryPrivate
 {
@@ -2014,7 +2014,7 @@ void QtCursorEditorFactoryPrivate::slotPropertyChanged(QtProperty *property, con
         return;
 
     m_updatingEnum = true;
-    m_enumPropertyManager->setValue(enumProp, cursorDatabase()->cursorToValue(cursor));
+    m_enumPropertyManager->setValue(enumProp, editorCursorDatabase()->cursorToValue(cursor));
     m_updatingEnum = false;
 }
 
@@ -2030,7 +2030,7 @@ void QtCursorEditorFactoryPrivate::slotEnumChanged(QtProperty *property, int val
     if (!cursorManager)
         return;
 #ifndef QT_NO_CURSOR
-    cursorManager->setValue(prop, QCursor(cursorDatabase()->valueToCursor(value)));
+    cursorManager->setValue(prop, QCursor(editorCursorDatabase()->valueToCursor(value)));
 #endif
 }
 
@@ -2115,10 +2115,10 @@ QWidget *QtCursorEditorFactory::createEditor(QtCursorPropertyManager *manager, Q
         enumProp = d_ptr->m_propertyToEnum[property];
     } else {
         enumProp = d_ptr->m_enumPropertyManager->addProperty(property->propertyName());
-        d_ptr->m_enumPropertyManager->setEnumNames(enumProp, cursorDatabase()->cursorShapeNames());
-        d_ptr->m_enumPropertyManager->setEnumIcons(enumProp, cursorDatabase()->cursorShapeIcons());
+        d_ptr->m_enumPropertyManager->setEnumNames(enumProp, editorCursorDatabase()->cursorShapeNames());
+        d_ptr->m_enumPropertyManager->setEnumIcons(enumProp, editorCursorDatabase()->cursorShapeIcons());
 #ifndef QT_NO_CURSOR
-        d_ptr->m_enumPropertyManager->setValue(enumProp, cursorDatabase()->cursorToValue(manager->value(property)));
+        d_ptr->m_enumPropertyManager->setValue(enumProp, editorCursorDatabase()->cursorToValue(manager->value(property)));
 #endif
         d_ptr->m_propertyToEnum[property] = enumProp;
         d_ptr->m_enumToProperty[enumProp] = property;

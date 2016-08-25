@@ -58,7 +58,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QDBusConnection dbusConnection = QDBusConnection::systemBus();
+static QDBusConnection nmConnection = QDBusConnection::systemBus();
 
 class QNetworkManagerInterfacePrivate
 {
@@ -74,7 +74,7 @@ QNetworkManagerInterface::QNetworkManagerInterface(QObject *parent)
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 QLatin1String(NM_DBUS_PATH),
                                                 QLatin1String(NM_DBUS_INTERFACE),
-                                                dbusConnection);
+                                                nmConnection);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -104,25 +104,25 @@ bool QNetworkManagerInterface::setConnections()
     if(!isValid() )
         return false;
     bool allOk = false;
-    if (!dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                                  QLatin1String(NM_DBUS_PATH),
-                                  QLatin1String(NM_DBUS_INTERFACE),
-                                  QLatin1String("PropertiesChanged"),
-                                nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>)))) {
+    if (!nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                              QLatin1String(NM_DBUS_PATH),
+                              QLatin1String(NM_DBUS_INTERFACE),
+                              QLatin1String("PropertiesChanged"),
+                              nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>)))) {
         allOk = true;
     }
-    if (!dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                                  QLatin1String(NM_DBUS_PATH),
-                                  QLatin1String(NM_DBUS_INTERFACE),
-                                  QLatin1String("DeviceAdded"),
-                                this,SIGNAL(deviceAdded(QDBusObjectPath)))) {
+    if (!nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                              QLatin1String(NM_DBUS_PATH),
+                              QLatin1String(NM_DBUS_INTERFACE),
+                              QLatin1String("DeviceAdded"),
+                              this,SIGNAL(deviceAdded(QDBusObjectPath)))) {
         allOk = true;
     }
-    if (!dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                                  QLatin1String(NM_DBUS_PATH),
-                                  QLatin1String(NM_DBUS_INTERFACE),
-                                  QLatin1String("DeviceRemoved"),
-                                  this,SIGNAL(deviceRemoved(QDBusObjectPath)))) {
+    if (!nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                              QLatin1String(NM_DBUS_PATH),
+                              QLatin1String(NM_DBUS_INTERFACE),
+                              QLatin1String("DeviceRemoved"),
+                              this,SIGNAL(deviceRemoved(QDBusObjectPath)))) {
         allOk = true;
     }
 
@@ -198,7 +198,7 @@ QNetworkManagerInterfaceAccessPoint::QNetworkManagerInterfaceAccessPoint(const Q
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 d->path,
                                                 QLatin1String(NM_DBUS_INTERFACE_ACCESS_POINT),
-                                                dbusConnection);
+                                                nmConnection);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -229,11 +229,11 @@ bool QNetworkManagerInterfaceAccessPoint::setConnections()
     connect(nmDBusHelper, SIGNAL(pathForPropertiesChanged(QString,QMap<QString,QVariant>)),
             this,SIGNAL(propertiesChanged(QString,QMap<QString,QVariant>)));
 
-    if(dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_ACCESS_POINT),
-                              QLatin1String("PropertiesChanged"),
-                              nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>))) ) {
+    if(nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                            d->path,
+                            QLatin1String(NM_DBUS_INTERFACE_ACCESS_POINT),
+                            QLatin1String("PropertiesChanged"),
+                            nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>))) ) {
         allOk = true;
 
     }
@@ -306,7 +306,7 @@ QNetworkManagerInterfaceDevice::QNetworkManagerInterfaceDevice(const QString &de
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 d->path,
                                                 QLatin1String(NM_DBUS_INTERFACE_DEVICE),
-                                                dbusConnection);
+                                                nmConnection);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -335,11 +335,11 @@ bool QNetworkManagerInterfaceDevice::setConnections()
     nmDBusHelper = new QNmDBusHelper(this);
     connect(nmDBusHelper,SIGNAL(pathForStateChanged(QString,quint32)),
             this, SIGNAL(stateChanged(QString,quint32)));
-    if(dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_DEVICE),
-                              QLatin1String("StateChanged"),
-                              nmDBusHelper,SLOT(deviceStateChanged(quint32)))) {
+    if(nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                            d->path,
+                            QLatin1String(NM_DBUS_INTERFACE_DEVICE),
+                            QLatin1String("StateChanged"),
+                            nmDBusHelper,SLOT(deviceStateChanged(quint32)))) {
         allOk = true;
     }
     return allOk;
@@ -397,7 +397,7 @@ QNetworkManagerInterfaceDeviceWired::QNetworkManagerInterfaceDeviceWired(const Q
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 d->path,
                                                 QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRED),
-                                                dbusConnection, parent);
+                                                nmConnection, parent);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -428,11 +428,11 @@ bool QNetworkManagerInterfaceDeviceWired::setConnections()
     nmDBusHelper = new QNmDBusHelper(this);
     connect(nmDBusHelper, SIGNAL(pathForPropertiesChanged(QString,QMap<QString,QVariant>)),
             this,SIGNAL(propertiesChanged(QString,QMap<QString,QVariant>)));
-    if(dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRED),
-                              QLatin1String("PropertiesChanged"),
-                              nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>))) )  {
+    if(nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                            d->path,
+                            QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRED),
+                            QLatin1String("PropertiesChanged"),
+                            nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>))) )  {
         allOk = true;
     }
     return allOk;
@@ -474,7 +474,7 @@ QNetworkManagerInterfaceDeviceWireless::QNetworkManagerInterfaceDeviceWireless(c
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 d->path,
                                                 QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
-                                                dbusConnection, parent);
+                                                nmConnection, parent);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -510,29 +510,29 @@ bool QNetworkManagerInterfaceDeviceWireless::setConnections()
     connect(nmDBusHelper, SIGNAL(pathForAccessPointRemoved(QString,QDBusObjectPath)),
             this,SIGNAL(accessPointRemoved(QString,QDBusObjectPath)));
 
-    if(!dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
-                              QLatin1String("AccessPointAdded"),
-                              nmDBusHelper, SLOT(slotAccessPointAdded(QDBusObjectPath)))) {
+    if(!nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                             d->path,
+                             QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
+                             QLatin1String("AccessPointAdded"),
+                             nmDBusHelper, SLOT(slotAccessPointAdded(QDBusObjectPath)))) {
         allOk = true;
     }
 
 
-    if(!dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
-                              QLatin1String("AccessPointRemoved"),
-                              nmDBusHelper, SLOT(slotAccessPointRemoved(QDBusObjectPath)))) {
+    if(!nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                             d->path,
+                             QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
+                             QLatin1String("AccessPointRemoved"),
+                             nmDBusHelper, SLOT(slotAccessPointRemoved(QDBusObjectPath)))) {
         allOk = true;
     }
 
 
-    if(!dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
-                              QLatin1String("PropertiesChanged"),
-                              nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>)))) {
+    if(!nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                             d->path,
+                             QLatin1String(NM_DBUS_INTERFACE_DEVICE_WIRELESS),
+                             QLatin1String("PropertiesChanged"),
+                             nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>)))) {
         allOk = true;
     }
 
@@ -591,7 +591,7 @@ QNetworkManagerSettings::QNetworkManagerSettings(const QString &settingsService,
     d->connectionInterface = new QDBusInterface(settingsService,
                                                 QLatin1String(NM_DBUS_PATH_SETTINGS),
                                                 QLatin1String(NM_DBUS_IFACE_SETTINGS),
-                                                dbusConnection);
+                                                nmConnection);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -614,9 +614,9 @@ bool QNetworkManagerSettings::setConnections()
 {
     bool allOk = false;
 
-    if (!dbusConnection.connect(d->path, QLatin1String(NM_DBUS_PATH_SETTINGS),
-                           QLatin1String(NM_DBUS_IFACE_SETTINGS), QLatin1String("NewConnection"),
-                           this, SIGNAL(newConnection(QDBusObjectPath)))) {
+    if (!nmConnection.connect(d->path, QLatin1String(NM_DBUS_PATH_SETTINGS),
+                              QLatin1String(NM_DBUS_IFACE_SETTINGS), QLatin1String("NewConnection"),
+                              this, SIGNAL(newConnection(QDBusObjectPath)))) {
         allOk = true;
     }
 
@@ -655,7 +655,7 @@ QNetworkManagerSettingsConnection::QNetworkManagerSettingsConnection(const QStri
     d->connectionInterface = new QDBusInterface(settingsService,
                                                 d->path,
                                                 QLatin1String(NM_DBUS_IFACE_SETTINGS_CONNECTION),
-                                                dbusConnection, parent);
+                                                nmConnection, parent);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -682,12 +682,12 @@ bool QNetworkManagerSettingsConnection::setConnections()
         return false;
 
     bool allOk = false;
-    if(!dbusConnection.connect(d->service, d->path,
-                           QLatin1String(NM_DBUS_IFACE_SETTINGS_CONNECTION), QLatin1String("Updated"),
-                           this, SIGNAL(updated(QNmSettingsMap)))) {
+    if(!nmConnection.connect(d->service, d->path,
+                             QLatin1String(NM_DBUS_IFACE_SETTINGS_CONNECTION), QLatin1String("Updated"),
+                             this, SIGNAL(updated(QNmSettingsMap)))) {
         allOk = true;
     } else {
-        QDBusError error = dbusConnection.lastError();
+        QDBusError error = nmConnection.lastError();
     }
 
     delete nmDBusHelper;
@@ -695,9 +695,9 @@ bool QNetworkManagerSettingsConnection::setConnections()
     connect(nmDBusHelper, SIGNAL(pathForSettingsRemoved(QString)),
             this,SIGNAL(removed(QString)));
 
-    if (!dbusConnection.connect(d->service, d->path,
-                           QLatin1String(NM_DBUS_IFACE_SETTINGS_CONNECTION), QLatin1String("Removed"),
-                           nmDBusHelper, SIGNAL(slotSettingsRemoved()))) {
+    if (!nmConnection.connect(d->service, d->path,
+                              QLatin1String(NM_DBUS_IFACE_SETTINGS_CONNECTION), QLatin1String("Removed"),
+                              nmDBusHelper, SIGNAL(slotSettingsRemoved()))) {
         allOk = true;
     }
 
@@ -808,7 +808,7 @@ QNetworkManagerConnectionActive::QNetworkManagerConnectionActive( const QString 
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 d->path,
                                                 QLatin1String(NM_DBUS_INTERFACE_ACTIVE_CONNECTION),
-                                                dbusConnection, parent);
+                                                nmConnection, parent);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;
@@ -837,11 +837,11 @@ bool QNetworkManagerConnectionActive::setConnections()
     nmDBusHelper = new QNmDBusHelper(this);
     connect(nmDBusHelper, SIGNAL(pathForPropertiesChanged(QString,QMap<QString,QVariant>)),
             this,SIGNAL(propertiesChanged(QString,QMap<QString,QVariant>)));
-    if(dbusConnection.connect(QLatin1String(NM_DBUS_SERVICE),
-                              d->path,
-                              QLatin1String(NM_DBUS_INTERFACE_ACTIVE_CONNECTION),
-                              QLatin1String("PropertiesChanged"),
-                              nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>))) )  {
+    if(nmConnection.connect(QLatin1String(NM_DBUS_SERVICE),
+                            d->path,
+                            QLatin1String(NM_DBUS_INTERFACE_ACTIVE_CONNECTION),
+                            QLatin1String("PropertiesChanged"),
+                            nmDBusHelper,SLOT(slotPropertiesChanged(QMap<QString,QVariant>))) )  {
         allOk = true;
     }
 
@@ -902,7 +902,7 @@ QNetworkManagerIp4Config::QNetworkManagerIp4Config( const QString &deviceObjectP
     d->connectionInterface = new QDBusInterface(QLatin1String(NM_DBUS_SERVICE),
                                                 d->path,
                                                 QLatin1String(NM_DBUS_INTERFACE_IP4_CONFIG),
-                                                dbusConnection, parent);
+                                                nmConnection, parent);
     if (!d->connectionInterface->isValid()) {
         d->valid = false;
         return;

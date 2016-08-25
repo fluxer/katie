@@ -443,7 +443,7 @@ static QString numericEntity(int ch)
         : QLatin1String("&#x%1;")) .arg(ch, 0, 16);
 }
 
-static QString protect(const QString &str)
+static QString protectTs(const QString &str)
 {
     QString result;
     result.reserve(str.length() * 12 / 10);
@@ -480,15 +480,15 @@ static QString evilBytes(const QString& str,
 {
     //qDebug() << "EVIL: " << str << isUtf8 << format << codecName;
     if (isUtf8)
-        return protect(str);
+        return protectTs(str);
     if (format == 20)
-        return protect(str);
+        return protectTs(str);
     if (codecName == "UTF-8")
-        return protect(str);
+        return protectTs(str);
     QTextCodec *codec = QTextCodec::codecForName(codecName);
     if (!codec)
-        return protect(str);
-    QString t = QString::fromLatin1(codec->fromUnicode(protect(str)).data());
+        return protectTs(str);
+    QString t = QString::fromLatin1(codec->fromUnicode(protectTs(str)).data());
     int len = (int) t.length();
     QString result;
     // FIXME: Factor is sensible only for latin scripts, probably.
@@ -508,7 +508,7 @@ static void writeExtras(QTextStream &t, const char *indent,
     for (Translator::ExtraData::ConstIterator it = extras.begin(); it != extras.end(); ++it) {
         if (!drops.exactMatch(it.key())) {
             t << indent << "<extra-" << it.key() << '>'
-              << protect(it.value())
+              << protectTs(it.value())
               << "</extra-" << it.key() << ">\n";
         }
     }
@@ -522,7 +522,7 @@ static void writeVariants(QTextStream &t, const char *indent, const QString &inp
         int start = 0;
         forever {
             t << "\n    " << indent << "<lengthvariant>"
-              << protect(input.mid(start, offset - start))
+              << protectTs(input.mid(start, offset - start))
               << "</lengthvariant>";
             if (offset == input.length())
                 break;
@@ -533,7 +533,7 @@ static void writeVariants(QTextStream &t, const char *indent, const QString &inp
         }
         t << "\n" << indent;
     } else {
-        t << ">" << protect(input);
+        t << ">" << protectTs(input);
     }
 }
 
@@ -666,7 +666,7 @@ bool saveTS(const Translator &translator, QIODevice &dev, ConversionData &cd, in
                   << "</source>\n";
 
                 if (format != 11 && !msg.oldSourceText().isEmpty())
-                    t << "        <oldsource>" << protect(msg.oldSourceText()) << "</oldsource>\n";
+                    t << "        <oldsource>" << protectTs(msg.oldSourceText()) << "</oldsource>\n";
 
                 if (!msg.comment().isEmpty()) {
                     t << "        <comment>"
@@ -677,14 +677,14 @@ bool saveTS(const Translator &translator, QIODevice &dev, ConversionData &cd, in
                 if (format != 11) {
 
                     if (!msg.oldComment().isEmpty())
-                        t << "        <oldcomment>" << protect(msg.oldComment()) << "</oldcomment>\n";
+                        t << "        <oldcomment>" << protectTs(msg.oldComment()) << "</oldcomment>\n";
 
                     if (!msg.extraComment().isEmpty())
-                        t << "        <extracomment>" << protect(msg.extraComment())
+                        t << "        <extracomment>" << protectTs(msg.extraComment())
                           << "</extracomment>\n";
 
                     if (!msg.translatorComment().isEmpty())
-                        t << "        <translatorcomment>" << protect(msg.translatorComment())
+                        t << "        <translatorcomment>" << protectTs(msg.translatorComment())
                           << "</translatorcomment>\n";
 
                 }

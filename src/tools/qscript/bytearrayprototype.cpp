@@ -41,7 +41,9 @@
 #include "bytearrayprototype.h"
 #include <QtScript/QScriptEngine>
 
+#ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QByteArray*)
+#endif
 
 ByteArrayPrototype::ByteArrayPrototype(QObject *parent)
     : QObject(parent)
