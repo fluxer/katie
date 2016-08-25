@@ -271,8 +271,9 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
 endmacro()
 
 macro(KATIE_TEST TESTNAME TESTSOURCES)
+    katie_resources(${TESTSOURCES} ${ARGN})
+
     add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
-    katie_resources(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
     # TODO: make GUI access optional, it is required by many tests so it should still be default
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
