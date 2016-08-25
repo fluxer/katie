@@ -1,5 +1,6 @@
 include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/bearer/connman
+    ${CMAKE_CURRENT_BINARY_DIR}/bearer
 )
 
 set(QTCONNMANBEARERPLUGIN_HEADERS
@@ -18,9 +19,7 @@ set(QTCONNMANBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
-
 katie_setup_target(qconnmanbearerplugin ${QTCONNMANBEARERPLUGIN_SOURCES} ${QTCONNMANBEARERPLUGIN_HEADERS})
-
 
 add_library(qconnmanbearerplugin MODULE ${qconnmanbearerplugin_SOURCES})
 target_link_libraries(qconnmanbearerplugin KtCore KtNetwork KtDBus)

@@ -113,54 +113,59 @@ function(KATIE_SETUP_TARGET FORTARGET)
     set(targetresources)
     foreach(tmpres ${ARGN})
         get_filename_component(resource ${tmpres} ABSOLUTE)
+        get_filename_component(rscext ${resource} EXT)
+        get_filename_component(rscname ${resource} NAME_WE)
+        get_filename_component(rscpath ${resource} PATH)
         get_source_file_property(skip ${resource} SKIP_RESOURCE)
-        if(NOT skip)
-            get_filename_component(rscext ${resource} EXT)
-            get_filename_component(rscname ${resource} NAME_WE)
-            get_filename_component(rscpath ${resource} PATH)
-            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
-            make_directory(${rscpath})
-            if("${rscext}" STREQUAL ".ui")
-                set(rscout "${rscpath}/ui_${rscname}.h")
-                add_custom_command(
-                    OUTPUT "${rscout}"
-                    COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
-                )
-                set(targetresources ${targetresources} ${rscout})
-            elseif("${rscext}" STREQUAL ".qrc")
-                set(rscout "${rscpath}/qrc_${rscname}.cpp")
-                add_custom_command(
-                    OUTPUT "${rscout}"
-                    COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
-                )
-                set(targetresources ${targetresources} ${rscout})
-            elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
-                file(READ "${resource}" rsccontent)
-                # this can be simpler if continue() was supported by old CMake versions
-                if(NOT "${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
-                    continue()
-                endif()
-
-                set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                set(mocargs)
-                foreach(ddef ${dirdefs})
-                    # TODO: filter non -D, support -U too
-                    set(mocargs ${mocargs} -D${ddef})
-                endforeach()
-                foreach(incdir ${dirincs})
-                    set(mocargs ${mocargs} -I${incdir})
-                endforeach()
-                add_custom_command(
-                    OUTPUT "${rscout}"
-                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
-                )
-                set(targetresources ${targetresources} ${rscout})
-                # this can be troublesome but common sources can cause multiple
-                # rules on the same file
-                set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
+        string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
+        make_directory(${rscpath})
+        if("${rscext}" STREQUAL ".ui")
+            set(rscout "${rscpath}/ui_${rscname}.h")
+            set(targetresources ${targetresources} ${rscout})
+            if(skip)
+                continue()
             endif()
+            add_custom_command(
+                OUTPUT "${rscout}"
+                COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
+            )
+        elseif("${rscext}" STREQUAL ".qrc")
+            set(rscout "${rscpath}/qrc_${rscname}.cpp")
+            set(targetresources ${targetresources} ${rscout})
+            if(skip)
+                continue()
+            endif()
+            add_custom_command(
+                OUTPUT "${rscout}"
+                COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+            )
+        elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
+            file(READ "${resource}" rsccontent)
+            if(NOT "${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
+                continue()
+            endif()
+
+            set(rscout "${rscpath}/moc_${rscname}${rscext}")
+            set(targetresources ${targetresources} ${rscout})
+            if(skip)
+                continue()
+            endif()
+            get_directory_property(dirdefs COMPILE_DEFINITIONS)
+            get_directory_property(dirincs INCLUDE_DIRECTORIES)
+            set(mocargs)
+            foreach(ddef ${dirdefs})
+                # TODO: filter non -D, support -U too
+                set(mocargs ${mocargs} -D${ddef})
+            endforeach()
+            foreach(incdir ${dirincs})
+                set(mocargs ${mocargs} -I${incdir})
+            endforeach()
+            add_custom_command(
+                OUTPUT "${rscout}"
+                COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+            )
+            # common sources can cause multiple rules on the same file
+            set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
         endif()
     endforeach()
     set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")

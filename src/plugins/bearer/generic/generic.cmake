@@ -4,7 +4,6 @@ include_directories(
 )
 
 set(QGENERICBEARERPLUGIN_HEADERS
-    ${QGENERICBEARERPLUGIN_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine_impl.h
@@ -12,7 +11,6 @@ set(QGENERICBEARERPLUGIN_HEADERS
 )
 
 set(QGENERICBEARERPLUGIN_SOURCES
-    ${QGENERICBEARERPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericmain.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
