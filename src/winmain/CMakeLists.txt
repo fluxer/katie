@@ -1,4 +1,4 @@
-set(EXTRA_QTMAIN_LIBS)
+set(EXTRA_MAIN_LIBS KtCore)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
