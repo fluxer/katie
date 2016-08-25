@@ -2,49 +2,7 @@ if("${KATIE_COMPILER}" STREQUAL "gcc")
     add_dependencies(-D__APPLE__ -D__GNUC__)
 endif()
 
-if("${KATIE_ARCHITECTURE}" STREQUAL "i386")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -arch i386
-    )
-elseif("${KATIE_ARCHITECTURE}" STREQUAL "x86_64")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -arch i386
-    )
-    if("${KATIE_COMPILER}" STREQUAL "gcc")
-        set(KATIE_CXXFLAGS
-            ${KATIE_CXXFLAGS}
-            -Xarch_x86_64 -mmacosx-version-min=10.5
-        )
-    endif()
-elseif("${KATIE_ARCHITECTURE}" STREQUAL "ppc")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -arch ppc
-    )
-elseif("${KATIE_ARCHITECTURE}" STREQUAL "ppc64")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -arch ppc64
-    )
-    if("${KATIE_COMPILER}" STREQUAL "gcc")
-        set(KATIE_CXXFLAGS
-            ${KATIE_CXXFLAGS}
-            -Xarch_ppc64 -mmacosx-version-min=10.5
-        )
-    endif()
-endif()
-
 if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -fvisibility=hidden -fvisibility-inlines-hidden
-        -Wformat -Werror=format-security
-        -Wall -Wundef -Wunused
-        # -fno-strict-aliasing -Wcast-align
-        # -Wmissing-noreturn -Winit-self -Winline -Wcast-qual
-    )
     set(QT_VISIBILITY_AVAILABLE TRUE)
 endif()
 

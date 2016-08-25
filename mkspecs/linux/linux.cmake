@@ -1,19 +1,4 @@
 if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
-        -fvisibility=hidden -fvisibility-inlines-hidden
-        -Wformat -Werror=format-security
-        -Wall -Wundef -Wunused
-        # -fno-strict-aliasing -Wcast-align
-        # -Wmissing-noreturn -Winit-self -Winline -Wcast-qual
-    )
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
-        -Wl,-O1
-        -Wl,--no-undefined
-        -Wl,-Bsymbolic-functions
-        # -Wl,--dynamic-list
-    )
     set(QT_VISIBILITY_AVAILABLE TRUE)
 endif()
 

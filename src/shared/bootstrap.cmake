@@ -116,5 +116,3 @@ endif()
 add_library(bootstrap OBJECT ${BOOTSTRAP_SOURCES})
 target_compile_definitions(bootstrap PRIVATE ${BOOTSTRAP_DEFINITIONS})
 target_include_directories(bootstrap PRIVATE ${BOOTSTRAP_INCLUDES})
-
-katie_setup_flags(bootstrap)

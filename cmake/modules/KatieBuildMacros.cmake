@@ -94,9 +94,7 @@ endmacro()
 # null so that when it is passed to another function/macro it does not complain
 # about inproper number of arguments and (2) it joins the input which if quoted
 # has semicolons in it (if it is a list) that the sub-command (e.g. gcc) can
-# not handle. that's a dirty hack to support gcc and clang at the same time
-# along with custom target COMPILE_FLAGS/LINK_FLAGS without doing compiler
-# checks all over the place.
+# not handle.
 function(KATIE_FIXUP_STRING INSTR OUTSTR)
     string(STRIP "${INSTR}" instrtrimmed)
     if("${instrtrimmed}" STREQUAL "")
@@ -106,25 +104,6 @@ function(KATIE_FIXUP_STRING INSTR OUTSTR)
         set(${OUTSTR} "${modstring}" PARENT_SCOPE)
     endif()
 endfunction()
-
-macro(KATIE_SETUP_FLAGS FORTARGET)
-    katie_fixup_string("${KATIE_CXXFLAGS}" KATIE_CXXFLAGS)
-    katie_fixup_string("${KATIE_LDFLAGS}" KATIE_LDFLAGS)
-
-    # since some compilers choke CXX flags when building C sources just filter
-    # the C++-specific flags instead of using KATIE_CFLAGS due to lack of
-    # per-language properties (e.g. CXX_COMPILE_FLAGS)
-    set(KATIE_CFILTER "-fvisibility-inlines-hidden" CACHE STRING "C flags to filter from the C++ flags")
-    set(modflags "${KATIE_CXXFLAGS}")
-    foreach(cxxflag ${KATIE_CFILTER})
-        string(REPLACE "${cxxflag}" " " modflags "${modflags}")
-    endforeach()
-
-    set_target_properties(${FORTARGET} PROPERTIES
-        COMPILE_FLAGS "${modflags}"
-        LINK_FLAGS "${KATIE_LDFLAGS}"
-    )
-endmacro()
 
 function(KATIE_SETUP_TARGET FORTARGET)
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")

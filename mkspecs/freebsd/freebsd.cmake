@@ -2,11 +2,6 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)
 endif()
 
-set(KATIE_CXXFLAGS
-    ${KATIE_CXXFLAGS}
-    -pthread
-)
-
 add_definitions(-D_THREAD_SAFE)
 
 set(QT_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}")
