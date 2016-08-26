@@ -42,9 +42,7 @@
 #ifndef LUPDATE_H
 #define LUPDATE_H
 
-#include "qglobal.h"
-
-#include <QList>
+#include <QtCore/QCoreApplication>
 
 QT_BEGIN_NAMESPACE
 
@@ -78,6 +76,12 @@ void fetchtrInlinedCpp(const QString &in, Translator &translator, const QString 
 void loadCPP(Translator &translator, const QStringList &filenames, ConversionData &cd);
 bool loadQScript(Translator &translator, const QString &filename, ConversionData &cd);
 bool loadUI(Translator &translator, const QString &filename, ConversionData &cd);
+
+class LU {
+    Q_DECLARE_TR_FUNCTIONS(LUpdate);
+};
+
+static QString MagicComment(QLatin1String("TRANSLATOR"));
 
 QT_END_NAMESPACE
 

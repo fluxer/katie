@@ -82,6 +82,7 @@
 %start Program
 
 /.
+#include <lupdate.h>
 #include <translator.h>
 
 #include <QtCore/QCoreApplication>
@@ -99,10 +100,6 @@
 #include <string.h>
 
 QT_BEGIN_NAMESPACE
-
-class LU {
-    Q_DECLARE_TR_FUNCTIONS(LUpdate)
-};
 
 static QString MagicComment(QLatin1String("TRANSLATOR"));
 

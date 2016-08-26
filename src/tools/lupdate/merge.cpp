@@ -53,11 +53,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class LU {
-    Q_DECLARE_TR_FUNCTIONS(LUpdate)
-};
-
-static bool isDigitFriendly(QChar c)
+static inline bool isDigitFriendly(QChar c)
 {
     return c.isPunct() || c.isSpace();
 }

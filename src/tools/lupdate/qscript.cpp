@@ -765,6 +765,7 @@ const short QScriptGrammar::action_check [] = {
 
 #define Q_SCRIPT_REGEXPLITERAL_RULE2 8
 
+#include <lupdate.h>
 #include <translator.h>
 
 #include <QtCore/QCoreApplication>
@@ -782,12 +783,6 @@ const short QScriptGrammar::action_check [] = {
 #include <string.h>
 
 QT_BEGIN_NAMESPACE
-
-class LU {
-    Q_DECLARE_TR_FUNCTIONS(LUpdate)
-};
-
-static QString MagicComment(QLatin1String("TRANSLATOR"));
 
 static void recordMessage(
     Translator *tor, const QString &context, const QString &text, const QString &comment,
