@@ -89,7 +89,7 @@ public:
         const QStringList &words, const QByteArray &data);
 
 private:
-    QVector<Document> setupDummyTerm(const QStringList &terms, const EntryTable &entryTable);
+    QVector<DefaultDocument> setupDummyTerm(const QStringList &terms, const EntryTable &entryTable);
     QStringList getWildcardTerms(const QString &term, const EntryTable &entryTable);
     void buildMiniIndex(const QString &string);
     void reset();

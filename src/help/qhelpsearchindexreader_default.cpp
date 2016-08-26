@@ -111,7 +111,7 @@ bool Reader::readIndex()
     QString key;
     int numOfDocs;
     EntryTable entryTable;
-    QVector<Document> docs;
+    QVector<DefaultDocument> docs;
     QDataStream dictStream(&idxFile);
     while (!dictStream.atEnd()) {
         dictStream >> key;
@@ -235,7 +235,7 @@ bool Reader::splitSearchTerm(const QString &searchTerm, QStringList *terms,
 void Reader::searchInIndex(const QStringList &terms)
 {
     foreach (const QString &term, terms) {
-        QVector<Document> documents;
+        QVector<DefaultDocument> documents;
 
         for(IndexTable::ConstIterator it = searchIndexTable.constBegin();
             it != searchIndexTable.constEnd(); ++it) {
@@ -253,7 +253,7 @@ void Reader::searchInIndex(const QStringList &terms)
                 DocumentInfo info;
                 QString title, url;
                 QVector<DocumentInfo> documentsInfo;
-                foreach(const Document &doc, documents) {
+                foreach(const DefaultDocument &doc, documents) {
                     info.docNumber = doc.docNumber;
                     info.frequency = doc.frequency;
                     info.documentUrl = documentList.at(doc.docNumber).at(1);
@@ -392,26 +392,26 @@ bool Reader::searchForPattern(const QStringList &patterns, const QStringList &wo
     return false;
 }
 
-QVector<Document> Reader::setupDummyTerm(const QStringList &terms,
+QVector<DefaultDocument> Reader::setupDummyTerm(const QStringList &terms,
                                               const EntryTable &entryTable)
 {
-    QList<Term> termList;
+    QList<DefaultTerm> termList;
     for (QStringList::ConstIterator it = terms.begin(); it != terms.end(); ++it) {
         if (entryTable.value(*it)) {
             Entry *e = entryTable.value(*it);
-            termList.append(Term(*it, e->documents.count(), e->documents ) );
+            termList.append(DefaultTerm(*it, e->documents.count(), e->documents ) );
         }
     }
-    QVector<Document> maxList(0);
+    QVector<DefaultDocument> maxList(0);
     if ( !termList.count() )
         return maxList;
     qSort(termList);
 
     maxList = termList.takeLast().documents;
-    for(QList<Term>::Iterator it = termList.begin(); it != termList.end(); ++it) {
-        Term *t = &(*it);
-        QVector<Document> docs = t->documents;
-        for (QVector<Document>::iterator docIt = docs.begin(); docIt != docs.end(); ++docIt ) {
+    for(QList<DefaultTerm>::Iterator it = termList.begin(); it != termList.end(); ++it) {
+        DefaultTerm *t = &(*it);
+        QVector<DefaultDocument> docs = t->documents;
+        for (QVector<DefaultDocument>::iterator docIt = docs.begin(); docIt != docs.end(); ++docIt ) {
             if ( maxList.indexOf( *docIt ) == -1 )
                 maxList.append( *docIt );
         }

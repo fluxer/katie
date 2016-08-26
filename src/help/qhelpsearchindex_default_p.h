@@ -61,23 +61,23 @@ QT_BEGIN_NAMESPACE
 
 namespace QtHelpInternal {
 
-struct Document {
-    Document(qint16 d, qint16 f)
+struct DefaultDocument {
+    DefaultDocument(qint16 d, qint16 f)
         : docNumber(d), frequency(f) {}
 
-    Document()
+    DefaultDocument()
         : docNumber(-1), frequency(0) {}
 
-    bool operator==(const Document &doc) const {
+    bool operator==(const DefaultDocument &doc) const {
         return docNumber == doc.docNumber;
     }
-    bool operator<(const Document &doc) const {
+    bool operator<(const DefaultDocument &doc) const {
         return frequency > doc.frequency;
     }
-    bool operator<=(const Document &doc) const {
+    bool operator<=(const DefaultDocument &doc) const {
         return frequency >= doc.frequency;
     }
-    bool operator>(const Document &doc) const {
+    bool operator>(const DefaultDocument &doc) const {
         return frequency < doc.frequency;
     }
 
@@ -85,25 +85,25 @@ struct Document {
     qint16 frequency;
 };
 
-struct DocumentInfo : public Document {
+struct DocumentInfo : public DefaultDocument {
     DocumentInfo()
-        : Document(-1, 0), documentTitle(QString()), documentUrl(QString()) {}
+        : DefaultDocument(-1, 0), documentTitle(QString()), documentUrl(QString()) {}
 
     DocumentInfo(qint16 d, qint16 f, const QString &title, const QString &url)
-        : Document(d, f), documentTitle(title), documentUrl(url) {}
+        : DefaultDocument(d, f), documentTitle(title), documentUrl(url) {}
 
-    DocumentInfo(const Document &document, const QString &title, const QString &url)
-        : Document(document.docNumber, document.frequency), documentTitle(title), documentUrl(url) {}
+    DocumentInfo(const DefaultDocument &document, const QString &title, const QString &url)
+        : DefaultDocument(document.docNumber, document.frequency), documentTitle(title), documentUrl(url) {}
 
     QString documentTitle;
     QString documentUrl;
 };
 
 struct Entry {
-    Entry(qint16 d) { documents.append(Document(d, 1)); }
-    Entry(QVector<Document> l) : documents(l) {}
+    Entry(qint16 d) { documents.append(DefaultDocument(d, 1)); }
+    Entry(QVector<DefaultDocument> l) : documents(l) {}
 
-    QVector<Document> documents;
+    QVector<DefaultDocument> documents;
 };
 
 struct PosEntry {
@@ -111,13 +111,13 @@ struct PosEntry {
     QList<uint> positions;
 };
 
-struct Term {
-    Term() : frequency(-1) {}
-    Term(const QString &t, int f, QVector<Document> l) : term(t), frequency(f), documents(l) {}
+struct DefaultTerm {
+    DefaultTerm() : frequency(-1) {}
+    DefaultTerm(const QString &t, int f, QVector<DefaultDocument> l) : term(t), frequency(f), documents(l) {}
     QString term;
     int frequency;
-    QVector<Document>documents;
-    bool operator<(const Term &i2) const { return frequency < i2.frequency; }
+    QVector<DefaultDocument>documents;
+    bool operator<(const DefaultTerm &i2) const { return frequency < i2.frequency; }
 };
 
 struct TermInfo {
@@ -134,15 +134,15 @@ struct TermInfo {
 
 } // namespace QtHelpInternal
 
-using QtHelpInternal::Document;
+using QtHelpInternal::DefaultDocument;
 using QtHelpInternal::DocumentInfo;
 using QtHelpInternal::Entry;
 using QtHelpInternal::PosEntry;
-using QtHelpInternal::Term;
+using QtHelpInternal::DefaultTerm;
 using QtHelpInternal::TermInfo;
 
-QDataStream &operator>>(QDataStream &s, Document &l);
-QDataStream &operator<<(QDataStream &s, const Document &l);
+QDataStream &operator>>(QDataStream &s, DefaultDocument &l);
+QDataStream &operator<<(QDataStream &s, const DefaultDocument &l);
 
 QT_END_NAMESPACE
 

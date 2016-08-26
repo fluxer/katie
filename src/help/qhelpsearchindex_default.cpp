@@ -43,14 +43,14 @@
 
 QT_BEGIN_NAMESPACE
 
-QDataStream &operator>>(QDataStream &s, Document &l)
+QDataStream &operator>>(QDataStream &s, DefaultDocument &l)
 {
     s >> l.docNumber;
     s >> l.frequency;
     return s;
 }
 
-QDataStream &operator<<(QDataStream &s, const Document &l)
+QDataStream &operator<<(QDataStream &s, const DefaultDocument &l)
 {
     s << qint16(l.docNumber);
     s << qint16(l.frequency);

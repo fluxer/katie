@@ -93,6 +93,13 @@ katie_generate_package(KtHelp "KtCore KtGui KtNetwork KtSql KtXml")
 katie_setup_target(KtHelp ${HELP_SOURCES} ${HELP_HEADERS})
 katie_setup_paths()
 
+# those are set after katie_setup_target() because they are known to cause
+# trouble for all-in-one build
+set(KtHelp_SOURCES
+    ${KtHelp_SOURCES}
+    ${FULLTEXTSEARCH_SOURCES}
+)
+
 add_library(KtHelp ${KATIE_TYPE} ${KtHelp_SOURCES})
 target_link_libraries(KtHelp ${EXTRA_HELP_LIBS})
 set_target_properties(KtHelp PROPERTIES

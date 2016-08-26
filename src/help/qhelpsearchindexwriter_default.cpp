@@ -141,7 +141,7 @@ void Writer::insertInIndex(const QString &string, int docNum)
 
     if (entry) {
         if (entry->documents.last().docNumber != docNum)
-            entry->documents.append(Document(docNum, 1));
+            entry->documents.append(DefaultDocument(docNum, 1));
         else
             entry->documents.last().frequency++;
     } else {
