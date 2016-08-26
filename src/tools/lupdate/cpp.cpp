@@ -58,14 +58,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class LU {
-    Q_DECLARE_TR_FUNCTIONS(LUpdate)
-};
-
-/* qmake ignore Q_OBJECT */
-
-static QString MagicComment(QLatin1String("TRANSLATOR"));
-
 #define STRING(s) static QString str##s(QLatin1String(#s))
 
 //#define DIAGNOSE_RETRANSLATABILITY // FIXME: should make a runtime option of this

@@ -172,7 +172,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
     if(NOT KATIE_ALLINONE)
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     # blacklisted targets are failing and too important for other components
-    elseif("${FORTARGET}" MATCHES "(KtCore|KtGui|KtOpenGL|KtHelp|KtDeclarative|KtDesigner|lupdate|designer|qtgradienteditor|shareddeviceskin)")
+    elseif("${FORTARGET}" MATCHES "(KtCore|KtGui|KtOpenGL|KtHelp|KtDeclarative|KtDesigner|designer|qtgradienteditor|shareddeviceskin)")
         katie_warning("All-in-one build not yet support for: ${FORTARGET}")
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     else()
