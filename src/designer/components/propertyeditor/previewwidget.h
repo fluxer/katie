@@ -56,7 +56,7 @@ public:
     virtual ~PreviewWidget();
 
 private:
-    Ui::PreviewWidget ui;
+    Ui_PreviewWidget ui;
 };
 
 }  // namespace qdesigner_internal

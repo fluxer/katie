@@ -85,7 +85,7 @@ unsigned ActionData::compare(const ActionData &rhs) const
 // -------------------- NewActionDialog
 NewActionDialog::NewActionDialog(ActionEditor *parent) :
     QDialog(parent, Qt::Sheet),
-    m_ui(new Ui::NewActionDialog),
+    m_ui(new Ui_NewActionDialog),
     m_actionEditor(parent)
 {
     m_ui->setupUi(this);

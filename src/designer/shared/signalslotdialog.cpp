@@ -357,7 +357,7 @@ void SignaturePanel::closeEditor()
 SignalSlotDialog::SignalSlotDialog(QDesignerDialogGuiInterface *dialogGui, QWidget *parent, FocusMode mode) :
     QDialog(parent),
     m_focusMode(mode),
-    m_ui(new Ui::SignalSlotDialogClass),
+    m_ui(new Ui_SignalSlotDialogClass),
     m_dialogGui(dialogGui)
 {
     setModal(true);

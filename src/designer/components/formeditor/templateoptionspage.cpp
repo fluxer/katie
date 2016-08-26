@@ -56,7 +56,7 @@ namespace qdesigner_internal {
 TemplateOptionsWidget::TemplateOptionsWidget(QDesignerFormEditorInterface *core, QWidget *parent) :
     QWidget(parent),
     m_core(core),
-    m_ui(new Ui::TemplateOptionsWidget)
+    m_ui(new Ui_TemplateOptionsWidget)
 {
     m_ui->setupUi(this);
 

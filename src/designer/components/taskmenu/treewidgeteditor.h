@@ -104,7 +104,7 @@ private:
     void moveColumnsRight(int fromColumn, int toColumn);
     void closeEditors();
 
-    Ui::TreeWidgetEditor ui;
+    Ui_TreeWidgetEditor ui;
     ItemListEditor *m_columnEditor;
     bool m_updatingBrowser;
 };

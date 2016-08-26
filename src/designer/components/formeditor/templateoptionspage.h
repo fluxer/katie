@@ -55,9 +55,7 @@ class QDesignerFormEditorInterface;
 
 namespace qdesigner_internal {
 
-namespace Ui {
-    class TemplateOptionsWidget;
-}
+class Ui_TemplateOptionsWidget;
 
 /* Present the user with a list of form template paths to save
  * form templates. */
@@ -83,7 +81,7 @@ private slots:
 
 private:
     QDesignerFormEditorInterface *m_core;
-    Ui::TemplateOptionsWidget *m_ui;
+    Ui_TemplateOptionsWidget *m_ui;
 };
 
 class TemplateOptionsPage : public QDesignerOptionsPageInterface

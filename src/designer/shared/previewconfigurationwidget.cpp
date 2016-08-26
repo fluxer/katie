@@ -126,7 +126,7 @@ private:
 
     const QString m_defaultStyle;
     QGroupBox *m_parent;
-    Ui::PreviewConfigurationWidget m_ui;
+    Ui_PreviewConfigurationWidget m_ui;
 
     int m_firstUserSkinIndex;
     int m_browseSkinIndex;

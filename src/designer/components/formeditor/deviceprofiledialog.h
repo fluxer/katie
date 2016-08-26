@@ -58,10 +58,7 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace Ui {
-    class DeviceProfileDialog;
-}
-
+class Ui_DeviceProfileDialog;
 class QDesignerDialogGuiInterface;
 
 class QDialogButtonBox;
@@ -93,7 +90,7 @@ private slots:
 
 private:
     void critical(const QString &title, const QString &msg);
-    Ui::DeviceProfileDialog *m_ui;
+    Ui_DeviceProfileDialog *m_ui;
     QDesignerDialogGuiInterface *m_dlgGui;
     QStringList m_existingNames;
 };

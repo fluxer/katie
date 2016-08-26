@@ -759,7 +759,7 @@ void QDesignerTaskMenu::navigateToSlot(QDesignerFormEditorInterface *core,
         }
     }
 
-    Ui::SelectSignalDialog dialogUi;
+    Ui_SelectSignalDialog dialogUi;
     QDialog selectSignalDialog(0, Qt::WindowTitleHint | Qt::WindowSystemMenuHint);
     dialogUi.setupUi(&selectSignalDialog);
 

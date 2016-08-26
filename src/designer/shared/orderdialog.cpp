@@ -58,7 +58,7 @@ namespace qdesigner_internal {
 
 OrderDialog::OrderDialog(QWidget *parent) :
     QDialog(parent),
-    m_ui(new Ui::OrderDialog),
+    m_ui(new Ui_OrderDialog),
     m_format(PageOrderFormat)
 {
     m_ui->setupUi(this);

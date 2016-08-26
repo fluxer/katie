@@ -135,7 +135,7 @@ static const struct TemplateSize templateSizes[] =
 NewFormWidget::NewFormWidget(QDesignerFormEditorInterface *core, QWidget *parentWidget) :
     QDesignerNewFormWidgetInterface(parentWidget),
     m_core(core),
-    m_ui(new Ui::NewFormWidget),
+    m_ui(new Ui_NewFormWidget),
     m_currentItem(0),
     m_acceptedItem(0)
 {

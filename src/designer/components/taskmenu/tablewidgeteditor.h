@@ -104,7 +104,7 @@ private:
     void moveRowsUp(int fromRow, int toRow);
     void moveRowsDown(int fromRow, int toRow);
 
-    Ui::TableWidgetEditor ui;
+    Ui_TableWidgetEditor ui;
     ItemListEditor *m_rowEditor;
     ItemListEditor *m_columnEditor;
     bool m_updatingBrowser;

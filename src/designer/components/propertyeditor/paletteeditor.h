@@ -91,7 +91,7 @@ private:
     QPalette::ColorGroup currentColorGroup() const
         { return m_currentColorGroup; }
 
-    Ui::PaletteEditor ui;
+    Ui_PaletteEditor ui;
     QPalette m_editPalette;
     QPalette m_parentPalette;
     QPalette::ColorGroup m_currentColorGroup;

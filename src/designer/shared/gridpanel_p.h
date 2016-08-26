@@ -62,12 +62,9 @@ QT_BEGIN_NAMESPACE
 namespace qdesigner_internal {
 
 class Grid;
+class Ui_GridPanel;
 
-namespace Ui {
-    class GridPanel;
-}
-
-class  QDESIGNER_SHARED_EXPORT GridPanel : public QWidget
+class QDESIGNER_SHARED_EXPORT GridPanel : public QWidget
 {
     Q_OBJECT
 public:
@@ -91,7 +88,7 @@ private slots:
     void reset();
 
 private:
-    Ui::GridPanel *m_ui;
+    Ui_GridPanel *m_ui;
 };
 
 } // qdesigner_internal

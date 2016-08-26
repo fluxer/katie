@@ -217,12 +217,12 @@ public slots:
 
 private:
     RichTextEditor *m_editor;
-    Ui::AddLinkDialog *m_ui;
+    Ui_AddLinkDialog *m_ui;
 };
 
 AddLinkDialog::AddLinkDialog(RichTextEditor *editor, QWidget *parent) :
     QDialog(parent),
-    m_ui(new Ui::AddLinkDialog)
+    m_ui(new Ui_AddLinkDialog)
 {
     m_ui->setupUi(this);
 

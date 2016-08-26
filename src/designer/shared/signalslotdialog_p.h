@@ -68,9 +68,7 @@ class QListView;
 class QToolButton;
 class QItemSelection;
 
-namespace Ui {
-    class SignalSlotDialogClass;
-}
+class Ui_SignalSlotDialogClass;
 
 namespace qdesigner_internal {
 
@@ -161,7 +159,7 @@ private:
     static bool editPromotedClass(QDesignerFormEditorInterface *core, const QString &promotedClassName, QObject *baseObject, QWidget *parent, FocusMode m);
 
     const FocusMode m_focusMode;
-    Ui::SignalSlotDialogClass *m_ui;
+    Ui_SignalSlotDialogClass *m_ui;
     QDesignerDialogGuiInterface *m_dialogGui;
     SignaturePanel *m_slotPanel;
     SignaturePanel *m_signalPanel;

@@ -62,10 +62,7 @@ QT_BEGIN_NAMESPACE
 
 namespace qdesigner_internal {
 
-namespace Ui {
-    class NewActionDialog;
-}
-
+class Ui_NewActionDialog;
 class ActionEditor;
 
 struct ActionData {
@@ -110,7 +107,7 @@ private slots:
     void slotResetKeySequence();
 
 private:
-    Ui::NewActionDialog *m_ui;
+    Ui_NewActionDialog *m_ui;
     ActionEditor *m_actionEditor;
     bool m_auto_update_object_name;
 

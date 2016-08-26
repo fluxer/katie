@@ -886,7 +886,7 @@ public:
             const QString &title, QString dir, const QString &filter, const QString &extension) const;
     QString qrcStartDirectory() const;
 
-    Ui::QtResourceEditorDialog m_ui;
+    Ui_QtResourceEditorDialog m_ui;
     QDesignerFormEditorInterface *m_core;
     QtResourceModel *m_resourceModel;
     QDesignerDialogGuiInterface *m_dlgGui;

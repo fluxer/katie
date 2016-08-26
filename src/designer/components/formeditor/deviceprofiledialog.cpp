@@ -80,7 +80,7 @@ namespace qdesigner_internal {
 
 DeviceProfileDialog::DeviceProfileDialog(QDesignerDialogGuiInterface *dlgGui, QWidget *parent) :
     QDialog(parent),
-    m_ui(new Ui::DeviceProfileDialog),
+    m_ui(new Ui_DeviceProfileDialog),
     m_dlgGui(dlgGui)
 {
     setModal(true);
@@ -201,4 +201,5 @@ void DeviceProfileDialog::critical(const QString &title, const QString &msg)
 }
 
 QT_END_NAMESPACE
-#include <moc_deviceprofiledialog.h>
+
+#include "moc_deviceprofiledialog.h"

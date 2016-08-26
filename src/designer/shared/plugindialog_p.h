@@ -80,7 +80,7 @@ private:
                  const QString &toolTip, const QString &whatsThis, const QIcon &icon);
 
     QDesignerFormEditorInterface *m_core;
-    Ui::PluginDialog ui;
+    Ui_PluginDialog ui;
     QIcon interfaceIcon;
     QIcon featureIcon;
 };

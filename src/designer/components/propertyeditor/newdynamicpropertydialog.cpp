@@ -54,7 +54,7 @@ NewDynamicPropertyDialog::NewDynamicPropertyDialog(QDesignerDialogGuiInterface *
                                                        QWidget *parent)   :
     QDialog(parent),
     m_dialogGui(dialogGui),
-    m_ui(new Ui::NewDynamicPropertyDialog)
+    m_ui(new Ui_NewDynamicPropertyDialog)
 {
     m_ui->setupUi(this);
     connect(m_ui->m_lineEdit, SIGNAL(textChanged(QString)), this, SLOT(nameChanged(QString)));

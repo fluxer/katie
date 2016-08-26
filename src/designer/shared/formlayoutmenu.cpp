@@ -132,7 +132,7 @@ private:
     // Check for buddy marker in string
     const QRegExp m_buddyMarkerRegexp;
 
-    Ui::FormLayoutRowDialog m_ui;
+    Ui_FormLayoutRowDialog m_ui;
     bool m_labelNameEdited;
     bool m_fieldNameEdited;
     bool m_buddyClicked;

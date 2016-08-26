@@ -72,9 +72,7 @@ class QTreeWidgetItem;
 
 namespace qdesigner_internal {
 
-namespace Ui {
-    class NewFormWidget;
-}
+class Ui_NewFormWidget;
 
 class QDESIGNER_SHARED_EXPORT NewFormWidget : public QDesignerNewFormWidgetInterface
 {
@@ -128,7 +126,7 @@ private:
     ItemPixmapCache m_itemPixmapCache;
 
     QDesignerFormEditorInterface *m_core;
-    Ui::NewFormWidget *m_ui;
+    Ui_NewFormWidget *m_ui;
     QTreeWidgetItem *m_currentItem;
     QTreeWidgetItem *m_acceptedItem;
     DeviceProfileList m_deviceProfiles;

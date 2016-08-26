@@ -50,7 +50,7 @@ class QStringListModel;
 
 namespace qdesigner_internal {
 
-class StringListEditor : public QDialog, private Ui::Dialog
+class StringListEditor : public QDialog, private Ui_Dialog
 {
     Q_OBJECT
 public:

@@ -64,9 +64,7 @@ class QDesignerFormEditorInterface;
 
 namespace qdesigner_internal {
 
-namespace Ui {
-    class OrderDialog;
-}
+class Ui_OrderDialog;
 
 class QDESIGNER_SHARED_EXPORT OrderDialog: public QDialog
 {
@@ -103,7 +101,7 @@ private:
 
     typedef QMap<int, QWidget*> OrderMap;
     OrderMap m_orderMap;
-    Ui::OrderDialog* m_ui;
+    Ui_OrderDialog* m_ui;
     Format m_format;
 };
 

@@ -45,10 +45,8 @@
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
-    
-namespace Ui {
-    class FormWindowSettings;
-}
+
+class Ui_FormWindowSettings;
 
 class QDesignerFormWindowInterface;
 
@@ -74,7 +72,7 @@ private:
     FormWindowData data() const;
     void setData(const FormWindowData&);
 
-    Ui::FormWindowSettings *m_ui;
+    Ui_FormWindowSettings *m_ui;
     FormWindowBase *m_formWindow;
     FormWindowData *m_oldData;
 };

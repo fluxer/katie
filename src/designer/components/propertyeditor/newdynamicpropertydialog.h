@@ -64,10 +64,7 @@ class QDesignerDialogGuiInterface;
 
 namespace qdesigner_internal {
 
-namespace Ui
-{
-    class NewDynamicPropertyDialog;
-}
+class Ui_NewDynamicPropertyDialog;
 
 class QT_PROPERTYEDITOR_EXPORT NewDynamicPropertyDialog: public QDialog
 {
@@ -93,7 +90,7 @@ private:
     void information(const QString &message);
 
     QDesignerDialogGuiInterface *m_dialogGui;
-    Ui::NewDynamicPropertyDialog *m_ui;
+    Ui_NewDynamicPropertyDialog *m_ui;
     QStringList m_reservedNames;
 };
 

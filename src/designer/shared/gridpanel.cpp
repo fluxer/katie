@@ -50,7 +50,7 @@ namespace qdesigner_internal {
 GridPanel::GridPanel(QWidget *parentWidget) :
     QWidget(parentWidget)
 {
-    m_ui = new Ui::GridPanel;
+    m_ui = new Ui_GridPanel;
     m_ui->setupUi(this);
 
     connect(m_ui->m_resetButton, SIGNAL(clicked()), this, SLOT(reset()));

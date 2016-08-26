@@ -153,7 +153,7 @@ protected:
 private:
     void setPropertyBrowserVisible(bool v);
     void updateEditor();
-    Ui::ItemListEditor ui;
+    Ui_ItemListEditor ui;
     bool m_updating;
     QString m_newItemText;
 };
