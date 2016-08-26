@@ -910,4 +910,4 @@ void tst_QGraphicsView::paintItemCache()
 QTEST_MAIN(tst_QGraphicsView)
 
 #include "moc_tst_qgraphicsview.cpp"
-#include "qrc_tst_qgraphicsview.cpp"
+#include "qrc_images.cpp"
