@@ -269,4 +269,4 @@ void QtColorButton::dropEvent(QDropEvent *event)
 
 QT_END_NAMESPACE
 
-#include <moc_qtcolorbutton.h>
+#include "moc_qtcolorbutton.h"

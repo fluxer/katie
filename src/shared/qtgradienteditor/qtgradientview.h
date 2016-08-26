@@ -91,7 +91,7 @@ private:
     QAction *m_removeAction;
 
     QtGradientManager *m_manager;
-    Ui::QtGradientView m_ui;
+    Ui_QtGradientView m_ui;
 };
 
 QT_END_NAMESPACE

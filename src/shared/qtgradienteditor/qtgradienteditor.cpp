@@ -102,7 +102,7 @@ public:
     QGradient gradient() const;
     void updateGradient(bool emitSignal);
 
-    Ui::QtGradientEditor m_ui;
+    Ui_QtGradientEditor m_ui;
     QtGradientStopsController *m_gradientStopsController;
 
     QDoubleSpinBox *startLinearXSpinBox;

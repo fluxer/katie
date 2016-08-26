@@ -66,7 +66,7 @@ private slots:
     void slotGradientActivated(const QString &id);
 
 private:
-    Ui::QtGradientViewDialog m_ui;
+    Ui_QtGradientViewDialog m_ui;
 };
 
 QT_END_NAMESPACE

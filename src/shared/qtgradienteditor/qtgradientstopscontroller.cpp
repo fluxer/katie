@@ -93,7 +93,7 @@ public:
     QtGradientStopsModel *m_model;
     QColor::Spec m_spec;
 
-    Ui::QtGradientEditor *m_ui;
+    Ui_QtGradientEditor *m_ui;
 };
 
 void QtGradientStopsControllerPrivate::enableCurrent(bool enable)
@@ -597,7 +597,7 @@ QtGradientStopsController::QtGradientStopsController(QObject *parent)
     d_ptr->m_spec = QColor::Hsv;
 }
 
-void QtGradientStopsController::setUi(Ui::QtGradientEditor *ui)
+void QtGradientStopsController::setUi(Ui_QtGradientEditor *ui)
 {
     d_ptr->m_ui = ui;
 

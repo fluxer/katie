@@ -46,9 +46,7 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace Ui {
-    class QtGradientEditor;
-}
+class Ui_QtGradientEditor;
 
 class QtGradientStopsController : public QObject
 {
@@ -57,7 +55,7 @@ public:
     QtGradientStopsController(QObject *parent = 0);
     ~QtGradientStopsController();
 
-    void setUi(Ui::QtGradientEditor *editor);
+    void setUi(Ui_QtGradientEditor *editor);
 
     void setGradientStops(const QGradientStops &stops);
     QGradientStops gradientStops() const;

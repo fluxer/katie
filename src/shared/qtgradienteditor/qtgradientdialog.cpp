@@ -53,7 +53,7 @@ public:
 
     void slotAboutToShowDetails(bool details, int extensionWidthHint);
 
-    Ui::QtGradientDialog m_ui;
+    Ui_QtGradientDialog m_ui;
 };
 
 void QtGradientDialogPrivate::slotAboutToShowDetails(bool details, int extensionWidthHint)

@@ -32,7 +32,6 @@ set(SHAREDGRADIENDEDITOR_SOURCES
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientmanager.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientutils.cpp
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradienteditor.qrc
-    ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtcolorbutton.cpp
 )
 
 set(SHAREDGRADIENDEDITOR_HEADERS
@@ -48,7 +47,6 @@ set(SHAREDGRADIENDEDITOR_HEADERS
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientviewdialog.h
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientmanager.h
     ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtgradientutils.h
-    ${CMAKE_SOURCE_DIR}/src/shared/qtgradienteditor/qtcolorbutton.h
 )
 
 katie_setup_target(sharedqtgradienteditor ${SHAREDGRADIENDEDITOR_SOURCES} ${SHAREDGRADIENDEDITOR_HEADERS})
