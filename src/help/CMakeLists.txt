@@ -89,9 +89,9 @@ include_directories(
 
 katie_generate_misc("${HELP_HEADERS}" QtHelp)
 katie_generate_public("${HELP_PUBLIC_HEADERS}" QtHelp)
-katie_setup_paths()
 katie_generate_package(KtHelp "KtCore KtGui KtNetwork KtSql KtXml")
 katie_setup_target(KtHelp ${HELP_SOURCES} ${HELP_HEADERS})
+katie_setup_paths()
 
 add_library(KtHelp ${KATIE_TYPE} ${KtHelp_SOURCES})
 target_link_libraries(KtHelp ${EXTRA_HELP_LIBS})

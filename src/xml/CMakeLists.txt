@@ -59,9 +59,9 @@ include_directories(
 
 katie_generate_misc("${XML_HEADERS}" QtXml)
 katie_generate_public("${XML_PUBLIC_HEADERS}" QtXml)
-katie_setup_paths()
 katie_generate_package(KtXml "KtCore")
 katie_setup_target(KtXml ${XML_SOURCES} ${XML_HEADERS})
+katie_setup_paths()
 
 add_library(KtXml ${KATIE_TYPE} ${KtXml_SOURCES})
 target_link_libraries(KtXml ${EXTRA_XML_LIBS})

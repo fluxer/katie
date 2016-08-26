@@ -39,9 +39,9 @@ include_directories(
 
 katie_generate_misc("${MULTIMEDIA_HEADERS}" QtMultimedia)
 katie_generate_public("${MULTIMEDIA_PUBLIC_HEADERS}" QtMultimedia)
-katie_setup_paths()
 katie_generate_package(KtMultimedia "KtCore KtGui")
 katie_setup_target(KtMultimedia ${MULTIMEDIA_SOURCES} ${MULTIMEDIA_HEADERS})
+katie_setup_paths()
 
 add_library(KtMultimedia ${KATIE_TYPE} ${KtMultimedia_SOURCES})
 target_link_libraries(KtMultimedia ${EXTRA_MULTIMEDIA_LIBS})

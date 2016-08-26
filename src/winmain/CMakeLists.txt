@@ -12,8 +12,8 @@ set(MAIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qtmain_win.cpp
 )
 
-katie_setup_paths()
 katie_setup_target(KtMain ${MAIN_SOURCES} ${MAIN_HEADERS})
+katie_setup_paths()
 
 add_library(KtMain ${KATIE_TYPE} ${KtMain_SOURCES})
 target_link_libraries(KtMain ${EXTRA_MAIN_LIBS})

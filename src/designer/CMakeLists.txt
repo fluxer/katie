@@ -114,9 +114,9 @@ endif()
 
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
-katie_setup_paths()
 katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
 katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
+katie_setup_paths()
 
 add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}
     $<TARGET_OBJECTS:sharedqtgradienteditor>

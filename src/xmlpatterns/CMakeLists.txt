@@ -74,9 +74,9 @@ include_directories(
 
 katie_generate_misc("${XMLPATTERNS_HEADERS}" QtXmlPatterns)
 katie_generate_public("${XMLPATTERNS_PUBLIC_HEADERS}" QtXmlPatterns)
-katie_setup_paths()
 katie_generate_package(KtXmlPatterns "KtCore KtNetwork")
 katie_setup_target(KtXmlPatterns ${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
+katie_setup_paths()
 
 # the component requires exceptions
 if(NOT KATIE_PLATFORM STREQUAL "win32")

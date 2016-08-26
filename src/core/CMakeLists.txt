@@ -371,12 +371,12 @@ set(CORE_HEADERS
 
 katie_generate_misc("${CORE_HEADERS}" QtCore)
 katie_generate_public("${CORE_PUBLIC_HEADERS}" QtCore)
-katie_setup_paths()
 katie_generate_package(KtCore "")
 katie_setup_target(KtCore ${CORE_SOURCES} ${CORE_HEADERS})
+katie_setup_paths()
 
 # those are set after katie_setup_target() because they are known to cause
-# trouble for all-in-one-build
+# trouble for all-in-one build
 if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
