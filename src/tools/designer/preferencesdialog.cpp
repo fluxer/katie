@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 
 PreferencesDialog::PreferencesDialog(QDesignerFormEditorInterface *core, QWidget *parentWidget) :
     QDialog(parentWidget),
-    m_ui(new Ui::PreferencesDialog())
+    m_ui(new Ui_PreferencesDialog())
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     m_ui->setupUi(this);

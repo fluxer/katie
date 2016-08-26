@@ -76,8 +76,6 @@ namespace Ui {
     class NewFormWidget;
 }
 
-class QDesignerWorkbench;
-
 class QDESIGNER_SHARED_EXPORT NewFormWidget : public QDesignerNewFormWidgetInterface
 {
     Q_OBJECT

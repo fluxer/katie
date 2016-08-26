@@ -50,9 +50,7 @@ class QPushButton;
 class QDesignerFormEditorInterface;
 class QDesignerOptionsPageInterface;
 
-namespace Ui {
-    class PreferencesDialog;
-}
+class Ui_PreferencesDialog;
 
 class PreferencesDialog: public QDialog
 {
@@ -72,7 +70,7 @@ private:
     QPushButton *applyButton() const;
     void closeOptionPages();
 
-    Ui::PreferencesDialog *m_ui;
+    Ui_PreferencesDialog *m_ui;
     QList<QDesignerOptionsPageInterface*> m_optionsPages;
 };
 
