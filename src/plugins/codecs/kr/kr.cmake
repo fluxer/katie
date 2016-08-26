@@ -1,16 +1,16 @@
 set(KRCODECSPLUGIN_HEADERS
-    ${KRCODECSPLUGIN_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/kr/qeuckrcodec.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/kr/cp949codetbl.h
 )
 
 set(KRCODECSPLUGIN_SOURCES
-    ${KRCODECSPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/kr/qeuckrcodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/kr/krmain.cpp
 )
 
-add_library(qkrcodecsplugin MODULE ${KRCODECSPLUGIN_SOURCES} ${KRCODECSPLUGIN_HEADERS})
+katie_setup_target(qkrcodecsplugin ${KRCODECSPLUGIN_SOURCES} ${KRCODECSPLUGIN_HEADERS})
+
+add_library(qkrcodecsplugin MODULE ${qkrcodecsplugin_SOURCES})
 target_link_libraries(qkrcodecsplugin KtCore)
 set_target_properties(qkrcodecsplugin PROPERTIES OUTPUT_NAME qkrcodecs)
 

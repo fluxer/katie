@@ -19,7 +19,9 @@ set(ACCESSIBLEWIDGETSPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/accessible/widgets/itemviews.cpp
 )
 
-add_library(qtaccessiblewidgetsplugin MODULE ${ACCESSIBLEWIDGETSPLUGIN_SOURCES} ${ACCESSIBLEWIDGETSPLUGIN_HEADERS})
+katie_setup_target(qtaccessiblewidgetsplugin ${ACCESSIBLEWIDGETSPLUGIN_SOURCES} ${ACCESSIBLEWIDGETSPLUGIN_HEADERS})
+
+add_library(qtaccessiblewidgetsplugin MODULE ${qtaccessiblewidgetsplugin_SOURCES})
 target_link_libraries(qtaccessiblewidgetsplugin KtCore KtGui)
 set_target_properties(qtaccessiblewidgetsplugin PROPERTIES OUTPUT_NAME qtaccessiblewidgets)
 target_include_directories(qtaccessiblewidgetsplugin PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/accessible/widgets)

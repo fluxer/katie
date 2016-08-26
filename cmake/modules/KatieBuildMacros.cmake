@@ -83,6 +83,7 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
             ${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake
             ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
         )
+        katie_setup_paths()
         install(
             FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
             DESTINATION ${QT_LIBRARIES_PATH}/pkgconfig

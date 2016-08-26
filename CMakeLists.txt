@@ -193,7 +193,7 @@ if(NOT KATIE_PLATFORM STREQUAL "integrity" AND NOT MINGW)
     )
 endif()
 
-# some things just cannot be done right
+# some things just cannot be done right, yet
 if(KATIE_ALLINONE)
     add_definitions(-DQT_ALLINONE)
 endif()

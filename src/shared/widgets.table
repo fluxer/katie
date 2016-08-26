@@ -1,5 +1,6 @@
 
 #ifndef DECLARE_WIDGET_1
+#  define SHOULD_UNDEFINE_DECLARE_WIDGET_1
 #  define DECLARE_WIDGET_1(a,b) DECLARE_WIDGET(a,b)
 #endif
 
@@ -145,4 +146,8 @@ DECLARE_LAYOUT(QStackedLayout, "")
 DECLARE_LAYOUT(QVBoxLayout, "")
 #ifndef QT_NO_FORMLAYOUT
 DECLARE_LAYOUT(QFormLayout, "")
+#endif
+
+#ifdef SHOULD_UNDEFINE_DECLARE_WIDGET_1
+#undef DECLARE_WIDGET_1
 #endif

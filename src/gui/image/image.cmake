@@ -57,8 +57,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxbmhandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qxpmhandler.cpp
-    # Optional but with no external dependencies
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qgifhandler.cpp
 )
 
 if(WITH_PNG)

@@ -1,5 +1,4 @@
 set(JPCODECSPLUGIN_HEADERS
-    ${JPCODECSPLUGIN_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/qjpunicode.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/qeucjpcodec.h
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/qjiscodec.h
@@ -8,7 +7,6 @@ set(JPCODECSPLUGIN_HEADERS
 )
 
 set(JPCODECSPLUGIN_SOURCES
-    ${JPCODECSPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/qeucjpcodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/qjiscodec.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/qsjiscodec.cpp
@@ -17,7 +15,9 @@ set(JPCODECSPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs/jp/jpmain.cpp
 )
 
-add_library(qjpcodecsplugin MODULE ${JPCODECSPLUGIN_SOURCES} ${JPCODECSPLUGIN_HEADERS})
+katie_setup_target(qjpcodecsplugin ${JPCODECSPLUGIN_SOURCES} ${JPCODECSPLUGIN_HEADERS})
+
+add_library(qjpcodecsplugin MODULE ${qcncodecsplugin_SOURCES})
 target_link_libraries(qjpcodecsplugin KtCore)
 set_target_properties(qjpcodecsplugin PROPERTIES OUTPUT_NAME qjpcodecs)
 

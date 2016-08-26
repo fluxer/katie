@@ -1,10 +1,11 @@
 set(QMNGPLUGIN_SOURCES
-    ${QMNGPLUGIN_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/mng/qmngplugin.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/image/qmnghandler.cpp
 )
 
-add_library(qmngplugin MODULE ${QMNGPLUGIN_SOURCES})
+katie_setup_target(qmngplugin ${QMNGPLUGIN_SOURCES})
+
+add_library(qmngplugin MODULE ${qmngplugin_SOURCES})
 target_link_libraries(qmngplugin KtCore KtGui)
 set_target_properties(qmngplugin PROPERTIES OUTPUT_NAME qmng)
 
