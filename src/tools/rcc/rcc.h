@@ -82,7 +82,7 @@ public:
     void setVerbose(bool b) { m_verbose = b; }
     bool verbose() const { return m_verbose; }
 
-    void setInitName(const QString &name) { m_initName = name; }
+    void setInitName(const QString &name);
     QString initName() const { return m_initName; }
 
     void setCompressLevel(int c) { m_compressLevel = c; }

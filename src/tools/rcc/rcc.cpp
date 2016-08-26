@@ -625,6 +625,16 @@ QStringList RCCResourceLibrary::dataFiles() const
     return ret;
 }
 
+void RCCResourceLibrary::setInitName(const QString &name)
+{
+    QString saneName = name;
+    if (!saneName.isEmpty()) {
+        saneName.prepend(QLatin1Char('_'));
+        saneName.replace(QRegExp(QLatin1String("[^a-zA-Z0-9_]")), QLatin1String("_"));
+    }
+    m_initName = saneName;
+}
+
 // Determine map of resource identifier (':/newPrefix/images/p1.png') to file via recursion
 static void resourceDataFileMapRecursion(const RCCFileInfo *m_root, const QString &path, RCCResourceLibrary::ResourceDataFileMap &m)
 {
@@ -749,10 +759,12 @@ bool RCCResourceLibrary::writeHeader()
 bool RCCResourceLibrary::writeDataBlobs()
 {
     Q_ASSERT(m_errorDevice);
-    if (m_format == C_Code)
-        writeString("static const unsigned char qt_resource_data[] = {\n");
-    else if (m_format == Binary)
+    if (m_format == C_Code) {
+        QByteArray tmpString = "static const unsigned char qt_resource_data_" + m_initName.toLatin1() + "[] = {\n";
+        writeByteArray(tmpString);
+    } else if (m_format == Binary) {
         m_dataOffset = m_out.size();
+    }
     QStack<RCCFileInfo*> pending;
 
     if (!m_root)
@@ -782,10 +794,12 @@ bool RCCResourceLibrary::writeDataBlobs()
 
 bool RCCResourceLibrary::writeDataNames()
 {
-    if (m_format == C_Code)
-        writeString("static const unsigned char qt_resource_name[] = {\n");
-    else if (m_format == Binary)
+    if (m_format == C_Code) {
+        QByteArray tmpString = "static const unsigned char qt_resource_name_" + m_initName.toLatin1() + "[] = {\n";
+        writeByteArray(tmpString);
+    } else if (m_format == Binary) {
         m_namesOffset = m_out.size();
+    }
 
     QHash<QString, int> names;
     QStack<RCCFileInfo*> pending;
@@ -822,10 +836,12 @@ static bool qt_rcc_compare_hash(const RCCFileInfo *left, const RCCFileInfo *righ
 
 bool RCCResourceLibrary::writeDataStructure()
 {
-    if (m_format == C_Code)
-        writeString("static const unsigned char qt_resource_struct[] = {\n");
-    else if (m_format == Binary)
+    if (m_format == C_Code) {
+        QByteArray tmpString = "static const unsigned char qt_resource_struct_" + m_initName.toLatin1() + "[] = {\n";
+        writeByteArray(tmpString);
+    } else if (m_format == Binary) {
         m_treeOffset = m_out.size();
+    }
     QStack<RCCFileInfo*> pending;
 
     if (!m_root)
@@ -900,13 +916,11 @@ void RCCResourceLibrary::writeAddNamespaceFunction(const QByteArray &name)
 bool RCCResourceLibrary::writeInitializer()
 {
     if (m_format == C_Code) {
+        QByteArray initLatin = m_initName.toLatin1();
+        QByteArray resourceDataString = "\n       (0x01, qt_resource_struct_" + initLatin +
+                                        ", qt_resource_name_" + initLatin +
+                                        ", qt_resource_data_" + initLatin + ");\n";
         //write("\nQT_BEGIN_NAMESPACE\n");
-        QString initName = m_initName;
-        if (!initName.isEmpty()) {
-            initName.prepend(QLatin1Char('_'));
-            initName.replace(QRegExp(QLatin1String("[^a-zA-Z0-9_]")), QLatin1String("_"));
-        }
-
         //init
         if (m_useNameSpace)
             writeString("QT_BEGIN_NAMESPACE\n\n");
@@ -920,8 +934,7 @@ bool RCCResourceLibrary::writeInitializer()
         }
         if (m_useNameSpace)
             writeString("QT_END_NAMESPACE\n\n\n");
-        QString initResources = QLatin1String("qInitResources");
-        initResources += initName;
+        QString initResources = QLatin1String("qInitResources") + m_initName;
         writeString("int ");
         writeMangleNamespaceFunction(initResources.toLatin1());
         writeString("()\n{\n");
@@ -929,8 +942,7 @@ bool RCCResourceLibrary::writeInitializer()
         if (m_root) {
             writeString("    ");
             writeAddNamespaceFunction("qRegisterResourceData");
-            writeString("\n        (0x01, qt_resource_struct, "
-                       "qt_resource_name, qt_resource_data);\n");
+            writeByteArray(resourceDataString);
         }
         writeString("    return 1;\n");
         writeString("}\n\n");
@@ -939,16 +951,14 @@ bool RCCResourceLibrary::writeInitializer()
         writeString(")\n\n");
 
         //cleanup
-        QString cleanResources = QLatin1String("qCleanupResources");
-        cleanResources += initName;
+        QString cleanResources = QLatin1String("qCleanupResources") + m_initName;
         writeString("int ");
         writeMangleNamespaceFunction(cleanResources.toLatin1());
         writeString("()\n{\n");
         if (m_root) {
             writeString("    ");
             writeAddNamespaceFunction("qUnregisterResourceData");
-            writeString("\n       (0x01, qt_resource_struct, "
-                      "qt_resource_name, qt_resource_data);\n");
+            writeByteArray(resourceDataString);
         }
         writeString("    return 1;\n");
         writeString("}\n\n");
