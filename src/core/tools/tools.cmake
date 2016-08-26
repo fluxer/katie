@@ -140,37 +140,6 @@ if(WITH_ICU AND ICU_FOUND)
     include_directories(${ICU_INCLUDES})
 endif()
 
-if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${HARFBUZZ_LIBRARIES}
-    )
-    include_directories(${HARFBUZZ_INCLUDE_DIRS})
-else()
-    # TODO: move to main CMakeLists?
-    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT)
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qharfbuzz_p.h
-    )
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qharfbuzz.cpp
-    )
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
-    )
-endif()
-
 # Note: libm should be present by default becaue this is C++
 if(NOT KATIE_PLATFORM MATCHES "(mac|vxworks)" AND UNIX)
     set(EXTRA_CORE_LIBS

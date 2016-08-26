@@ -364,11 +364,49 @@ if(WITH_THREADS AND THREADS_FOUND)
     )
 endif()
 
+set(CORE_HEADERS
+    ${CORE_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qcorecommon_p.h
+)
+
 katie_generate_misc("${CORE_HEADERS}" QtCore)
 katie_generate_public("${CORE_PUBLIC_HEADERS}" QtCore)
 katie_setup_paths()
 katie_generate_package(KtCore "")
 katie_setup_target(KtCore ${CORE_SOURCES} ${CORE_HEADERS})
+
+# those are set after katie_setup_target() because they are known to cause
+# trouble for all-in-one-build
+if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${HARFBUZZ_LIBRARIES}
+    )
+    include_directories(${HARFBUZZ_INCLUDE_DIRS})
+else()
+    # TODO: move to main CMakeLists?
+    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT)
+    set(CORE_HEADERS
+        ${CORE_HEADERS}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qharfbuzz_p.h
+    )
+    set(KtCore_SOURCES
+        ${KtCore_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qharfbuzz.cpp
+    )
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
+    )
+endif()
 
 add_library(KtCore ${KATIE_TYPE} ${KtCore_SOURCES})
 target_link_libraries(KtCore ${EXTRA_CORE_LIBS})

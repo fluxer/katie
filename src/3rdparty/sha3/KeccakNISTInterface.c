@@ -15,7 +15,7 @@ http://creativecommons.org/publicdomain/zero/1.0/
 //#include "KeccakNISTInterface.h"
 #include "KeccakF-1600-interface.h"
 
-static HashReturn Init(hashState *state, int hashbitlen)
+static HashReturn s3Init(hashState *state, int hashbitlen)
 {
     switch(hashbitlen) {
         case 0: // Default parameters, arbitrary length output
@@ -40,7 +40,7 @@ static HashReturn Init(hashState *state, int hashbitlen)
     return SUCCESS;
 }
 
-static HashReturn Update(hashState *state, const BitSequence *data, DataLength databitlen)
+static HashReturn s3Update(hashState *state, const BitSequence *data, DataLength databitlen)
 {
     if ((databitlen % 8) == 0)
         return (HashReturn) Absorb((spongeState*)state, data, databitlen);
@@ -57,26 +57,26 @@ static HashReturn Update(hashState *state, const BitSequence *data, DataLength d
     }
 }
 
-static HashReturn Final(hashState *state, BitSequence *hashval)
+static HashReturn s3Final(hashState *state, BitSequence *hashval)
 {
     return (HashReturn) Squeeze(state, hashval, state->fixedOutputLength);
 }
 
 #ifndef QT_KATIE
-static HashReturn Hash(int hashbitlen, const BitSequence *data, DataLength databitlen, BitSequence *hashval)
+static HashReturn s3Hash(int hashbitlen, const BitSequence *data, DataLength databitlen, BitSequence *hashval)
 {
     hashState state;
     HashReturn result;
 
     if ((hashbitlen != 224) && (hashbitlen != 256) && (hashbitlen != 384) && (hashbitlen != 512))
         return BAD_HASHLEN; // Only the four fixed output lengths available through this API
-    result = Init(&state, hashbitlen);
+    result = s3Init(&state, hashbitlen);
     if (result != SUCCESS)
         return result;
-    result = Update(&state, data, databitlen);
+    result = s3Update(&state, data, databitlen);
     if (result != SUCCESS)
         return result;
-    result = Final(&state, hashval);
+    result = s3Final(&state, hashval);
     return result;
 }
 #endif

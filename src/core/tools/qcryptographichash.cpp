@@ -66,22 +66,13 @@ typedef HashReturn (SHA3Update)(hashState *state, const BitSequence *data, DataL
 typedef HashReturn (SHA3Final)(hashState *state, BitSequence *hashval);
 
 #if QT_POINTER_SIZE == 8 // 64 bit version
-
 #include "../../3rdparty/sha3/KeccakF-1600-opt64.c"
-
-static SHA3Init * const sha3Init = Init;
-static SHA3Update * const sha3Update = Update;
-static SHA3Final * const sha3Final = Final;
-
 #else // 32 bit optimised fallback
-
 #include "../../3rdparty/sha3/KeccakF-1600-opt32.c"
-
-static SHA3Init * const sha3Init = Init;
-static SHA3Update * const sha3Update = Update;
-static SHA3Final * const sha3Final = Final;
-
 #endif
+static SHA3Init * const sha3Init = s3Init;
+static SHA3Update * const sha3Update = s3Update;
+static SHA3Final * const sha3Final = s3Final;
 
 /*
     These #defines replace the typedefs needed by the RFC6234 code. Normally
