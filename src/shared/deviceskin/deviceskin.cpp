@@ -856,4 +856,11 @@ int main(int argc,char *argv[])
 QT_END_NAMESPACE
 
 #include "moc_deviceskin.h"
-#include "qrc_deviceskin.cpp"
+#include "qrc_ClamshellPhone.cpp"
+#include "qrc_PortableMedia.cpp"
+#include "qrc_S60-nHD-Touchscreen.cpp"
+#include "qrc_S60-QVGA-Candybar.cpp"
+#include "qrc_SmartPhone.cpp"
+#include "qrc_SmartPhone2.cpp"
+#include "qrc_SmartPhoneWithButtons.cpp"
+#include "qrc_TouchscreenPhone.cpp"

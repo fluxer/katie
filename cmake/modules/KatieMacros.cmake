@@ -54,15 +54,6 @@ macro(KATIE_RESOURCES RESOURCES)
     endforeach()
 endmacro()
 
-macro(KATIE_RESOURCE SRCDEP RESOURCES OUTNAME)
-    set(rscout ${CMAKE_CURRENT_BINARY_DIR}/qrc_${OUTNAME}.cpp)
-    add_custom_command(
-        OUTPUT "${rscout}"
-        COMMAND "${KATIE_RCC}" ${RESOURCES} -o "${rscout}" -name "${OUTNAME}"
-    )
-    set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-endmacro()
-
 macro(KATIE_DBUS_ADAPTOR SRCDEP SRCIN OUTNAME)
     get_filename_component(resource ${SRCIN} ABSOLUTE)
     set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}.h)
