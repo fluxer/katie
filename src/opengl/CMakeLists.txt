@@ -2,7 +2,6 @@ add_definitions(-DQT_BUILD_OPENGL_LIB)
 set(EXTRA_OPENGL_LIBS KtCore KtGui ${OPENGL_LIBRARIES})
 
 set(OPENGL_PUBLIC_HEADERS
-    ${OPENGL_PUBLIC_HEADERS}
     QGL
     QGLBuffer
     QGLColormap
@@ -25,11 +24,9 @@ set(OPENGL_PUBLIC_HEADERS
 )
 
 set(OPENGL_HEADERS
-    ${OPENGL_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qgl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qgl_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qglcolormap.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qglfunctions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qglframebufferobject.h 
@@ -37,13 +34,12 @@ set(OPENGL_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qglextensions_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qglpaintdevice_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qglbuffer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qglfunctions.h
 )
 
 set(OPENGL_SOURCES
-    ${OPENGL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qgl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qglcolormap.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qglfunctions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qglframebufferobject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qglextensions.cpp
@@ -186,6 +182,18 @@ if(WITH_FREETYPE AND FREETYPE_FOUND)
         ${FREETYPE_LIBRARIES}
     )
 endif()
+
+set(OPENGL_HEADERS
+    ${OPENGL_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qopenglcommon_p.h
+)
+
+# qglfunctions.cpp must be last for all-in-one build because it
+# undefines and then defines pretty much all OpenGL functions
+set(OPENGL_SOURCES
+    ${OPENGL_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qglfunctions.cpp
+)
 
 katie_generate_misc("${OPENGL_HEADERS}" QtOpenGL)
 katie_generate_public("${OPENGL_PUBLIC_HEADERS}" QtOpenGL)

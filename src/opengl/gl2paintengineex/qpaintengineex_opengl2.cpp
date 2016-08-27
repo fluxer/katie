@@ -66,6 +66,7 @@
 
 #include "qglgradientcache_p.h"
 #include "qpaintengineex_opengl2_p.h"
+#include "qopenglcommon_p.h"
 
 #include <string.h> //for memcpy
 #include <qmath.h>
@@ -1363,12 +1364,6 @@ void QGL2PaintEngineEx::transformChanged()
     Q_D(QGL2PaintEngineEx);
     d->matrixDirty = true;
     state()->matrixChanged = true;
-}
-
-
-static const QRectF scaleRect(const QRectF &r, qreal sx, qreal sy)
-{
-    return QRectF(r.x() * sx, r.y() * sy, r.width() * sx, r.height() * sy);
 }
 
 void QGL2PaintEngineEx::drawPixmap(const QRectF& dest, const QPixmap & pixmap, const QRectF & src)

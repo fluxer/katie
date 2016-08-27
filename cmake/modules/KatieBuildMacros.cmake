@@ -172,13 +172,12 @@ function(KATIE_SETUP_TARGET FORTARGET)
 
     if(NOT KATIE_ALLINONE)
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
-    elseif("${FORTARGET}" MATCHES "(KtGui|KtOpenGL|KtDeclarative)")
+    elseif("${FORTARGET}" MATCHES "(KtGui|KtDeclarative)")
         katie_warning("All-in-one build not yet support for: ${FORTARGET}")
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     else()
         set(allinonesource "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_allinone.cpp")
         set(allinonedata)
-        set(targetobjects)
         foreach(srcstring ${ARGN})
             get_filename_component(srcname ${srcstring} EXT)
             if(NOT "${srcname}" MATCHES "(.h|.qrc|.ui)")
@@ -190,6 +189,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
     endif()
 endfunction()
 
+# a macro to ensure that object targets are build with PIC if the target they
+# are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(targets_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
     if(CMAKE_POSITION_INDEPENDENT_CODE OR targets_pic)
@@ -202,9 +203,10 @@ macro(KATIE_SETUP_OBJECT FORTARGET)
 endmacro()
 
 # a function to change full installation paths to relative so that CPack
-# generators do not choke, still paths must contain a string of some sort - if
-# they are null even quoting them will not help and CMake will complain that
-# not enought arguments have been passed to install() for DESTINATION
+# generators do not choke, still paths must contain a string of some sort that
+# is not just CMAKE_INSTALL_PREFIX - if they are null after they have been made
+# relative even quoting them will not help and CMake will complain that not
+# enought arguments have been passed to install() for DESTINATION
 function(KATIE_SETUP_PATHS)
     set(instpaths
         _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
@@ -228,6 +230,8 @@ function(KATIE_SETUP_PATHS)
     endforeach()
 endfunction()
 
+# a macro to remove conditional code from headers which is only relevant to the
+# process of building Katie itself
 macro(KATIE_OPTIMIZE_HEADERS DIR)
     find_program(unifdef NAMES unifdef)
     if(unifdef)
@@ -243,6 +247,7 @@ macro(KATIE_OPTIMIZE_HEADERS DIR)
     endif()
 endmacro()
 
+# a macro to add tests easily by setting them up with the assumptions they make
 macro(KATIE_TEST TESTNAME TESTSOURCES)
     katie_resources(${TESTSOURCES} ${ARGN})
 

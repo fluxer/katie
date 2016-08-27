@@ -1344,7 +1344,6 @@ void QGLOverlayWidget::paintGL()
     realWidget->paintOverlayGL();
 }
 
-#undef Bool
 QT_BEGIN_INCLUDE_NAMESPACE
 #include "moc_qgl_x11.cpp"
 QT_END_INCLUDE_NAMESPACE

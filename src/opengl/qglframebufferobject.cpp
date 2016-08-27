@@ -41,6 +41,7 @@
 
 #include "qglframebufferobject.h"
 #include "qglframebufferobject_p.h"
+#include "qopenglcommon_p.h"
 
 #include <qdebug.h>
 #include <qgl_p.h>
@@ -1092,14 +1093,6 @@ QImage QGLFramebufferObject::toImage() const
     return image;
 }
 
-#if !defined(QT_OPENGL_ES_1)
-Q_GLOBAL_STATIC(QGLEngineThreadStorage<QGL2PaintEngineEx>, qt_buffer_2_engine)
-#endif
-
-#ifndef QT_OPENGL_ES_2
-Q_GLOBAL_STATIC(QGLEngineThreadStorage<QOpenGLPaintEngine>, qt_buffer_engine)
-#endif
-
 /*! \reimp */
 QPaintEngine *QGLFramebufferObject::paintEngine() const
 {
@@ -1397,6 +1390,11 @@ void QGLFramebufferObject::blitFramebuffer(QGLFramebufferObject *target, const Q
 
     glBindFramebuffer(GL_FRAMEBUFFER_EXT, ctx->d_ptr->current_fbo);
 }
+
+#undef QGL_FUNC_CONTEXT
+#undef QGL_FUNCP_CONTEXT
+#undef QT_RESET_GLERROR
+#undef QT_CHECK_GLERROR
 
 QT_END_NAMESPACE
 

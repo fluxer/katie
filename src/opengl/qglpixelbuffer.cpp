@@ -90,7 +90,7 @@
     \sa {opengl/pbuffers}{Pbuffers Example}
 */
 
-#include <QtCore/qglobal.h>
+#include "qopenglcommon_p.h"
 
 #if !defined(QT_OPENGL_ES_1)
 #include <qpaintengineex_opengl2_p.h>
@@ -401,14 +401,6 @@ bool QGLPixelBuffer::isValid() const
     Q_D(const QGLPixelBuffer);
     return !d->invalid;
 }
-
-#if !defined(QT_OPENGL_ES_1)
-Q_GLOBAL_STATIC(QGLEngineThreadStorage<QGL2PaintEngineEx>, qt_buffer_2_engine)
-#endif
-
-#ifndef QT_OPENGL_ES_2
-Q_GLOBAL_STATIC(QGLEngineThreadStorage<QOpenGLPaintEngine>, qt_buffer_engine)
-#endif
 
 /*! \reimp */
 QPaintEngine *QGLPixelBuffer::paintEngine() const

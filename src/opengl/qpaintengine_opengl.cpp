@@ -63,6 +63,7 @@
 #include <qstatictext_p.h>
 
 #include "qtessellator_p.h"
+#include "qopenglcommon_p.h"
 
 #include "util/fragmentprograms_p.h"
 
@@ -3861,11 +3862,6 @@ void QOpenGLPaintEnginePrivate::drawTiledImageAsPath(const QRectF &r, const QIma
     brush_origin = old_brush_origin;
 }
 
-static const QRectF scaleRect(const QRectF &r, qreal sx, qreal sy)
-{
-    return QRectF(r.x() * sx, r.y() * sy, r.width() * sx, r.height() * sy);
-}
-
 template <typename T>
 static const T qSubImage(const T &image, const QRectF &src, QRectF *srcNew)
 {
@@ -5182,6 +5178,8 @@ void QOpenGLPaintEnginePrivate::ensureDrawableTexture()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 #endif
 }
+
+#undef QGL_FUNC_CONTEXT
 
 QT_END_NAMESPACE
 

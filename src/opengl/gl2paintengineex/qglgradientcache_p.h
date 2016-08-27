@@ -50,6 +50,9 @@
 // We mean it.
 //
 
+#ifndef QGLGRADIENTCACHE_P_H
+#define QGLGRADIENTCACHE_P_H
+
 #include <QMultiHash>
 #include <QObject>
 #include <qgl_p.h>
@@ -95,3 +98,4 @@ private:
 
 QT_END_NAMESPACE
 
+#endif // QGLGRADIENTCACHE_P_H
