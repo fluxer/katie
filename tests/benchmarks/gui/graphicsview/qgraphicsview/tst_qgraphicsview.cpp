@@ -858,6 +858,8 @@ void tst_QGraphicsView::paintItemCache_data()
 
 void tst_QGraphicsView::paintItemCache()
 {
+    Q_INIT_RESOURCE(qgraphicsview);
+
     QFETCH(bool, updatePartial);
     QFETCH(bool, rotation);
     QFETCH(int, cacheMode);
@@ -910,4 +912,4 @@ void tst_QGraphicsView::paintItemCache()
 QTEST_MAIN(tst_QGraphicsView)
 
 #include "moc_tst_qgraphicsview.cpp"
-#include "qrc_images.cpp"
+#include "qrc_qgraphicsview.cpp"
