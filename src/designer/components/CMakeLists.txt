@@ -76,6 +76,11 @@ else()
     add_definitions(-DQT_DESIGNER_STATIC)
 endif()
 
+set(DESIGNERCOMPONENTS_HEADERS
+    ${DESIGNERCOMPONENTS_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdesignercomponentscommon_p.h
+)
+
 # headers go in one place!
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)

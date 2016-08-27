@@ -49,7 +49,8 @@
 #include "shared_enums_p.h"
 #include "metadatabase_p.h"
 #include "formwindowbase_p.h"
-#include <abstractformbuilder.h>
+#include "abstractformbuilder.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformeditor.h>
@@ -83,8 +84,6 @@
 #include <QtGui/qwizard.h>
 #include <QtGui/QApplication>
 #include <QtGui/QFormLayout>
-
-Q_DECLARE_METATYPE(QWidgetList)
 
 QT_BEGIN_NAMESPACE
 
@@ -160,18 +159,6 @@ void InsertWidgetCommand::init(QWidget *widget, bool already_in_form, int layout
         m_cell = deco ? deco->currentCell() : qMakePair(0, 0);
     }
     m_widgetWasManaged = already_in_form;
-}
-
-static void recursiveUpdate(QWidget *w)
-{
-    w->update();
-
-    const QObjectList &l = w->children();
-    const QObjectList::const_iterator cend = l.end();
-    for ( QObjectList::const_iterator it = l.begin(); it != cend; ++it) {
-        if (QWidget *w = qobject_cast<QWidget*>(*it))
-            recursiveUpdate(w);
-    }
 }
 
 void InsertWidgetCommand::redo()

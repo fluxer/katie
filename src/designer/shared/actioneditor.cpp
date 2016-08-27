@@ -52,6 +52,7 @@
 #include "qsimpleresource_p.h"
 #include "formwindowbase_p.h"
 #include "qdesigner_taskmenu_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractpropertyeditor.h>
@@ -81,8 +82,6 @@
 #include <QtCore/QDebug>
 #include <QtCore/QSignalMapper>
 #include <QtCore/QBuffer>
-
-Q_DECLARE_METATYPE(QAction*)
 
 QT_BEGIN_NAMESPACE
 

@@ -46,6 +46,7 @@
 #include "layoutdecoration.h"
 #include "widgetfactory_p.h"
 #include "qdesigner_widgetitem_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractformwindow.h>
@@ -58,8 +59,7 @@
 #include <QtCore/qdebug.h>
 #include <QtCore/QVector>
 #include <QtCore/QSet>
-
-#include <QtGui/qevent.h>
+#include <QtCore/QEvent>
 #include <QtGui/QGridLayout>
 #include <QtGui/QPainter>
 #include <QtGui/QBitmap>
@@ -69,12 +69,9 @@
 #include <QtGui/QScrollArea>
 #include <QtGui/QFormLayout>
 #include <QtGui/QLabel>
-#include <QtGui/qwizard.h>
 #include <QtGui/QWizard>
 
 QT_BEGIN_NAMESPACE
-
-enum { FormLayoutColumns = 2 };
 
 namespace qdesigner_internal {
 

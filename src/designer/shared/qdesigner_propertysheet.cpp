@@ -45,8 +45,8 @@
 #include "layoutinfo_p.h"
 #include "qlayout_widget_p.h"
 #include "qdesigner_introspection_p.h"
-
-#include <formbuilderextra_p.h>
+#include "qdesignercommon_p.h"
+#include "formbuilderextra_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformeditor.h>
@@ -109,20 +109,6 @@ static const char *layoutGridRowStretchPropertyC = "layoutRowStretch";
 static const char *layoutGridColumnStretchPropertyC = "layoutColumnStretch";
 static const char *layoutGridRowMinimumHeightC = "layoutRowMinimumHeight";
 static const char *layoutGridColumnMinimumWidthC = "layoutColumnMinimumWidth";
-
-// Find the form editor in the hierarchy.
-// We know that the parent of the sheet is the extension manager
-// whose parent is the core.
-
-static QDesignerFormEditorInterface *formEditorForObject(QObject *o) {
-    do {
-        if (QDesignerFormEditorInterface* core = qobject_cast<QDesignerFormEditorInterface*>(o))
-            return core;
-        o = o->parent();
-    } while(o);
-    Q_ASSERT(o);
-    return 0;
-}
 
 static bool hasLayoutAttributes(QDesignerFormEditorInterface *core, QObject *object)
 {

@@ -45,8 +45,8 @@
 #include "ui_qtresourceeditordialog.h"
 #include "qtresourcemodel_p.h"
 #include "iconloader_p.h"
-
-#include <abstractdialoggui_p.h>
+#include "qdesignercommon_p.h"
+#include "abstractdialoggui_p.h"
 
 #include <QtCore/QFileInfo>
 #include <QtCore/QDir>
@@ -67,8 +67,6 @@ static const char *rccFileTag = "file";
 static const char *rccAliasAttribute = "alias";
 static const char *rccPrefixAttribute = "prefix";
 static const char *rccLangAttribute = "lang";
-static const char *SplitterPosition = "SplitterPosition";
-static const char *Geometry = "Geometry";
 static const char *QrcDialogC = "QrcDialog";
 
 static QString msgOverwrite(const QString &fname)

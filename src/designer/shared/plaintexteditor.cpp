@@ -41,6 +41,7 @@
 
 #include "plaintexteditor_p.h"
 #include "abstractsettings_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 
@@ -52,7 +53,6 @@
 QT_BEGIN_NAMESPACE
 
 static const char *PlainTextDialogC = "PlainTextDialog";
-static const char *Geometry = "Geometry";
 
 
 namespace qdesigner_internal {

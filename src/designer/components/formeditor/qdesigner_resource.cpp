@@ -54,6 +54,7 @@
 #include "qmdiarea_container.h"
 #include "qwizard_container.h"
 #include "layout_propertysheet.h"
+#include "qdesignercommon_p.h"
 
 #include <ui4_p.h>
 #include <formbuilderextra_p.h>
@@ -113,8 +114,6 @@
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qdebug.h>
 #include <QtCore/qxmlstream.h>
-
-Q_DECLARE_METATYPE(QWidgetList)
 
 QT_BEGIN_NAMESPACE
 

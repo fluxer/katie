@@ -41,6 +41,7 @@
 
 #include "widgetboxtreewidget.h"
 #include "widgetboxcategorylistview.h"
+#include "qdesignercomponentscommon_p.h"
 
 // shared
 #include <iconloader_p.h>
@@ -69,11 +70,9 @@
 #include <QtCore/QDebug>
 
 static const char *widgetBoxRootElementC = "widgetbox";
-static const char *widgetElementC = "widget";
 static const char *uiElementC = "ui";
 static const char *categoryElementC = "category";
 static const char *categoryEntryElementC = "categoryentry";
-static const char *nameAttributeC = "name";
 static const char *typeAttributeC = "type";
 static const char *iconAttributeC = "icon";
 static const char *defaultTypeValueC = "default";

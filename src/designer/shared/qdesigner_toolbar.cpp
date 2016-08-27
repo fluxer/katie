@@ -46,6 +46,7 @@
 #include "qdesigner_utils_p.h"
 #include "qdesigner_objectinspector_p.h"
 #include "promotiontaskmenu_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractpropertyeditor.h>
@@ -62,8 +63,6 @@
 #include <QtGui/qevent.h>
 #include <QtGui/QApplication>
 #include <QtCore/QDebug>
-
-Q_DECLARE_METATYPE(QAction*)
 
 QT_BEGIN_NAMESPACE
 

@@ -45,6 +45,7 @@
 #include "layoutinfo_p.h"
 #include "invisible_widget_p.h"
 #include "qdesigner_widgetitem_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/QExtensionManager>
@@ -57,9 +58,8 @@
 #include <QtGui/QGridLayout>
 #include <QtGui/QFormLayout>
 #include <QtGui/QApplication>
-#include <QtGui/qevent.h>
-#include <QtGui/qpen.h>
-#include <QtCore/qdebug.h>
+#include <QtGui/QPen>
+#include <QtCore/QDebug>
 #include <QtCore/qalgorithms.h>
 #include <QtCore/QMap>
 #include <QtCore/QStack>
@@ -68,7 +68,6 @@
 
 enum { ShiftValue = 1 };
 enum { debugLayout = 0 };
-enum { FormLayoutColumns = 2 };
 enum { indicatorSize = 2 };
 // Grid/form Helpers: get info (overloads to make templates work)
 

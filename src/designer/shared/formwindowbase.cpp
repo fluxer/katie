@@ -50,6 +50,7 @@
 #include "grid_p.h" 
 #include "deviceprofile_p.h"
 #include "qdesigner_utils_p.h"
+#include "qdesignercommon_p.h"
 
 #include "qsimpleresource_p.h"
 
@@ -264,18 +265,6 @@ void FormWindowBase::setGrid(const QPoint &grid)
 bool FormWindowBase::hasFeature(Feature f) const
 {
     return f & m_d->m_feature;
-}
-
-static void recursiveUpdate(QWidget *w)
-{
-    w->update();
-
-    const QObjectList &l = w->children();
-    const QObjectList::const_iterator cend = l.constEnd();
-    for (QObjectList::const_iterator it = l.constBegin(); it != cend; ++it) {
-        if (QWidget *w = qobject_cast<QWidget*>(*it))
-            recursiveUpdate(w);
-    }
 }
 
 void FormWindowBase::setFeatures(Feature f)

@@ -46,6 +46,7 @@
 #include "qlayout_widget_p.h"
 #include "layoutinfo_p.h"
 #include "qdesigner_propertycommand_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/QExtensionManager>
 #include <QtDesigner/container.h>
@@ -81,8 +82,6 @@
 #include <QtCore/QVariant>
 #include <QtCore/QSignalMapper>
 #include <QtCore/QDebug>
-
-Q_DECLARE_METATYPE(QWidgetList)
 
 QT_BEGIN_NAMESPACE
 

@@ -48,6 +48,7 @@
 #include "qdesigner_integration_p.h"
 #include "qdesigner_utils_p.h"
 #include "abstractsettings_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformwindow.h>
 #include <QtDesigner/abstractformwindowcursor.h>
@@ -71,7 +72,6 @@ QT_BEGIN_NAMESPACE
 
 static const char *styleSheetProperty = "styleSheet";
 static const char *StyleSheetDialogC = "StyleSheetDialog";
-static const char *Geometry = "Geometry";
 
 namespace qdesigner_internal {
 

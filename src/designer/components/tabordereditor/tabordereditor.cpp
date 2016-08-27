@@ -46,6 +46,7 @@
 #include <qdesigner_utils_p.h>
 #include <qlayout_widget_p.h>
 #include <orderdialog_p.h>
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/QExtensionManager>
 #include <QtDesigner/abstractformwindow.h>
@@ -54,13 +55,10 @@
 #include <QtDesigner/abstractwidgetfactory.h>
 #include <QtDesigner/propertysheet.h>
 
+#include <QtCore/QEvent>
 #include <QtGui/QPainter>
-#include <QtGui/qevent.h>
-#include <QtGui/qevent.h>
 #include <QtGui/QMenu>
 #include <QtGui/QApplication>
-
-Q_DECLARE_METATYPE(QWidgetList)
 
 QT_BEGIN_NAMESPACE
 

@@ -41,8 +41,9 @@
 
 #include "qdesigner_membersheet_p.h"
 
-#include <QtDesigner/abstractformeditor.h>
-#include <abstractintrospection_p.h>
+#include "abstractformeditor.h"
+#include "abstractintrospection_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtGui/QWidget>
 
@@ -57,20 +58,6 @@ static QList<QByteArray> stringListToByteArray(const QStringList &l)
     for (QStringList::const_iterator it = l.constBegin(); it != cend; ++it)
         rc += it->toUtf8();
     return rc;
-}
-
-// Find the form editor in the hierarchy.
-// We know that the parent of the sheet is the extension manager
-// whose parent is the core.
-
-static QDesignerFormEditorInterface *formEditorForObject(QObject *o) {
-    do {
-        if (QDesignerFormEditorInterface* core = qobject_cast<QDesignerFormEditorInterface*>(o))
-            return core;
-        o = o->parent();
-    } while(o);
-    Q_ASSERT(o);
-    return 0;
 }
 
 // ------------ QDesignerMemberSheetPrivate

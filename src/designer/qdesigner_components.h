@@ -43,7 +43,6 @@
 #define QDESIGNER_COMPONENTS_H
 
 #include <QtDesigner/qdesigner_components_global.h>
-#include <QtCore/qglobal.h>
 
 QT_BEGIN_HEADER
 

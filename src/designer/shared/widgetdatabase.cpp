@@ -64,10 +64,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
-    enum { debugWidgetDataBase = 0 };
-}
-
 namespace qdesigner_internal {
 
 // ----------------------------------------------------------
@@ -426,8 +422,9 @@ void WidgetDataBase::loadPlugins()
             }
         }
     }
-    if (debugWidgetDataBase)
-        qDebug() << "WidgetDataBase::loadPlugins(): " << addedPlugins << " added, " << replacedPlugins << " replaced, " << removedPlugins << "deleted.";
+#ifndef NDEBUG
+    qDebug() << "WidgetDataBase::loadPlugins(): " << addedPlugins << " added, " << replacedPlugins << " replaced, " << removedPlugins << "deleted.";
+#endif
 }
 
 void WidgetDataBase::remove(int index)
@@ -783,8 +780,9 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
                       const QString &includeFile,
                       bool promoted, bool custom)
 {
-    if (debugWidgetDataBase)
-        qDebug() << "appendDerived " << className << " derived from " << baseClassName;
+#ifndef NDEBUG
+    qDebug() << "appendDerived " << className << " derived from " << baseClassName;
+#endif
     // Check.
     if (className.isEmpty() || baseClassName.isEmpty()) {
         qWarning("** WARNING %s called with an empty class names: '%s' extends '%s'.",
@@ -819,8 +817,9 @@ QDESIGNER_SHARED_EXPORT QDesignerWidgetDataBaseItemInterface *
     // Create this item, inheriting its base properties
     const int baseIndex = db->indexOfClassName(baseClassName);
     if (baseIndex == -1) {
-        if (debugWidgetDataBase)
-            qDebug() << "appendDerived failed due to missing base class";
+#ifndef NDEBUG
+        qDebug() << "appendDerived failed due to missing base class";
+#endif
         return 0;
     }
     const QDesignerWidgetDataBaseItemInterface *baseItem = db->item(baseIndex);

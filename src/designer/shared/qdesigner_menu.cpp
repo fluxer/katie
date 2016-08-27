@@ -49,9 +49,10 @@
 #include "actioneditor_p.h"
 #include "qdesigner_utils_p.h"
 #include "qdesigner_objectinspector_p.h"
+#include "qdesignercommon_p.h"
 
+#include <QtCore/QEvent>
 #include <QtCore/QTimer>
-#include <QtCore/qdebug.h>
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractwidgetfactory.h>
@@ -65,9 +66,6 @@
 #include <QtGui/QRubberBand>
 #include <QtGui/QToolTip>
 #include <QtGui/QToolBar>
-#include <QtGui/qevent.h>
-
-Q_DECLARE_METATYPE(QAction*)
 
 QT_BEGIN_NAMESPACE
 

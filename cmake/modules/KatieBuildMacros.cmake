@@ -172,7 +172,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
 
     if(NOT KATIE_ALLINONE)
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
-    elseif("${FORTARGET}" MATCHES "(KtGui|KtOpenGL|KtDeclarative|KtDesigner)")
+    elseif("${FORTARGET}" MATCHES "(KtGui|KtOpenGL|KtDeclarative)")
         katie_warning("All-in-one build not yet support for: ${FORTARGET}")
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     else()

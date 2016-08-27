@@ -43,6 +43,7 @@
 #include "qtresourceview_p.h"
 #include "iconloader_p.h"
 #include "qdesigner_utils_p.h"
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/propertysheet.h>
@@ -60,8 +61,6 @@
 #include <QtGui/qevent.h>
 #include <QtCore/QSet>
 #include <QtCore/QDebug>
-
-Q_DECLARE_METATYPE(QAction*)
 
 QT_BEGIN_NAMESPACE
 

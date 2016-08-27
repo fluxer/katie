@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "widgetboxcategorylistview.h"
+#include "qdesignercomponentscommon_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 #include <QtDesigner/abstractwidgetdatabase.h>
@@ -57,8 +58,6 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QRegExp>
 
-static const char *widgetElementC = "widget";
-static const char *nameAttributeC = "name";
 static const char *uiOpeningTagC = "<ui>";
 static const char *uiClosingTagC = "</ui>";
 

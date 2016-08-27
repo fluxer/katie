@@ -112,6 +112,11 @@ else()
     add_definitions(-DQT_DESIGNER_STATIC)
 endif()
 
+set(DESIGNER_HEADERS
+    ${DESIGNER_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdesignercommon_p.h
+)
+
 katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
 katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")

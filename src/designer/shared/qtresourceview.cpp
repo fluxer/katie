@@ -45,6 +45,7 @@
 #include "qtresourceeditordialog_p.h"
 #include "iconloader_p.h"
 #include "filterwidget_p.h" // For FilterWidget
+#include "qdesignercommon_p.h"
 
 #include <QtDesigner/abstractformeditor.h>
 
@@ -78,8 +79,6 @@ static const char *typeImage = "image";
 static const char *typeStyleSheet = "stylesheet";
 static const char *typeOther = "other";
 static const char *fileAttribute = "file";
-static const char *SplitterPosition = "SplitterPosition";
-static const char *Geometry = "Geometry";
 static const char *ResourceViewDialogC = "ResourceDialog";
 
 // ---------------- ResourceListWidget: A list widget that has drag enabled
