@@ -674,7 +674,9 @@ static void loadXlfds(const char *reqFamily, int encoding_id)
         }
 
         QtFontFamily *family = fontFamily ? fontFamily : db->family(QLatin1String(familyName), true);
+#ifndef QT_NO_FONTCONFIG
         family->fontFileIndex = -1;
+#endif
         family->symbol_checked = true;
         QtFontFoundry *foundry = family->foundry(QLatin1String(foundryName), true);
         QtFontStyle *style = foundry->style(styleKey, QString(), true);
@@ -1264,6 +1266,7 @@ static void load(const QString &family = QString(), int script = -1, bool forceX
 
 static void checkSymbolFont(QtFontFamily *family)
 {
+#ifndef QT_NO_FONTCONFIG
     if (!family || family->symbol_checked || family->fontFilename.isEmpty())
         return;
 //     qDebug() << "checking " << family->rawName;
@@ -1289,6 +1292,9 @@ static void checkSymbolFont(QtFontFamily *family)
         }
     }
     f->release(id);
+#else
+    Q_UNUSED(family);
+#endif
 }
 
 static void checkSymbolFonts(const QString &family = QString())
@@ -1302,6 +1308,8 @@ static void checkSymbolFonts(const QString &family = QString())
     } else {
         checkSymbolFont(d->family(family));
     }
+#else
+    Q_UNUSED(family);
 #endif
 }
 
