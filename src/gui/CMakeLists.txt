@@ -502,6 +502,34 @@ katie_generate_package(KtGui "KtCore")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
 katie_setup_paths()
 
+# those are set after katie_setup_target() because they are known to cause
+# trouble for all-in-one build
+if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${HARFBUZZ_LIBRARIES}
+    )
+    include_directories(${HARFBUZZ_INCLUDE_DIRS})
+else()
+    # TODO: move to main CMakeLists?
+    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT)
+    set(KtGui_SOURCES
+        ${KtGui_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
+    )
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
+    )
+endif()
+
 add_library(KtGui ${KATIE_TYPE} ${KtGui_SOURCES})
 target_link_libraries(KtGui ${EXTRA_GUI_LIBS})
 set_target_properties(KtGui PROPERTIES

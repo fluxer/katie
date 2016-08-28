@@ -144,8 +144,7 @@ private:
 
         if (!m_splitter)
             m_splitter = new QTextBoundaryFinder(QTextBoundaryFinder::Word,
-                                                 m_string.constData(), m_string.length(),
-                                                 /*buffer*/0, /*buffer size*/0);
+                                                 m_string.constData(), m_string.length());
 
         m_splitter->setPosition(start);
         QScriptAnalysis itemAnalysis = m_analysis[start];

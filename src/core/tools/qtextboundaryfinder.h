@@ -73,10 +73,10 @@ public:
         EndWord = 2
         //Hyphen
     };
-    Q_DECLARE_FLAGS( BoundaryReasons, BoundaryReason )
+    Q_DECLARE_FLAGS(BoundaryReasons, BoundaryReason)
 
     QTextBoundaryFinder(BoundaryType type, const QString &string);
-    QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length, unsigned char *buffer = 0, int bufferSize = 0);
+    QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length);
 
     inline bool isValid() const { return d; }
 
@@ -96,11 +96,6 @@ public:
 
 private:
     BoundaryType t;
-    QString s;
-    const QChar *chars;
-    int length;
-    int pos;
-    uint freePrivate : 1;
     QTextBoundaryFinderPrivate *d;
 };
 

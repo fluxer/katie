@@ -42,63 +42,16 @@
 #include <QtCore/qvarlengtharray.h>
 #include <qunicodetables_p.h>
 #include <qdebug.h>
-#include "qharfbuzz_p.h"
 
 QT_BEGIN_NAMESPACE
 
 class QTextBoundaryFinderPrivate
 {
 public:
-    HB_CharAttributes attributes[1];
+    int length;
+    int pos;
+    QString string;
 };
-
-static void init(QTextBoundaryFinder::BoundaryType type, const QChar *chars, int length, HB_CharAttributes *attributes)
-{
-    QVarLengthArray<HB_ScriptItem> scriptItems;
-
-    const ushort *string = reinterpret_cast<const ushort *>(chars);
-    const ushort *unicode = string;
-    // correctly assign script, isTab and isObject to the script analysis
-    const ushort *uc = unicode;
-    const ushort *e = uc + length;
-    int script = QUnicodeTables::Common;
-    int lastScript = QUnicodeTables::Common;
-    const ushort *start = uc;
-    while (uc < e) {
-        int s = QUnicodeTables::script(*uc);
-        if (s != QUnicodeTables::Inherited)
-            script = s;
-        if (*uc == QChar::ObjectReplacementCharacter || *uc == QChar::LineSeparator || *uc == 9) 
-            script = QUnicodeTables::Common;
-        if (script != lastScript) {
-            if (uc != start) {
-                HB_ScriptItem item;
-                item.pos = start - string;
-                item.length = uc - start;
-                item.script = (HB_Script)lastScript;
-                item.bidiLevel = 0; // ### what's the proper value?
-                scriptItems.append(item);
-                start = uc;
-            }
-            lastScript = script;
-        }
-        ++uc;
-    }
-    if (uc != start) {
-        HB_ScriptItem item;
-        item.pos = start - string;
-        item.length = uc - start;
-        item.script = (HB_Script)lastScript;
-        item.bidiLevel = 0; // ### what's the proper value?
-        scriptItems.append(item);
-    }
-
-    qGetCharAttributes(string, length, scriptItems.data(), scriptItems.count(), attributes);
-    if (type == QTextBoundaryFinder::Word)
-        HB_GetWordBoundaries(string, length, scriptItems.data(), scriptItems.count(), attributes);
-    else if (type == QTextBoundaryFinder::Sentence)
-        HB_GetSentenceBoundaries(string, length, scriptItems.data(), scriptItems.count(), attributes);
-}
 
 /*! 
     \class QTextBoundaryFinder
@@ -123,7 +76,7 @@ static void init(QTextBoundaryFinder::BoundaryType type, const QChar *chars, int
     Grapheme clusters. The two unicode characters 'A' + diaeresis do
     for example form one grapheme cluster as the user thinks of them
     as one character, yet it is in this case represented by two
-    unicode code points.
+    unicode code points
 
     Word boundaries are there to locate the start and end of what a
     language considers to be a word.
@@ -162,11 +115,8 @@ static void init(QTextBoundaryFinder::BoundaryType type, const QChar *chars, int
   Constructs an invalid QTextBoundaryFinder object.
 */
 QTextBoundaryFinder::QTextBoundaryFinder()
-    : t(Grapheme)
-    , chars(0)
-    , length(0)
-    , freePrivate(true)
-    , d(0)
+    : d(0)
+    , t(QTextBoundaryFinder::Word)
 {
 }
 
@@ -174,16 +124,10 @@ QTextBoundaryFinder::QTextBoundaryFinder()
   Copies the QTextBoundaryFinder object, \a other.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
-    : t(other.t)
-    , s(other.s)
-    , chars(other.chars)
-    , length(other.length)
-    , pos(other.pos)
-    , freePrivate(true)
+    : d(new QTextBoundaryFinderPrivate)
+    , t(other.t)
 {
-    d = (QTextBoundaryFinderPrivate *) malloc(length*sizeof(HB_CharAttributes));
-    Q_CHECK_PTR(d);
-    memcpy(d, other.d, length*sizeof(HB_CharAttributes));
+    d = other.d;
 }
 
 /*!
@@ -194,18 +138,8 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
     if (&other == this)
         return *this;
 
+    d = other.d;
     t = other.t;
-    s = other.s;
-    chars = other.chars;
-    length = other.length;
-    pos = other.pos;
-
-    QTextBoundaryFinderPrivate *newD = (QTextBoundaryFinderPrivate *)
-        realloc(freePrivate ? d : 0, length*sizeof(HB_CharAttributes));
-    Q_CHECK_PTR(newD);
-    freePrivate = true;
-    d = newD;
-    memcpy(d, other.d, length*sizeof(HB_CharAttributes));
 
     return *this;
 }
@@ -215,24 +149,18 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
 */
 QTextBoundaryFinder::~QTextBoundaryFinder()
 {
-    if (freePrivate)
-        free(d);
+    delete d;
+    d = 0;
 }
 
 /*!
   Creates a QTextBoundaryFinder object of \a type operating on \a string.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &string)
-    : t(type)
-    , s(string)
-    , chars(string.unicode())
-    , length(string.length())
-    , pos(0)
-    , freePrivate(true)
+    : d(new QTextBoundaryFinderPrivate)
+    , t(type)
 {
-    d = (QTextBoundaryFinderPrivate *) malloc(length*sizeof(HB_CharAttributes));
-    Q_CHECK_PTR(d);
-    init(t, chars, length, d->attributes);
+    d->string = string;
 }
 
 /*!
@@ -248,21 +176,12 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
   as long as the QTextBoundaryFinder object stays alive. The same applies to
   \a buffer.
 */
-QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length, unsigned char *buffer, int bufferSize)
-    : t(type)
-    , chars(chars)
-    , length(length)
-    , pos(0)
+QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length)
+    : d(new QTextBoundaryFinderPrivate)
+    , t(type)
 {
-    if (buffer && (uint)bufferSize >= length*sizeof(HB_CharAttributes)) {
-        d = (QTextBoundaryFinderPrivate *)buffer;
-        freePrivate = false;
-    } else {
-        d = (QTextBoundaryFinderPrivate *) malloc(length*sizeof(HB_CharAttributes));
-        Q_CHECK_PTR(d);
-        freePrivate = true;
-    }
-    init(t, chars, length, d->attributes);
+    d->string = QString(chars);
+    d->length = length;
 }
 
 /*!
@@ -272,7 +191,7 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, 
 */
 void QTextBoundaryFinder::toStart()
 {
-    pos = 0;
+    d->pos = 0;
 }
 
 /*!
@@ -282,7 +201,7 @@ void QTextBoundaryFinder::toStart()
 */
 void QTextBoundaryFinder::toEnd()
 {
-    pos = length;
+    d->pos = d->length;
 }
 
 /*!
@@ -295,7 +214,7 @@ void QTextBoundaryFinder::toEnd()
 */
 int QTextBoundaryFinder::position() const
 {
-    return pos;
+    return d->pos;
 }
 
 /*!
@@ -309,7 +228,7 @@ int QTextBoundaryFinder::position() const
 */
 void QTextBoundaryFinder::setPosition(int position)
 {
-    pos = qBound(0, position, length);
+    d->pos = qBound(0, position, d->length);
 }
 
 /*! \fn QTextBoundaryFinder::BoundaryType QTextBoundaryFinder::type() const
@@ -328,9 +247,7 @@ void QTextBoundaryFinder::setPosition(int position)
 */
 QString QTextBoundaryFinder::string() const
 {
-    if (chars == s.unicode() && length == s.length())
-        return s;
-    return QString(chars, length);
+    return d->string;
 }
 
 
@@ -342,39 +259,38 @@ QString QTextBoundaryFinder::string() const
 int QTextBoundaryFinder::toNextBoundary()
 {
     if (!d) {
-        pos = -1;
-        return pos;
+        d->pos = -1;
+        return d->pos;
     }
 
-    if (pos < 0 || pos >= length) {
-        pos = -1;
-        return pos;
+    if (d->pos < 0 || d->pos >= d->length) {
+        d->pos = -1;
+        return d->pos;
     }
-    ++pos;
-    if (pos == length)
-        return pos;
-    
+    ++d->pos;
+    if (d->pos == d->length)
+        return d->pos;
+
     switch(t) {
-    case Grapheme:
-        while (pos < length && !d->attributes[pos].charStop)
-            ++pos;
+    case QTextBoundaryFinder::Grapheme:
+        while (d->pos < d->length && !d->string[d->pos].isLetterOrNumber())
+            ++d->pos;
+    case QTextBoundaryFinder::Word:
+        while (d->pos < d->length && !d->string[d->pos].isSpace())
+            ++d->pos;
         break;
-    case Word:
-        while (pos < length && !d->attributes[pos].wordBoundary)
-            ++pos;
+    case QTextBoundaryFinder::Sentence:
+        while (d->pos < d->length && !d->string[d->pos].category() == QChar::Punctuation_Close)
+            ++d->pos;
         break;
-    case Sentence:
-        while (pos < length && !d->attributes[pos].sentenceBoundary)
-            ++pos;
-        break;
-    case Line:
-        Q_ASSERT(pos);
-        while (pos < length && d->attributes[pos-1].lineBreakType < HB_Break)
-            ++pos;
+    case QTextBoundaryFinder::Line:
+        Q_ASSERT(d->pos);
+        while (d->pos < d->length && d->string[d->pos-1].category() == QChar::Separator_Line)
+            ++d->pos;
         break;
     }
 
-    return pos;
+    return d->pos;
 }
 
 /*!
@@ -385,38 +301,38 @@ int QTextBoundaryFinder::toNextBoundary()
 int QTextBoundaryFinder::toPreviousBoundary()
 {
     if (!d) {
-        pos = -1;
-        return pos;
+        d->pos = -1;
+        return d->pos;
     }
 
-    if (pos <= 0 || pos > length) {
-        pos = -1;
-        return pos;
+    if (d->pos <= 0 || d->pos > d->length) {
+        d->pos = -1;
+        return d->pos;
     }
-    --pos;
-    if (pos == 0)
-        return pos;
+    --d->pos;
+    if (d->pos == 0)
+        return d->pos;
 
     switch(t) {
-    case Grapheme:
-        while (pos > 0 && !d->attributes[pos].charStop)
-            --pos;
+    case QTextBoundaryFinder::Grapheme:
+        while (d->pos > 0 && !d->string[d->pos].isLetterOrNumber())
+            --d->pos;
         break;
-    case Word:
-        while (pos > 0 && !d->attributes[pos].wordBoundary)
-            --pos;
+    case QTextBoundaryFinder::Word:
+        while (d->pos > 0 && !d->string[d->pos].isSpace())
+            --d->pos;
         break;
-    case Sentence:
-        while (pos > 0 && !d->attributes[pos].sentenceBoundary)
-            --pos;
+    case QTextBoundaryFinder::Sentence:
+        while (d->pos > 0 && !d->string[d->pos].category() == QChar::Punctuation_Close)
+            --d->pos;
         break;
-    case Line:
-        while (pos > 0 && d->attributes[pos-1].lineBreakType < HB_Break)
-            --pos;
+    case QTextBoundaryFinder::Line:
+        while (d->pos > 0 && d->string[d->pos-1].category() == QChar::Separator_Line)
+            --d->pos;
         break;
     }
 
-    return pos;
+    return d->pos;
 }
 
 /*!
@@ -424,21 +340,21 @@ int QTextBoundaryFinder::toPreviousBoundary()
 */
 bool QTextBoundaryFinder::isAtBoundary() const
 {
-    if (!d || pos < 0)
+    if (!d || d->pos < 0)
         return false;
 
-    if (pos == length)
+    if (d->pos == d->length)
         return true;
 
     switch(t) {
-    case Grapheme:
-        return d->attributes[pos].charStop;
-    case Word:
-        return d->attributes[pos].wordBoundary;
-    case Line:
-        return (pos > 0) ? d->attributes[pos-1].lineBreakType >= HB_Break : true;
-    case Sentence:
-        return d->attributes[pos].sentenceBoundary;
+    case QTextBoundaryFinder::Grapheme:
+        return d->string[d->pos].isLetterOrNumber();
+    case QTextBoundaryFinder::Word:
+        return d->string[d->pos].isSpace();
+    case QTextBoundaryFinder::Line:
+        return (d->pos > 0) ? d->string[d->pos-1].category() == QChar::Separator_Line : true;
+    case QTextBoundaryFinder::Sentence:
+        return d->string[d->pos].category() == QChar::Punctuation_Close;
     }
     return false;
 }
@@ -449,31 +365,31 @@ bool QTextBoundaryFinder::isAtBoundary() const
 QTextBoundaryFinder::BoundaryReasons QTextBoundaryFinder::boundaryReasons() const
 {
     if (!d)
-        return NotAtBoundary;
-    if (! isAtBoundary())
-        return NotAtBoundary;
-    if (pos == 0) {
-        if (d->attributes[pos].whiteSpace)
-            return NotAtBoundary;
-        return StartWord;
+        return QTextBoundaryFinder::NotAtBoundary;
+    if (!isAtBoundary())
+        return QTextBoundaryFinder::NotAtBoundary;
+    if (d->pos == 0) {
+        if (d->string[d->pos].isSpace())
+            return QTextBoundaryFinder::NotAtBoundary;
+        return QTextBoundaryFinder::StartWord;
     }
-    if (pos == length) {
-        if (d->attributes[length-1].whiteSpace)
-            return NotAtBoundary;
-        return EndWord;
+    if (d->pos == d->length) {
+        if (d->string[d->length-1].isSpace())
+            return QTextBoundaryFinder::NotAtBoundary;
+        return QTextBoundaryFinder::EndWord;
     }
 
-    const bool nextIsSpace = d->attributes[pos].whiteSpace;
-    const bool prevIsSpace = d->attributes[pos - 1].whiteSpace;
+    const bool nextIsSpace = d->string[d->pos].isSpace();
+    const bool prevIsSpace = d->string[d->pos - 1].isSpace();
 
     if (prevIsSpace && !nextIsSpace)
-        return StartWord;
+        return QTextBoundaryFinder::StartWord;
     else if (!prevIsSpace && nextIsSpace)
-        return EndWord;
+        return QTextBoundaryFinder::EndWord;
     else if (!prevIsSpace && !nextIsSpace)
-        return BoundaryReasons(StartWord | EndWord);
+        return BoundaryReasons(QTextBoundaryFinder::StartWord | QTextBoundaryFinder::EndWord);
     else
-        return NotAtBoundary;
+        return QTextBoundaryFinder::NotAtBoundary;
 }
 
 QT_END_NAMESPACE

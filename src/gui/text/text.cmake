@@ -43,6 +43,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qglyphrun.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qglyphrun_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
 )
 
 set(GUI_SOURCES
