@@ -348,8 +348,8 @@ elseif(${KATIE_PLATFORM} STREQUAL "win32")
     )
     add_definitions(-DQT_MAKEDLL)
 elseif(${KATIE_PLATFORM} STREQUAL "mac")
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework CoreFoundation
         -framework Security
         -framework ApplicationServices

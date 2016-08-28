@@ -221,8 +221,8 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
 #     MENU_NIB.version = Versions
 #     QMAKE_BUNDLE_DATA += MENU_NIB
 
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework AppKit
         -framework Carbon
     )

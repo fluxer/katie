@@ -119,8 +119,8 @@ if(${KATIE_PLATFORM} STREQUAL "wince")
         winsock.lib
     )
 elseif(${KATIE_PLATFORM} STREQUAL "mac")
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework IOKit
         -framework Security
         -framework ApplicationServices

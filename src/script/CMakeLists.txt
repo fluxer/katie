@@ -221,8 +221,8 @@ include_directories(
 
 if(KATIE_COMPILER STREQUAL "msvc")
     # Disable a few warnings on Windows.
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
+    set(CMAKE_CXX_FLAGS
+        ${CMAKE_CXX_FLAGS}
         -wd4396
         -wd4099
         -wd4291
@@ -235,8 +235,8 @@ if(KATIE_COMPILER STREQUAL "msvc")
 endif()
 
 if(KATIE_PLATFORM STREQUAL "mac")
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework AppKit
     )
 elseif(KATIE_PLATFORM MATCHES "(win32|wince)" AND KATIE_COMPILER STREQUAL "msvc")
@@ -245,8 +245,8 @@ elseif(KATIE_PLATFORM MATCHES "(win32|wince)" AND KATIE_COMPILER STREQUAL "msvc"
         ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/os-win32
     )
 elseif(KATIE_PLATFORM STREQUAL "integrity")
-    set(KATIE_CXXFLAGS
-        ${KATIE_CXXFLAGS}
+    set(CMAKE_CXX_FLAGS
+        ${CMAKE_CXX_FLAGS}
         --diag_remark=236,82
     )
 endif()

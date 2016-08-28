@@ -168,8 +168,8 @@ elseif(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/qgl_mac.mm
         ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_mac.mm
     )
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework AppKit
         -framework Carbon
     )

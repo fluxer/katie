@@ -37,8 +37,8 @@ if(KATIE_PLATFORM STREQUAL "mac")
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_mac_p.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudio_mac.cpp
     )
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework ApplicationServices
         -framework CoreAudio
         -framework AudioUnit

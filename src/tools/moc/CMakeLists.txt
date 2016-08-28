@@ -21,8 +21,8 @@ set(MOC_SOURCES
 
 # this is done because of bootstrap_moc
 if(KATIE_PLATFORM STREQUAL "mac")
-    set(KATIE_LDFLAGS
-        ${KATIE_LDFLAGS}
+    set(CMAKE_SHARED_LINK_FLAGS
+        ${CMAKE_SHARED_LINK_FLAGS}
         -framework CoreFoundation
         -framework Security
         -framework ApplicationServices
