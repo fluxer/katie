@@ -70,9 +70,6 @@
 #include "qdeclarativeview.h"
 #include "qdeclarativeinfo.h"
 #include "qdeclarativetypenotavailable_p.h"
-#ifndef QT_NO_XMLPATTERNS
-#include "qdeclarativexmllistmodel_p.h"
-#endif
 
 void QDeclarativeUtilModule::defineModule()
 {
