@@ -33,8 +33,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativestyledtext_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativelistmodelworkeragent_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qlistmodelinterface_p.h
-    # FIXME: if xmlpatterns is not build do not add to headers
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativexmllistmodel_p.h
 )
 
 set(DECLARATIVE_SOURCES
@@ -67,6 +65,4 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativestyledtext.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativelistmodelworkeragent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qlistmodelinterface.cpp
-    # FIXME: if xmlpatterns is not build do not add to sources
-    ${CMAKE_CURRENT_SOURCE_DIR}/util/qdeclarativexmllistmodel.cpp
 )

@@ -54,6 +54,7 @@
 #include "qdeclarativelist_p.h"
 #include "qdeclarativecompiler_p.h"
 #include "qdeclarativevmemetaobject_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <QStringList>
 #include <QtCore/qdebug.h>
@@ -1562,20 +1563,6 @@ QMetaMethod QDeclarativePropertyPrivate::findSignalByName(const QMetaObject *mo,
     }
 
     return QMetaMethod();
-}
-
-static inline int QMetaObject_methods(const QMetaObject *metaObject)
-{
-    struct Private
-    {
-        int revision;
-        int className;
-        int classInfoCount, classInfoData;
-        int methodCount, methodData;
-        int propertyCount, propertyData;
-    };
-
-    return reinterpret_cast<const Private *>(metaObject->d.data)->methodCount;
 }
 
 static inline int QMetaObject_properties(const QMetaObject *metaObject)

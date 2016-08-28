@@ -47,6 +47,7 @@
 #include "qdeclarativestateoperations_p.h"
 #include "qdeclarativeanimation_p.h"
 #include "qdeclarativeanimation_p_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <qdeclarativebinding_p.h>
 #include <qdeclarativeglobal_p.h>
@@ -54,8 +55,6 @@
 #include <QtCore/qdebug.h>
 
 QT_BEGIN_NAMESPACE
-
-DEFINE_BOOL_CONFIG_OPTION(stateChangeDebug, STATECHANGE_DEBUG)
 
 QDeclarativeAction::QDeclarativeAction()
 : restore(true), actionDone(false), reverseEvent(false), deletableToBinding(false), fromBinding(0), event(0),

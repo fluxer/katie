@@ -18,7 +18,7 @@ if(CMAKE_CROSSCOMPILING)
     set(KATIE_RCC "${CMAKE_BINARY_DIR}/external_katie/bin/rcc")
     set(KATIE_MOC "${CMAKE_BINARY_DIR}/external_katie/bin/moc")
     set(KATIE_LRELEASE "${CMAKE_BINARY_DIR}/external_katie/bin/lrelease")
-    # NOTE: ExternalProject_Add_StepDependencies
+    # TODO: ExternalProject_Add_StepDependencies
 else()
     set(KATIE_UIC "uic")
     set(KATIE_RCC "rcc")
@@ -27,6 +27,7 @@ else()
 endif()
 set(KATIE_QDBUSXML2CPP "qdbusxml2cpp")
 
+# a macro to print a dev warning but only when the build type is Debug
 macro(KATIE_WARNING MESSAGESTR)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         message(AUTHOR_WARNING "${MESSAGESTR} ${ARGN}")
@@ -172,7 +173,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
 
     if(NOT KATIE_ALLINONE)
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
-    elseif("${FORTARGET}" MATCHES "(KtGui|KtDeclarative)")
+    elseif("${FORTARGET}" STREQUAL "KtGui")
         katie_warning("All-in-one build not yet support for: ${FORTARGET}")
         set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     else()

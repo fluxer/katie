@@ -123,10 +123,6 @@ public:
 
     QDeclarativeEnginePrivate *p;
 
-    // User by SQL API
-    QScriptClass *sqlQueryClass;
-    QString offlineStoragePath;
-
     // Used by DOM Core 3 API
     QScriptClass *namedNodeMapClass;
     QScriptClass *nodeListClass;

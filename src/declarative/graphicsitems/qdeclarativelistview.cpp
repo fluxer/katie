@@ -1569,8 +1569,7 @@ void QDeclarativeListViewPrivate::flick(AxisData &data, qreal minExtent, qreal m
     \brief The ListView item provides a list view of items provided by a model.
 
     A ListView displays data from models created from built-in QML elements like ListModel
-    and XmlListModel, or custom model classes defined in C++ that inherit from
-    QAbstractListModel.
+    or custom model classes defined in C++ that inherit from QAbstractListModel.
 
     A ListView has a \l model, which defines the data to be displayed, and
     a \l delegate, which defines how the data should be displayed. Items in a
@@ -1716,9 +1715,9 @@ QDeclarativeListView::~QDeclarativeListView()
     This property holds the model providing data for the list.
 
     The model provides the set of data that is used to create the items
-    in the view. Models can be created directly in QML using \l ListModel, \l XmlListModel
-    or \l VisualItemModel, or provided by C++ model classes. If a C++ model class is
-    used, it must be a subclass of \l QAbstractItemModel or a simple list.
+    in the view. Models can be created directly in QML using \l ListModel or
+    \l VisualItemModel, or provided by C++ model classes. If a C++ model class
+    is used, it must be a subclass of \l QAbstractItemModel or a simple list.
 
     \sa {qmlmodels}{Data Models}
 */

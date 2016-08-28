@@ -53,8 +53,6 @@
 #include "qdeclarativebinding_p_p.h"
 #include "qdeclarativevme_p.h"
 #include "qdeclarativestringconverters_p.h"
-#include "qdeclarativexmlhttprequest_p.h"
-#include "qdeclarativesqldatabase_p.h"
 #include "qdeclarativetypenamescriptclass_p.h"
 #include "qdeclarativelistscriptclass_p.h"
 #include "qdeclarativescriptstring.h"
@@ -70,6 +68,7 @@
 #include "qdeclarativeinclude_p.h"
 #include "qdeclarativenotifier_p.h"
 #include "qdeclarativeapplication_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <QtCore/qmetaobject.h>
 #include <QScriptClass>
@@ -170,12 +169,6 @@ QT_BEGIN_NAMESPACE
         item->setProperty("color", QColor(Qt::yellow));
     \endcode
 */
-
-struct StaticQtMetaObject : public QObject
-{
-    static const QMetaObject *get()
-        { return &static_cast<StaticQtMetaObject*> (0)->staticQtMetaObject; }
-};
 
 static bool qt_QmlQtModule_registered = false;
 
@@ -371,7 +364,7 @@ QUrl QDeclarativeScriptEngine::resolvedUrl(QScriptContext *context, const QUrl& 
 }
 
 QDeclarativeScriptEngine::QDeclarativeScriptEngine(QDeclarativeEnginePrivate *priv)
-: p(priv), sqlQueryClass(0), namedNodeMapClass(0), nodeListClass(0)
+: p(priv), namedNodeMapClass(0), nodeListClass(0)
 {
     // Note that all documentation for stuff put on the global object goes in
     // doc/src/declarative/globalobject.qdoc
@@ -381,21 +374,6 @@ QDeclarativeScriptEngine::QDeclarativeScriptEngine(QDeclarativeEnginePrivate *pr
     QScriptValue qtObject =
         newQMetaObject(StaticQtMetaObject::get());
     globalObject().setProperty(QLatin1String("Qt"), qtObject);
-
-#ifndef QT_NO_DESKTOPSERVICES
-    offlineStoragePath = QDesktopServices::storageLocation(QDesktopServices::DataLocation).replace(QLatin1Char('/'), QDir::separator())
-        + QDir::separator() + QLatin1String("QML")
-        + QDir::separator() + QLatin1String("OfflineStorage");
-#endif
-
-#ifndef QT_NO_XMLSTREAMREADER
-    qt_add_qmlxmlhttprequest(this);
-#endif
-    qt_add_qmlsqldatabase(this);
-    // XXX A Multimedia "Qt.Sound" class also needs to be made available,
-    // XXX but we don't want a dependency in that direction.
-    // XXX When the above a done some better way, that way should also be
-    // XXX used to add Qt.Sound class.
 
     //types
     if (mainthread)
@@ -454,7 +432,6 @@ QDeclarativeScriptEngine::QDeclarativeScriptEngine(QDeclarativeEnginePrivate *pr
 
 QDeclarativeScriptEngine::~QDeclarativeScriptEngine()
 {
-    delete sqlQueryClass;
     delete nodeListClass;
     delete namedNodeMapClass;
 }
@@ -2243,35 +2220,6 @@ bool QDeclarativeEngine::importPlugin(const QString &filePath, const QString &ur
 {
     Q_D(QDeclarativeEngine);
     return d->importDatabase.importPlugin(filePath, uri, errorString);
-}
-
-/*!
-  \property QDeclarativeEngine::offlineStoragePath
-  \brief the directory for storing offline user data
-
-  Returns the directory where SQL and other offline
-  storage is placed.
-
-  QDeclarativeWebView and the SQL databases created with openDatabase()
-  are stored here.
-
-  The default is QML/OfflineStorage in the platform-standard
-  user application data directory.
-
-  Note that the path may not currently exist on the filesystem, so
-  callers wanting to \e create new files at this location should create
-  it first - see QDir::mkpath().
-*/
-void QDeclarativeEngine::setOfflineStoragePath(const QString& dir)
-{
-    Q_D(QDeclarativeEngine);
-    d->scriptEngine.offlineStoragePath = dir;
-}
-
-QString QDeclarativeEngine::offlineStoragePath() const
-{
-    Q_D(const QDeclarativeEngine);
-    return d->scriptEngine.offlineStoragePath;
 }
 
 static void voidptr_destructor(void *v)

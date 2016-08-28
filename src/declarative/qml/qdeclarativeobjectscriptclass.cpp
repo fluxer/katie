@@ -49,12 +49,11 @@
 #include "qdeclarativebinding_p.h"
 #include "qdeclarativeguard_p.h"
 #include "qdeclarativevmemetaobject_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <QtCore/qtimer.h>
 #include <QtCore/qvarlengtharray.h>
 #include <QtScript/qscriptcontextinfo.h>
-
-Q_DECLARE_METATYPE(QScriptValue)
 
 #if defined(__GNUC__)
 # if (__GNUC__ * 100 + __GNUC_MINOR__) >= 405
@@ -328,12 +327,7 @@ void QDeclarativeObjectScriptClass::setProperty(Object *object,
 {
     return setProperty(toQObject(object), name, value, context());
 }
-namespace {
-int qRoundDouble(double d)
-{
-    return d >= double(0.0) ? int(d + double(0.5)) : int(d - int(d-1) + double(0.5)) + int(d-1);
-}
-}
+
 void QDeclarativeObjectScriptClass::setProperty(QObject *obj,
                                                 const Identifier &name,
                                                 const QScriptValue &value,
@@ -1180,19 +1174,6 @@ int QDeclarativeObjectMethodScriptClass::matchScore(const QScriptValue &actual, 
     } else {
         return 10;
     }
-}
-
-static inline int QMetaObject_methods(const QMetaObject *metaObject)
-{
-    struct Private
-    {
-        int revision;
-        int className;
-        int classInfoCount, classInfoData;
-        int methodCount, methodData;
-    };
-
-    return reinterpret_cast<const Private *>(metaObject->d.data)->methodCount;
 }
 
 static QByteArray QMetaMethod_name(const QMetaMethod &m)

@@ -40,17 +40,14 @@
 ****************************************************************************/
 
 #include "qdeclarativetransitionmanager_p_p.h"
-
 #include "qdeclarativestate_p_p.h"
 #include "qdeclarativestate_p.h"
-
-#include <qdeclarativebinding_p.h>
-#include <qdeclarativeglobal_p.h>
-#include <qdeclarativeproperty_p.h>
+#include "qdeclarativebinding_p.h"
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativeproperty_p.h"
+#include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-DEFINE_BOOL_CONFIG_OPTION(stateChangeDebug, STATECHANGE_DEBUG)
 
 class QDeclarativeTransitionManagerPrivate
 {

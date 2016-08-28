@@ -48,6 +48,7 @@
 #include "qdeclarativeengine_p.h"
 #include "qdeclarativeitemsmodule_p.h"
 #include "qdeclarativeutilmodule_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qstringlist.h>
@@ -65,21 +66,14 @@
 #include <qstringlist.h>
 #include <qvector.h>
 #include <qlocale.h>
-#include <QtCore/qcryptographichash.h>
-#include <QtScript/qscriptvalue.h>
+#include <qcryptographichash.h>
+#include <qscriptvalue.h>
 
 #include <ctype.h>
 
-#ifdef QT_BOOTSTRAPPED
-# ifndef QT_NO_GEOM_VARIANT
-#  define QT_NO_GEOM_VARIANT
-# endif
-#else
-#  include <qbitarray.h>
-#  include <qurl.h>
-#  include <qvariant.h>
-#endif
-
+#include <qbitarray.h>
+#include <qurl.h>
+#include <qvariant.h>
 #ifndef QT_NO_GEOM_VARIANT
 # include <qsize.h>
 # include <qpoint.h>
@@ -1097,8 +1091,6 @@ QT_END_NAMESPACE
 #include <QtGui/qvector3d.h>
 #include <QtGui/qvector4d.h>
 #include <QtGui/qquaternion.h>
-
-Q_DECLARE_METATYPE(QScriptValue)
 
 QT_BEGIN_NAMESPACE
 

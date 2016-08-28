@@ -43,9 +43,8 @@
 
 #include "qdeclarativeengine_p.h"
 #include "qdeclarativebinding_p.h"
-#include <QtCore/qdebug.h>
-
-Q_DECLARE_METATYPE(QScriptValue)
+#include "qdeclarativecommon_p.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 

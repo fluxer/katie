@@ -42,6 +42,7 @@
 #include "qdeclarativevisualitemmodel_p.h"
 
 #include "qdeclarativeitem.h"
+#include "qdeclarativecommon_p.h"
 
 #include <qdeclarativecontext.h>
 #include <qdeclarativecontext_p.h>
@@ -686,8 +687,7 @@ QDeclarativeVisualDataModel::~QDeclarativeVisualDataModel()
     provided by a C++ model object.  The C++ model object must be a \l
     {QAbstractItemModel} subclass or a simple list.
 
-    Models can also be created directly in QML, using a \l{ListModel} or
-    \l{XmlListModel}.
+    Models can also be created directly in QML, using a \l{ListModel}.
 
     \sa {qmlmodels}{Data Models}
 */
@@ -1421,8 +1421,6 @@ void QDeclarativeVisualDataModel::_q_destroyingPackage(QDeclarativePackage *pack
 }
 
 QT_END_NAMESPACE
-
-QML_DECLARE_TYPE(QListModelInterface)
 
 #include <moc_qdeclarativevisualitemmodel.cpp>
 #include <moc_qdeclarativevisualitemmodel_p.h>

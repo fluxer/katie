@@ -59,7 +59,6 @@
 #include "qdeclarativebinding_p.h"
 
 #include <QtCore/qbytearray.h>
-#include <QtCore/qxmlstream.h>
 
 QT_BEGIN_HEADER
 

@@ -40,22 +40,18 @@
 ****************************************************************************/
 
 #include "qdeclarativestategroup_p.h"
-
 #include "qdeclarativetransition_p.h"
 #include "qdeclarativestate_p_p.h"
+#include "qdeclarativebinding_p.h"
+#include "qdeclarativeglobal_p.h"
+#include "qdeclarativecommon_p.h"
 
-#include <qdeclarativebinding_p.h>
-#include <qdeclarativeglobal_p.h>
-
-#include <QtCore/qstringbuilder.h>
-#include <QtCore/qdebug.h>
-
-#include <qobject_p.h>
-#include <qdeclarativeinfo.h>
+#include "qdebug.h"
+#include "qobject_p.h"
+#include "qstringbuilder.h"
+#include "qdeclarativeinfo.h"
 
 QT_BEGIN_NAMESPACE
-
-DEFINE_BOOL_CONFIG_OPTION(stateChangeDebug, STATECHANGE_DEBUG)
 
 class QDeclarativeStateGroupPrivate : public QObjectPrivate
 {

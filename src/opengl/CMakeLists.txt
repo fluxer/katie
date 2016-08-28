@@ -188,8 +188,9 @@ set(OPENGL_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qopenglcommon_p.h
 )
 
-# qglfunctions.cpp must be last for all-in-one build because it
-# undefines and then defines pretty much all OpenGL functions
+# qglfunctions.cpp must be last for all-in-one build because qglfunctions.h
+# undefines from the global namespace and then defines pretty much all OpenGL
+# functions into a class
 set(OPENGL_SOURCES
     ${OPENGL_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/qglfunctions.cpp

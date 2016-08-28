@@ -55,13 +55,13 @@
 #include <qdeclarativeanchors_p_p.h>
 #include <qdeclarativeglobal_p.h>
 #include <qdeclarativefastproperties_p.h>
+#include "qdeclarativecommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
 DEFINE_BOOL_CONFIG_OPTION(qmlExperimental, QML_EXPERIMENTAL)
 DEFINE_BOOL_CONFIG_OPTION(qmlDisableOptimizer, QML_DISABLE_OPTIMIZER)
 DEFINE_BOOL_CONFIG_OPTION(qmlDisableFastProperties, QML_DISABLE_FAST_PROPERTIES)
-DEFINE_BOOL_CONFIG_OPTION(bindingsDump, QML_BINDINGS_DUMP)
 
 Q_GLOBAL_STATIC(QDeclarativeFastProperties, fastProperties)
 

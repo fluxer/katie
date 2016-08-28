@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "qdeclarativestringconverters_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <QtGui/qcolor.h>
 #include <QtGui/qvector3d.h>
@@ -97,12 +98,6 @@ QVariant QDeclarativeStringConverters::variantFromString(const QString &s)
     return QVariant(s);
 }
 
-namespace {
-int qRoundDouble(double d)
-{
-    return d >= double(0.0) ? int(d + double(0.5)) : int(d - int(d-1) + double(0.5)) + int(d-1);
-}
-}
 QVariant QDeclarativeStringConverters::variantFromString(const QString &s, int preferredType, bool *ok)
 {
     switch (preferredType) {

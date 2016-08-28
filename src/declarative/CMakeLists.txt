@@ -3,7 +3,7 @@ add_definitions(
     -DQT_NO_URL_CAST_FROM_STRING
     -DQT_NO_OPENTYPE
 )
-set(EXTRA_DECLARATIVE_LIBS KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql)
+set(EXTRA_DECLARATIVE_LIBS KtCore KtGui KtNetwork KtScript)
 
 set(DECLARATIVE_PUBLIC_HEADERS
     ${DECLARATIVE_PUBLIC_HEADERS}
@@ -47,8 +47,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
     ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
-    ${CMAKE_BINARY_DIR}/include/QtXmlPatterns
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXmlPatterns
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
     ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -73,7 +71,7 @@ endif()
 
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
-katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript KtXmlPatterns KtSql")
+katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript")
 katie_setup_target(KtDeclarative ${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
 katie_setup_paths()
 

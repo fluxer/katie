@@ -65,6 +65,7 @@
 #include "qdeclarativebinding_p.h"
 #include "qdeclarativecompiledbindings_p.h"
 #include "qdeclarativeglobalscriptclass_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <QColor>
 #include <QDebug>
@@ -79,7 +80,6 @@ QT_BEGIN_NAMESPACE
 
 DEFINE_BOOL_CONFIG_OPTION(compilerDump, QML_COMPILER_DUMP)
 DEFINE_BOOL_CONFIG_OPTION(compilerStatDump, QML_COMPILER_STATS)
-DEFINE_BOOL_CONFIG_OPTION(bindingsDump, QML_BINDINGS_DUMP)
 
 using namespace QDeclarativeParser;
 
@@ -2204,12 +2204,6 @@ bool QDeclarativeCompiler::buildPropertyLiteralAssignment(QDeclarativeParser::Pr
 
     return true;
 }
-
-struct StaticQtMetaObject : public QObject
-{
-    static const QMetaObject *get()
-        { return &static_cast<StaticQtMetaObject*> (0)->staticQtMetaObject; }
-};
 
 bool QDeclarativeCompiler::testQualifiedEnumAssignment(const QMetaProperty &prop,
                                               QDeclarativeParser::Object *obj,

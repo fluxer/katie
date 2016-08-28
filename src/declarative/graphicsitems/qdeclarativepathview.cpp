@@ -354,8 +354,7 @@ void QDeclarativePathViewPrivate::regenerate()
     \inherits Item
 
     A PathView displays data from models created from built-in QML elements like ListModel
-    and XmlListModel, or custom model classes defined in C++ that inherit from
-    QAbstractListModel.
+    or custom model classes defined in C++ that inherit from QAbstractListModel.
 
     The view has a \l model, which defines the data to be displayed, and
     a \l delegate, which defines how the data should be displayed.  

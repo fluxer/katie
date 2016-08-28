@@ -42,6 +42,7 @@
 #include "qdeclarativelistmodel_p_p.h"
 #include "qdeclarativelistmodelworkeragent_p.h"
 #include "qdeclarativeopenmetaobject_p.h"
+#include "qdeclarativecommon_p.h"
 
 #include <qdeclarativecustomparser_p.h>
 #include <qdeclarativeparser_p.h>
@@ -51,10 +52,7 @@
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qstack.h>
-#include <QtCore/qxmlstream.h>
 #include <QtScript/qscriptvalueiterator.h>
-
-Q_DECLARE_METATYPE(QListModelInterface *)
 
 QT_BEGIN_NAMESPACE
 
