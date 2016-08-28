@@ -67,7 +67,6 @@ class QNetworkAccessManager;
 class QDeclarativeNetworkAccessManagerFactory;
 class Q_DECLARATIVE_EXPORT QDeclarativeEngine : public QObject
 {
-    Q_PROPERTY(QString offlineStoragePath READ offlineStoragePath WRITE setOfflineStoragePath)
     Q_OBJECT
 public:
     QDeclarativeEngine(QObject *p = 0);
@@ -95,9 +94,6 @@ public:
     void addImageProvider(const QString &id, QDeclarativeImageProvider *);
     QDeclarativeImageProvider *imageProvider(const QString &id) const;
     void removeImageProvider(const QString &id);
-
-    void setOfflineStoragePath(const QString& dir);
-    QString offlineStoragePath() const;
 
     QUrl baseUrl() const;
     void setBaseUrl(const QUrl &);

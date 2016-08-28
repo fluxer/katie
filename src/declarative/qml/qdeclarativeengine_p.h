@@ -235,8 +235,6 @@ public:
     QDeclarativeTypeLoader typeLoader;
     QDeclarativeImportDatabase importDatabase;
 
-    QString offlineStoragePath;
-
     mutable quint32 uniqueId;
     quint32 getUniqueId() const {
         return uniqueId++;
