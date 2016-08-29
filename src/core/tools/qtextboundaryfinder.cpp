@@ -39,8 +39,6 @@
 **
 ****************************************************************************/
 #include <QtCore/qtextboundaryfinder.h>
-#include <QtCore/qvarlengtharray.h>
-#include <qunicodetables_p.h>
 #include <qdebug.h>
 
 QT_BEGIN_NAMESPACE
@@ -48,8 +46,8 @@ QT_BEGIN_NAMESPACE
 class QTextBoundaryFinderPrivate
 {
 public:
-    int length;
     int pos;
+    int length;
     QString string;
 };
 
@@ -76,7 +74,7 @@ public:
     Grapheme clusters. The two unicode characters 'A' + diaeresis do
     for example form one grapheme cluster as the user thinks of them
     as one character, yet it is in this case represented by two
-    unicode code points
+    unicode code points.
 
     Word boundaries are there to locate the start and end of what a
     language considers to be a word.
@@ -116,7 +114,7 @@ public:
 */
 QTextBoundaryFinder::QTextBoundaryFinder()
     : d(0)
-    , t(QTextBoundaryFinder::Word)
+    , t(QTextBoundaryFinder::Grapheme)
 {
 }
 
@@ -124,10 +122,9 @@ QTextBoundaryFinder::QTextBoundaryFinder()
   Copies the QTextBoundaryFinder object, \a other.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
-    : d(new QTextBoundaryFinderPrivate)
+    : d(other.d)
     , t(other.t)
 {
-    d = other.d;
 }
 
 /*!
@@ -160,28 +157,22 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
     : d(new QTextBoundaryFinderPrivate)
     , t(type)
 {
+    d->pos = 0;
+    d->length = string.size();
     d->string = string;
 }
 
 /*!
   Creates a QTextBoundaryFinder object of \a type operating on \a chars
   with \a length.
-
-  \a buffer is an optional working buffer of size \a bufferSize you can pass to
-  the QTextBoundaryFinder. If the buffer is large enough to hold the working
-  data required, it will use this instead of allocating its own buffer.
-
-  \warning QTextBoundaryFinder does not create a copy of \a chars. It is the
-  application programmer's responsibility to ensure the array is allocated for
-  as long as the QTextBoundaryFinder object stays alive. The same applies to
-  \a buffer.
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length)
     : d(new QTextBoundaryFinderPrivate)
     , t(type)
 {
-    d->string = QString(chars);
+    d->pos = 0;
     d->length = length;
+    d->string = QString::fromRawData(chars, length);
 }
 
 /*!
@@ -273,19 +264,18 @@ int QTextBoundaryFinder::toNextBoundary()
 
     switch(t) {
     case QTextBoundaryFinder::Grapheme:
-        while (d->pos < d->length && !d->string[d->pos].isLetterOrNumber())
+        while (d->pos < d->length && d->string[d->pos].isLetterOrNumber())
             ++d->pos;
     case QTextBoundaryFinder::Word:
         while (d->pos < d->length && !d->string[d->pos].isSpace())
             ++d->pos;
         break;
     case QTextBoundaryFinder::Sentence:
-        while (d->pos < d->length && !d->string[d->pos].category() == QChar::Punctuation_Close)
+        while (d->pos < d->length && !d->string[d->pos].isPunct())
             ++d->pos;
         break;
     case QTextBoundaryFinder::Line:
-        Q_ASSERT(d->pos);
-        while (d->pos < d->length && d->string[d->pos-1].category() == QChar::Separator_Line)
+        while (d->pos < d->length && !d->string[d->pos].category() == QChar::Separator_Line)
             ++d->pos;
         break;
     }
@@ -315,7 +305,7 @@ int QTextBoundaryFinder::toPreviousBoundary()
 
     switch(t) {
     case QTextBoundaryFinder::Grapheme:
-        while (d->pos > 0 && !d->string[d->pos].isLetterOrNumber())
+        while (d->pos > 0 && d->string[d->pos].isLetterOrNumber())
             --d->pos;
         break;
     case QTextBoundaryFinder::Word:
@@ -323,11 +313,11 @@ int QTextBoundaryFinder::toPreviousBoundary()
             --d->pos;
         break;
     case QTextBoundaryFinder::Sentence:
-        while (d->pos > 0 && !d->string[d->pos].category() == QChar::Punctuation_Close)
+        while (d->pos > 0 && !d->string[d->pos].isPunct())
             --d->pos;
         break;
     case QTextBoundaryFinder::Line:
-        while (d->pos > 0 && d->string[d->pos-1].category() == QChar::Separator_Line)
+        while (d->pos > 0 && !d->string[d->pos].category() == QChar::Separator_Line)
             --d->pos;
         break;
     }
@@ -348,13 +338,13 @@ bool QTextBoundaryFinder::isAtBoundary() const
 
     switch(t) {
     case QTextBoundaryFinder::Grapheme:
-        return d->string[d->pos].isLetterOrNumber();
+        return !d->string[d->pos].isLetterOrNumber();
     case QTextBoundaryFinder::Word:
         return d->string[d->pos].isSpace();
     case QTextBoundaryFinder::Line:
         return (d->pos > 0) ? d->string[d->pos-1].category() == QChar::Separator_Line : true;
     case QTextBoundaryFinder::Sentence:
-        return d->string[d->pos].category() == QChar::Punctuation_Close;
+        return d->string[d->pos].isPunct();
     }
     return false;
 }
