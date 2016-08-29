@@ -275,7 +275,7 @@ int QTextBoundaryFinder::toNextBoundary()
             ++d->pos;
         break;
     case QTextBoundaryFinder::Line:
-        while (d->pos < d->length && !d->string[d->pos].category() == QChar::Separator_Line)
+        while (d->pos < d->length && d->string[d->pos].category() != QChar::Separator_Line)
             ++d->pos;
         break;
     }
@@ -317,7 +317,7 @@ int QTextBoundaryFinder::toPreviousBoundary()
             --d->pos;
         break;
     case QTextBoundaryFinder::Line:
-        while (d->pos > 0 && !d->string[d->pos].category() == QChar::Separator_Line)
+        while (d->pos > 0 && d->string[d->pos].category() != QChar::Separator_Line)
             --d->pos;
         break;
     }
@@ -342,7 +342,7 @@ bool QTextBoundaryFinder::isAtBoundary() const
     case QTextBoundaryFinder::Word:
         return d->string[d->pos].isSpace();
     case QTextBoundaryFinder::Line:
-        return (d->pos > 0) ? d->string[d->pos-1].category() == QChar::Separator_Line : true;
+        return (d->pos > 0) ? d->string[d->pos].category() == QChar::Separator_Line : true;
     case QTextBoundaryFinder::Sentence:
         return d->string[d->pos].isPunct();
     }
