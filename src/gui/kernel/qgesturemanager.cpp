@@ -716,6 +716,8 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_GESTURES
 
+#undef DEBUG
+
 #include "moc_qgesturemanager_p.h"
 
 

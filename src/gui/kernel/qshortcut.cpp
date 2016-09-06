@@ -43,12 +43,12 @@
 #include "qwidget_p.h"
 
 #ifndef QT_NO_SHORTCUT
-#include <qevent.h>
-#include <qwhatsthis.h>
-#include <qmenu.h>
-#include <qapplication.h>
-#include <qapplication_p.h>
-#include <qshortcutmap_p.h>
+#include "qevent.h"
+#include "qwhatsthis.h"
+#include "qmenu.h"
+#include "qapplication.h"
+#include "qapplication_p.h"
+#include "qshortcutmap_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -402,9 +402,10 @@ bool QShortcut::event(QEvent *e)
     }
     return handled;
 }
-#endif // QT_NO_SHORTCUT
+#undef QAPP_CHECK
 
 QT_END_NAMESPACE
 
-
 #include "moc_qshortcut.h"
+
+#endif // QT_NO_SHORTCUT

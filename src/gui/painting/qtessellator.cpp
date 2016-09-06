@@ -50,8 +50,8 @@
 
 QT_BEGIN_NAMESPACE
 
-//#define DEBUG
-#ifdef DEBUG
+//#define DEBUG_TESSALLATOR
+#ifdef DEBUG_TESSALLATOR
 #define QDEBUG qDebug
 #else
 #define QDEBUG if (1){} else qDebug
@@ -899,7 +899,7 @@ void QTessellatorPrivate::processIntersections()
         }
 
         qSort(scanline.edges + min, scanline.edges + max + 1, EdgeSorter(y));
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
         for (int i = min; i <= max; ++i)
             QDEBUG() << "        " << scanline.edges[i]->edge << "at pos" << i;
 #endif
@@ -997,7 +997,7 @@ void QTessellatorPrivate::addEdges()
     }
 }
 
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
 static void checkLinkChain(const QTessellatorPrivate::Intersections &intersections,
                            QTessellatorPrivate::Intersection i)
 {
@@ -1097,7 +1097,7 @@ void QTessellatorPrivate::addIntersection(const Edge *e1, const Edge *e2)
         link2.next = link2.prev = i1.edge;
     } else if (link1.next == i2.edge || link1.prev == i2.edge
                || link2.next == i1.edge || link2.prev == i1.edge) {
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
         checkLinkChain(intersections, i1);
         checkLinkChain(intersections, i2);
         Q_ASSERT(edgeInChain(i1, i2.edge));
@@ -1109,7 +1109,7 @@ void QTessellatorPrivate::addIntersection(const Edge *e1, const Edge *e2)
             qSwap(link1, link2);
         }
         Q_ASSERT(link1.next == -1);
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
         checkLinkChain(intersections, i2);
 #endif
         // only i2 in list
@@ -1128,7 +1128,7 @@ void QTessellatorPrivate::addIntersection(const Edge *e1, const Edge *e2)
         bool connected = edgeInChain(i1, i2.edge);
         if (connected)
             return;
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
         checkLinkChain(intersections, i1);
         checkLinkChain(intersections, i2);
 #endif
@@ -1154,7 +1154,7 @@ void QTessellatorPrivate::addIntersection(const Edge *e1, const Edge *e2)
     }
     intersections.insert(i1, link1);
     intersections.insert(i2, link2);
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
     checkLinkChain(intersections, i1);
     checkLinkChain(intersections, i2);
     Q_ASSERT(edgeInChain(i1, i2.edge));
@@ -1169,7 +1169,7 @@ void QTessellatorPrivate::addIntersections()
     if (scanline.size) {
         QDEBUG() << "INTERSECTIONS";
         // check marked edges for intersections
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
         for (int i = 0; i < scanline.size; ++i) {
             Edge *e = scanline.edges[i];
             QDEBUG() << "    " << i << e->edge << "isect=(" << e->intersect_left << e->intersect_right
@@ -1217,7 +1217,7 @@ QRectF QTessellator::tessellate(const QPointF *points, int nPoints)
     Q_ASSERT(points[0] == points[nPoints-1]);
     --nPoints;
 
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
     QDEBUG()<< "POINTS:";
     for (int i = 0; i < nPoints; ++i) {
         QDEBUG() << points[i];
@@ -1232,7 +1232,7 @@ QRectF QTessellator::tessellate(const QPointF *points, int nPoints)
     QRectF br = d->collectAndSortVertices(points, &maxActiveEdges);
     d->cancelCoincidingEdges();
 
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
     QDEBUG() << "nPoints = " << nPoints << "using " << d->vertices.nPoints;
     QDEBUG()<< "VERTICES:";
     for (int i = 0; i < d->vertices.nPoints; ++i) {
@@ -1265,7 +1265,7 @@ QRectF QTessellator::tessellate(const QPointF *points, int nPoints)
         d->emitEdges(this);
         d->scanline.lineDone();
 
-#ifdef DEBUG
+#ifdef DEBUG_TESSALLATOR
         QDEBUG()<< "===== edges:";
         for (int i = 0; i < d->scanline.size; ++i) {
             QDEBUG() << "   " << d->scanline.edges[i]->edge
@@ -1497,6 +1497,4 @@ void QTessellator::tessellateRect(const QPointF &a_, const QPointF &b_, qreal wi
 
 QT_END_NAMESPACE
 
-
-
-
+#undef QDEBUG

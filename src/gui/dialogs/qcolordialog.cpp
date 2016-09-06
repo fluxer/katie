@@ -1666,7 +1666,7 @@ void QColorDialogPrivate::retranslateStrings()
     cs->retranslateStrings();
 }
 
-static const Qt::WindowFlags DefaultWindowFlags =
+static const Qt::WindowFlags DefaultColorWindowFlags =
         Qt::Dialog | Qt::WindowTitleHint | Qt::MSWindowsFixedSizeDialogHint
         | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;
 
@@ -1709,7 +1709,7 @@ static const Qt::WindowFlags DefaultWindowFlags =
     Constructs a color dialog with the given \a parent.
 */
 QColorDialog::QColorDialog(QWidget *parent)
-    : QDialog(*new QColorDialogPrivate, parent, DefaultWindowFlags)
+    : QDialog(*new QColorDialogPrivate, parent, DefaultColorWindowFlags)
 {
     Q_D(QColorDialog);
     d->init(Qt::white);
@@ -1722,7 +1722,7 @@ QColorDialog::QColorDialog(QWidget *parent)
     \a initial color.
 */
 QColorDialog::QColorDialog(const QColor &initial, QWidget *parent)
-    : QDialog(*new QColorDialogPrivate, parent, DefaultWindowFlags)
+    : QDialog(*new QColorDialogPrivate, parent, DefaultColorWindowFlags)
 {
     Q_D(QColorDialog);
     d->init(initial);
@@ -1891,7 +1891,7 @@ void QColorDialog::setVisible(bool visible)
             QColorDialogPrivate::sharedColorPanelAvailable = false;
             setAttribute(Qt::WA_DontShowOnScreen);
         }
-        setWindowFlags(windowModality() == Qt::WindowModal ? Qt::Sheet : DefaultWindowFlags);
+        setWindowFlags(windowModality() == Qt::WindowModal ? Qt::Sheet : DefaultColorWindowFlags);
     } else {
         if (d->delegate) {
             d->closeCocoaColorPanel();

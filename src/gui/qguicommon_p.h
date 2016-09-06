@@ -6,6 +6,16 @@
 #include "qiconengineplugin.h"
 #include "qimageiohandler.h"
 
+static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
+{
+    const int maxFactor = 100;
+    QColor tmp = colorA;
+    tmp.setRed((tmp.red() * factor) / maxFactor + (colorB.red() * (maxFactor - factor)) / maxFactor);
+    tmp.setGreen((tmp.green() * factor) / maxFactor + (colorB.green() * (maxFactor - factor)) / maxFactor);
+    tmp.setBlue((tmp.blue() * factor) / maxFactor + (colorB.blue() * (maxFactor - factor)) / maxFactor);
+    return tmp;
+}
+
 Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
 
 #if !defined(QT_NO_LIBRARY)

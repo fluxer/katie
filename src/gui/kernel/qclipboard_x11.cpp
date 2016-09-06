@@ -1539,4 +1539,5 @@ QT_END_NAMESPACE
 
 #endif // QT_NO_CLIPBOARD
 
-
+#undef DEBUG
+#undef VDEBUG

@@ -2641,9 +2641,3 @@ QDataStream &operator>>(QDataStream &stream, QColor &color)
 */
 
 QT_END_NAMESPACE
-
-
-
-
-
-

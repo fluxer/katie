@@ -2117,3 +2117,6 @@ QStringList QDropData::formats_sys() const
 QT_END_NAMESPACE
 
 #endif // QT_NO_DRAGANDDROP
+
+#undef DEBUG
+#undef DNDDEBUG

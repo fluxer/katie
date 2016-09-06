@@ -76,9 +76,6 @@ static quint64 xpmHash(char *str)
     return hashValue;
 }
 
-#ifdef QRGB
-#undef QRGB
-#endif
 #define QRGB(r,g,b) (r*65536 + g*256 + b)
 
 static const int xpmRgbTblSize = 657;
@@ -744,6 +741,7 @@ static const struct XPMRGBData {
   { QRGB(205,205,  0),  "yellow3" },
   { QRGB(139,139,  0),  "yellow4" },
   { QRGB(154,205, 50),  "yellowgreen" } };
+#undef QRGB
 
 inline bool operator<(const char *name, const XPMRGBData &data)
 { return qstrcmp(name, data.name) < 0; }

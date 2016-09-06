@@ -74,6 +74,7 @@
 #include <qstylehelper_p.h>
 #include <qgtkstyle_p.h>
 #include <qcleanlooksstyle_p.h>
+#include "qguicommon_p.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -144,16 +145,6 @@ QString QGtkStyle::getGConfString(const QString &value, const QString &fallback)
 bool QGtkStyle::getGConfBool(const QString &key, bool fallback)
 {
     return QGtkStylePrivate::getGConfBool(key, fallback);
-}
-
-static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
-{
-    const int maxFactor = 100;
-    QColor tmp = colorA;
-    tmp.setRed((tmp.red() * factor) / maxFactor + (colorB.red() * (maxFactor - factor)) / maxFactor);
-    tmp.setGreen((tmp.green() * factor) / maxFactor + (colorB.green() * (maxFactor - factor)) / maxFactor);
-    tmp.setBlue((tmp.blue() * factor) / maxFactor + (colorB.blue() * (maxFactor - factor)) / maxFactor);
-    return tmp;
 }
 
 static GdkColor fromQColor(const QColor &color)

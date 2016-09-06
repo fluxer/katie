@@ -87,6 +87,7 @@ static const int blueFrameWidth =  2;  // with of line edit focus frame
 #include <qvarlengtharray.h>
 #include <limits.h>
 #include <qstylehelper_p.h>
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -720,16 +721,6 @@ static void qt_plastique_draw_frame(QPainter *painter, const QRect &rect, const 
     }
 
     painter->setPen(oldPen);
-}
-
-static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
-{
-    const int maxFactor = 100;
-    QColor tmp = colorA;
-    tmp.setRed((tmp.red() * factor) / maxFactor + (colorB.red() * (maxFactor - factor)) / maxFactor);
-    tmp.setGreen((tmp.green() * factor) / maxFactor + (colorB.green() * (maxFactor - factor)) / maxFactor);
-    tmp.setBlue((tmp.blue() * factor) / maxFactor + (colorB.blue() * (maxFactor - factor)) / maxFactor);
-    return tmp;
 }
 
 static void qt_plastique_draw_gradient(QPainter *painter, const QRect &rect, const QColor &gradientStart,

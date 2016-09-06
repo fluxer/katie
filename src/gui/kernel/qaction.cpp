@@ -1386,9 +1386,9 @@ bool QAction::isIconVisibleInMenu() const
 {
     return !QApplication::instance()->testAttribute(Qt::AA_DontShowIconsInMenus);
 }
+#undef QAPP_CHECK
 
 QT_END_NAMESPACE
-
 
 #include "moc_qaction.h"
 
