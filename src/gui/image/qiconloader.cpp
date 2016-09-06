@@ -40,11 +40,12 @@
 ****************************************************************************/
 #ifndef QT_NO_ICON
 
-#include <qiconloader_p.h>
-#include <qapplication_p.h>
-#include <qicon_p.h>
-#include <qguiplatformplugin_p.h>
-#include <qfactoryloader_p.h>
+#include "qiconloader_p.h"
+#include "qapplication_p.h"
+#include "qicon_p.h"
+#include "qguiplatformplugin_p.h"
+#include "qfactoryloader_p.h"
+#include "qguicommon_p.h"
 
 #include <QtGui/QIconEnginePlugin>
 #include <QtGui/QPixmapCache>
@@ -69,10 +70,6 @@
 QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
-#if !defined(QT_NO_LIBRARY) && !defined(QT_ALLINONE)
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
-    (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
-#endif
 
 /* Theme to use in last resort, if the theme does not have the icon, neither the parents  */
 static QString fallbackTheme()

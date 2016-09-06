@@ -130,8 +130,9 @@
 #include <qvariant.h>
 
 // factory loader
-#include <qcoreapplication.h>
-#include <qfactoryloader_p.h>
+#include "qcoreapplication.h"
+#include "qfactoryloader_p.h"
+#include "qguicommon_p.h"
 
 // image handlers
 #include <qbmphandler_p.h>
@@ -155,11 +156,6 @@
 #endif
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
-    (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
-#endif
 
 enum _qt_BuiltInFormatType {
 #ifndef QT_NO_IMAGEFORMAT_PNG

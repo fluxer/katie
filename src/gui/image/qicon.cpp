@@ -55,6 +55,7 @@
 #include "qcache.h"
 #include "qdebug.h"
 #include "qguiplatformplugin_p.h"
+#include "qguicommon_p.h"
 
 #ifdef Q_WS_MAC
 #include <qt_mac_p.h>
@@ -413,13 +414,6 @@ bool QPixmapIconEngine::write(QDataStream &out) const
     }
     return true;
 }
-
-#ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
-    (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
-#endif
-
-
 
 /*!
   \class QIcon

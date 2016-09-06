@@ -496,6 +496,11 @@ if(NOT WITH_ZLIB OR NOT ZLIB_FOUND)
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
 endif()
 
+set(GUI_HEADERS
+    ${GUI_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qguicommon_p.h
+)
+
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_package(KtGui "KtCore")

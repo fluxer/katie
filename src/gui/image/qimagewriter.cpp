@@ -103,8 +103,9 @@
 #include <qvariant.h>
 
 // factory loader
-#include <qcoreapplication.h>
-#include <qfactoryloader_p.h>
+#include "qcoreapplication.h"
+#include "qfactoryloader_p.h"
+#include "qguicommon_p.h"
 
 // image handlers
 #include <qbmphandler_p.h>
@@ -128,11 +129,6 @@
 #endif
 
 QT_BEGIN_NAMESPACE
-
-#if !defined(QT_NO_LIBRARY) && !defined(QT_ALLINONE)
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
-    (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
-#endif
 
 static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
     const QByteArray &format)

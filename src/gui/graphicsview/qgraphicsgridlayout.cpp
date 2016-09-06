@@ -89,6 +89,7 @@
 #include "qgraphicsgridlayout.h"
 #include "qgraphicswidget.h"
 #include "qgridlayoutengine_p.h"
+#include "qguicommon_p.h"
 #include <QtCore/qdebug.h>
 
 QT_BEGIN_NAMESPACE
@@ -104,10 +105,6 @@ public:
     void dump(int indent) const;
 #endif
 };
-
-#ifndef QT_ALLINONE
-Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
-#endif
 
 QLayoutStyleInfo QGraphicsGridLayoutPrivate::styleInfo() const
 {
