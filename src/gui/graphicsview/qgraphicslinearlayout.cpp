@@ -171,9 +171,7 @@ int QGraphicsLinearLayoutPrivate::gridColumn(int index) const
     return int(qMin(uint(index), uint(engine.columnCount())));
 }
 
-#ifndef QT_ALLINONE
 Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
-#endif
 
 QLayoutStyleInfo QGraphicsLinearLayoutPrivate::styleInfo() const
 {

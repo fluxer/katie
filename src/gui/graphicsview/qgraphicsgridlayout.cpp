@@ -105,7 +105,9 @@ public:
 #endif
 };
 
+#ifndef QT_ALLINONE
 Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
+#endif
 
 QLayoutStyleInfo QGraphicsGridLayoutPrivate::styleInfo() const
 {
