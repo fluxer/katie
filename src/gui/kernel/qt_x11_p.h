@@ -333,10 +333,7 @@ struct QXdndDropTransaction
     QDrag *object;
 };
 
-class QMimeData;
 
-struct QX11Data;
-extern Q_GUI_EXPORT QX11Data *qt_x11Data;
 
 enum DesktopEnvironment {
     DE_UNKNOWN,
@@ -347,6 +344,7 @@ enum DesktopEnvironment {
     DE_4DWM
 };
 
+class QMimeData;
 struct QX11Data
 {
     static Qt::KeyboardModifiers translateModifiers(int s);
@@ -480,15 +478,15 @@ struct QX11Data
     QString default_im;
 
     // starts to ignore bad window errors from X
-    static inline void ignoreBadwindow() {
-        qt_x11Data->ignore_badwindow = true;
-        qt_x11Data->seen_badwindow = false;
+    void ignoreBadwindow() {
+        ignore_badwindow = true;
+        seen_badwindow = false;
     }
 
     // ends ignoring bad window errors and returns whether an error had happened.
-    static inline bool badwindow() {
-        qt_x11Data->ignore_badwindow = false;
-        return qt_x11Data->seen_badwindow;
+    bool badwindow() {
+        ignore_badwindow = false;
+        return seen_badwindow;
     }
 
     bool ignore_badwindow;
@@ -720,7 +718,8 @@ struct QX11Data
 #endif // QT_NO_XRANDR
 };
 
-extern QX11Data *qt_x11Data;
+extern Q_GUI_EXPORT QX11Data *qt_x11Data;
+
 #define ATOM(x) qt_x11Data->atoms[QX11Data::x]
 #define X11 qt_x11Data
 

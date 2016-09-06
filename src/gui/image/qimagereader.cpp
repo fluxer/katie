@@ -157,8 +157,8 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
-                          (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
+    (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
 #endif
 
 enum _qt_BuiltInFormatType {
@@ -243,7 +243,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 
 #ifndef QT_NO_LIBRARY
     // check if we have plugins that support the image format
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = imageloader();
     QStringList keys = l->keys();
 #endif
     QByteArray suffix;
@@ -1499,7 +1499,7 @@ QList<QByteArray> QImageReader::supportedImageFormats()
         formats << _qt_BuiltInFormats[i].extension;
 
 #ifndef QT_NO_LIBRARY
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = imageloader();
     QStringList keys = l->keys();
 
     for (int i = 0; i < keys.count(); ++i) {

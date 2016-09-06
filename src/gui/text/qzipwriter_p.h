@@ -74,7 +74,7 @@ public:
     bool isWritable() const;
     bool exists() const;
 
-    enum Status {
+    enum WriterStatus {
         NoError,
         FileWriteError,
         FileOpenError,
@@ -82,7 +82,7 @@ public:
         FileError
     };
 
-    Status status() const;
+    WriterStatus status() const;
 
     enum CompressionPolicy {
         AlwaysCompress,

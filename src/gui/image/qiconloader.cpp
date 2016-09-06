@@ -69,8 +69,8 @@
 QT_BEGIN_NAMESPACE
 
 Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
-#ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+#if !defined(QT_NO_LIBRARY) && !defined(QT_ALLINONE)
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
     (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
 #endif
 
@@ -100,7 +100,7 @@ QIconLoader::QIconLoader() :
     if (m_systemTheme.isEmpty())
         m_systemTheme = fallbackTheme();
 #ifndef QT_NO_LIBRARY
-    if (loader()->keys().contains(QLatin1String("svg")))
+    if (iconloader()->keys().contains(QLatin1String("svg")))
         m_supportsSvg = true;
 #endif //QT_NO_LIBRARY
 }

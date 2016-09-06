@@ -447,7 +447,7 @@ public:
 
     void scanFiles();
 
-    QZipReader::Status status;
+    QZipReader::ReaderStatus status;
 };
 
 class QZipWriterPrivate : public QZipPrivate
@@ -461,7 +461,7 @@ public:
     {
     }
 
-    QZipWriter::Status status;
+    QZipWriter::WriterStatus status;
     QFile::Permissions permissions;
     QZipWriter::CompressionPolicy compressionPolicy;
 
@@ -742,18 +742,18 @@ QZipReader::QZipReader(const QString &archive, QIODevice::OpenMode mode)
 {
     QScopedPointer<QFile> f(new QFile(archive));
     f->open(mode);
-    QZipReader::Status status;
+    QZipReader::ReaderStatus status;
     if (f->error() == QFile::NoError)
-        status = NoError;
+        status = QZipReader::NoError;
     else {
         if (f->error() == QFile::ReadError)
-            status = FileReadError;
+            status = QZipReader::FileReadError;
         else if (f->error() == QFile::OpenError)
-            status = FileOpenError;
+            status = QZipReader::FileOpenError;
         else if (f->error() == QFile::PermissionsError)
-            status = FilePermissionsError;
+            status = QZipReader::FilePermissionsError;
         else
-            status = FileError;
+            status = QZipReader::FileError;
     }
 
     d = new QZipReaderPrivate(f.data(), /*ownDevice=*/true);
@@ -975,7 +975,7 @@ bool QZipReader::extractAll(const QString &destinationDir) const
 }
 
 /*!
-    \enum QZipReader::Status
+    \enum QZipReader::ReaderStatus
 
     The following status values are possible:
 
@@ -990,7 +990,7 @@ bool QZipReader::extractAll(const QString &destinationDir) const
     Returns a status code indicating the first error that was met by QZipReader,
     or QZipReader::NoError if no error occurred.
 */
-QZipReader::Status QZipReader::status() const
+QZipReader::ReaderStatus QZipReader::status() const
 {
     return d->status;
 }
@@ -1027,7 +1027,7 @@ QZipWriter::QZipWriter(const QString &fileName, QIODevice::OpenMode mode)
 {
     QScopedPointer<QFile> f(new QFile(fileName));
     f->open(mode);
-    QZipWriter::Status status;
+    QZipWriter::WriterStatus status;
     if (f->error() == QFile::NoError)
         status = QZipWriter::NoError;
     else {
@@ -1091,7 +1091,7 @@ bool QZipWriter::exists() const
 }
 
 /*!
-    \enum QZipWriter::Status
+    \enum QZipWriter::WriterStatus
 
     The following status values are possible:
 
@@ -1106,7 +1106,7 @@ bool QZipWriter::exists() const
     Returns a status code indicating the first error that was met by QZipWriter,
     or QZipWriter::NoError if no error occurred.
 */
-QZipWriter::Status QZipWriter::status() const
+QZipWriter::WriterStatus QZipWriter::status() const
 {
     return d->status;
 }
@@ -1198,7 +1198,7 @@ void QZipWriter::addFile(const QString &fileName, QIODevice *device)
     if ((mode & QIODevice::ReadOnly) == 0) {
         opened = true;
         if (! device->open(QIODevice::ReadOnly)) {
-            d->status = FileOpenError;
+            d->status = QZipWriter::FileOpenError;
             return;
         }
     }

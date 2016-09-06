@@ -415,7 +415,7 @@ bool QPixmapIconEngine::write(QDataStream &out) const
 }
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
     (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
 #endif
 
@@ -769,7 +769,7 @@ void QIcon::addFile(const QString &fileName, const QSize &size, Mode mode, State
         QFileInfo info(fileName);
         QString suffix = info.suffix();
         if (!suffix.isEmpty()) {
-            if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(loader()->instance(suffix))) {
+            if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(iconloader()->instance(suffix))) {
                 if (QIconEngine *engine = factory->create(fileName)) {
                     d = new QIconPrivate;
                     d->engine = engine;
@@ -1021,7 +1021,7 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
             icon.d->engine = engine;
             engine->read(s);
 #if !defined (QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
-        } else if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(loader()->instance(key))) {
+        } else if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(iconloader()->instance(key))) {
             if (QIconEngine *engine= factory->create()) {
                 icon.d = new QIconPrivate;
                 icon.d->engine = engine;

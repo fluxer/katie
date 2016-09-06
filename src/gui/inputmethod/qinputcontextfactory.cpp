@@ -78,7 +78,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, inputloader,
     (QInputContextFactoryInterface_iid, QLatin1String("/inputmethods")))
 #endif
 
@@ -148,7 +148,7 @@ QInputContext *QInputContextFactory::create( const QString& key, QObject *parent
     Q_UNUSED(key);
 #else
     if (QInputContextFactoryInterface *factory =
-        qobject_cast<QInputContextFactoryInterface*>(loader()->instance(key))) {
+        qobject_cast<QInputContextFactoryInterface*>(inputloader()->instance(key))) {
         result = factory->create(key);
     }
 #endif
@@ -182,7 +182,7 @@ QStringList QInputContextFactory::keys()
     result << QLatin1String("mac");
 #endif
 #ifndef QT_NO_LIBRARY
-    result += loader()->keys();
+    result += inputloader()->keys();
 #endif // QT_NO_LIBRARY
     return result;
 }
@@ -221,7 +221,7 @@ QStringList QInputContextFactory::languages( const QString &key )
     Q_UNUSED(key);
 #else
     if (QInputContextFactoryInterface *factory =
-        qobject_cast<QInputContextFactoryInterface*>(loader()->instance(key)))
+        qobject_cast<QInputContextFactoryInterface*>(inputloader()->instance(key)))
         result = factory->languages(key);
 #endif // QT_NO_LIBRARY
     return result;
@@ -245,7 +245,7 @@ QString QInputContextFactory::displayName( const QString &key )
     Q_UNUSED(key);
 #else
     if (QInputContextFactoryInterface *factory =
-        qobject_cast<QInputContextFactoryInterface*>(loader()->instance(key)))
+        qobject_cast<QInputContextFactoryInterface*>(inputloader()->instance(key)))
         return factory->displayName(key);
 #endif // QT_NO_LIBRARY
     return QString();
@@ -276,7 +276,7 @@ QString QInputContextFactory::description( const QString &key )
     Q_UNUSED(key);
 #else
     if (QInputContextFactoryInterface *factory =
-        qobject_cast<QInputContextFactoryInterface*>(loader()->instance(key)))
+        qobject_cast<QInputContextFactoryInterface*>(inputloader()->instance(key)))
         return factory->description(key);
 #endif // QT_NO_LIBRARY
     return QString();

@@ -51,7 +51,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, graphicsloader,
     (QGraphicsSystemFactoryInterface_iid, QLatin1String("/graphicssystems"), Qt::CaseInsensitive))
 #endif
 
@@ -81,7 +81,7 @@ QGraphicsSystem *QGraphicsSystemFactory::create(const QString& key)
 
 #ifndef QT_NO_LIBRARY
     if (!ret) {
-        if (QGraphicsSystemFactoryInterface *factory = qobject_cast<QGraphicsSystemFactoryInterface*>(loader()->instance(system)))
+        if (QGraphicsSystemFactoryInterface *factory = qobject_cast<QGraphicsSystemFactoryInterface*>(graphicsloader()->instance(system)))
             ret = factory->create(system);
     }
 #endif
@@ -101,7 +101,7 @@ QGraphicsSystem *QGraphicsSystemFactory::create(const QString& key)
 QStringList QGraphicsSystemFactory::keys()
 {
 #ifndef QT_NO_LIBRARY
-    QStringList list = loader()->keys();
+    QStringList list = graphicsloader()->keys();
 #else
     QStringList list;
 #endif

@@ -49,7 +49,7 @@
 #include "qhash.h"
 #include "qmetaobject.h"
 #include "qmutex.h"
-#include <qfactoryloader_p.h>
+#include "qfactoryloader_p.h"
 
 #include "qwidget.h"
 
@@ -451,7 +451,7 @@ QT_BEGIN_NAMESPACE
 */
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, accessibleloader,
     (QAccessibleFactoryInterface_iid, QLatin1String("/accessible")))
 #endif
 
@@ -596,7 +596,7 @@ QAccessibleInterface *QAccessible::queryAccessibleInterface(QObject *object)
                 return iface;
         }
 #ifndef QT_NO_LIBRARY
-        QAccessibleFactoryInterface *factory = qobject_cast<QAccessibleFactoryInterface*>(loader()->instance(cn));
+        QAccessibleFactoryInterface *factory = qobject_cast<QAccessibleFactoryInterface*>(accessibleloader()->instance(cn));
         if (factory) {
             iface = factory->create(cn, object);
             if (iface)

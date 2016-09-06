@@ -129,9 +129,9 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
-                          (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
+#if !defined(QT_NO_LIBRARY) && !defined(QT_ALLINONE)
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
+    (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
 #endif
 
 static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
@@ -143,7 +143,7 @@ static QImageIOHandler *createWriteHandlerHelper(QIODevice *device,
 
 #ifndef QT_NO_LIBRARY
     // check if any plugins can write the image
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = imageloader();
     QStringList keys = l->keys();
     int suffixPluginIndex = -1;
 #endif
@@ -714,7 +714,7 @@ QList<QByteArray> QImageWriter::supportedImageFormats()
 #endif
 
 #ifndef QT_NO_LIBRARY
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = imageloader();
     QStringList keys = l->keys();
     for (int i = 0; i < keys.count(); ++i) {
         QImageIOPlugin *plugin = qobject_cast<QImageIOPlugin *>(l->instance(keys.at(i)));

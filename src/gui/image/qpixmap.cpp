@@ -39,12 +39,9 @@
 **
 ****************************************************************************/
 
-#include <qglobal.h>
-
 #include "qpixmap.h"
 #include "qpixmapdata_p.h"
 #include "qimagepixmapcleanuphooks_p.h"
-
 #include "qbitmap.h"
 #include "qcolormap.h"
 #include "qimage.h"
@@ -53,9 +50,9 @@
 #include "qdatastream.h"
 #include "qbuffer.h"
 #include "qapplication.h"
-#include <qapplication_p.h>
-#include <qgraphicssystem_p.h>
-#include <qwidget_p.h>
+#include "qapplication_p.h"
+#include "qgraphicssystem_p.h"
+#include "qwidget_p.h"
 #include "qevent.h"
 #include "qfile.h"
 #include "qfileinfo.h"
@@ -72,8 +69,8 @@
 
 #if defined(Q_WS_X11)
 # include "qx11info_x11.h"
-# include <qt_x11_p.h>
-# include <qpixmap_x11_p.h>
+# include "qt_x11_p.h"
+# include "qpixmap_x11_p.h"
 #endif
 
 
@@ -707,8 +704,7 @@ void QPixmap::setMask(const QBitmap &mask)
 */
 QBitmap QPixmap::createHeuristicMask(bool clipTight) const
 {
-    QBitmap m = QBitmap::fromImage(toImage().createHeuristicMask(clipTight));
-    return m;
+    return QBitmap::fromImage(toImage().createHeuristicMask(clipTight));
 }
 #endif
 

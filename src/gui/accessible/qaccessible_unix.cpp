@@ -54,7 +54,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, bridgeloader,
     (QAccessibleBridgeFactoryInterface_iid, QLatin1String("/accessiblebridge")))
 #endif
 Q_GLOBAL_STATIC(QVector<QAccessibleBridge *>, bridges)
@@ -69,10 +69,10 @@ void QAccessible::initialize()
     if (qgetenv("QT_ACCESSIBILITY") != "1")
         return;
 #ifndef QT_NO_LIBRARY
-    const QStringList l = loader()->keys();
+    const QStringList l = bridgeloader()->keys();
     for (int i = 0; i < l.count(); ++i) {
         if (QAccessibleBridgeFactoryInterface *factory =
-                qobject_cast<QAccessibleBridgeFactoryInterface*>(loader()->instance(l.at(i)))) {
+                qobject_cast<QAccessibleBridgeFactoryInterface*>(bridgeloader()->instance(l.at(i)))) {
             QAccessibleBridge * bridge = factory->create(l.at(i));
             if (bridge)
                 bridges()->append(bridge);

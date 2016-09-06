@@ -60,7 +60,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-struct QDeclarativeBindingCompilerPrivate;
+class QDeclarativeBindingCompilerPrivate;
 class QDeclarativeBindingCompiler
 {
 public:

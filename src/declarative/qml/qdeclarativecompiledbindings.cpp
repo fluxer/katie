@@ -566,8 +566,9 @@ struct Program {
 };
 }
 
-struct QDeclarativeBindingCompilerPrivate
+class QDeclarativeBindingCompilerPrivate
 {
+public:
     struct Result {
         Result() : unknownType(false), metaObject(0), type(-1), reg(-1) {}
         bool operator==(const Result &o) const { 

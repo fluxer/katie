@@ -76,7 +76,7 @@ QT_END_INCLUDE_NAMESPACE
 #endif
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
     (QStyleFactoryInterface_iid, QLatin1String("/styles"), Qt::CaseInsensitive))
 #endif
 
@@ -173,7 +173,7 @@ QStyle *QStyleFactory::create(const QString& key)
     { } // Keep these here - they make the #ifdefery above work
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
     if(!ret) {
-        if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(loader()->instance(style)))
+        if (QStyleFactoryInterface *factory = qobject_cast<QStyleFactoryInterface*>(stylesloader()->instance(style)))
             ret = factory->create(style);
     }
 #endif
@@ -191,7 +191,7 @@ QStyle *QStyleFactory::create(const QString& key)
 QStringList QStyleFactory::keys()
 {
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
-    QStringList list = loader()->keys();
+    QStringList list = stylesloader()->keys();
 #else
     QStringList list;
 #endif
