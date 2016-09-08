@@ -40,7 +40,7 @@
 ****************************************************************************/
 
 #include <qt_mac_p.h>
-#include <qnativeimage_p.h>
+#include <qimage.h>
 #include <qdebug.h>
 #include <qfont.h>
 
@@ -160,12 +160,12 @@ QColor qcolorForThemeTextColor(ThemeTextColor themeColor)
     case kThemeTextColorBevelButtonInactive:
         return QColor(127, 127, 127, 255);
     default: {
-        QNativeImage nativeImage(16,16, QNativeImage::systemFormat());
+        QImage nativeImage(16,16, QImage::systemFormat());
         CGRect cgrect = CGRectMake(0, 0, 16, 16);
         HIThemeSetTextFill(themeColor, 0, nativeImage.cg, kHIThemeOrientationNormal);
         CGContextFillRect(nativeImage.cg, cgrect);
-        QColor color = nativeImage.image.pixel(0,0);
-        return QColor(nativeImage.image.pixel(0 , 0));
+        QColor color = nativeImage.pixel(0,0);
+        return QColor(nativeImage.pixel(0 , 0));
     }
     }
 #endif

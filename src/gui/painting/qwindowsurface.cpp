@@ -296,15 +296,14 @@ QWindowSurface::WindowSurfaceFeatures QWindowSurface::features() const
     return PartialUpdates | PreservedContents;
 }
 
-void qt_scrollRectInImage(QImage &img, const QRect &rect, const QPoint &offset)
+void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset)
 {
-    // make sure we don't detach
-    uchar *mem = const_cast<uchar*>(const_cast<const QImage &>(img).bits());
+    uchar *mem = const_cast<uchar*>(img->bits());
 
-    int lineskip = img.bytesPerLine();
-    int depth = img.depth() >> 3;
+    int lineskip = img->bytesPerLine();
+    int depth = img->depth() >> 3;
 
-    const QRect imageRect(0, 0, img.width(), img.height());
+    const QRect imageRect(0, 0, img->width(), img->height());
     const QRect r = rect & imageRect & imageRect.translated(-offset);
     const QPoint p = rect.topLeft() + offset;
 

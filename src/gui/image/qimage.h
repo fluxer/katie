@@ -157,6 +157,7 @@ public:
         { return copy(QRect(x, y, w, h)); }
 
     Format format() const;
+    static Format systemFormat();
 
     QImage convertToFormat(Format f, Qt::ImageConversionFlags flags = Qt::AutoColor) const Q_REQUIRED_RESULT;
     QImage convertToFormat(Format f, const QVector<QRgb> &colorTable, Qt::ImageConversionFlags flags = Qt::AutoColor) const Q_REQUIRED_RESULT;
@@ -261,7 +262,6 @@ public:
     QString text(const QString &key = QString()) const;
     void setText(const QString &key, const QString &value);
 #endif
-
 
 protected:
     virtual int metric(PaintDeviceMetric metric) const;

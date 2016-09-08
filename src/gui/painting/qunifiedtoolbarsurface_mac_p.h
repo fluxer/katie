@@ -57,13 +57,11 @@
 #include <QWidget>
 #include <QToolBar>
 #include <qwidget_p.h>
-#include <qnativeimage_p.h>
+#include <qimage.h>
 
 #ifdef QT_MAC_USE_COCOA
 
 QT_BEGIN_NAMESPACE
-
-class QNativeImage;
 
 //
 // This is the implementation of the unified toolbar on Mac OS X
@@ -102,7 +100,7 @@ class QNativeImage;
 class QUnifiedToolbarSurfacePrivate
 {
 public:
-    QNativeImage *image;
+    QImage *image;
     uint inSetGeometry : 1;
 };
 

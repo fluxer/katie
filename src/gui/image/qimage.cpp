@@ -49,6 +49,7 @@
 #include "qimagewriter.h"
 #include "qstringlist.h"
 #include "qvariant.h"
+#include "qcolormap.h"
 #include "qimagepixmapcleanuphooks_p.h"
 #include <ctype.h>
 #include <stdlib.h>
@@ -1900,6 +1901,14 @@ QImage::Format QImage::format() const
     return d ? d->format : Format_Invalid;
 }
 
+QImage::Format QImage::systemFormat()
+{
+#if defined(Q_WS_X11)
+    if (QColormap::instance().depth() == 16)
+        return QImage::Format_RGB16;
+#endif
+    return QImage::Format_RGB32;
+}
 
 
 /*****************************************************************************

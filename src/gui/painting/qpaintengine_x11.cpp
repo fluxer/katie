@@ -1830,11 +1830,11 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
     }
 }
 
-Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage &image,
+Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image,
                                    Drawable hd, GC gc, Display *dpy, Visual *visual, int depth)
 {
-    Q_ASSERT(image.format() == QImage::Format_RGB32);
-    Q_ASSERT(image.depth() == 32);
+    Q_ASSERT(image->format() == QImage::Format_RGB32);
+    Q_ASSERT(image->depth() == 32);
 
     XImage *xi;
     // Note: this code assumes either RGB or BGR, 8 bpc server layouts
@@ -1850,7 +1850,7 @@ Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const Q
         || (image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::LittleEndian)
         || (image_byte_order == LSBFirst && bgr_layout))
     {
-        im = image.copy(rect);
+        im = image->copy(rect);
         const int iw = im.bytesPerLine() / 4;
         uint *data = (uint *)im.bits();
         for (int i=0; i < h; i++) {
@@ -1883,7 +1883,7 @@ Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const Q
                           0, (char *) im.bits(), w, h, 32, im.bytesPerLine());
     } else {
         xi = XCreateImage(dpy, visual, depth, ZPixmap,
-                          0, (char *) image.scanLine(rect.y())+rect.x()*sizeof(uint), w, h, 32, image.bytesPerLine());
+                          0, (char *) image->scanLine(rect.y())+rect.x()*sizeof(uint), w, h, 32, image->bytesPerLine());
     }
     XPutImage(dpy, hd, gc, xi, 0, 0, pos.x(), pos.y(), w, h);
     xi->data = 0; // QImage owns these bits
@@ -1905,7 +1905,7 @@ void QX11PaintEngine::drawImage(const QRectF &r, const QImage &image, const QRec
         int w = qRound(r.width());
         int h = qRound(r.height());
 
-        qt_x11_drawImage(QRect(sx, sy, w, h), QPoint(x, y), image, d->hd, d->gc, d->dpy,
+        qt_x11_drawImage(QRect(sx, sy, w, h), QPoint(x, y), &image, d->hd, d->gc, d->dpy,
                          (Visual *)d->xinfo->visual(), d->pdev_depth);
     } else {
         QPaintEngine::drawImage(r, image, sr, flags);

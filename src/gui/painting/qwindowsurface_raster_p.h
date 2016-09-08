@@ -96,7 +96,6 @@ class QRegion;
 class QSize;
 class QWidget;
 class QRasterWindowSurfacePrivate;
-class QNativeImage;
 
 class Q_GUI_EXPORT QRasterWindowSurface : public QWindowSurface
 {

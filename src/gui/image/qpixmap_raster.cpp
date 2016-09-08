@@ -42,7 +42,6 @@
 #include "qpixmap.h"
 #include "qfont_p.h"
 #include "qpixmap_raster_p.h"
-#include "qnativeimage_p.h"
 #include "qimage_p.h"
 #include "qpaintengine.h"
 #include "qbitmap.h"
@@ -78,7 +77,7 @@ void QRasterPixmapData::resize(int width, int height)
     if (pixelType() == BitmapType)
         format = QImage::Format_MonoLSB;
     else
-        format = QNativeImage::systemFormat();
+        format = QImage::systemFormat();
 
     image = QImage(width, height, format);
     w = width;
@@ -129,7 +128,7 @@ void QRasterPixmapData::fromImageReader(QImageReader *imageReader,
 }
 
 // from qwindowsurface.cpp
-extern void qt_scrollRectInImage(QImage &img, const QRect &rect, const QPoint &offset);
+extern void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset);
 
 void QRasterPixmapData::copy(const QPixmapData *data, const QRect &rect)
 {
@@ -139,7 +138,7 @@ void QRasterPixmapData::copy(const QPixmapData *data, const QRect &rect)
 bool QRasterPixmapData::scroll(int dx, int dy, const QRect &rect)
 {
     if (!image.isNull())
-        qt_scrollRectInImage(image, rect, QPoint(dx, dy));
+        qt_scrollRectInImage(&image, rect, QPoint(dx, dy));
     return true;
 }
 
@@ -355,21 +354,18 @@ void QRasterPixmapData::createPixmapForImage(QImage &sourceImage, Qt::ImageConve
                     ? QImage::Format_ARGB32_Premultiplied
                     : QImage::Format_RGB32;
         } else {
-            QImage::Format opaqueFormat = QNativeImage::systemFormat();
+            QImage::Format opaqueFormat = QImage::systemFormat();
             QImage::Format alphaFormat = QImage::Format_ARGB32_Premultiplied;
 
-            switch (opaqueFormat) {
-            case QImage::Format_RGB16:
+            // We don't care about the others...
+            if (opaqueFormat == QImage::Format_RGB16) {
                 alphaFormat = QImage::Format_ARGB8565_Premultiplied;
-                break;
-            default: // We don't care about the others...
-                break;
             }
 
             if (!sourceImage.hasAlphaChannel()) {
                 format = opaqueFormat;
             } else if ((flags & Qt::NoOpaqueDetection) == 0
-                       && !const_cast<QImage &>(sourceImage).data_ptr()->checkForAlphaPixels())
+                       && !sourceImage.data_ptr()->checkForAlphaPixels())
             {
                 // image has alpha format but is really opaque, so try to do a
                 // more efficient conversion

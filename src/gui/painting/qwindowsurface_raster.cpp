@@ -51,7 +51,7 @@
 #include <QtGui/qwidget.h>
 
 #include "qwindowsurface_raster_p.h"
-#include "qnativeimage_p.h"
+#include "qimage.h"
 #include "qwidget_p.h"
 
 #ifdef Q_WS_X11
@@ -74,7 +74,7 @@ QT_BEGIN_NAMESPACE
 class QRasterWindowSurfacePrivate
 {
 public:
-    QNativeImage *image;
+    QImage *image;
 
 #ifdef Q_WS_X11
     GC gc;
@@ -120,10 +120,9 @@ QRasterWindowSurface::~QRasterWindowSurface()
         delete d_ptr->image;
 }
 
-
 QPaintDevice *QRasterWindowSurface::paintDevice()
 {
-    return &d_ptr->image->image;
+    return d_ptr->image;
 }
 
 #if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
@@ -146,10 +145,10 @@ void QRasterWindowSurface::beginPaint(const QRegion &rgn)
 #if (defined(Q_WS_X11) && !defined(QT_NO_XRENDER)) || (defined(Q_WS_WIN) && !defined(Q_WS_WINCE))
     if (!qt_widget_private(window())->isOpaque && window()->testAttribute(Qt::WA_TranslucentBackground)) {
 #if defined(Q_WS_WIN) && !defined(Q_WS_WINCE)
-        if (d_ptr->image->image.format() != QImage::Format_ARGB32_Premultiplied)
+        if (d_ptr->image->format() != QImage::Format_ARGB32_Premultiplied)
             prepareBuffer(QImage::Format_ARGB32_Premultiplied, window());
 #endif
-        QPainter p(&d_ptr->image->image);
+        QPainter p(d_ptr->image);
         p.setCompositionMode(QPainter::CompositionMode_Source);
         const QVector<QRect> rects = rgn.rects();
         const QColor blank = Qt::transparent;
@@ -236,39 +235,26 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     }
 
     QPoint widgetOffset = offset + wOffset;
-    QRect clipRect = widget->rect().translated(widgetOffset).intersected(d_ptr->image->image.rect());
+    QRect clipRect = widget->rect().translated(widgetOffset).intersected(d_ptr->image->rect());
 
     QRect br = rgn.boundingRect().translated(offset).intersected(clipRect);
     QPoint wpos = br.topLeft() - widgetOffset;
 
-#ifndef QT_NO_XSHM
-    if (d_ptr->image->xshmpm) {
-        XCopyArea(X11->display, d_ptr->image->xshmpm, widget->handle(), d_ptr->gc,
-                  br.x(), br.y(), br.width(), br.height(), wpos.x(), wpos.y());
-        d_ptr->needsSync = true;
-    } else if (d_ptr->image->xshmimg) {
-        XShmPutImage(X11->display, widget->handle(), d_ptr->gc, d_ptr->image->xshmimg,
-                     br.x(), br.y(), wpos.x(), wpos.y(), br.width(), br.height(), False);
-        d_ptr->needsSync = true;
-    } else
-#endif
-    {
-        int depth = widget->x11Info().depth();
-        const QImage &src = d->image->image;
-        if (src.format() != QImage::Format_RGB32 || (depth != 24 && depth != 32) || X11->bppForDepth.value(depth) != 32) {
-            Q_ASSERT(src.depth() >= 16);
-            const QImage sub_src(src.scanLine(br.y()) + br.x() * (uint(src.depth()) / 8),
-                                 br.width(), br.height(), src.bytesPerLine(), src.format());
-            QX11PixmapData *data = new QX11PixmapData(QPixmapData::PixmapType);
-            data->xinfo = widget->x11Info();
-            data->fromImage(sub_src, Qt::NoOpaqueDetection);
-            QPixmap pm = QPixmap(data);
-            XCopyArea(X11->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
-        } else {
-            // qpaintengine_x11.cpp
-            extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage &image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
-            qt_x11_drawImage(br, wpos, src, widget->handle(), d_ptr->gc, X11->display, (Visual *)widget->x11Info().visual(), depth);
-        }
+    int depth = widget->x11Info().depth();
+    const QImage *src = d->image;
+    if (src->format() != QImage::Format_RGB32 || (depth != 24 && depth != 32) || X11->bppForDepth.value(depth) != 32) {
+        Q_ASSERT(src->depth() >= 16);
+        const QImage sub_src(src->scanLine(br.y()) + br.x() * (uint(src->depth()) / 8),
+                                br.width(), br.height(), src->bytesPerLine(), src->format());
+        QX11PixmapData *data = new QX11PixmapData(QPixmapData::PixmapType);
+        data->xinfo = widget->x11Info();
+        data->fromImage(sub_src, Qt::NoOpaqueDetection);
+        QPixmap pm = QPixmap(data);
+        XCopyArea(X11->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
+    } else {
+        // qpaintengine_x11.cpp
+        extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
+        qt_x11_drawImage(br, wpos, src, widget->handle(), d_ptr->gc, X11->display, (Visual *)widget->x11Info().visual(), depth);
     }
 
     if (wrgn.rectCount() != 1)
@@ -312,7 +298,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     }
     CGContextClip(context);
 
-    QRect r = rgn.boundingRect().intersected(d->image->image.rect());
+    QRect r = rgn.boundingRect().intersected(d->image->rect());
     const CGRect area = CGRectMake(r.x(), r.y(), r.width(), r.height());
     CGImageRef image = CGBitmapContextCreateImage(d->image->cg);
     CGImageRef subImage = CGImageCreateWithImageInRect(image, area);
@@ -348,7 +334,7 @@ void QRasterWindowSurface::setGeometry(const QRect &rect)
             prepareBuffer(QImage::Format_ARGB32_Premultiplied, window());
         else
 #endif
-            prepareBuffer(QNativeImage::systemFormat(), window());
+            prepareBuffer(QImage::systemFormat(), window());
     }
     d->inSetGeometry = false;
 
@@ -373,7 +359,7 @@ void QRasterWindowSurface::setGeometry(const QRect &rect)
 }
 
 // from qwindowsurface.cpp
-extern void qt_scrollRectInImage(QImage &img, const QRect &rect, const QPoint &offset);
+extern void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset);
 
 bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
 {
@@ -391,7 +377,7 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
 #else
     Q_D(QRasterWindowSurface);
 
-    if (!d->image || d->image->image.isNull())
+    if (!d->image || d->image->isNull())
         return false;
 
 #if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
@@ -400,7 +386,7 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
 
     const QVector<QRect> rects = area.rects();
     for (int i = 0; i < rects.size(); ++i)
-        qt_scrollRectInImage(d->image->image, rects.at(i), QPoint(dx, dy));
+        qt_scrollRectInImage(d->image, rects.at(i), QPoint(dx, dy));
 
     return true;
 #endif
@@ -428,22 +414,21 @@ void QRasterWindowSurface::prepareBuffer(QImage::Format format, QWidget *widget)
         return;
     }
 
-    QNativeImage *oldImage = d->image;
+    QImage *oldImage = d->image;
 
-    d->image = new QNativeImage(width, height, format, false, widget);
+    d->image = new QImage(width, height, format);
 
     if (oldImage && d->inSetGeometry && hasStaticContents()) {
-        // Make sure we use the const version of bits() (no detach).
-        const uchar *src = const_cast<const QImage &>(oldImage->image).bits();
-        uchar *dst = d->image->image.bits();
+        const uchar *src = oldImage->bits();
+        uchar *dst = d->image->bits();
 
-        const int srcBytesPerLine = oldImage->image.bytesPerLine();
-        const int dstBytesPerLine = d->image->image.bytesPerLine();
-        const int bytesPerPixel = oldImage->image.depth() >> 3;
+        const int srcBytesPerLine = oldImage->bytesPerLine();
+        const int dstBytesPerLine = d->image->bytesPerLine();
+        const int bytesPerPixel = oldImage->depth() >> 3;
 
         QRegion staticRegion(staticContents());
         // Make sure we're inside the boundaries of the old image.
-        staticRegion &= QRect(0, 0, oldImage->image.width(), oldImage->image.height());
+        staticRegion &= QRect(0, 0, oldImage->width(), oldImage->height());
         const QVector<QRect> &rects = staticRegion.rects();
         const QRect *srcRect = rects.constData();
 

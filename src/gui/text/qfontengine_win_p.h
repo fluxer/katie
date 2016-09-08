@@ -57,8 +57,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QNativeImage;
-
 class QFontEngineWin : public QFontEngine
 {
 public:
@@ -148,7 +146,7 @@ public:
 private:
     bool hasCFFTable() const;
     bool hasCMapTable() const;
-    QNativeImage *drawGDIGlyph(HFONT font, glyph_t, int margin, const QTransform &xform,
+    QImage *drawGDIGlyph(HFONT font, glyph_t, int margin, const QTransform &xform,
                                QImage::Format mask_format);
 
 };

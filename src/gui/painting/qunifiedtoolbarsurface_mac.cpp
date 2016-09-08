@@ -192,9 +192,9 @@ void QUnifiedToolbarSurface::prepareBuffer(QImage::Format format, QWidget *widge
         return;
     }
 
-    QNativeImage *oldImage = d->image;
+    QImage *oldImage = d->image;
 
-    d->image = new QNativeImage(width, height, format, false, widget);
+    d->image = new QImage(width, height, format, false, widget);
 
     if (oldImage && d->inSetGeometry && hasStaticContents()) {
         // Make sure we use the const version of bits() (no detach).

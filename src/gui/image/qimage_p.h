@@ -105,40 +105,34 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
 
 Q_GUI_EXPORT void qGamma_correct_back_to_linear_cs(QImage *image);
 
-inline int qt_depthForFormat(QImage::Format format)
+static inline int qt_depthForFormat(QImage::Format format)
 {
-    int depth = 0;
     switch(format) {
     case QImage::Format_Invalid:
     case QImage::NImageFormats:
         Q_ASSERT(false);
     case QImage::Format_Mono:
     case QImage::Format_MonoLSB:
-        depth = 1;
-        break;
+        return 1;
     case QImage::Format_Indexed8:
-        depth = 8;
-        break;
+        return 8;
     case QImage::Format_RGB32:
     case QImage::Format_ARGB32:
     case QImage::Format_ARGB32_Premultiplied:
-        depth = 32;
-        break;
+        return 32;
     case QImage::Format_RGB555:
     case QImage::Format_RGB16:
     case QImage::Format_RGB444:
     case QImage::Format_ARGB4444_Premultiplied:
-        depth = 16;
-        break;
+        return 16;
     case QImage::Format_RGB666:
     case QImage::Format_ARGB6666_Premultiplied:
     case QImage::Format_ARGB8565_Premultiplied:
     case QImage::Format_ARGB8555_Premultiplied:
     case QImage::Format_RGB888:
-        depth = 24;
-        break;
+        return 24;
     }
-    return depth;
+    return 0;
 }
 
 QT_END_NAMESPACE

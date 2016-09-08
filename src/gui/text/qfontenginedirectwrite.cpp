@@ -45,7 +45,6 @@
 
 #include <qendian.h>
 #include <dwrite.h>
-#include <qnativeimage_p.h>
 
 #include <d2d1.h>
 
