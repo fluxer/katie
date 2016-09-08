@@ -80,6 +80,13 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         string(REPLACE "Kt" "Qt" PACKAGE_FAKE "${FORTARGET}")
         set(PACKAGE_NAME ${FORTARGET})
         set(PACKAGE_REQUIRES ${REQUIRES})
+        set(PACKAGE_FLAGS)
+        # adding the definitions to other components is simply redundant since
+        # they all components require the core component
+        if("${FORTARGET}" STREQUAL "KtCore")
+            katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
+            set(PACKAGE_FLAGS "${KATIE_DEFINITIONS}")
+        endif()
         configure_file(
             ${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake
             ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
