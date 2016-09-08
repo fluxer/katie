@@ -340,7 +340,6 @@ incmap = {
         },
     }
 
-
 if '--printmap' in sys.argv:
     for component in sorted(incmap):
         for key in incmap[component]:
@@ -348,13 +347,10 @@ if '--printmap' in sys.argv:
     sys.exit(0)
 
 cppfiles = []
-cmakefiles = []
 for root, dirs, files in os.walk(os.curdir):
     for f in files:
-        if f.endswith(('.cpp', '.cc', '.hpp', '.h')) and not '--no-cpp' in sys.argv:
+        if f.endswith(('.cpp', '.cc', '.hpp', '.h')):
             cppfiles.append('%s/%s' % (root, f))
-        if f.endswith(('CMakeLists.txt', '.cmake')) and not '--no-cmake' in sys.argv:
-            cmakefiles.append('%s/%s' % (root, f))
 
 for cpp in cppfiles:
     cpp = os.path.realpath(cpp)
@@ -378,25 +374,3 @@ for cpp in cppfiles:
                     cppcontent = cppcontent.replace(match, replacement)
                     f.write(cppcontent)
                     replaced.append(replacement)
-
-# TODO: second run on same files can cause trouble
-for cmake in cmakefiles:
-    cmake = os.path.realpath(cmake)
-    cmakebase = os.path.basename(cmake)
-    with open(cmake, 'r') as f:
-        cmakecontent = f.read()
-    replacement = '''
-find_package(Katie)
-if(NOT KATIE_FOUND)
-    find_package(Qt4 %s) ## AUTOADJUSTED
-endif()
-'''
-    for match in re.findall('(find_package.*\(.*Qt4(.*)\).*)', cmakecontent):
-        if 'AUTOADJUSTED' in match[0]:
-            continue
-        print(match)
-        with open(cmake, 'w') as f:
-            print('adjusting package finding in %s' % cmake)
-            # and here is the trouble..
-            cmakecontent = cmakecontent.replace(match[0], replacement % match[1])
-            f.write(cmakecontent)
