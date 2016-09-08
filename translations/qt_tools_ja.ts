@@ -332,9 +332,125 @@ Options:
     </message>
 </context>
 <context>
+    <name>LU</name>
+    <message>
+        <location filename="../src/tools/lupdate/qscript.cpp" line="+1503"/>
+        <source>Illegal character</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Unclosed string at end of line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Illegal escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+39"/>
+        <source>Illegal unicode escape sequence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>Unclosed comment at end of file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+88"/>
+        <source>Illegal syntax for exponential number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Identifier cannot start with numeric literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+319"/>
+        <source>Unterminated regular expression literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+256"/>
+        <location line="+23"/>
+        <source>//% cannot be used with %1(). Ignoring
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-20"/>
+        <source>%1() requires at least two arguments.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>%1(): both arguments must be literal strings.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <location line="+21"/>
+        <source>%1() requires at least one argument.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-18"/>
+        <source>%1(): text to translate must be a literal string.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>//= cannot be used with %1(). Ignoring
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>%1(): identifier must be a literal string.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+68"/>
+        <source>Discarding unconsumed meta data
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+65"/>
+        <source>Expected </source>
+        <extracomment>Beginning of the string that contains comma-separated list of expected tokens</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+55"/>
+        <source>Unexpected character in meta string
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Unterminated meta string
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>Cannot open %1: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LUpdate</name>
     <message>
-        <location filename="../src/tools/lupdate/cpp.cpp" line="+638"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+630"/>
         <source>Parenthesis/bracket/brace mismatch between #if and #else branches; using #if branch
 </source>
         <translation type="unfinished"></translation>
@@ -427,14 +543,12 @@ Options:
     </message>
     <message>
         <location line="+67"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+2539"/>
         <source>Unexpected character in meta string
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+6"/>
         <source>Unterminated meta string
 </source>
         <translation type="unfinished"></translation>
@@ -447,7 +561,6 @@ Options:
     </message>
     <message>
         <location line="+33"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="-126"/>
         <source>Discarding unconsumed meta data
 </source>
         <translation type="unfinished"></translation>
@@ -472,8 +585,7 @@ Options:
     </message>
     <message>
         <location line="+62"/>
-        <location filename="../src/tools/lupdate/ui.cpp" line="+188"/>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="+178"/>
+        <location filename="../src/tools/lupdate/ui.cpp" line="+184"/>
         <source>Cannot open %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -487,98 +599,8 @@ Options:
         <source>Parse error in UI file</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/tools/lupdate/qscript.cpp" line="-1089"/>
-        <source>Illegal character</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Unclosed string at end of line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Illegal escape sequence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Illegal unicode escape sequence</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Unclosed comment at end of file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Illegal syntax for exponential number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Identifier cannot start with numeric literal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <source>Unterminated regular expression literal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+256"/>
-        <location line="+23"/>
-        <source>//% cannot be used with %1(). Ignoring
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1() requires at least two arguments.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>%1(): both arguments must be literal strings.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+21"/>
-        <source>%1() requires at least one argument.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-18"/>
-        <source>%1(): text to translate must be a literal string.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>//= cannot be used with %1(). Ignoring
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1(): identifier must be a literal string.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+133"/>
-        <source>Expected </source>
-        <extracomment>Beginning of the string that contains comma-separated list of expected tokens</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
-        <location filename="../src/tools/lupdate/merge.cpp" line="+494"/>
+        <location filename="../src/tools/lupdate/merge.cpp" line="+490"/>
         <source>    Found %n source text(s) (%1 new and %2 already existing)
 </source>
         <translation type="unfinished">
@@ -626,7 +648,7 @@ Options:
         </translation>
     </message>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="+90"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="+86"/>
         <source>Usage:
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
 

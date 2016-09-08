@@ -176,7 +176,7 @@
 <context>
     <name>Command</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_menu.cpp" line="+1195"/>
+        <location filename="../src/designer/shared/qdesigner_menu.cpp" line="+1193"/>
         <source>Set action text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <location line="+89"/>
-        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="+914"/>
+        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="+910"/>
         <source>Move action</source>
         <translation type="unfinished"></translation>
     </message>
@@ -229,18 +229,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/morphmenu.cpp" line="+350"/>
+        <location filename="../src/designer/shared/morphmenu.cpp" line="+349"/>
         <source>Morph %1/&apos;%2&apos; into %3</source>
         <extracomment>MorphWidgetCommand description</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/qdesigner_command.cpp" line="+149"/>
+        <location filename="../src/designer/shared/qdesigner_command.cpp" line="+148"/>
         <source>Insert &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+133"/>
+        <location line="+121"/>
         <source>Change Z-order of &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -660,7 +660,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+450"/>
+        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+449"/>
         <source>Qt Designer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,9 +1163,9 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+962"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+690"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+694"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+963"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+678"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+682"/>
         <source>Connection refused</source>
         <translation>Połączenie odrzucone</translation>
     </message>
@@ -1190,7 +1190,7 @@
         <translation>Operacja na gnieździe nie jest obsługiwana</translation>
     </message>
     <message>
-        <location line="+656"/>
+        <location line="+642"/>
         <source>Socket is not connected</source>
         <translation>Gniazdo nie jest podłączone</translation>
     </message>
@@ -1532,7 +1532,7 @@
         <translation>Nie można animować właściwości (tylko do odczytu): &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+108"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
         <source>Animation is an abstract class</source>
         <translation>&quot;Animation&quot; jest klasą abstrakcyjną</translation>
     </message>
@@ -1660,13 +1660,13 @@
         <location line="+1672"/>
         <location line="+205"/>
         <location line="+81"/>
-        <location line="+81"/>
+        <location line="+75"/>
         <location line="+594"/>
         <source>Invalid property assignment: &quot;%1&quot; is a read-only property</source>
         <translation>Niepoprawne przypisanie wartości: &quot;%1&quot; jest właściwością tylko do odczytu</translation>
     </message>
     <message>
-        <location line="-2624"/>
+        <location line="-2618"/>
         <source>Invalid property assignment: unknown enumeration</source>
         <translation>Niepoprawne przypisanie wartości: nieznana wartość wyliczeniowa</translation>
     </message>
@@ -1946,7 +1946,7 @@
         <translation>&quot;%1&quot; nie może operować na &quot;%2&quot;</translation>
     </message>
     <message>
-        <location line="+182"/>
+        <location line="+176"/>
         <source>Duplicate default property</source>
         <translation>Powielona domyślna właściwość</translation>
     </message>
@@ -2109,40 +2109,6 @@
     </message>
 </context>
 <context>
-    <name>QDeclarativeEngine</name>
-    <message>
-        <location filename="../src/declarative/qml/qdeclarativesqldatabase.cpp" line="+211"/>
-        <source>executeSql called outside transaction()</source>
-        <translation>&quot;executeSql&quot; zawołane na zewnątrz &quot;transation()&quot;</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>Read-only Transaction</source>
-        <translation>Transakcja tylko do odczytu</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Version mismatch: expected %1, found %2</source>
-        <translation>Niezgodność wersji: oczekiwano %1, znaleziono %2</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>SQL transaction failed</source>
-        <translation>Transakcja SQL zakończona błędem</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>transaction: missing callback</source>
-        <translation>transakcja: brak wywołania zwrotnego</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <location line="+15"/>
-        <source>SQL: database version mismatch</source>
-        <translation>SQL: niezgodność wersji bazy danych</translation>
-    </message>
-</context>
-<context>
     <name>QDeclarativeFlipable</name>
     <message>
         <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+138"/>
@@ -2263,7 +2229,7 @@
 <context>
     <name>QDeclarativeListModel</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+392"/>
+        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+390"/>
         <source>remove: index %1 out of range</source>
         <translation>remove: indeks %1 poza zakresem</translation>
     </message>
@@ -2661,26 +2627,10 @@
 <context>
     <name>QDeclarativeXmlListModel</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+40"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+39"/>
         <location line="+2"/>
         <source>Qt was built without support for xmlpatterns</source>
         <translation>Qt zostało zbudowane bez obsługi xmlpatterns</translation>
-    </message>
-</context>
-<context>
-    <name>QDeclarativeXmlListModelRole</name>
-    <message>
-        <location filename="../src/declarative/util/qdeclarativexmllistmodel_p.h" line="+173"/>
-        <source>An XmlRole query must not start with &apos;/&apos;</source>
-        <translation>Zapytanie XmlRole nie może rozpoczynać się od &quot;/&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>QDeclarativeXmlRoleList</name>
-    <message>
-        <location filename="../src/declarative/util/qdeclarativexmllistmodel.cpp" line="+826"/>
-        <source>An XmlListModel query must start with &apos;/&apos; or &quot;//&quot;</source>
-        <translation>Zapytanie XmlListModel nie może rozpoczynać się od &quot;/&quot; ani od &quot;//&quot;</translation>
     </message>
 </context>
 <context>
@@ -2804,7 +2754,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+762"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2857,7 +2807,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDesignerWidgetBox</name>
     <message>
-        <location filename="../src/designer/components/widgetbox/widgetboxtreewidget.cpp" line="+349"/>
+        <location filename="../src/designer/components/widgetbox/widgetboxtreewidget.cpp" line="+348"/>
         <source>An error has been encountered at line %1 of %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3439,7 +3389,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QFileSystemModel</name>
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+763"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+761"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
@@ -4125,8 +4075,8 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2124"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+121"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2102"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+100"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
     </message>
@@ -4984,7 +4934,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+430"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
         <source>No suitable proxy found</source>
         <translation>Nie odnaleziono odpowiedniego pośrednika</translation>
     </message>
@@ -4992,7 +4942,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1118"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
         <source>Network access is disabled.</source>
         <translation>Dostęp do sieci wyłączony.</translation>
     </message>
@@ -5000,13 +4950,13 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+433"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Błąd podczas pobierania %1 - odpowiedź serwera: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1030"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Protokół &quot;%1&quot; nie jest znany</translation>
     </message>
@@ -5022,7 +4972,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+652"/>
+        <location line="+647"/>
         <source>Temporary network failure.</source>
         <translation>Chwilowy błąd w sieci.</translation>
     </message>
@@ -5039,7 +4989,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+453"/>
         <source>Invalid configuration.</source>
         <translation>Niepoprawna konfiguracja.</translation>
     </message>
@@ -5174,17 +5124,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../src/declarative/util/qdeclarativexmllistmodel.cpp" line="-245"/>
-        <source>&quot;%1&quot; duplicates a previous role name and will be disabled.</source>
-        <translation>&quot;%1&quot; powiela poprzednią nazwę roli i zostanie wyłączone.</translation>
-    </message>
-    <message>
-        <location line="+524"/>
-        <location line="+4"/>
-        <source>invalid query: &quot;%1&quot;</source>
-        <translation>Niepoprawne zapytanie: &quot;%1&quot;</translation>
-    </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
         <source>Could not read image data</source>
@@ -6210,7 +6149,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QScriptDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
+        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+880"/>
         <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Przejdź do linii</translation>
@@ -6387,7 +6326,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QScriptDebuggerLocalsModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+897"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+896"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -9144,7 +9083,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/qtresourceeditordialog.cpp" line="+76"/>
+        <location filename="../src/designer/shared/qtresourceeditordialog.cpp" line="+74"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation type="unfinished">%1 już istnieje.
@@ -9380,7 +9319,7 @@ to
 <context>
     <name>QtResourceView</name>
     <message>
-        <location filename="../src/designer/shared/qtresourceview.cpp" line="+567"/>
+        <location filename="../src/designer/shared/qtresourceview.cpp" line="+566"/>
         <source>Size: %1 x %2
 %3</source>
         <translation type="unfinished"></translation>
@@ -11982,7 +11921,7 @@ to
 <context>
     <name>WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+812"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+810"/>
         <source>The file contains a custom widget &apos;%1&apos; whose base class (%2) differs from the current entry in the widget database (%3). The widget database is left unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11990,7 +11929,7 @@ to
 <context>
     <name>qdesigner_internal::ActionEditor</name>
     <message>
-        <location filename="../src/designer/shared/actioneditor.cpp" line="+125"/>
+        <location filename="../src/designer/shared/actioneditor.cpp" line="+124"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12078,7 +12017,7 @@ to
 <context>
     <name>qdesigner_internal::ActionModel</name>
     <message>
-        <location filename="../src/designer/shared/actionrepository.cpp" line="+89"/>
+        <location filename="../src/designer/shared/actionrepository.cpp" line="+88"/>
         <source>Name</source>
         <translation type="unfinished">Nazwa</translation>
     </message>
@@ -12891,7 +12830,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindowBase</name>
     <message>
-        <location filename="../src/designer/shared/formwindowbase.cpp" line="+404"/>
+        <location filename="../src/designer/shared/formwindowbase.cpp" line="+393"/>
         <source>Delete &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14608,7 +14547,7 @@ Class: %2</source>
 <context>
     <name>qdesigner_internal::TabOrderEditor</name>
     <message>
-        <location filename="../src/designer/components/tabordereditor/tabordereditor.cpp" line="+363"/>
+        <location filename="../src/designer/components/tabordereditor/tabordereditor.cpp" line="+361"/>
         <source>Start from Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14778,7 +14717,7 @@ Class: %2</source>
 <context>
     <name>qdesigner_internal::ToolBarEventFilter</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_toolbar.cpp" line="+148"/>
+        <location filename="../src/designer/shared/qdesigner_toolbar.cpp" line="+147"/>
         <source>Insert Separator before &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14991,7 +14930,7 @@ Class: %2</source>
 <context>
     <name>qdesigner_internal::WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="-410"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="-412"/>
         <source>A custom widget plugin whose class name (%1) matches that of an existing class has been found.</source>
         <translation type="unfinished"></translation>
     </message>

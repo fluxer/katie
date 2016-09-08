@@ -176,7 +176,7 @@
 <context>
     <name>Command</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_menu.cpp" line="+1195"/>
+        <location filename="../src/designer/shared/qdesigner_menu.cpp" line="+1193"/>
         <source>Set action text</source>
         <translation type="unfinished"></translation>
     </message>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <location line="+89"/>
-        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="+914"/>
+        <location filename="../src/designer/shared/qdesigner_menubar.cpp" line="+910"/>
         <source>Move action</source>
         <translation type="unfinished"></translation>
     </message>
@@ -229,18 +229,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/morphmenu.cpp" line="+350"/>
+        <location filename="../src/designer/shared/morphmenu.cpp" line="+349"/>
         <source>Morph %1/&apos;%2&apos; into %3</source>
         <extracomment>MorphWidgetCommand description</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/qdesigner_command.cpp" line="+149"/>
+        <location filename="../src/designer/shared/qdesigner_command.cpp" line="+148"/>
         <source>Insert &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+133"/>
+        <location line="+121"/>
         <source>Change Z-order of &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -660,7 +660,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+450"/>
+        <location filename="../src/designer/components/formeditor/qdesigner_resource.cpp" line="+449"/>
         <source>Qt Designer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1163,9 +1163,9 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+915"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+687"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+664"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+916"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+652"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>Nepodařilo se najít počítač</translation>
@@ -1183,7 +1183,7 @@
         <translation>Časový limit pro spojení byl překročen</translation>
     </message>
     <message>
-        <location line="+1153"/>
+        <location line="+1139"/>
         <source>Socket is not connected</source>
         <translation>Socket není spojen</translation>
     </message>
@@ -1199,7 +1199,7 @@
         <translation>Síť není dosažitelná</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1266"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1252"/>
         <location line="+822"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
@@ -1532,7 +1532,7 @@
         <translation>Vlastnost &apos;%1&quot; je pouze pro čtení a nelze ji proto animovat</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+108"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
         <source>Animation is an abstract class</source>
         <translation>Animace je abstraktní třída</translation>
     </message>
@@ -1660,13 +1660,13 @@
         <location line="+1672"/>
         <location line="+205"/>
         <location line="+81"/>
-        <location line="+81"/>
+        <location line="+75"/>
         <location line="+594"/>
         <source>Invalid property assignment: &quot;%1&quot; is a read-only property</source>
         <translation>Neplatné přiřazení vlastnosti: &quot;%1&quot; je vlastnost pouze pro čtení</translation>
     </message>
     <message>
-        <location line="-2624"/>
+        <location line="-2618"/>
         <source>Invalid property assignment: unknown enumeration</source>
         <translation>Neplatné přiřazení vlastnosti: neplatná výčtová hodnota</translation>
     </message>
@@ -1946,7 +1946,7 @@
         <translation>&quot;%1&quot; nelze použít na &quot;%2&quot;</translation>
     </message>
     <message>
-        <location line="+182"/>
+        <location line="+176"/>
         <source>Duplicate default property</source>
         <translation>Zdvojená výchozí vlastnost</translation>
     </message>
@@ -2109,40 +2109,6 @@
     </message>
 </context>
 <context>
-    <name>QDeclarativeEngine</name>
-    <message>
-        <location filename="../src/declarative/qml/qdeclarativesqldatabase.cpp" line="+211"/>
-        <source>executeSql called outside transaction()</source>
-        <translation>&apos;executeSql&apos; byl vyvolán mimo &apos;transaction()&apos;</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>Read-only Transaction</source>
-        <translation>Transakce pouze pro čtení</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Version mismatch: expected %1, found %2</source>
-        <translation>Verzi %2 nelze používat; je třeba %1</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>SQL transaction failed</source>
-        <translation>Transakce SQL se nezdařila</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>transaction: missing callback</source>
-        <translation>Transakce: chybí callback (zavolat znovu)</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <location line="+15"/>
-        <source>SQL: database version mismatch</source>
-        <translation>SQL: Verze databáze neodpovídá očekávané verzi</translation>
-    </message>
-</context>
-<context>
     <name>QDeclarativeFlipable</name>
     <message>
         <location filename="../src/declarative/graphicsitems/qdeclarativeflipable.cpp" line="+138"/>
@@ -2263,7 +2229,7 @@
 <context>
     <name>QDeclarativeListModel</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+392"/>
+        <location filename="../src/declarative/util/qdeclarativelistmodel.cpp" line="+390"/>
         <source>remove: index %1 out of range</source>
         <translation>odstranit (remove): Index %1 je mimo platnou oblast</translation>
     </message>
@@ -2661,26 +2627,10 @@
 <context>
     <name>QDeclarativeXmlListModel</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+40"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+39"/>
         <location line="+2"/>
         <source>Qt was built without support for xmlpatterns</source>
         <translation>Qt bylo sestaveno bez podpory pro xmlpatterns</translation>
-    </message>
-</context>
-<context>
-    <name>QDeclarativeXmlListModelRole</name>
-    <message>
-        <location filename="../src/declarative/util/qdeclarativexmllistmodel_p.h" line="+173"/>
-        <source>An XmlRole query must not start with &apos;/&apos;</source>
-        <translation>Vyhledávání XmlRole nesmí začínat s &apos;/&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>QDeclarativeXmlRoleList</name>
-    <message>
-        <location filename="../src/declarative/util/qdeclarativexmllistmodel.cpp" line="+826"/>
-        <source>An XmlListModel query must start with &apos;/&apos; or &quot;//&quot;</source>
-        <translation>Vyhledávání XmlListModel musí začínat s &apos;/&apos; nebo &quot;//&quot;</translation>
     </message>
 </context>
 <context>
@@ -2804,7 +2754,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+762"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2857,7 +2807,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDesignerWidgetBox</name>
     <message>
-        <location filename="../src/designer/components/widgetbox/widgetboxtreewidget.cpp" line="+349"/>
+        <location filename="../src/designer/components/widgetbox/widgetboxtreewidget.cpp" line="+348"/>
         <source>An error has been encountered at line %1 of %2: %3</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3438,7 +3388,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+925"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+923"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -4123,8 +4073,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2121"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+118"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2099"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+97"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
@@ -4982,7 +4932,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+430"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
         <source>No suitable proxy found</source>
         <translation>Nepodařilo se najít žádný vhodný proxy server</translation>
     </message>
@@ -4990,7 +4940,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1118"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
         <source>Network access is disabled.</source>
         <translation>Přístup k síti není dovolen.</translation>
     </message>
@@ -4998,13 +4948,13 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+433"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Při stahování %1 se vyskytla chyba - Odpověď serveru je: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1030"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Protokol &quot;%1&quot; není znám</translation>
     </message>
@@ -5020,7 +4970,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Chyba spuštění podpůrné vrstvy.</translation>
     </message>
     <message>
-        <location line="+652"/>
+        <location line="+647"/>
         <source>Temporary network failure.</source>
         <translation>Síť dočasně vypadla.</translation>
     </message>
@@ -5037,7 +4987,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkSession</name>
     <message>
-        <location filename="../src/network/bearer/qnetworksession.cpp" line="+452"/>
+        <location filename="../src/network/bearer/qnetworksession.cpp" line="+453"/>
         <source>Invalid configuration.</source>
         <translation>Neplatné nastavení.</translation>
     </message>
@@ -5176,17 +5126,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
-    </message>
-    <message>
-        <location filename="../src/declarative/util/qdeclarativexmllistmodel.cpp" line="-245"/>
-        <source>&quot;%1&quot; duplicates a previous role name and will be disabled.</source>
-        <translation>&quot;%1&quot; je již zadán jako název předchozí úlohy, a je proto vypnut.</translation>
-    </message>
-    <message>
-        <location line="+524"/>
-        <location line="+4"/>
-        <source>invalid query: &quot;%1&quot;</source>
-        <translation>Neplátný dotaz: &quot;%1&quot;</translation>
     </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
@@ -6208,7 +6147,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QScriptDebugger</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+886"/>
+        <location filename="../src/scripttools/debugging/qscriptdebugger.cpp" line="+880"/>
         <location line="+1013"/>
         <source>Go to Line</source>
         <translation>Jít na řádek</translation>
@@ -6385,7 +6324,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QScriptDebuggerLocalsModel</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+897"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggerlocalsmodel.cpp" line="+896"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -9142,7 +9081,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/designer/shared/qtresourceeditordialog.cpp" line="+76"/>
+        <location filename="../src/designer/shared/qtresourceeditordialog.cpp" line="+74"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation type="unfinished">Soubor %1 již existuje.
@@ -9378,7 +9317,7 @@ to
 <context>
     <name>QtResourceView</name>
     <message>
-        <location filename="../src/designer/shared/qtresourceview.cpp" line="+567"/>
+        <location filename="../src/designer/shared/qtresourceview.cpp" line="+566"/>
         <source>Size: %1 x %2
 %3</source>
         <translation type="unfinished"></translation>
@@ -11979,7 +11918,7 @@ to
 <context>
     <name>WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+812"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="+810"/>
         <source>The file contains a custom widget &apos;%1&apos; whose base class (%2) differs from the current entry in the widget database (%3). The widget database is left unchanged.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11987,7 +11926,7 @@ to
 <context>
     <name>qdesigner_internal::ActionEditor</name>
     <message>
-        <location filename="../src/designer/shared/actioneditor.cpp" line="+125"/>
+        <location filename="../src/designer/shared/actioneditor.cpp" line="+124"/>
         <source>New...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12075,7 +12014,7 @@ to
 <context>
     <name>qdesigner_internal::ActionModel</name>
     <message>
-        <location filename="../src/designer/shared/actionrepository.cpp" line="+89"/>
+        <location filename="../src/designer/shared/actionrepository.cpp" line="+88"/>
         <source>Name</source>
         <translation type="unfinished">Název</translation>
     </message>
@@ -12888,7 +12827,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindowBase</name>
     <message>
-        <location filename="../src/designer/shared/formwindowbase.cpp" line="+404"/>
+        <location filename="../src/designer/shared/formwindowbase.cpp" line="+393"/>
         <source>Delete &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14605,7 +14544,7 @@ Class: %2</source>
 <context>
     <name>qdesigner_internal::TabOrderEditor</name>
     <message>
-        <location filename="../src/designer/components/tabordereditor/tabordereditor.cpp" line="+363"/>
+        <location filename="../src/designer/components/tabordereditor/tabordereditor.cpp" line="+361"/>
         <source>Start from Here</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14775,7 +14714,7 @@ Class: %2</source>
 <context>
     <name>qdesigner_internal::ToolBarEventFilter</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_toolbar.cpp" line="+148"/>
+        <location filename="../src/designer/shared/qdesigner_toolbar.cpp" line="+147"/>
         <source>Insert Separator before &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -14988,7 +14927,7 @@ Class: %2</source>
 <context>
     <name>qdesigner_internal::WidgetDataBase</name>
     <message>
-        <location filename="../src/designer/shared/widgetdatabase.cpp" line="-410"/>
+        <location filename="../src/designer/shared/widgetdatabase.cpp" line="-412"/>
         <source>A custom widget plugin whose class name (%1) matches that of an existing class has been found.</source>
         <translation type="unfinished"></translation>
     </message>
