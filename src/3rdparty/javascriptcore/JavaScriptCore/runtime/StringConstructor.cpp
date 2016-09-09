@@ -40,7 +40,7 @@ static NEVER_INLINE JSValue stringFromCharCodeSlowCase(ExecState* exec, const Ar
 
 static JSValue JSC_HOST_CALL stringFromCharCode(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
-    if (LIKELY(args.size() == 1))
+    if (Q_LIKELY(args.size() == 1))
         return jsSingleCharacterString(exec, args.at(0).toUInt32(exec));
     return stringFromCharCodeSlowCase(exec, args);
 }

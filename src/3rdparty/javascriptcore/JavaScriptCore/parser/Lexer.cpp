@@ -76,7 +76,7 @@ ALWAYS_INLINE void Lexer::shift1()
     m_current = m_next1;
     m_next1 = m_next2;
     m_next2 = m_next3;
-    if (LIKELY(m_code < m_codeEnd))
+    if (Q_LIKELY(m_code < m_codeEnd))
         m_next3 = m_code[0];
     else
         m_next3 = -1;
@@ -88,7 +88,7 @@ ALWAYS_INLINE void Lexer::shift2()
 {
     m_current = m_next2;
     m_next1 = m_next3;
-    if (LIKELY(m_code + 1 < m_codeEnd)) {
+    if (Q_LIKELY(m_code + 1 < m_codeEnd)) {
         m_next2 = m_code[0];
         m_next3 = m_code[1];
     } else {
@@ -102,7 +102,7 @@ ALWAYS_INLINE void Lexer::shift2()
 ALWAYS_INLINE void Lexer::shift3()
 {
     m_current = m_next3;
-    if (LIKELY(m_code + 2 < m_codeEnd)) {
+    if (Q_LIKELY(m_code + 2 < m_codeEnd)) {
         m_next1 = m_code[0];
         m_next2 = m_code[1];
         m_next3 = m_code[2];
@@ -117,7 +117,7 @@ ALWAYS_INLINE void Lexer::shift3()
 
 ALWAYS_INLINE void Lexer::shift4()
 {
-    if (LIKELY(m_code + 3 < m_codeEnd)) {
+    if (Q_LIKELY(m_code + 3 < m_codeEnd)) {
         m_current = m_code[0];
         m_next1 = m_code[1];
         m_next2 = m_code[2];
@@ -153,7 +153,7 @@ void Lexer::setCode(const SourceCode& source, ParserArena& arena)
     // See <https://bugs.webkit.org/show_bug.cgi?id=4931> for details.
     if (source.provider()->hasBOMs()) {
         for (const UChar* p = m_codeStart; p < m_codeEnd; ++p) {
-            if (UNLIKELY(*p == byteOrderMark)) {
+            if (Q_UNLIKELY(*p == byteOrderMark)) {
                 copyCodeWithoutBOMs();
                 break;
             }
@@ -562,7 +562,7 @@ startString: {
         // Fast check for characters that require special handling.
         // Catches -1, \n, \r, \, 0x2028, and 0x2029 as efficiently
         // as possible, and lets through all common ASCII characters.
-        if (UNLIKELY(m_current == '\\') || UNLIKELY(((static_cast<unsigned>(m_current) - 0xE) & 0x2000))) {
+        if (Q_UNLIKELY(m_current == '\\') || Q_UNLIKELY(((static_cast<unsigned>(m_current) - 0xE) & 0x2000))) {
             m_buffer16.append(stringStart, currentCharacter() - stringStart);
             goto inString;
         }
@@ -579,9 +579,9 @@ inString:
     while (m_current != stringQuoteCharacter) {
         if (m_current == '\\')
             goto inStringEscapeSequence;
-        if (UNLIKELY(isLineTerminator(m_current)))
+        if (Q_UNLIKELY(isLineTerminator(m_current)))
             goto returnError;
-        if (UNLIKELY(m_current == -1))
+        if (Q_UNLIKELY(m_current == -1))
             goto returnError;
         record16(m_current);
         shift1();
@@ -643,13 +643,13 @@ inStringEscapeSequence:
 
 startIdentifierWithBackslash:
     shift1();
-    if (UNLIKELY(m_current != 'u'))
+    if (Q_UNLIKELY(m_current != 'u'))
         goto returnError;
     shift1();
-    if (UNLIKELY(!isASCIIHexDigit(m_current) || !isASCIIHexDigit(m_next1) || !isASCIIHexDigit(m_next2) || !isASCIIHexDigit(m_next3)))
+    if (Q_UNLIKELY(!isASCIIHexDigit(m_current) || !isASCIIHexDigit(m_next1) || !isASCIIHexDigit(m_next2) || !isASCIIHexDigit(m_next3)))
         goto returnError;
     token = convertUnicode(m_current, m_next1, m_next2, m_next3);
-    if (UNLIKELY(!isIdentStart(token)))
+    if (Q_UNLIKELY(!isIdentStart(token)))
         goto returnError;
     goto inIdentifierAfterCharacterCheck;
 
@@ -658,7 +658,7 @@ startIdentifierOrKeyword: {
     shift1();
     while (isIdentPart(m_current))
         shift1();
-    if (LIKELY(m_current != '\\')) {
+    if (Q_LIKELY(m_current != '\\')) {
         lvalp->ident = makeIdentifier(identifierStart, currentCharacter() - identifierStart);
         goto doneIdentifierOrKeyword;
     }
@@ -667,13 +667,13 @@ startIdentifierOrKeyword: {
 
     do {
         shift1();
-        if (UNLIKELY(m_current != 'u'))
+        if (Q_UNLIKELY(m_current != 'u'))
             goto returnError;
         shift1();
-        if (UNLIKELY(!isASCIIHexDigit(m_current) || !isASCIIHexDigit(m_next1) || !isASCIIHexDigit(m_next2) || !isASCIIHexDigit(m_next3)))
+        if (Q_UNLIKELY(!isASCIIHexDigit(m_current) || !isASCIIHexDigit(m_next1) || !isASCIIHexDigit(m_next2) || !isASCIIHexDigit(m_next3)))
             goto returnError;
         token = convertUnicode(m_current, m_next1, m_next2, m_next3);
-        if (UNLIKELY(!isIdentPart(token)))
+        if (Q_UNLIKELY(!isIdentPart(token)))
             goto returnError;
 inIdentifierAfterCharacterCheck:
         record16(token);
@@ -683,12 +683,12 @@ inIdentifierAfterCharacterCheck:
             record16(m_current);
             shift1();
         }
-    } while (UNLIKELY(m_current == '\\'));
+    } while (Q_UNLIKELY(m_current == '\\'));
     goto doneIdentifier;
 
 inSingleLineComment:
     while (!isLineTerminator(m_current)) {
-        if (UNLIKELY(m_current == -1))
+        if (Q_UNLIKELY(m_current == -1))
             return 0;
         shift1();
     }
@@ -706,7 +706,7 @@ inMultiLineComment:
             shiftLineTerminator();
         else {
             shift1();
-            if (UNLIKELY(m_current == -1))
+            if (Q_UNLIKELY(m_current == -1))
                 goto returnError;
         }
     }
@@ -840,7 +840,7 @@ doneNumber:
 
 doneNumeric:
     // No identifiers allowed directly after numeric literal, e.g. "3in" is bad.
-    if (UNLIKELY(isIdentStart(m_current)))
+    if (Q_UNLIKELY(isIdentStart(m_current)))
         goto returnError;
 
     m_atLineStart = false;

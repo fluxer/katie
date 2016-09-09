@@ -69,11 +69,11 @@ namespace JSC {
 
         uint32_t numProvidedArguments(ExecState* exec) const 
         {
-            if (UNLIKELY(d->overrodeLength))
+            if (Q_UNLIKELY(d->overrodeLength))
                 return get(exec, exec->propertyNames().length).toUInt32(exec);
             return d->numArguments; 
         }
-        
+
         void copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxSize);
         void copyRegisters();
         bool isTornOff() const { return d->registerArray; }

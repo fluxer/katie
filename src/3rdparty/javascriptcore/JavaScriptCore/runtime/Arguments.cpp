@@ -63,14 +63,14 @@ void Arguments::markChildren(MarkStack& markStack)
 
 void Arguments::copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxSize)
 {
-    if (UNLIKELY(d->overrodeLength)) {
+    if (Q_UNLIKELY(d->overrodeLength)) {
         unsigned length = min(get(exec, exec->propertyNames().length).toUInt32(exec), maxSize);
         for (unsigned i = 0; i < length; i++)
             buffer[i] = get(exec, i);
         return;
     }
 
-    if (LIKELY(!d->deletedArguments)) {
+    if (Q_LIKELY(!d->deletedArguments)) {
         unsigned parametersLength = min(min(d->numParameters, d->numArguments), maxSize);
         unsigned i = 0;
         for (; i < parametersLength; ++i)
@@ -98,15 +98,15 @@ void Arguments::copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxS
 
 void Arguments::fillArgList(ExecState* exec, MarkedArgumentBuffer& args)
 {
-    if (UNLIKELY(d->overrodeLength)) {
+    if (Q_UNLIKELY(d->overrodeLength)) {
         unsigned length = get(exec, exec->propertyNames().length).toUInt32(exec); 
         for (unsigned i = 0; i < length; i++) 
             args.append(get(exec, i)); 
         return;
     }
 
-    if (LIKELY(!d->deletedArguments)) {
-        if (LIKELY(!d->numParameters)) {
+    if (Q_LIKELY(!d->deletedArguments)) {
+        if (Q_LIKELY(!d->numParameters)) {
             args.initialize(d->extraArguments, d->numArguments);
             return;
         }
@@ -166,12 +166,12 @@ bool Arguments::getOwnPropertySlot(ExecState* exec, const Identifier& propertyNa
         return true;
     }
 
-    if (propertyName == exec->propertyNames().length && LIKELY(!d->overrodeLength)) {
+    if (propertyName == exec->propertyNames().length && Q_LIKELY(!d->overrodeLength)) {
         slot.setValue(jsNumber(exec, d->numArguments));
         return true;
     }
 
-    if (propertyName == exec->propertyNames().callee && LIKELY(!d->overrodeCallee)) {
+    if (propertyName == exec->propertyNames().callee && Q_LIKELY(!d->overrodeCallee)) {
         slot.setValue(d->callee);
         return true;
     }
@@ -191,12 +191,12 @@ bool Arguments::getOwnPropertyDescriptor(ExecState* exec, const Identifier& prop
         return true;
     }
     
-    if (propertyName == exec->propertyNames().length && LIKELY(!d->overrodeLength)) {
+    if (propertyName == exec->propertyNames().length && Q_LIKELY(!d->overrodeLength)) {
         descriptor.setDescriptor(jsNumber(exec, d->numArguments), DontEnum);
         return true;
     }
     
-    if (propertyName == exec->propertyNames().callee && LIKELY(!d->overrodeCallee)) {
+    if (propertyName == exec->propertyNames().callee && Q_LIKELY(!d->overrodeCallee)) {
         descriptor.setDescriptor(d->callee, DontEnum);
         return true;
     }

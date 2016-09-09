@@ -27,6 +27,8 @@
 #ifndef WTF_Platform_h
 #define WTF_Platform_h
 
+#include <qglobal.h>
+
 /* ==== PLATFORM handles OS, operating environment, graphics API, and
    CPU. This macro will be phased out in favor of platform adaptation
    macros, policy decision macros, and top-level port definitions. ==== */
@@ -533,13 +535,12 @@
 #define WTF_PLATFORM_ANDROID 1
 #endif
 
-/* OS(WINCE) && PLATFORM(QT)
+/* OS(WINCE)
    We can not determine the endianess at compile time. For
    Qt for Windows CE the endianess is specified in the
    device specific makespec
 */
-#if OS(WINCE) && PLATFORM(QT)
-#   include <QtGlobal>
+#if OS(WINCE)
 #   undef WTF_CPU_BIG_ENDIAN
 #   undef WTF_CPU_MIDDLE_ENDIAN
 #   if Q_BYTE_ORDER == Q_BIG_ENDIAN

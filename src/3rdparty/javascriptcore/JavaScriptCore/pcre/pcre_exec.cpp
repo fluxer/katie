@@ -1484,7 +1484,7 @@ RECURSE:
                             break;
                             
                         default:
-                            ASSERT_NOT_REACHED();
+                            Q_UNREACHABLE();
                             return matchError(JSRegExpErrorInternal, stack);
                     }  /* End switch(stack.currentFrame->locals.ctype) */
                 }
@@ -1543,7 +1543,7 @@ RECURSE:
                                 break;
                                 
                             default:
-                                ASSERT_NOT_REACHED();
+                                Q_UNREACHABLE();
                                 return matchError(JSRegExpErrorInternal, stack);
                         }
                     }
@@ -1632,7 +1632,7 @@ RECURSE:
                             break;
                             
                         default:
-                            ASSERT_NOT_REACHED();
+                            Q_UNREACHABLE();
                             return matchError(JSRegExpErrorInternal, stack);
                     }
                     
@@ -1660,7 +1660,7 @@ RECURSE:
             BEGIN_OPCODE(CRQUERY):
             BEGIN_OPCODE(CRRANGE):
             BEGIN_OPCODE(CRSTAR):
-                ASSERT_NOT_REACHED();
+                Q_UNREACHABLE();
                 return matchError(JSRegExpErrorInternal, stack);
                 
             default:
@@ -1730,7 +1730,7 @@ RECURSE:
         
     } /* End of main loop */
     
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     
 RRETURN_SWITCH:
     switch (stack.currentFrame->returnLocation) {
@@ -1763,7 +1763,7 @@ RRETURN_SWITCH:
         case 52: goto RRETURN_52;
     }
     
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return matchError(JSRegExpErrorInternal, stack);
 
 RETURN:

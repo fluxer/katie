@@ -59,21 +59,6 @@
 } while(false)
 #endif
 
-// TODO: get rid of that assert macro?
-/* ASSERT_NOT_REACHED */
-
-#include <qglobal.h>
-
-#ifdef QT_NO_DEBUG
-
-#define ASSERT_NOT_REACHED() ((void)0)
-
-#else
-
-#define ASSERT_NOT_REACHED() Q_ASSERT_X(false, 0, "SHOULD NEVER BE REACHED")
-
-#endif
-
 /* COMPILE_ASSERT */
 #ifndef COMPILE_ASSERT
 #if COMPILER_SUPPORTS(C_STATIC_ASSERT)

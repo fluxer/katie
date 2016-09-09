@@ -38,7 +38,7 @@ namespace WTF {
 #endif
     void derefIfNotNull(T* ptr)
     {
-        if (UNLIKELY(ptr != 0))
+        if (Q_UNLIKELY(ptr != 0))
             ptr->deref();
     }
 

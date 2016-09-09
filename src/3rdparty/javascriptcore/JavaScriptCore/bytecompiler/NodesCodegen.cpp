@@ -276,7 +276,7 @@ RegisterID* PropertyListNode::emitBytecode(BytecodeGenerator& generator, Registe
                 break;
             }
             default:
-                ASSERT_NOT_REACHED();
+                Q_UNREACHABLE();
         }
     }
     
@@ -1095,7 +1095,7 @@ static ALWAYS_INLINE RegisterID* emitReadModifyAssignment(BytecodeGenerator& gen
             opcodeID = op_mod;
             break;
         default:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
             return dst;
     }
 

@@ -40,22 +40,6 @@
 #endif
 #endif
 
-#ifndef UNLIKELY
-#if COMPILER(GCC)
-#define UNLIKELY(x) __builtin_expect((x), 0)
-#else
-#define UNLIKELY(x) (x)
-#endif
-#endif
-
-#ifndef LIKELY
-#if COMPILER(GCC)
-#define LIKELY(x) __builtin_expect((x), 1)
-#else
-#define LIKELY(x) (x)
-#endif
-#endif
-
 #ifndef NO_RETURN
 #if COMPILER(GCC)
 #define NO_RETURN __attribute((__noreturn__))

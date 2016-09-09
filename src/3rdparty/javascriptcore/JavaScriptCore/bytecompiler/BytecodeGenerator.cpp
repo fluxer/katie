@@ -1835,7 +1835,7 @@ void BytecodeGenerator::beginSwitch(RegisterID* scrutineeRegister, SwitchInfo::S
             emitOpcode(op_switch_string);
             break;
         default:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
     }
 
     instructions().append(0); // place holder for table index

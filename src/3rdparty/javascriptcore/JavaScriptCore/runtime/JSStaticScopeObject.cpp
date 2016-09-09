@@ -47,7 +47,7 @@ void JSStaticScopeObject::put(ExecState*, const Identifier& propertyName, JSValu
     if (symbolTablePut(propertyName, value))
         return;
     
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 void JSStaticScopeObject::putWithAttributes(ExecState*, const Identifier& propertyName, JSValue value, unsigned attributes)
@@ -55,7 +55,7 @@ void JSStaticScopeObject::putWithAttributes(ExecState*, const Identifier& proper
     if (symbolTablePutWithAttributes(propertyName, value, attributes))
         return;
     
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 bool JSStaticScopeObject::isDynamicScope() const

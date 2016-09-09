@@ -217,7 +217,7 @@ static NEVER_INLINE UString substituteBackreferencesSlow(const UString& replacem
 static inline UString substituteBackreferences(const UString& replacement, const UString& source, const int* ovector, RegExp* reg)
 {
     int i = replacement.find('$', 0);
-    if (UNLIKELY(i != -1))
+    if (Q_UNLIKELY(i != -1))
         return substituteBackreferencesSlow(replacement, source, ovector, reg, i);
     return replacement;
 }

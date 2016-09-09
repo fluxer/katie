@@ -903,7 +903,7 @@ void JIT::emitBinaryDoubleOp(OpcodeID opcodeID, unsigned dst, unsigned op1, unsi
                 addJump(branchDouble(DoubleLessThanOrUnordered, fpRegT0, fpRegT2), dst);
                 break;
             default:
-                ASSERT_NOT_REACHED();
+                Q_UNREACHABLE();
         }
 
         if (!notInt32Op2.empty())
@@ -960,7 +960,7 @@ void JIT::emitBinaryDoubleOp(OpcodeID opcodeID, unsigned dst, unsigned op1, unsi
                 addJump(branchDouble(DoubleLessThanOrUnordered, fpRegT1, fpRegT0), dst);
                 break;
             default:
-                ASSERT_NOT_REACHED();
+                Q_UNREACHABLE();
         }
     }
 
@@ -2146,7 +2146,7 @@ void JIT::emit_op_mod(Instruction* currentInstruction)
 
 void JIT::emitSlow_op_mod(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 #endif // CPU(X86) || CPU(X86_64)

@@ -685,7 +685,7 @@ JSValue JSC_HOST_CALL arrayProtoFuncMap(ExecState* exec, JSObject*, JSValue this
         JSArray* array = asArray(thisObj);
         CachedCall cachedCall(exec, f, 3, exec->exceptionSlot());
         for (; k < length && !exec->hadException(); ++k) {
-            if (UNLIKELY(!array->canGetIndex(k)))
+            if (Q_UNLIKELY(!array->canGetIndex(k)))
                 break;
 
             cachedCall.setThis(applyThis);
@@ -742,9 +742,9 @@ JSValue JSC_HOST_CALL arrayProtoFuncEvery(ExecState* exec, JSObject*, JSValue th
         JSArray* array = asArray(thisObj);
         CachedCall cachedCall(exec, f, 3, exec->exceptionSlot());
         for (; k < length && !exec->hadException(); ++k) {
-            if (UNLIKELY(!array->canGetIndex(k)))
+            if (Q_UNLIKELY(!array->canGetIndex(k)))
                 break;
-            
+
             cachedCall.setThis(applyThis);
             cachedCall.setArgument(0, array->getIndex(k));
             cachedCall.setArgument(1, jsNumber(exec, k));
@@ -796,7 +796,7 @@ JSValue JSC_HOST_CALL arrayProtoFuncForEach(ExecState* exec, JSObject*, JSValue 
         JSArray* array = asArray(thisObj);
         CachedCall cachedCall(exec, f, 3, exec->exceptionSlot());
         for (; k < length && !exec->hadException(); ++k) {
-            if (UNLIKELY(!array->canGetIndex(k)))
+            if (Q_UNLIKELY(!array->canGetIndex(k)))
                 break;
 
             cachedCall.setThis(applyThis);
@@ -843,9 +843,9 @@ JSValue JSC_HOST_CALL arrayProtoFuncSome(ExecState* exec, JSObject*, JSValue thi
         JSArray* array = asArray(thisObj);
         CachedCall cachedCall(exec, f, 3, exec->exceptionSlot());
         for (; k < length && !exec->hadException(); ++k) {
-            if (UNLIKELY(!array->canGetIndex(k)))
+            if (Q_UNLIKELY(!array->canGetIndex(k)))
                 break;
-            
+
             cachedCall.setThis(applyThis);
             cachedCall.setArgument(0, array->getIndex(k));
             cachedCall.setArgument(1, jsNumber(exec, k));
@@ -916,7 +916,7 @@ JSValue JSC_HOST_CALL arrayProtoFuncReduce(ExecState* exec, JSObject*, JSValue t
             cachedCall.setThis(jsNull());
             cachedCall.setArgument(0, rv);
             JSValue v;
-            if (LIKELY(array->canGetIndex(i)))
+            if (Q_LIKELY(array->canGetIndex(i)))
                 v = array->getIndex(i);
             else
                 break; // length has been made unsafe while we enumerate fallback to slow path
@@ -986,7 +986,7 @@ JSValue JSC_HOST_CALL arrayProtoFuncReduceRight(ExecState* exec, JSObject*, JSVa
             unsigned idx = length - i - 1;
             cachedCall.setThis(jsNull());
             cachedCall.setArgument(0, rv);
-            if (UNLIKELY(!array->canGetIndex(idx)))
+            if (Q_UNLIKELY(!array->canGetIndex(idx)))
                 break; // length has been made unsafe while we enumerate fallback to slow path
             cachedCall.setArgument(1, array->getIndex(idx));
             cachedCall.setArgument(2, jsNumber(exec, idx));

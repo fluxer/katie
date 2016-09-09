@@ -329,7 +329,7 @@ JSObject* JSCallbackObject<Base>::construct(ExecState* exec, JSObject* construct
         }
     }
     
-    ASSERT_NOT_REACHED(); // getConstructData should prevent us from reaching here
+    Q_UNREACHABLE(); // getConstructData should prevent us from reaching here
     return 0;
 }
 
@@ -393,7 +393,7 @@ JSValue JSCallbackObject<Base>::call(ExecState* exec, JSObject* functionObject, 
         }
     }
     
-    ASSERT_NOT_REACHED(); // getCallData should prevent us from reaching here
+    Q_UNREACHABLE(); // getCallData should prevent us from reaching here
     return JSValue();
 }
 

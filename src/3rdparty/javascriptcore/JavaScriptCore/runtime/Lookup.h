@@ -295,7 +295,7 @@ namespace JSC {
             return false;
 
         if (entry->attributes() & Function) { // function: put as override property
-            if (LIKELY(value.isCell()))
+            if (Q_LIKELY(value.isCell()))
                 thisObj->putDirectFunction(propertyName, value.asCell());
             else
                 thisObj->putDirect(propertyName, value);

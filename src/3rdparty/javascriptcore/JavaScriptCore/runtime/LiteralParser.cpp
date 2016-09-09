@@ -442,7 +442,7 @@ JSValue LiteralParser::parse(ParserState initialState)
                 return JSValue();
             }
             default:
-                ASSERT_NOT_REACHED();
+                Q_UNREACHABLE();
         }
         if (stateStack.isEmpty())
             return lastValue;

@@ -108,7 +108,7 @@ void JIT::emit_op_del_by_id(Instruction* currentInstruction)
 
 // Treat these as nops - the call will be handed as a regular get_by_id/op_call pair.
 void JIT::emit_op_method_check(Instruction*) {}
-void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { ASSERT_NOT_REACHED(); }
+void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { Q_UNREACHABLE(); }
 #if ENABLE(JIT_OPTIMIZE_METHOD_CALLS)
 #error "JIT_OPTIMIZE_METHOD_CALLS requires JIT_OPTIMIZE_PROPERTY_ACCESS"
 #endif
@@ -127,7 +127,7 @@ void JIT::emit_op_get_by_val(Instruction* currentInstruction)
 
 void JIT::emitSlow_op_get_by_val(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 void JIT::emit_op_put_by_val(Instruction* currentInstruction)
@@ -145,7 +145,7 @@ void JIT::emit_op_put_by_val(Instruction* currentInstruction)
 
 void JIT::emitSlow_op_put_by_val(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 void JIT::emit_op_get_by_id(Instruction* currentInstruction)
@@ -165,7 +165,7 @@ void JIT::emit_op_get_by_id(Instruction* currentInstruction)
 void JIT::emitSlow_op_get_by_id(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
     m_propertyAccessInstructionIndex++;
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 void JIT::emit_op_put_by_id(Instruction* currentInstruction)
@@ -186,7 +186,7 @@ void JIT::emit_op_put_by_id(Instruction* currentInstruction)
 void JIT::emitSlow_op_put_by_id(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
     m_propertyAccessInstructionIndex++;
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 #else // !ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
@@ -266,7 +266,7 @@ void JIT::emitSlow_op_method_check(Instruction* currentInstruction, Vector<SlowC
 
 // Treat these as nops - the call will be handed as a regular get_by_id/op_call pair.
 void JIT::emit_op_method_check(Instruction*) {}
-void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { ASSERT_NOT_REACHED(); }
+void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { Q_UNREACHABLE(); }
 
 #endif
 
@@ -1183,7 +1183,7 @@ void JIT::emit_op_del_by_id(Instruction* currentInstruction)
 
 // Treat these as nops - the call will be handed as a regular get_by_id/op_call pair.
 void JIT::emit_op_method_check(Instruction*) {}
-void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { ASSERT_NOT_REACHED(); }
+void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { Q_UNREACHABLE(); }
 #if ENABLE(JIT_OPTIMIZE_METHOD_CALLS)
 #error "JIT_OPTIMIZE_METHOD_CALLS requires JIT_OPTIMIZE_PROPERTY_ACCESS"
 #endif
@@ -1205,7 +1205,7 @@ void JIT::emit_op_get_by_id(Instruction* currentInstruction)
 
 void JIT::emitSlow_op_get_by_id(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 void JIT::emit_op_put_by_id(Instruction* currentInstruction)
@@ -1227,7 +1227,7 @@ void JIT::emit_op_put_by_id(Instruction* currentInstruction)
 
 void JIT::emitSlow_op_put_by_id(Instruction*, Vector<SlowCaseEntry>::iterator&)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 #else // !ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
@@ -1304,7 +1304,7 @@ void JIT::emitSlow_op_method_check(Instruction* currentInstruction, Vector<SlowC
 
 // Treat these as nops - the call will be handed as a regular get_by_id/op_call pair.
 void JIT::emit_op_method_check(Instruction*) {}
-void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { ASSERT_NOT_REACHED(); }
+void JIT::emitSlow_op_method_check(Instruction*, Vector<SlowCaseEntry>::iterator&) { Q_UNREACHABLE(); }
 
 #endif
 

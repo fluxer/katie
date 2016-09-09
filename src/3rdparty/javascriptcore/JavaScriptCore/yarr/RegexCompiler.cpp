@@ -426,7 +426,7 @@ public:
             break;
         
         default:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
         }
     }
 

@@ -1837,7 +1837,7 @@ compileBracket(int options, int* brackets, unsigned char** codePtr,
         code += 1 + LINK_SIZE;
         ptr++;
     }
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 }
 
 /*************************************************

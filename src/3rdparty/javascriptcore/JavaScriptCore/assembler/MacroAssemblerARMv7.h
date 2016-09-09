@@ -571,7 +571,7 @@ public:
 
     Jump branchTruncateDoubleToInt32(FPRegisterID, RegisterID)
     {
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return jump();
     }
 

@@ -190,37 +190,37 @@ bool JSCell::isGetterSetter() const
 
 JSValue JSCell::toPrimitive(ExecState*, PreferredPrimitiveType) const
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return JSValue();
 }
 
 bool JSCell::getPrimitiveNumber(ExecState*, double&, JSValue&)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return false;
 }
 
 bool JSCell::toBoolean(ExecState*) const
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return false;
 }
 
 double JSCell::toNumber(ExecState*) const
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return 0;
 }
 
 UString JSCell::toString(ExecState*) const
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return UString();
 }
 
 JSObject* JSCell::toObject(ExecState*) const
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return 0;
 }
 

@@ -995,17 +995,17 @@ static NEVER_INLINE void throwStackOverflowError(CallFrame* callFrame, JSGlobalD
 
 #define CHECK_FOR_EXCEPTION() \
     do { \
-        if (UNLIKELY(stackFrame.globalData->exception)) \
+        if (Q_UNLIKELY(stackFrame.globalData->exception)) \
             VM_THROW_EXCEPTION(); \
     } while (0)
 #define CHECK_FOR_EXCEPTION_AT_END() \
     do { \
-        if (UNLIKELY(stackFrame.globalData->exception)) \
+        if (Q_UNLIKELY(stackFrame.globalData->exception)) \
             VM_THROW_EXCEPTION_AT_END(); \
     } while (0)
 #define CHECK_FOR_EXCEPTION_VOID() \
     do { \
-        if (UNLIKELY(stackFrame.globalData->exception)) { \
+        if (Q_UNLIKELY(stackFrame.globalData->exception)) { \
             VM_THROW_EXCEPTION_AT_END(); \
             return; \
         } \
@@ -1177,7 +1177,7 @@ DEFINE_STUB_FUNCTION(void, register_file_check)
 {
     STUB_INIT_STACK_FRAME(stackFrame);
 
-    if (LIKELY(stackFrame.registerFile->grow(&stackFrame.callFrame->registers()[stackFrame.callFrame->codeBlock()->m_numCalleeRegisters])))
+    if (Q_LIKELY(stackFrame.registerFile->grow(&stackFrame.callFrame->registers()[stackFrame.callFrame->codeBlock()->m_numCalleeRegisters])))
         return;
 
     // Rewind to the previous call frame because op_call already optimistically
@@ -1441,7 +1441,7 @@ static PolymorphicAccessStructureList* getPolymorphicAccessStructureListSlot(Str
         stubInfo->u.getByIdProtoList.listSize++;
         break;
     default:
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
     }
     
     Q_ASSERT(listIndex < POLYMORPHIC_LIST_CACHE_SIZE);
@@ -1936,7 +1936,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_val)
 
     JSValue result;
 
-    if (LIKELY(subscript.isUInt32())) {
+    if (Q_LIKELY(subscript.isUInt32())) {
         uint32_t i = subscript.asUInt32();
         if (isJSArray(globalData, baseValue)) {
             JSArray* jsArray = asArray(baseValue);
@@ -1975,7 +1975,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_val_string)
     
     JSValue result;
     
-    if (LIKELY(subscript.isUInt32())) {
+    if (Q_LIKELY(subscript.isUInt32())) {
         uint32_t i = subscript.asUInt32();
         if (isJSString(globalData, baseValue) && asString(baseValue)->canGetIndex(i))
             result = asString(baseValue)->getIndex(callFrame, i);
@@ -2005,7 +2005,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_get_by_val_byte_array)
     
     JSValue result;
 
-    if (LIKELY(subscript.isUInt32())) {
+    if (Q_LIKELY(subscript.isUInt32())) {
         uint32_t i = subscript.asUInt32();
         if (isJSByteArray(globalData, baseValue) && asByteArray(baseValue)->canAccessIndex(i)) {
             // All fast byte array accesses are safe from exceptions so return immediately to avoid exception checks.
@@ -2053,7 +2053,7 @@ DEFINE_STUB_FUNCTION(void, op_put_by_val)
     JSValue subscript = stackFrame.args[1].jsValue();
     JSValue value = stackFrame.args[2].jsValue();
 
-    if (LIKELY(subscript.isUInt32())) {
+    if (Q_LIKELY(subscript.isUInt32())) {
         uint32_t i = subscript.asUInt32();
         if (isJSArray(globalData, baseValue)) {
             JSArray* jsArray = asArray(baseValue);
@@ -2101,7 +2101,7 @@ DEFINE_STUB_FUNCTION(void, op_put_by_val_byte_array)
     JSValue subscript = stackFrame.args[1].jsValue();
     JSValue value = stackFrame.args[2].jsValue();
     
-    if (LIKELY(subscript.isUInt32())) {
+    if (Q_LIKELY(subscript.isUInt32())) {
         uint32_t i = subscript.asUInt32();
         if (isJSByteArray(globalData, baseValue) && asByteArray(baseValue)->canAccessIndex(i)) {
             JSByteArray* jsByteArray = asByteArray(baseValue);
@@ -2754,7 +2754,7 @@ DEFINE_STUB_FUNCTION(EncodedJSValue, op_call_eval)
     if (thisValue == globalObject && funcVal == globalObject->evalFunction()) {
         JSValue exceptionValue;
         JSValue result = interpreter->callEval(callFrame, registerFile, argv, argCount, registerOffset, exceptionValue);
-        if (UNLIKELY(exceptionValue)) {
+        if (Q_UNLIKELY(exceptionValue)) {
             stackFrame.globalData->exception = exceptionValue;
             VM_THROW_EXCEPTION_AT_END();
         }

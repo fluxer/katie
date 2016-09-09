@@ -410,7 +410,7 @@ public:
         Q_UNUSED(cond);
         Q_UNUSED(left);
         Q_UNUSED(right);
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return jump();
     }
 
@@ -759,7 +759,7 @@ public:
 
     void divDouble(Address src, FPRegisterID dest)
     {
-        ASSERT_NOT_REACHED(); // Untested
+        Q_UNREACHABLE(); // Untested
         loadDouble(src, ARMRegisters::SD0);
         divDouble(ARMRegisters::SD0, dest);
     }
@@ -794,7 +794,7 @@ public:
 
     void convertInt32ToDouble(Address src, FPRegisterID dest)
     {
-        ASSERT_NOT_REACHED(); // Untested
+        Q_UNREACHABLE(); // Untested
         // flds does not worth the effort here
         load32(src, ARMRegisters::S1);
         convertInt32ToDouble(ARMRegisters::S1, dest);
@@ -802,7 +802,7 @@ public:
 
     void convertInt32ToDouble(AbsoluteAddress src, FPRegisterID dest)
     {
-        ASSERT_NOT_REACHED(); // Untested
+        Q_UNREACHABLE(); // Untested
         // flds does not worth the effort here
         m_assembler.ldr_un_imm(ARMRegisters::S1, (ARMWord)src.m_ptr);
         m_assembler.dtr_u(true, ARMRegisters::S1, ARMRegisters::S1, 0);
@@ -826,7 +826,7 @@ public:
     {
         Q_UNUSED(src);
         Q_UNUSED(dest);
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return jump();
     }
 

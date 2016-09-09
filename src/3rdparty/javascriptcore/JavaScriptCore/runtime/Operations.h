@@ -50,7 +50,7 @@ namespace JSC {
 
         unsigned index = 0;
         RefPtr<JSString::Rope> rope = JSString::Rope::createOrNull(ropeLength);
-        if (UNLIKELY(!rope))
+        if (Q_UNLIKELY(!rope))
             return throwOutOfMemoryError(exec);
         rope->append(index, s1);
         rope->append(index, s2);
@@ -68,7 +68,7 @@ namespace JSC {
 
         unsigned index = 0;
         RefPtr<JSString::Rope> rope = JSString::Rope::createOrNull(ropeLength);
-        if (UNLIKELY(!rope))
+        if (Q_UNLIKELY(!rope))
             return throwOutOfMemoryError(exec);
         rope->append(index, u1);
         rope->append(index, s2);
@@ -86,7 +86,7 @@ namespace JSC {
 
         unsigned index = 0;
         RefPtr<JSString::Rope> rope = JSString::Rope::createOrNull(ropeLength);
-        if (UNLIKELY(!rope))
+        if (Q_UNLIKELY(!rope))
             return throwOutOfMemoryError(exec);
         rope->append(index, s1);
         rope->append(index, u2);
@@ -101,7 +101,7 @@ namespace JSC {
         unsigned ropeLength = 0;
         for (unsigned i = 0; i < count; ++i) {
             JSValue v = strings[i].jsValue();
-            if (LIKELY(v.isString()))
+            if (Q_LIKELY(v.isString()))
                 ropeLength += asString(v)->ropeLength();
             else
                 ++ropeLength;
@@ -112,13 +112,13 @@ namespace JSC {
             return new (globalData) JSString(exec, strings[0].jsValue(), strings[1].jsValue(), strings[2].jsValue());
 
         RefPtr<JSString::Rope> rope = JSString::Rope::createOrNull(ropeLength);
-        if (UNLIKELY(!rope))
+        if (Q_UNLIKELY(!rope))
             return throwOutOfMemoryError(exec);
 
         unsigned index = 0;
         for (unsigned i = 0; i < count; ++i) {
             JSValue v = strings[i].jsValue();
-            if (LIKELY(v.isString()))
+            if (Q_LIKELY(v.isString()))
                 rope->append(index, asString(v));
             else
                 rope->append(index, v.toString(exec));
@@ -131,30 +131,30 @@ namespace JSC {
     ALWAYS_INLINE JSValue jsString(ExecState* exec, JSValue thisValue, const ArgList& args)
     {
         unsigned ropeLength = 0;
-        if (LIKELY(thisValue.isString()))
+        if (Q_LIKELY(thisValue.isString()))
             ropeLength += asString(thisValue)->ropeLength();
         else
             ++ropeLength;
         for (unsigned i = 0; i < args.size(); ++i) {
             JSValue v = args.at(i);
-            if (LIKELY(v.isString()))
+            if (Q_LIKELY(v.isString()))
                 ropeLength += asString(v)->ropeLength();
             else
                 ++ropeLength;
         }
 
         RefPtr<JSString::Rope> rope = JSString::Rope::createOrNull(ropeLength);
-        if (UNLIKELY(!rope))
+        if (Q_UNLIKELY(!rope))
             return throwOutOfMemoryError(exec);
 
         unsigned index = 0;
-        if (LIKELY(thisValue.isString()))
+        if (Q_LIKELY(thisValue.isString()))
             rope->append(index, asString(thisValue));
         else
             rope->append(index, thisValue.toString(exec));
         for (unsigned i = 0; i < args.size(); ++i) {
             JSValue v = args.at(i);
-            if (LIKELY(v.isString()))
+            if (Q_LIKELY(v.isString()))
                 rope->append(index, asString(v));
             else
                 rope->append(index, v.toString(exec));
@@ -408,7 +408,7 @@ namespace JSC {
             ++next;
         }
 
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return JSValue();
     }
 } // namespace JSC

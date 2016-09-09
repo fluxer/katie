@@ -154,7 +154,7 @@ namespace JSC {
         virtual bool isAdd() const { return false; }
         virtual bool hasConditionContextCodegen() const { return false; }
 
-        virtual void emitBytecodeInConditionContext(BytecodeGenerator&, Label*, Label*, bool) { ASSERT_NOT_REACHED(); }
+        virtual void emitBytecodeInConditionContext(BytecodeGenerator&, Label*, Label*, bool) { Q_UNREACHABLE(); }
 
         virtual ExpressionNode* stripUnaryPlus() { return this; }
 

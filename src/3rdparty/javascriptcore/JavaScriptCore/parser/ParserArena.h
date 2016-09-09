@@ -80,7 +80,7 @@ namespace JSC {
             Q_ASSERT(size <= freeablePoolSize);
             size_t alignedSize = alignSize(size);
             Q_ASSERT(alignedSize <= freeablePoolSize);
-            if (UNLIKELY(static_cast<size_t>(m_freeablePoolEnd - m_freeableMemory) < alignedSize))
+            if (Q_UNLIKELY(static_cast<size_t>(m_freeablePoolEnd - m_freeableMemory) < alignedSize))
                 allocateFreeablePool();
             void* block = m_freeableMemory;
             m_freeableMemory += alignedSize;

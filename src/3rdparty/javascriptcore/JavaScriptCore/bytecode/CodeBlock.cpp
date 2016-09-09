@@ -131,7 +131,7 @@ NEVER_INLINE static const char* debugHookName(int debugHookID)
             return "didReachBreakpoint";
     }
 
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return "";
 }
 
@@ -216,7 +216,7 @@ static unsigned instructionOffsetForNth(ExecState* exec, const Vector<Instructio
         i += opcodeLengths[currentOpcode];
     }
 
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return 0;
 }
 
@@ -268,7 +268,7 @@ static void printStructureStubInfo(const StructureStubInfo& stubInfo, unsigned i
         printf("  [%4d] %s\n", instructionOffset, "op_get_string_length");
         return;
     default:
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
     }
 }
 #endif

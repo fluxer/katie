@@ -343,7 +343,7 @@ namespace JSC {
     {
         if (isInt32())
             result = asInt32();
-        else if (LIKELY(isDouble()))
+        else if (Q_LIKELY(isDouble()))
             result = asDouble();
         else {
             Q_ASSERT(!isNumber());

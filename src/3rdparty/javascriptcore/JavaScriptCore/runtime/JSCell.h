@@ -293,7 +293,7 @@ namespace JSC {
 
     inline bool JSValue::needsThisConversion() const
     {
-        if (UNLIKELY(!isCell()))
+        if (Q_UNLIKELY(!isCell()))
             return true;
         return asCell()->structure()->typeInfo().needsThisConversion();
     }

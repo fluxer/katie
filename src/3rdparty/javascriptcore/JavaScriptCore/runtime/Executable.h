@@ -223,7 +223,7 @@ namespace JSC {
         JSObject* compile(ExecState*, ScopeChainNode*);
 
         // CodeBlocks for program code are transient and therefore do not gain from from throwing out there exception information.
-        ExceptionInfo* reparseExceptionInfo(JSGlobalData*, ScopeChainNode*, CodeBlock*) { ASSERT_NOT_REACHED(); return 0; }
+        ExceptionInfo* reparseExceptionInfo(JSGlobalData*, ScopeChainNode*, CodeBlock*) { Q_UNREACHABLE(); return 0; }
 
     private:
         ProgramExecutable(ExecState* exec, const SourceCode& source)

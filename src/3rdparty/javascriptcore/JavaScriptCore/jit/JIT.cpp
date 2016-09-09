@@ -321,7 +321,7 @@ void JIT::privateCompileMainPass()
         case op_put_by_id_generic:
         case op_put_by_id_replace:
         case op_put_by_id_transition:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
         }
     }
 
@@ -418,7 +418,7 @@ void JIT::privateCompileSlowCases()
         DEFINE_SLOWCASE_OP(op_to_jsnumber)
         DEFINE_SLOWCASE_OP(op_to_primitive)
         default:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
         }
 
         Q_ASSERT_X(iter == m_slowCases.end() || firstTo != iter->to, "JIT::privateCompileSlowCases", "Not enough jumps linked in slow case codegen");

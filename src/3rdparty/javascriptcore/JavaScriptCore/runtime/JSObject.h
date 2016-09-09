@@ -602,7 +602,7 @@ inline JSValue JSValue::get(ExecState* exec, const Identifier& propertyName) con
 
 inline JSValue JSValue::get(ExecState* exec, const Identifier& propertyName, PropertySlot& slot) const
 {
-    if (UNLIKELY(!isCell())) {
+    if (Q_UNLIKELY(!isCell())) {
         JSObject* prototype = synthesizePrototype(exec);
         if (propertyName == exec->propertyNames().underscoreProto)
             return prototype;
@@ -629,7 +629,7 @@ inline JSValue JSValue::get(ExecState* exec, unsigned propertyName) const
 
 inline JSValue JSValue::get(ExecState* exec, unsigned propertyName, PropertySlot& slot) const
 {
-    if (UNLIKELY(!isCell())) {
+    if (Q_UNLIKELY(!isCell())) {
         JSObject* prototype = synthesizePrototype(exec);
         if (!prototype->getPropertySlot(exec, propertyName, slot))
             return jsUndefined();
@@ -648,7 +648,7 @@ inline JSValue JSValue::get(ExecState* exec, unsigned propertyName, PropertySlot
 
 inline void JSValue::put(ExecState* exec, const Identifier& propertyName, JSValue value, PutPropertySlot& slot)
 {
-    if (UNLIKELY(!isCell())) {
+    if (Q_UNLIKELY(!isCell())) {
         synthesizeObject(exec)->put(exec, propertyName, value, slot);
         return;
     }
@@ -657,7 +657,7 @@ inline void JSValue::put(ExecState* exec, const Identifier& propertyName, JSValu
 
 inline void JSValue::put(ExecState* exec, unsigned propertyName, JSValue value)
 {
-    if (UNLIKELY(!isCell())) {
+    if (Q_UNLIKELY(!isCell())) {
         synthesizeObject(exec)->put(exec, propertyName, value);
         return;
     }

@@ -68,7 +68,7 @@ JSFunction::JSFunction(ExecState* exec, NonNullPassRefPtr<Structure> structure, 
 #else
     Q_UNUSED(length);
     Q_UNUSED(func);
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 #endif
 }
 

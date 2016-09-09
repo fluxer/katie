@@ -72,7 +72,7 @@ void StructureStubInfo::deref()
         // These instructions don't ref their Structures.
         return;
     default:
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
     }
 }
 #endif

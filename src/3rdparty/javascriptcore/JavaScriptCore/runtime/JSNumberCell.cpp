@@ -104,7 +104,7 @@ JSValue jsNumberCell(ExecState*, double);
 
 JSValue jsNumberCell(ExecState*, double)
 {
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
     return JSValue();
 }
 

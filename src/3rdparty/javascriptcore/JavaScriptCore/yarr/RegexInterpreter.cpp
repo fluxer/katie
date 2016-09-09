@@ -462,7 +462,7 @@ public:
             return true;
         }
 
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return false;
     }
 
@@ -535,7 +535,7 @@ public:
             return true;
         }
 
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return false;
     }
 
@@ -834,7 +834,7 @@ public:
             return true;
         }
 
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return false;
     }
 
@@ -957,7 +957,7 @@ public:
         }
         }
 
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return false;
     }
 
@@ -1105,7 +1105,7 @@ public:
         }
 
         // We should never fall-through to here.
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
 
     backtrack:
         Q_ASSERT(context->term < static_cast<int>(disjunction->terms.size()));
@@ -1114,7 +1114,7 @@ public:
         case ByteTerm::TypeSubpatternBegin:
             return false;
         case ByteTerm::TypeSubpatternEnd:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
 
         case ByteTerm::TypeBodyAlternativeBegin:
         case ByteTerm::TypeBodyAlternativeDisjunction: {
@@ -1131,7 +1131,7 @@ public:
             MATCH_NEXT();
         }
         case ByteTerm::TypeBodyAlternativeEnd:
-            ASSERT_NOT_REACHED();
+            Q_UNREACHABLE();
 
             case ByteTerm::TypeAlternativeBegin:
             case ByteTerm::TypeAlternativeDisjunction: {
@@ -1202,7 +1202,7 @@ public:
                 BACKTRACK();
         }
 
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         return false;
     }
 

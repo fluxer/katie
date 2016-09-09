@@ -238,8 +238,8 @@ ALWAYS_INLINE CallFrame* Interpreter::slideRegisterWindowForCall(CodeBlock* newC
     Register* r = callFrame->registers();
     Register* newEnd = r + registerOffset + newCodeBlock->m_numCalleeRegisters;
 
-    if (LIKELY(argc == newCodeBlock->m_numParameters)) { // correct number of arguments
-        if (UNLIKELY(!registerFile->grow(newEnd)))
+    if (Q_LIKELY(argc == newCodeBlock->m_numParameters)) { // correct number of arguments
+        if (Q_UNLIKELY(!registerFile->grow(newEnd)))
             return 0;
         r += registerOffset;
     } else if (argc < newCodeBlock->m_numParameters) { // too few arguments -- fill in the blanks
@@ -635,7 +635,7 @@ JSValue Interpreter::execute(FunctionExecutable* functionExecutable, CallFrame* 
 
     CodeBlock* codeBlock = &functionExecutable->bytecode(callFrame, scopeChain);
     newCallFrame = slideRegisterWindowForCall(codeBlock, &m_registerFile, newCallFrame, argc + RegisterFile::CallFrameHeaderSize, argc);
-    if (UNLIKELY(!newCallFrame)) {
+    if (Q_UNLIKELY(!newCallFrame)) {
         *exception = createStackOverflowError(callFrame);
         m_registerFile.shrink(oldEnd);
         return jsNull();
@@ -686,7 +686,7 @@ CallFrameClosure Interpreter::prepareForRepeatCall(FunctionExecutable* FunctionE
     
     CodeBlock* codeBlock = &FunctionExecutable->bytecode(callFrame, scopeChain);
     newCallFrame = slideRegisterWindowForCall(codeBlock, &m_registerFile, newCallFrame, argc + RegisterFile::CallFrameHeaderSize, argc);
-    if (UNLIKELY(!newCallFrame)) {
+    if (Q_UNLIKELY(!newCallFrame)) {
         *exception = createStackOverflowError(callFrame);
         m_registerFile.shrink(oldEnd);
         return CallFrameClosure();
@@ -1042,13 +1042,13 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 {
     // One-time initialization of our address tables. We have to put this code
     // here because our labels are only in scope inside this function.
-    if (UNLIKELY(flag == InitializeAndReturn)) {
+    if (Q_UNLIKELY(flag == InitializeAndReturn)) {
         return JSValue();
     }
 
 #if ENABLE(JIT)
     // Mixing Interpreter + JIT is not supported.
-    ASSERT_NOT_REACHED();
+    Q_UNREACHABLE();
 #endif
 
     JSGlobalData* globalData = &callFrame->globalData();
@@ -1060,7 +1060,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
 #define CHECK_FOR_EXCEPTION() \
     do { \
-        if (UNLIKELY(globalData->exception != JSValue())) { \
+        if (Q_UNLIKELY(globalData->exception != JSValue())) { \
             exceptionValue = globalData->exception; \
             goto vm_throw; \
         } \
@@ -1390,7 +1390,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         JSValue srcVal = callFrame->r(src).jsValue();
 
-        if (LIKELY(srcVal.isNumber()))
+        if (Q_LIKELY(srcVal.isNumber()))
             callFrame->r(dst) = callFrame->r(src);
         else {
             JSValue result = srcVal.toJSNumber(callFrame);
@@ -1856,7 +1856,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
            scope chain, and writes the resulting value to register
            dst. If the property is not found, raises an exception.
         */
-        if (UNLIKELY(!resolve(callFrame, vPC, exceptionValue)))
+        if (Q_UNLIKELY(!resolve(callFrame, vPC, exceptionValue)))
             goto vm_throw;
 
         vPC += OPCODE_LENGTH(op_resolve);
@@ -1869,7 +1869,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
          scope chain skipping the top 'skip' levels, and writes the resulting
          value to register dst. If the property is not found, raises an exception.
          */
-        if (UNLIKELY(!resolveSkip(callFrame, vPC, exceptionValue)))
+        if (Q_UNLIKELY(!resolveSkip(callFrame, vPC, exceptionValue)))
             goto vm_throw;
 
         vPC += OPCODE_LENGTH(op_resolve_skip);
@@ -1884,7 +1884,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
            a fast lookup using the case offset, otherwise fall back to a full resolve and
            cache the new structure and offset
          */
-        if (UNLIKELY(!resolveGlobal(callFrame, vPC, exceptionValue)))
+        if (Q_UNLIKELY(!resolveGlobal(callFrame, vPC, exceptionValue)))
             goto vm_throw;
         
         vPC += OPCODE_LENGTH(op_resolve_global);
@@ -1996,7 +1996,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
            resolve, or resolve_base followed by get_by_id, as it
            avoids duplicate hash lookups.
         */
-        if (UNLIKELY(!resolveBaseAndProperty(callFrame, vPC, exceptionValue)))
+        if (Q_UNLIKELY(!resolveBaseAndProperty(callFrame, vPC, exceptionValue)))
             goto vm_throw;
 
         vPC += OPCODE_LENGTH(op_resolve_with_base);
@@ -2035,11 +2035,11 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int base = vPC[2].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
 
-        if (LIKELY(baseValue.isCell())) {
+        if (Q_LIKELY(baseValue.isCell())) {
             JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structure() == structure)) {
+            if (Q_LIKELY(baseCell->structure() == structure)) {
                 Q_ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
                 int dst = vPC[1].u.operand;
@@ -2066,16 +2066,16 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int base = vPC[2].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
 
-        if (LIKELY(baseValue.isCell())) {
+        if (Q_LIKELY(baseValue.isCell())) {
             JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structure() == structure)) {
+            if (Q_LIKELY(baseCell->structure() == structure)) {
                 Q_ASSERT(structure->prototypeForLookup(callFrame).isObject());
                 JSObject* protoObject = asObject(structure->prototypeForLookup(callFrame));
                 Structure* prototypeStructure = vPC[5].u.structure;
 
-                if (LIKELY(protoObject->structure() == prototypeStructure)) {
+                if (Q_LIKELY(protoObject->structure() == prototypeStructure)) {
                     int dst = vPC[1].u.operand;
                     int offset = vPC[6].u.operand;
 
@@ -2094,14 +2094,14 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
     }
     DEFINE_OPCODE(op_get_by_id_self_list) {
         // Polymorphic self access caching currently only supported when JITting.
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         // This case of the switch must not be empty, else (op_get_by_id_self_list == op_get_by_id_chain)!
         vPC += OPCODE_LENGTH(op_get_by_id_self_list);
         NEXT_INSTRUCTION();
     }
     DEFINE_OPCODE(op_get_by_id_proto_list) {
         // Polymorphic prototype access caching currently only supported when JITting.
-        ASSERT_NOT_REACHED();
+        Q_UNREACHABLE();
         // This case of the switch must not be empty, else (op_get_by_id_proto_list == op_get_by_id_chain)!
         vPC += OPCODE_LENGTH(op_get_by_id_proto_list);
         NEXT_INSTRUCTION();
@@ -2116,11 +2116,11 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int base = vPC[2].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
 
-        if (LIKELY(baseValue.isCell())) {
+        if (Q_LIKELY(baseValue.isCell())) {
             JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structure() == structure)) {
+            if (Q_LIKELY(baseCell->structure() == structure)) {
                 RefPtr<Structure>* it = vPC[5].u.structureChain->head();
                 size_t count = vPC[6].u.operand;
                 RefPtr<Structure>* end = it + count;
@@ -2128,7 +2128,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
                 while (true) {
                     JSObject* baseObject = asObject(baseCell->structure()->prototypeForLookup(callFrame));
 
-                    if (UNLIKELY(baseObject->structure() != (*it).get()))
+                    if (Q_UNLIKELY(baseObject->structure() != (*it).get()))
                         break;
 
                     if (++it == end) {
@@ -2182,7 +2182,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         int base = vPC[2].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
-        if (LIKELY(isJSArray(globalData, baseValue))) {
+        if (Q_LIKELY(isJSArray(globalData, baseValue))) {
             int dst = vPC[1].u.operand;
             callFrame->r(dst) = jsNumber(callFrame, asArray(baseValue)->length());
             vPC += OPCODE_LENGTH(op_get_array_length);
@@ -2202,7 +2202,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         int base = vPC[2].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
-        if (LIKELY(isJSString(globalData, baseValue))) {
+        if (Q_LIKELY(isJSString(globalData, baseValue))) {
             int dst = vPC[1].u.operand;
             callFrame->r(dst) = jsNumber(callFrame, asString(baseValue)->length());
             vPC += OPCODE_LENGTH(op_get_string_length);
@@ -2252,12 +2252,12 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int base = vPC[1].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
         
-        if (LIKELY(baseValue.isCell())) {
+        if (Q_LIKELY(baseValue.isCell())) {
             JSCell* baseCell = baseValue.asCell();
             Structure* oldStructure = vPC[4].u.structure;
             Structure* newStructure = vPC[5].u.structure;
             
-            if (LIKELY(baseCell->structure() == oldStructure)) {
+            if (Q_LIKELY(baseCell->structure() == oldStructure)) {
                 Q_ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
 
@@ -2265,7 +2265,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
                 JSValue proto = baseObject->structure()->prototypeForLookup(callFrame);
                 while (!proto.isNull()) {
-                    if (UNLIKELY(asObject(proto)->structure() != (*it).get())) {
+                    if (Q_UNLIKELY(asObject(proto)->structure() != (*it).get())) {
                         uncachePutByID(callFrame->codeBlock(), vPC);
                         NEXT_INSTRUCTION();
                     }
@@ -2302,11 +2302,11 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         int base = vPC[1].u.operand;
         JSValue baseValue = callFrame->r(base).jsValue();
 
-        if (LIKELY(baseValue.isCell())) {
+        if (Q_LIKELY(baseValue.isCell())) {
             JSCell* baseCell = baseValue.asCell();
             Structure* structure = vPC[4].u.structure;
 
-            if (LIKELY(baseCell->structure() == structure)) {
+            if (Q_LIKELY(baseCell->structure() == structure)) {
                 Q_ASSERT(baseCell->isObject());
                 JSObject* baseObject = asObject(baseCell);
                 int value = vPC[3].u.operand;
@@ -2411,7 +2411,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
 
         JSValue result;
 
-        if (LIKELY(subscript.isUInt32())) {
+        if (Q_LIKELY(subscript.isUInt32())) {
             uint32_t i = subscript.asUInt32();
             if (isJSArray(globalData, baseValue)) {
                 JSArray* jsArray = asArray(baseValue);
@@ -2453,7 +2453,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         JSValue baseValue = callFrame->r(base).jsValue();
         JSValue subscript = callFrame->r(property).jsValue();
 
-        if (LIKELY(subscript.isUInt32())) {
+        if (Q_LIKELY(subscript.isUInt32())) {
             uint32_t i = subscript.asUInt32();
             if (isJSArray(globalData, baseValue)) {
                 JSArray* jsArray = asArray(baseValue);
@@ -2995,7 +2995,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             CallFrame* previousCallFrame = callFrame;
 
             callFrame = slideRegisterWindowForCall(newCodeBlock, registerFile, callFrame, registerOffset, argCount);
-            if (UNLIKELY(!callFrame)) {
+            if (Q_UNLIKELY(!callFrame)) {
                 callFrame = previousCallFrame;
                 exceptionValue = createStackOverflowError(callFrame);
                 goto vm_throw;
@@ -3149,7 +3149,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             CallFrame* previousCallFrame = callFrame;
             
             callFrame = slideRegisterWindowForCall(newCodeBlock, registerFile, callFrame, registerOffset, argCount);
-            if (UNLIKELY(!callFrame)) {
+            if (Q_UNLIKELY(!callFrame)) {
                 callFrame = previousCallFrame;
                 exceptionValue = createStackOverflowError(callFrame);
                 goto vm_throw;
@@ -3414,7 +3414,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             CallFrame* previousCallFrame = callFrame;
 
             callFrame = slideRegisterWindowForCall(newCodeBlock, registerFile, callFrame, registerOffset, argCount);
-            if (UNLIKELY(!callFrame)) {
+            if (Q_UNLIKELY(!callFrame)) {
                 callFrame = previousCallFrame;
                 exceptionValue = createStackOverflowError(callFrame);
                 goto vm_throw;
@@ -3463,7 +3463,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
         */
 
         int dst = vPC[1].u.operand;
-        if (LIKELY(callFrame->r(dst).jsValue().isObject())) {
+        if (Q_LIKELY(callFrame->r(dst).jsValue().isObject())) {
             vPC += OPCODE_LENGTH(op_construct_verify);
             NEXT_INSTRUCTION();
         }
