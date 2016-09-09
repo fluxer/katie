@@ -152,17 +152,6 @@ namespace JSC {
         JSGlobalData* m_globalData;
     };
 
-    // tunable parameters
-    template<size_t bytesPerWord> struct CellSize;
-
-    // cell size needs to be a power of two for certain optimizations in collector.cpp
-#if USE(JSVALUE32)
-    template<> struct CellSize<sizeof(uint32_t)> { static const size_t m_value = 32; };
-#else
-    template<> struct CellSize<sizeof(uint32_t)> { static const size_t m_value = 64; };
-#endif
-    template<> struct CellSize<sizeof(uint64_t)> { static const size_t m_value = 64; };
-
 #if OS(WINCE)
     const size_t BLOCK_SIZE = 64 * 1024; // 64k
 #else
@@ -172,7 +161,12 @@ namespace JSC {
     // derived constants
     const size_t BLOCK_OFFSET_MASK = BLOCK_SIZE - 1;
     const size_t BLOCK_MASK = ~BLOCK_OFFSET_MASK;
-    const size_t MINIMUM_CELL_SIZE = CellSize<sizeof(void*)>::m_value;
+    // cell size needs to be a power of two for certain optimizations in collector.cpp
+#if USE(JSVALUE32)
+    const size_t MINIMUM_CELL_SIZE = 32;
+#else
+    const size_t MINIMUM_CELL_SIZE = 64;
+#endif
     const size_t CELL_ARRAY_LENGTH = (MINIMUM_CELL_SIZE / sizeof(double)) + (MINIMUM_CELL_SIZE % sizeof(double) != 0 ? sizeof(double) : 0);
     const size_t CELL_SIZE = CELL_ARRAY_LENGTH * sizeof(double);
     const size_t SMALL_CELL_SIZE = CELL_SIZE / 2;
