@@ -23,8 +23,8 @@ There are several things you should be aware before considering Katie:
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - Symbian, QWS and QPA are no longer supported platforms
   - OpenVG is no longer supported graphics output
-  - native graphics system is not more, rasterizer is just as fast as native
   - Blitter is no longer supported painting engine
+  - native graphics system is no more, rasterizer is just as fast as native
   - QPictureIO and plugins for it are no longer supported
   - QML debugger and inspector have been removed, potentially dangerous
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
