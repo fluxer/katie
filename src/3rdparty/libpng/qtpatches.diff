@@ -36,6 +36,7 @@ index b4ec3c3..f0fdcf8 100644
  #define PNG_SIMPLIFIED_WRITE_AFIRST_SUPPORTED
  #define PNG_SIMPLIFIED_WRITE_BGR_SUPPORTED
  #define PNG_SIMPLIFIED_WRITE_SUPPORTED
+ #define PNG_SIMPLIFIED_WRITE_STDIO_SUPPORTED
 +#endif
  #define PNG_STDIO_SUPPORTED
  #define PNG_STORE_UNKNOWN_CHUNKS_SUPPORTED
@@ -69,17 +70,6 @@ index 5980a3f..4031d73 100644
  /* See pngconf.h for more details: the builder of the library may set this on
   * the command line to the right thing for the specific compilation system or it
   * may be automagically set above (at present we know of no system where it does
-@@ -425,7 +436,9 @@
- 
- #if defined(WIN32) || defined(_Windows) || defined(_WINDOWS) || \
-     defined(_WIN32) || defined(__WIN32__)
--#  include <windows.h>  /* defines _WINDOWS_ macro */
-+#  if !defined(__SYMBIAN32__)
-+#    include <windows.h>  /* defines _WINDOWS_ macro */
-+#  endif
- #endif
- #endif /* PNG_VERSION_INFO_ONLY */
- 
 @@ -436,7 +449,7 @@
  
  /* Memory model/platform independent fns */
