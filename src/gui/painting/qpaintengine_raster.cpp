@@ -1166,13 +1166,9 @@ void QRasterPaintEngine::clip(const QRect &rect, Qt::ClipOperation op)
     if (op == Qt::NoClip) {
         qrasterpaintengine_state_setNoClip(s);
 
-    } else if (op == Qt::UniteClip || s->matrix.type() > QTransform::TxScale) {
+    } else if (op == Qt::UniteClip || s->matrix.type() > QTransform::TxScale
+        || !setClipRectInDeviceCoords(s->matrix.mapRect(rect), op)) {
         QPaintEngineEx::clip(rect, op);
-        return;
-
-    } else if (!setClipRectInDeviceCoords(s->matrix.mapRect(rect), op)) {
-        QPaintEngineEx::clip(rect, op);
-        return;
     }
 }
 
