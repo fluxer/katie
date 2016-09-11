@@ -211,6 +211,8 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_testConnection())
     Q_PRIVATE_SLOT(d_func(), void _q_forceDisconnect())
 
+    friend class QLocalSocket;
+    friend class QLocalSocketPrivate;
 };
 
 #ifndef QT_NO_DEBUG_STREAM
