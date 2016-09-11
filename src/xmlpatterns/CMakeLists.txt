@@ -79,9 +79,7 @@ katie_setup_target(KtXmlPatterns ${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
 katie_setup_paths()
 
 # the component requires exceptions
-if(NOT KATIE_PLATFORM STREQUAL "win32")
-    set_source_files_properties(${XMLPATTERNS_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
-endif()
+set_source_files_properties(${XMLPATTERNS_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
 
 add_library(KtXmlPatterns ${KATIE_TYPE} ${KtXmlPatterns_SOURCES})
 target_link_libraries(KtXmlPatterns ${EXTRA_XMLPATTERNS_LIBS})

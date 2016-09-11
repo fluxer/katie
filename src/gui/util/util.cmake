@@ -27,20 +27,3 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp
     )
 endif()
-
-if(KATIE_PLATFORM STREQUAL "wince")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_wince.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "win32")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_win.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_mac.mm
-    )
-endif()

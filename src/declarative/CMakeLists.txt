@@ -65,10 +65,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/core/tools
 )
 
-if(KATIE_PLATFORM STREQUAL "maemo")
-    add_definitions(-DQDECLARATIVEVIEW_NOBACKGROUND)
-endif()
-
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
 katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript")

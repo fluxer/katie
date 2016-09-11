@@ -14,17 +14,3 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qlibraryinfo.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/global/qnumeric.cpp
 )
-
-# TODO: QNX slog2 check
-if(${KATIE_PLATFORM} STREQUAL "qnx")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        slog2
-    )
-    add_definitions(-DQT_USE_SLOG2)
-elseif(${KATIE_PLATFORM} STREQUAL "win32")
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/global/qt_windows.h
-    )
-endif()

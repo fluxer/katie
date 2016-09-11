@@ -144,35 +144,6 @@ if(WITH_X11 AND X11_FOUND)
             ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_x11.cpp
         )
     endif()
-elseif(KATIE_PLATFORM STREQUAL "wince")
-    set(OPENGL_HEADERS
-        ${OPENGL_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_egl_p.h
-    )
-    set(OPENGL_SOURCES
-        ${OPENGL_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_wince.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_egl.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_egl.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "win32")
-    set(OPENGL_SOURCES
-        ${OPENGL_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_win.cpp
-    )
-    add_definitions(-DQT_NO_EGL)
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(OPENGL_SOURCES
-        ${OPENGL_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qgl_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/qglpixelbuffer_mac.mm
-    )
-    set(CMAKE_SHARED_LINK_FLAGS
-        ${CMAKE_SHARED_LINK_FLAGS}
-        -framework AppKit
-        -framework Carbon
-    )
 endif()
 
 if(WITH_FREETYPE AND FREETYPE_FOUND)

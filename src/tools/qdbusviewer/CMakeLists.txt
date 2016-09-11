@@ -30,13 +30,6 @@ set(QDBUSVIEWER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.qrc
 )
 
-if(KATIE_PLATFORM MATCHES "(win32|wince)")
-    set(QDBUSVIEWER_SOURCES
-        ${QDBUSVIEWER_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.rc
-    )
-endif()
-
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusviewer.desktop.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
@@ -48,7 +41,6 @@ katie_setup_target(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 katie_setup_paths()
 
 add_executable(qdbusviewer
-    WIN32 # TODO: MACOSX_BUNDLE
     ${qdbusviewer_SOURCES}
 )
 target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
@@ -60,15 +52,13 @@ install(
     COMPONENT Devel
 )
 
-if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    install(
-        PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
-        DESTINATION ${APPLICATIONS_INSTALL_PATH}
-        COMPONENT Devel
-    )
-    install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
-        DESTINATION ${PIXMAPS_INSTALL_PATH}
-        COMPONENT Devel
-    )
-endif()
+install(
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
+    DESTINATION ${APPLICATIONS_INSTALL_PATH}
+    COMPONENT Devel
+)
+install(
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
+    DESTINATION ${PIXMAPS_INSTALL_PATH}
+    COMPONENT Devel
+)

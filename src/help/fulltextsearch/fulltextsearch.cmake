@@ -1,7 +1,4 @@
 add_definitions(-D_BUILD_FOR_QT_ -DLUCENE_DISABLE_MEMTRACKING)
-if(${KATIE_PLATFORM} STREQUAL "win32")
-    add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_MT)
-endif()
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/clucene/src
@@ -140,6 +137,4 @@ set(FULLTEXTSEARCH_SOURCES
 )
 
 # impossible to disable exceptions in clucene atm
-if(NOT KATIE_PLATFORM STREQUAL "win32")
-    set_source_files_properties(${FULLTEXTSEARCH_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
-endif()
+set_source_files_properties(${FULLTEXTSEARCH_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")

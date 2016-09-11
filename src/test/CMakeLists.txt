@@ -106,28 +106,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-if(${KATIE_PLATFORM} STREQUAL "wince")
-    set(EXTRA_TEST_LIBS
-        ${EXTRA_TEST_LIBS}
-        libcmt.lib
-        corelibc.lib
-        ole32.lib
-        oleaut32.lib
-        uuid.lib
-        commctrl.lib
-        coredll.lib
-        winsock.lib
-    )
-elseif(${KATIE_PLATFORM} STREQUAL "mac")
-    set(CMAKE_SHARED_LINK_FLAGS
-        ${CMAKE_SHARED_LINK_FLAGS}
-        -framework IOKit
-        -framework Security
-        -framework ApplicationServices
-        -framework CoreFoundation
-    )
-endif()
-
 katie_generate_misc("${TEST_HEADERS}" QtTest)
 katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
 katie_generate_package(KtTest "KtCore")

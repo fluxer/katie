@@ -67,91 +67,27 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystementry.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_unix.cpp
 )
 
-if(KATIE_PLATFORM STREQUAL "win32")
+if(KATIE_PLATFORM STREQUAL "linux")
     set(CORE_SOURCES
         ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qwindowspipewriter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_win.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_dnotify.cpp
     )
     set(CORE_HEADERS
         ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_win_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qwindowspipewriter_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_dnotify_p.h
     )
-elseif(UNIX)
+elseif(KATIE_PLATFORM MATCHES "(freebsd|mac|darwin|openbsd)")
     set(CORE_SOURCES
         ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_unix.cpp
-    )
-
-    if(KATIE_PLATFORM STREQUAL "mac")
-        set(CORE_HEADERS
-            ${CORE_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_fsevents_p.h
-        )
-        set(CORE_SOURCES
-            ${CORE_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qsettings_mac.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_mac.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_fsevents.cpp
-        )
-    else()
-        set(CORE_SOURCES
-            ${CORE_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_unix.cpp
-        )
-    endif()
-
-    if(KATIE_PLATFORM STREQUAL "qnx")
-        set(CORE_SOURCES
-            ${CORE_SOURCES}
-             ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
-        )
-        set(CORE_HEADERS
-            ${CORE_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
-        )
-    endif()
-
-    if(KATIE_PLATFORM STREQUAL "linux")
-        set(CORE_SOURCES
-            ${CORE_SOURCES}
-             ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify.cpp
-             ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_dnotify.cpp
-        )
-        set(CORE_HEADERS
-            ${CORE_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_dnotify_p.h
-        )
-    endif()
-
-    if(KATIE_PLATFORM MATCHES "(freebsd|mac|darwin|openbsd)")
-        set(CORE_SOURCES
-            ${CORE_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
-            ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
-        )
-    endif()
-endif()
-
-if(KATIE_PLATFORM STREQUAL "integrity")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfsfileengine_iterator.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue_p.h
     )
 endif()

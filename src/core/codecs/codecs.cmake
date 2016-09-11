@@ -36,12 +36,10 @@ if(UNIX)
             ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qiconvcodec.cpp
         )
         add_definitions(-DGNU_LIBICONV)
-        if(NOT ${KATIE_PLATFORM} STREQUAL "mac")
-            set(EXTRA_CORE_LIBS
-                ${EXTRA_CORE_LIBS}
-                ${ICONV_LIBRARIES}
-            )
-        endif()
+        set(EXTRA_CORE_LIBS
+            ${EXTRA_CORE_LIBS}
+            ${ICONV_LIBRARIES}
+        )
         include_directories(${ICONV_INCLUDES})
     else()
         # no iconv, so we put all plugins in the library

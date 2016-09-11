@@ -1,5 +1,5 @@
 add_definitions(${SHAREDDEVICESKIN_DEFINITIONS})
-set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtNetwork KtDesigner KtDesignerComponents)
+set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtNetwork KtDesigner KtDesignerComponents m)
 
 include(fontpanel/fontpanel.cmake)
 include(qttoolbardialog/qttoolbardialog.cmake)
@@ -75,22 +75,8 @@ set(DESIGNERBIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/designer.qrc
 )
 
-if(KATIE_PLATFORM MATCHES "(win32|wince)")
-    set(DESIGNERBIN_SOURCES
-        ${DESIGNERBIN_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/designer.rc
-    )
-endif()
-
-if(NOT ${KATIE_TYPE} STREQUAL SHARED)
+if(NOT KATIE_TYPE STREQUAL SHARED)
     add_definitions(-DQT_DESIGNER_STATIC)
-endif()
-
-if(UNIX AND NOT ${KATIE_PLATFORM} STREQUAL "mac")
-    set(EXTRA_DESIGNERBIN_LIBS
-        ${EXTRA_DESIGNERBIN_LIBS}
-        m
-    )
 endif()
 
 configure_file(
@@ -104,7 +90,6 @@ katie_setup_target(designer ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 katie_setup_paths()
 
 add_executable(designer
-    WIN32 # TODO: MACOSX_BUNDLE
     ${designer_SOURCES}
     $<TARGET_OBJECTS:shareddeviceskin>
 )
@@ -116,15 +101,13 @@ install(
     COMPONENT Devel
 )
 
-if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    install(
-        PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
-        DESTINATION ${APPLICATIONS_INSTALL_PATH}
-        COMPONENT Devel
-    )
-    install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/designer.png
-        DESTINATION ${PIXMAPS_INSTALL_PATH}
-        COMPONENT Devel
-    )
-endif()
+install(
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
+    DESTINATION ${APPLICATIONS_INSTALL_PATH}
+    COMPONENT Devel
+)
+install(
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/designer.png
+    DESTINATION ${PIXMAPS_INSTALL_PATH}
+    COMPONENT Devel
+)

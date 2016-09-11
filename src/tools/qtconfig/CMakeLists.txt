@@ -53,15 +53,13 @@ install(
     COMPONENT Devel
 )
 
-if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    install(
-        PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qtconfig.desktop
-        DESTINATION ${APPLICATIONS_INSTALL_PATH}
-        COMPONENT Devel
-    )
-    install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qtconfig.png
-        DESTINATION ${PIXMAPS_INSTALL_PATH}
-        COMPONENT Devel
-    )
-endif()
+install(
+    PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qtconfig.desktop
+    DESTINATION ${APPLICATIONS_INSTALL_PATH}
+    COMPONENT Devel
+)
+install(
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qtconfig.png
+    DESTINATION ${PIXMAPS_INSTALL_PATH}
+    COMPONENT Devel
+)

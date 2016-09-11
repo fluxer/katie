@@ -222,6 +222,23 @@ configure_file(
     ${CMAKE_BINARY_DIR}/include/QtCore/qglobal.h
 )
 
+# TODO: make it optional, Qt4 was prepping for it I believe (QT_NO_THREAD)
+find_package(Threads)
+set_package_properties(Threads PROPERTIES
+    PURPOSE "Required for threads support"
+    DESCRIPTION "Platform dependent threads implementation"
+    URL ""
+    TYPE REQUIRED
+)
+
+find_package(ZLIB)
+set_package_properties(ZLIB PROPERTIES
+    PURPOSE "Required for compression support"
+    DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
+    URL "http://zlib.net"
+    TYPE REQUIRED
+)
+
 find_package(PythonInterp)
 set_package_properties(PythonInterp PROPERTIES
     PURPOSE "UI class maps generator script"
@@ -235,14 +252,6 @@ set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
     DESCRIPTION "Support for secure network communications (SSL and TLS)"
     URL "http://openssl.org"
-    TYPE RECOMMENDED
-)
-
-find_package(ZLIB)
-set_package_properties(ZLIB PROPERTIES
-    PURPOSE "Required for compression support"
-    DESCRIPTION "A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
-    URL "http://zlib.net"
     TYPE RECOMMENDED
 )
 
@@ -426,16 +435,7 @@ set_package_properties(Sqlite PROPERTIES
     TYPE RECOMMENDED
 )
 
-# TODO: make it optional, Qt4 was prepping for it I believe (QT_NO_THREAD)
-find_package(Threads)
-set_package_properties(Threads PROPERTIES
-    PURPOSE "Required for threads support"
-    DESCRIPTION "Platform dependent threads implementation"
-    URL ""
-    TYPE REQUIRED
-)
-
-if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)" AND NOT KATIE_BOOTSTRAP)
+if(NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 
     find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xkb Xinerama Xrandr Xrender X11 Xtst Xt)
@@ -641,9 +641,6 @@ if(NOT KATIE_BOOTSTRAP)
     add_subdirectory(src/svg)
     add_subdirectory(src/test)
     add_subdirectory(src/uitools)
-    if(KATIE_PLATFORM MATCHES "(win32|wince)")
-        add_subdirectory(src/winmain)
-    endif()
     add_subdirectory(src/xmlpatterns)
     if(ENABLE_TESTING)
         add_subdirectory(tests)

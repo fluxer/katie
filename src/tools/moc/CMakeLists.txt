@@ -19,17 +19,6 @@ set(MOC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/token.cpp
 )
 
-# this is done because of bootstrap_moc
-if(KATIE_PLATFORM STREQUAL "mac")
-    set(CMAKE_EXE_LINK_FLAGS
-        ${CMAKE_EXE_LINK_FLAGS}
-        -framework CoreFoundation
-        -framework Security
-        -framework ApplicationServices
-        -lObjC
-    )
-endif()
-
 katie_setup_paths()
 
 add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES})
@@ -45,9 +34,7 @@ install(
     COMPONENT Devel
 )
 
-if(NOT "${KATIE_PLATFORM}" MATCHES "(win32|wince|mac)")
-    install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
-        DESTINATION ${MAN_INSTALL_PATH}/man1
-    )
-endif()
+install(
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
+    DESTINATION ${MAN_INSTALL_PATH}/man1
+)

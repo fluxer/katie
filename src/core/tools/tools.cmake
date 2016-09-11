@@ -91,29 +91,8 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
 )
 
-if(KATIE_PLATFORM STREQUAL "mac")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_mac.mm
-    )
-elseif(KATIE_PLATFORM STREQUAL "blackberry")
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_blackberry.h
-    )
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_blackberry.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "win32")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_win.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "integrity" OR UNIX)
+# TODO:
+if(UNIX)
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
@@ -141,12 +120,10 @@ if(WITH_ICU AND ICU_FOUND)
 endif()
 
 # Note: libm should be present by default becaue this is C++
-if(NOT KATIE_PLATFORM MATCHES "(mac|vxworks)" AND UNIX)
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        m
-    )
-endif()
+set(EXTRA_CORE_LIBS
+    ${EXTRA_CORE_LIBS}
+    m
+)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/md5

@@ -26,20 +26,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qsemaphore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthreadstorage.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutex_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qwaitcondition_unix.cpp
 )
-
-if(UNIX OR ${KATIE_PLATFORM} STREQUAL "integrity")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutex_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread/qwaitcondition_unix.cpp
-    )
-elseif(${KATIE_PLATFORM} STREQUAL "win32")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutex_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/thread/qwaitcondition_win.cpp
-    )
-endif()

@@ -157,32 +157,3 @@ if(WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar_x11.cpp
     )
 endif()
-
-if(KATIE_PLATFORM STREQUAL "mac")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmacnativewidget_mac.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmaccocoaviewcontainer_mac.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qcocoatoolbardelegate_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qcocoamenu_mac_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmaccocoaviewcontainer_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qcocoatoolbardelegate_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmainwindowlayout_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmacnativewidget_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qcocoamenu_mac.mm
-    )
-elseif(KATIE_PLATFORM STREQUAL "wince")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu_wince_resource_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu_wince.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenu_wince.rc
-    )
-endif()

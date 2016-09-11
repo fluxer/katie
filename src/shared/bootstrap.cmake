@@ -84,34 +84,11 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/xml/qxmlstream.cpp
     ${CMAKE_SOURCE_DIR}/src/xml/dom/qdom.cpp
     ${CMAKE_SOURCE_DIR}/src/xml/sax/qxml.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine_unix.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_unix.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_unix.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
 )
-
-if(UNIX)
-    set(BOOTSTRAP_SOURCES
-        ${BOOTSTRAP_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine_unix.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_unix.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_unix.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
-    )
-endif()
-
-if(KATIE_PLATFORM STREQUAL "win32")
-    set(BOOTSTRAP_SOURCES
-        ${BOOTSTRAP_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine_win.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_win.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_win.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/plugin/qsystemlibrary.cpp
-        ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_win.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(BOOTSTRAP_SOURCES
-        ${BOOTSTRAP_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_mac.mm
-        ${CMAKE_SOURCE_DIR}/src/core/kernel/qcore_mac.cpp
-    )
-endif()
 
 add_library(bootstrap OBJECT ${BOOTSTRAP_SOURCES})
 target_compile_definitions(bootstrap PRIVATE ${BOOTSTRAP_DEFINITIONS})

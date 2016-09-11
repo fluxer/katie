@@ -29,7 +29,6 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine.cpp
 )
 
-if(UNIX)
     set(NETWORK_HEADERS
         ${NETWORK_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
@@ -40,32 +39,5 @@ if(UNIX)
         ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "win32")
-    set(NETWORK_SOURCES
-        ${NETWORK_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_win.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "wince")
-    set(NETWORK_SOURCES
-        ${NETWORK_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_tcp.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_tcp.cpp
-    )
-    add_definitions(-DQT_LOCALSOCKET_TCP)
-elseif(KATIE_PLATFORM STREQUAL "integrity")
-    set(NETWORK_SOURCES
-        ${NETWORK_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_tcp.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_tcp.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
-    )
-    add_definitions(-DQT_LOCALSOCKET_TCP)
-endif()
 
 add_definitions(-DQT_USE_SYSTEM_PROXIES)

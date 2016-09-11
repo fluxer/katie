@@ -22,26 +22,4 @@ if(WITH_X11 AND X11_FOUND)
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qximinputcontext_x11.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "win32")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qwininputcontext_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qwininputcontext_win.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        imm32
-    )
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qmacinputcontext_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod/qmacinputcontext_mac.cpp
-    )
 endif()

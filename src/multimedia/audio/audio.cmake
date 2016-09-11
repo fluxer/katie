@@ -22,53 +22,7 @@ set(MULTIMEDIA_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiodevicefactory.cpp
 )
 
-if(KATIE_PLATFORM STREQUAL "mac")
-    set(MULTIMEDIA_HEADERS
-        ${MULTIMEDIA_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiooutput_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiodeviceinfo_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudio_mac_p.h
-    )
-    set(MULTIMEDIA_SOURCES
-        ${MULTIMEDIA_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiodeviceinfo_mac_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiooutput_mac_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_mac_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudio_mac.cpp
-    )
-    set(CMAKE_SHARED_LINK_FLAGS
-        ${CMAKE_SHARED_LINK_FLAGS}
-        -framework ApplicationServices
-        -framework CoreAudio
-        -framework AudioUnit
-        -framework AudioToolbox
-    )
-elseif(KATIE_PLATFORM MATCHES "(win32|wince)")
-    set(MULTIMEDIA_HEADERS
-        ${MULTIMEDIA_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_win32_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiooutput_win32_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiodeviceinfo_win32_p.h
-    )
-    set(MULTIMEDIA_SOURCES
-        ${MULTIMEDIA_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiodeviceinfo_win32_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiooutput_win32_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudioinput_win32_p.cpp
-    )
-    if(KATIE_PLATFORM STREQUAL "wince")
-        set(EXTRA_MULTIMEDIA_LIBS
-            ${EXTRA_MULTIMEDIA_LIBS}
-            coredll
-        )
-    else()
-        set(EXTRA_MULTIMEDIA_LIBS
-            ${EXTRA_MULTIMEDIA_LIBS}
-            winmm
-        )
-    endif()
-elseif(UNIX AND WITH_ALSA AND ALSA_FOUND)
+if(WITH_ALSA AND ALSA_FOUND)
     set(MULTIMEDIA_HEADERS
         ${MULTIMEDIA_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/audio/qaudiooutput_alsa_p.h

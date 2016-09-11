@@ -219,56 +219,6 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/yarr
 )
 
-if(KATIE_COMPILER STREQUAL "msvc")
-    # Disable a few warnings on Windows.
-    set(CMAKE_CXX_FLAGS
-        ${CMAKE_CXX_FLAGS}
-        -wd4396
-        -wd4099
-        -wd4291
-        -wd4344
-        -wd4503
-        -wd4800
-        -wd4819
-        -wd4996
-    )
-endif()
-
-if(KATIE_PLATFORM STREQUAL "mac")
-    set(CMAKE_SHARED_LINK_FLAGS
-        ${CMAKE_SHARED_LINK_FLAGS}
-        -framework AppKit
-    )
-elseif(KATIE_PLATFORM MATCHES "(win32|wince)" AND KATIE_COMPILER STREQUAL "msvc")
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/os-wince
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/JavaScriptCore/os-win32
-    )
-elseif(KATIE_PLATFORM STREQUAL "integrity")
-    set(CMAKE_CXX_FLAGS
-        ${CMAKE_CXX_FLAGS}
-        --diag_remark=236,82
-    )
-endif()
-
-if(KATIE_PLATFORM STREQUAL "wince")
-    set(SCRIPT_SOURCES
-        ${SCRIPT_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/ce-compat/ce_time.c
-    )
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/ce-compat
-    )
-    add_definitions(-DWINCEBASIC)
-endif()
-
-if(KATIE_PLATFORM MATCHES "(win32|wince)")
-    set(EXTRA_SCRIPT_LIBS
-        ${EXTRA_SCRIPT_LIBS}
-        winmm
-    )
-endif()
-
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
 katie_generate_package(KtScript "KtCore")

@@ -125,7 +125,7 @@ if(WITH_DIRECTWRITE)
     )
 endif()
 
-if(UNIX AND WITH_X11 AND X11_FOUND)
+if(WITH_X11 AND X11_FOUND)
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11_p.h
@@ -136,31 +136,4 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
     )
-elseif(KATIE_PLATFORM STREQUAL "win32")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_win_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_win.cpp
-    )
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_coretext_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_coretext.mm
-    )
-    if(WITH_HARFBUZZ)
-        add_definitions(-DQT_ENABLE_HARFBUZZ_FOR_MAC)
-    endif()
 endif()

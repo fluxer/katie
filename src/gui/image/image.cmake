@@ -144,12 +144,7 @@ if(WITH_TIFF AND TIFF_FOUND)
     include_directories(${TIFF_INCLUDE_DIR})
 endif()
 
-if(KATIE_PLATFORM STREQUAL "win32")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_win.cpp
-    )
-elseif(WITH_X11 AND X11_FOUND)
+if(WITH_X11 AND X11_FOUND)
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11_p.h

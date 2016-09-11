@@ -50,43 +50,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.qrc
 )
-
-if(${KATIE_PLATFORM} STREQUAL "wince")
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog_embedded.ui
-    )
-elseif(${KATIE_PLATFORM} STREQUAL "win32")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qwizard_win_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog_win_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qwizard_win.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        shell32     # the filedialog needs this library
-    )
-elseif(${KATIE_PLATFORM} STREQUAL "mac")
-    # TODO: Compile qcolordialog_mac.mm with exception support, disregarding
-    # the -no-exceptions configure option. (qcolordialog_mac needs to catch
-    # exceptions thrown by cocoa)
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfiledialog_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfontdialog_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qnspanelproxy_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_mac.mm
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qcolordialog_mac.mm
-    )
-elseif(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
+if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix_p.h

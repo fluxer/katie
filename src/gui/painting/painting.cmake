@@ -55,6 +55,8 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrgb.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
 )
 
 set(GUI_SOURCES
@@ -100,6 +102,8 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
 )
 
 if(WITH_X11 AND X11_FOUND)
@@ -114,63 +118,5 @@ if(WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp
-    )
-endif()
-
-if(KATIE_PLATFORM STREQUAL "win32")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_win_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_win.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        msimg32
-    )
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qunifiedtoolbarsurface_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_mac_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_mac_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qunifiedtoolbarsurface_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprintengine_mac.mm
-    )
-endif()
-
-if(UNIX)
-    if(NOT KATIE_PLATFORM STREQUAL "mac")
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
-        )
-    endif()
-
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
     )
 endif()

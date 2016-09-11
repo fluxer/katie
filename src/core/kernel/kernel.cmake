@@ -33,6 +33,8 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
 )
 
 set(CORE_SOURCES
@@ -58,100 +60,24 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qpointer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
 )
 
-if(UNIX)
+if(WITH_GLIB2 AND GLIB2_FOUND)
     set(CORE_SOURCES
         ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib.cpp
     )
     set(CORE_HEADERS
         ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_p.h
     )
-    if(WITH_GLIB2 AND GLIB2_FOUND)
-        set(CORE_SOURCES
-            ${CORE_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib.cpp
-        )
-        set(CORE_HEADERS
-            ${CORE_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_glib_p.h
-        )
-        include_directories(${GLIB2_INCLUDES})
-        set(EXTRA_CORE_LIBS
-            ${EXTRA_CORE_LIBS}
-            ${GLIB2_LIBRARIES}
-        )
-    endif()
-endif()
-
-if(KATIE_PLATFORM STREQUAL "win32")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwineventnotifier_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_win.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_win.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_win_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwineventnotifier_p.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "wince")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_wince.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_wince.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "mac")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_mac.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcoreapplication_mac.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_mac_p.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "vxworks")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_vxworks.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_vxworks.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "integrity")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_unix_p.h
-    )
-elseif(KATIE_PLATFORM STREQUAL "blackberry")
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry.cpp
-    )
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_blackberry_p.h
+    include_directories(${GLIB2_INCLUDES})
+    set(EXTRA_CORE_LIBS
+        ${EXTRA_CORE_LIBS}
+        ${GLIB2_LIBRARIES}
     )
 endif()

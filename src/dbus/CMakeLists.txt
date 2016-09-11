@@ -106,21 +106,6 @@ include_directories(
     ${DBUS_INCLUDES}
 )
 
-if(KATIE_PLATFORM STREQUAL "win32")
-    set(EXTRA_DBUS_LIBS
-        ${EXTRA_DBUS_LIBS}
-        ws2_32
-        advapi32
-        netapi32
-        user32
-    )
-elseif(KATIE_PLATFORM STREQUAL "wince")
-    set(EXTRA_DBUS_LIBS
-        ${EXTRA_DBUS_LIBS}
-        ws2
-    )
-endif()
-
 katie_generate_misc("${DBUS_HEADERS}" QtDBus)
 katie_generate_public("${DBUS_PUBLIC_HEADERS}" QtDBus)
 katie_generate_package(KtDBus "KtCore KtXml")

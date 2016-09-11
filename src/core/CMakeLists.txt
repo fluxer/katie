@@ -339,22 +339,6 @@ if(${KATIE_PLATFORM} STREQUAL "linux")
         dl
         rt
     )
-elseif(${KATIE_PLATFORM} STREQUAL "win32")
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ole32
-        ws2_32
-        uuid
-    )
-    add_definitions(-DQT_MAKEDLL)
-elseif(${KATIE_PLATFORM} STREQUAL "mac")
-    set(CMAKE_SHARED_LINK_FLAGS
-        ${CMAKE_SHARED_LINK_FLAGS}
-        -framework CoreFoundation
-        -framework Security
-        -framework ApplicationServices
-        -lObjC
-    )
 endif()
 
 if(WITH_THREADS AND THREADS_FOUND)
