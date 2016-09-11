@@ -26,7 +26,7 @@ include(KatieMacros)
 include(KatieBuildMacros)
 
 # components and tools that will be build, changed depending on the requirements availability
-set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Multimedia Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
+set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer qscript qtconfig")
 
 # optional package
@@ -44,9 +44,6 @@ add_feature_info(nis WITH_NIS "an open source something")
 
 option(WITH_CUPS "Build cups support" ON)
 add_feature_info(cups WITH_CUPS "an open source something")
-
-option(WITH_ALSA "Build alsa support" ON)
-add_feature_info(alsa WITH_ALSA "an open source something")
 
 option(WITH_PNG "Build png support" ON)
 add_feature_info(png WITH_PNG "an open source something")
@@ -318,14 +315,6 @@ set_package_properties(Cups PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(ALSA)
-set_package_properties(ALSA PROPERTIES
-    PURPOSE "Required for ALSA support"
-    DESCRIPTION "Advanced Linux Sound Architecture"
-    URL "http://www.alsa-project.org"
-    TYPE RECOMMENDED
-)
-
 # old versions of CMake ship bogus module, always use the custom one
 cmake_policy(PUSH)
 cmake_policy(SET CMP0017 OLD)
@@ -564,14 +553,6 @@ if(WITH_OPENGLES2)
     katie_definition(-DQT_OPENGL_ES_2)
 endif()
 
-# keep in sucn with multimedia audio component CMake file, only definitions setup is needed here
-if(KATIE_PLATFORM MATCHES "(mac|win32|wince)" OR (UNIX AND WITH_ALSA AND ALSA_FOUND))
-    # NOTE: CMake's logical OR does not stop at the first met condition and
-    # I'd rather not have a AND condition here with negatives
-else()
-    katie_definition(-DQT_NO_AUDIO_BACKEND)
-endif()
-
 # keep in sync with the gui component CMake file, only definitions setup is needed here
 if(WITH_X11 AND X11_FOUND)
     # TODO: xim
@@ -629,7 +610,6 @@ if(NOT KATIE_BOOTSTRAP)
     add_subdirectory(src/gui)
     add_subdirectory(src/help)
     add_subdirectory(src/imports)
-    add_subdirectory(src/multimedia)
     add_subdirectory(src/network)
     if(WITH_OPENGL AND OPENGL_FOUND)
         add_subdirectory(src/opengl)

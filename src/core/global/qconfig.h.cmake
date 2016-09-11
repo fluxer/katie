@@ -73,6 +73,7 @@
 #define QT_NO_QWS_DYNAMICSCREENTRANSFORMATION
 #define QT_NO_QWS_TRANSFORMED
 #define QT_NO_QWS_VNC
+#define QT_NO_AUDIO_BACKEND
 
 /* Qt build specs */
 #ifndef QT_EDITION
