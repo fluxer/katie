@@ -623,10 +623,7 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QStyleHintReturnVariant", "QtGui/qstyleoption.h"},
     { "QStyleFactoryInterface", "QtGui/qstyleplugin.h"},
     { "QStylePlugin", "QtGui/qstyleplugin.h"},
-    { "QWindowsCEStyle", "QtGui/qwindowscestyle.h"},
     { "QWindowsStyle", "QtGui/qwindowsstyle.h"},
-    { "QWindowsVistaStyle", "QtGui/qwindowsvistastyle.h"},
-    { "QWindowsXPStyle", "QtGui/qwindowsxpstyle.h"},
     { "QAbstractPageSetupDialog", "QtGui/qabstractpagesetupdialog.h"},
     { "QAbstractPrintDialog", "QtGui/qabstractprintdialog.h"},
     { "QColorDialog", "QtGui/qcolordialog.h"},
@@ -782,6 +779,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 776;
+static const int qclass_lib_count = 773;
 
 #endif

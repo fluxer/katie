@@ -57,23 +57,8 @@
 #ifndef QT_NO_STYLE_GTK
 #include "qgtkstyle.h"
 #endif
-#ifndef QT_NO_STYLE_WINDOWSXP
-#include "qwindowsxpstyle.h"
-#endif
-#ifndef QT_NO_STYLE_WINDOWSVISTA
-#include "qwindowsvistastyle.h"
-#endif
-#ifndef QT_NO_STYLE_WINDOWSCE
-#include "qwindowscestyle.h"
-#endif
 
 QT_BEGIN_NAMESPACE
-
-#if !defined(QT_NO_STYLE_MAC) && defined(Q_WS_MAC)
-QT_BEGIN_INCLUDE_NAMESPACE
-#  include "qmacstyle_mac.h"
-QT_END_INCLUDE_NAMESPACE
-#endif
 
 #ifndef QT_NO_LIBRARY
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
@@ -94,9 +79,8 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, stylesloader,
 
     The valid keys can be retrieved using the keys()
     function. Typically they include "windows", "motif", "cde",
-    "plastique" and "cleanlooks".  Depending on the platform,
-    "windowsxp", "windowsvista" and "macintosh" may be available.
-    Note that keys are case insensitive.
+    "plastique" and "cleanlooks".  Note that keys are case
+    insensitive.
 
     \sa QStyle
 */
@@ -119,21 +103,6 @@ QStyle *QStyleFactory::create(const QString& key)
 #ifndef QT_NO_STYLE_WINDOWS
     if (style == QLatin1String("windows"))
         ret = new QWindowsStyle;
-    else
-#endif
-#ifndef QT_NO_STYLE_WINDOWSCE
-    if (style == QLatin1String("windowsce"))
-        ret = new QWindowsCEStyle;
-    else
-#endif
-#ifndef QT_NO_STYLE_WINDOWSXP
-    if (style == QLatin1String("windowsxp"))
-        ret = new QWindowsXPStyle;
-    else
-#endif
-#ifndef QT_NO_STYLE_WINDOWSVISTA
-    if (style == QLatin1String("windowsvista"))
-        ret = new QWindowsVistaStyle;
     else
 #endif
 #ifndef QT_NO_STYLE_MOTIF
@@ -160,15 +129,6 @@ QStyle *QStyleFactory::create(const QString& key)
     if (style == QLatin1String("gtk") || style == QLatin1String("gtk+"))
         ret = new QGtkStyle;
     else
-#endif
-#ifndef QT_NO_STYLE_MAC
-    if (style.startsWith(QLatin1String("macintosh"))) {
-        ret = new QMacStyle;
-#  ifdef Q_WS_MAC
-        if (style == QLatin1String("macintosh"))
-            style += QLatin1String(" (aqua)");
-#  endif
-    } else
 #endif
     { } // Keep these here - they make the #ifdefery above work
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
@@ -199,20 +159,6 @@ QStringList QStyleFactory::keys()
     if (!list.contains(QLatin1String("Windows")))
         list << QLatin1String("Windows");
 #endif
-#ifndef QT_NO_STYLE_WINDOWSCE
-    if (!list.contains(QLatin1String("WindowsCE")))
-        list << QLatin1String("WindowsCE");
-#endif
-#ifndef QT_NO_STYLE_WINDOWSXP
-    if (!list.contains(QLatin1String("WindowsXP")) &&
-        (QSysInfo::WindowsVersion >= QSysInfo::WV_XP && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based)))
-        list << QLatin1String("WindowsXP");
-#endif
-#ifndef QT_NO_STYLE_WINDOWSVISTA
-    if (!list.contains(QLatin1String("WindowsVista")) &&
-        (QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based)))
-        list << QLatin1String("WindowsVista");
-#endif
 #ifndef QT_NO_STYLE_MOTIF
     if (!list.contains(QLatin1String("Motif")))
         list << QLatin1String("Motif");
@@ -232,14 +178,6 @@ QStringList QStyleFactory::keys()
 #ifndef QT_NO_STYLE_CLEANLOOKS
     if (!list.contains(QLatin1String("Cleanlooks")))
         list << QLatin1String("Cleanlooks");
-#endif
-#ifndef QT_NO_STYLE_MAC
-    QString mstyle = QLatin1String("Macintosh");
-# ifdef Q_WS_MAC
-    mstyle += QLatin1String(" (aqua)");
-# endif
-    if (!list.contains(mstyle))
-        list << mstyle;
 #endif
     return list;
 }
