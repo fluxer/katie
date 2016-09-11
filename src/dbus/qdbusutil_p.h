@@ -56,7 +56,6 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qvariant.h>
 
-#include <QtDBus/qdbusmacros.h>
 #include <QtDBus/qdbuserror.h>
 
 #ifndef QT_NO_DBUS

@@ -59,7 +59,6 @@
 #include <QtCore/qmap.h>
 #include <QtCore/qpair.h>
 #include <QtCore/qshareddata.h>
-#include <qdbusmacros.h>
 
 QT_BEGIN_NAMESPACE
 

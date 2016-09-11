@@ -42,7 +42,6 @@
 #ifndef QDBUSTREENODE_H
 #define QDBUSTREENODE_H
 
-#include <QtDBus/qdbusmacros.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qobject.h>
 

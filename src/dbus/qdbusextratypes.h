@@ -44,8 +44,7 @@
 
 // define some useful types for D-BUS
 
-#include <QtCore/qstring.h>
-#include <QtDBus/qdbusmacros.h>
+#include <QtCore/qvariant.h>
 
 #ifndef QT_NO_DBUS
 

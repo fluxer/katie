@@ -43,7 +43,6 @@
 
 #include <QtCore/qobject.h>
 #include <QtCore/qstring.h>
-#include <QtDBus/qdbusmacros.h>
 
 #ifndef QT_NO_DBUS
 

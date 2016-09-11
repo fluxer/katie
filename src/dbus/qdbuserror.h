@@ -42,7 +42,6 @@
 #ifndef QDBUSERROR_H
 #define QDBUSERROR_H
 
-#include <QtDBus/qdbusmacros.h>
 #include <QtCore/qstring.h>
 
 #ifndef QT_NO_DBUS

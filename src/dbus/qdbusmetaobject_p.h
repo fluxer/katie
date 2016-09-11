@@ -55,7 +55,6 @@
 #define QDBUSMETAOBJECTPRIVATE_H
 
 #include <QtCore/qmetaobject.h>
-#include <qdbusmacros.h>
 
 QT_BEGIN_NAMESPACE
 

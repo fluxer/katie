@@ -42,7 +42,6 @@
 #ifndef QDBUSMESSAGE_H
 #define QDBUSMESSAGE_H
 
-#include <QtDBus/qdbusmacros.h>
 #include <QtDBus/qdbuserror.h>
 #include <QtCore/qlist.h>
 #include <QtCore/qvariant.h>

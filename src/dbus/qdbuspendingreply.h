@@ -43,7 +43,6 @@
 #define QDBUSPENDINGREPLY_H
 
 #include <QtCore/qglobal.h>
-#include <QtDBus/qdbusmacros.h>
 #include <QtDBus/qdbusargument.h>
 #include <QtDBus/qdbuspendingcall.h>
 

@@ -32,7 +32,6 @@ set(DBUS_HEADERS
     ${DBUS_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusargument.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusconnectioninterface.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmacros.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuserror.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusextratypes.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusmessage.h

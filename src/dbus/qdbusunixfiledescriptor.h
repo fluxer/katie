@@ -43,8 +43,8 @@
 #ifndef QDBUSUNIXFILEDESCRIPTOR_H
 #define QDBUSUNIXFILEDESCRIPTOR_H
 
-#include <QtCore/QSharedData>
-#include <QtDBus/qdbusmacros.h>
+#include <QtCore/qshareddata.h>
+#include <QtCore/qmetatype.h>
 
 #ifndef QT_NO_DBUS
 

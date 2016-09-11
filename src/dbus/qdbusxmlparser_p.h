@@ -55,7 +55,6 @@
 
 #include <QtCore/qmap.h>
 #include <QtXml/qdom.h>
-#include <qdbusmacros.h>
 #include "qdbusintrospection_p.h"
 
 #ifndef QT_NO_DBUS

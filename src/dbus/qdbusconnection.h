@@ -43,7 +43,7 @@
 #define QDBUSCONNECTION_H
 
 #include <QtCore/qstring.h>
-#include <QtDBus/qdbusmacros.h>
+#include <QtCore/qobject.h>
 
 #ifndef QT_NO_DBUS
 

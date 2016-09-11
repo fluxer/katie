@@ -46,7 +46,6 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qshareddata.h>
 
-#include <QtDBus/qdbusmacros.h>
 #include <QtDBus/qdbusmessage.h>
 
 #ifndef QT_NO_DBUS
