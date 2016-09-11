@@ -1,5 +1,5 @@
 add_definitions(-DQT_BUILD_CORE_LIB)
-set(EXTRA_CORE_LIBS)
+set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES})
 
 set(CORE_PUBLIC_HEADERS
     ${CORE_PUBLIC_HEADERS}
@@ -305,6 +305,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/thread
     ${CMAKE_CURRENT_BINARY_DIR}/tools
     ${CMAKE_CURRENT_BINARY_DIR}/xml
+    ${ZLIB_INCLUDE_DIRS}
 )
 
 if(WITH_GLIB2 AND GLIB2_FOUND)
@@ -317,20 +318,6 @@ if(WITH_GLIB2 AND GLIB2_FOUND)
         ${GLIB2_LIBRARIES}
     )
     include_directories(${GLIB2_INCLUDES})
-endif()
-
-if(WITH_ZLIB AND ZLIB_FOUND)
-    set(EXTRA_CORE_LIBS
-        ${EXTRA_CORE_LIBS}
-        ${ZLIB_LIBRARIES}
-    )
-    include_directories(${ZLIB_INCLUDE_DIRS})
-else()
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/miniz/miniz.c
-    )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
 endif()
 
 if(${KATIE_PLATFORM} STREQUAL "linux")

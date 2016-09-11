@@ -48,7 +48,6 @@
 #include "qstringlist.h"
 #include "qdatetime.h"
 
-#include "qsystemlibrary_p.h"
 #include "qcorecommon_p.h"
 
 #ifndef QT_NO_QOBJECT

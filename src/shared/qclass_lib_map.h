@@ -470,8 +470,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QLabel", "QtGui/qlabel.h"},
     { "QLCDNumber", "QtGui/qlcdnumber.h"},
     { "QLineEdit", "QtGui/qlineedit.h"},
-    { "QMacCocoaViewContainer", "QtGui/qmaccocoaviewcontainer_mac.h"},
-    { "QMacNativeWidget", "QtGui/qmacnativewidget_mac.h"},
     { "QMainWindow", "QtGui/qmainwindow.h"},
     { "QMdiArea", "QtGui/qmdiarea.h"},
     { "QMdiSubWindow", "QtGui/qmdisubwindow.h"},
@@ -591,7 +589,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QCleanlooksStyle", "QtGui/qcleanlooksstyle.h"},
     { "QCommonStyle", "QtGui/qcommonstyle.h"},
     { "QGtkStyle", "QtGui/qgtkstyle.h"},
-    { "QMacStyle", "QtGui/qmacstyle_mac.h"},
     { "QMotifStyle", "QtGui/qmotifstyle.h"},
     { "QPlastiqueStyle", "QtGui/qplastiquestyle.h"},
     { "QProxyStyle", "QtGui/qproxystyle.h"},
@@ -785,6 +782,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 779;
+static const int qclass_lib_count = 776;
 
 #endif

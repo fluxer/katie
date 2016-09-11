@@ -7,7 +7,6 @@ set(QGENERICBEARERPLUGIN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.h
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine_impl.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/platformdefs_win.h
 )
 
 set(QGENERICBEARERPLUGIN_SOURCES

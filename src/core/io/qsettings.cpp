@@ -68,11 +68,6 @@
 #include "qcoreapplication.h"
 #endif
 
-#ifdef Q_OS_WIN // for homedirpath reading from registry
-#include "qt_windows.h"
-#include <qsystemlibrary_p.h>
-#endif
-
 #ifdef Q_OS_VXWORKS
 #  include <ioLib.h>
 #endif

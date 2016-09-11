@@ -65,7 +65,6 @@
 #endif
 #include "qnumeric.h"
 #include "qnumeric_p.h"
-#include "qsystemlibrary_p.h"
 
 QT_BEGIN_NAMESPACE
 

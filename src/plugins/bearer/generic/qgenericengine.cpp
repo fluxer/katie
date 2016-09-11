@@ -52,10 +52,6 @@
 #include <QtCore/qdebug.h>
 #include <QtCore/qcoreapplication_p.h>
 
-#ifdef Q_OS_WIN
-#include "../platformdefs_win.h"
-#endif
-
 #ifdef Q_OS_LINUX
 #include <sys/socket.h>
 #include <sys/ioctl.h>
