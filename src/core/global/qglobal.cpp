@@ -81,11 +81,6 @@
 #include <CoreServices/CoreServices.h>
 #endif
 
-#ifdef QT_USE_SLOG2
-#include <slog2.h>
-#endif
-
-
 
 QT_BEGIN_NAMESPACE
 
@@ -2025,56 +2020,6 @@ static void mac_default_handler(const char *msg)
 }
 #endif // Q_CC_MWERKS && Q_OS_MACX
 
-#if defined(QT_USE_SLOG2)
-#ifndef QT_LOG_CODE
-#define QT_LOG_CODE 9000
-#endif
-
-extern char *__progname;
-
-static void slog2_default_handler(QtMsgType msgType, const char *message)
-{
-    if (slog2_set_default_buffer((slog2_buffer_t)-1) == 0) {
-        slog2_buffer_set_config_t buffer_config;
-        slog2_buffer_t buffer_handle;
-
-        buffer_config.buffer_set_name = __progname;
-        buffer_config.num_buffers = 1;
-        buffer_config.verbosity_level = SLOG2_INFO;
-        buffer_config.buffer_config[0].buffer_name = "default";
-        buffer_config.buffer_config[0].num_pages = 8;
-
-        if (slog2_register(&buffer_config, &buffer_handle, 0) == -1) {
-            fprintf(stderr, "Error registering slogger2 buffer!\n");
-            fprintf(stderr, "%s", message);
-            fflush(stderr);
-            return;
-        }
-
-        // Set as the default buffer
-        slog2_set_default_buffer(buffer_handle);
-    }
-    int severity;
-    //Determines the severity level
-    switch (msgType) {
-    case QtDebugMsg:
-        severity = SLOG2_INFO;
-        break;
-    case QtWarningMsg:
-        severity = SLOG2_NOTICE;
-        break;
-    case QtCriticalMsg:
-        severity = SLOG2_WARNING;
-        break;
-    case QtFatalMsg:
-        severity = SLOG2_ERROR;
-        break;
-    }
-    //writes to the slog2 buffer
-    slog2c(NULL, QT_LOG_CODE, severity, message);
-}
-#endif // QT_USE_SLOG2
-
 QString qt_error_string(int errorCode)
 {
     const char *s = 0;
@@ -2191,8 +2136,6 @@ void qt_message_output(QtMsgType msgType, const char *buf)
     } else {
 #if defined(Q_CC_MWERKS) && defined(Q_OS_MACX)
         mac_default_handler(buf);
-#elif defined(QT_USE_SLOG2)
-        slog2_default_handler(msgType, buf);
 #elif defined(Q_OS_WINCE)
         QString fstr = QString::fromLatin1(buf);
         fstr += QLatin1Char('\n');

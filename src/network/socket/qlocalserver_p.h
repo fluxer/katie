@@ -58,16 +58,8 @@
 #include "qlocalserver.h"
 #include "qobject_p.h"
 #include <qqueue.h>
-
-#if defined(QT_LOCALSOCKET_TCP)
-#   include <qtcpserver.h>
-#elif defined(Q_OS_WIN)
-#   include <qt_windows.h>
-#   include <qwineventnotifier_p.h>
-#else
-#   include <qabstractsocketengine_p.h>
-#   include <qsocketnotifier.h>
-#endif
+#include <qabstractsocketengine_p.h>
+#include <qsocketnotifier.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -77,9 +69,7 @@ class QLocalServerPrivate : public QObjectPrivate
 
 public:
     QLocalServerPrivate() :
-#if !defined(QT_LOCALSOCKET_TCP) && !defined(Q_OS_WIN)
             listenSocket(-1), socketNotifier(0),
-#endif
             maxPendingConnections(30), error(QAbstractSocket::UnknownSocketError)
     {
     }
@@ -91,29 +81,10 @@ public:
     void waitForNewConnection(int msec, bool *timedOut);
     void _q_onNewConnection();
 
-#if defined(QT_LOCALSOCKET_TCP)
-
-    QTcpServer tcpServer;
-    QMap<quintptr, QTcpSocket*> socketMap;
-#elif defined(Q_OS_WIN)
-    struct Listener {
-        HANDLE handle;
-        OVERLAPPED overlapped;
-        bool connected;
-    };
-
-    void setError(const QString &function);
-    bool addListener();
-
-    QList<Listener> listeners;
-    HANDLE eventHandle;
-    QWinEventNotifier *connectionEventNotifier;
-#else
     void setError(const QString &function);
 
     int listenSocket;
     QSocketNotifier *socketNotifier;
-#endif
 
     QString serverName;
     QString fullServerName;

@@ -886,21 +886,6 @@ void QTextEngine::shapeLine(const QScriptLine &line)
     }
 }
 
-#if !defined(QT_ENABLE_HARFBUZZ_FOR_MAC) && defined(Q_WS_MAC)
-static bool enableHarfBuzz()
-{
-    static enum { Yes, No, Unknown } status = Unknown;
-
-    if (status == Unknown) {
-        QByteArray v = qgetenv("QT_ENABLE_HARFBUZZ");
-        bool value = !v.isEmpty() && v != "0" && v != "false";
-        if (value) status = Yes;
-        else status = No;
-    }
-    return status == Yes;
-}
-#endif
-
 void QTextEngine::shapeText(int item) const
 {
     Q_ASSERT(item < layoutData->items.size());
@@ -909,30 +894,7 @@ void QTextEngine::shapeText(int item) const
     if (si.num_glyphs)
         return;
 
-#if defined(Q_WS_MAC)
-#if !defined(QT_ENABLE_HARFBUZZ_FOR_MAC)
-    if (enableHarfBuzz()) {
-#endif
-        QFontEngine *actualFontEngine = fontEngine(si, &si.ascent, &si.descent, &si.leading);
-        if (actualFontEngine->type() == QFontEngine::Multi)
-            actualFontEngine = static_cast<QFontEngineMulti *>(actualFontEngine)->engine(0);
-
-        HB_Face face = actualFontEngine->harfbuzzFace();
-        HB_Script script = (HB_Script) si.analysis.script;
-        if (face->supported_scripts[script])
-            shapeTextWithHarfbuzz(item);
-        else
-            shapeTextMac(item);
-#if !defined(QT_ENABLE_HARFBUZZ_FOR_MAC)
-    } else {
-        shapeTextMac(item);
-    }
-#endif
-#elif defined(Q_WS_WINCE)
-    shapeTextWithCE(item);
-#else
     shapeTextWithHarfbuzz(item);
-#endif
 
     si.width = 0;
 

@@ -58,10 +58,10 @@ QLocalSocketPrivate::QLocalSocketPrivate() : QIODevicePrivate(),
 
 void QLocalSocketPrivate::init()
 {
-    setSocket(new QLocalUnixSocket);
+    setSocket(new QTcpSocket);
 }
 
-void QLocalSocketPrivate::setSocket(QLocalUnixSocket* socket)
+void QLocalSocketPrivate::setSocket(QTcpSocket* socket)
 {
     if (ownsTcpSocket)
         delete tcpSocket;
@@ -275,7 +275,7 @@ bool QLocalSocket::setSocketDescriptor(quintptr socketDescriptor,
         foreach (QObject* child, localServer->children()) {
             QTcpSocket* childTcpSocket = qobject_cast<QTcpSocket*>(child);
             if (childTcpSocket && childTcpSocket->socketDescriptor() == socketDescriptor) {
-                d->setSocket( static_cast<QLocalUnixSocket*>(childTcpSocket) );
+                d->setSocket( childTcpSocket );
                 return true;
             }
         }
