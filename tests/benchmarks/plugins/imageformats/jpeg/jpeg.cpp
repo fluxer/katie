@@ -59,7 +59,7 @@ void tst_jpeg::jpegDecodingQtWebkitStyle()
 {
     // QtWebkit currently calls size() to get the image size for layouting purposes.
     // Then when it is in the viewport (we assume that here) it actually gets decoded.
-    QFile inputJpeg(SRCDIR "n900.jpeg");
+    QFile inputJpeg(QLatin1String(SRCDIR "n900.jpeg"));
     QVERIFY(inputJpeg.exists());
     inputJpeg.open(QIODevice::ReadOnly);
     QByteArray imageData = inputJpeg.readAll();

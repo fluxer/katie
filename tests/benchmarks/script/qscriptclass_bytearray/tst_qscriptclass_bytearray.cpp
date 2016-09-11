@@ -97,7 +97,7 @@ void tst_QScriptClass_ByteArray::benchmark()
 
     QScriptEngine eng;
     ByteArrayClass *baClass = new ByteArrayClass(&eng);
-    eng.globalObject().setProperty("ByteArray", baClass->constructor());
+    eng.globalObject().setProperty(QLatin1String("ByteArray"), baClass->constructor());
 
     QBENCHMARK {
         eng.evaluate(testContents);

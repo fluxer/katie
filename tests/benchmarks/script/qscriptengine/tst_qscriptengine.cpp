@@ -462,9 +462,8 @@ void tst_QScriptEngine::toObject()
 void tst_QScriptEngine::toStringHandle()
 {
     newEngine();
-    QString str = QString::fromLatin1("foobarbaz");
     QBENCHMARK {
-        (void)m_engine->toStringHandle(str);
+        (void)m_engine->toStringHandle(QLatin1String("foobarbaz"));
     }
 }
 

@@ -71,7 +71,7 @@ void tst_QScriptClass::noSuchProperty()
     QScriptEngine eng;
     QScriptClass cls(&eng);
     QScriptValue obj = eng.newObject(&cls);
-    QString propertyName = QString::fromLatin1("foo");
+    QString propertyName = QLatin1String("foo");
     QBENCHMARK {
         for (int i = 0; i < iterationNumber; ++i)
             (void)obj.property(propertyName);
@@ -86,7 +86,7 @@ public:
     FooScriptClass(QScriptEngine *engine)
         : QScriptClass(engine)
     {
-        foo = engine->toStringHandle("foo");
+        foo = engine->toStringHandle(QLatin1String("foo"));
     }
 
     QueryFlags queryProperty(const QScriptValue &,
@@ -123,7 +123,7 @@ void tst_QScriptClass::property()
     QScriptEngine eng;
     FooScriptClass cls(&eng);
     QScriptValue obj = eng.newObject(&cls);
-    QScriptString foo = eng.toStringHandle("foo");
+    QScriptString foo = eng.toStringHandle(QLatin1String("foo"));
     QBENCHMARK {
         for (int i = 0; i < iterationNumber; ++i)
             (void)obj.property(foo);
@@ -137,7 +137,7 @@ void tst_QScriptClass::setProperty()
     FooScriptClass cls(&eng);
     QScriptValue obj = eng.newObject(&cls);
     QScriptValue value(456);
-    QScriptString foo = eng.toStringHandle("foo");
+    QScriptString foo = eng.toStringHandle(QLatin1String("foo"));
     QBENCHMARK {
         for (int i = 0; i < iterationNumber; ++i)
             obj.setProperty(foo, value);
@@ -150,7 +150,7 @@ void tst_QScriptClass::propertyFlags()
     QScriptEngine eng;
     FooScriptClass cls(&eng);
     QScriptValue obj = eng.newObject(&cls);
-    QScriptString foo = eng.toStringHandle("foo");
+    QScriptString foo = eng.toStringHandle(QLatin1String("foo"));
     QBENCHMARK {
         for (int i = 0; i < iterationNumber; ++i)
             (void)obj.propertyFlags(foo);
@@ -200,9 +200,9 @@ void tst_QScriptClass::hasInstance()
     QScriptEngine eng;
     ExtensionScriptClass cls(&eng);
     QScriptValue obj = eng.newObject(&cls);
-    obj.setProperty("foo", 123);
+    obj.setProperty(QLatin1String("foo"), 123);
     QScriptValue plain = eng.newObject();
-    plain.setProperty("foo", obj.property("foo"));
+    plain.setProperty(QLatin1String("foo"), obj.property(QLatin1String("foo")));
     QBENCHMARK {
         for (int i = 0; i < iterationNumber; ++i)
             (void)plain.instanceOf(obj);
