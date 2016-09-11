@@ -71,6 +71,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemengine_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qprocess_unix.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemiterator_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/io/qstandardpaths_unix.cpp
 )
 
 if(KATIE_PLATFORM STREQUAL "linux")
