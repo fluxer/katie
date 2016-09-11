@@ -94,11 +94,23 @@ void tst_qhostinfo::lookupSpeed()
     qt_qhostinfo_enable_cache(cache);
 
     QStringList hostnameList;
-    hostnameList << "www.ovi.com" << "www.nokia.com" << "qt.nokia.com" << "www.trolltech.com" << "troll.no"
-            << "www.qtcentre.org" << "forum.nokia.com" << "www.forum.nokia.com" << "wiki.forum.nokia.com"
-            << "www.nokia.no" << "nokia.de" << "127.0.0.1" << "----";
+    hostnameList << QLatin1String("www.ovi.com")
+                 << QLatin1String("www.nokia.com")
+                 << QLatin1String("qt.nokia.com")
+                 << QLatin1String("www.trolltech.com")
+                 << QLatin1String("troll.no")
+                 << QLatin1String("www.qtcentre.org")
+                 << QLatin1String("forum.nokia.com")
+                 << QLatin1String("www.forum.nokia.com")
+                 << QLatin1String("wiki.forum.nokia.com")
+                 << QLatin1String("www.nokia.no")
+                 << QLatin1String("nokia.de")
+                 << QLatin1String("127.0.0.1")
+                 << QLatin1String("----");
     // also add some duplicates:
-    hostnameList << "www.nokia.com" << "127.0.0.1" << "www.trolltech.com";
+    hostnameList << QLatin1String("www.nokia.com")
+                 << QLatin1String("127.0.0.1")
+                 << QLatin1String("www.trolltech.com");
     // and some more
     hostnameList << hostnameList;
 

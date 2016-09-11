@@ -602,7 +602,7 @@ void tst_qnetworkreply::performanceControlRate()
 
     TimedSender sender(5000);
     QTcpSocket sink;
-    sink.connectToHost("127.0.0.1", sender.serverPort());
+    sink.connectToHost(QLatin1String("127.0.0.1"), sender.serverPort());
     DataReader reader(&sink, false);
 
     QTime loopTime;
