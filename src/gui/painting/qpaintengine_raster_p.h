@@ -214,17 +214,6 @@ public:
     void saveBuffer(const QString &s) const;
 #endif
 
-#ifdef Q_WS_MAC
-    void setCGContext(CGContextRef ref);
-    CGContextRef getCGContext() const;
-#endif
-
-#ifdef Q_WS_WIN
-    void setDC(HDC hdc);
-    HDC getDC() const;
-    void releaseDC(HDC hdc) const;
-#endif
-
     void alphaPenBlt(const void* src, int bpl, int depth, int rx,int ry,int w,int h);
 
     Type type() const { return Raster; }
@@ -316,12 +305,6 @@ public:
     QScopedPointer<QOutlineMapper> outlineMapper;
     QScopedPointer<QRasterBuffer>  rasterBuffer;
 
-#if defined (Q_WS_WIN)
-    HDC hdc;
-#elif defined(Q_WS_MAC)
-    CGContextRef cgContext;
-#endif
-
     QRect deviceRect;
     QRect deviceRectUnclipped;
 
@@ -343,10 +326,6 @@ public:
 
     uint mono_surface : 1;
     uint outlinemapper_xform_dirty : 1;
-
-#ifdef Q_WS_WIN
-    uint isPlain45DegreeRotation : 1;
-#endif
 
     QScopedPointer<QRasterizer> rasterizer;
 };

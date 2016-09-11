@@ -593,9 +593,7 @@ QPrinter::QPrinter(PrinterMode mode)
     QPrinterInfo defPrn(QPrinterInfo::defaultPrinter());
     if (!defPrn.isNull()) {
         setPrinterName(defPrn.printerName());
-    } else if (QPrinterInfo::availablePrinters().isEmpty()
-               && d_ptr->paintEngine->type() != QPaintEngine::Windows
-               && d_ptr->paintEngine->type() != QPaintEngine::MacPrinter) {
+    } else if (QPrinterInfo::availablePrinters().isEmpty()) {
         setOutputFormat(QPrinter::PdfFormat);
     }
 }

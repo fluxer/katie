@@ -179,17 +179,10 @@ public:
     void setSystemRect(const QRect &rect);
     QRect systemRect() const;
 
-#ifdef Q_WS_WIN
-    virtual HDC getDC() const;
-    virtual void releaseDC(HDC hdc) const;
-#endif
-
     virtual QPoint coordinateOffset() const;
 
     enum Type {
         X11,
-        Windows,
-        QuickDraw, CoreGraphics, MacPrinter,
         QWindowSystem,
         PostScript,
         OpenGL,

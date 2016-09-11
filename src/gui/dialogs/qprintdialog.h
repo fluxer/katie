@@ -67,7 +67,7 @@ public:
     ~QPrintDialog();
 
     int exec();
-#if defined (Q_OS_UNIX) && !defined(Q_WS_MAC)
+#if defined (Q_OS_UNIX)
     virtual void accept();
 #endif
     void done(int result);
@@ -78,7 +78,7 @@ public:
     void setOptions(PrintDialogOptions options);
     PrintDialogOptions options() const;
 
-#if defined(Q_OS_UNIX) || defined(Q_WS_MAC) || defined(Q_OS_WIN)
+#if defined(Q_OS_UNIX)
     void setVisible(bool visible);
 #endif
 

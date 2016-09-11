@@ -58,7 +58,7 @@ QT_BEGIN_NAMESPACE
 template <class T> class QVector;
 class QVariant;
 
-#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
 struct QRegionPrivate;
 #endif
 
@@ -134,25 +134,8 @@ public:
     inline bool operator!=(const QRegion &r) const { return !(operator==(r)); }
     operator QVariant() const;
 
-#if defined(Q_WS_WIN)
-    inline HRGN    handle() const { ensureHandle(); return d->rgn; }
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     inline Region handle() const { if(!d->rgn) updateX11Region(); return d->rgn; }
-#elif defined(Q_WS_MAC)
-#if defined Q_WS_MAC32
-    RgnHandle toQDRgn() const;
-    RgnHandle toQDRgnForUpdate_sys() const;
-    static QRegion fromQDRgn(RgnHandle shape);
-#endif
-#ifdef QT_MAC_USE_COCOA
-    inline HIMutableShapeRef handle(bool unused = false) const
-    { Q_UNUSED(unused); return toHIMutableShape(); }
-#else
-    inline RgnHandle handle() const { return handle(false); }
-    inline RgnHandle handle(bool) const { return toQDRgn(); }
-#endif
-    HIMutableShapeRef toHIMutableShape() const;
-    static QRegion fromHIShapeRef(HIShapeRef shape);
 #endif
 
 #ifndef QT_NO_DATASTREAM
@@ -162,16 +145,10 @@ public:
 private:
     QRegion copy() const;   // helper of detach.
     void detach();
-#if defined(Q_WS_WIN)
-    void ensureHandle() const;
-    QRegion winCombine(const QRegion &r, int num) const;
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     void updateX11Region() const;
     void *clipRectangles(int &num) const;
     friend void *qt_getClipRects(const QRegion &r, int &num);
-#elif defined(Q_WS_MAC)
-    static OSStatus shape2QRegionHelper(int inMessage, HIShapeRef inShape,
-                                        const CGRect *inRect, void *inRefcon);
 #endif
     friend bool qt_region_strictContains(const QRegion &region,
                                          const QRect &rect);
@@ -182,19 +159,14 @@ private:
 #endif
     struct QRegionData {
         QBasicAtomicInt ref;
-#if defined(Q_WS_WIN)
-        HRGN   rgn;
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
         Region rgn;
         void *xrectangles;
 #endif
-#if defined(Q_WS_X11) || defined(Q_WS_MAC) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
         QRegionPrivate *qt_rgn;
 #endif
     };
-#if defined(Q_WS_WIN)
-    friend class QETWidget;
-#endif
     struct QRegionData *d;
     static struct QRegionData shared_empty;
     static void cleanUp(QRegionData *x);

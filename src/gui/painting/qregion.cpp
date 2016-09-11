@@ -49,7 +49,7 @@
 
 #include <qdebug.h>
 
-#if defined(Q_OS_UNIX) || defined(Q_WS_WIN)
+#if defined(Q_OS_UNIX)
 #include "qimage.h"
 #include "qbitmap.h"
 #include <stdlib.h>
@@ -526,7 +526,7 @@ QRegion& QRegion::operator|=(const QRegion &r)
 
     \sa intersected()
 */
-#if !defined (Q_OS_UNIX) && !defined (Q_WS_WIN)
+#if !defined (Q_OS_UNIX)
 QRegion& QRegion::operator+=(const QRect &r)
 {
     return operator+=(QRegion(r));
@@ -549,7 +549,7 @@ QRegion& QRegion::operator&=(const QRegion &r)
    \overload
    \since 4.4
  */
-#if defined (Q_OS_UNIX) || defined (Q_WS_WIN)
+#if defined (Q_OS_UNIX)
 QRegion& QRegion::operator&=(const QRect &r)
 {
     return *this = *this & r;
@@ -693,7 +693,7 @@ bool QRegion::intersects(const QRegion &region) const
 */
 
 
-#if !defined (Q_OS_UNIX) && !defined (Q_WS_WIN)
+#if !defined (Q_OS_UNIX)
 /*!
     \overload
     \since 4.4
@@ -1048,7 +1048,7 @@ Q_AUTOTEST_EXPORT QPainterPath qt_regionToPath(const QRegion &region)
     return result;
 }
 
-#if defined(Q_OS_UNIX) || defined(Q_WS_WIN)
+#if defined(Q_OS_UNIX)
 
 //#define QT_REGION_DEBUG
 /*
@@ -1584,14 +1584,6 @@ void QRegionPrivate::selfTest() const
 #if defined(Q_WS_X11)
 QT_BEGIN_INCLUDE_NAMESPACE
 # include "qregion_x11.cpp"
-QT_END_INCLUDE_NAMESPACE
-#elif defined(Q_WS_MAC)
-QT_BEGIN_INCLUDE_NAMESPACE
-# include "qregion_mac.cpp"
-QT_END_INCLUDE_NAMESPACE
-#elif defined(Q_WS_WIN)
-QT_BEGIN_INCLUDE_NAMESPACE
-# include "qregion_win.cpp"
 QT_END_INCLUDE_NAMESPACE
 #endif
 
@@ -3805,8 +3797,6 @@ QRegion::QRegion(const QRect &r, RegionType t)
 #if defined(Q_WS_X11)
         d->rgn = 0;
         d->xrectangles = 0;
-#elif defined(Q_WS_WIN)
-        d->rgn = 0;
 #endif
         if (t == Rectangle) {
             d->qt_rgn = new QRegionPrivate(r);
@@ -3830,8 +3820,6 @@ QRegion::QRegion(const QPolygon &a, Qt::FillRule fillRule)
 #if defined(Q_WS_X11)
             d->rgn = 0;
             d->xrectangles = 0;
-#elif defined(Q_WS_WIN)
-            d->rgn = 0;
 #endif
             d->qt_rgn = qt_rgn;
         } else {
@@ -3862,8 +3850,6 @@ QRegion::QRegion(const QBitmap &bm)
 #if defined(Q_WS_X11)
         d->rgn = 0;
         d->xrectangles = 0;
-#elif defined(Q_WS_WIN)
-        d->rgn = 0;
 #endif
         d->qt_rgn = qt_bitmapToRegion(bm);
     }
@@ -3877,9 +3863,6 @@ void QRegion::cleanUp(QRegion::QRegionData *x)
         XDestroyRegion(x->rgn);
     if (x->xrectangles)
         free(x->xrectangles);
-#elif defined(Q_WS_WIN)
-    if (x->rgn)
-        qt_win_dispose_rgn(x->rgn);
 #endif
     delete x;
 }
@@ -3912,8 +3895,6 @@ QRegion QRegion::copy() const
 #if defined(Q_WS_X11)
     x->rgn = 0;
     x->xrectangles = 0;
-#elif defined(Q_WS_WIN)
-    x->rgn = 0;
 #endif
     if (d->qt_rgn)
         x->qt_rgn = new QRegionPrivate(*d->qt_rgn);

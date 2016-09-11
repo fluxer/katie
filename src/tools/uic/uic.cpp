@@ -53,10 +53,6 @@
 #include <QtCore/QTextStream>
 #include <QtCore/QDateTime>
 
-#if defined Q_WS_WIN
-#include <qt_windows.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 Uic::Uic(Driver *d)

@@ -53,9 +53,6 @@
 // We mean it.
 //
 
-#ifdef Q_WS_WIN
-# include "QtCore/qt_windows.h"
-#endif
 #include "QtCore/qlibrary.h"
 #include "QtCore/qplugin.h"
 #include "QtCore/qsharedpointer.h"
@@ -70,13 +67,7 @@ class QSettings;
 class QLibraryPrivate
 {
 public:
-
-#ifdef Q_WS_WIN
-    HINSTANCE
-#else
-    void *
-#endif
-    pHnd;
+    void *pHnd;
 
     QString fileName, qualifiedFileName;
     QString fullVersion;

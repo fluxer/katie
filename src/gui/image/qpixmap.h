@@ -146,26 +146,6 @@ public:
 
     bool convertFromImage(const QImage &img, Qt::ImageConversionFlags flags = Qt::AutoColor);
 
-#if defined(Q_WS_WIN)
-    enum HBitmapFormat {
-        NoAlpha,
-        PremultipliedAlpha,
-        Alpha
-    };
-
-    HBITMAP toWinHBITMAP(HBitmapFormat format = NoAlpha) const;
-    HICON toWinHICON() const;
-
-    static QPixmap fromWinHBITMAP(HBITMAP hbitmap, HBitmapFormat format = NoAlpha);
-    static QPixmap fromWinHICON(HICON hicon);
-#endif
-
-#if defined(Q_WS_MAC)
-    CGImageRef toMacCGImageRef() const;
-    static QPixmap fromMacCGImageRef(CGImageRef image);
-#endif
-
-
     inline QPixmap copy(int x, int y, int width, int height) const;
     QPixmap copy(const QRect &rect = QRect()) const;
 
@@ -179,11 +159,7 @@ public:
 
     bool isQBitmap() const;
 
-#if defined(Q_WS_MAC)
-    Qt::HANDLE macQDHandle() const;
-    Qt::HANDLE macQDAlphaHandle() const;
-    Qt::HANDLE macCGHandle() const;
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     enum ShareMode { ImplicitlyShared, ExplicitlyShared };
 
     static QPixmap fromX11Pixmap(Qt::HANDLE pixmap, ShareMode mode = ImplicitlyShared);
@@ -191,9 +167,6 @@ public:
     void x11SetScreen(int screen);
     const QX11Info &x11Info() const;
     Qt::HANDLE x11PictureHandle() const;
-#endif
-
-#if defined(Q_WS_X11)
     Qt::HANDLE handle() const;
 #endif
 
@@ -212,17 +185,7 @@ private:
 
     QPixmap(const QSize &s, int type);
     void init(int, int, int);
-#if defined(Q_WS_WIN)
-    void initAlphaPixmap(uchar *bytes, int length, struct tagBITMAPINFO *bmi);
-#endif
     Q_DUMMY_COMPARISON_OPERATOR(QPixmap)
-#ifdef Q_WS_MAC
-    friend CGContextRef qt_mac_cg_context(const QPaintDevice*);
-    friend CGImageRef qt_mac_create_imagemask(const QPixmap&, const QRectF&);
-    friend IconRef qt_mac_create_iconref(const QPixmap&);
-    friend quint32 *qt_mac_pixmap_get_base(const QPixmap*);
-    friend int qt_mac_pixmap_get_bytes_per_line(const QPixmap*);
-#endif
     friend class QPixmapData;
     friend class QX11PixmapData;
     friend class QBitmap;

@@ -55,10 +55,6 @@
 
 #include <QtGui/qpixmapdata_p.h>
 
-#ifdef Q_WS_WIN
-# include "qt_windows.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class Q_GUI_EXPORT QRasterPixmapData : public QPixmapData

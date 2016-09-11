@@ -92,9 +92,6 @@ class Q_GUI_EXPORT QApplication : public QCoreApplication
 #ifndef QT_NO_STYLE_STYLESHEET
     Q_PROPERTY(QString styleSheet READ styleSheet WRITE setStyleSheet)
 #endif
-#ifdef Q_WS_WINCE
-    Q_PROPERTY(int autoMaximizeThreshold READ autoMaximizeThreshold WRITE setAutoMaximizeThreshold)
-#endif
     Q_PROPERTY(bool autoSipEnabled READ autoSipEnabled WRITE setAutoSipEnabled)
 
 public:
@@ -200,19 +197,12 @@ public:
     static bool isEffectEnabled(Qt::UIEffect);
     static void setEffectEnabled(Qt::UIEffect, bool enable = true);
 
-#if defined(Q_WS_MAC)
-    virtual bool macEventFilter(EventHandlerCallRef, EventRef);
-#endif
 #if defined(Q_WS_X11)
     virtual bool x11EventFilter(XEvent *);
     virtual int x11ClientMessage(QWidget*, XEvent*, bool passive_only);
     int x11ProcessEvent(XEvent*);
 #endif
 
-#if defined(Q_WS_WIN)
-    void winFocus(QWidget *, bool);
-    static void winMouseButtonUp();
-#endif
 #ifndef QT_NO_SESSIONMANAGER
     // session management
     bool isSessionRestored() const;
@@ -257,10 +247,6 @@ public:
 public Q_SLOTS:
 #ifndef QT_NO_STYLE_STYLESHEET
     void setStyleSheet(const QString& sheet);
-#endif
-#ifdef Q_WS_WINCE
-    void setAutoMaximizeThreshold(const int threshold);
-    int autoMaximizeThreshold() const;
 #endif
     void setAutoSipEnabled(const bool enabled);
     bool autoSipEnabled() const;
@@ -307,7 +293,7 @@ private:
     friend class QGestureManager;
 #endif
 
-#if defined(Q_WS_MAC) || defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     Q_PRIVATE_SLOT(d_func(), void _q_alertTimeOut())
 #endif
 #if defined(QT_RX71_MULTITOUCH)

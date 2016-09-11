@@ -74,10 +74,6 @@ class Q_AUTOTEST_EXPORT QFSFileEnginePrivate : public QAbstractFileEnginePrivate
     Q_DECLARE_PUBLIC(QFSFileEngine)
 
 public:
-#ifdef Q_WS_WIN
-    static QString longFileName(const QString &path);
-#endif
-
     QFileSystemEntry fileEntry;
     QIODevice::OpenMode openMode;
 
@@ -115,19 +111,7 @@ public:
 
     FILE *fh;
 
-#ifdef Q_WS_WIN
-    HANDLE fileHandle;
-    HANDLE mapHandle;
-    QHash<uchar *, DWORD /* offset % AllocationGranularity */> maps;
-
-#ifndef Q_OS_WINCE
-    mutable int cachedFd;
-#endif
-
-    mutable DWORD fileAttrib;
-#else
     QHash<uchar *, QPair<int /*offset % PageSize*/, size_t /*length + offset % PageSize*/> > maps;
-#endif
     int fd;
 
     enum LastIOCommand

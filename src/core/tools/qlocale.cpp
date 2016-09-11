@@ -59,10 +59,6 @@
 #include "qstringlist.h"
 #include "qvariant.h"
 #include "qstringbuilder.h"
-#if defined(Q_WS_WIN)
-#   include "qt_windows.h"
-#   include <time.h>
-#endif
 #include "qnumeric.h"
 #include "qnumeric_p.h"
 

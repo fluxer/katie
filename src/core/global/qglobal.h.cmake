@@ -507,26 +507,6 @@ namespace QT_NAMESPACE {}
 
 #elif defined(__MWERKS__)
 #  define Q_CC_MWERKS
-/* "explicit" recognized since 4.0d1 */
-
-#elif defined(_MSC_VER)
-#  define Q_CC_MSVC
-#  define Q_CC_MSVC_NET
-#  define Q_CANNOT_DELETE_CONSTANT
-#  define Q_OUTOFLINE_TEMPLATE inline
-#  define Q_NO_TEMPLATE_FRIENDS
-#  define Q_ALIGNOF(type) __alignof(type)
-#  define Q_DECL_ALIGN(n) __declspec(align(n))
-/* Intel C++ disguising as Visual C++: the `using' keyword avoids warnings */
-#  if defined(__INTEL_COMPILER)
-#    define Q_CC_INTEL
-#  endif
-/* MSVC does not support SSE/MMX on x64 */
-#  if (defined(Q_CC_MSVC) && defined(_M_X64))
-#    undef QT_HAVE_SSE
-#    undef QT_HAVE_MMX
-#    undef QT_HAVE_3DNOW
-#  endif
 
 #elif defined(__BORLANDC__) || defined(__TURBOC__)
 #  define Q_CC_BOR
@@ -969,22 +949,6 @@ namespace QT_NAMESPACE {}
 #  endif
 #endif
 
-#if defined(Q_CC_MSVC) && !defined(Q_CC_INTEL)
-#  if defined(__cplusplus)
-#    if _MSC_VER >= 1600
-       /* C++11 features supported in VC10 = VC2010: */
-#      define Q_COMPILER_AUTO_FUNCTION
-#      define Q_COMPILER_AUTO_TYPE
-#      define Q_COMPILER_DECLTYPE
-#      define Q_COMPILER_LAMBDA
-#      define Q_COMPILER_RVALUE_REFS
-#      define Q_COMPILER_NULLPTR
-//  MSVC's library has std::initializer_list, but the compiler does not support the braces initialization
-//#      define Q_COMPILER_INITIALIZER_LISTS
-#    endif
-#  endif
-#endif
-
 #ifdef Q_COMPILER_CONSTEXPR
 # define Q_DECL_CONSTEXPR constexpr
 #else
@@ -1190,16 +1154,11 @@ redefine to built-in booleans to make autotests work properly */
 #endif
 
 /*
-   Workaround for static const members on MSVC++.
+   Workaround for static const members on MSVC++. Deprecated.
 */
 
-#if defined(Q_CC_MSVC)
-#  define QT_STATIC_CONST static
-#  define QT_STATIC_CONST_IMPL
-#else
-#  define QT_STATIC_CONST static const
-#  define QT_STATIC_CONST_IMPL const
-#endif
+#define QT_STATIC_CONST static const
+#define QT_STATIC_CONST_IMPL const
 
 /*
    Warnings and errors when using deprecated methods
@@ -1208,12 +1167,6 @@ redefine to built-in booleans to make autotests work properly */
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
 #elif (defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && (__GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2))) || defined(Q_CC_RVCT)
 #  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
-#elif defined(Q_CC_MSVC)
-#  define Q_DECL_DEPRECATED __declspec(deprecated)
-#  if defined (Q_CC_INTEL)
-#    define Q_DECL_VARIABLE_DEPRECATED
-#  else
-#  endif
 #else
 #  define Q_DECL_DEPRECATED
 #endif
@@ -1273,8 +1226,6 @@ redefine to built-in booleans to make autotests work properly */
 #else
 #    define QT_FASTCALL
 #endif
-#  elif defined(Q_CC_MSVC)
-#    define QT_FASTCALL __fastcall
 #  else
 #     define QT_FASTCALL
 #  endif
@@ -1863,8 +1814,6 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 
 #if (defined(Q_CC_GNU) && !defined(Q_OS_SOLARIS)) || defined(Q_CC_HPACC) || defined(Q_CC_DIAB)
 #  define Q_FUNC_INFO __PRETTY_FUNCTION__
-#elif defined(_MSC_VER)
-#  define Q_FUNC_INFO __FUNCSIG__
 #else
 #   if defined(Q_OS_SOLARIS) || defined(Q_CC_XLC) || defined(Q_OS_INTEGRITY)
 #      define Q_FUNC_INFO __FILE__ "(line number unavailable)"
@@ -2250,30 +2199,14 @@ Q_CORE_EXPORT_INLINE void *qReallocAligned(void *ptr, size_t size, size_t oldsiz
 #if !defined(QT_CC_WARNINGS)
 #  define QT_NO_WARNINGS
 #endif
-#if defined(QT_NO_WARNINGS)
-#  if defined(Q_CC_MSVC)
-#    pragma warning(disable: 4251) /* class 'A' needs to have dll interface for to be used by clients of class 'B'. */
-#    pragma warning(disable: 4244) /* 'conversion' conversion from 'type1' to 'type2', possible loss of data */
-#    pragma warning(disable: 4275) /* non - DLL-interface classkey 'identifier' used as base for DLL-interface classkey 'identifier' */
-#    pragma warning(disable: 4514) /* unreferenced inline/local function has been removed */
-#    pragma warning(disable: 4800) /* 'type' : forcing value to bool 'true' or 'false' (performance warning) */
-#    pragma warning(disable: 4097) /* typedef-name 'identifier1' used as synonym for class-name 'identifier2' */
-#    pragma warning(disable: 4706) /* assignment within conditional expression */
-#    pragma warning(disable: 4786) /* truncating debug info after 255 characters */
-#    pragma warning(disable: 4660) /* template-class specialization 'identifier' is already instantiated */
-#    pragma warning(disable: 4355) /* 'this' : used in base member initializer list */
-#    pragma warning(disable: 4231) /* nonstandard extension used : 'extern' before template explicit instantiation */
-#    pragma warning(disable: 4710) /* function not inlined */
-#    pragma warning(disable: 4530) /* C++ exception handler used, but unwind semantics are not enabled. Specify -GX */
-#  elif defined(Q_CC_BOR)
-#    pragma option -w-inl
-#    pragma option -w-aus
-#    pragma warn -inl
-#    pragma warn -pia
-#    pragma warn -ccc
-#    pragma warn -rch
-#    pragma warn -sig
-#  endif
+#if defined(QT_NO_WARNINGS) && defined(Q_CC_BOR)
+#  pragma option -w-inl
+#  pragma option -w-aus
+#  pragma warn -inl
+#  pragma warn -pia
+#  pragma warn -ccc
+#  pragma warn -rch
+#  pragma warn -sig
 #endif
 
 class Q_CORE_EXPORT QFlag
@@ -2429,7 +2362,7 @@ inline const QForeachContainer<T> *qForeachContainer(const QForeachContainerBase
         for (variable = *qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i; \
              qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk;           \
              --qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk)
-#endif // MSVC6 || MIPSpro
+#endif // DIAB || MIPSpro
 
 #endif
 

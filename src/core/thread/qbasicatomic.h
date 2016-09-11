@@ -86,32 +86,19 @@ public:
         return *this;
     }
 
-    // Atomic API, implemented in qatomic_XXX.h
-
-    static bool isReferenceCountingNative();
-    static bool isReferenceCountingWaitFree();
-
+    // Atomic API, implemented in qatomic_generic.h
     bool ref();
     bool deref();
-
-    static bool isTestAndSetNative();
-    static bool isTestAndSetWaitFree();
 
     bool testAndSetRelaxed(int expectedValue, int newValue);
     bool testAndSetAcquire(int expectedValue, int newValue);
     bool testAndSetRelease(int expectedValue, int newValue);
     bool testAndSetOrdered(int expectedValue, int newValue);
 
-    static bool isFetchAndStoreNative();
-    static bool isFetchAndStoreWaitFree();
-
     int fetchAndStoreRelaxed(int newValue);
     int fetchAndStoreAcquire(int newValue);
     int fetchAndStoreRelease(int newValue);
     int fetchAndStoreOrdered(int newValue);
-
-    static bool isFetchAndAddNative();
-    static bool isFetchAndAddWaitFree();
 
     int fetchAndAddRelaxed(int valueToAdd);
     int fetchAndAddAcquire(int valueToAdd);
@@ -163,26 +150,16 @@ public:
         return *this;
     }
 
-    // Atomic API, implemented in qatomic_XXX.h
-
-    static bool isTestAndSetNative();
-    static bool isTestAndSetWaitFree();
-
+    // Atomic API, implemented in qatomic_generic.h
     bool testAndSetRelaxed(T *expectedValue, T *newValue);
     bool testAndSetAcquire(T *expectedValue, T *newValue);
     bool testAndSetRelease(T *expectedValue, T *newValue);
     bool testAndSetOrdered(T *expectedValue, T *newValue);
 
-    static bool isFetchAndStoreNative();
-    static bool isFetchAndStoreWaitFree();
-
     T *fetchAndStoreRelaxed(T *newValue);
     T *fetchAndStoreAcquire(T *newValue);
     T *fetchAndStoreRelease(T *newValue);
     T *fetchAndStoreOrdered(T *newValue);
-
-    static bool isFetchAndAddNative();
-    static bool isFetchAndAddWaitFree();
 
     T *fetchAndAddRelaxed(qptrdiff valueToAdd);
     T *fetchAndAddAcquire(qptrdiff valueToAdd);

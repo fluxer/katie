@@ -1350,11 +1350,7 @@ public:
     };
     Q_DECLARE_FLAGS(MatchFlags, MatchFlag)
 
-#if defined(Q_WS_MAC)
-    typedef void * HANDLE;
-#elif defined(Q_WS_WIN)
-    typedef void *HANDLE;
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     typedef unsigned long HANDLE;
 #endif
     typedef WindowFlags WFlags;

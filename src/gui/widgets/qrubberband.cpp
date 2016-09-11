@@ -49,14 +49,8 @@
 
 #include "qstyle.h"
 #include "qstyleoption.h"
-#ifdef Q_WS_MAC
-#  include <qt_mac_p.h>
-#  include <qt_cocoa_helpers_mac_p.h>
-#endif
-
-#include <qdebug.h>
-
-#include <qwidget_p.h>
+#include "qdebug.h"
+#include "qwidget_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -86,11 +80,7 @@ void QRubberBand::initStyleOption(QStyleOptionRubberBand *option) const
         return;
     option->initFrom(this);
     option->shape = d_func()->shape;
-#ifndef Q_WS_MAC
     option->opaque = true;
-#else
-    option->opaque = windowFlags() & RUBBERBAND_WINDOW_TYPE;
-#endif
 }
 
 /*!
@@ -142,18 +132,9 @@ QRubberBand::QRubberBand(Shape s, QWidget *p)
     Q_D(QRubberBand);
     d->shape = s;
     setAttribute(Qt::WA_TransparentForMouseEvents);
-#ifndef Q_WS_WIN
     setAttribute(Qt::WA_NoSystemBackground);
-#endif //Q_WS_WIN
     setAttribute(Qt::WA_WState_ExplicitShowHide);
     setVisible(false);
-#ifdef Q_WS_MAC
-    if (isWindow()) {
-        createWinId();
-        extern OSWindowRef qt_mac_window_for(const QWidget *); //qwidget_mac.cpp
-        macWindowSetHasShadow(qt_mac_window_for(this), false);
-    }
-#endif
 }
 
 /*!

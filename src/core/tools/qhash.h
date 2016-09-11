@@ -86,18 +86,10 @@ Q_CORE_EXPORT uint qHash(const QString &key);
 Q_CORE_EXPORT uint qHash(const QStringRef &key);
 Q_CORE_EXPORT uint qHash(const QBitArray &key);
 
-#if defined(Q_CC_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4311 ) // disable pointer truncation warning
-#endif
 template <class T> inline uint qHash(const T *key)
 {
     return qHash(reinterpret_cast<quintptr>(key));
 }
-#if defined(Q_CC_MSVC)
-#pragma warning( pop )
-#endif
-
 template <typename T1, typename T2> inline uint qHash(const QPair<T1, T2> &key)
 {
     uint h1 = qHash(key.first);

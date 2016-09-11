@@ -71,18 +71,12 @@ public:
         : fontEngine(0)
         , hintingPreference(QFont::PreferDefaultHinting)
         , thread(0)
-#if defined(Q_WS_WIN)
-        , fontHandle(NULL)
-#endif
     {}
 
     QRawFontPrivate(const QRawFontPrivate &other)
         : fontEngine(other.fontEngine)
         , hintingPreference(other.hintingPreference)
         , thread(other.thread)
-#if defined(Q_WS_WIN)
-        , fontHandle(NULL)
-#endif
     {
         if (fontEngine != 0)
             fontEngine->ref.ref();
@@ -112,10 +106,6 @@ public:
     QFont::HintingPreference hintingPreference;
     QThread *thread;
     QAtomicInt ref;
-
-#if defined(Q_WS_WIN)
-    HANDLE fontHandle;
-#endif
 };
 
 QT_END_NAMESPACE

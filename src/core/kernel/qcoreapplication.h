@@ -49,10 +49,6 @@
 #include <QtCore/qstringlist.h>
 #endif
 
-#if defined(Q_WS_WIN) && !defined(tagMSG)
-typedef struct tagMSG MSG;
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -145,11 +141,6 @@ public:
 
     static void flush();
 
-
-#if defined(Q_WS_WIN)
-    virtual bool winEventFilter(MSG *message, long *result);
-#endif
-
 #if defined(Q_OS_UNIX)
     static void watchUnixSignal(int signal, bool watch);
 #endif
@@ -232,11 +223,6 @@ typedef void (*QtCleanUpFunction)();
 Q_CORE_EXPORT void qAddPostRoutine(QtCleanUpFunction);
 Q_CORE_EXPORT void qRemovePostRoutine(QtCleanUpFunction);
 Q_CORE_EXPORT QString qAppName();                // get application name
-
-#if defined(Q_WS_WIN) && !defined(QT_NO_DEBUG_STREAM)
-Q_CORE_EXPORT QString decodeMSG(const MSG &);
-Q_CORE_EXPORT QDebug operator<<(QDebug, const MSG &);
-#endif
 
 QT_END_NAMESPACE
 

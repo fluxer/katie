@@ -319,23 +319,9 @@ inline bool QAbstractItemModel::removeColumn(int acolumn, const QModelIndex &apa
 inline QModelIndex QAbstractItemModel::createIndex(int arow, int acolumn, void *adata) const
 { return QModelIndex(arow, acolumn, adata, this); }
 inline QModelIndex QAbstractItemModel::createIndex(int arow, int acolumn, int aid) const
-#if defined(Q_CC_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4312 ) // avoid conversion warning on 64-bit
-#endif
 { return QModelIndex(arow, acolumn, reinterpret_cast<void*>(aid), this); }
-#if defined(Q_CC_MSVC)
-#pragma warning( pop )
-#endif
 inline QModelIndex QAbstractItemModel::createIndex(int arow, int acolumn, quint32 aid) const
-#if defined(Q_CC_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4312 ) // avoid conversion warning on 64-bit
-#endif
 { return QModelIndex(arow, acolumn, reinterpret_cast<void*>(aid), this); }
-#if defined(Q_CC_MSVC)
-#pragma warning( pop )
-#endif
 
 
 class Q_CORE_EXPORT QAbstractTableModel : public QAbstractItemModel

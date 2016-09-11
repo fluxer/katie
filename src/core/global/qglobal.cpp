@@ -65,12 +65,7 @@
 #  include <exception>
 #endif
 
-#if !defined(Q_OS_WINCE)
-#  include <errno.h>
-#  if defined(Q_CC_MSVC)
-#    include <crtdbg.h>
-#  endif
-#endif
+#include <errno.h>
 
 #if defined(Q_OS_VXWORKS) && defined(_WRS_KERNEL)
 #  include <envLib.h>
@@ -2148,22 +2143,6 @@ void qt_message_output(QtMsgType msgType, const char *buf)
     if (msgType == QtFatalMsg
         || (msgType == QtWarningMsg
             && (!qgetenv("QT_FATAL_WARNINGS").isNull())) ) {
-
-#if defined(Q_CC_MSVC) && defined(QT_DEBUG) && defined(_DEBUG) && defined(_CRT_ERROR)
-        // get the current report mode
-        int reportMode = _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_WNDW);
-        _CrtSetReportMode(_CRT_ERROR, reportMode);
-#if !defined(Q_OS_WINCE)
-        int ret = _CrtDbgReport(_CRT_ERROR, __FILE__, __LINE__, QT_VERSION_STR, buf);
-#else
-        int ret = _CrtDbgReportW(_CRT_ERROR, _CRT_WIDE(__FILE__),
-            __LINE__, _CRT_WIDE(QT_VERSION_STR), reinterpret_cast<const wchar_t *> (QString::fromLatin1(buf).utf16()));
-#endif
-        if (ret == 0  && reportMode & _CRTDBG_MODE_WNDW)
-            return; // ignore
-        else if (ret == 1)
-            _CrtDbgBreak();
-#endif
 
 #if   (defined(Q_OS_UNIX) || defined(Q_CC_MINGW))
         abort(); // trap; generates core dump

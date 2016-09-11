@@ -50,11 +50,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 
-#if defined (Q_CC_MSVC) && (_MSC_VER < 1300)
-#  define QT_TYPENAME
-#else
-#  define QT_TYPENAME typename
-#endif
+#define QT_TYPENAME typename
 
 namespace QtPrivate {
 

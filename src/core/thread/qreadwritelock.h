@@ -78,11 +78,6 @@ private:
     friend class QWaitCondition;
 };
 
-#if defined(Q_CC_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4312 ) // ignoring the warning from /Wp64
-#endif
-
 class Q_CORE_EXPORT QReadLocker
 {
 public:
@@ -171,10 +166,6 @@ inline QWriteLocker::QWriteLocker(QReadWriteLock *areadWriteLock)
                "QWriteLocker", "QReadWriteLock pointer is misaligned");
     relock();
 }
-
-#if defined(Q_CC_MSVC)
-#pragma warning( pop )
-#endif
 
 #else // QT_NO_THREAD
 

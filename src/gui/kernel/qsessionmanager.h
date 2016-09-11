@@ -65,7 +65,7 @@ class Q_GUI_EXPORT  QSessionManager : public QObject
 public:
     QString sessionId() const;
     QString sessionKey() const;
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
     void *handle() const;
 #endif
 

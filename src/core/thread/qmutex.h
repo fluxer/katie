@@ -116,19 +116,10 @@ public:
         }
     }
 
-#if defined(Q_CC_MSVC)
-#pragma warning( push )
-#pragma warning( disable : 4312 ) // ignoring the warning from /Wp64
-#endif
-
     inline QMutex *mutex() const
     {
         return reinterpret_cast<QMutex *>(val & ~quintptr(1u));
     }
-
-#if defined(Q_CC_MSVC)
-#pragma warning( pop )
-#endif
 
 private:
     Q_DISABLE_COPY(QMutexLocker)

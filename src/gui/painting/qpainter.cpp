@@ -5127,8 +5127,7 @@ void QPainter::drawGlyphRun(const QPointF &position, const QGlyphRun &glyphRun)
         supportsTransformations = d->extended->supportsTransformations(fontD->fontEngine->fontDef.pixelSize,
                                                                        d->state->matrix);
     } else {
-        supportsTransformations = d->engine->type() == QPaintEngine::CoreGraphics
-                                  || d->state->matrix.isAffine();
+        supportsTransformations = d->state->matrix.isAffine();
     }
 
     for (int i=0; i<count; ++i) {
@@ -5768,16 +5767,10 @@ static void drawTextItemDecoration(QPainter *painter, const QPointF &pos, const 
 
     QLineF line(pos.x(), pos.y(), pos.x() + qFloor(width), pos.y());
 
-    qreal underlineOffset = fe->underlinePosition().toReal();
-    qreal y = pos.y();
-    // compensate for different rounding rule in Core Graphics paint engine,
-    // ideally code like this should be moved to respective engines.
-    if (painter->paintEngine()->type() == QPaintEngine::CoreGraphics) {
-        y = qCeil(y);
-    }
+    const qreal underlineOffset = fe->underlinePosition().toReal();
     // deliberately ceil the offset to avoid the underline coming too close to
     // the text above it.
-    const qreal underlinePos = y + qCeil(underlineOffset);
+    const qreal underlinePos = pos.y() + qCeil(underlineOffset);
 
     if (underlineStyle == QTextCharFormat::SpellCheckUnderline) {
         underlineStyle = QTextCharFormat::UnderlineStyle(QApplication::style()->styleHint(QStyle::SH_SpellCheckUnderlineStyle));

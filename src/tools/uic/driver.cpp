@@ -293,15 +293,7 @@ bool Driver::uic(const QString &fileName, QTextStream *out)
     if (out) {
         m_output = out;
     } else {
-#ifdef Q_WS_WIN
-        // As one might also redirect the output to a file on win, 
-        // we should not create the textstream with QFile::Text flag.
-        // The redirected file is opened in TextMode and this will
-        // result in broken line endings as writing will replace \n again.
-        m_output = new QTextStream(stdout, QIODevice::WriteOnly);
-#else
         m_output = new QTextStream(stdout, QIODevice::WriteOnly | QFile::Text);
-#endif
         deleteOutput = true;
     }
 
