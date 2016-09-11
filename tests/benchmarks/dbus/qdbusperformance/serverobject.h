@@ -58,15 +58,15 @@ public:
     }
 
 public slots:
-    Q_NOREPLY void noReply(const QByteArray &)
+    void noReply(const QByteArray &)
     {
         // black hole
     }
-    Q_NOREPLY void noReply(const QString &)
+    void noReply(const QString &)
     {
         // black hole
     }
-    Q_NOREPLY void noReply(const QDBusVariant &)
+    void noReply(const QDBusVariant &)
     {
         // black hole
     }
