@@ -27,6 +27,7 @@
 #define WTF_StdLibExtras_h
 
 #include <wtf/Platform.h>
+#include <wtf/Assertions.h>
 
 // OBJECT_OFFSETOF: Like the C++ offsetof macro, but you can use it with classes.
 // The magic number 0x4000 is insignificant. We use it to avoid using NULL, since
@@ -34,6 +35,22 @@
 #define OBJECT_OFFSETOF(class, field) (reinterpret_cast<std::ptrdiff_t>(&(reinterpret_cast<class*>(0x4000)->field)) - 0x4000)
 
 namespace WTF {
+
+    /*
+     * C++'s idea of a reinterpret_cast lacks sufficient cojones.
+     */
+    template<typename TO, typename FROM>
+    TO bitwise_cast(FROM from)
+    {
+        COMPILE_ASSERT(sizeof(TO) == sizeof(FROM), WTF_bitwise_cast_sizeof_casted_types_is_equal);
+        union {
+            FROM from;
+            TO to;
+        } u;
+        u.from = from;
+        return u.to;
+    }
+
     // Returns a count of the number of bits set in 'bits'.
     inline size_t bitCount(unsigned bits)
     {

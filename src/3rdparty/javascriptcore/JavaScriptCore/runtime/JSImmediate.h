@@ -29,6 +29,7 @@
 #include <wtf/Assertions.h>
 #include <wtf/AlwaysInline.h>
 #include <wtf/MathExtras.h>
+#include <wtf/StdLibExtras.h>
 #include "JSValue.h"
 #include <limits>
 #include <limits.h>
@@ -44,6 +45,18 @@ namespace JSC {
     class JSGlobalData;
     class JSObject;
     class UString;
+
+#if USE(JSVALUE64)
+    inline intptr_t reinterpretDoubleToIntptr(double value)
+    {
+        return WTF::bitwise_cast<intptr_t>(value);
+    }
+
+    inline double reinterpretIntptrToDouble(intptr_t value)
+    {
+        return WTF::bitwise_cast<double>(value);
+    }
+#endif
 
     /*
      * A JSValue* is either a pointer to a cell (a heap-allocated object) or an immediate (a type-tagged 
@@ -301,7 +314,7 @@ namespace JSC {
 #if USE(JSVALUE64)
         static ALWAYS_INLINE JSValue makeDouble(double value)
         {
-            return makeValue(static_cast<intptr_t>(value) + DoubleEncodeOffset);
+            return makeValue(reinterpretDoubleToIntptr(value) + DoubleEncodeOffset);
         }
 #endif
         
@@ -326,7 +339,7 @@ namespace JSC {
 #if USE(JSVALUE64)
         static ALWAYS_INLINE double doubleValue(JSValue v)
         {
-            return static_cast<double>(rawValue(v) - DoubleEncodeOffset);
+            return reinterpretIntptrToDouble(rawValue(v) - DoubleEncodeOffset);
         }
 #endif
 

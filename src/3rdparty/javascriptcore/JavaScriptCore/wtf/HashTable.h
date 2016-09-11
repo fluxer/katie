@@ -411,7 +411,7 @@ namespace WTF {
     public:
         // All access to m_iterators should be guarded with m_mutex.
         mutable const_iterator* m_iterators;
-        mutable Mutex* m_mutex;
+        mutable Mutex m_mutex;
 #endif
     };
 
@@ -424,7 +424,6 @@ namespace WTF {
         , m_deletedCount(0)
 #if CHECK_HASHTABLE_ITERATORS
         , m_iterators(0)
-        , m_mutex(new QMutex)
 #endif
     {
     }
@@ -1031,7 +1030,7 @@ namespace WTF {
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     void HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::invalidateIterators()
     {
-        QMutexLocker lock(m_mutex);
+        QMutexLocker lock(&m_mutex);
         const_iterator* next;
         for (const_iterator* p = m_iterators; p; p = next) {
             next = p->m_next;
@@ -1053,7 +1052,7 @@ namespace WTF {
         if (!table) {
             it->m_next = 0;
         } else {
-            QMutexLocker lock(table->m_mutex);
+            QMutexLocker lock(&table->m_mutex);
             Q_ASSERT(table->m_iterators != it);
             it->m_next = table->m_iterators;
             table->m_iterators = it;
@@ -1072,7 +1071,7 @@ namespace WTF {
             Q_ASSERT(!it->m_next);
             Q_ASSERT(!it->m_previous);
         } else {
-            QMutexLocker lock(it->m_table->m_mutex);
+            QMutexLocker lock(&it->m_table->m_mutex);
             if (it->m_next) {
                 Q_ASSERT(it->m_next->m_previous == it);
                 it->m_next->m_previous = it->m_previous;
