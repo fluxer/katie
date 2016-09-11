@@ -49,7 +49,7 @@
 #include <QtGui/QDateTimeEdit>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QMenu>
-#include <QtGui/QEvent>
+#include <QtGui/qevent.h>
 #include <QtGui/QApplication>
 #include <QtGui/QLabel>
 #include <QtGui/QToolButton>
