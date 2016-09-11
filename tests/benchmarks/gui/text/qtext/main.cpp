@@ -302,7 +302,7 @@ void tst_QText::fontResolution()
 {
     QFont font;
     QFont font2;
-    font.setFamily("DejaVu");
+    font.setFamily(QLatin1String("DejaVu"));
     font2.setBold(true);
 
     QBENCHMARK {    

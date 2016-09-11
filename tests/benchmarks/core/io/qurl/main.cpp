@@ -78,14 +78,14 @@ void tst_qurl::emptyUrl()
 void tst_qurl::relativeUrl()
 {
     QBENCHMARK {
-        QUrl url("pics/avatar.png");
+        QUrl url(QLatin1String("pics/avatar.png"));
     }
 }
 
 void tst_qurl::absoluteUrl()
 {
     QBENCHMARK {
-        QUrl url("/tmp/avatar.png");
+        QUrl url(QLatin1String("/tmp/avatar.png"));
     }
 }
 
@@ -107,11 +107,11 @@ void tst_qurl::isRelative()
     QFETCH(bool, firstRun);
     if (firstRun) {
         QBENCHMARK {
-            QUrl url("pics/avatar.png");
+            QUrl url(QLatin1String("pics/avatar.png"));
             url.isRelative();
         }
     } else {
-        QUrl url("pics/avatar.png");
+        QUrl url(QLatin1String("pics/avatar.png"));
         QBENCHMARK {
             url.isRelative();
         }
@@ -128,11 +128,11 @@ void tst_qurl::toLocalFile()
     QFETCH(bool, firstRun);
     if (firstRun) {
         QBENCHMARK {
-            QUrl url("/tmp/avatar.png");
+            QUrl url(QLatin1String("/tmp/avatar.png"));
             url.toLocalFile();
         }
     } else {
-        QUrl url("/tmp/avatar.png");
+        QUrl url(QLatin1String("/tmp/avatar.png"));
         QBENCHMARK {
             url.toLocalFile();
         }
@@ -149,11 +149,11 @@ void tst_qurl::toString()
     QFETCH(bool, firstRun);
     if(firstRun) {
         QBENCHMARK {
-            QUrl url("pics/avatar.png");
+            QUrl url(QLatin1String("pics/avatar.png"));
             url.toString();
         }
     } else {
-        QUrl url("pics/avatar.png");
+        QUrl url(QLatin1String("pics/avatar.png"));
         QBENCHMARK {
             url.toString();
         }
@@ -170,11 +170,11 @@ void tst_qurl::toEncoded()
    QFETCH(bool, firstRun);
    if(firstRun) {
        QBENCHMARK {
-           QUrl url("pics/avatar.png");
+           QUrl url(QLatin1String("pics/avatar.png"));
            url.toEncoded(QUrl::FormattingOption(0x100));
        }
    } else {
-       QUrl url("pics/avatar.png");
+       QUrl url(QLatin1String("pics/avatar.png"));
        QBENCHMARK {
            url.toEncoded(QUrl::FormattingOption(0x100));
        }
@@ -191,13 +191,13 @@ void tst_qurl::resolved()
     QFETCH(bool, firstRun);
     if(firstRun) {
         QBENCHMARK {
-            QUrl baseUrl("/home/user/");
-            QUrl url("pics/avatar.png");
+            QUrl baseUrl(QLatin1String("/home/user/"));
+            QUrl url(QLatin1String("pics/avatar.png"));
             baseUrl.resolved(url);
         }
     } else {
-        QUrl baseUrl("/home/user/");
-        QUrl url("pics/avatar.png");
+        QUrl baseUrl(QLatin1String("/home/user/"));
+        QUrl url(QLatin1String("pics/avatar.png"));
         QBENCHMARK {
             baseUrl.resolved(url);
         }
@@ -214,13 +214,13 @@ void tst_qurl::equality()
     QFETCH(bool, firstRun);
     if(firstRun) {
         QBENCHMARK {
-            QUrl url("pics/avatar.png");
-            QUrl url2("pics/avatar2.png");
+            QUrl url(QLatin1String("pics/avatar.png"));
+            QUrl url2(QLatin1String("pics/avatar2.png"));
             //url == url2;
         }
     } else {
-        QUrl url("pics/avatar.png");
-        QUrl url2("pics/avatar2.png");
+        QUrl url(QLatin1String("pics/avatar.png"));
+        QUrl url2(QLatin1String("pics/avatar2.png"));
         QBENCHMARK {
             url == url2;
         }
@@ -229,7 +229,7 @@ void tst_qurl::equality()
 
 void tst_qurl::qmlPropertyWriteUseCase()
 {
-    QUrl base("file:///home/user/qt/demos/declarative/samegame/SamegameCore/");
+    QUrl base(QLatin1String("file:///home/user/qt/demos/declarative/samegame/SamegameCore/"));
     QString str(QLatin1String("pics/redStar.png"));
 
     QBENCHMARK {

@@ -78,8 +78,8 @@ void QObjectBenchmark::signal_slot_benchmark()
 
     Object singleObject;
     Object multiObject;
-    singleObject.setObjectName("single");
-    multiObject.setObjectName("multi");
+    singleObject.setObjectName(QLatin1String("single"));
+    multiObject.setObjectName(QLatin1String("multi"));
 
     singleObject.connect(&singleObject, SIGNAL(signal0()), SLOT(slot0()));
 
