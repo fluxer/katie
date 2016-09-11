@@ -547,11 +547,5 @@ _SRC_CLUCENE_CLUCENE_CONFIG_H
 */
 #endif
 
-
-#if defined Q_CC_MSVC && _MSC_VER < 1300
-# define LUCENE_NO_STDC_NAMESPACE
-#endif
-
-
 #endif // QCLUCENE_CONFIG_P_H
 

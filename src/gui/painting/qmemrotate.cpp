@@ -443,7 +443,6 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_template(const SRC *src,
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void qt_memrotate90_template<quint24, quint24>(const quint24 *src,
                                                              int srcWidth, int srcHeight, int srcStride,
                                                              quint24 *dest, int dstStride)
@@ -466,7 +465,6 @@ inline void qt_memrotate90_template<quint24, quint24>(const quint24 *src,
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void qt_memrotate90_template<quint24, quint32>(const quint32 *src,
                                                              int srcWidth, int srcHeight, int srcStride,
                                                              quint24 *dest, int dstStride)
@@ -489,7 +487,6 @@ inline void qt_memrotate90_template<quint24, quint32>(const quint32 *src,
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void qt_memrotate90_template<quint18, quint32>(const quint32 *src,
                                                              int srcWidth, int srcHeight, int srcStride,
                                                              quint18 *dest, int dstStride)

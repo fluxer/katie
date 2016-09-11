@@ -43,42 +43,9 @@
 #include "qsystemerror_p.h"
 #include "qcorecommon_p.h"
 
-#if !defined(Q_OS_WINCE)
-#  include <errno.h>
-#  if defined(Q_CC_MSVC)
-#    include <crtdbg.h>
-#  endif
-#else
-#  if (_WIN32_WCE >= 0x700)
-#    include <errno.h>
-#  endif
-#endif
-#ifdef Q_OS_WIN
-#include <windows.h>
-#endif
+#include <errno.h>
 
 QT_BEGIN_NAMESPACE
-
-#ifdef Q_OS_WIN
-static QString windowsErrorString(int errorCode)
-{
-    QString ret;
-    wchar_t *string = 0;
-    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER|FORMAT_MESSAGE_FROM_SYSTEM,
-                  NULL,
-                  errorCode,
-                  MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-                  (LPWSTR)&string,
-                  0,
-                  NULL);
-    ret = QString::fromWCharArray(string);
-    LocalFree((HLOCAL)string);
-
-    if (ret.isEmpty() && errorCode == ERROR_MOD_NOT_FOUND)
-        ret = QString::fromLatin1("The specified module could not be found.");
-    return ret;
-}
-#endif
 
 static QString standardLibraryErrorString(int errorCode)
 {
@@ -100,16 +67,12 @@ static QString standardLibraryErrorString(int errorCode)
         s = QT_TRANSLATE_NOOP("QIODevice", "No space left on device");
         break;
     default: {
-    #ifdef Q_OS_WINCE
-        ret = windowsErrorString(errorCode);
-    #else
-        #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L && !defined(Q_OS_INTEGRITY) && !defined(Q_OS_QNX)
-            QByteArray buf(1024, '\0');
-            ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
-        #else
-            ret = QString::fromLocal8Bit(strerror(errorCode));
-        #endif
-    #endif
+#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
+        QByteArray buf(1024, '\0');
+        ret = fromstrerror_helper(strerror_r(errorCode, buf.data(), buf.size()), buf);
+#else
+        ret = QString::fromLocal8Bit(strerror(errorCode));
+#endif
     break; }
     }
     if (s) {
@@ -124,12 +87,8 @@ static QString standardLibraryErrorString(int errorCode)
 QString QSystemError::toString()
 {
     switch(errorScope) {
+    // native and standard library are the same
     case NativeError:
-#if defined (Q_OS_WIN)
-        return windowsErrorString(errorCode);
-#else
-        //unix: fall through as native and standard library are the same
-#endif
     case StandardLibraryError:
         return standardLibraryErrorString(errorCode);
     default:

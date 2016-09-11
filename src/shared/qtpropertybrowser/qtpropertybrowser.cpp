@@ -44,10 +44,6 @@
 #include <QtCore/QMap>
 #include <QtGui/QIcon>
 
-#if defined(Q_CC_MSVC)
-#    pragma warning(disable: 4786) /* MS VS 6: truncating debug info after 255 characters */
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QtPropertyPrivate

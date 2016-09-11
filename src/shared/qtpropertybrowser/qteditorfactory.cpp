@@ -49,7 +49,7 @@
 #include <QtGui/QDateTimeEdit>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QMenu>
-#include <QtGui/qevent.h>
+#include <QtGui/QEvent>
 #include <QtGui/QApplication>
 #include <QtGui/QLabel>
 #include <QtGui/QToolButton>
@@ -57,10 +57,6 @@
 #include <QtGui/QFontDialog>
 #include <QtGui/QSpacerItem>
 #include <QtCore/QMap>
-
-#if defined(Q_CC_MSVC)
-#    pragma warning(disable: 4786) /* MS VS 6: truncating debug info after 255 characters */
-#endif
 
 QT_BEGIN_NAMESPACE
 

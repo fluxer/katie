@@ -46,10 +46,6 @@
 */
 #include <QtCore/qendian.h>
 
-#ifdef Q_CC_MSVC
-#  include <stdlib.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // Test Vectors (from FIPS PUB 180-1)
@@ -91,11 +87,7 @@ typedef union
 
 static inline quint32 rol32(quint32 value, unsigned int shift)
 {
-#ifdef Q_CC_MSVC
-    return _rotl(value, shift);
-#else
     return ((value << shift) | (value >> (32 - shift)));
-#endif
 }
 
 static inline quint32 sha1Word(Sha1Chunk *chunk, const uint position)

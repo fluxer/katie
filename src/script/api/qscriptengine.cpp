@@ -421,21 +421,6 @@ qsreal ToInteger(qsreal n)
     return sign * ::floor(::fabs(n));
 }
 
-#ifdef Q_CC_MSVC
-// MSVC2008 crashes if these are inlined.
-
-QString ToString(qsreal value)
-{
-    return JSC::UString::from(value);
-}
-
-qsreal ToNumber(const QString &value)
-{
-    return ((JSC::UString)value).toDouble();
-}
-
-#endif
-
 static const qsreal MsPerSecond = 1000.0;
 
 static inline int MsFromTime(qsreal t)
@@ -4535,11 +4520,6 @@ Q_AUTOTEST_EXPORT bool qt_script_isJITEnabled()
     return false;
 #endif
 }
-#endif
-
-#ifdef Q_CC_MSVC
-// Try to prevent compiler from crashing.
-#pragma optimize("", off)
 #endif
 
 QT_END_NAMESPACE

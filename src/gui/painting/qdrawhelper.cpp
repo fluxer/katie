@@ -313,7 +313,6 @@ template <QImage::Format format>
 Q_STATIC_TEMPLATE_FUNCTION uint QT_FASTCALL qt_fetchPixel(const uchar *scanLine, int x, const QVector<QRgb> *rgb);
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_Mono>(const uchar *scanLine,
                                                  int x, const QVector<QRgb> *rgb)
 {
@@ -323,7 +322,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_Mono>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_MonoLSB>(const uchar *scanLine,
                                                     int x, const QVector<QRgb> *rgb)
 {
@@ -333,7 +331,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_MonoLSB>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_Indexed8>(const uchar *scanLine,
                                                      int x, const QVector<QRgb> *rgb)
 {
@@ -341,7 +338,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_Indexed8>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32>(const uchar *scanLine,
                                                    int x, const QVector<QRgb> *)
 {
@@ -349,7 +345,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>(const uchar *scanLine,
                                                                  int x, const QVector<QRgb> *)
 {
@@ -357,7 +352,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB32_Premultiplied>(const uchar 
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB16>(const uchar *scanLine,
                                                   int x, const QVector<QRgb> *)
 {
@@ -365,7 +359,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB16>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB8565_Premultiplied>(const uchar *scanLine,
                                                      int x,
                                                      const QVector<QRgb> *)
@@ -375,7 +368,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB8565_Premultiplied>(const ucha
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB666>(const uchar *scanLine,
                                                    int x,
                                                    const QVector<QRgb> *)
@@ -385,7 +377,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB666>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB6666_Premultiplied>(const uchar *scanLine,
                                                    int x,
                                                    const QVector<QRgb> *)
@@ -395,7 +386,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB6666_Premultiplied>(const ucha
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB555>(const uchar *scanLine,
                                                    int x,
                                                    const QVector<QRgb> *)
@@ -405,7 +395,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB555>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB8555_Premultiplied>(const uchar *scanLine,
                                                      int x,
                                                      const QVector<QRgb> *)
@@ -415,7 +404,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB8555_Premultiplied>(const ucha
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB888>(const uchar *scanLine,
                                                    int x,
                                                    const QVector<QRgb> *)
@@ -425,7 +413,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB888>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB444>(const uchar *scanLine,
                                                    int x,
                                                    const QVector<QRgb> *)
@@ -435,7 +422,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_RGB444>(const uchar *scanLine,
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB4444_Premultiplied>(const uchar *scanLine,
                                                      int x,
                                                      const QVector<QRgb> *)
@@ -445,7 +431,6 @@ uint QT_FASTCALL qt_fetchPixel<QImage::Format_ARGB4444_Premultiplied>(const ucha
 }
 
 template<>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_Invalid>(const uchar *,
                                                      int ,
                                                      const QVector<QRgb> *)
@@ -499,7 +484,7 @@ Q_STATIC_TEMPLATE_FUNCTION const uint * QT_FASTCALL qt_fetchUntransformed(uint *
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION const uint * QT_FASTCALL
+const uint * QT_FASTCALL
 qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>(uint *, const Operator *,
                                                          const QSpanData *data,
                                                          int y, int x, int)
@@ -3347,7 +3332,6 @@ static void blend_untransformed_argb(int count, const QSpan *spans, void *userDa
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void madd_2(DST *dest, const quint16 alpha, const SRC *src)
 {
     Q_ASSERT((quintptr(dest) & 0x3) == 0);
@@ -3357,7 +3341,6 @@ inline void madd_2(DST *dest, const quint16 alpha, const SRC *src)
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void madd_4(DST *dest, const quint32 alpha, const SRC *src)
 {
     Q_ASSERT((quintptr(dest) & 0x3) == 0);
@@ -3370,7 +3353,6 @@ inline void madd_4(DST *dest, const quint32 alpha, const SRC *src)
 
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void madd_4(qargb8565 *dest, const quint32 a, const qargb8565 *src)
 {
     Q_ASSERT((quintptr(dest) & 0x3) == 0);
@@ -3452,7 +3434,6 @@ inline void madd_4(qargb8565 *dest, const quint32 a, const qargb8565 *src)
 
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline void madd_4(qargb8555 *dest, const quint32 a, const qargb8555 *src)
 {
     Q_ASSERT((quintptr(dest) & 0x3) == 0);
@@ -3533,7 +3514,6 @@ inline void madd_4(qargb8555 *dest, const quint32 a, const qargb8555 *src)
 #endif
 
 template <class T>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 alpha_2(const T *src)
 {
     Q_ASSERT((quintptr(src) & 0x3) == 0);
@@ -3545,7 +3525,6 @@ inline quint16 alpha_2(const T *src)
 }
 
 template <class T>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 alpha_4(const T *src)
 {
     Q_ASSERT((quintptr(src) & 0x3) == 0);
@@ -3559,7 +3538,6 @@ inline quint32 alpha_4(const T *src)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 alpha_4(const qargb8565 *src)
 {
     const quint8 *src8 = reinterpret_cast<const quint8*>(src);
@@ -3567,7 +3545,6 @@ inline quint32 alpha_4(const qargb8565 *src)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 alpha_4(const qargb6666 *src)
 {
     const quint8 *src8 = reinterpret_cast<const quint8*>(src);
@@ -3578,7 +3555,6 @@ inline quint32 alpha_4(const qargb6666 *src)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 alpha_4(const qargb8555 *src)
 {
     Q_ASSERT((quintptr(src) & 0x3) == 0);
@@ -3587,7 +3563,6 @@ inline quint32 alpha_4(const qargb8555 *src)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 alpha_2(const qargb4444 *src)
 {
     const quint32 *src32 = reinterpret_cast<const quint32*>(src);
@@ -3597,7 +3572,6 @@ inline quint16 alpha_2(const qargb4444 *src)
 }
 
 template <class T>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_alpha_2(quint16 alpha, const T*)
 {
     return (T::alpha((alpha >> 8) & 0xff) << 8)
@@ -3605,7 +3579,6 @@ inline quint16 eff_alpha_2(quint16 alpha, const T*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_alpha_2(quint16 a, const qrgb565*)
 {
     return ((((a & 0xff00) + 0x0100) >> 3) & 0xff00)
@@ -3613,7 +3586,6 @@ inline quint16 eff_alpha_2(quint16 a, const qrgb565*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_alpha_2(quint16 a, const qrgb444*)
 {
     return (((a & 0x00ff) + 0x0001) >> 4)
@@ -3621,7 +3593,6 @@ inline quint16 eff_alpha_2(quint16 a, const qrgb444*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_alpha_2(quint16 a, const qargb4444*)
 {
     return (((a & 0x00ff) + 0x0001) >> 4)
@@ -3629,7 +3600,6 @@ inline quint16 eff_alpha_2(quint16 a, const qargb4444*)
 }
 
 template <class T>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_ialpha_2(quint16 alpha, const T*)
 {
     return (T::ialpha((alpha >> 8) & 0xff) << 8)
@@ -3637,28 +3607,24 @@ inline quint16 eff_ialpha_2(quint16 alpha, const T*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_ialpha_2(quint16 a, const qrgb565 *dummy)
 {
     return 0x2020 - eff_alpha_2(a, dummy);
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_ialpha_2(quint16 a, const qargb4444 *dummy)
 {
     return 0x1010 - eff_alpha_2(a, dummy);
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint16 eff_ialpha_2(quint16 a, const qrgb444 *dummy)
 {
     return 0x1010 - eff_alpha_2(a, dummy);
 }
 
 template <class T>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_alpha_4(quint32 alpha, const T*)
 {
     return (T::alpha(alpha >> 24) << 24)
@@ -3668,14 +3634,12 @@ inline quint32 eff_alpha_4(quint32 alpha, const T*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_alpha_4(quint32 a, const qrgb888*)
 {
     return a;
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_alpha_4(quint32 a, const qargb8565*)
 {
     return ((((a & 0xff00ff00) + 0x01000100) >> 3) & 0xff00ff00)
@@ -3683,7 +3647,6 @@ inline quint32 eff_alpha_4(quint32 a, const qargb8565*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_alpha_4(quint32 a, const qargb6666*)
 {
     return ((((a & 0xff00ff00) >> 2) + 0x00400040) & 0xff00ff00)
@@ -3691,7 +3654,6 @@ inline quint32 eff_alpha_4(quint32 a, const qargb6666*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_alpha_4(quint32 a, const qrgb666*)
 {
     return ((((a & 0xff00ff00) >> 2) + 0x00400040) & 0xff00ff00)
@@ -3699,7 +3661,6 @@ inline quint32 eff_alpha_4(quint32 a, const qrgb666*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_alpha_4(quint32 a, const qargb8555*)
 {
     return ((((a & 0xff00ff00) + 0x01000100) >> 3) & 0xff00ff00)
@@ -3707,7 +3668,6 @@ inline quint32 eff_alpha_4(quint32 a, const qargb8555*)
 }
 
 template <class T>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_ialpha_4(quint32 alpha, const T*)
 {
     return (T::ialpha(alpha >> 24) << 24)
@@ -3717,35 +3677,30 @@ inline quint32 eff_ialpha_4(quint32 alpha, const T*)
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_ialpha_4(quint32 a, const qrgb888*)
 {
     return ~a;
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_ialpha_4(quint32 a, const qargb8565 *dummy)
 {
     return 0x20202020 - eff_alpha_4(a, dummy);
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_ialpha_4(quint32 a, const qargb6666 *dummy)
 {
     return 0x40404040 - eff_alpha_4(a, dummy);
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_ialpha_4(quint32 a, const qrgb666 *dummy)
 {
     return 0x40404040 - eff_alpha_4(a, dummy);
 }
 
 template <>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 inline quint32 eff_ialpha_4(quint32 a, const qargb8555 *dummy)
 {
     return 0x20202020 - eff_alpha_4(a, dummy);
@@ -4492,7 +4447,6 @@ void QT_FASTCALL blendUntransformed_dest24(DST *dest, const SRC *src,
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_SPECIALIZATION
 void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);

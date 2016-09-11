@@ -640,19 +640,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QProgressDialog", "QtGui/qprogressdialog.h"},
     { "QWizard", "QtGui/qwizard.h"},
     { "QWizardPage", "QtGui/qwizard.h"},
-    { "QAudioDeviceInfo", "QtMultimedia/qaudiodeviceinfo.h"},
-    { "QAbstractAudioDeviceInfo", "QtMultimedia/qaudioengine.h"},
-    { "QAbstractAudioOutput", "QtMultimedia/qaudioengine.h"},
-    { "QAbstractAudioInput", "QtMultimedia/qaudioengine.h"},
-    { "QAudioEngineFactoryInterface", "QtMultimedia/qaudioengineplugin.h"},
-    { "QAudioEnginePlugin", "QtMultimedia/qaudioengineplugin.h"},
-    { "QAudioFormat", "QtMultimedia/qaudioformat.h"},
-    { "QAudioInput", "QtMultimedia/qaudioinput.h"},
-    { "QAudioOutput", "QtMultimedia/qaudiooutput.h"},
-    { "QAbstractVideoBuffer", "QtMultimedia/qabstractvideobuffer.h"},
-    { "QAbstractVideoSurface", "QtMultimedia/qabstractvideosurface.h"},
-    { "QVideoFrame", "QtMultimedia/qvideoframe.h"},
-    { "QVideoSurfaceFormat", "QtMultimedia/qvideosurfaceformat.h"},
     { "QAbstractMessageHandler", "QtXmlPatterns/qabstractmessagehandler.h"},
     { "QAbstractUriResolver", "QtXmlPatterns/qabstracturiresolver.h"},
     { "QXmlNodeModelIndex", "QtXmlPatterns/qabstractxmlnodemodel.h"},
@@ -779,6 +766,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 773;
+static const int qclass_lib_count = 760;
 
 #endif
