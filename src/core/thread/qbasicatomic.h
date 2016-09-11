@@ -54,13 +54,7 @@ public:
 #ifdef QT_ARCH_PARISC
     int _q_lock[4];
 #endif
-#if defined(QT_ARCH_WINDOWS) || defined(QT_ARCH_WINDOWSCE)
-    union { // needed for Q_BASIC_ATOMIC_INITIALIZER
-        volatile long _q_value;
-    };
-#else
     volatile int _q_value;
-#endif
 
     // Non-atomic API
     inline bool operator==(int value) const
@@ -132,19 +126,7 @@ public:
 #ifdef QT_ARCH_PARISC
     int _q_lock[4];
 #endif
-#if defined(QT_ARCH_WINDOWS) || defined(QT_ARCH_WINDOWSCE)
-    union {
-        T * volatile _q_value;
-#  if !defined(Q_OS_WINCE) && !defined(__i386__) && !defined(_M_IX86)
-        qint64
-#  else
-        long
-#  endif
-        volatile _q_value_integral;
-    };
-#else
     T * volatile _q_value;
-#endif
 
     // Non-atomic API
     inline bool operator==(T *value) const
@@ -220,54 +202,8 @@ QT_END_NAMESPACE
 
 #if defined(QT_BOOTSTRAPPED)
 #  include <qatomic_bootstrap.h>
-#elif defined(QT_ARCH_INTEGRITY)
-#  include "QtCore/qatomic_integrity.h"
-#elif defined(QT_ARCH_VXWORKS)
-#  include "QtCore/qatomic_vxworks.h"
-#elif defined(QT_ARCH_ALPHA)
-#  include "QtCore/qatomic_alpha.h"
-#elif defined(QT_ARCH_ARM)
-#  include "QtCore/qatomic_arm.h"
-#elif defined(QT_ARCH_ARMV6)
-#  include "QtCore/qatomic_armv6.h"
-#elif defined(QT_ARCH_AVR32)
-#  include "QtCore/qatomic_avr32.h"
-#elif defined(QT_ARCH_BFIN)
-#  include "QtCore/qatomic_bfin.h"
-#elif defined(QT_ARCH_GENERIC)
-#  include "QtCore/qatomic_generic.h"
-#elif defined(QT_ARCH_I386)
-#  include "QtCore/qatomic_i386.h"
-#elif defined(QT_ARCH_IA64)
-#  include "QtCore/qatomic_ia64.h"
-#elif defined(QT_ARCH_M68K)
-#  include "QtCore/qatomic_m68k.h"
-#elif defined(QT_ARCH_MACOSX)
-#  include "QtCore/qatomic_macosx.h"
-#elif defined(QT_ARCH_MIPS)
-#  include "QtCore/qatomic_mips.h"
-#elif defined(QT_ARCH_PARISC)
-#  include "QtCore/qatomic_parisc.h"
-#elif defined(QT_ARCH_POWERPC)
-#  include "QtCore/qatomic_powerpc.h"
-#elif defined(QT_ARCH_S390)
-#  include "QtCore/qatomic_s390.h"
-#elif defined(QT_ARCH_SPARC)
-#  include "QtCore/qatomic_sparc.h"
-#elif defined(QT_ARCH_WINDOWS)
-#  include "QtCore/qatomic_windows.h"
-#elif defined(QT_ARCH_WINDOWSCE)
-#  include "QtCore/qatomic_windowsce.h"
-#elif defined(QT_ARCH_X86_64)
-#  include "QtCore/qatomic_x86_64.h"
-#elif defined(QT_ARCH_SH)
-#  include "QtCore/qatomic_sh.h"
-#elif defined(QT_ARCH_SH4A)
-#  include "QtCore/qatomic_sh4a.h"
-#elif defined(QT_ARCH_NACL)
-#  include "QtCore/qatomic_generic.h"
 #else
-#  error "Qt has not been ported to this architecture"
+#  include "QtCore/qatomic_generic.h"
 #endif
 
 QT_END_HEADER
