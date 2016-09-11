@@ -3252,11 +3252,6 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Naposledy navštívené</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>Všetky súbory (*.*)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
         <source>Remove</source>
         <translation>Odstrániť</translation>
@@ -3869,41 +3864,31 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+185"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+192"/>
         <source>No host name given</source>
         <translation>Nezadaný názov hostiteľa</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>Neplatný hostiteľ</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+54"/>
+        <location line="+54"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Neznámy typ adresy</translation>
     </message>
     <message>
-        <location line="-125"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-26"/>
+        <location line="-26"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Hostiteľ nebol nájdený</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>Neznáma chyba</translation>
-    </message>
-    <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+4"/>
-        <source>Unknown error (%1)</source>
-        <translation>Neznáma chyba (%1)</translation>
     </message>
 </context>
 <context>
@@ -4073,7 +4058,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>Prístup zamietnutý</translation>
@@ -4267,19 +4252,16 @@ Chcete ho aj tak zmazať?</translation>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>Nie je možné načítať knižnicu %1: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Nie je možné uvoľniť z pamäte knižnicu %1: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Nie je možné vyriešiť symbol &quot;%1&quot; v %2: %3</translation>
     </message>
@@ -4362,8 +4344,6 @@ Chcete ho aj tak zmazať?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Neplatný názov</translation>
@@ -4394,7 +4374,6 @@ Chcete ho aj tak zmazať?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Chyba spojenia</translation>
@@ -4412,14 +4391,8 @@ Chcete ho aj tak zmazať?</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Neznáma chyba %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation>%1: Prístup odmietnutý</translation>
     </message>
 </context>
 <context>
@@ -4995,28 +4968,12 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>Chyba roamingu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>Spojenie bolo prerušené používateľom alebo systémom</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+261"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+3"/>
         <source>The specified configuration cannot be used.</source>
         <translation>Zadanú konfiguráciu nie je možné použiť.</translation>
     </message>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+4"/>
-        <source>Unidentified Error</source>
-        <translation>Neidentifikovaná chyba</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="-6"/>
+        <location line="-6"/>
         <source>Unknown session error.</source>
         <translation>Neznáma chyba spojenia.</translation>
     </message>
@@ -5171,11 +5128,6 @@ Chcete ho aj tak zmazať?</translation>
         <location line="+4"/>
         <source>Could not reset to start position</source>
         <translation>Nepodarilo sa vrátiť na štartovaciu pozíciu</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
     </message>
 </context>
 <context>
@@ -5358,7 +5310,6 @@ Chcete ho aj tak zmazať?</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Tlačiť</translation>
     </message>
@@ -5578,11 +5529,6 @@ Prosím vyberte si iný názov súboru.</translation>
 Do you want to overwrite it?</source>
         <translation>%1 už existuje.
 Má sa prepísať?</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>Hodnota &apos;Od&apos; nemôže byť väčšia ako hodnota &apos;Do&apos;.</translation>
     </message>
     <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
@@ -5883,22 +5829,19 @@ Má sa prepísať?</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+602"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Chyba pri čítaní z procesu</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Chyba pri zápise do procesu</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>Proces spadol</translation>
     </message>
@@ -5909,13 +5852,11 @@ Má sa prepísať?</translation>
     </message>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-654"/>
         <source>Could not open input redirection for reading</source>
         <translation>Vstupné presmerovanie sa nepodarilo otvoriť na čítanie</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Výstupné presmerovanie sa nepodarilo otvoriť pre zápis</translation>
     </message>
@@ -5929,18 +5870,8 @@ Má sa prepísať?</translation>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>Časový limit pre operáciu vypršal</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation>Proces sa nepodarilo spustiť: %1</translation>
     </message>
 </context>
 <context>
@@ -6545,51 +6476,43 @@ Má sa prepísať?</translation>
         <translation>%1: nedá sa odomknúť</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+71"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+95"/>
         <source>%1: already exists</source>
         <translation>%1: už existuje</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+16"/>
+        <location line="+16"/>
         <source>%1: invalid size</source>
         <translation>%1: neplatná veľkosť</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-4"/>
+        <location line="-4"/>
         <source>%1: out of resources</source>
         <translation>%1: bez použiteľných zdrojov</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-16"/>
+        <location line="-16"/>
         <source>%1: permission denied</source>
         <translation>%1: prístup zamietnutý</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+24"/>
+        <location line="+24"/>
         <source>%1: unknown error %2</source>
         <translation>%1: neznáma chyba %2</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+23"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: kľúč je prázdny</translation>
     </message>
     <message>
-        <location line="-59"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-65"/>
+        <location line="-65"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: neexistuje</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+46"/>
+        <location line="+46"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: Súbor s unixovým kľúčom neexistuje</translation>
     </message>
@@ -6618,11 +6541,6 @@ Má sa prepísať?</translation>
         <location line="+42"/>
         <source>%1: not attached</source>
         <translation>%1: nepripojený</translation>
-    </message>
-    <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+88"/>
-        <source>%1: size query failed</source>
-        <translation>%1: dopyt po veľkosti zlyhal</translation>
     </message>
 </context>
 <context>
@@ -8142,7 +8060,6 @@ Má sa prepísať?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
@@ -8213,13 +8130,12 @@ Má sa prepísať?</translation>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+72"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-63"/>
         <source>%1: permission denied</source>
         <translation>%1: prístup zamietnutý</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: už existuje</translation>
     </message>
@@ -8229,19 +8145,17 @@ Má sa prepísať?</translation>
         <translation>%1: neexistuje</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="-4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+9"/>
+        <location line="+9"/>
         <source>%1: out of resources</source>
         <translation>%1: bez použiteľných zdrojov</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: name error</source>
         <translation>%1: chyba názvu</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+7"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: neznáma chyba %2</translation>
     </message>

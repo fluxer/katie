@@ -3244,11 +3244,6 @@ Do you want to delete it anyway?</source>
         <translation>مکان‌های اخیر</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>تمام پرونده‌ها (*.*)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
         <source>Remove</source>
         <translation>حذف</translation>
@@ -3861,41 +3856,31 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+185"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+192"/>
         <source>No host name given</source>
         <translation>نام میزبان داده نشده است</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>نام نامعتبر میزبان</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+54"/>
+        <location line="+54"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>نوع ناشناخته آدرس</translation>
     </message>
     <message>
-        <location line="-125"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-26"/>
+        <location line="-26"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>میزبان پیدا نشد</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>خطای ناشناخته</translation>
-    </message>
-    <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+4"/>
-        <source>Unknown error (%1)</source>
-        <translation>خطای ناشناخته (%1)</translation>
     </message>
 </context>
 <context>
@@ -4065,7 +4050,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>حق دسترسی رد شد</translation>
@@ -4234,19 +4219,16 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>نمی‌توان کتابخانه %1 را بارگذاری کرد: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>نمی‌توان کتابخانه %1 را تخلیه کرد: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>نمی‌توان درباره نماد «%1» در %2 تصمیم‌گیری کرد: %3</translation>
     </message>
@@ -4354,8 +4336,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: نام نامعتبر</translation>
@@ -4386,7 +4366,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: خطای اتصال</translation>
@@ -4404,14 +4383,8 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: خطای ناشناخته %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation>%1: اجازهٔ دسترسی داده نشد</translation>
     </message>
 </context>
 <context>
@@ -4987,28 +4960,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>خطای رومینگ</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>جلسه به‌وسیلهٔ کاربر یا سیستم لغو شد</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+261"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+3"/>
         <source>The specified configuration cannot be used.</source>
         <translation>پیکربندی مشخص‌‌شده نمی‌تواند استفاده شود.</translation>
     </message>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+4"/>
-        <source>Unidentified Error</source>
-        <translation>خطای ناشناخته</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="-6"/>
+        <location line="-6"/>
         <source>Unknown session error.</source>
         <translation>خطای ناشناختهٔ جلسه.</translation>
     </message>
@@ -5163,11 +5120,6 @@ Do you want to delete it anyway?</source>
         <location line="+4"/>
         <source>Could not reset to start position</source>
         <translation>نمی‌توان به موقعیت ابتدایی بازنشانی کرد</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
     </message>
 </context>
 <context>
@@ -5350,7 +5302,6 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>چاپ</translation>
     </message>
@@ -5570,11 +5521,6 @@ Please choose a different file name.</source>
 Do you want to overwrite it?</source>
         <translation>%1 هم‌اکنون وجود دارد 
 آیا می‌خواهید آن را بازنویسی کنید؟</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>مقدار مبدأ نمی‌تواند از مقدار مقصد بزرگتر باشد.</translation>
     </message>
     <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
@@ -5875,22 +5821,19 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+602"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>خطای خواندن از پردازش</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>خطای نوشتن روی پردازش</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>پردازش خراب‌ شد</translation>
     </message>
@@ -5901,13 +5844,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-654"/>
         <source>Could not open input redirection for reading</source>
         <translation>نمی‌توان تغییر مسیر ورودی را برای خواندن باز کرد</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>نمی‌توان تغییر مسیر خروجی را برای نوشتن باز کرد</translation>
     </message>
@@ -5921,18 +5862,8 @@ Do you want to overwrite it?</source>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>عملیات پردازش با وقفهٔ زمانی مواجه شد</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation>شروع ناموفق پردازش: %1</translation>
     </message>
 </context>
 <context>
@@ -6537,56 +6468,48 @@ Do you want to overwrite it?</source>
         <translation>%1: نمی‌توان قفل را باز کرد</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+71"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+95"/>
         <source>%1: already exists</source>
         <translation>%1: هم‌اکنون موجود است</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+16"/>
+        <location line="+16"/>
         <source>%1: invalid size</source>
         <translation>%1: اندازهٔ نامعتبر</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-4"/>
+        <location line="-4"/>
         <source>%1: out of resources</source>
         <translation>%1: خارج از منابع</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-16"/>
+        <location line="-16"/>
         <source>%1: permission denied</source>
         <translation>%1: حق دسترسی وجود ندارد</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+24"/>
+        <location line="+24"/>
         <source>%1: unknown error %2</source>
         <translation>%1: خطای ناشناخته %2</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+112"/>
+        <location line="+112"/>
         <source>%1: unable to make key</source>
         <translation>%1: نمی‌توان کلید ایجاد کرد</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-16"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-128"/>
+        <location line="-128"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: وجود ندارد</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+39"/>
+        <location line="+39"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: کلید تهی است</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-19"/>
+        <location line="-19"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: پروندهٔ کلید UNIX وجود ندارد</translation>
     </message>
@@ -6610,11 +6533,6 @@ Do you want to overwrite it?</source>
         <location line="+42"/>
         <source>%1: not attached</source>
         <translation>%1: ضمیمه نشد</translation>
-    </message>
-    <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+29"/>
-        <source>%1: size query failed</source>
-        <translation>%1: عدم موفقیت اندازهٔ پرس‌وجو</translation>
     </message>
 </context>
 <context>
@@ -8134,7 +8052,6 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
@@ -8205,13 +8122,12 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+72"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-63"/>
         <source>%1: permission denied</source>
         <translation>%1: حق دسترسی وجود ندارد</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: هم‌اکنون موجود است</translation>
     </message>
@@ -8221,19 +8137,17 @@ Do you want to overwrite it?</source>
         <translation>%1: وجود ندارد</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="-4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+9"/>
+        <location line="+9"/>
         <source>%1: out of resources</source>
         <translation>%1: خارج از منابع</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: name error</source>
         <translation>%1: خطای نام</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+7"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: خطای ناشناخته %2</translation>
     </message>

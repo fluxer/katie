@@ -3212,12 +3212,7 @@ Do you want to delete it anyway?</source>
         <translation>最近的地方</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>所有檔案 (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2613"/>
+        <location line="-2613"/>
         <source>Save As</source>
         <translation>另存新檔</translation>
     </message>
@@ -3861,39 +3856,29 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>找不到主機</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+66"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-100"/>
+        <location line="-100"/>
         <source>No host name given</source>
         <translation type="unfinished">未指定主機</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+54"/>
+        <location line="+54"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>未知的位址型態</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+10"/>
+        <location line="+10"/>
         <source>Unknown error</source>
         <translation>未知的錯誤</translation>
     </message>
@@ -4065,7 +4050,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>權限不足</translation>
@@ -4234,19 +4219,16 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>無法載入函式庫 %1：%2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>無法卸載函式庫 %1：%2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>無法反解 %2 內的符號 %1：%3</translation>
     </message>
@@ -4354,8 +4336,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1：不合法的名稱</translation>
@@ -4386,7 +4366,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1：連線錯誤</translation>
@@ -4404,14 +4383,8 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1：未知的錯誤 %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5003,28 +4976,12 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1036"/>
         <source>The specified configuration cannot be used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Roaming was aborted or is not possible.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="-6"/>
-        <source>Roaming error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Unidentified Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5114,11 +5071,6 @@ Do you want to delete it anyway?</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation>首頁</translation>
-    </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
         <source>Could not read image data</source>
@@ -5367,7 +5319,6 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>列印</translation>
     </message>
@@ -5587,11 +5538,6 @@ Please choose a different file name.</source>
         <location line="+1"/>
         <source>Write %1 file</source>
         <translation>寫入 %1 檔案</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>起始數值不能大於結束數值</translation>
     </message>
 </context>
 <context>
@@ -5876,13 +5822,11 @@ Please choose a different file name.</source>
     <name>QProcess</name>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+138"/>
         <source>Could not open input redirection for reading</source>
         <translation>無法開啟輸入導向以讀取</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>無法開啟輸出導向以寫入</translation>
     </message>
@@ -5896,36 +5840,23 @@ Please choose a different file name.</source>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>行程操作逾時</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+170"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>從行程讀取時發生錯誤</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>寫入行程時發生錯誤</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>行程已崩潰</translation>
     </message>
@@ -6537,45 +6468,38 @@ Please choose a different file name.</source>
         <translation>%1：無法解除鎖定</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+93"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: permission denied</source>
         <translation>%1：存取被拒</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1：已存在</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: out of resources</source>
         <translation>%1：資源不足</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1：未知的錯誤 %2</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+23"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1：鍵值是空的</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-19"/>
+        <location line="-19"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6606,15 +6530,9 @@ Please choose a different file name.</source>
         <translation>%1：未附加</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-55"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-261"/>
+        <location line="-261"/>
         <source>%1: invalid size</source>
         <translation>%1：不合法的大小</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>%1: size query failed</source>
-        <translation>%1：大小查詢失敗</translation>
     </message>
 </context>
 <context>
@@ -8134,7 +8052,6 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8205,19 +8122,17 @@ Please choose a different file name.</source>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+68"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-46"/>
         <source>%1: out of resources</source>
         <translation>%1：資源不足</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-17"/>
+        <location line="-17"/>
         <source>%1: permission denied</source>
         <translation>%1：存取被拒</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1：已存在</translation>
     </message>
@@ -8232,8 +8147,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+3"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1：未知的錯誤 %2</translation>
     </message>

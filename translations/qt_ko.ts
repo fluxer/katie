@@ -3244,11 +3244,6 @@ Do you want to delete it anyway?</source>
         <translation>최근 장소</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>모든 파일 (*)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
         <source>Remove</source>
         <translation>삭제</translation>
@@ -3861,39 +3856,29 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+119"/>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished">알 수 없는 오류 (%1)</translation>
-    </message>
-    <message>
-        <location line="+66"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+192"/>
         <source>No host name given</source>
         <translation>호스트 이름이 지정되지 않았음</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>호스트 이름이 잘못됨</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+54"/>
+        <location line="+54"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>알 수 없는 주소 형식</translation>
     </message>
     <message>
-        <location line="-125"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-26"/>
+        <location line="-26"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>호스트를 찾을 수 없음</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>알 수 없는 오류</translation>
     </message>
@@ -4065,7 +4050,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>권한이 거부됨</translation>
@@ -4234,19 +4219,16 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>라이브러리 %1을(를) 불러올 수 없음: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>라이브러리 %1을(를) 닫을 수 없음: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>%2의 심볼 &quot;%1&quot;을(를) 불러올 수 없음: %3</translation>
     </message>
@@ -4354,8 +4336,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: 잘못된 이름</translation>
@@ -4386,7 +4366,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: 연결 오류</translation>
@@ -4404,14 +4383,8 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: 알 수 없는 오류 %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation>%1: 접근이 거부됨</translation>
     </message>
 </context>
 <context>
@@ -4987,28 +4960,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>로밍 오류</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>사용자나 시스템에서 세션 종료함</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+261"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+3"/>
         <source>The specified configuration cannot be used.</source>
         <translation>지정한 설정을 사용할 수 없습니다.</translation>
     </message>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+4"/>
-        <source>Unidentified Error</source>
-        <translation>지정되지 않은 오류</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="-6"/>
+        <location line="-6"/>
         <source>Unknown session error.</source>
         <translation>알 수 없는 세션 오류.</translation>
     </message>
@@ -5114,11 +5071,6 @@ Do you want to delete it anyway?</source>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
-    </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
         <source>Could not read image data</source>
@@ -5350,7 +5302,6 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>인쇄</translation>
     </message>
@@ -5570,11 +5521,6 @@ Please choose a different file name.</source>
 Do you want to overwrite it?</source>
         <translation>%1이(가) 이미 존재합니다.
 덮어쓰시겠습니까?</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>&apos;시작&apos; 값이 &apos;끝&apos; 값보다 클 수 없습니다.</translation>
     </message>
     <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
@@ -5875,22 +5821,19 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+602"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>프로세스에서 읽을 수 없음</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>프로세스에 쓸 수 없음</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>프로세스가 충돌함</translation>
     </message>
@@ -5901,13 +5844,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-654"/>
         <source>Could not open input redirection for reading</source>
         <translation>읽기 위해 입력 리다이렉션을 열 수 없음</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>쓰기 위해 출력 리다이렉션을 열 수 없음</translation>
     </message>
@@ -5921,18 +5862,8 @@ Do you want to overwrite it?</source>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>프로세스 작업 시간 초과</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation>프로세스를 시작할 수 없음: %1</translation>
     </message>
 </context>
 <context>
@@ -6537,37 +6468,32 @@ Do you want to overwrite it?</source>
         <translation>%1: 잠금을 풀 수 없음</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+71"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+95"/>
         <source>%1: already exists</source>
         <translation>%1: 이미 존재함</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+16"/>
+        <location line="+16"/>
         <source>%1: invalid size</source>
         <translation>%1: 잘못된 크기</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-4"/>
+        <location line="-4"/>
         <source>%1: out of resources</source>
         <translation>%1: 자원 부족</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-16"/>
+        <location line="-16"/>
         <source>%1: permission denied</source>
         <translation>%1: 권한이 거부됨</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+24"/>
+        <location line="+24"/>
         <source>%1: unknown error %2</source>
         <translation>%1: 알 수 없는 오류 %2</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+112"/>
+        <location line="+112"/>
         <source>%1: unable to make key</source>
         <translation>%1: 키를 만들 수 없음</translation>
     </message>
@@ -6577,21 +6503,18 @@ Do you want to overwrite it?</source>
         <translation>%1: 유닉스 키 파일이 없음</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-16"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-46"/>
+        <location line="-46"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: 존재하지 않음</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+39"/>
+        <location line="+39"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: 키가 비어 있음</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-12"/>
+        <location line="-12"/>
         <source>%1: ftok failed</source>
         <translation>%1: ftok 실패</translation>
     </message>
@@ -6610,11 +6533,6 @@ Do you want to overwrite it?</source>
         <location line="+42"/>
         <source>%1: not attached</source>
         <translation>%1: 연결되지 않음</translation>
-    </message>
-    <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+29"/>
-        <source>%1: size query failed</source>
-        <translation>%1: 크기 조회 실패</translation>
     </message>
 </context>
 <context>
@@ -8134,7 +8052,6 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
@@ -8205,13 +8122,12 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+72"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-63"/>
         <source>%1: permission denied</source>
         <translation>%1: 권한이 거부됨</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: 이미 존재함</translation>
     </message>
@@ -8221,19 +8137,17 @@ Do you want to overwrite it?</source>
         <translation>%1: 존재하지 않음</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="-4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+9"/>
+        <location line="+9"/>
         <source>%1: out of resources</source>
         <translation>%1: 자원 부족</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: name error</source>
         <translation>%1: 이름 오류</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+7"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: 알 수 없는 오류 %2</translation>
     </message>

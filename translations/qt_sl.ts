@@ -3224,12 +3224,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Nedavna mesta</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>Vse datoteke (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2613"/>
+        <location line="-2613"/>
         <source>Save As</source>
         <translation>Shrani kot</translation>
     </message>
@@ -3873,39 +3868,29 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Ni moč najti gostitelja</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished">Neznana napaka (%1)</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-45"/>
+        <location line="-45"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Neznana vrsta naslova</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+10"/>
+        <location line="+10"/>
         <source>Unknown error</source>
         <translation>Neznana napaka</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="-55"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-104"/>
+        <location line="-104"/>
         <source>No host name given</source>
         <translation>Podano ni bilo nobeno ime gostitelja</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>Neveljavno ime gostitelja</translation>
     </message>
@@ -4077,7 +4062,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>Nimate dovoljenja</translation>
@@ -4246,19 +4231,16 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>Ni moč naložiti knjižnice %1: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Ni moč odstraniti knjižnice %1: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Ni moč razrešiti simbola »%1« v %2: %3</translation>
     </message>
@@ -4366,8 +4348,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: neveljavno ime</translation>
@@ -4398,7 +4378,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: napaka povezave</translation>
@@ -4416,14 +4395,8 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: neznana napaka %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4999,21 +4972,6 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>Napaka potovanja</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>Sejo je preklical uporabnik ali pa sistem</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Unidentified Error</source>
-        <translation>Neznana napaka</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
         <source>Unknown session error.</source>
         <translation>Neznana napaka seje.</translation>
@@ -5030,7 +4988,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="-4"/>
         <source>The specified configuration cannot be used.</source>
         <translation>Navedenih nastavitev ni moč uporabiti.</translation>
     </message>
@@ -5126,11 +5083,6 @@ Ali jo kljub temu želite izbrisati?</translation>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Začetek</translation>
-    </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
         <source>Could not read image data</source>
@@ -5379,7 +5331,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Natisni</translation>
     </message>
@@ -5599,11 +5550,6 @@ Izberite drugo ime datoteke.</translation>
         <location line="+1"/>
         <source>Write %1 file</source>
         <translation>Zapiši datoteko %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>Vrednost »Od« ne more biti večja od vrednosti »Do«.</translation>
     </message>
 </context>
 <context>
@@ -5888,13 +5834,11 @@ Izberite drugo ime datoteke.</translation>
     <name>QProcess</name>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+138"/>
         <source>Could not open input redirection for reading</source>
         <translation>Preusmeritve vhoda ni bilo moč odpreti za branje</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Preusmeritve izhoda ni bilo moč odpreti za pisanje</translation>
     </message>
@@ -5908,31 +5852,23 @@ Izberite drugo ime datoteke.</translation>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>Čas za dejanje procesa je potekel</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-211"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Napaka pri branju iz procesa</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Napak pri pisanju v proces</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>Program se je sesul</translation>
     </message>
@@ -5940,11 +5876,6 @@ Izberite drugo ime datoteke.</translation>
         <location line="+977"/>
         <source>No program defined</source>
         <translation>Določenega ni nobenega programa</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-360"/>
-        <source>Process failed to start: %1</source>
-        <translation>Proces se ni uspel zagnati: %1</translation>
     </message>
 </context>
 <context>
@@ -6549,39 +6480,33 @@ Izberite drugo ime datoteke.</translation>
         <translation>%1: ni moč odkleniti</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+93"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: permission denied</source>
         <translation>%1: nimate dovoljenja</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: že obstaja</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+12"/>
+        <location line="+12"/>
         <source>%1: out of resources</source>
         <translation>%1: zmanjkalo je virov</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1: neznana napaka %2</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+23"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: ključ je prazen</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-12"/>
+        <location line="-12"/>
         <source>%1: ftok failed</source>
         <translation>%1: funkcija ftok ni uspela</translation>
     </message>
@@ -6591,13 +6516,12 @@ Izberite drugo ime datoteke.</translation>
         <translation>%1: ni moč ustvariti ključa</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-59"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-128"/>
+        <location line="-128"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: ne obstaja</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+46"/>
+        <location line="+46"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: UNIX-ova zaklepna datoteka ne obstaja</translation>
     </message>
@@ -6618,15 +6542,9 @@ Izberite drugo ime datoteke.</translation>
         <translation>%1: ni pripeto</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-261"/>
+        <location line="-261"/>
         <source>%1: invalid size</source>
         <translation>%1: neveljavna velikost</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>%1: size query failed</source>
-        <translation>%1: poizvedba po velikosti ni uspela</translation>
     </message>
 </context>
 <context>
@@ -8146,7 +8064,6 @@ Izberite drugo ime datoteke.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Začetek</translation>
     </message>
@@ -8217,19 +8134,17 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+68"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-46"/>
         <source>%1: out of resources</source>
         <translation>%1: zmanjkalo je virov</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-17"/>
+        <location line="-17"/>
         <source>%1: permission denied</source>
         <translation>%1: nimate dovoljenja</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: že obstaja</translation>
     </message>
@@ -8244,8 +8159,7 @@ Izberite drugo ime datoteke.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+3"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: neznana napaka %2</translation>
     </message>

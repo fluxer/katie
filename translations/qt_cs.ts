@@ -3260,12 +3260,7 @@ Ověřte, prosím, že byl zadán správný název adresáře.</translation>
         <translation>Adresáře</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>Všechny soubory (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-703"/>
+        <location line="-703"/>
         <source>&amp;Rename</source>
         <translation>&amp;Přejmenovat</translation>
     </message>
@@ -3869,41 +3864,31 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Nepodařilo se najít počítač</translation>
     </message>
     <message>
-        <location line="+100"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-45"/>
+        <location line="-45"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Neznámý typ adresy</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+10"/>
+        <location line="+10"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="-55"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-104"/>
+        <location line="-104"/>
         <source>No host name given</source>
         <translation>Nebyl zadán název pro hostitelský počítač</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>Neplatný název pro hostitelský počítač</translation>
-    </message>
-    <message>
-        <location line="-66"/>
-        <source>Unknown error (%1)</source>
-        <translation>Neznámá chyba (%1)</translation>
     </message>
 </context>
 <context>
@@ -4073,7 +4058,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2099"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2038"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+97"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
@@ -4210,13 +4195,11 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <name>QLibrary</name>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+258"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+158"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
     </message>
     <message>
         <location line="-17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="-22"/>
         <source>Cannot load library %1: %2</source>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
@@ -4227,7 +4210,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+51"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+37"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
@@ -4350,7 +4332,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <name>QLocalSocket</name>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+160"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+74"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+153"/>
         <source>%1: Connection error</source>
         <translation>%1: Chyba spojení</translation>
@@ -4363,7 +4344,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location line="+28"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Neznámá chyba %2</translation>
     </message>
@@ -4387,8 +4367,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location line="-18"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-10"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="-18"/>
         <source>%1: Invalid name</source>
         <translation>%1: Neplatný název</translation>
@@ -4415,11 +4393,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="-15"/>
         <source>%1: Remote closed</source>
         <translation>%1: Spojení bylo protější stranou uzavřeno</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-59"/>
-        <source>%1: Access denied</source>
-        <translation>Přístup odepřen</translation>
     </message>
 </context>
 <context>
@@ -4995,28 +4968,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>Chyba při toulání se (roaming)</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>Spojení bylo zrušeno buď uživatelem nebo operačním systémem</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+261"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+3"/>
         <source>The specified configuration cannot be used.</source>
         <translation>Zadané nastavení nelze použít.</translation>
     </message>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+4"/>
-        <source>Unidentified Error</source>
-        <translation>Neznámá chyba</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="-6"/>
+        <location line="-6"/>
         <source>Unknown session error.</source>
         <translation>Neznámá chyba při spojení přes síť.</translation>
     </message>
@@ -5122,11 +5079,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
-    </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
         <source>Could not read image data</source>
@@ -5483,7 +5435,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
@@ -5576,11 +5527,6 @@ Má se přepsat?</translation>
         <location line="+199"/>
         <source>unknown</source>
         <translation>Neznámý</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>Údaj pro první stranu nesmí být větší než údaj pro poslední stranu.</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qpagesetupdialog_unix.cpp" line="+6"/>
@@ -5883,14 +5829,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+792"/>
         <location filename="../src/core/io/qprocess.cpp" line="+982"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Zápis do procesu se nezdařil</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+202"/>
+        <location line="+202"/>
         <source>No program defined</source>
         <translation>Nestanoven žádný program</translation>
     </message>
@@ -5900,8 +5845,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Potíže se zdroji (selhání rozcestí - &quot;fork failure&quot;): %1</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-190"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="-1145"/>
         <location line="+52"/>
         <source>Error reading from process</source>
@@ -5909,13 +5852,11 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     </message>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="-292"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-514"/>
         <source>Could not open input redirection for reading</source>
         <translation>Vstupní přesměrování se nepodařilo otevřít pro čtení</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Výstupní přesměrování se nepodařilo otevřít pro zápis</translation>
     </message>
@@ -5924,11 +5865,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>Překročení času u procesu</translation>
     </message>
@@ -5936,11 +5872,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <location filename="../src/core/io/qprocess.cpp" line="+116"/>
         <source>Process crashed</source>
         <translation>Proces spadl</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation>Proces se nepodařilo spustit: %1</translation>
     </message>
 </context>
 <context>
@@ -6524,13 +6455,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+80"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+99"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: Neexistuje</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+46"/>
+        <location line="+46"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: Soubor s unixovým klíčem neexistuje</translation>
     </message>
@@ -6546,9 +6476,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Špatný název</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+31"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-192"/>
+        <location line="-192"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: Neplatný údaj u klíče (prázdný)</translation>
@@ -6559,25 +6487,22 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Údaj o velikosti vytvoření je menší než nula</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-68"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-69"/>
         <source>%1: already exists</source>
         <translation>%1: Již existuje</translation>
     </message>
     <message>
-        <location line="+25"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+20"/>
+        <location line="+20"/>
         <source>%1: unknown error %2</source>
         <translation>%1: Neznámá chyba %2</translation>
     </message>
     <message>
-        <location line="-12"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-4"/>
+        <location line="-4"/>
         <source>%1: invalid size</source>
         <translation>%1: Neplatná velikost</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+116"/>
+        <location line="+116"/>
         <source>%1: unable to make key</source>
         <translation>%1: Nepodařilo se vytvořit klíč</translation>
     </message>
@@ -6592,31 +6517,24 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Uzavření se nepodařilo zrušit</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+9"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-136"/>
         <source>%1: permission denied</source>
         <translation>%1: Přístup odepřen</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+61"/>
+        <location line="+61"/>
         <source>%1: ftok failed</source>
         <translation>%1: Vyvolání ftok se nezdařilo</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-45"/>
+        <location line="-45"/>
         <source>%1: out of resources</source>
         <translation>%1: Nejsou již použitelné zdroje</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+265"/>
+        <location line="+265"/>
         <source>%1: not attached</source>
         <translation>%1: Nepřipojen</translation>
-    </message>
-    <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+79"/>
-        <source>%1: size query failed</source>
-        <translation>%1: Vyhledání velikosti se nezdařilo</translation>
     </message>
     <message>
         <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
@@ -8142,7 +8060,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
@@ -8228,20 +8145,17 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Chybný název</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+75"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: Neznámá chyba %2</translation>
     </message>
     <message>
-        <location line="-3"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-25"/>
+        <location line="-25"/>
         <source>%1: permission denied</source>
         <translation>%1: Přístup odepřen</translation>
     </message>
     <message>
-        <location line="-4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+17"/>
+        <location line="+17"/>
         <source>%1: out of resources</source>
         <translation>%1: Nejsou již použitelné zdroje</translation>
     </message>

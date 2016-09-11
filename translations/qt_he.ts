@@ -3180,12 +3180,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>ספריות</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>כל הקבצים (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+842"/>
+        <location line="+842"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>‏%1 כבר קיים.
@@ -3867,41 +3862,31 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>מארח לא נמצא</translation>
     </message>
     <message>
-        <location line="+100"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-45"/>
+        <location line="-45"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>טיפוס כתובת לא מוכר</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+10"/>
+        <location line="+10"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="-55"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-104"/>
+        <location line="-104"/>
         <source>No host name given</source>
         <translation>לא ניתן שם מארח</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>שם מארח לא תקין</translation>
-    </message>
-    <message>
-        <location line="-66"/>
-        <source>Unknown error (%1)</source>
-        <translation>שגיאה לא מוכרת (%1)</translation>
     </message>
 </context>
 <context>
@@ -4071,7 +4056,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
@@ -4240,19 +4225,16 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>אין אפשרות לטעון ספרייה %1: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>אין אפשרות לפרוק ספרייה %1: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>אין אפשרות לפתור סמל &quot;%1&quot; בתוך %2: %3</translation>
     </message>
@@ -4360,8 +4342,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: שם לא תקין</translation>
@@ -4393,7 +4373,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: שגיאת חיבור</translation>
@@ -4411,14 +4390,8 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: שגיאה לא מוכרת %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation>%1: גישה נדחתה</translation>
     </message>
 </context>
 <context>
@@ -4994,28 +4967,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>שגיאת נדידה</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>פגישה בוטלה על ידי משתמש או מערכת</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+261"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+3"/>
         <source>The specified configuration cannot be used.</source>
         <translation>התצורה אשר צוינה לא שמישה.</translation>
     </message>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+4"/>
-        <source>Unidentified Error</source>
-        <translation>שגיאה לא מזוהה</translation>
-    </message>
-    <message>
-        <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="-6"/>
+        <location line="-6"/>
         <source>Unknown session error.</source>
         <translation>שגיאת פגישה לא מוכרת.</translation>
     </message>
@@ -5170,11 +5127,6 @@ Do you want to delete it anyway?</source>
         <location line="+4"/>
         <source>Could not reset to start position</source>
         <translation>אין אפשרות לאפס אל נקודת התחלה</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
     </message>
 </context>
 <context>
@@ -5374,7 +5326,6 @@ Do you want to delete it anyway?</source>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>הדפסה</translation>
     </message>
@@ -5594,11 +5545,6 @@ Please choose a different file name.</source>
         <location line="+1"/>
         <source>Write %1 file</source>
         <translation>כתוב קובץ %1</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>ערך התחלה לא יכול להיות גדול מערך סיום.</translation>
     </message>
 </context>
 <context>
@@ -5883,13 +5829,11 @@ Please choose a different file name.</source>
     <name>QProcess</name>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+138"/>
         <source>Could not open input redirection for reading</source>
         <translation>לא ניתן לפתוח הפניית קלט לקריאה</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>לא ניתן לפתוח הפניית פלט לכתיבה</translation>
     </message>
@@ -5903,31 +5847,23 @@ Please choose a different file name.</source>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>תם זמן פעולת תהליך</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-211"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>שגיאה בקריאה מתהליך</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>שגיאה בכתיבה אל תהליך</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>תהליך קרס</translation>
     </message>
@@ -5935,11 +5871,6 @@ Please choose a different file name.</source>
         <location line="+977"/>
         <source>No program defined</source>
         <translation>לא הוגדרה תוכנית</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-360"/>
-        <source>Process failed to start: %1</source>
-        <translation>תהליך נכשל בעליה: %1</translation>
     </message>
 </context>
 <context>
@@ -6545,45 +6476,38 @@ Please choose a different file name.</source>
         <translation>%1: אין אפשרות לבטל נעילה</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+93"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: permission denied</source>
         <translation>%1: הרשאה נדחתה</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>‏%1: כבר קיים</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+12"/>
+        <location line="+12"/>
         <source>%1: out of resources</source>
         <translation>%1: לא נותרו משאבים</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1: שגיאה לא מוכרת %2</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+23"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: מפתח ריק</translation>
     </message>
     <message>
-        <location line="-59"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-65"/>
+        <location line="-65"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: לא קיים</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+46"/>
+        <location line="+46"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: קובץ מפתח UNIX לא קיים</translation>
     </message>
@@ -6614,15 +6538,9 @@ Please choose a different file name.</source>
         <translation>%1: לא מחובר</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-261"/>
+        <location line="-261"/>
         <source>%1: invalid size</source>
         <translation>%1: גודל לא תקין</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>%1: size query failed</source>
-        <translation>%1: שאילתת גודל נכשלה</translation>
     </message>
 </context>
 <context>
@@ -8143,7 +8061,6 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
@@ -8214,19 +8131,17 @@ Please choose a different file name.</source>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+68"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-46"/>
         <source>%1: out of resources</source>
         <translation>%1: לא נותרו משאבים</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-17"/>
+        <location line="-17"/>
         <source>%1: permission denied</source>
         <translation>%1: הרשאה נדחתה</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>‏%1: כבר קיים</translation>
     </message>
@@ -8241,8 +8156,7 @@ Please choose a different file name.</source>
         <translation>%1: שגיאת שם</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+3"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: שגיאה לא מוכרת %2</translation>
     </message>

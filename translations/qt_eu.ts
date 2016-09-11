@@ -3253,11 +3253,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Azken Guneak</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>Agiri Guztiak (*.*)</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
         <source>Remove</source>
         <translation>Kendu</translation>
@@ -3865,39 +3860,29 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+119"/>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished">Akats ezezaguna (%1)</translation>
-    </message>
-    <message>
-        <location line="+66"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+192"/>
         <source>No host name given</source>
         <translation>Ez da hostalari izenik eman</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>Hostalari-izen baliogabea</translation>
     </message>
     <message>
-        <location line="+30"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+54"/>
+        <location line="+54"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Helbide mota ezezaguna</translation>
     </message>
     <message>
-        <location line="-125"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-26"/>
+        <location line="-26"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Hostalaria ez da aurkitu</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>Unknown error</source>
         <translation>Akats ezezaguna</translation>
     </message>
@@ -4069,7 +4054,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>Baimena ukatuta</translation>
@@ -4238,19 +4223,16 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>Ezin da liburutegia gertatu %1: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Ezin da liburutegia desgertatu %1: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Ezin da &quot;%1&quot; sinboloa erabaki hemen, %2: %3</translation>
     </message>
@@ -4358,8 +4340,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Izen baliogabea</translation>
@@ -4390,7 +4370,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Elkarketa akatsa</translation>
@@ -4408,14 +4387,8 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Akats ezezaguna %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation>%1: Sarbidea ukatuta</translation>
     </message>
 </context>
 <context>
@@ -4991,21 +4964,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>Roaming akatsa</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>Saioa erabiltzaileak edo sistemak utzita</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Unidentified Error</source>
-        <translation>Akats zehaztugabea</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
         <source>Unknown session error.</source>
         <translation>Saio akats ezezaguna.</translation>
@@ -5022,7 +4980,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="-4"/>
         <source>The specified configuration cannot be used.</source>
         <translation>Adierazitako itxurapena ezin da erabili.</translation>
     </message>
@@ -5167,11 +5124,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <location line="+4"/>
         <source>Could not reset to start position</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Hasiera</translation>
     </message>
 </context>
 <context>
@@ -5571,14 +5523,8 @@ Gainidaztea nahi duzu?</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Irarkitu</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>&apos;Hemendik&apos; balioa ezin da &apos;Hona&apos; balioa baino handiagoa izan.</translation>
     </message>
     <message>
         <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
@@ -5879,22 +5825,19 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+602"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Akatsa garapenetik irakurtzerakoan</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Akatsa garapenera idazterakoan</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>Garapena matxuratuta</translation>
     </message>
@@ -5905,13 +5848,11 @@ Gainidaztea nahi duzu?</translation>
     </message>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-654"/>
         <source>Could not open input redirection for reading</source>
         <translation>Ezin da sarrera berzuzentzea ireki irakurtzeko</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Ezin da irteera berzuzentzea ireki irakurtzeko</translation>
     </message>
@@ -5925,18 +5866,8 @@ Gainidaztea nahi duzu?</translation>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>Prozesu eragiketa epez kanpo</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation>Prozesu hutsegitea hasieran: %1</translation>
     </message>
 </context>
 <context>
@@ -6541,56 +6472,48 @@ Gainidaztea nahi duzu?</translation>
         <translation>%1: ezinezkoa desblokeatzea</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+71"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+95"/>
         <source>%1: already exists</source>
         <translation>%1: badago jadanik</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+16"/>
+        <location line="+16"/>
         <source>%1: invalid size</source>
         <translation>%1: neurri baliogabea</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-4"/>
+        <location line="-4"/>
         <source>%1: out of resources</source>
         <translation>%1: baliabide gabe</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-16"/>
+        <location line="-16"/>
         <source>%1: permission denied</source>
         <translation>%1: baimena ukatuta</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+24"/>
+        <location line="+24"/>
         <source>%1: unknown error %2</source>
         <translation>%1: akats ezezaguna %2</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+112"/>
+        <location line="+112"/>
         <source>%1: unable to make key</source>
         <translation>%1: ezinezkoa giltza egitea</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-16"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-128"/>
+        <location line="-128"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: ez dago</translation>
     </message>
     <message>
-        <location line="+31"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+39"/>
+        <location line="+39"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: giltza hutsik dago</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-19"/>
+        <location line="-19"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: UNIX giltza agiria ez dago</translation>
     </message>
@@ -6614,11 +6537,6 @@ Gainidaztea nahi duzu?</translation>
         <location line="+42"/>
         <source>%1: not attached</source>
         <translation>%1: erantsi gabe</translation>
-    </message>
-    <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+29"/>
-        <source>%1: size query failed</source>
-        <translation>%1: neurri eskaera hutsegitea</translation>
     </message>
 </context>
 <context>
@@ -8138,7 +8056,6 @@ Gainidaztea nahi duzu?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Hasiera</translation>
     </message>
@@ -8209,13 +8126,12 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+72"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-63"/>
         <source>%1: permission denied</source>
         <translation>%1: baimena ukatuta</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: jadanik badago</translation>
     </message>
@@ -8225,19 +8141,17 @@ Gainidaztea nahi duzu?</translation>
         <translation>%1: ez dago</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="-4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+9"/>
+        <location line="+9"/>
         <source>%1: out of resources</source>
         <translation>%1: baliabideetatik kanpo</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: name error</source>
         <translation>%1: izen akatsa</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+7"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: akats ezezaguna %2</translation>
     </message>

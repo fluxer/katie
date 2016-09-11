@@ -1339,7 +1339,7 @@ Options:
 <context>
     <name>MainWindowBase</name>
     <message>
-        <location filename="../src/tools/designer/mainwindow.cpp" line="+121"/>
+        <location filename="../src/tools/designer/mainwindow.cpp" line="+119"/>
         <source>Main</source>
         <extracomment>Not currently used (main tool bar)</extracomment>
         <translation type="unfinished"></translation>
@@ -1919,7 +1919,7 @@ Options:
 <context>
     <name>QDesigner</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner.cpp" line="+141"/>
+        <location filename="../src/tools/designer/qdesigner.cpp" line="+139"/>
         <source>%1 - warning</source>
         <translation type="unfinished"></translation>
     </message>

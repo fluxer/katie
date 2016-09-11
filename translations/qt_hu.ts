@@ -3217,12 +3217,7 @@ Biztosan törölni akarja?</translation>
         <translation>Legutóbbi helyek</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>Minden fájl (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2613"/>
+        <location line="-2613"/>
         <source>Save As</source>
         <translation>Mentés másként</translation>
     </message>
@@ -3866,39 +3861,29 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>A kiszolgáló nem található</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Unknown error (%1)</source>
-        <translation type="unfinished">Ismeretlen hiba (%1)</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-45"/>
+        <location line="-45"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Ismeretlen címtípus</translation>
     </message>
     <message>
-        <location line="-55"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-94"/>
+        <location line="-94"/>
         <source>No host name given</source>
         <translation>Nem adott meg gépnevet</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>Érvénytelen gépnév</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+103"/>
+        <location line="+103"/>
         <source>Unknown error</source>
         <translation>Ismeretlen hiba</translation>
     </message>
@@ -4070,7 +4055,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2093"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
         <source>Permission denied</source>
         <translation>Hozzáférés megtagadva</translation>
@@ -4239,19 +4224,16 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>A(z) %1 könyvtár nem tölthető be: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>A(z) %1 könyvtár nem távolítható el: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>A(z) &quot;%1&quot; szimbólum nem oldható fel a(z) %2 könyvtárban: %3</translation>
     </message>
@@ -4359,8 +4341,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Érvénytelen név</translation>
@@ -4391,7 +4371,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Kapcsolódási hiba</translation>
@@ -4409,14 +4388,8 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Ismeretlen hiba %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4993,21 +4966,6 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>Roaming hiba</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>A munkamenetet a felhasználó vagy a rendszer megszakította</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Unidentified Error</source>
-        <translation>Azonosítatlan hiba</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
         <source>Unknown session error.</source>
         <translation>Ismeretlen hiba a munkamenetben.</translation>
@@ -5024,7 +4982,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="-4"/>
         <source>The specified configuration cannot be used.</source>
         <translation>A megadott konfiguráció nem használható.</translation>
     </message>
@@ -5120,11 +5077,6 @@ Biztosan törölni akarja?</translation>
 </context>
 <context>
     <name>QObject</name>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Saját könyvtár</translation>
-    </message>
     <message>
         <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
         <source>Could not read image data</source>
@@ -5371,14 +5323,8 @@ Biztosan törölni akarja?</translation>
         <translation>ismeretlen</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+273"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>Az első oldal száma nem lehet nagyobb, mint az utolsó oldalé.</translation>
-    </message>
-    <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="-1"/>
         <source>Print</source>
         <translation>Nyomtatás</translation>
     </message>
@@ -5881,22 +5827,19 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+602"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Hiba a folyamat kimenetéről olvasáskor</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Hiba a folyamat bemenetére íráskor</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>A folyamat összeomlott</translation>
     </message>
@@ -5907,13 +5850,11 @@ Válasszon másik fájlnevet.</translation>
     </message>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-654"/>
         <source>Could not open input redirection for reading</source>
         <translation>Az átirányított bemenet megnyitása olvasásra sikertelen</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Az átirányított kimenet megnyitása írásra sikertelen</translation>
     </message>
@@ -5927,18 +5868,8 @@ Válasszon másik fájlnevet.</translation>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>A művelet időtúllépés miatt megszakadt</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-381"/>
-        <source>Process failed to start: %1</source>
-        <translation>A művelet előkészítése nem lehetséges: %1</translation>
     </message>
 </context>
 <context>
@@ -6544,39 +6475,33 @@ Válasszon másik fájlnevet.</translation>
         <translation>%1: a feloldás sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+93"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: permission denied</source>
         <translation>%1: hozzáférés megtagadva</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: már létezik</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+12"/>
+        <location line="+12"/>
         <source>%1: out of resources</source>
         <translation>%1: az erőforrások elfogytak</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1: ismeretlen hiba %2</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+23"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: a kulcs hiányzik</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-12"/>
+        <location line="-12"/>
         <source>%1: ftok failed</source>
         <translation>%1: ftok hibát adott vissza</translation>
     </message>
@@ -6586,13 +6511,12 @@ Válasszon másik fájlnevet.</translation>
         <translation>%1: a kulcs elkészítése sikertelen</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-59"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-128"/>
+        <location line="-128"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: nem létezik</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+46"/>
+        <location line="+46"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: az UNIX kulcsfájl nem létezik</translation>
     </message>
@@ -6613,15 +6537,9 @@ Válasszon másik fájlnevet.</translation>
         <translation>%1: nem lesz csatolva</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-261"/>
+        <location line="-261"/>
         <source>%1: invalid size</source>
         <translation>%1: hibás méret</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>%1: size query failed</source>
-        <translation>%1: hiba a méret lekérdezésekor</translation>
     </message>
 </context>
 <context>
@@ -8152,7 +8070,6 @@ Válasszon másik fájlnevet.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Saját könyvtár</translation>
     </message>
@@ -8223,13 +8140,12 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+72"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-63"/>
         <source>%1: permission denied</source>
         <translation>%1: hozzáférés megtagadva</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: már létezik</translation>
     </message>
@@ -8244,14 +8160,12 @@ Válasszon másik fájlnevet.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="-4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-4"/>
+        <location line="-4"/>
         <source>%1: out of resources</source>
         <translation>%1: az erőforrások elfogytak</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1: ismeretlen hiba %2</translation>
     </message>

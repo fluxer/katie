@@ -3264,12 +3264,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Znajdź katalog</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog_win.cpp" line="+131"/>
-        <source>All Files (*.*)</source>
-        <translation>Wszystkie pliki (*.*)</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+29"/>
+        <location line="+29"/>
         <source>Show </source>
         <translation>Pokaż </translation>
     </message>
@@ -3871,41 +3866,31 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="+115"/>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Host nie znaleziony</translation>
     </message>
     <message>
-        <location line="+100"/>
-        <location line="+25"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-45"/>
+        <location line="-45"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Nieznany typ adresu</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+10"/>
+        <location line="+10"/>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_win.cpp" line="-55"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="-104"/>
+        <location line="-104"/>
         <source>No host name given</source>
         <translation>Nie podano nazwy hosta</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+1"/>
+        <location line="+1"/>
         <source>Invalid hostname</source>
         <translation>Niepoprawna nazwa hosta</translation>
-    </message>
-    <message>
-        <location line="-66"/>
-        <source>Unknown error (%1)</source>
-        <translation>Nieznany błąd (%1)</translation>
     </message>
 </context>
 <context>
@@ -4075,7 +4060,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2102"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+2041"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+100"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
@@ -4244,19 +4229,16 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+136"/>
         <source>Cannot load library %1: %2</source>
         <translation>Nie można załadować biblioteki %1: %2</translation>
     </message>
     <message>
         <location line="+17"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+22"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Nie można zwolnić biblioteki %1: %2</translation>
     </message>
     <message>
         <location line="+34"/>
-        <location filename="../src/core/plugin/qlibrary_win.cpp" line="+15"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Nie można zidentyfikować symbolu &quot;%1&quot; w %2: %3</translation>
     </message>
@@ -4364,8 +4346,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+79"/>
-        <location line="+64"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Invalid name</source>
         <translation>%1: Niepoprawna nazwa</translation>
@@ -4396,7 +4376,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-69"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+3"/>
         <source>%1: Connection error</source>
         <translation>%1: Błąd połączenia</translation>
@@ -4414,14 +4393,8 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+4"/>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="+15"/>
         <source>%1: Unknown error %2</source>
         <translation>%1: Nieznany błąd %2</translation>
-    </message>
-    <message>
-        <location filename="../src/network/socket/qlocalsocket_win.cpp" line="-5"/>
-        <source>%1: Access denied</source>
-        <translation>%1: Odmowa dostępu</translation>
     </message>
 </context>
 <context>
@@ -4997,21 +4970,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkSessionPrivateImpl</name>
     <message>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="+1030"/>
-        <source>Roaming error</source>
-        <translation>Błąd roamingu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Session aborted by user or system</source>
-        <translation>Sesja przerwana przez użytkownika lub system</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Unidentified Error</source>
-        <translation>Niezidentyfikowany błąd</translation>
-    </message>
-    <message>
         <location filename="../src/plugins/bearer/qnetworksession_impl.cpp" line="+255"/>
         <source>Unknown session error.</source>
         <translation>Nieznany błąd sesji.</translation>
@@ -5028,7 +4986,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/plugins/bearer/icd/qnetworksession_impl.cpp" line="-4"/>
         <source>The specified configuration cannot be used.</source>
         <translation>Podana konfiguracja nie może być użyta.</translation>
     </message>
@@ -5173,11 +5130,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <location line="+4"/>
         <source>Could not reset to start position</source>
         <translation>Nie można zresetować do pozycji startowej</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/util/qdesktopservices_mac.cpp" line="+171"/>
-        <source>Home</source>
-        <translation type="unfinished">Home</translation>
     </message>
 </context>
 <context>
@@ -5377,7 +5329,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <message>
         <location filename="../src/gui/dialogs/qabstractprintdialog.cpp" line="+116"/>
         <location line="+13"/>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+272"/>
         <source>Print</source>
         <translation>Drukowanie</translation>
     </message>
@@ -5597,11 +5548,6 @@ Proszę wybrać inną nazwę pliku.</translation>
         <location line="+1"/>
         <source>Write %1 file</source>
         <translation>Zapisz %1 plik</translation>
-    </message>
-    <message>
-        <location filename="../src/gui/dialogs/qprintdialog_win.cpp" line="+1"/>
-        <source>The &apos;From&apos; value cannot be greater than the &apos;To&apos; value.</source>
-        <translation>Wartość &quot;od&quot; nie może być większa od wartości &quot;do&quot;.</translation>
     </message>
 </context>
 <context>
@@ -5886,13 +5832,11 @@ Proszę wybrać inną nazwę pliku.</translation>
     <name>QProcess</name>
     <message>
         <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+138"/>
         <source>Could not open input redirection for reading</source>
         <translation>Nie można otworzyć wejściowego przekierowania do odczytu</translation>
     </message>
     <message>
         <location line="+12"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+20"/>
         <source>Could not open output redirection for writing</source>
         <translation>Nie można otworzyć wyjściowego przekierowania do zapisu</translation>
     </message>
@@ -5906,31 +5850,23 @@ Proszę wybrać inną nazwę pliku.</translation>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
-        <location filename="../src/core/io/qprocess_win.cpp" line="+434"/>
-        <location line="+50"/>
-        <location line="+75"/>
-        <location line="+42"/>
-        <location line="+54"/>
         <source>Process operation timed out</source>
         <translation>Przekroczony czas operacji procesu</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-211"/>
-        <location line="+50"/>
         <location filename="../src/core/io/qprocess.cpp" line="+883"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Błąd odczytywania z procesu</translation>
     </message>
     <message>
-        <location line="+140"/>
-        <location filename="../src/core/io/qprocess.cpp" line="+47"/>
+        <location line="+47"/>
         <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Błąd zapisywania do procesu</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-775"/>
+        <location line="-775"/>
         <source>Process crashed</source>
         <translation>Wystąpił błąd w procesie - proces zakończony</translation>
     </message>
@@ -5938,11 +5874,6 @@ Proszę wybrać inną nazwę pliku.</translation>
         <location line="+977"/>
         <source>No program defined</source>
         <translation>Nie zdefiniowano programu</translation>
-    </message>
-    <message>
-        <location filename="../src/core/io/qprocess_win.cpp" line="-360"/>
-        <source>Process failed to start: %1</source>
-        <translation>Nie można rozpocząć procesu: %1</translation>
     </message>
 </context>
 <context>
@@ -6542,39 +6473,33 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>%1: nie można odblokować</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+93"/>
         <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+91"/>
         <source>%1: permission denied</source>
         <translation>%1: brak uprawnień</translation>
     </message>
     <message>
-        <location line="-22"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: już istnieje</translation>
     </message>
     <message>
-        <location line="+18"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+12"/>
+        <location line="+12"/>
         <source>%1: out of resources</source>
         <translation>%1: zasoby wyczerpane</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+8"/>
+        <location line="+8"/>
         <source>%1: unknown error %2</source>
         <translation>%1: nieznany błąd %2</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <location line="+28"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+23"/>
+        <location line="+23"/>
         <location line="+26"/>
         <source>%1: key is empty</source>
         <translation>%1: klucz jest pusty</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-12"/>
+        <location line="-12"/>
         <source>%1: ftok failed</source>
         <translation>%1: wystąpił błąd w funkcji ftok()</translation>
     </message>
@@ -6584,13 +6509,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>%1: nie można utworzyć klucza</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="-59"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-128"/>
+        <location line="-128"/>
         <source>%1: doesn&apos;t exist</source>
         <translation>%1: nie istnieje</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="+46"/>
+        <location line="+46"/>
         <source>%1: UNIX key file doesn&apos;t exist</source>
         <translation>%1: unixowy plik z kluczem nie istnieje</translation>
     </message>
@@ -6611,15 +6535,9 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>%1: niedołączony</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_win.cpp" line="+4"/>
-        <location filename="../src/core/kernel/qsharedmemory_unix.cpp" line="-261"/>
+        <location line="-261"/>
         <source>%1: invalid size</source>
         <translation>%1: niepoprawny rozmiar</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>%1: size query failed</source>
-        <translation>%1: zapytanie o rozmiar zakończone błędem</translation>
     </message>
     <message>
         <location filename="../src/core/kernel/qsharedmemory.cpp" line="-282"/>
@@ -8144,7 +8062,6 @@ Proszę wybrać inną nazwę pliku.</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location filename="../src/core/io/qstandardpaths_mac.cpp" line="+184"/>
         <source>Home</source>
         <translation type="unfinished">Home</translation>
     </message>
@@ -8215,19 +8132,17 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSystemSemaphore</name>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+68"/>
         <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-46"/>
         <source>%1: out of resources</source>
         <translation>%1: zasoby wyczerpane</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="-17"/>
+        <location line="-17"/>
         <source>%1: permission denied</source>
         <translation>%1: brak uprawnień</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: already exists</source>
         <translation>%1: już istnieje</translation>
     </message>
@@ -8242,8 +8157,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>%1: błąd nazwy</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsystemsemaphore_win.cpp" line="+3"/>
-        <location filename="../src/core/kernel/qsystemsemaphore_unix.cpp" line="+4"/>
+        <location line="+4"/>
         <source>%1: unknown error %2</source>
         <translation>%1: nieznany błąd %2</translation>
     </message>
