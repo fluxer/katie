@@ -64,14 +64,6 @@ QPixmapData *QGLGraphicsSystem::createPixmapData(QPixmapData::PixelType type) co
 
 QWindowSurface *QGLGraphicsSystem::createWindowSurface(QWidget *widget) const
 {
-#ifdef Q_WS_WIN
-    // On Windows the QGLWindowSurface class can't handle
-    // drop shadows and native effects, e.g. fading a menu in/out using
-    // top level window opacity.
-    if (widget->windowType() == Qt::Popup)
-        return new QRasterWindowSurface(widget);
-#endif
-
 #if defined(Q_WS_X11) && !defined(QT_NO_EGL)
     if (m_useX11GL && QX11GLPixmapData::hasX11GLPixmaps()) {
         // If the widget is a QGraphicsView which will be re-drawing the entire

@@ -58,18 +58,13 @@ QT_BEGIN_NAMESPACE
 typedef ptrdiff_t qgl_GLintptr;
 typedef ptrdiff_t qgl_GLsizeiptr;
 
-#ifndef Q_WS_MAC
-# ifndef QGLF_APIENTRYP
-#   ifdef QGLF_APIENTRY
-#     define QGLF_APIENTRYP QGLF_APIENTRY *
-#   else
-#     define QGLF_APIENTRY
-#     define QGLF_APIENTRYP *
-#   endif
-# endif
-#else
-# define QGLF_APIENTRY
-# define QGLF_APIENTRYP *
+#ifndef QGLF_APIENTRYP
+#  ifdef QGLF_APIENTRY
+#    define QGLF_APIENTRYP QGLF_APIENTRY *
+#  else
+#    define QGLF_APIENTRY
+#    define QGLF_APIENTRYP *
+#  endif
 #endif
 
 struct QGLFunctionsPrivate;

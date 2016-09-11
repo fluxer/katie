@@ -96,14 +96,6 @@ inline static bool isPowerOfTwo(uint x)
 }
 #endif
 
-#if defined(Q_WS_WIN)
-extern Q_GUI_EXPORT bool qt_cleartype_enabled;
-#endif
-
-#ifdef Q_WS_MAC
-extern bool qt_applefontsmoothing_enabled;
-#endif
-
 #if !defined(QT_MAX_CACHED_GLYPH_SIZE)
 #  define QT_MAX_CACHED_GLYPH_SIZE 64
 #endif
@@ -1569,14 +1561,6 @@ namespace {
 
 }
 
-#if defined(Q_WS_WIN)
-static bool fontSmoothingApproximately(qreal target)
-{
-    extern Q_GUI_EXPORT qreal qt_fontsmoothing_gamma; // qapplication_win.cpp
-    return (qAbs(qt_fontsmoothing_gamma - target) < 0.2);
-}
-#endif
-
 static inline qreal qt_sRGB_to_linear_RGB(qreal f)
 {
     return f > 0.04045 ? qPow((f + 0.055) / 1.055, 2.4) : f / 12.92;
@@ -1742,29 +1726,6 @@ void QGL2PaintEngineExPrivate::drawCachedGlyphs(QFontEngineGlyphCache::Type glyp
 
     QBrush pensBrush = q->state()->pen.brush();
 
-    bool srgbFrameBufferEnabled = false;
-    if (pensBrush.style() == Qt::SolidPattern &&
-        (ctx->d_ptr->extension_flags & QGLExtensions::SRGBFrameBuffer)) {
-#if defined(Q_WS_MAC)
-        if (glyphType == QFontEngineGlyphCache::Raster_RGBMask)
-#elif defined(Q_WS_WIN)
-        if (glyphType != QFontEngineGlyphCache::Raster_RGBMask || fontSmoothingApproximately(2.1))
-#else
-        if (false)
-#endif
-        {
-            QColor c = pensBrush.color();
-            qreal red = qt_sRGB_to_linear_RGB(c.redF());
-            qreal green = qt_sRGB_to_linear_RGB(c.greenF());
-            qreal blue = qt_sRGB_to_linear_RGB(c.blueF());
-            c = QColor::fromRgbF(red, green, blue, c.alphaF());
-            pensBrush.setColor(c);
-
-            glEnable(FRAMEBUFFER_SRGB_EXT);
-            srgbFrameBufferEnabled = true;
-        }
-    }
-
     setBrush(pensBrush);
 
     if (glyphType == QFontEngineGlyphCache::Raster_RGBMask) {
@@ -1881,10 +1842,6 @@ void QGL2PaintEngineExPrivate::drawCachedGlyphs(QFontEngineGlyphCache::Type glyp
 #else
     glDrawElements(GL_TRIANGLE_STRIP, 6 * numGlyphs, GL_UNSIGNED_SHORT, elementIndices.data());
 #endif
-
-    if (srgbFrameBufferEnabled)
-        glDisable(FRAMEBUFFER_SRGB_EXT);
-
 }
 
 void QGL2PaintEngineEx::drawPixmapFragments(const QPainter::PixmapFragment *fragments, int fragmentCount, const QPixmap &pixmap,
@@ -2155,14 +2112,7 @@ bool QGL2PaintEngineEx::begin(QPaintDevice *pdev)
     d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
 
 #if !defined(QT_OPENGL_ES_2)
-#if defined(Q_WS_WIN)
-    if (qt_cleartype_enabled
-        && (fontSmoothingApproximately(1.0) || fontSmoothingApproximately(2.1)))
-#endif
-#if defined(Q_WS_MAC)
-    if (qt_applefontsmoothing_enabled)
-#endif
-        d->glyphCacheType = QFontEngineGlyphCache::Raster_RGBMask;
+    d->glyphCacheType = QFontEngineGlyphCache::Raster_RGBMask;
 #endif
 
 #if defined(QT_OPENGL_ES_2)

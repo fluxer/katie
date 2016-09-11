@@ -137,11 +137,7 @@ public:
 
     void drawEllipse(const QRectF &rect);
 
-#ifdef Q_WS_WIN
-    HDC handle() const;
-#else
     Qt::HANDLE handle() const;
-#endif
     inline Type type() const { return QPaintEngine::OpenGL; }
     bool supportsTransformations(qreal, const QTransform &) const { return true; }
 

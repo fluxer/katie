@@ -4101,12 +4101,7 @@ void QOpenGLPaintEngine::drawTextureRect(int tx_width, int tx_height, const QRec
 #endif
 }
 
-#ifdef Q_WS_WIN
-HDC
-#else
-Qt::HANDLE
-#endif
-QOpenGLPaintEngine::handle() const
+Qt::HANDLE QOpenGLPaintEngine::handle() const
 {
     return 0;
 }
@@ -4196,16 +4191,7 @@ void QGLGlyphCache::fontEngineDestroyed(QObject *o)
     quint64 font_key = (reinterpret_cast<quint64>(ctx) << 32) | reinterpret_cast<quint64>(fe);
     QGLFontTexture *tex = qt_font_textures.take(font_key);
     if (tex) {
-#ifdef Q_WS_MAC
-        if (
-#  ifndef QT_MAC_USE_COCOA
-            aglGetCurrentContext() != 0
-#  else
-            qt_current_nsopengl_context() != 0
-#  endif
-           )
-#endif
-            glDeleteTextures(1, &tex->texture);
+        glDeleteTextures(1, &tex->texture);
         delete tex;
     }
 }
@@ -4229,16 +4215,7 @@ void QGLGlyphCache::cleanupContext(const QGLContext *ctx)
             quint64 font_key = (reinterpret_cast<quint64>(ctx) << 32) | reinterpret_cast<quint64>(fe);
             QGLFontTexture *font_tex = qt_font_textures.take(font_key);
             if (font_tex) {
-#ifdef Q_WS_MAC
-                if (
-#  ifndef QT_MAC_USE_COCOA
-            aglGetCurrentContext() == 0
-#  else
-            qt_current_nsopengl_context() != 0
-#  endif
-                   )
-#endif
-                    glDeleteTextures(1, &font_tex->texture);
+                glDeleteTextures(1, &font_tex->texture);
                 delete font_tex;
             }
         }
@@ -4252,10 +4229,6 @@ void QGLGlyphCache::cleanCache()
     QGLFontTexHash::const_iterator it = qt_font_textures.constBegin();
     if (QGLContext::currentContext()) {
         while (it != qt_font_textures.constEnd()) {
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-            if (qt_current_nsopengl_context() == 0)
-                break;
-#endif
             glDeleteTextures(1, &it.value()->texture);
             ++it;
         }
@@ -4439,13 +4412,8 @@ void QGLGlyphCache::cacheGlyphs(QGLContext *context, QFontEngine *fontEngine,
             qgl_glyph->height = qreal(glyph_height) / font_tex->height;
             qgl_glyph->log_width = qreal(glyph_width);
             qgl_glyph->log_height = qgl_glyph->height * font_tex->height;
-#ifdef Q_WS_MAC
-            qgl_glyph->x_offset = -metrics.x + 1;
-            qgl_glyph->y_offset = metrics.y - 2;
-#else
             qgl_glyph->x_offset = -metrics.x;
             qgl_glyph->y_offset = metrics.y;
-#endif
 
             if (!glyph_im.isNull()) {
                 int idx = 0;

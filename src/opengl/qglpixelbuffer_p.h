@@ -125,8 +125,6 @@ struct GLXFBConfig {
 
 #endif // Q_OS_HPUX
 
-#elif defined(Q_WS_WIN)
-DECLARE_HANDLE(HPBUFFERARB);
 #elif !defined(QT_NO_EGL)
 #include <QtGui/qegl_p.h>
 #endif
@@ -152,11 +150,6 @@ class QGLPixelBufferPrivate {
 public:
     QGLPixelBufferPrivate(QGLPixelBuffer *q) : q_ptr(q), invalid(true), qctx(0), pbuf(0), ctx(0)
     {
-#ifdef Q_WS_WIN
-        dc = 0;
-#elif defined(Q_WS_MACX)
-        share_ctx = 0;
-#endif
     }
     bool init(const QSize &size, const QGLFormat &f, QGLWidget *shareWidget);
     void common_init(const QSize &size, const QGLFormat &f, QGLWidget *shareWidget);
@@ -175,23 +168,6 @@ public:
 #if defined(Q_WS_X11) && defined(QT_NO_EGL)
     GLXPbuffer pbuf;
     GLXContext ctx;
-#elif defined(Q_WS_WIN)
-    HDC dc;
-    bool has_render_texture :1;
-#if !defined(QT_OPENGL_ES)
-    HPBUFFERARB pbuf;
-    HGLRC ctx;
-#endif
-#elif defined(Q_WS_MACX)
-#  ifdef QT_MAC_USE_COCOA
-    void *pbuf;
-    void *ctx;
-    void *share_ctx;
-#  else
-    AGLPbuffer pbuf;
-    AGLContext ctx;
-    AGLContext share_ctx;
-#  endif
 #endif
 #ifndef QT_NO_EGL
     EGLSurface pbuf;

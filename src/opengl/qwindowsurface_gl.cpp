@@ -91,9 +91,6 @@ QT_BEGIN_NAMESPACE
 //
 // QGLGraphicsSystem
 //
-#ifdef Q_WS_WIN
-extern Q_GUI_EXPORT bool qt_win_owndc_required;
-#endif
 QGLGraphicsSystem::QGLGraphicsSystem(bool useX11GL)
     : QGraphicsSystem(), m_useX11GL(useX11GL)
 {
@@ -171,10 +168,6 @@ QGLGraphicsSystem::QGLGraphicsSystem(bool useX11GL)
             printf("using visual class %x, id %x\n", X11->visual_class, X11->visual_id);
         }
     }
-#elif defined(Q_WS_WIN)
-    QGLWindowSurface::surfaceFormat.setDoubleBuffer(true);
-
-    qt_win_owndc_required = true;
 #endif
 }
 
@@ -827,9 +820,6 @@ void QGLWindowSurface::updateGeometry() {
         hijackWindow(window());
 
     QGLContext *ctx = reinterpret_cast<QGLContext *>(wd->extraData()->glContext);
-#ifdef Q_WS_MAC
-    ctx->updatePaintDevice();
-#endif
 
     QSize surfSize = geometry().size();
 

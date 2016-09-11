@@ -50,13 +50,7 @@
 
 QT_BEGIN_HEADER
 
-#if defined(Q_WS_WIN)
-# include <QtCore/qt_windows.h>
-#endif
-
-#if defined(Q_WS_MAC)
-# include <OpenGL/gl.h>
-#elif defined(QT_OPENGL_ES_1)
+#if defined(QT_OPENGL_ES_1)
 # if defined(Q_OS_MAC)
 #  include <OpenGLES/ES1/gl.h>
 # else
@@ -85,37 +79,6 @@ typedef GLfloat GLdouble;
 #endif
 
 QT_BEGIN_NAMESPACE
-
-
-#if defined(Q_WS_MAC) && defined (QT_BUILD_OPENGL_LIB) && !defined(QT_MAC_USE_COCOA)
-#define Q_MAC_COMPAT_GL_FUNCTIONS
-
-template <typename T>
-struct QMacGLCompatTypes
-{
-    typedef long CompatGLint;
-    typedef unsigned long CompatGLuint;
-    typedef unsigned long CompatGLenum;
-};
-
-template <>
-struct QMacGLCompatTypes<long>
-{
-    typedef int CompatGLint;
-    typedef unsigned int CompatGLuint;
-    typedef unsigned int CompatGLenum;
-};
-
-typedef QMacGLCompatTypes<GLint>::CompatGLint QMacCompatGLint;
-typedef QMacGLCompatTypes<GLint>::CompatGLuint QMacCompatGLuint;
-typedef QMacGLCompatTypes<GLint>::CompatGLenum QMacCompatGLenum;
-
-#endif
-
-
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-class QGLCmap;
-#endif
 
 class QPixmap;
 #if defined(Q_WS_X11) && !defined(QT_OPENGL_ES)
@@ -378,15 +341,9 @@ public:
 protected:
     virtual bool chooseContext(const QGLContext* shareContext = 0);
 
-#if defined(Q_WS_WIN)
-    virtual int choosePixelFormat(void* pfd, HDC pdc);
-#endif
 #if defined(Q_WS_X11)
     virtual void* tryVisual(const QGLFormat& f, int bufDepth = 1);
     virtual void* chooseVisual();
-#endif
-#if defined(Q_WS_MAC)
-    virtual void* chooseMacVisual(GDHandle);
 #endif
 
     bool deviceIsPixmap() const;
@@ -427,13 +384,6 @@ private:
     friend class QGLExtensions;
     friend class QGLTexture;
     friend QGLFormat::OpenGLVersionFlags QGLFormat::openGLVersionFlags();
-#ifdef Q_WS_MAC
-public:
-    void updatePaintDevice();
-private:
-    friend class QMacGLWindowChangeEvent;
-    friend QGLContextPrivate *qt_phonon_get_dptr(const QGLContext *);
-#endif
     friend class QGLFramebufferObject;
     friend class QGLFramebufferObjectPrivate;
     friend class QGLFBOGLPaintDevice;
@@ -560,9 +510,6 @@ protected:
 private:
     Q_DISABLE_COPY(QGLWidget)
 
-#ifdef Q_WS_MAC
-    friend class QMacGLWindowChangeEvent;
-#endif
     friend class QGLDrawable;
     friend class QGLPixelBuffer;
     friend class QGLPixelBufferPrivate;

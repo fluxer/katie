@@ -75,24 +75,6 @@ class QGLContext;
 class QGLOverlayWidget;
 class QPixmap;
 class QPixmapFilter;
-#ifdef Q_WS_MAC
-# ifdef qDebug
-#   define old_qDebug qDebug
-#   undef qDebug
-# endif
-QT_BEGIN_INCLUDE_NAMESPACE
-#ifndef QT_MAC_USE_COCOA
-# include <AGL/agl.h>
-#endif
-QT_END_INCLUDE_NAMESPACE
-# ifdef old_qDebug
-#   undef qDebug
-#   define qDebug QT_NO_QDEBUG_MACRO
-#   undef old_qDebug
-# endif
-class QMacWindowChangeEvent;
-#endif
-
 #ifndef QT_NO_EGL
 class QEglContext;
 #endif
@@ -187,18 +169,12 @@ public:
 
     bool disable_clear_on_painter_begin;
 
-#if defined(Q_WS_WIN)
-    void updateColormap();
-    QGLContext *olcx;
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     QGLOverlayWidget *olw;
 #ifndef QT_NO_EGL
     void recreateEglSurface();
     WId eglSurfaceWindowId;
 #endif
-#elif defined(Q_WS_MAC)
-    QGLContext *olcx;
-    void updatePaintDevice();
 #endif
 };
 
@@ -332,20 +308,6 @@ public:
     void syncGlState(); // Makes sure the GL context's state is what we think it is
     void swapRegion(const QRegion &region);
 
-#if defined(Q_WS_WIN)
-    void updateFormatVersion();
-#endif
-
-#if defined(Q_WS_WIN)
-    HGLRC rc;
-    HDC dc;
-    WId        win;
-    int pixelFormatId;
-    QGLCmap* cmap;
-    HBITMAP hbitmap;
-    HDC hbitmap_hdc;
-    Qt::HANDLE threadId;
-#endif
 #ifndef QT_NO_EGL
     QEglContext *eglContext;
     EGLSurface eglSurface;
@@ -355,13 +317,9 @@ public:
     static void setExtraWindowSurfaceCreationProps(QEglProperties *props);
 #endif
 
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
-    void* cx;
-#endif
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
-    void* vi;
-#endif
 #if defined(Q_WS_X11)
+    void* cx;
+    void* vi;
     void* pbuf;
     quint32 gpm;
     int screen;
@@ -370,11 +328,6 @@ public:
                                             QGLContext::BindOptions options);
     static void destroyGlSurfaceForPixmap(QPixmapData*);
     static void unbindPixmapFromTexture(QPixmapData*);
-#endif
-#if defined(Q_WS_MAC)
-    bool update;
-    void *tryFormat(const QGLFormat &format);
-    void clearDrawable();
 #endif
     QGLFormat glFormat;
     QGLFormat reqFormat;
@@ -424,11 +377,7 @@ public:
 
     static inline QGLContextGroup *contextGroup(const QGLContext *ctx) { return ctx->d_ptr->group; }
 
-#ifdef Q_WS_WIN
-    static inline QGLExtensionFuncs& extensionFuncs(const QGLContext *ctx) { return ctx->d_ptr->group->extensionFuncs(); }
-#endif
-
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
     static Q_OPENGL_EXPORT QGLExtensionFuncs qt_extensionFuncs;
     static Q_OPENGL_EXPORT QGLExtensionFuncs& extensionFuncs(const QGLContext *);
 #endif

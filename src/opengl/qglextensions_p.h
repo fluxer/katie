@@ -54,18 +54,13 @@
 //
 
 // extension prototypes
-#ifndef Q_WS_MAC
-# ifndef APIENTRYP
-#   ifdef APIENTRY
-#     define APIENTRYP APIENTRY *
-#   else
-#     define APIENTRY
-#     define APIENTRYP *
-#   endif
-# endif
-#else
-# define APIENTRY
-# define APIENTRYP *
+#ifndef APIENTRYP
+#  ifdef APIENTRY
+#    define APIENTRYP APIENTRY *
+#  else
+#    define APIENTRY
+#    define APIENTRYP *
+#  endif
 #endif
 
 #ifndef QT_NO_EGL
