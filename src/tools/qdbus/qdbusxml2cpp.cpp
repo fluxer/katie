@@ -674,7 +674,7 @@ static void writeProxy(const QString &filename, const QDBusIntrospection::Interf
                << (isDeprecated ? "Q_DECL_DEPRECATED " : "");
 
             if (isNoReply) {
-                hs << "Q_NOREPLY void ";
+                hs << "void ";
             } else {
                 hs << "QDBusPendingReply<";
                 for (int i = 0; i < method.outputArgs.count(); ++i)
@@ -1002,10 +1002,7 @@ static void writeAdaptor(const QString &filename, const QDBusIntrospection::Inte
                 hs << "Q_DECL_DEPRECATED ";
 
             QByteArray returnType;
-            if (isNoReply) {
-                hs << "Q_NOREPLY void ";
-                cs << "void ";
-            } else if (method.outputArgs.isEmpty()) {
+            if (isNoReply || method.outputArgs.isEmpty()) {
                 hs << "void ";
                 cs << "void ";
             } else {
