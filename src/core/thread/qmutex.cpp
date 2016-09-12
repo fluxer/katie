@@ -148,10 +148,9 @@ QMutex::~QMutex()
 void QMutex::lock()
 {
     QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
-    Qt::HANDLE self;
 
     if (d->recursive) {
-        self = QThread::currentThreadId();
+        Qt::HANDLE self = QThread::currentThreadId();
         if (d->owner == self) {
             ++d->count;
             Q_ASSERT_X(d->count != 0, "QMutex::lock", "Overflow in recursion counter");
@@ -198,10 +197,9 @@ void QMutex::lock()
 bool QMutex::tryLock()
 {
     QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
-    Qt::HANDLE self;
 
     if (d->recursive) {
-        self = QThread::currentThreadId();
+        Qt::HANDLE self = QThread::currentThreadId();
         if (d->owner == self) {
             ++d->count;
             Q_ASSERT_X(d->count != 0, "QMutex::tryLock", "Overflow in recursion counter");
@@ -250,10 +248,9 @@ bool QMutex::tryLock()
 bool QMutex::tryLock(int timeout)
 {
     QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
-    Qt::HANDLE self;
 
     if (d->recursive) {
-        self = QThread::currentThreadId();
+        Qt::HANDLE self = QThread::currentThreadId();
         if (d->owner == self) {
             ++d->count;
             Q_ASSERT_X(d->count != 0, "QMutex::tryLock", "Overflow in recursion counter");
