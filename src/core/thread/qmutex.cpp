@@ -131,7 +131,7 @@ QMutex::QMutex(RecursionMode mode)
     \warning Destroying a locked mutex may result in undefined behavior.
 */
 QMutex::~QMutex()
-{ delete static_cast<QMutexPrivate *>(d); }
+{ delete d; }
 
 /*!
     Locks the mutex. If another thread has locked the mutex then this
@@ -147,7 +147,7 @@ QMutex::~QMutex()
 */
 void QMutex::lock()
 {
-    QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
+    QMutexPrivate *d = this->d;
 
     if (d->recursive) {
         Qt::HANDLE self = QThread::currentThreadId();
@@ -196,7 +196,7 @@ void QMutex::lock()
 */
 bool QMutex::tryLock()
 {
-    QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
+    QMutexPrivate *d = this->d;
 
     if (d->recursive) {
         Qt::HANDLE self = QThread::currentThreadId();
@@ -247,7 +247,7 @@ bool QMutex::tryLock()
 */
 bool QMutex::tryLock(int timeout)
 {
-    QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
+    QMutexPrivate *d = this->d;
 
     if (d->recursive) {
         Qt::HANDLE self = QThread::currentThreadId();
@@ -286,7 +286,7 @@ bool QMutex::tryLock(int timeout)
 */
 void QMutex::unlock()
 {
-    QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
+    QMutexPrivate *d = this->d;
     if (d->recursive) {
         if (!--d->count) {
             d->owner = 0;
@@ -426,7 +426,7 @@ void QMutex::unlock()
  */
 void QMutex::lockInternal()
 {
-    QMutexPrivate *d = static_cast<QMutexPrivate *>(this->d);
+    QMutexPrivate *d = this->d;
 
     if (QThread::idealThreadCount() == 1) {
         // don't spin on single cpu machines
@@ -480,13 +480,6 @@ void QMutex::lockInternal()
     }
 }
 
-/*!
-    \internal
-*/
-void QMutex::unlockInternal()
-{
-    static_cast<QMutexPrivate *>(d)->wakeUp();
-}
 
 /*!
    \fn QMutex::lockInline()

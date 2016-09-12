@@ -75,7 +75,7 @@ static void report_error(int code, const char *where, const char *what)
 
 
 QMutexPrivate::QMutexPrivate(QMutex::RecursionMode mode)
-    : QMutexData(mode), maximumSpinTime(MaximumSpinTimeThreshold), averageWaitTime(0), owner(0), count(0)
+    : maximumSpinTime(MaximumSpinTimeThreshold), averageWaitTime(0), owner(0), count(0), recursive(mode == QMutex::Recursive)
 {
 #if !defined(Q_OS_LINUX) || defined(QT_LINUXBASE)
     wakeup = false;
