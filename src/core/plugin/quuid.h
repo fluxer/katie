@@ -46,20 +46,6 @@
 
 QT_BEGIN_HEADER
 
-#if defined(Q_OS_WIN)
-#ifndef GUID_DEFINED
-#define GUID_DEFINED
-typedef struct _GUID
-{
-    ulong   Data1;
-    ushort  Data2;
-    ushort  Data3;
-    uchar   Data4[8];
-} GUID, *REFGUID, *LPGUID;
-#endif
-#endif
-
-
 QT_BEGIN_NAMESPACE
 
 
@@ -136,40 +122,6 @@ struct Q_CORE_EXPORT QUuid
     bool operator<(const QUuid &other) const;
     bool operator>(const QUuid &other) const;
 
-#if defined(Q_OS_WIN)
-    // On Windows we have a type GUID that is used by the platform API, so we
-    // provide convenience operators to cast from and to this type.
-    QUuid(const GUID &guid)
-    {
-        data1 = guid.Data1;
-        data2 = guid.Data2;
-        data3 = guid.Data3;
-        for(int i = 0; i < 8; i++)
-            data4[i] = guid.Data4[i];
-    }
-
-    QUuid &operator=(const GUID &guid)
-    {
-        *this = QUuid(guid);
-        return *this;
-    }
-
-    operator GUID() const
-    {
-        GUID guid = { data1, data2, data3, { data4[0], data4[1], data4[2], data4[3], data4[4], data4[5], data4[6], data4[7] } };
-        return guid;
-    }
-
-    bool operator==(const GUID &guid) const
-    {
-        return *this == QUuid(guid);
-    }
-
-    bool operator!=(const GUID &guid) const
-    {
-        return !(*this == guid);
-    }
-#endif
     static QUuid createUuid();
     QUuid::Variant variant() const;
     QUuid::Version version() const;

@@ -49,6 +49,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QString;
+class QDataStream;
 
 struct QLatin1Char
 {

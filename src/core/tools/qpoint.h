@@ -48,6 +48,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+class QDataStream;
 
 class Q_CORE_EXPORT QPoint
 {

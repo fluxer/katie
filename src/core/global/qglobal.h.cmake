@@ -1115,27 +1115,6 @@ template <typename T>
 Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
 { return qMax(min, qMin(max, val)); }
 
-
-/*
-   Data stream functions are provided by many classes (defined in qdatastream.h)
-*/
-
-class QDataStream;
-
-#if defined(Q_WS_MAC)
-#  ifndef QMAC_QMENUBAR_NO_EVENT
-#    define QMAC_QMENUBAR_NO_EVENT
-#  endif
-#endif
-
-#if defined(Q_OS_VXWORKS)
-#  define QT_NO_CRASHHANDLER     // no popen
-#  define QT_NO_PROCESS          // no exec*, no fork
-#  define QT_NO_LPR
-#  define QT_NO_SHAREDMEMORY     // only POSIX, no SysV and in the end...
-#  define QT_NO_SYSTEMSEMAPHORE  // not needed at all in a flat address space
-#endif
-
 # include <QtCore/qfeatures.h>
 
 #define QT_SUPPORTS(FEATURE) (!defined(QT_NO_##FEATURE))
