@@ -156,27 +156,14 @@ QSizeF qt_printerPaperSize(QPrinter::Orientation orientation,
 void QPrinterPrivate::createDefaultEngines()
 {
     QPrinter::OutputFormat realOutputFormat = outputFormat;
-#if defined (Q_OS_UNIX) && ! defined (Q_WS_MAC)
+#if defined (Q_OS_UNIX)
     if(outputFormat == QPrinter::NativeFormat) {
         realOutputFormat = QPrinter::PostScriptFormat;
     }
 #endif
 
+    // QPrinter::NativeFormat is purposely ignored
     switch (realOutputFormat) {
-    case QPrinter::NativeFormat: {
-#if defined (Q_WS_WIN)
-        QWin32PrintEngine *winEngine = new QWin32PrintEngine(printerMode);
-        paintEngine = winEngine;
-        printEngine = winEngine;
-#elif defined (Q_WS_MAC)
-        QMacPrintEngine *macEngine = new QMacPrintEngine(printerMode);
-        paintEngine = macEngine;
-        printEngine = macEngine;
-#elif defined (Q_OS_UNIX)
-        Q_ASSERT(false);
-#endif
-        }
-        break;
     case QPrinter::PdfFormat: {
         QPdfEngine *pdfEngine = new QPdfEngine(printerMode);
         paintEngine = pdfEngine;

@@ -472,16 +472,12 @@ private:
     friend class QFontEngine;
     friend class QFontEngineBox;
     friend class QFontEngineFT;
-    friend class QFontEngineMac;
-    friend class QFontEngineWin;
     friend class QFontEngineXLFD;
     friend class QPaintEngine;
     friend class QPaintEngineExPrivate;
     friend class QOpenGLPaintEngine;
     friend class QX11PaintEngine;
     friend class QX11PaintEnginePrivate;
-    friend class QWin32PaintEngine;
-    friend class QWin32PaintEnginePrivate;
     friend class QRasterPaintEngine;
     friend class QAlphaPaintEngine;
     friend class QPreviewPaintEngine;

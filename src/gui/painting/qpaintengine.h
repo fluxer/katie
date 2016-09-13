@@ -228,21 +228,14 @@ private:
 
     friend class QPainterReplayer;
     friend class QFontEngineBox;
-    friend class QFontEngineMac;
-    friend class QFontEngineWin;
 #ifndef QT_NO_FREETYPE
     friend class QFontEngineFT;
 #endif
     friend class QPSPrintEngine;
-    friend class QMacPrintEngine;
-    friend class QMacPrintEnginePrivate;
     friend class QPainter;
     friend class QPainterPrivate;
     friend class QWidget;
     friend class QWidgetPrivate;
-    friend class QWin32PaintEngine;
-    friend class QWin32PaintEnginePrivate;
-    friend class QMacCGContext;
     friend class QPreviewPaintEngine;
     friend class QX11GLPixmapData;
 };

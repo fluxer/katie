@@ -69,8 +69,10 @@ public:
 
     virtual ~QPaintDevice();
 
-    virtual int devType() const;
-    bool paintingActive() const;
+    virtual int devType() const
+        { return QInternal::UnknownDevice; }
+    bool paintingActive() const
+        { return painters != 0; }
     virtual QPaintEngine *paintEngine() const = 0;
 
 #ifdef Q_WS_WIN
@@ -100,21 +102,9 @@ private:
 
 
     friend class QPainter;
-    friend class QFontEngineMac;
     friend class QX11PaintEngine;
     friend Q_GUI_EXPORT int qt_paint_device_metric(const QPaintDevice *device, PaintDeviceMetric metric);
 };
-
-
-/*****************************************************************************
-  Inline functions
- *****************************************************************************/
-
-inline int QPaintDevice::devType() const
-{ return QInternal::UnknownDevice; }
-
-inline bool QPaintDevice::paintingActive() const
-{ return painters != 0; }
 
 QT_END_NAMESPACE
 

@@ -5187,9 +5187,7 @@ QInputContext *QApplication::inputContext() const
 //Returns the current platform used by keyBindings
 uint QApplicationPrivate::currentPlatform(){
     uint platform = KB_Win;
-#ifdef Q_WS_MAC
-    platform = KB_Mac;
-#elif defined Q_WS_X11
+#if defined Q_WS_X11
     platform = KB_X11;
     if (X11->desktopEnvironment == DE_KDE)
         platform |= KB_KDE;

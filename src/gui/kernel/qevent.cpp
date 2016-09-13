@@ -48,7 +48,7 @@
 #include "qwidget.h"
 #include "qgraphicsview.h"
 #include "qdebug.h"
-#include "qmime.h"
+#include "qmimedata.h"
 #include "qdnd_p.h"
 #include "qevent_p.h"
 #include "qgesture.h"

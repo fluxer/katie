@@ -562,17 +562,7 @@ public:
     Qt::HANDLE x11PictureHandle() const;
 #endif
 
-#if defined(Q_WS_MAC)
-    Qt::HANDLE macQDHandle() const;
-    Qt::HANDLE macCGHandle() const;
-#endif
-
-#if defined(Q_WS_WIN)
-    HDC getDC() const;
-    void releaseDC(HDC) const;
-#else
     Qt::HANDLE handle() const;
-#endif
 
     void setAttribute(Qt::WidgetAttribute, bool on = true);
     inline bool testAttribute(Qt::WidgetAttribute) const;
@@ -640,12 +630,6 @@ protected:
     virtual void showEvent(QShowEvent *);
     virtual void hideEvent(QHideEvent *);
 
-#if defined(Q_WS_MAC)
-    virtual bool macEvent(EventHandlerCallRef, EventRef);
-#endif
-#if defined(Q_WS_WIN)
-    virtual bool winEvent(MSG *message, long *result);
-#endif
 #if defined(Q_WS_X11)
     virtual bool x11Event(XEvent *);
 #endif
@@ -702,7 +686,6 @@ private:
     friend class QGLWidget;
     friend class QGLWindowSurface;
     friend class QX11PaintEngine;
-    friend class QWin32PaintEngine;
     friend class QShortcutPrivate;
     friend class QShortcutMap;
     friend class QWindowSurface;
@@ -716,17 +699,6 @@ private:
 #endif // QT_NO_GESTURES
     friend class QWidgetEffectSourcePrivate;
 
-#ifdef Q_WS_MAC
-    friend class QCoreGraphicsPaintEnginePrivate;
-    friend QPoint qt_mac_posInWindow(const QWidget *w);
-    friend OSWindowRef qt_mac_window_for(const QWidget *w);
-    friend bool qt_mac_is_metal(const QWidget *w);
-    friend OSViewRef qt_mac_nativeview_for(const QWidget *w);
-    friend void qt_event_request_window_change(QWidget *widget);
-    friend bool qt_mac_sendMacEventToWidget(QWidget *widget, EventRef ref);
-    friend class QRasterWindowSurface;
-    friend class QUnifiedToolbarSurface;
-#endif
 #ifdef Q_WS_X11
     friend void qt_net_update_user_time(QWidget *tlw, unsigned long timestamp);
     friend void qt_net_remove_user_time(QWidget *tlw);

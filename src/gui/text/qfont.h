@@ -312,7 +312,6 @@ private:
     friend class QTextLine;
     friend struct QScriptLine;
     friend class QGLContext;
-    friend class QWin32PaintEngine;
     friend class QAlphaPaintEngine;
     friend class QPainterPath;
     friend class QTextItemInt;

@@ -54,21 +54,13 @@
 //
 
 #include "QtCore/qobject.h"
+#include "QtCore/qpoint.h"
 #include "QtCore/qmap.h"
-#include "QtGui/qmime.h"
+#include "QtCore/qmimedata.h"
 #include "QtGui/qdrag.h"
 #include "QtGui/qpixmap.h"
 #include "QtGui/qcursor.h"
-#include "QtCore/qpoint.h"
 #include "qobject_p.h"
-#ifdef Q_WS_MAC
-# include "qt_mac_p.h"
-#endif
-
-#if defined(Q_WS_WIN)
-# include <qt_windows.h>
-# include <objidl.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

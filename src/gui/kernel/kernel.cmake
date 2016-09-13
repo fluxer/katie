@@ -20,7 +20,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayoutengine_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qlayoutitem.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmime.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsessionmanager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qshortcut.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qshortcutmap_p.h

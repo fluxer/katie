@@ -65,12 +65,6 @@
 #include "qt_x11_p.h"
 #include "qximinputcontext_p.h"
 #endif
-#ifdef Q_WS_WIN
-#include "qwininputcontext_p.h"
-#endif
-#ifdef Q_WS_MAC
-#include "qmacinputcontext_p.h"
-#endif
 
 #include "qfactoryloader_p.h"
 #include "qmutex.h"

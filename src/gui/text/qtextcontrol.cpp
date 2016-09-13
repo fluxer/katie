@@ -48,7 +48,7 @@
 #include <qpainter.h>
 #include <qevent.h>
 #include <qdebug.h>
-#include <qmime.h>
+#include <qmimedata.h>
 #include <qdrag.h>
 #include <qconfig.h>
 #include <qclipboard.h>

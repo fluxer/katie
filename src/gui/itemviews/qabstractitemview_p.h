@@ -55,16 +55,16 @@
 
 #include "qabstractscrollarea_p.h"
 #include "qabstractitemmodel_p.h"
-#include "QtGui/qapplication.h"
-#include "QtGui/qevent.h"
-#include "QtGui/qmime.h"
-#include "QtGui/qpainter.h"
 #include "QtCore/qpair.h"
-#include "QtGui/qregion.h"
+#include "QtCore/qmimedata.h"
 #include "QtCore/qdebug.h"
-#include "QtGui/qpainter.h"
 #include "QtCore/qbasictimer.h"
 #include "QtCore/qelapsedtimer.h"
+#include "QtGui/qapplication.h"
+#include "QtGui/qevent.h"
+#include "QtGui/qpainter.h"
+#include "QtGui/qregion.h"
+#include "QtGui/qpainter.h"
 
 #ifndef QT_NO_ITEMVIEWS
 

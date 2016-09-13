@@ -570,9 +570,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSpacerItem", "QtGui/qlayoutitem.h"},
     { "QWidgetItem", "QtGui/qlayoutitem.h"},
     { "QWidgetItemV2", "QtGui/qlayoutitem.h"},
-    { "QWindowsMime", "QtGui/qmime.h"},
-    { "QMacMime", "QtGui/qmime.h"},
-    { "QMacPasteboardMime", "QtGui/qmime.h"},
     { "QPalette", "QtGui/qpalette.h"},
     { "QShortcut", "QtGui/qshortcut.h"},
     { "QSizePolicy", "QtGui/qsizepolicy.h"},
@@ -766,6 +763,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 760;
+static const int qclass_lib_count = 757;
 
 #endif
