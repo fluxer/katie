@@ -64,8 +64,6 @@
 /*
    The architechture, must be one of: (QT_ARCH_x)
 
-     !INTEGRITY - ...
-     !VXWORKS   - ...
      ALPHA     - ...
      ARM       - ...
      !ARMV6     - ...
@@ -75,14 +73,11 @@
      I386      - ...
      IA64      - ...
      M68K      - ...
-     !MACOSX    - ...
      MIPS      - ...
      !PARISC    - ...
      !POWERPC   - ...
      S390      - ...
      SPARC     - ...
-     !WINDOWS   - ...
-     !WINDOWSCE - ...
      X86_64    - ...
      SH        - ...
      !SH4A      - ...
@@ -212,28 +207,14 @@ namespace QT_NAMESPACE {}
 
 #endif /* __cplusplus */
 
-#if defined(Q_OS_MAC) && !defined(Q_CC_INTEL)
-#define QT_BEGIN_HEADER extern "C++" {
-#define QT_END_HEADER }
-#define QT_BEGIN_INCLUDE_HEADER }
-#define QT_END_INCLUDE_HEADER extern "C++" {
-#else
 #define QT_BEGIN_HEADER
 #define QT_END_HEADER
 #define QT_BEGIN_INCLUDE_HEADER
 #define QT_END_INCLUDE_HEADER extern "C++"
-#endif
 
 /*
    The operating system, must be one of: (Q_OS_x)
 
-     DARWIN   - Darwin OS (synonym for Q_OS_MAC)
-     MSDOS    - MS-DOS and Windows
-     OS2      - OS/2
-     OS2EMX   - XFree86 on OS/2 (not PM)
-     WIN32    - Win32 (Windows 2000/XP/Vista/7 and Windows Server 2003/2008)
-     WINCE    - WinCE (Windows CE 5.0)
-     CYGWIN   - Cygwin
      SOLARIS  - Sun Solaris
      HPUX     - HP-UX
      ULTRIX   - DEC Ultrix
@@ -305,27 +286,7 @@ namespace QT_NAMESPACE {}
 #  error "Qt has not been ported to this OS - talk to qt-bugs@trolltech.com"
 #endif
 
-#if defined(Q_OS_DARWIN)
-#  define Q_OS_MAC /* Q_OS_MAC is mostly for compatibility, but also more clear */
-#  define Q_OS_MACX /* Q_OS_MACX is only for compatibility.*/
-#  if defined(Q_OS_DARWIN64)
-#     define Q_OS_MAC64
-#  elif defined(Q_OS_DARWIN32)
-#     define Q_OS_MAC32
-#  endif
-#endif
-
-#ifdef Q_OS_MAC64
-#  define QT_MAC_USE_COCOA 1
-#endif
-
-#if defined(Q_WS_MAC64) && !defined(QT_MAC_USE_COCOA) && !defined(QT_BOOTSTRAPPED)
-#error "You are building a 64-bit application, but using a 32-bit version of Qt. Check your build configuration."
-#endif
-
-#if defined(Q_OS_MSDOS) || defined(Q_OS_OS2)
-#  undef Q_OS_UNIX
-#elif !defined(Q_OS_UNIX)
+#if !defined(Q_OS_UNIX)
 #  define Q_OS_UNIX
 #endif
 
@@ -343,7 +304,6 @@ namespace QT_NAMESPACE {}
 
      SYM      - Digital Mars C/C++ (used to be Symantec C++)
      MWERKS   - Metrowerks CodeWarrior
-     MSVC     - Microsoft Visual C/C++, Intel C++ for Windows
      BOR      - Borland/Turbo C++
      WAT      - Watcom C++
      GNU      - GNU C++
@@ -466,10 +426,6 @@ namespace QT_NAMESPACE {}
 /* GCC <= 3.3 cannot handle template friends */
 #  if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ <= 3)
 #    define Q_NO_TEMPLATE_FRIENDS
-#  endif
-/* Apple's GCC 3.1 chokes on our streaming qDebug() */
-#  if defined(Q_OS_DARWIN) && __GNUC__ == 3 && (__GNUC_MINOR__ >= 1 && __GNUC_MINOR__ < 3)
-#    define Q_BROKEN_DEBUG_STREAM
 #  endif
 #  if (defined(Q_CC_GNU) || defined(Q_CC_INTEL)) && !defined(QT_MOC_CPP)
 #    define Q_PACKED __attribute__ ((__packed__))
@@ -984,7 +940,7 @@ redefine to built-in booleans to make autotests work properly */
 #endif
 
 /*
-   Workaround for static const members on MSVC++. Deprecated.
+   Leftovers from workaround for static const members on MSVC++
 */
 
 #define QT_STATIC_CONST static const
@@ -1049,7 +1005,7 @@ redefine to built-in booleans to make autotests work properly */
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
 #endif
 
-#if defined(__i386__) || defined(_WIN32) || defined(_WIN32_WCE)
+#if defined(__i386__)
 #  if defined(Q_CC_GNU)
 #if !defined(Q_CC_INTEL) && ((100*(__GNUC__ - 0) + 10*(__GNUC_MINOR__ - 0) + __GNUC_PATCHLEVEL__) >= 332)
 #    define QT_FASTCALL __attribute__((regparm(3)))
@@ -1063,17 +1019,6 @@ redefine to built-in booleans to make autotests work properly */
 #  define QT_FASTCALL
 #endif
 
-//defines the type for the WNDPROC on windows
-//the alignment needs to be forced for sse2 to not crash with mingw
-#if defined(Q_WS_WIN)
-#  if defined(Q_CC_MINGW)
-#    define QT_ENSURE_STACK_ALIGNED_FOR_SSE __attribute__ ((force_align_arg_pointer))
-#  else
-#    define QT_ENSURE_STACK_ALIGNED_FOR_SSE
-#  endif
-#  define QT_WIN_CALLBACK CALLBACK QT_ENSURE_STACK_ALIGNED_FOR_SSE
-#endif
-
 typedef int QNoImplicitBoolCast;
 
 #if defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH) || defined(QT_ARCH_SH4A)
@@ -1083,7 +1028,7 @@ typedef int QNoImplicitBoolCast;
 // This logic must match the one in qmetatype.h
 #if defined(QT_COORD_TYPE)
 typedef QT_COORD_TYPE qreal;
-#elif defined(QT_NO_FPU) || defined(QT_ARCH_ARM) || defined(QT_ARCH_WINDOWSCE)
+#elif defined(QT_NO_FPU) || defined(QT_ARCH_ARM)
 typedef float qreal;
 #else
 typedef double qreal;
@@ -1099,7 +1044,7 @@ Q_DECL_CONSTEXPR inline T qAbs(const T &t) { return t >= 0 ? t : -t; }
 Q_DECL_CONSTEXPR inline int qRound(qreal d)
 { return d >= qreal(0.0) ? int(d + qreal(0.5)) : int(d - int(d-1) + qreal(0.5)) + int(d-1); }
 
-#if defined(QT_NO_FPU) || defined(QT_ARCH_ARM) || defined(QT_ARCH_WINDOWSCE)
+#if defined(QT_NO_FPU) || defined(QT_ARCH_ARM)
 Q_DECL_CONSTEXPR inline qint64 qRound64(double d)
 { return d >= 0.0 ? qint64(d + 0.5) : qint64(d - qreal(qint64(d-1)) + 0.5) + qint64(d-1); }
 #else
@@ -1181,29 +1126,8 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #  endif
 #endif
 
-// Functions marked as Q_GUI_EXPORT_INLINE were exported and inlined by mistake.
-// Compilers like MinGW complain that the import attribute is ignored.
-#if defined(Q_CC_MINGW)
-#    if defined(QT_BUILD_CORE_LIB)
-#      define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
-#    else
-#      define Q_CORE_EXPORT_INLINE inline
-#    endif
-#    if defined(QT_BUILD_GUI_LIB)
-#      define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
-#    else
-#      define Q_GUI_EXPORT_INLINE inline
-#    endif
-#elif defined(Q_CC_RVCT)
-// we force RVCT not to export inlines by passing --visibility_inlines_hidden
-// so we need to just inline it, rather than exporting and inlining
-// note: this affects the contents of the DEF files (ie. these functions do not appear)
-#    define Q_CORE_EXPORT_INLINE inline
-#    define Q_GUI_EXPORT_INLINE inline
-#else
-#    define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
-#    define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
-#endif
+#define Q_CORE_EXPORT_INLINE Q_CORE_EXPORT inline
+#define Q_GUI_EXPORT_INLINE Q_GUI_EXPORT inline
 
 /*
    No, this is not an evil backdoor. QT_BUILD_INTERNAL just exports more symbols
@@ -1268,97 +1192,10 @@ public:
 #  error "Undefined byte order"
 #endif
     };
-#if defined(Q_WS_WIN) || defined(Q_OS_CYGWIN)
-    enum WinVersion {
-        WV_32s      = 0x0001,
-        WV_95       = 0x0002,
-        WV_98       = 0x0003,
-        WV_Me       = 0x0004,
-        WV_DOS_based= 0x000f,
-
-        /* codenames */
-        WV_NT       = 0x0010,
-        WV_2000     = 0x0020,
-        WV_XP       = 0x0030,
-        WV_2003     = 0x0040,
-        WV_VISTA    = 0x0080,
-        WV_WINDOWS7 = 0x0090,
-        WV_WINDOWS8 = 0x00a0,
-        WV_WINDOWS8_1 = 0x00b0,
-        WV_WINDOWS10 = 0x00c0,
-        WV_NT_based = 0x00f0,
-
-        /* version numbers */
-        WV_4_0      = WV_NT,
-        WV_5_0      = WV_2000,
-        WV_5_1      = WV_XP,
-        WV_5_2      = WV_2003,
-        WV_6_0      = WV_VISTA,
-        WV_6_1      = WV_WINDOWS7,
-        WV_6_2      = WV_WINDOWS8,
-        WV_6_3      = WV_WINDOWS8_1,
-        WV_10_0     = WV_WINDOWS10,
-
-        WV_CE       = 0x0100,
-        WV_CENET    = 0x0200,
-        WV_CE_5     = 0x0300,
-        WV_CE_6     = 0x0400,
-        WV_CE_based = 0x0f00
-    };
-    static const WinVersion WindowsVersion;
-    static WinVersion windowsVersion();
-
-#endif
-#ifdef Q_OS_MAC
-    enum MacVersion {
-        MV_Unknown = 0x0000,
-
-        /* version */
-        MV_9 = 0x0001,
-        MV_10_0 = 0x0002,
-        MV_10_1 = 0x0003,
-        MV_10_2 = 0x0004,
-        MV_10_3 = 0x0005,
-        MV_10_4 = 0x0006,
-        MV_10_5 = 0x0007,
-        MV_10_6 = 0x0008,
-        MV_10_7 = 0x0009,
-        MV_10_8 = 0x000A,
-        MV_10_9 = 0x000B,
-        MV_10_10 = 0x000C,
-
-        /* codenames */
-        MV_CHEETAH = MV_10_0,
-        MV_PUMA = MV_10_1,
-        MV_JAGUAR = MV_10_2,
-        MV_PANTHER = MV_10_3,
-        MV_TIGER = MV_10_4,
-        MV_LEOPARD = MV_10_5,
-        MV_SNOWLEOPARD = MV_10_6,
-        MV_LION = MV_10_7,
-        MV_MOUNTAINLION = MV_10_8,
-        MV_MAVERICKS = MV_10_9,
-        MV_YOSEMITE = MV_10_10
-    };
-    static const MacVersion MacintoshVersion;
-#endif
 };
 
 Q_CORE_EXPORT const char *qVersion();
 Q_CORE_EXPORT bool qSharedBuild();
-
-#if defined(Q_OS_MAC)
-inline int qMacVersion() { return QSysInfo::MacintoshVersion; }
-#endif
-
-
-#if defined(Q_WS_WIN) || defined(Q_OS_CYGWIN)
-
-// ### Qt 5: remove Win9x support macros QT_WA and QT_WA_INLINE.
-#define QT_WA(unicode, ansi) unicode
-#define QT_WA_INLINE(unicode, ansi) (unicode)
-
-#endif /* Q_WS_WIN */
 
 #ifndef Q_OUTOFLINE_TEMPLATE
 #  define Q_OUTOFLINE_TEMPLATE
@@ -1852,9 +1689,7 @@ Q_DECLARE_TYPEINFO(qint64, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(quint64, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(float, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(double, Q_PRIMITIVE_TYPE);
-#ifndef Q_OS_DARWIN
 Q_DECLARE_TYPEINFO(long double, Q_PRIMITIVE_TYPE);
-#endif
 
 /*
    These functions are for compatibility only
@@ -2157,9 +1992,7 @@ Q_CORE_EXPORT int qrand();
 #  endif
 #endif
 
-#if !(defined(Q_WS_WIN) && !defined(Q_WS_WINCE)) \
-    && !(defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)) \
-    && !(defined(Q_WS_X11) && !defined(QT_NO_FREETYPE))
+#if !(defined(Q_WS_X11) && !defined(QT_NO_FREETYPE))
 #  define QT_NO_RAWFONT
 #endif
 
