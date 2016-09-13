@@ -387,40 +387,10 @@ QString QFileSystemEngine::resolveGroupName(uint groupId)
     return QString();
 }
 
-#if defined(Q_OS_MAC)
-//static
-QString QFileSystemEngine::bundleName(const QFileSystemEntry &entry)
-{
-    QCFType<CFURLRef> url = CFURLCreateWithFileSystemPath(0, QCFString(entry.filePath()),
-            kCFURLPOSIXPathStyle, true);
-    if (QCFType<CFDictionaryRef> dict = CFBundleCopyInfoDictionaryForURL(url)) {
-        if (CFTypeRef name = (CFTypeRef)CFDictionaryGetValue(dict, kCFBundleNameKey)) {
-            if (CFGetTypeID(name) == CFStringGetTypeID())
-                return QCFString::toQString((CFStringRef)name);
-        }
-    }
-    return QString();
-}
-#endif
-
 //static
 bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemMetaData &data,
         QFileSystemMetaData::MetaDataFlags what)
 {
-#if defined(Q_OS_MAC)
-    if (what & QFileSystemMetaData::BundleType) {
-        if (!data.hasFlags(QFileSystemMetaData::DirectoryType))
-            what |= QFileSystemMetaData::DirectoryType;
-    }
-#endif
-
-#if defined(Q_OS_MAC) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
-    if (what & QFileSystemMetaData::HiddenAttribute) {
-        // Mac OS >= 10.5: st_flags & UF_HIDDEN
-        what |= QFileSystemMetaData::PosixStatFlags;
-    }
-#endif
-
     if (what & QFileSystemMetaData::PosixStatFlags)
         what |= QFileSystemMetaData::PosixStatFlags;
 
@@ -687,16 +657,6 @@ QString QFileSystemEngine::tempPath()
 {
 #ifdef QT_UNIX_TEMP_PATH_OVERRIDE
     return QLatin1String(QT_UNIX_TEMP_PATH_OVERRIDE);
-#elif defined(Q_OS_BLACKBERRY)
-    QString temp = QFile::decodeName(qgetenv("TEMP"));
-    if (temp.isEmpty())
-        temp = QFile::decodeName(qgetenv("TMPDIR"));
-
-    if (temp.isEmpty()) {
-        qWarning("Neither the TEMP nor the TMPDIR environment variable is set, falling back to /tmp.");
-        temp = QLatin1String("/tmp/");
-    }
-    return QDir::cleanPath(temp);
 #else
     QString temp = QFile::decodeName(qgetenv("TMPDIR"));
     if (temp.isEmpty())

@@ -1584,11 +1584,7 @@ bool QFilePrivate::putCharHelper(char c)
 
     // Cutoff for code that doesn't only touch the buffer.
     int writeBufferSize = writeBuffer.size();
-    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QFILE_WRITEBUFFER_SIZE
-#ifdef Q_OS_WIN
-        || ((openMode & QIODevice::Text) && c == '\n' && writeBufferSize + 2 >= QFILE_WRITEBUFFER_SIZE)
-#endif
-        ) {
+    if ((openMode & QIODevice::Unbuffered) || writeBufferSize + 1 >= QFILE_WRITEBUFFER_SIZE) {
         return QIODevicePrivate::putCharHelper(c);
     }
 
@@ -1607,22 +1603,14 @@ bool QFilePrivate::putCharHelper(char c)
 
     lastWasWrite = true;
 
-    int len = 1;
-#ifdef Q_OS_WIN
-    if ((openMode & QIODevice::Text) && c == '\n') {
-        ++len;
-        *writeBuffer.reserve(1) = '\r';
-    }
-#endif
-
     // Write to buffer.
     *writeBuffer.reserve(1) = c;
 
     if (!sequential) {
-        pos += len;
-        devicePos += len;
+        pos += 1;
+        devicePos += 1;
         if (!buffer.isEmpty())
-            buffer.skip(len);
+            buffer.skip(1);
     }
 
     return true;

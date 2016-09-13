@@ -568,9 +568,7 @@ QAbstractFileEngine::FileFlags QFSFileEngine::fileFlags(FileFlags type) const
 QString QFSFileEngine::fileName(FileName file) const
 {
     Q_D(const QFSFileEngine);
-    if (file == BundleName) {
-        return QFileSystemEngine::bundleName(d->fileEntry);
-    } else if (file == BaseName) {
+    if (file == BaseName) {
         return d->fileEntry.fileName();
     } else if (file == PathName) {
         return d->fileEntry.path();

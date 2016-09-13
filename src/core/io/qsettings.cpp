@@ -1156,28 +1156,20 @@ QConfFileSettingsPrivate::QConfFileSettingsPrivate(QSettings::Format format,
         org = QLatin1String("Unknown Organization");
     }
 
-#if !defined(Q_OS_BLACKBERRY)
-    QString appFile = org + QDir::separator() + application + extension;
-    QString orgFile = org + extension;
+    const QString appFile = org + QDir::separator() + application + extension;
+    const QString orgFile = org + extension;
 
     if (scope == QSettings::UserScope) {
-        QString userPath = getPath(format, QSettings::UserScope);
+        const QString userPath = getPath(format, QSettings::UserScope);
         if (!application.isEmpty())
             confFiles[F_User | F_Application].reset(QConfFile::fromName(userPath + appFile, true));
         confFiles[F_User | F_Organization].reset(QConfFile::fromName(userPath + orgFile, true));
     }
 
-    QString systemPath = getPath(format, QSettings::SystemScope);
+    const QString systemPath = getPath(format, QSettings::SystemScope);
     if (!application.isEmpty())
         confFiles[F_System | F_Application].reset(QConfFile::fromName(systemPath + appFile, false));
     confFiles[F_System | F_Organization].reset(QConfFile::fromName(systemPath + orgFile, false));
-#else
-    QString confName = getPath(format, QSettings::UserScope) + org;
-    if (!application.isEmpty())
-        confName += QDir::separator() + application;
-    confName += extension;
-    confFiles[SandboxConfFile].reset(QConfFile::fromName(confName, true));
-#endif
 
     for (i = 0; i < NumConfFiles; ++i) {
         if (confFiles[i]) {
@@ -2312,47 +2304,14 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     stored in the following registry path:
     \c{HKEY_LOCAL_MACHINE\Software\WOW6432node}.
 
-    On BlackBerry only a single file is used (see \l{Platform Limitations}).
-    If the file format is NativeFormat, this is "Settings/MySoft/Star Runner.conf"
-    in the application's home directory.
-
     If the file format is IniFormat, the following files are
-    used on Unix and Mac OS X:
+    used on Unix:
 
     \list 1
     \o \c{$HOME/.config/MySoft/Star Runner.ini} (Qt for Embedded Linux: \c{$HOME/Settings/MySoft/Star Runner.ini})
     \o \c{$HOME/.config/MySoft.ini} (Qt for Embedded Linux: \c{$HOME/Settings/MySoft.ini})
     \o \c{/etc/xdg/MySoft/Star Runner.ini}
     \o \c{/etc/xdg/MySoft.ini}
-    \endlist
-
-    On Windows, the following files are used:
-
-    \list 1
-    \o \c{%APPDATA%\MySoft\Star Runner.ini}
-    \o \c{%APPDATA%\MySoft.ini}
-    \o \c{%COMMON_APPDATA%\MySoft\Star Runner.ini}
-    \o \c{%COMMON_APPDATA%\MySoft.ini}
-    \endlist
-
-    The \c %APPDATA% path is usually \tt{C:\\Documents and
-    Settings\\\e{User Name}\\Application Data}; the \c
-    %COMMON_APPDATA% path is usually \tt{C:\\Documents and
-    Settings\\All Users\\Application Data}.
-
-    On BlackBerry only a single file is used (see \l{Platform Limitations}).
-    If the file format is IniFormat, this is "Settings/MySoft/Star Runner.ini"
-    in the application's home directory.
-
-    On Symbian, the following files are used for both IniFormat and
-    NativeFormat (in this example, we assume that the application is
-    installed on the \c e-drive and its Secure ID is \c{0xECB00931}):
-
-    \list 1
-    \o \c{c:\data\.config\MySoft\Star Runner.conf}
-    \o \c{c:\data\.config\MySoft.conf}
-    \o \c{e:\private\ecb00931\MySoft\Star Runner.conf}
-    \o \c{e:\private\ecb00931\MySoft.conf}
     \endlist
 
     The SystemScope settings location is determined from the installation
@@ -2505,22 +2464,9 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
 
         \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 7
 
-    \o On Unix and Mac OS X systems, the advisory file locking is disabled
-       if NFS (or AutoFS or CacheFS) is detected to work around a bug in the
-       NFS fcntl() implementation, which hangs forever if statd or lockd aren't
-       running. Also, the locking isn't performed when accessing \c .plist
-       files.
-
-    \o On the BlackBerry platform, applications run in a sandbox. They are not
-       allowed to read or write outside of this sandbox. This involves the
-       following limitations:
-       \list
-       \o As there is only a single scope the scope is simply ignored,
-          i.e. there is no difference between SystemScope and UserScope.
-       \o The \l{Fallback Mechanism} is not applied, i.e. only a single
-          location is considered.
-       \o It is advised against setting and using custom file paths.
-       \endlist
+    \o On Unix systems, the advisory file locking is disabled if NFS (or AutoFS
+       or CacheFS) is detected to work around a bug in the NFS fcntl()
+       implementation, which hangs forever if statd or lockd aren't running.
 
     \endlist
 

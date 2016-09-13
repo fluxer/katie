@@ -131,11 +131,7 @@ Q_DECLARE_TYPEINFO(QDate, Q_MOVABLE_TYPE);
 class Q_CORE_EXPORT QTime
 {
 public:
-    QTime(): mds(NullTime)
-#if defined(Q_OS_WINCE)
-        , startTick(NullTime)
-#endif
-    {}
+    QTime(): mds(NullTime) {}
     QTime(int h, int m, int s = 0, int ms = 0);
 
     bool isNull() const { return mds == NullTime; }
@@ -177,9 +173,6 @@ private:
     enum TimeFlag { NullTime = -1 };
     inline int ds() const { return mds == -1 ? 0 : mds; }
     int mds;
-#if defined(Q_OS_WINCE)
-    int startTick;
-#endif
 
     friend class QDateTime;
     friend class QDateTimePrivate;

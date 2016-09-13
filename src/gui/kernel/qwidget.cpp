@@ -114,43 +114,17 @@
 #include "qtabwidget.h" // Needed in inTabWidget()
 #endif // QT_KEYPAD_NAVIGATION
 
-
-#ifdef Q_OS_BLACKBERRY
-#include <bps/navigator.h>
-#endif
-
-#ifdef Q_OS_BLACKBERRY_TABLET
-#include <bps/orientation.h>
-#endif
-
 // widget/widget data creation count
 //#define QWIDGET_EXTRA_DEBUG
 //#define ALIEN_DEBUG
 
 QT_BEGIN_NAMESPACE
 
-#ifdef QT_MAC_USE_COCOA
-bool qt_mac_clearDirtyOnWidgetInsideDrawWidget = false;
-#endif
-
 static inline bool qRectIntersects(const QRect &r1, const QRect &r2)
 {
     return (qMax(r1.left(), r2.left()) <= qMin(r1.right(), r2.right()) &&
             qMax(r1.top(), r2.top()) <= qMin(r1.bottom(), r2.bottom()));
 }
-
-static inline bool hasBackingStoreSupport()
-{
-#ifdef Q_WS_MAC
-    return QApplicationPrivate::graphics_system != 0;
-#else
-    return true;
-#endif
-}
-
-#ifdef Q_WS_MAC
-#  define QT_NO_PAINT_DEBUG
-#endif
 
 extern QDesktopWidget *qt_desktopWidget; // qapplication.cpp
 
@@ -1399,8 +1373,7 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
     // a real toplevel window needs a backing store
     if (isWindow() && windowType() != Qt::Desktop) {
         d->topData()->backingStore.destroy();
-        if (hasBackingStoreSupport())
-            d->topData()->backingStore.create(this);
+        d->topData()->backingStore.create(this);
     }
 
     d->setModal_sys();
@@ -9967,21 +9940,11 @@ void QWidget::repaint(const QRect &rect)
     if (!isVisible() || !updatesEnabled() || rect.isEmpty())
         return;
 
-    if (hasBackingStoreSupport()) {
-#ifdef QT_MAC_USE_COCOA
-        if (qt_widget_private(this)->isInUnifiedToolbar) {
-            qt_widget_private(this)->unifiedSurface->renderToolbar(this, true);
-            return;
-        }
-#endif // QT_MAC_USE_COCOA
-        QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
-        if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore) {
-            tlwExtra->inRepaint = true;
-            tlwExtra->backingStore->markDirty(rect, this, true);
-            tlwExtra->inRepaint = false;
-        }
-    } else {
-        d->repaint_sys(rect);
+    QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
+    if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore) {
+        tlwExtra->inRepaint = true;
+        tlwExtra->backingStore->markDirty(rect, this, true);
+        tlwExtra->inRepaint = false;
     }
 }
 
@@ -10002,21 +9965,11 @@ void QWidget::repaint(const QRegion &rgn)
     if (!isVisible() || !updatesEnabled() || rgn.isEmpty())
         return;
 
-    if (hasBackingStoreSupport()) {
-#ifdef QT_MAC_USE_COCOA
-        if (qt_widget_private(this)->isInUnifiedToolbar) {
-            qt_widget_private(this)->unifiedSurface->renderToolbar(this, true);
-            return;
-        }
-#endif // QT_MAC_USE_COCOA
-        QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
-        if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore) {
-            tlwExtra->inRepaint = true;
-            tlwExtra->backingStore->markDirty(rgn, this, true);
-            tlwExtra->inRepaint = false;
-        }
-    } else {
-        d->repaint_sys(rgn);
+    QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
+    if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore) {
+        tlwExtra->inRepaint = true;
+        tlwExtra->backingStore->markDirty(rgn, this, true);
+        tlwExtra->inRepaint = false;
     }
 }
 
@@ -10070,19 +10023,9 @@ void QWidget::update(const QRect &rect)
         return;
     }
 
-    if (hasBackingStoreSupport()) {
-#ifdef QT_MAC_USE_COCOA
-        if (qt_widget_private(this)->isInUnifiedToolbar) {
-            qt_widget_private(this)->unifiedSurface->renderToolbar(this, true);
-            return;
-        }
-#endif // QT_MAC_USE_COCOA
-        QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
-        if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore)
-            tlwExtra->backingStore->markDirty(r, this);
-    } else {
-        d_func()->repaint_sys(r);
-    }
+    QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
+    if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore)
+        tlwExtra->backingStore->markDirty(r, this);
 }
 
 /*!
@@ -10105,19 +10048,9 @@ void QWidget::update(const QRegion &rgn)
         return;
     }
 
-    if (hasBackingStoreSupport()) {
-#ifdef QT_MAC_USE_COCOA
-        if (qt_widget_private(this)->isInUnifiedToolbar) {
-            qt_widget_private(this)->unifiedSurface->renderToolbar(this, true);
-            return;
-        }
-#endif // QT_MAC_USE_COCOA
-        QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
-        if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore)
-            tlwExtra->backingStore->markDirty(r, this);
-    } else {
-        d_func()->repaint_sys(r);
-    }
+    QTLWExtra *tlwExtra = window()->d_func()->maybeTopData();
+    if (tlwExtra && !tlwExtra->inTopLevelResize && tlwExtra->backingStore)
+        tlwExtra->backingStore->markDirty(r, this);
 }
 
 
@@ -10432,41 +10365,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
                     setAttribute_internal(orientations[i], false, data, d);
             }
         }
-
-#ifdef Q_OS_BLACKBERRY
-        if (testAttribute(Qt::WA_AutoOrientation)) {
-            navigator_rotation_lock(false);
-        } else {
-#ifdef Q_OS_BLACKBERRY_TABLET
-            const bool portraitLocked = testAttribute(Qt::WA_LockPortraitOrientation);
-
-            orientation_direction_t direction;
-            orientation_get(&direction, 0);
-
-            int rotation = 0;
-
-            switch (direction) {
-            case ORIENTATION_TOP_UP:
-            case ORIENTATION_RIGHT_UP:
-                rotation = portraitLocked ? 90 : 0;
-                break;
-            case ORIENTATION_BOTTOM_UP:
-            case ORIENTATION_LEFT_UP:
-                rotation = portraitLocked ? 270 : 180;
-                break;
-            default:
-                break;
-            }
-
-            navigator_set_orientation(rotation, 0);
-#else
-            navigator_set_orientation_mode((testAttribute(Qt::WA_LockPortraitOrientation) ?
-                                            NAVIGATOR_PORTRAIT : NAVIGATOR_LANDSCAPE), 0);
-#endif // Q_OS_BLACKBERRY_TABLET
-            navigator_rotation_lock(true);
-        }
-#endif // Q_OS_BLACKBERRY
-
         break;
     }
     default:

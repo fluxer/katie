@@ -188,11 +188,6 @@ void QDirIteratorPrivate::pushDirectory(const QFileInfo &fileInfo)
 {
     QString path = fileInfo.filePath();
 
-#ifdef Q_OS_WIN
-    if (fileInfo.isSymLink())
-        path = fileInfo.canonicalFilePath();
-#endif
-
     if (iteratorFlags & QDirIterator::FollowSymlinks)
         visitedLinks << fileInfo.canonicalFilePath();
 

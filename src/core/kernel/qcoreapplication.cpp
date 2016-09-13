@@ -66,42 +66,13 @@
 #include <qlocale_p.h>
 #include <qmutexpool_p.h>
 
-#if   defined(Q_OS_UNIX)
-#  if defined(Q_OS_BLACKBERRY)
-#    include "qeventdispatcher_blackberry_p.h"
-#    include <process.h>
-#    include <unistd.h>
-#  else
-#    if !defined(QT_NO_GLIB)
-#      include "qeventdispatcher_glib_p.h"
-#    endif
-#    include "qeventdispatcher_unix_p.h"
-#  endif
+#if !defined(QT_NO_GLIB)
+#  include "qeventdispatcher_glib_p.h"
 #endif
-
-#ifdef Q_OS_WIN
-#  include "qeventdispatcher_win_p.h"
-#endif
-
-#ifdef Q_OS_MAC
-#  include "qcore_mac_p.h"
-#endif
+#include "qeventdispatcher_unix_p.h"
 
 #include <stdlib.h>
-
-#ifdef Q_OS_UNIX
-#  include <locale.h>
-#endif
-
-#ifdef Q_OS_VXWORKS
-#  include <taskLib.h>
-#endif
-
-#ifdef Q_OS_QNX
-#  include <sys/neutrino.h>
-#  include <pthread.h>
-#  include <sched.h>
-#endif
+#include <locale.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -120,40 +91,18 @@ private:
     QMutex *mtx;
 };
 
-
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-extern QString qAppFileName();
-#endif
-
 int QCoreApplicationPrivate::app_compile_version = 0x040000; //we don't know exactly, but it's at least 4.0.0
 
-#if !defined(Q_OS_WIN)
-#ifdef Q_OS_MAC
-QString QCoreApplicationPrivate::macMenuBarName()
-{
-    QString bundleName;
-    CFTypeRef string = CFBundleGetValueForInfoDictionaryKey(CFBundleGetMainBundle(), CFSTR("CFBundleName"));
-    if (string)
-        bundleName = QCFString::toQString(static_cast<CFStringRef>(string));
-    return bundleName;
-}
-#endif
 QString QCoreApplicationPrivate::appName() const
 {
     QMutexLocker locker(QMutexPool::globalInstanceGet(&applicationName));
 
-    if (applicationName.isNull()) {
-#ifdef Q_OS_MAC
-        applicationName = macMenuBarName();
-#endif
-        if (applicationName.isEmpty() && argv[0]) {
-            char *p = strrchr(argv[0], '/');
-            applicationName = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
-        }
+    if (applicationName.isEmpty() && argv[0]) {
+        char *p = strrchr(argv[0], '/');
+        applicationName = QString::fromLocal8Bit(p ? p + 1 : argv[0]);
     }
     return applicationName;
 }
-#endif
 
 bool QCoreApplicationPrivate::checkInstance(const char *function)
 {
@@ -292,34 +241,6 @@ struct QCoreApplicationData {
 #endif
     }
 
-#ifdef Q_OS_BLACKBERRY
-    //The QCoreApplicationData struct is only populated on demand, because it is rarely needed and would
-    //affect startup time
-    void loadManifest() {
-        static bool manifestLoadAttempt = false;
-        if (manifestLoadAttempt)
-            return;
-
-        manifestLoadAttempt = true;
-
-        QFile metafile(QLatin1String("app/META-INF/MANIFEST.MF"));
-        if (!metafile.open(QIODevice::ReadOnly)) {
-            qWarning() << Q_FUNC_INFO << "Could not open application metafile for reading";
-        } else {
-            while (!metafile.atEnd() && (application.isEmpty() || applicationVersion.isEmpty() || orgName.isEmpty())) {
-                QByteArray line = metafile.readLine();
-                if (line.startsWith("Application-Name:"))
-                    application = QString::fromUtf8(line.mid(18).trimmed());
-                else if (line.startsWith("Application-Version:"))
-                    applicationVersion = QString::fromUtf8(line.mid(21).trimmed());
-                else if (line.startsWith("Package-Author:"))
-                    orgName = QString::fromUtf8(line.mid(16).trimmed());
-            }
-            metafile.close();
-        }
-    }
-#endif
-
     QString orgName, orgDomain, application;
     QString applicationVersion;
 
@@ -396,32 +317,17 @@ QCoreApplicationPrivate::~QCoreApplicationPrivate()
 void QCoreApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QCoreApplication);
-#if   defined(Q_OS_UNIX)
-#  if defined(Q_OS_BLACKBERRY)
-    eventDispatcher = new QEventDispatcherBlackberry(q);
-#  else
-#  if !defined(QT_NO_GLIB)
+#if !defined(QT_NO_GLIB)
     if (qgetenv("QT_NO_GLIB").isEmpty() && QEventDispatcherGlib::versionSupported())
         eventDispatcher = new QEventDispatcherGlib(q);
     else
-#  endif
-        eventDispatcher = new QEventDispatcherUNIX(q);
-#  endif
-#elif defined(Q_OS_WIN)
-    eventDispatcher = new QEventDispatcherWin32(q);
-#else
-#  error "QEventDispatcher not yet ported to this platform"
 #endif
+        eventDispatcher = new QEventDispatcherUNIX(q);
 }
 
 QThread *QCoreApplicationPrivate::theMainThread = 0;
-QThread *QCoreApplicationPrivate::mainThread()
-{
-    Q_ASSERT(theMainThread != 0);
-    return theMainThread;
-}
 
-#if !defined (QT_NO_DEBUG) || defined (QT_MAC_FRAMEWORK_BUILD)
+#if !defined (QT_NO_DEBUG)
 void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)
 {
     QThread *currentThread = QThread::currentThread();
@@ -1825,49 +1731,7 @@ QString QCoreApplication::applicationFilePath()
     if (!d->cachedApplicationFilePath.isNull())
         return d->cachedApplicationFilePath;
 
-#if defined(Q_WS_WIN)
-    d->cachedApplicationFilePath = QFileInfo(qAppFileName()).filePath();
-    return d->cachedApplicationFilePath;
-#elif defined(Q_OS_BLACKBERRY)
-    if (!arguments().isEmpty()) { // args is never empty, but the navigator can change behaviour some day
-        QFileInfo fileInfo(arguments().at(0));
-        const bool zygotized = fileInfo.exists();
-        if (zygotized) {
-            // Handle the zygotized case:
-            d->cachedApplicationFilePath = QDir::cleanPath(fileInfo.absoluteFilePath());
-            return d->cachedApplicationFilePath;
-        }
-    }
-
-    // Handle the non-zygotized case:
-    const size_t maximum_path = static_cast<size_t>(pathconf("/",_PC_PATH_MAX));
-    char buff[maximum_path+1];
-    if (_cmdname(buff)) {
-        d->cachedApplicationFilePath = QDir::cleanPath(QString::fromLocal8Bit(buff));
-        return d->cachedApplicationFilePath;
-    } else {
-        qWarning("QCoreApplication::applicationFilePath: _cmdname() failed");
-        // _cmdname() won't fail, but just in case, fallback to the old method
-        QDir dir(QLatin1String("./app/native/"));
-        QStringList executables = dir.entryList(QDir::Executable | QDir::Files);
-        if (!executables.empty()) {
-            //We assume that there is only one executable in the folder
-            d->cachedApplicationFilePath = dir.absoluteFilePath(executables.first());
-            return d->cachedApplicationFilePath;
-        } else {
-            return QString();
-        }
-    }
-#elif defined(Q_WS_MAC)
-    QString qAppFileName_str = qAppFileName();
-    if(!qAppFileName_str.isEmpty()) {
-        QFileInfo fi(qAppFileName_str);
-        d->cachedApplicationFilePath = fi.exists() ? fi.canonicalFilePath() : QString();
-        return d->cachedApplicationFilePath;
-    }
-#endif
-#if   defined( Q_OS_UNIX )
-#  ifdef Q_OS_LINUX
+#ifdef Q_OS_LINUX
     // Try looking for a /proc/<pid>/exe symlink first which points to
     // the absolute path of the executable
     QFileInfo pfi(QString::fromLatin1("/proc/%1/exe").arg(getpid()));
@@ -1875,7 +1739,7 @@ QString QCoreApplication::applicationFilePath()
         d->cachedApplicationFilePath = pfi.canonicalFilePath();
         return d->cachedApplicationFilePath;
     }
-#  endif
+#endif
 
     QString argv0 = QFile::decodeName(arguments().at(0).toLocal8Bit());
     QString absPath;
@@ -1917,7 +1781,6 @@ QString QCoreApplication::applicationFilePath()
     QFileInfo fi(absPath);
     d->cachedApplicationFilePath = fi.exists() ? fi.canonicalFilePath() : QString();
     return d->cachedApplicationFilePath;
-#endif
 }
 
 /*!
@@ -1927,13 +1790,7 @@ QString QCoreApplication::applicationFilePath()
 */
 qint64 QCoreApplication::applicationPid()
 {
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    return GetCurrentProcessId();
-#elif defined(Q_OS_VXWORKS)
-    return (pid_t) taskIdCurrent;
-#else
     return getpid();
-#endif
 }
 
 /*!
@@ -1980,46 +1837,11 @@ QStringList QCoreApplication::arguments()
         qWarning("QCoreApplication::arguments: Please instantiate the QApplication object first");
         return list;
     }
-#ifdef Q_OS_WIN
-    QString cmdline = QString::fromWCharArray(GetCommandLine());
-
-#if defined(Q_OS_WINCE)
-    wchar_t tempFilename[MAX_PATH+1];
-    if (GetModuleFileName(0, tempFilename, MAX_PATH)) {
-        tempFilename[MAX_PATH] = 0;
-        cmdline.prepend(QLatin1Char('\"') + QString::fromWCharArray(tempFilename) + QLatin1String("\" "));
-    }
-#endif // Q_OS_WINCE
-
-    list = qWinCmdArgs(cmdline);
-    if (self->d_func()->application_type) { // GUI app? Skip known - see qapplication.cpp
-        QStringList stripped;
-        for (int a = 0; a < list.count(); ++a) {
-            QString arg = list.at(a);
-            QByteArray l1arg = arg.toLatin1();
-            if (l1arg == "-reverse" ||
-                l1arg == "-stylesheet" ||
-                l1arg == "-widgetcount")
-                ;
-            else if (l1arg.startsWith("-style="))
-                ;
-            else if (l1arg == "-style" ||
-                     l1arg == "-session" ||
-                     l1arg == "-graphicssystem" ||
-                     l1arg == "-testability")
-                ++a;
-            else
-                stripped += arg;
-        }
-        list = stripped;
-    }
-#else
     const int ac = self->d_func()->argc;
     char ** const av = self->d_func()->argv;
     for (int a = 0; a < ac; ++a) {
         list << QString::fromLocal8Bit(av[a]);
     }
-#endif
 
     return list;
 }
@@ -2032,14 +1854,6 @@ QStringList QCoreApplication::arguments()
     using the empty constructor. This saves having to repeat this
     information each time a QSettings object is created.
 
-    On Mac, QSettings uses organizationDomain() as the organization
-    if it's not an empty string; otherwise it uses
-    organizationName(). On all other platforms, QSettings uses
-    organizationName() as the organization.
-
-    On BlackBerry this property is read-only. It is obtained from the
-    BAR application descriptor file.
-
     \sa organizationDomain applicationName
 */
 
@@ -2050,9 +1864,6 @@ void QCoreApplication::setOrganizationName(const QString &orgName)
 
 QString QCoreApplication::organizationName()
 {
-#ifdef Q_OS_BLACKBERRY
-    coreappdata()->loadManifest();
-#endif
     return coreappdata()->orgName;
 }
 
@@ -2089,9 +1900,6 @@ QString QCoreApplication::organizationDomain()
     using the empty constructor. This saves having to repeat this
     information each time a QSettings object is created.
 
-    On BlackBerry this property is read-only. It is obtained from the
-    BAR application descriptor file.
-
     \sa organizationName organizationDomain applicationVersion
 */
 void QCoreApplication::setApplicationName(const QString &application)
@@ -2101,24 +1909,19 @@ void QCoreApplication::setApplicationName(const QString &application)
 
 QString QCoreApplication::applicationName()
 {
-#ifdef Q_OS_BLACKBERRY
-    coreappdata()->loadManifest();
-#endif
+    if (coreappdata())
+        return coreappdata()->application;
 
-    QString appname = coreappdata() ? coreappdata()->application : QString();
-    if (appname.isEmpty() && QCoreApplication::self)
-        appname = QCoreApplication::self->d_func()->appName();
+    if (QCoreApplication::self)
+        return QCoreApplication::self->d_func()->appName();
 
-    return appname;
+    return QString();
 }
 
 /*!
     \property QCoreApplication::applicationVersion
     \since 4.4
     \brief the version of this application
-
-    On BlackBerry this property is read-only. It is obtained from the
-    BAR application descriptor file.
 
     \sa applicationName organizationName organizationDomain
 */
@@ -2129,9 +1932,6 @@ void QCoreApplication::setApplicationVersion(const QString &version)
 
 QString QCoreApplication::applicationVersion()
 {
-#ifdef Q_OS_BLACKBERRY
-    coreappdata()->loadManifest();
-#endif
     return coreappdata()->applicationVersion;
 }
 
@@ -2182,11 +1982,7 @@ QStringList QCoreApplication::libraryPaths()
 
         const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
         if (!libPathEnv.isEmpty()) {
-#if defined(Q_OS_WIN)
-            QLatin1Char pathSep(';');
-#else
-            QLatin1Char pathSep(':');
-#endif
+            const QLatin1Char pathSep(':');
             QStringList paths = QString::fromLatin1(libPathEnv).split(pathSep, QString::SkipEmptyParts);
             for (QStringList::const_iterator it = paths.constBegin(); it != paths.constEnd(); ++it) {
                 QString canonicalPath = QDir(*it).canonicalPath();
@@ -2353,11 +2149,7 @@ bool QCoreApplication::filterEvent(void *message, long *result)
         *result = 0;
     if (d->eventFilter)
         return d->eventFilter(message, result);
-#ifdef Q_OS_WIN
-    return winEventFilter(reinterpret_cast<MSG *>(message), result);
-#else
     return false;
-#endif
 }
 
 /*!

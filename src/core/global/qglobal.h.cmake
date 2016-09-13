@@ -257,36 +257,7 @@ namespace QT_NAMESPACE {}
      UNIX     - Any UNIX BSD/SYSV system
 */
 
-#if defined(__APPLE__) && (defined(__GNUC__) || defined(__xlC__) || defined(__xlc__))
-#  define Q_OS_DARWIN
-#  define Q_OS_BSD4
-#  ifdef __LP64__
-#    define Q_OS_DARWIN64
-#  else
-#    define Q_OS_DARWIN32
-#  endif
-#elif defined(__CYGWIN__)
-#  define Q_OS_CYGWIN
-#elif defined(MSDOS) || defined(_MSDOS)
-#  define Q_OS_MSDOS
-#elif defined(__OS2__)
-#  if defined(__EMX__)
-#    define Q_OS_OS2EMX
-#  else
-#    define Q_OS_OS2
-#  endif
-#elif !defined(SAG_COM) && (defined(WIN64) || defined(_WIN64) || defined(__WIN64__))
-#  define Q_OS_WIN32
-#  define Q_OS_WIN64
-#elif !defined(SAG_COM) && (defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__))
-#  if defined(WINCE) || defined(_WIN32_WCE)
-#    define Q_OS_WINCE
-#  else
-#    define Q_OS_WIN32
-#  endif
-#elif defined(__MWERKS__) && defined(__INTEL__)
-#  define Q_OS_WIN32
-#elif defined(__sun) || defined(sun)
+#if defined(__sun) || defined(sun)
 #  define Q_OS_SOLARIS
 #elif defined(hpux) || defined(__hpux)
 #  define Q_OS_HPUX
@@ -322,8 +293,6 @@ namespace QT_NAMESPACE {}
 #  define Q_OS_HURD
 #elif defined(__DGUX__)
 #  define Q_OS_DGUX
-#elif defined(__QNXNTO__)
-#  define Q_OS_QNX
 #elif defined(_SEQUENT_)
 #  define Q_OS_DYNIX
 #elif defined(_SCO_DS) /* SCO OpenServer 5 + GCC */
@@ -332,17 +301,8 @@ namespace QT_NAMESPACE {}
 #  define Q_OS_UNIXWARE
 #elif defined(__svr4__) && defined(i386) /* Open UNIX 8 + GCC */
 #  define Q_OS_UNIXWARE
-#elif defined(__INTEGRITY)
-#  define Q_OS_INTEGRITY
-#elif defined(VXWORKS) /* there is no "real" VxWorks define - this has to be set in the mkspec! */
-#  define Q_OS_VXWORKS
-#elif defined(__MAKEDEPEND__)
 #else
 #  error "Qt has not been ported to this OS - talk to qt-bugs@trolltech.com"
-#endif
-
-#if defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_WINCE)
-#  define Q_OS_WIN
 #endif
 
 #if defined(Q_OS_DARWIN)
@@ -363,81 +323,10 @@ namespace QT_NAMESPACE {}
 #error "You are building a 64-bit application, but using a 32-bit version of Qt. Check your build configuration."
 #endif
 
-#if defined(Q_OS_MSDOS) || defined(Q_OS_OS2) || defined(Q_OS_WIN)
+#if defined(Q_OS_MSDOS) || defined(Q_OS_OS2)
 #  undef Q_OS_UNIX
 #elif !defined(Q_OS_UNIX)
 #  define Q_OS_UNIX
-#endif
-
-#if defined(Q_OS_DARWIN) && !defined(QT_LARGEFILE_SUPPORT)
-#  define QT_LARGEFILE_SUPPORT 64
-#endif
-
-#ifdef Q_OS_DARWIN
-#  include <AvailabilityMacros.h>
-#
-#  // Availability.h was introduced with the OS X 10.6 SDK
-#  if (defined(__MAC_OS_X_VERSION_MAX_ALLOWED) && __MAC_OS_X_VERSION_MAX_ALLOWED >= 1060) || \
-      (defined(MAC_OS_X_VERSION_MAX_ALLOWED) && MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
-#    include <Availability.h>
-#  endif
-#
-#  ifdef Q_OS_MACX
-#    if !defined(__MAC_OS_X_VERSION_MIN_REQUIRED) || __MAC_OS_X_VERSION_MIN_REQUIRED < 1040
-#       undef __MAC_OS_X_VERSION_MIN_REQUIRED
-#       define __MAC_OS_X_VERSION_MIN_REQUIRED 1040
-#    endif
-#    if !defined(MAC_OS_X_VERSION_MIN_REQUIRED) || MAC_OS_X_VERSION_MIN_REQUIRED < 1040
-#       undef MAC_OS_X_VERSION_MIN_REQUIRED
-#       define MAC_OS_X_VERSION_MIN_REQUIRED 1040
-#    endif
-#  endif
-#
-#  // Numerical checks are preferred to named checks, but to be safe
-#  // we define the missing version names in case Qt uses them.
-#
-#  if !defined(__MAC_10_4)
-#       define __MAC_10_4 1040
-#  endif
-#  if !defined(__MAC_10_5)
-#       define __MAC_10_5 1050
-#  endif
-#  if !defined(__MAC_10_6)
-#       define __MAC_10_6 1060
-#  endif
-#  if !defined(__MAC_10_7)
-#       define __MAC_10_7 1070
-#  endif
-#  if !defined(__MAC_10_8)
-#       define __MAC_10_8 1080
-#  endif
-#  if !defined(__MAC_10_9)
-#       define __MAC_10_9 1090
-#  endif
-#  if !defined(__MAC_10_10)
-#       define __MAC_10_10 101000
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_4)
-#       define MAC_OS_X_VERSION_10_4 1040
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_5)
-#       define MAC_OS_X_VERSION_10_5 1050
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_6)
-#       define MAC_OS_X_VERSION_10_6 1060
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_7)
-#       define MAC_OS_X_VERSION_10_7 1070
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_8)
-#       define MAC_OS_X_VERSION_10_8 1080
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_9)
-#       define MAC_OS_X_VERSION_10_9 1090
-#  endif
-#  if !defined(MAC_OS_X_VERSION_10_10)
-#       define MAC_OS_X_VERSION_10_10 101000
-#  endif
 #endif
 
 #ifdef __LSB_VERSION__
@@ -997,66 +886,14 @@ namespace QT_NAMESPACE {}
 #  endif
 #endif
 
-#ifdef __cplusplus
-# if defined(Q_OS_QNX) || defined(Q_OS_BLACKBERRY)
-#  include <utility>
-#  if defined(_YVALS) || defined(_LIBCPP_VER)
-// QNX: libcpp (Dinkumware-based) doesn't have the <initializer_list>
-// header, so the feature is useless, even if the compiler supports
-// it. Disable.
-#    ifdef Q_COMPILER_INITIALIZER_LISTS
-#      undef Q_COMPILER_INITIALIZER_LISTS
-#    endif
-#  endif
-# endif
-#endif
-
 /*
    The window system, must be one of: (Q_WS_x)
 
-     MACX     - Mac OS X
-     MAC9     - Mac OS 9
-     WIN32    - Windows
      X11      - X Window System
-     PM       - unsupported
-     WIN16    - unsupported
 */
 
-#if defined(Q_OS_MSDOS)
-#  define Q_WS_WIN16
-#  error "Qt requires Win32 and does not work with Windows 3.x"
-#elif defined(_WIN32_X11_)
+#if defined(Q_OS_UNIX)
 #  define Q_WS_X11
-#elif defined(Q_OS_WIN32)
-#  define Q_WS_WIN32
-#  if defined(Q_OS_WIN64)
-#    define Q_WS_WIN64
-#  endif
-#elif defined(Q_OS_WINCE)
-#  define Q_WS_WIN32
-#  define Q_WS_WINCE
-#  if defined(Q_OS_WINCE_WM)
-#    define Q_WS_WINCE_WM
-#  endif
-#elif defined(Q_OS_OS2)
-#  define Q_WS_PM
-#  error "Qt does not work with OS/2 Presentation Manager or Workplace Shell"
-#elif defined(Q_OS_UNIX)
-#  if defined(Q_OS_MAC) && !defined(__USE_WS_X11__)
-#    define Q_WS_MAC
-#    define Q_WS_MACX
-#    if defined(Q_OS_MAC64)
-#      define Q_WS_MAC64
-#    elif defined(Q_OS_MAC32)
-#      define Q_WS_MAC32
-#    endif
-#  else
-#    define Q_WS_X11
-#  endif
-#endif
-
-#if defined(Q_WS_WIN16) || defined(Q_WS_WIN32) || defined(Q_WS_WINCE)
-#  define Q_WS_WIN
 #endif
 
 QT_BEGIN_HEADER
@@ -1074,17 +911,10 @@ typedef short qint16;              /* 16 bit signed */
 typedef unsigned short quint16;    /* 16 bit unsigned */
 typedef int qint32;                /* 32 bit signed */
 typedef unsigned int quint32;      /* 32 bit unsigned */
-#if defined(Q_OS_WIN) && !defined(Q_CC_GNU) && !defined(Q_CC_MWERKS)
-#  define Q_INT64_C(c) c ## i64    /* signed 64 bit constant */
-#  define Q_UINT64_C(c) c ## ui64   /* unsigned 64 bit constant */
-typedef __int64 qint64;            /* 64 bit signed */
-typedef unsigned __int64 quint64;  /* 64 bit unsigned */
-#else
-#  define Q_INT64_C(c) static_cast<long long>(c ## LL)     /* signed 64 bit constant */
-#  define Q_UINT64_C(c) static_cast<unsigned long long>(c ## ULL) /* unsigned 64 bit constant */
+#define Q_INT64_C(c) static_cast<long long>(c ## LL)     /* signed 64 bit constant */
+#define Q_UINT64_C(c) static_cast<unsigned long long>(c ## ULL) /* unsigned 64 bit constant */
 typedef long long qint64;           /* 64 bit signed */
 typedef unsigned long long quint64; /* 64 bit unsigned */
-#endif
 
 typedef qint64 qlonglong;
 typedef quint64 qulonglong;
@@ -1246,7 +1076,7 @@ redefine to built-in booleans to make autotests work properly */
 
 typedef int QNoImplicitBoolCast;
 
-#if defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6) || defined(QT_ARCH_AVR32) || (defined(QT_ARCH_MIPS) && defined(Q_OS_WINCE)) || defined(QT_ARCH_SH) || defined(QT_ARCH_SH4A)
+#if defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6) || defined(QT_ARCH_AVR32) || defined(QT_ARCH_SH) || defined(QT_ARCH_SH4A)
 #define QT_NO_FPU
 #endif
 
@@ -1310,16 +1140,8 @@ class QDataStream;
 
 #define QT_SUPPORTS(FEATURE) (!defined(QT_NO_##FEATURE))
 
-#if defined(Q_OS_LINUX) && defined(Q_CC_RVCT)
-#  define Q_DECL_EXPORT     __attribute__((visibility("default")))
-#  define Q_DECL_IMPORT     __attribute__((visibility("default")))
-#  define Q_DECL_HIDDEN     __attribute__((visibility("hidden")))
-#endif
-
 #ifndef Q_DECL_EXPORT
-#  if defined(Q_OS_WIN) || defined(Q_CC_RVCT)
-#    define Q_DECL_EXPORT __declspec(dllexport)
-#  elif defined(QT_VISIBILITY_AVAILABLE)
+#  if defined(QT_VISIBILITY_AVAILABLE)
 #    define Q_DECL_EXPORT __attribute__((visibility("default")))
 #    define Q_DECL_HIDDEN __attribute__((visibility("hidden")))
 #  endif
@@ -1328,11 +1150,7 @@ class QDataStream;
 #  endif
 #endif
 #ifndef Q_DECL_IMPORT
-#  if defined(Q_OS_WIN) || defined(Q_CC_RVCT)
-#    define Q_DECL_IMPORT __declspec(dllimport)
-#  else
-#    define Q_DECL_IMPORT
-#  endif
+#  define Q_DECL_IMPORT
 #endif
 #ifndef Q_DECL_HIDDEN
 #  define Q_DECL_HIDDEN
@@ -1340,114 +1158,15 @@ class QDataStream;
 
 
 /*
-   Create Qt DLL if QT_DLL is defined (Windows only)
+   QT_DLL leftovers (Windows only)
 */
 
-#if defined(Q_OS_WIN)
-#  if defined(QT_NODLL)
-#    undef QT_MAKEDLL
-#    undef QT_DLL
-#  elif defined(QT_MAKEDLL)        /* create a Qt DLL library */
-#    if defined(QT_DLL)
-#      undef QT_DLL
-#    endif
-#    if defined(QT_BUILD_CORE_LIB)
-#      define Q_CORE_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_CORE_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_GUI_LIB)
-#      define Q_GUI_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_GUI_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_HELP_LIB)
-#      define Q_HELP_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_HELP_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_SQL_LIB)
-#      define Q_SQL_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SQL_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_NETWORK_LIB)
-#      define Q_NETWORK_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_NETWORK_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_SVG_LIB)
-#      define Q_SVG_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SVG_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_TEST_LIB)
-#      define Q_TEST_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_TEST_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_DECLARATIVE_LIB)
-#      define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_DECLARATIVE_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_OPENGL_LIB)
-#      define Q_OPENGL_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_OPENGL_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_XML_LIB)
-#      define Q_XML_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_XML_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_XMLPATTERNS_LIB)
-#      define Q_XMLPATTERNS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_XMLPATTERNS_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_SCRIPT_LIB)
-#      define Q_SCRIPT_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SCRIPT_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_SCRIPTTOOLS_LIB)
-#      define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_SCRIPTTOOLS_EXPORT Q_DECL_IMPORT
-#    endif
-#    if defined(QT_BUILD_DBUS_LIB)
-#      define Q_DBUS_EXPORT Q_DECL_EXPORT
-#    else
-#      define Q_DBUS_EXPORT Q_DECL_IMPORT
-#    endif
-#    define Q_TEMPLATEDLL
-#  elif defined(QT_DLL) /* use a Qt DLL library */
-#    define Q_CORE_EXPORT Q_DECL_IMPORT
-#    define Q_GUI_EXPORT Q_DECL_IMPORT
-#    define Q_HELP_EXPORT Q_DECL_IMPORT
-#    define Q_SQL_EXPORT Q_DECL_IMPORT
-#    define Q_NETWORK_EXPORT Q_DECL_IMPORT
-#    define Q_SVG_EXPORT Q_DECL_IMPORT
-#    define Q_TEST_EXPORT Q_DECL_IMPORT
-#    define Q_DECLARATIVE_EXPORT Q_DECL_IMPORT
-#    define Q_OPENGL_EXPORT Q_DECL_IMPORT
-#    define Q_XML_EXPORT Q_DECL_IMPORT
-#    define Q_XMLPATTERNS_EXPORT Q_DECL_IMPORT
-#    define Q_SCRIPT_EXPORT Q_DECL_IMPORT
-#    define Q_SCRIPTTOOLS_EXPORT Q_DECL_IMPORT
-#    define Q_DBUS_EXPORT Q_DECL_IMPORT
-#    define Q_TEMPLATEDLL
-#  endif
+#if defined(Q_OS_LINUX) && defined(Q_CC_BOR)
+#  define Q_TEMPLATEDLL
 #  define Q_NO_DECLARED_NOT_DEFINED
-#else
-#  if defined(Q_OS_LINUX) && defined(Q_CC_BOR)
-#    define Q_TEMPLATEDLL
-#    define Q_NO_DECLARED_NOT_DEFINED
-#  endif
-#  undef QT_MAKEDLL /* ignore these for other platforms */
-#  undef QT_DLL
 #endif
+#undef QT_MAKEDLL /* ignore these for other platforms */
+#undef QT_DLL
 
 #if !defined(Q_CORE_EXPORT)
 #  if defined(QT_SHARED)
@@ -1512,11 +1231,7 @@ class QDataStream;
    for Qt's internal unit tests. If you want slower loading times and more
    symbols that can vanish from version to version, feel free to define QT_BUILD_INTERNAL.
 */
-#if defined(QT_BUILD_INTERNAL) && defined(Q_OS_WIN) && defined(QT_MAKEDLL)
-#    define Q_AUTOTEST_EXPORT Q_DECL_EXPORT
-#elif defined(QT_BUILD_INTERNAL) && defined(Q_OS_WIN) && defined(QT_DLL)
-#    define Q_AUTOTEST_EXPORT Q_DECL_IMPORT
-#elif defined(QT_BUILD_INTERNAL) && !defined(Q_OS_WIN) && defined(QT_SHARED)
+#if defined(QT_BUILD_INTERNAL) && defined(QT_SHARED)
 #    define Q_AUTOTEST_EXPORT Q_DECL_EXPORT
 #else
 #    define Q_AUTOTEST_EXPORT

@@ -89,7 +89,6 @@ public:
     QString baseName() const;
     QString completeBaseName() const;
     QString suffix() const;
-    QString bundleName() const;
     QString completeSuffix() const;
 
     QString path() const;

@@ -68,20 +68,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef Q_OS_WIN
-static QString driveSpec(const QString &path)
-{
-    if (path.size() < 2)
-        return QString();
-    char c = path.at(0).toAscii();
-    if (c < 'a' && c > 'z' && c < 'A' && c > 'Z')
-        return QString();
-    if (path.at(1).toAscii() != ':')
-        return QString();
-    return path.mid(0, 2);
-}
-#endif
-
 #ifdef QT_BUILD_CORE_LIB
 struct QCoreGlobalData {
     QMap<QString, QStringList> dirSearchPaths;
@@ -166,13 +152,8 @@ inline QStringList QDirPrivate::splitFilters(const QString &nameFilter, QChar se
 inline void QDirPrivate::setPath(const QString &path)
 {
     QString p = QDir::fromNativeSeparators(path);
-    if (p.endsWith(QLatin1Char('/'))
-            && p.length() > 1
-#if defined(Q_OS_WIN)
-        && (!(p.length() == 3 && p.at(1).unicode() == ':' && p.at(0).isLetter()))
-#endif
-    ) {
-            p.truncate(p.length() - 1);
+    if (p.endsWith(QLatin1Char('/')) && p.length() > 1) {
+        p.truncate(p.length() - 1);
     }
 
     dirEntry = QFileSystemEntry(p, QFileSystemEntry::FromInternalPath());
@@ -722,42 +703,17 @@ QString QDir::relativeFilePath(const QString &fileName) const
     if (isRelativePath(file) || isRelativePath(dir))
         return file;
 
-#ifdef Q_OS_WIN
-    QString dirDrive = driveSpec(dir);
-    QString fileDrive = driveSpec(file);
-
-    bool fileDriveMissing = false;
-    if (fileDrive.isEmpty()) {
-        fileDrive = dirDrive;
-        fileDriveMissing = true;
-    }
-
-    if (fileDrive.toLower() != dirDrive.toLower()
-        || (file.startsWith(QLatin1String("//"))
-        && !dir.startsWith(QLatin1String("//"))))
+    if (file.startsWith(QLatin1String("//")) && !dir.startsWith(QLatin1String("//")))
         return file;
-
-    dir.remove(0, dirDrive.size());
-    if (!fileDriveMissing)
-        file.remove(0, fileDrive.size());
-#else
-    if (file.startsWith(QLatin1String("//")) 
-        && !dir.startsWith(QLatin1String("//")))
-        return file;
-#endif
 
     QString result;
     QStringList dirElts = dir.split(QLatin1Char('/'), QString::SkipEmptyParts);
     QStringList fileElts = file.split(QLatin1Char('/'), QString::SkipEmptyParts);
 
     int i = 0;
-    while (i < dirElts.size() && i < fileElts.size() &&
-#if defined(Q_OS_WIN)
-           dirElts.at(i).toLower() == fileElts.at(i).toLower())
-#else
-           dirElts.at(i) == fileElts.at(i))
-#endif
+    while (i < dirElts.size() && i < fileElts.size() && dirElts.at(i) == fileElts.at(i)) {
         ++i;
+    }
 
     for (int j = 0; j < dirElts.size() - i; ++j)
         result += QLatin1String("../");
@@ -1980,10 +1936,6 @@ QString QDir::cleanPath(const QString &path)
     for (int i = 0, last = -1, iwrite = 0; i < len; ++i) {
         if (p[i] == QLatin1Char('/')) {
             while (i+1 < len && p[i+1] == QLatin1Char('/')) {
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE) //allow unc paths
-                if (!i)
-                    break;
-#endif
                 i++;
             }
             bool eaten = false;
@@ -2040,11 +1992,7 @@ QString QDir::cleanPath(const QString &path)
                     levels++;
                 }
             } else if (last != -1 && iwrite - last == 1) {
-#if defined(Q_OS_WIN)
-                eaten = (iwrite > 2);
-#else
                 eaten = true;
-#endif
                 last = -1;
             } else if (last != -1 && i == len-1) {
                 eaten = true;
@@ -2075,10 +2023,7 @@ QString QDir::cleanPath(const QString &path)
     QString ret = (used == len ? name : QString(out, used));
     // Strip away last slash except for root directories
     if (ret.length() > 1 && ret.endsWith(QLatin1Char('/'))) {
-#if defined (Q_OS_WIN)
-        if (!(ret.length() == 3 && ret.at(1) == QLatin1Char(':')))
-#endif
-            ret.chop(1);
+        ret.chop(1);
     }
 
     return ret;

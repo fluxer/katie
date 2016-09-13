@@ -144,7 +144,7 @@ QT_BEGIN_NAMESPACE
     \endtable
 
     \table
-    \header \li Path type \li Blackberry \li Linux (including Android)
+    \header \li Path type \li Linux (including Android)
     \row \li DesktopLocation
          \li "<APPROOT>/data"
          \li "~/Desktop"
@@ -307,9 +307,6 @@ static QStringList executableExtensions()
 static QString checkExecutable(const QString &path)
 {
    const QFileInfo info(path);
-   if (info.isBundle()) {
-      return info.bundleName();
-   }
    if (info.isFile() && info.isExecutable()) {
       return QDir::cleanPath(path);
    }

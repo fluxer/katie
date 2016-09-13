@@ -48,17 +48,8 @@
 #include "qdatetime.h"
 #include "qregexp.h"
 #include "qdebug.h"
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-#include <qt_windows.h>
-#endif
-#ifndef Q_WS_WIN
-#include <locale.h>
-#endif
 
 #include <time.h>
-#if defined(Q_OS_WINCE)
-#include "qfunctions_wince.h"
-#endif
 
 //#define QDATETIMEPARSER_DEBUG
 #if defined (QDATETIMEPARSER_DEBUG) && !defined(QT_NO_DEBUG_STREAM)
@@ -68,11 +59,6 @@
 #  define QDTPDEBUG if (false) qDebug()
 #  define QDTPDEBUGN if (false) qDebug
 #endif
-
-#if defined(Q_WS_MAC)
-#include <qcore_mac_p.h>
-#endif
-
 
 QT_BEGIN_NAMESPACE
 
@@ -1559,9 +1545,6 @@ QString QTime::toString(const QString& format) const
 
 bool QTime::setHMS(int h, int m, int s, int ms)
 {
-#if defined(Q_OS_WINCE)
-    startTick = NullTime;
-#endif
     if (!isValid(h,m,s,ms)) {
         mds = NullTime;                // make this invalid
         return false;
@@ -1626,10 +1609,6 @@ QTime QTime::addMSecs(int ms) const
     } else {
         t.mds = (ds() + ms) % MSECS_PER_DAY;
     }
-#if defined(Q_OS_WINCE)
-    if (startTick > NullTime)
-        t.startTick = (startTick + ms) % MSECS_PER_DAY;
-#endif
     return t;
 }
 
@@ -1647,13 +1626,7 @@ QTime QTime::addMSecs(int ms) const
 
 int QTime::msecsTo(const QTime &t) const
 {
-#if defined(Q_OS_WINCE)
-    // GetLocalTime() for Windows CE has no milliseconds resolution
-    if (t.startTick > NullTime && startTick > NullTime)
-        return t.startTick - startTick;
-    else
-#endif
-        return t.ds() - ds();
+    return t.ds() - ds();
 }
 
 
@@ -2855,68 +2828,6 @@ static inline uint msecsFromDecomposed(int hour, int minute, int sec, int msec =
     return MSECS_PER_HOUR * hour + MSECS_PER_MIN * minute + 1000 * sec + msec;
 }
 
-#if defined(Q_OS_WIN)
-QDate QDate::currentDate()
-{
-    QDate d;
-    SYSTEMTIME st;
-    memset(&st, 0, sizeof(SYSTEMTIME));
-    GetLocalTime(&st);
-    d.jd = julianDayFromDate(st.wYear, st.wMonth, st.wDay);
-    return d;
-}
-
-QTime QTime::currentTime()
-{
-    QTime ct;
-    SYSTEMTIME st;
-    memset(&st, 0, sizeof(SYSTEMTIME));
-    GetLocalTime(&st);
-    ct.mds = msecsFromDecomposed(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
-#if defined(Q_OS_WINCE)
-    ct.startTick = GetTickCount() % MSECS_PER_DAY;
-#endif
-    return ct;
-}
-
-QDateTime QDateTime::currentDateTime()
-{
-    QDate d;
-    QTime t;
-    SYSTEMTIME st;
-    memset(&st, 0, sizeof(SYSTEMTIME));
-    GetLocalTime(&st);
-    d.jd = julianDayFromDate(st.wYear, st.wMonth, st.wDay);
-    t.mds = msecsFromDecomposed(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
-    return QDateTime(d, t);
-}
-
-QDateTime QDateTime::currentDateTimeUtc()
-{
-    QDate d;
-    QTime t;
-    SYSTEMTIME st;
-    memset(&st, 0, sizeof(SYSTEMTIME));
-    GetSystemTime(&st);
-    d.jd = julianDayFromDate(st.wYear, st.wMonth, st.wDay);
-    t.mds = msecsFromDecomposed(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds);
-    return QDateTime(d, t, Qt::UTC);
-}
-
-qint64 QDateTime::currentMSecsSinceEpoch()
-{
-    QDate d;
-    QTime t;
-    SYSTEMTIME st;
-    memset(&st, 0, sizeof(SYSTEMTIME));
-    GetSystemTime(&st);
-
-    return msecsFromDecomposed(st.wHour, st.wMinute, st.wSecond, st.wMilliseconds) +
-            qint64(julianDayFromGregorianDate(st.wYear, st.wMonth, st.wDay)
-                   - julianDayFromGregorianDate(1970, 1, 1)) * Q_INT64_C(86400000);
-}
-
-#elif defined(Q_OS_UNIX)
 QDate QDate::currentDate()
 {
     QDate d;
@@ -3022,10 +2933,6 @@ qint64 QDateTime::currentMSecsSinceEpoch()
     gettimeofday(&tv, 0);
     return qint64(tv.tv_sec) * Q_INT64_C(1000) + tv.tv_usec / 1000;
 }
-
-#else
-#error "What system is this?"
-#endif
 
 /*!
   \since 4.2
@@ -3810,11 +3717,7 @@ static QString fmtDateTime(const QString& f, const QTime* dt, const QDate* dd)
 }
 #endif // QT_NO_DATESTRING
 
-#ifdef Q_OS_WIN
-static const int LowerYear = 1980;
-#else
 static const int LowerYear = 1970;
-#endif
 static const int UpperYear = 2037;
 
 static QDate adjustDate(QDate date)
@@ -3846,34 +3749,14 @@ static QDateTimePrivate::Spec utcToLocal(QDate &date, QTime &time)
 
     // won't overflow because of fakeDate
     time_t secsSince1Jan1970UTC = toMSecsSinceEpoch_helper(fakeDate.toJulianDay(), QTime().msecsTo(time)) / 1000;
-    tm *brokenDown = 0;
 
-#if defined(Q_OS_WINCE)
-    tm res;
-    FILETIME utcTime = time_tToFt(secsSince1Jan1970UTC);
-    FILETIME resultTime;
-    FileTimeToLocalFileTime(&utcTime , &resultTime);
-    SYSTEMTIME sysTime;
-    FileTimeToSystemTime(&resultTime , &sysTime);
-
-    res.tm_sec = sysTime.wSecond;
-    res.tm_min = sysTime.wMinute;
-    res.tm_hour = sysTime.wHour;
-    res.tm_mday = sysTime.wDay;
-    res.tm_mon = sysTime.wMonth - 1;
-    res.tm_year = sysTime.wYear - 1900;
-    brokenDown = &res;
-#elif !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of localtime() where available
     tzset();
     tm res;
-    brokenDown = localtime_r(&secsSince1Jan1970UTC, &res);
-#elif defined(_MSC_VER) && _MSC_VER >= 1400
-    tm res;
-    if (!_localtime64_s(&res, &secsSince1Jan1970UTC))
-        brokenDown = &res;
+    tm *brokenDown = localtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    brokenDown = localtime(&secsSince1Jan1970UTC);
+    tm *brokenDown = localtime(&secsSince1Jan1970UTC);
 #endif
     if (!brokenDown) {
         date = QDate(1970, 1, 1);
@@ -3908,51 +3791,13 @@ static void localToUtc(QDate &date, QTime &time, int isdst)
     localTM.tm_mon = fakeDate.month() - 1;
     localTM.tm_year = fakeDate.year() - 1900;
     localTM.tm_isdst = isdst;
-#if defined(Q_OS_WINCE)
-    time_t secsSince1Jan1970UTC = (toMSecsSinceEpoch_helper(fakeDate.toJulianDay(), QTime().msecsTo(time)) / 1000);
-#else
-#if defined(Q_OS_WIN)
-    _tzset();
-#endif
     time_t secsSince1Jan1970UTC = mktime(&localTM);
-#ifdef Q_OS_QNX
-    //mktime sometimes fails on QNX. Following workaround converts the date and time then manually
-    if (secsSince1Jan1970UTC == (time_t)-1) {
-        QDateTime tempTime = QDateTime(date, time, Qt::UTC);;
-        tempTime = tempTime.addMSecs(timezone * 1000);
-        date = tempTime.date();
-        time = tempTime.time();
-        return;
-    }
-#endif
-#endif
-    tm *brokenDown = 0;
-#if defined(Q_OS_WINCE)
-    tm res;
-    FILETIME localTime = time_tToFt(secsSince1Jan1970UTC);
-    SYSTEMTIME sysTime;
-    FileTimeToSystemTime(&localTime, &sysTime);
-    FILETIME resultTime;
-    LocalFileTimeToFileTime(&localTime , &resultTime);
-    FileTimeToSystemTime(&resultTime , &sysTime);
-    res.tm_sec = sysTime.wSecond;
-    res.tm_min = sysTime.wMinute;
-    res.tm_hour = sysTime.wHour;
-    res.tm_mday = sysTime.wDay;
-    res.tm_mon = sysTime.wMonth - 1;
-    res.tm_year = sysTime.wYear - 1900;
-    res.tm_isdst = isdst;
-    brokenDown = &res;
-#elif !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
+#if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of gmtime() where available
     tm res;
-    brokenDown = gmtime_r(&secsSince1Jan1970UTC, &res);
-#elif defined(_MSC_VER) && _MSC_VER >= 1400
-    tm res;
-    if (!_gmtime64_s(&res, &secsSince1Jan1970UTC))
-        brokenDown = &res;
+    tm *brokenDown = gmtime_r(&secsSince1Jan1970UTC, &res);
 #else
-    brokenDown = gmtime(&secsSince1Jan1970UTC);
+    tm *brokenDown = gmtime(&secsSince1Jan1970UTC);
 #endif // !QT_NO_THREAD && _POSIX_THREAD_SAFE_FUNCTIONS
     if (!brokenDown) {
         date = QDate(1970, 1, 1);

@@ -45,14 +45,10 @@
 
 #include <qcoreapplication_p.h>
 
-#if defined(Q_OS_BLACKBERRY)
-#  include <qeventdispatcher_blackberry_p.h>
-#else
-#  if !defined(QT_NO_GLIB)
-#    include "../kernel/qeventdispatcher_glib_p.h"
-#  endif
-#  include <qeventdispatcher_unix_p.h>
+#if !defined(QT_NO_GLIB)
+#  include "../kernel/qeventdispatcher_glib_p.h"
 #endif
+#include <qeventdispatcher_unix_p.h>
 
 #include "qthreadstorage.h"
 
@@ -66,32 +62,9 @@
 #ifdef Q_OS_BSD4
 #include <sys/sysctl.h>
 #endif
-#ifdef Q_OS_VXWORKS
-#  if (_WRS_VXWORKS_MAJOR > 6) || ((_WRS_VXWORKS_MAJOR == 6) && (_WRS_VXWORKS_MINOR >= 6))
-#    include <vxCpuLib.h>
-#    include <cpuset.h>
-#    define QT_VXWORKS_HAS_CPUSET
-#  endif
-#endif
 
 #ifdef Q_OS_HPUX
 #include <sys/pstat.h>
-#endif
-
-#if defined(Q_OS_MAC)
-# ifdef qDebug
-#   define old_qDebug qDebug
-#   undef qDebug
-# endif
-#if !defined(Q_OS_IOS)
-# include <CoreServices/CoreServices.h>
-#endif // !defined(Q_OS_IOS)
-
-# ifdef old_qDebug
-#   undef qDebug
-#   define qDebug QT_NO_QDEBUG_MACRO
-#   undef old_qDebug
-# endif
 #endif
 
 #if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
@@ -103,7 +76,7 @@
 # define SCHED_IDLE    5
 #endif
 
-#if defined(Q_OS_DARWIN) || !defined(Q_OS_OPENBSD) && defined(_POSIX_THREAD_PRIORITY_SCHEDULING) && (_POSIX_THREAD_PRIORITY_SCHEDULING-0 >= 0)
+#if !defined(Q_OS_OPENBSD) && defined(_POSIX_THREAD_PRIORITY_SCHEDULING) && (_POSIX_THREAD_PRIORITY_SCHEDULING-0 >= 0)
 #define QT_HAS_THREAD_PRIORITY_SCHEDULING
 #endif
 
@@ -275,9 +248,6 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
 {
     QMutexLocker l(&data->postEventList.mutex);
 
-#if defined(Q_OS_BLACKBERRY)
-    data->eventDispatcher = new QEventDispatcherBlackberry;
-#else
 #if !defined(QT_NO_GLIB)
     if (qgetenv("QT_NO_GLIB").isEmpty()
         && qgetenv("QT_NO_THREADED_GLIB").isEmpty()
@@ -286,7 +256,6 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
     else
 #endif
     data->eventDispatcher = new QEventDispatcherUNIX;
-#endif
 
     l.unlock();
     data->eventDispatcher->startingUp();

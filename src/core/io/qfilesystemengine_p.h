@@ -76,28 +76,10 @@ public:
     static QString resolveGroupName(uint groupId);
 #endif
 
-#if defined(Q_OS_MAC)
-    static QString bundleName(const QFileSystemEntry &entry);
-#else
-    static QString bundleName(const QFileSystemEntry &entry) { Q_UNUSED(entry) return QString(); }
-#endif
-
     static bool fillMetaData(const QFileSystemEntry &entry, QFileSystemMetaData &data,
                              QFileSystemMetaData::MetaDataFlags what);
 #if defined(Q_OS_UNIX)
     static bool fillMetaData(int fd, QFileSystemMetaData &data); // what = PosixStatFlags
-#endif
-#if defined(Q_OS_WIN)
-
-    static bool uncListSharesOnServer(const QString &server, QStringList *list); //Used also by QFSFileEngineIterator::hasNext()
-    static bool fillMetaData(int fd, QFileSystemMetaData &data,
-                             QFileSystemMetaData::MetaDataFlags what);
-    static bool fillMetaData(HANDLE fHandle, QFileSystemMetaData &data,
-                             QFileSystemMetaData::MetaDataFlags what);
-    static bool fillPermissions(const QFileSystemEntry &entry, QFileSystemMetaData &data,
-                                QFileSystemMetaData::MetaDataFlags what);
-    static QString owner(const QFileSystemEntry &entry, QAbstractFileEngine::FileOwner own);
-    static QString nativeAbsoluteFilePath(const QString &path);
 #endif
     //homePath, rootPath and tempPath shall return clean paths
     static QString homePath();

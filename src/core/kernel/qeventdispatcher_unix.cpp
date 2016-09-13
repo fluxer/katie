@@ -109,48 +109,12 @@ QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 {
     extern Qt::HANDLE qt_application_thread_id;
     mainThread = (QThread::currentThreadId() == qt_application_thread_id);
-    bool pipefail = false;
 
     // initialize the common parts of the event loop
-#if defined(Q_OS_NACL) || defined (Q_OS_BLACKBERRY)
-   // do nothing.
-#elif defined(Q_OS_INTEGRITY)
-    // INTEGRITY doesn't like a "select" on pipes, so use socketpair instead
-    if (socketpair(AF_INET, SOCK_STREAM, 0, thread_pipe) == -1) {
-        perror("QEventDispatcherUNIXPrivate(): Unable to create socket pair");
-        pipefail = true;
-    } else {
-        initThreadPipeFD(thread_pipe[0]);
-        initThreadPipeFD(thread_pipe[1]);
-    }
-#elif defined(Q_OS_VXWORKS)
-    char name[20];
-    qsnprintf(name, sizeof(name), "/pipe/qt_%08x", int(taskIdSelf()));
-
-    // make sure there is no pipe with this name
-    pipeDevDelete(name, true);
-    // create the pipe
-    if (pipeDevCreate(name, 128 /*maxMsg*/, 1 /*maxLength*/) != OK) {
-        perror("QEventDispatcherUNIXPrivate(): Unable to create thread pipe device");
-        pipefail = true;
-    } else {
-        if ((thread_pipe[0] = open(name, O_RDWR, 0)) < 0) {
-            perror("QEventDispatcherUNIXPrivate(): Unable to create thread pipe");
-            pipefail = true;
-        } else {
-            initThreadPipeFD(thread_pipe[0]);
-            thread_pipe[1] = thread_pipe[0];
-        }
-    }
-#else
     if (qt_safe_pipe(thread_pipe, O_NONBLOCK) == -1) {
         perror("QEventDispatcherUNIXPrivate(): Unable to create thread pipe");
-        pipefail = true;
-    }
-#endif
-
-    if (pipefail)
         qFatal("QEventDispatcherUNIXPrivate(): Can not continue without a thread pipe");
+    }
 
     sn_highest = -1;
 
@@ -159,15 +123,8 @@ QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 
 QEventDispatcherUNIXPrivate::~QEventDispatcherUNIXPrivate()
 {
-#if defined(Q_OS_NACL) || defined (Q_OS_BLACKBERRY)
+#if defined(Q_OS_NACL)
    // do nothing.
-#elif defined(Q_OS_VXWORKS)
-    close(thread_pipe[0]);
-
-    char name[20];
-    qsnprintf(name, sizeof(name), "/pipe/qt_%08x", int(taskIdSelf()));
-
-    pipeDevDelete(name, true);
 #else
     // cleanup the common parts of the event loop
     close(thread_pipe[0]);

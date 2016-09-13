@@ -1382,27 +1382,6 @@ void QNetworkProxyFactory::setApplicationProxyFactory(QNetworkProxyFactory *fact
     such libraries exist. If they don't, this function will just return a
     QNetworkProxy of type QNetworkProxy::NoProxy.
 
-    On Windows, this function will use the WinHTTP DLL functions. Despite
-    its name, Microsoft suggests using it for all applications that
-    require network connections, not just HTTP. This will respect the
-    proxy settings set on the registry with the proxycfg.exe tool. If
-    those settings are not found, this function will attempt to obtain
-    Internet Explorer's settings and use them.
-
-    On MacOS X, this function will obtain the proxy settings using the
-    SystemConfiguration framework from Apple. It will apply the FTP,
-    HTTP and HTTPS proxy configurations for queries that contain the
-    protocol tag "ftp", "http" and "https", respectively. If the SOCKS
-    proxy is enabled in that configuration, this function will use the
-    SOCKS server for all queries. If SOCKS isn't enabled, it will use
-    the HTTPS proxy for all TcpSocket and UrlRequest queries.
-
-    On BlackBerry, this function obtains proxy settings for the default
-    configuration using system configuration. The type will be set based on
-    protocol tag "http", "https", "ftp", respectively. By default, it
-    assumes http type. Proxy username and password are also set during
-    the query using system configuration.
-
     On other systems, this function will pick up proxy settings from
     the "http_proxy" environment variable. This variable must be a URL
     using one of the following schemes: "http", "socks5" or "socks5h".
@@ -1412,18 +1391,6 @@ void QNetworkProxyFactory::setApplicationProxyFactory(QNetworkProxyFactory *fact
     These are the limitations for the current version of this
     function. Future versions of Qt may lift some of the limitations
     listed here.
-
-    \list
-    \o On MacOS X, this function will ignore the Proxy Auto Configuration
-    settings, since it cannot execute the associated ECMAScript code.
-
-    \o On Windows platforms, this function may take several seconds to
-    execute depending on the configuration of the user's system.
-
-    \li On BlackBerry, only UrlRequest and TcpSocket queries are supported. SOCKS is
-    not supported. The proxy credentials are only retrieved for the
-    default configuration.
-    \endlist
 */
 
 /*!

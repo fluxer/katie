@@ -2305,13 +2305,12 @@ bool QSslSocketPrivate::rootCertOnDemandLoadingSupported()
 */
 QList<QByteArray> QSslSocketPrivate::unixRootCertDirectories()
 {
-    return QList<QByteArray>() <<  "/etc/ssl/certs/" // (K)ubuntu, OpenSUSE, Mandriva, MeeGo ...
+    return QList<QByteArray>() <<  "/etc/ssl/certs/" // (K)ubuntu, OpenSUSE, Mandriva ...
                                << "/usr/lib/ssl/certs/" // Gentoo, Mandrake
                                << "/usr/share/ssl/" // Centos, Redhat, SuSE
                                << "/usr/local/ssl/" // Normal OpenSSL Tarball
                                << "/var/ssl/certs/" // AIX
                                << "/usr/local/ssl/certs/" // Solaris
-                               << "/etc/openssl/certs/" // BlackBerry
                                << "/opt/openssl/certs/"; // HP-UX
 }
 

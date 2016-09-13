@@ -293,11 +293,7 @@ QCommandLineOption QCommandLineParser::addVersionOption()
 QCommandLineOption QCommandLineParser::addHelpOption()
 {
    d->builtinHelpOption = true;
-   QCommandLineOption opt(QStringList()
-#ifdef Q_OS_WIN
-                          << QLatin1String("?")
-#endif
-                          << QLatin1String("h")
+   QCommandLineOption opt(QStringList() << QLatin1String("h")
                           << QLatin1String("help"), tr("Displays this help."));
    addOption(opt);
    return opt;

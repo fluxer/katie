@@ -262,7 +262,6 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
     link to. (This will be empty if this file is not a link.)
     \value CanonicalName Often very similar to LinkName. Will return the true path to the file.
     \value CanonicalPathName Same as CanonicalName, excluding the base name.
-    \value BundleName Returns the name of the bundle implies BundleType is set.
 
     \omitvalue NFileNames
 

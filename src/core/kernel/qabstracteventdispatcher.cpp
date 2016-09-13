@@ -463,25 +463,16 @@ void QAbstractEventDispatcher::closingDown()
     \snippet doc/src/snippets/code/src_corelib_kernel_qabstracteventdispatcher.cpp 0
 
     Note that the type of the \a message is platform dependent. The
-    following table shows the \a {message}'s type on Windows, Mac, X11
-    and BlackBerry. You can do a static cast to these types.
+    following table shows the \a {message}'s type on UNIX. You can
+    do a static cast to these types.
 
     \table
         \header
             \o Platform
             \o type
         \row
-            \o Windows
-            \o MSG
-        \row
             \o X11
             \o XEvent
-        \row
-            \o Mac
-            \o NSEvent
-        \row
-            \o BlackBerry
-            \o bps_event_t
     \endtable
 
     

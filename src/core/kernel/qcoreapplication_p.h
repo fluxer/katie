@@ -82,20 +82,14 @@ public:
 
     virtual void createEventDispatcher();
     static void removePostedEvent(QEvent *);
-#ifdef Q_OS_WIN
-    static void removePostedTimerEvent(QObject *object, int timerId);
-#endif
-
-#ifdef Q_OS_MAC
-    static QString macMenuBarName();
-#endif
 
     static QThread *theMainThread;
-    static QThread *mainThread();
+    static inline QThread *mainThread()
+        { Q_ASSERT(theMainThread != 0); return theMainThread; }
     static bool checkInstance(const char *method);
     static void sendPostedEvents(QObject *receiver, int event_type, QThreadData *data);
 
-#if !defined (QT_NO_DEBUG) || defined (QT_MAC_FRAMEWORK_BUILD)
+#if !defined (QT_NO_DEBUG)
     void checkReceiverThread(QObject *receiver);
 #endif
     int &argc;
@@ -122,7 +116,8 @@ public:
     static bool is_app_closing;
 
     static uint attribs;
-    static inline bool testAttribute(uint flag) { return attribs & (1 << flag); }
+    static inline bool testAttribute(uint flag)
+        { return attribs & (1 << flag); }
     static int app_compile_version;
 #ifndef QT_NO_SETTINGS
     static QSettings *trolltechConf();

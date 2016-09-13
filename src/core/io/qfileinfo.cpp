@@ -71,9 +71,6 @@ QString QFileInfoPrivate::getFileName(QAbstractFileEngine::FileName name) const
             case QAbstractFileEngine::LinkName:
                 ret = QFileSystemEngine::getLinkTarget(fileEntry, metaData).filePath();
                 break;
-            case QAbstractFileEngine::BundleName:
-                ret = QFileSystemEngine::bundleName(fileEntry);
-                break;
             case QAbstractFileEngine::AbsoluteName:
             case QAbstractFileEngine::AbsolutePathName: {
                 QFileSystemEntry entry = QFileSystemEngine::absoluteName(fileEntry);
@@ -706,26 +703,6 @@ QString QFileInfo::fileName() const
     if (d->isDefaultConstructed)
         return QLatin1String("");
     return d->fileEntry.fileName();
-}
-
-/*!
-    \since 4.3
-    Returns the name of the bundle.
-
-    On Mac OS X this returns the proper localized name for a bundle if the
-    path isBundle(). On all other platforms an empty QString is returned.
-
-    Example:
-    \snippet doc/src/snippets/code/src_corelib_io_qfileinfo.cpp 4
-
-    \sa isBundle(), filePath(), baseName(), extension()
-*/
-QString QFileInfo::bundleName() const
-{
-    Q_D(const QFileInfo);
-    if (d->isDefaultConstructed)
-        return QLatin1String("");
-    return d->getFileName(QAbstractFileEngine::BundleName);
 }
 
 /*!

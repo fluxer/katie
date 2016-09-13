@@ -59,10 +59,6 @@
 #include <QtCore/qmutex.h>
 #include <QtCore/qmap.h>
 
-#ifdef Q_OS_BLACKBERRY
-#include <bps/netstatus.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 typedef QExplicitlySharedDataPointer<QNetworkConfigurationPrivate> QNetworkConfigurationPrivatePointer;
@@ -74,9 +70,6 @@ public:
         type(QNetworkConfiguration::Invalid),
         purpose(QNetworkConfiguration::UnknownPurpose),
         bearerType(QNetworkConfiguration::BearerUnknown),
-#ifdef Q_OS_BLACKBERRY
-        oldIpStatus(NETSTATUS_IP_STATUS_ERROR_UNKNOWN),
-#endif
         isValid(false), roamingSupported(false)
     {}
     virtual ~QNetworkConfigurationPrivate()
@@ -101,10 +94,6 @@ public:
     QNetworkConfiguration::Type type;
     QNetworkConfiguration::Purpose purpose;
     QNetworkConfiguration::BearerType bearerType;
-
-#ifdef Q_OS_BLACKBERRY
-    netstatus_ip_status_t oldIpStatus;
-#endif
 
     bool isValid;
     bool roamingSupported;
