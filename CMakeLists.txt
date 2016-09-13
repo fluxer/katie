@@ -761,7 +761,6 @@ katie_generate_obsolete(qdesignerwidgetdatabaseinterface.h QtDesigner abstractwi
 katie_generate_obsolete(qstyleoptionviewitem.h QtGui qstyleoption.h)
 katie_generate_obsolete(qintvalidator.h QtGui qvalidator.h)
 katie_generate_obsolete(qtexttableformat.h QtGui qtextformat.h)
-katie_generate_obsolete(qmimesource.h QtGui qmime.h)
 katie_generate_obsolete(qstyleoptiongraphicsitem.h QtGui qstyleoption.h)
 katie_generate_obsolete(qaccessiblebridgefactoryinterface.h QtGui qaccessiblebridge.h)
 katie_generate_obsolete(qiconenginev2.h QtGui qiconengine.h)

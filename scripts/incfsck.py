@@ -199,7 +199,7 @@ incmap = {
         'QStyleOptionGraphicsItem': 'qstyleoption.h',
         'QTextBlock': 'qtextobject.h',
         'QTableWidgetItem': 'qtablewidget.h',
-        'QMimeSource': 'qmime.h',
+        'QMimeSource': 'qmimedata.h',
         'QDateEdit': 'qdatetimeedit.h',
         'QWizardPage': 'qwizard.h',
         'QRadialGradient': 'qbrush.h',
