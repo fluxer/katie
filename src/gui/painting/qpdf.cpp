@@ -1935,14 +1935,7 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
     if (!currentPage->fonts.contains(font->object_id))
         currentPage->fonts.append(font->object_id);
 
-    qreal size = ti.fontEngine->fontDef.pixelSize;
-#ifdef Q_WS_WIN
-    if (ti.fontEngine->type() == QFontEngine::Win) {
-        QFontEngineWin *fe = static_cast<QFontEngineWin *>(ti.fontEngine);
-        size = fe->tm.tmHeight;
-    }
-#endif
-
+    const qreal size = ti.fontEngine->fontDef.pixelSize;
     QVarLengthArray<glyph_t> glyphs;
     QVarLengthArray<QFixedPoint> positions;
     QTransform m = QTransform::fromTranslate(p.x(), p.y());
@@ -1950,8 +1943,8 @@ void QPdfBaseEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &t
                                      glyphs, positions);
     if (glyphs.size() == 0)
         return;
-    int synthesized = ti.fontEngine->synthesized();
-    qreal stretch = synthesized & QFontEngine::SynthesizedStretch ? ti.fontEngine->fontDef.stretch/100. : 1.;
+    const int synthesized = ti.fontEngine->synthesized();
+    const qreal stretch = synthesized & QFontEngine::SynthesizedStretch ? ti.fontEngine->fontDef.stretch/100. : 1.;
 
     *currentPage << "BT\n"
                  << "/F" << font->object_id << size << "Tf "

@@ -2492,9 +2492,6 @@ QString QTextEngine::elidedText(Qt::TextElideMode mode, const QFixed &width, int
                 ? static_cast<QFontEngineMulti *>(fe)->engine(0)
                 : fe;
 
-            if (feForEllipsis->type() == QFontEngine::Mac)
-                feForEllipsis = fe;
-
             // the lookup can be really slow when we use XLFD fonts
             if (feForEllipsis->type() != QFontEngine::XLFD
                 && feForEllipsis->canRender(&ellipsisChar, 1)) {

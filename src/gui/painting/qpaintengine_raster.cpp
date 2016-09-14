@@ -2946,26 +2946,12 @@ bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) 
     if (!state()->WxF)
         return false;
     const QTransform &m = state()->matrix;
-#if defined(Q_WS_WIN) && !defined(Q_WS_WINCE)
-    QFontEngine::Type fontEngineType = fontEngine->type();
-    if ((fontEngineType == QFontEngine::Win && !((QFontEngineWin *) fontEngine)->ttf && m.type() > QTransform::TxTranslate)
-        || (m.type() <= QTransform::TxTranslate
-            && (fontEngineType == QFontEngine::TestFontEngine
-                || fontEngineType == QFontEngine::Box))) {
-            return true;
-    }
-#endif
     return supportsTransformations(fontEngine->fontDef.pixelSize, m);
 }
 
 bool QRasterPaintEngine::supportsTransformations(qreal pixelSize, const QTransform &m) const
 {
-#if defined(Q_WS_MAC)
-    // Mac font engines don't support scaling and rotation
-    if (m.type() > QTransform::TxTranslate)
-#else
     if (m.type() >= QTransform::TxProject)
-#endif
         return true;
 
     if (pixelSize * pixelSize * qAbs(m.determinant()) >= 64 * 64)

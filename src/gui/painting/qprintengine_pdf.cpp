@@ -651,15 +651,9 @@ int QPdfEnginePrivate::addImage(const QImage &img, bool *bitmap, qint64 serial_n
 void QPdfEnginePrivate::drawTextItem(const QPointF &p, const QTextItemInt &ti)
 {
     if (ti.charFormat.isAnchor()) {
-        qreal size = ti.fontEngine->fontDef.pixelSize;
-#ifdef Q_WS_WIN
-        if (ti.fontEngine->type() == QFontEngine::Win) {
-            QFontEngineWin *fe = static_cast<QFontEngineWin *>(ti.fontEngine);
-            size = fe->tm.tmHeight;
-        }
-#endif
-        int synthesized = ti.fontEngine->synthesized();
-        qreal stretch = synthesized & QFontEngine::SynthesizedStretch ? ti.fontEngine->fontDef.stretch/100. : 1.;
+        const qreal size = ti.fontEngine->fontDef.pixelSize;
+        const int synthesized = ti.fontEngine->synthesized();
+        const qreal stretch = synthesized & QFontEngine::SynthesizedStretch ? ti.fontEngine->fontDef.stretch/100. : 1.;
 
         QTransform trans;
         // Build text rendering matrix (Trm). We need it to map the text area to user
