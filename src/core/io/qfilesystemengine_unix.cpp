@@ -209,23 +209,6 @@ QFileSystemEntry QFileSystemEngine::getLinkTarget(const QFileSystemEntry &link, 
             ret.chop(1);
         return QFileSystemEntry(ret);
     }
-#if defined(Q_OS_MAC)
-    {
-        FSRef fref;
-        if (FSPathMakeRef((const UInt8 *)QFile::encodeName(QDir::cleanPath(link.filePath())).data(), &fref, 0) == noErr) {
-            // TODO get the meta data info from the QFileSystemMetaData object
-            Boolean isAlias, isFolder;
-            if (FSResolveAliasFile(&fref, true, &isFolder, &isAlias) == noErr && isAlias) {
-                AliasHandle alias;
-                if (FSNewAlias(0, &fref, &alias) == noErr && alias) {
-                    QCFString cfstr;
-                    if (FSCopyAliasInfo(alias, 0, 0, &cfstr, 0, 0) == noErr)
-                        return QFileSystemEntry(QCFString::toQString(cfstr));
-                }
-            }
-        }
-    }
-#endif
     return QFileSystemEntry();
 }
 
@@ -235,40 +218,15 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
     if (entry.isEmpty() || entry.isRoot())
         return entry;
 
-#if !defined(Q_OS_MAC) && !defined(Q_OS_QNX) && _POSIX_VERSION < 200809L
+#if _POSIX_VERSION < 200809L
     // realpath(X,0) is not supported
     Q_UNUSED(data);
     return QFileSystemEntry(slowCanonicalized(absoluteName(entry).filePath()));
 #else
     char *ret = 0;
-# if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-    // When using -mmacosx-version-min=10.4, we get the legacy realpath implementation,
-    // which does not work properly with the realpath(X,0) form. See QTBUG-28282.
-    if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_6) {
-        ret = (char*)malloc(PATH_MAX + 1);
-        if (ret && realpath(entry.nativeFilePath().constData(), (char*)ret) == 0) {
-            const int savedErrno = errno; // errno is checked below, and free() might change it
-            free(ret);
-            errno = savedErrno;
-            ret = 0;
-        }
-    } else {
-        // on 10.5 we can use FSRef to resolve the file path.
-        QString path = QDir::cleanPath(entry.filePath());
-        FSRef fsref;
-        if (FSPathMakeRef((const UInt8 *)path.toUtf8().data(), &fsref, 0) == noErr) {
-            CFURLRef urlref = CFURLCreateFromFSRef(NULL, &fsref);
-            CFStringRef canonicalPath = CFURLCopyFileSystemPath(urlref, kCFURLPOSIXPathStyle);
-            QString ret = QCFString::toQString(canonicalPath);
-            CFRelease(canonicalPath);
-            CFRelease(urlref);
-            return QFileSystemEntry(ret);
-        }
-    }
-# else
-#  if _POSIX_VERSION >= 200801L
+#if _POSIX_VERSION >= 200801L
     ret = realpath(entry.nativeFilePath().constData(), (char*)0);
-#  else
+#else
     ret = (char*)malloc(PATH_MAX + 1);
     if (realpath(entry.nativeFilePath().constData(), (char*)ret) == 0) {
         const int savedErrno = errno; // errno is checked below, and free() might change it
@@ -276,8 +234,7 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
         errno = savedErrno;
         ret = 0;
     }
-#  endif
-# endif
+#endif
     if (ret) {
         data.knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
         data.entryFlags |= QFileSystemMetaData::ExistsAttribute;
@@ -450,23 +407,6 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
             | QFileSystemMetaData::ExistsAttribute;
     }
 
-#if defined(Q_OS_MAC)
-    if (what & QFileSystemMetaData::AliasType)
-    {
-        if (entryExists) {
-            FSRef fref;
-            if (FSPathMakeRef((const UInt8 *)nativeFilePath, &fref, NULL) == noErr) {
-                Boolean isAlias, isFolder;
-                if (FSIsAliasFile(&fref, &isAlias, &isFolder) == noErr) {
-                    if (isAlias)
-                        data.entryFlags |= QFileSystemMetaData::AliasType;
-                }
-            }
-        }
-        data.knownFlagsMask |= QFileSystemMetaData::AliasType;
-    }
-#endif
-
     if (what & QFileSystemMetaData::UserPermissions) {
         // calculate user permissions
 
@@ -495,14 +435,6 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
             data.entryFlags |= QFileSystemMetaData::HiddenAttribute;
         data.knownFlagsMask |= QFileSystemMetaData::HiddenAttribute;
     }
-
-#if defined(Q_OS_MAC)
-    if (what & QFileSystemMetaData::BundleType) {
-        if (entryExists && isPackage(data, entry))
-            data.entryFlags |= QFileSystemMetaData::BundleType;
-        data.knownFlagsMask |= QFileSystemMetaData::BundleType;
-    }
-#endif
 
     return data.hasFlags(what);
 }

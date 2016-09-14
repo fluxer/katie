@@ -514,11 +514,9 @@ QAbstractFileEngine::FileFlags QFSFileEngine::fileFlags(FileFlags type) const
                 & QFileSystemMetaData::Permissions;
 
         if (type & TypesMask)
-            queryFlags |= QFileSystemMetaData::AliasType
-                    | QFileSystemMetaData::LinkType
+            queryFlags |= QFileSystemMetaData::LinkType
                     | QFileSystemMetaData::FileType
-                    | QFileSystemMetaData::DirectoryType
-                    | QFileSystemMetaData::BundleType;
+                    | QFileSystemMetaData::DirectoryType;
 
         if (type & FlagsMask)
             queryFlags |= QFileSystemMetaData::HiddenAttribute
@@ -536,19 +534,13 @@ QAbstractFileEngine::FileFlags QFSFileEngine::fileFlags(FileFlags type) const
         ret |= FileFlags(uint(d->metaData.permissions()));
 
     if (type & TypesMask) {
-        if (d->metaData.isAlias()) {
+        if ((type & LinkType) && d->metaData.isLink())
             ret |= LinkType;
-        } else {
-            if ((type & LinkType) && d->metaData.isLink())
-                ret |= LinkType;
-            if (exists) {
-                if (d->metaData.isFile()) {
-                    ret |= FileType;
-                } else if (d->metaData.isDirectory()) {
-                    ret |= DirectoryType;
-                    if ((type & BundleType) && d->metaData.isBundle())
-                        ret |= BundleType;
-                }
+        if (exists) {
+            if (d->metaData.isFile()) {
+                ret |= FileType;
+            } else if (d->metaData.isDirectory()) {
+                ret |= DirectoryType;
             }
         }
     }

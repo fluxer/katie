@@ -72,7 +72,6 @@ public:
         LinkType      = 0x10000,
         FileType      = 0x20000,
         DirectoryType = 0x40000,
-        BundleType    = 0x80000,
 
         //flags
         HiddenFlag     = 0x0100000,

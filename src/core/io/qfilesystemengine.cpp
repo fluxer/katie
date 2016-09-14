@@ -345,8 +345,6 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
         knownFlagsMask = QFileSystemMetaData::LinkType
             | QFileSystemMetaData::FileType
             | QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::BundleType
-            | QFileSystemMetaData::AliasType
             | QFileSystemMetaData::SequentialType
             | QFileSystemMetaData::ExistsAttribute;
 
@@ -364,7 +362,6 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
         knownFlagsMask = QFileSystemMetaData::LinkType
             | QFileSystemMetaData::FileType
             | QFileSystemMetaData::DirectoryType
-            | QFileSystemMetaData::BundleType
             | QFileSystemMetaData::SequentialType
             | QFileSystemMetaData::ExistsAttribute;
 

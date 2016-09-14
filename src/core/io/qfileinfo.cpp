@@ -123,8 +123,7 @@ QString QFileInfoPrivate::getFileOwner(QAbstractFileEngine::FileOwner own) const
 uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) const
 {
     Q_ASSERT(fileEngine); // should never be called when using the native FS
-    // We split the testing into tests for for LinkType, BundleType, PermsMask
-    // and the rest.
+    // We split the testing into tests for for LinkType, PermsMask and the rest.
     // Tests for file permissions on Windows can be slow, expecially on network
     // paths and NTFS drives.
     // In order to determine if a file is a symlink or not, we have to lstat().
@@ -140,7 +139,6 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
             req |= QAbstractFileEngine::FlagsMask;
             req |= QAbstractFileEngine::TypesMask;
             req &= (~QAbstractFileEngine::LinkType);
-            req &= (~QAbstractFileEngine::BundleType);
 
             cachedFlags |= CachedFileFlags;
         }
@@ -149,13 +147,6 @@ uint QFileInfoPrivate::getFileFlags(QAbstractFileEngine::FileFlags request) cons
             if (!getCachedFlag(CachedLinkTypeFlag)) {
                 req |= QAbstractFileEngine::LinkType;
                 cachedFlags |= CachedLinkTypeFlag;
-            }
-        }
-
-        if (request & QAbstractFileEngine::BundleType) {
-            if (!getCachedFlag(CachedBundleTypeFlag)) {
-                req |= QAbstractFileEngine::BundleType;
-                cachedFlags |= CachedBundleTypeFlag;
             }
         }
     }
@@ -905,7 +896,7 @@ bool QFileInfo::isHidden() const
     link to a file. Returns false if the
     object points to something which isn't a file, such as a directory.
 
-    \sa isDir(), isSymLink(), isBundle()
+    \sa isDir(), isSymLink()
 */
 bool QFileInfo::isFile() const
 {
@@ -924,7 +915,7 @@ bool QFileInfo::isFile() const
     Returns true if this object points to a directory or to a symbolic
     link to a directory; otherwise returns false.
 
-    \sa isFile(), isSymLink(), isBundle()
+    \sa isFile(), isSymLink()
 */
 bool QFileInfo::isDir() const
 {
@@ -937,27 +928,6 @@ bool QFileInfo::isDir() const
         return d->metaData.isDirectory();
     }
     return d->getFileFlags(QAbstractFileEngine::DirectoryType);
-}
-
-
-/*!
-    \since 4.3
-    Returns true if this object points to a bundle or to a symbolic
-    link to a bundle on Mac OS X; otherwise returns false.
-
-    \sa isDir(), isSymLink(), isFile()
-*/
-bool QFileInfo::isBundle() const
-{
-    Q_D(const QFileInfo);
-    if (d->isDefaultConstructed)
-        return false;
-    if (d->fileEngine == 0) {
-        if (!d->cache_enabled || !d->metaData.hasFlags(QFileSystemMetaData::BundleType))
-            QFileSystemEngine::fillMetaData(d->fileEntry, d->metaData, QFileSystemMetaData::BundleType);
-        return d->metaData.isBundle();
-    }
-    return d->getFileFlags(QAbstractFileEngine::BundleType);
 }
 
 /*!
@@ -983,9 +953,9 @@ bool QFileInfo::isSymLink() const
     if (d->isDefaultConstructed)
         return false;
     if (d->fileEngine == 0) {
-        if (!d->cache_enabled || !d->metaData.hasFlags(QFileSystemMetaData::LegacyLinkType))
-            QFileSystemEngine::fillMetaData(d->fileEntry, d->metaData, QFileSystemMetaData::LegacyLinkType);
-        return d->metaData.isLegacyLink();
+        if (!d->cache_enabled || !d->metaData.hasFlags(QFileSystemMetaData::LinkType))
+            QFileSystemEngine::fillMetaData(d->fileEntry, d->metaData, QFileSystemMetaData::LinkType);
+        return d->metaData.isLink();
     }
     return d->getFileFlags(QAbstractFileEngine::LinkType);
 }

@@ -300,7 +300,6 @@ QAbstractFileEngine *QAbstractFileEngine::create(const QString &fileName)
     the file system (i.e. not a file or directory).
     \value FileType The file is a regular file to the file system
     (i.e. not a link or directory)
-    \value BundleType The file is a Mac OS X bundle implies DirectoryType
     \value DirectoryType The file is a directory in the file system
     (i.e. not a link or file).
 
