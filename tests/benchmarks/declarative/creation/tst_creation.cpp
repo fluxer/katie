@@ -305,7 +305,7 @@ void tst_creation::itemtree_data_cpp()
 
 void tst_creation::itemtree_qml()
 {
-    QDeclarativeComponent component(&engine, TEST_FILE("item.qml"));
+    QDeclarativeComponent component(&engine, TEST_FILE(QLatin1String("item.qml")));
     QObject *obj = component.create();
     delete obj;
 

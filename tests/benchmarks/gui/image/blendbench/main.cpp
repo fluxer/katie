@@ -115,7 +115,7 @@ void BlendBench::blendBench_data()
 {
     int first = 0;
     int limit = 12;
-    if (qApp->arguments().contains(QLatin1Char("--extended"))) {
+    if (qApp->arguments().contains(QLatin1String("--extended"))) {
         first = 12;
         limit = 24;
     }

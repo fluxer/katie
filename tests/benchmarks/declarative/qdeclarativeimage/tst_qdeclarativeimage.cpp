@@ -62,7 +62,7 @@ private:
 void tst_qmlgraphicsimage::qmlgraphicsimage()
 {
     int x = 0;
-    QUrl url(SRCDIR "/image.png");
+    QUrl url(QLatin1String(SRCDIR "/image.png"));
     QBENCHMARK {
         QUrl url2(QLatin1String("http://localhost/image") + QString::number(x++) + QLatin1String(".png"));
         QDeclarativeImage *image = new QDeclarativeImage;
@@ -74,7 +74,7 @@ void tst_qmlgraphicsimage::qmlgraphicsimage()
 void tst_qmlgraphicsimage::qmlgraphicsimage_file()
 {
     int x = 0;
-    QUrl url(SRCDIR "/image.png");
+    QUrl url(QLatin1String(SRCDIR "/image.png"));
     //get rid of initialization effects
     {
         QDeclarativeImage *image = new QDeclarativeImage;
@@ -93,7 +93,7 @@ void tst_qmlgraphicsimage::qmlgraphicsimage_file()
 void tst_qmlgraphicsimage::qmlgraphicsimage_url()
 {
     int x = 0;
-    QUrl url(SRCDIR "/image.png");
+    QUrl url(QLatin1String(SRCDIR "/image.png"));
     QBENCHMARK {
         QUrl url2(QLatin1String("http://localhost/image") + QString::number(x++) + QLatin1String(".png"));
         QDeclarativeImage *image = new QDeclarativeImage;
