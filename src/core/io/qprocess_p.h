@@ -74,23 +74,8 @@ typedef int Q_PIPE;
 QT_BEGIN_NAMESPACE
 
 class QSocketNotifier;
-class QWindowsPipeWriter;
-class QWinEventNotifier;
 class QTimer;
 
-#ifdef Q_OS_WIN
-class QProcEnvKey : public QString
-{
-public:
-    QProcEnvKey() {}
-    explicit QProcEnvKey(const QString &other) : QString(other) {}
-    QProcEnvKey(const QProcEnvKey &other) : QString(other) {}
-    bool operator==(const QProcEnvKey &other) const { return !compare(other, Qt::CaseInsensitive); }
-};
-inline uint qHash(const QProcEnvKey &key) { return qHash(key.toCaseFolded()); }
-
-typedef QString QProcEnvValue;
-#else
 class QProcEnvKey
 {
 public:
@@ -134,7 +119,6 @@ public:
     mutable QString stringValue;
 };
 Q_DECLARE_TYPEINFO(QProcEnvValue, Q_MOVABLE_TYPE);
-#endif
 Q_DECLARE_TYPEINFO(QProcEnvKey, Q_MOVABLE_TYPE);
 
 class QProcessEnvironmentPrivate: public QSharedData
@@ -316,9 +300,6 @@ public:
 
     QString program;
     QStringList arguments;
-#if defined(Q_OS_WIN)
-    QString nativeArguments;
-#endif
     QProcessEnvironment environment;
 
     QRingBuffer outputReadBuffer;
@@ -332,28 +313,13 @@ public:
     QSocketNotifier *startupSocketNotifier;
     QSocketNotifier *deathNotifier;
 
-    // the wonderful windows notifier
-    QTimer *notifier;
-    QWindowsPipeWriter *pipeWriter;
-    QWinEventNotifier *processFinishedNotifier;
-
     void startProcess();
-#if defined(Q_OS_UNIX) && !defined(Q_OS_QNX)
     void execChild(const char *workingDirectory, char **path, char **argv, char **envp);
-#elif defined(Q_OS_QNX)
-    pid_t spawnChild(const char *workingDirectory, char **argv, char **envp);
-#endif
     bool processStarted();
     void terminateProcess();
     void killProcess();
     void findExitCode();
-#ifdef Q_OS_UNIX
     bool waitForDeadChild();
-#endif
-#ifdef Q_OS_WIN
-    void flushPipeWriter();
-    qint64 pipeWriterBytesToWrite() const;
-#endif
 
     static bool startDetached(const QString &program, const QStringList &arguments, const QString &workingDirectory = QString(),
                               qint64 *pid = 0);
@@ -361,9 +327,7 @@ public:
     int exitCode;
     QProcess::ExitStatus exitStatus;
     bool crashed;
-#ifdef Q_OS_UNIX
     int serial;
-#endif
 
     bool waitForStarted(int msecs = 30000);
     bool waitForReadyRead(int msecs = 30000);
@@ -378,9 +342,7 @@ public:
     qint64 writeToStdin(const char *data, qint64 maxlen);
 
     void cleanup();
-#ifdef Q_OS_UNIX
     static void initializeProcessManager();
-#endif
 
 };
 

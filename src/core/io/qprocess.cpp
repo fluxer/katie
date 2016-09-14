@@ -93,11 +93,6 @@ QT_END_NAMESPACE
 #include <qsocketnotifier.h>
 #include <qtimer.h>
 
-#ifdef Q_WS_WIN
-#include <qwineventnotifier_p.h>
-#endif
-
-
 #ifndef QT_NO_PROCESS
 
 QT_BEGIN_NAMESPACE
@@ -768,8 +763,6 @@ QProcessPrivate::QProcessPrivate()
     exitStatus = QProcess::NormalExit;
     startupSocketNotifier = 0;
     deathNotifier = 0;
-    notifier = 0;
-    pipeWriter = 0;
     childStartedPipe[0] = INVALID_Q_PIPE;
     childStartedPipe[1] = INVALID_Q_PIPE;
     deathPipe[0] = INVALID_Q_PIPE;
@@ -779,13 +772,7 @@ QProcessPrivate::QProcessPrivate()
     dying = false;
     emittedReadyRead = false;
     emittedBytesWritten = false;
-#ifdef Q_WS_WIN
-    pipeWriter = 0;
-    processFinishedNotifier = 0;
-#endif // Q_WS_WIN
-#ifdef Q_OS_UNIX
     serial = 0;
-#endif
 }
 
 /*! \internal
@@ -803,20 +790,6 @@ QProcessPrivate::~QProcessPrivate()
 void QProcessPrivate::cleanup()
 {
     q_func()->setProcessState(QProcess::NotRunning);
-#ifdef Q_OS_WIN
-    if (pid) {
-        CloseHandle(pid->hThread);
-        CloseHandle(pid->hProcess);
-        delete pid;
-        pid = 0;
-    }
-    if (processFinishedNotifier) {
-        processFinishedNotifier->setEnabled(false);
-        delete processFinishedNotifier;
-        processFinishedNotifier = 0;
-    }
-
-#endif
     pid = 0;
     sequenceNumber = 0;
     dying = false;
@@ -846,18 +819,12 @@ void QProcessPrivate::cleanup()
         delete deathNotifier;
         deathNotifier = 0;
     }
-    if (notifier) {
-        delete notifier;
-        notifier = 0;
-    }
     destroyPipe(stdoutChannel.pipe);
     destroyPipe(stderrChannel.pipe);
     destroyPipe(stdinChannel.pipe);
     destroyPipe(childStartedPipe);
     destroyPipe(deathPipe);
-#ifdef Q_OS_UNIX
     serial = 0;
-#endif
 }
 
 /*! \internal
@@ -1011,14 +978,8 @@ bool QProcessPrivate::_q_processDied()
 #if defined QPROCESS_DEBUG
     qDebug("QProcessPrivate::_q_processDied()");
 #endif
-#ifdef Q_OS_UNIX
     if (!waitForDeadChild())
         return false;
-#endif
-#ifdef Q_OS_WIN
-    if (processFinishedNotifier)
-        processFinishedNotifier->setEnabled(false);
-#endif
 
     // the process may have died before it got a chance to report that it was
     // either running or stopped, so we will call _q_startupNotification() and
@@ -1115,11 +1076,6 @@ void QProcessPrivate::closeWriteChannel()
             stdinChannel.notifier = 0;
         }
     }
-#ifdef Q_OS_WIN
-    // ### Find a better fix, feeding the process little by little
-    // instead.
-    flushPipeWriter();
-#endif
     destroyPipe(stdinChannel.pipe);
 }
 
