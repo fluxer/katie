@@ -274,7 +274,7 @@ void tst_QPixmap::fromImageReader_data()
 
         painter.fillRect(image.rect(), radialGrad);
     }
-    image.save("test.png");
+    image.save(QString::fromLatin1("test.png"));
 
     // RGB32
     const QString rgb32Path = tempDir + QString::fromLatin1("/rgb32.jpg");

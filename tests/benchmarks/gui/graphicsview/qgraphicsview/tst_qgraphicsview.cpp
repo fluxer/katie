@@ -561,11 +561,11 @@ void tst_QGraphicsView::imageRiver()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(":/images/designer.png");
+    QPixmap pix(QLatin1String(":/images/designer.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(":/random.data");
+    QFile file(QLatin1String(":/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     for (int i = 0; i < 50; ++i) {
@@ -606,7 +606,7 @@ public:
     AnimatedTextItem(int x, int y, bool rot, bool scal, QGraphicsItem *parent = 0)
         : QGraphicsSimpleTextItem(parent), rotateFactor(0), scaleFactor(25)
     {
-        setText("River of text");
+        setText(QLatin1String("River of text"));
         rotate = rot;
         scale = scal;
         xspeed = x;
@@ -670,11 +670,11 @@ void tst_QGraphicsView::textRiver()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(":/images/designer.png");
+    QPixmap pix(QLatin1String(":/images/designer.png"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(":/random.data");
+    QFile file(QLatin1String(":/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     for (int i = 0; i < 50; ++i) {
@@ -769,11 +769,11 @@ void tst_QGraphicsView::moveItemCache()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(":/images/wine.jpeg");
+    QPixmap pix(QLatin1String(":/images/wine.jpeg"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(":/random.data");
+    QFile file(QLatin1String(":/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     for (int i = 0; i < 5; ++i) {
@@ -866,11 +866,11 @@ void tst_QGraphicsView::paintItemCache()
 
     QGraphicsScene scene(0, 0, 300, 300);
 
-    QPixmap pix(":/images/wine.jpeg");
+    QPixmap pix(QLatin1String(":/images/wine.jpeg"));
     QVERIFY(!pix.isNull());
 
     QList<QGraphicsItem *> items;
-    QFile file(":/random.data");
+    QFile file(QLatin1String(":/random.data"));
     QVERIFY(file.open(QIODevice::ReadOnly));
     QDataStream str(&file);
     UpdatedPixmapCacheItem *item = new UpdatedPixmapCacheItem(updatePartial);
@@ -881,7 +881,7 @@ void tst_QGraphicsView::paintItemCache()
     item->setPos(-100, -100);
     scene.addItem(item);
 
-    QPixmap pix2(":/images/wine-big.jpeg");
+    QPixmap pix2(QLatin1String(":/images/wine-big.jpeg"));
     item = new UpdatedPixmapCacheItem(updatePartial);
     item->setPixmap(pix2);
     item->setCacheMode((QGraphicsItem::CacheMode)cacheMode);
