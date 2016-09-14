@@ -110,21 +110,6 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     add_definitions(${FONTCONFIG_DEFINITIONS})
 endif()
 
-if(WITH_DIRECTWRITE)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontenginedirectwrite_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontenginedirectwrite.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        dwrite
-    )
-endif()
-
 if(WITH_X11 AND X11_FOUND)
     set(GUI_HEADERS
         ${GUI_HEADERS}

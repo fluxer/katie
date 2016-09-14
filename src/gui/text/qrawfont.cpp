@@ -80,9 +80,8 @@ QT_BEGIN_NAMESPACE
    combination with the QGlyphRun class to draw specific glyph indexes at specific positions, and
    also have accessors to some relevant data in the physical font.
 
-   QRawFont only provides support for the main font technologies: GDI and DirectWrite on Windows
-   platforms, FreeType on Symbian and Linux platforms and CoreText on Mac OS X. For other
-   font back-ends, the APIs will be disabled.
+   QRawFont only provides support for the main font technologies: FreeType on UNIX platforms. For
+   other font back-ends, the APIs will be disabled.
 
    QRawFont can be constructed in a number of ways:
    \list

@@ -102,17 +102,9 @@ public:
         // X11 types
         XLFD,
 
-        // MS Windows types
-        Win,
-
-        // Apple Mac OS types
-        Mac,
-
         // QWS types
         Freetype,
         Proxy,
-
-        DirectWrite,
 
         TestFontEngine = 0x1000
     };

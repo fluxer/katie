@@ -122,17 +122,6 @@ add_feature_info(opengles2 WITH_OPENGLES2 "an open source something")
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "an open source something")
 
-# windows
-option(WITH_ICD "Build icd support (Windows)" ON)
-add_feature_info(icd WITH_ICD "an closed source something")
-
-option(WITH_DIRECTWRITE "Build DirectWrite support (Windows)" OFF)
-add_feature_info(directwrite WITH_DIRECTWRITE "an closed source something")
-
-# mac
-option(WITH_COREWLAN "Build corewlan support (Mac)" ON)
-add_feature_info(corewlan WITH_COREWLAN "an closed source something")
-
 include(mkspecs/mkspecs.cmake)
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 framework")
@@ -144,20 +133,10 @@ set(CPACK_PACKAGE_VERSION_MAJOR ${KATIE_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${KATIE_MINOR})
 set(CPACK_PACKAGE_VERSION_PATCH ${KATIE_MICRO})
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Katie")
-set(CPACK_SOURCE_IGNORE_FILES "/build/;/mingw/;/.git;${CPACK_SOURCE_IGNORE_FILES}")
+set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;${CPACK_SOURCE_IGNORE_FILES}")
 set(CPACK_STRIP_FILES TRUE)
-if(WIN32 AND CMAKE_CROSSCOMPILING)
-    # Windows build on non-Windows host, NSIS is not manditory on such
-    set(CPACK_GENERATOR "ZIP")
-    set(CPACK_SOURCE_GENERATOR "ZIP")
-elseif(WIN32)
-    # native Windows build, let's make a NSIS package
-    set(CPACK_GENERATOR "ZIP;NSIS")
-    set(CPACK_SOURCE_GENERATOR "ZIP")
-else()
-    set(CPACK_GENERATOR "TXZ")
-    set(CPACK_SOURCE_GENERATOR "TXZ")
-endif()
+set(CPACK_GENERATOR "TXZ")
+set(CPACK_SOURCE_GENERATOR "TXZ")
 include(CPack)
 
 # 9 minutes timeout for the tests, Travis timeouts on 10min and I do not want
@@ -535,14 +514,9 @@ if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
 endif()
 
-
 # conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
-endif()
-
-if(NOT WITH_DIRECTWRITE)
-    katie_definition(-DQT_NO_DIRECTWRITE)
 endif()
 
 if(WITH_OPENGLES1)

@@ -915,36 +915,12 @@ int QFont::pointSize() const
     \o PreferVerticalHinting
     \o PreferFullHinting
     \row
-    \o Windows Vista (w/o Platform Update) and earlier
-    \o Full hinting
-    \o Full hinting
-    \o Full hinting
-    \o Full hinting
-    \row
-    \o Windows 7 and Windows Vista (w/Platform Update) and DirectWrite enabled in Qt
-    \o Full hinting
-    \o Vertical hinting
-    \o Vertical hinting
-    \o Full hinting
-    \row
     \o FreeType
     \o Operating System setting
     \o No hinting
     \o Vertical hinting (light)
     \o Full hinting
-    \row
-    \o Cocoa on Mac OS X
-    \o No hinting
-    \o No hinting
-    \o No hinting
-    \o No hinting
     \endtable
-
-    \note Please be aware that altering the hinting preference on Windows is available through
-    the DirectWrite font engine. This is available on Windows Vista after installing the platform
-    update, and on Windows 7. In order to use this extension, configure Qt using -directwrite.
-    The target application will then depend on the availability of DirectWrite on the target
-    system.
 
 */
 

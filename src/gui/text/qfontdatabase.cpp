@@ -71,10 +71,6 @@
 #  define FM_DEBUG if (false) qDebug
 #endif
 
-#if defined(Q_WS_WIN) && !defined(QT_NO_DIRECTWRITE)
-#  include <dwrite.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 #define SMOOTH_SCALABLE 0xffff
@@ -586,20 +582,10 @@ class QFontDatabasePrivate
 public:
     QFontDatabasePrivate()
         : count(0), families(0), reregisterAppFonts(false)
-#if defined(Q_WS_WIN) && !defined(QT_NO_DIRECTWRITE)
-          , directWriteFactory(0)
-          , directWriteGdiInterop(0)
-#endif
     { }
 
     ~QFontDatabasePrivate() {
         free();
-#if defined(Q_WS_WIN) && !defined(QT_NO_DIRECTWRITE)
-    if (directWriteGdiInterop)
-        directWriteGdiInterop->Release();
-    if (directWriteFactory != 0)
-        directWriteFactory->Release();
-#endif
     }
     QtFontFamily *family(const QString &f, bool = false);
     void free() {
@@ -617,22 +603,9 @@ public:
 #endif
     QtFontFamily **families;
 
-#if defined(Q_WS_WIN) && !defined(QT_NO_DIRECTWRITE)
-    IDWriteFactory *directWriteFactory;
-    IDWriteGdiInterop *directWriteGdiInterop;
-#endif
-
-
     struct ApplicationFont {
         QString fileName;
         QByteArray data;
-#if defined(Q_OS_WIN)
-        HANDLE handle;
-        bool memoryFont;
-        QVector<FONTSIGNATURE> signatures;
-#elif defined(Q_WS_MAC)
-        ATSFontContainerRef handle;
-#endif
         QStringList families;
     };
     QVector<ApplicationFont> applicationFonts;

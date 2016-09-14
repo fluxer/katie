@@ -74,6 +74,7 @@
 #define QT_NO_QWS_TRANSFORMED
 #define QT_NO_QWS_VNC
 #define QT_NO_AUDIO_BACKEND
+#define QT_NO_DIRECTWRITE
 
 /* Qt build specs */
 #ifndef QT_EDITION
