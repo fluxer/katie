@@ -379,6 +379,7 @@ set(GUI_PUBLIC_HEADERS
     QTouchEvent
     QDragEnterEvent
     QHelpEvent
+    QContextMenuEvent
     QItemSelection
     QIntValidator
     QFontMetricsF
