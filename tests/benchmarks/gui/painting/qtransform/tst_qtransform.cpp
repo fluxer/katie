@@ -198,12 +198,14 @@ void tst_QTransform::func##_data() \
     QMapIterator<const char *, QTransform> it(x); \
     while (it.hasNext()) { \
         it.next(); \
-        const char *key1 = it.key(); \
+        const QString key1 = QString::fromLatin1(it.key()); \
         QTransform x1 = it.value(); \
         QMapIterator<const char *, QTransform> it2(x); \
         while (it2.hasNext()) { \
             it2.next(); \
-            QTest::newRow(QString("%1 + %2").arg(key1).arg(it2.key()).toLatin1().constData()) \
+            const QString key2 = QString::fromLatin1(it2.key()); \
+            const QString row = key1 + QLatin1String(" + ") + key2; \
+            QTest::newRow(row.toLatin1()) \
                 << x1 << it2.value(); \
         } \
     } \
