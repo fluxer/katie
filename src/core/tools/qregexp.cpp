@@ -884,7 +884,7 @@ struct QRegExpEngineKey
     }
 };
 
-Q_STATIC_GLOBAL_OPERATOR bool operator==(const QRegExpEngineKey &key1, const QRegExpEngineKey &key2)
+static inline bool operator==(const QRegExpEngineKey &key1, const QRegExpEngineKey &key2)
 {
     return key1.pattern == key2.pattern && key1.patternSyntax == key2.patternSyntax
            && key1.cs == key2.cs;

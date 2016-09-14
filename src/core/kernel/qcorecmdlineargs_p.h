@@ -67,4 +67,4 @@ static inline QStringList qCmdLineArgs(int argc, char *argv[])
 
 QT_END_NAMESPACE
 
-#endif // QCORECMDLINEARGS_WIN_P_H
+#endif // QCORECMDLINEARGS_P_H

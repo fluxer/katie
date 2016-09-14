@@ -124,18 +124,12 @@ void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunctio
 #  define Q_PLUGIN_VERIFICATION_SECTION
 #  endif
 
-#  if defined (Q_OS_WIN32) && defined(Q_CC_BOR)
-#     define Q_STANDARD_CALL __stdcall
-#  else
-#     define Q_STANDARD_CALL
-#  endif
-
 #  define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS)      \
             Q_PLUGIN_VERIFICATION_SECTION Q_PLUGIN_VERIFICATION_DATA \
             Q_EXTERN_C Q_DECL_EXPORT \
-            const char * Q_STANDARD_CALL qt_plugin_query_verification_data() \
+            const char * qt_plugin_query_verification_data() \
             { return qt_plugin_verification_data; } \
-            Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * Q_STANDARD_CALL qt_plugin_instance() \
+            Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * qt_plugin_instance() \
             Q_PLUGIN_INSTANCE(PLUGINCLASS)
 
 #  define Q_EXPORT_STATIC_PLUGIN2(PLUGIN, PLUGINCLASS)

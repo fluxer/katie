@@ -55,21 +55,12 @@
 
 #include <QtCore/qstring.h>
 
-#if defined(Q_OS_WIN)
-#define QFILESYSTEMENTRY_NATIVE_PATH_IS_UTF16
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QFileSystemEntry
 {
 public:
-
-#ifndef QFILESYSTEMENTRY_NATIVE_PATH_IS_UTF16
     typedef QByteArray NativePath;
-#else
-    typedef QString NativePath;
-#endif
     struct FromNativePath{};
     struct FromInternalPath{};
 

@@ -1302,58 +1302,7 @@ qint64 QIODevice::write(const char *data, qint64 maxSize)
     if (d->pos != d->devicePos && !sequential && !seek(d->pos))
         return qint64(-1);
 
-#ifdef Q_OS_WIN
-    if (d->openMode & Text) {
-        const char *endOfData = data + maxSize;
-        const char *startOfBlock = data;
-
-        qint64 writtenSoFar = 0;
-
-        forever {
-            const char *endOfBlock = startOfBlock;
-            while (endOfBlock < endOfData && *endOfBlock != '\n')
-                ++endOfBlock;
-
-            qint64 blockSize = endOfBlock - startOfBlock;
-            if (blockSize > 0) {
-                qint64 ret = writeData(startOfBlock, blockSize);
-                if (ret <= 0) {
-                    if (writtenSoFar && !sequential)
-                        d->buffer.skip(writtenSoFar);
-                    return writtenSoFar ? writtenSoFar : ret;
-                }
-                if (!sequential) {
-                    d->pos += ret;
-                    d->devicePos += ret;
-                }
-                writtenSoFar += ret;
-            }
-
-            if (endOfBlock == endOfData)
-                break;
-
-            qint64 ret = writeData("\r\n", 2);
-            if (ret <= 0) {
-                if (writtenSoFar && !sequential)
-                    d->buffer.skip(writtenSoFar);
-                return writtenSoFar ? writtenSoFar : ret;
-            }
-            if (!sequential) {
-                d->pos += ret;
-                d->devicePos += ret;
-            }
-            ++writtenSoFar;
-
-            startOfBlock = endOfBlock + 1;
-        }
-
-        if (writtenSoFar && !sequential)
-            d->buffer.skip(writtenSoFar);
-        return writtenSoFar;
-    }
-#endif
-
-    qint64 written = writeData(data, maxSize);
+    const qint64 written = writeData(data, maxSize);
     if (written > 0) {
         if (!sequential) {
             d->pos += written;

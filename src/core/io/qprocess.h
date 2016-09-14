@@ -52,13 +52,7 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_PROCESS
 
-#if !defined(Q_OS_WIN32) && !defined(Q_OS_WINCE)
 typedef qint64 Q_PID;
-#else
-QT_END_NAMESPACE
-typedef struct _PROCESS_INFORMATION *Q_PID;
-QT_BEGIN_NAMESPACE
-#endif
 
 class QProcessPrivate;
 class QProcessEnvironmentPrivate;
@@ -147,11 +141,6 @@ public:
     void setStandardOutputFile(const QString &fileName, OpenMode mode = Truncate);
     void setStandardErrorFile(const QString &fileName, OpenMode mode = Truncate);
     void setStandardOutputProcess(QProcess *destination);
-
-#if defined(Q_OS_WIN)
-    QString nativeArguments() const;
-    void setNativeArguments(const QString &arguments);
-#endif
 
     QString workingDirectory() const;
     void setWorkingDirectory(const QString &dir);

@@ -57,13 +57,6 @@
 #include <QtCore/qdatetime.h>
 #include <QtCore/qabstractfileengine.h>
 
-// Platform-specific includes
-#if defined(Q_OS_WIN)
-#ifndef IO_REPARSE_TAG_SYMLINK
-#define IO_REPARSE_TAG_SYMLINK (0xA000000CL)
-#endif
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QFileSystemEngine;
@@ -146,15 +139,6 @@ public:
                             | QFileSystemMetaData::Times
                             | QFileSystemMetaData::OwnerIds,
 
-#if defined(Q_OS_WIN)
-        WinStatFlags        = QFileSystemMetaData::FileType
-                            | QFileSystemMetaData::DirectoryType
-                            | QFileSystemMetaData::HiddenAttribute
-                            | QFileSystemMetaData::ExistsAttribute
-                            | QFileSystemMetaData::SizeAttribute
-                            | QFileSystemMetaData::Times,
-#endif
-
         AllMetaDataFlags    = 0xFFFFFFFF
 
     };
@@ -190,11 +174,6 @@ public:
     bool isLegacyLink() const               { return (entryFlags & LegacyLinkType); }
     bool isSequential() const               { return (entryFlags & SequentialType); }
     bool isHidden() const                   { return (entryFlags & HiddenAttribute); }
-#if defined(Q_OS_WIN)
-    bool isLnkFile() const                  { return (entryFlags & WinLnkType); }
-#else
-    bool isLnkFile() const                  { return false; }
-#endif
 
     qint64 size() const                     { return size_; }
 
@@ -209,16 +188,9 @@ public:
     uint groupId() const;
     uint ownerId(QAbstractFileEngine::FileOwner owner) const;
 
-#ifdef Q_OS_UNIX
     void fillFromStatBuf(const QT_STATBUF &statBuffer);
     void fillFromDirEnt(const QT_DIRENT &statBuffer);
-#endif
 
-#if defined(Q_OS_WIN)
-    inline void fillFromFileAttribute(DWORD fileAttribute, bool isDriveRoot = false);
-    inline void fillFromFindData(WIN32_FIND_DATA &findData, bool setLinkType = false, bool isDriveRoot = false);
-    inline void fillFromFindInfo(BY_HANDLE_FILE_INFORMATION &fileInfo);
-#endif
 private:
     friend class QFileSystemEngine;
 
@@ -228,20 +200,12 @@ private:
     qint64 size_;
 
     // Platform-specific data goes here:
-#if defined(Q_OS_WIN)
-    DWORD fileAttribute_;
-    FILETIME creationTime_;
-    FILETIME lastAccessTime_;
-    FILETIME lastWriteTime_;
-#else
     time_t creationTime_;
     time_t modificationTime_;
     time_t accessTime_;
 
     uint userId_;
     uint groupId_;
-#endif
-
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QFileSystemMetaData::MetaDataFlags)

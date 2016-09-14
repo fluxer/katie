@@ -57,12 +57,8 @@
 #include "qstring.h"
 
 #if !defined(QT_QLOCALE_NEEDS_VOLATILE)
-#  if defined(Q_CC_GNU)
-#    if  __GNUC__ == 4
-#      define QT_QLOCALE_NEEDS_VOLATILE
-#    elif defined(Q_OS_WIN)
-#      define QT_QLOCALE_NEEDS_VOLATILE
-#    endif
+#  if defined(Q_CC_GNU) && __GNUC__ == 4
+#    define QT_QLOCALE_NEEDS_VOLATILE
 #  endif
 #endif
 

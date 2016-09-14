@@ -169,8 +169,6 @@ public:
 
 #ifdef QT_ARCH_PARISC
 #  define Q_BASIC_ATOMIC_INITIALIZER(a) {{-1,-1,-1,-1},(a)}
-#elif defined(QT_ARCH_WINDOWS) || defined(QT_ARCH_WINDOWSCE)
-#  define Q_BASIC_ATOMIC_INITIALIZER(a) { {(a)} }
 #else
 #  define Q_BASIC_ATOMIC_INITIALIZER(a) { (a) }
 #endif

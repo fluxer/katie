@@ -536,25 +536,11 @@ bool QLibraryPrivate::loadPlugin()
  */
 bool QLibrary::isLibrary(const QString &fileName)
 {
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    return fileName.endsWith(QLatin1String(".dll"), Qt::CaseInsensitive);
-#else
     QString completeSuffix = QFileInfo(fileName).completeSuffix();
     if (completeSuffix.isEmpty())
         return false;
     QStringList suffixes = completeSuffix.split(QLatin1Char('.'));
-# if defined(Q_OS_DARWIN)
-
-    // On Mac, libs look like libmylib.1.0.0.dylib
-    const QString lastSuffix = suffixes.at(suffixes.count() - 1);
-    const QString firstSuffix = suffixes.at(0);
-
-    bool valid = (lastSuffix == QLatin1String("dylib")
-            || firstSuffix == QLatin1String("so")
-            || firstSuffix == QLatin1String("bundle"));
-
-    return valid;
-# else  // Generic Unix
+    // Generic Unix
     QStringList validSuffixList;
 
 #  if defined(Q_OS_HPUX)
@@ -590,28 +576,7 @@ bool QLibrary::isLibrary(const QString &fileName)
         if (i != suffixPos)
             suffixes.at(i).toInt(&valid);
     return valid;
-# endif
-#endif
-
 }
-
-#if defined (Q_OS_WIN) && defined(_MSC_VER) && _MSC_VER >= 1400  && !defined(Q_CC_INTEL)
-#define QT_USE_MS_STD_EXCEPTION 1
-const char* qt_try_versioninfo(void *pfn, bool *exceptionThrown)
-{
-    *exceptionThrown = false;
-    const char *szData = 0;
-    typedef const char * (*VerificationFunction)();
-    VerificationFunction func = reinterpret_cast<VerificationFunction>(pfn);
-    __try {
-        if(func)
-            szData =  func();
-    } __except(EXCEPTION_EXECUTE_HANDLER) {
-        *exceptionThrown = true;
-    }
-    return szData;
-}
-#endif
 
 #ifdef Q_CC_BOR
 typedef const char * __stdcall (*QtPluginQueryVerificationDataFunction)();
@@ -622,21 +587,14 @@ typedef const char * (*QtPluginQueryVerificationDataFunction)();
 bool qt_get_verificationdata(QtPluginQueryVerificationDataFunction pfn, uint *qt_version, bool *debug, bool *exceptionThrown)
 {
     *exceptionThrown = false;
-    const char *szData = 0;
     if (!pfn)
         return false;
-#ifdef QT_USE_MS_STD_EXCEPTION
-    szData = qt_try_versioninfo((void *)pfn, exceptionThrown);
-    if (*exceptionThrown)
-        return false;
-#else
-    szData = pfn();
-#endif
 
 #ifdef QT_NO_PLUGIN_CHECK
-	return true;
+    return true;
 #else
-	return qt_parse_pattern(szData, qt_version, debug);
+    const char *szData = pfn();
+    return qt_parse_pattern(szData, qt_version, debug);
 #endif
 }
 
@@ -702,42 +660,17 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
         debug = bool(reg.at(1).toInt());
         success = qt_version != 0;
     } else {
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         if (!pHnd) {
             // use unix shortcut to avoid loading the library
             success = qt_unix_query(fileName, &qt_version, &debug, this);
-        } else
-#endif
-        {
+        } else {
             bool retryLoadLibrary = false;    // Only used on Windows with MS compiler.(false in other cases)
             do {
                 bool temporary_load = false;
-#ifdef Q_OS_WIN
-                HMODULE hTempModule = 0;
-#endif
                 if (!pHnd) {
-#ifdef Q_OS_WIN
-                    DWORD dwFlags = (retryLoadLibrary) ? 0: DONT_RESOLVE_DLL_REFERENCES;
-                    //avoid 'Bad Image' message box
-                    UINT oldmode = SetErrorMode(SEM_FAILCRITICALERRORS|SEM_NOOPENFILEERRORBOX);
-                    hTempModule = ::LoadLibraryEx((wchar_t*)QDir::toNativeSeparators(fileName).utf16(), 0, dwFlags);
-                    SetErrorMode(oldmode);
-#else
-                        temporary_load =  load_sys();
-#endif
+                    temporary_load =  load_sys();
                 }
-#ifdef Q_OS_WIN
-                QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = hTempModule ? (QtPluginQueryVerificationDataFunction)
-#ifdef Q_OS_WINCE
-                        ::GetProcAddress(hTempModule, L"qt_plugin_query_verification_data")
-#else
-                        ::GetProcAddress(hTempModule, "qt_plugin_query_verification_data")
-#endif
-                : (QtPluginQueryVerificationDataFunction) resolve("qt_plugin_query_verification_data");
-#else
-                QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = NULL;
-                qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("qt_plugin_query_verification_data");
-#endif
+                const QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("qt_plugin_query_verification_data");
                 bool exceptionThrown = false;
                 bool ret = qt_get_verificationdata(qtPluginQueryVerificationDataFunction,
                                                    &qt_version, &debug, &exceptionThrown);
@@ -751,24 +684,6 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
                     }
                     retryLoadLibrary = false;
                 }
-#ifdef QT_USE_MS_STD_EXCEPTION
-                else {
-                    // An exception was thrown when calling qt_plugin_query_verification_data().
-                    // This usually happens when plugin is compiled with the /clr compiler flag,
-                    // & will only work if the dependencies are loaded & DLLMain() is called.
-                    // LoadLibrary() will do this, try once with this & if it fails don't load.
-                    retryLoadLibrary = !retryLoadLibrary;
-                }
-#endif
-#ifdef Q_OS_WIN
-                if (hTempModule) {
-                    BOOL ok = ::FreeLibrary(hTempModule);
-                    if (ok) {
-                        hTempModule = 0;
-                    }
-
-                }
-#endif
             } while(retryLoadLibrary);  // Will be 'false' in all cases other than when an
                                         // exception is thrown(will happen only when using a MS compiler)
         }

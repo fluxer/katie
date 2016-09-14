@@ -212,8 +212,6 @@ void qt_set_current_thread_to_main_thread()
     QCoreApplicationPrivate::theMainThread = QThread::currentThread();
 }
 
-
-
 QCoreApplication *QCoreApplication::self = 0;
 QAbstractEventDispatcher *QCoreApplicationPrivate::eventDispatcher = 0;
 uint QCoreApplicationPrivate::attribs;
@@ -254,7 +252,7 @@ Q_GLOBAL_STATIC(QCoreApplicationData, coreappdata)
 
 QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv, uint flags)
     : QObjectPrivate(), argc(aargc), argv(aargv), application_type(0), eventFilter(0),
-      in_exec(false), aboutToQuitEmitted(false)
+      aboutToQuitEmitted(false)
 {
     app_compile_version = flags & 0xffffff;
     static const char *const empty = "";
@@ -912,12 +910,10 @@ int QCoreApplication::exec()
 
     threadData->quitNow = false;
     QEventLoop eventLoop;
-    self->d_func()->in_exec = true;
     self->d_func()->aboutToQuitEmitted = false;
     int returnCode = eventLoop.exec();
     threadData->quitNow = false;
     if (self) {
-        self->d_func()->in_exec = false;
         if (!self->d_func()->aboutToQuitEmitted)
             emit self->aboutToQuit();
         self->d_func()->aboutToQuitEmitted = true;
@@ -1097,38 +1093,19 @@ void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
 */
 bool QCoreApplication::compressEvent(QEvent *event, QObject *receiver, QPostEventList *postedEvents)
 {
-#ifdef Q_WS_WIN
-    Q_ASSERT(event);
-    Q_ASSERT(receiver);
-    Q_ASSERT(postedEvents);
-
-    // compress posted timers to this object.
-    if (event->type() == QEvent::Timer && receiver->d_func()->postedEvents > 0) {
-        int timerId = ((QTimerEvent *) event)->timerId();
-        for (int i=0; i<postedEvents->size(); ++i) {
-            const QPostEvent &e = postedEvents->at(i);
-            if (e.receiver == receiver && e.event && e.event->type() == QEvent::Timer
-                && ((QTimerEvent *) e.event)->timerId() == timerId) {
-                delete event;
-                return true;
-            }
+    if ((event->type() == QEvent::DeferredDelete || event->type() == QEvent::Quit)
+        && receiver->d_func()->postedEvents > 0) {
+        for (int i = 0; i < postedEvents->size(); ++i) {
+            const QPostEvent &cur = postedEvents->at(i);
+            if (cur.receiver != receiver
+                || cur.event == 0
+                || cur.event->type() != event->type())
+                continue;
+            // found an event for this receiver
+            delete event;
+            return true;
         }
-    } else
-#endif
-        if ((event->type() == QEvent::DeferredDelete
-             || event->type() == QEvent::Quit)
-            && receiver->d_func()->postedEvents > 0) {
-            for (int i = 0; i < postedEvents->size(); ++i) {
-                const QPostEvent &cur = postedEvents->at(i);
-                if (cur.receiver != receiver
-                    || cur.event == 0
-                    || cur.event->type() != event->type())
-                    continue;
-                // found an event for this receiver
-                delete event;
-                return true;
-            }
-        }
+    }
     return false;
 }
 

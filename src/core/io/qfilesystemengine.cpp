@@ -70,18 +70,6 @@ QString QFileSystemEngine::slowCanonicalized(const QString &path)
 
     known.insert(path);
     do {
-#ifdef Q_OS_WIN
-        if (separatorPos == 0) {
-            if (tmpPath.size() >= 2 && tmpPath.at(0) == slash && tmpPath.at(1) == slash) {
-                // UNC, skip past the first two elements
-                separatorPos = tmpPath.indexOf(slash, 2);
-            } else if (tmpPath.size() >= 3 && tmpPath.at(1) == QLatin1Char(':') && tmpPath.at(2) == slash) {
-                // volume root, skip since it can not be a symlink
-                separatorPos = 2;
-            }
-        }
-        if (separatorPos != -1)
-#endif
         separatorPos = tmpPath.indexOf(slash, separatorPos + 1);
         QString prefix = separatorPos == -1 ? tmpPath : tmpPath.left(separatorPos);
         if (
@@ -399,27 +387,17 @@ void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
 //static
 QString QFileSystemEngine::resolveUserName(const QFileSystemEntry &entry, QFileSystemMetaData &metaData)
 {
-#if   defined(Q_OS_WIN)
-    Q_UNUSED(metaData);
-    return QFileSystemEngine::owner(entry, QAbstractFileEngine::OwnerUser);
-#else //(Q_OS_UNIX)
     if (!metaData.hasFlags(QFileSystemMetaData::UserId))
         QFileSystemEngine::fillMetaData(entry, metaData, QFileSystemMetaData::UserId);
     return resolveUserName(metaData.userId());
-#endif
 }
 
 //static
 QString QFileSystemEngine::resolveGroupName(const QFileSystemEntry &entry, QFileSystemMetaData &metaData)
 {
-#if   defined(Q_OS_WIN)
-    Q_UNUSED(metaData);
-    return QFileSystemEngine::owner(entry, QAbstractFileEngine::OwnerGroup);
-#else //(Q_OS_UNIX)
     if (!metaData.hasFlags(QFileSystemMetaData::GroupId))
         QFileSystemEngine::fillMetaData(entry, metaData, QFileSystemMetaData::GroupId);
     return resolveGroupName(metaData.groupId());
-#endif
 }
 
 QT_END_NAMESPACE

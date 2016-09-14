@@ -65,6 +65,8 @@ typedef QList<QTranslator*> QTranslatorList;
 
 class QAbstractEventDispatcher;
 
+Q_CORE_EXPORT uint qGlobalPostedEventsCount();
+
 class Q_CORE_EXPORT QCoreApplicationPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QCoreApplication)
@@ -104,7 +106,6 @@ public:
 
     QCoreApplication::EventFilter eventFilter;
 
-    bool in_exec;
     bool aboutToQuitEmitted;
     QString cachedApplicationDirPath;
     QString cachedApplicationFilePath;

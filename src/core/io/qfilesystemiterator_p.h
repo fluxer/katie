@@ -59,15 +59,10 @@
 
 #include <QtCore/qdiriterator.h>
 #include <QtCore/qstringlist.h>
+#include <QtCore/qscopedpointer.h>
 
 #include <qfilesystementry_p.h>
 #include <qfilesystemmetadata_p.h>
-
-// Platform-specific headers
-#if defined(Q_OS_WIN)
-#else
-#include <QtCore/qscopedpointer.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -85,14 +80,6 @@ private:
     QFileSystemEntry::NativePath nativePath;
 
     // Platform-specific data
-#if defined(Q_OS_WIN)
-    QFileSystemEntry::NativePath dirPath;
-    HANDLE findFileHandle;
-    QStringList uncShares;
-    bool uncFallback;
-    int uncShareIndex;
-    bool onlyDirs;
-#else
     QT_DIR *dir;
     QT_DIRENT *dirEntry;
 #if defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_CYGWIN) || defined(QT_EXT_QNX_READDIR_R)
@@ -104,7 +91,6 @@ private:
 #endif
 #endif
     int lastError;
-#endif
 
     Q_DISABLE_COPY(QFileSystemIterator)
 };

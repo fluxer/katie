@@ -49,37 +49,12 @@
 
 #ifndef QT_NO_FSFILEENGINE
 
-#if !defined(Q_OS_WINCE)
 #include <errno.h>
-#endif
-#if defined(Q_OS_UNIX)
 #include "qcore_unix_p.h"
-#endif
 #include <stdio.h>
 #include <stdlib.h>
-#if defined(Q_OS_MAC)
-# include <qcore_mac_p.h>
-#endif
 
 QT_BEGIN_NAMESPACE
-
-#ifdef Q_OS_WIN
-#  ifndef S_ISREG
-#    define S_ISREG(x)   (((x) & S_IFMT) == S_IFREG)
-#  endif
-#  ifndef S_ISCHR
-#    define S_ISCHR(x)   (((x) & S_IFMT) == S_IFCHR)
-#  endif
-#  ifndef S_ISFIFO
-#    define S_ISFIFO(x) false
-#  endif
-#  ifndef S_ISSOCK
-#    define S_ISSOCK(x) false
-#  endif
-#  ifndef INVALID_FILE_ATTRIBUTES
-#    define INVALID_FILE_ATTRIBUTES (DWORD (-1))
-#  endif
-#endif
 
 /*! \class QFSFileEngine
     \brief The QFSFileEngine class implements Qt's default file engine.
@@ -113,24 +88,14 @@ void QFSFileEnginePrivate::init()
 {
     is_sequential = 0;
     tried_stat = 0;
-#if !defined(Q_OS_WINCE)
     need_lstat = 1;
     is_link = 0;
-#endif
     openMode = QIODevice::NotOpen;
     fd = -1;
     fh = 0;
     lastIOCommand = IOFlushCommand;
     lastFlushFailed = false;
     closeFileHandle = false;
-#ifdef Q_OS_WIN
-    fileAttrib = INVALID_FILE_ATTRIBUTES;
-    fileHandle = INVALID_HANDLE_VALUE;
-    mapHandle = NULL;
-#ifndef Q_OS_WINCE
-    cachedFd = -1;
-#endif
-#endif
 }
 
 /*!
@@ -614,12 +579,7 @@ qint64 QFSFileEnginePrivate::readFdFh(char *data, qint64 len)
 
     } else if (fd != -1) {
         // Unbuffered stdio mode.
-
-#ifdef Q_OS_WIN
-        int result;
-#else
         ssize_t result;
-#endif
         do {
             result = QT_READ(fd, data + readBytes, size_t(len - readBytes));
         } while ((result == -1 && errno == EINTR)
@@ -663,12 +623,7 @@ qint64 QFSFileEnginePrivate::readLineFdFh(char *data, qint64 maxlen)
     if (!fh)
         return q->QAbstractFileEngine::readLine(data, maxlen);
 
-    QT_OFF_T oldPos = 0;
-#ifdef Q_OS_WIN
-    bool seq = q->isSequential();
-    if (!seq)
-#endif
-        oldPos = QT_FTELL(fh);
+    const QT_OFF_T oldPos = QT_FTELL(fh);
 
     // QIODevice::readLine() passes maxlen - 1 to QFile::readLineData()
     // because it has made space for the '\0' at the end of data.  But fgets
@@ -680,12 +635,7 @@ qint64 QFSFileEnginePrivate::readLineFdFh(char *data, qint64 maxlen)
         return -1;              // error
     }
 
-#ifdef Q_OS_WIN
-    if (seq)
-        return qstrlen(data);
-#endif
-
-    qint64 lineLength = QT_FTELL(fh) - oldPos;
+    const qint64 lineLength = QT_FTELL(fh) - oldPos;
     return lineLength > 0 ? lineLength : qstrlen(data);
 }
 

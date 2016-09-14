@@ -47,9 +47,8 @@
 //  -------------
 //
 // This file is not part of the Qt API.  It exists for the convenience
-// of qmutex.cpp, qmutex_unix.cpp, and qmutex_win.cpp.  This header
-// file may change from version to version without notice, or even be
-// removed.
+// of qmutex.cpp and qmutex_unix.cpp.  This header file may change
+// from version to version without notice, or even be removed.
 //
 // We mean it.
 //
@@ -77,7 +76,7 @@ public:
     const uint recursive : 1;
     QAtomicInt contenders;
 
-#if defined(Q_OS_UNIX) && (!defined(Q_OS_LINUX) || defined(QT_LINUXBASE))
+#if !defined(Q_OS_LINUX) || defined(QT_LINUXBASE)
     volatile bool wakeup;
     pthread_mutex_t mutex;
     pthread_cond_t cond;

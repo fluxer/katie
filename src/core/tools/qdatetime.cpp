@@ -2399,32 +2399,11 @@ QString QDateTime::toString(Qt::DateFormat f) const
     }
 #ifndef QT_NO_TEXTDATE
     else if (f == Qt::TextDate) {
-#ifndef Q_WS_WIN
         buf = d->date.shortDayName(d->date.dayOfWeek());
         buf += QLatin1Char(' ');
         buf += d->date.shortMonthName(d->date.month());
         buf += QLatin1Char(' ');
         buf += QString::number(d->date.day());
-#else
-        wchar_t out[255];
-        GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_ILDATE, out, 255);
-        QString winstr = QString::fromWCharArray(out);
-        switch (winstr.toInt()) {
-        case 1:
-            buf = d->date.shortDayName(d->date.dayOfWeek());
-            buf += QLatin1Char(' ');
-            buf += QString::number(d->date.day());
-            buf += QLatin1String(". ");
-            buf += d->date.shortMonthName(d->date.month());
-            break;
-        default:
-            buf = d->date.shortDayName(d->date.dayOfWeek());
-            buf += QLatin1Char(' ');
-            buf += d->date.shortMonthName(d->date.month());
-            buf += QLatin1Char(' ');
-            buf += QString::number(d->date.day());
-        }
-#endif
         buf += QLatin1Char(' ');
         buf += d->time.toString();
         buf += QLatin1Char(' ');

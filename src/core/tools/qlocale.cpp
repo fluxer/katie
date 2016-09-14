@@ -1329,31 +1329,10 @@ static bool timeFormatContainsAP(const QString &format)
     return false;
 }
 
-static QString timeZone()
+static inline QString timeZone()
 {
-#if defined(Q_OS_WINCE)
-    TIME_ZONE_INFORMATION info;
-    DWORD res = GetTimeZoneInformation(&info);
-    if (res == TIME_ZONE_ID_UNKNOWN)
-        return QString();
-    return QString::fromWCharArray(info.StandardName);
-#elif defined(Q_OS_WIN)
-    _tzset();
-# if defined(_MSC_VER) && _MSC_VER >= 1400
-    size_t returnSize = 0;
-    char timeZoneName[512];
-    if (_get_tzname(&returnSize, timeZoneName, 512, 1))
-        return QString();
-    return QString::fromLocal8Bit(timeZoneName);
-# else
-    return QString::fromLocal8Bit(_tzname[1]);
-# endif
-#elif defined(Q_OS_VXWORKS)
-    return QString();
-#else
     tzset();
     return QString::fromLocal8Bit(tzname[1]);
-#endif
 }
 
 /*!

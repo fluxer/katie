@@ -1528,11 +1528,7 @@ qint64 QProcess::bytesAvailable() const
 qint64 QProcess::bytesToWrite() const
 {
     Q_D(const QProcess);
-    qint64 size = d->writeBuffer.size();
-#ifdef Q_OS_WIN
-    size += d->pipeWriterBytesToWrite();
-#endif
-    return size;
+    return d->writeBuffer.size();
 }
 
 /*!
@@ -2229,17 +2225,7 @@ bool QProcess::startDetached(const QString &program)
     return QProcessPrivate::startDetached(prog, args);
 }
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-# include <crt_externs.h>
-# define environ (*_NSGetEnviron())
-#elif defined(Q_OS_WINCE) || (defined(Q_OS_MAC) && defined(Q_OS_IOS))
-  static char *qt_empty_environ[] = { 0 };
-#define environ qt_empty_environ
-#elif !defined(Q_OS_WIN)
-  extern char **environ;
-#endif
-QT_END_INCLUDE_NAMESPACE
+extern char **environ;
 
 /*!
     \since 4.1

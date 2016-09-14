@@ -65,10 +65,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(Q_OS_WINCE_STD) && _WIN32_WCE < 0x600
-#define Q_USE_DEPRECATED_MAP_API 1
-#endif
-
 class Q_AUTOTEST_EXPORT QFSFileEnginePrivate : public QAbstractFileEnginePrivate
 {
     Q_DECLARE_PUBLIC(QFSFileEngine)
@@ -85,9 +81,7 @@ public:
     bool nativeFlush();
     bool flushFh();
     qint64 nativeSize() const;
-#ifndef Q_OS_WIN
     qint64 sizeFdFh() const;
-#endif
     qint64 nativePos() const;
     qint64 posFdFh() const;
     bool nativeSeek(qint64);
@@ -100,9 +94,7 @@ public:
     qint64 writeFdFh(const char *data, qint64 len);
     int nativeHandle() const;
     bool nativeIsSequential() const;
-#ifndef Q_OS_WIN
     bool isSequentialFdFh() const;
-#endif
 
     uchar *map(qint64 offset, qint64 size, QFile::MemoryMapFlags flags);
     bool unmap(uchar *ptr);
@@ -132,16 +124,8 @@ public:
     mutable uint is_link : 1;
 #endif
 
-#if defined(Q_OS_WIN)
-    bool doStat(QFileSystemMetaData::MetaDataFlags flags) const;
-#else
     bool doStat(QFileSystemMetaData::MetaDataFlags flags = QFileSystemMetaData::PosixStatFlags) const;
-#endif
     bool isSymlink() const;
-
-#if defined(Q_OS_WIN32)
-    int sysOpen(const QString &, int flags);
-#endif
 
 protected:
     QFSFileEnginePrivate();

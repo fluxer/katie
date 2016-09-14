@@ -80,11 +80,7 @@ Q_CORE_EXPORT void qt_qFindChildren_helper(const QObject *parent, const QString 
                                            const QMetaObject &mo, QList<void *> *list);
 Q_CORE_EXPORT QObject *qt_qFindChild_helper(const QObject *parent, const QString &name, const QMetaObject &mo);
 
-class
-#if defined(__INTEL_COMPILER) && defined(Q_OS_WIN)
-Q_CORE_EXPORT
-#endif
-QObjectData {
+class QObjectData {
 public:
     virtual ~QObjectData() = 0;
     QObject *q_ptr;

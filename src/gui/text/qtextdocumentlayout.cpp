@@ -390,12 +390,12 @@ struct QCheckPoint
 };
 Q_DECLARE_TYPEINFO(QCheckPoint, Q_PRIMITIVE_TYPE);
 
-Q_STATIC_GLOBAL_OPERATOR bool operator<(const QCheckPoint &checkPoint, QFixed y)
+static inline bool operator<(const QCheckPoint &checkPoint, QFixed y)
 {
     return checkPoint.y < y;
 }
 
-Q_STATIC_GLOBAL_OPERATOR bool operator<(const QCheckPoint &checkPoint, int pos)
+static inline bool operator<(const QCheckPoint &checkPoint, int pos)
 {
     return checkPoint.positionInFrame < pos;
 }

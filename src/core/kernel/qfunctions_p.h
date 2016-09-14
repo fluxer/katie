@@ -55,25 +55,9 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(Q_OS_WINCE)
-#  include "QtCore/qfunctions_wince.h"
-#elif defined(Q_OS_VXWORKS)
-#  include "QtCore/qfunctions_vxworks.h"
-#elif defined(Q_OS_NACL)
+#if defined(Q_OS_NACL)
 #  include "QtCore/qfunctions_nacl.h"
 #endif
-
-#ifdef Q_CC_RVCT
-// rvct doesn't see static operators when using our qalgorithms
-#  define Q_STATIC_GLOBAL_OPERATOR inline
-#  define Q_STATIC_GLOBAL_INLINE_OPERATOR inline
-#else
-#  define Q_STATIC_GLOBAL_OPERATOR static
-#  define Q_STATIC_GLOBAL_INLINE_OPERATOR static inline
-#endif
-
-QT_BEGIN_HEADER
-QT_END_HEADER
 
 #endif
 

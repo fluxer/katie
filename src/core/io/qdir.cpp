@@ -728,42 +728,21 @@ QString QDir::relativeFilePath(const QString &fileName) const
 }
 
 /*!
+    \fn QDir::toNativeSeparators(const QString &pathName)
     \since 4.2
 
     Returns \a pathName with the '/' separators converted to
     separators that are appropriate for the underlying operating
     system.
 
-    On Windows, toNativeSeparators("c:/winnt/system32") returns
-    "c:\\winnt\\system32".
-
     The returned string may be the same as the argument on some
     operating systems, for example on Unix.
 
     \sa fromNativeSeparators(), separator()
 */
-QString QDir::toNativeSeparators(const QString &pathName)
-{
-#if defined(Q_FS_FAT) || defined(Q_OS_OS2EMX)
-    int i = pathName.indexOf(QLatin1Char('/'));
-    if (i != -1) {
-        QString n(pathName);
-
-        QChar * const data = n.data();
-        data[i++] = QLatin1Char('\\');
-
-        for (; i < n.length(); ++i) {
-            if (data[i] == QLatin1Char('/'))
-                data[i] = QLatin1Char('\\');
-        }
-
-        return n;
-    }
-#endif
-    return pathName;
-}
 
 /*!
+    \fn QString QDir::fromNativeSeparators(const QString &pathName)
     \since 4.2
 
     Returns \a pathName using '/' as file separator. On Windows,
@@ -775,26 +754,6 @@ QString QDir::toNativeSeparators(const QString &pathName)
 
     \sa toNativeSeparators(), separator()
 */
-QString QDir::fromNativeSeparators(const QString &pathName)
-{
-#if defined(Q_FS_FAT) || defined(Q_OS_OS2EMX)
-    int i = pathName.indexOf(QLatin1Char('\\'));
-    if (i != -1) {
-        QString n(pathName);
-
-        QChar * const data = n.data();
-        data[i++] = QLatin1Char('/');
-
-        for (; i < n.length(); ++i) {
-            if (data[i] == QLatin1Char('\\'))
-                data[i] = QLatin1Char('/');
-        }
-
-        return n;
-    }
-#endif
-    return pathName;
-}
 
 /*!
     Changes the QDir's directory to \a dirName.
@@ -1682,6 +1641,7 @@ QFileInfoList QDir::drives()
 }
 
 /*!
+    \fn QChar QDir::separator()
     Returns the native directory separator: "/" under Unix (including
     Mac OS X) and "\\" under Windows.
 
@@ -1691,18 +1651,6 @@ QFileInfoList QDir::drives()
     user using their operating system's separator use
     toNativeSeparators().
 */
-QChar QDir::separator()
-{
-#if defined (Q_FS_FAT) || defined(Q_WS_WIN)
-    return QLatin1Char('\\');
-#elif defined(Q_OS_UNIX)
-    return QLatin1Char('/');
-#elif defined (Q_OS_MAC)
-    return QLatin1Char(':');
-#else
-    return QLatin1Char('/');
-#endif
-}
 
 /*!
     Sets the application's current working directory to \a path.

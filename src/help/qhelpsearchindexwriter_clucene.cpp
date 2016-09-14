@@ -333,12 +333,12 @@ static const struct QTextHtmlEntity
     { "zwnj", 0x200c }
 };
 
-Q_STATIC_GLOBAL_OPERATOR bool operator<(const QString &entityStr, const QTextHtmlEntity &entity)
+static inline bool operator<(const QString &entityStr, const QTextHtmlEntity &entity)
 {
     return entityStr < QLatin1String(entity.name);
 }
 
-Q_STATIC_GLOBAL_OPERATOR bool operator<(const QTextHtmlEntity &entity, const QString &entityStr)
+static inline bool operator<(const QTextHtmlEntity &entity, const QString &entityStr)
 {
     return QLatin1String(entity.name) < entityStr;
 }

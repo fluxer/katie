@@ -70,17 +70,12 @@ public:
     static QFileSystemEntry absoluteName(const QFileSystemEntry &entry);
     static QString resolveUserName(const QFileSystemEntry &entry, QFileSystemMetaData &data);
     static QString resolveGroupName(const QFileSystemEntry &entry, QFileSystemMetaData &data);
-
-#if defined(Q_OS_UNIX)
     static QString resolveUserName(uint userId);
     static QString resolveGroupName(uint groupId);
-#endif
 
     static bool fillMetaData(const QFileSystemEntry &entry, QFileSystemMetaData &data,
                              QFileSystemMetaData::MetaDataFlags what);
-#if defined(Q_OS_UNIX)
     static bool fillMetaData(int fd, QFileSystemMetaData &data); // what = PosixStatFlags
-#endif
     //homePath, rootPath and tempPath shall return clean paths
     static QString homePath();
     static QString rootPath();
@@ -105,9 +100,6 @@ public:
                                                                   QFileSystemMetaData &data);
 private:
     static QString slowCanonicalized(const QString &path);
-#if defined(Q_OS_WIN)
-    static void clearWinStatData(QFileSystemMetaData &data);
-#endif
 };
 
 QT_END_NAMESPACE

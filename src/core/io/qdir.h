@@ -129,8 +129,12 @@ public:
     QString absoluteFilePath(const QString &fileName) const;
     QString relativeFilePath(const QString &fileName) const;
 
-    static QString toNativeSeparators(const QString &pathName);
-    static QString fromNativeSeparators(const QString &pathName);
+    static inline QChar separator()
+        { return QLatin1Char('/'); }
+    static QString toNativeSeparators(const QString &pathName)
+        { return pathName; }
+    static QString fromNativeSeparators(const QString &pathName)
+        { return pathName; }
 
     bool cd(const QString &dirName);
     bool cdUp();
@@ -179,8 +183,6 @@ public:
     bool exists(const QString &name) const;
 
     static QFileInfoList drives();
-
-    static QChar separator();
 
     static bool setCurrent(const QString &path);
     static inline QDir current() { return QDir(currentPath()); }

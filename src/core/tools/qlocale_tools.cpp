@@ -50,10 +50,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#ifdef Q_OS_WINCE
-#   include "qfunctions_wince.h"    // for _control87
-#endif
-
 #if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
 #    include <fenv.h>
 #endif
@@ -2270,36 +2266,12 @@ __attribute__ ((dllimport)) unsigned int __cdecl __MINGW_NOTHROW _clearfp (void)
 
 Q_CORE_EXPORT char *qdtoa ( double d, int mode, int ndigits, int *decpt, int *sign, char **rve, char **resultp)
 {
-    // Some values of the floating-point control word can cause _qdtoa to crash with an underflow.
-    // We set a safe value here.
-#ifdef Q_OS_WIN
-    _clear87();
-    unsigned int oldbits = _control87(0, 0);
-#ifndef MCW_EM
-#    ifdef _MCW_EM
-#        define MCW_EM _MCW_EM
-#    else
-#        define MCW_EM 0x0008001F
-#    endif
-#endif
-    _control87(MCW_EM, MCW_EM);
-#endif
-
 #if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
     fenv_t envp;
     feholdexcept(&envp);
 #endif
 
     char *s = _qdtoa(d, mode, ndigits, decpt, sign, rve, resultp);
-
-#ifdef Q_OS_WIN
-    _clear87();
-#ifndef _M_X64
-    _control87(oldbits, 0xFFFFF);
-#else
-    _control87(oldbits, _MCW_EM|_MCW_DN|_MCW_RC);
-#endif //_M_X64
-#endif //Q_OS_WIN
 
 #if defined(Q_OS_LINUX) && !defined(__UCLIBC__)
     fesetenv(&envp);
