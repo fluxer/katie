@@ -69,11 +69,7 @@ namespace QSharedMemoryPrivate
 #include "qsystemsemaphore.h"
 #include "qobject_p.h"
 
-#ifdef Q_OS_WIN
-#  include <qt_windows.h>
-#else
-#  include <sys/types.h>
-#endif
+#include <sys/types.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -130,9 +126,7 @@ public:
     static int createUnixKeyFile(const QString &fileName);
     static QString makePlatformSafeKey(const QString &key,
             const QString &prefix = QLatin1String("qipc_sharedmemory_"));
-#ifdef Q_OS_WIN
-    HANDLE handle();
-#elif defined(QT_POSIX_IPC)
+#if defined(QT_POSIX_IPC)
     int handle();
 #else
     key_t handle();
@@ -157,9 +151,7 @@ public:
 #endif // QT_NO_SYSTEMSEMAPHORE
 
 private:
-#ifdef Q_OS_WIN
-    HANDLE hand;
-#elif defined(QT_POSIX_IPC)
+#if defined(QT_POSIX_IPC)
     int hand;
 #else
     key_t unix_key;

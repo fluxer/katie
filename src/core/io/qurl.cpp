@@ -206,9 +206,6 @@
 #ifndef QT_BOOTSTRAPPED
 #include "qtldurl_p.h"
 #endif
-#if defined(Q_OS_WINCE_WM)
-#pragma optimize("g", off)
-#endif
 #include "qmutex.h"
 #include "qorderedmutexlocker_p.h"
 

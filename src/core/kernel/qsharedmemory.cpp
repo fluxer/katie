@@ -59,7 +59,7 @@ QT_BEGIN_NAMESPACE
   */
 QString
 QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
-					  const QString &prefix)
+                                          const QString &prefix)
 {
     if (key.isEmpty())
         return QString();
@@ -72,9 +72,7 @@ QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
 
     QByteArray hex = QCryptographicHash::hash(key.toUtf8(), QCryptographicHash::Sha1).toHex();
     result.append(QLatin1String(hex));
-#ifdef Q_OS_WIN
-    return result;
-#elif defined(QT_POSIX_IPC)
+#if defined(QT_POSIX_IPC)
     return QLatin1Char('/') + result;
 #else
     return QDir::tempPath() + QLatin1Char('/') + result;
@@ -348,11 +346,9 @@ bool QSharedMemory::create(int size, AccessMode mode)
     }
 
 #ifndef QT_NO_SYSTEMSEMAPHORE
-#ifndef Q_OS_WIN
     // Take ownership and force set initialValue because the semaphore
     // might have already existed from a previous crash.
     d->systemSemaphore.setKey(d->key, 1, QSystemSemaphore::Create);
-#endif
 
     QSharedMemoryLocker lock(this);
     if (!d->key.isNull() && !d->tryLocker(&lock, QLatin1String("QSharedMemory::create")))

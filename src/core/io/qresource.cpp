@@ -145,16 +145,6 @@ protected:
     }
 };
 
-static QString cleanPath(const QString &_path)
-{
-    QString path = QDir::cleanPath(_path);
-    // QDir::cleanPath does not remove two trailing slashes under _Windows_
-    // due to support for UNC paths. Remove those manually.
-    if (path.startsWith(QLatin1String("//")))
-        path.remove(0, 1);
-    return path;
-}
-
 Q_DECLARE_TYPEINFO(QResourceRoot, Q_MOVABLE_TYPE);
 
 Q_GLOBAL_STATIC_WITH_ARGS(QMutex, resourceMutex, (QMutex::Recursive))
@@ -270,7 +260,7 @@ QResourcePrivate::load(const QString &file)
     related.clear();
     QMutexLocker lock(resourceMutex());
     const ResourceList *list = resourceList();
-    QString cleaned = cleanPath(file);
+    QString cleaned = QDir::cleanPath(file);
     for(int i = 0; i < list->size(); ++i) {
         QResourceRoot *res = list->at(i);
         const int node = res->findNode(cleaned, locale);
@@ -345,7 +335,7 @@ QResourcePrivate::ensureChildren() const
     if(path.startsWith(QLatin1Char(':')))
         path = path.mid(1);
     QSet<QString> kids;
-    QString cleaned = cleanPath(path);
+    QString cleaned = QDir::cleanPath(path);
     for(int i = 0; i < related.size(); ++i) {
         QResourceRoot *res = related.at(i);
         if(res->mappingRootSubdir(path, &k) && !k.isEmpty()) {

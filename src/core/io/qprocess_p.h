@@ -56,18 +56,10 @@
 #include "QtCore/qprocess.h"
 #include "QtCore/qiodevice_p.h"
 #include "QtCore/qringbuffer_p.h"
-#ifdef Q_OS_UNIX
-#include <qorderedmutexlocker_p.h>
-#endif
+#include "qorderedmutexlocker_p.h"
 
-#ifdef Q_OS_WIN
-#include "QtCore/qt_windows.h"
-typedef HANDLE Q_PIPE;
-#define INVALID_Q_PIPE INVALID_HANDLE_VALUE
-#else
 typedef int Q_PIPE;
 #define INVALID_Q_PIPE -1
-#endif
 
 #ifndef QT_NO_PROCESS
 

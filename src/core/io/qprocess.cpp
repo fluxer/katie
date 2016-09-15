@@ -45,9 +45,7 @@
 #include <qdebug.h>
 #include <qstring.h>
 #include <ctype.h>
-#if !defined(Q_OS_WINCE)
 #include <errno.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 /*
@@ -1324,50 +1322,6 @@ void QProcess::setStandardOutputProcess(QProcess *destination)
     dto->stdinChannel.pipeFrom(dfrom);
 }
 
-#if defined(Q_OS_WIN)
-
-/*!
-    \since 4.7
-
-    Returns the additional native command line arguments for the program.
-
-    \note This function is available only on the Windows and Symbian
-    platforms.
-
-    \sa setNativeArguments()
-*/
-QString QProcess::nativeArguments() const
-{
-    Q_D(const QProcess);
-    return d->nativeArguments;
-}
-
-/*!
-    \since 4.7
-    \overload
-
-    Sets additional native command line \a arguments for the program.
-
-    On operating systems where the system API for passing command line
-    \a arguments to a subprocess natively uses a single string, one can
-    conceive command lines which cannot be passed via QProcess's portable
-    list-based API. In such cases this function must be used to set a
-    string which is \e appended to the string composed from the usual
-    argument list, with a delimiting space.
-
-    \note This function is available only on the Windows and Symbian
-    platforms.
-
-    \sa nativeArguments()
-*/
-void QProcess::setNativeArguments(const QString &arguments)
-{
-    Q_D(QProcess);
-    d->nativeArguments = arguments;
-}
-
-#endif
-
 /*!
     If QProcess has been assigned a working directory, this function returns
     the working directory that the QProcess will enter before the program has
@@ -1770,15 +1724,6 @@ qint64 QProcess::readData(char *data, qint64 maxlen)
 qint64 QProcess::writeData(const char *data, qint64 len)
 {
     Q_D(QProcess);
-
-#if defined(Q_OS_WINCE)
-    Q_UNUSED(data);
-    Q_UNUSED(len);
-    d->processError = QProcess::WriteError;
-    setErrorString(tr("Error writing to process"));
-    emit error(d->processError);
-    return -1;
-#endif
 
     if (d->stdinChannel.closed) {
 #if defined QPROCESS_DEBUG

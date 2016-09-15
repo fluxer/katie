@@ -62,10 +62,6 @@
 #endif
 #include "qscopedpointer_p.h"
 
-#ifdef Q_OS_WIN
-#include "QtCore/qt_windows.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // used in testing framework

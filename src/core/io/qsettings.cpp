@@ -355,22 +355,16 @@ after_loop:
     return result;
 }
 
-// see also qsettings_win.cpp and qsettings_mac.cpp
-
-#if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
 QSettingsPrivate *QSettingsPrivate::create(QSettings::Format format, QSettings::Scope scope,
                                            const QString &organization, const QString &application)
 {
     return new QConfFileSettingsPrivate(format, scope, organization, application);
 }
-#endif
 
-#if !defined(Q_OS_WIN)
 QSettingsPrivate *QSettingsPrivate::create(const QString &fileName, QSettings::Format format)
 {
     return new QConfFileSettingsPrivate(fileName, format);
 }
-#endif
 
 void QSettingsPrivate::processChild(QString key, ChildSpec spec, QMap<QString, QString> &result)
 {
@@ -1022,50 +1016,6 @@ void QConfFileSettingsPrivate::initAccess()
     sync();       // loads the files the first time
 }
 
-#ifdef Q_OS_WIN
-static QString windowsConfigPath(int type)
-{
-    QString result;
-
-#ifndef Q_OS_WINCE
-    QSystemLibrary library(QLatin1String("shell32"));
-#else
-    QSystemLibrary library(QLatin1String("coredll"));
-#endif // Q_OS_WINCE
-    typedef BOOL (WINAPI*GetSpecialFolderPath)(HWND, LPWSTR, int, BOOL);
-    GetSpecialFolderPath SHGetSpecialFolderPath = (GetSpecialFolderPath)library.resolve("SHGetSpecialFolderPathW");
-    if (SHGetSpecialFolderPath) {
-        wchar_t path[MAX_PATH];
-        SHGetSpecialFolderPath(0, path, type, FALSE);
-        result = QString::fromWCharArray(path);
-    }
-
-    if (result.isEmpty()) {
-        switch (type) {
-#ifndef Q_OS_WINCE
-        case CSIDL_COMMON_APPDATA:
-            result = QLatin1String("C:\\temp\\qt-common");
-            break;
-        case CSIDL_APPDATA:
-            result = QLatin1String("C:\\temp\\qt-user");
-            break;
-#else
-        case CSIDL_COMMON_APPDATA:
-            result = QLatin1String("\\Temp\\qt-common");
-            break;
-        case CSIDL_APPDATA:
-            result = QLatin1String("\\Temp\\qt-user");
-            break;
-#endif
-        default:
-            ;
-        }
-    }
-
-    return result;
-}
-#endif // Q_OS_WIN
-
 static inline int pathHashKey(QSettings::Format format, QSettings::Scope scope)
 {
     return int((uint(format) << 1) | uint(scope == QSettings::SystemScope));
@@ -1092,15 +1042,7 @@ static void initDefaultPaths(QMutexLocker *locker)
         /*
            Lazy initialization of pathHash. We initialize the
            IniFormat paths and (on Unix) the NativeFormat paths.
-           (The NativeFormat paths are not configurable for the
-           Windows registry and the Mac CFPreferences.)
        */
-#ifdef Q_OS_WIN
-        pathHash->insert(pathHashKey(QSettings::IniFormat, QSettings::UserScope),
-                         windowsConfigPath(CSIDL_APPDATA) + QDir::separator());
-        pathHash->insert(pathHashKey(QSettings::IniFormat, QSettings::SystemScope),
-                         windowsConfigPath(CSIDL_COMMON_APPDATA) + QDir::separator());
-#else
         QString userPath;
         char *env = getenv("XDG_CONFIG_HOME");
         if (env == 0) {
@@ -1114,11 +1056,8 @@ static void initDefaultPaths(QMutexLocker *locker)
 
         pathHash->insert(pathHashKey(QSettings::IniFormat, QSettings::UserScope), userPath);
         pathHash->insert(pathHashKey(QSettings::IniFormat, QSettings::SystemScope), systemPath);
-#ifndef Q_OS_MAC
         pathHash->insert(pathHashKey(QSettings::NativeFormat, QSettings::UserScope), userPath);
         pathHash->insert(pathHashKey(QSettings::NativeFormat, QSettings::SystemScope), systemPath);
-#endif
-#endif
     }
 }
 
@@ -1426,55 +1365,10 @@ void QConfFileSettingsPrivate::syncConfFile(int confFileNo)
     if (!createFile && !file.isOpen())
         setStatus(QSettings::AccessError);
 
-#ifdef Q_OS_WIN
-    HANDLE readSemaphore = 0;
-    HANDLE writeSemaphore = 0;
-    static const int FileLockSemMax = 50;
-    int numReadLocks = readOnly ? 1 : FileLockSemMax;
-
-    if (file.isOpen()) {
-        // Acquire the write lock if we will be writing
-        if (!readOnly) {
-            QString writeSemName = QLatin1String("QSettingsWriteSem ");
-            writeSemName.append(file.fileName());
-
-            writeSemaphore = CreateSemaphore(0, 1, 1, reinterpret_cast<const wchar_t *>(writeSemName.utf16()));
-
-            if (writeSemaphore) {
-                WaitForSingleObject(writeSemaphore, INFINITE);
-            } else {
-                setStatus(QSettings::AccessError);
-                return;
-            }
-        }
-
-        // Acquire all the read locks if we will be writing, to make sure nobody
-        // reads while we're writing. If we are only reading, acquire a single
-        // read lock.
-        QString readSemName(QLatin1String("QSettingsReadSem "));
-        readSemName.append(file.fileName());
-
-        readSemaphore = CreateSemaphore(0, FileLockSemMax, FileLockSemMax, reinterpret_cast<const wchar_t *>(readSemName.utf16()));
-
-        if (readSemaphore) {
-            for (int i = 0; i < numReadLocks; ++i)
-                WaitForSingleObject(readSemaphore, INFINITE);
-        } else {
-            setStatus(QSettings::AccessError);
-            if (writeSemaphore != 0) {
-                ReleaseSemaphore(writeSemaphore, 1, 0);
-                CloseHandle(writeSemaphore);
-            }
-            return;
-        }
-    }
-#else
-    if (file.isOpen())
-        unixLock(file.handle(), readOnly ? F_RDLCK : F_WRLCK);
-#endif
-
     // If we have created the file, apply the file perms
     if (file.isOpen()) {
+        unixLock(file.handle(), readOnly ? F_RDLCK : F_WRLCK);
+
         if (createFile) {
             QFile::Permissions perms = file.permissions() | QFile::ReadOwner | QFile::WriteOwner;
             if (!confFile->userPerms)
@@ -1503,32 +1397,25 @@ void QConfFileSettingsPrivate::syncConfFile(int confFileNo)
             because they don't exist) are treated as empty files.
         */
         if (file.isReadable() && fileInfo.size() != 0) {
-#ifdef Q_OS_MAC
-            if (format == QSettings::NativeFormat) {
-                ok = readPlistFile(confFile->name, &confFile->originalKeys);
-            } else
-#endif
-            {
-                if (format <= QSettings::IniFormat) {
-                    QByteArray data = file.readAll();
-                    ok = readIniFile(data, &confFile->unparsedIniSections);
-                } else {
-                    if (readFunc) {
-                        QSettings::SettingsMap tempNewKeys;
-                        ok = readFunc(file, tempNewKeys);
+            if (format <= QSettings::IniFormat) {
+                QByteArray data = file.readAll();
+                ok = readIniFile(data, &confFile->unparsedIniSections);
+            } else {
+                if (readFunc) {
+                    QSettings::SettingsMap tempNewKeys;
+                    ok = readFunc(file, tempNewKeys);
 
-                        if (ok) {
-                            QSettings::SettingsMap::const_iterator i = tempNewKeys.constBegin();
-                            while (i != tempNewKeys.constEnd()) {
-                                confFile->originalKeys.insert(QSettingsKey(i.key(),
-                                                                           caseSensitivity),
-                                                              i.value());
-                                ++i;
-                            }
+                    if (ok) {
+                        QSettings::SettingsMap::const_iterator i = tempNewKeys.constBegin();
+                        while (i != tempNewKeys.constEnd()) {
+                            confFile->originalKeys.insert(QSettingsKey(i.key(),
+                                                                        caseSensitivity),
+                                                            i.value());
+                            ++i;
                         }
-                    } else {
-                        ok = false;
                     }
+                } else {
+                    ok = false;
                 }
             }
 
@@ -1599,20 +1486,6 @@ void QConfFileSettingsPrivate::syncConfFile(int confFileNo)
             setStatus(QSettings::AccessError);
         }
     }
-
-    /*
-        Release the file lock.
-    */
-#ifdef Q_OS_WIN
-    if (readSemaphore != 0) {
-        ReleaseSemaphore(readSemaphore, numReadLocks, 0);
-        CloseHandle(readSemaphore);
-    }
-    if (writeSemaphore != 0) {
-        ReleaseSemaphore(writeSemaphore, 1, 0);
-        CloseHandle(writeSemaphore);
-    }
-#endif
 }
 
 enum { Space = 0x1, Special = 0x2 };
@@ -1868,11 +1741,7 @@ bool QConfFileSettingsPrivate::writeIniFile(QIODevice &device, const ParsedSetti
     IniMap iniMap;
     IniMap::const_iterator i;
 
-#ifdef Q_OS_WIN
-    const char * const eol = "\r\n";
-#else
     const char eol = '\n';
-#endif
 
     for (ParsedSettingsMap::const_iterator j = map.constBegin(); j != map.constEnd(); ++j) {
         QString section;
@@ -3421,9 +3290,7 @@ QSettings::Format QSettings::defaultFormat()
 void QSettings::setSystemIniPath(const QString &dir)
 {
     setPath(IniFormat, SystemScope, dir);
-#if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
     setPath(NativeFormat, SystemScope, dir);
-#endif
 }
 
 /*!
@@ -3435,9 +3302,7 @@ void QSettings::setSystemIniPath(const QString &dir)
 void QSettings::setUserIniPath(const QString &dir)
 {
     setPath(IniFormat, UserScope, dir);
-#if !defined(Q_OS_WIN) && !defined(Q_OS_MAC)
     setPath(NativeFormat, UserScope, dir);
-#endif
 }
 
 /*!
