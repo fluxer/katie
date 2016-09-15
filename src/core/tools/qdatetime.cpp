@@ -2813,15 +2813,14 @@ QDate QDate::currentDate()
     // posix compliant system
     time_t ltime;
     time(&ltime);
-    struct tm *t = 0;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
-    t = localtime_r(&ltime, &res);
+    struct tm *t = localtime_r(&ltime, &res);
 #else
-    t = localtime(&ltime);
+    struct tm *t = localtime(&ltime);
 #endif // !QT_NO_THREAD && _POSIX_THREAD_SAFE_FUNCTIONS
 
     d.jd = julianDayFromDate(t->tm_year + 1900, t->tm_mon + 1, t->tm_mday);
@@ -2835,15 +2834,14 @@ QTime QTime::currentTime()
     struct timeval tv;
     gettimeofday(&tv, 0);
     time_t ltime = tv.tv_sec;
-    struct tm *t = 0;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
-    t = localtime_r(&ltime, &res);
+    struct tm *t = localtime_r(&ltime, &res);
 #else
-    t = localtime(&ltime);
+    struct tm *t = localtime(&ltime);
 #endif
     Q_CHECK_PTR(t);
 
@@ -2858,15 +2856,14 @@ QDateTime QDateTime::currentDateTime()
     struct timeval tv;
     gettimeofday(&tv, 0);
     time_t ltime = tv.tv_sec;
-    struct tm *t = 0;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of localtime() where available
     tzset();
     struct tm res;
-    t = localtime_r(&ltime, &res);
+    struct tm *t = localtime_r(&ltime, &res);
 #else
-    t = localtime(&ltime);
+    struct tm *t = localtime(&ltime);
 #endif
 
     QDateTime dt;
@@ -2886,14 +2883,13 @@ QDateTime QDateTime::currentDateTimeUtc()
     struct timeval tv;
     gettimeofday(&tv, 0);
     time_t ltime = tv.tv_sec;
-    struct tm *t = 0;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
     // use the reentrant version of localtime() where available
     struct tm res;
-    t = gmtime_r(&ltime, &res);
+    struct tm *t = gmtime_r(&ltime, &res);
 #else
-    t = gmtime(&ltime);
+    struct tm *t = gmtime(&ltime);
 #endif
 
     QDateTime dt;
@@ -3004,8 +3000,7 @@ int QDateTime::utcOffset() const
 {
     if(isValid() && d->spec == QDateTimePrivate::OffsetFromUTC)
         return d->utcOffset;
-    else
-        return 0;
+    return 0;
 }
 
 #ifndef QT_NO_DATESTRING
@@ -3037,9 +3032,8 @@ static int fromShortMonthName(const QString &monthName)
 */
 QDateTime QDateTime::fromString(const QString& s, Qt::DateFormat f)
 {
-    if (s.isEmpty()) {
+    if (s.isEmpty())
         return QDateTime();
-    }
 
     switch (f) {
     case Qt::ISODate: {

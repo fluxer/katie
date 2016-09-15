@@ -62,13 +62,5 @@ endif()
 
 add_definitions(-DQT_STYLE_MOTIF -DQT_STYLE_WINDOWS)
 
-# TODO: get rid of these style remains
-add_definitions(
-    -DQT_NO_STYLE_WINDOWSCE
-    -DQT_NO_STYLE_WINDOWSXP
-    -DQT_NO_STYLE_WINDOWSVISTA
-    -DQT_NO_STYLE_MAC
-)
-
 # TODO: get rid of these conditionals
 # add_definitions(-DQT_NO_STYLE_CDE -DQT_NO_STYLE_PLASTIQUE -DQT_NO_STYLE_MOTIF)

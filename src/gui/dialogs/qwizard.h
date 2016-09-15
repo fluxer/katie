@@ -93,6 +93,7 @@ public:
         NPixmaps
     };
 
+    // TODO: get rid of those?
     enum WizardStyle {
         ClassicStyle,
         ModernStyle,
@@ -189,9 +190,6 @@ protected:
     bool event(QEvent *event);
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
-#if defined(Q_WS_WIN)
-    bool winEvent(MSG * message, long * result);
-#endif
     void done(int result);
     virtual void initializePage(int id);
     virtual void cleanupPage(int id);

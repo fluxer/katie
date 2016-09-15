@@ -44,10 +44,8 @@
 
 /* No longer supported */
 #define QT_NO_OPENVG
-#define QT_NO_STYLE_S60
 #define QT_NO_PHONON
 #define QT_NO_WIN_ACTIVEQT
-#define QT_NO_STYLE_WINDOWSMOBILE
 #define QT_NO_DIRECTPAINTER
 #define QT_NO_COP
 #define QT_NO_BLITTABLE
@@ -79,6 +77,8 @@
 #define QT_NO_STYLE_WINDOWSMOBILE
 #define QT_NO_STYLE_WINDOWSXP
 #define QT_NO_STYLE_WINDOWSVISTA
+#define QT_NO_STYLE_MAC
+#define QT_NO_STYLE_S60
 
 /* Qt build specs */
 #ifndef QT_EDITION

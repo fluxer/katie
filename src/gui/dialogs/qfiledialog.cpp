@@ -880,7 +880,6 @@ void QFileDialog::selectFile(const QString &filename)
         d->lineEdit()->setText(file);
 }
 
-#ifdef Q_OS_UNIX
 Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded = 0)
 {
     if (expanded != 0)
@@ -888,16 +887,13 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
     if (!path.startsWith(QLatin1Char('~')))
         return path;
     QString ret = path;
-#if !defined(Q_OS_INTEGRITY)
     QStringList tokens = ret.split(QDir::separator());
     if (tokens.first() == QLatin1String("~")) {
         ret.replace(0, 1, QDir::homePath());
     } else {
         QString userName = tokens.first();
         userName.remove(0, 1);
-#if defined(Q_OS_VXWORKS)
-        const QString homePath = QDir::homePath();
-#elif defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD)
+#if defined(_POSIX_THREAD_SAFE_FUNCTIONS) && !defined(Q_OS_OPENBSD)
         passwd pw;
         passwd *tmpPw;
         char buf[200];
@@ -921,31 +917,23 @@ Q_AUTOTEST_EXPORT QString qt_tildeExpansion(const QString &path, bool *expanded 
     }
     if (expanded != 0)
         *expanded = true;
-#endif
     return ret;
 }
-#endif
 
 /**
     Returns the text in the line edit which can be one or more file names
   */
 QStringList QFileDialogPrivate::typedFiles() const
 {
-#ifdef Q_OS_UNIX
     Q_Q(const QFileDialog);
-#endif
     QStringList files;
     QString editText = lineEdit()->text();
     if (!editText.contains(QLatin1Char('"'))) {
-#ifdef Q_OS_UNIX
         const QString prefix = q->directory().absolutePath() + QDir::separator();
         if (QFile::exists(prefix + editText))
             files << editText;
         else
             files << qt_tildeExpansion(editText);
-#else
-        files << editText;
-#endif
     } else {
         // " is used to separate files like so: "file1" "file2" "file3" ...
         // ### need escape character for filenames with quotes (")
@@ -953,16 +941,12 @@ QStringList QFileDialogPrivate::typedFiles() const
         for (int i=0; i<tokens.size(); ++i) {
             if ((i % 2) == 0)
                 continue; // Every even token is a separator
-#ifdef Q_OS_UNIX
             const QString token = tokens.at(i);
             const QString prefix = q->directory().absolutePath() + QDir::separator();
             if (QFile::exists(prefix + token))
                 files << token;
             else
                 files << qt_tildeExpansion(token);
-#else
-            files << toInternal(tokens.at(i));
-#endif
         }
     }
     return addDefaultSuffixToFiles(files);
@@ -1347,10 +1331,6 @@ void QFileDialog::setAcceptMode(QFileDialog::AcceptMode mode)
         d->qFileDialogUi->lookInCombo->setEditable(false);
     }
     d->retranslateWindowTitle();
-#if defined(Q_WS_MAC)
-    d->deleteNativeDialog_sys();
-    setAttribute(Qt::WA_DontShowOnScreen, false);
-#endif
 }
 
 /*
@@ -1370,7 +1350,7 @@ QAbstractItemView *QFileDialogPrivate::currentView() const {
 }
 
 QLineEdit *QFileDialogPrivate::lineEdit() const {
-    return (QLineEdit*)qFileDialogUi->fileNameEdit;
+    return qFileDialogUi->fileNameEdit;
 }
 
 /*
