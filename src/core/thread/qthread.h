@@ -57,8 +57,8 @@ class QThreadPrivate;
 class Q_CORE_EXPORT QThread : public QObject
 {
 public:
-    static Qt::HANDLE currentThreadId();
     static QThread *currentThread();
+    static Qt::HANDLE currentThreadId();
     static int idealThreadCount();
     static void yieldCurrentThread();
 
@@ -130,9 +130,10 @@ private:
 class Q_CORE_EXPORT QThread : public QObject
 {
 public:
-    static Qt::HANDLE currentThreadId() { return Qt::HANDLE(currentThread()); }
     static QThread* currentThread();
-    
+    static inline Qt::HANDLE currentThreadId()
+        { return Qt::HANDLE(currentThread()); }
+
 protected:
     QThread(QThreadPrivate &dd, QObject *parent = 0);
 

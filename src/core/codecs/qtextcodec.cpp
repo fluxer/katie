@@ -93,12 +93,6 @@
 #include <langinfo.h>
 #endif
 
-#if defined(Q_OS_WINCE)
-#  define QT_NO_SETLOCALE
-#endif
-
-
-
 // enabling this is not exception safe!
 // #define Q_DEBUG_TEXTCODEC
 
@@ -518,11 +512,7 @@ static const char * const probably_koi8_rlocales[] = {
 static QTextCodec * ru_RU_hack(const char * i) {
     QTextCodec * ru_RU_codec = 0;
 
-#if !defined(QT_NO_SETLOCALE)
-    QByteArray origlocale(setlocale(LC_CTYPE, i));
-#else
-    QByteArray origlocale(i);
-#endif
+    const QByteArray origlocale(setlocale(LC_CTYPE, i));
     // unicode   koi8r   latin5   name
     // 0x044E    0xC0    0xEE     CYRILLIC SMALL LETTER YU
     // 0x042E    0xE0    0xCE     CYRILLIC CAPITAL LETTER YU
@@ -538,9 +528,7 @@ static QTextCodec * ru_RU_hack(const char * i) {
         qWarning("QTextCodec: Using KOI8-R, probe failed (%02x %02x %s)",
                   koi8r, latin5, i);
     }
-#if !defined(QT_NO_SETLOCALE)
     setlocale(LC_CTYPE, origlocale);
-#endif
 
     return ru_RU_codec;
 }
@@ -594,11 +582,7 @@ static void setupLocaleMapper()
         // First part is getting that locale name.  First try setlocale() which
         // definitely knows it, but since we cannot fully trust it, get ready
         // to fall back to environment variables.
-#if !defined(QT_NO_SETLOCALE)
         const QByteArray ctype = setlocale(LC_CTYPE, 0);
-#else
-        const QByteArray ctype;
-#endif
 
         // Get the first nonempty value from $LC_ALL, $LC_CTYPE, and $LANG
         // environment variables.
@@ -735,7 +719,6 @@ static void setup()
 #  endif // Q_WS_X11
 
 
-#if !defined(Q_OS_INTEGRITY)
 #  if defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED) && !defined(QT_CODEC_PLUGINS)
     // no asian codecs when bootstrapping, sorry
     (void)new QGb18030Codec;
@@ -749,12 +732,7 @@ static void setup()
     (void)new QBig5Codec;
     (void)new QBig5hkscsCodec;
 #  endif // QT_NO_ICONV && !QT_BOOTSTRAPPED && !QT_CODEC_PLUGINS
-#endif //Q_OS_INTEGRITY
 #endif // QT_NO_CODECS
-
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    (void) new QWindowsLocalCodec;
-#endif // Q_OS_WIN32
 
     (void)new QUtf16Codec;
     (void)new QUtf16BECodec;
@@ -766,7 +744,7 @@ static void setup()
     (void)new QLatin1Codec;
     (void)new QUtf8Codec;
 
-#if !defined(Q_OS_INTEGRITY) && defined(Q_OS_UNIX) && !defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED)
+#if !defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED)
     // QIconvCodec depends on the UTF-16 codec, so it needs to be created last
     (void) new QIconvCodec();
 #endif

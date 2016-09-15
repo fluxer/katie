@@ -231,9 +231,7 @@ static const int QTEXTSTREAM_BUFFERSIZE = 16384;
 #ifndef QT_NO_TEXTCODEC
 #include "qtextcodec.h"
 #endif
-#ifndef Q_OS_WINCE
 #include <locale.h>
-#endif
 #include "qlocale_p.h"
 
 #include <stdlib.h>
@@ -528,29 +526,10 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     // read raw data into a temporary buffer
     char buf[QTEXTSTREAM_BUFFERSIZE];
     qint64 bytesRead = 0;
-#if defined(Q_OS_WIN)
-    // On Windows, there is no non-blocking stdin - so we fall back to reading
-    // lines instead. If there is no QOBJECT, we read lines for all sequential
-    // devices; otherwise, we read lines only for stdin.
-    QFile *file = 0;
-    Q_UNUSED(file);
-    if (device->isSequential()
-#if !defined(QT_NO_QOBJECT)
-        && (file = qobject_cast<QFile *>(device)) && file->handle() == 0
-#endif
-        ) {
-        if (maxBytes != -1)
-            bytesRead = device->readLine(buf, qMin<qint64>(sizeof(buf), maxBytes));
-        else
-            bytesRead = device->readLine(buf, sizeof(buf));
-    } else
-#endif
-    {
-        if (maxBytes != -1)
-            bytesRead = device->read(buf, qMin<qint64>(sizeof(buf), maxBytes));
-        else
-            bytesRead = device->read(buf, sizeof(buf));
-    }
+    if (maxBytes != -1)
+        bytesRead = device->read(buf, qMin<qint64>(sizeof(buf), maxBytes));
+    else
+        bytesRead = device->read(buf, sizeof(buf));
 
 #ifndef QT_NO_TEXTCODEC
     // codec auto detection, explicitly defaults to locale encoding if the
@@ -653,15 +632,6 @@ void QTextStreamPrivate::flushWriteBuffer()
     if (writeBuffer.isEmpty())
         return;
 
-#if defined (Q_OS_WIN)
-    // handle text translation and bypass the Text flag in the device.
-    bool textModeEnabled = device->isTextModeEnabled();
-    if (textModeEnabled) {
-        device->setTextModeEnabled(false);
-        writeBuffer.replace(QLatin1Char('\n'), QLatin1String("\r\n"));
-    }
-#endif
-
 #ifndef QT_NO_TEXTCODEC
     if (!codec)
         codec = QTextCodec::codecForLocale();
@@ -687,12 +657,6 @@ void QTextStreamPrivate::flushWriteBuffer()
         status = QTextStream::WriteFailed;
         return;
     }
-
-#if defined (Q_OS_WIN)
-    // replace the text flag
-    if (textModeEnabled)
-        device->setTextModeEnabled(true);
-#endif
 
     // flush the file
 #ifndef QT_NO_QOBJECT

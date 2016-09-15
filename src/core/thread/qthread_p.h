@@ -152,27 +152,12 @@ public:
 
     static QThread *threadForId(int id);
 
-#ifdef Q_OS_UNIX
     pthread_t thread_id;
     QWaitCondition thread_done;
 
     static void *start(void *arg);
     static void finish(void *);
 
-#endif // Q_OS_UNIX
-
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    HANDLE handle;
-    unsigned int id;
-    int waiters;
-
-    static unsigned int __stdcall start(void *);
-    static void finish(void *, bool lockAnyway=true);
-#endif // Q_OS_WIN32
-
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    bool terminationEnabled, terminatePending;
-# endif
     QThreadData *data;
 
     static void createEventDispatcher(QThreadData *data);

@@ -52,24 +52,6 @@
 #include "qthread_p.h"
 #include "qcoreapplication_p.h"
 
-/*
-#ifdef Q_OS_WIN32
-# include "qt_windows.h"
-#else
-# include <unistd.h>
-# include <netinet/in.h>
-# include <sys/utsname.h>
-# include <sys/socket.h>
-*/
-/*
-#  elif defined(Q_OS_HPUX)
-#   include <sys/pstat.h>
-#  elif defined(Q_OS_FREEBSD) || defined(Q_OS_OPENBSD) || defined(Q_OS_MAC)
-#   include <sys/sysctl.h>
-#  endif
-#endif
-*/
-
 QT_BEGIN_NAMESPACE
 
 /*
@@ -175,18 +157,6 @@ QThreadPrivate::QThreadPrivate(QThreadData *d)
       isInFinish(false), exited(false), returnCode(-1),
       stackSize(0), priority(QThread::InheritPriority), data(d)
 {
-#if defined (Q_OS_UNIX)
-    thread_id = 0;
-#elif defined (Q_WS_WIN)
-    handle = 0;
-    id = 0;
-    waiters = 0;
-#endif
-#if defined (Q_WS_WIN)
-    terminationEnabled = true;
-    terminatePending = false;
-#endif
-
     if (!data)
         data = new QThreadData;
 }

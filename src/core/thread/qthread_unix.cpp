@@ -263,19 +263,13 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
 
 #ifndef QT_NO_THREAD
 
-#if (defined(Q_OS_LINUX) || (defined(Q_OS_MAC) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6) || defined(Q_OS_QNX))
+#if defined(Q_OS_LINUX)
 static void setCurrentThreadName(pthread_t threadId, const char *name)
 {
-#  if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
+#if defined(Q_OS_LINUX) && !defined(QT_LINUXBASE)
     Q_UNUSED(threadId);
     prctl(PR_SET_NAME, (unsigned long)name, 0, 0, 0);
-#  elif (defined(Q_OS_MAC) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6)
-    Q_UNUSED(threadId);
-    if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_6)
-        pthread_setname_np(name);
-#  elif defined(Q_OS_QNX)
-    pthread_setname_np(threadId, name);
-#  endif
+#endif
 }
 #endif
 
@@ -304,7 +298,7 @@ void *QThreadPrivate::start(void *arg)
     // ### TODO: allow the user to create a custom event dispatcher
     createEventDispatcher(data);
 
-#if (defined(Q_OS_LINUX) || (defined(Q_OS_MAC) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_6) || defined(Q_OS_QNX))
+#if defined(Q_OS_LINUX)
     // sets the name of the current thread.
     QString objectName = thr->objectName();
 
@@ -384,10 +378,7 @@ int QThread::idealThreadCount()
 {
     int cores = -1;
 
-#if defined(Q_OS_MAC)
-    // Mac OS X
-    cores = MPProcessorsScheduled();
-#elif defined(Q_OS_HPUX)
+#if defined(Q_OS_HPUX)
     // HP-UX
     struct pst_dynamic psd;
     if (pstat_getdynamic(&psd, sizeof(psd), 1, 0) == -1) {
@@ -409,32 +400,6 @@ int QThread::idealThreadCount()
 #elif defined(Q_OS_IRIX)
     // IRIX
     cores = (int)sysconf(_SC_NPROC_ONLN);
-#elif defined(Q_OS_INTEGRITY)
-#if (__INTEGRITY_MAJOR_VERSION >= 10)
-    // Integrity V10+ does support multicore CPUs
-    Value processorCount;
-    if (GetProcessorCount(CurrentTask(), &processorCount) == 0)
-        cores = processorCount;
-    else
-#endif
-    cores = 1;
-#elif defined(Q_OS_VXWORKS)
-    // VxWorks
-#  if defined(QT_VXWORKS_HAS_CPUSET)
-    cpuset_t cpus = vxCpuEnabledGet();
-    cores = 0;
-
-    // 128 cores should be enough for everyone ;)
-    for (int i = 0; i < 128 && !CPUSET_ISZERO(cpus); ++i) {
-        if (CPUSET_ISSET(cpus, i)) {
-            CPUSET_CLR(cpus, i);
-            cores++;
-        }
-    }
-#  else
-    // as of aug 2008 VxWorks < 6.6 only supports one single core CPU
-    cores = 1;
-#  endif
 #else
     // the rest: Linux, Solaris, AIX, Tru64
     cores = (int)sysconf(_SC_NPROCESSORS_ONLN);
@@ -508,11 +473,6 @@ void QThread::usleep(unsigned long usecs)
 // sched_priority is OUT only
 static bool calculateUnixPriority(int priority, int *sched_policy, int *sched_priority)
 {
-#ifdef Q_OS_QNX
-    // without Round Robin drawn intensive apps will hog the cpu
-    // and make the system appear frozen
-   *sched_policy = SCHED_RR;
-#endif
 #ifdef SCHED_IDLE
     if (priority == QThread::IdlePriority) {
         *sched_policy = SCHED_IDLE;
@@ -525,20 +485,8 @@ static bool calculateUnixPriority(int priority, int *sched_policy, int *sched_pr
 #endif
     const int highestPriority = QThread::TimeCriticalPriority;
 
-    int prio_min;
-    int prio_max;
-#if defined(Q_OS_VXWORKS) && defined(VXWORKS_DKM)
-    // for other scheduling policies than SCHED_RR or SCHED_FIFO
-    prio_min = SCHED_FIFO_LOW_PRI;
-    prio_max = SCHED_FIFO_HIGH_PRI;
-
-    if ((*sched_policy == SCHED_RR) || (*sched_policy == SCHED_FIFO))
-#endif
-    {
-    prio_min = sched_get_priority_min(*sched_policy);
-    prio_max = sched_get_priority_max(*sched_policy);
-    }
-
+    const int prio_min = sched_get_priority_min(*sched_policy);
+    const int prio_max = sched_get_priority_max(*sched_policy);
     if (prio_min == -1 || prio_max == -1)
         return false;
 
