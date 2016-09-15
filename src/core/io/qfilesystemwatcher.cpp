@@ -239,16 +239,12 @@ void QPollingFileSystemWatcherEngine::timeout()
 
 QFileSystemWatcherEngine *QFileSystemWatcherPrivate::createNativeEngine()
 {
-#if defined(Q_OS_WIN)
-    return new QWindowsFileSystemWatcherEngine;
-#elif defined(Q_OS_QNX) && !defined(QT_NO_INOTIFY)
-    return QInotifyFileSystemWatcherEngine::create();
-#elif defined(Q_OS_LINUX)
+#if defined(Q_OS_LINUX)
     QFileSystemWatcherEngine *eng = QInotifyFileSystemWatcherEngine::create();
     if(!eng)
         eng = QDnotifyFileSystemWatcherEngine::create();
     return eng;
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_MAC)
+#elif defined(Q_OS_FREEBSD)
         return QKqueueFileSystemWatcherEngine::create();
 #else
     return 0;

@@ -75,6 +75,10 @@
 #define QT_NO_QWS_VNC
 #define QT_NO_AUDIO_BACKEND
 #define QT_NO_DIRECTWRITE
+#define QT_NO_STYLE_WINDOWSCE
+#define QT_NO_STYLE_WINDOWSMOBILE
+#define QT_NO_STYLE_WINDOWSXP
+#define QT_NO_STYLE_WINDOWSVISTA
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -209,10 +213,6 @@
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
 #cmakedefine QT_NO_STYLE_PLASTIQUE
 #cmakedefine QT_NO_STYLE_STYLESHEET
-#cmakedefine QT_NO_STYLE_WINDOWSCE
-#cmakedefine QT_NO_STYLE_WINDOWSMOBILE
-#cmakedefine QT_NO_STYLE_WINDOWSVISTA
-#cmakedefine QT_NO_STYLE_WINDOWSXP
 
 /* Utilities */
 #cmakedefine QT_NO_ACCESSIBILITY

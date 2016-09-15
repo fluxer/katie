@@ -58,9 +58,8 @@
 #ifndef QT_NO_SYSTEMSEMAPHORE
 
 #include "qsharedmemory_p.h"
-#ifndef Q_OS_WINCE
-#  include <sys/types.h>
-#endif
+
+#include <sys/types.h>
 #ifdef QT_POSIX_IPC
 #  include <semaphore.h>
 #endif
@@ -78,10 +77,7 @@ public:
         return QSharedMemoryPrivate::makePlatformSafeKey(key, QLatin1String("qipc_systemsem_"));
     }
 
-#ifdef Q_OS_WIN
-    HANDLE handle(QSystemSemaphore::AccessMode mode = QSystemSemaphore::Open);
-    void setErrorString(const QString &function);
-#elif defined(QT_POSIX_IPC)
+#if defined(QT_POSIX_IPC)
     bool handle(QSystemSemaphore::AccessMode mode = QSystemSemaphore::Open);
     void setErrorString(const QString &function);
 #else
@@ -94,10 +90,7 @@ public:
     QString key;
     QString fileName;
     int initialValue;
-#ifdef Q_OS_WIN
-    HANDLE semaphore;
-    HANDLE semaphoreLock;
-#elif defined(QT_POSIX_IPC)
+#if defined(QT_POSIX_IPC)
     sem_t *semaphore;
     bool createdSemaphore;
 #else

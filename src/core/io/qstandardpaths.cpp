@@ -292,18 +292,6 @@ QStringList QStandardPaths::locateAll(StandardLocation type, const QString &file
    return result;
 }
 
-#ifdef Q_OS_WIN
-static QStringList executableExtensions()
-{
-   // If %PATHEXT% does not contain .exe, it is either empty, malformed, or distorted in ways that we cannot support, anyway.
-   const QStringList pathExt = QString::fromLocal8Bit(qgetenv("PATHEXT")).toLower().split(QLatin1Char(';'));
-   return pathExt.contains(QLatin1String(".exe"), Qt::CaseInsensitive) ?
-          pathExt :
-          QStringList() << QLatin1String(".exe") << QLatin1String(".com")
-          << QLatin1String(".bat") << QLatin1String(".cmd");
-}
-#endif
-
 static QString checkExecutable(const QString &path)
 {
    const QFileInfo info(path);
@@ -326,30 +314,6 @@ static inline QString searchExecutable(const QStringList &searchPaths,
    }
    return QString();
 }
-
-#ifdef Q_OS_WIN
-
-// Find executable appending candidate suffixes, used for suffix-less executables
-// on Windows.
-static inline QString
-searchExecutableAppendSuffix(const QStringList &searchPaths,
-                             const QString &executableName,
-                             const QStringList &suffixes)
-{
-   const QDir currentDir = QDir::current();
-   foreach (const QString & searchPath, searchPaths) {
-      const QString candidateRoot = currentDir.absoluteFilePath(searchPath + QLatin1Char('/') + executableName);
-      foreach (const QString & suffix, suffixes) {
-         const QString absPath = checkExecutable(candidateRoot + suffix);
-         if (!absPath.isEmpty()) {
-            return absPath;
-         }
-      }
-   }
-   return QString();
-}
-
-#endif // Q_OS_WIN
 
 /*!
   Finds the executable named \a executableName in the paths specified by \a paths,
@@ -378,12 +342,8 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
 
    QStringList searchPaths = paths;
    if (paths.isEmpty()) {
-      QByteArray pEnv = qgetenv("PATH");
-#if defined(Q_OS_WIN)
-      const QLatin1Char pathSep(';');
-#else
+      const QByteArray pEnv = qgetenv("PATH");
       const QLatin1Char pathSep(':');
-#endif
       // Remove trailing slashes, which occur on Windows.
       const QStringList rawPaths = QString::fromLocal8Bit(pEnv.constData()).split(pathSep, QString::SkipEmptyParts);
       searchPaths.reserve(rawPaths.size());
@@ -396,19 +356,6 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
       }
    }
 
-#ifdef Q_OS_WIN
-   // On Windows, if the name does not have a suffix or a suffix not
-   // in PATHEXT ("xx.foo"), append suffixes from PATHEXT.
-   static const QStringList executable_extensions = executableExtensions();
-   if (executableName.contains(QLatin1Char('.'))) {
-      const QString suffix = QFileInfo(executableName).suffix();
-      if (suffix.isEmpty() || !executable_extensions.contains(QLatin1Char('.') + suffix, Qt::CaseInsensitive)) {
-         return searchExecutableAppendSuffix(searchPaths, executableName, executable_extensions);
-      }
-   } else {
-      return searchExecutableAppendSuffix(searchPaths, executableName, executable_extensions);
-   }
-#endif
    return searchExecutable(searchPaths, executableName);
 }
 
@@ -419,7 +366,6 @@ QString QStandardPaths::findExecutable(const QString &executableName, const QStr
     an empty QString if no relevant location can be found.
 */
 
-#if !defined(Q_OS_MAC)
 QString QStandardPaths::displayName(StandardLocation type)
 {
    switch (type) {
@@ -461,7 +407,6 @@ QString QStandardPaths::displayName(StandardLocation type)
    // not reached
    return QString();
 }
-#endif
 
 QT_END_NAMESPACE
 

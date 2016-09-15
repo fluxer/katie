@@ -41,19 +41,11 @@
 
 #include "qtconcurrentiteratekernel.h"
 
-#if defined(Q_OS_MAC)
-#include <mach/mach.h>
-#include <mach/mach_time.h>
-#include <unistd.h>
-#elif defined(Q_OS_UNIX)
 #if defined(Q_OS_HURD)
 #include <sys/time.h>
 #endif
 #include <time.h>
 #include <unistd.h>
-#elif defined(Q_OS_WIN)
-#include <qt_windows.h>
-#endif
 
 #include "qfunctions_p.h"
 
@@ -65,16 +57,6 @@ enum {
     TargetRatio = 100,
     MedianSize = 7
 };
-
-#if defined(Q_OS_MAC)
-
-static qint64 getticks()
-{
-    return mach_absolute_time();
-}
-
-#elif defined(Q_OS_UNIX)
-
 
 static qint64 getticks()
 {
@@ -115,19 +97,7 @@ static qint64 getticks()
 #endif
 }
 
-#elif defined(Q_OS_WIN)
-
-static qint64 getticks()
-{
-    LARGE_INTEGER x;
-    if (!QueryPerformanceCounter(&x))
-        return 0;
-    return x.QuadPart;
-}
-
-#endif
-
-static double elapsed(qint64 after, qint64 before)
+static inline double elapsed(qint64 after, qint64 before)
 {
     return double(after - before);
 }

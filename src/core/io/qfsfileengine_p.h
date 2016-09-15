@@ -119,10 +119,8 @@ public:
     mutable uint is_sequential : 2;
     mutable uint could_stat : 1;
     mutable uint tried_stat : 1;
-#if !defined(Q_OS_WINCE)
     mutable uint need_lstat : 1;
     mutable uint is_link : 1;
-#endif
 
     bool doStat(QFileSystemMetaData::MetaDataFlags flags = QFileSystemMetaData::PosixStatFlags) const;
     bool isSymlink() const;

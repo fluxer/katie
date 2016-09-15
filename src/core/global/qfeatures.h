@@ -229,9 +229,6 @@
 // QMotifStyle
 //#define QT_NO_STYLE_MOTIF
 
-// QWindowsStyle
-//#define QT_NO_STYLE_WINDOWS
-
 // QSystemSemaphore
 //#define QT_NO_SYSTEMSEMAPHORE
 
@@ -385,11 +382,6 @@
 #define QT_NO_STYLE_CDE
 #endif
 
-// QWindowsXPStyle
-#if !defined(QT_NO_STYLE_WINDOWSXP) && (defined(QT_NO_STYLE_WINDOWS))
-#define QT_NO_STYLE_WINDOWSXP
-#endif
-
 // QToolButton
 #if !defined(QT_NO_TOOLBUTTON) && (defined(QT_NO_ACTION))
 #define QT_NO_TOOLBUTTON
@@ -448,11 +440,6 @@
 // QScrollArea
 #if !defined(QT_NO_SCROLLAREA) && (defined(QT_NO_SCROLLBAR))
 #define QT_NO_SCROLLAREA
-#endif
-
-// QWindowsVistaStyle
-#if !defined(QT_NO_STYLE_WINDOWSVISTA) && (defined(QT_NO_STYLE_WINDOWSXP))
-#define QT_NO_STYLE_WINDOWSVISTA
 #endif
 
 // QTabBar
@@ -528,16 +515,6 @@
 // QStyleSheetStyle
 #if !defined(QT_NO_STYLE_STYLESHEET) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_PROPERTIES) || defined(QT_NO_CSSPARSER))
 #define QT_NO_STYLE_STYLESHEET
-#endif
-
-// QWindowsCEStyle
-#if !defined(QT_NO_STYLE_WINDOWSCE) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_IMAGEFORMAT_XPM))
-#define QT_NO_STYLE_WINDOWSCE
-#endif
-
-// QWindowsMobileStyle
-#if !defined(QT_NO_STYLE_WINDOWSMOBILE) && (defined(QT_NO_STYLE_WINDOWS) || defined(QT_NO_IMAGEFORMAT_XPM))
-#define QT_NO_STYLE_WINDOWSMOBILE
 #endif
 
 // QtSvg module

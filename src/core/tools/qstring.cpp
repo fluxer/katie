@@ -58,18 +58,7 @@
 #include "qdebug.h"
 #include "qendian.h"
 #include "qmutex.h"
-
-#ifdef Q_OS_MAC
-#include <qcore_mac_p.h>
-#endif
-
-#include <qfunctions_p.h>
-
-#if defined(Q_OS_WINCE)
-#include <windows.h>
-#include <winnls.h>
-#endif
-
+#include "qfunctions_p.h"
 
 #include <limits.h>
 #include <string.h>
@@ -4574,12 +4563,6 @@ int QString::localeAwareCompare(const QString &other) const
     return localeAwareCompare_helper(constData(), length(), other.constData(), other.length());
 }
 
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-QT_END_NAMESPACE
-#include "qt_windows.h"
-QT_BEGIN_NAMESPACE
-#endif
-
 /*!
     \internal
     \since 4.5
@@ -4591,50 +4574,19 @@ int QString::localeAwareCompare_helper(const QChar *data1, int length1,
     if (length1 == 0 || length2 == 0)
         return ucstrcmp(data1, length1, data2, length2);
 
-#if defined(Q_OS_WIN32) || defined(Q_OS_WINCE)
-    int res = CompareString(GetUserDefaultLCID(), 0, (wchar_t*)data1, length1, (wchar_t*)data2, length2);
-
-    switch (res) {
-    case CSTR_LESS_THAN:
-        return -1;
-    case CSTR_GREATER_THAN:
-        return 1;
-    default:
-        return 0;
-    }
-#elif defined (Q_OS_MAC)
-    // Use CFStringCompare for comparing strings on Mac. This makes Qt order
-    // strings the same way as native applications do, and also respects
-    // the "Order for sorted lists" setting in the International preferences
-    // panel.
-    const CFStringRef thisString =
-        CFStringCreateWithCharactersNoCopy(kCFAllocatorDefault,
-            reinterpret_cast<const UniChar *>(data1), length1, kCFAllocatorNull);
-    const CFStringRef otherString =
-        CFStringCreateWithCharactersNoCopy(kCFAllocatorDefault,
-            reinterpret_cast<const UniChar *>(data2), length2, kCFAllocatorNull);
-
-    const int result = CFStringCompare(thisString, otherString, kCFCompareLocalized);
-    CFRelease(thisString);
-    CFRelease(otherString);
-    return result;
-#elif defined(Q_OS_UNIX)
-#  if defined(QT_USE_ICU)
+#if defined(QT_USE_ICU)
     int res;
     if (qt_ucol_strcoll(data1, length1, data2, length2, &res)) {
         if (res == 0)
             res = ucstrcmp(data1, length1, data2, length2);
         return res;
     } // else fall through
-#  endif
+#endif
     // declared in <string.h>
     int delta = strcoll(toLocal8Bit_helper(data1, length1), toLocal8Bit_helper(data2, length2));
     if (delta == 0)
         delta = ucstrcmp(data1, length1, data2, length2);
     return delta;
-#else
-    return ucstrcmp(data1, length1, data2, length2);
-#endif
 }
 
 
@@ -5233,11 +5185,7 @@ QString &QString::vsprintf(const char* cformat, va_list ap)
             }
             case 'p': {
                 void *arg = va_arg(ap, void*);
-#ifdef Q_OS_WIN64
-                quint64 i = reinterpret_cast<quint64>(arg);
-#else
                 quint64 i = reinterpret_cast<unsigned long>(arg);
-#endif
                 flags |= QLocalePrivate::Alternate;
                 subst = locale.d()->unsLongLongToString(i, precision, 16, width, flags);
                 ++c;

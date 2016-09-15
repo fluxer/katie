@@ -433,7 +433,6 @@ qint64 QFSFileEngine::size() const
     return d->nativeSize();
 }
 
-#ifndef Q_OS_WIN
 /*!
     \internal
 */
@@ -448,7 +447,6 @@ qint64 QFSFileEnginePrivate::sizeFdFh() const
         return 0;
     return metaData.size();
 }
-#endif
 
 /*!
     \reimp
@@ -683,11 +681,7 @@ qint64 QFSFileEnginePrivate::writeFdFh(const char *data, qint64 len)
     } else if (fd != -1) {
         // Unbuffered stdio mode.
 
-#ifdef Q_OS_WIN
-        int result;
-#else
         ssize_t result;
-#endif
         do {
             result = QT_WRITE(fd, data + writtenBytes, size_t(len - writtenBytes));
         } while ((result == -1 && errno == EINTR)

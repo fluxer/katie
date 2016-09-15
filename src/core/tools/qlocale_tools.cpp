@@ -254,13 +254,6 @@ bool removeGroupSeparators(QLocalePrivate::CharBuff *num)
     return true;
 }
 
-#if defined(Q_CC_MWERKS) && defined(Q_OS_WIN32)
-inline bool isascii(int c)
-{
-        return (c >= 0 && c <=127);
-}
-#endif
-
 /*-
  * Copyright (c) 1992, 1993
  *        The Regents of the University of California.  All rights reserved.
@@ -557,11 +550,11 @@ __RCSID("$NetBSD: strtod.c,v 1.26 1998/02/03 18:44:21 perry Exp $");
 #endif /* LIBC_SCCS and not lint */
 
 /*
-#if defined(__m68k__)    || defined(__sparc__) || defined(__i386__) || \
-     defined(__mips__)    || defined(__ns32k__) || defined(__alpha__) || \
-     defined(__powerpc__) || defined(Q_OS_WIN) || defined(Q_OS_DARWIN) || defined(Q_OS_MAC) || \
-     defined(mips) || defined(Q_OS_AIX) || defined(Q_OS_SOLARIS)
-#           define IEEE_BIG_OR_LITTLE_ENDIAN 1
+#if defined(__m68k__)    || defined(__sparc__) || defined(__i386__)  || \
+    defined(__mips__)    || defined(__ns32k__) || defined(__alpha__) || \
+    defined(__powerpc__) || defined(mips)      || defined(Q_OS_AIX)  || \
+    defined(Q_OS_SOLARIS)
+#       define IEEE_BIG_OR_LITTLE_ENDIAN 1
 #endif
 */
 
@@ -2252,14 +2245,6 @@ static int quorem(Bigint *b, Bigint *S)
  *           something like 10^(k-15) that we must resort to the Long
  *           calculation.
  */
-
-#if defined(Q_OS_WIN) && defined (Q_CC_GNU) && !defined(_clear87) // See QTBUG-7576
-extern "C" {
-__attribute__ ((dllimport)) unsigned int __cdecl __MINGW_NOTHROW _control87 (unsigned int unNew, unsigned int unMask);
-__attribute__ ((dllimport)) unsigned int __cdecl __MINGW_NOTHROW _clearfp (void); /* Clear the FPU status word */
-}
-#  define _clear87 _clearfp
-#endif
 
 /* This actually sometimes returns a pointer to a string literal
    cast to a char*. Do NOT try to modify the return value. */

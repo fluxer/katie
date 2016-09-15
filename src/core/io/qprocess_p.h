@@ -118,19 +118,6 @@ class QProcessEnvironmentPrivate: public QSharedData
 public:
     typedef QProcEnvKey Key;
     typedef QProcEnvValue Value;
-#ifdef Q_OS_WIN
-    inline Key prepareName(const QString &name) const { return Key(name); }
-    inline QString nameToString(const Key &name) const { return name; }
-    inline Value prepareValue(const QString &value) const { return value; }
-    inline QString valueToString(const Value &value) const { return value; }
-    struct MutexLocker {
-        MutexLocker(const QProcessEnvironmentPrivate *) {}
-    };
-    struct OrderedMutexLocker {
-        OrderedMutexLocker(const QProcessEnvironmentPrivate *,
-                           const QProcessEnvironmentPrivate *) {}
-    };
-#else
     inline Key prepareName(const QString &name) const
     {
         Key &ent = nameMap[name];
@@ -177,17 +164,14 @@ public:
         hash.detach();
         nameMap.detach();
     }
-#endif
 
     typedef QHash<Key, Value> Hash;
     Hash hash;
 
-#ifdef Q_OS_UNIX
     typedef QHash<QString, Key> NameHash;
     mutable NameHash nameMap;
 
     mutable QMutex mutex;
-#endif
 
     static QProcessEnvironment fromList(const QStringList &list);
     QStringList toList() const;
