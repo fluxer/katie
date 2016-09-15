@@ -977,7 +977,6 @@ configure_file(
     @ONLY
 )
 
-# translations
 katie_setup_paths()
 file(GLOB TRANSLATIONS "translations/*.ts")
 katie_translations(${TRANSLATIONS})
@@ -1011,15 +1010,13 @@ install(
     FILE KatieBinaryTargets.cmake
 )
 
-if(NOT KATIE_PLATFORM MATCHES "(win32|wince|mac)")
-    install(
-        FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-        DESTINATION ${LDCONF_INSTALL_PATH}
-    )
-    install(
-        FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
-        DESTINATION ${PROFILE_INSTALL_PATH}
-    )
-endif()
+install(
+    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
+    DESTINATION ${LDCONF_INSTALL_PATH}
+)
+install(
+    FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
+    DESTINATION ${PROFILE_INSTALL_PATH}
+)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 

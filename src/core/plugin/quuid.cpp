@@ -804,21 +804,6 @@ bool QUuid::operator>(const QUuid &other) const
 
     \sa variant(), version()
 */
-#if defined(Q_OS_WIN32) && ! defined(Q_CC_MWERKS)
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <objbase.h> // For CoCreateGuid
-QT_END_INCLUDE_NAMESPACE
-
-QUuid QUuid::createUuid()
-{
-    GUID guid;
-    CoCreateGuid(&guid);
-    QUuid result = guid;
-    return result;
-}
-
-#else // !Q_OS_WIN32
 
 QT_BEGIN_INCLUDE_NAMESPACE
 #include "qdatetime.h"
@@ -873,7 +858,6 @@ QUuid QUuid::createUuid()
 
     return result;
 }
-#endif // !Q_OS_WIN32
 
 /*!
     \fn bool QUuid::operator==(const GUID &guid) const
