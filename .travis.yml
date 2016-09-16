@@ -17,7 +17,8 @@ before_script:
     - sh -e /etc/init.d/xvfb start
     - sleep 3
 script:
-    - cmake -DENABLE_TESTING=TRUE -DKATIE_ALLINONE=ON -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio"
+    - if [ "$CXX" = "clang++" ];then cmake -DENABLE_TESTING=TRUE -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ;fi
+    - if [ "$CXX" = "g++" ];then cmake -DENABLE_TESTING=TRUE -DKATIE_ALLINONE=ON -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ;fi
     - make
 # the tests/benchmarks take more then 1-hour and Travis times out
 #    - ctest -V
