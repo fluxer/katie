@@ -116,41 +116,6 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
 }
 
 #ifndef QT_NO_PAINT_DEBUG
-#ifdef Q_WS_WIN
-static void showYellowThing_win(QWidget *widget, const QRegion &region, int msec)
-{
-    HBRUSH brush;
-    static int i = 0;
-    switch (i) {
-    case 0:
-        brush = CreateSolidBrush(RGB(255, 255, 0));
-        break;
-    case 1:
-        brush = CreateSolidBrush(RGB(255, 200, 55));
-        break;
-    case 2:
-        brush = CreateSolidBrush(RGB(200, 255, 55));
-        break;
-    case 3:
-        brush = CreateSolidBrush(RGB(200, 200, 0));
-        break;
-    }
-    i = (i + 1) & 3;
-
-    HDC hdc = widget->getDC();
-
-    const QVector<QRect> &rects = region.rects();
-    foreach (QRect rect, rects) {
-        RECT winRect;
-        SetRect(&winRect, rect.left(), rect.top(), rect.right(), rect.bottom());
-        FillRect(hdc, &winRect, brush);
-    }
-
-    widget->releaseDC(hdc);
-    ::Sleep(msec);
-}
-#endif
-
 void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePainted, int msec, bool unclipped)
 {
     QRegion paintRegion = toBePainted;
@@ -164,10 +129,6 @@ void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePa
         widget = nativeParent;
     }
 
-#ifdef Q_WS_WIN
-    Q_UNUSED(unclipped);
-    showYellowThing_win(widget, paintRegion, msec);
-#else
     //flags to fool painter
     bool paintUnclipped = widget->testAttribute(Qt::WA_PaintUnclipped);
     if (unclipped && !widget->d_func()->paintOnScreen())
@@ -214,11 +175,7 @@ void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePa
         pe->setSystemClip(QRegion());
 
     QApplication::syncX();
-
-#if defined(Q_OS_UNIX)
     ::usleep(1000 * msec);
-#endif
-#endif // Q_WS_WIN
 }
 
 bool QWidgetBackingStore::flushPaint(QWidget *widget, const QRegion &rgn)
@@ -645,12 +602,6 @@ void QWidgetBackingStore::markDirtyOnScreen(const QRegion &region, QWidget *widg
 {
     if (!widget || widget->d_func()->paintOnScreen() || region.isEmpty())
         return;
-
-#if defined(Q_WS_MAC)
-    if (!widget->testAttribute(Qt::WA_WState_InPaintEvent))
-        dirtyOnScreen += region.translated(topLevelOffset);
-    return;
-#endif
 
     // Top-level.
     if (widget == tlw) {
@@ -1435,12 +1386,6 @@ void QWidgetPrivate::repaint_sys(const QRegion &rgn)
                                                 || engine->type() == QPaintEngine::OpenGL2))
                                         && (usesDoubleBufferedGLContext || q->autoFillBackground());
     QRegion toBePainted(noPartialUpdateSupport ? q->rect() : rgn);
-
-#ifdef Q_WS_MAC
-    // No difference between update() and repaint() on the Mac.
-    update_sys(toBePainted);
-    return;
-#endif
 
     toBePainted &= clipRect();
     clipToEffectiveMask(toBePainted);

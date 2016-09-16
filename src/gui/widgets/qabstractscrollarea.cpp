@@ -52,16 +52,9 @@
 #include "qboxlayout.h"
 #include "qpainter.h"
 #include "qmargins.h"
-
 #include "qabstractscrollarea_p.h"
-#include <qwidget.h>
-
-#include <qapplication_p.h>
-
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
+#include "qwidget.h"
+#include "qapplication_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -160,9 +153,6 @@ QAbstractScrollAreaPrivate::QAbstractScrollAreaPrivate()
     :hbar(0), vbar(0), vbarpolicy(Qt::ScrollBarAsNeeded), hbarpolicy(Qt::ScrollBarAsNeeded),
      viewport(0), cornerWidget(0), left(0), top(0), right(0), bottom(0),
      xoffset(0), yoffset(0), viewportFilter(0)
-#ifdef Q_WS_WIN
-     , singleFingerPanEnabled(false)
-#endif
 {
 }
 
@@ -294,63 +284,19 @@ void QAbstractScrollAreaPrivate::init()
     q->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
     q->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layoutChildren();
-#ifndef Q_WS_MAC
 #ifndef QT_NO_GESTURES
     viewport->grabGesture(Qt::PanGesture);
 #endif
-#endif
 }
-
-#ifdef Q_WS_WIN
-void QAbstractScrollAreaPrivate::setSingleFingerPanEnabled(bool on)
-{
-    singleFingerPanEnabled = on;
-    QWidgetPrivate *dd = static_cast<QWidgetPrivate *>(QObjectPrivate::get(viewport));
-    if (dd)
-        dd->winSetupGestures();
-}
-#endif // Q_WS_WIN
 
 void QAbstractScrollAreaPrivate::layoutChildren()
 {
     Q_Q(QAbstractScrollArea);
-    bool needh = (hbarpolicy == Qt::ScrollBarAlwaysOn
-                  || (hbarpolicy == Qt::ScrollBarAsNeeded && hbar->minimum() < hbar->maximum()));
+    const bool needh = (hbarpolicy == Qt::ScrollBarAlwaysOn
+                    || (hbarpolicy == Qt::ScrollBarAsNeeded && hbar->minimum() < hbar->maximum()));
 
-    bool needv = (vbarpolicy == Qt::ScrollBarAlwaysOn
-                  || (vbarpolicy == Qt::ScrollBarAsNeeded && vbar->minimum() < vbar->maximum()));
-
-#ifdef Q_WS_MAC
-    QWidget * const window = q->window();
-
-    // Use small scroll bars for tool windows, to match the native size grip.
-    bool hbarIsSmall = hbar->testAttribute(Qt::WA_MacSmallSize);
-    bool vbarIsSmall = vbar->testAttribute(Qt::WA_MacSmallSize);
-    const Qt::WindowType windowType = window->windowType();
-    if (windowType == Qt::Tool) {
-        if (!hbarIsSmall) {
-            hbar->setAttribute(Qt::WA_MacMiniSize, false);
-            hbar->setAttribute(Qt::WA_MacNormalSize, false);
-            hbar->setAttribute(Qt::WA_MacSmallSize, true);
-        }
-        if (!vbarIsSmall) {
-            vbar->setAttribute(Qt::WA_MacMiniSize, false);
-            vbar->setAttribute(Qt::WA_MacNormalSize, false);
-            vbar->setAttribute(Qt::WA_MacSmallSize, true);
-        }
-    } else {
-        if (hbarIsSmall) {
-            hbar->setAttribute(Qt::WA_MacMiniSize, false);
-            hbar->setAttribute(Qt::WA_MacNormalSize, false);
-            hbar->setAttribute(Qt::WA_MacSmallSize, false);
-        }
-        if (vbarIsSmall) {
-            vbar->setAttribute(Qt::WA_MacMiniSize, false);
-            vbar->setAttribute(Qt::WA_MacNormalSize, false);
-            vbar->setAttribute(Qt::WA_MacSmallSize, false);
-        }
-     }
-#endif
+    const bool needv = (vbarpolicy == Qt::ScrollBarAlwaysOn
+                    || (vbarpolicy == Qt::ScrollBarAsNeeded && vbar->minimum() < vbar->maximum()));
 
     const int hsbExt = hbar->sizeHint().height();
     const int vsbExt = vbar->sizeHint().width();
@@ -362,30 +308,6 @@ void QAbstractScrollAreaPrivate::layoutChildren()
     opt.init(q);
 
     const bool hasCornerWidget = (cornerWidget != 0);
-
-// If the scroll bars are at the very right and bottom of the window we
-// move their positions to be aligned with the size grip.
-#ifdef Q_WS_MAC
-    // Check if a native sizegrip is present.
-    bool hasMacReverseSizeGrip = false;
-    bool hasMacSizeGrip = false;
-    bool nativeGripPresent = false;
-    if (q->testAttribute(Qt::WA_WState_Created))
-        nativeGripPresent = qt_mac_checkForNativeSizeGrip(q);
-
-    if (nativeGripPresent) {
-        // Look for a native size grip at the visual window bottom right and at the
-        // absolute window bottom right. In reverse mode, the native size grip does not
-        // swich side, so we need to check if it is on the "wrong side".
-        const QPoint scrollAreaBottomRight = q->mapTo(window, widgetRect.bottomRight() - QPoint(frameWidth, frameWidth));
-        const QPoint windowBottomRight = window->rect().bottomRight();
-        const QPoint visualWindowBottomRight = QStyle::visualPos(opt.direction, opt.rect, windowBottomRight);
-        const QPoint offset = windowBottomRight - scrollAreaBottomRight;
-        const QPoint visualOffset = visualWindowBottomRight - scrollAreaBottomRight;
-        hasMacSizeGrip = (visualOffset.manhattanLength() < vsbExt);
-        hasMacReverseSizeGrip = (hasMacSizeGrip == false && (offset.manhattanLength() < hsbExt));
-    }
-#endif
 
     QPoint cornerOffset(needv ? vsbExt : 0, needh ? hsbExt : 0);
     QRect controlsRect;
@@ -416,12 +338,6 @@ void QAbstractScrollAreaPrivate::layoutChildren()
     if (hasCornerWidget && (needv || needh))
         cornerOffset =  extPoint;
 
-#ifdef Q_WS_MAC
-    // Also move the scroll bars if they are covered by the native Mac size grip.
-    if (hasMacSizeGrip)
-        cornerOffset =  extPoint;
-#endif
-
     // The corner point is where the scroll bar rects, the corner widget rect and the
     // viewport rect meets.
     const QPoint cornerPoint(controlsRect.bottomRight() + QPoint(1, 1) - cornerOffset);
@@ -429,31 +345,14 @@ void QAbstractScrollAreaPrivate::layoutChildren()
     // Some styles paints the corner if both scorllbars are showing and there is
     // no corner widget. Also, on the Mac we paint if there is a native
     // (transparent) sizegrip in the area where a corner widget would be.
-    if ((needv && needh && hasCornerWidget == false)
-        || ((needv || needh) 
-#ifdef Q_WS_MAC
-        && hasMacSizeGrip
-#endif
-        )
-    ) {
+    if ((needv && needh && hasCornerWidget == false) || needv || needh) {
         cornerPaintingRect = QStyle::visualRect(opt.direction, opt.rect, QRect(cornerPoint, extSize));
     } else {
         cornerPaintingRect = QRect();
     }
 
-#ifdef Q_WS_MAC
-    if (hasMacReverseSizeGrip)
-        reverseCornerPaintingRect = QRect(controlsRect.bottomRight() + QPoint(1, 1) - extPoint, extSize);
-    else
-        reverseCornerPaintingRect = QRect();
-#endif
-
     if (needh) {
         QRect horizontalScrollBarRect(QPoint(controlsRect.left(), cornerPoint.y()), QPoint(cornerPoint.x() - 1, controlsRect.bottom()));
-#ifdef Q_WS_MAC
-        if (hasMacReverseSizeGrip)
-            horizontalScrollBarRect.adjust(vsbExt, 0, 0, 0);
-#endif
         scrollBarContainers[Qt::Horizontal]->setGeometry(QStyle::visualRect(opt.direction, opt.rect, horizontalScrollBarRect));
         scrollBarContainers[Qt::Horizontal]->raise();
     }
@@ -547,10 +446,8 @@ void QAbstractScrollArea::setViewport(QWidget *widget)
         d->viewport->setParent(this);
         d->viewport->setFocusProxy(this);
         d->viewport->installEventFilter(d->viewportFilter.data());
-#ifndef Q_WS_MAC
 #ifndef QT_NO_GESTURES
         d->viewport->grabGesture(Qt::PanGesture);
-#endif
 #endif
         d->layoutChildren();
         if (isVisible())
@@ -931,13 +828,6 @@ bool QAbstractScrollArea::event(QEvent *e)
             QPainter p(this);
             style()->drawPrimitive(QStyle::PE_PanelScrollAreaCorner, &option, &p, this);
         }
-#ifdef Q_WS_MAC
-        if (d->reverseCornerPaintingRect.isValid()) {
-            option.rect = d->reverseCornerPaintingRect;
-            QPainter p(this);
-            style()->drawPrimitive(QStyle::PE_PanelScrollAreaCorner, &option, &p, this);
-        }
-#endif
         }
         QFrame::paintEvent((QPaintEvent*)e);
         break;
@@ -1322,13 +1212,6 @@ void QAbstractScrollAreaPrivate::_q_vslide(int y)
 void QAbstractScrollAreaPrivate::_q_showOrHideScrollBars()
 {
     layoutChildren();
-#ifdef Q_WS_WIN
-    // Need to re-subscribe to gestures as the content changes to make sure we
-    // enable/disable panning when needed.
-    QWidgetPrivate *dd = static_cast<QWidgetPrivate *>(QObjectPrivate::get(viewport));
-    if (dd)
-        dd->winSetupGestures();
-#endif // Q_WS_WIN
 }
 
 QPoint QAbstractScrollAreaPrivate::contentsOffset() const

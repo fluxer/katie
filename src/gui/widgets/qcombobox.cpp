@@ -221,16 +221,11 @@ void QComboBoxPrivate::_q_modelDestroyed()
 //Windows and KDE allows menus to cover the taskbar, while GNOME and Mac don't
 QRect QComboBoxPrivate::popupGeometry(int screen) const
 {
-#ifdef Q_WS_WIN
-    return QApplication::desktop()->screenGeometry(screen);
-#elif defined Q_WS_X11
+#if defined Q_WS_X11
     if (X11->desktopEnvironment == DE_KDE)
         return QApplication::desktop()->screenGeometry(screen);
-    else
-        return QApplication::desktop()->availableGeometry(screen);
-#else
-        return QApplication::desktop()->availableGeometry(screen);
 #endif
+    return QApplication::desktop()->availableGeometry(screen);
 }
 
 bool QComboBoxPrivate::updateHoverControl(const QPoint &pos)
@@ -2471,21 +2466,11 @@ void QComboBox::showPopup()
     const bool updatesEnabled = container->updatesEnabled();
 #endif
 
-#if defined(Q_WS_WIN) && !defined(QT_NO_EFFECTS)
-    bool scrollDown = (listRect.topLeft() == below);
-    if (QApplication::isEffectEnabled(Qt::UI_AnimateCombo)
-        && !style->styleHint(QStyle::SH_ComboBox_Popup, &opt, this) && !window()->testAttribute(Qt::WA_DontShowOnScreen))
-        qScrollEffect(container, scrollDown ? QEffects::DownScroll : QEffects::UpScroll, 150);
-#endif
-
-// Don't disable updates on Mac OS X. Windows are displayed immediately on this platform,
-// which means that the window will be visible before the call to container->show() returns.
-// If updates are disabled at this point we'll miss our chance at painting the popup
-// menu before it's shown, causing flicker since the window then displays the standard gray
-// background.
-#ifndef Q_WS_MAC
+// indows are displayed immediately on this platform, which means that the window will
+// be visible before the call to container->show() returns. If updates are disabled at
+// this point we'll miss our chance at painting the popup menu before it's shown, causing
+// flicker since the window then displays the standard gray background.
     container->setUpdatesEnabled(false);
-#endif
 
     container->raise();
     container->show();
@@ -2546,13 +2531,7 @@ void QComboBox::hidePopup()
         }
 
         // Fade out.
-        bool needFade = style()->styleHint(QStyle::SH_Menu_FadeOutOnHide);
-        if (needFade) {
-#if defined(Q_WS_MAC)
-            macWindowFade(qt_mac_window_for(d->container));
-#endif // Q_WS_MAC
-            // Other platform implementations welcome :-)
-        }
+        const bool needFade = style()->styleHint(QStyle::SH_Menu_FadeOutOnHide);
         d->model->blockSignals(false);
         d->container->itemView()->blockSignals(false);
         d->container->blockSignals(false);

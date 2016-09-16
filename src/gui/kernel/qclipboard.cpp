@@ -161,7 +161,6 @@ QClipboard::QClipboard(QObject *parent)
 }
 #endif
 
-#ifndef Q_WS_WIN32
 /*!
     \internal
 
@@ -173,7 +172,6 @@ QClipboard::QClipboard(QObject *parent)
 QClipboard::~QClipboard()
 {
 }
-#endif
 
 /*!
     \fn void QClipboard::changed(QClipboard::Mode mode)

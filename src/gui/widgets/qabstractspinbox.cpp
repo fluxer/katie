@@ -1157,8 +1157,6 @@ void QAbstractSpinBox::hideEvent(QHideEvent *event)
 
 
 /*!
-    \internal
-
     Used when acceleration is turned on. We need to get the
     keyboard auto repeat rate from OS. This value is used as
     argument when starting acceleration related timers.
@@ -1168,15 +1166,7 @@ void QAbstractSpinBox::hideEvent(QHideEvent *event)
 
     Remember that time value should be given in msecs.
 */
-static int getKeyboardAutoRepeatRate() {
-    int ret = 30;
-#if   defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    DWORD time;
-    if (SystemParametersInfo(SPI_GETKEYBOARDSPEED, 0, &time, 0) != FALSE)
-        ret = static_cast<int>(1000 / static_cast<int>(time)); // msecs
-#endif
-    return ret; // msecs
-}
+static const int keyboardAutoRepeatRate = 30;
 
 /*!
     \reimp
@@ -1191,7 +1181,7 @@ void QAbstractSpinBox::timerEvent(QTimerEvent *event)
         killTimer(d->spinClickThresholdTimerId);
         d->spinClickThresholdTimerId = -1;
         d->effectiveSpinRepeatRate = d->buttonState & Keyboard
-                                     ? getKeyboardAutoRepeatRate()
+                                     ? keyboardAutoRepeatRate
                                      : d->spinClickTimerInterval;
         d->spinClickTimerId = startTimer(d->effectiveSpinRepeatRate);
         doStep = true;

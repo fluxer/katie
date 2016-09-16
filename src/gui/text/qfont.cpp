@@ -76,10 +76,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef Q_WS_WIN
-extern HDC shared_dc();
-#endif
-
 #ifdef Q_WS_X11
 extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
 #endif
@@ -151,11 +147,6 @@ Q_GUI_EXPORT int qt_defaultDpiX()
 
 #ifdef Q_WS_X11
     return QX11Info::appDpiX();
-#elif defined(Q_WS_WIN)
-    return GetDeviceCaps(shared_dc(),LOGPIXELSX);
-#elif defined(Q_WS_MAC)
-    extern float qt_mac_defaultDpi_x(); //qpaintdevice_mac.cpp
-    return qt_mac_defaultDpi_x();
 #endif // Q_WS_X11
 }
 
@@ -166,11 +157,6 @@ Q_GUI_EXPORT int qt_defaultDpiY()
 
 #ifdef Q_WS_X11
     return QX11Info::appDpiY();
-#elif defined(Q_WS_WIN)
-    return GetDeviceCaps(shared_dc(),LOGPIXELSY);
-#elif defined(Q_WS_MAC)
-    extern float qt_mac_defaultDpi_y(); //qpaintdevice_mac.cpp
-    return qt_mac_defaultDpi_y();
 #endif // Q_WS_X11
 }
 
@@ -190,9 +176,6 @@ QFontPrivate::QFontPrivate()
     else
         screen = 0;
 #endif
-#ifdef Q_WS_WIN
-    hdc = 0;
-#endif
 }
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
@@ -203,9 +186,6 @@ QFontPrivate::QFontPrivate(const QFontPrivate &other)
       letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing),
       scFont(other.scFont)
 {
-#ifdef Q_WS_WIN
-    hdc = other.hdc;
-#endif
     if (scFont && scFont != this)
         scFont->ref.ref();
 }
@@ -222,12 +202,6 @@ QFontPrivate::~QFontPrivate()
 
 extern QMutex *qt_fontdatabase_mutex();
 
-#if !defined(Q_WS_MAC)
-#define QT_FONT_ENGINE_FROM_DATA(data, script) data->engines[script]
-#else
-#define QT_FONT_ENGINE_FROM_DATA(data, script) data->engine
-#endif
-
 QFontEngine *QFontPrivate::engineForScript(int script) const
 {
     QMutexLocker locker(qt_fontdatabase_mutex());
@@ -239,9 +213,9 @@ QFontEngine *QFontPrivate::engineForScript(int script) const
             delete engineData;
         engineData = 0;
     }
-    if (!engineData || !QT_FONT_ENGINE_FROM_DATA(engineData, script))
+    if (!engineData || !engineData->engines[script])
         QFontDatabase::load(this, script);
-    return QT_FONT_ENGINE_FROM_DATA(engineData, script);
+    return engineData->engines[script];
 }
 
 void QFontPrivate::alterCharForCapitalization(QChar &c) const {
@@ -344,26 +318,16 @@ void QFontPrivate::resolve(uint mask, const QFontPrivate *other)
 QFontEngineData::QFontEngineData()
     : ref(1), fontCache(QFontCache::instance())
 {
-#if !defined(Q_WS_MAC)
     memset(engines, 0, QUnicodeTables::ScriptCount * sizeof(QFontEngine *));
-#else
-    engine = 0;
-#endif
 }
 
 QFontEngineData::~QFontEngineData()
 {
-#if !defined(Q_WS_MAC)
     for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
         if (engines[i] && !engines[i]->ref.deref())
             delete engines[i];
         engines[i] = 0;
     }
-#else
-    if (engine && !engine->ref.deref())
-        delete engine;
-    engine = 0;
-#endif // Q_WS_X11 || Q_WS_WIN || Q_WS_MAC
 }
 
 
@@ -688,10 +652,6 @@ QFont::QFont(const QFont &font, QPaintDevice *pd)
     } else {
         d = font.d.data();
     }
-#ifdef Q_WS_WIN
-    if (pd->devType() == QInternal::Printer && pd->getDC())
-        d->hdc = pd->getDC();
-#endif
 }
 
 /*!
@@ -1833,13 +1793,6 @@ static void initFontSubst()
         "times new roman", "times",
         "courier new",  "courier",
         "sans serif",   "helvetica",
-#elif defined(Q_WS_MAC)
-        ".lucida grande ui", "lucida grande",
-#elif defined(Q_WS_WIN)
-        "times",        "times new roman",
-        "courier",      "courier new",
-        "helvetica",    "arial",
-        "sans serif",   "arial",
 #endif
 
         0,              0
@@ -2507,16 +2460,6 @@ bool QFontInfo::fixedPitch() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-#ifdef Q_OS_MAC
-    if (!engine->fontDef.fixedPitchComputed) {
-        QChar ch[2] = { QLatin1Char('i'), QLatin1Char('m') };
-        QGlyphLayoutArray<2> g;
-        int l = 2;
-        engine->stringToCMap(ch, 2, &g, &l, 0);
-        engine->fontDef.fixedPitch = g.advances_x[0] == g.advances_x[1];
-        engine->fontDef.fixedPitchComputed = true;
-    }
-#endif
     return engine->fontDef.fixedPitch;
 }
 
@@ -2767,71 +2710,6 @@ void QFontCache::decreaseCost(uint cost)
             cost, total_cost, max_cost);
 }
 
-#if defined(Q_WS_WIN)
-void QFontCache::cleanupPrinterFonts()
-{
-    FC_DEBUG("QFontCache::cleanupPrinterFonts");
-
-    {
-        FC_DEBUG("  CLEAN engine data:");
-
-        // clean out all unused engine data
-        EngineDataCache::Iterator it = engineDataCache.begin(),
-                                 end = engineDataCache.end();
-        while (it != end) {
-            if (it.key().screen == 0) {
-                ++it;
-                continue;
-            }
-
-            if (it.value()->ref > 1) {
-                for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
-                    if (it.value()->engines[i] && !it.value()->engines[i]->ref.deref())
-                        delete it.value()->engines[i];
-                    it.value()->engines[i] = 0;
-                }
-                ++it;
-            } else {
-
-                EngineDataCache::Iterator rem = it++;
-
-                decreaseCost(sizeof(QFontEngineData));
-
-                FC_DEBUG("    %p", rem.value());
-
-                if (!rem.value()->ref.deref())
-                    delete rem.value();
-                engineDataCache.erase(rem);
-            }
-        }
-    }
-
-    EngineCache::Iterator it = engineCache.begin(),
-                         end = engineCache.end();
-    while(it != end) {
-        if (it.value().data->ref != 1 || it.key().screen == 0) {
-            ++it;
-            continue;
-        }
-
-        FC_DEBUG("    %p: timestamp %4u hits %2u ref %2d/%2d, type '%s'",
-                 it.value().data, it.value().timestamp, it.value().hits,
-                 int(it.value().data->ref), it.value().data->cache_count,
-                 it.value().data->name());
-
-        if (--it.value().data->cache_count == 0) {
-            FC_DEBUG("    DELETE: last occurrence in cache");
-
-            decreaseCost(it.value().data->cache_cost);
-            if (!it.value().data->ref.deref())
-                delete it.value().data;
-        }
-
-        engineCache.erase(it++);
-    }
-}
-#endif
-
 void QFontCache::timerEvent(QTimerEvent *)
 {
     FC_DEBUG("QFontCache::timerEvent: performing cache maintenance (timestamp %u)",
@@ -2863,14 +2741,14 @@ void QFontCache::timerEvent(QTimerEvent *)
 #ifdef QFONTCACHE_DEBUG
             FC_DEBUG("    %p: ref %2d", it.value(), int(it.value()->ref));
 
-#  if defined(Q_WS_X11) || defined(Q_WS_WIN)
+#  if defined(Q_WS_X11)
             // print out all engines
             for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
                 if (! it.value()->engines[i])
                     continue;
                 FC_DEBUG("      contains %p", it.value()->engines[i]);
             }
-#  endif // Q_WS_X11 || Q_WS_WIN
+#  endif // Q_WS_X11
 #endif // QFONTCACHE_DEBUG
 
             if (it.value()->ref > 1)

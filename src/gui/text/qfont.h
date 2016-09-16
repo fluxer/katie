@@ -244,14 +244,7 @@ public:
     { qSwap(d, other.d); qSwap(resolve_mask, other.resolve_mask);  return *this; }
 #endif
 
-#ifdef Q_WS_WIN
-    HFONT handle() const;
-#else // !Q_WS_WIN
     Qt::HANDLE handle() const;
-#endif // Q_WS_WIN
-#ifdef Q_WS_MAC
-    quint32 macFontID() const;
-#endif
 #if defined(Q_WS_X11)
     FT_Face freetypeFace() const;
 #endif

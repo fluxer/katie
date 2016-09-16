@@ -80,10 +80,6 @@ public:
 
     const QVector<QColor> colormap() const;
 
-#ifdef Q_WS_WIN
-    static HPALETTE hPal();
-#endif
-
 private:
     QColormap();
     QColormapPrivate *d;

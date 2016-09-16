@@ -180,10 +180,6 @@ public:
     int dpi;
     int screen;
 
-#ifdef Q_WS_WIN
-    HDC hdc;
-#endif
-
     uint rawMode    :  1;
     uint underline  :  1;
     uint overline   :  1;
@@ -265,10 +261,6 @@ public:
 
     QFontEngine *findEngine(const Key &key);
     void insertEngine(const Key &key, QFontEngine *engine);
-
-#if defined(Q_WS_WIN)
-    void cleanupPrinterFonts();
-#endif
 
     private:
     void increaseCost(uint cost);

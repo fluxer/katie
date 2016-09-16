@@ -705,7 +705,7 @@ int qt_script_for_writing_system(QFontDatabase::WritingSystem writingSystem)
 }
 
 
-#if (defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
 static inline bool requiresOpenType(int writingSystem)
 {
     return ((writingSystem >= QFontDatabase::Syriac && writingSystem <= QFontDatabase::Sinhala)
@@ -863,14 +863,10 @@ QMutex *qt_fontdatabase_mutex()
 QT_BEGIN_INCLUDE_NAMESPACE
 #if defined(Q_WS_X11)
 #  include "qfontdatabase_x11.h"
-#elif defined(Q_WS_MAC)
-#  include "qfontdatabase_mac.h"
-#elif defined(Q_WS_WIN)
-#  include "qfontdatabase_win.h"
 #endif
 QT_END_INCLUDE_NAMESPACE
 
-#if !defined(Q_WS_X11) && !defined(Q_WS_MAC)
+#if !defined(Q_WS_X11)
 QString QFontDatabase::resolveFontFamilyAlias(const QString &family)
 {
     return family;
@@ -1206,11 +1202,7 @@ static void match(int script, const QFontDef &request,
         test.familyIndex = x;
 
         if (!family_name.isEmpty()
-            && test.family->name.compare(family_name, Qt::CaseInsensitive) != 0
-#ifdef Q_WS_WIN
-            && test.family->english_name.compare(family_name, Qt::CaseInsensitive) != 0
-#endif
-            )
+            && test.family->name.compare(family_name, Qt::CaseInsensitive) != 0)
             continue;
 
         if (family_name.isEmpty())
@@ -1690,13 +1682,6 @@ bool  QFontDatabase::isScalable(const QString &family,
 QList<int> QFontDatabase::pointSizes(const QString &family,
                                            const QString &styleName)
 {
-#if defined(Q_WS_WIN)
-    // windows and macosx are always smoothly scalable
-    Q_UNUSED(family);
-    Q_UNUSED(styleName);
-    return standardSizes();
-#else
-    bool smoothScalable = false;
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
@@ -1725,8 +1710,7 @@ QList<int> QFontDatabase::pointSizes(const QString &family,
             if (!style) continue;
 
             if (style->smoothScalable) {
-                smoothScalable = true;
-                goto end;
+                return standardSizes();
             }
             for (int l = 0; l < style->count; l++) {
                 const QtFontSize *size = style->pixelSizes + l;
@@ -1739,13 +1723,9 @@ QList<int> QFontDatabase::pointSizes(const QString &family,
             }
         }
     }
- end:
-    if (smoothScalable)
-        return standardSizes();
 
     qSort(sizes);
     return sizes;
-#endif
 }
 
 /*!

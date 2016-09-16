@@ -88,16 +88,6 @@ extern bool qt_is_gui_used;
 extern QClipboard *qt_clipboard;
 #endif
 
-#if defined (Q_OS_WIN32) || defined (Q_OS_CYGWIN) || defined(Q_OS_WINCE)
-extern QSysInfo::WinVersion qt_winver;
-enum { QT_TABLET_NPACKETQSIZE = 128 };
-# ifdef Q_OS_WINCE
-  extern DWORD qt_cever;
-# endif
-#elif defined (Q_OS_MAC)
-extern QSysInfo::MacVersion qt_macver;
-#endif
-
 #ifndef QT_NO_TABLET
 struct QTabletDeviceData
 {
@@ -212,14 +202,12 @@ public:
 #endif
 
     enum KeyPlatform {
-        KB_Win = 1,
-        KB_Mac = 2,
-        KB_X11 = 4,
-        KB_KDE = 8,
+        KB_None  = 2,
+        KB_X11   = 4,
+        KB_KDE   = 8,
         KB_Gnome = 16,
-        KB_CDE = 32,
-        KB_S60 = 64,
-        KB_All = 0xffff
+        KB_CDE   = 32,
+        KB_All   = 0xffff
     };
 
     static uint currentPlatform();

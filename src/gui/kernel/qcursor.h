@@ -52,9 +52,6 @@ QT_BEGIN_NAMESPACE
 
 class QVariant;
 
-/*
-  ### The fake cursor has to go first with old qdoc.
-*/
 #ifdef QT_NO_CURSOR
 
 class Q_GUI_EXPORT QCursor
@@ -67,17 +64,11 @@ private:
     QCursor();
 };
 
-#endif // QT_NO_CURSOR
-
-#ifndef QT_NO_CURSOR
+#else // QT_NO_CURSOR
 
 class QCursorData;
 class QBitmap;
 class QPixmap;
-
-#if defined(Q_WS_MAC)
-void qt_mac_set_cursor(const QCursor *c);
-#endif
 
 class Q_GUI_EXPORT QCursor
 {
@@ -106,26 +97,15 @@ public:
     static QPoint pos();
     static void setPos(int x, int y);
     inline static void setPos(const QPoint &p) { setPos(p.x(), p.y()); }
-    
 
-#if defined(Q_WS_WIN)
-    HCURSOR handle() const;
-    QCursor(HCURSOR cursor);
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     Qt::HANDLE handle() const;
     QCursor(Qt::HANDLE cursor);
     static int x11Screen();
-#elif defined(Q_WS_MAC)
-    Qt::HANDLE handle() const;
 #endif
 
 private:
     QCursorData *d;
-#if defined(Q_WS_MAC)
-    friend void *qt_mac_nsCursorForQCursor(const QCursor &c);
-    friend void qt_mac_set_cursor(const QCursor *c);
-    friend void qt_mac_updateCursorWithWidgetUnderMouse(QWidget *widgetUnderMouse);
-#endif
 };
 
 

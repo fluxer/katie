@@ -108,41 +108,20 @@
 #include "qlibrary.h"
 #endif
 
-#ifdef Q_WS_WINCE
 #include "qdatetime.h"
-#include "qguifunctions_wince.h"
-extern bool qt_wince_is_smartphone(); //qguifunctions_wince.cpp
-extern bool qt_wince_is_mobile();     //qguifunctions_wince.cpp
-extern bool qt_wince_is_pocket_pc();  //qguifunctions_wince.cpp
-#endif
-
-#include "qdatetime.h"
-
-#ifdef QT_MAC_USE_COCOA
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
 
 //#define ALIEN_DEBUG
 
 
 static void initResources()
 {
-#if defined(Q_WS_WINCE)
-    Q_INIT_RESOURCE_EXTERN(qstyle_wince)
-    Q_INIT_RESOURCE(qstyle_wince);
-#else
     Q_INIT_RESOURCE_EXTERN(qstyle)
     Q_INIT_RESOURCE(qstyle);
-#endif
     Q_INIT_RESOURCE_EXTERN(qmessagebox)
     Q_INIT_RESOURCE(qmessagebox);
 #if !defined(QT_NO_PRINTDIALOG)
     Q_INIT_RESOURCE_EXTERN(qprintdialog)
     Q_INIT_RESOURCE(qprintdialog);
-#endif
-#ifdef Q_WS_MAC
-    Q_INIT_RESOURCE_EXTERN(macresources)
-    Q_INIT_RESOURCE(macresources);
 #endif
 }
 
@@ -156,14 +135,7 @@ QApplicationPrivate *QApplicationPrivate::self = 0;
 QInputContext *QApplicationPrivate::inputContext = 0;
 
 bool QApplicationPrivate::quitOnLastWindowClosed = true;
-
-
-#ifdef Q_WS_WINCE
-int QApplicationPrivate::autoMaximizeThreshold = -1;
-bool QApplicationPrivate::autoSipEnabled = false;
-#else
 bool QApplicationPrivate::autoSipEnabled = true;
-#endif
 
 QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::Type type, int flags)
     : QCoreApplicationPrivate(argc, argv, flags)
@@ -182,13 +154,10 @@ QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::T
     gestureWidget = 0;
 #endif // QT_NO_GESTURES
 
-#if defined(Q_WS_X11) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
     move_cursor = 0;
     copy_cursor = 0;
     link_cursor = 0;
-#endif
-#if defined(Q_WS_WIN)
-    ignore_cursor = 0;
 #endif
 
     if (!self)
@@ -859,17 +828,6 @@ void QApplicationPrivate::initialize()
     if (qgetenv("QT_USE_NATIVE_WINDOWS").toInt() > 0)
         q->setAttribute(Qt::AA_NativeWindows);
 
-#ifdef Q_WS_WINCE
-#ifdef QT_AUTO_MAXIMIZE_THRESHOLD
-    autoMaximizeThreshold = QT_AUTO_MAXIMIZE_THRESHOLD;
-#else
-    if (qt_wince_is_mobile())
-        autoMaximizeThreshold = 50;
-    else
-        autoMaximizeThreshold = -1;
-#endif //QT_AUTO_MAXIMIZE_THRESHOLD
-#endif //Q_WS_WINCE
-
     // Set up which span functions should be used in raster engine...
     qInitDrawhelperAsm();
 
@@ -989,13 +947,10 @@ QApplication::~QApplication()
     qt_clipboard = 0;
 #endif
 
-#if defined(Q_WS_X11) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
     delete d->move_cursor; d->move_cursor = 0;
     delete d->copy_cursor; d->copy_cursor = 0;
     delete d->link_cursor; d->link_cursor = 0;
-#endif
-#if defined(Q_WS_WIN)
-    delete d->ignore_cursor; d->ignore_cursor = 0;
 #endif
 
     delete QApplicationPrivate::app_pal;
@@ -1219,18 +1174,6 @@ bool QApplication::compressEvent(QEvent *event, QObject *receiver, QPostEventLis
 
     The default is platform dependent.
 */
-
-#ifdef Q_WS_WINCE
-void QApplication::setAutoMaximizeThreshold(const int threshold)
-{
-    QApplicationPrivate::autoMaximizeThreshold = threshold;
-}
-
-int QApplication::autoMaximizeThreshold() const
-{
-    return QApplicationPrivate::autoMaximizeThreshold;
-}
-#endif
 
 void QApplication::setAutoSipEnabled(const bool enabled)
 {
@@ -2237,16 +2180,12 @@ bool QApplication::event(QEvent *e)
 #ifndef QT_NO_TRANSLATION
         setLayoutDirection(qt_detectRTLLanguage()?Qt::RightToLeft:Qt::LeftToRight);
 #endif
-#if defined(QT_MAC_USE_COCOA)
-        qt_mac_post_retranslateAppMenu();
-#endif
         QWidgetList list = topLevelWidgets();
         for (int i = 0; i < list.size(); ++i) {
             QWidget *w = list.at(i);
             if (!(w->windowType() == Qt::Desktop))
                 postEvent(w, new QEvent(QEvent::LanguageChange));
         }
-#ifndef Q_OS_WIN
     } else if (e->type() == QEvent::LocaleChange) {
         // on Windows the event propagation is taken care by the
         // WM_SETTINGCHANGE event handler.
@@ -2258,7 +2197,6 @@ bool QApplication::event(QEvent *e)
                     w->d_func()->setLocale_helper(QLocale(), true);
             }
         }
-#endif
     } else if (e->type() == QEvent::Timer) {
         QTimerEvent *te = static_cast<QTimerEvent*>(e);
         Q_ASSERT(te != 0);
@@ -2350,9 +2288,7 @@ void QApplication::setActiveWindow(QWidget* act)
         }
     }
 
-#if !defined(Q_WS_MAC)
     QWidget *previousActiveWindow =  QApplicationPrivate::active_window;
-#endif
     QApplicationPrivate::active_window = window;
 
     if (QApplicationPrivate::active_window) {
@@ -2374,12 +2310,10 @@ void QApplication::setActiveWindow(QWidget* act)
     QEvent windowActivate(QEvent::WindowActivate);
     QEvent windowDeactivate(QEvent::WindowDeactivate);
 
-#if !defined(Q_WS_MAC)
     if (!previousActiveWindow) {
         QEvent appActivate(QEvent::ApplicationActivate);
         sendSpontaneousEvent(qApp, &appActivate);
     }
-#endif
 
     for (int i = 0; i < toBeActivated.size(); ++i) {
         QWidget *w = toBeActivated.at(i);
@@ -2387,25 +2321,16 @@ void QApplication::setActiveWindow(QWidget* act)
         sendSpontaneousEvent(w, &activationChange);
     }
 
-#ifdef QT_MAC_USE_COCOA
-    // In case the user clicked on a child window, we need to
-    // reestablish the stacking order of the window so
-    // it pops in front of other child windows in cocoa:
-    qt_cocoaStackChildWindowOnTopOfOtherChildren(window);
-#endif
-
     for(int i = 0; i < toBeDeactivated.size(); ++i) {
         QWidget *w = toBeDeactivated.at(i);
         sendSpontaneousEvent(w, &windowDeactivate);
         sendSpontaneousEvent(w, &activationChange);
     }
 
-#if !defined(Q_WS_MAC)
     if (!QApplicationPrivate::active_window) {
         QEvent appDeactivate(QEvent::ApplicationDeactivate);
         sendSpontaneousEvent(qApp, &appDeactivate);
     }
-#endif
 
     if (QApplicationPrivate::popupWidgets == 0) { // !inPopupMode()
         // then focus events
@@ -2551,7 +2476,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     for (int i = 0; i < leaveList.size(); ++i) {
         w = leaveList.at(i);
         if (!QApplication::activeModalWidget() || QApplicationPrivate::tryModalHelper(w, 0)) {
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
             if (leaveAfterRelease == w)
                 leaveAfterRelease = 0;
 #endif
@@ -2626,9 +2551,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
         } else
 #endif
         {
-#if defined(Q_WS_WIN)
-            qt_win_set_cursor(cursorWidget, true);
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
             qt_x11_enforce_cursor(cursorWidget, true);
 #endif
         }
@@ -2664,12 +2587,6 @@ bool QApplicationPrivate::isBlockedByModal(QWidget *widget)
                     return false;
                 w = w->parentWidget();
             }
-#ifdef Q_WS_WIN
-            if ((widget->testAttribute(Qt::WA_WState_Created) || widget->data->winid)
-                && (modalWidget->testAttribute(Qt::WA_WState_Created) || modalWidget->data->winid)
-                && IsChild(modalWidget->data->winid, widget->data->winid))
-                return false;
-#endif
         }
 
         Qt::WindowModality windowModality = modalWidget->windowModality();
@@ -2932,7 +2849,7 @@ bool QApplicationPrivate::sendMouseEvent(QWidget *receiver, QMouseEvent *event,
     return result;
 }
 
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
 /*
     This function should only be called when the widget changes visibility, i.e.
     when the \a widget is shown, hidden or deleted. This function does nothing
@@ -2987,7 +2904,7 @@ void QApplicationPrivate::sendSyntheticEnterLeave(QWidget *widget)
     sendMouseEvent(widgetUnderCursor, &e, widgetUnderCursor, tlw, &qt_button_down, qt_last_mouse_receiver);
 #endif // QT_NO_CURSOR
 }
-#endif // Q_WS_WIN || Q_WS_X11 || Q_WS_MAC
+#endif // Q_WS_X11
 
 /*!
     Returns the desktop widget (also called the root window).
@@ -4240,14 +4157,12 @@ bool QApplicationPrivate::notify_helper(QObject *receiver, QEvent * e)
     if (receiver->isWidgetType()) {
         QWidget *widget = static_cast<QWidget *>(receiver);
 
-#if !defined(Q_WS_WINCE) || (defined(GWES_ICONCURS) && !defined(QT_NO_CURSOR))
         // toggle HasMouse widget state on enter and leave
         if ((e->type() == QEvent::Enter || e->type() == QEvent::DragEnter) &&
             (!QApplication::activePopupWidget() || QApplication::activePopupWidget() == widget->window()))
             widget->setAttribute(Qt::WA_UnderMouse, true);
         else if (e->type() == QEvent::Leave || e->type() == QEvent::DragLeave)
             widget->setAttribute(Qt::WA_UnderMouse, false);
-#endif
 
         if (QLayout *layout=widget->d_func()->layout) {
             layout->widgetEvent(e);
@@ -4554,174 +4469,6 @@ bool QApplicationPrivate::notify_helper(QObject *receiver, QEvent * e)
     before, simultaneously with, or after your application's second phase.
 
     \sa isPhase2()
-*/
-
-/*****************************************************************************
-  Stubbed session management support
- *****************************************************************************/
-#ifndef QT_NO_SESSIONMANAGER
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-
-#if defined(Q_OS_WINCE)
-HRESULT qt_CoCreateGuid(GUID* guid)
-{
-    // We will use the following information to create the GUID
-    // 1. absolute path to application
-    wchar_t tempFilename[MAX_PATH];
-    if (!GetModuleFileName(0, tempFilename, MAX_PATH))
-        return S_FALSE;
-    unsigned int hash = qHash(QString::fromWCharArray(tempFilename));
-    guid->Data1 = hash;
-    // 2. creation time of file
-    QFileInfo info(QString::fromWCharArray(tempFilename));
-    guid->Data2 = qHash(info.created().toTime_t());
-    // 3. current system time
-    guid->Data3 = qHash(QDateTime::currentDateTime().toTime_t());
-    return S_OK;
-}
-#if !defined(OLE32_MCOMGUID) || defined(QT_WINCE_FORCE_CREATE_GUID)
-#define CoCreateGuid qt_CoCreateGuid
-#endif
-
-#endif
-
-class QSessionManagerPrivate : public QObjectPrivate
-{
-public:
-    QStringList restartCommand;
-    QStringList discardCommand;
-    QString sessionId;
-    QString sessionKey;
-    QSessionManager::RestartHint restartHint;
-};
-
-QSessionManager* qt_session_manager_self = 0;
-QSessionManager::QSessionManager(QApplication * app, QString &id, QString &key)
-    : QObject(*new QSessionManagerPrivate, app)
-{
-    Q_D(QSessionManager);
-    setObjectName(QLatin1String("qt_sessionmanager"));
-    qt_session_manager_self = this;
-#if defined(Q_WS_WIN)
-    wchar_t guidstr[40];
-    GUID guid;
-    CoCreateGuid(&guid);
-    StringFromGUID2(guid, guidstr, 40);
-    id = QString::fromWCharArray(guidstr);
-    CoCreateGuid(&guid);
-    StringFromGUID2(guid, guidstr, 40);
-    key = QString::fromWCharArray(guidstr);
-#endif
-    d->sessionId = id;
-    d->sessionKey = key;
-    d->restartHint = RestartIfRunning;
-}
-
-QSessionManager::~QSessionManager()
-{
-    qt_session_manager_self = 0;
-}
-
-QString QSessionManager::sessionId() const
-{
-    Q_D(const QSessionManager);
-    return d->sessionId;
-}
-
-QString QSessionManager::sessionKey() const
-{
-    Q_D(const QSessionManager);
-    return d->sessionKey;
-}
-
-
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
-void* QSessionManager::handle() const
-{
-    return 0;
-}
-#endif
-
-#if !defined(Q_WS_WIN)
-bool QSessionManager::allowsInteraction()
-{
-    return true;
-}
-
-bool QSessionManager::allowsErrorInteraction()
-{
-    return true;
-}
-void QSessionManager::release()
-{
-}
-
-void QSessionManager::cancel()
-{
-}
-#endif
-
-
-void QSessionManager::setRestartHint(QSessionManager::RestartHint hint)
-{
-    Q_D(QSessionManager);
-    d->restartHint = hint;
-}
-
-QSessionManager::RestartHint QSessionManager::restartHint() const
-{
-    Q_D(const QSessionManager);
-    return d->restartHint;
-}
-
-void QSessionManager::setRestartCommand(const QStringList& command)
-{
-    Q_D(QSessionManager);
-    d->restartCommand = command;
-}
-
-QStringList QSessionManager::restartCommand() const
-{
-    Q_D(const QSessionManager);
-    return d->restartCommand;
-}
-
-void QSessionManager::setDiscardCommand(const QStringList& command)
-{
-    Q_D(QSessionManager);
-    d->discardCommand = command;
-}
-
-QStringList QSessionManager::discardCommand() const
-{
-    Q_D(const QSessionManager);
-    return d->discardCommand;
-}
-
-void QSessionManager::setManagerProperty(const QString&, const QString&)
-{
-}
-
-void QSessionManager::setManagerProperty(const QString&, const QStringList&)
-{
-}
-
-bool QSessionManager::isPhase2() const
-{
-    return false;
-}
-
-void QSessionManager::requestPhase2()
-{
-}
-
-#endif
-#endif // QT_NO_SESSIONMANAGER
-
-/*!
-    \fn Qt::MacintoshVersion QApplication::macVersion()
-
-    Use QSysInfo::MacintoshVersion instead.
 */
 
 /*!
@@ -5186,7 +4933,7 @@ QInputContext *QApplication::inputContext() const
 
 //Returns the current platform used by keyBindings
 uint QApplicationPrivate::currentPlatform(){
-    uint platform = KB_Win;
+    uint platform = KB_None;
 #if defined Q_WS_X11
     platform = KB_X11;
     if (X11->desktopEnvironment == DE_KDE)
@@ -5621,17 +5368,12 @@ QGestureManager* QGestureManager::instance()
 // These pixmaps approximate the images in the Windows User Interface Guidelines.
 
 // XPM
-#if defined(Q_WS_X11) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
 static const char * const move_xpm[] = {
 "11 20 3 1",
 ".        c None",
-#if defined(Q_WS_WIN)
-"a        c #000000",
-"X        c #FFFFFF", // Windows cursor is traditionally white
-#else
 "a        c #FFFFFF",
 "X        c #000000", // X11 cursor is traditionally black
-#endif
 "aa.........",
 "aXa........",
 "aXXa.......",
@@ -5653,73 +5395,12 @@ static const char * const move_xpm[] = {
 ".......aXXa",
 "........aa."};
 
-#ifdef Q_WS_WIN
-/* XPM */
-static const char * const ignore_xpm[] = {
-"24 30 3 1",
-".        c None",
-"a        c #000000",
-"X        c #FFFFFF",
-"aa......................",
-"aXa.....................",
-"aXXa....................",
-"aXXXa...................",
-"aXXXXa..................",
-"aXXXXXa.................",
-"aXXXXXXa................",
-"aXXXXXXXa...............",
-"aXXXXXXXXa..............",
-"aXXXXXXXXXa.............",
-"aXXXXXXaaaa.............",
-"aXXXaXXa................",
-"aXXaaXXa................",
-"aXa..aXXa...............",
-"aa...aXXa...............",
-"a.....aXXa..............",
-"......aXXa.....XXXX.....",
-".......aXXa..XXaaaaXX...",
-".......aXXa.XaaaaaaaaX..",
-"........aa.XaaaXXXXaaaX.",
-"...........XaaaaX..XaaX.",
-"..........XaaXaaaX..XaaX",
-"..........XaaXXaaaX.XaaX",
-"..........XaaX.XaaaXXaaX",
-"..........XaaX..XaaaXaaX",
-"...........XaaX..XaaaaX.",
-"...........XaaaXXXXaaaX.",
-"............XaaaaaaaaX..",
-".............XXaaaaXX...",
-"...............XXXX....."};
-#endif
-
 /* XPM */
 static const char * const copy_xpm[] = {
 "24 30 3 1",
 ".        c None",
 "a        c #000000",
 "X        c #FFFFFF",
-#if defined(Q_WS_WIN) // Windows cursor is traditionally white
-"aa......................",
-"aXa.....................",
-"aXXa....................",
-"aXXXa...................",
-"aXXXXa..................",
-"aXXXXXa.................",
-"aXXXXXXa................",
-"aXXXXXXXa...............",
-"aXXXXXXXXa..............",
-"aXXXXXXXXXa.............",
-"aXXXXXXaaaa.............",
-"aXXXaXXa................",
-"aXXaaXXa................",
-"aXa..aXXa...............",
-"aa...aXXa...............",
-"a.....aXXa..............",
-"......aXXa..............",
-".......aXXa.............",
-".......aXXa.............",
-"........aa...aaaaaaaaaaa",
-#else
 "XX......................",
 "XaX.....................",
 "XaaX....................",
@@ -5740,7 +5421,6 @@ static const char * const copy_xpm[] = {
 ".......XaaX.............",
 ".......XaaX.............",
 "........XX...aaaaaaaaaaa",
-#endif
 ".............aXXXXXXXXXa",
 ".............aXXXXXXXXXa",
 ".............aXXXXaXXXXa",
@@ -5758,28 +5438,6 @@ static const char * const link_xpm[] = {
 ".        c None",
 "a        c #000000",
 "X        c #FFFFFF",
-#if defined(Q_WS_WIN) // Windows cursor is traditionally white
-"aa......................",
-"aXa.....................",
-"aXXa....................",
-"aXXXa...................",
-"aXXXXa..................",
-"aXXXXXa.................",
-"aXXXXXXa................",
-"aXXXXXXXa...............",
-"aXXXXXXXXa..............",
-"aXXXXXXXXXa.............",
-"aXXXXXXaaaa.............",
-"aXXXaXXa................",
-"aXXaaXXa................",
-"aXa..aXXa...............",
-"aa...aXXa...............",
-"a.....aXXa..............",
-"......aXXa..............",
-".......aXXa.............",
-".......aXXa.............",
-"........aa...aaaaaaaaaaa",
-#else
 "XX......................",
 "XaX.....................",
 "XaaX....................",
@@ -5800,7 +5458,6 @@ static const char * const link_xpm[] = {
 ".......XaaX.............",
 ".......XaaX.............",
 "........XX...aaaaaaaaaaa",
-#endif
 ".............aXXXXXXXXXa",
 ".............aXXXaaaaXXa",
 ".............aXXXXaaaXXa",
@@ -5811,18 +5468,15 @@ static const char * const link_xpm[] = {
 ".............aXXXaXXXXXa",
 ".............aXXXXXXXXXa",
 ".............aaaaaaaaaaa"};
-#endif // defined(Q_WS_X11) || defined(Q_WS_WIN)
+#endif // defined(Q_WS_X11)
 
 QPixmap QApplicationPrivate::getPixmapCursor(Qt::CursorShape cshape)
 {
-#if defined(Q_WS_X11) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
     if (!move_cursor) {
         move_cursor = new QPixmap((const char **)move_xpm);
         copy_cursor = new QPixmap((const char **)copy_xpm);
         link_cursor = new QPixmap((const char **)link_xpm);
-#ifdef Q_WS_WIN
-        ignore_cursor = new QPixmap((const char **)ignore_xpm);
-#endif
     }
 
     switch (cshape) {
@@ -5832,10 +5486,6 @@ QPixmap QApplicationPrivate::getPixmapCursor(Qt::CursorShape cshape)
         return *copy_cursor;
     case Qt::DragLinkCursor:
         return *link_cursor;
-#ifdef Q_WS_WIN
-    case Qt::ForbiddenCursor:
-        return *ignore_cursor;
-#endif
     default:
         break;
     }
