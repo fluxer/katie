@@ -103,7 +103,7 @@ endif()
 if(WITH_PSQL AND PostgreSQL_FOUND)
     include(sqldrivers/psql/psql.cmake)
 endif()
-if(WITH_SQLITE OR SQLITE_FOUND)
+if(WITH_SQLITE AND SQLITE_FOUND)
     include(sqldrivers/sqlite/sqlite.cmake)
 endif()
 

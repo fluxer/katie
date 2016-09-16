@@ -502,6 +502,10 @@ if(NOT WITH_NAS OR NOT NAS_FOUND)
     katie_definition(-DQT_NO_NAS)
 endif()
 
+if(NOT WITH_PNG OR NOT PNG_FOUND)
+    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
+endif()
+
 if(NOT WITH_JPEG OR NOT JPEG_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_JPEG)
 endif()
@@ -554,11 +558,6 @@ if(WITH_X11 AND X11_FOUND)
         message(WARNING "X11 SM was not found thus disabling session manager support")
         katie_definition(-DQT_NO_SESSIONMANAGER)
     endif()
-endif()
-
-# kinda optional package
-if(NOT WITH_PNG)
-    katie_definition(-DQT_NO_IMAGEFORMAT_PNG)
 endif()
 
 # semi-shared
