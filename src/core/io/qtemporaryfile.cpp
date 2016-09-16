@@ -48,12 +48,9 @@
 #include "qfsfileengine_p.h"
 #include "qsystemerror_p.h"
 #include "qfilesystemengine_p.h"
-
-
-#if !defined(Q_OS_WIN)
 #include "qcore_unix_p.h"       // overrides QT_OPEN
+
 #include <errno.h>
-#endif
 
 #if defined(QT_BUILD_CORE_LIB)
 #include "qcoreapplication.h"
@@ -61,29 +58,10 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(Q_OS_WIN)
-typedef ushort Char;
 
-static inline Char Latin1Char(char ch)
-{
-    return ushort(uchar(ch));
-}
-
-# ifdef Q_OS_WIN
-typedef HANDLE NativeFileHandle;
-# else // Q_OS_SYMBIAN
-#  ifdef  SYMBIAN_ENABLE_64_BIT_FILE_SERVER_API
-typedef RFile64 NativeFileHandle;
-#  else
-typedef RFile NativeFileHandle;
-#  endif
-# endif
-
-#else // POSIX
 typedef char Char;
 typedef char Latin1Char;
 typedef int NativeFileHandle;
-#endif
 
 /*
  * Copyright (c) 1987, 1993
@@ -158,73 +136,54 @@ static bool createFileFromTemplate(NativeFileHandle &file,
         }
     }
 
+    // Atomically create file and obtain handle
+    file = QT_OPEN(path.constData(),
+            QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR | QT_OPEN_LARGEFILE,
+            0600);
 
-    for (;;) {
-        // Atomically create file and obtain handle
-#if defined(Q_OS_WIN)
-        file = CreateFile((const wchar_t *)path.constData(),
-                GENERIC_READ | GENERIC_WRITE,
-                FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, CREATE_NEW,
-                FILE_ATTRIBUTE_NORMAL, NULL);
+    if (file != -1)
+        return true;
 
-        if (file != INVALID_HANDLE_VALUE)
-            return true;
-
-        DWORD err = GetLastError();
-        if (err != ERROR_FILE_EXISTS) {
-            error = QSystemError(err, QSystemError::NativeError);
-            return false;
-        }
-#else // POSIX
-        file = QT_OPEN(path.constData(),
-                QT_OPEN_CREAT | O_EXCL | QT_OPEN_RDWR | QT_OPEN_LARGEFILE,
-                0600);
-
-        if (file != -1)
-            return true;
-
-        int err = errno;
-        if (err != EEXIST) {
-            error = QSystemError(err, QSystemError::NativeError);
-            return false;
-        }
-#endif
-
-        /* tricky little algorwwithm for backward compatibility */
-        for (Char *iter = placeholderStart;;) {
-            // Character progression: [0-9] => 'a' ... 'z' => 'A' .. 'Z'
-            // String progression: "ZZaiC" => "aabiC"
-            switch (char(*iter)) {
-                case 'Z':
-                    // Rollover, advance next character
-                    *iter = Latin1Char('a');
-                    if (++iter == placeholderEnd) {
-                        // Out of alternatives. Return file exists error, previously set.
-                        error = QSystemError(err, QSystemError::NativeError);
-                        return false;
-                    }
-
-                    continue;
-
-                case '0': case '1': case '2': case '3': case '4':
-                case '5': case '6': case '7': case '8': case '9':
-                    *iter = Latin1Char('a');
-                    break;
-
-                case 'z':
-                    // increment 'z' to 'A'
-                    *iter = Latin1Char('A');
-                    break;
-
-                default:
-                    ++*iter;
-                    break;
-            }
-            break;
-        }
+    int err = errno;
+    if (err != EEXIST) {
+        error = QSystemError(err, QSystemError::NativeError);
+        return false;
     }
 
-    Q_ASSERT(false);
+    /* tricky little algorithm for backward compatibility */
+    for (Char *iter = placeholderStart;;) {
+        // Character progression: [0-9] => 'a' ... 'z' => 'A' .. 'Z'
+        // String progression: "ZZaiC" => "aabiC"
+        switch (char(*iter)) {
+            case 'Z':
+                // Rollover, advance next character
+                *iter = Latin1Char('a');
+                if (++iter == placeholderEnd) {
+                    // Out of alternatives. Return file exists error, previously set.
+                    error = QSystemError(err, QSystemError::NativeError);
+                    return false;
+                }
+
+                continue;
+
+            case '0': case '1': case '2': case '3': case '4':
+            case '5': case '6': case '7': case '8': case '9':
+                *iter = Latin1Char('a');
+                break;
+
+            case 'z':
+                // increment 'z' to 'A'
+                *iter = Latin1Char('A');
+                break;
+
+            default:
+                ++*iter;
+                break;
+        }
+        break;
+    }
+
+    Q_UNREACHABLE();
 }
 
 //************* QTemporaryFileEngine
@@ -265,11 +224,7 @@ bool QTemporaryFileEngine::isReallyOpen()
 {
     Q_D(QFSFileEngine);
 
-    if (!((0 == d->fh) && (-1 == d->fd)
-#if defined Q_OS_WIN
-                && (INVALID_HANDLE_VALUE == d->fileHandle)
-#endif
-            ))
+    if (!((0 == d->fh) && (-1 == d->fd)))
         return true;
 
     return false;
@@ -355,11 +310,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
     Q_ASSERT(phLength >= 6);
 
     QSystemError error;
-#if defined(Q_OS_WIN)
-    NativeFileHandle &file = d->fileHandle;
-#else // POSIX
     NativeFileHandle &file = d->fd;
-#endif
 
     if (!createFileFromTemplate(file, filename, phPos, phLength, error)) {
         setError(QFile::OpenError, error.toString());
@@ -368,9 +319,7 @@ bool QTemporaryFileEngine::open(QIODevice::OpenMode openMode)
 
     d->fileEntry = QFileSystemEntry(filename, QFileSystemEntry::FromNativePath());
 
-#if !defined(Q_OS_WIN)
     d->closeFileHandle = true;
-#endif
 
     filePathIsTemplate = false;
 

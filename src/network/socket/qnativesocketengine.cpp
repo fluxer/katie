@@ -944,36 +944,7 @@ bool QNativeSocketEngine::waitForWrite(int msecs, bool *timedOut)
     if (timedOut)
         *timedOut = false;
 
-    int ret = d->nativeSelect(msecs, false);
-    // On Windows, the socket is in connected state if a call to
-    // select(writable) is successful. In this case we should not
-    // issue a second call to WSAConnect()
-#if defined (Q_WS_WIN)
-    if (ret > 0) {
-        setState(QAbstractSocket::ConnectedState);
-        d_func()->fetchConnectionParameters();
-        return true;
-    } else {
-        int value = 0;
-        int valueSize = sizeof(value);
-        if (::getsockopt(d->socketDescriptor, SOL_SOCKET, SO_ERROR, (char *) &value, &valueSize) == 0) {
-            if (value == WSAECONNREFUSED) {
-                d->setError(QAbstractSocket::ConnectionRefusedError, QNativeSocketEnginePrivate::ConnectionRefusedErrorString);
-                d->socketState = QAbstractSocket::UnconnectedState;
-                return false;
-            } else if (value == WSAETIMEDOUT) {
-                d->setError(QAbstractSocket::NetworkError, QNativeSocketEnginePrivate::ConnectionTimeOutErrorString);
-                d->socketState = QAbstractSocket::UnconnectedState;
-                return false;
-            } else if (value == WSAEHOSTUNREACH) {
-                d->setError(QAbstractSocket::NetworkError, QNativeSocketEnginePrivate::HostUnreachableErrorString);
-                d->socketState = QAbstractSocket::UnconnectedState;
-                return false;
-            }
-        }
-    }
-#endif
-
+    const int ret = d->nativeSelect(msecs, false);
     if (ret == 0) {
         if (timedOut)
             *timedOut = true;
@@ -997,35 +968,7 @@ bool QNativeSocketEngine::waitForReadOrWrite(bool *readyToRead, bool *readyToWri
     Q_CHECK_NOT_STATE(QNativeSocketEngine::waitForReadOrWrite(),
                       QAbstractSocket::UnconnectedState, false);
 
-    int ret = d->nativeSelect(msecs, checkRead, checkWrite, readyToRead, readyToWrite);
-    // On Windows, the socket is in connected state if a call to
-    // select(writable) is successful. In this case we should not
-    // issue a second call to WSAConnect()
-#if defined (Q_WS_WIN)
-    if (checkWrite && ((readyToWrite && *readyToWrite) || !readyToWrite) && ret > 0) {
-        setState(QAbstractSocket::ConnectedState);
-        d_func()->fetchConnectionParameters();
-        return true;
-    } else {
-        int value = 0;
-        int valueSize = sizeof(value);
-        if (::getsockopt(d->socketDescriptor, SOL_SOCKET, SO_ERROR, (char *) &value, &valueSize) == 0) {
-            if (value == WSAECONNREFUSED) {
-                d->setError(QAbstractSocket::ConnectionRefusedError, QNativeSocketEnginePrivate::ConnectionRefusedErrorString);
-                d->socketState = QAbstractSocket::UnconnectedState;
-                return false;
-            } else if (value == WSAETIMEDOUT) {
-                d->setError(QAbstractSocket::NetworkError, QNativeSocketEnginePrivate::ConnectionTimeOutErrorString);
-                d->socketState = QAbstractSocket::UnconnectedState;
-                return false;
-            } else if (value == WSAEHOSTUNREACH) {
-                d->setError(QAbstractSocket::NetworkError, QNativeSocketEnginePrivate::HostUnreachableErrorString);
-                d->socketState = QAbstractSocket::UnconnectedState;
-                return false;
-            }
-        }
-    }
-#endif
+    const int ret = d->nativeSelect(msecs, checkRead, checkWrite, readyToRead, readyToWrite);
     if (ret == 0) {
         if (timedOut)
             *timedOut = true;

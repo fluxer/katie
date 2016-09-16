@@ -252,23 +252,11 @@ bool QUdpSocket::bind(const QHostAddress &address, quint16 port, BindMode mode)
     if (!d->ensureInitialized(address, port))
         return false;
 
-#ifdef Q_OS_UNIX
     if ((mode & ShareAddress) || (mode & ReuseAddressHint))
         d->socketEngine->setOption(QAbstractSocketEngine::AddressReusable, 1);
     else
         d->socketEngine->setOption(QAbstractSocketEngine::AddressReusable, 0);
-#endif
-#ifdef Q_OS_WIN
-    if (mode & ReuseAddressHint)
-        d->socketEngine->setOption(QAbstractSocketEngine::AddressReusable, 1);
-    else
-        d->socketEngine->setOption(QAbstractSocketEngine::AddressReusable, 0);
-    if (mode & DontShareAddress)
-        d->socketEngine->setOption(QAbstractSocketEngine::BindExclusively, 1);
-    else
-        d->socketEngine->setOption(QAbstractSocketEngine::BindExclusively, 0);
-#endif
-    bool result = d_func()->socketEngine->bind(address, port);
+    const bool result = d_func()->socketEngine->bind(address, port);
     d->cachedSocketDescriptor = d->socketEngine->socketDescriptor();
 
     if (!result) {

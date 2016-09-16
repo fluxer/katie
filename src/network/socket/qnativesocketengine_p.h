@@ -54,11 +54,7 @@
 //
 #include "QtNetwork/qhostaddress.h"
 #include "qabstractsocketengine_p.h"
-#ifndef Q_OS_WIN
-#  include "qplatformdefs.h"
-#else
-#  include <winsock2.h>
-#endif
+#include "qplatformdefs.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -175,16 +171,6 @@ private:
     Q_DISABLE_COPY(QNativeSocketEngine)
 };
 
-#ifdef Q_OS_WIN
-class QWindowsSockInit
-{
-public:
-    QWindowsSockInit();
-    ~QWindowsSockInit();
-    int version;
-};
-#endif
-
 class QSocketNotifier;
 
 class QNativeSocketEnginePrivate : public QAbstractSocketEnginePrivate
@@ -197,10 +183,6 @@ public:
     int socketDescriptor;
 
     QSocketNotifier *readNotifier, *writeNotifier, *exceptNotifier;
-
-#ifdef Q_OS_WIN
-    QWindowsSockInit winSock;
-#endif
 
     enum ErrorString {
         NonBlockingInitFailedErrorString,

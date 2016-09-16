@@ -100,7 +100,6 @@ void QNetworkAccessFileBackend::open()
 
     if (url.host() == QLatin1String("localhost"))
         url.setHost(QString());
-#if !defined(Q_OS_WIN)
     // do not allow UNC paths on Unix
     if (!url.host().isEmpty()) {
         // we handle only local files
@@ -109,7 +108,6 @@ void QNetworkAccessFileBackend::open()
         finished();
         return;
     }
-#endif // !defined(Q_OS_WIN)
     if (url.path().isEmpty())
         url.setPath(QLatin1String("/"));
     setUrl(url);

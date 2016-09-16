@@ -49,9 +49,6 @@
 #ifndef QT_NO_DATASTREAM
 #include <qdatastream.h>
 #endif
-#if defined(Q_OS_WINCE)
-#include <winsock.h>
-#endif
 
 #ifdef QT_LINUXBASE
 #  include <arpa/inet.h>

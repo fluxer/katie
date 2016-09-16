@@ -126,15 +126,10 @@ QString QNetworkInterfacePrivate::makeHwAddress(int len, uchar *data)
 {
     QString result;
     for (int i = 0; i < len; ++i) {
-        if (i)
-            result += QLatin1Char(':');
+        result += QLatin1Char(':');
 
         char buf[3];
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE) && defined(_MSC_VER) && _MSC_VER >= 1400
-        sprintf_s(buf, 3, "%02hX", ushort(data[i]));
-#else
         sprintf(buf, "%02hX", ushort(data[i]));
-#endif
         result += QLatin1String(buf);
     }
     return result;

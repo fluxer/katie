@@ -56,44 +56,13 @@
 // We mean it.
 //
 
-#include <qtcpsocket_p.h>
+#include "qtcpsocket_p.h"
 #include "qsslkey.h"
 #include "qsslconfiguration_p.h"
-
-#include <QtCore/qstringlist.h>
-
-#include <qringbuffer_p.h>
-
-#if defined(Q_OS_MAC)
-#include <Security/SecCertificate.h>
-#include <CoreFoundation/CFArray.h>
-#elif defined(Q_OS_WIN)
-#include <windows.h>
-#include <wincrypt.h>
-#ifndef HCRYPTPROV_LEGACY
-#define HCRYPTPROV_LEGACY HCRYPTPROV
-#endif
-#endif
+#include "qringbuffer_p.h"
+#include "qstringlist.h"
 
 QT_BEGIN_NAMESPACE
-
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-    typedef OSStatus (*PtrSecCertificateGetData)(SecCertificateRef, CSSM_DATA_PTR);
-    typedef OSStatus (*PtrSecTrustSettingsCopyCertificates)(int, CFArrayRef*);
-    typedef OSStatus (*PtrSecTrustCopyAnchorCertificates)(CFArrayRef*);
-#endif
-
-#if defined(Q_OS_WIN)
-#if defined(Q_OS_WINCE)
-    typedef HCERTSTORE (WINAPI *PtrCertOpenSystemStoreW)(LPCSTR, DWORD, HCRYPTPROV_LEGACY, DWORD, const void*);
-#else
-    typedef HCERTSTORE (WINAPI *PtrCertOpenSystemStoreW)(HCRYPTPROV_LEGACY, LPCWSTR);
-#endif
-    typedef PCCERT_CONTEXT (WINAPI *PtrCertFindCertificateInStore)(HCERTSTORE, DWORD, DWORD, DWORD, const void*, PCCERT_CONTEXT);
-    typedef BOOL (WINAPI *PtrCertCloseStore)(HCERTSTORE, DWORD);
-#endif
-
-
 
 class QSslSocketPrivate : public QTcpSocketPrivate
 {
@@ -138,16 +107,6 @@ public:
                                          QRegExp::PatternSyntax syntax);
     static void addDefaultCaCertificate(const QSslCertificate &cert);
     static void addDefaultCaCertificates(const QList<QSslCertificate> &certs);
-
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-    static PtrSecCertificateGetData ptrSecCertificateGetData;
-    static PtrSecTrustSettingsCopyCertificates ptrSecTrustSettingsCopyCertificates;
-    static PtrSecTrustCopyAnchorCertificates ptrSecTrustCopyAnchorCertificates;
-#elif defined(Q_OS_WIN)
-    static PtrCertOpenSystemStoreW ptrCertOpenSystemStoreW;
-    static PtrCertFindCertificateInStore ptrCertFindCertificateInStore;
-    static PtrCertCloseStore ptrCertCloseStore;
-#endif
 
     // The socket itself, including private slots.
     QTcpSocket *plainSocket;

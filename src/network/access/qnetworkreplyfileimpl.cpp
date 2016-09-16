@@ -72,7 +72,6 @@ QNetworkReplyFileImpl::QNetworkReplyFileImpl(QObject *parent, const QNetworkRequ
     if (url.host() == QLatin1String("localhost"))
         url.setHost(QString());
 
-#if !defined(Q_OS_WIN)
     // do not allow UNC paths on Unix
     if (!url.host().isEmpty()) {
         // we handle only local files
@@ -83,7 +82,6 @@ QNetworkReplyFileImpl::QNetworkReplyFileImpl(QObject *parent, const QNetworkRequ
         QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
         return;
     }
-#endif
     if (url.path().isEmpty())
         url.setPath(QLatin1String("/"));
     setUrl(url);

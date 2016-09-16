@@ -56,13 +56,6 @@
 
 #include "qsslsocket_p.h"
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#if defined(OCSP_RESPONSE)
-#undef OCSP_RESPONSE
-#endif
-#endif
-
 #include <openssl/asn1.h>
 #include <openssl/bio.h>
 #include <openssl/bn.h>

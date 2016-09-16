@@ -51,10 +51,6 @@
 
 #ifndef QT_NO_BEARERMANAGEMENT
 
-#if defined(Q_OS_WIN) && defined(interface)
-#undef interface
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE

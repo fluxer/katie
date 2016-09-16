@@ -683,26 +683,14 @@ bool QAbstractSocketPrivate::canReadNotification()
 */
 bool QAbstractSocketPrivate::canWriteNotification()
 {
-#if defined (Q_OS_WIN)
-    if (socketEngine && socketEngine->isWriteNotificationEnabled())
-        socketEngine->setWriteNotificationEnabled(false);
-#endif
-
 #if defined (QABSTRACTSOCKET_DEBUG)
     qDebug("QAbstractSocketPrivate::canWriteNotification() flushing");
 #endif
     int tmp = writeBuffer.size();
     flush();
 
-    if (socketEngine) {
-#if defined (Q_OS_WIN)
-        if (!writeBuffer.isEmpty())
-            socketEngine->setWriteNotificationEnabled(true);
-#else
-        if (writeBuffer.isEmpty() && socketEngine->bytesToWrite() == 0)
-            socketEngine->setWriteNotificationEnabled(false);
-#endif
-    }
+    if (socketEngine && writeBuffer.isEmpty() && socketEngine->bytesToWrite() == 0)
+        socketEngine->setWriteNotificationEnabled(false);
 
     return (writeBuffer.size() < tmp);
 }

@@ -120,7 +120,6 @@ Q_GLOBAL_STATIC(CustomFormatVector, customFormatVectorFunc)
 Q_GLOBAL_STATIC(QMutex, globalMutex)
 static QSettings::Format globalDefaultFormat = QSettings::NativeFormat;
 
-#ifndef Q_OS_WIN
 inline bool qt_isEvilFsTypeName(const char *name)
 {
     return (qstrncmp(name, "nfs", 3) == 0
@@ -213,7 +212,6 @@ static bool unixLock(int handle, int lockType)
     fl.l_type = lockType;
     return fcntl(handle, F_SETLKW, &fl) == 0;
 }
-#endif
 
 QConfFile::QConfFile(const QString &fileName, bool _userPerms)
     : name(fileName), size(0), ref(1), userPerms(_userPerms)
@@ -983,11 +981,7 @@ void QConfFileSettingsPrivate::initFormat()
     extension = (format == QSettings::NativeFormat) ? QLatin1String(".conf") : QLatin1String(".ini");
     readFunc = 0;
     writeFunc = 0;
-#if defined(Q_OS_MAC)
-    caseSensitivity = (format == QSettings::NativeFormat) ? Qt::CaseSensitive : IniCaseSensitivity;
-#else
     caseSensitivity = IniCaseSensitivity;
-#endif
 
     if (format > QSettings::IniFormat) {
         QMutexLocker locker(globalMutex());
@@ -1028,7 +1022,7 @@ static void initDefaultPaths(QMutexLocker *locker)
     QString systemPath;
 
     locker->unlock();
-	
+
     /*
        QLibraryInfo::location() uses QSettings, so in order to
        avoid a dead-lock, we can't hold the global mutex while
@@ -1436,37 +1430,30 @@ void QConfFileSettingsPrivate::syncConfFile(int confFileNo)
         ParsedSettingsMap mergedKeys = confFile->mergedKeyMap();
 
         if (file.isWritable()) {
-#ifdef Q_OS_MAC
-            if (format == QSettings::NativeFormat) {
-                ok = writePlistFile(confFile->name, mergedKeys);
-            } else
-#endif
-            {
-                file.seek(0);
-                file.resize(0);
+            file.seek(0);
+            file.resize(0);
 
-                if (format <= QSettings::IniFormat) {
-                    ok = writeIniFile(file, mergedKeys);
-                    if (!ok) {
-                        // try to restore old data; might work if the disk was full and the new data
-                        // was larger than the old data
-                        file.seek(0);
-                        file.resize(0);
-                        writeIniFile(file, confFile->originalKeys);
+            if (format <= QSettings::IniFormat) {
+                ok = writeIniFile(file, mergedKeys);
+                if (!ok) {
+                    // try to restore old data; might work if the disk was full and the new data
+                    // was larger than the old data
+                    file.seek(0);
+                    file.resize(0);
+                    writeIniFile(file, confFile->originalKeys);
+                }
+            } else {
+                if (writeFunc) {
+                    QSettings::SettingsMap tempOriginalKeys;
+
+                    ParsedSettingsMap::const_iterator i = mergedKeys.constBegin();
+                    while (i != mergedKeys.constEnd()) {
+                        tempOriginalKeys.insert(i.key(), i.value());
+                        ++i;
                     }
+                    ok = writeFunc(file, tempOriginalKeys);
                 } else {
-                    if (writeFunc) {
-                        QSettings::SettingsMap tempOriginalKeys;
-
-                        ParsedSettingsMap::const_iterator i = mergedKeys.constBegin();
-                        while (i != mergedKeys.constEnd()) {
-                            tempOriginalKeys.insert(i.key(), i.value());
-                            ++i;
-                        }
-                        ok = writeFunc(file, tempOriginalKeys);
-                    } else {
-                        ok = false;
-                    }
+                    ok = false;
                 }
             }
         } else {
@@ -2149,30 +2136,6 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     \o \c{/etc/xdg/MySoft.conf}
     \endlist
 
-    On Mac OS X versions 10.2 and 10.3, these files are used by
-    default:
-
-    \list 1
-    \o \c{$HOME/Library/Preferences/com.MySoft.Star Runner.plist}
-    \o \c{$HOME/Library/Preferences/com.MySoft.plist}
-    \o \c{/Library/Preferences/com.MySoft.Star Runner.plist}
-    \o \c{/Library/Preferences/com.MySoft.plist}
-    \endlist
-
-    On Windows, NativeFormat settings are stored in the following
-    registry paths:
-
-    \list 1
-    \o \c{HKEY_CURRENT_USER\Software\MySoft\Star Runner}
-    \o \c{HKEY_CURRENT_USER\Software\MySoft}
-    \o \c{HKEY_LOCAL_MACHINE\Software\MySoft\Star Runner}
-    \o \c{HKEY_LOCAL_MACHINE\Software\MySoft}
-    \endlist
-
-    \note On Windows, for 32-bit programs running in WOW64 mode, settings are
-    stored in the following registry path:
-    \c{HKEY_LOCAL_MACHINE\Software\WOW6432node}.
-
     If the file format is IniFormat, the following files are
     used on Unix:
 
@@ -2192,9 +2155,8 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     environments.
 
     The paths for the \c .ini and \c .conf files can be changed using
-    setPath(). On Unix and Mac OS X, the user can override them by
-    setting the \c XDG_CONFIG_HOME environment variable; see
-    setPath() for details.
+    setPath(). On Unix, the user can override them by setting the
+    \c XDG_CONFIG_HOME environment variable; see setPath() for details.
 
     \section2 Accessing INI and .plist Files Directly
 
@@ -2209,92 +2171,6 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     You can then use the QSettings object to read and write settings
     in the file.
 
-    On Mac OS X, you can access XML-based \c .plist files by passing
-    QSettings::NativeFormat as second argument. For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 3
-
-    \section2 Accessing the Windows Registry Directly
-
-    On Windows, QSettings lets you access settings that have been
-    written with QSettings (or settings in a supported format, e.g., string
-    data) in the system registry. This is done by constructing a QSettings
-    object with a path in the registry and QSettings::NativeFormat.
-
-    For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 4
-
-    All the registry entries that appear under the specified path can
-    be read or written through the QSettings object as usual (using
-    forward slashes instead of backslashes). For example:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 5
-
-    Note that the backslash character is, as mentioned, used by
-    QSettings to separate subkeys. As a result, you cannot read or
-    write windows registry entries that contain slashes or
-    backslashes; you should use a native windows API if you need to do
-    so.
-
-    \section2 Accessing Common Registry Settings on Windows
-
-    On Windows, it is possible for a key to have both a value and subkeys.
-    Its default value is accessed by using "Default" or "." in
-    place of a subkey:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 6
-
-    On other platforms than Windows, "Default" and "." would be
-    treated as regular subkeys.
-
-    \section2 Securing application settings in Symbian
-
-    UserScope settings in Symbian are writable by any application by
-    default. To protect the application settings from access and tampering
-    by other applications, the settings need to be placed in the private
-    secure area of the application. This can be done by specifying the
-    settings storage path directly to the private area. The following
-    snippet changes the UserScope to \c{c:/private/ecb00931/MySoft.conf}
-    (provided the application is installed on the \c{c-drive} and its
-    Secure ID is \c{0xECB00931}:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 30
-
-    Framework libraries (like Qt itself) may store configuration and cache
-    settings using UserScope, which is accessible and writable by other
-    applications. If the application is very security sensitive or uses
-    high platform security capabilities, it may be prudent to also force
-    framework settings to be stored in the private directory of the
-    application. This can be done by changing the default path of UserScope
-    before QApplication is created:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 31
-
-    Note that this may affect framework libraries' functionality if they expect
-    the settings to be shared between applications.
-
-    \section2 Changing the location of global Qt settings on Mac OS X
-
-    On Mac OS X, the global Qt settings (stored in \c com.trolltech.plist)
-    are stored in the application settings file in two situations:
-
-    \list 1
-    \o If the application runs in a Mac OS X sandbox (on Mac OS X 10.7 or later) or
-    \o If the \c Info.plist file of the application contains the key \c "ForAppStore" with the value \c "yes"
-    \endlist
-
-    In these situations, the application settings file is named using
-    the bundle identifier of the application, which must consequently
-    be set in the application's \c Info.plist file.
-
-    This feature is provided to ease the acceptance of Qt applications into
-    the Mac App Store, as the default behaviour of storing global Qt
-    settings in the \c com.trolltech.plist file does not conform with Mac
-    App Store file system usage requirements. For more information
-    about submitting Qt applications to the Mac App Store, see
-    \l{mac-differences.html#Preparing a Qt application for Mac App Store submission}{Preparing a Qt application for Mac App Store submission}.
-
     \section2 Platform Limitations
 
     While QSettings attempts to smooth over the differences between
@@ -2303,36 +2179,6 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     application:
 
     \list
-    \o  The Windows system registry has the following limitations: A
-        subkey may not exceed 255 characters, an entry's value may
-        not exceed 16,383 characters, and all the values of a key may
-        not exceed 65,535 characters. One way to work around these
-        limitations is to store the settings using the IniFormat
-        instead of the NativeFormat.
-
-    \o  On Mac OS X, allKeys() will return some extra keys for global
-        settings that apply to all applications. These keys can be
-        read using value() but cannot be changed, only shadowed.
-        Calling setFallbacksEnabled(false) will hide these global
-        settings.
-
-    \o  On Mac OS X, the CFPreferences API used by QSettings expects
-        Internet domain names rather than organization names. To
-        provide a uniform API, QSettings derives a fake domain name
-        from the organization name (unless the organization name
-        already is a domain name, e.g. OpenOffice.org). The algorithm
-        appends ".com" to the company name and replaces spaces and
-        other illegal characters with hyphens. If you want to specify
-        a different domain name, call
-        QCoreApplication::setOrganizationDomain(),
-        QCoreApplication::setOrganizationName(), and
-        QCoreApplication::setApplicationName() in your \c main()
-        function and then use the default QSettings constructor.
-        Another solution is to use preprocessor directives, for
-        example:
-
-        \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 7
-
     \o On Unix systems, the advisory file locking is disabled if NFS (or AutoFS
        or CacheFS) is detected to work around a bug in the NFS fcntl()
        implementation, which hangs forever if statd or lockd aren't running.
@@ -2578,10 +2424,6 @@ QSettings::QSettings(const QString &fileName, Format format, QObject *parent)
     called, the QSettings object will not be able to read or write
     any settings, and status() will return AccessError.
 
-    On Mac OS X, if both a name and an Internet domain are specified
-    for the organization, the domain is preferred over the name. On
-    other platforms, the name is preferred over the domain.
-
     \sa QCoreApplication::setOrganizationName(),
         QCoreApplication::setOrganizationDomain(),
         QCoreApplication::setApplicationName(),
@@ -2589,15 +2431,9 @@ QSettings::QSettings(const QString &fileName, Format format, QObject *parent)
 */
 QSettings::QSettings(QObject *parent)
     : QObject(*QSettingsPrivate::create(globalDefaultFormat, UserScope,
-#ifdef Q_OS_MAC
-                                        QCoreApplication::organizationDomain().isEmpty()
-                                            ? QCoreApplication::organizationName()
-                                            : QCoreApplication::organizationDomain()
-#else
                                         QCoreApplication::organizationName().isEmpty()
                                             ? QCoreApplication::organizationDomain()
                                             : QCoreApplication::organizationName()
-#endif
                                         , QCoreApplication::applicationName()),
               parent)
 {
@@ -3093,11 +2929,6 @@ bool QSettings::isWritable() const
   Sets the value of setting \a key to \a value. If the \a key already
   exists, the previous value is overwritten.
 
-  Note that the Windows registry and INI files use case-insensitive
-  keys, whereas the Carbon Preferences API on Mac OS X uses
-  case-sensitive keys. To avoid portability problems, see the
-  \l{Section and Key Syntax} rules.
-
   Example:
 
   \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 23
@@ -3128,11 +2959,6 @@ void QSettings::setValue(const QString &key, const QVariant &value)
 
     \snippet doc/src/snippets/code/src_corelib_io_qsettings.cpp 25
 
-    Note that the Windows registry and INI files use case-insensitive
-    keys, whereas the Carbon Preferences API on Mac OS X uses
-    case-sensitive keys. To avoid portability problems, see the
-    \l{Section and Key Syntax} rules.
-
     \sa setValue(), value(), contains()
 */
 void QSettings::remove(const QString &key)
@@ -3162,11 +2988,6 @@ void QSettings::remove(const QString &key)
 
     If a group is set using beginGroup(), \a key is taken to be
     relative to that group.
-
-    Note that the Windows registry and INI files use case-insensitive
-    keys, whereas the Carbon Preferences API on Mac OS X uses
-    case-sensitive keys. To avoid portability problems, see the
-    \l{Section and Key Syntax} rules.
 
     \sa value(), setValue()
 */
@@ -3224,11 +3045,6 @@ bool QSettings::event(QEvent *event)
 
     If no default value is specified, a default QVariant is
     returned.
-
-    Note that the Windows registry and INI files use case-insensitive
-    keys, whereas the Carbon Preferences API on Mac OS X uses
-    case-sensitive keys. To avoid portability problems, see the
-    \l{Section and Key Syntax} rules.
 
     Example:
 
@@ -3315,16 +3131,8 @@ void QSettings::setUserIniPath(const QString &dir)
 
     \table
     \header \o Platform         \o Format                       \o Scope       \o Path
-    \row    \o{1,2} Windows     \o{1,2} IniFormat               \o UserScope   \o \c %APPDATA%
-    \row                                                        \o SystemScope \o \c %COMMON_APPDATA%
     \row    \o{1,2} Unix        \o{1,2} NativeFormat, IniFormat \o UserScope   \o \c $HOME/.config
     \row                                                        \o SystemScope \o \c /etc/xdg
-    \row    \o{1,2} Qt for Embedded Linux \o{1,2} NativeFormat, IniFormat \o UserScope   \o \c $HOME/Settings
-    \row                                                        \o SystemScope \o \c /etc/xdg
-    \row    \o{1,2} Mac OS X    \o{1,2} IniFormat               \o UserScope   \o \c $HOME/.config
-    \row                                                        \o SystemScope \o \c /etc/xdg
-    \row    \o{1,2} Symbian     \o{1,2} NativeFormat, IniFormat \o UserScope   \o \c c:/data/.config
-    \row                                                        \o SystemScope \o \c <drive>/private/<uid>
     \endtable
 
     The default UserScope paths on Unix and Mac OS X (\c

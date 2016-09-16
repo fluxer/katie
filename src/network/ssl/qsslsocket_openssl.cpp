@@ -72,17 +72,6 @@
 #endif
 QT_BEGIN_NAMESPACE
 
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-#define kSecTrustSettingsDomainSystem 2 // so we do not need to include the header file
-    PtrSecCertificateGetData QSslSocketPrivate::ptrSecCertificateGetData = 0;
-    PtrSecTrustSettingsCopyCertificates QSslSocketPrivate::ptrSecTrustSettingsCopyCertificates = 0;
-    PtrSecTrustCopyAnchorCertificates QSslSocketPrivate::ptrSecTrustCopyAnchorCertificates = 0;
-#elif defined(Q_OS_WIN)
-    PtrCertOpenSystemStoreW QSslSocketPrivate::ptrCertOpenSystemStoreW = 0;
-    PtrCertFindCertificateInStore QSslSocketPrivate::ptrCertFindCertificateInStore = 0;
-    PtrCertCloseStore QSslSocketPrivate::ptrCertCloseStore = 0;
-#endif
-
 bool QSslSocketPrivate::s_libraryLoaded = false;
 bool QSslSocketPrivate::s_loadedCiphersAndCerts = false;
 bool QSslSocketPrivate::s_loadRootCertsOnDemand = false;
@@ -573,47 +562,9 @@ void QSslSocketPrivate::ensureCiphersAndCertsLoaded()
 
     resetDefaultCiphers();
 
-    //load symbols needed to receive certificates from system store
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-    QLibrary securityLib("/System/Library/Frameworks/Security.framework/Versions/Current/Security");
-    if (securityLib.load()) {
-        ptrSecCertificateGetData = (PtrSecCertificateGetData) securityLib.resolve("SecCertificateGetData");
-        if (!ptrSecCertificateGetData)
-            qWarning("could not resolve symbols in security library"); // should never happen
-
-        ptrSecTrustSettingsCopyCertificates = (PtrSecTrustSettingsCopyCertificates) securityLib.resolve("SecTrustSettingsCopyCertificates");
-        if (!ptrSecTrustSettingsCopyCertificates) { // method was introduced in Leopard, use legacy method if it's not there
-            ptrSecTrustCopyAnchorCertificates = (PtrSecTrustCopyAnchorCertificates) securityLib.resolve("SecTrustCopyAnchorCertificates");
-            if (!ptrSecTrustCopyAnchorCertificates)
-                qWarning("could not resolve symbols in security library"); // should never happen
-        }
-    } else {
-        qWarning("could not load security library");
-    }
-#elif defined(Q_OS_WIN)
-    HINSTANCE hLib = LoadLibraryW(L"Crypt32");
-    if (hLib) {
-#if defined(Q_OS_WINCE)
-        ptrCertOpenSystemStoreW = (PtrCertOpenSystemStoreW)GetProcAddress(hLib, L"CertOpenStore");
-        ptrCertFindCertificateInStore = (PtrCertFindCertificateInStore)GetProcAddress(hLib, L"CertFindCertificateInStore");
-        ptrCertCloseStore = (PtrCertCloseStore)GetProcAddress(hLib, L"CertCloseStore");
-#else
-        ptrCertOpenSystemStoreW = (PtrCertOpenSystemStoreW)GetProcAddress(hLib, "CertOpenSystemStoreW");
-        ptrCertFindCertificateInStore = (PtrCertFindCertificateInStore)GetProcAddress(hLib, "CertFindCertificateInStore");
-        ptrCertCloseStore = (PtrCertCloseStore)GetProcAddress(hLib, "CertCloseStore");
-#endif
-        if (!ptrCertOpenSystemStoreW || !ptrCertFindCertificateInStore || !ptrCertCloseStore)
-            qWarning("could not resolve symbols in crypt32 library"); // should never happen
-    } else {
-        qWarning("could not load crypt32 library"); // should never happen
-    }
-#elif defined(Q_OS_QNX)
-    s_loadRootCertsOnDemand = true;
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     // check whether we can enable on-demand root-cert loading (i.e. check whether the sym links are there)
-    QList<QByteArray> dirs = unixRootCertDirectories();
-    QStringList symLinkFilter;
-    symLinkFilter << QLatin1String("[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].[0-9]");
+    const QList<QByteArray> dirs = unixRootCertDirectories();
+    const QStringList symLinkFilter = QStringList() << QLatin1String("[0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f].[0-9]");
     for (int a = 0; a < dirs.count(); ++a) {
         QDirIterator iterator(QLatin1String(dirs.at(a)), symLinkFilter, QDir::Files);
         if (iterator.hasNext()) {
@@ -621,7 +572,6 @@ void QSslSocketPrivate::ensureCiphersAndCertsLoaded()
             break;
         }
     }
-#endif
     // if on-demand loading was not enabled, load the certs now
     if (!s_loadRootCertsOnDemand)
         setDefaultCaCertificates(systemCaCertificates());
@@ -684,68 +634,7 @@ QList<QSslCertificate> QSslSocketPrivate::systemCaCertificates()
     timer.start();
 #endif
     QList<QSslCertificate> systemCerts;
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-    CFArrayRef cfCerts;
-    OSStatus status = 1;
 
-    OSStatus SecCertificateGetData (
-       SecCertificateRef certificate,
-       CSSM_DATA_PTR data
-    );
-
-    if (ptrSecCertificateGetData) {
-        if (ptrSecTrustSettingsCopyCertificates)
-            status = ptrSecTrustSettingsCopyCertificates(kSecTrustSettingsDomainSystem, &cfCerts);
-        else if (ptrSecTrustCopyAnchorCertificates)
-            status = ptrSecTrustCopyAnchorCertificates(&cfCerts);
-        if (!status) {
-            CFIndex size = CFArrayGetCount(cfCerts);
-            for (CFIndex i = 0; i < size; ++i) {
-                SecCertificateRef cfCert = (SecCertificateRef)CFArrayGetValueAtIndex(cfCerts, i);
-                CSSM_DATA data;
-                CSSM_DATA_PTR dataPtr = &data;
-                if (ptrSecCertificateGetData(cfCert, dataPtr)) {
-                    qWarning("error retrieving a CA certificate from the system store");
-                } else {
-                    int len = data.Length;
-                    char *rawData = reinterpret_cast<char *>(data.Data);
-                    QByteArray rawCert(rawData, len);
-                    systemCerts.append(QSslCertificate::fromData(rawCert, QSsl::Der));
-                }
-            }
-            CFRelease(cfCerts);
-        }
-        else {
-           // no detailed error handling here
-           qWarning("could not retrieve system CA certificates");
-        }
-    }
-#elif defined(Q_OS_WIN)
-    if (ptrCertOpenSystemStoreW && ptrCertFindCertificateInStore && ptrCertCloseStore) {
-        HCERTSTORE hSystemStore;
-#if defined(Q_OS_WINCE)
-        hSystemStore = ptrCertOpenSystemStoreW(CERT_STORE_PROV_SYSTEM_W,
-                                               0,
-                                               0,
-                                               CERT_STORE_NO_CRYPT_RELEASE_FLAG|CERT_SYSTEM_STORE_CURRENT_USER,
-                                               L"ROOT");
-#else
-        hSystemStore = ptrCertOpenSystemStoreW(0, L"ROOT");
-#endif
-        if(hSystemStore) {
-            PCCERT_CONTEXT pc = NULL;
-            while(1) {
-                pc = ptrCertFindCertificateInStore( hSystemStore, X509_ASN_ENCODING, 0, CERT_FIND_ANY, NULL, pc);
-                if(!pc)
-                    break;
-                QByteArray der((const char *)(pc->pbCertEncoded), static_cast<int>(pc->cbCertEncoded));
-                QSslCertificate cert(der, QSsl::Der);
-                systemCerts.append(cert);
-            }
-            ptrCertCloseStore(hSystemStore, 0);
-        }
-    }
-#elif defined(Q_OS_UNIX)
     QSet<QString> certFiles;
     QList<QByteArray> directories = unixRootCertDirectories();
     QDir currentDir;
@@ -768,7 +657,6 @@ QList<QSslCertificate> QSslSocketPrivate::systemCaCertificates()
     systemCerts.append(QSslCertificate::fromPath(QLatin1String("/etc/pki/tls/certs/ca-bundle.crt"), QSsl::Pem)); // Fedora, Mandriva
     systemCerts.append(QSslCertificate::fromPath(QLatin1String("/usr/local/share/certs/ca-root-nss.crt"), QSsl::Pem)); // FreeBSD's ca_root_nss
 
-#endif
 #ifdef QSSLSOCKET_DEBUG
     qDebug() << "systemCaCertificates retrieval time " << timer.elapsed() << "ms";
     qDebug() << "imported " << systemCerts.count() << " certificates";

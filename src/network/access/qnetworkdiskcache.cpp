@@ -428,10 +428,7 @@ QIODevice *QNetworkDiskCache::data(const QUrl &url)
             buffer.reset(new QBuffer);
             // ### verify that QFile uses the fd size and not the file name
             qint64 size = file->size() - file->pos();
-            const uchar *p = 0;
-#if !defined(Q_OS_WINCE) && !defined(Q_OS_INTEGRITY)
-            p = file->map(file->pos(), size);
-#endif
+            const uchar *p = file->map(file->pos(), size);
             if (p) {
                 buffer->setData((const char *)p, size);
                 file.take()->setParent(buffer.data());
