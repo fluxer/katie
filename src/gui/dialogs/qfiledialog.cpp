@@ -956,7 +956,7 @@ QStringList QFileDialogPrivate::addDefaultSuffixToFiles(const QStringList filesT
 {
     QStringList files;
     for (int i=0; i<filesToFix.size(); ++i) {
-        QString name = toInternal(filesToFix.at(i));
+        QString name = filesToFix.at(i);
         QFileInfo info(name);
         // if the filename has no suffix, add the default suffix
         if (!defaultSuffix.isEmpty() && !info.isDir() && name.lastIndexOf(QLatin1Char('.')) == -1)
@@ -1961,16 +1961,6 @@ QString QFileDialog::getExistingDirectory(QWidget *parent,
     args.directory = QFileDialogPrivate::workingDirectory(dir);
     args.mode = (options & ShowDirsOnly ? DirectoryOnly : Directory);
     args.options = options;
-
-#if defined(Q_WS_WIN)
-    if (qt_use_native_dialogs && !(args.options & DontUseNativeDialog) && (options & ShowDirsOnly)
-#if defined(Q_WS_WINCE)
-        && qt_priv_ptr_valid
-#endif
-        ) {
-        return qt_win_get_existing_directory(args);
-    }
-#endif
 
     // create a qt dialog
     QFileDialog dialog(args);

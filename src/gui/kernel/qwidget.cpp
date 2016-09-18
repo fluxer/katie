@@ -1161,11 +1161,7 @@ void QWidgetPrivate::adjustFlags(Qt::WindowFlags &flags, QWidget *w)
     if (customize)
         ; // don't modify window flags if the user explicitly set them.
     else if (type == Qt::Dialog || type == Qt::Sheet)
-#ifndef Q_WS_WINCE
         flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint;
-#else
-        flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;
-#endif
     else if (type == Qt::Tool)
         flags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;
     else
@@ -4272,20 +4268,10 @@ const QPalette &QWidget::palette() const
 {
     if (!isEnabled()) {
         data->pal.setCurrentColorGroup(QPalette::Disabled);
-    } else if ((!isVisible() || isActiveWindow())
-#if defined(Q_OS_WIN) && !defined(Q_WS_WINCE)
-        && !QApplicationPrivate::isBlockedByModal(const_cast<QWidget *>(this))
-#endif
-        ) {
+    } else if (!isVisible() || isActiveWindow()) {
         data->pal.setCurrentColorGroup(QPalette::Active);
     } else {
-#ifdef Q_WS_MAC
-        extern bool qt_mac_can_clickThrough(const QWidget *); //qwidget_mac.cpp
-        if (qt_mac_can_clickThrough(this))
-            data->pal.setCurrentColorGroup(QPalette::Active);
-        else
-#endif
-            data->pal.setCurrentColorGroup(QPalette::Inactive);
+        data->pal.setCurrentColorGroup(QPalette::Inactive);
     }
     return data->pal;
 }
@@ -7678,17 +7664,12 @@ QSize QWidgetPrivate::adjustedSize() const
         if (exp & Qt::Vertical)
             s.setHeight(qMax(s.height(), 100));
 #if defined(Q_WS_X11)
-        QRect screen = QApplication::desktop()->screenGeometry(q->x11Info().screen());
+        const QRect screen = QApplication::desktop()->screenGeometry(q->x11Info().screen());
 #else // all others
-        QRect screen = QApplication::desktop()->screenGeometry(q->pos());
+        const QRect screen = QApplication::desktop()->screenGeometry(q->pos());
 #endif
-#if defined (Q_WS_WINCE)
-        s.setWidth(qMin(s.width(), screen.width()));
-        s.setHeight(qMin(s.height(), screen.height()));
-#else
         s.setWidth(qMin(s.width(), screen.width()*2/3));
         s.setHeight(qMin(s.height(), screen.height()*2/3));
-#endif
         if (QTLWExtra *extra = maybeTopData())
             extra->sizeAdjusted = true;
     }

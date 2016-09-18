@@ -123,9 +123,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_newColorTypedIn(QRgb rgb))
     Q_PRIVATE_SLOT(d_func(), void _q_newCustom(int, int))
     Q_PRIVATE_SLOT(d_func(), void _q_newStandard(int, int))
-#if defined(Q_WS_MAC)
-    Q_PRIVATE_SLOT(d_func(), void _q_macRunNativeAppModalPanel())
-#endif
 
     friend class QColorShower;
 };

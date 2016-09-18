@@ -111,11 +111,6 @@ QAlphaWidget::QAlphaWidget(QWidget* w, Qt::WindowFlags f)
 
 QAlphaWidget::~QAlphaWidget()
 {
-#if defined(Q_WS_WIN) && !defined(Q_WS_WINCE)
-    // Restore user-defined opacity value
-    if (widget)
-        widget->setWindowOpacity(1);
-#endif
 }
 
 /*
@@ -145,13 +140,6 @@ void QAlphaWidget::run(int time)
     checkTime.start();
 
     showWidget = true;
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    qApp->installEventFilter(this);
-    widget->setWindowOpacity(0.0);
-    widget->show();
-    connect(&anim, SIGNAL(timeout()), this, SLOT(render()));
-    anim.start(1);
-#else
     //This is roughly equivalent to calling setVisible(true) without actually showing the widget
     widget->setAttribute(Qt::WA_WState_ExplicitShowHide, true);
     widget->setAttribute(Qt::WA_WState_Hidden, false);
@@ -178,7 +166,6 @@ void QAlphaWidget::run(int time)
        duration = 0;
        render();
     }
-#endif
 }
 
 /*
@@ -252,27 +239,12 @@ void QAlphaWidget::render()
     else
         alpha = 1;
 
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    if (alpha >= 1 || !showWidget) {
-        anim.stop();
-        qApp->removeEventFilter(this);
-        widget->setWindowOpacity(1);
-        q_blend = 0;
-        deleteLater();
-    } else {
-        widget->setWindowOpacity(alpha);
-    }
-#else
     if (alpha >= 1 || !showWidget) {
         anim.stop();
         qApp->removeEventFilter(this);
 
         if (widget) {
             if (!showWidget) {
-#ifdef Q_WS_WIN
-                setEnabled(true);
-                setFocus();
-#endif // Q_WS_WIN
                 widget->hide();
             } else {
                 //Since we are faking the visibility of the widget 
@@ -289,7 +261,6 @@ void QAlphaWidget::render()
         pm = QPixmap::fromImage(mixedImage);
         repaint();
     }
-#endif // defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
 }
 
 /*

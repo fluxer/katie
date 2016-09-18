@@ -57,11 +57,6 @@
 #include <qwidgetaction.h>
 #include <qtimer.h>
 #include <qwidgetaction_p.h>
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
-
 #include <qmainwindowlayout_p.h>
 
 #include "qtoolbar_p.h"
@@ -72,14 +67,6 @@
 #define POPUP_TIMER_INTERVAL 500
 
 QT_BEGIN_NAMESPACE
-
-#ifdef Q_WS_MAC
-static void qt_mac_updateToolBarButtonHint(QWidget *parentWidget)
-{
-    if (!(parentWidget->windowFlags() & Qt::CustomizeWindowHint))
-        parentWidget->setWindowFlags(parentWidget->windowFlags() | Qt::MacWindowToolBarButtonHint);
-}
-#endif
 
 // qmainwindow.cpp
 extern QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *window);
@@ -102,17 +89,6 @@ void QToolBarPrivate::init()
 
     layout = new QToolBarLayout(q);
     layout->updateMarginAndSpacing();
-
-#ifdef Q_WS_MAC
-    if (q->parentWidget() && q->parentWidget()->isWindow()) {
-        // Make sure that the window has the "toolbar" button.
-        QWidget *parentWidget = q->parentWidget();
-        qt_mac_updateToolBarButtonHint(parentWidget);
-        reinterpret_cast<QToolBar *>(parentWidget)->d_func()->createWinId(); // Please let me create your winId...
-        extern OSWindowRef qt_mac_window_for(const QWidget *); // qwidget_mac.cpp
-        macWindowToolbarShow(q->parentWidget(), true);
-    }
-#endif
 
     toggleViewAction = new QAction(q);
     toggleViewAction->setCheckable(true);
@@ -159,9 +135,6 @@ void QToolBarPrivate::updateWindowFlags(bool floating, bool unplug)
 
     if (unplug) {
         flags |= Qt::X11BypassWindowManagerHint;
-#ifdef Q_WS_MAC
-        flags |= Qt::WindowStaysOnTopHint;
-#endif
     }
 
     q->setWindowFlags(flags);
@@ -230,11 +203,6 @@ void QToolBarPrivate::startDrag(bool moving)
 
     if (!moving) {
         state->widgetItem = layout->unplug(q);
-#if defined(Q_WS_MAC) && !defined(QT_MAC_USE_COCOA)
-        if (q->isWindow()) {
-           setWindowState(true, true); //set it to floating
-        }
-#endif
         Q_ASSERT(state->widgetItem != 0);
     }
     state->dragging = !moving;
@@ -255,7 +223,7 @@ void QToolBarPrivate::endDrag()
         if (!layout->plug(state->widgetItem)) {
             if (q->isFloatable()) {
                 layout->restore();
-#if defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
                 setWindowState(true); // gets rid of the X11BypassWindowManager window flag
                                       // and activates the resizer
 #endif
@@ -276,21 +244,6 @@ bool QToolBarPrivate::mousePressEvent(QMouseEvent *event)
     QStyleOptionToolBar opt;
     q->initStyleOption(&opt);
     if (q->style()->subElementRect(QStyle::SE_ToolBarHandle, &opt, q).contains(event->pos()) == false) {
-#ifdef Q_WS_MAC
-        // When using the unified toolbar on Mac OS X the user can can click and
-        // drag between toolbar contents to move the window. Make this work by
-        // implementing the standard mouse-dragging code and then call
-        // window->move() in mouseMoveEvent below.
-        if (QMainWindow *mainWindow = qobject_cast<QMainWindow *>(parent)) {
-            if (mainWindow->toolBarArea(q) == Qt::TopToolBarArea
-                    && mainWindow->unifiedTitleAndToolBarOnMac()
-                    && q->childAt(event->pos()) == 0) {
-                macWindowDragging = true;
-                macWindowDragPressPosition = event->pos();
-                return true;
-            }
-        }
-#endif
         return false;
     }
 
@@ -309,16 +262,8 @@ bool QToolBarPrivate::mouseReleaseEvent(QMouseEvent*)
     if (state != 0) {
         endDrag();
         return true;
-    } else {
-#ifdef Q_WS_MAC
-        if (!macWindowDragging)
-            return false;
-        macWindowDragging = false;
-        macWindowDragPressPosition = QPoint();
-        return true;
-#endif
-        return false;
     }
+    return false;
 }
 
 bool QToolBarPrivate::mouseMoveEvent(QMouseEvent *event)
@@ -326,14 +271,6 @@ bool QToolBarPrivate::mouseMoveEvent(QMouseEvent *event)
     Q_Q(QToolBar);
 
     if (!state) {
-#ifdef Q_WS_MAC
-        if (!macWindowDragging)
-            return false;
-        QWidget *w = q->window();
-        const QPoint delta = event->pos() - macWindowDragPressPosition;
-        w->move(w->pos() + delta);
-        return true;
-#endif
         return false;
     }
 
@@ -573,16 +510,6 @@ QToolBar::QToolBar(const QString &title, QWidget *parent)
 */
 QToolBar::~QToolBar()
 {
-    // Remove the toolbar button if there is nothing left.
-    QMainWindow *mainwindow = qobject_cast<QMainWindow *>(parentWidget());
-    if (mainwindow) {
-#ifdef Q_WS_MAC
-        QMainWindowLayout *mainwin_layout = qt_mainwindow_layout(mainwindow);
-        if (mainwin_layout && mainwin_layout->layoutState.toolBarAreaLayout.isEmpty()
-                && mainwindow->testAttribute(Qt::WA_WState_Created))
-            macWindowToolbarShow(mainwindow, false);
-#endif
-    }
 }
 
 /*! \property QToolBar::movable
@@ -669,12 +596,6 @@ void QToolBar::setAllowedAreas(Qt::ToolBarAreas areas)
 Qt::ToolBarAreas QToolBar::allowedAreas() const
 {
     Q_D(const QToolBar);
-#ifdef Q_WS_MAC
-    if (QMainWindow *window = qobject_cast<QMainWindow *>(parentWidget())) {
-        if (window->unifiedTitleAndToolBarOnMac()) // Don't allow drags to the top (for now).
-            return (d->allowedAreas & ~Qt::TopToolBarArea);
-    }
-#endif
     return d->allowedAreas;
 }
 
@@ -1088,15 +1009,6 @@ static bool waitForPopup(QToolBar *tb, QWidget *popup)
     return false;
 }
 
-#if defined(Q_WS_MAC)
-static bool toolbarInUnifiedToolBar(QToolBar *toolbar)
-{
-    const QMainWindow *mainWindow = qobject_cast<const QMainWindow *>(toolbar->parentWidget());
-    return mainWindow && mainWindow->unifiedTitleAndToolBarOnMac()
-            && mainWindow->toolBarArea(toolbar) == Qt::TopToolBarArea;
-}
-#endif
-
 /*! \reimp */
 bool QToolBar::event(QEvent *event)
 {
@@ -1120,52 +1032,9 @@ bool QToolBar::event(QEvent *event)
     case QEvent::Show:
         d->toggleViewAction->setChecked(event->type() == QEvent::Show);
         emit visibilityChanged(event->type() == QEvent::Show);
-#if defined(Q_WS_MAC)
-        if (toolbarInUnifiedToolBar(this)) {
-             // I can static_cast because I did the qobject_cast in the if above, therefore
-            // we must have a QMainWindowLayout here.
-            QMainWindowLayout *mwLayout = qt_mainwindow_layout(qobject_cast<QMainWindow *>(parentWidget()));
-            mwLayout->fixSizeInUnifiedToolbar(this);
-            mwLayout->syncUnifiedToolbarVisibility();
-        }
-#  if !defined(QT_MAC_USE_COCOA)
-        // Fall through
-    case QEvent::LayoutRequest: {
-        // There's currently no way to invalidate the size and let
-        // HIToolbar know about it. This forces a re-check.
-        int earlyResult = -1;
-        if (QMainWindow *mainWindow = qobject_cast<QMainWindow *>(parentWidget())) {
-            bool needUpdate = true;
-            if (event->type() == QEvent::LayoutRequest) {
-                QSize oldSizeHint = sizeHint();
-                earlyResult = QWidget::event(event) ? 1 : 0;
-                needUpdate = oldSizeHint != sizeHint();
-            }
-
-            if (needUpdate) {
-                OSWindowRef windowRef = qt_mac_window_for(mainWindow);
-                if (toolbarInUnifiedToolBar(this)
-                        && macWindowToolbarIsVisible(windowRef))   {
-                    DisableScreenUpdates();
-                    macWindowToolbarShow(this, false);
-                    macWindowToolbarShow(this, true);
-                    EnableScreenUpdates();
-                }
-            }
-
-            if (earlyResult != -1)
-                return earlyResult;
-        }
-    }
-#  endif // !QT_MAC_USE_COCOA
-#endif // Q_WS_MAC
         break;
     case QEvent::ParentChange:
         d->layout->checkUsePopupMenu();
-#if defined(Q_WS_MAC)
-        if (parentWidget() && parentWidget()->isWindow())
-            qt_mac_updateToolBarButtonHint(parentWidget());
-#endif
         break;
 
     case QEvent::MouseButtonPress: {
@@ -1197,27 +1066,8 @@ bool QToolBar::event(QEvent *event)
         if (d->mouseMoveEvent(static_cast<QMouseEvent*>(event)))
             return true;
         break;
-#ifdef Q_WS_WINCE
-    case QEvent::ContextMenu:
-        {
-            QContextMenuEvent* contextMenuEvent = static_cast<QContextMenuEvent*>(event);
-            QWidget* child = childAt(contextMenuEvent->pos());
-            QAbstractButton* button = qobject_cast<QAbstractButton*>(child);
-            if (button)
-                button->setDown(false);
-        }
-        break;
-#endif
     case QEvent::Leave:
-        if (d->state != 0 && d->state->dragging) {
-#ifdef Q_OS_WIN
-            // This is a workaround for loosing the mouse on Vista.
-            QPoint pos = QCursor::pos();
-            QMouseEvent fake(QEvent::MouseMove, mapFromGlobal(pos), pos, Qt::NoButton,
-                             QApplication::mouseButtons(), QApplication::keyboardModifiers());
-            d->mouseMoveEvent(&fake);
-#endif
-        } else {
+        if (!(d->state != 0 && d->state->dragging)) {
             if (!d->layout->expanded)
                 break;
 

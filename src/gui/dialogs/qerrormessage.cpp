@@ -61,14 +61,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifdef Q_WS_WINCE
-extern bool qt_wince_is_mobile();    //defined in qguifunctions_wince.cpp
-extern bool qt_wince_is_high_dpi();  //defined in qguifunctions_wince.cpp
-
-#include "qguifunctions_wince.h"
-#endif
-
-
 QT_BEGIN_NAMESPACE
 
 class QErrorMessagePrivate : public QDialogPrivate
@@ -101,33 +93,12 @@ public:
 
 QSize QErrorMessageTextView::minimumSizeHint() const
 {
-#ifdef Q_WS_WINCE
-    if (qt_wince_is_mobile())
-         if (qt_wince_is_high_dpi())
-            return QSize(200, 200);
-         else
-             return QSize(100, 100);
-    else
-      return QSize(70, 70);
-#else
     return QSize(50, 50);
-#endif
 }
 
 QSize QErrorMessageTextView::sizeHint() const
 {
-#ifdef Q_WS_WINCE
-    if (qt_wince_is_mobile())
-         if (qt_wince_is_high_dpi())
-            return QSize(400, 200);
-         else
-             return QSize(320, 120);
-    else
-      return QSize(300, 100);
-#else
-
     return QSize(250, 75);
-#endif //Q_WS_WINCE
 }
 
 /*!
@@ -244,9 +215,6 @@ QErrorMessage::QErrorMessage(QWidget * parent)
     grid->addWidget(d->again, 1, preferredTextColumn, Qt::AlignTop);
     d->ok = new QPushButton(this);
 
-#if defined(Q_WS_WINCE) || defined(Q_WS_S60)
-    d->ok->setFixedSize(0,0);
-#endif
     connect(d->ok, SIGNAL(clicked()), this, SLOT(accept()));
     d->ok->setFocus();
     grid->addWidget(d->ok, 2, 0, 1, 2, Qt::AlignCenter);

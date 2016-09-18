@@ -68,59 +68,6 @@ QT_BEGIN_NAMESPACE
 class QTornOffMenu;
 class QEventLoop;
 
-#ifdef Q_WS_MAC
-#  ifdef __OBJC__
-QT_END_NAMESPACE
-@class NSMenuItem;
-QT_BEGIN_NAMESPACE
-#  else
-typedef void NSMenuItem;
-#  endif //__OBJC__
-struct QMacMenuAction {
-    QMacMenuAction()
-#ifndef QT_MAC_USE_COCOA
-       : command(0)
-#else
-       : menuItem(0)
-#endif
-         , ignore_accel(0), merged(0), menu(0)
-    {
-    }
-    ~QMacMenuAction();
-#ifndef QT_MAC_USE_COCOA
-    uint command;
-#else
-    NSMenuItem *menuItem;
-#endif
-    uchar ignore_accel : 1;
-    uchar merged : 1;
-    QPointer<QAction> action;
-    OSMenuRef menu;
-};
-
-struct QMenuMergeItem
-{
-#ifndef QT_MAC_USE_COCOA
-    inline QMenuMergeItem(MenuCommand c, QMacMenuAction *a) : command(c), action(a) { }
-    MenuCommand command;
-#else
-    inline QMenuMergeItem(NSMenuItem *c, QMacMenuAction *a) : menuItem(c), action(a) { }
-    NSMenuItem *menuItem;
-#endif
-    QMacMenuAction *action;
-};
-typedef QList<QMenuMergeItem> QMenuMergeList;
-#endif
-
-#ifdef Q_WS_WINCE
-struct QWceMenuAction {
-    uint command;
-    QPointer<QAction> action;
-    HMENU menuHandle;
-    QWceMenuAction() : menuHandle(0), command(0) {}
-};
-#endif
-
 class QMenuPrivate : public QWidgetPrivate
 {
     Q_DECLARE_PUBLIC(QMenu)
@@ -134,22 +81,10 @@ public:
 #endif
                       scroll(0), eventLoop(0), tearoff(0), tornoff(0), tearoffHighlighted(0),
                       hasCheckableItems(0), sloppyDelayTimer(0), sloppyAction(0), doChildEffects(false)
-#ifdef Q_WS_MAC
-                      ,mac_menu(0)
-#endif
-#if defined(Q_WS_WINCE) && !defined(QT_NO_MENUBAR)
-                      ,wce_menu(0)
-#endif
     { }
     ~QMenuPrivate()
     {
         delete scroll;
-#ifdef Q_WS_MAC
-        delete mac_menu;
-#endif
-#if defined(Q_WS_WINCE) && !defined(QT_NO_MENUBAR)
-        delete wce_menu;
-#endif
 
     }
     void init();
@@ -273,66 +208,8 @@ public:
     //menu fading/scrolling effects
     bool doChildEffects;
 
-#ifdef Q_WS_MAC
-    //mac menu binding
-    struct QMacMenuPrivate {
-        QList<QMacMenuAction*> actionItems;
-        OSMenuRef menu;
-        QMacMenuPrivate();
-        ~QMacMenuPrivate();
-
-        bool merged(const QAction *action) const;
-        void addAction(QAction *, QMacMenuAction* =0, QMenuPrivate *qmenu = 0);
-        void addAction(QMacMenuAction *, QMacMenuAction* =0, QMenuPrivate *qmenu = 0);
-        void syncAction(QMacMenuAction *);
-        inline void syncAction(QAction *a) { syncAction(findAction(a)); }
-        void removeAction(QMacMenuAction *);
-        inline void removeAction(QAction *a) { removeAction(findAction(a)); }
-        inline QMacMenuAction *findAction(QAction *a) {
-            for(int i = 0; i < actionItems.size(); i++) {
-                QMacMenuAction *act = actionItems[i];
-                if(a == act->action)
-                    return act;
-            }
-            return 0;
-        }
-    } *mac_menu;
-    OSMenuRef macMenu(OSMenuRef merge);
-#ifndef QT_MAC_USE_COCOA
-    void setMacMenuEnabled(bool enable = true);
-#endif
-    void syncSeparatorsCollapsible(bool collapsible);
-    static QHash<OSMenuRef, OSMenuRef> mergeMenuHash;
-    static QHash<OSMenuRef, QMenuMergeList*> mergeMenuItemsHash;
-#endif
-
     QPointer<QAction> actionAboutToTrigger;
 
-#if defined(Q_WS_WINCE) && !defined(QT_NO_MENUBAR)
-    struct QWceMenuPrivate {
-        QList<QWceMenuAction*> actionItems;
-        HMENU menuHandle;
-        QWceMenuPrivate();
-        ~QWceMenuPrivate();
-        void addAction(QAction *, QWceMenuAction* =0);
-        void addAction(QWceMenuAction *, QWceMenuAction* =0);
-        void syncAction(QWceMenuAction *);
-        inline void syncAction(QAction *a) { syncAction(findAction(a)); }
-        void removeAction(QWceMenuAction *);
-        void rebuild();
-        inline void removeAction(QAction *a) { removeAction(findAction(a)); }
-        inline QWceMenuAction *findAction(QAction *a) {
-            for(int i = 0; i < actionItems.size(); i++) {
-                QWceMenuAction *act = actionItems[i];
-                if(a == act->action)
-                    return act;
-            }
-            return 0;
-        }
-    } *wce_menu;
-    HMENU wceMenu();
-    QAction* wceCommands(uint command);
-#endif
     QPointer<QWidget> noReplayFor;
 };
 

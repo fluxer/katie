@@ -202,7 +202,6 @@ public:
 #ifdef Q_NO_USING_KEYWORD
     inline void drawEllipse(const QRect &rect) { QPaintEngineEx::drawEllipse(rect); }
 #else
-    using QPaintEngineEx::drawPolygon;
     using QPaintEngineEx::drawEllipse;
 #endif
 
@@ -217,8 +216,6 @@ public:
     void alphaPenBlt(const void* src, int bpl, int depth, int rx,int ry,int w,int h);
 
     Type type() const { return Raster; }
-
-    QPoint coordinateOffset() const;
 
     bool supportsTransformations(const QFontEngine *fontEngine) const;
     bool supportsTransformations(qreal pixelSize, const QTransform &m) const;

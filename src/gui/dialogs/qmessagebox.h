@@ -140,10 +140,6 @@ public:
     QPushButton *addButton(StandardButton button);
     void removeButton(QAbstractButton *button);
 
-#ifdef Q_WS_WINCE
-    void setVisible(bool visible);
-#endif
-
 #ifdef Q_NO_USING_KEYWORD
     void open() { QDialog::open(); }
 #else
@@ -206,7 +202,6 @@ public:
     void setDetailedText(const QString &text);
 #endif
 
-    void setWindowTitle(const QString &title);
     void setWindowModality(Qt::WindowModality windowModality);
 
     static QPixmap standardIcon(Icon icon);
@@ -216,7 +211,6 @@ Q_SIGNALS:
 
 protected:
     bool event(QEvent *e);
-    void resizeEvent(QResizeEvent *event);
     void showEvent(QShowEvent *event);
     void closeEvent(QCloseEvent *event);
     void keyPressEvent(QKeyEvent *event);

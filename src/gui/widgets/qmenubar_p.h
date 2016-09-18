@@ -53,19 +53,12 @@
 // We mean it.
 //
 
-#ifndef QMAC_Q3MENUBAR_CPP_FILE
 #include "QtGui/qstyleoption.h"
-#include <qmenu_p.h> // Mac needs what in this file!
-
-#ifdef Q_WS_WINCE
-#include "qguifunctions_wince.h"
-#endif
+#include "qwidget_p.h"
+#include "qbasictimer.h"
 
 #ifdef Q_WS_X11
 #include "qabstractplatformmenubar_p.h"
-#endif
-
-#ifndef QT_NO_MENUBAR
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -83,14 +76,8 @@ public:
                          , nativeMenuBar(-1)
 #endif
                          , doChildEffects(false)
-#ifdef Q_WS_MAC
-                         , mac_menubar(0)
-#endif
 #ifdef Q_WS_X11
                          , platformMenuBar(0)
-#endif
-#ifdef Q_WS_WINCE
-                         , wce_menubar(0), wceClassicMenu(false)
 #endif
 
         { }
@@ -98,12 +85,6 @@ public:
         {
 #ifdef Q_WS_X11
             delete platformMenuBar;
-#endif
-#ifdef Q_WS_MAC
-            delete mac_menubar;
-#endif
-#ifdef Q_WS_WINCE
-            delete wce_menubar;
 #endif
         }
 
@@ -147,10 +128,6 @@ public:
     void _q_internalShortcutActivated(int);
     void _q_updateLayout();
 
-#ifdef Q_WS_WINCE
-    void _q_updateDefaultAction();
-#endif
-
     //extra widgets in the menubar
     QPointer<QWidget> leftWidget, rightWidget;
     QMenuBarExtension *extension;
@@ -174,74 +151,6 @@ public:
 #ifdef Q_WS_X11
     QAbstractPlatformMenuBar *platformMenuBar;
 #endif
-#ifdef Q_WS_MAC
-    //mac menubar binding
-    struct QMacMenuBarPrivate {
-        QList<QMacMenuAction*> actionItems;
-        OSMenuRef menu, apple_menu;
-        QMacMenuBarPrivate();
-        ~QMacMenuBarPrivate();
-
-        void addAction(QAction *, QAction* =0);
-        void addAction(QMacMenuAction *, QMacMenuAction* =0);
-        void syncAction(QMacMenuAction *);
-        inline void syncAction(QAction *a) { syncAction(findAction(a)); }
-        void removeAction(QMacMenuAction *);
-        inline void removeAction(QAction *a) { removeAction(findAction(a)); }
-        inline QMacMenuAction *findAction(QAction *a) {
-            for(int i = 0; i < actionItems.size(); i++) {
-                QMacMenuAction *act = actionItems[i];
-                if(a == act->action)
-                    return act;
-            }
-            return 0;
-        }
-    } *mac_menubar;
-    static bool macUpdateMenuBarImmediatly();
-    bool macWidgetHasNativeMenubar(QWidget *widget);
-    void macCreateMenuBar(QWidget *);
-    void macDestroyMenuBar();
-    OSMenuRef macMenu();
-#endif
-#ifdef Q_WS_WINCE
-    void wceCreateMenuBar(QWidget *);
-    void wceDestroyMenuBar();
-    struct QWceMenuBarPrivate {
-        QList<QWceMenuAction*> actionItems;
-        QList<QWceMenuAction*> actionItemsLeftButton;
-        QList<QList<QWceMenuAction*>> actionItemsClassic;
-        HMENU menuHandle;
-        HMENU leftButtonMenuHandle;
-        HWND menubarHandle;
-        HWND parentWindowHandle;
-        bool leftButtonIsMenu;
-        QPointer<QAction> leftButtonAction;
-        QMenuBarPrivate *d;
-        int leftButtonCommand;
-
-        QWceMenuBarPrivate(QMenuBarPrivate *menubar);
-        ~QWceMenuBarPrivate();
-        void addAction(QAction *, QAction* =0);
-        void addAction(QWceMenuAction *, QWceMenuAction* =0);
-        void syncAction(QWceMenuAction *);
-        inline void syncAction(QAction *a) { syncAction(findAction(a)); }
-        void removeAction(QWceMenuAction *);
-        void rebuild();
-        inline void removeAction(QAction *a) { removeAction(findAction(a)); }
-        inline QWceMenuAction *findAction(QAction *a) {
-            for(int i = 0; i < actionItems.size(); i++) {
-                QWceMenuAction *act = actionItems[i];
-                if(a == act->action)
-                    return act;
-            }
-            return 0;
-        }
-    } *wce_menubar;
-    bool wceClassicMenu;
-    void wceCommands(uint command);
-    void wceRefresh();
-    bool wceEmitSignals(QList<QWceMenuAction*> actions, uint command);
-#endif
 
 #ifdef Q_WS_X11
     void updateCornerWidgetToolBar();
@@ -249,7 +158,6 @@ public:
     QWidget *cornerWidgetContainer;
 #endif
 };
-#endif
 
 #endif // QT_NO_MENUBAR
 

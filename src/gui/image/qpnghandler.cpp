@@ -76,12 +76,6 @@
 #   endif
 #endif
 
-#ifdef Q_OS_WINCE
-#define CALLBACK_CALL_TYPE        __cdecl
-#else
-#define CALLBACK_CALL_TYPE
-#endif
-
 QT_BEGIN_NAMESPACE
 
 #if defined(Q_OS_WINCE) && defined(STANDARDSHELL_UI_MODEL)
@@ -170,8 +164,7 @@ private:
     float gamma;
 };
 
-static
-void CALLBACK_CALL_TYPE iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
+static void iod_read_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
     QPngHandlerPrivate *d = (QPngHandlerPrivate *)png_get_io_ptr(png_ptr);
     QIODevice *in = d->q->device();
@@ -195,8 +188,7 @@ void CALLBACK_CALL_TYPE iod_read_fn(png_structp png_ptr, png_bytep data, png_siz
 }
 
 
-static
-void CALLBACK_CALL_TYPE qpiw_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
+static void qpiw_write_fn(png_structp png_ptr, png_bytep data, png_size_t length)
 {
     QPNGImageWriter* qpiw = (QPNGImageWriter*)png_get_io_ptr(png_ptr);
     QIODevice* out = qpiw->device();
@@ -209,8 +201,7 @@ void CALLBACK_CALL_TYPE qpiw_write_fn(png_structp png_ptr, png_bytep data, png_s
 }
 
 
-static
-void CALLBACK_CALL_TYPE qpiw_flush_fn(png_structp /* png_ptr */)
+static void qpiw_flush_fn(png_structp /* png_ptr */)
 {
 }
 
@@ -370,7 +361,7 @@ void setup_qt(QImage& image, png_structp png_ptr, png_infop info_ptr, float scre
 #if defined(Q_C_CALLBACKS)
 extern "C" {
 #endif
-static void CALLBACK_CALL_TYPE qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
+static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
 {
     qWarning("libpng warning: %s", message);
 }

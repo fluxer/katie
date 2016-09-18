@@ -83,9 +83,6 @@ public:
     void setOptions(PageSetupDialogOptions options);
     PageSetupDialogOptions options() const;
 
-#if defined(Q_WS_MAC) || defined(Q_OS_WIN)
-    virtual void setVisible(bool visible);
-#endif
     virtual int exec();
 
 #ifdef Q_NO_USING_KEYWORD

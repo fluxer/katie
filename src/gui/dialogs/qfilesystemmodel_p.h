@@ -97,9 +97,6 @@ public:
         }
 
         QString fileName;
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-        QString volumeName;
-#endif
 
         inline qint64 size() const { if (info && !info->isDir()) return info->size(); return 0; }
         inline QString type() const { if (info) return info->displayType; return QLatin1String(""); }

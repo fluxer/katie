@@ -69,10 +69,6 @@
 #include "qmenubar_x11_p.h"
 #endif
 
-#ifdef Q_WS_WINCE
-extern bool qt_wince_is_mobile(); //defined in qguifunctions_wce.cpp
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QMenuBarExtension : public QToolButton
@@ -197,12 +193,6 @@ void QMenuBarPrivate::updateGeometries()
         }
     }
 
-#ifdef Q_WS_MAC
-    if(q->isNativeMenuBar()) {//nothing to see here folks, move along..
-        itemsDirty = false;
-        return;
-    }
-#endif
     calcActionRects(q_width, q_start);
     currentAction = 0;
 #ifndef QT_NO_SHORTCUT
@@ -728,21 +718,6 @@ void QMenuBarPrivate::init()
     Q_Q(QMenuBar);
     q->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
     q->setAttribute(Qt::WA_CustomWhatsThis);
-#ifdef Q_WS_MAC
-    macCreateMenuBar(q->parentWidget());
-    if(mac_menubar)
-        q->hide();
-#endif
-#ifdef Q_WS_WINCE
-    if (qt_wince_is_mobile()) {
-        wceCreateMenuBar(q->parentWidget());
-        if(wce_menubar)
-            q->hide();
-    }
-    else {
-        QApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, true);
-    }
-#endif
 #ifdef Q_WS_X11
     platformMenuBar = qt_guiPlatformMenuBarFactory()->create();
     platformMenuBar->init(q);
@@ -799,15 +774,6 @@ QMenuBar::QMenuBar(QWidget *parent) : QWidget(*new QMenuBarPrivate, parent, 0)
 */
 QMenuBar::~QMenuBar()
 {
-#ifdef Q_WS_MAC
-    Q_D(QMenuBar);
-    d->macDestroyMenuBar();
-#endif
-#ifdef Q_WS_WINCE
-    Q_D(QMenuBar);
-    if (qt_wince_is_mobile())
-        d->wceDestroyMenuBar();
-#endif
 #ifdef Q_WS_X11
     Q_D(QMenuBar);
     delete d->cornerWidgetToolBar;
@@ -1067,13 +1033,6 @@ void QMenuBar::setVisible(bool visible)
     Q_D(QMenuBar);
     d->platformMenuBar->setVisible(visible);
 #else
-#if defined(Q_WS_MAC) || defined(Q_OS_WINCE) || defined(Q_WS_S60)
-    if (isNativeMenuBar()) {
-        if (!visible)
-            QWidget::setVisible(false);
-        return;
-    }
-#endif
     QWidget::setVisible(visible);
 #endif // Q_WS_X11
 }
@@ -1274,23 +1233,6 @@ void QMenuBar::actionEvent(QActionEvent *e)
 #ifdef Q_WS_X11
     d->platformMenuBar->actionEvent(e);
 #endif
-#if defined (Q_WS_MAC) || defined(Q_OS_WINCE) || defined(Q_WS_S60)
-    if (isNativeMenuBar()) {
-#ifdef Q_WS_MAC
-        QMenuBarPrivate::QMacMenuBarPrivate *nativeMenuBar = d->mac_menubar;
-#else
-        QMenuBarPrivate::QWceMenuBarPrivate *nativeMenuBar = d->wce_menubar;
-#endif
-        if (!nativeMenuBar)
-            return;
-        if(e->type() == QEvent::ActionAdded)
-            nativeMenuBar->addAction(e->action(), e->before());
-        else if(e->type() == QEvent::ActionRemoved)
-            nativeMenuBar->removeAction(e->action());
-        else if(e->type() == QEvent::ActionChanged)
-            nativeMenuBar->syncAction(e->action());
-    }
-#endif
 
     if(e->type() == QEvent::ActionAdded) {
         connect(e->action(), SIGNAL(triggered()), this, SLOT(_q_actionTriggered()));
@@ -1372,21 +1314,6 @@ void QMenuBarPrivate::handleReparent()
 
     oldParent = newParent;
     oldWindow = newWindow;
-
-#ifdef Q_WS_MAC
-    if (q->isNativeMenuBar() && !macWidgetHasNativeMenubar(newParent)) {
-        // If the new parent got a native menubar from before, keep that
-        // menubar rather than replace it with this one (because a parents
-        // menubar has precedence over children menubars).
-        macDestroyMenuBar();
-        macCreateMenuBar(newParent);
-    }
-#endif
-
-#ifdef Q_WS_WINCE
-    if (qt_wince_is_mobile() && wce_menubar)
-        wce_menubar->rebuild();
-#endif
 }
 
 
@@ -1572,7 +1499,7 @@ QRect QMenuBar::actionGeometry(QAction *act) const
 QSize QMenuBar::minimumSizeHint() const
 {
     Q_D(const QMenuBar);
-#if defined(Q_WS_MAC) || defined(Q_WS_WINCE) || defined(Q_WS_S60) || defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     const bool as_gui_menubar = !isNativeMenuBar();
 #else
     const bool as_gui_menubar = true;
@@ -1634,7 +1561,7 @@ QSize QMenuBar::minimumSizeHint() const
 QSize QMenuBar::sizeHint() const
 {
     Q_D(const QMenuBar);
-#if defined(Q_WS_MAC) || defined(Q_WS_WINCE) || defined(Q_WS_S60) || defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     const bool as_gui_menubar = !isNativeMenuBar();
 #else
     const bool as_gui_menubar = true;
@@ -1699,7 +1626,7 @@ QSize QMenuBar::sizeHint() const
 int QMenuBar::heightForWidth(int) const
 {
     Q_D(const QMenuBar);
-#if defined(Q_WS_MAC) || defined(Q_WS_WINCE) || defined(Q_WS_S60) || defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     const bool as_gui_menubar = !isNativeMenuBar();
 #else
     const bool as_gui_menubar = true;
@@ -1910,27 +1837,6 @@ void QMenuBar::setNativeMenuBar(bool nativeMenuBar)
 #else
     if (d->nativeMenuBar == -1 || (nativeMenuBar != bool(d->nativeMenuBar))) {
         d->nativeMenuBar = nativeMenuBar;
-#ifdef Q_WS_MAC
-        if (!d->nativeMenuBar) {
-            extern void qt_mac_clear_menubar();
-            qt_mac_clear_menubar();
-            d->macDestroyMenuBar();
-            const QList<QAction *> &menubarActions = actions();
-            for (int i = 0; i < menubarActions.size(); ++i) {
-                const QAction *action = menubarActions.at(i);
-                if (QMenu *menu = action->menu()) {
-                    delete menu->d_func()->mac_menu;
-                    menu->d_func()->mac_menu = 0;
-                }
-            }
-        } else {
-            d->macCreateMenuBar(parentWidget());
-        }
-        macUpdateMenuBar();
-	updateGeometry();
-	if (!d->nativeMenuBar && parentWidget())
-	    setVisible(true);
-#endif
     }
 #endif // Q_WS_X11
 }
@@ -1947,59 +1853,6 @@ bool QMenuBar::isNativeMenuBar() const
     return d->nativeMenuBar;
 #endif
 }
-
-/*!
-  \since 4.4
-
-  Sets the default action to \a act.
-
-  The default action is assigned to the left soft key. The menu is assigned
-  to the right soft key.
-
-  Currently there is only support for the default action on Windows
-  Mobile. On all other platforms this method is not available.
-
-  \sa defaultAction()
-*/
-
-#ifdef Q_WS_WINCE
-void QMenuBar::setDefaultAction(QAction *act)
-{
-    Q_D(QMenuBar);
-    if (d->defaultAction == act)
-        return;
-#ifdef Q_WS_WINCE
-    if (qt_wince_is_mobile())
-        if (d->defaultAction) {
-            disconnect(d->defaultAction, SIGNAL(changed()), this, SLOT(_q_updateDefaultAction()));
-            disconnect(d->defaultAction, SIGNAL(destroyed()), this, SLOT(_q_updateDefaultAction()));
-        }
-#endif
-    d->defaultAction = act;
-#ifdef Q_WS_WINCE
-    if (qt_wince_is_mobile())
-        if (d->defaultAction) {
-            connect(d->defaultAction, SIGNAL(changed()), this, SLOT(_q_updateDefaultAction()));
-            connect(d->defaultAction, SIGNAL(destroyed()), this, SLOT(_q_updateDefaultAction()));
-        }
-    if (d->wce_menubar) {
-        d->wce_menubar->rebuild();
-    }
-#endif
-}
-
-/*!
-  \since 4.4
-
-  Returns the current default action.
-
-  \sa setDefaultAction()
-*/
-QAction *QMenuBar::defaultAction() const
-{
-    return d_func()->defaultAction;
-}
-#endif
 
 /*!
     \fn void QMenuBar::triggered(QAction *action)

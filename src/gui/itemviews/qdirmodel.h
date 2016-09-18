@@ -131,12 +131,6 @@ public:
     QIcon fileIcon(const QModelIndex &index) const;
     QFileInfo fileInfo(const QModelIndex &index) const;
 
-#ifdef Q_NO_USING_KEYWORD
-    inline QObject *parent() const { return QObject::parent(); }
-#else
-    using QObject::parent;
-#endif
-
 public Q_SLOTS:
     void refresh(const QModelIndex &parent = QModelIndex());
 

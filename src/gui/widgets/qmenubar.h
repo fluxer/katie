@@ -102,19 +102,6 @@ public:
     void setCornerWidget(QWidget *w, Qt::Corner corner = Qt::TopRightCorner);
     QWidget *cornerWidget(Qt::Corner corner = Qt::TopRightCorner) const;
 
-#ifdef Q_WS_MAC
-    OSMenuRef macMenu();
-    static bool macUpdateMenuBar();
-#endif
-
-#ifdef Q_WS_WINCE
-    void setDefaultAction(QAction *);
-    QAction *defaultAction() const;
-
-    static void wceCommands(uint command);
-    static void wceRefresh();
-#endif
-
     bool isNativeMenuBar() const;
     void setNativeMenuBar(bool nativeMenuBar);
 
@@ -151,19 +138,9 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_internalShortcutActivated(int))
     Q_PRIVATE_SLOT(d_func(), void _q_updateLayout())
 
-#ifdef Q_WS_WINCE
-    Q_PRIVATE_SLOT(d_func(), void _q_updateDefaultAction())
-#endif
-
     friend class QMenu;
     friend class QMenuPrivate;
     friend class QWindowsStyle;
-
-#ifdef Q_WS_MAC
-    friend class QApplicationPrivate;
-    friend class QWidgetPrivate;
-    friend bool qt_mac_activate_action(MenuRef, uint, QAction::ActionEvent, bool);
-#endif
 };
 
 #endif // QT_NO_MENUBAR

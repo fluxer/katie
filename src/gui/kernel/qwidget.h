@@ -457,11 +457,7 @@ public Q_SLOTS:
 
     virtual void setVisible(bool visible);
     inline void setHidden(bool hidden) { setVisible(!hidden); }
-#ifndef Q_WS_WINCE
     inline void show() { setVisible(true); }
-#else
-    void show();
-#endif
     inline void hide() { setVisible(false); }
 
     void showMinimized();

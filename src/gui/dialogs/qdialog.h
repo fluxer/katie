@@ -102,9 +102,6 @@ public Q_SLOTS:
 protected:
     QDialog(QDialogPrivate &, QWidget *parent, Qt::WindowFlags f = 0);
 
-#if defined(Q_WS_WINCE)
-    bool event(QEvent *e);
-#endif
     void keyPressEvent(QKeyEvent *);
     void closeEvent(QCloseEvent *);
     void showEvent(QShowEvent *);
@@ -117,11 +114,6 @@ protected:
 private:
     Q_DECLARE_PRIVATE(QDialog)
     Q_DISABLE_COPY(QDialog)
-
-
-#ifdef Q_WS_WINCE_WM
-    Q_PRIVATE_SLOT(d_func(), void _q_doneAction())
-#endif
 };
 
 QT_END_NAMESPACE

@@ -54,7 +54,6 @@
 #include <qlabel.h>
 #include <qbitmap.h>
 #include <qmath.h>
-
 #include <qfontengine_ft_p.h>
 #include <qmath_p.h>
 #include <qtextengine_p.h>
@@ -63,25 +62,9 @@
 #include <qimage_p.h>
 #include <qstatictext_p.h>
 #include "qmemrotate_p.h"
-
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
 
-#if defined(Q_WS_WIN)
-#  include <qt_windows.h>
-#  include <qvarlengtharray.h>
-#  include <qfontengine_p.h>
-#  if defined(Q_OS_WINCE)
-#    include "qguifunctions_wince.h"
-#  endif
-#elif defined(Q_WS_MAC)
-#  include <qt_mac_p.h>
-#  include <qpaintengine_mac_p.h>
-#endif
-
-#if defined(Q_WS_WIN64)
-#  include <malloc.h>
-#endif
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
@@ -107,14 +90,6 @@ void dumpClip(int width, int height, const QClipData *clip);
 
 // use the same rounding as in qrasterizer.cpp (6 bit fixed point)
 static const qreal aliasedCoordinateDelta = 0.5 - 0.015625;
-
-#ifdef Q_WS_WIN
-extern bool qt_cleartype_enabled;
-#endif
-
-#ifdef Q_WS_MAC
-extern bool qt_applefontsmoothing_enabled;
-#endif
 
 
 /********************************************************************************
@@ -272,11 +247,6 @@ void QRasterPaintEngine::init()
 {
     Q_D(QRasterPaintEngine);
 
-
-#ifdef Q_WS_WIN
-    d->hdc = 0;
-#endif
-
     d->rasterizer.reset(new QRasterizer);
     d->rasterBuffer.reset(new QRasterBuffer());
     d->outlineMapper.reset(new QOutlineMapper);
@@ -399,27 +369,9 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     }
 #endif
 
-#if defined(Q_WS_WIN)
-    d->isPlain45DegreeRotation = true;
-#endif
-
     if (d->mono_surface)
         d->glyphCacheType = QFontEngineGlyphCache::Raster_Mono;
-#if defined(Q_WS_WIN)
-    else if (qt_cleartype_enabled)
-#elif defined (Q_WS_MAC)
-    else if (qt_applefontsmoothing_enabled)
-#else
-    else if (false)
-#endif
-    {
-        QImage::Format format = static_cast<QImage *>(d->device)->format();
-        if (format == QImage::Format_ARGB32_Premultiplied || format == QImage::Format_RGB32)
-            d->glyphCacheType = QFontEngineGlyphCache::Raster_RGBMask;
-        else
-            d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
-    } else
-        d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
+    d->glyphCacheType = QFontEngineGlyphCache::Raster_A8;
 
     setActive(true);
     return true;
@@ -506,32 +458,6 @@ void QRasterPaintEngine::updateMatrix(const QTransform &matrix)
     s->flags.tx_noshear = qt_scaleForTransform(s->matrix, &s->txscale);
 
     ensureOutlineMapper();
-
-#ifdef Q_WS_WIN
-    Q_D(QRasterPaintEngine);
-    d->isPlain45DegreeRotation = false;
-    if (txop >= QTransform::TxRotate) {
-        d->isPlain45DegreeRotation =
-            (qFuzzyIsNull(matrix.m11())
-             && qFuzzyIsNull(matrix.m12() - qreal(1))
-             && qFuzzyIsNull(matrix.m21() + qreal(1))
-             && qFuzzyIsNull(matrix.m22())
-                )
-            ||
-            (qFuzzyIsNull(matrix.m11() + qreal(1))
-             && qFuzzyIsNull(matrix.m12())
-             && qFuzzyIsNull(matrix.m21())
-             && qFuzzyIsNull(matrix.m22() + qreal(1))
-                )
-            ||
-            (qFuzzyIsNull(matrix.m11())
-             && qFuzzyIsNull(matrix.m12() + qreal(1))
-             && qFuzzyIsNull(matrix.m21() - qreal(1))
-             && qFuzzyIsNull(matrix.m22())
-                )
-            ;
-    }
-#endif
 }
 
 
@@ -2729,23 +2655,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
     ensurePen();
     ensureRasterState();
 
-#if defined (Q_WS_WIN) || defined(Q_WS_MAC)
-
-    if (!supportsTransformations(ti.fontEngine)) {
-        QVarLengthArray<QFixedPoint> positions;
-        QVarLengthArray<glyph_t> glyphs;
-
-        QTransform matrix = s->matrix;
-        matrix.translate(p.x(), p.y());
-
-        ti.fontEngine->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
-
-        drawCachedGlyphs(glyphs.size(), glyphs.constData(), positions.constData(), ti.fontEngine);
-        return;
-    }
-
-#else // Q_WS_WIN || Q_WS_MAC
-
     QFontEngine *fontEngine = ti.fontEngine;
 
 #if defined(Q_WS_X11) && !defined(QT_NO_FREETYPE)
@@ -2771,7 +2680,6 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
         QPaintEngine::drawTextItem(p, ti);
 
     return;
-#endif
 #endif
 
     QPaintEngineEx::drawTextItem(p, ti);
@@ -2894,53 +2802,6 @@ void QRasterPaintEngine::drawEllipse(const QRectF &rect)
     QPaintEngineEx::drawEllipse(rect);
 }
 
-/*!
-    \internal
-*/
-#ifdef Q_WS_MAC
-void QRasterPaintEngine::setCGContext(CGContextRef ctx)
-{
-    Q_D(QRasterPaintEngine);
-    d->cgContext = ctx;
-}
-
-/*!
-    \internal
-*/
-CGContextRef QRasterPaintEngine::getCGContext() const
-{
-    Q_D(const QRasterPaintEngine);
-    return d->cgContext;
-}
-#endif
-
-#ifdef Q_WS_WIN
-/*!
-    \internal
-*/
-void QRasterPaintEngine::setDC(HDC hdc) {
-    Q_D(QRasterPaintEngine);
-    d->hdc = hdc;
-}
-
-/*!
-    \internal
-*/
-HDC QRasterPaintEngine::getDC() const
-{
-    Q_D(const QRasterPaintEngine);
-    return d->hdc;
-}
-
-/*!
-    \internal
-*/
-void QRasterPaintEngine::releaseDC(HDC) const
-{
-}
-
-#endif
-
 bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) const
 {
     if (!state()->WxF)
@@ -2958,14 +2819,6 @@ bool QRasterPaintEngine::supportsTransformations(qreal pixelSize, const QTransfo
         return true;
 
     return false;
-}
-
-/*!
-    \internal
-*/
-QPoint QRasterPaintEngine::coordinateOffset() const
-{
-    return QPoint(0, 0);
 }
 
 void QRasterPaintEngine::drawBitmap(const QPointF &pos, const QImage &image, QSpanData *fg)

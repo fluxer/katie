@@ -2859,28 +2859,6 @@ void QMenu::actionEvent(QActionEvent *e)
         d->widgetItems.remove(e->action());
     }
 
-#ifdef Q_WS_MAC
-    if (d->mac_menu) {
-        if (e->type() == QEvent::ActionAdded)
-            d->mac_menu->addAction(e->action(), d->mac_menu->findAction(e->before()), d);
-        else if (e->type() == QEvent::ActionRemoved)
-            d->mac_menu->removeAction(e->action());
-        else if (e->type() == QEvent::ActionChanged)
-            d->mac_menu->syncAction(e->action());
-    }
-#endif
-
-#if defined(Q_WS_WINCE) && !defined(QT_NO_MENUBAR)
-    if (!d->wce_menu)
-        d->wce_menu = new QMenuPrivate::QWceMenuPrivate;
-    if (e->type() == QEvent::ActionAdded)
-        d->wce_menu->addAction(e->action(), d->wce_menu->findAction(e->before()));
-    else if (e->type() == QEvent::ActionRemoved)
-        d->wce_menu->removeAction(e->action());
-    else if (e->type() == QEvent::ActionChanged)
-        d->wce_menu->syncAction(e->action());
-#endif
-
     if (isVisible()) {
         d->updateActionRects();
         resize(sizeHint());

@@ -47,11 +47,6 @@
 #include <QtGui/qicon.h>
 #include <QtGui/qaction.h>
 
-
-#ifdef Q_WS_WINCE
-#include <windef.h> // for HMENU
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -133,13 +128,6 @@ public:
     void setIcon(const QIcon &icon);
 
     void setNoReplayFor(QWidget *widget);
-#ifdef Q_WS_MAC
-    OSMenuRef macMenu(OSMenuRef merge=0);
-#endif
-
-#ifdef Q_WS_WINCE
-    HMENU wceMenu();
-#endif
 
     bool separatorsCollapsible() const;
     void setSeparatorsCollapsible(bool collapse);
@@ -171,10 +159,6 @@ protected:
     bool focusNextPrevChild(bool next);
     void initStyleOption(QStyleOptionMenuItem *option, const QAction *action) const;
 
-#ifdef Q_WS_WINCE
-    QAction* wceCommands(uint command);
-#endif
-
 private Q_SLOTS:
     void internalSetSloppyAction();
     void internalDelayedPopup();
@@ -197,15 +181,6 @@ private:
     friend class QComboBox;
     friend class QAction;
     friend class QToolButtonPrivate;
-
-#ifdef Q_WS_MAC
-    friend void qt_mac_trayicon_activate_action(QMenu *, QAction *action);
-    friend bool qt_mac_watchingAboutToShow(QMenu *);
-    friend OSStatus qt_mac_menu_event(EventHandlerCallRef, EventRef, void *);
-    friend bool qt_mac_activate_action(OSMenuRef, uint, QAction::ActionEvent, bool);
-    friend void qt_mac_emit_menuSignals(QMenu *, bool);
-    friend void qt_mac_menu_emit_hovered(QMenu *menu, QAction *action);
-#endif
 };
 
 #endif // QT_NO_MENU

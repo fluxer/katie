@@ -55,17 +55,8 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#if defined(Q_WS_WINCE)
-#include "qt_windows.h"
-#include "qmenubar.h"
-#include "qpointer.h"
-#include "qguifunctions_wince.h"
-extern bool qt_wince_is_mobile();     //defined in qguifunctions_wce.cpp
-extern bool qt_wince_is_smartphone(); //is defined in qguifunctions_wce.cpp
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
 #  include "../kernel/qt_x11_p.h"
-#elif defined(Q_OS_BLACKBERRY)
-#   include "qmessagebox.h"
 #endif
 
 
@@ -254,11 +245,6 @@ QDialog::QDialog(QWidget *parent, Qt::WindowFlags f)
     : QWidget(*new QDialogPrivate, parent,
               f | ((f & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0)))
 {
-#ifdef Q_WS_WINCE
-    if (!qt_wince_is_smartphone())
-        setWindowFlags(windowFlags() | Qt::WindowOkButtonHint | QFlag(qt_wince_is_mobile() ? 0 : Qt::WindowCancelButtonHint));
-#endif
-
 }
 
 
@@ -269,11 +255,6 @@ QDialog::QDialog(QWidget *parent, Qt::WindowFlags f)
 QDialog::QDialog(QDialogPrivate &dd, QWidget *parent, Qt::WindowFlags f)
     : QWidget(dd, parent, f | ((f & Qt::WindowType_Mask) == 0 ? Qt::Dialog : Qt::WindowType(0)))
 {
-#ifdef Q_WS_WINCE
-    if (!qt_wince_is_smartphone())
-        setWindowFlags(windowFlags() | Qt::WindowOkButtonHint | QFlag(qt_wince_is_mobile() ? 0 : Qt::WindowCancelButtonHint));
-#endif
-
 }
 
 /*!
@@ -350,38 +331,9 @@ void QDialogPrivate::resetModalitySetByOpen()
         // open() changed the window modality and the user didn't touch it afterwards; restore it
         q->setWindowModality(Qt::WindowModality(resetModalityTo));
         q->setAttribute(Qt::WA_SetWindowModality, wasModalitySet);
-#ifdef Q_WS_MAC
-        Q_ASSERT(resetModalityTo != Qt::WindowModal);
-        q->setParent(q->parentWidget(), Qt::Dialog);
-#endif
     }
     resetModalityTo = -1;
 }
-
-#if defined(Q_WS_WINCE)
-#ifdef Q_WS_WINCE_WM
-void QDialogPrivate::_q_doneAction()
-{
-    //Done...
-    QApplication::postEvent(q_func(), new QEvent(QEvent::OkRequest));
-}
-#endif
-
-/*!
-    \reimp
-*/
-bool QDialog::event(QEvent *e)
-{
-    bool result = QWidget::event(e);
-#ifdef Q_WS_WINCE
-    if (e->type() == QEvent::OkRequest) {
-        accept();
-        result = true;
-     }
-#endif
-    return result;
-}
-#endif
 
 /*!
   In general returns the modal dialog's result code, \c Accepted or \c Rejected.
@@ -429,9 +381,6 @@ void QDialog::open()
         d->wasModalitySet = testAttribute(Qt::WA_SetWindowModality);
         setWindowModality(Qt::WindowModal);
         setAttribute(Qt::WA_SetWindowModality, false);
-#ifdef Q_WS_MAC
-        setParent(parentWidget(), Qt::Sheet);
-#endif
     }
 
     setResult(0);
@@ -470,37 +419,7 @@ int QDialog::exec()
     setAttribute(Qt::WA_ShowModal, true);
     setResult(0);
 
-//On Windows Mobile we create an empty menu to hide the current menu
-#ifdef Q_WS_WINCE_WM
-#ifndef QT_NO_MENUBAR
-    QMenuBar *menuBar = 0;
-    if (!findChild<QMenuBar *>())
-        menuBar = new QMenuBar(this);
-    if (qt_wince_is_smartphone()) {
-        QAction *doneAction = new QAction(tr("Done"), this);
-        menuBar->setDefaultAction(doneAction);
-        connect(doneAction, SIGNAL(triggered()), this, SLOT(_q_doneAction()));
-    }
-#endif //QT_NO_MENUBAR
-#endif //Q_WS_WINCE_WM
-
-    bool showSystemDialogFullScreen = false;
-
-
-#ifdef Q_OS_BLACKBERRY
-    if (!qobject_cast<QMessageBox *>(this))
-        showSystemDialogFullScreen = true;
-#endif // Q_OS_BLACKBERRY
-
-    if (showSystemDialogFullScreen) {
-        setWindowFlags(windowFlags() | Qt::WindowSoftkeysVisibleHint);
-        setWindowState(Qt::WindowFullScreen);
-    }
     show();
-
-#ifdef Q_WS_MAC
-    d->mac_nativeDialogModalHelp();
-#endif
 
     QEventLoop eventLoop;
     d->eventLoop = &eventLoop;
@@ -515,12 +434,6 @@ int QDialog::exec()
     int res = result();
     if (deleteOnClose)
         delete this;
-#ifdef Q_WS_WINCE_WM
-#ifndef QT_NO_MENUBAR
-    else if (menuBar)
-        delete menuBar;
-#endif //QT_NO_MENUBAR
-#endif //Q_WS_WINCE_WM
     return res;
 }
 
@@ -622,11 +535,6 @@ void QDialog::keyPressEvent(QKeyEvent *e)
     //   Calls reject() if Escape is pressed. Simulates a button
     //   click for the default button if Enter is pressed. Move focus
     //   for the arrow keys. Ignore the rest.
-#ifdef Q_WS_MAC
-    if(e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_Period) {
-        reject();
-    } else
-#endif
     if (!e->modifiers() || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
         switch (e->key()) {
         case Qt::Key_Enter:
@@ -748,15 +656,6 @@ void QDialog::setVisible(bool visible)
         if (d->eventLoop)
             d->eventLoop->exit();
     }
-#ifdef Q_WS_WIN
-    if (d->mainDef && isActiveWindow()) {
-        BOOL snapToDefault = false;
-        if (SystemParametersInfo(SPI_GETSNAPTODEFBUTTON, 0, &snapToDefault, 0)) {
-            if (snapToDefault)
-                QCursor::setPos(d->mainDef->mapToGlobal(d->mainDef->rect().center()));
-        }
-    }
-#endif
 }
 
 /*!\reimp */

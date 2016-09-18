@@ -67,9 +67,7 @@ public:
     ~QPrintDialog();
 
     int exec();
-#if defined (Q_OS_UNIX)
     virtual void accept();
-#endif
     void done(int result);
 
 
@@ -78,9 +76,7 @@ public:
     void setOptions(PrintDialogOptions options);
     PrintDialogOptions options() const;
 
-#if defined(Q_OS_UNIX)
     void setVisible(bool visible);
-#endif
 
 #ifdef Q_NO_USING_KEYWORD
     void open() { QDialog::open(); }
@@ -100,12 +96,10 @@ Q_SIGNALS:
 
 private:
     Q_PRIVATE_SLOT(d_func(), void _q_chbPrintLastFirstToggled(bool))
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
     Q_PRIVATE_SLOT(d_func(), void _q_collapseOrExpandDialog())
-#endif
-# if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_MESSAGEBOX)
+#if !defined(QT_NO_MESSAGEBOX)
     Q_PRIVATE_SLOT(d_func(), void _q_checkFields())
-# endif
+#endif
     friend class QUnixPrintWidget;
 };
 
