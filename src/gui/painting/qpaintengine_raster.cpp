@@ -46,8 +46,6 @@
 #define QT_FT_END_HEADER
 
 #include <qrasterdefs_p.h>
-#include <qgrayraster_p.h>
-
 #include <qpainterpath.h>
 #include <qdebug.h>
 #include <qhash.h>
@@ -172,7 +170,7 @@ QRasterPaintEnginePrivate::QRasterPaintEnginePrivate() :
     // The antialiasing raster.
     grayRaster = new QT_FT_Raster;
     Q_CHECK_PTR(grayRaster);
-    if (qt_ft_grays_raster.raster_new(grayRaster)) {
+    if (gray_raster_new(grayRaster)) {
         // an error creating the raster is caused by a bad malloc
         QT_THROW(std::bad_alloc());
     }
@@ -3092,7 +3090,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     }
 
     char pool_base[RASTER_POOL_SIZE];
-    qt_ft_grays_raster.raster_reset(*grayRaster, pool_base);
+    gray_raster_reset(*grayRaster, pool_base);
 
     QT_FT_BBox clip_box = { deviceRect.x(),
                             deviceRect.y(),
@@ -3106,7 +3104,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     rasterParams.clip_box = clip_box;
     rasterParams.gray_spans = callback;
     rasterParams.skip_spans = 0;
-    qt_ft_grays_raster.raster_render(*grayRaster, &rasterParams);
+    gray_raster_render(*grayRaster, &rasterParams);
 }
 
 QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)

@@ -362,8 +362,6 @@ QT_FT_BEGIN_HEADER
                     const QT_FT_Span*  spans,
                     void*     worker);
 
-#define QT_FT_Raster_Span_Func   QT_FT_SpanFunc
-
 
   /*************************************************************************/
   /*                                                                       */
@@ -424,8 +422,8 @@ QT_FT_BEGIN_HEADER
 
   /*************************************************************************/
   /*                                                                       */
-  /* <FuncType>                                                            */
-  /*    QT_FT_Raster_NewFunc                                               */
+  /* <Func>                                                                */
+  /*    gray_raster_new                                                    */
   /*                                                                       */
   /* <Description>                                                         */
   /*    A function used to create a new raster object.                     */
@@ -436,15 +434,16 @@ QT_FT_BEGIN_HEADER
   /* <Return>                                                              */
   /*    Error code.  0 means success.                                      */
   /*                                                                       */
-  typedef int
-  (*QT_FT_Raster_NewFunc)( QT_FT_Raster*  raster );
+#ifdef __cplusplus
+  extern "C"
+#endif
+  int gray_raster_new( QT_FT_Raster*  raster );
 
-#define  QT_FT_Raster_New_Func    QT_FT_Raster_NewFunc
 
   /*************************************************************************/
   /*                                                                       */
-  /* <FuncType>                                                            */
-  /*    QT_FT_Raster_ResetFunc                                             */
+  /* <Func>                                                                */
+  /*    gray_raster_reset                                                  */
   /*                                                                       */
   /* <Description>                                                         */
   /*    FreeType provides an area of memory called the `render pool',      */
@@ -466,15 +465,16 @@ QT_FT_BEGIN_HEADER
   /*    passed to the raster constructor).  However, this is not           */
   /*    recommended for efficiency purposes.                               */
   /*                                                                       */
-  typedef void
-  (*QT_FT_Raster_ResetFunc)( QT_FT_Raster       raster, char*  pool);
+#ifdef __cplusplus
+  extern "C"
+#endif
+  void gray_raster_reset( QT_FT_Raster       raster, char*  pool);
 
-#define  QT_FT_Raster_Reset_Func   QT_FT_Raster_ResetFunc
 
   /*************************************************************************/
   /*                                                                       */
-  /* <FuncType>                                                            */
-  /*    QT_FT_Raster_RenderFunc                                               */
+  /* <Func>                                                                */
+  /*    gray_raster_render                                                 */
   /*                                                                       */
   /* <Description>                                                         */
   /*   Invokes a given raster to scan-convert a given glyph image into a   */
@@ -505,36 +505,18 @@ QT_FT_BEGIN_HEADER
   /*         examples of distinct implementations which support direct     */
   /*         composition).                                                 */
   /*                                                                       */
-  typedef int
-  (*QT_FT_Raster_RenderFunc)( QT_FT_Raster          raster,
-                           QT_FT_Raster_Params*  params );
-
-#define  QT_FT_Raster_Render_Func    QT_FT_Raster_RenderFunc
+#ifdef __cplusplus
+  extern "C"
+#endif
+  int gray_raster_render( QT_FT_Raster          raster,
+                           const QT_FT_Raster_Params*  params );
 
   /*************************************************************************/
   /*                                                                       */
-  /* <Struct>                                                              */
-  /*    QT_FT_Raster_Funcs                                                    */
+  /* Minimum buffer size for raster object, that accounts for TWorker and  */
+  /* TCell sizes.                                                          */
   /*                                                                       */
-  /* <Description>                                                         */
-  /*   A structure used to describe a given raster class to the library.   */
-  /*                                                                       */
-  /* <Fields>                                                              */
-  /*    raster_new    :: The raster constructor.                           */
-  /*                                                                       */
-  /*    raster_reset  :: Used to reset the render pool within the raster.  */
-  /*                                                                       */
-  /*    raster_render :: A function to render a glyph into a given bitmap. */
-  /*                                                                       */
-  /*                                                                       */
-  typedef struct  QT_FT_Raster_Funcs_
-  {
-    QT_FT_Raster_NewFunc       raster_new;
-    QT_FT_Raster_ResetFunc     raster_reset;
-    QT_FT_Raster_RenderFunc    raster_render;
-
-  } QT_FT_Raster_Funcs;
-
+  #define RASTER_POOL_SIZE 8192
 
   /* */
 

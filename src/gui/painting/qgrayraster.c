@@ -145,7 +145,6 @@
 #define QT_FT_END_HEADER
 
 #include <qrasterdefs_p.h>
-#include <qgrayraster_p.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -254,10 +253,10 @@
     QT_FT_BBox     clip_box;
 
     QT_FT_Span     gray_spans[QT_FT_MAX_GRAY_SPANS];
-    int         num_gray_spans;
+    int            num_gray_spans;
 
-    QT_FT_Raster_Span_Func  render_span;
-    void*                render_span_data;
+    QT_FT_SpanFunc render_span;
+    void*          render_span_data;
 
     int  band_size;
     int  band_shoot;
@@ -1348,8 +1347,7 @@
   /**** RASTER OBJECT CREATION: In standalone mode, we simply use *****/
   /****                         a static object.                  *****/
 
-  static int
-  gray_raster_new( QT_FT_Raster*  araster )
+  int gray_raster_new( QT_FT_Raster*  araster )
   {
     *araster = malloc(sizeof(TRaster));
     if (!*araster) {
@@ -1362,8 +1360,7 @@
   }
 
 
-  static void
-  gray_raster_reset( QT_FT_Raster  raster, char* pool_base )
+  void gray_raster_reset( QT_FT_Raster  raster, char* pool_base )
   {
     PRaster  rast = (PRaster)raster;
     if ( raster && pool_base )
@@ -1384,8 +1381,7 @@
     }
   }
 
-  static int
-  gray_raster_render( QT_FT_Raster                  raster,
+  int gray_raster_render( QT_FT_Raster                  raster,
                       const QT_FT_Raster_Params*  params )
   {
     const QT_FT_Outline*  outline    = (const QT_FT_Outline*)params->source;
@@ -1429,17 +1425,10 @@
     ras.outline   = *outline;
     ras.band_size = raster->band_size;
 
-    ras.render_span      = (QT_FT_Raster_Span_Func)params->gray_spans;
+    ras.render_span      = (QT_FT_SpanFunc)params->gray_spans;
     ras.render_span_data = params->user;
 
     return gray_convert_glyph( worker );
   }
-
-  const QT_FT_Raster_Funcs  qt_ft_grays_raster =
-  {
-    (QT_FT_Raster_New_Func)     gray_raster_new,
-    (QT_FT_Raster_Reset_Func)   gray_raster_reset,
-    (QT_FT_Raster_Render_Func)  gray_raster_render,
-  };
 
 /* END */
