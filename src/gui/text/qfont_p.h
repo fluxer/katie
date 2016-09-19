@@ -73,9 +73,6 @@ struct QFontDef
           styleStrategy(QFont::PreferDefault), styleHint(QFont::AnyStyle),
           weight(50), fixedPitch(false), style(QFont::StyleNormal), stretch(100),
           ignorePitch(true), hintingPreference(QFont::PreferDefaultHinting)
-#ifdef Q_WS_MAC
-          ,fixedPitchComputed(false)
-#endif
     {
     }
 
@@ -152,11 +149,7 @@ public:
     QAtomicInt ref;
     QFontCache *fontCache;
 
-#if !defined(Q_WS_MAC)
     QFontEngine *engines[QUnicodeTables::ScriptCount];
-#else
-    QFontEngine *engine;
-#endif
 };
 
 

@@ -281,9 +281,7 @@ private:
 
     void detach();
 
-#if defined(Q_WS_MAC)
-    void macSetFont(QPaintDevice *);
-#elif defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     void x11SetScreen(int screen = -1);
     int x11Screen() const;
 #endif

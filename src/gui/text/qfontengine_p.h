@@ -59,19 +59,7 @@
 #include <QtCore/QLinkedList>
 #include "qtextengine_p.h"
 #include "qfont_p.h"
-
-#ifdef Q_WS_WIN
-#   include "QtCore/qt_windows.h"
-#endif
-
-#ifdef Q_WS_MAC
-#   include "qt_mac_p.h"
-#   include "QtCore/qmap.h"
-#   include "QtCore/qcache.h"
-#   include "qcore_mac_p.h"
-#endif
-
-#include <qfontengineglyphcache_p.h>
+#include "qfontengineglyphcache_p.h"
 
 struct glyph_metrics_t;
 typedef unsigned int glyph_t;
@@ -167,7 +155,7 @@ public:
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const {}
     virtual void doKerning(QGlyphLayout *, QTextEngine::ShaperFlags) const;
 
-#if !defined(Q_WS_X11) && !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
+#if !defined(Q_WS_X11)
     virtual void draw(QPaintEngine *p, qreal x, qreal y, const QTextItemInt &si) = 0;
 #endif
     virtual void addGlyphsToPath(glyph_t *glyphs, QFixedPoint *positions, int nglyphs,
@@ -246,7 +234,7 @@ public:
     bool symbol;
     mutable HB_FontRec hbFont;
     mutable HB_Face hbFace;
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
     struct KernPair {
         uint left_right;
         QFixed adjust;
@@ -299,7 +287,7 @@ public:
     virtual bool stringToCMap(const QChar *str, int len, QGlyphLayout *glyphs, int *nglyphs, QTextEngine::ShaperFlags flags) const;
     virtual void recalcAdvances(QGlyphLayout *, QTextEngine::ShaperFlags) const;
 
-#if !defined(Q_WS_X11) && !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
+#if !defined(Q_WS_X11)
     void draw(QPaintEngine *p, qreal x, qreal y, const QTextItemInt &si);
 #endif
     virtual void addOutlineToPath(qreal x, qreal y, const QGlyphLayout &glyphs, QPainterPath *path, QTextItem::RenderFlags flags);

@@ -114,9 +114,6 @@ public:
     inline bool operator !=(const QFontMetrics &other) const { return !operator==(other); }
 
 private:
-#if defined(Q_WS_MAC)
-    friend class QFontPrivate;
-#endif
     friend class QFontMetricsF;
     friend class QStackTextEngine;
 

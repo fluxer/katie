@@ -54,8 +54,8 @@
 //
 
 #include "qwindowsurface_p.h"
-#if defined(Q_WS_X11) || defined(Q_WS_WIN) || defined(Q_WS_MAC)
-# include <qpixmap_raster_p.h>
+#if defined(Q_WS_X11)
+# include "qpixmap_raster_p.h"
 #else
 #error QGraphicsSystem::createDefaultPixmapData() not implemented
 #endif

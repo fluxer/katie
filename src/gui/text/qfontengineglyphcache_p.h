@@ -58,17 +58,6 @@
 #include "QtCore/qatomic.h"
 #include "qfont_p.h"
 
-#ifdef Q_WS_WIN
-#   include "QtCore/qt_windows.h"
-#endif
-
-#ifdef Q_WS_MAC
-#   include "qt_mac_p.h"
-#   include "QtCore/qmap.h"
-#   include "QtCore/qcache.h"
-#   include "qcore_mac_p.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 class QFontEngineGlyphCache: public QSharedData

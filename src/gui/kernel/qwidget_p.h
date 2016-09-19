@@ -68,17 +68,8 @@
 #include "QtGui/qgraphicsview.h"
 #include <qgesture_p.h>
 
-#ifdef Q_WS_WIN
-#include "QtCore/qt_windows.h"
-#include <qdnd_p.h>
-#endif // Q_WS_WIN
-
 #ifdef Q_WS_X11
 #include "QtGui/qx11info_x11.h"
-#endif
-
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -86,9 +77,6 @@ QT_BEGIN_NAMESPACE
 // Extra QWidget data
 //  - to minimize memory usage for members that are seldom used.
 //  - top-level widgets have extra extra data to reduce cost further
-#if defined(Q_WS_MAC)
-class QCoreGraphicsPaintEnginePrivate;
-#endif
 class QPaintEngine;
 class QPixmap;
 class QWidgetBackingStore;
@@ -188,26 +176,6 @@ struct QTLWExtra {
     qint32 newCounterValueHi;
     quint32 newCounterValueLo;
 #endif
-#elif defined(Q_WS_WIN) // <--------------------------------------------------------- WIN
-    uint hotkeyRegistered: 1; // Hot key from the STARTUPINFO has been registered.
-    HICON winIconBig; // internal big Windows icon
-    HICON winIconSmall; // internal small Windows icon
-#elif defined(Q_WS_MAC) // <--------------------------------------------------------- MAC
-    uint resizer : 4;
-    uint isSetGeometry : 1;
-    uint isMove : 1;
-    quint32 wattr;
-    quint32 wclass;
-    WindowGroupRef group;
-    IconRef windowIcon; // the current window icon, if set with setWindowIcon_sys.
-    quint32 savedWindowAttributesFromMaximized; // Saved attributes from when the calling updateMaximizeButton_sys()
-#ifdef QT_MAC_USE_COCOA
-    // This value is just to make sure we maximize and restore to the right location, yet we allow apps to be maximized and
-    // manually resized.
-    // The name is misleading, since this is set when maximizing the window. It is a hint to saveGeometry(..) to record the
-    // starting position as 0,0 instead of the normal starting position.
-    bool wasMaximized;
-#endif // QT_MAC_USE_COCOA
 #endif
 };
 
@@ -248,20 +216,9 @@ struct QWExtra {
     uint hasMask : 1;
 
     // *************************** Platform specific values (bit fields first) **********
-#if defined(Q_WS_WIN) // <----------------------------------------------------------- WIN
-#ifndef QT_NO_DRAGANDDROP
-    QOleDropTarget *dropTarget; // drop target
-    QList<QPointer<QWidget> > oleDropWidgets;
-#endif
-#elif defined(Q_WS_X11) // <--------------------------------------------------------- X11
+#if defined(Q_WS_X11) // <--------------------------------------------------------- X11
     uint compress_events : 1;
     WId xDndProxy; // XDND forwarding to embedded windows
-#elif defined(Q_WS_MAC) // <------------------------------------------------------ MAC
-#ifdef QT_MAC_USE_COCOA
-    // Cocoa Mask stuff
-    QImage maskBits;
-    CGImageRef imageMask;
-#endif
 #endif
 };
 
@@ -711,104 +668,6 @@ public:
     void updateX11AcceptFocus();
     QPoint mapToGlobal(const QPoint &pos) const;
     QPoint mapFromGlobal(const QPoint &pos) const;
-#elif defined(Q_WS_WIN) // <--------------------------------------------------------- WIN
-    uint noPaintOnScreen : 1; // see qwidget_win.cpp ::paintEngine()
-#ifndef QT_NO_GESTURES
-    uint nativeGesturePanEnabled : 1;
-#endif
-    bool shouldShowMaximizeButton();
-    void winUpdateIsOpaque();
-    void reparentChildren();
-#ifndef QT_NO_DRAGANDDROP
-    QOleDropTarget *registerOleDnd(QWidget *widget);
-    void unregisterOleDnd(QWidget *widget, QOleDropTarget *target);
-#endif
-    void grabMouseWhileInWindow();
-    void registerTouchWindow();
-    void winSetupGestures();
-#elif defined(Q_WS_MAC) // <--------------------------------------------------------- MAC
-    // This is new stuff
-    uint needWindowChange : 1;
-
-    // Each wiget keeps a list of all its child and grandchild OpenGL widgets.
-    // This list is used to update the gl context whenever a parent and a granparent
-    // moves, and also to check for intersections with gl widgets within the window
-    // when a widget moves.
-    struct GlWidgetInfo
-    {
-        GlWidgetInfo(QWidget *widget) : widget(widget), lastUpdateWidget(0) { }
-        bool operator==(const GlWidgetInfo &other) const { return (widget == other.widget); }
-        QWidget * widget;
-        QWidget * lastUpdateWidget;
-    };
-
-    // dirtyOnWidget contains the areas in the widget that needs to be repained,
-    // in the same way as dirtyOnScreen does for the window. Areas are added in
-    // dirtyWidget_sys and cleared in the paint event. In scroll_sys we then use
-    // this information repaint invalid areas when widgets are scrolled.
-    QRegion dirtyOnWidget;
-    EventHandlerRef window_event;
-    QList<GlWidgetInfo> glWidgets;
-
-    //these are here just for code compat (HIViews)
-    Qt::HANDLE qd_hd;
-
-    void macUpdateSizeAttribute();
-    void macUpdateHideOnSuspend();
-    void macUpdateOpaqueSizeGrip();
-    void macUpdateIgnoreMouseEvents();
-    void macUpdateMetalAttribute();
-    void macUpdateIsOpaque();
-    void macSetNeedsDisplay(QRegion region);
-    void setEnabled_helper_sys(bool enable);
-    bool isRealWindow() const;
-    void adjustWithinMaxAndMinSize(int &w, int &h);
-    void applyMaxAndMinSizeOnWindow();
-    void update_sys(const QRect &rect);
-    void update_sys(const QRegion &rgn);
-    void setGeometry_sys_helper(int, int, int, int, bool);
-    void setWindowModified_sys(bool b);
-    void updateMaximizeButton_sys();
-    void setWindowFilePath_sys(const QString &filePath);
-    void createWindow_sys();
-    void recreateMacWindow();
-#ifndef QT_MAC_USE_COCOA
-    void initWindowPtr();
-    void finishCreateWindow_sys_Carbon(OSWindowRef windowRef);
-#else
-    void setSubWindowStacking(bool set);
-    void setWindowLevel();
-    void finishCreateWindow_sys_Cocoa(void * /*NSWindow * */ windowRef);
-    void syncCocoaMask();
-    void finishCocoaMaskSetup();
-    void syncUnifiedMode();
-    // Did we add the drawRectOriginal method?
-    bool drawRectOriginalAdded;
-    // Is the original drawRect method available?
-    bool originalDrawMethod;
-    // Do we need to change the methods?
-    bool changeMethods;
-
-    // Unified toolbar variables
-    bool isInUnifiedToolbar;
-    QUnifiedToolbarSurface *unifiedSurface;
-    QPoint toolbar_offset;
-    QWidget *toolbar_ancestor;
-    bool flushRequested;
-    bool touchEventsEnabled;
-#endif // QT_MAC_USE_COCOA
-    void determineWindowClass();
-    void transferChildren();
-    bool qt_mac_dnd_event(uint, DragRef);
-    void toggleDrawers(bool);
-    //mac event functions
-    static bool qt_create_root_win();
-    static void qt_clean_root_win();
-    static bool qt_mac_update_sizer(QWidget *, int up = 0);
-    static OSStatus qt_window_event(EventHandlerCallRef er, EventRef event, void *);
-    static OSStatus qt_widget_event(EventHandlerCallRef er, EventRef event, void *);
-    static bool qt_widget_rgn(QWidget *, short, RgnHandle, bool);
-    void registerTouchWindow(bool enable = true);
 #endif
 
 };

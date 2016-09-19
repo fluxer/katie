@@ -90,22 +90,6 @@ QT_END_HEADER
 
 // Window system dependent definitions
 
-#if defined(Q_WS_MAC)
-
-#include <QtGui/qmacdefines_mac.h>
-
-#ifdef Q_WS_MAC32
-typedef int WId;
-#else
-typedef long WId;
-#endif
-
-#endif // Q_WS_MAC
-
-#if defined(Q_WS_WIN)
-#include <QtGui/qwindowdefs_win.h>
-#endif // Q_WS_WIN
-
 #if defined(Q_WS_X11)
 
 typedef struct _XDisplay Display;

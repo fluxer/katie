@@ -137,26 +137,6 @@ public:
     QFontDialog::FontDialogOptions opts;
     QPointer<QObject> receiverToDisconnectOnClose;
     QByteArray memberToDisconnectOnClose;
-
-#ifdef Q_WS_MAC
-    static void setFont(void *delegate, const QFont &font);
-
-    inline void done(int result) { q_func()->done(result); }
-    inline QFontDialog *fontDialog() { return q_func(); }
-
-    void *delegate;
-    void closeCocoaFontPanel();
-    bool nativeDialogInUse;
-    bool canBeNativeDialog();
-    bool setVisible_sys(bool visible);
-    void createNSFontPanelDelegate();
-    void _q_macRunNativeAppModalPanel();
-    void mac_nativeDialogModalHelp();
-    bool showCocoaFontPanel();
-    bool hideCocoaFontPanel();
-
-    static bool sharedFontPanelAvailable;
-#endif
 };
 
 #endif // QT_NO_FONTDIALOG

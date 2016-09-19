@@ -75,9 +75,6 @@ public:
           allowedAreas(Qt::AllToolBarAreas), orientation(Qt::Horizontal),
           toolButtonStyle(Qt::ToolButtonIconOnly),
           layout(0), state(0)
-#ifdef Q_WS_MAC
-        , macWindowDragging(false)
-#endif
     { }
 
     void init();
@@ -106,11 +103,6 @@ public:
         QLayoutItem *widgetItem;
     };
     DragState *state;
-
-#ifdef Q_WS_MAC
-    bool macWindowDragging;
-    QPoint macWindowDragPressPosition;
-#endif
 
     bool mousePressEvent(QMouseEvent *e);
     bool mouseReleaseEvent(QMouseEvent *e);
