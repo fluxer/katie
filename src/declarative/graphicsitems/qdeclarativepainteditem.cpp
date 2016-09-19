@@ -287,14 +287,7 @@ void QDeclarativePaintedItem::paint(QPainter *p, const QStyleOptionGraphicsItem 
             QRectF target(area.x(), area.y(), area.width(), area.height());
             if (!d->cachefrozen) {
                 if (!d->imagecache[i]->dirty.isNull() && topaint.contains(d->imagecache[i]->dirty)) {
-#ifdef Q_WS_MAC
-                    bool oldSmooth = qt_applefontsmoothing_enabled;
-                    qt_applefontsmoothing_enabled = false;
-#endif
                     QPainter qp(&d->imagecache[i]->image);
-#ifdef Q_WS_MAC
-                    qt_applefontsmoothing_enabled = oldSmooth;
-#endif
                     qp.translate(-area.x(), -area.y());
                     qp.scale(d->contentsScale,d->contentsScale);
                     QRect clip = d->imagecache[i]->dirty;
@@ -355,14 +348,7 @@ void QDeclarativePaintedItem::paint(QPainter *p, const QStyleOptionGraphicsItem 
                 if (d->fillColor.isValid())
                     img.fill(d->fillColor);
                 {
-#ifdef Q_WS_MAC
-                    bool oldSmooth = qt_applefontsmoothing_enabled;
-                    qt_applefontsmoothing_enabled = false;
-#endif
                     QPainter qp(&img);
-#ifdef Q_WS_MAC
-                    qt_applefontsmoothing_enabled = oldSmooth;
-#endif
                     qp.translate(-r.x(),-r.y());
                     qp.scale(d->contentsScale,d->contentsScale);
                     QRect sclip(qFloor(r.x()/d->contentsScale),

@@ -71,13 +71,9 @@ QT_BEGIN_NAMESPACE
 
 static QIcon createIconSet(const QString &name)
 {
-    QStringList candidates = QStringList()
-        << (QString::fromUtf8(":/trolltech/shared/images/") + name)
-#ifdef Q_WS_MAC
-        << (QString::fromUtf8(":/trolltech/shared/images/mac/") + name);
-#else
-        << (QString::fromUtf8(":/trolltech/shared/images/win/") + name);
-#endif
+    const QStringList candidates = QStringList()
+        << (QLatin1String(":/trolltech/shared/images/") + name)
+        << (QLatin1String(":/trolltech/shared/images/win/") + name);
 
     foreach (const QString &f, candidates) {
         if (QFile::exists(f))

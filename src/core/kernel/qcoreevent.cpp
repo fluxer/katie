@@ -167,7 +167,6 @@ QT_BEGIN_NAMESPACE
     \value NonClientAreaMouseButtonPress    A mouse button press occurred outside the client area.
     \value NonClientAreaMouseButtonRelease  A mouse button release occurred outside the client area.
     \value NonClientAreaMouseMove           A mouse move occurred outside the client area.
-    \value MacSizeChange                    The user changed his widget sizes (Mac OS X only).
     \value MetaCall                         An asynchronous method invocation via QMetaObject::invokeMethod().
     \value ModifiedChange                   Widgets modification state has been changed.
     \value MouseButtonDblClick              Mouse press again (QMouseEvent).
@@ -212,7 +211,6 @@ QT_BEGIN_NAMESPACE
     \value WhatsThis                        The widget should reveal "What's This?" help (QHelpEvent).
     \value WhatsThisClicked                 A link in a widget's "What's This?" help was clicked.
     \value Wheel                            Mouse wheel rolled (QWheelEvent).
-    \value WinEventAct                      A Windows-specific activation event has occurred.
     \value WindowActivate                   Window was activated.
     \value WindowBlocked                    The window is blocked by a modal dialog.
     \value WindowDeactivate                 Window was deactivated.
@@ -263,11 +261,8 @@ QT_BEGIN_NAMESPACE
     \omitvalue Speech
     \omitvalue Style
     \omitvalue ThreadChange
-    \omitvalue ZeroTimerEvent
     \omitvalue ApplicationActivated
     \omitvalue ApplicationDeactivated
-    \omitvalue MacGLWindowChange
-    \omitvalue MacGLClearDrawable
     \omitvalue NetworkReplyUpdated
     \omitvalue FutureCallOut
     \omitvalue NativeGesture

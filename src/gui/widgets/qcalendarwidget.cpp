@@ -1538,9 +1538,6 @@ public:
 protected:
     void paintEvent(QPaintEvent *e)
     {
-        Q_UNUSED(e)
-
-#ifndef Q_WS_MAC
         QStyleOptionToolButton opt;
         initStyleOption(&opt);
 
@@ -1553,7 +1550,6 @@ protected:
             toolPalette.setColor(QPalette::ButtonText, toolPalette.color(QPalette::HighlightedText));
             setPalette(toolPalette);
         }
-#endif
         QToolButton::paintEvent(e);
     }
 };

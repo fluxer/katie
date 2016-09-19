@@ -359,7 +359,6 @@ bool QSlider::event(QEvent *event)
             d->updateHoverControl(he->pos());
         break;
     case QEvent::StyleChange:
-    case QEvent::MacSizeChange:
         d->resetLayoutItemMargins();
         break;
     default:

@@ -17,10 +17,6 @@ set(OPENGL_PUBLIC_HEADERS
     QGLShader
     QGLShaderProgram
     QGLWidget
-    QMacCompatGLenum
-    QMacCompatGLint
-    QMacCompatGLuint
-    QMacGLCompatTypes
 )
 
 set(OPENGL_HEADERS

@@ -1655,14 +1655,7 @@ QFont QApplication::font()
 {
     QMutexLocker locker(applicationFontMutex());
     if (!QApplicationPrivate::app_font) {
-#if defined(Q_OS_BLACKBERRY)
-        // See http://docs.blackberry.com/en/developers/deliverables/41577/typography.jsp
-        // which recommends using font family "Slate Pro" and normal font size of 8 points
-        QApplicationPrivate::app_font = new QFont(QLatin1String("Slate Pro"));
-        QApplicationPrivate::app_font->setPointSize(8);
-#else
         QApplicationPrivate::app_font = new QFont(QLatin1String("Helvetica"));
-#endif
     }
     return *QApplicationPrivate::app_font;
 }
@@ -1678,15 +1671,6 @@ QFont QApplication::font()
 QFont QApplication::font(const QWidget *widget)
 {
     FontHash *hash = app_fonts();
-
-#ifdef Q_WS_MAC
-    // short circuit for small and mini controls
-    if (widget->testAttribute(Qt::WA_MacSmallSize)) {
-        return hash->value("QSmallFont");
-    } else if (widget->testAttribute(Qt::WA_MacMiniSize)) {
-        return hash->value("QMiniFont");
-    }
-#endif
     if (widget && hash  && hash->size()) {
         QHash<QByteArray, QFont>::ConstIterator it =
                 hash->constFind(widget->metaObject()->className());
@@ -1821,11 +1805,6 @@ void QApplication::setWindowIcon(const QIcon &icon)
         QApplicationPrivate::app_icon = new QIcon();
     *QApplicationPrivate::app_icon = icon;
     if (QApplicationPrivate::is_app_running && !QApplicationPrivate::is_app_closing) {
-#ifdef Q_WS_MAC
-        void qt_mac_set_app_icon(const QPixmap &); //qapplication_mac.cpp
-        QSize size = QApplicationPrivate::app_icon->actualSize(QSize(128, 128));
-        qt_mac_set_app_icon(QApplicationPrivate::app_icon->pixmap(size));
-#endif
         QEvent e(QEvent::ApplicationWindowIconChange);
         QWidgetList all = QApplication::allWidgets();
         for (QWidgetList::ConstIterator it = all.constBegin(); it != all.constEnd(); ++it) {
@@ -2060,13 +2039,7 @@ void QApplication::closeAllWindows()
 void QApplication::aboutQt()
 {
 #ifndef QT_NO_MESSAGEBOX
-    QMessageBox::aboutQt(
-#ifdef Q_WS_MAC
-            0
-#else
-            activeWindow()
-#endif // Q_WS_MAC
-            );
+    QMessageBox::aboutQt(activeWindow());
 #endif // QT_NO_MESSAGEBOX
 }
 
@@ -2129,27 +2102,6 @@ static bool qt_detectRTLLanguage()
                          " languages or to 'RTL' in right-to-left languages (such as Hebrew"
                          " and Arabic) to get proper widget layout.") == QLatin1String("RTL"));
 }
-#if defined(Q_WS_MAC)
-static const char *application_menu_strings[] = {
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Services"),
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Hide %1"),
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Hide Others"),
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Show All"),
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Preferences..."),
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Quit %1"),
-    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","About %1")
-    };
-QString qt_mac_applicationmenu_string(int type)
-{
-    QString menuString = QString::fromLatin1(application_menu_strings[type]);
-    QString translated = qApp->translate("QMenuBar", application_menu_strings[type]);
-    if (translated != menuString)
-        return translated;
-    else
-        return qApp->translate("MAC_APPLICATION_MENU",
-                               application_menu_strings[type]);
-}
-#endif
 #endif
 
 /*!\reimp
@@ -2713,12 +2665,6 @@ bool QApplicationPrivate::tryModalHelper(QWidget *widget, QWidget **rettop)
     // the active popup widget always gets the input event
     if (QApplication::activePopupWidget())
         return true;
-
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-    top = QApplicationPrivate::tryModalHelper_sys(top);
-    if (rettop)
-        *rettop = top;
-#endif
 
     return !isBlockedByModal(widget->window());
 }
@@ -3890,16 +3836,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     case QEvent::DragEnter: {
             QWidget* w = static_cast<QWidget *>(receiver);
             QDragEnterEvent *dragEvent = static_cast<QDragEnterEvent *>(e);
-#ifdef Q_WS_MAC
-            // HIView has a slight difference in how it delivers events to children and parents
-            // It will not give a leave to a child's parent when it enters a child.
-            QWidget *currentTarget = QDragManager::self()->currentTarget();
-            if (currentTarget) {
-                // Assume currentTarget did not get a leave
-                QDragLeaveEvent event;
-                QApplication::sendEvent(currentTarget, &event);
-            }
-#endif
 #ifndef QT_NO_GRAPHICSVIEW
             // QGraphicsProxyWidget handles its own propagation,
             // and we must not change QDragManagers currentTarget.
@@ -3932,27 +3868,13 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
             // QGraphicsProxyWidget handles its own propagation,
             // and we must not change QDragManagers currentTarget.
             QWExtra *extra = w->window()->d_func()->extra;
-            bool isProxyWidget = extra && extra->proxyWidget;
+            const bool isProxyWidget = extra && extra->proxyWidget;
             if (!isProxyWidget)
 #endif
                 w = QDragManager::self()->currentTarget();
 
             if (!w) {
-#ifdef Q_WS_MAC
-                // HIView has a slight difference in how it delivers events to children and parents
-                // It will not give an enter to a child's parent when it leaves the child.
-                if (e->type() == QEvent::DragLeave)
-                    break;
-                // Assume that w did not get an enter.
-                QDropEvent *dropEvent = static_cast<QDropEvent *>(e);
-                QDragEnterEvent dragEnterEvent(dropEvent->pos(), dropEvent->possibleActions(),
-                                               dropEvent->mimeData(), dropEvent->mouseButtons(),
-                                               dropEvent->keyboardModifiers());
-                QApplication::sendEvent(receiver, &dragEnterEvent);
-                w = QDragManager::self()->currentTarget();
-                if (!w)
-#endif
-                    break;
+                break;
             }
             if (e->type() == QEvent::DragMove || e->type() == QEvent::Drop) {
                 QDropEvent *dragEvent = static_cast<QDropEvent *>(e);

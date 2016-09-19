@@ -597,11 +597,7 @@ void QDesignerFormEditorInterface::setIntrospection(QDesignerIntrospectionInterf
 */
 QString QDesignerFormEditorInterface::resourceLocation() const
 {
-#ifdef Q_WS_MAC
-    return QLatin1String(":/trolltech/formeditor/images/mac");
-#else
     return QLatin1String(":/trolltech/formeditor/images/win");
-#endif
 }
 
 /*!

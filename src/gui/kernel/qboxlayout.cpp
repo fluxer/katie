@@ -144,107 +144,14 @@ static inline bool horz(QBoxLayout::Direction dir)
  */
 void QBoxLayoutPrivate::effectiveMargins(int *left, int *top, int *right, int *bottom) const
 {
-    int l = leftMargin;
-    int t = topMargin;
-    int r = rightMargin;
-    int b = bottomMargin;
-#ifdef Q_WS_MAC
-    Q_Q(const QBoxLayout);
-    if (horz(dir)) {
-        QBoxLayoutItem *leftBox = 0;
-        QBoxLayoutItem *rightBox = 0;
-
-        if (left || right) {
-            leftBox = list.value(0);
-            rightBox = list.value(list.count() - 1);
-            if (dir == QBoxLayout::RightToLeft)
-                qSwap(leftBox, rightBox);
-
-            int leftDelta = 0;
-            int rightDelta = 0;
-            if (leftBox) {
-                QLayoutItem *itm = leftBox->item;
-                if (QWidget *w = itm->widget())
-                    leftDelta = itm->geometry().left() - w->geometry().left();
-            }
-            if (rightBox) {
-                QLayoutItem *itm = rightBox->item;
-                if (QWidget *w = itm->widget())
-                    rightDelta = w->geometry().right() - itm->geometry().right();
-            }
-            QWidget *w = q->parentWidget();
-            Qt::LayoutDirection layoutDirection = w ? w->layoutDirection() : QApplication::layoutDirection();
-            if (layoutDirection == Qt::RightToLeft)
-                qSwap(leftDelta, rightDelta);
-
-            l = qMax(l, leftDelta);
-            r = qMax(r, rightDelta);
-        }
-
-        int count = top || bottom ? list.count() : 0;
-        for (int i = 0; i < count; ++i) {
-            QBoxLayoutItem *box = list.at(i);
-            QLayoutItem *itm = box->item;
-            QWidget *w = itm->widget();
-            if (w) {
-                QRect lir = itm->geometry();
-                QRect wr = w->geometry();
-                if (top)
-                    t = qMax(t, lir.top() - wr.top());
-                if (bottom)
-                    b = qMax(b, wr.bottom() - lir.bottom());
-            }
-        }
-    } else {    // vertical layout
-        QBoxLayoutItem *topBox = 0;
-        QBoxLayoutItem *bottomBox = 0;
-
-        if (top || bottom) {
-            topBox = list.value(0);
-            bottomBox = list.value(list.count() - 1);
-            if (dir == QBoxLayout::BottomToTop) {
-                qSwap(topBox, bottomBox);
-            }
-
-            if (top && topBox) {
-                QLayoutItem *itm = topBox->item;
-                QWidget *w = itm->widget();
-                if (w)
-                    t = qMax(t, itm->geometry().top() - w->geometry().top());
-            }
-
-            if (bottom && bottomBox) {
-                QLayoutItem *itm = bottomBox->item;
-                QWidget *w = itm->widget();
-                if (w)
-                    b = qMax(b, w->geometry().bottom() - itm->geometry().bottom());
-            }
-        }
-
-        int count = left || right ? list.count() : 0;
-        for (int i = 0; i < count; ++i) {
-            QBoxLayoutItem *box = list.at(i);
-            QLayoutItem *itm = box->item;
-            QWidget *w = itm->widget();
-            if (w) {
-                QRect lir = itm->geometry();
-                QRect wr = w->geometry();
-                if (left)
-                    l = qMax(l, lir.left() - wr.left());
-                if (right)
-                    r = qMax(r, wr.right() - lir.right());
-            }
-        }        
-    }
-#endif
     if (left)
-        *left = l;
+        *left = leftMargin;
     if (top)
-        *top = t;
+        *top = topMargin;
     if (right)
-        *right = r;
+        *right = rightMargin;
     if (bottom)
-        *bottom = b;
+        *bottom = bottomMargin;
 }
 
 
@@ -297,16 +204,6 @@ void QBoxLayoutPrivate::setupGeom()
         if (!empty) {
             if (fixedSpacing >= 0) {
                 spacing = (previousNonEmptyIndex >= 0) ? fixedSpacing : 0;
-#ifdef Q_WS_MAC
-                if (!horz(dir) && previousNonEmptyIndex >= 0) {
-                    QBoxLayoutItem *sibling = (dir == QBoxLayout::TopToBottom  ? box : list.at(previousNonEmptyIndex));
-                    if (sibling) {
-                        QWidget *wid = sibling->item->widget();
-                        if (wid)
-                            spacing = qMax(spacing, sibling->item->geometry().top() - wid->geometry().top());
-                    }
-                }
-#endif
             } else {
                 controlTypes1 = controlTypes2;
                 controlTypes2 = box->item->controlTypes();

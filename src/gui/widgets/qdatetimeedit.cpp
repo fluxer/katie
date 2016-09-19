@@ -985,30 +985,21 @@ QSize QDateTimeEdit::sizeHint() const
 
         QSize hint(w, h);
 
-#ifdef Q_WS_MAC
-        if (d->calendarPopupEnabled()) {
-            QStyleOptionComboBox opt;
-            d->cachedSizeHint = style()->sizeFromContents(QStyle::CT_ComboBox, &opt, hint, this);
-        } else {
-#else
-        {
-#endif
-            QSize extra(35, 6);
-            QStyleOptionSpinBox opt;
-            initStyleOption(&opt);
-            opt.rect.setSize(hint + extra);
-            extra += hint - style()->subControlRect(QStyle::CC_SpinBox, &opt,
-                                                QStyle::SC_SpinBoxEditField, this).size();
-            // get closer to final result by repeating the calculation
-            opt.rect.setSize(hint + extra);
-            extra += hint - style()->subControlRect(QStyle::CC_SpinBox, &opt,
-                                                QStyle::SC_SpinBoxEditField, this).size();
-            hint += extra;
+        QSize extra(35, 6);
+        QStyleOptionSpinBox opt;
+        initStyleOption(&opt);
+        opt.rect.setSize(hint + extra);
+        extra += hint - style()->subControlRect(QStyle::CC_SpinBox, &opt,
+                                            QStyle::SC_SpinBoxEditField, this).size();
+        // get closer to final result by repeating the calculation
+        opt.rect.setSize(hint + extra);
+        extra += hint - style()->subControlRect(QStyle::CC_SpinBox, &opt,
+                                            QStyle::SC_SpinBoxEditField, this).size();
+        hint += extra;
 
-            opt.rect = rect();
-            d->cachedSizeHint = style()->sizeFromContents(QStyle::CT_SpinBox, &opt, hint, this)
-                                .expandedTo(QApplication::globalStrut());
-        }
+        opt.rect = rect();
+        d->cachedSizeHint = style()->sizeFromContents(QStyle::CT_SpinBox, &opt, hint, this)
+                            .expandedTo(QApplication::globalStrut());
 
         d->cachedMinimumSizeHint = d->cachedSizeHint;
         // essentially make minimumSizeHint return the same as sizeHint for datetimeedits
@@ -1035,9 +1026,6 @@ bool QDateTimeEdit::event(QEvent *event)
         d->updateEdit();
         break;
     case QEvent::StyleChange:
-#ifdef Q_WS_MAC
-    case QEvent::MacSizeChange:
-#endif
         d->setLayoutItemMargins(QStyle::SE_DateTimeEditLayoutItem);
         break;
     default:
@@ -1136,16 +1124,6 @@ void QDateTimeEdit::keyPressEvent(QKeyEvent *event)
                 select = false;
                 break;
             }
-#ifdef Q_WS_MAC
-            else
-#ifdef QT_KEYPAD_NAVIGATION
-                if (!QApplication::keypadNavigationEnabled())
-#endif
-            {
-                select = (event->modifiers() & Qt::ShiftModifier);
-                break;
-            }
-#endif
         }
         // else fall through
     case Qt::Key_Backtab:

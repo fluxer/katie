@@ -970,11 +970,7 @@ bool QLabel::event(QEvent *e)
     if (type == QEvent::Resize) {
         if (d->control)
             d->textLayoutDirty = true;
-    } else if (e->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-               || e->type() == QEvent::MacSizeChange
-#endif
-               ) {
+    } else if (e->type() == QEvent::StyleChange) {
         d->setLayoutItemMargins(QStyle::SE_LabelLayoutItem);
         d->updateLabel();
     }

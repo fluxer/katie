@@ -1284,11 +1284,7 @@ QString QDoubleSpinBoxPrivate::textFromValue(const QVariant &f) const
 bool QSpinBox::event(QEvent *event)
 {
     Q_D(QSpinBox);
-    if (event->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-            || event->type() == QEvent::MacSizeChange
-#endif
-            )
+    if (event->type() == QEvent::StyleChange)
         d->setLayoutItemMargins(QStyle::SE_SpinBoxLayoutItem);
     return QAbstractSpinBox::event(event);
 }

@@ -135,8 +135,6 @@ static QEvent *cloneEvent(QEvent *e)
         break;
     case QEvent::SockAct:
         return new QEvent(*e);
-    case QEvent::WinEventAct:
-        return new QEvent(*e);
     case QEvent::DeferredDelete:
         return new QEvent(*e);
 #ifndef QT_NO_DRAGANDDROP 
@@ -304,10 +302,6 @@ static QEvent *cloneEvent(QEvent *e)
     case QEvent::AcceptDropsChange:
         return new QEvent(*e);
 
-
-    case QEvent::ZeroTimerEvent:
-        Q_ASSERT_X(false, "cloneEvent()", "not implemented");
-        break;
 #ifndef QT_NO_GRAPHICSVIEW
     case QEvent::GraphicsSceneMouseMove:
     case QEvent::GraphicsSceneMousePress:
@@ -405,13 +399,7 @@ static QEvent *cloneEvent(QEvent *e)
     case QEvent::NonClientAreaMouseButtonDblClick:
         return new QMouseEvent(*static_cast<QMouseEvent*>(e));
 
-    case QEvent::MacSizeChange:
-        return new QEvent(*e);
-
     case QEvent::ContentsRectChange:
-        return new QEvent(*e);
-
-    case QEvent::MacGLWindowChange:
         return new QEvent(*e);
 
     case QEvent::FutureCallOut:

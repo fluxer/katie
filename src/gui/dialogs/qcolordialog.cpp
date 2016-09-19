@@ -1592,10 +1592,6 @@ void QColorDialog::setCurrentColor(const QColor &color)
     d->selectColor(color);
     d->setCurrentAlpha(color.alpha());
 
-#ifdef Q_WS_MAC
-    d->setCurrentQColor(color);
-    d->setCocoaPanelColor(color);
-#endif
     if (d->nativeDialogInUse)
         qt_guiPlatformPlugin()->colorDialogSetCurrentColor(this, color);
 }
@@ -1704,11 +1700,6 @@ QColorDialog::ColorDialogOptions QColorDialog::options() const
     \sa color, colorSelected()
 */
 
-#ifdef Q_WS_MAC
-// can only have one Cocoa color panel active
-bool QColorDialogPrivate::sharedColorPanelAvailable = true;
-#endif
-
 /*!
     \fn void QColorDialog::colorSelected(const QColor &color);
 
@@ -1735,24 +1726,6 @@ void QColorDialog::setVisible(bool visible)
     if (visible)
         d->selectedQColor = QColor();
 
-#if defined(Q_WS_MAC)
-    if (visible) {
-        if (d->delegate || (QColorDialogPrivate::sharedColorPanelAvailable &&
-                !(testAttribute(Qt::WA_DontShowOnScreen) || (d->opts & DontUseNativeDialog)))){
-            d->openCocoaColorPanel(currentColor(), parentWidget(), windowTitle(), options());
-            QColorDialogPrivate::sharedColorPanelAvailable = false;
-            setAttribute(Qt::WA_DontShowOnScreen);
-        }
-        setWindowFlags(windowModality() == Qt::WindowModal ? Qt::Sheet : DefaultColorWindowFlags);
-    } else {
-        if (d->delegate) {
-            d->closeCocoaColorPanel();
-            QColorDialogPrivate::sharedColorPanelAvailable = true;
-            setAttribute(Qt::WA_DontShowOnScreen, false);
-        }
-    }
-#else
-
     if (!(d->opts & DontUseNativeDialog) && qt_guiPlatformPlugin()->colorDialogSetVisible(this, visible)) {
         d->nativeDialogInUse = true;
         // Set WA_DontShowOnScreen so that QDialog::setVisible(visible) below
@@ -1762,7 +1735,6 @@ void QColorDialog::setVisible(bool visible)
         d->nativeDialogInUse = false;
         setAttribute(Qt::WA_DontShowOnScreen, false);
     }
-#endif
 
     QDialog::setVisible(visible);
 }
@@ -1855,12 +1827,6 @@ QRgb QColorDialog::getRgba(QRgb initial, bool *ok, QWidget *parent)
 QColorDialog::~QColorDialog()
 {
     Q_D(QColorDialog);
-#if defined(Q_WS_MAC)
-    if (d->delegate) {
-        d->releaseCocoaColorPanelDelegate();
-        QColorDialogPrivate::sharedColorPanelAvailable = true;
-    }
-#endif
 
 #ifndef QT_NO_SETTINGS
     if (!customSet) {

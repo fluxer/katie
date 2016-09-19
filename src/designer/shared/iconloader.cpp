@@ -51,14 +51,10 @@ namespace qdesigner_internal {
 
 QDESIGNER_SHARED_EXPORT QIcon createIconSet(const QString &name)
 {
-    QStringList candidates = QStringList()
-        << (QString::fromUtf8(":/trolltech/formeditor/images/") + name)
-#ifdef Q_WS_MAC
-        << (QString::fromUtf8(":/trolltech/formeditor/images/mac/") + name)
-#else
-        << (QString::fromUtf8(":/trolltech/formeditor/images/win/") + name)
-#endif
-        << (QString::fromUtf8(":/trolltech/formeditor/images/designer_") + name);
+    const QStringList candidates = QStringList()
+        << (QLatin1String(":/trolltech/formeditor/images/") + name)
+        << (QLatin1String(":/trolltech/formeditor/images/win/") + name)
+        << (QLatin1String(":/trolltech/formeditor/images/designer_") + name);
 
     foreach (const QString &f, candidates) {
         if (QFile::exists(f))

@@ -669,13 +669,9 @@ bool QPushButton::event(QEvent *e)
             if (d->defaultButton)
                 dialog->d_func()->setMainDefault(this);
         }
-    } else if (e->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-               || e->type() == QEvent::MacSizeChange
-#endif
-               ) {
-		d->resetLayoutItemMargins();
-		updateGeometry();
+    } else if (e->type() == QEvent::StyleChange) {
+        d->resetLayoutItemMargins();
+        updateGeometry();
     } else if (e->type() == QEvent::PolishRequest) {
         updateGeometry();
     }

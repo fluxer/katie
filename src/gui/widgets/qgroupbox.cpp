@@ -682,11 +682,7 @@ void QGroupBox::changeEvent(QEvent *ev)
             if (!d->checked)
                 d->_q_setChildrenEnabled(false);
         }
-    } else if (ev->type() == QEvent::FontChange
-#ifdef Q_WS_MAC
-               || ev->type() == QEvent::MacSizeChange
-#endif
-               || ev->type() == QEvent::StyleChange) {
+    } else if (ev->type() == QEvent::FontChange || ev->type() == QEvent::StyleChange) {
         d->calculateFrame();
     }
     QWidget::changeEvent(ev);

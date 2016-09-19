@@ -1097,10 +1097,6 @@ void QDialogButtonBox::changeEvent(QEvent *event)
             for (StandardButtonHash::iterator it = d->standardButtonHash.begin(); it != end; ++it)
                 it.key()->setStyle(newStyle);
         }
-        // fallthrough intended
-#ifdef Q_WS_MAC
-    case QEvent::MacSizeChange:
-#endif
         d->resetLayout();
         QWidget::changeEvent(event);
         break;

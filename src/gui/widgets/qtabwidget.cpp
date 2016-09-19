@@ -1057,11 +1057,7 @@ bool QTabWidget::event(QEvent *ev)
  */
 void QTabWidget::changeEvent(QEvent *ev)
 {
-    if (ev->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-            || ev->type() == QEvent::MacSizeChange
-#endif
-            )
+    if (ev->type() == QEvent::StyleChange)
         setUpLayout();
     QWidget::changeEvent(ev);
 }

@@ -386,11 +386,7 @@ void QCheckBox::nextCheckState()
 bool QCheckBox::event(QEvent *e)
 {
     Q_D(QCheckBox);
-    if (e->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-            || e->type() == QEvent::MacSizeChange
-#endif
-            )
+    if (e->type() == QEvent::StyleChange)
         d->setLayoutItemMargins(QStyle::SE_CheckBoxLayoutItem);
     return QAbstractButton::event(e);
 }

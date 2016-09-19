@@ -242,7 +242,6 @@ protected:
     void showEvent(QShowEvent *e);
     void hideEvent(QHideEvent *e);
     void timerEvent(QTimerEvent *timerEvent);
-    void leaveEvent(QEvent *e);
     void resizeEvent(QResizeEvent *e);
     QStyleOptionComboBox comboStyleOption() const;
 

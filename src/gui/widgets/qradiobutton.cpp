@@ -257,11 +257,7 @@ void QRadioButton::paintEvent(QPaintEvent *)
 bool QRadioButton::event(QEvent *e)
 {
     Q_D(QRadioButton);
-    if (e->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-            || e->type() == QEvent::MacSizeChange
-#endif
-            )
+    if (e->type() == QEvent::StyleChange)
         d->setLayoutItemMargins(QStyle::SE_RadioButtonLayoutItem);
     return QAbstractButton::event(e);
 }

@@ -115,24 +115,6 @@ public:
     QPointer<QObject> receiverToDisconnectOnClose;
     QByteArray memberToDisconnectOnClose;
     bool nativeDialogInUse;
-
-#ifdef Q_WS_MAC
-    void openCocoaColorPanel(const QColor &initial,
-            QWidget *parent, const QString &title, QColorDialog::ColorDialogOptions options);
-    void closeCocoaColorPanel();
-    void releaseCocoaColorPanelDelegate();
-    void setCocoaPanelColor(const QColor &color);
-
-    inline void done(int result) { q_func()->done(result); }
-    inline QColorDialog *colorDialog() { return q_func(); }
-
-    void *delegate;
-
-    static bool sharedColorPanelAvailable;
-
-    void _q_macRunNativeAppModalPanel();
-    void mac_nativeDialogModalHelp();
-#endif
 };
 
 #endif // QT_NO_COLORDIALOG

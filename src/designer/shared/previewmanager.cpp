@@ -882,11 +882,7 @@ bool PreviewManager::eventFilter(QObject *watched, QEvent *event)
         case QEvent::ShortcutOverride:        {
             const  QKeyEvent *keyEvent = static_cast<const QKeyEvent *>(event);
             const int key = keyEvent->key();
-            if ((key == Qt::Key_Escape
-#ifdef Q_WS_MAC
-                 || (keyEvent->modifiers() == Qt::ControlModifier && key == Qt::Key_Period)
-#endif
-                 )) {
+            if (key == Qt::Key_Escape) {
                 previewWindow->close();
                 return true;
             }

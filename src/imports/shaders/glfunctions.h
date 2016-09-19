@@ -44,18 +44,13 @@
 
 #ifndef QT_OPENGL_ES
 
-#ifndef Q_WS_MAC
-# ifndef APIENTRYP
-#   ifdef APIENTRY
-#     define APIENTRYP APIENTRY *
-#   else
-#     define APIENTRY
-#     define APIENTRYP *
-#   endif
-# endif
-#else
-# define APIENTRY
-# define APIENTRYP *
+#ifndef APIENTRYP
+#  ifdef APIENTRY
+#    define APIENTRYP APIENTRY *
+#  else
+#    define APIENTRY
+#    define APIENTRYP *
+#  endif
 #endif
 
 #define GL_TEXTURE0 0x84C0

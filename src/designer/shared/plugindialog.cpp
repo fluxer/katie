@@ -59,11 +59,7 @@ QT_BEGIN_NAMESPACE
 namespace qdesigner_internal {
 
 PluginDialog::PluginDialog(QDesignerFormEditorInterface *core, QWidget *parent)
-    : QDialog(parent
-#ifdef Q_WS_MAC
-            , Qt::Tool
-#endif
-            ), m_core(core)
+    : QDialog(parent), m_core(core)
 {
     ui.setupUi(this);
 

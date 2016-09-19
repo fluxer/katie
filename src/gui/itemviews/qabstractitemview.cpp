@@ -2324,15 +2324,6 @@ void QAbstractItemView::keyPressEvent(QKeyEvent *event)
         }
 #endif
         break;
-#ifdef Q_WS_MAC
-    case Qt::Key_Enter:
-    case Qt::Key_Return:
-        // Propagate the enter if you couldn't edit the item and there are no
-        // current editors (if there are editors, the event was most likely propagated from it).
-        if (!edit(currentIndex(), EditKeyPressed, event) && d->editorIndexHash.isEmpty())
-            event->ignore();
-        break;
-#else
     case Qt::Key_F2:
         if (!edit(currentIndex(), EditKeyPressed, event))
             event->ignore();
@@ -2348,20 +2339,13 @@ void QAbstractItemView::keyPressEvent(QKeyEvent *event)
             event->ignore();
         }
         break;
-#endif
     case Qt::Key_A:
         if (event->modifiers() & Qt::ControlModifier) {
             selectAll();
             break;
         }
     default: {
-#ifdef Q_WS_MAC
-        if (event->key() == Qt::Key_O && event->modifiers() & Qt::ControlModifier && currentIndex().isValid()) {
-            emit activated(currentIndex());
-            break;
-        }
-#endif
-        bool modified = (event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier));
+        const bool modified = (event->modifiers() & (Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier));
         if (!event->text().isEmpty() && !modified && !edit(currentIndex(), AnyKeyPressed, event)) {
             keyboardSearch(event->text());
             event->accept();
@@ -3526,12 +3510,8 @@ QStyleOptionViewItem QAbstractItemView::viewOptions() const
     option.state &= ~QStyle::State_MouseOver;
     option.font = font();
 
-#ifndef Q_WS_MAC
-    // On mac the focus appearance follows window activation
-    // not widget activation
     if (!hasFocus())
         option.state &= ~QStyle::State_Active;
-#endif
 
     option.state &= ~QStyle::State_HasFocus;
     if (d->iconSize.isValid()) {

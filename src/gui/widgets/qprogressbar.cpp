@@ -560,11 +560,7 @@ QProgressBar::Direction QProgressBar::textDirection() const
 bool QProgressBar::event(QEvent *e)
 {
     Q_D(QProgressBar);
-    if (e->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-            || e->type() == QEvent::MacSizeChange
-#endif
-            )
+    if (e->type() == QEvent::StyleChange)
         d->resetLayoutItemMargins();
     return QWidget::event(e);
 }

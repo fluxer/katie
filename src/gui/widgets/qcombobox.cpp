@@ -68,11 +68,6 @@
 #ifdef Q_WS_X11
 #include <qt_x11_p.h>
 #endif
-#if defined(Q_WS_MAC) && !defined(QT_NO_EFFECTS) && !defined(QT_NO_STYLE_MAC)
-#include <qcore_mac_p.h>
-#include <QtGui/qmacstyle_mac.h>
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
 #ifndef QT_NO_EFFECTS
 # include <qeffects_p.h>
 #endif
@@ -384,17 +379,6 @@ void QComboBoxPrivateContainer::resizeEvent(QResizeEvent *e)
         clearMask();
     }
     QFrame::resizeEvent(e);
-}
-
-void QComboBoxPrivateContainer::leaveEvent(QEvent *)
-{
-// On Mac using the Mac style we want to clear the selection
-// when the mouse moves outside the popup.
-#ifdef Q_WS_MAC
-    QStyleOptionComboBox opt = comboStyleOption();
-    if (combo->style()->styleHint(QStyle::SH_ComboBox_Popup, &opt, combo))
-          view->clearSelection();
-#endif
 }
 
 QComboBoxPrivateContainer::QComboBoxPrivateContainer(QAbstractItemView *itemView, QComboBox *parent)
@@ -2462,11 +2446,9 @@ void QComboBox::showPopup()
     }
     container->setGeometry(listRect);
 
-#ifndef Q_WS_MAC
     const bool updatesEnabled = container->updatesEnabled();
-#endif
 
-// indows are displayed immediately on this platform, which means that the window will
+// windows are displayed immediately on this platform, which means that the window will
 // be visible before the call to container->show() returns. If updates are disabled at
 // this point we'll miss our chance at painting the popup menu before it's shown, causing
 // flicker since the window then displays the standard gray background.
@@ -2482,9 +2464,7 @@ void QComboBox::showPopup()
                              ? QAbstractItemView::PositionAtCenter
                              : QAbstractItemView::EnsureVisible);
 
-#ifndef Q_WS_MAC
     container->setUpdatesEnabled(updatesEnabled);
-#endif
 
     container->update();
 #ifdef QT_KEYPAD_NAVIGATION
@@ -2629,9 +2609,6 @@ void QComboBox::changeEvent(QEvent *e)
     switch (e->type()) {
     case QEvent::StyleChange:
         d->updateDelegate();
-#ifdef Q_WS_MAC
-    case QEvent::MacSizeChange:
-#endif
         d->sizeHint = QSize(); // invalidate size hint
         d->minimumSizeHint = QSize();
         d->updateLayoutDirection();

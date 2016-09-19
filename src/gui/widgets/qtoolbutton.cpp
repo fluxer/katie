@@ -589,11 +589,7 @@ void QToolButton::changeEvent(QEvent *e)
     if (e->type() == QEvent::ParentChange) {
         if (qobject_cast<QToolBar*>(parentWidget()))
             d->autoRaise = true;
-    } else if (e->type() == QEvent::StyleChange
-#ifdef Q_WS_MAC
-               || e->type() == QEvent::MacSizeChange
-#endif
-               ) {
+    } else if (e->type() == QEvent::StyleChange) {
         d->delay = style()->styleHint(QStyle::SH_ToolButton_PopupDelay, 0, this);
         d->setLayoutItemMargins(QStyle::SE_ToolButtonLayoutItem);
     }

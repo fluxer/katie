@@ -104,164 +104,156 @@ public:
         Speech = 37,                            // reserved for speech input
         MetaCall =  38,                         // meta call event
         SockAct = 39,                           // socket activation
-        WinEventAct = 40,                       // win event activation
-        DeferredDelete = 41,                    // deferred delete event
-        DragEnter = 42,                         // drag moves into widget
-        DragMove = 43,                          // drag moves in widget
-        DragLeave = 44,                         // drag leaves or is cancelled
-        Drop = 45,                              // actual drop
-        DragResponse = 46,                      // drag accepted/rejected
-        ChildAdded = 47,                        // new child widget
-        ChildPolished = 48,                     // polished child widget
-        ChildRemoved = 49,                      // deleted child widget
-        ShowWindowRequest = 50,                 // widget's window should be mapped
-        PolishRequest = 51,                     // widget should be polished
-        Polish = 52,                            // widget is polished
-        LayoutRequest = 53,                     // widget should be relayouted
-        UpdateRequest = 54,                     // widget should be repainted
-        UpdateLater = 55,                       // request update() later
+        DeferredDelete = 40,                    // deferred delete event
+        DragEnter = 41,                         // drag moves into widget
+        DragMove = 42,                          // drag moves in widget
+        DragLeave = 43,                         // drag leaves or is cancelled
+        Drop = 44,                              // actual drop
+        DragResponse = 45,                      // drag accepted/rejected
+        ChildAdded = 46,                        // new child widget
+        ChildPolished = 47,                     // polished child widget
+        ChildRemoved = 48,                      // deleted child widget
+        ShowWindowRequest = 49,                 // widget's window should be mapped
+        PolishRequest = 50,                     // widget should be polished
+        Polish = 51,                            // widget is polished
+        LayoutRequest = 52,                     // widget should be relayouted
+        UpdateRequest = 53,                     // widget should be repainted
+        UpdateLater = 54,                       // request update() later
 
-        EmbeddingControl = 56,                  // ActiveX embedding
-        ActivateControl = 57,                   // ActiveX activation
-        DeactivateControl = 58,                 // ActiveX deactivation
-        ContextMenu = 59,                       // context popup menu
-        InputMethod = 60,                       // input method
-        AccessibilityPrepare = 61,              // accessibility information is requested
-        TabletMove = 62,                        // Wacom tablet event
-        LocaleChange = 63,                      // the system locale changed
-        LanguageChange = 64,                    // the application language changed
-        LayoutDirectionChange = 65,             // the layout direction changed
-        Style = 66,                             // internal style event
-        TabletPress = 67,                       // tablet press
-        TabletRelease = 68,                     // tablet release
-        OkRequest = 69,                         // CE (Ok) button pressed
-        HelpRequest = 70,                       // CE (?)  button pressed
+        EmbeddingControl = 55,                  // ActiveX embedding
+        ActivateControl = 56,                   // ActiveX activation
+        DeactivateControl = 57,                 // ActiveX deactivation
+        ContextMenu = 58,                       // context popup menu
+        InputMethod = 59,                       // input method
+        AccessibilityPrepare = 60,              // accessibility information is requested
+        TabletMove = 61,                        // Wacom tablet event
+        LocaleChange = 62,                      // the system locale changed
+        LanguageChange = 63,                    // the application language changed
+        LayoutDirectionChange = 64,             // the layout direction changed
+        Style = 65,                             // internal style event
+        TabletPress = 66,                       // tablet press
+        TabletRelease = 67,                     // tablet release
+        OkRequest = 68,                         // CE (Ok) button pressed
+        HelpRequest = 69,                       // CE (?)  button pressed
 
-        IconDrag = 71,                          // proxy icon dragged
+        IconDrag = 70,                          // proxy icon dragged
 
-        FontChange = 72,                        // font has changed
-        EnabledChange = 73,                     // enabled state has changed
-        ActivationChange = 74,                  // window activation has changed
-        StyleChange = 75,                       // style has changed
-        IconTextChange = 76,                    // icon text has changed
-        ModifiedChange = 77,                    // modified state has changed
-        MouseTrackingChange = 78,               // mouse tracking state has changed
+        FontChange = 71,                        // font has changed
+        EnabledChange = 72,                     // enabled state has changed
+        ActivationChange = 73,                  // window activation has changed
+        StyleChange = 74,                       // style has changed
+        IconTextChange = 75,                    // icon text has changed
+        ModifiedChange = 76,                    // modified state has changed
+        MouseTrackingChange = 77,               // mouse tracking state has changed
 
-        WindowBlocked = 79,                     // window is about to be blocked modally
-        WindowUnblocked = 80,                   // windows modal blocking has ended
-        WindowStateChange = 81,
+        WindowBlocked = 78,                     // window is about to be blocked modally
+        WindowUnblocked = 79,                   // windows modal blocking has ended
+        WindowStateChange = 80,
 
-        ToolTip = 82,
-        WhatsThis = 83,
-        StatusTip = 84,
+        ToolTip = 81,
+        WhatsThis = 82,
+        StatusTip = 83,
 
-        ActionChanged = 85,
-        ActionAdded = 86,
-        ActionRemoved = 87,
+        ActionChanged = 84,
+        ActionAdded = 85,
+        ActionRemoved = 86,
 
-        FileOpen = 88,                          // file open request
+        FileOpen = 87,                          // file open request
 
-        Shortcut = 89,                          // shortcut triggered
-        ShortcutOverride = 90,                  // shortcut override request
+        Shortcut = 88,                          // shortcut triggered
+        ShortcutOverride = 89,                  // shortcut override request
 
 
-        WhatsThisClicked = 91,
+        WhatsThisClicked = 90,
 
-        ToolBarChange = 92,                     // toolbar visibility toggled
+        ToolBarChange = 91,                     // toolbar visibility toggled
 
-        ApplicationActivate = 93,               // application has been changed to active
-        ApplicationDeactivate = 94,             // application has been changed to inactive
+        ApplicationActivate = 92,               // application has been changed to active
+        ApplicationDeactivate = 93,             // application has been changed to inactive
 
-        QueryWhatsThis = 95,                    // query what's this widget help
-        EnterWhatsThisMode = 96,
-        LeaveWhatsThisMode = 97,
+        QueryWhatsThis = 94,                    // query what's this widget help
+        EnterWhatsThisMode = 95,
+        LeaveWhatsThisMode = 96,
 
-        ZOrderChange = 98,                      // child widget has had its z-order changed
+        ZOrderChange = 97,                      // child widget has had its z-order changed
 
-        HoverEnter = 99,                        // mouse cursor enters a hover widget
-        HoverLeave = 100,                       // mouse cursor leaves a hover widget
-        HoverMove = 101,                        // mouse cursor move inside a hover widget
+        HoverEnter = 98,                        // mouse cursor enters a hover widget
+        HoverLeave = 99,                       // mouse cursor leaves a hover widget
+        HoverMove = 100,                        // mouse cursor move inside a hover widget
 
-        AccessibilityHelp = 102,                // accessibility help text request
-        AccessibilityDescription = 103,         // accessibility description text request
+        AccessibilityHelp = 101,                // accessibility help text request
+        AccessibilityDescription = 102,         // accessibility description text request
 
 #ifdef QT_KEYPAD_NAVIGATION
-        EnterEditFocus = 104,                   // enter edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
-        LeaveEditFocus = 105,                   // leave edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
+        EnterEditFocus = 103,                   // enter edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
+        LeaveEditFocus = 104,                   // leave edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
 #endif
-        AcceptDropsChange = 106,
+        AcceptDropsChange = 105,
 
-        ZeroTimerEvent = 107,                   // Used for Windows Zero timer events
+        GraphicsSceneMouseMove = 106,           // GraphicsView
+        GraphicsSceneMousePress = 107,
+        GraphicsSceneMouseRelease = 108,
+        GraphicsSceneMouseDoubleClick = 109,
+        GraphicsSceneContextMenu = 110,
+        GraphicsSceneHoverEnter = 111,
+        GraphicsSceneHoverMove = 112,
+        GraphicsSceneHoverLeave = 113,
+        GraphicsSceneHelp = 114,
+        GraphicsSceneDragEnter = 115,
+        GraphicsSceneDragMove = 116,
+        GraphicsSceneDragLeave = 117,
+        GraphicsSceneDrop = 118,
+        GraphicsSceneWheel = 119,
 
-        GraphicsSceneMouseMove = 108,           // GraphicsView
-        GraphicsSceneMousePress = 109,
-        GraphicsSceneMouseRelease = 110,
-        GraphicsSceneMouseDoubleClick = 111,
-        GraphicsSceneContextMenu = 112,
-        GraphicsSceneHoverEnter = 113,
-        GraphicsSceneHoverMove = 114,
-        GraphicsSceneHoverLeave = 115,
-        GraphicsSceneHelp = 116,
-        GraphicsSceneDragEnter = 117,
-        GraphicsSceneDragMove = 118,
-        GraphicsSceneDragLeave = 119,
-        GraphicsSceneDrop = 120,
-        GraphicsSceneWheel = 121,
+        KeyboardLayoutChange = 120,             // keyboard layout changed
 
-        KeyboardLayoutChange = 122,             // keyboard layout changed
+        DynamicPropertyChange = 121,            // A dynamic property was changed through setProperty/property
 
-        DynamicPropertyChange = 123,            // A dynamic property was changed through setProperty/property
+        TabletEnterProximity = 122,
+        TabletLeaveProximity = 123,
 
-        TabletEnterProximity = 124,
-        TabletLeaveProximity = 125,
+        NonClientAreaMouseMove = 124,
+        NonClientAreaMouseButtonPress = 125,
+        NonClientAreaMouseButtonRelease = 126,
+        NonClientAreaMouseButtonDblClick = 127,
 
-        NonClientAreaMouseMove = 126,
-        NonClientAreaMouseButtonPress = 127,
-        NonClientAreaMouseButtonRelease = 128,
-        NonClientAreaMouseButtonDblClick = 129,
+        ContentsRectChange = 128,               // sent by QWidget::setContentsMargins (internal)
 
-        MacSizeChange = 130,                    // when the Qt::WA_Mac{Normal,Small,Mini}Size changes
+        FutureCallOut = 129,
 
-        ContentsRectChange = 131,               // sent by QWidget::setContentsMargins (internal)
+        GraphicsSceneResize  = 130,
+        GraphicsSceneMove  = 131,
 
-        MacGLWindowChange = 132,                // Internal! the window of the GLWidget has changed
+        CursorChange = 132,
+        ToolTipChange = 133,
 
-        FutureCallOut = 133,
+        NetworkReplyUpdated = 134,              // Internal for QNetworkReply
 
-        GraphicsSceneResize  = 134,
-        GraphicsSceneMove  = 135,
+        GrabMouse = 135,
+        UngrabMouse = 136,
+        GrabKeyboard = 137,
+        UngrabKeyboard = 138,
 
-        CursorChange = 136,
-        ToolTipChange = 137,
+        StateMachineSignal = 139,
+        StateMachineWrapped = 140,
 
-        NetworkReplyUpdated = 138,              // Internal for QNetworkReply
-
-        GrabMouse = 139,
-        UngrabMouse = 140,
-        GrabKeyboard = 141,
-        UngrabKeyboard = 142,
-        MacGLClearDrawable = 143,               // Internal Cocoa, the window has changed, so we must clear
-
-        StateMachineSignal = 144,
-        StateMachineWrapped = 145,
-
-        TouchBegin = 146,
-        TouchUpdate = 147,
-        TouchEnd = 148,
+        TouchBegin = 141,
+        TouchUpdate = 142,
+        TouchEnd = 143,
 
 #ifndef QT_NO_GESTURES
-        NativeGesture = 149,                    // Internal for platform gesture support
+        NativeGesture = 144,                    // Internal for platform gesture support
 #endif
-        RequestSoftwareInputPanel = 150,
-        CloseSoftwareInputPanel = 151,
+        RequestSoftwareInputPanel = 145,
+        CloseSoftwareInputPanel = 146,
 
-        WinIdChange = 152,
+        WinIdChange = 147,
 #ifndef QT_NO_GESTURES
-        Gesture = 153,
-        GestureOverride = 154,
+        Gesture = 148,
+        GestureOverride = 149,
 #endif
 
-        PlatformPanel = 155,
+        PlatformPanel = 150,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id

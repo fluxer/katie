@@ -7704,7 +7704,7 @@ void QWidget::adjustSize()
 {
     Q_D(QWidget);
     ensurePolished();
-    QSize s = d->adjustedSize();
+    const QSize s = d->adjustedSize();
 
     if (d->layout)
         d->layout->activate();
@@ -8125,7 +8125,6 @@ bool QWidget::event(QEvent *event)
     case QEvent::ParentChange:
     case QEvent::WindowStateChange:
     case QEvent::LocaleChange:
-    case QEvent::MacSizeChange:
     case QEvent::ContentsRectChange:
         changeEvent(event);
         break;
@@ -8262,16 +8261,10 @@ bool QWidget::event(QEvent *event)
             }
             break;
         }
-#ifdef Q_WS_MAC
-    case QEvent::MacGLWindowChange:
-        d->needWindowChange = false;
-        break;
-#endif
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
     case QEvent::TouchEnd:
     {
-#ifndef Q_WS_MAC
         QTouchEvent *touchEvent = static_cast<QTouchEvent *>(event);
         const QTouchEvent::TouchPoint &touchPoint = touchEvent->touchPoints().first();
         if (touchPoint.isPrimary() || touchEvent->deviceType() == QTouchEvent::TouchPad)
@@ -8303,7 +8296,6 @@ bool QWidget::event(QEvent *event)
                                Qt::LeftButton,
                                touchEvent->modifiers());
         (void) QApplication::sendEvent(this, &mouseEvent);
-#endif // Q_WS_MAC
         break;
     }
 #ifndef QT_NO_GESTURES
