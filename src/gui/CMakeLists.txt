@@ -145,10 +145,6 @@ set(GUI_PUBLIC_HEADERS
     QLineEdit
     QListView
     QListWidget
-    QMacCocoaViewContainer
-    QMacMime
-    QMacNativeWidget
-    QMacPasteboardMime
     QMainWindow
     QMatrix
     QMatrix2x2
@@ -349,13 +345,8 @@ set(GUI_PUBLIC_HEADERS
     QWidgetItemV2
     QWidgetMapper
     QWidgetSet
-    QWindowsCEStyle
-    QWindowsMime
-    QWindowsMobileStyle
     QWindowsStyle
     QWindowStateChangeEvent
-    QWindowsVistaStyle
-    QWindowsXPStyle
     QWindowSystemInterface
     QWizard
     QWizardPage
@@ -364,7 +355,6 @@ set(GUI_PUBLIC_HEADERS
     QX11Info
     QX11EmbedContainer
     QX11EmbedWidget
-    QMacStyle
     # mixed
     QTextBlock
     QListWidgetItem
