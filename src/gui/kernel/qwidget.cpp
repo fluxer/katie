@@ -60,16 +60,6 @@
 #ifndef QT_NO_ACCESSIBILITY
 # include "qaccessible.h"
 #endif
-#if defined(Q_WS_WIN)
-# include "qt_windows.h"
-#endif
-#ifdef Q_WS_MAC
-# include "qt_mac_p.h"
-# include "qt_cocoa_helpers_mac_p.h"
-# include "qmainwindow.h"
-# include "qtoolbar.h"
-# include <qmainwindowlayout_p.h>
-#endif
 #include "qpainter.h"
 #include "qtooltip.h"
 #include "qwhatsthis.h"
@@ -79,10 +69,6 @@
 #include "qinputcontext_p.h"
 #include "qfileinfo.h"
 
-#if defined (Q_WS_WIN)
-# include <qwininputcontext_p.h>
-#endif
-
 #if defined(Q_WS_X11)
 # include <qpaintengine_x11_p.h>
 # include "qx11info_x11.h"
@@ -91,9 +77,6 @@
 #include <qgraphicseffect_p.h>
 #include <qwindowsurface_p.h>
 #include <qbackingstore_p.h>
-#ifdef Q_WS_MAC
-# include <qpaintengine_mac_p.h>
-#endif
 #include <qpaintengine_raster_p.h>
 
 
@@ -256,15 +239,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , inSetParent(0)
 #if defined(Q_WS_X11)
       , picture(0)
-#elif defined(Q_WS_WIN)
-      , noPaintOnScreen(0)
-  #ifndef QT_NO_GESTURES
-      , nativeGesturePanEnabled(0)
-  #endif
-#elif defined(Q_WS_MAC)
-      , needWindowChange(0)
-      , window_event(0)
-      , qd_hd(0)
 #endif
 {
     if (!qApp) {
@@ -1352,15 +1326,6 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
              << "Alien?" << !testAttribute(Qt::WA_NativeWindow);
 #endif
 
-#if defined (Q_WS_WIN) && !defined(QT_NO_DRAGANDDROP)
-    // Unregister the dropsite (if already registered) before we
-    // re-create the widget with a native window.
-    if (testAttribute(Qt::WA_WState_Created) && !internalWinId() && testAttribute(Qt::WA_NativeWindow)
-            && d->extra && d->extra->dropTarget) {
-        d->registerDropSite(false);
-    }
-#endif // defined (Q_WS_WIN) && !defined(QT_NO_DRAGANDDROP)
-
     d->updateIsOpaque();
 
     setAttribute(Qt::WA_WState_Created);                        // set created flag
@@ -1470,7 +1435,7 @@ QWidget::~QWidget()
         }
     }
 
-#if defined(Q_WS_WIN) || defined(Q_WS_X11)|| defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
     else if (!internalWinId() && isVisible()) {
         qApp->d_func()->sendSyntheticEnterLeave(this);
     }
@@ -2121,27 +2086,15 @@ void QWidgetPrivate::setOpaque(bool opaque)
     if (isOpaque == opaque)
         return;
     isOpaque = opaque;
-#ifdef Q_WS_MAC
-    macUpdateIsOpaque();
-#endif
 #ifdef Q_WS_X11
     x11UpdateIsOpaque();
-#endif
-#ifdef Q_WS_WIN
-    winUpdateIsOpaque();
 #endif
 }
 
 void QWidgetPrivate::updateIsTranslucent()
 {
-#ifdef Q_WS_MAC
-    macUpdateIsOpaque();
-#endif
 #ifdef Q_WS_X11
     x11UpdateIsOpaque();
-#endif
-#ifdef Q_WS_WIN
-    winUpdateIsOpaque();
 #endif
 }
 

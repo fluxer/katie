@@ -128,16 +128,6 @@ QInputContext *QInputContextFactory::create( const QString& key, QObject *parent
         result = new QXIMInputContext;
     }
 #endif
-#if defined(Q_WS_WIN)
-    if (key == QLatin1String("win")) {
-        result = new QWinInputContext;
-    }
-#endif
-#if defined(Q_WS_MAC)
-    if (key == QLatin1String("mac")) {
-        result = new QMacInputContext;
-    }
-#endif
 #ifdef QT_NO_LIBRARY
     Q_UNUSED(key);
 #else
