@@ -10,9 +10,9 @@ macro(KATIE_RESOURCES RESOURCES)
             get_filename_component(rscname ${resource} NAME_WE)
             get_filename_component(rscpath ${resource} PATH)
             string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
-            make_directory(${rscpath})
             if("${rscext}" STREQUAL ".ui")
                 set(rscout ${rscpath}/ui_${rscname}.h)
+                make_directory(${rscpath})
                 add_custom_command(
                     OUTPUT ${rscout}
                     COMMAND ${KATIE_UIC} "${resource}" -o "${rscout}"
@@ -20,6 +20,7 @@ macro(KATIE_RESOURCES RESOURCES)
                 )
             elseif("${rscext}" STREQUAL ".qrc")
                 set(rscout ${rscpath}/qrc_${rscname}.cpp)
+                make_directory(${rscpath})
                 add_custom_command(
                     OUTPUT ${rscout}
                     COMMAND ${KATIE_RCC} "${resource}" -o "${rscout}" -name "${rscname}"
@@ -41,6 +42,7 @@ macro(KATIE_RESOURCES RESOURCES)
                     foreach(incdir ${dirincs})
                         set(mocargs ${mocargs} -I${incdir})
                     endforeach()
+                    make_directory(${rscpath})
                     add_custom_command(
                         OUTPUT ${rscout}
                         COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
