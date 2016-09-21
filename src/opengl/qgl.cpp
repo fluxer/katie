@@ -2698,31 +2698,6 @@ GLuint QGLContext::bindTexture(const QImage &image, GLenum target, GLint format,
     return texture->id;
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-GLuint QGLContext::bindTexture(const QImage &image, QMacCompatGLenum target, QMacCompatGLint format)
-{
-    if (image.isNull())
-        return 0;
-
-    Q_D(QGLContext);
-    QGLTexture *texture = d->bindTexture(image, GLenum(target), GLint(format), DefaultBindOption);
-    return texture->id;
-}
-
-/*! \internal */
-GLuint QGLContext::bindTexture(const QImage &image, QMacCompatGLenum target, QMacCompatGLint format,
-                               BindOptions options)
-{
-    if (image.isNull())
-        return 0;
-
-    Q_D(QGLContext);
-    QGLTexture *texture = d->bindTexture(image, GLenum(target), GLint(format), options);
-    return texture->id;
-}
-#endif
-
 /*! \overload
 
     Generates and binds a 2D GL texture based on \a pixmap.
@@ -2754,30 +2729,6 @@ GLuint QGLContext::bindTexture(const QPixmap &pixmap, GLenum target, GLint forma
     return texture->id;
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-GLuint QGLContext::bindTexture(const QPixmap &pixmap, QMacCompatGLenum target, QMacCompatGLint format)
-{
-    if (pixmap.isNull())
-        return 0;
-
-    Q_D(QGLContext);
-    QGLTexture *texture = d->bindTexture(pixmap, GLenum(target), GLint(format), DefaultBindOption);
-    return texture->id;
-}
-/*! \internal */
-GLuint QGLContext::bindTexture(const QPixmap &pixmap, QMacCompatGLenum target, QMacCompatGLint format,
-                               BindOptions options)
-{
-    if (pixmap.isNull())
-        return 0;
-
-    Q_D(QGLContext);
-    QGLTexture *texture = d->bindTexture(pixmap, GLenum(target), GLint(format), options);
-    return texture->id;
-}
-#endif
-
 /*!
     Removes the texture identified by \a id from the texture cache,
     and calls glDeleteTextures() to delete the texture from the
@@ -2791,14 +2742,6 @@ void QGLContext::deleteTexture(GLuint id)
         return;
     glDeleteTextures(1, &id);
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLContext::deleteTexture(QMacCompatGLuint id)
-{
-    return deleteTexture(GLuint(id));
-}
-#endif
 
 void qt_add_rect_to_array(const QRectF &r, GLfloat *array)
 {
@@ -2939,14 +2882,6 @@ void QGLContext::drawTexture(const QRectF &target, GLuint textureId, GLenum text
 #endif
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLContext::drawTexture(const QRectF &target, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    drawTexture(target, GLuint(textureId), GLenum(textureTarget));
-}
-#endif
-
 /*!
     \since 4.4
 
@@ -3009,15 +2944,6 @@ void QGLContext::drawTexture(const QPointF &point, GLuint textureId, GLenum text
     glBindTexture(textureTarget, oldTexture);
 #endif
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLContext::drawTexture(const QPointF &point, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    drawTexture(point, GLuint(textureId), GLenum(textureTarget));
-}
-#endif
-
 
 /*!
     This function sets the limit for the texture cache to \a size,
@@ -4149,7 +4075,6 @@ void QGLWidget::resizeOverlayGL(int, int)
 /*! \fn bool QGLWidget::event(QEvent *e)
   \reimp
 */
-#if !defined(Q_OS_WINCE)
 bool QGLWidget::event(QEvent *e)
 {
     Q_D(QGLWidget);
@@ -4196,7 +4121,6 @@ bool QGLWidget::event(QEvent *e)
 
     return QWidget::event(e);
 }
-#endif
 
 /*!
     \fn void QGLWidget::paintEvent(QPaintEvent *event)
@@ -4930,29 +4854,6 @@ GLuint QGLWidget::bindTexture(const QImage &image, GLenum target, GLint format, 
     return d->glcx->bindTexture(image, target, format, options);
 }
 
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-GLuint QGLWidget::bindTexture(const QImage &image, QMacCompatGLenum target, QMacCompatGLint format)
-{
-    if (image.isNull())
-        return 0;
-
-   Q_D(QGLWidget);
-   return d->glcx->bindTexture(image, GLenum(target), GLint(format), QGLContext::DefaultBindOption);
-}
-
-GLuint QGLWidget::bindTexture(const QImage &image, QMacCompatGLenum target, QMacCompatGLint format,
-                              QGLContext::BindOptions options)
-{
-    if (image.isNull())
-        return 0;
-
-   Q_D(QGLWidget);
-   return d->glcx->bindTexture(image, GLenum(target), GLint(format), options);
-}
-#endif
-
 /*!
     Calls QGLContext:::bindTexture(\a pixmap, \a target, \a format) on the currently
     set context.
@@ -4985,23 +4886,6 @@ GLuint QGLWidget::bindTexture(const QPixmap &pixmap, GLenum target, GLint format
     return d->glcx->bindTexture(pixmap, target, format, options);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-GLuint QGLWidget::bindTexture(const QPixmap &pixmap, QMacCompatGLenum target, QMacCompatGLint format)
-{
-    Q_D(QGLWidget);
-    return d->glcx->bindTexture(pixmap, target, format, QGLContext::DefaultBindOption);
-}
-
-GLuint QGLWidget::bindTexture(const QPixmap &pixmap, QMacCompatGLenum target, QMacCompatGLint format,
-                              QGLContext::BindOptions options)
-{
-    Q_D(QGLWidget);
-    return d->glcx->bindTexture(pixmap, target, format, options);
-}
-#endif
-
-
 /*! \overload
 
     Calls QGLContext::bindTexture(\a fileName) on the currently set context.
@@ -5026,15 +4910,6 @@ void QGLWidget::deleteTexture(GLuint id)
     d->glcx->deleteTexture(id);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLWidget::deleteTexture(QMacCompatGLuint id)
-{
-    Q_D(QGLWidget);
-    d->glcx->deleteTexture(GLuint(id));
-}
-#endif
-
 /*!
     \since 4.4
 
@@ -5048,15 +4923,6 @@ void QGLWidget::drawTexture(const QRectF &target, GLuint textureId, GLenum textu
     d->glcx->drawTexture(target, textureId, textureTarget);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLWidget::drawTexture(const QRectF &target, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    Q_D(QGLWidget);
-    d->glcx->drawTexture(target, GLint(textureId), GLenum(textureTarget));
-}
-#endif
-
 /*!
     \since 4.4
 
@@ -5069,15 +4935,6 @@ void QGLWidget::drawTexture(const QPointF &point, GLuint textureId, GLenum textu
     Q_D(QGLWidget);
     d->glcx->drawTexture(point, textureId, textureTarget);
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLWidget::drawTexture(const QPointF &point, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    Q_D(QGLWidget);
-    d->glcx->drawTexture(point, GLuint(textureId), GLenum(textureTarget));
-}
-#endif
 
 #ifndef QT_OPENGL_ES_1
 Q_GLOBAL_STATIC(QGLEngineThreadStorage<QGL2PaintEngineEx>, qt_gl_2_engine)

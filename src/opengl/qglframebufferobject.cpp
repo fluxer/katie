@@ -307,22 +307,6 @@ GLenum QGLFramebufferObjectFormat::internalTextureFormat() const
     return d->internal_format;
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLFramebufferObjectFormat::setTextureTarget(QMacCompatGLenum target)
-{
-    detach();
-    d->target = target;
-}
-
-/*! \internal */
-void QGLFramebufferObjectFormat::setInternalTextureFormat(QMacCompatGLenum internalTextureFormat)
-{
-    detach();
-    d->internal_format = internalTextureFormat;
-}
-#endif
-
 /*!
     Returns true if all the options of this framebuffer object format
     are the same as \a other; otherwise returns false.
@@ -781,16 +765,6 @@ QGLFramebufferObject::QGLFramebufferObject(const QSize &size, GLenum target)
     d->init(this, size, NoAttachment, target, DEFAULT_FORMAT);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-QGLFramebufferObject::QGLFramebufferObject(const QSize &size, QMacCompatGLenum target)
-    : d_ptr(new QGLFramebufferObjectPrivate)
-{
-    Q_D(QGLFramebufferObject);
-    d->init(this, size, NoAttachment, target, DEFAULT_FORMAT);
-}
-#endif
-
 /*! \overload
 
     Constructs an OpenGL framebuffer object and binds a 2D GL texture
@@ -833,16 +807,6 @@ QGLFramebufferObject::QGLFramebufferObject(int width, int height, const QGLFrame
             format.internalTextureFormat(), format.samples(), format.mipmap());
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-QGLFramebufferObject::QGLFramebufferObject(int width, int height, QMacCompatGLenum target)
-    : d_ptr(new QGLFramebufferObjectPrivate)
-{
-    Q_D(QGLFramebufferObject);
-    d->init(this, QSize(width, height), NoAttachment, target, DEFAULT_FORMAT);
-}
-#endif
-
 /*! \overload
 
     Constructs an OpenGL framebuffer object and binds a texture to the
@@ -864,17 +828,6 @@ QGLFramebufferObject::QGLFramebufferObject(int width, int height, Attachment att
     d->init(this, QSize(width, height), attachment, target, internal_format);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-QGLFramebufferObject::QGLFramebufferObject(int width, int height, Attachment attachment,
-                                           QMacCompatGLenum target, QMacCompatGLenum internal_format)
-    : d_ptr(new QGLFramebufferObjectPrivate)
-{
-    Q_D(QGLFramebufferObject);
-    d->init(this, QSize(width, height), attachment, target, internal_format);
-}
-#endif
-
 /*! \overload
 
     Constructs an OpenGL framebuffer object and binds a texture to the
@@ -895,17 +848,6 @@ QGLFramebufferObject::QGLFramebufferObject(const QSize &size, Attachment attachm
     Q_D(QGLFramebufferObject);
     d->init(this, size, attachment, target, internal_format);
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-QGLFramebufferObject::QGLFramebufferObject(const QSize &size, Attachment attachment,
-                                           QMacCompatGLenum target, QMacCompatGLenum internal_format)
-    : d_ptr(new QGLFramebufferObjectPrivate)
-{
-    Q_D(QGLFramebufferObject);
-    d->init(this, size, attachment, target, internal_format);
-}
-#endif
 
 /*!
     \fn QGLFramebufferObject::~QGLFramebufferObject()
@@ -1182,14 +1124,6 @@ void QGLFramebufferObject::drawTexture(const QRectF &target, GLuint textureId, G
     const_cast<QGLContext *>(QGLContext::currentContext())->drawTexture(target, textureId, textureTarget);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLFramebufferObject::drawTexture(const QRectF &target, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    const_cast<QGLContext *>(QGLContext::currentContext())->drawTexture(target, textureId, textureTarget);
-}
-#endif
-
 /*!
     \since 4.4
 
@@ -1204,14 +1138,6 @@ void QGLFramebufferObject::drawTexture(const QPointF &point, GLuint textureId, G
 {
     const_cast<QGLContext *>(QGLContext::currentContext())->drawTexture(point, textureId, textureTarget);
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLFramebufferObject::drawTexture(const QPointF &point, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    const_cast<QGLContext *>(QGLContext::currentContext())->drawTexture(point, textureId, textureTarget);
-}
-#endif
 
 /*! \reimp */
 int QGLFramebufferObject::metric(PaintDeviceMetric metric) const

@@ -75,9 +75,6 @@
 QT_BEGIN_NAMESPACE
 
 Q_GUI_EXPORT QImage qt_imageForBrush(int brushStyle, bool invert); //in qbrush.cpp
-#ifdef QT_MAC_USE_COCOA
-extern void *qt_current_nsopengl_context(); // qgl_mac.mm
-#endif
 
 #define QREAL_MAX 9e100
 #define QREAL_MIN -9e100
@@ -2676,8 +2673,6 @@ quint64 QGLMaskTextureCache::hash(const QPainterPath &p, const QTransform &m, qr
     }
 
     h += FloatToQuint64(m.m11());
-#ifndef Q_OS_WINCE    //  ###
-    //Compiler crashes for arm on WinCE
     h += FloatToQuint64(m.m12()) << 4;
     h += FloatToQuint64(m.m13()) << 8;
     h += FloatToQuint64(m.m21()) << 12;
@@ -2685,7 +2680,6 @@ quint64 QGLMaskTextureCache::hash(const QPainterPath &p, const QTransform &m, qr
     h += FloatToQuint64(m.m23()) << 20;
     h += FloatToQuint64(m.m31()) << 24;
     h += FloatToQuint64(m.m32()) << 28;
-#endif
     h += FloatToQuint64(m.m33()) << 32;
 
     h += FloatToQuint64(w);
@@ -4099,11 +4093,6 @@ void QOpenGLPaintEngine::drawTextureRect(int tx_width, int tx_height, const QRec
 #ifndef QT_OPENGL_ES
     glPopAttrib();
 #endif
-}
-
-Qt::HANDLE QOpenGLPaintEngine::handle() const
-{
-    return 0;
 }
 
 static const int x_margin = 1;

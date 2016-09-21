@@ -347,13 +347,6 @@ void QGLPixelBuffer::updateDynamicTexture(GLuint texture_id) const
 #endif
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-void QGLPixelBuffer::updateDynamicTexture(QMacCompatGLuint texture_id) const
-{
-    updateDynamicTexture(GLuint(texture_id));
-}
-#endif
-
 /*!
     Returns the size of the pbuffer.
 */
@@ -479,15 +472,6 @@ GLuint QGLPixelBuffer::bindTexture(const QImage &image, GLenum target)
 #endif
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-GLuint QGLPixelBuffer::bindTexture(const QImage &image, QMacCompatGLenum target)
-{
-    Q_D(QGLPixelBuffer);
-    return d->qctx->bindTexture(image, target, QMacCompatGLint(GL_RGBA8));
-}
-#endif
-
 /*! \overload
 
     Generates and binds a 2D GL texture based on \a pixmap.
@@ -505,15 +489,6 @@ GLuint QGLPixelBuffer::bindTexture(const QPixmap &pixmap, GLenum target)
     return d->qctx->bindTexture(pixmap, target, GL_RGBA);
 #endif
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-GLuint QGLPixelBuffer::bindTexture(const QPixmap &pixmap, QMacCompatGLenum target)
-{
-    Q_D(QGLPixelBuffer);
-    return d->qctx->bindTexture(pixmap, target, QMacCompatGLint(GL_RGBA8));
-}
-#endif
 
 /*! \overload
 
@@ -541,15 +516,6 @@ void QGLPixelBuffer::deleteTexture(GLuint texture_id)
     d->qctx->deleteTexture(texture_id);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLPixelBuffer::deleteTexture(QMacCompatGLuint texture_id)
-{
-    Q_D(QGLPixelBuffer);
-    d->qctx->deleteTexture(texture_id);
-}
-#endif
-
 /*!
     \since 4.4
 
@@ -565,15 +531,6 @@ void QGLPixelBuffer::drawTexture(const QRectF &target, GLuint textureId, GLenum 
     d->qctx->drawTexture(target, textureId, textureTarget);
 }
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLPixelBuffer::drawTexture(const QRectF &target, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    Q_D(QGLPixelBuffer);
-    d->qctx->drawTexture(target, textureId, textureTarget);
-}
-#endif
-
 /*!
     \since 4.4
 
@@ -587,15 +544,6 @@ void QGLPixelBuffer::drawTexture(const QPointF &point, GLuint textureId, GLenum 
     Q_D(QGLPixelBuffer);
     d->qctx->drawTexture(point, textureId, textureTarget);
 }
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-/*! \internal */
-void QGLPixelBuffer::drawTexture(const QPointF &point, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget)
-{
-    Q_D(QGLPixelBuffer);
-    d->qctx->drawTexture(point, textureId, textureTarget);
-}
-#endif
 
 /*!
     Returns the format of the pbuffer. The format may be different

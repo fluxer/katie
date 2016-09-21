@@ -51,11 +51,7 @@
 QT_BEGIN_HEADER
 
 #if defined(QT_OPENGL_ES_1)
-# if defined(Q_OS_MAC)
-#  include <OpenGLES/ES1/gl.h>
-# else
-#  include <GLES/gl.h>
-# endif
+# include <GLES/gl.h>
 # ifndef GL_DOUBLE
 #  define GL_DOUBLE GL_FLOAT
 # endif
@@ -63,11 +59,7 @@ QT_BEGIN_HEADER
 typedef GLfloat GLdouble;
 # endif
 #elif defined(QT_OPENGL_ES_2)
-# if defined(Q_OS_MAC)
-#  include <OpenGLES/ES2/gl.h>
-# else
-#  include <GLES2/gl2.h>
-# endif
+# include <GLES2/gl2.h>
 # ifndef GL_DOUBLE
 #  define GL_DOUBLE GL_FLOAT
 # endif
@@ -313,22 +305,6 @@ public:
     void drawTexture(const QRectF &target, GLuint textureId, GLenum textureTarget = GL_TEXTURE_2D);
     void drawTexture(const QPointF &point, GLuint textureId, GLenum textureTarget = GL_TEXTURE_2D);
 
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-    GLuint bindTexture(const QImage &image, QMacCompatGLenum = GL_TEXTURE_2D,
-                       QMacCompatGLint format = GL_RGBA);
-    GLuint bindTexture(const QPixmap &pixmap, QMacCompatGLenum = GL_TEXTURE_2D,
-                       QMacCompatGLint format = GL_RGBA);
-    GLuint bindTexture(const QImage &image, QMacCompatGLenum, QMacCompatGLint format,
-                       BindOptions);
-    GLuint bindTexture(const QPixmap &pixmap, QMacCompatGLenum, QMacCompatGLint format,
-                       BindOptions);
-
-    void deleteTexture(QMacCompatGLuint tx_id);
-
-    void drawTexture(const QRectF &target, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget = GL_TEXTURE_2D);
-    void drawTexture(const QPointF &point, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget = GL_TEXTURE_2D);
-#endif
-
     static void setTextureCacheLimit(int size);
     static int textureCacheLimit();
 
@@ -466,22 +442,6 @@ public:
 
     void drawTexture(const QRectF &target, GLuint textureId, GLenum textureTarget = GL_TEXTURE_2D);
     void drawTexture(const QPointF &point, GLuint textureId, GLenum textureTarget = GL_TEXTURE_2D);
-
-#ifdef Q_MAC_COMPAT_GL_FUNCTIONS
-    GLuint bindTexture(const QImage &image, QMacCompatGLenum = GL_TEXTURE_2D,
-                       QMacCompatGLint format = GL_RGBA);
-    GLuint bindTexture(const QPixmap &pixmap, QMacCompatGLenum = GL_TEXTURE_2D,
-                       QMacCompatGLint format = GL_RGBA);
-    GLuint bindTexture(const QImage &image, QMacCompatGLenum, QMacCompatGLint format,
-                       QGLContext::BindOptions);
-    GLuint bindTexture(const QPixmap &pixmap, QMacCompatGLenum, QMacCompatGLint format,
-                       QGLContext::BindOptions);
-
-    void deleteTexture(QMacCompatGLuint tx_id);
-
-    void drawTexture(const QRectF &target, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget = GL_TEXTURE_2D);
-    void drawTexture(const QPointF &point, QMacCompatGLuint textureId, QMacCompatGLenum textureTarget = GL_TEXTURE_2D);
-#endif
 
 public Q_SLOTS:
     virtual void updateGL();
