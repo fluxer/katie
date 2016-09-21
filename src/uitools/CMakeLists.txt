@@ -10,7 +10,6 @@ set(UITOOLS_HEADERS
     ${UITOOLS_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.h
     ${CMAKE_CURRENT_SOURCE_DIR}/customwidget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/extension.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.h
     ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner_p.h
@@ -27,7 +26,6 @@ set(UITOOLS_SOURCES
     ${UITOOLS_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/quiloader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/abstractformbuilder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/extension.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formbuilderextra.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/formscriptrunner.cpp
