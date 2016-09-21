@@ -176,17 +176,21 @@ public:
 
 
     static bool connect(const QObject *sender, const char *signal,
-                        const QObject *receiver, const char *member, Qt::ConnectionType = Qt::AutoConnection
+                        const QObject *receiver, const char *member,
+                        Qt::ConnectionType type = Qt::AutoConnection
         );
-        
+
     static bool connect(const QObject *sender, const QMetaMethod &signal,
                         const QObject *receiver, const QMetaMethod &method,
                         Qt::ConnectionType type = Qt::AutoConnection
         );
 
     inline bool connect(const QObject *sender, const char *signal,
-                        const char *member, Qt::ConnectionType type = Qt::AutoConnection
-        ) const;
+                        const char *member,
+                        Qt::ConnectionType type = Qt::AutoConnection
+        ) const
+        { return connect(sender, signal, this, member, type); }
+
 
     static bool disconnect(const QObject *sender, const char *signal,
                            const QObject *receiver, const char *member);
@@ -258,10 +262,6 @@ private:
     Q_DISABLE_COPY(QObject)
     Q_PRIVATE_SLOT(d_func(), void _q_reregisterTimers(void *))
 };
-
-inline bool QObject::connect(const QObject *asender, const char *asignal,
-                             const char *amember, Qt::ConnectionType atype) const
-{ return connect(asender, asignal, this, amember, atype); }
 
 #ifndef QT_NO_USERDATA
 class Q_CORE_EXPORT QObjectUserData {

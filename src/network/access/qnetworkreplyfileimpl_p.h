@@ -68,7 +68,6 @@ class QNetworkReplyFileImpl: public QNetworkReply
     Q_OBJECT
 public:
     QNetworkReplyFileImpl(QObject *parent, const QNetworkRequest &req, const QNetworkAccessManager::Operation op);
-    ~QNetworkReplyFileImpl();
     virtual void abort();
 
     // reimplemented from QNetworkReply

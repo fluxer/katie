@@ -71,7 +71,6 @@ public:
     virtual void abort();
 
     // reimplemented from QNetworkReply
-    virtual void close();
     virtual qint64 bytesAvailable() const;
     virtual bool isSequential () const;
     qint64 size() const;
@@ -84,9 +83,6 @@ public:
 class QNetworkReplyDataImplPrivate: public QNetworkReplyPrivate
 {
 public:
-    QNetworkReplyDataImplPrivate();
-    ~QNetworkReplyDataImplPrivate();
-
     QPair<QString, QByteArray> decodeDataUrlResult;
     QBuffer decodedData;
 

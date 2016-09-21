@@ -46,19 +46,6 @@
 
 QT_BEGIN_NAMESPACE
 
-QNetworkReplyDataImplPrivate::QNetworkReplyDataImplPrivate()
-    : QNetworkReplyPrivate()
-{
-}
-
-QNetworkReplyDataImplPrivate::~QNetworkReplyDataImplPrivate()
-{
-}
-
-QNetworkReplyDataImpl::~QNetworkReplyDataImpl()
-{
-}
-
 QNetworkReplyDataImpl::QNetworkReplyDataImpl(QObject *parent, const QNetworkRequest &req, const QNetworkAccessManager::Operation op)
     : QNetworkReply(*new QNetworkReplyDataImplPrivate(), parent)
 {
@@ -98,11 +85,6 @@ QNetworkReplyDataImpl::QNetworkReplyDataImpl(QObject *parent, const QNetworkRequ
                                   Q_ARG(QNetworkReply::NetworkError, QNetworkReply::ProtocolFailure));
         QMetaObject::invokeMethod(this, "finished", Qt::QueuedConnection);
     }
-}
-
-void QNetworkReplyDataImpl::close()
-{
-    QNetworkReply::close();
 }
 
 void QNetworkReplyDataImpl::abort()

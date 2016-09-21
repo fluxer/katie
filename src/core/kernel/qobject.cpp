@@ -1466,53 +1466,6 @@ void QObject::killTimer(int id)
 */
 
 /*!
-    \fn T qFindChild(const QObject *obj, const QString &name)
-    \relates QObject
-    \overload qFindChildren()
-    \obsolete
-
-    This function is equivalent to
-    \a{obj}->\l{QObject::findChild()}{findChild}<T>(\a name).
-
-    \note This function was provided as a workaround for MSVC 6
-    which did not support member template functions. It is advised
-    to use the other form in new code.
-
-    \sa QObject::findChild()
-*/
-
-/*!
-    \fn QList<T> qFindChildren(const QObject *obj, const QString &name)
-    \relates QObject
-    \overload qFindChildren()
-    \obsolete
-
-    This function is equivalent to
-    \a{obj}->\l{QObject::findChildren()}{findChildren}<T>(\a name).
-
-    \note This function was provided as a workaround for MSVC 6
-    which did not support member template functions. It is advised
-    to use the other form in new code.
-
-    \sa QObject::findChildren()
-*/
-
-/*!
-    \fn QList<T> qFindChildren(const QObject *obj, const QRegExp &regExp)
-    \relates QObject
-    \overload qFindChildren()
-
-    This function is equivalent to
-    \a{obj}->\l{QObject::findChildren()}{findChildren}<T>(\a regExp).
-
-    \note This function was provided as a workaround for MSVC 6
-    which did not support member template functions. It is advised
-    to use the other form in new code.
-
-    \sa QObject::findChildren()
-*/
-
-/*!
     \internal
 */
 void qt_qFindChildren_helper(const QObject *parent, const QString &name, const QRegExp *re,

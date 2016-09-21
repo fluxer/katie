@@ -53,10 +53,6 @@ QNetworkReplyFileImplPrivate::QNetworkReplyFileImplPrivate()
 {
 }
 
-QNetworkReplyFileImpl::~QNetworkReplyFileImpl()
-{
-}
-
 QNetworkReplyFileImpl::QNetworkReplyFileImpl(QObject *parent, const QNetworkRequest &req, const QNetworkAccessManager::Operation op)
     : QNetworkReply(*new QNetworkReplyFileImplPrivate(), parent)
 {

@@ -105,7 +105,6 @@ public:
     virtual void abort() = 0;
 
     // reimplemented from QIODevice
-    virtual void close();
     virtual bool isSequential() const;
 
     // like QAbstractSocket:

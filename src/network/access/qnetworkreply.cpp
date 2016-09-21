@@ -355,22 +355,6 @@ QNetworkReply::~QNetworkReply()
 }
 
 /*!
-    Closes this device for reading. Unread data is discarded, but the
-    network resources are not discarded until they are finished. In
-    particular, if any upload is in progress, it will continue until
-    it is done.
-
-    The finished() signal is emitted when all operations are over and
-    the network resources are freed.
-
-    \sa abort(), finished()
-*/
-void QNetworkReply::close()
-{
-    QIODevice::close();
-}
-
-/*!
     \internal
 */
 bool QNetworkReply::isSequential() const
