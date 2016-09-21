@@ -27,6 +27,7 @@ There are several things you should be aware before considering Katie:
   - native graphics system is no more, rasterizer is just as fast as native
   - QPictureIO and plugins for it are no longer supported
   - QML debugger and inspector have been removed, potentially dangerous
+  - no SIMD, zero performance impact with decent compiler
   - removed non-open source DB2, OCI, TDS and InterBase database drivers
   - removed 3rd party sources that are very common nowdays
 
@@ -35,7 +36,7 @@ There are several things you should be aware before considering Katie:
   - command line parser
   - standard directories handler
   - building against IODBC instead of unixODBC is possible
-  - building with LTO is possible and supported, if the compiler can handle it
+  - building with LTO is possible and supported, if the toolchain can handle it
   - alternative libc implementations support
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - support for generating SHA3-224, SHA3-256, SHA3-384, SHA3-512 hash sums
