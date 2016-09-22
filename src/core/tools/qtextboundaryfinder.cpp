@@ -132,12 +132,13 @@ QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
 */
 QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &other)
 {
-    if (&other == this)
-        return *this;
-
-    d = other.d;
-    t = other.t;
-
+    // this object was constructed as invalid
+    if (!d)
+        d = new QTextBoundaryFinderPrivate();
+    if (this != &other) {
+        t = other.t;
+        memcpy(d, other.d, sizeof(QTextBoundaryFinderPrivate));
+    }
     return *this;
 }
 
