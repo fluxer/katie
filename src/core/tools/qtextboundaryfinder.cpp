@@ -160,14 +160,14 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
 {
     d->pos = 0;
     d->length = string.size();
-    d->string = string;
+    d->string = QString(string);
 }
 
 /*!
   Creates a QTextBoundaryFinder object of \a type operating on \a chars
   with \a length.
 */
-QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length)
+QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length)
     : d(new QTextBoundaryFinderPrivate)
     , t(type)
 {
@@ -218,7 +218,7 @@ int QTextBoundaryFinder::position() const
 
   \sa position()
 */
-void QTextBoundaryFinder::setPosition(int position)
+void QTextBoundaryFinder::setPosition(const int position)
 {
     d->pos = qBound(0, position, d->length);
 }
@@ -235,11 +235,11 @@ void QTextBoundaryFinder::setPosition(int position)
 */
 
 /*!
-  Returns the string  the QTextBoundaryFinder object operates on.
+  Returns the string the QTextBoundaryFinder object operates on.
 */
 QString QTextBoundaryFinder::string() const
 {
-    return d->string;
+    return QString(d->string);
 }
 
 
@@ -355,9 +355,7 @@ bool QTextBoundaryFinder::isAtBoundary() const
 */
 QTextBoundaryFinder::BoundaryReasons QTextBoundaryFinder::boundaryReasons() const
 {
-    if (!d)
-        return QTextBoundaryFinder::NotAtBoundary;
-    if (!isAtBoundary())
+    if (!d || !isAtBoundary())
         return QTextBoundaryFinder::NotAtBoundary;
     if (d->pos == 0) {
         if (d->string[d->pos].isSpace())

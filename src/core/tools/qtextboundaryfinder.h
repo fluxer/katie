@@ -76,7 +76,7 @@ public:
     Q_DECLARE_FLAGS(BoundaryReasons, BoundaryReason)
 
     QTextBoundaryFinder(BoundaryType type, const QString &string);
-    QTextBoundaryFinder(BoundaryType type, const QChar *chars, int length);
+    QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length);
 
     inline bool isValid() const { return d; }
 
@@ -86,7 +86,7 @@ public:
     void toStart();
     void toEnd();
     int position() const;
-    void setPosition(int position);
+    void setPosition(const int position);
 
     int toNextBoundary();
     int toPreviousBoundary();
