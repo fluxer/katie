@@ -48,7 +48,6 @@
 QT_BEGIN_NAMESPACE
 
 
-#define MASK(src, a) src = BYTE_MUL(src, a)
 /*
   constants and structures
 */
@@ -124,8 +123,6 @@ Q_STATIC_TEMPLATE_FUNCTION uint * QT_FASTCALL destFetch(uint *buffer, QRasterBuf
     return buffer;
 }
 
-# define SPANFUNC_POINTER_DESTFETCH(Arg) destFetch<Arg>
-
 static DestFetchProc destFetchProc[QImage::NImageFormats] =
 {
     0, // Format_Invalid
@@ -136,14 +133,14 @@ static DestFetchProc destFetchProc[QImage::NImageFormats] =
     destFetchARGB32, // Format_ARGB32,
     destFetchARGB32P, // Format_ARGB32_Premultiplied
     destFetchRGB16,   // Format_RGB16
-    SPANFUNC_POINTER_DESTFETCH(qargb8565), // Format_ARGB8565_Premultiplied
-    SPANFUNC_POINTER_DESTFETCH(qrgb666),   // Format_RGB666
-    SPANFUNC_POINTER_DESTFETCH(qargb6666), // Format_ARGB6666_Premultiplied
-    SPANFUNC_POINTER_DESTFETCH(qrgb555),   // Format_RGB555
-    SPANFUNC_POINTER_DESTFETCH(qargb8555), // Format_ARGB8555_Premultiplied
-    SPANFUNC_POINTER_DESTFETCH(qrgb888),   // Format_RGB888
-    SPANFUNC_POINTER_DESTFETCH(qrgb444),   // Format_RGB444
-    SPANFUNC_POINTER_DESTFETCH(qargb4444)  // Format_ARGB4444_Premultiplied
+    destFetch<qargb8565>, // Format_ARGB8565_Premultiplied
+    destFetch<qrgb666>,   // Format_RGB666
+    destFetch<qargb6666>, // Format_ARGB6666_Premultiplied
+    destFetch<qrgb555>,   // Format_RGB555
+    destFetch<qargb8555>, // Format_ARGB8555_Premultiplied
+    destFetch<qrgb888>,   // Format_RGB888
+    destFetch<qrgb444>,   // Format_RGB444
+    destFetch<qargb4444>  // Format_ARGB4444_Premultiplied
 };
 
 /*
