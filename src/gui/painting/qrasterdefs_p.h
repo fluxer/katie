@@ -423,26 +423,6 @@ QT_FT_BEGIN_HEADER
   /*************************************************************************/
   /*                                                                       */
   /* <Func>                                                                */
-  /*    gray_raster_new                                                    */
-  /*                                                                       */
-  /* <Description>                                                         */
-  /*    A function used to create a new raster object.                     */
-  /*                                                                       */
-  /* <Output>                                                              */
-  /*    raster :: A handle to the new raster object.                       */
-  /*                                                                       */
-  /* <Return>                                                              */
-  /*    Error code.  0 means success.                                      */
-  /*                                                                       */
-#ifdef __cplusplus
-  extern "C"
-#endif
-  int gray_raster_new( QT_FT_Raster*  raster );
-
-
-  /*************************************************************************/
-  /*                                                                       */
-  /* <Func>                                                                */
   /*    gray_raster_reset                                                  */
   /*                                                                       */
   /* <Description>                                                         */
@@ -454,11 +434,6 @@ QT_FT_BEGIN_HEADER
   /*    This function is called each time the render pool changes, or just */
   /*    after a new raster object is created.                              */
   /*                                                                       */
-  /* <Input>                                                               */
-  /*    raster    :: A handle to the new raster object.                    */
-  /*                                                                       */
-  /*    pool_base :: The address in memory of the render pool.             */
-  /*                                                                       */
   /* <Note>                                                                */
   /*    Rasters can ignore the render pool and rely on dynamic memory      */
   /*    allocation if they want to (a handle to the memory allocator is    */
@@ -468,7 +443,7 @@ QT_FT_BEGIN_HEADER
 #ifdef __cplusplus
   extern "C"
 #endif
-  void gray_raster_reset( QT_FT_Raster       raster, char*  pool);
+  void gray_raster_reset( );
 
 
   /*************************************************************************/
@@ -508,8 +483,7 @@ QT_FT_BEGIN_HEADER
 #ifdef __cplusplus
   extern "C"
 #endif
-  int gray_raster_render( QT_FT_Raster          raster,
-                           const QT_FT_Raster_Params*  params );
+  int gray_raster_render( const QT_FT_Raster_Params*  params );
 
   /*************************************************************************/
   /*                                                                       */

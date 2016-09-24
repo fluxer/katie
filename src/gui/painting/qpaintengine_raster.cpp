@@ -167,18 +167,6 @@ static void qt_ft_outline_cubic_to(qfixed c1x, qfixed c1y,
 QRasterPaintEnginePrivate::QRasterPaintEnginePrivate() :
     QPaintEngineExPrivate()
 {
-    // The antialiasing raster.
-    grayRaster = new QT_FT_Raster;
-    Q_CHECK_PTR(grayRaster);
-    if (gray_raster_new(grayRaster)) {
-        // an error creating the raster is caused by a bad malloc
-        QT_THROW(std::bad_alloc());
-    }
-}
-
-QRasterPaintEnginePrivate::~QRasterPaintEnginePrivate()
-{
-    free(grayRaster);
 }
 
 /*!
@@ -3080,8 +3068,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
         return;
     }
 
-    char pool_base[RASTER_POOL_SIZE];
-    gray_raster_reset(*grayRaster, pool_base);
+    gray_raster_reset();
 
     QT_FT_BBox clip_box = { deviceRect.x(),
                             deviceRect.y(),
@@ -3095,7 +3082,7 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     rasterParams.clip_box = clip_box;
     rasterParams.gray_spans = callback;
     rasterParams.skip_spans = 0;
-    gray_raster_render(*grayRaster, &rasterParams);
+    gray_raster_render(&rasterParams);
 }
 
 QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)

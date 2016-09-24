@@ -266,7 +266,6 @@ class QRasterPaintEnginePrivate : public QPaintEngineExPrivate
     Q_DECLARE_PUBLIC(QRasterPaintEngine)
 public:
     QRasterPaintEnginePrivate();
-    ~QRasterPaintEnginePrivate();
 
     void rasterizeLine_dashed(QLineF line, qreal width,
                               int *dashIndex, qreal *dashOffset, bool *inDash);
@@ -307,8 +306,6 @@ public:
 
     QStroker basicStroker;
     QScopedPointer<QDashStroker> dashStroker;
-
-    QT_FT_Raster* grayRaster;
 
     QSpanData image_filler;
     QSpanData image_filler_xform;

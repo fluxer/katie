@@ -130,7 +130,6 @@
 
 #define QT_FT_UINT_MAX  UINT_MAX
 
-#define qt_ft_memset   memset
 #define qt_ft_setjmp   setjmp
 #define qt_ft_longjmp  longjmp
 #define qt_ft_jmp_buf  jmp_buf
@@ -1346,53 +1345,31 @@
 
   /**** RASTER OBJECT CREATION: In standalone mode, we simply use *****/
   /****                         a static object.                  *****/
+  static TRaster raster;
+  static char raster_pool[RASTER_POOL_SIZE];
 
-  int gray_raster_new( QT_FT_Raster*  araster )
+  void gray_raster_reset( )
   {
-    *araster = malloc(sizeof(TRaster));
-    if (!*araster) {
-        *araster = 0;
-        return ErrRaster_Memory_Overflow;
-    }
-    qt_ft_memset(*araster, 0, sizeof(TRaster));
-
-    return 0;
+    raster.worker      = (PWorker)raster_pool;
+    raster.buffer      = raster_pool +
+                          ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
+                          ~( sizeof ( TCell ) - 1 ) );
+    raster.buffer_size = ( ( raster_pool + RASTER_POOL_SIZE ) -
+                          raster.buffer ) & ~( sizeof ( TCell ) - 1 );
+    raster.band_size   = raster.buffer_size / ( sizeof ( TCell ) * 8 );
   }
 
-
-  void gray_raster_reset( QT_FT_Raster  raster, char* pool_base )
-  {
-    PRaster  rast = (PRaster)raster;
-    if ( raster && pool_base )
-    {
-      rast->worker      = (PWorker)pool_base;
-      rast->buffer      = pool_base +
-                            ( ( sizeof ( TWorker ) + sizeof ( TCell ) - 1 ) &
-                            ~( sizeof ( TCell ) - 1 ) );
-      rast->buffer_size = ( ( pool_base + RASTER_POOL_SIZE ) -
-                            rast->buffer ) & ~( sizeof ( TCell ) - 1 );
-      rast->band_size   = rast->buffer_size / ( sizeof ( TCell ) * 8 );
-    }
-    else
-    {
-      rast->buffer      = NULL;
-      rast->buffer_size = 0;
-      rast->worker      = NULL;
-    }
-  }
-
-  int gray_raster_render( QT_FT_Raster                  raster,
-                      const QT_FT_Raster_Params*  params )
+  int gray_raster_render( const QT_FT_Raster_Params*  params )
   {
     const QT_FT_Outline*  outline    = (const QT_FT_Outline*)params->source;
     PWorker            worker;
 
 
-    if ( !raster || !raster->buffer || !raster->buffer_size )
+    if ( !raster.buffer || !raster.buffer_size )
       return ErrRaster_Invalid_Argument;
 
-    if ( raster->worker )
-      raster->worker->skip_spans = params->skip_spans;
+    if ( raster.worker )
+      raster.worker->skip_spans = params->skip_spans;
 
     /* return immediately if the outline is empty */
     if ( !outline || outline->n_points == 0 || outline->n_contours <= 0 )
@@ -1405,16 +1382,16 @@
            outline->contours[outline->n_contours - 1] + 1 )
       return ErrRaster_Invalid_Outline;
 
-    worker = raster->worker;
+    worker = raster.worker;
 
     /* compute clipping box */
     ras.clip_box = params->clip_box;
 
     /* initialize the cells table */
-    ras.buffer      = raster->buffer;
-    ras.buffer_size = raster->buffer_size;
+    ras.buffer      = raster.buffer;
+    ras.buffer_size = raster.buffer_size;
 
-    ras.ycells      = (PCell*) raster->buffer;
+    ras.ycells      = (PCell*) raster.buffer;
     ras.cells       = NULL;
     ras.max_cells   = 0;
     ras.num_cells   = 0;
@@ -1423,7 +1400,7 @@
     ras.invalid     = 1;
 
     ras.outline   = *outline;
-    ras.band_size = raster->band_size;
+    ras.band_size = raster.band_size;
 
     ras.render_span      = (QT_FT_SpanFunc)params->gray_spans;
     ras.render_span_data = params->user;
