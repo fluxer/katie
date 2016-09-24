@@ -413,14 +413,6 @@ if(NOT KATIE_BOOTSTRAP)
         URL "http://www.x.org"
         TYPE REQUIRED
     )
-
-    set_package_properties(Fontconfig PROPERTIES
-        TYPE REQUIRED
-    )
-
-    set_package_properties(Freetype PROPERTIES
-        TYPE REQUIRED
-    )
 endif()
 
 if(PYTHONINTERP_FOUND)
