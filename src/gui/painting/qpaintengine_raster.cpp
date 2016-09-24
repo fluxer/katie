@@ -339,10 +339,10 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     ensureOutlineMapper();
     d->outlineMapper->m_clip_rect = d->deviceRect;
 
-    if (d->outlineMapper->m_clip_rect.width() > QT_RASTER_COORD_LIMIT)
-        d->outlineMapper->m_clip_rect.setWidth(QT_RASTER_COORD_LIMIT);
-    if (d->outlineMapper->m_clip_rect.height() > QT_RASTER_COORD_LIMIT)
-        d->outlineMapper->m_clip_rect.setHeight(QT_RASTER_COORD_LIMIT);
+    if (d->outlineMapper->m_clip_rect.width() > RASTER_COORD_LIMIT)
+        d->outlineMapper->m_clip_rect.setWidth(RASTER_COORD_LIMIT);
+    if (d->outlineMapper->m_clip_rect.height() > RASTER_COORD_LIMIT)
+        d->outlineMapper->m_clip_rect.setHeight(RASTER_COORD_LIMIT);
 
     d->rasterizer->setClipRect(d->deviceRect);
 
@@ -517,13 +517,9 @@ QRasterPaintEngineState::QRasterPaintEngineState(QRasterPaintEngineState &s)
 */
 QPainterState *QRasterPaintEngine::createState(QPainterState *orig) const
 {
-    QRasterPaintEngineState *s;
     if (!orig)
-        s = new QRasterPaintEngineState();
-    else
-        s = new QRasterPaintEngineState(*static_cast<QRasterPaintEngineState *>(orig));
-
-    return s;
+        return new QRasterPaintEngineState();
+    return new QRasterPaintEngineState(*static_cast<QRasterPaintEngineState *>(orig));
 }
 
 /*!
@@ -595,7 +591,7 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
     d->basicStroker.setCapStyle(qpen_capStyle(pen));
     d->basicStroker.setMiterLimit(pen.miterLimit());
 
-    qreal penWidth = qpen_widthf(pen);
+    const qreal penWidth = qpen_widthf(pen);
     if (penWidth == 0)
         d->basicStroker.setStrokeWidth(1);
     else
@@ -875,8 +871,8 @@ void QRasterPaintEnginePrivate::drawImage(const QPointF &pt,
 void QRasterPaintEnginePrivate::systemStateChanged()
 {
     deviceRectUnclipped = QRect(0, 0,
-            qMin(QT_RASTER_COORD_LIMIT, device->width()),
-            qMin(QT_RASTER_COORD_LIMIT, device->height()));
+            qMin(RASTER_COORD_LIMIT, device->width()),
+            qMin(RASTER_COORD_LIMIT, device->height()));
 
     if (!systemClip.isEmpty()) {
         QRegion clippedDeviceRgn = systemClip & deviceRectUnclipped;
@@ -1100,7 +1096,7 @@ void QRasterPaintEngine::clip(const QRect &rect, Qt::ClipOperation op)
 bool QRasterPaintEngine::setClipRectInDeviceCoords(const QRect &r, Qt::ClipOperation op)
 {
     Q_D(QRasterPaintEngine);
-    QRect clipRect = r & d->deviceRect;
+    const QRect clipRect = r & d->deviceRect;
     QRasterPaintEngineState *s = state();
 
     if (op == Qt::ReplaceClip || s->clip == 0) {
@@ -1222,10 +1218,10 @@ void QRasterPaintEngine::fillPath(const QPainterPath &path, QSpanData *fillData)
     QRasterPaintEngineState *s = state();
     const QRect deviceRect = s->matrix.mapRect(controlPointRect).toRect();
     ProcessSpans blend = d->getBrushFunc(deviceRect, fillData);
-    const bool do_clip = (deviceRect.left() < -QT_RASTER_COORD_LIMIT
-                          || deviceRect.right() > QT_RASTER_COORD_LIMIT
-                          || deviceRect.top() < -QT_RASTER_COORD_LIMIT
-                          || deviceRect.bottom() > QT_RASTER_COORD_LIMIT);
+    const bool do_clip = (deviceRect.left() < -RASTER_COORD_LIMIT
+                          || deviceRect.right() > RASTER_COORD_LIMIT
+                          || deviceRect.top() < -RASTER_COORD_LIMIT
+                          || deviceRect.bottom() > RASTER_COORD_LIMIT);
 
     if (!s->flags.antialiased && !do_clip) {
         d->initializeRasterizer(fillData);
@@ -1529,10 +1525,10 @@ void QRasterPaintEngine::fill(const QVectorPath &path, const QBrush &brush)
     ProcessSpans blend = d->getBrushFunc(deviceRect, &s->brushData);
 
         // ### Falcon
-//         const bool do_clip = (deviceRect.left() < -QT_RASTER_COORD_LIMIT
-//                               || deviceRect.right() > QT_RASTER_COORD_LIMIT
-//                               || deviceRect.top() < -QT_RASTER_COORD_LIMIT
-//                               || deviceRect.bottom() > QT_RASTER_COORD_LIMIT);
+//         const bool do_clip = (deviceRect.left() < -RASTER_COORD_LIMIT
+//                               || deviceRect.right() > RASTER_COORD_LIMIT
+//                               || deviceRect.top() < -RASTER_COORD_LIMIT
+//                               || deviceRect.bottom() > RASTER_COORD_LIMIT);
 
         // ### Falonc: implement....
 //         if (!s->flags.antialiased && !do_clip) {
@@ -2147,7 +2143,8 @@ static inline bool monoVal(const uchar* s, int x)
 /*!
     \internal
 */
-void QRasterPaintEngine::alphaPenBlt(const void* src, int bpl, int depth, int rx,int ry,int w,int h)
+void QRasterPaintEngine::alphaPenBlt(const void* src, const int bpl, const int depth,
+                                    int rx, int ry, int w, int h)
 {
     Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
@@ -2808,7 +2805,7 @@ bool QRasterPaintEngine::supportsTransformations(const QFontEngine *fontEngine) 
     return supportsTransformations(fontEngine->fontDef.pixelSize, m);
 }
 
-bool QRasterPaintEngine::supportsTransformations(qreal pixelSize, const QTransform &m) const
+bool QRasterPaintEngine::supportsTransformations(const qreal pixelSize, const QTransform &m) const
 {
     if (m.type() >= QTransform::TxProject)
         return true;
@@ -3146,8 +3143,8 @@ QRasterBuffer::QRasterBuffer()
 QImage::Format QRasterBuffer::prepare(QImage *image)
 {
     m_buffer = (uchar *)image->bits();
-    m_width = qMin(QT_RASTER_COORD_LIMIT, image->width());
-    m_height = qMin(QT_RASTER_COORD_LIMIT, image->height());
+    m_width = qMin(RASTER_COORD_LIMIT, image->width());
+    m_height = qMin(RASTER_COORD_LIMIT, image->height());
     bytes_per_pixel = image->depth()/8;
     bytes_per_line = image->bytesPerLine();
 

@@ -67,10 +67,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// This limitations comes from qgrayraster.c. Any higher and
-// rasterization of shapes will produce incorrect results.
-const int QT_RASTER_COORD_LIMIT = 32767;
-
 //#define QT_DEBUG_CONVERT
 
 /********************************************************************************

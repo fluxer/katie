@@ -213,12 +213,13 @@ public:
     void saveBuffer(const QString &s) const;
 #endif
 
-    void alphaPenBlt(const void* src, int bpl, int depth, int rx,int ry,int w,int h);
+    void alphaPenBlt(const void* src, const int bpl, const int depth,
+                    int rx, int ry, int w, int h);
 
     Type type() const { return Raster; }
 
     bool supportsTransformations(const QFontEngine *fontEngine) const;
-    bool supportsTransformations(qreal pixelSize, const QTransform &m) const;
+    bool supportsTransformations(const qreal pixelSize, const QTransform &m) const;
 
 protected:
     QRasterPaintEngine(QRasterPaintEnginePrivate &d, QPaintDevice *);
@@ -365,8 +366,8 @@ public:
     uint hasRectClip : 1;
     uint hasRegionClip : 1;
 
-    void appendSpan(int x, int length, int y, int coverage);
-    void appendSpans(const QSpan *s, int num);
+    void appendSpan(const int x, const int length, const int y, const int coverage);
+    void appendSpans(const QSpan *s, const int num);
 
     // ### Should optimize and actually kill the QSpans if the rect is
     // ### a subset of The current region. Thus the "fast" clipspan
@@ -376,7 +377,7 @@ public:
     void fixup();
 };
 
-inline void QClipData::appendSpan(int x, int length, int y, int coverage)
+inline void QClipData::appendSpan(const int x, const int length, const int y, const int coverage)
 {
     Q_ASSERT(m_spans); // initialize() has to be called prior to adding spans..
 
@@ -391,7 +392,7 @@ inline void QClipData::appendSpan(int x, int length, int y, int coverage)
     ++count;
 }
 
-inline void QClipData::appendSpans(const QSpan *s, int num)
+inline void QClipData::appendSpans(const QSpan *s, const int num)
 {
     Q_ASSERT(m_spans);
 

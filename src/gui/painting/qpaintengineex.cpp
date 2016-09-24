@@ -1106,7 +1106,7 @@ void QPaintEngineEx::drawStaticTextItem(QStaticTextItem *staticTextItem)
     }
 }
 
-bool QPaintEngineEx::supportsTransformations(qreal pixelSize, const QTransform &m) const
+bool QPaintEngineEx::supportsTransformations(const qreal pixelSize, const QTransform &m) const
 {
     Q_UNUSED(pixelSize);
 

@@ -220,7 +220,7 @@ public:
     // that will be requested, and not just the "type".
     virtual QPixmapFilter *pixmapFilter(int /*type*/, const QPixmapFilter * /*prototype*/) { return 0; }
 
-    virtual bool supportsTransformations(qreal pixelSize, const QTransform &m) const;
+    virtual bool supportsTransformations(const qreal pixelSize, const QTransform &m) const;
 
 protected:
     QPaintEngineEx(QPaintEngineExPrivate &data);

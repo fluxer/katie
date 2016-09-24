@@ -518,6 +518,13 @@ QT_FT_BEGIN_HEADER
   /*                                                                       */
   #define RASTER_POOL_SIZE 8192
 
+  /*************************************************************************/
+  /*                                                                       */
+  /* Any higher and rasterization of shapes will produce incorrect         */
+  /* results.                                                              */
+  /*                                                                       */
+  #define RASTER_COORD_LIMIT 32767
+
   /* */
 
 

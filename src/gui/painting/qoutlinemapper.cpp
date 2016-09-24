@@ -222,12 +222,12 @@ void QOutlineMapper::endOutline()
 
 
     // Check for out of dev bounds...
-    const bool do_clip = !m_in_clip_elements && (controlPointRect.left() < -QT_RASTER_COORD_LIMIT
-                          || controlPointRect.right() > QT_RASTER_COORD_LIMIT
-                          || controlPointRect.top() < -QT_RASTER_COORD_LIMIT
-                          || controlPointRect.bottom() > QT_RASTER_COORD_LIMIT
-                          || controlPointRect.width() > QT_RASTER_COORD_LIMIT
-                          || controlPointRect.height() > QT_RASTER_COORD_LIMIT);
+    const bool do_clip = !m_in_clip_elements && (controlPointRect.left() < -RASTER_COORD_LIMIT
+                          || controlPointRect.right() > RASTER_COORD_LIMIT
+                          || controlPointRect.top() < -RASTER_COORD_LIMIT
+                          || controlPointRect.bottom() > RASTER_COORD_LIMIT
+                          || controlPointRect.width() > RASTER_COORD_LIMIT
+                          || controlPointRect.height() > RASTER_COORD_LIMIT);
 
     if (do_clip) {
         clipElements(elements, elementTypes(), element_count);
