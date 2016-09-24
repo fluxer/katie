@@ -88,7 +88,6 @@ public:
     QSpanData brushData;
     uint fillFlags;
 
-    uint pixmapFlags;
     int intOpacity;
 
     qreal txscale;

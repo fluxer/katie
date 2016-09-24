@@ -473,7 +473,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
 
     fillFlags = 0;
     strokeFlags = 0;
-    pixmapFlags = 0;
 
     intOpacity = 256;
 
@@ -500,7 +499,6 @@ QRasterPaintEngineState::QRasterPaintEngineState(QRasterPaintEngineState &s)
     , lastBrush(s.lastBrush)
     , brushData(s.brushData)
     , fillFlags(s.fillFlags)
-    , pixmapFlags(s.pixmapFlags)
     , intOpacity(s.intOpacity)
     , txscale(s.txscale)
     , clip(s.clip)
@@ -713,7 +711,6 @@ void QRasterPaintEngine::opacityChanged()
 
     s->fillFlags |= DirtyOpacity;
     s->strokeFlags |= DirtyOpacity;
-    s->pixmapFlags |= DirtyOpacity;
     s->dirty |= DirtyOpacity;
     s->intOpacity = (int) (s->opacity * 256);
 }
@@ -795,7 +792,6 @@ void QRasterPaintEngine::clipEnabledChanged()
         s->clip->enabled = s->clipEnabled;
         s->fillFlags |= DirtyClipEnabled;
         s->strokeFlags |= DirtyClipEnabled;
-        s->pixmapFlags |= DirtyClipEnabled;
     }
 }
 
@@ -891,7 +887,6 @@ void QRasterPaintEnginePrivate::systemStateChanged()
     Q_Q(QRasterPaintEngine);
     q->state()->strokeFlags |= QPaintEngine::DirtyClipRegion;
     q->state()->fillFlags |= QPaintEngine::DirtyClipRegion;
-    q->state()->pixmapFlags |= QPaintEngine::DirtyClipRegion;
 }
 
 void QRasterPaintEnginePrivate::updateMatrixData(QSpanData *spanData, const QBrush &b, const QTransform &m)
@@ -965,7 +960,6 @@ static void qrasterpaintengine_dirty_clip(QRasterPaintEnginePrivate *d, QRasterP
 {
     s->fillFlags |= QPaintEngine::DirtyClipPath;
     s->strokeFlags |= QPaintEngine::DirtyClipPath;
-    s->pixmapFlags |= QPaintEngine::DirtyClipPath;
 
     d->solid_color_filler.clip = d->clip();
     d->solid_color_filler.adjustSpanMethods();

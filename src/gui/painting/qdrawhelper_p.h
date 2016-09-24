@@ -62,7 +62,8 @@
 #define QT_FT_END_HEADER
 #endif
 #include "qrasterdefs_p.h"
-#include <qmath_p.h>
+#include "qmath.h"
+#include "qmath_p.h"
 
 QT_BEGIN_NAMESPACE
 
