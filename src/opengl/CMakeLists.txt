@@ -143,11 +143,11 @@ if(WITH_X11 AND X11_FOUND)
 endif()
 
 if(WITH_FREETYPE AND FREETYPE_FOUND)
-    include_directories(${FREETYPE_INCLUDE_DIRS})
     set(EXTRA_OPENGL_LIBS
         ${EXTRA_OPENGL_LIBS}
         ${FREETYPE_LIBRARIES}
     )
+    include_directories(${FREETYPE_INCLUDE_DIRS})
 endif()
 
 set(OPENGL_HEADERS

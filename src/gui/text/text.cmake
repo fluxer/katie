@@ -84,11 +84,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src)
 add_definitions(-DQT_NO_OPENTYPE)
 
 if(WITH_FREETYPE AND FREETYPE_FOUND)
-    include_directories(${FREETYPE_INCLUDE_DIRS})
     set(EXTRA_GUI_LIBS
         ${EXTRA_GUI_LIBS}
         ${FREETYPE_LIBRARIES}
     )
+    include_directories(${FREETYPE_INCLUDE_DIRS})
 endif()
 
 if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
