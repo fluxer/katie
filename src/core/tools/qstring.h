@@ -59,10 +59,6 @@ typedef std::basic_string<wchar_t> QStdWString;
 
 #include <stdarg.h>
 
-#ifdef truncate
-#error qstring.h must be included before any header file that defines truncate
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -923,14 +919,6 @@ inline QString QString::fromStdString(const std::string &s)
 inline QStdWString QString::toStdWString() const
 {
     QStdWString str;
-    str.resize(length());
-
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-    // VS2005 crashes if the string is empty
-    if (!length())
-        return str;
-#endif
-
     str.resize(toWCharArray(&(*str.begin())));
     return str;
 }

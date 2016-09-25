@@ -342,8 +342,8 @@ void QPainterPrivate::draw_helper(const QPainterPath &originalPath, DrawOperatio
             // QRegion/QRect based clips, since they use integer
             // coordinates and converting to/from logical coordinates will
             // lose precision.
-            bool old_txinv = txinv;
-            QTransform old_invMatrix = invMatrix;
+            const bool old_txinv = txinv;
+            const QTransform old_invMatrix = invMatrix;
             txinv = true;
             invMatrix = QTransform();
             QPainterPath clipPath = q->clipPath();
@@ -3023,7 +3023,7 @@ void QPainter::strokePath(const QPainterPath &path, const QPen &pen)
         return;
 
     if (d->extended) {
-        const QGradient *g = qpen_brush(pen).gradient();
+        const QGradient *g = pen.brush().gradient();
         if (!g || g->coordinateMode() == QGradient::LogicalMode) {
             d->extended->stroke(qtVectorPathForPath(path), pen);
             return;

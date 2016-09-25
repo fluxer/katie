@@ -236,13 +236,13 @@ private:
     bool setClipRectInDeviceCoords(const QRect &r, Qt::ClipOperation op);
 
     inline void ensureBrush(const QBrush &brush) {
-        if (!qbrush_fast_equals(state()->lastBrush, brush) || (brush.style() != Qt::NoBrush && state()->fillFlags))
+        if (state()->lastBrush != brush || (brush.style() != Qt::NoBrush && state()->fillFlags))
             updateBrush(brush);
     }
     inline void ensureBrush() { ensureBrush(state()->brush); }
 
     inline void ensurePen(const QPen &pen) {
-        if (!qpen_fast_equals(state()->lastPen, pen) || (pen.style() != Qt::NoPen && state()->strokeFlags))
+        if (state()->lastPen != pen || (pen.style() != Qt::NoPen && state()->strokeFlags))
             updatePen(pen);
     }
     inline void ensurePen() { ensurePen(state()->pen); }

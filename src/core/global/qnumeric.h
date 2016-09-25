@@ -44,9 +44,7 @@
 
 #include <QtCore/qglobal.h>
 
-#if defined(_MSC_VER) && _MSC_VER < 1800
-#include <float.h>
-#elif !defined(QT_NO_STL)
+#if !defined(QT_NO_STL)
 #include <math.h>
 #endif
 
@@ -54,14 +52,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#if defined(_MSC_VER) && _MSC_VER < 1800
-Q_CORE_EXPORT_INLINE bool qIsInf(double d) { return !_finite(d) && !_isnan(d); }
-Q_CORE_EXPORT_INLINE bool qIsNaN(double d) { return !!_isnan(d); }
-Q_CORE_EXPORT_INLINE bool qIsFinite(double d) { return !!_finite(d); }
-Q_CORE_EXPORT_INLINE bool qIsInf(float f) { return !_finite(f) && !_isnan(f); }
-Q_CORE_EXPORT_INLINE bool qIsNaN(float f) { return !!_isnan(f); }
-Q_CORE_EXPORT_INLINE bool qIsFinite(float f) { return !!_finite(f); }
-#elif !defined(QT_NO_STL)
+#if !defined(QT_NO_STL)
 Q_CORE_EXPORT_INLINE bool qIsInf(double d) { return isinf(d); }
 Q_CORE_EXPORT_INLINE bool qIsNaN(double d) { return isnan(d); }
 Q_CORE_EXPORT_INLINE bool qIsFinite(double d) { return isfinite(d); }

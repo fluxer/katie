@@ -62,12 +62,12 @@ public:
 
     int width() const;
     int height() const;
-    void setWidth(int w);
-    void setHeight(int h);
+    void setWidth(const int w);
+    void setHeight(const int h);
     void transpose();
 
-    void scale(int w, int h, Qt::AspectRatioMode mode);
-    void scale(const QSize &s, Qt::AspectRatioMode mode);
+    void scale(const int w, const int h, const Qt::AspectRatioMode mode);
+    void scale(const QSize &s, const Qt::AspectRatioMode mode);
 
     QSize expandedTo(const QSize &) const;
     QSize boundedTo(const QSize &) const;
@@ -77,16 +77,16 @@ public:
 
     QSize &operator+=(const QSize &);
     QSize &operator-=(const QSize &);
-    QSize &operator*=(qreal c);
-    QSize &operator/=(qreal c);
+    QSize &operator*=(const qreal c);
+    QSize &operator/=(const qreal c);
 
     friend inline bool operator==(const QSize &, const QSize &);
     friend inline bool operator!=(const QSize &, const QSize &);
     friend inline const QSize operator+(const QSize &, const QSize &);
     friend inline const QSize operator-(const QSize &, const QSize &);
-    friend inline const QSize operator*(const QSize &, qreal);
+    friend inline const QSize operator*(const QSize &, const qreal);
     friend inline const QSize operator*(qreal, const QSize &);
-    friend inline const QSize operator/(const QSize &, qreal);
+    friend inline const QSize operator/(const QSize &, const qreal);
 
 private:
     int wd;
@@ -129,13 +129,13 @@ inline int QSize::width() const
 inline int QSize::height() const
 { return ht; }
 
-inline void QSize::setWidth(int w)
+inline void QSize::setWidth(const int w)
 { wd = w; }
 
-inline void QSize::setHeight(int h)
+inline void QSize::setHeight(const int h)
 { ht = h; }
 
-inline void QSize::scale(int w, int h, Qt::AspectRatioMode mode)
+inline void QSize::scale(const int w, const int h, const Qt::AspectRatioMode mode)
 { scale(QSize(w, h), mode); }
 
 inline int &QSize::rwidth()
@@ -150,7 +150,7 @@ inline QSize &QSize::operator+=(const QSize &s)
 inline QSize &QSize::operator-=(const QSize &s)
 { wd-=s.wd; ht-=s.ht; return *this; }
 
-inline QSize &QSize::operator*=(qreal c)
+inline QSize &QSize::operator*=(const qreal c)
 { wd = qRound(wd*c); ht = qRound(ht*c); return *this; }
 
 inline bool operator==(const QSize &s1, const QSize &s2)
@@ -168,10 +168,10 @@ inline const QSize operator-(const QSize &s1, const QSize &s2)
 inline const QSize operator*(const QSize &s, qreal c)
 { return QSize(qRound(s.wd*c), qRound(s.ht*c)); }
 
-inline const QSize operator*(qreal c, const QSize &s)
+inline const QSize operator*(const qreal c, const QSize &s)
 { return QSize(qRound(s.wd*c), qRound(s.ht*c)); }
 
-inline QSize &QSize::operator/=(qreal c)
+inline QSize &QSize::operator/=(const qreal c)
 {
     Q_ASSERT(!qFuzzyIsNull(c));
     wd = qRound(wd/c); ht = qRound(ht/c);
@@ -204,7 +204,7 @@ class Q_CORE_EXPORT QSizeF
 public:
     QSizeF();
     QSizeF(const QSize &sz);
-    QSizeF(qreal w, qreal h);
+    QSizeF(const qreal w, const qreal h);
 
     bool isNull() const;
     bool isEmpty() const;
@@ -212,12 +212,12 @@ public:
 
     qreal width() const;
     qreal height() const;
-    void setWidth(qreal w);
-    void setHeight(qreal h);
+    void setWidth(const qreal w);
+    void setHeight(const qreal h);
     void transpose();
 
-    void scale(qreal w, qreal h, Qt::AspectRatioMode mode);
-    void scale(const QSizeF &s, Qt::AspectRatioMode mode);
+    void scale(const qreal w, const qreal h, const Qt::AspectRatioMode mode);
+    void scale(const QSizeF &s, const Qt::AspectRatioMode mode);
 
     QSizeF expandedTo(const QSizeF &) const;
     QSizeF boundedTo(const QSizeF &) const;
@@ -227,16 +227,16 @@ public:
 
     QSizeF &operator+=(const QSizeF &);
     QSizeF &operator-=(const QSizeF &);
-    QSizeF &operator*=(qreal c);
-    QSizeF &operator/=(qreal c);
+    QSizeF &operator*=(const qreal c);
+    QSizeF &operator/=(const qreal c);
 
     friend inline bool operator==(const QSizeF &, const QSizeF &);
     friend inline bool operator!=(const QSizeF &, const QSizeF &);
     friend inline const QSizeF operator+(const QSizeF &, const QSizeF &);
     friend inline const QSizeF operator-(const QSizeF &, const QSizeF &);
-    friend inline const QSizeF operator*(const QSizeF &, qreal);
-    friend inline const QSizeF operator*(qreal, const QSizeF &);
-    friend inline const QSizeF operator/(const QSizeF &, qreal);
+    friend inline const QSizeF operator*(const QSizeF &, const qreal);
+    friend inline const QSizeF operator*(const qreal, const QSizeF &);
+    friend inline const QSizeF operator/(const QSizeF &, const qreal);
 
     inline QSize toSize() const;
 
@@ -269,7 +269,7 @@ inline QSizeF::QSizeF(const QSize &sz)
 {
 }
 
-inline QSizeF::QSizeF(qreal w, qreal h)
+inline QSizeF::QSizeF(const qreal w, const qreal h)
 { wd = w; ht = h; }
 
 inline bool QSizeF::isNull() const
@@ -287,13 +287,13 @@ inline qreal QSizeF::width() const
 inline qreal QSizeF::height() const
 { return ht; }
 
-inline void QSizeF::setWidth(qreal w)
+inline void QSizeF::setWidth(const qreal w)
 { wd = w; }
 
-inline void QSizeF::setHeight(qreal h)
+inline void QSizeF::setHeight(const qreal h)
 { ht = h; }
 
-inline void QSizeF::scale(qreal w, qreal h, Qt::AspectRatioMode mode)
+inline void QSizeF::scale(const qreal w, const qreal h, const Qt::AspectRatioMode mode)
 { scale(QSizeF(w, h), mode); }
 
 inline qreal &QSizeF::rwidth()
@@ -308,7 +308,7 @@ inline QSizeF &QSizeF::operator+=(const QSizeF &s)
 inline QSizeF &QSizeF::operator-=(const QSizeF &s)
 { wd -= s.wd; ht -= s.ht; return *this; }
 
-inline QSizeF &QSizeF::operator*=(qreal c)
+inline QSizeF &QSizeF::operator*=(const qreal c)
 { wd *= c; ht *= c; return *this; }
 
 inline bool operator==(const QSizeF &s1, const QSizeF &s2)
@@ -323,20 +323,20 @@ inline const QSizeF operator+(const QSizeF & s1, const QSizeF & s2)
 inline const QSizeF operator-(const QSizeF &s1, const QSizeF &s2)
 { return QSizeF(s1.wd-s2.wd, s1.ht-s2.ht); }
 
-inline const QSizeF operator*(const QSizeF &s, qreal c)
+inline const QSizeF operator*(const QSizeF &s, const qreal c)
 { return QSizeF(s.wd*c, s.ht*c); }
 
-inline const QSizeF operator*(qreal c, const QSizeF &s)
+inline const QSizeF operator*(const qreal c, const QSizeF &s)
 { return QSizeF(s.wd*c, s.ht*c); }
 
-inline QSizeF &QSizeF::operator/=(qreal c)
+inline QSizeF &QSizeF::operator/=(const qreal c)
 {
     Q_ASSERT(!qFuzzyIsNull(c));
     wd = wd/c; ht = ht/c;
     return *this;
 }
 
-inline const QSizeF operator/(const QSizeF &s, qreal c)
+inline const QSizeF operator/(const QSizeF &s, const qreal c)
 {
     Q_ASSERT(!qFuzzyIsNull(c));
     return QSizeF(s.wd/c, s.ht/c);

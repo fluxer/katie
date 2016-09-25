@@ -133,16 +133,7 @@ char *qstrcpy(char *dst, const char *src)
 {
     if (!src)
         return 0;
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-    int len = qstrlen(src);
-    // This is actually not secure!!! It will be fixed
-    // properly in a later release!
-    if (len >= 0 && strcpy_s(dst, len+1, src) == 0)
-        return dst;
-    return 0;
-#else
     return strcpy(dst, src);
-#endif
 }
 
 /*! \relates QByteArray
@@ -168,11 +159,7 @@ char *qstrncpy(char *dst, const char *src, uint len)
 {
     if (!src || !dst)
         return 0;
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-    strncpy_s(dst, len, src, len-1);
-#else
     strncpy(dst, src, len);
-#endif
     if (len > 0)
         dst[len-1] = '\0';
     return dst;

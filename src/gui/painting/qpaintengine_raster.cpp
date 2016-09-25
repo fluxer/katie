@@ -552,7 +552,7 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
     qDebug() << "QRasterPaintEngine::updatePen():" << s->pen;
 #endif
 
-    Qt::PenStyle pen_style = qpen_style(pen);
+    Qt::PenStyle pen_style = pen.style();
 
     s->lastPen = pen;
     s->strokeFlags = 0;
@@ -573,11 +573,11 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
         s->lastPen.setStyle(Qt::SolidLine);
     }
 
-    d->basicStroker.setJoinStyle(qpen_joinStyle(pen));
-    d->basicStroker.setCapStyle(qpen_capStyle(pen));
+    d->basicStroker.setJoinStyle(pen.joinStyle());
+    d->basicStroker.setCapStyle(pen.capStyle());
     d->basicStroker.setMiterLimit(pen.miterLimit());
 
-    const qreal penWidth = qpen_widthf(pen);
+    const qreal penWidth = pen.widthF();
     if (penWidth == 0)
         d->basicStroker.setStrokeWidth(1);
     else
@@ -604,7 +604,7 @@ void QRasterPaintEngine::updatePen(const QPen &pen)
 
     ensureRasterState(); // needed because of tx_noshear...
 
-    s->flags.non_complex_pen = qpen_capStyle(s->lastPen) <= Qt::SquareCap && s->flags.tx_noshear;
+    s->flags.non_complex_pen = s->lastPen.capStyle() <= Qt::SquareCap && s->flags.tx_noshear;
 
     s->strokeFlags = 0;
 }
@@ -1388,9 +1388,10 @@ void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
         return;
 
     if (s->flags.non_complex_pen && path.shape() == QVectorPath::LinesHint) {
-        qreal width = s->lastPen.isCosmetic()
-                      ? (qpen_widthf(s->lastPen) == 0 ? 1 : qpen_widthf(s->lastPen))
-                      : qpen_widthf(s->lastPen) * s->txscale;
+        const qreal lastwidthf = s->lastPen.widthF();
+        const qreal width = s->lastPen.isCosmetic()
+                            ? (lastwidthf == 0 ? 1 : lastwidthf)
+                            : lastwidthf * s->txscale;
         int dashIndex = 0;
         qreal dashOffset = s->lastPen.dashOffset();
         bool inDash = true;
@@ -1427,7 +1428,7 @@ void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
             }
 
             const QLineF line = s->matrix.map(lines[i]);
-            if (qpen_style(s->lastPen) == Qt::SolidLine) {
+            if (s->lastPen.style() == Qt::SolidLine) {
                 d->rasterizer->rasterizeLine(line.p1(), line.p2(),
                                             width / line.length(),
                                             s->lastPen.capStyle() == Qt::SquareCap);
@@ -3881,12 +3882,12 @@ Q_GUI_EXPORT extern QImage qt_imageForBrush(int brushStyle, bool invert);
 
 void QSpanData::setup(const QBrush &brush, int alpha, QPainter::CompositionMode compositionMode)
 {
-    Qt::BrushStyle brushStyle = qbrush_style(brush);
+    Qt::BrushStyle brushStyle = brush.style();
     switch (brushStyle) {
     case Qt::SolidPattern: {
         type = Solid;
-        QColor c = qbrush_color(brush);
-        QRgb rgba = c.rgba();
+        const QColor c = brush.color();
+        const QRgb rgba = c.rgba();
         solid.color = PREMUL(ARGB_COMBINE_ALPHA(rgba, alpha));
         if ((solid.color & 0xff000000) == 0
             && compositionMode == QPainter::CompositionMode_SourceOver) {

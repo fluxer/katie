@@ -400,7 +400,7 @@ void QPaintEngineEx::stroke(const QVectorPath &path, const QPen &pen)
         d->stroker.setCubicToHook(qpaintengineex_cubicTo);
     }
 
-    if (!qpen_fast_equals(pen, d->strokerPen)) {
+    if (pen != d->strokerPen) {
         d->strokerPen = pen;
         d->stroker.setJoinStyle(pen.joinStyle());
         d->stroker.setCapStyle(pen.capStyle());
@@ -579,7 +579,7 @@ void QPaintEngineEx::stroke(const QVectorPath &path, const QPen &pen)
         transformChanged();
 
         QBrush brush = pen.brush();
-        if (qbrush_style(brush) != Qt::SolidPattern)
+        if (brush.style() != Qt::SolidPattern)
             brush.setTransform(brush.transform() * xform);
 
         fill(strokePath, brush);
@@ -592,11 +592,11 @@ void QPaintEngineEx::stroke(const QVectorPath &path, const QPen &pen)
 void QPaintEngineEx::draw(const QVectorPath &path)
 {
     const QBrush &brush = state()->brush;
-    if (qbrush_style(brush) != Qt::NoBrush)
+    if (brush.style() != Qt::NoBrush)
         fill(path, brush);
 
     const QPen &pen = state()->pen;
-    if (qpen_style(pen) != Qt::NoPen && qbrush_style(qpen_brush(pen)) != Qt::NoBrush)
+    if (pen.style() != Qt::NoPen && pen.brush().style() != Qt::NoBrush)
         stroke(path, pen);
 }
 

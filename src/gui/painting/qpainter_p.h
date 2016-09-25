@@ -63,38 +63,11 @@
 #include "QtGui/qpaintengine.h"
 #include <QtCore/qhash.h>
 
-#include <qpen_p.h>
-
 QT_BEGIN_NAMESPACE
 
 class QPaintEngine;
 class QPaintEngineEx;
 struct QFixedPoint;
-
-struct QTLWExtra;
-
-struct DataPtrContainer {
-    void *ptr;
-};
-
-inline void *data_ptr(const QTransform &t) { return (DataPtrContainer *) &t; }
-inline bool qtransform_fast_equals(const QTransform &a, const QTransform &b) { return data_ptr(a) == data_ptr(b); }
-
-// QPen inline functions...
-inline QPen::DataPtr &data_ptr(const QPen &p) { return const_cast<QPen &>(p).data_ptr(); }
-inline bool qpen_fast_equals(const QPen &a, const QPen &b) { return data_ptr(a) == data_ptr(b); }
-inline QBrush qpen_brush(const QPen &p) { return data_ptr(p)->brush; }
-inline qreal qpen_widthf(const QPen &p) { return data_ptr(p)->width; }
-inline Qt::PenStyle qpen_style(const QPen &p) { return data_ptr(p)->style; }
-inline Qt::PenCapStyle qpen_capStyle(const QPen &p) { return data_ptr(p)->capStyle; }
-inline Qt::PenJoinStyle qpen_joinStyle(const QPen &p) { return data_ptr(p)->joinStyle; }
-
-// QBrush inline functions...
-inline QBrush::DataPtr &data_ptr(const QBrush &p) { return const_cast<QBrush &>(p).data_ptr(); }
-inline bool qbrush_fast_equals(const QBrush &a, const QBrush &b) { return data_ptr(a) == data_ptr(b); }
-inline Qt::BrushStyle qbrush_style(const QBrush &b) { return data_ptr(b)->style; }
-inline const QColor &qbrush_color(const QBrush &b) { return data_ptr(b)->color; }
-inline bool qbrush_has_transform(const QBrush &b) { return data_ptr(b)->transform.type() > QTransform::TxNone; }
 
 class QPainterClipInfo
 {

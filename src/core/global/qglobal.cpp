@@ -1952,21 +1952,7 @@ void qFatal(const char *msg, ...)
 */
 QByteArray qgetenv(const char *varName)
 {
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-    size_t requiredSize = 0;
-    QByteArray buffer;
-    getenv_s(&requiredSize, 0, 0, varName);
-    if (requiredSize == 0)
-        return buffer;
-    buffer.resize(int(requiredSize));
-    getenv_s(&requiredSize, buffer.data(), requiredSize, varName);
-    // requiredSize includes the terminating null, which we don't want.
-    Q_ASSERT(buffer.endsWith('\0'));
-    buffer.chop(1);
-    return buffer;
-#else
     return QByteArray(::getenv(varName));
-#endif
 }
 
 /*!
@@ -1985,9 +1971,6 @@ QByteArray qgetenv(const char *varName)
 */
 bool qputenv(const char *varName, const QByteArray& value)
 {
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-    return _putenv_s(varName, value.constData()) == 0;
-#else
     QByteArray buffer(varName);
     buffer += '=';
     buffer += value;
@@ -1996,21 +1979,12 @@ bool qputenv(const char *varName, const QByteArray& value)
     if (result != 0) // error. we have to delete the string.
         delete[] envVar;
     return result == 0;
-#endif
 }
 
-#if defined(Q_OS_UNIX) && !defined(QT_NO_THREAD)
-
-#  if defined(Q_OS_INTEGRITY) && defined(__GHS_VERSION_NUMBER) && (__GHS_VERSION_NUMBER < 500)
-// older versions of INTEGRITY used a long instead of a uint for the seed.
-typedef long SeedStorageType;
-#  else
+#if !defined(QT_NO_THREAD)
 typedef uint SeedStorageType;
-#  endif
-
 typedef QThreadStorage<SeedStorageType *> SeedStorage;
 Q_GLOBAL_STATIC(SeedStorage, randTLS)  // Thread Local Storage for seed value
-
 #endif
 
 /*!
@@ -2030,7 +2004,7 @@ Q_GLOBAL_STATIC(SeedStorage, randTLS)  // Thread Local Storage for seed value
 */
 void qsrand(uint seed)
 {
-#if defined(Q_OS_UNIX) && !defined(QT_NO_THREAD)
+#if !defined(QT_NO_THREAD)
     SeedStorage *seedStorage = randTLS();
     if (seedStorage) {
         SeedStorageType *pseed = seedStorage->localData();
@@ -2045,9 +2019,6 @@ void qsrand(uint seed)
         srand(seed);
     }
 #else
-    // On Windows and Symbian srand() and rand() already use Thread-Local-Storage
-    // to store the seed between calls
-    // this is also valid for QT_NO_THREAD
     srand(seed);
 #endif
 }
