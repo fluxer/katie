@@ -81,7 +81,8 @@ void QTriangulatingStroker::process(const QVectorPath &path, const QPen &pen, co
     if (count < 2)
         return;
 
-    float realWidth = qpen_widthf(pen);
+    const qreal penWidth = pen.widthF();
+    float realWidth = penWidth;
     if (realWidth == 0)
         realWidth = 1;
 
@@ -92,10 +93,10 @@ void QTriangulatingStroker::process(const QVectorPath &path, const QPen &pen, co
         m_width = m_width * m_inv_scale;
     }
 
-    m_join_style = qpen_joinStyle(pen);
-    m_cap_style = qpen_capStyle(pen);
+    m_join_style = pen.joinStyle();
+    m_cap_style = pen.capStyle();
     m_vertices.reset();
-    m_miter_limit = pen.miterLimit() * qpen_widthf(pen);
+    m_miter_limit = pen.miterLimit() * penWidth;
 
     // The curvyness is based on the notion that I originally wanted
     // roughly one line segment pr 4 pixels. This may seem little, but
@@ -503,7 +504,7 @@ void QDashedStrokeProcessor::process(const QVectorPath &path, const QPen &pen, c
     m_points.reserve(path.elementCount());
     m_types.reserve(path.elementCount());
 
-    qreal width = qpen_widthf(pen);
+    qreal width = pen.widthF();
     if (width == 0)
         width = 1;
 

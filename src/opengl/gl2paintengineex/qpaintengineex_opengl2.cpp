@@ -154,10 +154,10 @@ inline QColor qt_premultiplyColor(QColor c, GLfloat opacity)
 
 void QGL2PaintEngineExPrivate::setBrush(const QBrush& brush)
 {
-    if (qbrush_fast_equals(currentBrush, brush))
+    if (currentBrush == brush)
         return;
 
-    const Qt::BrushStyle newStyle = qbrush_style(brush);
+    const Qt::BrushStyle newStyle = brush.style();
     Q_ASSERT(newStyle != Qt::NoBrush);
 
     currentBrush = brush;
@@ -1201,7 +1201,7 @@ void QGL2PaintEngineEx::fill(const QVectorPath &path, const QBrush &brush)
 {
     Q_D(QGL2PaintEngineEx);
 
-    if (qbrush_style(brush) == Qt::NoBrush)
+    if (brush.style() == Qt::NoBrush)
         return;
     ensureActive();
     d->setBrush(brush);
@@ -1215,8 +1215,8 @@ void QGL2PaintEngineEx::stroke(const QVectorPath &path, const QPen &pen)
 {
     Q_D(QGL2PaintEngineEx);
 
-    const QBrush &penBrush = qpen_brush(pen);
-    if (qpen_style(pen) == Qt::NoPen || qbrush_style(penBrush) == Qt::NoBrush)
+    const QBrush &penBrush = pen.brush();
+    if (pen.style() == Qt::NoPen || penBrush.style() == Qt::NoBrush)
         return;
 
     QOpenGL2PaintEngineState *s = state();
@@ -1239,8 +1239,8 @@ void QGL2PaintEngineExPrivate::stroke(const QVectorPath &path, const QPen &pen)
         matrixDirty = true;
     }
 
-    const Qt::PenStyle penStyle = qpen_style(pen);
-    const QBrush &penBrush = qpen_brush(pen);
+    const Qt::PenStyle penStyle = pen.style();
+    const QBrush &penBrush = pen.brush();
     const bool opaque = penBrush.isOpaque() && s->opacity > 0.99;
 
     transferMode(BrushDrawingMode);
@@ -1280,7 +1280,7 @@ void QGL2PaintEngineExPrivate::stroke(const QVectorPath &path, const QPen &pen)
 //         glDrawArrays(GL_LINE_STRIP, 0, d->stroker.vertexCount() / 2);
 
     } else {
-        qreal width = qpen_widthf(pen) / 2;
+        qreal width = pen.widthF() / 2;
         if (width == 0)
             width = 0.5;
         qreal extra = pen.joinStyle() == Qt::MiterJoin

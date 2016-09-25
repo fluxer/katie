@@ -80,7 +80,7 @@ public:
             return;
 
         buffers.append(other.buffers);
-        bufferCompleteSize += other.byteAmount();
+        bufferCompleteSize += other.bufferCompleteSize;
     }
 
 
@@ -114,14 +114,14 @@ public:
     // avoid to use this, it might malloc and memcpy.
     inline QByteArray readAll()
     {
-        return read(byteAmount());
+        return read(bufferCompleteSize);
     }
 
     // return amount. User of this function has to qFree() its .data!
     // avoid to use this, it might malloc and memcpy.
     inline QByteArray read(qint64 amount)
     {
-        amount = qMin(byteAmount(), amount);
+        amount = qMin(bufferCompleteSize, amount);
         QByteArray byteData;
         byteData.resize(amount);
         read(byteData.data(), byteData.size());
@@ -132,7 +132,7 @@ public:
     // avoid to use this, it will memcpy.
     qint64 read(char* dst, qint64 amount)
     {
-        amount = qMin(amount, byteAmount());
+        amount = qMin(amount, bufferCompleteSize);
         qint64 originalAmount = amount;
         char *writeDst = dst;
 
@@ -191,7 +191,7 @@ public:
 
     inline bool isEmpty() const
     {
-        return byteAmount() == 0;
+        return bufferCompleteSize == 0;
     }
 
     inline qint64 sizeNextBlock() const
