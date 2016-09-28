@@ -159,13 +159,6 @@ QSslError::QSslError(const QSslError &other)
 }
 
 /*!
-    Destroys the QSslError object.
-*/
-QSslError::~QSslError()
-{
-}
-
-/*!
     \since 4.4
 
     Assigns the contents of \a other to this error.

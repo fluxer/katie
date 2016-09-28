@@ -321,7 +321,6 @@ namespace QT_NAMESPACE {}
      HIGHC    - MetaWare High C/C++
      PGI      - Portland Group C++
      GHS      - Green Hills Optimizing C++ Compilers
-     RVCT     - ARM Realview Compiler Suite
      CLANG    - C++ front-end for the LLVM compiler
 
 
@@ -368,18 +367,6 @@ namespace QT_NAMESPACE {}
 
 #elif defined(__WATCOMC__)
 #  define Q_CC_WAT
-
-/* ARM Realview Compiler Suite
-   RVCT compiler also defines __EDG__ and __GNUC__ (if --gnu flag is given),
-   so check for it before that */
-#elif defined(__ARMCC__) || defined(__CC_ARM)
-#  define Q_CC_RVCT
-#  if __TARGET_ARCH_ARM >= 6
-#    define QT_HAVE_ARMV6
-#  endif
-/* work-around for missing compiler intrinsics */
-#  define __is_empty(X) false
-#  define __is_pod(X) false
 
 #elif defined(__GNUC__)
 #  define Q_CC_GNU
@@ -951,7 +938,7 @@ redefine to built-in booleans to make autotests work properly */
 */
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
-#elif (defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && (__GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2))) || defined(Q_CC_RVCT)
+#elif defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && (__GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2))
 #  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #else
 #  define Q_DECL_DEPRECATED
@@ -1212,13 +1199,7 @@ Q_CORE_EXPORT bool qSharedBuild();
    Avoid "unused parameter" warnings
 */
 
-#if defined(Q_CC_RVCT)
-template <typename T>
-inline void qUnused(T &x) { (void)x; }
-#  define Q_UNUSED(x) qUnused(x);
-#else
-#  define Q_UNUSED(x) (void)x;
-#endif
+#define Q_UNUSED(x) (void)x;
 
 /*
    Debugging and error handling
@@ -1347,9 +1328,9 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #       define QT_STRINGIFY(x) QT_STRINGIFY2(x)
 #       define Q_FUNC_INFO __FILE__ ":" QT_STRINGIFY(__LINE__)
 #   endif
-    /* The MIPSpro and RVCT compilers postpones macro expansion,
-       and therefore macros must be in scope when being used. */
-#   if !defined(Q_CC_MIPS) && !defined(Q_CC_RVCT)
+    /* The MIPSpro postpones macro expansion, and therefore
+       macros must be in scope when being used. */
+#   if !defined(Q_CC_MIPS)
 #       undef QT_STRINGIFY2
 #       undef QT_STRINGIFY
 #   endif
@@ -1811,7 +1792,7 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#if defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && !defined(Q_CC_RVCT)
+#if defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
 /* make use of typeof-extension */
 template <typename T>
 class QForeachContainer {

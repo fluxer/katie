@@ -113,7 +113,7 @@ static uint * QT_FASTCALL destFetchRGB16(uint *buffer, QRasterBuffer *rasterBuff
 }
 
 template <class DST>
-Q_STATIC_TEMPLATE_FUNCTION uint * QT_FASTCALL destFetch(uint *buffer, QRasterBuffer *rasterBuffer,
+static uint * QT_FASTCALL destFetch(uint *buffer, QRasterBuffer *rasterBuffer,
                                     int x, int y, int length)
 {
     const DST *src = reinterpret_cast<DST*>(rasterBuffer->scanLine(y)) + x;
@@ -259,7 +259,7 @@ static void QT_FASTCALL destStoreRGB16(QRasterBuffer *rasterBuffer, int x, int y
 }
 
 template <class DST>
-Q_STATIC_TEMPLATE_FUNCTION void QT_FASTCALL destStore(QRasterBuffer *rasterBuffer,
+static void QT_FASTCALL destStore(QRasterBuffer *rasterBuffer,
                                   int x, int y,
                                   const uint *buffer, int length)
 {
@@ -307,7 +307,7 @@ static DestStoreProc destStoreProc[QImage::NImageFormats] =
 */
 
 template <QImage::Format format>
-Q_STATIC_TEMPLATE_FUNCTION uint QT_FASTCALL qt_fetchPixel(const uchar *scanLine, int x, const QVector<QRgb> *rgb);
+static uint QT_FASTCALL qt_fetchPixel(const uchar *scanLine, int x, const QVector<QRgb> *rgb);
 
 template<>
 uint QT_FASTCALL qt_fetchPixel<QImage::Format_Mono>(const uchar *scanLine,
@@ -471,7 +471,7 @@ enum TextureBlendType {
 };
 
 template <QImage::Format format>
-Q_STATIC_TEMPLATE_FUNCTION const uint * QT_FASTCALL qt_fetchUntransformed(uint *buffer, const Operator *, const QSpanData *data,
+static const uint * QT_FASTCALL qt_fetchUntransformed(uint *buffer, const Operator *, const QSpanData *data,
                                              int y, int x, int length)
 {
     const uchar *scanLine = data->texture.scanLine(y);
@@ -491,8 +491,7 @@ qt_fetchUntransformed<QImage::Format_ARGB32_Premultiplied>(uint *, const Operato
 }
 
 template<TextureBlendType blendType>  /* either BlendTransformed or BlendTransformedTiled */
-Q_STATIC_TEMPLATE_FUNCTION
-const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *, const QSpanData *data,
+static const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *, const QSpanData *data,
                                                          int y, int x, int length)
 {
     const FetchPixelProc fetch = fetchPixelProc[data->texture.format];
@@ -608,7 +607,7 @@ static inline uint interpolate_4_pixels_16(uint tl, uint tr, uint bl, uint br, i
 }
 
 template<TextureBlendType blendType>
-Q_STATIC_TEMPLATE_FUNCTION inline void fetchTransformedBilinear_pixelBounds(int max, int l1, int l2, int &v1, int &v2)
+static inline void fetchTransformedBilinear_pixelBounds(int max, int l1, int l2, int &v1, int &v2)
 {
     if (blendType == BlendTransformedBilinearTiled) {
         v1 %= max;
@@ -630,8 +629,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void fetchTransformedBilinear_pixelBounds(int 
 }
 
 template<TextureBlendType blendType, QImage::Format format> /* blendType = BlendTransformedBilinear or BlendTransformedBilinearTiled */
-Q_STATIC_TEMPLATE_FUNCTION
-const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Operator *, const QSpanData *data,
+static const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Operator *, const QSpanData *data,
                                                   int y, int x, int length)
 {
     FetchPixelProc fetch = (format != QImage::Format_Invalid) ? FetchPixelProc(qt_fetchPixel<format>) : fetchPixelProc[data->texture.format];
@@ -1669,7 +1667,7 @@ static inline int mix_alpha(int da, int sa)
          = Sca + Dca
 */
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Plus_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Plus_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND(dest)
@@ -1688,7 +1686,7 @@ void QT_FASTCALL comp_func_solid_Plus(uint *dest, const int length, uint color, 
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Plus_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Plus_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -1718,7 +1716,7 @@ static inline int multiply_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Multiply_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Multiply_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -1750,7 +1748,7 @@ void QT_FASTCALL comp_func_solid_Multiply(uint *dest, const int length, uint col
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Multiply_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Multiply_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -1784,7 +1782,7 @@ void QT_FASTCALL comp_func_Multiply(uint *dest, const uint *src, const int lengt
          = Sca + Dca - Sca.Dca
 */
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Screen_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Screen_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -1816,7 +1814,7 @@ void QT_FASTCALL comp_func_solid_Screen(uint *dest, const int length, uint color
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Screen_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Screen_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -1861,7 +1859,7 @@ static inline int overlay_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Overlay_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Overlay_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -1893,7 +1891,7 @@ void QT_FASTCALL comp_func_solid_Overlay(uint *dest, const int length, uint colo
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Overlay_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Overlay_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -1932,7 +1930,7 @@ static inline int darken_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Darken_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Darken_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -1964,7 +1962,7 @@ void QT_FASTCALL comp_func_solid_Darken(uint *dest, const int length, uint color
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Darken_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Darken_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2003,7 +2001,7 @@ static inline int lighten_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Lighten_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Lighten_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2035,7 +2033,7 @@ void QT_FASTCALL comp_func_solid_Lighten(uint *dest, const int length, uint colo
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Lighten_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Lighten_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2084,7 +2082,7 @@ static inline int color_dodge_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_ColorDodge_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_ColorDodge_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2116,7 +2114,7 @@ void QT_FASTCALL comp_func_solid_ColorDodge(uint *dest, const int length, uint c
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_ColorDodge_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_ColorDodge_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2165,7 +2163,7 @@ static inline int color_burn_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_ColorBurn_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_ColorBurn_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2197,7 +2195,7 @@ void QT_FASTCALL comp_func_solid_ColorBurn(uint *dest, const int length, uint co
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_ColorBurn_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_ColorBurn_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2243,7 +2241,7 @@ static inline uint hardlight_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_HardLight_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_HardLight_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2275,7 +2273,7 @@ void QT_FASTCALL comp_func_solid_HardLight(uint *dest, const int length, uint co
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_HardLight_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_HardLight_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2328,7 +2326,7 @@ static inline int soft_light_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_SoftLight_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_SoftLight_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2360,7 +2358,7 @@ void QT_FASTCALL comp_func_solid_SoftLight(uint *dest, const int length, uint co
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_SoftLight_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_SoftLight_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2399,7 +2397,7 @@ static inline int difference_op(int dst, int src, int da, int sa)
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_solid_Difference_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void comp_func_solid_Difference_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2431,7 +2429,7 @@ void QT_FASTCALL comp_func_solid_Difference(uint *dest, const int length, uint c
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Difference_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Difference_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2464,7 +2462,7 @@ void QT_FASTCALL comp_func_Difference(uint *dest, const uint *src, const int len
     Dca' = (Sca.Da + Dca.Sa - 2.Sca.Dca) + Sca.(1 - Da) + Dca.(1 - Sa)
 */
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void QT_FASTCALL comp_func_solid_Exclusion_impl(uint *dest, const int length, uint color, const T &coverage)
+static inline void QT_FASTCALL comp_func_solid_Exclusion_impl(uint *dest, const int length, uint color, const T &coverage)
 {
     int sa = qAlpha(color);
     int sr = qRed(color);
@@ -2496,7 +2494,7 @@ void QT_FASTCALL comp_func_solid_Exclusion(uint *dest, const int length, uint co
 }
 
 template <typename T>
-Q_STATIC_TEMPLATE_FUNCTION inline void comp_func_Exclusion_impl(uint *dest, const uint *src, const int length, const T &coverage)
+static inline void comp_func_Exclusion_impl(uint *dest, const uint *src, const int length, const T &coverage)
 {
     for (int i = 0; i < length; ++i) {
         PRELOAD_COND2(dest, src)
@@ -2947,7 +2945,7 @@ static void blend_color_argb(int count, const QSpan *spans, void *userData)
 }
 
 template <class T>
-Q_STATIC_TEMPLATE_FUNCTION void blendColor(int count, const QSpan *spans, void *userData)
+static void blendColor(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     Operator op = getOperator(data, spans, count);
@@ -4591,7 +4589,7 @@ static void blend_tiled_argb(int count, const QSpan *spans, void *userData)
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION void blendTiled(int count, const QSpan *spans, void *userData)
+static void blendTiled(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -4747,7 +4745,7 @@ static void blend_tiled_rgb444(int count, const QSpan *spans, void *userData)
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION void blendTransformedBilinear(int count, const QSpan *spans,
+static void blendTransformedBilinear(int count, const QSpan *spans,
                                      void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
@@ -5133,7 +5131,7 @@ static void blend_transformed_argb(int count, const QSpan *spans, void *userData
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION void blendTransformed(int count, const QSpan *spans, void *userData)
+static void blendTransformed(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
@@ -5462,7 +5460,7 @@ static void blend_transformed_tiled_argb(int count, const QSpan *spans, void *us
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION void blendTransformedTiled(int count, const QSpan *spans, void *userData)
+static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData*>(userData);
     QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;

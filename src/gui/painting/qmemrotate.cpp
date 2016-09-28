@@ -54,7 +54,7 @@ static const int tileSize = 32;
 #endif
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_cachedRead(const SRC *src, int w, int h,
+static inline void qt_memrotate90_cachedRead(const SRC *src, int w, int h,
                                              int sstride,
                                              DST *dest, int dstride)
 {
@@ -71,7 +71,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_cachedRead(const SRC *src,
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_cachedRead(const SRC *src, int w, int h,
+static inline void qt_memrotate270_cachedRead(const SRC *src, int w, int h,
                                               int sstride,
                                               DST *dest, int dstride)
 {
@@ -91,7 +91,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_cachedRead(const SRC *src
 #if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_cachedWrite(const SRC *src, int w, int h,
+static inline void qt_memrotate90_cachedWrite(const SRC *src, int w, int h,
                                               int sstride,
                                               DST *dest, int dstride)
 {
@@ -105,7 +105,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_cachedWrite(const SRC *src
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_cachedWrite(const SRC *src, int w, int h,
+static inline void qt_memrotate270_cachedWrite(const SRC *src, int w, int h,
                                                int sstride,
                                                DST *dest, int dstride)
 {
@@ -124,7 +124,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_cachedWrite(const SRC *sr
 // TODO: packing algorithms should probably be modified on 64-bit architectures
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_packing(const SRC *src, int w, int h,
+static inline void qt_memrotate90_packing(const SRC *src, int w, int h,
                                           int sstride,
                                           DST *dest, int dstride)
 {
@@ -165,7 +165,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_packing(const SRC *src, in
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_packing(const SRC *src, int w, int h,
+static inline void qt_memrotate270_packing(const SRC *src, int w, int h,
                                            int sstride,
                                            DST *dest, int dstride)
 {
@@ -208,7 +208,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_packing(const SRC *src, i
 
 #if QT_ROTATION_ALGORITHM == QT_ROTATION_TILED
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_tiled(const SRC *src, int w, int h,
+static inline void qt_memrotate90_tiled(const SRC *src, int w, int h,
                                         int sstride,
                                         DST *dest, int dstride)
 {
@@ -268,7 +268,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_tiled(const SRC *src, int 
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_tiled_unpacked(const SRC *src, int w, int h,
+static inline void qt_memrotate90_tiled_unpacked(const SRC *src, int w, int h,
                                                  int sstride,
                                                  DST *dest, int dstride)
 {
@@ -296,7 +296,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_tiled_unpacked(const SRC *
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_tiled(const SRC *src, int w, int h,
+static inline void qt_memrotate270_tiled(const SRC *src, int w, int h,
                                          int sstride,
                                          DST *dest, int dstride)
 {
@@ -356,7 +356,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_tiled(const SRC *src, int
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_tiled_unpacked(const SRC *src, int w, int h,
+static inline void qt_memrotate270_tiled_unpacked(const SRC *src, int w, int h,
                                                   int sstride,
                                                   DST *dest, int dstride)
 {
@@ -386,7 +386,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_tiled_unpacked(const SRC 
 #endif // QT_ROTATION_ALGORITHM
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_template(const SRC *src,
+static inline void qt_memrotate90_template(const SRC *src,
                                            int srcWidth, int srcHeight, int srcStride,
                                            DST *dest, int dstStride)
 {
@@ -406,7 +406,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate90_template(const SRC *src,
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate180_template(const SRC *src,
+static inline void qt_memrotate180_template(const SRC *src,
                                             int w, int h, int sstride,
                                             DST *dest, int dstride)
 {
@@ -422,7 +422,7 @@ Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate180_template(const SRC *src,
 }
 
 template <class DST, class SRC>
-Q_STATIC_TEMPLATE_FUNCTION inline void qt_memrotate270_template(const SRC *src,
+static inline void qt_memrotate270_template(const SRC *src,
                                             int srcWidth, int srcHeight, int srcStride,
                                             DST *dest, int dstStride)
 {

@@ -67,13 +67,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// RVCT doesn't like static template functions
-#if defined(Q_CC_RVCT)
-#define Q_STATIC_TEMPLATE_FUNCTION
-#else
-#define Q_STATIC_TEMPLATE_FUNCTION static
-#endif
-
 static const uint AMASK = 0xff000000;
 static const uint RMASK = 0x00ff0000;
 static const uint GMASK = 0x0000ff00;
@@ -442,10 +435,6 @@ const uint * QT_FASTCALL qt_fetch_radial_gradient_template(uint *buffer, const O
     return b;
 }
 
-#if defined(Q_CC_RVCT)
-#  pragma push
-#  pragma arm
-#endif
 static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
     uint t = (x & 0xff00ff) * a + (y & 0xff00ff) * b;
     t = (t + ((t >> 8) & 0xff00ff) + 0x800080) >> 8;
@@ -457,9 +446,6 @@ static inline uint INTERPOLATE_PIXEL_255(uint x, uint a, uint y, uint b) {
     x |= t;
     return x;
 }
-#if defined(Q_CC_RVCT)
-#  pragma pop
-#endif
 
 #if QT_POINTER_SIZE == 8 // 64-bit versions
 
@@ -499,10 +485,6 @@ static inline uint INTERPOLATE_PIXEL_256(uint x, uint a, uint y, uint b) {
     return x;
 }
 
-#if defined(Q_CC_RVCT)
-#  pragma push
-#  pragma arm
-#endif
 static inline uint BYTE_MUL(uint x, uint a) {
     uint t = (x & 0xff00ff) * a;
     t = (t + ((t >> 8) & 0xff00ff) + 0x800080) >> 8;
@@ -514,9 +496,6 @@ static inline uint BYTE_MUL(uint x, uint a) {
     x |= t;
     return x;
 }
-#if defined(Q_CC_RVCT)
-#  pragma pop
-#endif
 
 static inline uint PREMUL(uint x) {
     uint a = x >> 24;
@@ -1856,14 +1835,7 @@ do {                                          \
     }                                         \
 } while (0)
 
-#if defined(Q_CC_RVCT)
-#  pragma push
-#  pragma arm
-#endif
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
-#if defined(Q_CC_RVCT)
-#  pragma pop
-#endif
 
 inline ushort qConvertRgb32To16(uint c)
 {

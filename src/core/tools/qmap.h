@@ -928,8 +928,7 @@ public:
     inline QMultiMap operator+(const QMultiMap &other) const
     { QMultiMap result = *this; result += other; return result; }
 
-#if !defined(Q_NO_USING_KEYWORD) && !defined(Q_CC_RVCT)
-    // RVCT compiler doesn't handle using-keyword right when used functions are overloaded in child class
+#if !defined(Q_NO_USING_KEYWORD)
     using QMap<Key, T>::contains;
     using QMap<Key, T>::remove;
     using QMap<Key, T>::count;

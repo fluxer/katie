@@ -894,8 +894,7 @@ public:
     inline QMultiHash operator+(const QMultiHash &other) const
     { QMultiHash result = *this; result += other; return result; }
 
-#if !defined(Q_NO_USING_KEYWORD) && !defined(Q_CC_RVCT)
-    // RVCT compiler doesn't handle using-keyword right when used functions are overloaded in child class
+#if !defined(Q_NO_USING_KEYWORD)
     using QHash<Key, T>::contains;
     using QHash<Key, T>::remove;
     using QHash<Key, T>::count;
