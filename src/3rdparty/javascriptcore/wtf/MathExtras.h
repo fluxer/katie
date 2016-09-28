@@ -39,13 +39,6 @@
 #include <machine/ieee.h>
 #endif
 
-#if COMPILER(MSVC)
-#if OS(WINCE)
-#include <stdlib.h>
-#endif
-#include <limits>
-#endif
-
 #ifndef M_PI
 const double piDouble = 3.14159265358979323846;
 const float piFloat = 3.14159265358979323846f;
@@ -60,15 +53,6 @@ const float piOverFourFloat = 0.785398163397448309616f;
 #else
 const double piOverFourDouble = M_PI_4;
 const float piOverFourFloat = static_cast<float>(M_PI_4);
-#endif
-
-#if OS(DARWIN)
-
-// Work around a bug in the Mac OS X libc where ceil(-0.1) return +0.
-inline double wtf_ceil(double x) { return copysign(ceil(x), x); }
-
-#define ceil(x) wtf_ceil(x)
-
 #endif
 
 #if OS(SOLARIS)
@@ -95,78 +79,6 @@ inline bool signbit(double x) { struct ieee_double *p = (struct ieee_double *)&x
 #endif
 
 #endif
-
-#if (COMPILER(MSVC) && _MSC_VER < 1800) || COMPILER(RVCT)
-
-// We must not do 'num + 0.5' or 'num - 0.5' because they can cause precision loss.
-static double round(double num)
-{
-    double integer = ceil(num);
-    if (num > 0)
-        return integer - num > 0.5 ? integer - 1.0 : integer;
-    return integer - num >= 0.5 ? integer - 1.0 : integer;
-}
-static float roundf(float num)
-{
-    float integer = ceilf(num);
-    if (num > 0)
-        return integer - num > 0.5f ? integer - 1.0f : integer;
-    return integer - num >= 0.5f ? integer - 1.0f : integer;
-}
-inline long long llround(double num) { return static_cast<long long>(round(num)); }
-inline long long llroundf(float num) { return static_cast<long long>(roundf(num)); }
-inline long lround(double num) { return static_cast<long>(round(num)); }
-inline long lroundf(float num) { return static_cast<long>(roundf(num)); }
-inline double trunc(double num) { return num > 0 ? floor(num) : ceil(num); }
-
-#endif
-
-#if COMPILER(MSVC) && _MSC_VER < 1800
-
-inline bool isinf(double num) { return !_finite(num) && !_isnan(num); }
-inline bool isnan(double num) { return !!_isnan(num); }
-inline bool signbit(double num) { return _copysign(1.0, num) < 0; }
-
-inline double nextafter(double x, double y) { return _nextafter(x, y); }
-inline float nextafterf(float x, float y) { return x > y ? x - FLT_EPSILON : x + FLT_EPSILON; }
-
-inline double copysign(double x, double y) { return _copysign(x, y); }
-inline int isfinite(double x) { return _finite(x); }
-
-// Work around a bug in Win, where atan2(+-infinity, +-infinity) yields NaN instead of specific values.
-inline double wtf_atan2(double x, double y)
-{
-    double posInf = std::numeric_limits<double>::infinity();
-    double negInf = -std::numeric_limits<double>::infinity();
-    double nan = std::numeric_limits<double>::quiet_NaN();
-
-    double result = nan;
-
-    if (x == posInf && y == posInf)
-        result = piOverFourDouble;
-    else if (x == posInf && y == negInf)
-        result = 3 * piOverFourDouble;
-    else if (x == negInf && y == posInf)
-        result = -piOverFourDouble;
-    else if (x == negInf && y == negInf)
-        result = -3 * piOverFourDouble;
-    else
-        result = ::atan2(x, y);
-
-    return result;
-}
-
-// Work around a bug in the Microsoft CRT, where fmod(x, +-infinity) yields NaN instead of x.
-inline double wtf_fmod(double x, double y) { return (!isinf(x) && isinf(y)) ? x : fmod(x, y); }
-
-// Work around a bug in the Microsoft CRT, where pow(NaN, 0) yields NaN instead of 1.
-inline double wtf_pow(double x, double y) { return y == 0 ? 1 : pow(x, y); }
-
-#define atan2(x, y) wtf_atan2(x, y)
-#define fmod(x, y) wtf_fmod(x, y)
-#define pow(x, y) wtf_pow(x, y)
-
-#endif // COMPILER(MSVC)
 
 inline double deg2rad(double d)  { return d * piDouble / 180.0; }
 inline double rad2deg(double r)  { return r * 180.0 / piDouble; }

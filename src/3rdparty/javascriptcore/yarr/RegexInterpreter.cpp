@@ -287,7 +287,8 @@ public:
 
         int ch = input.read();
 
-        if (pattern->m_ignoreCase ? ((Unicode::toLower(testChar) == ch) || (Unicode::toUpper(testChar) == ch)) : (testChar == ch)) {
+        QChar qc(testChar);
+        if (pattern->m_ignoreCase ? ((qc.toLower() == ch) || (qc.toUpper() == ch)) : (testChar == ch)) {
             input.next();
             return true;
         }
@@ -1302,8 +1303,8 @@ public:
     void atomPatternCharacter(UChar ch, int inputPosition, unsigned frameLocation, unsigned quantityCount, QuantifierType quantityType)
     {
         if (m_pattern.m_ignoreCase) {
-            UChar lo = Unicode::toLower(ch);
-            UChar hi = Unicode::toUpper(ch);
+            const UChar lo = QChar::toLower(ch);
+            const UChar hi = QChar::toUpper(ch);
 
             if (lo != hi) {
                 m_bodyDisjunction->terms.append(ByteTerm(lo, hi, inputPosition, frameLocation, quantityCount, quantityType));

@@ -31,7 +31,6 @@
 #include <wtf/PassRefPtr.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
-#include <wtf/unicode/Unicode.h>
 
 #include <QtCore/qstring.h>
 

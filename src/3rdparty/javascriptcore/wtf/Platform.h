@@ -79,14 +79,8 @@
 #endif
 #endif
 
-/* COMPILER(RVCT)  - ARM RealView Compilation Tools */
-#if defined(__CC_ARM) || defined(__ARMCC__)
-#define WTF_COMPILER_RVCT 1
-#endif
-
 /* COMPILER(GCC) - GNU Compiler Collection */
-/* --gnu option of the RVCT compiler also defines __GNUC__ */
-#if defined(__GNUC__) && !COMPILER(RVCT)
+#if defined(__GNUC__)
 #define WTF_COMPILER_GCC 1
 #define GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
 #define GCC_VERSION_AT_LEAST(major, minor, patch) (GCC_VERSION >= (major * 10000 + minor * 100 + patch))
@@ -295,10 +289,6 @@
     || defined(__ARM_ARCH_7R__)
 #define WTF_ARM_ARCH_VERSION 7
 
-/* RVCT sets _TARGET_ARCH_ARM */
-#elif defined(__TARGET_ARCH_ARM)
-#define WTF_ARM_ARCH_VERSION __TARGET_ARCH_ARM
-
 #else
 #define WTF_ARM_ARCH_VERSION 0
 
@@ -326,10 +316,6 @@
     || defined(__ARM_ARCH_7R__) \
     || defined(__ARM_ARCH_7M__)
 #define WTF_THUMB_ARCH_VERSION 4
-
-/* RVCT sets __TARGET_ARCH_THUMB */
-#elif defined(__TARGET_ARCH_THUMB)
-#define WTF_THUMB_ARCH_VERSION __TARGET_ARCH_THUMB
 
 #else
 #define WTF_THUMB_ARCH_VERSION 0
@@ -560,7 +546,7 @@
 #endif
 
 #if !OS(WINDOWS) && !OS(SOLARIS) && !OS(QNX) \
-     && !OS(HAIKU) && !OS(RVCT) && !OS(ANDROID) \
+     && !OS(HAIKU) && !OS(ANDROID) \
      && !OS(AIX) && !OS(HPUX)
 #define HAVE_TM_GMTOFF 1
 #define HAVE_TM_ZONE 1

@@ -706,32 +706,8 @@ JSValue JSC_HOST_CALL stringProtoFuncToLowerCase(ExecState* exec, JSObject*, JSV
     if (!sSize)
         return sVal;
 
-    const UChar* sData = s.data();
-    Vector<UChar> buffer(sSize);
-
-    UChar ored = 0;
-    for (int i = 0; i < sSize; i++) {
-        UChar c = sData[i];
-        ored |= c;
-        buffer[i] = toASCIILower(c);
-    }
-    if (!(ored & ~0x7f))
-        return jsString(exec, UString::adopt(buffer));
-
-    bool error;
-    int length = Unicode::toLower(buffer.data(), sSize, sData, sSize, &error);
-    if (error) {
-        buffer.resize(length);
-        length = Unicode::toLower(buffer.data(), length, sData, sSize, &error);
-        if (error)
-            return sVal;
-    }
-    if (length == sSize) {
-        if (memcmp(buffer.data(), sData, length * sizeof(UChar)) == 0)
-            return sVal;
-    } else
-        buffer.resize(length);
-    return jsString(exec, UString::adopt(buffer));
+    const QString qs = QString(s).toLower();
+    return jsString(exec, UString(qs));
 }
 
 JSValue JSC_HOST_CALL stringProtoFuncToUpperCase(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
@@ -743,32 +719,8 @@ JSValue JSC_HOST_CALL stringProtoFuncToUpperCase(ExecState* exec, JSObject*, JSV
     if (!sSize)
         return sVal;
 
-    const UChar* sData = s.data();
-    Vector<UChar> buffer(sSize);
-
-    UChar ored = 0;
-    for (int i = 0; i < sSize; i++) {
-        UChar c = sData[i];
-        ored |= c;
-        buffer[i] = toASCIIUpper(c);
-    }
-    if (!(ored & ~0x7f))
-        return jsString(exec, UString::adopt(buffer));
-
-    bool error;
-    int length = Unicode::toUpper(buffer.data(), sSize, sData, sSize, &error);
-    if (error) {
-        buffer.resize(length);
-        length = Unicode::toUpper(buffer.data(), length, sData, sSize, &error);
-        if (error)
-            return sVal;
-    }
-    if (length == sSize) {
-        if (memcmp(buffer.data(), sData, length * sizeof(UChar)) == 0)
-            return sVal;
-    } else
-        buffer.resize(length);
-    return jsString(exec, UString::adopt(buffer));
+    const QString qs = QString(s).toUpper();
+    return jsString(exec, UString(qs));
 }
 
 JSValue JSC_HOST_CALL stringProtoFuncLocaleCompare(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)

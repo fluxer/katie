@@ -30,7 +30,6 @@
 
 #if ENABLE(YARR)
 
-#include <wtf/unicode/Unicode.h>
 #include "RegexParser.h"
 #include "RegexPattern.h"
 

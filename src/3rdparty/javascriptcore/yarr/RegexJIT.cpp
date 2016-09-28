@@ -525,9 +525,9 @@ class RegexGenerator : private MacroAssembler {
         if (m_pattern.m_ignoreCase && isASCIIAlpha(ch)) {
             readCharacter(state.inputOffset(), character);
             or32(Imm32(32), character);
-            state.jumpToBacktrack(branch32(NotEqual, character, Imm32(Unicode::toLower(ch))), this);
+            state.jumpToBacktrack(branch32(NotEqual, character, Imm32(QChar::toLower(ch))), this);
         } else {
-            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (QChar::toLower(ch) == QChar::toUpper(ch)));
             state.jumpToBacktrack(jumpIfCharNotEquals(ch, state.inputOffset()), this);
         }
     }
@@ -570,9 +570,9 @@ class RegexGenerator : private MacroAssembler {
         if (m_pattern.m_ignoreCase && isASCIIAlpha(ch)) {
             load16(BaseIndex(input, countRegister, TimesTwo, (state.inputOffset() + term.quantityCount) * sizeof(UChar)), character);
             or32(Imm32(32), character);
-            state.jumpToBacktrack(branch32(NotEqual, character, Imm32(Unicode::toLower(ch))), this);
+            state.jumpToBacktrack(branch32(NotEqual, character, Imm32(QChar::toLower(ch))), this);
         } else {
-            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (QChar::toLower(ch) == QChar::toUpper(ch)));
             state.jumpToBacktrack(branch16(NotEqual, BaseIndex(input, countRegister, TimesTwo, (state.inputOffset() + term.quantityCount) * sizeof(UChar)), Imm32(ch)), this);
         }
         add32(Imm32(1), countRegister);
@@ -594,9 +594,9 @@ class RegexGenerator : private MacroAssembler {
         if (m_pattern.m_ignoreCase && isASCIIAlpha(ch)) {
             readCharacter(state.inputOffset(), character);
             or32(Imm32(32), character);
-            failures.append(branch32(NotEqual, character, Imm32(Unicode::toLower(ch))));
+            failures.append(branch32(NotEqual, character, Imm32(QChar::toLower(ch))));
         } else {
-            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (QChar::toLower(ch) == QChar::toUpper(ch)));
             failures.append(jumpIfCharNotEquals(ch, state.inputOffset()));
         }
         add32(Imm32(1), countRegister);
@@ -640,9 +640,9 @@ class RegexGenerator : private MacroAssembler {
         if (m_pattern.m_ignoreCase && isASCIIAlpha(ch)) {
             readCharacter(state.inputOffset(), character);
             or32(Imm32(32), character);
-            branch32(NotEqual, character, Imm32(Unicode::toLower(ch))).linkTo(hardFail, this);
+            branch32(NotEqual, character, Imm32(QChar::toLower(ch))).linkTo(hardFail, this);
         } else {
-            Q_ASSERT(!m_pattern.m_ignoreCase || (Unicode::toLower(ch) == Unicode::toUpper(ch)));
+            Q_ASSERT(!m_pattern.m_ignoreCase || (QChar::toLower(ch) == QChar::toUpper(ch)));
             jumpIfCharNotEquals(ch, state.inputOffset()).linkTo(hardFail, this);
         }
 

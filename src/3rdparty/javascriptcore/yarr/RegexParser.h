@@ -32,7 +32,6 @@
 
 #include <UString.h>
 #include <wtf/ASCIICType.h>
-#include <wtf/unicode/Unicode.h>
 #include <limits.h>
 
 namespace JSC { namespace Yarr {

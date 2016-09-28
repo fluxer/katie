@@ -73,7 +73,7 @@ public:
                 addSorted(m_matches, ch);
         } else {
             UChar upper, lower;
-            if (m_isCaseInsensitive && ((upper = Unicode::toUpper(ch)) != (lower = Unicode::toLower(ch)))) {
+            if (m_isCaseInsensitive && ((upper = QChar::toUpper(ch)) != (lower = QChar::toLower(ch)))) {
                 addSorted(m_matchesUnicode, upper);
                 addSorted(m_matchesUnicode, lower);
             } else
@@ -84,13 +84,13 @@ public:
     // returns true if this character has another case, and 'ch' is the upper case form.
     static inline bool isUnicodeUpper(UChar ch)
     {
-        return ch != Unicode::toLower(ch);
+        return ch != QChar::toLower(ch);
     }
 
     // returns true if this character has another case, and 'ch' is the lower case form.
     static inline bool isUnicodeLower(UChar ch)
     {
-        return ch != Unicode::toUpper(ch);
+        return ch != QChar::toUpper(ch);
     }
 
     void putRange(UChar lo, UChar hi)
@@ -121,15 +121,15 @@ public:
                     Q_ASSERT(unicodeCurr <= 0xffff);
 
                     if (isUnicodeUpper(unicodeCurr)) {
-                        UChar lowerCaseRangeBegin = Unicode::toLower(unicodeCurr);
+                        UChar lowerCaseRangeBegin = QChar::toLower(unicodeCurr);
                         UChar lowerCaseRangeEnd = lowerCaseRangeBegin;
-                        while ((++unicodeCurr <= hi) && isUnicodeUpper(unicodeCurr) && (Unicode::toLower(unicodeCurr) == (lowerCaseRangeEnd + 1)))
+                        while ((++unicodeCurr <= hi) && isUnicodeUpper(unicodeCurr) && (QChar::toLower(unicodeCurr) == (lowerCaseRangeEnd + 1)))
                             lowerCaseRangeEnd++;
                         addSortedRange(m_rangesUnicode, lowerCaseRangeBegin, lowerCaseRangeEnd);
                     } else if (isUnicodeLower(unicodeCurr)) {
-                        UChar upperCaseRangeBegin = Unicode::toUpper(unicodeCurr);
+                        UChar upperCaseRangeBegin = QChar::toUpper(unicodeCurr);
                         UChar upperCaseRangeEnd = upperCaseRangeBegin;
-                        while ((++unicodeCurr <= hi) && isUnicodeLower(unicodeCurr) && (Unicode::toUpper(unicodeCurr) == (upperCaseRangeEnd + 1)))
+                        while ((++unicodeCurr <= hi) && isUnicodeLower(unicodeCurr) && (QChar::toUpper(unicodeCurr) == (upperCaseRangeEnd + 1)))
                             upperCaseRangeEnd++;
                         addSortedRange(m_rangesUnicode, upperCaseRangeBegin, upperCaseRangeEnd);
                     } else
@@ -367,7 +367,7 @@ public:
     {
         // We handle case-insensitive checking of unicode characters which do have both
         // cases by handling them as if they were defined using a CharacterClass.
-        if (m_pattern.m_ignoreCase && !isASCII(ch) && (Unicode::toUpper(ch) != Unicode::toLower(ch))) {
+        if (m_pattern.m_ignoreCase && !isASCII(ch) && (QChar::toUpper(ch) != QChar::toLower(ch))) {
             atomCharacterClassBegin();
             atomCharacterClassAtom(ch);
             atomCharacterClassEnd();

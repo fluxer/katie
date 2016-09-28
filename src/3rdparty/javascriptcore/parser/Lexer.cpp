@@ -209,7 +209,9 @@ inline bool Lexer::lastTokenWasRestrKeyword() const
 
 static NEVER_INLINE bool isNonASCIIIdentStart(int c)
 {
-    return category(c) & (Letter_Uppercase | Letter_Lowercase | Letter_Titlecase | Letter_Modifier | Letter_Other);
+    QChar qc(c);
+    return qc.category() & (QChar::Letter_Uppercase | QChar::Letter_Lowercase | QChar::Letter_Titlecase
+        | QChar::Letter_Modifier | QChar::Letter_Other);
 }
 
 static inline bool isIdentStart(int c)
@@ -219,8 +221,10 @@ static inline bool isIdentStart(int c)
 
 static NEVER_INLINE bool isNonASCIIIdentPart(int c)
 {
-    return category(c) & (Letter_Uppercase | Letter_Lowercase | Letter_Titlecase | Letter_Modifier | Letter_Other
-        | Mark_NonSpacing | Mark_SpacingCombining | Number_DecimalDigit | Punctuation_Connector);
+    QChar qc(c);
+    return qc.category() & (QChar::Letter_Uppercase | QChar::Letter_Lowercase | QChar::Letter_Titlecase
+        | QChar::Letter_Modifier | QChar::Letter_Other | QChar::Mark_NonSpacing | QChar::Mark_SpacingCombining
+        | QChar::Number_DecimalDigit | QChar::Punctuation_Connector);
 }
 
 static inline bool isIdentPart(int c)
