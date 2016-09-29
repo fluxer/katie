@@ -104,6 +104,7 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsSceneEvent
     QGraphicsSceneHelpEvent
     QGraphicsSceneMoveEvent
+    QGraphicsSceneMouseEvent
     QGraphicsSimpleTextItem
     QGraphicsView
     QGraphicsWidget
