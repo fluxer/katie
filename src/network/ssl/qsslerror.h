@@ -94,6 +94,7 @@ public:
 
     QSslError(const QSslError &other);
 
+    ~QSslError();
     QSslError &operator=(const QSslError &other);
     bool operator==(const QSslError &other) const;
     inline bool operator!=(const QSslError &other) const
