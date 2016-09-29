@@ -192,14 +192,6 @@ PassRefPtr<JSGlobalData> JSGlobalData::create()
     return adoptRef(globalData);
 }
 
-PassRefPtr<JSGlobalData> JSGlobalData::createLeaked()
-{
-    Structure::startIgnoringLeaks();
-    RefPtr<JSGlobalData> data = create();
-    Structure::stopIgnoringLeaks();
-    return data.release();
-}
-
 bool JSGlobalData::sharedInstanceExists()
 {
     return sharedInstanceInternal();

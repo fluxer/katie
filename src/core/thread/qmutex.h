@@ -43,7 +43,6 @@
 #define QMUTEX_H
 
 #include <QtCore/qatomic.h>
-#include <new>
 
 QT_BEGIN_HEADER
 

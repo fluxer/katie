@@ -26,7 +26,6 @@
 #include <time.h>
 #include <wtf/Assertions.h>
 #include <wtf/MathExtras.h>
-#include <wtf/RandomNumber.h>
 
 namespace JSC {
 

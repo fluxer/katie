@@ -25,7 +25,7 @@
 
 namespace WTF {
 
-    extern WTF::Mutex* s_dtoaP5Mutex;
+    extern QMutex* s_dtoaP5Mutex;
 
     double strtod(const char* s00, char** se);
 

@@ -97,7 +97,6 @@ namespace JSC {
         static JSGlobalData& sharedInstance();
 
         static PassRefPtr<JSGlobalData> create();
-        static PassRefPtr<JSGlobalData> createLeaked();
         static PassRefPtr<JSGlobalData> createNonDefault();
         ~JSGlobalData();
 

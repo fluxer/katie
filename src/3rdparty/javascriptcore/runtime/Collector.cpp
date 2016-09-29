@@ -488,40 +488,7 @@ static void *hpux_get_stack_base()
 
 static inline void* currentThreadStackBase()
 {
-#if OS(DARWIN)
-    pthread_t thread = pthread_self();
-    return pthread_get_stackaddr_np(thread);
-#elif OS(WINCE)
-    AtomicallyInitializedStatic(QMutex*, mutex = new QMutex);
-    QMutexLocker locker(mutex);
-    if (g_stackBase)
-        return g_stackBase;
-    else {
-        int dummy;
-        return getStackBase(&dummy);
-    }
-#elif OS(WINDOWS) && CPU(X86) && COMPILER(MSVC)
-    // offset 0x18 from the FS segment register gives a pointer to
-    // the thread information block for the current thread
-    NT_TIB* pTib;
-    __asm {
-        MOV EAX, FS:[18h]
-        MOV pTib, EAX
-    }
-    return static_cast<void*>(pTib->StackBase);
-#elif OS(WINDOWS) && CPU(X86_64) && (COMPILER(MSVC) || COMPILER(GCC))
-    // FIXME: why only for MSVC?
-    PNT_TIB64 pTib = reinterpret_cast<PNT_TIB64>(NtCurrentTeb());
-    return reinterpret_cast<void*>(pTib->StackBase);
-#elif OS(WINDOWS) && CPU(X86) && COMPILER(GCC)
-    // offset 0x18 from the FS segment register gives a pointer to
-    // the thread information block for the current thread
-    NT_TIB* pTib;
-    asm ( "movl %%fs:0x18, %0\n"
-          : "=r" (pTib)
-        );
-    return static_cast<void*>(pTib->StackBase);
-#elif OS(HPUX)
+#if OS(HPUX)
     return hpux_get_stack_base();
 #elif OS(QNX)
     return (void *) (((uintptr_t)__tls() + __PAGESIZE - 1) & ~(__PAGESIZE - 1));

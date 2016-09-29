@@ -182,9 +182,10 @@ public:
                             int decimals = 1, bool *ok = 0, Qt::WindowFlags flags = 0);
 
     // obsolete
-    static int getInteger(QWidget *parent, const QString &title, const QString &label, int value = 0,
+    static inline int getInteger(QWidget *parent, const QString &title, const QString &label, int value = 0,
                           int minValue = -2147483647, int maxValue = 2147483647,
-                          int step = 1, bool *ok = 0, Qt::WindowFlags flags = 0);
+                          int step = 1, bool *ok = 0, Qt::WindowFlags flags = 0)
+        { return getInt(parent, title, label, value, minValue, maxValue, step, ok, flags); };
 
 
 Q_SIGNALS:

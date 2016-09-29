@@ -2942,37 +2942,10 @@ void QCalendarWidget::updateCells()
 
 */
 
-/*!
-    \property QCalendarWidget::headerVisible
-    \brief whether the navigation bar is shown or not
-
-    \obsolete
-
-    Use navigationBarVisible() instead.
-
-    By default, this property is true.
-*/
-
-/*!
-    \obsolete
-
-    Use setNavigationBarVisible() instead.
-*/
-bool QCalendarWidget::isHeaderVisible() const
+bool QCalendarWidget::isNavigationBarVisible() const
 {
     Q_D(const QCalendarWidget);
     return d->navBarVisible;
-}
-
-/*!
-    \obsolete
-
-    Use setNavigationBarVisible() instead.
-
-*/
-void QCalendarWidget::setHeaderVisible(bool visible)
-{
-    setNavigationBarVisible(visible);
 }
 
 /*!

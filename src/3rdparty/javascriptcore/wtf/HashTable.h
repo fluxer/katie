@@ -411,7 +411,7 @@ namespace WTF {
     public:
         // All access to m_iterators should be guarded with m_mutex.
         mutable const_iterator* m_iterators;
-        mutable Mutex m_mutex;
+        mutable QMutex m_mutex;
 #endif
     };
 

@@ -274,7 +274,7 @@ namespace JSC {
         unsigned m_opcodeSamplesInCTIFunctions[numOpcodeIDs];
         
 #if ENABLE(CODEBLOCK_SAMPLING)
-        Mutex m_scriptSampleMapMutex;
+        QMutex m_scriptSampleMapMutex;
         OwnPtr<ScriptSampleRecordMap> m_scopeSampleMap;
 #endif
     };

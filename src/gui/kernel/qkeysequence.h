@@ -143,14 +143,13 @@ public:
     };
 
     QKeySequence();
-    QKeySequence(const QString &key);
-    QKeySequence(const QString &key, SequenceFormat format);
+    QKeySequence(const QString &key, SequenceFormat format = NativeText);
     QKeySequence(int k1, int k2 = 0, int k3 = 0, int k4 = 0);
     QKeySequence(const QKeySequence &ks);
     QKeySequence(StandardKey key);
     ~QKeySequence();
 
-    uint count() const; // ### Qt 5: return 'int'
+    int count() const;
     bool isEmpty() const;
 
     enum SequenceMatch {
@@ -166,8 +165,6 @@ public:
     static QKeySequence mnemonic(const QString &text);
     static QList<QKeySequence> keyBindings(StandardKey key);
 
-    // ### Qt 5: kill 'operator QString' - it's evil
-    operator QString() const;
     operator QVariant() const;
     operator int() const;
     int operator[](uint i) const;
@@ -192,8 +189,7 @@ public:
 private:
     static int decodeString(const QString &ks);
     static QString encodeString(int key);
-    int assign(const QString &str);
-    int assign(const QString &str, SequenceFormat format);
+    int assign(const QString &str, SequenceFormat format = NativeText);
     void setKey(int key, int index);
 
     QKeySequencePrivate *d;

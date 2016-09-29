@@ -298,7 +298,7 @@ void QMenuPrivate::updateActionRects(const QRect &screen) const
                 } else {
                     QKeySequence seq = action->shortcut();
                     if (!seq.isEmpty())
-                        tabWidth = qMax(int(tabWidth), qfm.width(seq));
+                        tabWidth = qMax(int(tabWidth), qfm.width(seq.toString()));
     #endif
                 }
                 sz.setWidth(fm.boundingRect(QRect(), Qt::TextSingleLine | Qt::TextShowMnemonic, s).width());
@@ -1200,7 +1200,7 @@ void QMenu::initStyleOption(QStyleOptionMenuItem *option, const QAction *action)
     if (textAndAccel.indexOf(QLatin1Char('\t')) == -1) {
         QKeySequence seq = action->shortcut();
         if (!seq.isEmpty())
-            textAndAccel += QLatin1Char('\t') + QString(seq);
+            textAndAccel += QLatin1Char('\t') + seq.toString();
     }
 #endif
     option->text = textAndAccel;

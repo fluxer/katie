@@ -414,7 +414,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t,
         switch (d->type) {
 #ifndef QT_NO_SHORTCUT
         case QVariant::KeySequence:
-            *str = QString(*v_cast<QKeySequence>(d));
+            *str = v_cast<QKeySequence>(d)->toString();
             return true;
 #endif
         case QVariant::Font:

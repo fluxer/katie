@@ -76,31 +76,15 @@ void ThreadPrivate::run()
     m_returnValue = m_entryPoint(m_data);
 }
 
-class ThreadMonitor : public QObject {
-    Q_OBJECT
-public:
-    static ThreadMonitor * instance()
-    {
-        static ThreadMonitor *instance = new ThreadMonitor();
-        return instance;
-    }
-
-public Q_SLOTS:
-    void threadFinished()
-    {
-        sender()->deleteLater();
-    }
-};
-
-static Mutex* atomicallyInitializedStaticMutex;
+static QMutex* atomicallyInitializedStaticMutex;
 
 static ThreadIdentifier mainThreadIdentifier;
 
-static Mutex* threadMapMutex()
+static QMutex* threadMapMutex()
 {
-    static Mutex* mutex;
+    static QMutex* mutex;
     if (!mutex)
-        mutex = new Mutex;
+        mutex = new QMutex;
     return mutex;
 }
 
@@ -155,7 +139,7 @@ static QThread* threadForIdentifier(ThreadIdentifier id)
 void initializeThreading()
 {
     if (!atomicallyInitializedStaticMutex) {
-        atomicallyInitializedStaticMutex = new Mutex;
+        atomicallyInitializedStaticMutex = new QMutex;
         threadMapMutex();
         QThread* mainThread = QCoreApplication::instance()->thread();
         mainThreadIdentifier = identifierByQthreadHandle(mainThread);
@@ -183,7 +167,7 @@ ThreadIdentifier createThreadInternal(ThreadFunction entryPoint, void* data, con
         return 0;
     }
 
-    QObject::connect(thread, SIGNAL(finished()), ThreadMonitor::instance(), SLOT(threadFinished()));
+    QObject::connect(thread, SIGNAL(finished()), thread, SLOT(deleteLater()));
 
     thread->start();
 

@@ -34,9 +34,9 @@ int HashTableStats::numReinserts;
 
 static HashTableStats logger;
 
-static Mutex& hashTableStatsMutex()
+static QMutex& hashTableStatsMutex()
 {
-    AtomicallyInitializedStatic(Mutex&, mutex = *new Mutex);
+    AtomicallyInitializedStatic(QMutex&, mutex = *new QMutex);
     return mutex;
 }
 

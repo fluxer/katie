@@ -35,7 +35,7 @@ struct NewThreadContext : FastAllocBase {
         : entryPoint(entryPoint)
         , data(data)
         , name(name)
-        , creationMutex(new Mutex)
+        , creationMutex(new QMutex)
     {
     }
 
@@ -43,7 +43,7 @@ struct NewThreadContext : FastAllocBase {
     void* data;
     const char* name;
 
-    Mutex* creationMutex;
+    QMutex* creationMutex;
 };
 
 static void* threadEntryPoint(void* contextData)

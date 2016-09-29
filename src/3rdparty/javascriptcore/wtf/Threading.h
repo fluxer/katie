@@ -108,37 +108,7 @@ inline bool isMainThread()
 int waitForThreadCompletion(ThreadIdentifier, void**);
 void detachThread(ThreadIdentifier);
 
-typedef QT_PREPEND_NAMESPACE(QMutex) Mutex;
-
-#if OS(WINDOWS)
-#define WTF_USE_LOCKFREE_THREADSAFESHARED 1
-
-#if COMPILER(MINGW) || COMPILER(MSVC7) || OS(WINCE)
-inline int atomicIncrement(int* addend) { return InterlockedIncrement(reinterpret_cast<long*>(addend)); }
-inline int atomicDecrement(int* addend) { return InterlockedDecrement(reinterpret_cast<long*>(addend)); }
-#else
-inline int atomicIncrement(int volatile* addend) { return InterlockedIncrement(reinterpret_cast<long volatile*>(addend)); }
-inline int atomicDecrement(int volatile* addend) { return InterlockedDecrement(reinterpret_cast<long volatile*>(addend)); }
-#endif
-
-#elif OS(DARWIN)
-#define WTF_USE_LOCKFREE_THREADSAFESHARED 1
-
-inline int atomicIncrement(int volatile* addend) { return OSAtomicIncrement32Barrier(const_cast<int*>(addend)); }
-inline int atomicDecrement(int volatile* addend) { return OSAtomicDecrement32Barrier(const_cast<int*>(addend)); }
-
-#elif OS(ANDROID)
-
-inline int atomicIncrement(int volatile* addend) { return android_atomic_inc(addend); }
-inline int atomicDecrement(int volatile* addend) { return android_atomic_dec(addend); }
-
-#elif OS(QNX)
-
-// component functions take and return unsigned
-inline int atomicIncrement(int volatile* addend) { return (int) atomic_add_value((unsigned volatile*)addend, 1); }
-inline int atomicDecrement(int volatile* addend) { return (int) atomic_sub_value((unsigned volatile*)addend, 1); }
-
-#elif COMPILER(GCC) && !CPU(SPARC64) // sizeof(_Atomic_word) != sizeof(int) on sparc64 gcc
+#if COMPILER(GCC) && !CPU(SPARC64) // sizeof(_Atomic_word) != sizeof(int) on sparc64 gcc
 #define WTF_USE_LOCKFREE_THREADSAFESHARED 1
 
 inline int atomicIncrement(int volatile* addend) { return __sync_add_and_fetch(addend, 1); }
@@ -202,7 +172,7 @@ private:
 
     int m_refCount;
 #if !USE(LOCKFREE_THREADSAFESHARED)
-    mutable Mutex m_mutex;
+    mutable QMutex m_mutex;
 #endif
 };
 
@@ -229,7 +199,6 @@ void unlockAtomicallyInitializedStaticMutex();
 
 } // namespace WTF
 
-using WTF::Mutex;
 using WTF::ThreadIdentifier;
 using WTF::ThreadSafeShared;
 
