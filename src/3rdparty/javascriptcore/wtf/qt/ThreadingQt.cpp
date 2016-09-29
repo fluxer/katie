@@ -207,6 +207,4 @@ ThreadIdentifier currentThread()
 
 } // namespace WTF
 
-#include "moc_ThreadingQt.cpp"
-
 #endif
