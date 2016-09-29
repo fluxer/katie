@@ -101,10 +101,6 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsRotation
     QGraphicsScale
     QGraphicsScene
-    QGraphicsSceneEvent
-    QGraphicsSceneHelpEvent
-    QGraphicsSceneMoveEvent
-    QGraphicsSceneMouseEvent
     QGraphicsSimpleTextItem
     QGraphicsView
     QGraphicsWidget
@@ -364,6 +360,7 @@ set(GUI_PUBLIC_HEADERS
     QCloseEvent
     QResizeEvent
     QShowEvent
+    QFocusEvent
     QMouseEvent
     QKeyEvent
     QWheelEvent
@@ -371,6 +368,10 @@ set(GUI_PUBLIC_HEADERS
     QDragEnterEvent
     QHelpEvent
     QContextMenuEvent
+    QGraphicsSceneEvent
+    QGraphicsSceneHelpEvent
+    QGraphicsSceneMoveEvent
+    QGraphicsSceneMouseEvent
     QItemSelection
     QIntValidator
     QFontMetricsF
