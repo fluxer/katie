@@ -1860,7 +1860,7 @@ QString QAccessibleComboBox::text(Text t, int child) const
 #ifndef QT_NO_SHORTCUT
     case Accelerator:
         if (child == OpenList)
-            str = (QString)QKeySequence(Qt::Key_Down);
+            str = QKeySequence(Qt::Key_Down).toString();
         break;
 #endif
     default:

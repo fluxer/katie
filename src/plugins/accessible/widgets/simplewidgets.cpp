@@ -171,7 +171,7 @@ QString QAccessibleButton::text(Text t, int child) const
 #ifndef QT_NO_SHORTCUT
             QPushButton *pb = qobject_cast<QPushButton*>(object());
             if (pb && pb->isDefault())
-                str = (QString)QKeySequence(Qt::Key_Enter);
+                str = QKeySequence(Qt::Key_Enter).toString();
 #endif
             if (str.isEmpty())
                 str = qt_accHotKey(button()->text());

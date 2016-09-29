@@ -105,7 +105,7 @@ QString QAccessibleMenu::text(Text t, int child) const
         return child ? menu()->actions().at(child-1)->whatsThis() : tx;
 #ifndef QT_NO_SHORTCUT
     case Accelerator:
-        return child ? static_cast<QString>(menu()->actions().at(child-1)->shortcut()) : tx;
+        return child ? menu()->actions().at(child-1)->shortcut().toString() : tx;
 #endif
     default:
         break;
