@@ -289,7 +289,6 @@ public:
     void createExtra();
     void deleteExtra();
     void createSysExtra();
-    void deleteSysExtra();
     void createTLSysExtra();
     void deleteTLSysExtra();
     void updateSystemBackground();
@@ -412,7 +411,6 @@ public:
     void _q_showIfNotHidden();
 
     void setEnabled_helper(bool);
-    void registerDropSite(bool);
     static void adjustFlags(Qt::WindowFlags &flags, QWidget *w = 0);
 
     void updateFrameStrut();
@@ -465,8 +463,6 @@ public:
             w = w->focusProxy();
         return w;
     }
-
-    void setModal_sys();
 
     // This is an helper function that return the available geometry for
     // a widget and takes care is this one is in QGraphicsView.

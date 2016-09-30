@@ -1327,8 +1327,6 @@ void QWidget::create(WId window, bool initializeWindow, bool destroyOldWindow)
         d->topData()->backingStore.create(this);
     }
 
-    d->setModal_sys();
-
     if (!isWindow() && parentWidget() && parentWidget()->testAttribute(Qt::WA_DropSiteRegistered))
         setAttribute(Qt::WA_DropSiteRegistered, true);
 
@@ -1369,9 +1367,6 @@ QWidget::~QWidget()
     foreach (Qt::GestureType type, d->gestureContext.keys())
         ungrabGesture(type);
 #endif
-
-    // force acceptDrops false before winId is destroyed.
-    d->registerDropSite(false);
 
 #ifndef QT_NO_ACTION
     // remove all actions from this widget
@@ -1601,7 +1596,6 @@ void QWidgetPrivate::deleteExtra()
 #ifndef QT_NO_CURSOR
         delete extra->curs;
 #endif
-        deleteSysExtra();
 #ifndef QT_NO_STYLE_STYLESHEET
         // dereference the stylesheet style
         if (QStyleSheetStyle *proxy = qobject_cast<QStyleSheetStyle *>(extra->style))
@@ -2629,7 +2623,6 @@ Qt::WindowModality QWidget::windowModality() const
 void QWidget::setWindowModality(Qt::WindowModality windowModality)
 {
     data->window_modality = windowModality;
-    // setModal_sys() will be called by setAttribute()
     setAttribute(Qt::WA_ShowModal, (data->window_modality != Qt::NonModal));
     setAttribute(Qt::WA_SetWindowModality, true);
 }
@@ -9912,7 +9905,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         break;
     }
     case Qt::WA_DropSiteRegistered:  {
-        d->registerDropSite(on);
         for (int i = 0; i < d->children.size(); ++i) {
             QWidget *w = qobject_cast<QWidget *>(d->children.at(i));
             if (w && !w->isWindow() && !w->testAttribute(Qt::WA_AcceptDrops) && w->testAttribute(Qt::WA_DropSiteRegistered) != on)
@@ -9992,10 +9984,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
             // window is showing. Therefore, to be consistent, we cannot call
             // QApplicationPrivate::enterModal(this) here. The window must be
             // hidden before changing modality.
-        }
-        if (testAttribute(Qt::WA_WState_Created)) {
-            // don't call setModal_sys() before create_sys()
-            d->setModal_sys();
         }
         break;
     case Qt::WA_MouseTracking: {

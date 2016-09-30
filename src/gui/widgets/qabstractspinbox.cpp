@@ -1214,7 +1214,6 @@ void QAbstractSpinBox::timerEvent(QTimerEvent *event)
         return;
     }
     QWidget::timerEvent(event);
-    return;
 }
 
 /*!

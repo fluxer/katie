@@ -45,9 +45,20 @@
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qnamespace.h>
 
+// Window system dependent definitions
+
+#if defined(Q_WS_X11)
+
+typedef struct _XDisplay Display;
+typedef union  _XEvent XEvent;
+typedef struct _XGC *GC;
+typedef struct _XRegion *Region;
+typedef unsigned long  WId;
+
+#endif // Q_WS_X11
+
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
-
 
 // Class forward definitions
 
@@ -85,24 +96,6 @@ class QApplication;
 template<typename T> class QList;
 typedef QList<QWidget *> QWidgetList;
 
-QT_END_NAMESPACE
-QT_END_HEADER
-
-// Window system dependent definitions
-
-#if defined(Q_WS_X11)
-
-typedef struct _XDisplay Display;
-typedef union  _XEvent XEvent;
-typedef struct _XGC *GC;
-typedef struct _XRegion *Region;
-typedef unsigned long  WId;
-
-#endif // Q_WS_X11
-
-QT_BEGIN_HEADER
-QT_BEGIN_NAMESPACE
-
 template<class K, class V> class QHash;
 typedef QHash<WId, QWidget *> QWidgetMapper;
 
@@ -111,11 +104,5 @@ typedef QSet<QWidget *> QWidgetSet;
 
 QT_END_NAMESPACE
 QT_END_HEADER
-
-#if defined(QT_NEEDS_QMAIN)
-#define main qMain
-#endif
-
-// Global platform-independent types and functions
 
 #endif // QWINDOWDEFS_H

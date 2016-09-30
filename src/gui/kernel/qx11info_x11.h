@@ -56,9 +56,7 @@ class QX11Info;
 class QPaintDevice;
 class QApplicationPrivate;
 class QX11InfoPrivate;
-struct QX11WindowAttributes;
 
-void qt_x11_getX11InfoForWindow(QX11Info * xinfo, const QX11WindowAttributes &a);
 class Q_GUI_EXPORT QX11Info
 {
 public:
@@ -112,7 +110,6 @@ protected:
     friend void qt_init(QApplicationPrivate *priv, int, Display *display, Qt::HANDLE visual,
                         Qt::HANDLE colormap);
     friend void qt_cleanup();
-    friend void qt_x11_getX11InfoForWindow(QX11Info * xinfo, const QX11WindowAttributes &a);
 };
 
 QT_END_NAMESPACE

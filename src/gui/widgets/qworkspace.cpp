@@ -942,7 +942,6 @@ public slots:
     void titleBarDoubleClicked();
 
 protected:
-    void enterEvent(QEvent *);
     void leaveEvent(QEvent *);
     void childEvent(QChildEvent*);
     void resizeEvent(QResizeEvent *);
@@ -2824,10 +2823,6 @@ void QWorkspaceChild::doResize()
 void QWorkspaceChild::doMove()
 {
     widgetResizeHandler->doMove();
-}
-
-void QWorkspaceChild::enterEvent(QEvent *)
-{
 }
 
 void QWorkspaceChild::leaveEvent(QEvent *)

@@ -557,7 +557,7 @@ static Bool qt_xfixes_scanner(Display*, XEvent *event, XPointer arg)
 class QETWidget : public QWidget                // event translator widget
 {
 public:
-    QWidgetPrivate* d_func() { return QWidget::d_func(); }
+    inline QWidgetPrivate* d_func() { return QWidget::d_func(); }
     bool translateMouseEvent(const XEvent *);
     void translatePaintEvent(const XEvent *);
     bool translateConfigEvent(const XEvent *);

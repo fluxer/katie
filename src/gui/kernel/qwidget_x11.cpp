@@ -420,18 +420,6 @@ void qt_change_net_wm_state(const QWidget* w, bool set, Atom one, Atom two = 0)
                false, (SubstructureNotifyMask | SubstructureRedirectMask), &e);
 }
 
-struct QX11WindowAttributes {
-    const XWindowAttributes *att;
-};
-
-void qt_x11_getX11InfoForWindow(QX11Info * xinfo, const XWindowAttributes &a)
-{
-    QX11WindowAttributes att;
-    att.att = &a;
-    qt_x11_getX11InfoForWindow(xinfo,att);
-}
-
-
 static QVector<Atom> getNetWmState(QWidget *w)
 {
     QVector<Atom> returnValue;
@@ -589,7 +577,25 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         else
             q->setAttribute(Qt::WA_WState_Visible);
 
-        qt_x11_getX11InfoForWindow(&xinfo,a);
+        QX11InfoData* xd = xinfo.getX11Data(true);
+        // find which screen the window is on...
+        xd->screen = QX11Info::appScreen(); // by default, use the default :)
+        int i;
+        for (i = 0; i < ScreenCount(X11->display); i++) {
+            if (RootWindow(X11->display, i) == a.root) {
+                xd->screen = i;
+                break;
+            }
+        }
+
+        xd->depth = a.depth;
+        xd->cells = DisplayCells(X11->display, xd->screen);
+        xd->visual = a.visual;
+        xd->defaultVisual = (XVisualIDFromVisual((Visual *) a.visual) ==
+                            XVisualIDFromVisual((Visual *) QX11Info::appVisual(scr)));
+        xd->colormap = a.colormap;
+        xd->defaultColormap = (a.colormap == QX11Info::appColormap(scr));
+        xinfo.setX11Data(xd);
 
     } else if (desktop) {                        // desktop widget
 #ifdef QWIDGET_EXTRA_DEBUG
@@ -2838,10 +2844,6 @@ void QWidgetPrivate::createSysExtra()
     extra->xDndProxy = 0;
 }
 
-void QWidgetPrivate::deleteSysExtra()
-{
-}
-
 void QWidgetPrivate::createTLSysExtra()
 {
     extra->topextra->spont_unmapped = 0;
@@ -2868,11 +2870,6 @@ void QWidgetPrivate::deleteTLSysExtra()
         extra->topextra->syncUpdateCounter = 0;
     }
 #endif
-}
-
-void QWidgetPrivate::registerDropSite(bool on)
-{
-    Q_UNUSED(on);
 }
 
 void QWidgetPrivate::setMask_sys(const QRegion &region)
@@ -3086,34 +3083,6 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
     return X11->solid_fills[i].picture;
 }
 #endif
-
-void QWidgetPrivate::setModal_sys()
-{
-}
-
-void qt_x11_getX11InfoForWindow(QX11Info * xinfo, const QX11WindowAttributes &att)
-{
-    QX11InfoData* xd = xinfo->getX11Data(true);
-    const XWindowAttributes &a = *(att.att);
-    // find which screen the window is on...
-    xd->screen = QX11Info::appScreen(); // by default, use the default :)
-    int i;
-    for (i = 0; i < ScreenCount(X11->display); i++) {
-        if (RootWindow(X11->display, i) == a.root) {
-            xd->screen = i;
-            break;
-        }
-    }
-
-    xd->depth = a.depth;
-    xd->cells = DisplayCells(X11->display, xd->screen);
-    xd->visual = a.visual;
-    xd->defaultVisual = (XVisualIDFromVisual((Visual *) a.visual) ==
-                         XVisualIDFromVisual((Visual *) QX11Info::appVisual(xinfo->screen())));
-    xd->colormap = a.colormap;
-    xd->defaultColormap = (a.colormap == QX11Info::appColormap(xinfo->screen()));
-    xinfo->setX11Data(xd);
-}
 
 void QWidgetPrivate::updateX11AcceptFocus()
 {

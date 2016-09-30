@@ -59,12 +59,6 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#if defined(Q_WS_WIN)
-#include "qt_windows.h"
-#ifndef SPI_GETDROPSHADOW
-#define SPI_GETDROPSHADOW                   0x1024
-#endif
-#endif
 #if defined(Q_WS_X11)
 #include "qx11info_x11.h"
 #include <qwidget.h>
@@ -223,15 +217,6 @@ QWhatsThat::QWhatsThat(const QString& txt, QWidget* parent, QWidget *showTextFor
                                         + Qt::TextWordWrap + Qt::TextExpandTabs,
                                         text);
     }
-#if defined(Q_WS_WIN)
-    if ((QSysInfo::WindowsVersion >= QSysInfo::WV_XP
-        && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based)))
-    {
-        BOOL shadow;
-        SystemParametersInfo(SPI_GETDROPSHADOW, 0, &shadow, 0);
-        shadowWidth = shadow ? 0 : 6;
-    }
-#endif
     resize(r.width() + 2*hMargin + shadowWidth, r.height() + 2*vMargin + shadowWidth);
 }
 
@@ -300,23 +285,9 @@ void QWhatsThat::keyPressEvent(QKeyEvent*)
 
 void QWhatsThat::paintEvent(QPaintEvent*)
 {
-    bool drawShadow = true;
-#if defined(Q_WS_WIN)
-    if ((QSysInfo::WindowsVersion >= QSysInfo::WV_XP
-        && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based)))
-    {
-        BOOL shadow;
-        SystemParametersInfo(SPI_GETDROPSHADOW, 0, &shadow, 0);
-        drawShadow = !shadow;
-    }
-#elif defined(Q_WS_MAC)
-    drawShadow = false; // never draw it on OS X, as we get it for free
-#endif
-
     QRect r = rect();
     r.adjust(0, 0, -1, -1);
-    if (drawShadow)
-        r.adjust(0, 0, -shadowWidth, -shadowWidth);
+    r.adjust(0, 0, -shadowWidth, -shadowWidth);
     QPainter p(this);
     p.drawPixmap(0, 0, background);
     p.setPen(QPen(palette().toolTipText(), 0));
@@ -326,19 +297,20 @@ void QWhatsThat::paintEvent(QPaintEvent*)
     int h = r.height();
     p.setPen(palette().brush(QPalette::Dark).color());
     p.drawRect(1, 1, w-2, h-2);
-    if (drawShadow) {
-        p.setPen(palette().shadow().color());
-        p.drawPoint(w + 5, 6);
-        p.drawLine(w + 3, 6, w + 5, 8);
-        p.drawLine(w + 1, 6, w + 5, 10);
-        int i;
-        for(i=7; i < h; i += 2)
-            p.drawLine(w, i, w + 5, i + 5);
-        for(i = w - i + h; i > 6; i -= 2)
-            p.drawLine(i, h, i + 5, h + 5);
-        for(; i > 0 ; i -= 2)
-            p.drawLine(6, h + 6 - i, i + 5, h + 5);
-    }
+
+    // draw shadow
+    p.setPen(palette().shadow().color());
+    p.drawPoint(w + 5, 6);
+    p.drawLine(w + 3, 6, w + 5, 8);
+    p.drawLine(w + 1, 6, w + 5, 10);
+    int i;
+    for(i=7; i < h; i += 2)
+        p.drawLine(w, i, w + 5, i + 5);
+    for(i = w - i + h; i > 6; i -= 2)
+        p.drawLine(i, h, i + 5, h + 5);
+    for(; i > 0 ; i -= 2)
+        p.drawLine(6, h + 6 - i, i + 5, h + 5);
+
     r.adjust(0, 0, 1, 1);
     p.setPen(palette().toolTipText().color());
     r.adjust(hMargin, vMargin, -hMargin, -vMargin);

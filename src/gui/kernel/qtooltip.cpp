@@ -38,9 +38,6 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifdef Q_WS_MAC
-# include <qcore_mac_p.h>
-#endif
 
 #include <qapplication.h>
 #include <qdesktopwidget.h>
@@ -59,11 +56,6 @@
 #include <qstylesheetstyle_p.h>
 #include <qbasictimer.h>
 #ifndef QT_NO_TOOLTIP
-
-#ifdef Q_WS_MAC
-# include <qcore_mac_p.h>
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -343,15 +335,7 @@ void QTipLabel::placeTip(const QPoint &pos, QWidget *w)
 #endif //QT_NO_STYLE_STYLESHEET
 
     const QRect screen = QApplication::desktop()->screenGeometry(getTipScreen(pos, w));
-
-    QPoint p = pos;
-    p += QPoint(2,
-#ifdef Q_WS_WIN
-                21
-#else
-                16
-#endif
-        );
+    QPoint p = pos + QPoint(2, 16);
     if (p.x() + this->width() > screen.x() + screen.width())
         p.rx() -= 4 + this->width();
     if (p.y() + this->height() > screen.y() + screen.height())
