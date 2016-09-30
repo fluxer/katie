@@ -359,19 +359,24 @@ set(GUI_PUBLIC_HEADERS
     QStandardItem
     QCloseEvent
     QResizeEvent
+    QMoveEvent
     QShowEvent
+    QHideEvent
     QFocusEvent
     QMouseEvent
     QKeyEvent
     QWheelEvent
     QTouchEvent
     QDragEnterEvent
+    QPaintEvent
     QHelpEvent
     QContextMenuEvent
     QGraphicsSceneEvent
     QGraphicsSceneHelpEvent
     QGraphicsSceneMoveEvent
     QGraphicsSceneMouseEvent
+    QStyleOptionGraphicsItem
+    QStyleOptionFocusRect
     QItemSelection
     QIntValidator
     QFontMetricsF
