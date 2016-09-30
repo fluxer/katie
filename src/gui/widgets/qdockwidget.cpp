@@ -1051,12 +1051,6 @@ void QDockWidgetPrivate::setWindowState(bool floating, bool unplug, const QRect 
 
     q->setWindowFlags(flags);
 
-#if defined(Q_WS_MAC) && !defined(QT_MAC_USE_COCOA)
-    if (floating && nativeDeco && (q->features() & QDockWidget::DockWidgetVerticalTitleBar)) {
-        ChangeWindowAttributes(HIViewGetWindow(HIViewRef(q->winId())), kWindowSideTitlebarAttribute, 0);
-    }
-#endif
-
     if (!rect.isNull())
         q->setGeometry(rect);
 

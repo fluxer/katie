@@ -310,13 +310,6 @@ void QGroupBox::setAlignment(int alignment)
 
 /*! \reimp
 */
-void QGroupBox::resizeEvent(QResizeEvent *e)
-{
-    QWidget::resizeEvent(e);
-}
-
-/*! \reimp
-*/
 
 void QGroupBox::paintEvent(QPaintEvent *)
 {

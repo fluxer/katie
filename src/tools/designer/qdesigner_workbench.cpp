@@ -413,16 +413,13 @@ void QDesignerWorkbench::switchToDockedMode()
 #ifdef Q_WS_X11
     QApplication::setAttribute(Qt::AA_DontUseNativeMenuBar, false);
 #endif
-#ifndef Q_WS_MAC
     QDesignerToolWindow *widgetBoxWrapper = widgetBoxToolWindow();
     widgetBoxWrapper->action()->setVisible(true);
     widgetBoxWrapper->setWindowTitle(tr("Widget Box"));
-#endif
 
     m_mode = DockedMode;
     const QDesignerSettings settings(m_core);
     m_dockedMainWindow = new DockedMainWindow(this, m_toolbarMenu, m_toolWindows);
-    m_dockedMainWindow->setUnifiedTitleAndToolBarOnMac(true);
     m_dockedMainWindow->setCloseEventPolicy(MainWindowBase::EmitCloseEventSignal);
     connect(m_dockedMainWindow, SIGNAL(closeEventReceived(QCloseEvent*)), this, SLOT(handleCloseEvent(QCloseEvent*)));
     connect(m_dockedMainWindow, SIGNAL(fileDropped(QString)), this, SLOT(slotFileDropped(QString)));
@@ -431,10 +428,8 @@ void QDesignerWorkbench::switchToDockedMode()
 
     m_core->setTopLevel(m_dockedMainWindow);
 
-#ifndef Q_WS_MAC
     m_dockedMainWindow->setMenuBar(m_globalMenuBar);
     m_globalMenuBar->show();
-#endif
     qDesigner->setMainWindow(m_dockedMainWindow);
 
     foreach (QDesignerFormWindow *fw, m_formWindows) {

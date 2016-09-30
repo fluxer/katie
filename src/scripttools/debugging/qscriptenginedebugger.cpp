@@ -594,7 +594,6 @@ QMainWindow *QScriptEngineDebugger::standardWindow() const
     win->setCentralWidget(central);
 
     win->setWindowTitle(tr("Qt Script Debugger"));
-    win->setUnifiedTitleAndToolBarOnMac(true);
 
     QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
     QVariant geometry = settings.value(QLatin1String("Qt/scripttools/debugging/mainWindowGeometry"));

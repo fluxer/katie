@@ -78,42 +78,6 @@ inline static bool verticalTabs(QTabBar::Shape shape)
            || shape == QTabBar::TriangularEast;
 }
 
-void QTabBarPrivate::updateMacBorderMetrics()
-{
-#if (defined Q_WS_MAC) && (MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5)
-    if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_5) {
-        Q_Q(QTabBar);
-        ::HIContentBorderMetrics metrics;
-
-        // TODO: get metrics to preserve the bottom value
-        // TODO: test tab bar position
-
-        OSWindowRef window = qt_mac_window_for(q);
-
-        // push base line separator down to the client are so we can paint over it (Carbon)
-        metrics.top = (documentMode && q->isVisible()) ? 1 : 0;
-        metrics.bottom = 0;
-        metrics.left = 0;
-        metrics.right = 0;
-        qt_mac_updateContentBorderMetricts(window, metrics);
-#ifdef QT_MAC_USE_COCOA
-        // In Cocoa we need to keep track of the drawRect method.
-        // If documentMode is enabled we need to change it, unless
-        // a toolbar is present.
-        // Notice that all the information is kept in the window,
-        // that's why we get the private widget for it instead of
-        // the private widget for this widget.
-        QWidgetPrivate *privateWidget = qt_widget_private(q->window());
-        if(privateWidget)
-            privateWidget->changeMethods = documentMode;
-        // Since in Cocoa there is no simple way to remove the baseline, so we just ask the
-        // top level to do the magic for us.
-        privateWidget->syncUnifiedMode();
-#endif // QT_MAC_USE_COCOA
-    }
-#endif
-}
-
 /*!
     Initialize \a option with the values from the tab at \a tabIndex. This method
     is useful for subclasses when they need a QStyleOptionTab, QStyleOptionTabV2,
@@ -1395,15 +1359,6 @@ void QTabBar::showEvent(QShowEvent *)
         d->refresh();
     if (!d->validIndex(d->currentIndex))
         setCurrentIndex(0);
-    d->updateMacBorderMetrics();
-}
-
-/*!\reimp
- */
-void QTabBar::hideEvent(QHideEvent *)
-{
-    Q_D(QTabBar);
-    d->updateMacBorderMetrics();
 }
 
 /*!\reimp
@@ -1709,9 +1664,6 @@ void QTabBar::mousePressEvent(QMouseEvent *event)
         d->moveTabFinished(d->pressedIndex);
 
     d->pressedIndex = d->indexAtPos(event->pos());
-#ifdef Q_WS_MAC
-    d->previousPressedIndex = d->pressedIndex;
-#endif
     if (d->validIndex(d->pressedIndex)) {
         QStyleOptionTabBarBaseV2 optTabBase;
         optTabBase.init(this);
@@ -1736,7 +1688,7 @@ void QTabBar::mouseMoveEvent(QMouseEvent *event)
         if (d->pressedIndex != -1
             && event->buttons() == Qt::NoButton)
             d->moveTabFinished(d->pressedIndex);
-        
+
         // Start drag
         if (!d->dragInProgress && d->pressedIndex != -1) {
             if ((event->pos() - d->dragStartPosition).manhattanLength() > QApplication::startDragDistance()) {
@@ -1792,17 +1744,6 @@ void QTabBar::mouseMoveEvent(QMouseEvent *event)
 
             update();
         }
-#ifdef Q_WS_MAC
-    } else if (!d->documentMode && event->buttons() == Qt::LeftButton && d->previousPressedIndex != -1) {
-        int newPressedIndex = d->indexAtPos(event->pos());
-        if (d->pressedIndex == -1 && d->previousPressedIndex == newPressedIndex) {
-            d->pressedIndex = d->previousPressedIndex;
-            update(tabRect(d->pressedIndex));
-        } else if(d->pressedIndex != newPressedIndex) {
-            d->pressedIndex = -1;
-            update(tabRect(d->previousPressedIndex));
-        }
-#endif
     }
 
     if (event->buttons() != Qt::LeftButton) {
@@ -1895,9 +1836,6 @@ void QTabBar::mouseReleaseEvent(QMouseEvent *event)
         event->ignore();
         return;
     }
-#ifdef Q_WS_MAC
-    d->previousPressedIndex = -1;
-#endif
     if (d->movable && d->dragInProgress && d->validIndex(d->pressedIndex)) {
         int length = d->tabList[d->pressedIndex].dragOffset;
         int width = verticalTabs(d->shape)
@@ -2215,7 +2153,6 @@ void QTabBar::setDocumentMode(bool enabled)
     Q_D(QTabBar);
 
     d->documentMode = enabled;
-    d->updateMacBorderMetrics();
 }
 
 /*!

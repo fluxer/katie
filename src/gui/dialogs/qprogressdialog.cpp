@@ -679,9 +679,6 @@ void QProgressDialog::setValue(int progress)
                 d->shown_once = true;
             }
         }
-#ifdef Q_WS_MAC
-        QApplication::flush();
-#endif
     }
 
     if (progress == d->bar->maximum() && d->autoReset)

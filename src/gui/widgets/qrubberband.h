@@ -65,9 +65,6 @@ public:
 
     Shape shape() const;
 
-    void setGeometry(const QRect &r);
-
-    inline void setGeometry(int x, int y, int w, int h);
     inline void move(int x, int y);
     inline void move(const QPoint &p)
     { move(p.x(), p.y()); }
@@ -77,7 +74,6 @@ public:
     { resize(s.width(), s.height()); }
 
 protected:
-    bool event(QEvent *e);
     void paintEvent(QPaintEvent *);
     void changeEvent(QEvent *);
     void showEvent(QShowEvent *);
@@ -89,8 +85,6 @@ private:
     Q_DECLARE_PRIVATE(QRubberBand)
 };
 
-inline void QRubberBand::setGeometry(int ax, int ay, int aw, int ah)
-{ setGeometry(QRect(ax, ay, aw, ah)); }
 inline void QRubberBand::move(int ax, int ay)
 { setGeometry(ax, ay, width(), height()); }
 

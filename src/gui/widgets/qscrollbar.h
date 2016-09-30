@@ -72,7 +72,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void hideEvent(QHideEvent*);
-    void sliderChange(SliderChange change);
 #ifndef QT_NO_CONTEXTMENU
     void contextMenuEvent(QContextMenuEvent *);
 #endif

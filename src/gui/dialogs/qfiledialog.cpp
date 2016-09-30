@@ -531,14 +531,6 @@ QFileDialogPrivate::QFileDialogPrivate()
         defaultFileTypes(true),
         fileNameLabelExplicitlySat(false),
         nativeDialogInUse(false),
-#ifdef Q_WS_MAC
-        mDelegate(0),
-#ifndef QT_MAC_USE_COCOA
-        mDialog(0),
-        mDialogStarted(false),
-        mDialogClosed(true),
-#endif
-#endif
         qFileDialogUi(0)
 {
 }

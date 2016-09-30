@@ -54,11 +54,6 @@
 
 #if defined(Q_WS_X11)
 #include <qt_x11_p.h>
-#elif defined (Q_WS_WIN)
-#include "qt_windows.h"
-#endif
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
 #endif
 
 #include <qwidget_p.h>
@@ -91,9 +86,6 @@ public:
     Qt::Corner m_corner;
     bool gotMousePress;
     QWidget *tlw;
-#ifdef Q_WS_MAC
-    void updateMacSizer(bool hide) const;
-#endif
     Qt::Corner corner() const;
     inline bool atBottom() const
     {
@@ -128,10 +120,7 @@ public:
         bool showSizeGrip = !(q->isHidden() && q->testAttribute(Qt::WA_WState_ExplicitShowHide));
         updateTopLevelWidget();
         if (tlw && showSizeGrip) {
-            Qt::WindowStates sizeGripNotVisibleState = Qt::WindowFullScreen;
-#ifndef Q_WS_MAC
-            sizeGripNotVisibleState |= Qt::WindowMaximized;
-#endif
+            const Qt::WindowStates sizeGripNotVisibleState = Qt::WindowFullScreen | Qt::WindowMaximized;
             // Don't show the size grip if the tlw is maximized or in full screen mode.
             showSizeGrip = !(tlw->windowState() & sizeGripNotVisibleState);
         }
@@ -139,18 +128,6 @@ public:
             q->setVisible(true);
     }
 };
-
-#ifdef Q_WS_MAC
-void QSizeGripPrivate::updateMacSizer(bool hide) const
-{
-    Q_Q(const QSizeGrip);
-    if (QApplication::closingDown() || !parent)
-        return;
-    QWidget *topLevelWindow = qt_sizegrip_topLevelWidget(const_cast<QSizeGrip *>(q));
-    if(topLevelWindow && topLevelWindow->isWindow())
-        QWidgetPrivate::qt_mac_update_sizer(topLevelWindow, hide ? -1 : 1);
-}
-#endif
 
 Qt::Corner QSizeGripPrivate::corner() const
 {
@@ -316,19 +293,6 @@ void QSizeGrip::mousePressEvent(QMouseEvent * e)
         return;
     }
 #endif // Q_WS_X11
-#ifdef Q_WS_WIN
-    if (tlw->isWindow() && !tlw->testAttribute(Qt::WA_DontShowOnScreen) && !qt_widget_private(tlw)->hasHeightForWidth()) {
-        uint orientation = 0;
-        if (d->atBottom())
-            orientation = d->atLeft() ? SZ_SIZEBOTTOMLEFT : SZ_SIZEBOTTOMRIGHT;
-        else
-            orientation = d->atLeft() ? SZ_SIZETOPLEFT : SZ_SIZETOPRIGHT;
-
-        ReleaseCapture();
-        PostMessage(tlw->winId(), WM_SYSCOMMAND, orientation, 0);
-        return;
-    }
-#endif // Q_WS_WIN
 
     // Find available desktop/workspace geometry.
     QRect availableGeometry;
@@ -410,14 +374,6 @@ void QSizeGrip::mouseMoveEvent(QMouseEvent * e)
         && !tlw->testAttribute(Qt::WA_DontShowOnScreen) && !qt_widget_private(tlw)->hasHeightForWidth())
         return;
 #endif
-#ifdef Q_WS_WIN
-    if (tlw->isWindow() && GetSystemMenu(tlw->winId(), FALSE) != 0 && internalWinId()
-        && !tlw->testAttribute(Qt::WA_DontShowOnScreen) && !qt_widget_private(tlw)->hasHeightForWidth()) {
-        MSG msg;
-        while(PeekMessage(&msg, winId(), WM_MOUSEMOVE, WM_MOUSEMOVE, PM_REMOVE));
-        return;
-    }
-#endif
 
     QPoint np(e->globalPos());
 
@@ -483,36 +439,6 @@ void QSizeGrip::moveEvent(QMoveEvent * /*moveEvent*/)
 #endif
 }
 
-/*!
-  \reimp
-*/
-void QSizeGrip::showEvent(QShowEvent *showEvent)
-{
-#ifdef Q_WS_MAC
-    d_func()->updateMacSizer(false);
-#endif
-    QWidget::showEvent(showEvent);
-}
-
-/*!
-  \reimp
-*/
-void QSizeGrip::hideEvent(QHideEvent *hideEvent)
-{
-#ifdef Q_WS_MAC
-    d_func()->updateMacSizer(true);
-#endif
-    QWidget::hideEvent(hideEvent);
-}
-
-/*!
-    \reimp
-*/
-void QSizeGrip::setVisible(bool visible)
-{
-    QWidget::setVisible(visible);
-}
-
 /*! \reimp */
 bool QSizeGrip::eventFilter(QObject *o, QEvent *e)
 {
@@ -522,31 +448,13 @@ bool QSizeGrip::eventFilter(QObject *o, QEvent *e)
 		|| o != d->tlw) {
         return QWidget::eventFilter(o, e);
     }
-    Qt::WindowStates sizeGripNotVisibleState = Qt::WindowFullScreen;
-#ifndef Q_WS_MAC
-    sizeGripNotVisibleState |= Qt::WindowMaximized;
-#endif
+    const Qt::WindowStates sizeGripNotVisibleState = Qt::WindowFullScreen | Qt::WindowMaximized;
     // Don't show the size grip if the tlw is maximized or in full screen mode.
     setVisible(!(d->tlw->windowState() & sizeGripNotVisibleState));
     setAttribute(Qt::WA_WState_ExplicitShowHide, false);
     return QWidget::eventFilter(o, e);
 }
 
-/*!
-    \reimp
-*/
-bool QSizeGrip::event(QEvent *event)
-{
-    return QWidget::event(event);
-}
-
-#ifdef Q_WS_WIN
-/*! \reimp */
-bool QSizeGrip::winEvent( MSG *m, long *result )
-{
-    return QWidget::winEvent(m, result);
-}
-#endif
 
 QT_END_NAMESPACE
 

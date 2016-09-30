@@ -185,7 +185,6 @@ protected:
     bool event(QEvent *);
     void resizeEvent(QResizeEvent *);
     void showEvent(QShowEvent *);
-    void hideEvent(QHideEvent *);
     void paintEvent(QPaintEvent *);
     void mousePressEvent (QMouseEvent *);
     void mouseMoveEvent (QMouseEvent *);

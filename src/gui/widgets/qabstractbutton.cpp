@@ -217,13 +217,6 @@ void QButtonGroup::setExclusive(bool exclusive)
     d->exclusive = exclusive;
 }
 
-
-// TODO: Qt 5: Merge with addButton(QAbstractButton *button, int id)
-void QButtonGroup::addButton(QAbstractButton *button)
-{
-    addButton(button, -1);
-}
-
 void QButtonGroup::addButton(QAbstractButton *button, int id)
 {
     Q_D(QButtonGroup);
@@ -1296,11 +1289,6 @@ void QAbstractButton::changeEvent(QEvent *e)
     }
     QWidget::changeEvent(e);
 }
-
-/*!
-    \fn void QAbstractButton::paintEvent(QPaintEvent *e)
-    \reimp
-*/
 
 /*!
     \fn void QAbstractButton::pressed()

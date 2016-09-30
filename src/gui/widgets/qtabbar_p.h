@@ -177,7 +177,6 @@ public:
     void layoutTabs();
     void layoutWidgets(int start = 0);
     void layoutTab(int index);
-    void updateMacBorderMetrics();
     void setupMovableTab();
 
     void makeVisible(int index);

@@ -99,7 +99,6 @@ Q_SIGNALS:
     void currentChanged(int index);
 
 protected:
-    bool event(QEvent *e);
     virtual void itemInserted(int index);
     virtual void itemRemoved(int index);
     void showEvent(QShowEvent *e);

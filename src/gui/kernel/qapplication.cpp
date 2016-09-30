@@ -1336,7 +1336,6 @@ void QApplication::setStyle(QStyle *style)
     if (QApplicationPrivate::set_pal) {
         QApplication::setPalette(*QApplicationPrivate::set_pal);
     } else if (QApplicationPrivate::sys_pal) {
-        QApplicationPrivate::initializeWidgetPaletteHash();
         QApplicationPrivate::setPalette_helper(*QApplicationPrivate::sys_pal, /*className=*/0, /*clearWidgetPaletteHash=*/false);
     } else if (!QApplicationPrivate::sys_pal) {
         // Initialize the sys_pal if it hasn't happened yet...
@@ -4044,24 +4043,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         break;
     }
 #endif // QT_NO_GESTURES
-#ifdef QT_MAC_USE_COCOA
-    case QEvent::Enter:
-        if (receiver->isWidgetType()) {
-            QWidget *w = static_cast<QWidget *>(receiver);
-            if (w->testAttribute(Qt::WA_AcceptTouchEvents))
-                qt_widget_private(w)->registerTouchWindow(true);
-        }
-        res = d->notify_helper(receiver, e);
-    break;
-    case QEvent::Leave:
-        if (receiver->isWidgetType()) {
-            QWidget *w = static_cast<QWidget *>(receiver);
-            if (w->testAttribute(Qt::WA_AcceptTouchEvents))
-                qt_widget_private(w)->registerTouchWindow(false);
-        }
-        res = d->notify_helper(receiver, e);
-    break;
-#endif
     default:
         res = d->notify_helper(receiver, e);
         break;

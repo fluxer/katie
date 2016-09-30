@@ -56,38 +56,7 @@
 #include <qglobal.h>
 #include "qwindowsurface_p.h"
 
-#ifdef QT_MAC_USE_COCOA
-# include <qt_cocoa_helpers_mac_p.h>
-#endif // QT_MAC_USE_COCOA
-
 QT_BEGIN_NAMESPACE
-
-#ifdef Q_WS_WIN
-#define Q_WS_EX_LAYERED           0x00080000 // copied from WS_EX_LAYERED in winuser.h
-#define Q_LWA_ALPHA               0x00000002 // copied from LWA_ALPHA in winuser.h
-#define Q_ULW_ALPHA               0x00000002 // copied from ULW_ALPHA in winuser.h
-#define Q_AC_SRC_ALPHA            0x00000001 // copied from AC_SRC_ALPHA in winuser.h
-
-struct Q_UPDATELAYEREDWINDOWINFO {
-    DWORD cbSize;
-    HDC hdcDst;
-    const POINT *pptDst;
-    const SIZE *psize;
-    HDC hdcSrc;
-    const POINT *pptSrc;
-    COLORREF crKey;
-    const BLENDFUNCTION *pblend;
-    DWORD dwFlags;
-    const RECT *prcDirty;
-};
-
-typedef BOOL (WINAPI *PtrUpdateLayeredWindow)(HWND hwnd, HDC hdcDst, const POINT *pptDst,
-             const SIZE *psize, HDC hdcSrc, const POINT *pptSrc, COLORREF crKey,
-             const BLENDFUNCTION *pblend, DWORD dwflags);
-typedef BOOL (WINAPI *PtrUpdateLayeredWindowIndirect)(HWND hwnd, const Q_UPDATELAYEREDWINDOWINFO *pULWInfo);
-extern PtrUpdateLayeredWindow ptrUpdateLayeredWindow;
-extern PtrUpdateLayeredWindowIndirect ptrUpdateLayeredWindowIndirect;
-#endif
 
 class QPaintDevice;
 class QPoint;
@@ -109,13 +78,6 @@ public:
     void setGeometry(const QRect &rect);
     bool scroll(const QRegion &area, int dx, int dy);
     WindowSurfaceFeatures features() const;
-
-#ifdef QT_MAC_USE_COCOA
-    CGContextRef imageContext();
-
-    bool needsFlush;
-    QRegion regionToFlush;
-#endif // QT_MAC_USE_COCOA
 
 private:
 #if defined(Q_WS_X11) && !defined(QT_NO_XSHM)

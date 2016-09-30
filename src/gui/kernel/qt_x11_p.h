@@ -340,7 +340,6 @@ enum DesktopEnvironment {
     DE_KDE,
     DE_GNOME,
     DE_CDE,
-    DE_MEEGO_COMPOSITOR,
     DE_4DWM
 };
 
@@ -577,7 +576,6 @@ struct QX11Data
         DTWM_IS_RUNNING,
         ENLIGHTENMENT_DESKTOP,
         _DT_SAVE_MODE,
-        _SGI_DESKS_MANAGER,
 
         // EWMH (aka NETWM)
         _NET_SUPPORTED,

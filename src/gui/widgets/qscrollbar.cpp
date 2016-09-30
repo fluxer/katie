@@ -455,12 +455,6 @@ QSize QScrollBar::sizeHint() const
 
     return style()->sizeFromContents(QStyle::CT_ScrollBar, &opt, size, this)
         .expandedTo(QApplication::globalStrut());
- }
-
-/*!\reimp */
-void QScrollBar::sliderChange(SliderChange change)
-{
-    QAbstractSlider::sliderChange(change);
 }
 
 /*!

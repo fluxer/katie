@@ -284,7 +284,6 @@ public:
 
     static void setSystemPalette(const QPalette &pal);
     static void setPalette_helper(const QPalette &palette, const char* className, bool clearWidgetPaletteHash);
-    static void initializeWidgetPaletteHash();
     static void setSystemFont(const QFont &font);
 
 #if defined(Q_WS_X11)

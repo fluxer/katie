@@ -443,7 +443,7 @@ public:
     void setConstraints_sys();
     bool pointInsideRectAndMask(const QPoint &) const;
     QWidget *childAt_helper(const QPoint &, bool) const;
-    QWidget *childAtRecursiveHelper(const QPoint &p, bool, bool includeFrame = false) const;
+    QWidget *childAtRecursiveHelper(const QPoint &p, bool) const;
     void updateGeometry_helper(bool forceUpdate);
 
     void getLayoutItemMargins(int *left, int *top, int *right, int *bottom) const;

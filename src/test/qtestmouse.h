@@ -101,11 +101,7 @@ namespace QTest
                 break;
             case MouseMove:
                 QCursor::setPos(widget->mapToGlobal(pos));
-#ifdef QT_MAC_USE_COCOA
-                QTest::qWait(20);
-#else
                 qApp->processEvents();
-#endif
                 return;
             default:
                 QTEST_ASSERT(false);

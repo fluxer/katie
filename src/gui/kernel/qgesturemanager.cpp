@@ -74,27 +74,11 @@ QGestureManager::QGestureManager(QObject *parent)
     : QObject(parent), state(NotGesture), m_lastCustomGestureId(Qt::CustomGesture)
 {
     qRegisterMetaType<Qt::GestureState>();
-
-#if defined(Q_WS_MAC)
-    registerGestureRecognizer(new QMacSwipeGestureRecognizer);
-    registerGestureRecognizer(new QMacPinchGestureRecognizer);
-  #if defined(QT_MAC_USE_COCOA)
-    registerGestureRecognizer(new QMacPanGestureRecognizer);
-  #endif
-#else
     registerGestureRecognizer(new QPanGestureRecognizer);
     registerGestureRecognizer(new QPinchGestureRecognizer);
     registerGestureRecognizer(new QSwipeGestureRecognizer);
     registerGestureRecognizer(new QTapGestureRecognizer);
-#endif
-#if defined(Q_OS_WIN)
-  #if !defined(QT_NO_NATIVE_GESTURES)
-    if (QApplicationPrivate::HasTouchSupport)
-        registerGestureRecognizer(new QWinNativePanGestureRecognizer);
-  #endif
-#else
     registerGestureRecognizer(new QTapAndHoldGestureRecognizer);
-#endif
 }
 
 QGestureManager::~QGestureManager()

@@ -2064,9 +2064,7 @@ void QDockAreaLayoutInfo::updateSeparatorWidgets() const
         }
         j++;
 
-#ifndef QT_MAC_USE_COCOA
         sepWidget->raise();
-#endif
         QRect sepRect = separatorRect(i).adjusted(-2, -2, 2, 2);
         sepWidget->setGeometry(sepRect);
         sepWidget->setMask( QRegion(separatorRect(i).translated( - sepRect.topLeft())));
@@ -3177,9 +3175,7 @@ void QDockAreaLayout::updateSeparatorWidgets() const
         }
         j++;
 
-#ifndef QT_MAC_USE_COCOA
         sepWidget->raise();
-#endif
         QRect sepRect = separatorRect(i).adjusted(-2, -2, 2, 2);
         sepWidget->setGeometry(sepRect);
         sepWidget->setMask( QRegion(separatorRect(i).translated( - sepRect.topLeft())));

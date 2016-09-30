@@ -1266,10 +1266,6 @@ void QTextLayout::drawCursor(QPainter *p, const QPointF &pos, int cursorPosition
                               && (p->transform().type() > QTransform::TxTranslate);
     if (toggleAntialiasing)
         p->setRenderHint(QPainter::Antialiasing);
-#if defined(QT_MAC_USE_COCOA)
-    // Always draw the cursor aligned to pixel boundary.
-    x = qRound(x);
-#endif
     p->fillRect(QRectF(x, y, qreal(width), (base + descent + 1).toReal()), p->pen().brush());
     if (toggleAntialiasing)
         p->setRenderHint(QPainter::Antialiasing, false);

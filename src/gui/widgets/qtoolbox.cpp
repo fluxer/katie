@@ -794,12 +794,6 @@ void QToolBox::itemRemoved(int index)
     \sa setMargin(), QWidget::getContentsMargins()
 */
 
-/*! \reimp */
-bool QToolBox::event(QEvent *e)
-{
-    return QFrame::event(e);
-}
-
 QT_END_NAMESPACE
 
 #include "moc_qtoolbox.cpp"

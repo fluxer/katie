@@ -127,7 +127,6 @@ Q_SIGNALS:
     void toggled(bool checked);
 
 protected:
-    virtual void paintEvent(QPaintEvent *e) = 0;
     virtual bool hitButton(const QPoint &pos) const;
     virtual void checkStateSet();
     virtual void nextCheckState();

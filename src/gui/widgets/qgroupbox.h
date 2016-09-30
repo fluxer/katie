@@ -91,7 +91,6 @@ Q_SIGNALS:
 protected:
     bool event(QEvent *event);
     void childEvent(QChildEvent *event);
-    void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
     void focusInEvent(QFocusEvent *event);
     void changeEvent(QEvent *event);

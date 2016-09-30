@@ -251,16 +251,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
 
     isWidget = true;
     memset(high_attributes, 0, sizeof(high_attributes));
-#ifdef QT_MAC_USE_COCOA
-    drawRectOriginalAdded = false;
-    originalDrawMethod = true;
-    changeMethods = false;
-    isInUnifiedToolbar = false;
-    unifiedSurface = 0;
-    toolbar_ancestor = 0;
-    flushRequested = false;
-    touchEventsEnabled = false;
-#endif // QT_MAC_USE_COCOA
 #ifdef QWIDGET_EXTRA_DEBUG
     static int count = 0;
     qDebug() << "widgets" << ++count;
@@ -1473,15 +1463,6 @@ QWidget::~QWidget()
 
     d->blockSig = blocked;
 
-#ifdef QT_MAC_USE_COCOA
-    // QCocoaView holds a pointer back to this widget. Clear it now
-    // to make sure it's not followed later on. The lifetime of the
-    // QCocoaView might exceed the lifetime of this widget in cases
-    // where Cocoa itself holds references to it.
-    extern void qt_mac_clearCocoaViewQWidgetPointers(QWidget *);
-    qt_mac_clearCocoaViewQWidgetPointers(this);
-#endif
-
     if (!d->children.isEmpty())
         d->deleteChildren();
 
@@ -1562,9 +1543,7 @@ void QWidgetPrivate::createTLExtra()
         x->inTopLevelResize = false;
         x->inRepaint = false;
         x->embedded = 0;
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-        x->wasMaximized = false;
-#endif // Q_WS_MAC && QT_MAC_USE_COCOA
+
         createTLSysExtra();
 #ifdef QWIDGET_EXTRA_DEBUG
         static int count = 0;
@@ -1910,11 +1889,6 @@ void QWidgetPrivate::subtractOpaqueSiblings(QRegion &sourceRegion, bool *hasDirt
     static int disableSubtractOpaqueSiblings = qgetenv("QT_NO_SUBTRACTOPAQUESIBLINGS").toInt();
     if (disableSubtractOpaqueSiblings || q->isWindow())
         return;
-
-#ifdef QT_MAC_USE_COCOA
-    if (q->d_func()->isInUnifiedToolbar)
-        return;
-#endif // QT_MAC_USE_COCOA
 
     QRect clipBoundingRect;
     bool dirtyClipBoundingRect = true;
@@ -2829,15 +2803,6 @@ bool QWidget::isFullScreen() const
 */
 void QWidget::showFullScreen()
 {
-#ifdef Q_WS_MAC
-    // If the unified toolbar is enabled, we have to disable it before going fullscreen.
-    QMainWindow *mainWindow = qobject_cast<QMainWindow*>(this);
-    if (mainWindow && mainWindow->unifiedTitleAndToolBarOnMac()) {
-        mainWindow->setUnifiedTitleAndToolBarOnMac(false);
-        QMainWindowLayout *mainLayout = qobject_cast<QMainWindowLayout*>(mainWindow->layout());
-        mainLayout->activateUnifiedToolbarAfterFullScreen = true;
-    }
-#endif // Q_WS_MAC
     ensurePolished();
 
     setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowMaximized))
@@ -2862,18 +2827,6 @@ void QWidget::showMaximized()
 
     setWindowState((windowState() & ~(Qt::WindowMinimized | Qt::WindowFullScreen))
                    | Qt::WindowMaximized);
-#ifdef Q_WS_MAC
-    // If the unified toolbar was enabled before going fullscreen, we have to enable it back.
-    QMainWindow *mainWindow = qobject_cast<QMainWindow*>(this);
-    if (mainWindow)
-    {
-        QMainWindowLayout *mainLayout = qobject_cast<QMainWindowLayout*>(mainWindow->layout());
-        if (mainLayout->activateUnifiedToolbarAfterFullScreen) {
-            mainWindow->setUnifiedTitleAndToolBarOnMac(true);
-            mainLayout->activateUnifiedToolbarAfterFullScreen = false;
-        }
-    }
-#endif // Q_WS_MAC
     show();
 }
 
@@ -2891,18 +2844,6 @@ void QWidget::showNormal()
     setWindowState(windowState() & ~(Qt::WindowMinimized
                                      | Qt::WindowMaximized
                                      | Qt::WindowFullScreen));
-#ifdef Q_WS_MAC
-    // If the unified toolbar was enabled before going fullscreen, we have to enable it back.
-    QMainWindow *mainWindow = qobject_cast<QMainWindow*>(this);
-    if (mainWindow)
-    {
-        QMainWindowLayout *mainLayout = qobject_cast<QMainWindowLayout*>(mainWindow->layout());
-        if (mainLayout->activateUnifiedToolbarAfterFullScreen) {
-            mainWindow->setUnifiedTitleAndToolBarOnMac(true);
-            mainLayout->activateUnifiedToolbarAfterFullScreen = false;
-        }
-    }
-#endif // Q_WS_MAC
     show();
 }
 
@@ -5002,19 +4943,8 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
     if (rgn.isEmpty())
         return;
 
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-    if (qt_mac_clearDirtyOnWidgetInsideDrawWidget)
-        dirtyOnWidget = QRegion();
-
-    // We disable the rendering of QToolBar in the backingStore if
-    // it's supposed to be in the unified toolbar on Mac OS X.
-    if (backingStore && isInUnifiedToolbar)
-        return;
-#endif // Q_WS_MAC && QT_MAC_USE_COCOA
-
-
     Q_Q(QWidget);
-#if !defined(QT_NO_GRAPHICSEFFECT) && !defined(Q_WS_MAC)
+#if !defined(QT_NO_GRAPHICSEFFECT)
     if (graphicsEffect && graphicsEffect->isEnabled()) {
         QGraphicsEffectSource *source = graphicsEffect->d_func()->source;
         QWidgetEffectSourcePrivate *sourced = static_cast<QWidgetEffectSourcePrivate *>
@@ -6502,18 +6432,6 @@ void QWidget::setGeometry(const QRect &r)
 */
 QByteArray QWidget::saveGeometry() const
 {
-#ifdef QT_MAC_USE_COCOA
-    // We check if the window was maximized during this invocation. If so, we need to record the
-    // starting position as 0,0.
-    Q_D(const QWidget);
-    QRect newFramePosition = frameGeometry();
-    QRect newNormalPosition = normalGeometry();
-    if(d->topData()->wasMaximized && !(windowState() & Qt::WindowMaximized)) {
-        // Change the starting position
-        newFramePosition.moveTo(0, 0);
-        newNormalPosition.moveTo(0, 0);
-    }
-#endif // QT_MAC_USE_COCOA
     QByteArray array;
     QDataStream stream(&array, QIODevice::WriteOnly);
     stream.setVersion(QDataStream::Qt_4_0);
@@ -6523,13 +6441,8 @@ QByteArray QWidget::saveGeometry() const
     stream << magicNumber
            << majorVersion
            << minorVersion
-#ifdef QT_MAC_USE_COCOA
-           << newFramePosition
-           << newNormalPosition
-#else
            << frameGeometry()
            << normalGeometry()
-#endif // QT_MAC_USE_COCOA
            << qint32(QApplication::desktop()->screenNumber(this))
            << quint8(windowState() & Qt::WindowMaximized)
            << quint8(windowState() & Qt::WindowFullScreen);
@@ -7369,23 +7282,6 @@ void QWidgetPrivate::hideChildren(bool spontaneous)
         QWidget *widget = qobject_cast<QWidget*>(childList.at(i));
         if (!widget || widget->isWindow() || widget->testAttribute(Qt::WA_WState_Hidden))
             continue;
-#ifdef QT_MAC_USE_COCOA
-        // Before doing anything we need to make sure that we don't leave anything in a non-consistent state.
-        // When hiding a widget we need to make sure that no mouse_down events are active, because
-        // the mouse_up event will never be received by a hidden widget or one of its descendants.
-        // The solution is simple, before going through with this we check if there are any mouse_down events in
-        // progress, if so we check if it is related to this widget or not. If so, we just reset the mouse_down and
-        // then we continue.
-        // In X11 and Windows we send a mouse_release event, however we don't do that here because we were already
-        // ignoring that from before. I.e. Carbon did not send the mouse release event, so we will not send the
-        // mouse release event. There are two ways to interpret this:
-        // 1. If we don't send the mouse release event, the widget might get into an inconsistent state, i.e. it
-        // might be waiting for a release event that will never arrive.
-        // 2. If we send the mouse release event, then the widget might decide to trigger an action that is not
-        // supposed to trigger because it is not visible.
-        if(widget == qt_button_down)
-            qt_button_down = 0;
-#endif // QT_MAC_USE_COCOA
         if (spontaneous)
             widget->setAttribute(Qt::WA_Mapped, false);
         else
@@ -7403,7 +7299,7 @@ void QWidgetPrivate::hideChildren(bool spontaneous)
                 widget->d_func()->hide_sys();
             }
         }
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
         qApp->d_func()->sendSyntheticEnterLeave(widget);
 #endif
 #ifndef QT_NO_ACCESSIBILITY
@@ -9376,26 +9272,13 @@ QWidget *QWidgetPrivate::childAt_helper(const QPoint &p, bool ignoreChildrenInDe
     if (children.isEmpty())
         return 0;
 
-#ifdef Q_WS_MAC
-    Q_Q(const QWidget);
-    // Unified tool bars on the Mac require special handling since they live outside
-    // QMainWindow's geometry(). See commit: 35667fd45ada49269a5987c235fdedfc43e92bb8
-    bool includeFrame = q->isWindow() && qobject_cast<const QMainWindow *>(q)
-                        && static_cast<const QMainWindow *>(q)->unifiedTitleAndToolBarOnMac();
-    if (includeFrame)
-        return childAtRecursiveHelper(p, ignoreChildrenInDestructor, includeFrame);
-#endif
-
     if (!pointInsideRectAndMask(p))
         return 0;
     return childAtRecursiveHelper(p, ignoreChildrenInDestructor);
 }
 
-QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChildrenInDestructor, bool includeFrame) const
+QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChildrenInDestructor) const
 {
-#ifndef Q_WS_MAC
-    Q_UNUSED(includeFrame);
-#endif
     for (int i = children.size() - 1; i >= 0; --i) {
         QWidget *child = qobject_cast<QWidget *>(children.at(i));
         if (!child || child->isWindow() || child->isHidden() || child->testAttribute(Qt::WA_TransparentForMouseEvents)
@@ -9405,14 +9288,6 @@ QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChil
 
         // Map the point 'p' from parent coordinates to child coordinates.
         QPoint childPoint = p;
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-        // 'includeFrame' is true if the child's parent is a top-level QMainWindow with an unified tool bar.
-        // An unified tool bar on the Mac lives outside QMainWindow's geometry(), so a normal
-        // QWidget::mapFromParent won't do the trick.
-        if (includeFrame && qobject_cast<QToolBar *>(child) && qt_widget_private(child)->isInUnifiedToolbar)
-            childPoint = qt_mac_nativeMapFromParent(child, p);
-        else
-#endif
         childPoint -= child->data->crect.topLeft();
 
         // Check if the point hits the child.
@@ -9582,15 +9457,9 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
         desktopWidget = parent;
     bool newParent = (parent != parentWidget()) || !wasCreated || desktopWidget;
 
-#if defined(Q_WS_X11) || defined(Q_WS_WIN) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
     if (newParent && parent && !desktopWidget) {
-        if (testAttribute(Qt::WA_NativeWindow) && !qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings)
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-            // On Mac, toolbars inside the unified title bar will never overlap with
-            // siblings in the content view. So we skip enforce native siblings in that case
-            && !d->isInUnifiedToolbar && parentWidget() && parentWidget()->isWindow()
-#endif // Q_WS_MAC && QT_MAC_USE_COCOA
-        )
+        if (testAttribute(Qt::WA_NativeWindow) && !qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings))
             parent->d_func()->enforceNativeChildren();
         else if (parent->d_func()->nativeChildrenForced() || parent->testAttribute(Qt::WA_PaintOnScreen))
             setAttribute(Qt::WA_NativeWindow);
@@ -10145,13 +10014,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
                 ic->setFocusWidget(0);
             }
         }
-        if (!qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings) && parentWidget()
-#if defined(Q_WS_MAC) && defined(QT_MAC_USE_COCOA)
-            // On Mac, toolbars inside the unified title bar will never overlap with
-            // siblings in the content view. So we skip enforce native siblings in that case
-            && !d->isInUnifiedToolbar && parentWidget()->isWindow()
-#endif // Q_WS_MAC && QT_MAC_USE_COCOA
-        )
+        if (!qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings) && parentWidget())
             parentWidget()->d_func()->enforceNativeChildren();
         if (on && !internalWinId() && testAttribute(Qt::WA_WState_Created))
             d->createWinId();
@@ -11861,10 +11724,8 @@ void QWidget::setMask(const QRegion &newMask)
     d->extra->mask = newMask;
     d->extra->hasMask = !newMask.isEmpty();
 
-#ifndef QT_MAC_USE_COCOA
     if (!testAttribute(Qt::WA_WState_Created))
         return;
-#endif
 
     d->setMask_sys(newMask);
 
@@ -11956,29 +11817,6 @@ void QWidget::clearMask()
     XRender extension is not supported on the X11 display, or if the
     handle could not be created.
 */
-
-
-#ifdef QT_MAC_USE_COCOA
-void QWidgetPrivate::syncUnifiedMode() {
-    // The whole purpose of this method is to keep the unifiedToolbar in sync.
-    // That means making sure we either exchange the drawing methods or we let
-    // the toolbar know that it does not require to draw the baseline.
-    Q_Q(QWidget);
-    // This function makes sense only if this is a top level
-    if(!q->isWindow())
-        return;
-    OSWindowRef window = qt_mac_window_for(q);
-    if(changeMethods) {
-        // Ok, we are in documentMode.
-        if(originalDrawMethod)
-            qt_mac_replaceDrawRect(window, this);
-    } else {
-        if(!originalDrawMethod)
-            qt_mac_replaceDrawRectOriginal(window, this);
-    }
-}
-
-#endif // QT_MAC_USE_COCOA
 
 QT_END_NAMESPACE
 

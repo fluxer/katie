@@ -63,8 +63,6 @@ public:
     QWidget *widget() const;
 
 protected:
-    bool event(QEvent *e);
-
     bool eventFilter(QObject *, QEvent *);
     void paintEvent(QPaintEvent *);
     void initStyleOption(QStyleOption *option) const;

@@ -330,11 +330,6 @@ QFocusFrame::eventFilter(QObject *o, QEvent *e)
     return false;
 }
 
-/*! \reimp */
-bool QFocusFrame::event(QEvent *e)
-{
-    return QWidget::event(e);
-}
 
 QT_END_NAMESPACE
 

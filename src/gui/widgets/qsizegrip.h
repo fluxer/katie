@@ -59,7 +59,6 @@ public:
     ~QSizeGrip();
 
     QSize sizeHint() const;
-    void setVisible(bool);
 
 protected:
     void paintEvent(QPaintEvent *);
@@ -67,15 +66,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *mouseEvent);
     void moveEvent(QMoveEvent *moveEvent);
-    void showEvent(QShowEvent *showEvent);
-    void hideEvent(QHideEvent *hideEvent);
     bool eventFilter(QObject *, QEvent *);
-    bool event(QEvent *);
-#ifdef Q_WS_WIN
-    bool winEvent(MSG *m, long *result);
-#endif
-
-public:
 
 private:
     Q_DECLARE_PRIVATE(QSizeGrip)

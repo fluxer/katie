@@ -85,7 +85,6 @@ Q_SIGNALS:
 protected:
     void showEvent(QShowEvent *);
     void paintEvent(QPaintEvent *);
-    void resizeEvent(QResizeEvent *);
 
     // ### Qt 5: consider making reformat() and hideOrShow() private
     void reformat();

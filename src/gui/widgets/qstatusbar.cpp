@@ -705,14 +705,6 @@ void QStatusBar::paintEvent(QPaintEvent *event)
 /*!
     \reimp
 */
-void QStatusBar::resizeEvent(QResizeEvent * e)
-{
-    QWidget::resizeEvent(e);
-}
-
-/*!
-    \reimp
-*/
 
 bool QStatusBar::event(QEvent *e)
 {
@@ -754,48 +746,8 @@ bool QStatusBar::event(QEvent *e)
             }
         }
     }
-    
-// On Mac OS X Leopard it is possible to drag the window by clicking
-// on the tool bar on most applications.
-#ifndef Q_WS_MAC
+
     return QWidget::event(e);
-#else
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_4)
-        return QWidget::event(e);
-
-    // Enable drag-click only if the status bar is the status bar for a
-    // QMainWindow with a unifed toolbar.
-    if (parent() == 0 || qobject_cast<QMainWindow *>(parent()) == 0 || 
-        qobject_cast<QMainWindow *>(parent())->unifiedTitleAndToolBarOnMac() == false )
-        return QWidget::event(e);
-
-    // Check for mouse events.
-    QMouseEvent *mouseEvent;
-    if (e->type() == QEvent::MouseButtonPress ||
-        e->type() == QEvent::MouseMove ||
-        e->type() == QEvent::MouseButtonRelease) {
-        mouseEvent = static_cast <QMouseEvent*>(e);
-    } else {
-        return QWidget::event(e);
-    }
-
-    // The following is a standard mouse drag handler.
-    if (e->type() == QEvent::MouseButtonPress && (mouseEvent->button() == Qt::LeftButton)) {
-        d->dragStart = mouseEvent->pos();
-    } else if (e->type() == QEvent::MouseMove){
-        if (d->dragStart == QPoint())
-            return QWidget::event(e);
-        QPoint pos = mouseEvent->pos();
-        QPoint delta = (pos - d->dragStart);
-        window()->move(window()->pos() + delta);
-    } else if (e->type() == QEvent::MouseButtonRelease && (mouseEvent->button() == Qt::LeftButton)){
-        d->dragStart = QPoint();
-    } else {
-        return QWidget::event(e);
-    }
-
-    return true;
-#endif
 }
 
 QT_END_NAMESPACE

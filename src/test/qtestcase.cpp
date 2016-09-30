@@ -66,25 +66,9 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifdef Q_OS_WIN
-#include <windows.h> // for Sleep
-#endif
-#ifdef Q_OS_UNIX
 #include <errno.h>
 #include <signal.h>
 #include <time.h>
-#endif
-
-#ifdef Q_WS_MAC
-#include <Carbon/Carbon.h> // for SetFrontProcess
-#ifdef QT_MAC_USE_COCOA
-#include <IOKit/pwr_mgt/IOPMLib.h>
-#else
-#include <Security/AuthSession.h>
-#endif
-#undef verify
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -1844,37 +1828,9 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
     int callgrindChildExitCode = 0;
 #endif
 
-#ifdef Q_WS_MAC
-     bool macNeedsActivate = qApp && (qstrcmp(qApp->metaObject()->className(), "QApplication") == 0);
-#ifdef QT_MAC_USE_COCOA
-     IOPMAssertionID powerID;
-#endif
-#endif
 #ifndef QT_NO_EXCEPTIONS
     try {
 #endif
-
- #if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-     SetErrorMode(SetErrorMode(0) | SEM_NOGPFAULTERRORBOX);
- #endif
-
-#ifdef Q_WS_MAC
-    // Starting with Qt 4.4, applications launched from the command line
-    // no longer get focus automatically. Since some tests might depend
-    // on this, call SetFrontProcess here to get the pre 4.4 behavior.
-    if (macNeedsActivate) {
-        ProcessSerialNumber psn = { 0, kCurrentProcess };
-        SetFrontProcess(&psn);
-#  ifdef QT_MAC_USE_COCOA
-        IOReturn ok = IOPMAssertionCreate(kIOPMAssertionTypeNoDisplaySleep, kIOPMAssertionLevelOn, &powerID);
-        if (ok != kIOReturnSuccess)
-            macNeedsActivate = false; // no need to release the assertion on exit.
-#  else
-        UpdateSystemActivity(1); // Wake the display.
-#  endif
-    }
-#endif
-
 
     QTestResult::reset();
 
@@ -1913,33 +1869,23 @@ int QTest::qExec(QObject *testObject, int argc, char **argv)
     }
 
 #ifndef QT_NO_EXCEPTIONS
-     } catch (...) {
-         QTestResult::addFailure("Caught unhandled exception", __FILE__, __LINE__);
-         if (QTestResult::currentTestFunction()) {
+    } catch (...) {
+        QTestResult::addFailure("Caught unhandled exception", __FILE__, __LINE__);
+        if (QTestResult::currentTestFunction()) {
              QTestResult::finishedCurrentTestFunction();
              QTestResult::setCurrentTestFunction(0);
-         }
+        }
 
         QTestLog::stopLogging();
-#ifdef QT_MAC_USE_COCOA
-         if (macNeedsActivate) {
-             IOPMAssertionRelease(powerID);
-         }
-#endif
-         currentTestObject = 0;
+        currentTestObject = 0;
 
-         // Rethrow exception to make debugging easier.
-         throw;
-         return 1;
-     }
+        // Rethrow exception to make debugging easier.
+        throw;
+        return 1;
+    }
 #  endif
 
     currentTestObject = 0;
-#ifdef QT_MAC_USE_COCOA
-     if (macNeedsActivate) {
-         IOPMAssertionRelease(powerID);
-     }
-#endif
 
 #if defined(QTEST_NOEXITCODE)
     return 0;

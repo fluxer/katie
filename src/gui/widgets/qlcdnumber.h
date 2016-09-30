@@ -111,8 +111,6 @@ protected:
     bool event(QEvent *e);
     void paintEvent(QPaintEvent *);
 
-public:
-
 private:
     Q_DISABLE_COPY(QLCDNumber)
     Q_DECLARE_PRIVATE(QLCDNumber)

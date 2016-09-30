@@ -632,11 +632,6 @@ QDesignerPropertySheet::QDesignerPropertySheet(QObject *object, QObject *parent)
 
         if (d->m_objectType == ObjectLabel)
             createFakeProperty(QLatin1String("buddy"), QVariant(QByteArray()));
-        /* We need to create a fake property since the property does not work
-         * for non-toplevel windows or on other systems than Mac and only if
-         * it is above a certain Mac OS version. */
-        if (qobject_cast<const QMainWindow *>(d->m_object))
-            createFakeProperty(QLatin1String("unifiedTitleAndToolBarOnMac"), false);
     }
 
     if (qobject_cast<const QDialog*>(object)) {

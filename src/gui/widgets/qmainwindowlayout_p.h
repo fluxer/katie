@@ -154,7 +154,6 @@ public:
 
     QMainWindow::DockOptions dockOptions;
     void setDockOptions(QMainWindow::DockOptions opts);
-    bool usesHIToolBar(QToolBar *toolbar) const;
 
     void timerEvent(QTimerEvent *e);
 

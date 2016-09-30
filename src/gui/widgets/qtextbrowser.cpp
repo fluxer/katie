@@ -979,30 +979,6 @@ void QTextBrowser::keyPressEvent(QKeyEvent *ev)
 /*!
     \reimp
 */
-void QTextBrowser::mouseMoveEvent(QMouseEvent *e)
-{
-    QTextEdit::mouseMoveEvent(e);
-}
-
-/*!
-    \reimp
-*/
-void QTextBrowser::mousePressEvent(QMouseEvent *e)
-{
-    QTextEdit::mousePressEvent(e);
-}
-
-/*!
-    \reimp
-*/
-void QTextBrowser::mouseReleaseEvent(QMouseEvent *e)
-{
-    QTextEdit::mouseReleaseEvent(e);
-}
-
-/*!
-    \reimp
-*/
 void QTextBrowser::focusOutEvent(QFocusEvent *ev)
 {
 #ifndef QT_NO_CURSOR
@@ -1248,12 +1224,6 @@ void QTextBrowser::setOpenLinks(bool open)
 {
     Q_D(QTextBrowser);
     d->openLinks = open;
-}
-
-/*! \reimp */
-bool QTextBrowser::event(QEvent *e)
-{
-    return QTextEdit::event(e);
 }
 
 QT_END_NAMESPACE
