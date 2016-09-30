@@ -10,7 +10,6 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_GEOM_VARIANT
     -DQT_NO_LIBRARY
     -DQT_NO_QOBJECT
-    -DQT_NO_STL
     -DQT_NO_SYSTEMLOCALE
     -DQT_NO_TEXTSTREAM
     -DQT_NO_THREAD
@@ -26,11 +25,6 @@ set(BOOTSTRAP_INCLUDES
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
-    ${CMAKE_SOURCE_DIR}/src/xml
-    ${CMAKE_SOURCE_DIR}/src/xml/dom
-    ${CMAKE_SOURCE_DIR}/src/xml/sax
     ${CMAKE_SOURCE_DIR}/src/core/arch
     ${CMAKE_SOURCE_DIR}/src/core/global
     ${CMAKE_SOURCE_DIR}/src/core/kernel
@@ -80,10 +74,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qstringlist.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvector.cpp
     ${CMAKE_SOURCE_DIR}/src/core/tools/qvsnprintf.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/xml/qxmlutils.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/xml/qxmlstream.cpp
-    ${CMAKE_SOURCE_DIR}/src/xml/dom/qdom.cpp
-    ${CMAKE_SOURCE_DIR}/src/xml/sax/qxml.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemengine_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfilesystemiterator_unix.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfsfileengine_unix.cpp

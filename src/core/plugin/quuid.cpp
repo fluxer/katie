@@ -833,7 +833,7 @@ QUuid QUuid::createUuid()
     static QThreadStorage<int *> uuidseed;
     if (!uuidseed.hasLocalData()) {
         int *pseed = new int;
-        static QBasicAtomicInt serial = Q_BASIC_ATOMIC_INITIALIZER(2);
+        static QAtomicInt serial = QAtomicInt(2);
         qsrand(*pseed = QDateTime::currentDateTime().toTime_t()
                 + quintptr(&pseed)
                 + serial.fetchAndAddRelaxed(1));

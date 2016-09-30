@@ -76,11 +76,9 @@ public:
     const uint recursive : 1;
     QAtomicInt contenders;
 
-#if !defined(Q_OS_LINUX) || defined(QT_LINUXBASE)
     volatile bool wakeup;
     pthread_mutex_t mutex;
     pthread_cond_t cond;
-#endif
 };
 
 QT_END_NAMESPACE

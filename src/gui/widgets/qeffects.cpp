@@ -101,9 +101,7 @@ static QAlphaWidget* q_blend = 0;
 QAlphaWidget::QAlphaWidget(QWidget* w, Qt::WindowFlags f)
     : QWidget(QApplication::desktop()->screen(QApplication::desktop()->screenNumber(w)), f)
 {
-#ifndef Q_WS_WIN
     setEnabled(false);
-#endif
     setAttribute(Qt::WA_NoSystemBackground, true);
     widget = w;
     alpha = 0;
@@ -353,9 +351,7 @@ static QRollEffect* q_roll = 0;
 QRollEffect::QRollEffect(QWidget* w, Qt::WindowFlags f, DirFlags orient)
     : QWidget(0, f), orientation(orient)
 {
-#ifndef Q_WS_WIN
     setEnabled(false);
-#endif
 
     widget = w;
     Q_ASSERT(widget);
@@ -508,10 +504,6 @@ void QRollEffect::scroll()
         qApp->removeEventFilter(this);
         if (widget) {
             if (!showWidget) {
-#ifdef Q_WS_WIN
-                setEnabled(true);
-                setFocus();
-#endif
                 widget->hide();
             } else {
                 //Since we are faking the visibility of the widget 

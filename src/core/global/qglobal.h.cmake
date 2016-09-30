@@ -139,9 +139,7 @@
 
 #ifdef __cplusplus
 
-#ifndef QT_NO_STL
 #include <algorithm>
-#endif
 
 #ifndef QT_NAMESPACE /* user namespace */
 
@@ -386,34 +384,11 @@ namespace QT_NAMESPACE {}
 #      define __has_extension __has_feature
 #    endif
 #  endif
-#  ifdef __APPLE__
-#    define Q_NO_DEPRECATED_CONSTRUCTORS
-#  endif
-#  if __GNUC__ == 2 && __GNUC_MINOR__ <= 7
-#    define Q_FULL_TEMPLATE_INSTANTIATION
-#  endif
-/* GCC 2.95 knows "using" but does not support it correctly */
-#  if __GNUC__ == 2 && __GNUC_MINOR__ <= 95
-#    define Q_NO_USING_KEYWORD
-#    define QT_NO_STL_WCHAR
-#  endif
-#  if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 95)
-#    define Q_ALIGNOF(type)   __alignof__(type)
-#    define Q_TYPEOF(expr)    __typeof__(expr)
-#    define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#  endif
-#  if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ >= 96)
-#    define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
-#    define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
-#  endif
-/* GCC 3.1 and GCC 3.2 wrongly define _SB_CTYPE_MACROS on HP-UX */
-#  if defined(Q_OS_HPUX) && __GNUC__ == 3 && __GNUC_MINOR__ >= 1
-#    define Q_WRONG_SB_CTYPE_MACROS
-#  endif
-/* GCC <= 3.3 cannot handle template friends */
-#  if __GNUC__ < 3 || (__GNUC__ == 3 && __GNUC_MINOR__ <= 3)
-#    define Q_NO_TEMPLATE_FRIENDS
-#  endif
+#  define Q_ALIGNOF(type)   __alignof__(type)
+#  define Q_TYPEOF(expr)    __typeof__(expr)
+#  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
+#  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
+#  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
 #  if (defined(Q_CC_GNU) || defined(Q_CC_INTEL)) && !defined(QT_MOC_CPP)
 #    define Q_PACKED __attribute__ ((__packed__))
 #    define Q_NO_PACKED_REFERENCE
@@ -753,31 +728,23 @@ namespace QT_NAMESPACE {}
 
 #if defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && !defined(Q_CC_CLANG)
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 403
-       /* C++0x features supported in GCC 4.3: */
-#      define Q_COMPILER_RVALUE_REFS
-#      define Q_COMPILER_DECLTYPE
-#    endif
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 404
-       /* C++0x features supported in GCC 4.4: */
-#      define Q_COMPILER_VARIADIC_TEMPLATES
-#      define Q_COMPILER_AUTO_FUNCTION
-#      define Q_COMPILER_AUTO_TYPE
-#      define Q_COMPILER_EXTERN_TEMPLATES
-#      define Q_COMPILER_DEFAULT_DELETE_MEMBERS
-#      define Q_COMPILER_CLASS_ENUM
-#      define Q_COMPILER_INITIALIZER_LISTS
-#    endif
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 405
-       /* C++0x features supported in GCC 4.5: */
-#      define Q_COMPILER_LAMBDA
-#      define Q_COMPILER_UNICODE_STRINGS
-#    endif
-#    if (__GNUC__ * 100 + __GNUC_MINOR__) >= 406
-       /* C++0x features supported in GCC 4.6: */
-#      define Q_COMPILER_CONSTEXPR
-#      define Q_COMPILER_NULLPTR
-#    endif
+     /* C++0x features supported in GCC 4.3: */
+#    define Q_COMPILER_RVALUE_REFS
+#    define Q_COMPILER_DECLTYPE
+     /* C++0x features supported in GCC 4.4: */
+#    define Q_COMPILER_VARIADIC_TEMPLATES
+#    define Q_COMPILER_AUTO_FUNCTION
+#    define Q_COMPILER_AUTO_TYPE
+#    define Q_COMPILER_EXTERN_TEMPLATES
+#    define Q_COMPILER_DEFAULT_DELETE_MEMBERS
+#    define Q_COMPILER_CLASS_ENUM
+#    define Q_COMPILER_INITIALIZER_LISTS
+#    /* C++0x features supported in GCC 4.5: */
+#    define Q_COMPILER_LAMBDA
+#    define Q_COMPILER_UNICODE_STRINGS
+#    /* C++0x features supported in GCC 4.6: */
+#    define Q_COMPILER_CONSTEXPR
+#    define Q_COMPILER_NULLPTR
 #  endif
 #endif
 
@@ -822,7 +789,7 @@ namespace QT_NAMESPACE {}
 #endif
 
 #ifndef Q_REQUIRED_RESULT
-#  if defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1))
+#  if defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
 #    define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  else
 #    define Q_REQUIRED_RESULT
@@ -938,7 +905,7 @@ redefine to built-in booleans to make autotests work properly */
 */
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
-#elif defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && (__GNUC__ - 0 > 3 || (__GNUC__ - 0 == 3 && __GNUC_MINOR__ - 0 >= 2))
+#elif defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
 #  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #else
 #  define Q_DECL_DEPRECATED
@@ -981,24 +948,15 @@ redefine to built-in booleans to make autotests work properly */
 
 #ifdef QT_ASCII_CAST_WARNINGS
 #  define QT_ASCII_CAST_WARN Q_DECL_DEPRECATED
-#  if defined(Q_CC_GNU) && __GNUC__ < 4
-     /* gcc < 4 doesn't like Q_DECL_DEPRECATED in front of constructors */
-#    define QT_ASCII_CAST_WARN_CONSTRUCTOR
-#  else
-#    define QT_ASCII_CAST_WARN_CONSTRUCTOR Q_DECL_CONSTRUCTOR_DEPRECATED
-#  endif
+#  define QT_ASCII_CAST_WARN_CONSTRUCTOR Q_DECL_CONSTRUCTOR_DEPRECATED
 #else
 #  define QT_ASCII_CAST_WARN
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
 #endif
 
 #if defined(__i386__)
-#  if defined(Q_CC_GNU)
-#if !defined(Q_CC_INTEL) && ((100*(__GNUC__ - 0) + 10*(__GNUC_MINOR__ - 0) + __GNUC_PATCHLEVEL__) >= 332)
+#  if defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
 #    define QT_FASTCALL __attribute__((regparm(3)))
-#else
-#    define QT_FASTCALL
-#endif
 #  else
 #     define QT_FASTCALL
 #  endif
@@ -1386,14 +1344,14 @@ public:
 #else
 
 // forward declaration, since qatomic.h needs qglobal.h
-template <typename T> class QBasicAtomicPointer;
+template <typename T> class QAtomicPointer;
 
 // POD for Q_GLOBAL_STATIC
 template <typename T>
 class QGlobalStatic
 {
 public:
-    QBasicAtomicPointer<T> pointer;
+    QAtomicPointer<T> pointer;
     bool destroyed;
 };
 
@@ -1417,7 +1375,7 @@ public:
 
 #define Q_GLOBAL_STATIC_INIT(TYPE, NAME)                                      \
         static QGlobalStatic<TYPE > this_ ## NAME                             \
-                            = { Q_BASIC_ATOMIC_INITIALIZER(0), false }
+                            = { QAtomicPointer<TYPE>(0), false }
 
 #define Q_GLOBAL_STATIC(TYPE, NAME)                                           \
     static TYPE *NAME()                                                       \
@@ -1617,13 +1575,7 @@ Q_DECLARE_TYPEINFO_BODY(TYPE, FLAGS)
 template <typename T>
 inline void qSwap(T &value1, T &value2)
 {
-#ifdef QT_NO_STL
-    const T t = value1;
-    value1 = value2;
-    value2 = t;
-#else
     std::swap(value1, value2);
-#endif
 }
 
 /*
@@ -1635,23 +1587,16 @@ inline void qSwap(T &value1, T &value2)
    types must declare a 'bool isDetached(void) const;' member for this
    to work.
 */
-#ifdef QT_NO_STL
-#define Q_DECLARE_SHARED_STL(TYPE)
-#else
-#define Q_DECLARE_SHARED_STL(TYPE) \
+#define Q_DECLARE_SHARED(TYPE)                                          \
+template <> inline bool qIsDetached<TYPE>(TYPE &t) { return t.isDetached(); } \
+template <> inline void qSwap<TYPE>(TYPE &value1, TYPE &value2) \
+{ qSwap(value1.data_ptr(), value2.data_ptr()); } \
 QT_END_NAMESPACE \
 namespace std { \
     template<> inline void swap<QT_PREPEND_NAMESPACE(TYPE)>(QT_PREPEND_NAMESPACE(TYPE) &value1, QT_PREPEND_NAMESPACE(TYPE) &value2) \
     { swap(value1.data_ptr(), value2.data_ptr()); } \
 } \
 QT_BEGIN_NAMESPACE
-#endif
-
-#define Q_DECLARE_SHARED(TYPE)                                          \
-template <> inline bool qIsDetached<TYPE>(TYPE &t) { return t.isDetached(); } \
-template <> inline void qSwap<TYPE>(TYPE &value1, TYPE &value2) \
-{ qSwap(value1.data_ptr(), value2.data_ptr()); } \
-Q_DECLARE_SHARED_STL(TYPE)
 
 /*
    QTypeInfo primitive specializations
@@ -1958,13 +1903,6 @@ Q_CORE_EXPORT int qrand();
 
 #ifdef QT_NO_CONCURRENT
 #  define QT_NO_QFUTURE
-#endif
-
-// gcc 3 version has problems with some of the
-// map/filter overloads.
-#if defined(Q_CC_GNU) && (__GNUC__ < 4)
-#  define QT_NO_CONCURRENT_MAP
-#  define QT_NO_CONCURRENT_FILTER
 #endif
 
 #if defined (__ELF__)

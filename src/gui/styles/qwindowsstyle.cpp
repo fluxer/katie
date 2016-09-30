@@ -405,7 +405,7 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
 
 #ifndef QT_NO_SLIDER
     case PM_SliderLength:
-        ret = int(QStyleHelper::dpiScaled(11.));
+        ret = 11;
         break;
 
         // Returns the number of pixels to use for the business part of the
@@ -453,11 +453,11 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
         break;
 
     case PM_SmallIconSize:
-        ret = int(QStyleHelper::dpiScaled(16.));
+        ret = 16;
         break;
 
     case PM_LargeIconSize:
-        ret = int(QStyleHelper::dpiScaled(32.));
+        ret = 32;
         break;
 
     case PM_IconViewIconSize:
@@ -465,24 +465,12 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
         break;
 
     case PM_DockWidgetTitleMargin:
-        ret = int(QStyleHelper::dpiScaled(2.));
+        ret = 2;
         break;
     case PM_DockWidgetTitleBarButtonMargin:
-        ret = int(QStyleHelper::dpiScaled(4.));
-        break;
-#if defined(Q_WS_WIN)
-    case PM_DockWidgetFrameWidth:
-#if defined(Q_OS_WINCE)
-        ret = GetSystemMetrics(SM_CXDLGFRAME);
-#else
-        ret = GetSystemMetrics(SM_CXFRAME);
-#endif
-        break;
-#else
     case PM_DockWidgetFrameWidth:
         ret = 4;
         break;
-#endif // Q_WS_WIN
     break;
 
 #endif // QT_NO_MENU
@@ -544,7 +532,7 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
         ret = 0;
         break;
     case PM_ToolBarHandleExtent:
-        ret = int(QStyleHelper::dpiScaled(10.));
+        ret = 10;
         break;
     default:
         ret = QCommonStyle::pixelMetric(pm, opt, widget);
@@ -3025,15 +3013,13 @@ QSize QWindowsStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
             int defwidth = 0;
             if (btn->features & QStyleOptionButton::AutoDefaultButton)
                 defwidth = 2 * proxy()->pixelMetric(PM_ButtonDefaultIndicator, btn, widget);
-            int minwidth = int(QStyleHelper::dpiScaled(75.));
-            int minheight = int(QStyleHelper::dpiScaled(23.));
+            const int minwidth = 75;
+            const int minheight = 23;
 
-#ifndef QT_QWS_SMALL_PUSHBUTTON
             if (w < minwidth + defwidth && !btn->text.isEmpty())
                 w = minwidth + defwidth;
             if (h < minheight + defwidth)
                 h = minheight + defwidth;
-#endif
             sz = QSize(w, h);
         }
         break;

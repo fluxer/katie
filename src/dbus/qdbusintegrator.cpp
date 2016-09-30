@@ -70,7 +70,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QBasicAtomicInt isDebugging = Q_BASIC_ATOMIC_INITIALIZER(-1);
+static QAtomicInt isDebugging = QAtomicInt(-1);
 #define qDBusDebug              if (::isDebugging == 0); else qDebug
 
 static const QString orgFreedesktopDBusString = QLatin1String(DBUS_SERVICE_DBUS);

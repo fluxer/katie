@@ -98,7 +98,7 @@
 
 /* Data structures */
 #cmakedefine QT_NO_QUUID_STRING
-#cmakedefine QT_NO_STL
+#cmakedefine QT_NO_STL_WCHAR
 #cmakedefine QT_NO_TEXTDATE
 #cmakedefine QT_NO_DATESTRING
 

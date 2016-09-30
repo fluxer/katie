@@ -40,115 +40,131 @@
 ****************************************************************************/
 
 #include "qnumeric.h"
-#include "qnumeric_p.h"
 
 QT_BEGIN_NAMESPACE
 
-#if defined(QT_NO_STL)
-/*!
-    Returns true if the double \a {d} is equivalent to infinity.
-*/
-Q_CORE_EXPORT bool qIsInf(double d)
-{
-    uchar *ch = (uchar *)&d;
-#ifdef QT_ARMFPA
-    return (ch[3] & 0x7f) == 0x7f && ch[2] == 0xf0;
-#else
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return (ch[0] & 0x7f) == 0x7f && ch[1] == 0xf0;
-    } else {
-        return (ch[7] & 0x7f) == 0x7f && ch[6] == 0xf0;
-    }
-#endif
-}
-
-/*!
-    Returns true if the double \a {d} is not a number (NaN).
-*/
-Q_CORE_EXPORT bool qIsNaN(double d)
-{
-    uchar *ch = (uchar *)&d;
-#ifdef QT_ARMFPA
-    return (ch[3] & 0x7f) == 0x7f && ch[2] > 0xf0;
-#else
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return (ch[0] & 0x7f) == 0x7f && ch[1] > 0xf0;
-    } else {
-        return (ch[7] & 0x7f) == 0x7f && ch[6] > 0xf0;
-    }
-#endif
-}
-
-/*!
-    Returns true if the double \a {d} is a finite number.
-*/
-Q_CORE_EXPORT bool qIsFinite(double d)
-{
-    uchar *ch = (uchar *)&d;
-#ifdef QT_ARMFPA
-    return (ch[3] & 0x7f) != 0x7f || (ch[2] & 0xf0) != 0xf0;
-#else
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return (ch[0] & 0x7f) != 0x7f || (ch[1] & 0xf0) != 0xf0;
-    } else {
-        return (ch[7] & 0x7f) != 0x7f || (ch[6] & 0xf0) != 0xf0;
-    }
-#endif
-}
-
-/*!
-    Returns true if the float \a {f} is equivalent to infinity.
-*/
-Q_CORE_EXPORT bool qIsInf(float f)
-{
-    uchar *ch = (uchar *)&f;
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return (ch[0] & 0x7f) == 0x7f && ch[1] == 0x80;
-    } else {
-        return (ch[3] & 0x7f) == 0x7f && ch[2] == 0x80;
-    }
-}
-
-/*!
-    Returns true if the float \a {f} is not a number (NaN).
-*/
-Q_CORE_EXPORT bool qIsNaN(float f)
-{
-    uchar *ch = (uchar *)&f;
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return (ch[0] & 0x7f) == 0x7f && ch[1] > 0x80;
-    } else {
-        return (ch[3] & 0x7f) == 0x7f && ch[2] > 0x80;
-    }
-}
-
-/*!
-    Returns true if the float \a {f} is a finite number.
-*/
-Q_CORE_EXPORT bool qIsFinite(float f)
-{
-    uchar *ch = (uchar *)&f;
-    if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
-        return (ch[0] & 0x7f) != 0x7f || (ch[1] & 0x80) != 0x80;
-    } else {
-        return (ch[3] & 0x7f) != 0x7f || (ch[2] & 0x80) != 0x80;
-    }
-}
-#endif // QT_NO_STL
-
-/*!
-    Returns the bit pattern of a signalling NaN as a double.
-*/
-Q_CORE_EXPORT double qSNaN() { return qt_snan(); }
-
-/*!
-    Returns the bit pattern of a quiet NaN as a double.
-*/
-Q_CORE_EXPORT double qQNaN() { return qt_qnan(); }
+#if !defined(Q_CC_MIPS)
 
 /*!
     Returns the bit pattern for an infinite number as a double.
 */
-Q_CORE_EXPORT double qInf() { return qt_inf(); }
+static const union { unsigned char c[8]; double d; } qt_be_inf_bytes = { { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 } };
+static const union { unsigned char c[8]; double d; } qt_le_inf_bytes = { { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f } };
+static const union { unsigned char c[8]; double d; } qt_armfpa_inf_bytes = { { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 } };
+Q_CORE_EXPORT double qInf()
+{
+#ifdef QT_ARMFPA
+    return qt_armfpa_inf_bytes.d;
+#else
+    return (QSysInfo::ByteOrder == QSysInfo::BigEndian
+            ? qt_be_inf_bytes.d
+            : qt_le_inf_bytes.d);
+#endif
+}
+
+/*!
+    Returns the bit pattern of a signalling NaN as a double.
+*/
+static const union { unsigned char c[8]; double d; } qt_be_snan_bytes = { { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 } };
+static const union { unsigned char c[8]; double d; } qt_le_snan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f } };
+static const union { unsigned char c[8]; double d; } qt_armfpa_snan_bytes = { { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 } };
+Q_CORE_EXPORT double qSNaN()
+{
+#ifdef QT_ARMFPA
+    return qt_armfpa_snan_bytes.d;
+#else
+    return (QSysInfo::ByteOrder == QSysInfo::BigEndian
+            ? qt_be_snan_bytes.d
+            : qt_le_snan_bytes.d);
+#endif
+}
+
+/*!
+    Returns the bit pattern of a quiet NaN as a double.
+*/
+static const union { unsigned char c[8]; double d; } qt_be_qnan_bytes = { { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 } };
+static const union { unsigned char c[8]; double d; } qt_le_qnan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0xff } };
+static const union { unsigned char c[8]; double d; } qt_armfpa_qnan_bytes = { { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 } };
+Q_CORE_EXPORT double qQNaN()
+{
+#ifdef QT_ARMFPA
+    return qt_armfpa_qnan_bytes.d;
+#else
+    return (QSysInfo::ByteOrder == QSysInfo::BigEndian
+            ? qt_be_qnan_bytes.d
+            : qt_le_qnan_bytes.d);
+#endif
+}
+
+#else // Q_CC_MIPS
+
+
+/*!
+    Returns the bit pattern for an infinite number as a double.
+*/
+static const unsigned char qt_be_inf_bytes[] = { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 };
+static const unsigned char qt_le_inf_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f };
+static const unsigned char qt_armfpa_inf_bytes[] = { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 };
+Q_CORE_EXPORT double qInf()
+{
+    const unsigned char *bytes;
+#ifdef QT_ARMFPA
+    bytes = qt_armfpa_inf_bytes;
+#else
+    bytes = (QSysInfo::ByteOrder == QSysInfo::BigEndian
+             ? qt_be_inf_bytes
+             : qt_le_inf_bytes);
+#endif
+
+    union { unsigned char c[8]; double d; } returnValue;
+    memcpy(returnValue.c, bytes, sizeof(returnValue.c));
+    return returnValue.d;
+}
+
+/*!
+    Returns the bit pattern of a signalling NaN as a double.
+*/
+static const unsigned char qt_be_snan_bytes[] = { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 };
+static const unsigned char qt_le_snan_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f };
+static const unsigned char qt_armfpa_snan_bytes[] = { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 };
+Q_CORE_EXPORT double qSNaN()
+{
+    const unsigned char *bytes;
+#ifdef QT_ARMFPA
+    bytes = qt_armfpa_snan_bytes;
+#else
+    bytes = (QSysInfo::ByteOrder == QSysInfo::BigEndian
+             ? qt_be_snan_bytes
+             : qt_le_snan_bytes);
+#endif
+
+    union { unsigned char c[8]; double d; } returnValue;
+    memcpy(returnValue.c, bytes, sizeof(returnValue.c));
+    return returnValue.d;
+}
+
+/*!
+    Returns the bit pattern of a quiet NaN as a double.
+*/
+static const unsigned char qt_be_qnan_bytes[] = { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 };
+static const unsigned char qt_le_qnan_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf8, 0xff };
+static const unsigned char qt_armfpa_qnan_bytes[] = { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 };
+Q_CORE_EXPORT double qQNaN()
+{
+    const unsigned char *bytes;
+#ifdef QT_ARMFPA
+    bytes = qt_armfpa_qnan_bytes;
+#else
+    bytes = (QSysInfo::ByteOrder == QSysInfo::BigEndian
+             ? qt_be_qnan_bytes
+             : qt_le_qnan_bytes);
+#endif
+
+    union { unsigned char c[8]; double d; } returnValue;
+    memcpy(returnValue.c, bytes, sizeof(returnValue.c));
+    return returnValue.d;
+}
+
+#endif // Q_CC_MIPS
 
 QT_END_NAMESPACE

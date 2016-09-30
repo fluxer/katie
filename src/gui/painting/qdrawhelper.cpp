@@ -6019,12 +6019,7 @@ static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int
     int dg = qGreen(*dst);
     int db = qBlue(*dst);
 
-    if (da != 255
-#if defined (Q_WS_WIN)
-        // Work around GDI messing up alpha channel
-        && qRed(*dst) <= da && qBlue(*dst) <= da && qGreen(*dst) <= da
-#endif
-        ) {
+    if (da != 255) {
 
         int a = qGray(coverage);
         sr = qt_div_255(qt_pow_rgb_invgamma[sr] * a);
@@ -6409,38 +6404,17 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
 
 void qInitDrawhelperAsm()
 {
-    qreal smoothing = qreal(1.7);
-
-#ifdef Q_WS_MAC
-    // decided by testing a few things on an iMac, should probably get this from the
-    // system...
-    smoothing = qreal(2.0);
-#endif
-
-#ifdef Q_WS_WIN
-    extern qreal qt_fontsmoothing_gamma; // qapplication_win.cpp
-    smoothing = qt_fontsmoothing_gamma;
-#endif
-
 #ifdef Q_WS_X11
-    Q_UNUSED(smoothing);
     for (int i=0; i<256; ++i) {
         qt_pow_rgb_gamma[i] = uchar(i);
         qt_pow_rgb_invgamma[i] = uchar(i);
     }
 #else
+    const qreal smoothing = qreal(1.7);
     for (int i=0; i<256; ++i) {
         qt_pow_rgb_gamma[i] = uchar(qRound(qPow(i / qreal(255.0), smoothing) * 255));
         qt_pow_rgb_invgamma[i] = uchar(qRound(qPow(i / qreal(255.), 1 / smoothing) * 255));
     }
-#endif
-
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    const qreal gray_gamma = 2.31;
-    for (int i=0; i<256; ++i)
-        qt_pow_gamma[i] = uint(qRound(qPow(i / qreal(255.), gray_gamma) * 2047));
-    for (int i=0; i<2048; ++i)
-        qt_pow_invgamma[i] = uchar(qRound(qPow(i / qreal(2047.0), 1 / gray_gamma) * 255));
 #endif
 }
 

@@ -61,9 +61,7 @@ QT_BEGIN_NAMESPACE
 
 /**
  * @file
- * @short Contains class Numeric. This file was originally called qnumeric_p.h,
- * but various build systems cannot handle that that name happens to be
- * identical to another one, the one in QtCore.
+ * @short Contains class Numeric.
  */
 
 namespace QPatternist

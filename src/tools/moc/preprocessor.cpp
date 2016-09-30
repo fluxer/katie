@@ -41,7 +41,6 @@
 
 #include "preprocessor.h"
 #include "utils.h"
-#include <QStringList>
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>

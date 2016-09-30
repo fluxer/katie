@@ -25,7 +25,7 @@
 
 #include "CallData.h"
 #include "ConstructData.h"
-#include <math.h>
+#include <cmath>
 #include <stddef.h> // for size_t
 #include <stdint.h>
 #include <wtf/AlwaysInline.h>
@@ -606,11 +606,7 @@ namespace JSC {
     inline JSValue::JSValue(ExecState* exec, double d)
     {
         const int32_t asInt32 = static_cast<int32_t>(d);
-#if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
         if (asInt32 != d || (!asInt32 && std::signbit(d))) { // true for -0.0
-#else
-        if (asInt32 != d || (!asInt32 && signbit(d))) { // true for -0.0
-#endif
             u.asDouble = d;
             return;
         }
@@ -691,11 +687,7 @@ namespace JSC {
     inline JSValue::JSValue(JSGlobalData* globalData, double d)
     {
         const int32_t asInt32 = static_cast<int32_t>(d);
-#if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
         if (asInt32 != d || (!asInt32 && std::signbit(d))) { // true for -0.0
-#else
-        if (asInt32 != d || (!asInt32 && signbit(d))) { // true for -0.0
-#endif
             u.asDouble = d;
             return;
         }

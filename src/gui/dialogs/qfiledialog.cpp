@@ -59,18 +59,7 @@
 #include <qapplication.h>
 #include <qstylepainter.h>
 #include <qfileiconprovider_p.h>
-#if !defined(Q_WS_WINCE)
 #include "ui_qfiledialog.h"
-#else
-#define Q_EMBEDDED_SMALLSCREEN
-#include "ui_qfiledialog_embedded.h"
-#if defined(Q_OS_WINCE)
-extern bool qt_priv_ptr_valid;
-#endif
-#if defined(Q_OS_UNIX)
-#include <pwd.h>
-#endif
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -2160,12 +2149,6 @@ void QFileDialogPrivate::init(const QString &directory, const QString &nameFilte
     q->restoreState(settings.value(QLatin1String("filedialog")).toByteArray());
 #endif
 
-#if defined(Q_EMBEDDED_SMALLSCREEN)
-    qFileDialogUi->lookInLabel->setVisible(false);
-    qFileDialogUi->fileNameLabel->setVisible(false);
-    qFileDialogUi->fileTypeLabel->setVisible(false);
-    qFileDialogUi->sidebar->hide();
-#endif
     // Default case
     if (!nameFilter.isEmpty())
         q->setNameFilter(nameFilter);

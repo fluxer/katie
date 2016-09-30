@@ -46,10 +46,8 @@
 #include <QtCore/qatomic.h>
 #include <QtCore/qalgorithms.h>
 
-#ifndef QT_NO_STL
 #include <iterator>
 #include <list>
-#endif
 #ifdef Q_COMPILER_INITIALIZER_LISTS
 #include <iterator>
 #include <initializer_list>
@@ -69,7 +67,7 @@ template <typename T> class QSet;
 
 struct Q_CORE_EXPORT QListData {
     struct Data {
-        QBasicAtomicInt ref;
+        QAtomicInt ref;
         int alloc, begin, end;
         uint sharable : 1;
         void *array[1];
@@ -324,12 +322,10 @@ public:
     static QList<T> fromVector(const QVector<T> &vector);
     static QList<T> fromSet(const QSet<T> &set);
 
-#ifndef QT_NO_STL
     static inline QList<T> fromStdList(const std::list<T> &list)
     { QList<T> tmp; qCopy(list.begin(), list.end(), std::back_inserter(tmp)); return tmp; }
     inline std::list<T> toStdList() const
     { std::list<T> tmp; qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
-#endif
 
 private:
     Node *detach_helper_grow(int i, int n);

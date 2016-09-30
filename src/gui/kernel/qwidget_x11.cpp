@@ -577,25 +577,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         else
             q->setAttribute(Qt::WA_WState_Visible);
 
-        QX11InfoData* xd = xinfo.getX11Data(true);
-        // find which screen the window is on...
-        xd->screen = QX11Info::appScreen(); // by default, use the default :)
-        int i;
-        for (i = 0; i < ScreenCount(X11->display); i++) {
-            if (RootWindow(X11->display, i) == a.root) {
-                xd->screen = i;
-                break;
-            }
-        }
-
-        xd->depth = a.depth;
-        xd->cells = DisplayCells(X11->display, xd->screen);
-        xd->visual = a.visual;
-        xd->defaultVisual = (XVisualIDFromVisual((Visual *) a.visual) ==
-                            XVisualIDFromVisual((Visual *) QX11Info::appVisual(scr)));
-        xd->colormap = a.colormap;
-        xd->defaultColormap = (a.colormap == QX11Info::appColormap(scr));
-        xinfo.setX11Data(xd);
+        qt_x11_getX11InfoForWindow(&xinfo, static_cast<const void*>(&a));
 
     } else if (desktop) {                        // desktop widget
 #ifdef QWIDGET_EXTRA_DEBUG
@@ -1060,7 +1042,7 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
         setAttribute(Qt::WA_WState_Created, false);
         QObjectList childList = children();
         for (int i = 0; i < childList.size(); ++i) { // destroy all widget children
-            register QObject *obj = childList.at(i);
+            QObject *obj = childList.at(i);
             if (obj->isWidgetType())
                 static_cast<QWidget*>(obj)->destroy(destroySubWindows,
                                                     destroySubWindows);
@@ -2753,7 +2735,7 @@ void QWidgetPrivate::scroll_sys(int dx, int dy, const QRect &r)
     if (!valid_rect && !children.isEmpty()) {        // scroll children
         QPoint pd(dx, dy);
         for (int i = 0; i < children.size(); ++i) { // move all children
-            register QObject *object = children.at(i);
+            QObject *object = children.at(i);
             if (object->isWidgetType()) {
                 QWidget *w = static_cast<QWidget *>(object);
                 if (!w->isWindow())
@@ -3045,6 +3027,7 @@ XRenderColor QX11Data::preMultiply(const QColor &c)
     color.blue  = (B | B << 8) * color.alpha / 0x10000;
     return color;
 }
+
 Picture QX11Data::getSolidFill(int screen, const QColor &c)
 {
     if (!X11->use_xrender)
@@ -3083,6 +3066,30 @@ Picture QX11Data::getSolidFill(int screen, const QColor &c)
     return X11->solid_fills[i].picture;
 }
 #endif
+
+void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att)
+{
+    QX11InfoData* xd = xinfo->getX11Data(true);
+    const XWindowAttributes *a = static_cast<const XWindowAttributes*>(att);
+    // find which screen the window is on...
+    xd->screen = QX11Info::appScreen(); // by default, use the default :)
+    int i;
+    for (i = 0; i < ScreenCount(X11->display); i++) {
+        if (RootWindow(X11->display, i) == a->root) {
+            xd->screen = i;
+            break;
+        }
+    }
+
+    xd->depth = a->depth;
+    xd->cells = DisplayCells(X11->display, xd->screen);
+    xd->visual = a->visual;
+    xd->defaultVisual = (XVisualIDFromVisual((Visual *) a->visual) ==
+    XVisualIDFromVisual((Visual *) QX11Info::appVisual(xinfo->screen())));
+    xd->colormap = a->colormap;
+    xd->defaultColormap = (a->colormap == QX11Info::appColormap(xinfo->screen()));
+    xinfo->setX11Data(xd);
+}
 
 void QWidgetPrivate::updateX11AcceptFocus()
 {

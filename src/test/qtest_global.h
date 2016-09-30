@@ -48,7 +48,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#if defined (Q_CC_SUN) || defined (Q_CC_XLC) || (defined (Q_CC_GNU) && (__GNUC__ - 0 < 3))
+#if defined (Q_CC_SUN) || defined (Q_CC_XLC)
 # define QTEST_NO_SPECIALIZATIONS
 #endif
 

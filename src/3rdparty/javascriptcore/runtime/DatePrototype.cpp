@@ -216,11 +216,7 @@ static bool fillStructuresUsingTimeArgs(ExecState* exec, const ArgList& args, in
     // milliseconds
     if (idx < numArgs) {
         double millis = args.at(idx).toNumber(exec);
-#if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
         ok = std::isfinite(millis);
-#else
-        ok = isfinite(millis);
-#endif
         milliseconds += millis;
     } else
         milliseconds += *ms;
@@ -657,7 +653,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetMilliSeconds(ExecState* exec, JSObject*, J
 
     DateInstance* thisDateObj = asDateInstance(thisValue); 
     double milli = thisDateObj->internalNumber();
-    if (isnan(milli))
+    if (std::isnan(milli))
         return jsNaN(exec);
 
     double secs = floor(milli / msPerSecond);
@@ -672,7 +668,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCMilliseconds(ExecState* exec, JSObject*
 
     DateInstance* thisDateObj = asDateInstance(thisValue); 
     double milli = thisDateObj->internalNumber();
-    if (isnan(milli))
+    if (std::isnan(milli))
         return jsNaN(exec);
 
     double secs = floor(milli / msPerSecond);
@@ -714,7 +710,7 @@ static JSValue setNewValueFromTimeArgs(ExecState* exec, JSValue thisValue, const
     DateInstance* thisDateObj = asDateInstance(thisValue);
     double milli = thisDateObj->internalNumber();
     
-    if (args.isEmpty() || isnan(milli)) {
+    if (args.isEmpty() || std::isnan(milli)) {
         JSValue result = jsNaN(exec);
         thisDateObj->setInternalValue(result);
         return result;
@@ -758,7 +754,7 @@ static JSValue setNewValueFromDateArgs(ExecState* exec, JSValue thisValue, const
     double ms = 0; 
 
     GregorianDateTime gregorianDateTime; 
-    if (numArgsToUse == 3 && isnan(milli)) 
+    if (numArgsToUse == 3 && std::isnan(milli)) 
         msToGregorianDateTime(exec, 0, true, gregorianDateTime); 
     else { 
         ms = milli - floor(milli / msPerSecond) * msPerSecond; 
@@ -881,7 +877,7 @@ JSValue JSC_HOST_CALL dateProtoFuncSetYear(ExecState* exec, JSObject*, JSValue t
     double ms = 0;
 
     GregorianDateTime gregorianDateTime;
-    if (isnan(milli))
+    if (std::isnan(milli))
         // Based on ECMA 262 B.2.5 (setYear)
         // the time must be reset to +0 if it is NaN. 
         msToGregorianDateTime(exec, 0, true, gregorianDateTime);

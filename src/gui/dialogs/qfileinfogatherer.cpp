@@ -249,7 +249,7 @@ QExtendedInformation QFileInfoGatherer::getInfo(const QFileInfo &fileInfo) const
     #endif
 #endif
 
-    if (m_resolveSymlinks && info.isSymLink(/* ignoreNtfsSymLinks = */ true)) {
+    if (m_resolveSymlinks && info.isSymLink()) {
         QFileInfo resolvedInfo(fileInfo.readLink());
         resolvedInfo = resolvedInfo.canonicalFilePath();
         if (resolvedInfo.exists()) {
@@ -261,16 +261,7 @@ QExtendedInformation QFileInfoGatherer::getInfo(const QFileInfo &fileInfo) const
 
 QString QFileInfoGatherer::translateDriveName(const QFileInfo &drive) const
 {
-    QString driveName = drive.absoluteFilePath();
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    if (driveName.startsWith(QLatin1Char('/'))) // UNC host
-        return drive.fileName();
-#endif
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    if (driveName.endsWith(QLatin1Char('/')))
-        driveName.chop(1);
-#endif
-    return driveName;
+    return drive.absoluteFilePath();
 }
 
 /*

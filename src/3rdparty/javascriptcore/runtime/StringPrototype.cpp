@@ -675,9 +675,9 @@ JSValue JSC_HOST_CALL stringProtoFuncSubstring(ExecState* exec, JSObject*, JSVal
 
     double start = a0.toNumber(exec);
     double end = a1.toNumber(exec);
-    if (isnan(start))
+    if (std::isnan(start))
         start = 0;
-    if (isnan(end))
+    if (std::isnan(end))
         end = 0;
     if (start < 0)
         start = 0;

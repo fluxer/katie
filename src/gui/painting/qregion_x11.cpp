@@ -45,7 +45,7 @@
 
 QT_BEGIN_NAMESPACE
 
-QRegion::QRegionData QRegion::shared_empty = {Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, 0};
+QRegion::QRegionData QRegion::shared_empty = { QAtomicInt(1), 0, 0, 0};
 
 void QRegion::updateX11Region() const
 {

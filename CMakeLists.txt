@@ -1,7 +1,7 @@
 # Editors notes:
 #
 # * To find all FIXME/TODO related to the CMake build system (and those
-#   inherited from the autotools build system) execute the following in the
+#   inherited from the QMake build system) execute the following in the
 #   top-level directory of the source tree:
 #
 #     find -name '*.cmake' -exec grep -E 'TODO|FIXME' {} +
@@ -139,9 +139,10 @@ set(CPACK_GENERATOR "TXZ")
 set(CPACK_SOURCE_GENERATOR "TXZ")
 include(CPack)
 
-# 9 minutes timeout for the tests, Travis timeouts on 10min and I do not want
-# some tests to be skipped because of one test. Like the qpainter test - it
-# does a lot of tests and can (and sometimes it does) take more then 10min.
+# 9 minutes timeout for the tests, Travis timeouts on 10min if there is no
+# output and I do not want some tests to be skipped because of one test. Like
+# the qpainter test - it does a lot of tests and can (and sometimes it does)
+# take more then 10min.
 set(CTEST_TEST_TIMEOUT 540)
 
 if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
@@ -154,10 +155,11 @@ add_definitions(
     -DKATIE_DATE="${KATIE_DATE}"
     -DQT_USE_QSTRINGBUILDER
     -DQT_ASCII_CAST_WARNINGS
-    # maybe one day, use with caution!
+    # -DQT_STRICT_ITERATORS
+    # maybe one day, this forces it onto other projects which (most likely)
+    # means source code adjustments!
     # -DQT_NO_CAST_FROM_ASCII
     # -DQT_NO_CAST_TO_ASCII
-    # -DQT_STRICT_ITERATORS
 )
 
 # this is how Qt4 does it
@@ -422,9 +424,7 @@ if(PYTHONINTERP_FOUND)
         message(SEND_ERROR "${genmap_error}")
     endif()
 else()
-    message(WARNING
-        "\nUsing pre-generated classes map"
-    )
+    message(WARNING "\nUsing pre-generated classes map")
 endif()
 
 # various sources use #include <shared/blah.h>
@@ -432,8 +432,11 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 if(ENABLE_TESTING)
     message(WARNING
-        "\nUnless it is intentionall you should not enable testing. You will have to unset "
-        "QT_PLUGIN_PATH if you have Qt4 installed on the system prior to running the tests."
+        "\nUnless it is intentionall you should not enable testing, deploying tests builds"
+        " is a bad idea.\n\n"
+        "Prior to runing the test you will have to unset the QT_PLUGIN_PATH environmental"
+        "variable if you have Qt4 installed on the system because the plugins are not "
+        "compatible and using them will cause undefined behaviour."
     )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)

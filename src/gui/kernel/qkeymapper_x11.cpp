@@ -184,7 +184,7 @@ qt_XTranslateKey(register QXCoreDesc *dpy,
                  KeySym *keysym_return)
 {
     int per;
-    register KeySym *syms;
+    KeySym *syms;
     KeySym sym, lsym, usym;
 
     if (! dpy->keysyms)

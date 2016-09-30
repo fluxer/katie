@@ -4201,13 +4201,13 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         ret = 0;
         break;
     case PM_DialogButtonsSeparator:
-        ret = int(QStyleHelper::dpiScaled(5.));
+        ret = 5;
         break;
     case PM_DialogButtonsButtonWidth:
-        ret = int(QStyleHelper::dpiScaled(70.));
+        ret = 70;
         break;
     case PM_DialogButtonsButtonHeight:
-        ret = int(QStyleHelper::dpiScaled(30.));
+        ret = 30;
         break;
     case PM_TitleBarHeight: {
         if (const QStyleOptionTitleBar *tb = qstyleoption_cast<const QStyleOptionTitleBar *>(opt)) {
@@ -4215,26 +4215,26 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
                 ret = qMax(widget ? widget->fontMetrics().height() : opt->fontMetrics.height(), 16);
 #ifndef QT_NO_DOCKWIDGET
             } else if (qobject_cast<const QDockWidget*>(widget)) {
-                ret = qMax(widget->fontMetrics().height(), int(QStyleHelper::dpiScaled(13)));
+                ret = qMax(widget->fontMetrics().height(), 13);
 #endif
             } else {
                 ret = qMax(widget ? widget->fontMetrics().height() : opt->fontMetrics.height(), 18);
             }
         } else {
-            ret = int(QStyleHelper::dpiScaled(18.));
+            ret = 18;
         }
 
         break; }
     case PM_ScrollBarSliderMin:
-        ret = int(QStyleHelper::dpiScaled(9.));
+        ret = 9;
         break;
 
     case PM_ButtonMargin:
-        ret = int(QStyleHelper::dpiScaled(6.));
+        ret = 6;
         break;
 
     case PM_DockWidgetTitleBarButtonMargin:
-        ret = int(QStyleHelper::dpiScaled(2.));
+        ret = 2;
         break;
 
     case PM_ButtonDefaultIndicator:
@@ -4242,7 +4242,7 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         break;
 
     case PM_MenuButtonIndicator:
-        ret = int(QStyleHelper::dpiScaled(12.));
+        ret = 12;
         break;
 
     case PM_ButtonShiftHorizontal:
@@ -4261,11 +4261,11 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         break;
 
     case PM_MdiSubWindowFrameWidth:
-        ret = int(QStyleHelper::dpiScaled(4.));
+        ret = 4;
         break;
 
     case PM_MdiSubWindowMinimizedWidth:
-        ret = int(QStyleHelper::dpiScaled(196.));
+        ret = 196;
         break;
 
 #ifndef QT_NO_SCROLLBAR
@@ -4276,7 +4276,7 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
                     : QApplication::globalStrut().width();
             ret = qMax(16, s);
         } else {
-            ret = int(QStyleHelper::dpiScaled(16.));
+            ret = 16;
         }
         break;
 #endif
@@ -4286,7 +4286,7 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
 
 #ifndef QT_NO_SLIDER
     case PM_SliderThickness:
-        ret = int(QStyleHelper::dpiScaled(16.));
+        ret = 16;
         break;
 
     case PM_SliderTickmarkOffset:
@@ -4320,11 +4320,11 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
 #endif // QT_NO_SLIDER
 #ifndef QT_NO_DOCKWIDGET
     case PM_DockWidgetSeparatorExtent:
-        ret = int(QStyleHelper::dpiScaled(6.));
+        ret = 6;
         break;
 
     case PM_DockWidgetHandleExtent:
-        ret = int(QStyleHelper::dpiScaled(8.));
+        ret = 8;
         break;
     case PM_DockWidgetTitleMargin:
         ret = 0;
@@ -4353,19 +4353,19 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         break;
 
     case PM_ToolBarItemSpacing:
-        ret = int(QStyleHelper::dpiScaled(4.));
+        ret = 4;
         break;
 
     case PM_ToolBarHandleExtent:
-        ret = int(QStyleHelper::dpiScaled(8.));
+        ret = 8;
         break;
 
     case PM_ToolBarSeparatorExtent:
-        ret = int(QStyleHelper::dpiScaled(6.));
+        ret = 6;
         break;
 
     case PM_ToolBarExtensionExtent:
-        ret = int(QStyleHelper::dpiScaled(12.));
+        ret = 12;
         break;
 #endif // QT_NO_TOOLBAR
 
@@ -4375,7 +4375,7 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         break;
 
     case PM_TabBarTabHSpace:
-        ret = int(QStyleHelper::dpiScaled(24.));
+        ret = 24;
         break;
 
     case PM_TabBarTabShiftHorizontal:
@@ -4404,27 +4404,18 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         break;
 
     case PM_IndicatorWidth:
-        ret = int(QStyleHelper::dpiScaled(13.));
-        break;
-
     case PM_IndicatorHeight:
-        ret = int(QStyleHelper::dpiScaled(13.));
+        ret = 13;
         break;
 
     case PM_ExclusiveIndicatorWidth:
-        ret = int(QStyleHelper::dpiScaled(12.));
-        break;
-
     case PM_ExclusiveIndicatorHeight:
-        ret = int(QStyleHelper::dpiScaled(12.));
+        ret = 12;
         break;
 
     case PM_MenuTearoffHeight:
-        ret = int(QStyleHelper::dpiScaled(10.));
-        break;
-
     case PM_MenuScrollerHeight:
-        ret = int(QStyleHelper::dpiScaled(10.));
+        ret = 10;
         break;
 
     case PM_MenuDesktopFrameWidth:
@@ -4433,17 +4424,16 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         ret = 0;
         break;
 
-    case PM_HeaderMargin:
-        ret = int(QStyleHelper::dpiScaled(4.));
-        break;
+
     case PM_HeaderMarkSize:
-        ret = int(QStyleHelper::dpiScaled(32.));
+        ret = 32;
         break;
+    case PM_HeaderMargin:
     case PM_HeaderGripMargin:
-        ret = int(QStyleHelper::dpiScaled(4.));
+        ret = 4;
         break;
     case PM_TabBarScrollButtonWidth:
-        ret = int(QStyleHelper::dpiScaled(16.));
+        ret = 16;
         break;
     case PM_LayoutLeftMargin:
     case PM_LayoutTopMargin:
@@ -4465,19 +4455,19 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
         break;
 
     case PM_DefaultTopLevelMargin:
-        ret = int(QStyleHelper::dpiScaled(11.));
+        ret = 11;
         break;
     case PM_DefaultChildMargin:
-        ret = int(QStyleHelper::dpiScaled(9.));
+        ret = 9;
         break;
     case PM_DefaultLayoutSpacing:
-        ret = int(QStyleHelper::dpiScaled(6.));
+        ret = 6;
         break;
 
     case PM_ToolBarIconSize:
         ret = qt_guiPlatformPlugin()->platformHint(QGuiPlatformPlugin::PH_ToolBarIconSize);
         if (!ret)
-            ret = int(QStyleHelper::dpiScaled(24.));
+            ret = 24;
         break;
 
     case PM_TabBarIconSize:
@@ -4487,38 +4477,34 @@ int QCommonStyle::pixelMetric(PixelMetric m, const QStyleOption *opt, const QWid
 
     case PM_ButtonIconSize:
     case PM_SmallIconSize:
-        ret = int(QStyleHelper::dpiScaled(16.));
+        ret = 16;
         break;
     case PM_IconViewIconSize:
         ret = proxy()->pixelMetric(PM_LargeIconSize, opt, widget);
         break;
 
     case PM_LargeIconSize:
-        ret = int(QStyleHelper::dpiScaled(32.));
+        ret = 32;
         break;
 
     case PM_ToolTipLabelFrameWidth:
+    case PM_TextCursorWidth:
+    case PM_TabBar_ScrollButtonOverlap:
         ret = 1;
         break;
     case PM_CheckBoxLabelSpacing:
     case PM_RadioButtonLabelSpacing:
-        ret = int(QStyleHelper::dpiScaled(6.));
+        ret = 6;
         break;
     case PM_SizeGripSize:
-        ret = int(QStyleHelper::dpiScaled(13.));
+        ret = 13;
         break;
     case PM_MessageBoxIconSize:
-        ret = int(QStyleHelper::dpiScaled(32.));
-        break;
-    case PM_TextCursorWidth:
-        ret = 1;
-        break;
-    case PM_TabBar_ScrollButtonOverlap:
-        ret = 1;
+        ret = 32;
         break;
     case PM_TabCloseIndicatorWidth:
     case PM_TabCloseIndicatorHeight:
-        ret = int(QStyleHelper::dpiScaled(16.));
+        ret = 16;
         break;
     case PM_ScrollView_ScrollBarSpacing:
         ret = 2 * proxy()->pixelMetric(PM_DefaultFrameWidth, opt, widget);

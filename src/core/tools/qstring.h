@@ -47,15 +47,11 @@
 #include <QtCore/qatomic.h>
 #include <QtCore/qnamespace.h>
 
-#ifndef QT_NO_STL
-#  include <string>
-
-#  ifndef QT_NO_STL_WCHAR
+#include <string>
+#ifndef QT_NO_STL_WCHAR
 // workaround for some headers not typedef'ing std::wstring
 typedef std::basic_string<wchar_t> QStdWString;
-#  endif // QT_NO_STL_WCHAR
-
-#endif // QT_NO_STL
+#endif // QT_NO_STL_WCHAR
 
 #include <stdarg.h>
 
@@ -473,14 +469,12 @@ public:
     inline void push_front(QChar c) { prepend(c); }
     inline void push_front(const QString &s) { prepend(s); }
 
-#ifndef QT_NO_STL
     static inline QString fromStdString(const std::string &s);
     inline std::string toStdString() const;
-#  ifndef QT_NO_STL_WCHAR
+#ifndef QT_NO_STL_WCHAR
     static inline QString fromStdWString(const QStdWString &s);
     inline QStdWString toStdWString() const;
-#  endif // QT_NO_STL_WCHAR
-#endif
+#endif // QT_NO_STL_WCHAR
 
     // compatibility
     struct Null { };
@@ -506,7 +500,7 @@ private:
 #endif
 
     struct Data {
-        QBasicAtomicInt ref;
+        QAtomicInt ref;
         int alloc, size;
         ushort *data;
         ushort capacity : 1;
@@ -908,14 +902,13 @@ inline QT_ASCII_CAST_WARN const QString operator+(const QString &s, const QByteA
 #  endif // QT_NO_CAST_FROM_ASCII
 #endif // QT_USE_QSTRINGBUILDER
 
-#ifndef QT_NO_STL
 inline std::string QString::toStdString() const
 { return toAscii().toStdString(); }
 
 inline QString QString::fromStdString(const std::string &s)
 { return fromAscii(s.data(), int(s.size())); }
 
-# ifndef QT_NO_STL_WCHAR
+#ifndef QT_NO_STL_WCHAR
 inline QStdWString QString::toStdWString() const
 {
     QStdWString str;
@@ -924,7 +917,6 @@ inline QStdWString QString::toStdWString() const
 }
 inline QString QString::fromStdWString(const QStdWString &s)
 { return fromWCharArray(s.data(), int(s.size())); }
-# endif
 #endif
 
 

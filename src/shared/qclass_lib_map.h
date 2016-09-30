@@ -101,8 +101,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QTextBoundaryFinder", "QtCore/qtextboundaryfinder.h"},
     { "QTimeLine", "QtCore/qtimeline.h"},
     { "QVectorData", "QtCore/qvector.h"},
-    { "QAtomicInt", "QtCore/qatomic.h"},
-    { "QBasicAtomicInt", "QtCore/qbasicatomic.h"},
     { "QMutex", "QtCore/qmutex.h"},
     { "QMutexLocker", "QtCore/qmutex.h"},
     { "QReadWriteLock", "QtCore/qreadwritelock.h"},
@@ -763,6 +761,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 757;
+static const int qclass_lib_count = 755;
 
 #endif

@@ -311,13 +311,6 @@ int IconHandle::compare(const IconHandle &rhs) const
     return 0;
 }
 
-
-#if defined(Q_OS_MAC) && defined(Q_CC_GNU) && (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
-inline uint qHash(const SizePolicyHandle &handle) { return qHash(handle.m_domSizePolicy); }
-inline uint qHash(const FontHandle &handle) { return qHash(handle.m_domFont); }
-inline uint qHash(const IconHandle &handle) { return qHash(handle.m_domIcon); }
-#endif
-
 SizePolicyHandle::SizePolicyHandle(const DomSizePolicy *domSizePolicy) :
     m_domSizePolicy(domSizePolicy)
 {
@@ -418,17 +411,11 @@ void WriteInitialization::LayoutDefaultHandler::writeProperty(int p, const QStri
         // the default value, layout properties were always written
         const bool useLayoutFunctionPre43 = !suppressDefault && (m_state[p] == (HasDefaultFunction|HasDefaultValue)) && value == m_defaultValues[p];
         if (!useLayoutFunctionPre43) {
-            bool ifndefMac = (!(m_state[p] & (HasDefaultFunction|HasDefaultValue))
-                             && value == defaultStyleValue);
-            if (ifndefMac)
-                str << "#ifndef Q_OS_MAC\n";
             if (p == Margin) { // Use setContentsMargins for numeric values
                 writeContentsMargins(indent, objectName, value, str);
             } else {
                 writeSetter(indent, objectName, setter, value, str);
             }
-            if (ifndefMac)
-                str << "#endif\n";
             return;
         }
     }

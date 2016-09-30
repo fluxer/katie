@@ -2772,10 +2772,9 @@ void QApplication::setOverrideCursor(const QCursor &cursor)
     qApp->d_func()->cursor_list.prepend(cursor);
 
     QWidgetList all = allWidgets();
-    for (QWidgetList::ConstIterator it = all.constBegin(); it != all.constEnd(); ++it) {
-        register QWidget *w = *it;
-        if ((w->testAttribute(Qt::WA_SetCursor) || w->isWindow()) && (w->windowType() != Qt::Desktop))
-            qt_x11_enforce_cursor(w);
+    foreach (QWidget *it, all) {
+        if ((it->testAttribute(Qt::WA_SetCursor) || it->isWindow()) && (it->windowType() != Qt::Desktop))
+            qt_x11_enforce_cursor(it);
     }
     XFlush(X11->display);                                // make X execute it NOW
 }
@@ -2787,11 +2786,9 @@ void QApplication::restoreOverrideCursor()
     qApp->d_func()->cursor_list.removeFirst();
 
     if (QWidgetPrivate::mapper != 0 && !closingDown()) {
-        QWidgetList all = allWidgets();
-        for (QWidgetList::ConstIterator it = all.constBegin(); it != all.constEnd(); ++it) {
-            register QWidget *w = *it;
-            if ((w->testAttribute(Qt::WA_SetCursor) || w->isWindow()) && (w->windowType() != Qt::Desktop))
-                qt_x11_enforce_cursor(w);
+        foreach (QWidget *it, allWidgets()) {
+            if ((it->testAttribute(Qt::WA_SetCursor) || it->isWindow()) && (it->windowType() != Qt::Desktop))
+                qt_x11_enforce_cursor(it);
         }
         XFlush(X11->display);
     }

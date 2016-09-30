@@ -88,7 +88,7 @@ public:
     bool finished;
 
 private:
-    static QBasicAtomicInt idCounter;
+    static QAtomicInt idCounter;
 };
 
 class QHttpPrivate : public QObjectPrivate
@@ -180,7 +180,7 @@ public:
     QTimer post100ContinueTimer;
 };
 
-QBasicAtomicInt QHttpRequest::idCounter = Q_BASIC_ATOMIC_INITIALIZER(1);
+QAtomicInt QHttpRequest::idCounter = QAtomicInt(1);
 
 bool QHttpRequest::hasRequestHeader()
 {

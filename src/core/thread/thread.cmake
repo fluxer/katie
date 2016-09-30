@@ -13,8 +13,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qorderedmutexlocker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qreadwritelock_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qthread_p.h
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qbasicatomic.h
 )
 
 set(CORE_SOURCES

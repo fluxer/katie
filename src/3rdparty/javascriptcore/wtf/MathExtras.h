@@ -30,15 +30,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-#if OS(SOLARIS)
-#include <ieeefp.h>
-#endif
-
-#if OS(OPENBSD)
-#include <sys/types.h>
-#include <machine/ieee.h>
-#endif
-
 #ifndef M_PI
 const double piDouble = 3.14159265358979323846;
 const float piFloat = 3.14159265358979323846f;
@@ -53,31 +44,6 @@ const float piOverFourFloat = 0.785398163397448309616f;
 #else
 const double piOverFourDouble = M_PI_4;
 const float piOverFourFloat = static_cast<float>(M_PI_4);
-#endif
-
-#if OS(SOLARIS)
-
-#ifndef isfinite
-inline bool isfinite(double x) { return finite(x) && !isnand(x); }
-#endif
-#ifndef isinf
-inline bool isinf(double x) { return !finite(x) && !isnand(x); }
-#endif
-#ifndef signbit
-inline bool signbit(double x) { return x < 0.0; } // FIXME: Wrong for negative 0.
-#endif
-
-#endif
-
-#if OS(OPENBSD)
-
-#ifndef isfinite
-inline bool isfinite(double x) { return finite(x); }
-#endif
-#ifndef signbit
-inline bool signbit(double x) { struct ieee_double *p = (struct ieee_double *)&x; return p->dbl_sign; }
-#endif
-
 #endif
 
 inline double deg2rad(double d)  { return d * piDouble / 180.0; }

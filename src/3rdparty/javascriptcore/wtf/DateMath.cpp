@@ -838,7 +838,7 @@ double parseDateFromNullTerminatedCharacters(const char* dateString)
     bool haveTZ;
     int offset;
     double ms = parseDateFromNullTerminatedCharacters(dateString, haveTZ, offset);
-    if (isnan(ms))
+    if (std::isnan(ms))
         return NaN;
 
     // fall back to local timezone
@@ -850,11 +850,7 @@ double parseDateFromNullTerminatedCharacters(const char* dateString)
 
 double timeClip(double t)
 {
-#if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
     if (!std::isfinite(t))
-#else
-    if (!isfinite(t))
-#endif
         return NaN;
     if (fabs(t) > maxECMAScriptTime)
         return NaN;
@@ -966,7 +962,7 @@ double parseDateFromNullTerminatedCharacters(ExecState* exec, const char* dateSt
     bool haveTZ;
     int offset;
     double ms = WTF::parseDateFromNullTerminatedCharacters(dateString, haveTZ, offset);
-    if (isnan(ms))
+    if (std::isnan(ms))
         return NaN;
 
     // fall back to local timezone

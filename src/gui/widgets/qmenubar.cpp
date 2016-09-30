@@ -1063,10 +1063,6 @@ void QMenuBar::mousePressEvent(QMouseEvent *e)
             d->activeMenu = 0;
             menu->hide();
         }
-#ifdef Q_WS_WIN
-        if((d->closePopupMode = style()->styleHint(QStyle::SH_MenuBar_DismissOnSecondClick)))
-            update(d->actionRect(action));
-#endif
     } else {
         d->setCurrentAction(action, true);
     }

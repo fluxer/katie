@@ -94,8 +94,8 @@ static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
     return types;
 }
 
-static QBasicAtomicPointer<QMutexPool> signalSlotMutexes = Q_BASIC_ATOMIC_INITIALIZER(0);
-static QBasicAtomicInt objectCount = Q_BASIC_ATOMIC_INITIALIZER(0);
+static QAtomicPointer<QMutexPool> signalSlotMutexes = QAtomicPointer<QMutexPool>(0);
+static QAtomicInt objectCount = QAtomicInt(0);
 
 /** \internal
  * mutex to be locked when accessing the connectionlists or the senders list
@@ -109,19 +109,6 @@ static inline QMutex *signalSlotLock(const QObject *o)
         }
     }
     return signalSlotMutexes->get(o);
-}
-
-extern "C" Q_CORE_EXPORT void qt_addObject(QObject *)
-{
-    objectCount.ref();
-}
-
-extern "C" Q_CORE_EXPORT void qt_removeObject(QObject *)
-{
-    if(!objectCount.deref()) {
-        QMutexPool *old = signalSlotMutexes.fetchAndStoreAcquire(0);
-        delete old;
-    }
 }
 
 void (*QAbstractDeclarativeData::destroyed)(QAbstractDeclarativeData *, QObject *) = 0;
@@ -167,11 +154,14 @@ QObjectPrivate::~QObjectPrivate()
     if (threadData)
         threadData->deref();
 
-    delete static_cast<QAbstractDynamicMetaObject*>(metaObject);
+    QAbstractDynamicMetaObject* mobject = static_cast<QAbstractDynamicMetaObject*>(metaObject);
+    if (mobject)
+        delete mobject;
 #ifndef QT_NO_USERDATA
-    if (extraData)
+    if (extraData) {
         qDeleteAll(extraData->userData);
-    delete extraData;
+        delete extraData;
+    }
 #endif
 }
 
@@ -610,7 +600,7 @@ QObject::QObject(QObject *parent)
             QT_RETHROW;
         }
     }
-    qt_addObject(this);
+    objectCount.ref();
 }
 
 
@@ -641,7 +631,7 @@ QObject::QObject(QObjectPrivate &dd, QObject *parent)
             QT_RETHROW;
         }
     }
-    qt_addObject(this);
+    objectCount.ref();
 }
 
 /*!
@@ -774,7 +764,10 @@ QObject::~QObject()
     if (!d->children.isEmpty())
         d->deleteChildren();
 
-    qt_removeObject(this);
+    if(!objectCount.deref()) {
+        QMutexPool *old = signalSlotMutexes.fetchAndStoreAcquire(0);
+        delete old;
+    }
 
     if (d->parent)        // remove it from parent object
         d->setParent_helper(0);
@@ -2737,7 +2730,7 @@ bool QMetaObjectPrivate::connect(const QObject *sender, int signal_index,
     c->method_relative = method_index;
     c->method_offset = method_offset;
     c->connectionType = type;
-    c->argumentTypes = types;
+    c->argumentTypes = QAtomicPointer<int>(types);
     c->nextConnectionList = 0;
     c->callFunction = callFunction;
 

@@ -119,9 +119,6 @@ public:
 
     QNativeGestureEvent()
         : QEvent(QEvent::NativeGesture), gestureType(None), percentage(0)
-#ifdef Q_WS_WIN
-        , sequenceId(0), argument(0)
-#endif
     {
     }
 
@@ -129,10 +126,6 @@ public:
     float percentage;
     QPoint position;
     float angle;
-#ifdef Q_WS_WIN
-    ulong sequenceId;
-    quint64 argument;
-#endif
 };
 
 class QGestureEventPrivate

@@ -110,6 +110,7 @@ protected:
     friend void qt_init(QApplicationPrivate *priv, int, Display *display, Qt::HANDLE visual,
                         Qt::HANDLE colormap);
     friend void qt_cleanup();
+    friend void qt_x11_getX11InfoForWindow(QX11Info *xinfo, const void *att);
 };
 
 QT_END_NAMESPACE

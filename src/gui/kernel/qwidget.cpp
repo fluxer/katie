@@ -5841,11 +5841,7 @@ void QWidget::setFocus(Qt::FocusReason reason)
     while (f->d_func()->extra && f->d_func()->extra->focus_proxy)
         f = f->d_func()->extra->focus_proxy;
 
-    if (QApplication::focusWidget() == f
-#if defined(Q_WS_WIN)
-        && GetFocus() == f->internalWinId()
-#endif
-       )
+    if (QApplication::focusWidget() == f)
         return;
 
 #ifndef QT_NO_GRAPHICSVIEW
@@ -5970,16 +5966,9 @@ void QWidget::clearFocus()
     if (hasFocus()) {
         // Update proxy state
         QApplicationPrivate::setFocusWidget(0, Qt::OtherFocusReason);
-#if defined(Q_WS_WIN)
-        if (!(windowType() == Qt::Popup) && GetFocus() == internalWinId())
-            SetFocus(0);
-        else
-#endif
-        {
 #ifndef QT_NO_ACCESSIBILITY
-            QAccessible::updateAccessibility(this, 0, QAccessible::Focus);
+        QAccessible::updateAccessibility(this, 0, QAccessible::Focus);
 #endif
-        }
     }
 }
 
@@ -6132,14 +6121,7 @@ bool QWidget::isActiveWindow() const
                 return true;
         }
     }
-#if defined(Q_WS_WIN32)
-    HWND active = GetActiveWindow();
-    if (!tlw->testAttribute(Qt::WA_WState_Created))
-        return false;
-    return active == tlw->internalWinId() || ::IsChild(active, tlw->internalWinId());
-#else
     return false;
-#endif
 }
 
 /*!
@@ -6548,24 +6530,7 @@ bool QWidget::restoreGeometry(const QByteArray &geometry)
         // set geomerty before setting the window state to make
         // sure the window is maximized to the right screen.
         Qt::WindowStates ws = windowState();
-#ifndef Q_WS_WIN
         setGeometry(restoredNormalGeometry);
-#else
-        if (ws & Qt::WindowFullScreen) {
-            // Full screen is not a real window state on Windows.
-            move(availableGeometry.topLeft());
-        } else if (ws & Qt::WindowMaximized) {
-            // Setting a geometry on an already maximized window causes this to be
-            // restored into a broken, half-maximized state, non-resizable state (QTBUG-4397).
-            // Move the window in normal state if needed.
-            if (restoredScreenNumber != desktop->screenNumber(this)) {
-                setWindowState(Qt::WindowNoState);
-                setGeometry(restoredNormalGeometry);
-            }
-        } else {
-            setGeometry(restoredNormalGeometry);
-        }
-#endif // Q_WS_WIN
         if (maximized)
             ws |= Qt::WindowMaximized;
         if (fullScreen)
@@ -6955,14 +6920,6 @@ void QWidgetPrivate::show_helper()
     Q_UNUSED(isEmbedded);
 #endif
 
-    // On Windows, show the popup now so that our own focus handling
-    // stores the correct old focus widget even if it's stolen in the
-    // showevent
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-    if (!isEmbedded && q->windowType() == Qt::Popup)
-        qApp->d_func()->openPopup(q);
-#endif
-
     // send the show event before showing the window
     QShowEvent showEvent;
     QApplication::sendEvent(q, &showEvent);
@@ -6975,10 +6932,8 @@ void QWidgetPrivate::show_helper()
 
     show_sys();
 
-#if !defined(Q_WS_WIN) && !defined(Q_WS_MAC)
     if (!isEmbedded && q->windowType() == Qt::Popup)
         qApp->d_func()->openPopup(q);
-#endif
 
 #ifndef QT_NO_ACCESSIBILITY
     if (q->windowType() != Qt::ToolTip)     // Tooltips are read aloud twice in MS narrator.
@@ -7034,12 +6989,6 @@ void QWidgetPrivate::hide_helper()
     if (!isEmbedded && q->isModal() && q->isWindow())
         QApplicationPrivate::leaveModal(q);
 
-#if defined(Q_WS_WIN)
-    if (q->isWindow() && !(q->windowType() == Qt::Popup) && q->parentWidget()
-        && !q->parentWidget()->isHidden() && q->isActiveWindow())
-        q->parentWidget()->activateWindow();        // Activate parent
-#endif
-
     q->setAttribute(Qt::WA_Mapped, false);
     hide_sys();
 
@@ -7057,7 +7006,7 @@ void QWidgetPrivate::hide_helper()
     // next bit tries to move the focus if the focus widget is now
     // hidden.
     if (wasVisible) {
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
         qApp->d_func()->sendSyntheticEnterLeave(q);
 #endif
 
@@ -7183,7 +7132,7 @@ void QWidget::setVisible(bool visible)
 
             d->show_helper();
 
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
             qApp->d_func()->sendSyntheticEnterLeave(this);
 #endif
         }
@@ -7193,16 +7142,6 @@ void QWidget::setVisible(bool visible)
     } else { // hide
         if (testAttribute(Qt::WA_WState_ExplicitShowHide) && testAttribute(Qt::WA_WState_Hidden))
             return;
-#if defined(Q_WS_WIN)
-        // reset WS_DISABLED style in a Blocked window
-        if(isWindow() && testAttribute(Qt::WA_WState_Created)
-           && QApplicationPrivate::isBlockedByModal(this))
-        {
-            LONG dwStyle = GetWindowLong(winId(), GWL_STYLE);
-            dwStyle &= ~WS_DISABLED;
-            SetWindowLong(winId(), GWL_STYLE, dwStyle);
-        }
-#endif
         if (QApplicationPrivate::hidden_focus_widget == this)
             QApplicationPrivate::hidden_focus_widget = 0;
 
@@ -7633,26 +7572,6 @@ bool QWidget::isAncestorOf(const QWidget *child) const
     return false;
 }
 
-#if defined(Q_WS_WIN)
-inline void setDisabledStyle(QWidget *w, bool setStyle)
-{
-    // set/reset WS_DISABLED style.
-    if(w && w->isWindow() && w->isVisible() && w->isEnabled()) {
-        LONG dwStyle = GetWindowLong(w->winId(), GWL_STYLE);
-        LONG newStyle = dwStyle;
-        if (setStyle)
-            newStyle |= WS_DISABLED;
-        else
-            newStyle &= ~WS_DISABLED;
-        if (newStyle != dwStyle) {
-            SetWindowLong(w->winId(), GWL_STYLE, newStyle);
-            // we might need to repaint in some situations (eg. menu)
-            w->repaint();
-        }
-    }
-}
-#endif
-
 /*****************************************************************************
   QWidget event handling
  *****************************************************************************/
@@ -8028,9 +7947,6 @@ bool QWidget::event(QEvent *event)
                     QApplication::sendEvent(o, event);
                 }
             }
-#if defined(Q_WS_WIN)
-            setDisabledStyle(this, (event->type() == QEvent::WindowBlocked));
-#endif
         }
         break;
 #ifndef QT_NO_TOOLTIP
@@ -8078,7 +7994,7 @@ bool QWidget::event(QEvent *event)
     case QEvent::EmbeddingControl:
         d->topData()->frameStrut.setCoords(0 ,0, 0, 0);
         data->fstrut_dirty = false;
-#if defined(Q_WS_WIN) || defined(Q_WS_X11)
+#if defined(Q_WS_X11)
         d->topData()->embedded = 1;
 #endif
         break;
@@ -8929,31 +8845,7 @@ bool QWidget::macEvent(EventHandlerCallRef, EventRef)
 }
 
 #endif
-#if defined(Q_WS_WIN)
 
-/*!
-    This special event handler can be reimplemented in a subclass to
-    receive native Windows events which are passed in the \a message
-    parameter.
-
-    In your reimplementation of this function, if you want to stop the
-    event being handled by Qt, return true and set \a result to the value
-    that the window procedure should return. If you return false, this
-    native event is passed back to Qt, which translates the event into
-    a Qt event and sends it to the widget.
-
-    \warning This function is not portable.
-
-    \sa QApplication::winEventFilter()
-*/
-bool QWidget::winEvent(MSG *message, long *result)
-{
-    Q_UNUSED(message);
-    Q_UNUSED(result);
-    return false;
-}
-
-#endif
 #if defined(Q_WS_X11)
 
 /*!
@@ -9280,8 +9172,7 @@ QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChil
         }
 
         // Map the point 'p' from parent coordinates to child coordinates.
-        QPoint childPoint = p;
-        childPoint -= child->data->crect.topLeft();
+        const QPoint childPoint = p - child->data->crect.topLeft();
 
         // Check if the point hits the child.
         if (!child->d_func()->pointInsideRectAndMask(childPoint))
@@ -9529,7 +9420,7 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
     // (f & Qt::MSWindowsOwnDC) clause (which is set on QGLWidgets on all
     // platforms).
     if (newParent
-#if defined(Q_WS_WIN) || defined(QT_OPENGL_ES)
+#if defined(QT_OPENGL_ES)
         || (f & Qt::MSWindowsOwnDC)
 #endif
         ) {
@@ -9880,15 +9771,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     Q_ASSERT_X(sizeof(d->high_attributes)*8 >= (Qt::WA_AttributeCount - sizeof(uint)*8),
                "QWidget::setAttribute(WidgetAttribute, bool)",
                "QWidgetPrivate::high_attributes[] too small to contain all attributes in WidgetAttribute");
-#ifdef Q_WS_WIN
-    // ### Don't use PaintOnScreen+paintEngine() to do native painting in 5.0
-    if (attribute == Qt::WA_PaintOnScreen && on && !inherits("QGLWidget")) {
-        // see qwidget_win.cpp, ::paintEngine for details
-        paintEngine();
-        if (d->noPaintOnScreen)
-            return;
-    }
-#endif
 
     setAttribute_internal(attribute, on, data, d);
 
@@ -10015,7 +9897,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     }
     case Qt::WA_PaintOnScreen:
         d->updateIsOpaque();
-#if defined(Q_WS_WIN) || defined(Q_WS_X11) || defined(Q_WS_MAC)
+#if defined(Q_WS_X11)
         // Recreate the widget if it's already created as an alien widget and
         // WA_PaintOnScreen is enabled. Paint on screen widgets must have win id.
         // So must their children.
@@ -10121,10 +10003,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         }
         break;
     case Qt::WA_AcceptTouchEvents:
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-        if (on)
-            d->registerTouchWindow();
-#endif
         break;
     case Qt::WA_LockPortraitOrientation:
     case Qt::WA_LockLandscapeOrientation:
@@ -10516,39 +10394,6 @@ void QWidget::updateMicroFocus()
 #endif
 }
 
-
-#if defined (Q_WS_WIN)
-/*!
-    Returns the window system handle of the widget, for low-level
-    access. Using this function is not portable.
-
-    An HDC acquired with getDC() has to be released with releaseDC().
-
-    \warning Using this function is not portable.
-*/
-HDC QWidget::getDC() const
-{
-    Q_D(const QWidget);
-    if (d->hd)
-        return (HDC) d->hd;
-    return GetDC(winId());
-}
-
-/*!
-    Releases the HDC \a hdc acquired by a previous call to getDC().
-
-    \warning Using this function is not portable.
-*/
-void QWidget::releaseDC(HDC hdc) const
-{
-    Q_D(const QWidget);
-    // If its the widgets own dc, it will be released elsewhere. If
-    // its a different HDC we release it and issue a warning if it
-    // fails.
-    if (hdc != d->hd && !ReleaseDC(winId(), hdc))
-        qErrnoWarning("QWidget::releaseDC(): failed to release HDC");
-}
-#else
 /*!
     Returns the window system handle of the widget, for low-level
     access. Using this function is not portable.
@@ -10563,7 +10408,6 @@ Qt::HANDLE QWidget::handle() const
         (void)winId(); // enforce native window
     return d->hd;
 }
-#endif
 
 
 /*!
@@ -11143,10 +10987,8 @@ QRect QWidgetPrivate::frameStrut() const
     }
 
     if (data.fstrut_dirty
-#ifndef Q_WS_WIN
         // ### Fix properly for 4.3
         && q->isVisible()
-#endif
         && q->testAttribute(Qt::WA_WState_Created))
         const_cast<QWidgetPrivate *>(this)->updateFrameStrut();
 

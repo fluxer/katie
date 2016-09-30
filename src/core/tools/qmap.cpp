@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 QMapData QMapData::shared_null = {
     &shared_null,
     { &shared_null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    Q_BASIC_ATOMIC_INITIALIZER(1), 0, 0, 0, false, true
+    QAtomicInt(1), 0, 0, 0, false, true
 };
 
 QMapData *QMapData::createData()

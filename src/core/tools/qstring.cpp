@@ -723,9 +723,9 @@ const QString::Null QString::null = { };
     \sa split()
 */
 
-QString::Data QString::shared_null = { Q_BASIC_ATOMIC_INITIALIZER(1),
+QString::Data QString::shared_null = { QAtomicInt(1),
                                        0, 0, shared_null.array, 0, {0} };
-QString::Data QString::shared_empty = { Q_BASIC_ATOMIC_INITIALIZER(1),
+QString::Data QString::shared_empty = { QAtomicInt(1),
                                         0, 0, shared_empty.array, 0, {0} };
 
 int QString::grow(int size)

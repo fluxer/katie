@@ -56,18 +56,6 @@
 #include "qlocale_p.h"
 #include "qstring.h"
 
-#if !defined(QT_QLOCALE_NEEDS_VOLATILE)
-#  if defined(Q_CC_GNU) && __GNUC__ == 4
-#    define QT_QLOCALE_NEEDS_VOLATILE
-#  endif
-#endif
-
-#if defined(QT_QLOCALE_NEEDS_VOLATILE)
-#   define NEEDS_VOLATILE volatile
-#else
-#   define NEEDS_VOLATILE
-#endif
-
 QT_BEGIN_NAMESPACE
 
 QString qulltoa(qulonglong l, int base, const QChar _zero);

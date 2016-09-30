@@ -60,7 +60,6 @@
 #include "qvariant.h"
 #include "qstringbuilder.h"
 #include "qnumeric.h"
-#include "qnumeric_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -2973,13 +2972,13 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
     }
 
     if (qstrcmp(num, "nan") == 0)
-        return qt_snan();
+        return qSNaN();
 
     if (qstrcmp(num, "+inf") == 0 || qstrcmp(num, "inf") == 0)
-        return qt_inf();
+        return qInf();
 
     if (qstrcmp(num, "-inf") == 0)
-        return -qt_inf();
+        return -qInf();
 
     bool _ok;
     const char *endptr;

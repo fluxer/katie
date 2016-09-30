@@ -149,7 +149,7 @@ inline void qt_ignore_sigpipe()
 {
 #ifndef Q_NO_POSIX_SIGNALS
     // Set to ignore SIGPIPE once only.
-    static QBasicAtomicInt atom = Q_BASIC_ATOMIC_INITIALIZER(0);
+    static QAtomicInt atom = QAtomicInt(0);
     if (!atom) {
         // More than one thread could turn off SIGPIPE at the same time
         // But that's acceptable because they all would be doing the same

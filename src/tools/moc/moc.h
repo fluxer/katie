@@ -43,7 +43,6 @@
 #define MOC_H
 
 #include "parser.h"
-#include <QStringList>
 #include <QMap>
 #include <QPair>
 #include <stdio.h>

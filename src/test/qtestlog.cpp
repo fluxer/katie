@@ -120,7 +120,7 @@ namespace QTest {
 
     static void messageHandler(QtMsgType type, const char *msg)
     {
-        static QBasicAtomicInt counter = Q_BASIC_ATOMIC_INITIALIZER(QTest::maxWarnings);
+        static QAtomicInt counter = QAtomicInt(QTest::maxWarnings);
 
         if (!msg || !QTest::testLogger) {
             // if this goes wrong, something is seriously broken.

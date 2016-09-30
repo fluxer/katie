@@ -71,28 +71,28 @@ public:
         return adoptRef(new UStringImpl(buffer, length, sharedBuffer));
     }
 
-    static PassRefPtr<UStringImpl> createUninitialized(unsigned length, UChar*& output)
+    static PassRefPtr<UStringImpl> createUninitialized(unsigned int length, UChar*& output)
     {
         if (!length) {
             output = 0;
             return &empty();
         }
 
-        if (length > ((std::numeric_limits<size_t>::max() - sizeof(UStringImpl)) / sizeof(UChar)))
+        if (length > ((std::numeric_limits<unsigned int>::max() - sizeof(UStringImpl)) / sizeof(UChar)))
             CRASH();
         UStringImpl* resultImpl = static_cast<UStringImpl*>(fastMalloc(sizeof(UChar) * length + sizeof(UStringImpl)));
         output = reinterpret_cast<UChar*>(resultImpl + 1);
         return adoptRef(new(resultImpl) UStringImpl(output, length, BufferInternal));
     }
 
-    static PassRefPtr<UStringImpl> tryCreateUninitialized(unsigned length, UChar*& output)
+    static PassRefPtr<UStringImpl> tryCreateUninitialized(unsigned int length, UChar*& output)
     {
         if (!length) {
             output = 0;
             return &empty();
         }
 
-        if (length > ((std::numeric_limits<size_t>::max() - sizeof(UStringImpl)) / sizeof(UChar)))
+        if (length > ((std::numeric_limits<unsigned int>::max() - sizeof(UStringImpl)) / sizeof(UChar)))
             return 0;
         UStringImpl* resultImpl = static_cast<UStringImpl*>(tryFastMalloc(sizeof(UChar) * length + sizeof(UStringImpl)));
         if (!resultImpl)

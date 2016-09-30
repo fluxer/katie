@@ -36,17 +36,14 @@ namespace WTF {
     using std::max;
 
     // WTF_ALIGN_OF / WTF_ALIGNED
-    #if COMPILER(GCC) || COMPILER(MINGW) || COMPILER(RVCT) || COMPILER(WINSCW)
+    #if COMPILER(GCC)
         #define WTF_ALIGN_OF(type) __alignof__(type)
         #define WTF_ALIGNED(variable_type, variable, n) variable_type variable __attribute__((__aligned__(n)))
-    #elif COMPILER(MSVC)
-        #define WTF_ALIGN_OF(type) __alignof(type)
-        #define WTF_ALIGNED(variable_type, variable, n) __declspec(align(n)) variable_type variable
     #else
         #define WTF_ALIGN_OF(type)   0
     #endif
 
-    #if COMPILER(GCC) && !COMPILER(INTEL) && (((__GNUC__ * 100) + __GNUC_MINOR__) >= 303)
+    #if COMPILER(GCC) && !COMPILER(INTEL)
         typedef char __attribute__((__may_alias__)) AlignedBufferChar; 
     #else
         typedef char AlignedBufferChar; 

@@ -44,9 +44,7 @@
 
 #include <QtCore/qlist.h>
 
-#ifndef QT_NO_STL
 #include <vector>
-#endif
 
 QT_BEGIN_HEADER
 
@@ -54,7 +52,7 @@ QT_BEGIN_NAMESPACE
 
 struct Q_CORE_EXPORT QVectorData
 {
-    QBasicAtomicInt ref;
+    QAtomicInt ref;
     int alloc;
     int size;
     uint sharable : 1;
@@ -281,12 +279,10 @@ public:
 
     static QVector<T> fromList(const QList<T> &list);
 
-#ifndef QT_NO_STL
     static inline QVector<T> fromStdVector(const std::vector<T> &vector)
     { QVector<T> tmp; tmp.reserve(int(vector.size())); qCopy(vector.begin(), vector.end(), std::back_inserter(tmp)); return tmp; }
     inline std::vector<T> toStdVector() const
     { std::vector<T> tmp; tmp.reserve(size()); qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
-#endif
 private:
     friend class QRegion; // Optimization for QRegion::rects()
 

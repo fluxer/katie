@@ -42,8 +42,9 @@
 #include "qpathclipper_p.h"
 
 #include <qbezier_p.h>
-#include <qnumeric_p.h>
 #include <qmath.h>
+#include <qnumeric.h>
+#include <qdebug.h>
 
 /**
   The algorithm is as follows:
@@ -60,8 +61,6 @@
  8. (Optional) Simplify the resulting winged edge structure by merging shared edges.
  9. Convert the resulting winged edge structure to a painter path.
  */
-
-#include <qdebug.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -280,10 +279,10 @@ SegmentTree::SegmentTree(QPathSegments &segments)
     : m_segments(segments),
       m_intersections(0)
 {
-    m_bounds.x1 = qt_inf();
-    m_bounds.y1 = qt_inf();
-    m_bounds.x2 = -qt_inf();
-    m_bounds.y2 = -qt_inf();
+    m_bounds.x1 = qInf();
+    m_bounds.y1 = qInf();
+    m_bounds.x2 = -qInf();
+    m_bounds.y2 = -qInf();
 
     m_index.resize(m_segments.segments());
 

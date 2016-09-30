@@ -589,9 +589,9 @@ QByteArray qUncompress(const uchar* data, int nbytes)
 }
 #endif
 
-QByteArray::Data QByteArray::shared_null = {Q_BASIC_ATOMIC_INITIALIZER(1),
-                                                          0, 0, shared_null.array, {0} };
-QByteArray::Data QByteArray::shared_empty = { Q_BASIC_ATOMIC_INITIALIZER(1),
+QByteArray::Data QByteArray::shared_null = { QAtomicInt(1),
+                                             0, 0, shared_null.array, {0} };
+QByteArray::Data QByteArray::shared_empty = { QAtomicInt(1),
                                               0, 0, shared_empty.array, {0} };
 
 /*!

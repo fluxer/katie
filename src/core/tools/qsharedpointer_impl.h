@@ -156,8 +156,8 @@ namespace QtSharedPointer {
     // the ExternalRefCountData object.
     struct ExternalRefCountData
     {
-        QBasicAtomicInt weakref;
-        QBasicAtomicInt strongref;
+        QAtomicInt weakref;
+        QAtomicInt strongref;
 
         inline ExternalRefCountData()
         {
@@ -740,7 +740,6 @@ inline void qSwap(QSharedPointer<T> &p1, QSharedPointer<T> &p2)
     p1.swap(p2);
 }
 
-#ifndef QT_NO_STL
 QT_END_NAMESPACE
 namespace std {
     template <class T>
@@ -748,7 +747,6 @@ namespace std {
     { p1.swap(p2); }
 }
 QT_BEGIN_NAMESPACE
-#endif
 
 namespace QtSharedPointer {
 // helper functions:

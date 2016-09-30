@@ -48,18 +48,13 @@
 
 #include "qmutex_p.h"
 #include "qreadwritelock_p.h"
+#include "qcorecommon_p.h"
 
 #include <errno.h>
 
 #ifndef QT_NO_THREAD
 
 QT_BEGIN_NAMESPACE
-
-static void report_error(int code, const char *where, const char *what)
-{
-    if (code != 0)
-        qWarning("%s: %s failure: %s", where, what, qPrintable(qt_error_string(code)));
-}
 
 class QWaitConditionPrivate {
 public:

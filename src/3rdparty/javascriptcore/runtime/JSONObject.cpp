@@ -399,11 +399,7 @@ Stringifier::StringifyResult Stringifier::appendStringifiedValue(StringBuilder& 
 
     double numericValue;
     if (value.getNumber(numericValue)) {
-#if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
         if (!std::isfinite(numericValue))
-#else
-        if (!isfinite(numericValue))
-#endif
             builder.append("null");
         else
             builder.append(UString::from(numericValue));

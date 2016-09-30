@@ -108,15 +108,8 @@ public:
         return QExtendedInformation::System;
     }
 
-    bool isSymLink(bool ignoreNtfsSymLinks = false) const
+    bool isSymLink() const
     {
-#ifdef Q_WS_WIN
-        if (ignoreNtfsSymLinks) {
-            return !mFileInfo.suffix().compare(QLatin1String("lnk"), Qt::CaseInsensitive);
-        }
-#else
-        Q_UNUSED(ignoreNtfsSymLinks);
-#endif
         return mFileInfo.isSymLink();
     }
 
@@ -202,10 +195,8 @@ private:
     bool m_resolveSymlinks;
     QFileIconProvider *m_iconProvider;
     QFileIconProvider defaultProvider;
-#ifndef Q_OS_WIN
     uint userId;
     uint groupId;
-#endif
 };
 #endif // QT_NO_FILESYSTEMMODEL
 

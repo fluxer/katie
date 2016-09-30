@@ -68,8 +68,8 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_QLOCALE_USES_FCVT
-static char *_qdtoa( NEEDS_VOLATILE double d, int mode, int ndigits, int *decpt,
-                        int *sign, char **rve, char **digits_str);
+static char *_qdtoa( double d, int mode, int ndigits, int *decpt,
+                     int *sign, char **rve, char **digits_str);
 #endif
 
 QString qulltoa(qulonglong l, int base, const QChar _zero)
@@ -597,9 +597,9 @@ QT_END_INCLUDE_NAMESPACE
 #error Exactly one of IEEE_BIG_OR_LITTLE_ENDIAN, VAX, or IBM should be defined.
 #endif
 
-static inline ULong _getWord0(const NEEDS_VOLATILE double x)
+static inline ULong _getWord0(const double x)
 {
-    const NEEDS_VOLATILE uchar *ptr = reinterpret_cast<const NEEDS_VOLATILE uchar *>(&x);
+    const uchar *ptr = reinterpret_cast<const uchar *>(&x);
     if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
         return (ptr[0]<<24) + (ptr[1]<<16) + (ptr[2]<<8) + ptr[3];
     } else {
@@ -607,9 +607,9 @@ static inline ULong _getWord0(const NEEDS_VOLATILE double x)
     }
 }
 
-static inline void _setWord0(NEEDS_VOLATILE double *x, ULong l)
+static inline void _setWord0(double *x, ULong l)
 {
-    NEEDS_VOLATILE uchar *ptr = reinterpret_cast<NEEDS_VOLATILE uchar *>(x);
+    uchar *ptr = reinterpret_cast<uchar *>(x);
     if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
         ptr[0] = uchar(l>>24);
         ptr[1] = uchar(l>>16);
@@ -623,18 +623,18 @@ static inline void _setWord0(NEEDS_VOLATILE double *x, ULong l)
     }
 }
 
-static inline ULong _getWord1(const NEEDS_VOLATILE double x)
+static inline ULong _getWord1(const double x)
 {
-    const NEEDS_VOLATILE uchar *ptr = reinterpret_cast<const NEEDS_VOLATILE uchar *>(&x);
+    const uchar *ptr = reinterpret_cast<const uchar *>(&x);
     if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
         return (ptr[4]<<24) + (ptr[5]<<16) + (ptr[6]<<8) + ptr[7];
     } else {
         return (ptr[3]<<24) + (ptr[2]<<16) + (ptr[1]<<8) + ptr[0];
     }
 }
-static inline void _setWord1(NEEDS_VOLATILE double *x, ULong l)
+static inline void _setWord1(double *x, ULong l)
 {
-    NEEDS_VOLATILE uchar *ptr = reinterpret_cast<uchar NEEDS_VOLATILE *>(x);
+    uchar *ptr = reinterpret_cast<uchar *>(x);
     if (QSysInfo::ByteOrder == QSysInfo::BigEndian) {
         ptr[4] = uchar(l>>24);
         ptr[5] = uchar(l>>16);
@@ -648,7 +648,7 @@ static inline void _setWord1(NEEDS_VOLATILE double *x, ULong l)
     }
 }
 
-static inline ULong getWord0(const NEEDS_VOLATILE double x)
+static inline ULong getWord0(const double x)
 {
 #ifdef QT_ARMFPA
     return _getWord1(x);
@@ -657,7 +657,7 @@ static inline ULong getWord0(const NEEDS_VOLATILE double x)
 #endif
 }
 
-static inline void setWord0(NEEDS_VOLATILE double *x, ULong l)
+static inline void setWord0(double *x, ULong l)
 {
 #ifdef QT_ARMFPA
     _setWord1(x, l);
@@ -666,7 +666,7 @@ static inline void setWord0(NEEDS_VOLATILE double *x, ULong l)
 #endif
 }
 
-static inline ULong getWord1(const NEEDS_VOLATILE double x)
+static inline ULong getWord1(const double x)
 {
 #ifdef QT_ARMFPA
     return _getWord0(x);
@@ -675,7 +675,7 @@ static inline ULong getWord1(const NEEDS_VOLATILE double x)
 #endif
 }
 
-static inline void setWord1(NEEDS_VOLATILE double *x, ULong l)
+static inline void setWord1(double *x, ULong l)
 {
 #ifdef QT_ARMFPA
     _setWord0(x, l);
@@ -2265,7 +2265,7 @@ Q_CORE_EXPORT char *qdtoa ( double d, int mode, int ndigits, int *decpt, int *si
     return s;
 }
 
-static char *_qdtoa( NEEDS_VOLATILE double d, int mode, int ndigits, int *decpt, int *sign, char **rve, char **resultp)
+static char *_qdtoa( double d, int mode, int ndigits, int *decpt, int *sign, char **rve, char **resultp)
 {
     /*
       Arguments ndigits, decpt, sign are similar to those

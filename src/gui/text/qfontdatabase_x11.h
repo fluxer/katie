@@ -1913,18 +1913,6 @@ QFontEngine *QFontDatabase::loadXlfd(int script, const QFontDef &request, int fo
     return fe;
 }
 
-#if (defined(QT_ARCH_ARM) || defined(QT_ARCH_ARMV6)) && defined(Q_CC_GNU) && (__GNUC__ == 4) && (__GNUC_MINOR__ == 3)
-#define NEEDS_GCC_BUG_WORKAROUND
-#endif
-
-#ifdef NEEDS_GCC_BUG_WORKAROUND
-static inline void gccBugWorkaround(const QFontDef &req)
-{
-    char buffer[8];
-    snprintf(buffer, 8, "%f", req.pixelSize);
-}
-#endif
-
 /*! \internal
   Loads a QFontEngine for the specified \a script that matches the
   QFontDef \e request member variable.
@@ -1939,11 +1927,6 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
         req.pixelSize = qFloor(qt_pixelSize(req.pointSize, d->dpi) * 100.0 + 0.5) * 0.01;
     if (req.pixelSize < 1)
         req.pixelSize = 1;
-
-#ifdef NEEDS_GCC_BUG_WORKAROUND
-    // req.pixelSize ends up with a bogus value unless this workaround is called
-    gccBugWorkaround(req);
-#endif
 
     if (req.weight == 0)
         req.weight = QFont::Normal;

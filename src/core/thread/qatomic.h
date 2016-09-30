@@ -1,118 +1,314 @@
-/****************************************************************************
-**
-** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
-**
-** This file is part of the QtCore module of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial License Usage
-** Licensees holding valid commercial Qt licenses may use this file in
-** accordance with the commercial license agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and The Qt Company. For licensing terms
-** and conditions see http://www.qt.io/terms-conditions. For further
-** information use the contact form at http://www.qt.io/contact-us.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 or version 3 as published by the Free
-** Software Foundation and appearing in the file LICENSE.LGPLv21 and
-** LICENSE.LGPLv3 included in the packaging of this file. Please review the
-** following information to ensure the GNU Lesser General Public License
-** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
-** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** As a special exception, The Qt Company gives you certain additional
-** rights. These rights are described in The Qt Company LGPL Exception
-** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+/***********************************************************************
+*
+* Copyright (c) 2012-2016 Barbara Geller
+* Copyright (c) 2012-2016 Ansel Sermersheim
+* Copyright (c) 2012-2014 Digia Plc and/or its subsidiary(-ies).
+* Copyright (c) 2008-2012 Nokia Corporation and/or its subsidiary(-ies).
+* All rights reserved.
+*
+* This file is part of CopperSpice.
+*
+* CopperSpice is free software: you can redistribute it and/or 
+* modify it under the terms of the GNU Lesser General Public License
+* version 2.1 as published by the Free Software Foundation.
+*
+* CopperSpice is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with CopperSpice.  If not, see 
+* <http://www.gnu.org/licenses/>.
+*
+***********************************************************************/
 
 #ifndef QATOMIC_H
 #define QATOMIC_H
 
-#include <QtCore/qbasicatomic.h>
+#include "QtCore/qglobal.h"
 
-QT_BEGIN_HEADER
+#include <atomic>
+#include <cstddef>
+
+#ifndef ATOMIC_INT_LOCK_FREE
+#define ATOMIC_INT_LOCK_FREE 0
+#endif
+
+#ifndef ATOMIC_POINTER_LOCK_FREE
+#define ATOMIC_POINTER_LOCK_FREE 0
+#endif
 
 QT_BEGIN_NAMESPACE
+QT_BEGIN_HEADER
 
-// High-level atomic integer operations
-class Q_CORE_EXPORT QAtomicInt : public QBasicAtomicInt
-{
-public:
-    inline QAtomicInt(int value = 0)
-    {
-#ifdef QT_ARCH_PARISC
-        this->_q_lock[0] = this->_q_lock[1] = this->_q_lock[2] = this->_q_lock[3] = -1;
-#endif
-        _q_value = value;
-    }
-    inline QAtomicInt(const QAtomicInt &other)
-    {
-#ifdef QT_ARCH_PARISC
-        this->_q_lock[0] = this->_q_lock[1] = this->_q_lock[2] = this->_q_lock[3] = -1;
-#endif
-        _q_value = other._q_value;
-    }
+class QAtomicInt
+{  
+   public:      
+        
+      inline QAtomicInt() : m_data(0) { 
+      }
 
-    inline QAtomicInt &operator=(int value)
-    {
-        (void) QBasicAtomicInt::operator=(value);
-        return *this;
-    }
+      inline QAtomicInt(int value) : m_data(value) { 
+      }
 
-    inline QAtomicInt &operator=(const QAtomicInt &other)
-    {
-        (void) QBasicAtomicInt::operator=(other);
-        return *this;
-    }
+      inline QAtomicInt(const QAtomicInt &other) {
+         int data = other.load();
+         store(data);
+      }
 
+      inline QAtomicInt &operator=(const QAtomicInt &other) {
+         int data = other.load();
+         store(data);
+
+         return *this;
+      }
+
+      inline QAtomicInt &operator=(int data) {         
+         store(data);
+         return *this;
+      }
+
+      int load() const {
+         return m_data.load();  
+      }
+
+      int loadAcquire() {
+         return m_data.load(std::memory_order_acquire);
+      }
+      
+      void store(int newValue) {
+         m_data.store(newValue);   
+      }
+      
+      void storeRelease(int newValue) {
+         m_data.store(newValue, std::memory_order_release);   
+      }
+      
+      //   
+      static bool isReferenceCountingNative()  {         
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+
+      static bool isReferenceCountingWaitFree()  { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+      
+      bool ref()  { 
+         int newValue = ++m_data;
+         return newValue != 0;
+      }
+
+      bool deref()  { 
+         int newValue = --m_data;
+         return newValue != 0;
+      }
+         
+      //      
+      static bool isTestAndSetNative()  { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+
+      static bool isTestAndSetWaitFree()  { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+      
+      bool testAndSetRelaxed(int expectedValue, int newValue)  {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_relaxed);         
+      }
+   
+      bool testAndSetAcquire(int expectedValue, int newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_acquire); 
+      }
+
+      bool testAndSetRelease(int expectedValue, int newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_release); 
+      }
+
+      bool testAndSetOrdered(int expectedValue, int newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_seq_cst); 
+      }
+   
+      //   
+      static bool isFetchAndStoreNative() { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+
+      static bool isFetchAndStoreWaitFree() { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+      
+      int fetchAndStoreRelaxed(int newValue) {
+         return m_data.exchange(newValue, std::memory_order_relaxed); 
+      }
+
+      int fetchAndStoreAcquire(int newValue) {
+         return m_data.exchange(newValue, std::memory_order_acquire); 
+      }
+
+      int fetchAndStoreRelease(int newValue) {
+         return m_data.exchange(newValue, std::memory_order_release); 
+      }
+
+      int fetchAndStoreOrdered(int newValue) {
+         return m_data.exchange(newValue, std::memory_order_seq_cst); 
+      }
+
+      //         
+      static bool isFetchAndAddNative() { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+
+      static bool isFetchAndAddWaitFree()  { 
+         return ATOMIC_INT_LOCK_FREE == 2;
+      }
+  
+      int fetchAndAddRelaxed(int valueToAdd) {
+         return m_data.fetch_add(valueToAdd, std::memory_order_relaxed);         
+      }
+
+      int fetchAndAddAcquire(int valueToAdd) {        
+         return m_data.fetch_add(valueToAdd, std::memory_order_acquire);   
+      }
+
+      int fetchAndAddRelease(int valueToAdd) {
+         return m_data.fetch_add(valueToAdd, std::memory_order_release);   
+      }
+
+      int fetchAndAddOrdered(int valueToAdd) {
+         return m_data.fetch_add(valueToAdd, std::memory_order_seq_cst);   
+      }
+
+      inline operator int() const
+        { return load(); }
+
+   private:
+      std::atomic<int> m_data;   
 };
 
-// High-level atomic pointer operations
+
 template <typename T>
-class QAtomicPointer : public QBasicAtomicPointer<T>
+class QAtomicPointer
 {
-public:
-    inline QAtomicPointer(T *value = 0)
-    {
-#ifdef QT_ARCH_PARISC
-        this->_q_lock[0] = this->_q_lock[1] = this->_q_lock[2] = this->_q_lock[3] = -1;
-#endif
-        QBasicAtomicPointer<T>::_q_value = value;
-    }
-    inline QAtomicPointer(const QAtomicPointer<T> &other)
-    {
-#ifdef QT_ARCH_PARISC
-        this->_q_lock[0] = this->_q_lock[1] = this->_q_lock[2] = this->_q_lock[3] = -1;
-#endif
-        QBasicAtomicPointer<T>::_q_value = other._q_value;
-    }
+   public:     
+      QAtomicPointer(T *value = 0) : m_data(value) {
+      }
 
-    inline QAtomicPointer<T> &operator=(T *value)
-    {
-        (void) QBasicAtomicPointer<T>::operator=(value);
-        return *this;
-    }
+      QAtomicPointer(const QAtomicPointer<T> &other) {
+         T *data = other.load();
+         store(data);     
+      }
 
-    inline QAtomicPointer<T> &operator=(const QAtomicPointer<T> &other)
-    {
-        (void) QBasicAtomicPointer<T>::operator=(other);
-        return *this;
-    }
+      QAtomicPointer<T> &operator=(const QAtomicPointer<T> &other) {
+         T *data = other.load();
+         store(data);
 
+         return *this;
+      }
+
+      QAtomicPointer<T> &operator=(T *data) {
+         store(data);
+         return *this;
+      }
+        
+      T *load() const {
+         return m_data.load();  
+      }
+
+      T *loadAcquire() {
+         return m_data.load(std::memory_order_acquire);
+      }
+
+      void store(T *newValue) {
+         m_data.store(newValue);  
+      }
+
+      void storeRelease(T *newValue) {
+         m_data.store(newValue, std::memory_order_release);  
+      }
+      
+      //   
+      static bool isTestAndSetNative() {
+         return ATOMIC_POINTER_LOCK_FREE == 2;
+      }
+
+      static bool isTestAndSetWaitFree() {
+         return ATOMIC_POINTER_LOCK_FREE == 2;
+      }
+      
+      bool testAndSetRelaxed(T *expectedValue, T *newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_relaxed);    
+      }
+
+      bool testAndSetAcquire(T *expectedValue, T *newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_acquire);    
+      }
+
+      bool testAndSetRelease(T *expectedValue, T *newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_release);    
+      }
+
+      bool testAndSetOrdered(T *expectedValue, T *newValue) {
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_seq_cst);    
+      }
+      
+      //
+      static bool isFetchAndStoreNative() {
+         return ATOMIC_POINTER_LOCK_FREE == 2;
+      }
+
+      static bool isFetchAndStoreWaitFree() {
+         return ATOMIC_POINTER_LOCK_FREE == 2;
+      }
+      
+      T *fetchAndStoreRelaxed(T *newValue)  {
+         return m_data.exchange(newValue, std::memory_order_relaxed); 
+      }
+
+      T *fetchAndStoreAcquire(T *newValue) {
+         return m_data.exchange(newValue, std::memory_order_acquire); 
+      }
+
+      T *fetchAndStoreRelease(T *newValue) {
+         return m_data.exchange(newValue, std::memory_order_release); 
+      }
+
+      T *fetchAndStoreOrdered(T *newValue) {
+         return m_data.exchange(newValue, std::memory_order_seq_cst); 
+      }
+      
+      //
+      static bool isFetchAndAddNative() {
+         return ATOMIC_POINTER_LOCK_FREE == 2;
+      }
+
+      static bool isFetchAndAddWaitFree() {
+         return ATOMIC_POINTER_LOCK_FREE == 2;
+      }
+      
+      T *fetchAndAddRelaxed(std::ptrdiff_t valueToAdd) {
+         return m_data.fetch_add(valueToAdd, std::memory_order_relaxed);         
+      }
+
+      T *fetchAndAddAcquire(std::ptrdiff_t valueToAdd) {        
+         return m_data.fetch_add(valueToAdd, std::memory_order_acquire);   
+      }
+
+      T *fetchAndAddRelease(std::ptrdiff_t valueToAdd){
+         return m_data.fetch_add(valueToAdd, std::memory_order_release);   
+      }
+
+      T *fetchAndAddOrdered(std::ptrdiff_t valueToAdd){
+         return m_data.fetch_add(valueToAdd, std::memory_order_seq_cst);   
+      }
+
+      inline operator T *() const
+        { return load(); }
+      inline T *operator->() const
+        { return load(); }
+
+   private:
+      std::atomic<T *> m_data; 
 };
 
 /*!
@@ -124,12 +320,16 @@ public:
 template <typename T>
 inline void qAtomicAssign(T *&d, T *x)
 {
-    if (d == x)
-        return;
-    x->ref.ref();
-    if (!d->ref.deref())
-        delete d;
-    d = x;
+   if (d == x) {
+      return;
+   }
+
+   x->ref.ref();
+   if (! d->ref.deref()) {
+      delete d;
+   }
+
+   d = x;
 }
 
 /*!
@@ -143,12 +343,16 @@ inline void qAtomicAssign(T *&d, T *x)
 template <typename T>
 inline void qAtomicDetach(T *&d)
 {
-    if (d->ref == 1)
-        return;
-    T *x = d;
-    d = new T(*d);
-    if (!x->ref.deref())
-        delete x;
+   if (d->ref.load() == 1) {
+      return;
+   }
+
+   T *x = d;
+   d = new T(*d);
+
+   if (! x->ref.deref()) {
+      delete x;
+   }
 }
 
 QT_END_NAMESPACE

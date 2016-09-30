@@ -75,11 +75,6 @@ public:
         { return painters != 0; }
     virtual QPaintEngine *paintEngine() const = 0;
 
-#ifdef Q_WS_WIN
-    virtual HDC getDC() const;
-    virtual void releaseDC(HDC hdc) const;
-#endif
-
     int width() const { return metric(PdmWidth); }
     int height() const { return metric(PdmHeight); }
     int widthMM() const { return metric(PdmWidthMM); }

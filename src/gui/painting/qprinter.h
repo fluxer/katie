@@ -196,9 +196,6 @@ public:
 
     QList<int> supportedResolutions() const;
 
-#ifdef Q_WS_WIN
-    QList<PaperSource> supportedPaperSources() const;
-#endif
 
     void setFontEmbeddingEnabled(bool enable);
     bool fontEmbeddingEnabled() const;
@@ -206,20 +203,13 @@ public:
     void setDoubleSidedPrinting(bool enable);
     bool doubleSidedPrinting() const;
 
-#ifdef Q_WS_WIN
-    void setWinPageSize(int winPageSize);
-    int winPageSize() const;
-#endif
-
     QRect paperRect() const;
     QRect pageRect() const;
     QRectF paperRect(Unit) const;
     QRectF pageRect(Unit) const;
 
-#if !defined(Q_WS_WIN)
     QString printerSelectionOption() const;
     void setPrinterSelectionOption(const QString &);
-#endif
 
     bool newPage();
     bool abort();
@@ -228,11 +218,6 @@ public:
 
     QPaintEngine *paintEngine() const;
     QPrintEngine *printEngine() const;
-
-#ifdef Q_WS_WIN
-    HDC getDC() const;
-    void releaseDC(HDC hdc) const;
-#endif
 
     void setFromTo(int fromPage, int toPage);
     int fromPage() const;

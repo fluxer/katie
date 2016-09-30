@@ -45,10 +45,8 @@
 #include <QtCore/qiterator.h>
 #include <QtCore/qatomic.h>
 
-#ifndef QT_NO_STL
 #include <iterator>
 #include <list>
-#endif
 
 QT_BEGIN_HEADER
 
@@ -58,7 +56,7 @@ QT_BEGIN_NAMESPACE
 struct Q_CORE_EXPORT QLinkedListData
 {
     QLinkedListData *n, *p;
-    QBasicAtomicInt ref;
+    QAtomicInt ref;
     int size;
     uint sharable : 1;
 
@@ -219,12 +217,10 @@ public:
     typedef const value_type &const_reference;
     typedef qptrdiff difference_type;
 
-#ifndef QT_NO_STL
     static inline QLinkedList<T> fromStdList(const std::list<T> &list)
     { QLinkedList<T> tmp; qCopy(list.begin(), list.end(), std::back_inserter(tmp)); return tmp; }
     inline std::list<T> toStdList() const
     { std::list<T> tmp; qCopy(constBegin(), constEnd(), std::back_inserter(tmp)); return tmp; }
-#endif
 
 
     // comfort

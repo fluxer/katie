@@ -41,7 +41,6 @@
 
 #include <qmath.h>
 #include "qtextureglyphcache_p.h"
-#include "qnumeric_p.h"
 #include "qfontengine_ft_p.h"
 
 QT_BEGIN_NAMESPACE

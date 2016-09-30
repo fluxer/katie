@@ -51,31 +51,4 @@ endif()
 
 ################################ MISC TESTS ################################
 
-macro(KATIE_MISC_TEST _test _define)
-    string(TOUPPER ${_test} uppertest)
-    try_compile(
-        _has_misc_feature
-        ${CMAKE_BINARY_DIR}/katie_tests/misc
-        ${KATIE_MKSPECS_DIR}/tests/misc/${_test}.cpp
-        OUTPUT_VARIABLE _misc_feature_log
-    )
-
-    file(WRITE ${CMAKE_BINARY_DIR}/katie_tests/misc/${_test}.log "${_misc_feature_log}")
-
-    set(KATIE_${uppertest}_RESULT ${_has_misc_feature} CACHE BOOL "Host supports ${uppertest}")
-    if(KATIE_${uppertest}_RESULT)
-        add_definitions(-DQT_${_define})
-    else()
-        add_definitions(-DQT_NO_${_define})
-    endif()
-
-    set(_cache_override)
-    if(NOT _has_misc_feature STREQUAL KATIE_${uppertest}_RESULT)
-        set(_cache_override " (cache override)")
-    endif()
-    message(STATUS "Host supports ${uppertest}: ${KATIE_${uppertest}_RESULT}${_cache_override}")
-endmacro()
-
-katie_misc_test(stl STL)
-
 # TODO: check if data relocations should be disabled before any target additions and define Q_NO_DATA_RELOCATION

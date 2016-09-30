@@ -885,31 +885,6 @@ QPaintDevice *QPaintEngine::paintDevice() const
     return d_func()->pdev;
 }
 
-#ifdef Q_WS_WIN
-/*!
-    \internal
-
-    Empty default implementation.
-*/
-
-HDC QPaintEngine::getDC() const
-{
-    return 0;
-}
-
-
-/*!
-    \internal
-
-    Empty default implementation.
-*/
-
-void QPaintEngine::releaseDC(HDC) const
-{
-}
-
-#endif
-
 /*!
     \internal
 

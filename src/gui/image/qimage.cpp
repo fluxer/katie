@@ -108,7 +108,7 @@ static QImage rotated90(const QImage &src);
 static QImage rotated180(const QImage &src);
 static QImage rotated270(const QImage &src);
 
-QBasicAtomicInt qimage_serial_number = Q_BASIC_ATOMIC_INITIALIZER(1);
+QAtomicInt qimage_serial_number = QAtomicInt(1);
 
 QImageData::QImageData()
     : ref(0), width(0), height(0), depth(0), nbytes(0), data(0),

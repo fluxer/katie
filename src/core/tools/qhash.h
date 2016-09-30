@@ -106,7 +106,7 @@ struct Q_CORE_EXPORT QHashData
 
     Node *fakeNext;
     Node **buckets;
-    QBasicAtomicInt ref;
+    QAtomicInt ref;
     int size;
     int nodeSize;
     short userNumBits;

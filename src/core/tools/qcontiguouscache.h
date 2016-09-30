@@ -55,7 +55,7 @@ QT_BEGIN_NAMESPACE
 
 struct Q_CORE_EXPORT QContiguousCacheData
 {
-    QBasicAtomicInt ref;
+    QAtomicInt ref;
     int alloc;
     int count;
     int start;

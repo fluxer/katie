@@ -91,6 +91,14 @@ if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)
 endif()
 
+# Set compiler standard to C++ 11
+if(NOT CMAKE_VERSION VERSION_LESS "3.1.0")
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_STANDARD 11)
+elseif("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
+
 # TODO: make use of GNUInstallDirs
 set(QT_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
 set(QT_HEADERS_PATH "${QT_PREFIX_PATH}/include/katie" CACHE PATH "Headers installation path")

@@ -88,13 +88,13 @@ static const int BucketOffset[] = {
     FourthBucketOffset, FifthBucketOffset, SixthBucketOffset
 };
 
-static QBasicAtomicPointer<int> timerIds[] =
-    { Q_BASIC_ATOMIC_INITIALIZER(FirstBucket),
-      Q_BASIC_ATOMIC_INITIALIZER(0),
-      Q_BASIC_ATOMIC_INITIALIZER(0),
-      Q_BASIC_ATOMIC_INITIALIZER(0),
-      Q_BASIC_ATOMIC_INITIALIZER(0),
-      Q_BASIC_ATOMIC_INITIALIZER(0) };
+static QAtomicPointer<int> timerIds[] =
+    { QAtomicPointer<int>(FirstBucket),
+      QAtomicPointer<int>(0),
+      QAtomicPointer<int>(0),
+      QAtomicPointer<int>(0),
+      QAtomicPointer<int>(0),
+      QAtomicPointer<int>(0) };
 
 static void timerIdsDestructorFunction()
 {
@@ -104,7 +104,7 @@ static void timerIdsDestructorFunction()
 }
 Q_DESTRUCTOR_FUNCTION(timerIdsDestructorFunction)
 
-static QBasicAtomicInt nextFreeTimerId = Q_BASIC_ATOMIC_INITIALIZER(1);
+static QAtomicInt nextFreeTimerId = QAtomicInt(1);
 
 // avoid the ABA-problem by using 7 of the top 8 bits of the timerId as a serial number
 static inline int prepareNewValueWithSerialNumber(int oldId, int newId)

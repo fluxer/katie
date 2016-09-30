@@ -256,7 +256,7 @@ inline int qRegisterMetaTypeStreamOperators()
         enum { Defined = 1 };                                           \
         static int qt_metatype_id()                                     \
             {                                                           \
-                static QBasicAtomicInt metatype_id = Q_BASIC_ATOMIC_INITIALIZER(0); \
+                static QAtomicInt metatype_id = QAtomicInt(0); \
                 if (!metatype_id)                                       \
                     metatype_id = qRegisterMetaType< TYPE >(#TYPE,      \
                                reinterpret_cast< TYPE *>(quintptr(-1))); \

@@ -115,7 +115,7 @@ Q_GLOBAL_STATIC(QHostInfoLookupManager, theHostInfoLookupManager)
     \sa QAbstractSocket, {http://www.rfc-editor.org/rfc/rfc3492.txt}{RFC 3492}
 */
 
-static QBasicAtomicInt theIdCounter = Q_BASIC_ATOMIC_INITIALIZER(1);
+static QAtomicInt theIdCounter = QAtomicInt(1);
 
 /*!
     Looks up the IP address(es) associated with host name \a name, and

@@ -219,12 +219,6 @@ bool QBenchmarkValgrindUtils::runCallgrindSubProcess(const QStringList &origAppA
     return finishedOk;
 }
 
-#if defined(Q_CC_GNU) && (__GNUC__ * 100 + __GNUC_MINOR__ >= 406)
-// the callgrind macros below generate warnings
-# pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wunused-but-set-variable"
-#endif
-
 void QBenchmarkCallgrindMeasurer::start()
 {
     CALLGRIND_ZERO_STATS;
@@ -233,14 +227,8 @@ void QBenchmarkCallgrindMeasurer::start()
 qint64 QBenchmarkCallgrindMeasurer::checkpoint()
 {
     CALLGRIND_DUMP_STATS;
-    const qint64 result = QBenchmarkValgrindUtils::extractLastResult();
-    return result;
+    return QBenchmarkValgrindUtils::extractLastResult();
 }
-
-#if defined(__GNUC__) && (__GNUC__ * 100 + __GNUC_MINOR__ >= 406)
-// the callgrind macros above generate warnings
-# pragma GCC diagnostic pop
-#endif
 
 qint64 QBenchmarkCallgrindMeasurer::stop()
 {	

@@ -774,7 +774,7 @@ static ALWAYS_INLINE void diff(BigInt& c, const BigInt& aRef, const BigInt& bRef
 
 static double ulp(U *x)
 {
-    register int32_t L;
+    int32_t L;
     U u;
 
     L = (word0(x) & Exp_mask) - (P - 1) * Exp_msk1;
@@ -2379,7 +2379,7 @@ void doubleToStringInJavaScriptFormat(double d, DtoaBuffer buffer, unsigned* res
     Q_ASSERT(buffer);
 
     // avoid ever printing -NaN, in JS conceptually there is only one NaN value
-    if (isnan(d)) {
+    if (std::isnan(d)) {
         append(buffer, "NaN", 3);
         if (resultLength)
             *resultLength = 3;

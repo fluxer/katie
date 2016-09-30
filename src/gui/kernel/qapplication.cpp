@@ -932,7 +932,7 @@ QApplication::~QApplication()
         QWidgetSet *mySet = QWidgetPrivate::allWidgets;
         QWidgetPrivate::allWidgets = 0;
         for (QWidgetSet::ConstIterator it = mySet->constBegin(); it != mySet->constEnd(); ++it) {
-            register QWidget *w = *it;
+            QWidget *w = *it;
             if (!w->parent())                        // window
                 w->destroy(true, true);
         }
@@ -1306,8 +1306,7 @@ void QApplication::setStyle(QStyle *style)
     // clean up the old style
     if (QApplicationPrivate::app_style) {
         if (QApplicationPrivate::is_app_running && !QApplicationPrivate::is_app_closing) {
-            for (QWidgetList::ConstIterator it = all.constBegin(); it != all.constEnd(); ++it) {
-                register QWidget *w = *it;
+            foreach (QWidget *w, all) {
                 if (!(w->windowType() == Qt::Desktop) &&        // except desktop
                      w->testAttribute(Qt::WA_WState_Polished)) { // has been polished
                     QApplicationPrivate::app_style->unpolish(w);
@@ -1347,24 +1346,22 @@ void QApplication::setStyle(QStyle *style)
 
     // re-polish existing widgets if necessary
     if (QApplicationPrivate::is_app_running && !QApplicationPrivate::is_app_closing) {
-        for (QWidgetList::ConstIterator it1 = all.constBegin(); it1 != all.constEnd(); ++it1) {
-            register QWidget *w = *it1;
-            if (w->windowType() != Qt::Desktop && w->testAttribute(Qt::WA_WState_Polished)) {
-                if (w->style() == QApplicationPrivate::app_style)
-                    QApplicationPrivate::app_style->polish(w);                // repolish
+        foreach (QWidget *it1, all) {
+            if (it1->windowType() != Qt::Desktop && it1->testAttribute(Qt::WA_WState_Polished)) {
+                if (it1->style() == QApplicationPrivate::app_style)
+                    QApplicationPrivate::app_style->polish(it1);                // repolish
 #ifndef QT_NO_STYLE_STYLESHEET
                 else
-                    w->setStyleSheet(w->styleSheet()); // touch
+                    it1->setStyleSheet(it1->styleSheet()); // touch
 #endif
             }
         }
 
-        for (QWidgetList::ConstIterator it2 = all.constBegin(); it2 != all.constEnd(); ++it2) {
-            register QWidget *w = *it2;
-            if (w->windowType() != Qt::Desktop && !w->testAttribute(Qt::WA_SetStyle)) {
+        foreach (QWidget *it2, all) {
+            if (it2->windowType() != Qt::Desktop && !it2->testAttribute(Qt::WA_SetStyle)) {
                 QEvent e(QEvent::StyleChange);
-                QApplication::sendEvent(w, &e);
-                w->update();
+                QApplication::sendEvent(it2, &e);
+                it2->update();
             }
         }
     }
@@ -1564,9 +1561,7 @@ void QApplicationPrivate::setPalette_helper(const QPalette &palette, const char*
         QEvent e(QEvent::ApplicationPaletteChange);
         QApplication::sendEvent(QApplication::instance(), &e);
 
-        QWidgetList wids = QApplication::allWidgets();
-        for (QWidgetList::ConstIterator it = wids.constBegin(); it != wids.constEnd(); ++it) {
-            register QWidget *w = *it;
+        foreach (QWidget *w, QApplication::allWidgets()) {
             if (all || (!className && w->isWindow()) || w->inherits(className)) // matching class
                 QApplication::sendEvent(w, &e);
         }
@@ -1743,9 +1738,7 @@ void QApplication::setFont(const QFont &font, const char *className)
         QEvent e(QEvent::ApplicationFontChange);
         QApplication::sendEvent(QApplication::instance(), &e);
 
-        QWidgetList wids = QApplication::allWidgets();
-        for (QWidgetList::ConstIterator it = wids.constBegin(); it != wids.constEnd(); ++it) {
-            register QWidget *w = *it;
+        foreach (QWidget *w, QApplication::allWidgets()) {
             if (all || (!className && w->isWindow()) || w->inherits(className)) // matching class
                 sendEvent(w, &e);
         }
@@ -1805,9 +1798,7 @@ void QApplication::setWindowIcon(const QIcon &icon)
     *QApplicationPrivate::app_icon = icon;
     if (QApplicationPrivate::is_app_running && !QApplicationPrivate::is_app_closing) {
         QEvent e(QEvent::ApplicationWindowIconChange);
-        QWidgetList all = QApplication::allWidgets();
-        for (QWidgetList::ConstIterator it = all.constBegin(); it != all.constEnd(); ++it) {
-            register QWidget *w = *it;
+        foreach (QWidget *w, QApplication::allWidgets()) {
             if (w->isWindow())
                 sendEvent(w, &e);
         }
@@ -1829,10 +1820,8 @@ void QApplication::setWindowIcon(const QIcon &icon)
 QWidgetList QApplication::topLevelWidgets()
 {
     QWidgetList list;
-    QWidgetList all = allWidgets();
 
-    for (QWidgetList::ConstIterator it = all.constBegin(); it != all.constEnd(); ++it) {
-        QWidget *w = *it;
+    foreach (QWidget *w, QApplication::allWidgets()) {
         if (w->isWindow() && w->windowType() != Qt::Desktop)
             list.append(w);
     }
@@ -3651,7 +3640,7 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
                     && mouse->type() == QEvent::MouseMove && mouse->buttons() == 0) {
                     // but still send them through all application event filters (normally done by notify_helper)
                     for (int i = 0; i < d->eventFilters.size(); ++i) {
-                        register QObject *obj = d->eventFilters.at(i);
+                        QObject *obj = d->eventFilters.at(i);
                         if (!obj)
                             continue;
                         if (obj->d_func()->threadData != w->d_func()->threadData) {

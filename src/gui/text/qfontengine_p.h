@@ -376,9 +376,4 @@ public:
 
 QT_END_NAMESPACE
 
-#ifdef Q_WS_WIN
-#   include "qfontengine_win_p.h"
-#endif
-
-
 #endif // QFONTENGINE_P_H

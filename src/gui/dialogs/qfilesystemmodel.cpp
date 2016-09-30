@@ -802,7 +802,7 @@ QString QFileSystemModelPrivate::name(const QModelIndex &index) const
         return QString();
     QFileSystemNode *dirNode = node(index);
     if (fileInfoGatherer.resolveSymlinks() && !resolvedSymLinks.isEmpty() &&
-        dirNode->isSymLink(/* ignoreNtfsSymLinks = */ true)) {
+        dirNode->isSymLink()) {
         QString fullPath = QDir::fromNativeSeparators(filePath(index));
         if (resolvedSymLinks.contains(fullPath))
             return resolvedSymLinks[fullPath];

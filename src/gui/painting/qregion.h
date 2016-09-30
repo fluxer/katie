@@ -158,12 +158,10 @@ private:
     void exec(const QByteArray &ba, int ver = 0, QDataStream::ByteOrder byteOrder = QDataStream::BigEndian);
 #endif
     struct QRegionData {
-        QBasicAtomicInt ref;
+        QAtomicInt ref;
 #if defined(Q_WS_X11)
         Region rgn;
         void *xrectangles;
-#endif
-#if defined(Q_WS_X11)
         QRegionPrivate *qt_rgn;
 #endif
     };

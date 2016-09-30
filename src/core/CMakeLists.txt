@@ -152,7 +152,6 @@ set(CORE_PUBLIC_HEADERS
     QStateMachine
     QVariantComparisonHelper
     QMetaObject
-    QBasicAtomicPointer
     QPauseAnimation
     QMapData
     QByteRef
@@ -178,7 +177,6 @@ set(CORE_PUBLIC_HEADERS
     QCharRef
     QReturnArgument
     QMetaObjectAccessor
-    QBasicAtomicInt
     QConcatenable
     QLocale
     QMetaType
@@ -260,7 +258,6 @@ set(CORE_PUBLIC_HEADERS
 )
 
 include(animation/animation.cmake)
-include(arch/arch.cmake)
 include(codecs/codecs.cmake)
 include(concurrent/concurrent.cmake)
 include(global/global.cmake)
@@ -280,7 +277,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_CURRENT_SOURCE_DIR}/animation
-    ${CMAKE_CURRENT_SOURCE_DIR}/arch
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent
     ${CMAKE_CURRENT_SOURCE_DIR}/global
@@ -293,7 +289,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/tools
     ${CMAKE_CURRENT_SOURCE_DIR}/xml
     ${CMAKE_CURRENT_BINARY_DIR}/animation
-    ${CMAKE_CURRENT_BINARY_DIR}/arch
     ${CMAKE_CURRENT_BINARY_DIR}/codecs
     ${CMAKE_CURRENT_BINARY_DIR}/concurrent
     ${CMAKE_CURRENT_BINARY_DIR}/global
