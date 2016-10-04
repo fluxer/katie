@@ -42,7 +42,7 @@
 QT_BEGIN_NAMESPACE
 QT_BEGIN_HEADER
 
-class QAtomicInt
+class Q_CORE_EXPORT QAtomicInt
 {  
    public:      
         
@@ -188,7 +188,7 @@ class QAtomicInt
 
 
 template <typename T>
-class QAtomicPointer
+class Q_CORE_EXPORT QAtomicPointer
 {
    public:     
       QAtomicPointer(T *value = 0) : m_data(value) {
