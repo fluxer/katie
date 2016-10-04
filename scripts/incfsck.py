@@ -136,6 +136,7 @@ incmap = {
         'QTextLine': 'qtextlayout.h',
         'QTextFrame': 'qtextobject.h',
         'QTextCharFormat': 'qtextformat.h',
+        'QTextBlockFormat': 'qtextformat.h',
         'QUndoCommand': 'qundostack.h',
         'QTouchEvent': 'qevent.h',
         'QDropEvent': 'qevent.h',

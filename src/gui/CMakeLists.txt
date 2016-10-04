@@ -282,7 +282,6 @@ set(GUI_PUBLIC_HEADERS
     QTapAndHoldGesture
     QTapGesture
     QtEvents
-    QTextBlockFormat
     QTextBlockGroup
     QTextBlockUserData
     QTextBrowser
@@ -354,6 +353,7 @@ set(GUI_PUBLIC_HEADERS
     QX11EmbedWidget
     # mixed
     QTextBlock
+    QTextBlockFormat
     QListWidgetItem
     QTreeWidgetItem
     QStandardItem
