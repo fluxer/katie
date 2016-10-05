@@ -97,12 +97,6 @@ QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
 
   \list
 
-  \o Windows: QSharedMemory does not "own" the shared memory segment.
-  When all threads or processes that have an instance of QSharedMemory
-  attached to a particular shared memory segment have either destroyed
-  their instance of QSharedMemory or exited, the Windows kernel
-  releases the shared memory segment automatically.
-
   \o Unix: QSharedMemory "owns" the shared memory segment. When the
   last thread or process that has an instance of QSharedMemory
   attached to a particular shared memory segment detaches from the
@@ -111,20 +105,9 @@ QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
   process crashes without running the QSharedMemory destructor, the
   shared memory segment survives the crash.
 
-  \o QNX: Due to possible race conditions in the POSIX IPC implementation, create()
-  should be called prior to any attach() calls (even across multiple threads).
-
   \o HP-UX: Only one attach to a shared memory segment is allowed per
   process. This means that QSharedMemory should not be used across
   multiple threads in the same process in HP-UX.
-
-  \o Symbian: QSharedMemory does not "own" the shared memory segment.
-  When all threads or processes that have an instance of QSharedMemory
-  attached to a particular shared memory segment have either destroyed
-  their instance of QSharedMemory or exited, the Symbian kernel
-  releases the shared memory segment automatically.
-  Also, access to a shared memory segment cannot be limited to read-only
-  in Symbian.
 
   \endlist
 

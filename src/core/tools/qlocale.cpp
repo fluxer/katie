@@ -39,15 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qglobal.h"
-
-#if !defined(QWS) && defined(Q_OS_MAC)
-#   include "qcore_mac_p.h"
-#   include <CoreFoundation/CoreFoundation.h>
-#endif
-
 #include "qplatformdefs.h"
-
 #include "qdatastream.h"
 #include "qstring.h"
 #include "qlocale.h"
@@ -515,7 +507,6 @@ void QLocalePrivate::updateSystemPrivate()
     if (!default_lp)
         qt_initIcu(system_lp->bcp47Name());
 #endif
-
 }
 #endif
 
@@ -2143,12 +2134,9 @@ Qt::LayoutDirection QLocale::textDirection() const
 QString QLocale::toUpper(const QString &str) const
 {
 #ifdef QT_USE_ICU
-    {
-        QString result;
-        if (qt_u_strToUpper(str, &result, *this))
-            return result;
-        // else fall through and use Qt's toUpper
-    }
+    QString result;
+    if (qt_u_strToUpper(str, &result, *this))
+        return result;
 #endif
     return str.toUpper();
 }
@@ -2161,12 +2149,9 @@ QString QLocale::toUpper(const QString &str) const
 QString QLocale::toLower(const QString &str) const
 {
 #ifdef QT_USE_ICU
-    {
-        QString result;
-        if (qt_u_strToLower(str, &result, *this))
-            return result;
-        // else fall through and use Qt's toUpper
-    }
+    QString result;
+    if (qt_u_strToLower(str, &result, *this))
+        return result;
 #endif
     return str.toLower();
 }

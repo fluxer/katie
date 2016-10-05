@@ -213,19 +213,6 @@ bool QFileSystemEngine::fillMetaData(int fd, QFileSystemMetaData &data)
     return false;
 }
 
-#if defined(QT_EXT_QNX_READDIR_R)
-static void fillStat64fromStat32(struct stat64 *statBuf64, const struct stat &statBuf32)
-{
-    statBuf64->st_mode = statBuf32.st_mode;
-    statBuf64->st_size = statBuf32.st_size;
-    statBuf64->st_ctime = statBuf32.st_ctime;
-    statBuf64->st_mtime = statBuf32.st_mtime;
-    statBuf64->st_atime = statBuf32.st_atime;
-    statBuf64->st_uid = statBuf32.st_uid;
-    statBuf64->st_gid = statBuf32.st_gid;
-}
-#endif
-
 void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
 {
     // Permissions
@@ -261,12 +248,6 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
     // Attributes
     entryFlags |= QFileSystemMetaData::ExistsAttribute;
     size_ = statBuffer.st_size;
-#if defined(Q_OS_MAC) && MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_5
-    if (statBuffer.st_flags & UF_HIDDEN) {
-        entryFlags |= QFileSystemMetaData::HiddenAttribute;
-        knownFlagsMask |= QFileSystemMetaData::HiddenAttribute;
-    }
-#endif
 
     // Times
     creationTime_ = statBuffer.st_ctime ? statBuffer.st_ctime : statBuffer.st_mtime;
@@ -278,48 +259,7 @@ void QFileSystemMetaData::fillFromStatBuf(const QT_STATBUF &statBuffer)
 
 void QFileSystemMetaData::fillFromDirEnt(const QT_DIRENT &entry)
 {
-#if defined(QT_EXT_QNX_READDIR_R)
-    entryFlags = 0;
-    knownFlagsMask = 0;
-    for (dirent_extra *extra = _DEXTRA_FIRST(&entry); _DEXTRA_VALID(extra, &entry);
-         extra = _DEXTRA_NEXT(extra)) {
-        if (extra->d_type == _DTYPE_STAT || extra->d_type == _DTYPE_LSTAT) {
-
-            const struct dirent_extra_stat * const extra_stat =
-                    reinterpret_cast<struct dirent_extra_stat *>(extra);
-
-            // Remember whether this was a link or not, this saves an lstat() call later.
-            if (extra->d_type == _DTYPE_LSTAT) {
-                knownFlagsMask |= QFileSystemMetaData::LinkType;
-                if (S_ISLNK(extra_stat->d_stat.st_mode))
-                    entryFlags |= QFileSystemMetaData::LinkType;
-            }
-
-            // For symlinks, the extra type _DTYPE_LSTAT doesn't work for filling out the meta data,
-            // as we need the stat() information there, not the lstat() information.
-            // In this case, don't use the extra information.
-            // Unfortunately, readdir() never seems to return extra info of type _DTYPE_STAT, so for
-            // symlinks, we always incur the cost of an extra stat() call later.
-            if (S_ISLNK(extra_stat->d_stat.st_mode) && extra->d_type == _DTYPE_LSTAT)
-                continue;
-
-#if defined(QT_USE_XOPEN_LFS_EXTENSIONS) && defined(QT_LARGEFILE_SUPPORT)
-            // Even with large file support, d_stat is always of type struct stat, not struct stat64,
-            // so it needs to be converted
-            struct stat64 statBuf;
-            fillStat64fromStat32(&statBuf, extra_stat->d_stat);
-            fillFromStatBuf(statBuf);
-#else
-            fillFromStatBuf(extra_stat->d_stat);
-#endif
-            knownFlagsMask |= QFileSystemMetaData::PosixStatFlags;
-            if (!S_ISLNK(extra_stat->d_stat.st_mode)) {
-                knownFlagsMask |= QFileSystemMetaData::ExistsAttribute;
-                entryFlags |= QFileSystemMetaData::ExistsAttribute;
-            }
-        }
-    }
-#elif defined(_DIRENT_HAVE_D_TYPE) || defined(Q_OS_BSD4)
+#if defined(_DIRENT_HAVE_D_TYPE) || defined(Q_OS_BSD4)
     // BSD4 includes Mac OS X
 
     // ### This will clear all entry flags and knownFlagsMask

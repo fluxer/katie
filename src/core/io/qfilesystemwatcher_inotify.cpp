@@ -61,11 +61,6 @@
 
 #if defined(QT_NO_INOTIFY)
 
-#if defined(Q_OS_QNX)
-// These files should only be compiled on QNX if the inotify headers are found
-#error "Should not get here."
-#endif
-
 #include <linux/types.h>
 
 #if defined(__i386__)

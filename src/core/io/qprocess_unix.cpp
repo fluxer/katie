@@ -85,11 +85,6 @@ QT_END_NAMESPACE
 #include "qprocess.h"
 #include "qprocess_p.h"
 #include "qcore_unix_p.h"
-
-#ifdef Q_OS_MAC
-#include <qcore_mac_p.h>
-#endif
-
 #include <qcoreapplication_p.h>
 #include <qthread_p.h>
 #include <qfile.h>
@@ -105,12 +100,6 @@ QT_END_NAMESPACE
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef Q_OS_QNX
-#include "qvarlengtharray.h"
-
-#include <spawn.h>
-#include <sys/neutrino.h>
-#endif
 
 
 QT_BEGIN_NAMESPACE
@@ -118,13 +107,6 @@ QT_BEGIN_NAMESPACE
 // POSIX requires PIPE_BUF to be 512 or larger
 // so we will use 512
 static const int errorBufferMax = 512;
-
-#ifdef Q_OS_INTEGRITY
-static inline char *strdup(const char *data)
-{
-    return qstrdup(data);
-}
-#endif
 
 static int qt_qprocess_deadChild_pipe[2];
 static struct sigaction qt_sa_old_sigchld_handler;
@@ -487,19 +469,11 @@ bool QProcessPrivate::createChannel(Channel &channel)
     }
 }
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#if defined(Q_OS_MAC) && !defined(Q_OS_IOS)
-# include <crt_externs.h>
-# define environ (*_NSGetEnviron())
-#else
-  extern char **environ;
-#endif
-QT_END_INCLUDE_NAMESPACE
+extern char **environ;
 
 QProcessEnvironment QProcessEnvironment::systemEnvironment()
 {
     QProcessEnvironment env;
-#if !defined(Q_OS_IOS)
     const char *entry;
     for (int count = 0; (entry = environ[count]); ++count) {
         const char *equal = strchr(entry, '=');
@@ -511,7 +485,6 @@ QProcessEnvironment QProcessEnvironment::systemEnvironment()
         env.d->hash.insert(QProcessEnvironmentPrivate::Key(name),
                            QProcessEnvironmentPrivate::Value(value));
     }
-#endif
     return env;
 }
 
@@ -524,11 +497,7 @@ static char **_q_dupEnvironment(const QProcessEnvironmentPrivate::Hash &environm
     // if LD_LIBRARY_PATH exists in the current environment, but
     // not in the environment list passed by the programmer, then
     // copy it over.
-#if defined(Q_OS_MAC)
-    static const char libraryPath[] = "DYLD_LIBRARY_PATH";
-#else
     static const char libraryPath[] = "LD_LIBRARY_PATH";
-#endif
     const QByteArray envLibraryPath = qgetenv(libraryPath);
     bool needToAddLibraryPath = !envLibraryPath.isEmpty() &&
                                 !environment.contains(QProcessEnvironmentPrivate::Key(QByteArray(libraryPath)));
@@ -554,10 +523,6 @@ static char **_q_dupEnvironment(const QProcessEnvironmentPrivate::Hash &environm
                                  envLibraryPath).constData());
     return envp;
 }
-
-#ifdef Q_OS_MAC
-Q_GLOBAL_STATIC(QMutex, cfbundleMutex);
-#endif
 
 void QProcessPrivate::startProcess()
 {
@@ -602,41 +567,14 @@ void QProcessPrivate::startProcess()
     argv[arguments.count() + 1] = 0;
 
     // Encode the program name.
-    QByteArray encodedProgramName = QFile::encodeName(program);
-#ifdef Q_OS_MAC
-    // allow invoking of .app bundles on the Mac.
-    QFileInfo fileInfo(QString::fromUtf8(encodedProgramName.constData()));
-    if (encodedProgramName.endsWith(".app") && fileInfo.isDir()) {
-        QCFType<CFURLRef> url = CFURLCreateWithFileSystemPath(0,
-                                                          QCFString(fileInfo.absoluteFilePath()),
-                                                          kCFURLPOSIXPathStyle, true);
-        {
-            // CFBundle is not reentrant, since CFBundleCreate might return a reference
-            // to a cached bundle object. Protect the bundle calls with a mutex lock.
-            QMutexLocker lock(cfbundleMutex());
-            QCFType<CFBundleRef> bundle = CFBundleCreate(0, url);
-            url = CFBundleCopyExecutableURL(bundle);
-        }
-        if (url) {
-            QCFString str = CFURLCopyFileSystemPath(url, kCFURLPOSIXPathStyle);
-            encodedProgramName += "/Contents/MacOS/" + static_cast<QString>(str).toUtf8();
-        }
-    }
-#endif
-
+    const QByteArray encodedProgramName = QFile::encodeName(program);
     // Add the program name to the argument list.
-    char *dupProgramName = ::strdup(encodedProgramName.constData());
-    argv[0] = dupProgramName;
+    argv[0] = (char*)encodedProgramName.data();
 
     // Add every argument to the list
     for (int i = 0; i < arguments.count(); ++i) {
-        QString arg = arguments.at(i);
-#ifdef Q_OS_MAC
-        // Mac OS X uses UTF8 for exec, regardless of the system locale.
-        argv[i + 1] = ::strdup(arg.toUtf8().constData());
-#else
+        const QString arg = arguments.at(i);
         argv[i + 1] = ::strdup(arg.toLocal8Bit().constData());
-#endif
     }
 
     // Duplicate the environment.
@@ -680,15 +618,10 @@ void QProcessPrivate::startProcess()
 
     // Start the process manager, and fork off the child process.
     processManager()->lock();
-#if defined(Q_OS_QNX)
-    pid_t childPid = spawnChild(workingDirPtr, argv, envp);
-#else
-    pid_t childPid = fork();
-    int lastForkErrno = errno;
-#endif
+    const pid_t childPid = fork();
+    const int lastForkErrno = errno;
     if (childPid != 0) {
         // Clean up duplicated memory.
-        free(dupProgramName);
         for (int i = 1; i <= arguments.count(); ++i)
             free(argv[i]);
         for (int i = 0; i < envc; ++i)
@@ -700,17 +633,6 @@ void QProcessPrivate::startProcess()
         delete [] path;
     }
 
-    // This is not a valid check under QNX, because the semantics are
-    // different. While under other platforms where fork() may succeed and exec() can still fail,
-    // causing the childPid to hold a valid value (and thus evaluating the
-    // following if to false), and then signaling the error via
-    // childStartedPipe, under QNX on the other hand, spawn() return value will be assigned
-    // to childPid (which will be -1 in case of failure). This will force
-    // QProcess to cleanup, instead of signaling the error via
-    // childStartedPipe. Since it will invalidade the pipes, functions like
-    // QProcess::waitForStarted() will fail, for childStartedPipe will be
-    // '-1' and mess with the select() calls.
-#if !defined(Q_OS_QNX)
     if (childPid < 0) {
         // Cleanup, report error and return
 #if defined (QPROCESS_DEBUG)
@@ -730,7 +652,6 @@ void QProcessPrivate::startProcess()
         execChild(workingDirPtr, path, argv, envp);
         ::_exit(-1);
     }
-#endif
 
     // Register the child. In the mean time, we can get a SIGCHLD, so we need
     // to keep the lock held to avoid a race to catch the child.
@@ -766,7 +687,6 @@ void QProcessPrivate::startProcess()
         ::fcntl(stderrChannel.pipe[0], F_SETFL, ::fcntl(stderrChannel.pipe[0], F_GETFL) | O_NONBLOCK);
 }
 
-#if !defined(Q_OS_QNX)
 void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv, char **envp)
 {
     ::signal(SIGPIPE, SIG_DFL);         // reset the signal that we ignored
@@ -830,8 +750,6 @@ void QProcessPrivate::execChild(const char *workingDir, char **path, char **argv
     childStartedPipe[1] = -1;
 }
 
-#endif //Q_OS_QNX
-
 bool QProcessPrivate::processStarted()
 {
     ushort buf[errorBufferMax];
@@ -854,99 +772,6 @@ bool QProcessPrivate::processStarted()
 
     return i <= 0;
 }
-
-#if defined(Q_OS_QNX)
-static pid_t doSpawn(int fd_count, int fd_map[], char **argv, char **envp,
-        const char *workingDir, bool spawn_detached)
-{
-    // A multi threaded QNX Process can't fork so we call spawn() instead.
-
-    struct inheritance inherit;
-    memset(&inherit, 0, sizeof(inherit));
-    inherit.flags |= SPAWN_SETSID;
-    inherit.flags |= SPAWN_CHECK_SCRIPT;
-    if (spawn_detached)
-        inherit.flags |= SPAWN_NOZOMBIE;
-    inherit.flags |= SPAWN_SETSIGDEF;
-    sigaddset(&inherit.sigdefault, SIGPIPE); // reset the signal that we ignored
-
-    // enter the working directory
-    const char *oldWorkingDir = 0;
-    char buff[PATH_MAX + 1];
-
-    if (workingDir) {
-        //we need to freeze everyone in order to avoid race conditions with //chdir().
-        if (ThreadCtl(_NTO_TCTL_THREADS_HOLD, 0) == -1)
-            qWarning("ThreadCtl(): cannot hold threads: %s", qPrintable(qt_error_string(errno)));
-
-        oldWorkingDir = QT_GETCWD(buff, PATH_MAX + 1);
-        QT_CHDIR(workingDir);
-    }
-
-    pid_t childPid;
-    EINTR_LOOP(childPid, ::spawn(argv[0], fd_count, fd_map, &inherit, argv, envp));
-    if (childPid == -1) {
-        inherit.flags |= SPAWN_SEARCH_PATH;
-        EINTR_LOOP(childPid, ::spawn(argv[0], fd_count, fd_map, &inherit, argv, envp));
-    }
-
-    if (oldWorkingDir) {
-        QT_CHDIR(oldWorkingDir);
-
-        if (ThreadCtl(_NTO_TCTL_THREADS_CONT, 0) == -1)
-            qFatal("ThreadCtl(): cannot resume threads: %s", qPrintable(qt_error_string(errno)));
-    }
-
-    return childPid;
-}
-
-pid_t QProcessPrivate::spawnChild(const char *workingDir, char **argv, char **envp)
-{
-    // we need to manually fill in fd_map
-    // to inherit the file descriptors from
-    // the parent
-    const int fd_count = sysconf(_SC_OPEN_MAX);
-    QVarLengthArray<int, 1024> fd_map(fd_count);
-
-    for (int i = 3; i < fd_count; ++i) {
-        // here we rely that fcntl returns -1 and
-        // sets errno to EBADF
-        const int flags = ::fcntl(i, F_GETFD);
-
-        fd_map[i] = ((flags >= 0) && !(flags & FD_CLOEXEC))
-                  ? i : SPAWN_FDCLOSED;
-    }
-
-    switch (processChannelMode) {
-    case QProcess::ForwardedChannels:
-        fd_map[0] = stdinChannel.pipe[0];
-        fd_map[1] = QT_FILENO(stdout);
-        fd_map[2] = QT_FILENO(stderr);
-        break;
-    case QProcess::MergedChannels:
-        fd_map[0] = stdinChannel.pipe[0];
-        fd_map[1] = stdoutChannel.pipe[1];
-        fd_map[2] = stdoutChannel.pipe[1];
-        break;
-    case QProcess::SeparateChannels:
-        fd_map[0] = stdinChannel.pipe[0];
-        fd_map[1] = stdoutChannel.pipe[1];
-        fd_map[2] = stderrChannel.pipe[1];
-        break;
-    }
-
-    pid_t childPid = doSpawn(fd_count, fd_map.data(), argv, envp, workingDir, false);
-
-    if (childPid == -1) {
-        QString error = qt_error_string(errno);
-        qt_safe_write(childStartedPipe[1], error.data(), error.length() * sizeof(QChar));
-        qt_safe_close(childStartedPipe[1]);
-        childStartedPipe[1] = -1;
-    }
-
-    return childPid;
-}
-#endif // Q_OS_QNX
 
 qint64 QProcessPrivate::bytesAvailableFromStdout() const
 {
@@ -1322,46 +1147,6 @@ bool QProcessPrivate::waitForDeadChild()
     return false;
 }
 
-void QProcessPrivate::_q_notified()
-{
-}
-
-#if defined(Q_OS_QNX)
-bool QProcessPrivate::startDetached(const QString &program, const QStringList &arguments, const QString &workingDirectory, qint64 *pid)
-{
-    const int fd_count = 3;
-    int fd_map[fd_count] = { QT_FILENO(stdin), QT_FILENO(stdout), QT_FILENO(stderr) };
-
-    QList<QByteArray> enc_args;
-    enc_args.append(QFile::encodeName(program));
-    for (int i = 0; i < arguments.size(); ++i)
-        enc_args.append(arguments.at(i).toLocal8Bit());
-
-    const int argc = enc_args.size();
-    QScopedArrayPointer<char*> raw_argv(new char*[argc + 1]);
-    for (int i = 0; i < argc; ++i)
-        raw_argv[i] = const_cast<char *>(enc_args.at(i).data());
-    raw_argv[argc] = 0;
-
-    char **envp = 0; // inherit environment
-
-    // Encode the working directory if it's non-empty, otherwise just pass 0.
-    const char *workingDirPtr = 0;
-    QByteArray encodedWorkingDirectory;
-    if (!workingDirectory.isEmpty()) {
-        encodedWorkingDirectory = QFile::encodeName(workingDirectory);
-        workingDirPtr = encodedWorkingDirectory.constData();
-    }
-
-    pid_t childPid = doSpawn(fd_count, fd_map, raw_argv.data(), envp, workingDirPtr, true);
-    if (pid && childPid != -1)
-        *pid = childPid;
-
-    return childPid != -1;
-}
-
-#else
-
 bool QProcessPrivate::startDetached(const QString &program, const QStringList &arguments, const QString &workingDirectory, qint64 *pid)
 {
     processManager()->start();
@@ -1401,11 +1186,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
 
             char **argv = new char *[arguments.size() + 2];
             for (int i = 0; i < arguments.size(); ++i) {
-#ifdef Q_OS_MAC
-                argv[i + 1] = ::strdup(arguments.at(i).toUtf8().constData());
-#else
                 argv[i + 1] = ::strdup(arguments.at(i).toLocal8Bit().constData());
-#endif
             }
             argv[arguments.size() + 1] = 0;
 
@@ -1480,7 +1261,6 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
     qt_safe_close(pidPipe[0]);
     return success;
 }
-#endif // Q_OS_QNX
 
 void QProcessPrivate::initializeProcessManager()
 {

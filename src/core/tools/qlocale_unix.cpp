@@ -49,22 +49,6 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_SYSTEMLOCALE
-static QByteArray getSystemLocale()
-{
-#if defined(Q_OS_QNX)
-    static char buff[257];
-
-    memset(buff, 0, sizeof buff);
-
-    if (confstr(_CS_LOCALE, buff, 257) > 0)
-        return buff;
-    else
-        return qgetenv("LC_ALL");
-#else
-    return qgetenv("LC_ALL");
-#endif
-}
-
 struct QSystemLocaleData
 {
     QSystemLocaleData()
@@ -78,7 +62,7 @@ struct QSystemLocaleData
 
     void updateLocale()
     {
-        QByteArray all = getSystemLocale();
+        const QByteArray all = qgetenv("LC_ALL");
         QByteArray numeric  = all.isEmpty() ? qgetenv("LC_NUMERIC") : all;
         QByteArray time     = all.isEmpty() ? qgetenv("LC_TIME") : all;
         QByteArray monetary = all.isEmpty() ? qgetenv("LC_MONETARY") : all;
@@ -116,13 +100,13 @@ Q_GLOBAL_STATIC(QSystemLocaleData, qSystemLocaleData)
 QLocale QSystemLocale::fallbackLocale() const
 {
 
-    QByteArray lang = getSystemLocale();
+    QByteArray lang = qgetenv("LC_ALL");
 
     if (lang.isEmpty())
         lang = qgetenv("LC_MESSAGES");
     if (lang.isEmpty())
         lang = qgetenv("LANG");
-    return QLocale(QLatin1String(lang));
+    return QLocale(lang);
 }
 
 QVariant QSystemLocale::query(QueryType type, QVariant in) const
