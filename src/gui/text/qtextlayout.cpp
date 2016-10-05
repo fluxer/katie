@@ -1882,9 +1882,7 @@ void QTextLine::layout_helper(int maxGlyphs)
             // expand the text beyond the edge.
             if (sb_or_ws|breakany) {
                 QFixed rightBearing = lbh.rightBearing; // store previous right bearing
-#if !defined(Q_WS_MAC)
                 if (lbh.calculateNewWidth(line) - lbh.minimumRightBearing > line.width)
-#endif
                     lbh.adjustRightBearing();
                 if (lbh.checkFullOtherwiseExtend(line)) {
                     // we are too wide, fix right bearing
@@ -2203,14 +2201,7 @@ QList<QGlyphRun> QTextLine::glyphs(int from, int length) const
         fontD->fontEngine = fontEngine;
         fontD->fontEngine->ref.ref();
 
-#if defined(Q_WS_WIN)
-        if (fontEngine->supportsSubPixelPositions())
-            fontD->hintingPreference = QFont::PreferVerticalHinting;
-        else
-            fontD->hintingPreference = QFont::PreferFullHinting;
-#elif defined(Q_WS_MAC)
-        fontD->hintingPreference = QFont::PreferNoHinting;
-#elif !defined(QT_NO_FREETYPE)
+#if !defined(QT_NO_FREETYPE)
         if (fontEngine->type() == QFontEngine::Freetype) {
             QFontEngineFT *freeTypeEngine = static_cast<QFontEngineFT *>(fontEngine);
             switch (freeTypeEngine->defaultHintStyle()) {

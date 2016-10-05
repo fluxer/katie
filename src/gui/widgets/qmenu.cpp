@@ -164,31 +164,21 @@ int QMenuPrivate::scrollerHeight() const
 //Windows and KDE allows menus to cover the taskbar, while GNOME and Mac don't
 QRect QMenuPrivate::popupGeometry(const QWidget *widget) const
 {
-#ifdef Q_WS_WIN
-    return QApplication::desktop()->screenGeometry(widget);
-#elif defined Q_WS_X11
+#if defined Q_WS_X11
     if (X11->desktopEnvironment == DE_KDE)
         return QApplication::desktop()->screenGeometry(widget);
-    else
-        return QApplication::desktop()->availableGeometry(widget);
-#else
-        return QApplication::desktop()->availableGeometry(widget);
 #endif
+    return QApplication::desktop()->availableGeometry(widget);
 }
 
 //Windows and KDE allows menus to cover the taskbar, while GNOME and Mac don't
 QRect QMenuPrivate::popupGeometry(int screen) const
 {
-#ifdef Q_WS_WIN
-    return QApplication::desktop()->screenGeometry(screen);
-#elif defined Q_WS_X11
+#if defined Q_WS_X11
     if (X11->desktopEnvironment == DE_KDE)
         return QApplication::desktop()->screenGeometry(screen);
-    else
-        return QApplication::desktop()->availableGeometry(screen);
-#else
-        return QApplication::desktop()->availableGeometry(screen);
 #endif
+    return QApplication::desktop()->availableGeometry(screen);
 }
 
 QList<QPointer<QWidget> > QMenuPrivate::calcCausedStack() const
@@ -398,10 +388,6 @@ QRect QMenuPrivate::actionRect(QAction *act) const
     return actionRects.at(index);
 }
 
-#if defined(Q_WS_MAC)
-static const qreal MenuFadeTimeInSec = 0.150;
-#endif
-
 void QMenuPrivate::hideUpToMenuBar()
 {
     Q_Q(QMenu);
@@ -426,14 +412,6 @@ void QMenuPrivate::hideUpToMenuBar()
             } else {                caused = 0;
             }
         }
-#if defined(Q_WS_MAC)
-        if (fadeMenus) {
-            QEventLoop eventLoop;
-            QTimer::singleShot(int(MenuFadeTimeInSec * 1000), &eventLoop, SLOT(quit()));
-            QMacWindowFader::currentFader()->performFade();
-            eventLoop.exec();
-        }
-#endif
     }
     setCurrentAction(0);
 }
@@ -468,15 +446,6 @@ void QMenuPrivate::hideMenu(QMenu *menu, bool justRegister)
         // Should be something like: q->transitionWindow(Qt::FadeOutTransition, MenuFadeTimeInSec);
         // Hopefully we'll integrate qt/research/windowtransitions into main before 4.4.
         // Talk to Richard, Trenton or Bjoern.
-#if defined(Q_WS_MAC)
-        if (justRegister) {
-            QMacWindowFader::currentFader()->setFadeDuration(MenuFadeTimeInSec);
-            QMacWindowFader::currentFader()->registerWindowToFade(menu);
-        } else {
-            macWindowFade(qt_mac_window_for(menu), MenuFadeTimeInSec);
-        }
-
-#endif // Q_WS_MAC
     }
     aboutToHide = false;
     menu->blockSignals(false);
@@ -2383,12 +2352,10 @@ void QMenu::keyPressEvent(QKeyEvent *e)
         else if (key == Qt::Key_Right)
             key = Qt::Key_Left;
     }
-#ifndef Q_WS_MAC
     if (key == Qt::Key_Tab) //means down
         key = Qt::Key_Down;
     if (key == Qt::Key_Backtab) //means up
         key = Qt::Key_Up;
-#endif
 
     bool key_consumed = false;
     switch(key) {
