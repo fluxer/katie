@@ -160,7 +160,7 @@ class Q_GUI_EXPORT QApplicationPrivate : public QCoreApplicationPrivate
 {
     Q_DECLARE_PUBLIC(QApplication)
 public:
-    QApplicationPrivate(int &argc, char **argv, QApplication::Type type, int flags);
+    QApplicationPrivate(int &argc, char **argv, QApplication::Type type);
     ~QApplicationPrivate();
 
 #if defined(Q_WS_X11)

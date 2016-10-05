@@ -91,8 +91,6 @@ private:
     QMutex *mtx;
 };
 
-int QCoreApplicationPrivate::app_compile_version = 0x040000; //we don't know exactly, but it's at least 4.0.0
-
 QString QCoreApplicationPrivate::appName() const
 {
     QMutexLocker locker(QMutexPool::globalInstanceGet(&applicationName));
@@ -250,11 +248,10 @@ struct QCoreApplicationData {
 
 Q_GLOBAL_STATIC(QCoreApplicationData, coreappdata)
 
-QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv, uint flags)
+QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
     : QObjectPrivate(), argc(aargc), argv(aargv), application_type(0), eventFilter(0),
       in_exec(false), aboutToQuitEmitted(false)
 {
-    app_compile_version = flags & 0xffffff;
     static const char *const empty = "";
     if (argc == 0 || argv == 0) {
         argc = 0;
@@ -489,8 +486,8 @@ void QCoreApplication::flush()
     \a argc must be greater than zero and \a argv must contain at least
     one valid character string.
 */
-QCoreApplication::QCoreApplication(int &argc, char **argv, int _internal)
-: QObject(*new QCoreApplicationPrivate(argc, argv, _internal))
+QCoreApplication::QCoreApplication(int &argc, char **argv)
+: QObject(*new QCoreApplicationPrivate(argc, argv))
 {
     init();
     QCoreApplicationPrivate::eventDispatcher->startingUp();

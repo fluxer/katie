@@ -72,7 +72,7 @@ class Q_CORE_EXPORT QCoreApplicationPrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QCoreApplication)
 
 public:
-    QCoreApplicationPrivate(int &aargc,  char **aargv, uint flags);
+    QCoreApplicationPrivate(int &aargc,  char **aargv);
     ~QCoreApplicationPrivate();
 
     bool sendThroughApplicationEventFilters(QObject *, QEvent *);
@@ -120,7 +120,6 @@ public:
     static uint attribs;
     static inline bool testAttribute(uint flag)
         { return attribs & (1 << flag); }
-    static int app_compile_version;
 #ifndef QT_NO_SETTINGS
     static QSettings *trolltechConf();
 #endif

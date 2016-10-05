@@ -137,8 +137,8 @@ QInputContext *QApplicationPrivate::inputContext = 0;
 bool QApplicationPrivate::quitOnLastWindowClosed = true;
 bool QApplicationPrivate::autoSipEnabled = true;
 
-QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::Type type, int flags)
-    : QCoreApplicationPrivate(argc, argv, flags)
+QApplicationPrivate::QApplicationPrivate(int &argc, char **argv, QApplication::Type type)
+    : QCoreApplicationPrivate(argc, argv)
 {
     application_type = type;
     qt_appType = type;
@@ -622,8 +622,8 @@ void QApplicationPrivate::process_cmdline()
     \sa arguments()
 */
 
-QApplication::QApplication(int &argc, char **argv, int _internal)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, GuiClient, _internal))
+QApplication::QApplication(int &argc, char **argv)
+    : QCoreApplication(*new QApplicationPrivate(argc, argv, GuiClient))
 { Q_D(QApplication); d->construct(); }
 
 
@@ -652,8 +652,8 @@ QApplication::QApplication(int &argc, char **argv, int _internal)
     \snippet doc/src/snippets/code/src_gui_kernel_qapplication.cpp 0
 */
 
-QApplication::QApplication(int &argc, char **argv, bool GUIenabled , int _internal)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, GUIenabled ? GuiClient : Tty, _internal))
+QApplication::QApplication(int &argc, char **argv, bool GUIenabled)
+    : QCoreApplication(*new QApplicationPrivate(argc, argv, GUIenabled ? GuiClient : Tty))
 { Q_D(QApplication); d->construct();}
 
 
@@ -672,8 +672,8 @@ QApplication::QApplication(int &argc, char **argv, bool GUIenabled , int _intern
     \c -qws option).
 */
 
-QApplication::QApplication(int &argc, char **argv, Type type , int _internal)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, type, _internal))
+QApplication::QApplication(int &argc, char **argv, Type type)
+    : QCoreApplication(*new QApplicationPrivate(argc, argv, type))
 { Q_D(QApplication); d->construct(); }
 
 /*!
@@ -747,14 +747,13 @@ static char *aargv[] = { (char*)"unknown", 0 };
 
     This function is only available on X11.
 */
-QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap, int _internal)
-    : QCoreApplication(*new QApplicationPrivate(aargc, aargv, GuiClient, _internal))
+QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap)
+    : QCoreApplication(*new QApplicationPrivate(aargc, aargv, GuiClient))
 {
     if (! dpy)
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
     d->construct(dpy, visual, colormap);
-    QApplicationPrivate::app_compile_version = _internal;
 }
 
 /*!
@@ -772,14 +771,13 @@ QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
     This function is only available on X11.
 */
 QApplication::QApplication(Display *dpy, int &argc, char **argv,
-                           Qt::HANDLE visual, Qt::HANDLE colormap, int _internal)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, GuiClient, _internal))
+                           Qt::HANDLE visual, Qt::HANDLE colormap)
+    : QCoreApplication(*new QApplicationPrivate(argc, argv, GuiClient))
 {
     if (! dpy)
         qWarning("QApplication: Invalid Display* argument");
     Q_D(QApplication);
-    d->construct(dpy, visual, colormap);
-    QApplicationPrivate::app_compile_version = _internal;
+    d->construct(dpy, visual, colormap);;
 }
 
 #endif // Q_WS_X11
