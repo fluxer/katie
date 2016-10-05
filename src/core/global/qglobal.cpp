@@ -1981,12 +1981,6 @@ bool qputenv(const char *varName, const QByteArray& value)
     return result == 0;
 }
 
-#if !defined(QT_NO_THREAD)
-typedef uint SeedStorageType;
-typedef QThreadStorage<SeedStorageType *> SeedStorage;
-Q_GLOBAL_STATIC(SeedStorage, randTLS)  // Thread Local Storage for seed value
-#endif
-
 /*!
     \relates <QtGlobal>
     \since 4.2
@@ -2004,23 +1998,7 @@ Q_GLOBAL_STATIC(SeedStorage, randTLS)  // Thread Local Storage for seed value
 */
 void qsrand(uint seed)
 {
-#if !defined(QT_NO_THREAD)
-    SeedStorage *seedStorage = randTLS();
-    if (seedStorage) {
-        SeedStorageType *pseed = seedStorage->localData();
-        if (!pseed)
-            seedStorage->setLocalData(pseed = new SeedStorageType);
-        *pseed = seed;
-    } else {
-        //global static seed storage should always exist,
-        //except after being deleted by QGlobalStaticDeleter.
-        //But since it still can be called from destructor of another
-        //global static object, fallback to srand(seed)
-        srand(seed);
-    }
-#else
-    srand(seed);
-#endif
+    std::srand(seed);
 }
 
 /*!
@@ -2040,28 +2018,19 @@ void qsrand(uint seed)
 */
 int qrand()
 {
-#if defined(Q_OS_UNIX) && !defined(QT_NO_THREAD)
-    SeedStorage *seedStorage = randTLS();
-    if (seedStorage) {
-        SeedStorageType *pseed = seedStorage->localData();
-        if (!pseed) {
-            seedStorage->setLocalData(pseed = new SeedStorageType);
-            *pseed = 1;
-        }
-        return rand_r(pseed);
-    } else {
-        //global static seed storage should always exist,
-        //except after being deleted by QGlobalStaticDeleter.
-        //But since it still can be called from destructor of another
-        //global static object, fallback to rand()
-        return rand();
+    // Seed the PRNG once per thread with a combination of current time, a
+    // stack address and a serial counter (since thread stack addresses are
+    // re-used).
+    static bool almostrandom = false;
+    if (!almostrandom) {
+        uint *pseed = new uint;
+        static QAtomicInt serial = QAtomicInt(2);
+        std::srand(*pseed = QDateTime::currentDateTime().toTime_t()
+                + quintptr(&pseed)
+                + serial.fetchAndAddRelaxed(1));
+        almostrandom = true;
     }
-#else
-    // On Windows and Symbian srand() and rand() already use Thread-Local-Storage
-    // to store the seed between calls
-    // this is also valid for QT_NO_THREAD
-    return rand();
-#endif
+    return std::rand();
 }
 
 /*!
