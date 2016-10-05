@@ -209,15 +209,8 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
     default both files and directories are shown. (Valid only in the
     \l Directory file mode.)
 
-    \value DontResolveSymlinks Don't resolve symlinks in the file
-    dialog. By default symlinks are resolved.
-
     \value DontConfirmOverwrite Don't ask for confirmation if an
     existing file is selected.  By default confirmation is requested.
-
-    \value DontUseNativeDialog Don't use the native file dialog. By
-    default, the native file dialog is used unless you use a subclass
-    of QFileDialog that contains the Q_OBJECT macro.
 
     \value ReadOnly Indicates that the model is readonly.
 
@@ -288,10 +281,6 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
 
   This signal is emitted when the user selects a \a filter.
 */
-
-#if defined(Q_WS_WIN) || defined(Q_WS_MAC)
-bool Q_GUI_EXPORT qt_use_native_dialogs = true; // for the benefit of testing tools, until we have a proper API
-#endif
 
 QT_BEGIN_INCLUDE_NAMESPACE
 #ifdef Q_WS_WIN
@@ -599,8 +588,6 @@ bool QFileDialogPrivate::canBeNativeDialog()
         return true;
     if (q->testAttribute(Qt::WA_DontShowOnScreen))
         return false;
-    if (opts & QFileDialog::DontUseNativeDialog)
-        return false;
 
     QLatin1String staticName(QFileDialog::staticMetaObject.className());
     QLatin1String dynamicName(q->metaObject()->className());
@@ -657,8 +644,6 @@ void QFileDialog::setOptions(Options options)
         return;
 
     d->opts = options;
-    if (changed & DontResolveSymlinks)
-        d->model->setResolveSymlinks(!(options & DontResolveSymlinks));
     if (changed & ReadOnly) {
         bool ro = (options & ReadOnly);
         d->model->setReadOnly(ro);
@@ -844,12 +829,7 @@ void QFileDialog::selectFile(const QString &filename)
         if (QFileInfo(filename).isAbsolute()) {
             QString current = d->rootPath();
             text.remove(current);
-            if (text.at(0) == QDir::separator()
-#ifdef Q_OS_WIN
-                //On Windows both cases can happen
-                || text.at(0) == QLatin1Char('/')
-#endif
-                )
+            if (text.at(0) == QDir::separator())
                 text = text.remove(0,1);
         }
         file = text;
@@ -1384,27 +1364,6 @@ bool QFileDialog::isReadOnly() const
 }
 
 /*!
-    \property QFileDialog::resolveSymlinks
-    \obsolete
-    \brief whether the filedialog should resolve shortcuts
-
-    If this property is set to true, the file dialog will resolve
-    shortcuts or symbolic links.
-
-    Use setOption(DontResolveSymlinks, !\a enabled) or
-    !testOption(DontResolveSymlinks).
-*/
-void QFileDialog::setResolveSymlinks(bool enabled)
-{
-    setOption(DontResolveSymlinks, !enabled);
-}
-
-bool QFileDialog::resolveSymlinks() const
-{
-    return !testOption(DontResolveSymlinks);
-}
-
-/*!
     \property QFileDialog::confirmOverwrite
     \obsolete
     \brief whether the filedialog should ask before accepting a selected file,
@@ -1657,9 +1616,7 @@ extern QString qt_win_get_existing_directory(const QFileDialogArgs &args);
 
     On Unix/X11, the normal behavior of the file dialog is to resolve and
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
-    the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}. If
-    \a options includes DontResolveSymlinks, the file dialog will treat
-    symlinks as regular directories.
+    the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}.
 
     On Symbian^3 the parameter \a selectedFilter has no meaning and the
     \a options parameter is only used to define if the native file dialog is
@@ -1678,7 +1635,7 @@ QString QFileDialog::getOpenFileName(QWidget *parent,
                                QString *selectedFilter,
                                Options options)
 {
-    if (qt_filedialog_open_filename_hook && !(options & DontUseNativeDialog))
+    if (qt_filedialog_open_filename_hook)
         return qt_filedialog_open_filename_hook(parent, caption, dir, filter, selectedFilter, options);
     QFileDialogArgs args;
     args.parent = parent;
@@ -1688,11 +1645,6 @@ QString QFileDialog::getOpenFileName(QWidget *parent,
     args.filter = filter;
     args.mode = ExistingFile;
     args.options = options;
-#if defined(Q_WS_WIN)
-    if (qt_use_native_dialogs && !(args.options & DontUseNativeDialog)) {
-        return qt_win_get_open_file_name(args, &(args.directory), selectedFilter);
-    }
-#endif
 
     // create a qt dialog
     QFileDialog dialog(args);
@@ -1766,7 +1718,7 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
                                           QString *selectedFilter,
                                           Options options)
 {
-    if (qt_filedialog_open_filenames_hook && !(options & DontUseNativeDialog))
+    if (qt_filedialog_open_filenames_hook)
         return qt_filedialog_open_filenames_hook(parent, caption, dir, filter, selectedFilter, options);
     QFileDialogArgs args;
     args.parent = parent;
@@ -1776,12 +1728,6 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
     args.filter = filter;
     args.mode = ExistingFiles;
     args.options = options;
-
-#if defined(Q_WS_WIN)
-    if (qt_use_native_dialogs && !(args.options & DontUseNativeDialog)) {
-        return qt_win_get_open_file_names(args, &(args.directory), selectedFilter);
-    }
-#endif
 
     // create a qt dialog
     QFileDialog dialog(args);
@@ -1835,9 +1781,7 @@ QStringList QFileDialog::getOpenFileNames(QWidget *parent,
 
     On Unix/X11, the normal behavior of the file dialog is to resolve and
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
-    the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}. If
-    \a options includes DontResolveSymlinks the file dialog will treat symlinks
-    as regular directories.
+    the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}.
 
     On Symbian^3 the parameters \a filter and \a selectedFilter have no
     meaning. The \a options parameter is only used to define if the native file
@@ -1856,7 +1800,7 @@ QString QFileDialog::getSaveFileName(QWidget *parent,
                                      QString *selectedFilter,
                                      Options options)
 {
-    if (qt_filedialog_save_filename_hook && !(options & DontUseNativeDialog))
+    if (qt_filedialog_save_filename_hook)
         return qt_filedialog_save_filename_hook(parent, caption, dir, filter, selectedFilter, options);
     QFileDialogArgs args;
     args.parent = parent;
@@ -1866,12 +1810,6 @@ QString QFileDialog::getSaveFileName(QWidget *parent,
     args.filter = filter;
     args.mode = AnyFile;
     args.options = options;
-
-#if defined(Q_WS_WIN)
-    if (qt_use_native_dialogs && !(args.options & DontUseNativeDialog)) {
-        return qt_win_get_save_file_name(args, &(args.directory), selectedFilter);
-    }
-#endif
 
     // create a qt dialog
     QFileDialog dialog(args);
@@ -1906,22 +1844,13 @@ QString QFileDialog::getSaveFileName(QWidget *parent,
     pass. To ensure a native file dialog, \l{QFileDialog::}{ShowDirsOnly} must
     be set.
 
-    On Windows, Mac OS X and Symbian^3, this static function will use the
-    native file dialog and not a QFileDialog. On Windows CE, if the device has
-    no native file dialog, a QFileDialog will be used.
-
     On Unix/X11, the normal behavior of the file dialog is to resolve and
     follow symlinks. For example, if \c{/usr/tmp} is a symlink to \c{/var/tmp},
-    the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}. If
-    \a options includes DontResolveSymlinks, the file dialog will treat
-    symlinks as regular directories.
+    the file dialog will change to \c{/var/tmp} after entering \c{/usr/tmp}.
 
     On Windows the dialog will spin a blocking modal event loop that will not
     dispatch any QTimers, and if \a parent is not 0 then it will position the
     dialog just below the parent's title bar.
-
-    On Symbian^3 the \a options parameter is only used to define if the native
-    file dialog is used.
 
     \warning Do not delete \a parent during the execution of the dialog. If you
     want to do this, you should create the dialog yourself using one of the
@@ -1934,7 +1863,7 @@ QString QFileDialog::getExistingDirectory(QWidget *parent,
                                           const QString &dir,
                                           Options options)
 {
-    if (qt_filedialog_existing_directory_hook && !(options & DontUseNativeDialog))
+    if (qt_filedialog_existing_directory_hook)
         return qt_filedialog_existing_directory_hook(parent, caption, dir, options);
     QFileDialogArgs args;
     args.parent = parent;
@@ -3265,11 +3194,9 @@ QString QFSCompleter::pathFromIndex(const QModelIndex &index) const
     QString currentLocation = dirModel->rootPath();
     QString path = index.data(QFileSystemModel::FilePathRole).toString();
     if (!currentLocation.isEmpty() && path.startsWith(currentLocation)) {
-#if defined(Q_OS_UNIX) || defined(Q_OS_WINCE)
         if (currentLocation == QDir::separator())
             return path.mid(currentLocation.length());
-#endif
-        if (currentLocation.endsWith(QLatin1Char('/')))
+        else if (currentLocation.endsWith(QLatin1Char('/')))
             return path.mid(currentLocation.length());
         else
             return path.mid(currentLocation.length()+1);
@@ -3282,19 +3209,8 @@ QStringList QFSCompleter::splitPath(const QString &path) const
     if (path.isEmpty())
         return QStringList(completionPrefix());
 
-    QString pathCopy = QDir::toNativeSeparators(path);
-    QString sep = QDir::separator();
-#if   defined(Q_OS_WIN)
-    if (pathCopy == QLatin1String("\\") || pathCopy == QLatin1String("\\\\"))
-        return QStringList(pathCopy);
-    QString doubleSlash(QLatin1String("\\\\"));
-    if (pathCopy.startsWith(doubleSlash))
-        pathCopy = pathCopy.mid(2);
-    else
-        doubleSlash.clear();
-#elif defined(Q_OS_UNIX)
     bool expanded;
-    pathCopy = qt_tildeExpansion(pathCopy, &expanded);
+    QString pathCopy = qt_tildeExpansion(QDir::toNativeSeparators(path), &expanded);
     if (expanded) {
         QFileSystemModel *dirModel;
         if (proxyModel)
@@ -3303,39 +3219,20 @@ QStringList QFSCompleter::splitPath(const QString &path) const
             dirModel = sourceModel;
         dirModel->fetchMore(dirModel->index(pathCopy));
     }
-#endif
 
-    QRegExp re(QLatin1Char('[') + QRegExp::escape(sep) + QLatin1Char(']'));
+    QStringList parts = pathCopy.split(QDir::separator());
+    if (pathCopy[0] == QDir::separator()) // read the "/" at the beginning as the split removed it
+        parts[0] = QDir::separator();
 
-#if   defined(Q_OS_WIN)
-    QStringList parts = pathCopy.split(re, QString::SkipEmptyParts);
-    if (!doubleSlash.isEmpty() && !parts.isEmpty())
-        parts[0].prepend(doubleSlash);
-    if (pathCopy.endsWith(sep))
-        parts.append(QString());
-#else
-    QStringList parts = pathCopy.split(re);
-    if (pathCopy[0] == sep[0]) // read the "/" at the beginning as the split removed it
-        parts[0] = sep[0];
-#endif
-
-#if defined(Q_OS_WIN)
-    bool startsFromRoot = !parts.isEmpty() && parts[0].endsWith(QLatin1Char(':'));
-#else
-    bool startsFromRoot = pathCopy[0] == sep[0];
-#endif
+    const bool startsFromRoot = pathCopy[0] == QDir::separator();
     if (parts.count() == 1 || (parts.count() > 1 && !startsFromRoot)) {
         const QFileSystemModel *dirModel;
         if (proxyModel)
             dirModel = qobject_cast<const QFileSystemModel *>(proxyModel->sourceModel());
         else
             dirModel = sourceModel;
-        QString currentLocation = QDir::toNativeSeparators(dirModel->rootPath());
-#if defined(Q_OS_WIN)
-        if (currentLocation.endsWith(QLatin1Char(':')))
-            currentLocation.append(sep);
-#endif
-        if (currentLocation.contains(sep) && path != currentLocation) {
+        const QString currentLocation = QDir::toNativeSeparators(dirModel->rootPath());
+        if (currentLocation.contains(QDir::separator()) && path != currentLocation) {
             QStringList currentLocationList = splitPath(currentLocation);
             while (!currentLocationList.isEmpty()
                    && parts.count() > 0

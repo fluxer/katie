@@ -78,12 +78,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#if defined(Q_OS_WINCE) && defined(STANDARDSHELL_UI_MODEL)
-#  define Q_INTERNAL_WIN_NO_THROW __declspec(nothrow)
-#else
-#  define Q_INTERNAL_WIN_NO_THROW
-#endif
-
 // avoid going through QImage::scanLine() which calls detach
 #define FAST_SCAN_LINE(data, bpl, y) (data + (y) * bpl)
 
@@ -374,7 +368,7 @@ static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
 /*!
     \internal
 */
-void Q_INTERNAL_WIN_NO_THROW QPngHandlerPrivate::readPngTexts(png_info *info)
+void QPngHandlerPrivate::readPngTexts(png_info *info)
 {
 #ifndef QT_NO_IMAGE_TEXT
     png_textp text_ptr;
@@ -406,7 +400,7 @@ void Q_INTERNAL_WIN_NO_THROW QPngHandlerPrivate::readPngTexts(png_info *info)
 /*!
     \internal
 */
-bool Q_INTERNAL_WIN_NO_THROW QPngHandlerPrivate::readPngHeader()
+bool QPngHandlerPrivate::readPngHeader()
 {
     state = Error;
     png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING,0,0,0);
@@ -447,7 +441,7 @@ bool Q_INTERNAL_WIN_NO_THROW QPngHandlerPrivate::readPngHeader()
 /*!
     \internal
 */
-bool Q_INTERNAL_WIN_NO_THROW QPngHandlerPrivate::readPngImage(QImage *outImage)
+bool QPngHandlerPrivate::readPngImage(QImage *outImage)
 {
     if (state == Error)
         return false;
@@ -712,7 +706,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int off_x, int off_y)
     return writeImage(image, -1, QString(), off_x, off_y);
 }
 
-bool Q_INTERNAL_WIN_NO_THROW QPNGImageWriter::writeImage(const QImage& image, int quality_in, const QString &description,
+bool QPNGImageWriter::writeImage(const QImage& image, int quality_in, const QString &description,
                                  int off_x_in, int off_y_in)
 {
 #ifdef QT_NO_IMAGE_TEXT

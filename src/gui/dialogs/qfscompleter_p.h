@@ -66,9 +66,6 @@ public:
     QFSCompleter(QFileSystemModel *model, QObject *parent = 0)
         : QCompleter(model, parent), proxyModel(0), sourceModel(model)
     {
-#if defined(Q_OS_WIN)
-        setCaseSensitivity(Qt::CaseInsensitive);
-#endif
     }
     QString pathFromIndex(const QModelIndex &index) const;
     QStringList splitPath(const QString& path) const;

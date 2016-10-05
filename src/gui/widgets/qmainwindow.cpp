@@ -48,7 +48,6 @@
 
 #include "qdockwidget.h"
 #include "qtoolbar.h"
-
 #include <qapplication.h>
 #include <qmenubar.h>
 #include <qstatusbar.h>
@@ -56,17 +55,9 @@
 #include <qstyle.h>
 #include <qdebug.h>
 #include <qpainter.h>
-
 #include <qwidget_p.h>
 #include "qtoolbar_p.h"
 #include "qwidgetanimator_p.h"
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
-#include <qt_cocoa_helpers_mac_p.h>
-QT_BEGIN_NAMESPACE
-extern OSWindowRef qt_mac_window_for(const QWidget *); // qwidget_mac.cpp
-QT_END_NAMESPACE
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -76,9 +67,6 @@ class QMainWindowPrivate : public QWidgetPrivate
 public:
     inline QMainWindowPrivate()
         : layout(0), explicitIconSize(false), toolButtonStyle(Qt::ToolButtonIconOnly)
-#ifdef Q_WS_MAC
-            , useHIToolBar(false)
-#endif
 #if !defined(QT_NO_DOCKWIDGET) && !defined(QT_NO_CURSOR)
             , hasOldCursor(false) , cursorAdjusted(false)
 #endif
@@ -87,9 +75,6 @@ public:
     QSize iconSize;
     bool explicitIconSize;
     Qt::ToolButtonStyle toolButtonStyle;
-#ifdef Q_WS_MAC
-    bool useHIToolBar;
-#endif
     void init();
     QList<int> hoverSeparator;
     QPoint hoverPos;
@@ -475,13 +460,6 @@ void QMainWindow::setToolButtonStyle(Qt::ToolButtonStyle toolButtonStyle)
 /*!
     Returns the menu bar for the main window. This function creates
     and returns an empty menu bar if the menu bar does not exist.
-
-    If you want all windows in a Mac application to share one menu
-    bar, don't use this function to create it, because the menu bar
-    created here will have this QMainWindow as its parent.  Instead,
-    you must create a menu bar that does not have a parent, which you
-    can then share among all the Mac windows. Create a parent-less
-    menu bar this way:
 
     \snippet doc/src/snippets/code/src_gui_widgets_qmenubar.cpp 1
 
@@ -1050,21 +1028,6 @@ void QMainWindow::addDockWidget(Qt::DockWidgetArea area, QDockWidget *dockwidget
     }
     d_func()->layout->removeWidget(dockwidget); // in case it was already in here
     addDockWidget(area, dockwidget, orientation);
-
-#ifdef Q_WS_MAC     //drawer support
-    QMacCocoaAutoReleasePool pool;
-    extern bool qt_mac_is_macdrawer(const QWidget *); //qwidget_mac.cpp
-    if (qt_mac_is_macdrawer(dockwidget)) {
-        extern bool qt_mac_set_drawer_preferred_edge(QWidget *, Qt::DockWidgetArea); //qwidget_mac.cpp
-        window()->createWinId();
-        dockwidget->window()->createWinId();
-        qt_mac_set_drawer_preferred_edge(dockwidget, area);
-        if (dockwidget->isVisible()) {
-            dockwidget->hide();
-            dockwidget->show();
-        }
-    }
-#endif
 }
 
 /*!

@@ -154,7 +154,6 @@ Q_OBJECT
 Q_SIGNALS:
     void updates(const QString &directory, const QList<QPair<QString, QFileInfo> > &updates);
     void newListOfFiles(const QString &directory, const QStringList &listOfFiles) const;
-    void nameResolved(const QString &fileName, const QString &resolvedName) const;
     void directoryLoaded(const QString &path);
 
 public:
@@ -169,8 +168,6 @@ public Q_SLOTS:
     void list(const QString &directoryPath);
     void fetchExtendedInformation(const QString &path, const QStringList &files);
     void updateFile(const QString &path);
-    void setResolveSymlinks(bool enable);
-    bool resolveSymlinks() const;
     void setIconProvider(QFileIconProvider *provider);
     QFileIconProvider *iconProvider() const;
 
@@ -192,7 +189,6 @@ private:
 #ifndef QT_NO_FILESYSTEMWATCHER
     QFileSystemWatcher *watcher;
 #endif
-    bool m_resolveSymlinks;
     QFileIconProvider *m_iconProvider;
     QFileIconProvider defaultProvider;
     uint userId;

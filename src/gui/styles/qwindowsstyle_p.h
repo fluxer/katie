@@ -77,7 +77,6 @@ public:
     bool altDown() const { return alt_down; }
     bool alt_down;
     QList<const QWidget *> seenAlt;
-    int menuBarTimer;
 
     QList<QProgressBar *> animatedProgressBars;
     int animationFps;

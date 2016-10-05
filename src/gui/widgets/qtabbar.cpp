@@ -62,11 +62,6 @@
 
 #ifndef QT_NO_TABBAR
 
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 

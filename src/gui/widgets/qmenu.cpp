@@ -73,12 +73,6 @@
 #   include <qt_x11_p.h>
 #endif
 
-#if defined(Q_WS_MAC) && !defined(QT_NO_EFFECTS)
-#   include <qcore_mac_p.h>
-#   include <qt_cocoa_helpers_mac_p.h>
-#endif
-
-
 
 QT_BEGIN_NAMESPACE
 
@@ -1283,12 +1277,6 @@ void QMenu::initStyleOption(QStyleOptionMenuItem *option, const QAction *action)
     \warning To make QMenu visible on the screen, exec() or popup() should be
     used instead of show().
 
-    \section1 QMenu on Qt for Windows CE
-
-    If a menu is integrated into the native menubar on Windows Mobile we
-    do not support the signals: aboutToHide (), aboutToShow () and hovered ().
-    It is not possible to display an icon in a native menu on Windows Mobile.
-
     \section1 QMenu on Mac OS X with Qt build against Cocoa
 
     QMenu can be inserted only once in a menu/menubar. Subsequent insertions will
@@ -2269,11 +2257,7 @@ void QMenu::mouseReleaseEvent(QMouseEvent *e)
 
     if (action && action == d->currentAction) {
         if (!action->menu()){
-#if defined(Q_WS_WIN)
-            //On Windows only context menus can be activated with the right button
-            if (e->button() == Qt::LeftButton || d->topCausedWidget() == 0)
-#endif
-                d->activateAction(action, QAction::Trigger);
+            d->activateAction(action, QAction::Trigger);
         }
     } else if (d->hasMouseMoved(e->globalPos())) {
         d->hideUpToMenuBar();
@@ -2730,11 +2714,6 @@ void QMenu::keyPressEvent(QKeyEvent *e)
             }
 #endif
         }
-
-#ifdef Q_OS_WIN32
-        if (key_consumed && (e->key() == Qt::Key_Control || e->key() == Qt::Key_Shift || e->key() == Qt::Key_Meta))
-            QApplication::beep();
-#endif // Q_OS_WIN32
     }
     if (key_consumed)
         e->accept();
@@ -2981,18 +2960,6 @@ void QMenu::internalDelayedPopup()
     \sa triggered(), QAction::hovered()
 */
 
-
-/*!\internal
-*/
-void QMenu::setNoReplayFor(QWidget *noReplayFor)
-{
-#ifdef Q_WS_WIN
-    d_func()->noReplayFor = noReplayFor;
-#else
-    Q_UNUSED(noReplayFor);
-#endif
-}
-
 /*!
   \property QMenu::separatorsCollapsible
   \since 4.2
@@ -3023,10 +2990,6 @@ void QMenu::setSeparatorsCollapsible(bool collapse)
         d->updateActionRects();
         update();
     }
-#ifdef Q_WS_MAC
-    if (d->mac_menu)
-        d->syncSeparatorsCollapsible(collapse);
-#endif
 }
 
 

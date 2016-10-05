@@ -252,12 +252,8 @@ void QUrlModel::addUrls(const QList<QUrl> &list, int row, bool move)
         url = QUrl::fromLocalFile(cleanUrl);
 
         for (int j = 0; move && j < rowCount(); ++j) {
-            QString local = index(j, 0).data(UrlRole).toUrl().toLocalFile();
-#if defined(Q_OS_WIN)
-            if (index(j, 0).data(UrlRole).toUrl().toLocalFile().toLower() == cleanUrl.toLower()) {
-#else
-            if (index(j, 0).data(UrlRole).toUrl().toLocalFile() == cleanUrl) {
-#endif
+            const QString local = index(j, 0).data(UrlRole).toUrl().toLocalFile();
+            if (local == cleanUrl) {
                 removeRow(j);
                 if (j <= row)
                     row--;
@@ -265,7 +261,7 @@ void QUrlModel::addUrls(const QList<QUrl> &list, int row, bool move)
             }
         }
         row = qMax(row, 0);
-        QModelIndex idx = fileSystemModel->index(cleanUrl);
+        const QModelIndex idx = fileSystemModel->index(cleanUrl);
         if (!fileSystemModel->isDir(idx))
             continue;
         insertRows(row, 1);

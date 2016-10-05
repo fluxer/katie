@@ -843,11 +843,7 @@ static bool read_xpm_header(
     if (!read_xpm_string(buf, device, source, index, state))
         return false;
 
-#if defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(Q_OS_WINCE)
-        if (sscanf_s(buf, "%d %d %d %d", w, h, ncols, cpp) < 4)
-#else
     if (sscanf(buf, "%d %d %d %d", w, h, ncols, cpp) < 4)
-#endif
         return false;                                        // < 4 numbers parsed
 
     return true;

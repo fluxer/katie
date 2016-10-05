@@ -438,13 +438,7 @@ QVariant QDirModel::headerData(int section, Qt::Orientation orientation, int rol
         case 0: return tr("Name");
         case 1: return tr("Size");
         case 2: return
-#ifdef Q_OS_MAC
-                       tr("Kind", "Match OS X Finder");
-#else
                        tr("Type", "All other platforms");
-#endif
-        // Windows   - Type
-        // OS X      - Kind
         // Konqueror - File Type
         // Nautilus  - Type
         case 3: return tr("Date Modified");
@@ -852,64 +846,21 @@ QModelIndex QDirModel::index(const QString &path, int column) const
     if (path.isEmpty() || path == QCoreApplication::translate("QFileDialog", "My Computer"))
         return QModelIndex();
 
-    QString absolutePath = QDir(path).absolutePath();
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    absolutePath = absolutePath.toLower();
-#endif
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    // On Windows, "filename......." and "filename" are equivalent
-    if (absolutePath.endsWith(QLatin1Char('.'))) {
-        int i;
-        for (i = absolutePath.count() - 1; i >= 0; --i) {
-            if (absolutePath.at(i) != QLatin1Char('.'))
-                break;
-        }
-        absolutePath = absolutePath.left(i+1);
-    }
-#endif
-
+    const QString absolutePath = QDir(path).absolutePath();
     QStringList pathElements = absolutePath.split(QLatin1Char('/'), QString::SkipEmptyParts);
-    if ((pathElements.isEmpty() || !QFileInfo(path).exists())
-#if !defined(Q_OS_WIN) || defined(Q_OS_WINCE)
-        && path != QLatin1String("/")
-#endif
-        )
+    if ((pathElements.isEmpty() || !QFileInfo(path).exists()) && path != QLatin1String("/"))
         return QModelIndex();
 
     QModelIndex idx; // start with "My Computer"
     if (!d->root.populated) // make sure the root is populated
         d->populate(&d->root);
 
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    if (absolutePath.startsWith(QLatin1String("//"))) { // UNC path
-        QString host = pathElements.first();
-        int r = 0;
-        for (; r < d->root.children.count(); ++r)
-            if (d->root.children.at(r).info.fileName() == host)
-                break;
-        bool childAppended = false;
-        if (r >= d->root.children.count() && d->allowAppendChild) {
-            d->appendChild(&d->root, QLatin1String("//") + host);
-            childAppended = true;
-        }
-        idx = index(r, 0, QModelIndex());
-        pathElements.pop_front();
-        if (childAppended)
-            emit const_cast<QDirModel*>(this)->layoutChanged();
-    } else 
-#endif
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    if (pathElements.at(0).endsWith(QLatin1Char(':'))) {
-        pathElements[0] += QLatin1Char('/');
-    }
-#else
     // add the "/" item, since it is a valid path element on unix
     pathElements.prepend(QLatin1String("/"));
-#endif
 
     for (int i = 0; i < pathElements.count(); ++i) {
         Q_ASSERT(!pathElements.at(i).isEmpty());
-        QString element = pathElements.at(i);
+        const QString element = pathElements.at(i);
         QDirModelPrivate::QDirNode *parent = (idx.isValid() ? d->node(idx) : &d->root);
 
         Q_ASSERT(parent);
@@ -920,11 +871,7 @@ QModelIndex QDirModel::index(const QString &path, int column) const
         int row = -1;
         for (int j = parent->children.count() - 1; j >= 0; --j) {
             const QFileInfo& fi = parent->children.at(j).info;
-            QString childFileName;
-            childFileName = idx.isValid() ? fi.fileName() : fi.absoluteFilePath();
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-            childFileName = childFileName.toLower();
-#endif
+            const QString childFileName = idx.isValid() ? fi.fileName() : fi.absoluteFilePath();
             if (childFileName == element) {
                 if (i == pathElements.count() - 1)
                     parent->children[j].stat = true;
@@ -935,15 +882,7 @@ QModelIndex QDirModel::index(const QString &path, int column) const
 
         // we couldn't find the path element, we create a new node since we _know_ that the path is valid
         if (row == -1) {
-#if defined(Q_OS_WINCE)
-            QString newPath;
-            if (parent->info.isRoot())
-                newPath = parent->info.absoluteFilePath() + element;
-            else
-                newPath = parent->info.absoluteFilePath() + QLatin1Char('/') + element;
-#else
-            QString newPath = parent->info.absoluteFilePath() + QLatin1Char('/') + element;
-#endif
+            const QString newPath = parent->info.absoluteFilePath() + QLatin1Char('/') + element;
             if (!d->allowAppendChild || !QFileInfo(newPath).isDir())
                 return QModelIndex();
             d->appendChild(parent, newPath);
@@ -1294,16 +1233,7 @@ QString QDirModelPrivate::name(const QModelIndex &index) const
     const QDirNode *n = node(index);
     const QFileInfo info = n->info;
     if (info.isRoot()) {
-        QString name = info.absoluteFilePath();
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-        if (name.startsWith(QLatin1Char('/'))) // UNC host
-            return info.fileName();
-#endif        
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-        if (name.endsWith(QLatin1Char('/')))
-            name.chop(1);
-#endif
-        return name;
+        return info.absoluteFilePath();
     }
     return info.fileName();
 }
@@ -1312,13 +1242,7 @@ QString QDirModelPrivate::size(const QModelIndex &index) const
 {
     const QDirNode *n = node(index);
     if (n->info.isDir()) {
-#ifdef Q_OS_MAC
-        return QLatin1String("--");
-#else
         return QLatin1String("");
-#endif
-    // Windows   - ""
-    // OS X      - "--"
     // Konqueror - "4 KB"
     // Nautilus  - "9 items" (the number of children)
     }
@@ -1380,10 +1304,6 @@ void QDirModelPrivate::appendChild(QDirModelPrivate::QDirNode *parent, const QSt
 
 QFileInfo QDirModelPrivate::resolvedInfo(QFileInfo info)
 {
-#ifdef Q_OS_WIN
-    // On windows, we cannot create a shortcut to a shortcut.
-    return QFileInfo(info.readLink());
-#else
     QStringList paths;
     do {
         QFileInfo link(info.readLink());
@@ -1396,7 +1316,6 @@ QFileInfo QDirModelPrivate::resolvedInfo(QFileInfo info)
         paths.append(info.absoluteFilePath());
     } while (info.isSymLink());
     return info;
-#endif
 }
 
 QT_END_NAMESPACE

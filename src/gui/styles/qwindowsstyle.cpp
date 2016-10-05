@@ -120,15 +120,8 @@ enum QSliderDirection { SlUp, SlDown, SlLeft, SlRight };
     \internal
 */
 QWindowsStylePrivate::QWindowsStylePrivate()
-    : alt_down(false), menuBarTimer(0), animationFps(10), animateTimer(0), animateStep(0)
+    : alt_down(false), animationFps(10), animateTimer(0), animateStep(0)
 {
-#if defined(Q_WS_WIN) && !defined(Q_OS_WINCE)
-    if ((QSysInfo::WindowsVersion >= QSysInfo::WV_VISTA
-        && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based))) {
-        QSystemLibrary shellLib(QLatin1String("shell32"));
-        pSHGetStockIconInfo = (PtrSHGetStockIconInfo)shellLib.resolve("SHGetStockIconInfo");
-    }
-#endif
     startTime.start();
 }
 

@@ -1800,8 +1800,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
 bool QKeyMapper::sendKeyEvent(QWidget *keyWidget, bool grab,
                               QEvent::Type type, int code, Qt::KeyboardModifiers modifiers,
                               const QString &text, bool autorepeat, int count,
-                              quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers,
-                              bool *)
+                              quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers)
 {
     // try the menukey first
     if (type == QEvent::KeyPress && code == Qt::Key_Menu) {

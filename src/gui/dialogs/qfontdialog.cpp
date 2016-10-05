@@ -171,11 +171,6 @@ void QFontDialogPrivate::init()
 {
     Q_Q(QFontDialog);
 
-#ifdef Q_WS_MAC
-    nativeDialogInUse = false;
-    delegate = 0;
-#endif
-
     q->setSizeGripEnabled(true);
     q->setWindowTitle(QFontDialog::tr("Select Font"));
 
@@ -316,11 +311,7 @@ void QFontDialogPrivate::init()
     buttonBox->addButton(QDialogButtonBox::Cancel);
     QObject::connect(buttonBox, SIGNAL(rejected()), q, SLOT(reject()));
 
-#if defined(Q_WS_WINCE)
-    q->resize(180, 120);
-#else
     q->resize(500, 360);
-#endif // Q_WS_WINCE
 
     sizeEdit->installEventFilter(q);
     familyList->installEventFilter(q);
@@ -338,13 +329,6 @@ void QFontDialogPrivate::init()
 
 QFontDialog::~QFontDialog()
 {
-#ifdef Q_WS_MAC
-    Q_D(QFontDialog);
-    if (d->delegate) {
-        d->closeCocoaFontPanel();
-        return;
-    }
-#endif
 }
 
 /*!
@@ -836,9 +820,6 @@ QFont QFontDialog::selectedFont() const
     of a font dialog.
 
     \value NoButtons Don't display \gui{OK} and \gui{Cancel} buttons. (Useful for "live dialogs".)
-    \value DontUseNativeDialog Use Qt's standard font dialog on the Mac instead of Apple's
-                               native font panel. (Currently, the native dialog is never used,
-                               but this is likely to change in future Qt releases.)
 
     \sa options, setOption(), testOption()
 */
@@ -952,30 +933,6 @@ void QFontDialog::open(QObject *receiver, const char *member)
 */
 
 /*!
-    \reimp
-*/
-void QFontDialog::setVisible(bool visible)
-{
-    if (testAttribute(Qt::WA_WState_ExplicitShowHide) && testAttribute(Qt::WA_WState_Hidden) != visible)
-        return;
-#ifdef Q_WS_MAC
-    Q_D(QFontDialog);
-    if (d->canBeNativeDialog()){
-        if (d->setVisible_sys(visible)){
-            d->nativeDialogInUse = true;
-            // Set WA_DontShowOnScreen so that QDialog::setVisible(visible) below
-            // updates the state correctly, but skips showing the non-native version:
-            setAttribute(Qt::WA_DontShowOnScreen, true);
-        } else {
-            d->nativeDialogInUse = false;
-            setAttribute(Qt::WA_DontShowOnScreen, false);
-        }
-    }
-#endif // Q_WS_MAC
-    QDialog::setVisible(visible);
-}
-
-/*!
   Closes the dialog and sets its result code to \a result. If this dialog
   is shown with exec(), done() causes the local event loop to finish,
   and exec() to return \a result.
@@ -1002,23 +959,6 @@ void QFontDialog::done(int result)
     }
     d->memberToDisconnectOnClose.clear();
 }
-
-#ifdef Q_WS_MAC
-bool QFontDialogPrivate::canBeNativeDialog()
-{
-    Q_Q(QFontDialog);
-    if (nativeDialogInUse)
-        return true;
-    if (q->testAttribute(Qt::WA_DontShowOnScreen))
-        return false;
-    if (opts & QFontDialog::DontUseNativeDialog)
-        return false;
-
-    QLatin1String staticName(QFontDialog::staticMetaObject.className());
-    QLatin1String dynamicName(q->metaObject()->className());
-    return (staticName == dynamicName);
-}
-#endif // Q_WS_MAC
 
 /*!
     \fn QFont QFontDialog::getFont(bool *ok, const QFont &initial, QWidget* parent, const char* name)

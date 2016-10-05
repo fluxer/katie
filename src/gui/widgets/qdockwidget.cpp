@@ -206,7 +206,7 @@ bool QDockWidgetLayout::nativeWindowDeco() const
 
 bool QDockWidgetLayout::nativeWindowDeco(bool floating) const
 {
-#if defined(Q_WS_X11) || defined(Q_WS_WINCE)
+#if defined(Q_WS_X11)
     Q_UNUSED(floating);
     return false;
 #else
@@ -865,11 +865,7 @@ bool QDockWidgetPrivate::mouseMoveEvent(QMouseEvent *event)
             && (event->pos() - state->pressPos).manhattanLength()
                 > QApplication::startDragDistance()) {
             startDrag();
-#ifdef Q_OS_WIN
-            grabMouseWhileInWindow();
-#else
             q->grabMouse();
-#endif
             ret = true;
         }
     }
@@ -936,12 +932,7 @@ void QDockWidgetPrivate::nonClientAreaMouseEvent(QMouseEvent *event)
             initDrag(event->pos(), true);
             if (state == 0)
                 break;
-#ifdef Q_OS_WIN
-            // On Windows, NCA mouse events don't contain modifier info
-            state->ctrlDrag = GetKeyState(VK_CONTROL) & 0x8000;
-#else
             state->ctrlDrag = event->modifiers() & Qt::ControlModifier;
-#endif
             startDrag();
             break;
         case QEvent::NonClientAreaMouseMove:
@@ -950,23 +941,9 @@ void QDockWidgetPrivate::nonClientAreaMouseEvent(QMouseEvent *event)
             if (state->nca) {
                 endDrag();
             }
-#ifdef Q_OS_MAC
-            else { // workaround for lack of mouse-grab on Mac
-                QMainWindowLayout *layout = qt_mainwindow_layout(qobject_cast<QMainWindow *>(q->parentWidget()));
-                Q_ASSERT(layout != 0);
-
-                q->move(event->globalPos() - state->pressPos);
-                if (!state->ctrlDrag)
-                    layout->hover(state->widgetItem, event->globalPos());
-            }
-#endif
             break;
         case QEvent::NonClientAreaMouseButtonRelease:
-#ifdef Q_OS_MAC
-                        if (state)
-                                endDrag();
-#endif
-                        break;
+            break;
         case QEvent::NonClientAreaMouseButtonDblClick:
             _q_toggleTopLevel();
             break;
@@ -1450,17 +1427,6 @@ bool QDockWidget::event(QEvent *event)
         if (d->mouseMoveEvent(static_cast<QMouseEvent *>(event)))
             return true;
         break;
-#ifdef Q_OS_WIN
-    case QEvent::Leave:
-        if (d->state != 0 && d->state->dragging && !d->state->nca) {
-            // This is a workaround for loosing the mouse on Vista.
-            QPoint pos = QCursor::pos();
-            QMouseEvent fake(QEvent::MouseMove, mapFromGlobal(pos), pos, Qt::NoButton,
-                             QApplication::mouseButtons(), QApplication::keyboardModifiers());
-            d->mouseMoveEvent(&fake);
-        }
-        break;
-#endif
     case QEvent::MouseButtonRelease:
         if (d->mouseReleaseEvent(static_cast<QMouseEvent *>(event)))
             return true;

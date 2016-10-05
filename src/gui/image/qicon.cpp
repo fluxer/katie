@@ -57,11 +57,6 @@
 #include "qguiplatformplugin_p.h"
 #include "qguicommon_p.h"
 
-#ifdef Q_WS_MAC
-#include <qt_mac_p.h>
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
-
 #ifdef Q_WS_X11
 #include "qt_x11_p.h"
 #include "qkde_p.h"

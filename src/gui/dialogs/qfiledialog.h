@@ -71,7 +71,6 @@ class Q_GUI_EXPORT QFileDialog : public QDialog
     Q_PROPERTY(FileMode fileMode READ fileMode WRITE setFileMode)
     Q_PROPERTY(AcceptMode acceptMode READ acceptMode WRITE setAcceptMode)
     Q_PROPERTY(bool readOnly READ isReadOnly WRITE setReadOnly DESIGNABLE false)
-    Q_PROPERTY(bool resolveSymlinks READ resolveSymlinks WRITE setResolveSymlinks DESIGNABLE false)
     Q_PROPERTY(bool confirmOverwrite READ confirmOverwrite WRITE setConfirmOverwrite DESIGNABLE false)
     Q_PROPERTY(QString defaultSuffix READ defaultSuffix WRITE setDefaultSuffix)
     Q_PROPERTY(bool nameFilterDetailsVisible READ isNameFilterDetailsVisible
@@ -88,13 +87,11 @@ public:
     enum Option
     {
         ShowDirsOnly                = 0x00000001,
-        DontResolveSymlinks         = 0x00000002,
-        DontConfirmOverwrite        = 0x00000004,
-        DontUseSheet                = 0x00000008,
-        DontUseNativeDialog         = 0x00000010,
-        ReadOnly                    = 0x00000020,
-        HideNameFilterDetails       = 0x00000040,
-        DontUseCustomDirectoryIcons = 0x00000080
+        DontConfirmOverwrite        = 0x00000002,
+        DontUseSheet                = 0x00000004,
+        ReadOnly                    = 0x00000008,
+        HideNameFilterDetails       = 0x00000010,
+        DontUseCustomDirectoryIcons = 0x00000020
     };
     Q_DECLARE_FLAGS(Options, Option)
 
@@ -135,9 +132,6 @@ public:
 
     void setReadOnly(bool enabled);
     bool isReadOnly() const;
-
-    void setResolveSymlinks(bool enabled);
-    bool resolveSymlinks() const;
 
     void setSidebarUrls(const QList<QUrl> &urls);
     QList<QUrl> sidebarUrls() const;
@@ -252,9 +246,6 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_rowsInserted(const QModelIndex & parent))
     Q_PRIVATE_SLOT(d_func(), void _q_fileRenamed(const QString &path,
                 const QString oldName, const QString newName))
-#if defined(Q_WS_MAC)
-    Q_PRIVATE_SLOT(d_func(), void _q_macRunNativeAppModalPanel())
-#endif
 };
 
 inline void QFileDialog::setDirectory(const QDir &adirectory)

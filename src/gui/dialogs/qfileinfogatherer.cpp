@@ -43,13 +43,9 @@
 #include <qdebug.h>
 #include <qfsfileengine.h>
 #include <qdiriterator.h>
-#ifndef Q_OS_WIN
-#  include <unistd.h>
-#  include <sys/types.h>
-#endif
-#if defined(Q_OS_VXWORKS)
-#  include "qplatformdefs.h"
-#endif
+
+#include <unistd.h>
+#include <sys/types.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -76,14 +72,10 @@ QFileInfoGatherer::QFileInfoGatherer(QObject *parent)
 #ifndef QT_NO_FILESYSTEMWATCHER
       watcher(0),
 #endif
-      m_resolveSymlinks(false), m_iconProvider(&defaultProvider)
+      m_iconProvider(&defaultProvider)
 {
-#ifdef Q_OS_WIN
-    m_resolveSymlinks = true;
-#elif !defined(Q_OS_INTEGRITY) && !defined(Q_OS_VXWORKS)
     userId = getuid();
     groupId = getgid();
-#endif
 #ifndef QT_NO_FILESYSTEMWATCHER
     watcher = new QFileSystemWatcher(this);
     connect(watcher, SIGNAL(directoryChanged(QString)), this, SLOT(list(QString)));
@@ -102,21 +94,6 @@ QFileInfoGatherer::~QFileInfoGatherer()
     condition.wakeOne();
     locker.unlock();
     wait();
-}
-
-void QFileInfoGatherer::setResolveSymlinks(bool enable)
-{
-#ifdef Q_OS_WIN
-    QMutexLocker locker(&mutex);
-    m_resolveSymlinks = enable;
-#else
-    Q_UNUSED(enable);
-#endif
-}
-
-bool QFileInfoGatherer::resolveSymlinks() const
-{
-    return m_resolveSymlinks;
 }
 
 void QFileInfoGatherer::setIconProvider(QFileIconProvider *provider)
@@ -249,13 +226,6 @@ QExtendedInformation QFileInfoGatherer::getInfo(const QFileInfo &fileInfo) const
     #endif
 #endif
 
-    if (m_resolveSymlinks && info.isSymLink()) {
-        QFileInfo resolvedInfo(fileInfo.readLink());
-        resolvedInfo = resolvedInfo.canonicalFilePath();
-        if (resolvedInfo.exists()) {
-            emit nameResolved(fileInfo.filePath(), resolvedInfo.fileName());
-        }
-    }
     return info;
 }
 

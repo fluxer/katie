@@ -127,8 +127,6 @@ public:
     QIcon icon() const;
     void setIcon(const QIcon &icon);
 
-    void setNoReplayFor(QWidget *widget);
-
     bool separatorsCollapsible() const;
     void setSeparatorsCollapsible(bool collapse);
 

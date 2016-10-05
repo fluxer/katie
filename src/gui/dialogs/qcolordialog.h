@@ -65,8 +65,7 @@ class Q_GUI_EXPORT QColorDialog : public QDialog
 public:
     enum ColorDialogOption {
         ShowAlphaChannel    = 0x00000001,
-        NoButtons           = 0x00000002,
-        DontUseNativeDialog = 0x00000004
+        NoButtons           = 0x00000002
     };
 
     Q_DECLARE_FLAGS(ColorDialogOptions, ColorDialogOption)

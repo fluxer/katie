@@ -229,12 +229,6 @@ void QPageSetupDialog::open(QObject *receiver, const char *member)
     QDialog::open();
 }
 
-#if defined(Q_WS_MAC) || defined(Q_OS_WIN)
-/*! \fn void QPageSetupDialog::setVisible(bool visible)
-    \reimp
-*/
-#endif
-
 QT_END_NAMESPACE
 
 #include "moc_qpagesetupdialog.h"

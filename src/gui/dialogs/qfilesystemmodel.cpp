@@ -48,13 +48,6 @@
 #include <qmessagebox.h>
 #include <qapplication.h>
 
-#ifdef Q_OS_WIN
-#include <qt_windows.h>
-#endif
-#ifdef Q_OS_WIN32
-#include <QtCore/QVarLengthArray>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_FILESYSTEMMODEL
@@ -304,41 +297,6 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QM
     return indexNode;
 }
 
-#ifdef Q_OS_WIN32
-static QString qt_GetLongPathName(const QString &strShortPath)
-{
-    if (strShortPath.isEmpty()
-        || strShortPath == QLatin1String(".") || strShortPath == QLatin1String(".."))
-        return strShortPath;
-    if (strShortPath.length() == 2 && strShortPath.endsWith(QLatin1Char(':')))
-        return strShortPath.toUpper();
-    const QString absPath = QDir(strShortPath).absolutePath();
-    if (absPath.startsWith(QLatin1String("//"))
-        || absPath.startsWith(QLatin1String("\\\\"))) // unc
-        return QDir::fromNativeSeparators(absPath);
-    if (absPath.startsWith(QLatin1Char('/')))
-        return QString();
-    const QString inputString = QLatin1String("\\\\?\\") + QDir::toNativeSeparators(absPath);
-    QVarLengthArray<TCHAR, MAX_PATH> buffer(MAX_PATH);
-    DWORD result = ::GetLongPathName((wchar_t*)inputString.utf16(),
-                                     buffer.data(),
-                                     buffer.size());
-    if (result > DWORD(buffer.size())) {
-        buffer.resize(result);
-        result = ::GetLongPathName((wchar_t*)inputString.utf16(),
-                                   buffer.data(),
-                                   buffer.size());
-    }
-    if (result > 4) {
-        QString longPath = QString::fromWCharArray(buffer.data() + 4); // ignoring prefix
-        longPath[0] = longPath.at(0).toUpper(); // capital drive letters
-        return QDir::fromNativeSeparators(longPath);
-    } else {
-        return QDir::fromNativeSeparators(strShortPath);
-    }
-}
-#endif
-
 /*!
     \internal
 
@@ -353,75 +311,26 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QS
 
     // Construct the nodes up to the new root path if they need to be built
     QString absolutePath;
-#ifdef Q_OS_WIN32
-    QString longPath = qt_GetLongPathName(path);
-#else
-    QString longPath = path;
-#endif
-    if (longPath == rootDir.path())
+    if (path == rootDir.path())
         absolutePath = rootDir.absolutePath();
     else
-        absolutePath = QDir(longPath).absolutePath();
+        absolutePath = QDir(path).absolutePath();
 
     // ### TODO can we use bool QAbstractFileEngine::caseSensitive() const?
     QStringList pathElements = absolutePath.split(QLatin1Char('/'), QString::SkipEmptyParts);
     if ((pathElements.isEmpty())
-#if !defined(Q_OS_WIN) || defined(Q_OS_WINCE)
-        && QDir::fromNativeSeparators(longPath) != QLatin1String("/")
-#endif
+        && QDir::fromNativeSeparators(path) != QLatin1String("/")
         )
         return const_cast<QFileSystemModelPrivate::QFileSystemNode*>(&root);
     QModelIndex index = QModelIndex(); // start with "My Computer"
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    if (absolutePath.startsWith(QLatin1String("//"))) { // UNC path
-        QString host = QLatin1String("\\\\") + pathElements.first();
-        if (absolutePath == QDir::fromNativeSeparators(host))
-            absolutePath.append(QLatin1Char('/'));
-        if (longPath.endsWith(QLatin1Char('/')) && !absolutePath.endsWith(QLatin1Char('/')))
-            absolutePath.append(QLatin1Char('/'));
-        int r = 0;
-        QFileSystemModelPrivate::QFileSystemNode *rootNode = const_cast<QFileSystemModelPrivate::QFileSystemNode*>(&root);
-        if (!root.children.contains(host.toLower())) {
-            if (pathElements.count() == 1 && !absolutePath.endsWith(QLatin1Char('/')))
-                return rootNode;
-            QFileInfo info(host);
-            if (!info.exists())
-                return rootNode;
-            QFileSystemModelPrivate *p = const_cast<QFileSystemModelPrivate*>(this);
-            p->addNode(rootNode, host,info);
-            p->addVisibleFiles(rootNode, QStringList(host));
-        }
-        r = rootNode->visibleLocation(host);
-        r = translateVisibleLocation(rootNode, r);
-        index = q->index(r, 0, QModelIndex());
-        pathElements.pop_front();
-    } else
-#endif
-
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    {
-        if (!pathElements.at(0).contains(QLatin1String(":"))) {
-            QString rootPath = QDir(longPath).rootPath();
-            pathElements.prepend(rootPath);
-        }
-        if (pathElements.at(0).endsWith(QLatin1Char('/')))
-            pathElements[0].chop(1);
-    }
-#else
     // add the "/" item, since it is a valid path element on Unix
     if (absolutePath[0] == QLatin1Char('/'))
         pathElements.prepend(QLatin1String("/"));
-#endif
 
     QFileSystemModelPrivate::QFileSystemNode *parent = node(index);
 
     for (int i = 0; i < pathElements.count(); ++i) {
-        QString element = pathElements.at(i);
-#ifdef Q_OS_WIN
-        // On Windows, "filename......." and "filename" are equivalent Task #133928
-        while (element.endsWith(QLatin1Char('.')))
-            element.chop(1);
-#endif
+        const QString element = pathElements.at(i);
         bool alreadyExisted = parent->children.contains(element);
 
         // we couldn't find the path element, we create a new node since we
@@ -690,7 +599,7 @@ QVariant QFileSystemModel::data(const QModelIndex &index, int role) const
     case Qt::EditRole:
     case Qt::DisplayRole:
         switch (index.column()) {
-        case 0: return d->displayName(index);
+        case 0: return d->name(index);
         case 1: return d->size(index);
         case 2: return d->type(index);
         case 3: return d->time(index);
@@ -736,13 +645,7 @@ QString QFileSystemModelPrivate::size(const QModelIndex &index) const
         return QString();
     const QFileSystemNode *n = node(index);
     if (n->isDir()) {
-#ifdef Q_OS_MAC
-        return QLatin1String("--");
-#else
         return QLatin1String("");
-#endif
-    // Windows   - ""
-    // OS X      - "--"
     // Konqueror - "4 KB"
     // Nautilus  - "9 items" (the number of children)
     }
@@ -800,27 +703,7 @@ QString QFileSystemModelPrivate::name(const QModelIndex &index) const
 {
     if (!index.isValid())
         return QString();
-    QFileSystemNode *dirNode = node(index);
-    if (fileInfoGatherer.resolveSymlinks() && !resolvedSymLinks.isEmpty() &&
-        dirNode->isSymLink()) {
-        QString fullPath = QDir::fromNativeSeparators(filePath(index));
-        if (resolvedSymLinks.contains(fullPath))
-            return resolvedSymLinks[fullPath];
-    }
-    return dirNode->fileName;
-}
-
-/*!
-    \internal
-*/
-QString QFileSystemModelPrivate::displayName(const QModelIndex &index) const
-{
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    QFileSystemNode *dirNode = node(index);
-    if (!dirNode->volumeName.isNull())
-        return dirNode->volumeName + QLatin1String(" (") + name(index) + QLatin1Char(')');
-#endif
-    return name(index);
+    return node(index)->fileName;
 }
 
 /*!
@@ -1072,13 +955,11 @@ public:
     {
         switch (sortColumn) {
         case 0: {
-#ifndef Q_OS_MAC
             // place directories before files
             bool left = l->isDir();
             bool right = r->isDir();
             if (left ^ right)
                 return left;
-#endif
             return QFileSystemModelPrivate::naturalCompare(l->fileName,
                                                 r->fileName, Qt::CaseInsensitive) < 0;
                 }
@@ -1278,17 +1159,7 @@ Qt::DropActions QFileSystemModel::supportedDropActions() const
 QString QFileSystemModel::filePath(const QModelIndex &index) const
 {
     Q_D(const QFileSystemModel);
-    QString fullPath = d->filePath(index);
-    QFileSystemModelPrivate::QFileSystemNode *dirNode = d->node(index);
-    if (dirNode->isSymLink() && d->fileInfoGatherer.resolveSymlinks()
-        && d->resolvedSymLinks.contains(fullPath)
-        && dirNode->isDir()) {
-        QFileInfo resolvedInfo(fullPath);
-        resolvedInfo = resolvedInfo.canonicalFilePath();
-        if (resolvedInfo.exists())
-            return resolvedInfo.filePath();
-    }
-    return fullPath;
+    return d->filePath(index);
 }
 
 QString QFileSystemModelPrivate::filePath(const QModelIndex &index) const
@@ -1308,14 +1179,8 @@ QString QFileSystemModelPrivate::filePath(const QModelIndex &index) const
         idx = idx.parent();
     }
     QString fullPath = QDir::fromNativeSeparators(path.join(QDir::separator()));
-#if !defined(Q_OS_WIN) || defined(Q_OS_WINCE)
     if ((fullPath.length() > 2) && fullPath[0] == QLatin1Char('/') && fullPath[1] == QLatin1Char('/'))
         fullPath = fullPath.mid(1);
-#endif
-#if defined(Q_OS_WIN)
-    if (fullPath.length() == 2 && fullPath.endsWith(QLatin1Char(':')))
-        fullPath.append(QLatin1Char('/'));
-#endif
     return fullPath;
 }
 
@@ -1370,15 +1235,7 @@ QFile::Permissions QFileSystemModel::permissions(const QModelIndex &index) const
 QModelIndex QFileSystemModel::setRootPath(const QString &newPath)
 {
     Q_D(QFileSystemModel);
-#ifdef Q_OS_WIN
-#ifdef Q_OS_WIN32
-    QString longNewPath = qt_GetLongPathName(newPath);
-#else
-    QString longNewPath = QDir::fromNativeSeparators(newPath);
-#endif
-#else
     QString longNewPath = newPath;
-#endif
     QDir newPathDir(longNewPath);
     //we remove .. and . from the given path if exist
     if (!newPath.isEmpty()) {
@@ -1501,26 +1358,6 @@ QDir::Filters QFileSystemModel::filter() const
 {
     Q_D(const QFileSystemModel);
     return d->filters;
-}
-
-/*!
-    \property QFileSystemModel::resolveSymlinks
-    \brief Whether the directory model should resolve symbolic links
-
-    This is only relevant on operating systems that support symbolic links.
-
-    By default, this property is false.
-*/
-void QFileSystemModel::setResolveSymlinks(bool enable)
-{
-    Q_D(QFileSystemModel);
-    d->fileInfoGatherer.setResolveSymlinks(enable);
-}
-
-bool QFileSystemModel::resolveSymlinks() const
-{
-    Q_D(const QFileSystemModel);
-    return d->fileInfoGatherer.resolveSymlinks();
 }
 
 /*!
@@ -1682,18 +1519,6 @@ QFileSystemModelPrivate::QFileSystemNode* QFileSystemModelPrivate::addNode(QFile
     QFileSystemModelPrivate::QFileSystemNode *node = new QFileSystemModelPrivate::QFileSystemNode(fileName, parentNode);
 #ifndef QT_NO_FILESYSTEMWATCHER
     node->populate(info);
-#endif
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    //The parentNode is "" so we are listing the drives
-    if (parentNode->fileName.isEmpty()) {
-        wchar_t name[MAX_PATH + 1];
-        //GetVolumeInformation requires to add trailing backslash
-        const QString nodeName = fileName + QLatin1String("\\");
-        BOOL success = ::GetVolumeInformation((wchar_t *)(nodeName.utf16()),
-                name, MAX_PATH + 1, NULL, 0, NULL, NULL, 0);
-        if (success && name[0])
-            node->volumeName = QString::fromWCharArray(name);
-    }
 #endif
     parentNode->children.insert(fileName, node);
     return node;
@@ -1906,14 +1731,6 @@ void QFileSystemModelPrivate::_q_fileSystemChanged(const QString &path, const QL
 /*!
     \internal
 */
-void QFileSystemModelPrivate::_q_resolvedName(const QString &fileName, const QString &resolvedName)
-{
-    resolvedSymLinks[fileName] = resolvedName;
-}
-
-/*!
-    \internal
-*/
 void QFileSystemModelPrivate::init()
 {
     Q_Q(QFileSystemModel);
@@ -1922,8 +1739,6 @@ void QFileSystemModelPrivate::init()
                q, SLOT(_q_directoryChanged(QString,QStringList)));
     q->connect(&fileInfoGatherer, SIGNAL(updates(QString,QList<QPair<QString,QFileInfo> >)),
             q, SLOT(_q_fileSystemChanged(QString,QList<QPair<QString,QFileInfo> >)));
-    q->connect(&fileInfoGatherer, SIGNAL(nameResolved(QString,QString)),
-            q, SLOT(_q_resolvedName(QString,QString)));
     q->connect(&fileInfoGatherer, SIGNAL(directoryLoaded(QString)),
                q, SIGNAL(directoryLoaded(QString)));
     q->connect(&delayedSortTimer, SIGNAL(timeout()), q, SLOT(_q_performDelayedSort()), Qt::QueuedConnection);

@@ -54,7 +54,6 @@
 #include "qrubberband.h"
 #include "qdockwidget_p.h"
 #include "qtabbar_p.h"
-
 #include <qapplication.h>
 #include <qstatusbar.h>
 #include <qstring.h>
@@ -62,15 +61,9 @@
 #include <qstack.h>
 #include <qmap.h>
 #include <qtimer.h>
-
 #include <qdebug.h>
-
 #include <qapplication_p.h>
 #include <qlayoutengine_p.h>
-#ifdef Q_WS_MAC
-#   include <qcore_mac_p.h>
-#   include <qt_cocoa_helpers_mac_p.h>
-#endif
 
 #ifdef QT_NO_DOCKWIDGET
 extern QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *window);

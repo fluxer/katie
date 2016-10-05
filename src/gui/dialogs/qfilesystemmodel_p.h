@@ -250,15 +250,7 @@ public:
     }
 
     inline static QString myComputer() {
-        // ### TODO We should query the system to find out what the string should be
-        // XP == "My Computer",
-        // Vista == "Computer",
-        // OS X == "Computer" (sometime user generated) "Benjamin's PowerBook G4"
-#ifdef Q_OS_WIN
-        return QFileSystemModel::tr("My Computer");
-#else
         return QFileSystemModel::tr("Computer");
-#endif
     }
 
     inline void delayedSort() {
@@ -278,7 +270,6 @@ public:
 
     QIcon icon(const QModelIndex &index) const;
     QString name(const QModelIndex &index) const;
-    QString displayName(const QModelIndex &index) const;
     QString filePath(const QModelIndex &index) const;
     QString size(const QModelIndex &index) const;
     static QString size(qint64 bytes);
@@ -288,7 +279,6 @@ public:
     void _q_directoryChanged(const QString &directory, const QStringList &list);
     void _q_performDelayedSort();
     void _q_fileSystemChanged(const QString &path, const QList<QPair<QString, QFileInfo> > &);
-    void _q_resolvedName(const QString &fileName, const QString &resolvedName);
 
     static int naturalCompare(const QString &s1, const QString &s2, Qt::CaseSensitivity cs);
 
@@ -312,8 +302,6 @@ public:
 #ifndef QT_NO_REGEXP
     QList<QRegExp> nameFilters;
 #endif
-    // ### Qt 5: resolvedSymLinks goes away
-    QHash<QString, QString> resolvedSymLinks;
 
     QFileSystemNode root;
 

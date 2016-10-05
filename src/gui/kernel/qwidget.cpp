@@ -2219,10 +2219,6 @@ QWidget *QWidget::find(WId id)
     If a widget is non-native (alien) and winId() is invoked on it, that widget
     will be provided a native handle.
 
-    On Mac OS X, the type returned depends on which framework Qt was linked
-    against. If Qt is using Carbon, the {WId} is actually an HIViewRef. If Qt
-    is using Cocoa, {WId} is a pointer to an NSView.
-
     This value may change at run-time. An event with type QEvent::WinIdChange
     will be sent to the widget following a change in window system identifier.
 
@@ -8811,41 +8807,6 @@ void QWidget::hideEvent(QHideEvent *)
     \sa QApplication::x11EventFilter(), QWidget::winId()
 */
 
-
-#if defined(Q_WS_MAC)
-
-/*!
-    \fn bool QWidget::macEvent(EventHandlerCallRef caller, EventRef event)
-
-    This special event handler can be reimplemented in a subclass to
-    receive native Macintosh events.
-
-    The parameters are a bit different depending if Qt is build against Carbon
-    or Cocoa.  In Carbon, \a caller and \a event are the corresponding
-    EventHandlerCallRef and EventRef that correspond to the Carbon event
-    handlers that are installed. In Cocoa, \a caller is always 0 and the
-    EventRef is the EventRef generated from the NSEvent.
-
-    In your reimplementation of this function, if you want to stop the
-    event being handled by Qt, return true. If you return false, this
-    native event is passed back to Qt, which translates the event into
-    a Qt event and sends it to the widget.
-
-    \warning This function is not portable.
-
-    \warning This function was not called inside of Qt until Qt 4.4.
-    If you need compatibility with earlier versions of Qt, consider QApplication::macEventFilter() instead.
-
-    \sa QApplication::macEventFilter()
-*/
-
-bool QWidget::macEvent(EventHandlerCallRef, EventRef)
-{
-    return false;
-}
-
-#endif
-
 #if defined(Q_WS_X11)
 
 /*!
@@ -11408,11 +11369,6 @@ void QWidget::ungrabGesture(Qt::GestureType gesture)
     \note Only visible widgets can grab mouse input. If isVisible()
     returns false for a widget, that widget cannot call grabMouse().
 
-    \note \bold{(Mac OS X developers)} For \e Cocoa, calling
-    grabMouse() on a widget only works when the mouse is inside the
-    frame of that widget.  For \e Carbon, it works outside the widget's
-    frame as well, like for Windows and X11.
-
     \sa releaseMouse() grabKeyboard() releaseKeyboard()
 */
 
@@ -11427,8 +11383,6 @@ void QWidget::ungrabGesture(Qt::GestureType gesture)
     mouse events until releaseMouse() is called().
 
     \warning Grabbing the mouse might lock the terminal.
-
-    \note \bold{(Mac OS X developers)} See the note in QWidget::grabMouse().
 
     \sa releaseMouse(), grabKeyboard(), releaseKeyboard(), setCursor()
 */

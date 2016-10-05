@@ -3119,29 +3119,13 @@ void handleSpans(int count, const QSpan *spans, const QSpanData *data, T &handle
     }
 }
 
-struct QBlendBase
-{
-    QBlendBase(QSpanData *d, Operator o)
-        : data(d)
-        , op(o)
-        , dest(0)
-    {
-    }
-
-    QSpanData *data;
-    Operator op;
-
-    uint *dest;
-
-    uint buffer[buffer_size];
-    uint src_buffer[buffer_size];
-};
-
-class BlendSrcGeneric : public QBlendBase
+class BlendSrcGeneric
 {
 public:
     BlendSrcGeneric(QSpanData *d, Operator o)
-        : QBlendBase(d, o)
+        : data(d)
+        , op(o)
+        , dest(0)
     {
     }
 
@@ -3162,6 +3146,14 @@ public:
             op.dest_store(data->rasterBuffer, x, y, dest, len);
         }
     }
+
+    QSpanData *data;
+    Operator op;
+
+    uint *dest;
+
+    uint buffer[buffer_size];
+    uint src_buffer[buffer_size];
 };
 
 static void blend_src_generic(int count, const QSpan *spans, void *userData)
@@ -6057,32 +6049,6 @@ static inline void rgbBlendPixel(quint32 *dst, int coverage, int sr, int sg, int
     *dst = qRgb(nr, ng, nb);
 }
 
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-static inline void grayBlendPixel(quint32 *dst, int coverage, int sr, int sg, int sb)
-{
-    // Do a gammacorrected gray alphablend...
-    int dr = qRed(*dst);
-    int dg = qGreen(*dst);
-    int db = qBlue(*dst);
-
-    dr = qt_pow_gamma[dr];
-    dg = qt_pow_gamma[dg];
-    db = qt_pow_gamma[db];
-
-    int alpha = coverage;
-    int ialpha = 255 - alpha;
-    int nr = (sr * alpha + ialpha * dr) / 255;
-    int ng = (sg * alpha + ialpha * dg) / 255;
-    int nb = (sb * alpha + ialpha * db) / 255;
-
-    nr = qt_pow_invgamma[nr];
-    ng = qt_pow_invgamma[ng];
-    nb = qt_pow_invgamma[nb];
-
-    *dst = qRgb(nr, ng, nb);
-}
-#endif
-
 static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
                                     int x, int y, quint32 color,
                                     const uchar *map,
@@ -6091,17 +6057,6 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
 {
     const quint32 c = color;
     const int destStride = rasterBuffer->bytesPerLine() / sizeof(quint32);
-
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-    int sr = qRed(color);
-    int sg = qGreen(color);
-    int sb = qBlue(color);
-
-    sr = qt_pow_gamma[sr];
-    sg = qt_pow_gamma[sg];
-    sb = qt_pow_gamma[sb];
-    bool opaque_src = (qAlpha(color) == 255);
-#endif
 
     if (!clip) {
         quint32 *dest = reinterpret_cast<quint32*>(rasterBuffer->scanLine(y)) + x;
@@ -6114,25 +6069,17 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
                 } else if (coverage == 255) {
                     dest[i] = c;
                 } else {
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-                    if (QSysInfo::WindowsVersion >= QSysInfo::WV_XP && opaque_src
-                        && qAlpha(dest[i]) == 255) {
-                        grayBlendPixel(dest+i, coverage, sr, sg, sb);
-                    } else
-#endif
-                    {
-                        int ialpha = 255 - coverage;
-                        dest[i] = INTERPOLATE_PIXEL_255(c, coverage, dest[i], ialpha);
-                    }
+                    const int ialpha = 255 - coverage;
+                    dest[i] = INTERPOLATE_PIXEL_255(c, coverage, dest[i], ialpha);
                 }
             }
             dest += destStride;
             map += mapStride;
         }
     } else {
-        int bottom = qMin(y + mapHeight, rasterBuffer->height());
+        const int bottom = qMin(y + mapHeight, rasterBuffer->height());
 
-        int top = qMax(y, 0);
+        const int top = qMax(y, 0);
         map += (top - y) * mapStride;
 
         const_cast<QClipData *>(clip)->initialize();
@@ -6144,8 +6091,8 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
             for (int i=0; i<line.count; ++i) {
                 const QSpan &clip = line.spans[i];
 
-                int start = qMax<int>(x, clip.x);
-                int end = qMin<int>(x + mapWidth, clip.x + clip.len);
+                const int start = qMax<int>(x, clip.x);
+                const int end = qMin<int>(x + mapWidth, clip.x + clip.len);
 
                 for (int xp=start; xp<end; ++xp) {
                     const int coverage = map[xp - x];
@@ -6155,16 +6102,8 @@ static void qt_alphamapblit_quint32(QRasterBuffer *rasterBuffer,
                     } else if (coverage == 255) {
                         dest[xp] = c;
                     } else {
-#if defined(Q_OS_WIN) && !defined(Q_OS_WINCE)
-                        if (QSysInfo::WindowsVersion >= QSysInfo::WV_XP && opaque_src
-                            && qAlpha(dest[xp]) == 255) {
-                            grayBlendPixel(dest+xp, coverage, sr, sg, sb);
-                        } else
-#endif
-                        {
-                            int ialpha = 255 - coverage;
-                            dest[xp] = INTERPOLATE_PIXEL_255(c, coverage, dest[xp], ialpha);
-                        }
+                        const int ialpha = 255 - coverage;
+                        dest[xp] = INTERPOLATE_PIXEL_255(c, coverage, dest[xp], ialpha);
                     }
 
                 } // for (i -> line.count)

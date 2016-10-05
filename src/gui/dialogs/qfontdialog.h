@@ -66,7 +66,6 @@ class Q_GUI_EXPORT QFontDialog : public QDialog
 public:
     enum FontDialogOption {
         NoButtons           = 0x00000001,
-        DontUseNativeDialog = 0x00000002
     };
 
     Q_DECLARE_FLAGS(FontDialogOptions, FontDialogOption)
@@ -91,8 +90,6 @@ public:
     using QDialog::open;
 #endif
     void open(QObject *receiver, const char *member);
-
-    void setVisible(bool visible);
 
     static QFont getFont(bool *ok, const QFont &initial, QWidget *parent = 0,
                         const QString &title = QString(), FontDialogOptions options = 0);

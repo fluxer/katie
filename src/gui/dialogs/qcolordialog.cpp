@@ -466,10 +466,6 @@ QRgb QColorDialog::customColor(int index)
 
 /*!
     Sets the custom color at \a index to the QRgb \a color value.
-
-    \note This function does not apply to the Native Color Dialog on the Mac
-    OS X platform. If you still require this function, use the
-    QColorDialog::DontUseNativeDialog option.
 */
 void QColorDialog::setCustomColor(int index, QRgb color)
 {
@@ -482,10 +478,6 @@ void QColorDialog::setCustomColor(int index, QRgb color)
 
 /*!
     Sets the standard color at \a  index to the QRgb \a color value.
-
-    \note This function does not apply to the Native Color Dialog on the Mac
-    OS X platform. If you still require this function, use the
-    QColorDialog::DontUseNativeDialog option.
 */
 
 void QColorDialog::setStandardColor(int index, QRgb color)
@@ -1685,8 +1677,6 @@ QColorDialog::ColorDialogOptions QColorDialog::options() const
 
     \value ShowAlphaChannel Allow the user to select the alpha component of a color.
     \value NoButtons Don't display \gui{OK} and \gui{Cancel} buttons. (Useful for "live dialogs".)
-    \value DontUseNativeDialog Use Qt's standard color dialog on the Mac instead of the operating system
-                               native color dialog.
 
     \sa options, setOption(), testOption(), windowModality()
 */
@@ -1726,7 +1716,7 @@ void QColorDialog::setVisible(bool visible)
     if (visible)
         d->selectedQColor = QColor();
 
-    if (!(d->opts & DontUseNativeDialog) && qt_guiPlatformPlugin()->colorDialogSetVisible(this, visible)) {
+    if (qt_guiPlatformPlugin()->colorDialogSetVisible(this, visible)) {
         d->nativeDialogInUse = true;
         // Set WA_DontShowOnScreen so that QDialog::setVisible(visible) below
         // updates the state correctly, but skips showing the non-native version:

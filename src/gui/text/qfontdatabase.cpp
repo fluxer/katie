@@ -365,13 +365,6 @@ struct  QtFontFamily
 #else
         fixedPitch(false),
 #endif
-#ifdef Q_WS_WIN
-        writingSystemCheck(false),
-        loaded(false),
-#endif
-#ifdef Q_OS_MAC
-        fixedPitchComputed(false),
-#endif
         name(n), count(0), foundries(0)
     {
         memset(writingSystems, 0, sizeof(writingSystems));
@@ -387,15 +380,6 @@ struct  QtFontFamily
     bool ftWritingSystemCheck : 1;
     bool xlfdLoaded : 1;
     bool synthetic : 1;
-#endif
-#ifdef Q_WS_WIN
-    bool writingSystemCheck : 1;
-    bool loaded : 1;
-#endif
-#ifdef Q_OS_MAC
-    bool fixedPitchComputed : 1;
-#endif
-#ifdef Q_WS_X11
     bool symbol_checked : 1;
 #endif
 
@@ -404,9 +388,6 @@ struct  QtFontFamily
     QByteArray fontFilename;
     int fontFileIndex;
 #endif
-#ifdef Q_WS_WIN
-    QString english_name;
-#endif
     int count;
     QtFontFoundry **foundries;
 
@@ -414,18 +395,6 @@ struct  QtFontFamily
 
     QtFontFoundry *foundry(const QString &f, bool = false);
 };
-
-#ifdef Q_OS_MAC
-inline static void qt_mac_get_fixed_pitch(QtFontFamily *f)
-{
-    if(f && !f->fixedPitchComputed) {
-        QFontMetrics fm(f->name);
-        f->fixedPitch = fm.width(QLatin1Char('i')) == fm.width(QLatin1Char('m'));
-        f->fixedPitchComputed = true;
-    }
-}
-#endif
-
 
 QtFontFoundry *QtFontFamily::foundry(const QString &f, bool create)
 {
@@ -1107,9 +1076,6 @@ unsigned int bestFoundry(int script, unsigned int score, int styleStrategy,
         }
 #else
         if (pitch != '*') {
-#ifdef Q_OS_MAC
-            qt_mac_get_fixed_pitch(const_cast<QtFontFamily*>(family));
-#endif
             if ((pitch == 'm' && !family->fixedPitch)
                 || (pitch == 'p' && family->fixedPitch))
                 this_score += PitchMismatch;
@@ -1567,9 +1533,6 @@ bool QFontDatabase::isFixedPitch(const QString &family,
     QT_PREPEND_NAMESPACE(load)(familyName);
 
     QtFontFamily *f = d->family(familyName);
-#ifdef Q_OS_MAC
-    qt_mac_get_fixed_pitch(f);
-#endif
     return (f && f->fixedPitch);
 }
 
@@ -1586,7 +1549,6 @@ bool QFontDatabase::isFixedPitch(const QString &family,
 bool QFontDatabase::isBitmapScalable(const QString &family,
                                       const QString &style) const
 {
-    bool bitmapScalable = false;
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
@@ -1597,7 +1559,7 @@ bool QFontDatabase::isBitmapScalable(const QString &family,
     QtFontStyle::Key styleKey(style);
 
     QtFontFamily *f = d->family(familyName);
-    if (!f) return bitmapScalable;
+    if (!f) return false;
 
     for (int j = 0; j < f->count; j++) {
         QtFontFoundry *foundry = f->foundries[j];
@@ -1607,13 +1569,11 @@ bool QFontDatabase::isBitmapScalable(const QString &family,
                      foundry->styles[k]->styleName == style ||
                      foundry->styles[k]->key == styleKey)
                     && foundry->styles[k]->bitmapScalable && !foundry->styles[k]->smoothScalable) {
-                    bitmapScalable = true;
-                    goto end;
+                    return true;
                 }
         }
     }
- end:
-    return bitmapScalable;
+    return false;
 }
 
 
@@ -1627,7 +1587,6 @@ bool QFontDatabase::isBitmapScalable(const QString &family,
 */
 bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &style) const
 {
-    bool smoothScalable = false;
     QString familyName, foundryName;
     parseFontName(family, foundryName, familyName);
 
@@ -1638,7 +1597,7 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
     QtFontStyle::Key styleKey(style);
 
     QtFontFamily *f = d->family(familyName);
-    if (!f) return smoothScalable;
+    if (!f) return false;
 
     for (int j = 0; j < f->count; j++) {
         QtFontFoundry *foundry = f->foundries[j];
@@ -1647,13 +1606,11 @@ bool QFontDatabase::isSmoothlyScalable(const QString &family, const QString &sty
                 if ((style.isEmpty() ||
                      foundry->styles[k]->styleName == style ||
                      foundry->styles[k]->key == styleKey) && foundry->styles[k]->smoothScalable) {
-                    smoothScalable = true;
-                    goto end;
+                    return true;
                 }
         }
     }
- end:
-    return smoothScalable;
+    return false;
 }
 
 /*!
@@ -1804,7 +1761,7 @@ QList<int> QFontDatabase::smoothSizes(const QString &family,
         return sizes;
 
 #ifdef Q_WS_X11
-    int dpi = QX11Info::appDpiY();
+    const int dpi = QX11Info::appDpiY();
 #else
     const int dpi = qt_defaultDpiY(); // embedded
 #endif

@@ -49,14 +49,6 @@
 #include "qgesture.h"
 #include "qevent.h"
 #include "qgraphicsitem.h"
-
-#ifdef Q_WS_MAC
-#include "qmacgesturerecognizer_mac_p.h"
-#endif
-#if defined(Q_OS_WIN) && !defined(QT_NO_NATIVE_GESTURES)
-#include "qwinnativepangesturerecognizer_win_p.h"
-#endif
-
 #include "qdebug.h"
 
 // #define GESTURE_DEBUG

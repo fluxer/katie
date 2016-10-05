@@ -49,12 +49,7 @@
 //
 // #define QT_MITSHM
 
-#if defined(Q_OS_WIN32) && defined(QT_MITSHM)
-#undef QT_MITSHM
-#endif
-
 #include "qplatformdefs.h"
-
 #include "qdebug.h"
 #include "qiodevice.h"
 #include "qpixmap_x11_p.h"

@@ -57,10 +57,6 @@
 #include <QtCore/QSettings>
 #include <QtGui/QPainter>
 
-#ifdef Q_WS_MAC
-#include <qt_cocoa_helpers_mac_p.h>
-#endif
-
 #ifdef Q_WS_X11
 #include <qt_x11_p.h>
 #endif

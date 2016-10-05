@@ -274,7 +274,7 @@ bool QToolBarPrivate::mouseMoveEvent(QMouseEvent *event)
         return false;
     }
 
-    QMainWindow *win = qobject_cast<QMainWindow*>(parent);
+    const QMainWindow *win = qobject_cast<QMainWindow*>(parent);
     if (win == 0)
         return true;
 
@@ -290,11 +290,7 @@ bool QToolBarPrivate::mouseMoveEvent(QMouseEvent *event)
 
             startDrag(moving);
             if (!moving && !wasDragging) {
-#ifdef Q_OS_WIN
-                grabMouseWhileInWindow();
-#else
                 q->grabMouse();
-#endif
             }
     }
 

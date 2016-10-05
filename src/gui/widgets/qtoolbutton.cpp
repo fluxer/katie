@@ -782,7 +782,6 @@ void QToolButtonPrivate::popupTimerDone()
     p.rx() = qMax(screen.left(), qMin(p.x(), screen.right() - sh.width()));
     p.ry() += 1;
     QPointer<QToolButton> that = q;
-    actualMenu->setNoReplayFor(q);
     if (!mustDeleteActualMenu) //only if action are not in this widget
         QObject::connect(actualMenu, SIGNAL(triggered(QAction*)), q, SLOT(_q_menuTriggered(QAction*)));
     QObject::connect(actualMenu, SIGNAL(aboutToHide()), q, SLOT(_q_updateButtonDown()));

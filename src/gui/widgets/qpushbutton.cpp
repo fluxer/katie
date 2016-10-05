@@ -578,8 +578,6 @@ void QPushButtonPrivate::_q_popupPressed()
     if (!down || !menu)
         return;
 
-    menu->setNoReplayFor(q);
-
     QPoint menuPos = adjustedMenuPosition();
 
     QPointer<QPushButton> guard(q);
