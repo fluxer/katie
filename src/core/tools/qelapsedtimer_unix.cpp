@@ -140,9 +140,10 @@ timeval qt_gettime()
 
     timeval tv;
     tv.tv_sec = sec;
-    tv.tv_usec = frac;
     if (monotonicClockAvailable)
-        tv.tv_usec /= 1000;
+        tv.tv_usec = frac / 1000;
+    else
+        tv.tv_usec = frac;
 
     return tv;
 }
