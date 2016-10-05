@@ -1,7 +1,6 @@
 set(BOOTSTRAP_DEFINITIONS
     ${BOOTSTRAP_DEFINITIONS}
     -DQT_BOOTSTRAPPED
-    -DQT_LITE_UNICODE
     -DQT_TEXTCODEC
     -DQT_NO_CAST_FROM_ASCII
     -DQT_NO_CAST_TO_ASCII
@@ -25,7 +24,6 @@ set(BOOTSTRAP_INCLUDES
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_SOURCE_DIR}/src/core/arch
     ${CMAKE_SOURCE_DIR}/src/core/global
     ${CMAKE_SOURCE_DIR}/src/core/kernel
     ${CMAKE_SOURCE_DIR}/src/core/tools

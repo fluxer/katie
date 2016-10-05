@@ -399,12 +399,12 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QChar::setCell(uchar cell)
+    \fn void QChar::setCell(const uchar cell)
     \internal
 */
 
 /*!
-    \fn void QChar::setRow(uchar row)
+    \fn void QChar::setRow(const uchar row)
     \internal
 */
 
@@ -417,13 +417,13 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QChar::QChar(QLatin1Char ch)
+    \fn QChar::QChar(const QLatin1Char ch)
 
     Constructs a QChar corresponding to ASCII/Latin-1 character \a ch.
 */
 
 /*!
-    \fn QChar::QChar(SpecialCharacter ch)
+    \fn QChar::QChar(const SpecialCharacter ch)
 
     Constructs a QChar for the predefined character value \a ch.
 */
@@ -432,7 +432,7 @@ QT_BEGIN_NAMESPACE
     Constructs a QChar corresponding to ASCII/Latin-1 character \a
     ch.
 */
-QChar::QChar(char ch)
+QChar::QChar(const char ch)
 {
 #ifndef QT_NO_CODEC_FOR_C_STRINGS
     if (QTextCodec::codecForCStrings())
@@ -446,12 +446,12 @@ QChar::QChar(char ch)
 /*!
     Constructs a QChar corresponding to ASCII/Latin-1 character \a ch.
 */
-QChar::QChar(uchar ch)
+QChar::QChar(const uchar ch)
 {
 #ifndef QT_NO_CODEC_FOR_C_STRINGS
     if (QTextCodec::codecForCStrings()) {
         // #####
-        char c = char(ch);
+        const char c = char(ch);
         ucs =  QTextCodec::codecForCStrings()->toUnicode(&c, 1).at(0).unicode();
     } else
 #endif
@@ -459,7 +459,7 @@ QChar::QChar(uchar ch)
 }
 
 /*!
-    \fn QChar::QChar(uchar cell, uchar row)
+    \fn QChar::QChar(const uchar cell, const uchar row)
 
     Constructs a QChar for Unicode cell \a cell in row \a row.
 
@@ -467,7 +467,7 @@ QChar::QChar(uchar ch)
 */
 
 /*!
-    \fn QChar::QChar(ushort code)
+    \fn QChar::QChar(uconst short code)
 
     Constructs a QChar for the character with Unicode code point \a
     code.
@@ -475,7 +475,7 @@ QChar::QChar(uchar ch)
 
 
 /*!
-    \fn QChar::QChar(short code)
+    \fn QChar::QChar(const short code)
 
     Constructs a QChar for the character with Unicode code point \a
     code.
@@ -483,7 +483,7 @@ QChar::QChar(uchar ch)
 
 
 /*!
-    \fn QChar::QChar(uint code)
+    \fn QChar::QChar(const uint code)
 
     Constructs a QChar for the character with Unicode code point \a
     code.
@@ -491,7 +491,7 @@ QChar::QChar(uchar ch)
 
 
 /*!
-    \fn QChar::QChar(int code)
+    \fn QChar::QChar(const int code)
 
     Constructs a QChar for the character with Unicode code point \a
     code.
@@ -731,7 +731,7 @@ int QChar::digitValue() const
     Returns the numeric value of the digit, specified by the UCS-2-encoded
     character, \a ucs2, or -1 if the character is not a digit.
 */
-int QChar::digitValue(ushort ucs2)
+int QChar::digitValue(const ushort ucs2)
 {
     return qGetProp(ucs2)->digitValue;
 }
@@ -741,7 +741,7 @@ int QChar::digitValue(ushort ucs2)
     Returns the numeric value of the digit specified by the UCS-4-encoded
     character, \a ucs4, or -1 if the character is not a digit.
 */
-int QChar::digitValue(uint ucs4)
+int QChar::digitValue(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return 0;
@@ -761,7 +761,7 @@ QChar::Category QChar::category() const
     \since 4.3
     Returns the category of the UCS-4-encoded character specified by \a ucs4.
 */
-QChar::Category QChar::category(uint ucs4)
+QChar::Category QChar::category(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return QChar::NoCategory;
@@ -772,7 +772,7 @@ QChar::Category QChar::category(uint ucs4)
     \overload
     Returns the category of the UCS-2-encoded character specified by \a ucs2.
 */
-QChar::Category QChar::category(ushort ucs2)
+QChar::Category QChar::category(const ushort ucs2)
 {
     return (QChar::Category) qGetProp(ucs2)->category;
 }
@@ -790,7 +790,7 @@ QChar::Direction QChar::direction() const
     \overload
     Returns the direction of the UCS-4-encoded character specified by \a ucs4.
 */
-QChar::Direction QChar::direction(uint ucs4)
+QChar::Direction QChar::direction(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return QChar::DirL;
@@ -801,7 +801,7 @@ QChar::Direction QChar::direction(uint ucs4)
     \overload
     Returns the direction of the UCS-2-encoded character specified by \a ucs2.
 */
-QChar::Direction QChar::direction(ushort ucs2)
+QChar::Direction QChar::direction(const ushort ucs2)
 {
     return (QChar::Direction) qGetProp(ucs2)->direction;
 }
@@ -821,7 +821,7 @@ QChar::Joining QChar::joining() const
     character specified by \a ucs4 (needed for certain languages such as
     Arabic).
 */
-QChar::Joining QChar::joining(uint ucs4)
+QChar::Joining QChar::joining(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return QChar::OtherJoining;
@@ -834,7 +834,7 @@ QChar::Joining QChar::joining(uint ucs4)
     character specified by \a ucs2 (needed for certain languages such as
     Arabic).
 */
-QChar::Joining QChar::joining(ushort ucs2)
+QChar::Joining QChar::joining(const ushort ucs2)
 {
     return (QChar::Joining) qGetProp(ucs2)->joining;
 }
@@ -899,7 +899,7 @@ QChar QChar::mirroredChar() const
 
     \sa hasMirrored()
 */
-uint QChar::mirroredChar(uint ucs4)
+uint QChar::mirroredChar(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return ucs4;
@@ -913,7 +913,7 @@ uint QChar::mirroredChar(uint ucs4)
 
     \sa hasMirrored()
 */
-ushort QChar::mirroredChar(ushort ucs2)
+ushort QChar::mirroredChar(const ushort ucs2)
 {
     return ucs2 + qGetProp(ucs2)->mirrorDiff;
 }
@@ -933,7 +933,7 @@ enum {
 
 // buffer has to have a length of 3. It's needed for Hangul decomposition
 static const unsigned short * QT_FASTCALL decompositionHelper
-    (uint ucs4, int *length, int *tag, unsigned short *buffer)
+    (const uint ucs4, int *length, int *tag, unsigned short *buffer)
 {
     *length = 0;
     if (ucs4 > UNICODE_LAST_CODEPOINT)
@@ -971,7 +971,7 @@ QString QChar::decomposition() const
     Decomposes the UCS-4-encoded character specified by \a ucs4 into its
     constituent parts. Returns an empty string if no decomposition exists.
 */
-QString QChar::decomposition(uint ucs4)
+QString QChar::decomposition(const uint ucs4)
 {
     unsigned short buffer[3];
     int length;
@@ -994,7 +994,7 @@ QChar::Decomposition QChar::decompositionTag() const
     Returns the tag defining the composition of the UCS-4-encoded character
     specified by \a ucs4. Returns QChar::Single if no decomposition exists.
 */
-QChar::Decomposition QChar::decompositionTag(uint ucs4)
+QChar::Decomposition QChar::decompositionTag(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return QChar::NoDecomposition;
@@ -1022,7 +1022,7 @@ unsigned char QChar::combiningClass() const
     Returns the combining class for the UCS-4-encoded character specified by
     \a ucs4, as defined in the Unicode standard.
 */
-unsigned char QChar::combiningClass(uint ucs4)
+unsigned char QChar::combiningClass(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return 0;
@@ -1034,7 +1034,7 @@ unsigned char QChar::combiningClass(uint ucs4)
     Returns the combining class for the UCS-2-encoded character specified by
     \a ucs2, as defined in the Unicode standard.
 */
-unsigned char QChar::combiningClass(ushort ucs2)
+unsigned char QChar::combiningClass(const ushort ucs2)
 {
     return (unsigned char) qGetProp(ucs2)->combiningClass;
 }
@@ -1052,7 +1052,7 @@ QChar::UnicodeVersion QChar::unicodeVersion() const
     Returns the Unicode version that introduced the character specified in
     its UCS-4-encoded form as \a ucs4.
 */
-QChar::UnicodeVersion QChar::unicodeVersion(uint ucs4)
+QChar::UnicodeVersion QChar::unicodeVersion(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return QChar::Unicode_Unassigned;
@@ -1064,7 +1064,7 @@ QChar::UnicodeVersion QChar::unicodeVersion(uint ucs4)
     Returns the Unicode version that introduced the character specified in
     its UCS-2-encoded form as \a ucs2.
 */
-QChar::UnicodeVersion QChar::unicodeVersion(ushort ucs2)
+QChar::UnicodeVersion QChar::unicodeVersion(const ushort ucs2)
 {
     return (QChar::UnicodeVersion) qGetProp(ucs2)->unicodeVersion;
 }
@@ -1097,7 +1097,7 @@ QChar QChar::toLower() const
     by \a ucs4 if the character is uppercase or titlecase; otherwise returns
     the character itself.
 */
-uint QChar::toLower(uint ucs4)
+uint QChar::toLower(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return ucs4;
@@ -1113,7 +1113,7 @@ uint QChar::toLower(uint ucs4)
     by \a ucs2 if the character is uppercase or titlecase; otherwise returns
     the character itself.
 */
-ushort QChar::toLower(ushort ucs2)
+ushort QChar::toLower(const ushort ucs2)
 {
     const QUnicodeTables::Properties *p = qGetProp(ucs2);
     if (!p->lowerCaseSpecial)
@@ -1139,7 +1139,7 @@ QChar QChar::toUpper() const
     by \a ucs4 if the character is lowercase or titlecase; otherwise returns
     the character itself.
 */
-uint QChar::toUpper(uint ucs4)
+uint QChar::toUpper(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return ucs4;
@@ -1155,7 +1155,7 @@ uint QChar::toUpper(uint ucs4)
     by \a ucs2 if the character is lowercase or titlecase; otherwise returns
     the character itself.
 */
-ushort QChar::toUpper(ushort ucs2)
+ushort QChar::toUpper(const ushort ucs2)
 {
     const QUnicodeTables::Properties *p = qGetProp(ucs2);
     if (!p->upperCaseSpecial)
@@ -1181,7 +1181,7 @@ QChar QChar::toTitleCase() const
     by \a ucs4 if the character is lowercase or uppercase; otherwise returns
     the character itself.
 */
-uint QChar::toTitleCase(uint ucs4)
+uint QChar::toTitleCase(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return ucs4;
@@ -1197,7 +1197,7 @@ uint QChar::toTitleCase(uint ucs4)
     by \a ucs2 if the character is lowercase or uppercase; otherwise returns
     the character itself.
 */
-ushort QChar::toTitleCase(ushort ucs2)
+ushort QChar::toTitleCase(const ushort ucs2)
 {
     const QUnicodeTables::Properties *p = qGetProp(ucs2);
     if (!p->titleCaseSpecial)
@@ -1214,7 +1214,7 @@ static inline uint foldCase(const ushort *ch, const ushort *start)
     return *ch + qGetProp(c)->caseFoldDiff;
 }
 
-static inline uint foldCase(uint ch, uint &last)
+static inline uint foldCase(const uint ch, uint &last)
 {
     uint c = ch;
     if (QChar(c).isLowSurrogate() && QChar(last).isHighSurrogate())
@@ -1223,7 +1223,7 @@ static inline uint foldCase(uint ch, uint &last)
     return ch + qGetProp(c)->caseFoldDiff;
 }
 
-static inline ushort foldCase(ushort ch)
+static inline ushort foldCase(const ushort ch)
 {
     return ch + qGetProp(ch)->caseFoldDiff;
 }
@@ -1242,7 +1242,7 @@ QChar QChar::toCaseFolded() const
     Returns the case folded equivalent of the UCS-4-encoded character specified
     by \a ucs4. For most Unicode characters this is the same as toLowerCase().
 */
-uint QChar::toCaseFolded(uint ucs4)
+uint QChar::toCaseFolded(const uint ucs4)
 {
     if (ucs4 > UNICODE_LAST_CODEPOINT)
         return ucs4;
@@ -1254,7 +1254,7 @@ uint QChar::toCaseFolded(uint ucs4)
     Returns the case folded equivalent of the UCS-2-encoded character specified
     by \a ucs2. For most Unicode characters this is the same as toLowerCase().
 */
-ushort QChar::toCaseFolded(ushort ucs2)
+ushort QChar::toCaseFolded(const ushort ucs2)
 {
     return ucs2 + qGetProp(ucs2)->caseFoldDiff;
 }
@@ -1322,7 +1322,7 @@ char QChar::toAscii() const
 
     \sa fromLatin1(), unicode(), QTextCodec::codecForCStrings()
 */
-QChar QChar::fromAscii(char c)
+QChar QChar::fromAscii(const char c)
 {
 #ifndef QT_NO_CODEC_FOR_C_STRINGS
     if (QTextCodec::codecForCStrings())
@@ -1459,11 +1459,11 @@ QDataStream &operator>>(QDataStream &in, QChar &chr)
 
 // ---------------------------------------------------------------------------
 
-
-static void decomposeHelper(QString *str, bool canonical, QChar::UnicodeVersion version, int from)
+// used by QString's qt_string_normalize()
+static void decomposeHelper(QString *str, const bool canonical,
+                            const QChar::UnicodeVersion version, const int from)
 {
     unsigned short buffer[3];
-
     QString &s = *str;
 
     const unsigned short *utf16 = reinterpret_cast<unsigned short *>(s.data());
@@ -1496,16 +1496,16 @@ static void decomposeHelper(QString *str, bool canonical, QChar::UnicodeVersion 
 
 
 struct UCS2Pair {
-    ushort u1;
-    ushort u2;
+    const ushort u1;
+    const ushort u2;
 };
 
-inline bool operator<(ushort u1, const UCS2Pair &ligature)
+inline bool operator<(const ushort u1, const UCS2Pair &ligature)
 { return u1 < ligature.u1; }
 inline bool operator<(const UCS2Pair &ligature, ushort u1)
 { return ligature.u1 < u1; }
 
-static ushort ligatureHelper(ushort u1, ushort u2)
+static ushort ligatureHelper(const ushort u1, const ushort u2)
 {
     // hangul L-V pair
     int LIndex = u1 - Hangul_LBase;
@@ -1538,7 +1538,7 @@ static ushort ligatureHelper(ushort u1, ushort u2)
     return 0;
 }
 
-static void composeHelper(QString *str, QChar::UnicodeVersion version, int from)
+static void composeHelper(QString *str, const QChar::UnicodeVersion version, const int from)
 {
     QString &s = *str;
 
@@ -1583,7 +1583,7 @@ static void composeHelper(QString *str, QChar::UnicodeVersion version, int from)
 }
 
 
-static void canonicalOrderHelper(QString *str, QChar::UnicodeVersion version, int from)
+static void canonicalOrderHelper(QString *str, const QChar::UnicodeVersion version, const int from)
 {
     QString &s = *str;
     const int l = s.length()-1;

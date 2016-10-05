@@ -51,15 +51,15 @@ QT_BEGIN_NAMESPACE
 class QString;
 class QDataStream;
 
-struct QLatin1Char
+class QLatin1Char
 {
 public:
-    inline explicit QLatin1Char(char c) : ch(c) {}
+    inline explicit QLatin1Char(const char c) : ch(c) {}
     inline char toLatin1() const { return ch; }
     inline ushort unicode() const { return ushort(uchar(ch)); }
 
 private:
-    char ch;
+    const char ch;
 };
 
 
@@ -67,15 +67,15 @@ class Q_CORE_EXPORT QChar {
 public:
     QChar();
 #ifndef QT_NO_CAST_FROM_ASCII
-    QT_ASCII_CAST_WARN_CONSTRUCTOR QChar(char c);
-    QT_ASCII_CAST_WARN_CONSTRUCTOR QChar(uchar c);
+    QT_ASCII_CAST_WARN_CONSTRUCTOR QChar(const char c);
+    QT_ASCII_CAST_WARN_CONSTRUCTOR QChar(const uchar c);
 #endif
-    QChar(QLatin1Char ch);
-    QChar(uchar c, uchar r);
-    inline QChar(ushort rc) : ucs(rc){}
-    QChar(short rc);
-    QChar(uint rc);
-    QChar(int rc);
+    QChar(const QLatin1Char ch);
+    QChar(const uchar c, uchar r);
+    QChar(const ushort rc);
+    QChar(const short rc);
+    QChar(const uint rc);
+    QChar(const int rc);
     enum SpecialCharacter {
         Null = 0x0000,
         Nbsp = 0x00a0,
@@ -86,7 +86,7 @@ public:
         ParagraphSeparator = 0x2029,
         LineSeparator = 0x2028
     };
-    QChar(SpecialCharacter sc);
+    QChar(const SpecialCharacter sc);
 
     // Unicode information
 
@@ -228,8 +228,8 @@ public:
     inline ushort unicode() const { return ucs; }
     inline ushort &unicode() { return ucs; }
 
-    static QChar fromAscii(char c);
-    static QChar fromLatin1(char c);
+    static QChar fromAscii(const char c);
+    static QChar fromLatin1(const char c);
 
     inline bool isNull() const { return ucs == 0; }
     bool isPrint() const;
@@ -279,32 +279,32 @@ public:
         return ushort(ucs4%0x400 + 0xdc00);
     }
 
-    static Category QT_FASTCALL category(uint ucs4);
-    static Category QT_FASTCALL category(ushort ucs2);
-    static Direction QT_FASTCALL direction(uint ucs4);
-    static Direction QT_FASTCALL direction(ushort ucs2);
-    static Joining QT_FASTCALL joining(uint ucs4);
-    static Joining QT_FASTCALL joining(ushort ucs2);
-    static unsigned char QT_FASTCALL combiningClass(uint ucs4);
-    static unsigned char QT_FASTCALL combiningClass(ushort ucs2);
+    static Category QT_FASTCALL category(const uint ucs4);
+    static Category QT_FASTCALL category(const ushort ucs2);
+    static Direction QT_FASTCALL direction(const uint ucs4);
+    static Direction QT_FASTCALL direction(const ushort ucs2);
+    static Joining QT_FASTCALL joining(const uint ucs4);
+    static Joining QT_FASTCALL joining(const ushort ucs2);
+    static unsigned char QT_FASTCALL combiningClass(const uint ucs4);
+    static unsigned char QT_FASTCALL combiningClass(const ushort ucs2);
 
-    static uint QT_FASTCALL mirroredChar(uint ucs4);
-    static ushort QT_FASTCALL mirroredChar(ushort ucs2);
-    static Decomposition QT_FASTCALL decompositionTag(uint ucs4);
+    static uint QT_FASTCALL mirroredChar(const uint ucs4);
+    static ushort QT_FASTCALL mirroredChar(const ushort ucs2);
+    static Decomposition QT_FASTCALL decompositionTag(const uint ucs4);
 
-    static int QT_FASTCALL digitValue(uint ucs4);
-    static int QT_FASTCALL digitValue(ushort ucs2);
-    static uint QT_FASTCALL toLower(uint ucs4);
-    static ushort QT_FASTCALL toLower(ushort ucs2);
-    static uint QT_FASTCALL toUpper(uint ucs4);
-    static ushort QT_FASTCALL toUpper(ushort ucs2);
-    static uint QT_FASTCALL toTitleCase(uint ucs4);
-    static ushort QT_FASTCALL toTitleCase(ushort ucs2);
-    static uint QT_FASTCALL toCaseFolded(uint ucs4);
-    static ushort QT_FASTCALL toCaseFolded(ushort ucs2);
+    static int QT_FASTCALL digitValue(const uint ucs4);
+    static int QT_FASTCALL digitValue(const ushort ucs2);
+    static uint QT_FASTCALL toLower(const uint ucs4);
+    static ushort QT_FASTCALL toLower(const ushort ucs2);
+    static uint QT_FASTCALL toUpper(const uint ucs4);
+    static ushort QT_FASTCALL toUpper(const ushort ucs2);
+    static uint QT_FASTCALL toTitleCase(const uint ucs4);
+    static ushort QT_FASTCALL toTitleCase(const ushort ucs2);
+    static uint QT_FASTCALL toCaseFolded(const uint ucs4);
+    static ushort QT_FASTCALL toCaseFolded(const ushort ucs2);
 
-    static UnicodeVersion QT_FASTCALL unicodeVersion(uint ucs4);
-    static UnicodeVersion QT_FASTCALL unicodeVersion(ushort ucs2);
+    static UnicodeVersion QT_FASTCALL unicodeVersion(const uint ucs4);
+    static UnicodeVersion QT_FASTCALL unicodeVersion(const ushort ucs2);
 
     static UnicodeVersion QT_FASTCALL currentUnicodeVersion();
 
@@ -313,8 +313,8 @@ public:
 
 private:
 #ifdef QT_NO_CAST_FROM_ASCII
-    QChar(char c);
-    QChar(uchar c);
+    QChar(const char c);
+    QChar(const uchar c);
 #endif
     ushort ucs;
 };
@@ -324,18 +324,19 @@ Q_DECLARE_TYPEINFO(QChar, Q_MOVABLE_TYPE);
 inline QChar::QChar() : ucs(0) {}
 
 inline char QChar::toLatin1() const { return ucs > 0xff ? '\0' : char(ucs); }
-inline QChar QChar::fromLatin1(char c) { return QChar(ushort(uchar(c))); }
+inline QChar QChar::fromLatin1(const char c) { return QChar(ushort(uchar(c))); }
 
-inline QChar::QChar(uchar c, uchar r) : ucs(ushort((r << 8) | c)){}
-inline QChar::QChar(short rc) : ucs(ushort(rc)){}
-inline QChar::QChar(uint rc) : ucs(ushort(rc & 0xffff)){}
-inline QChar::QChar(int rc) : ucs(ushort(rc & 0xffff)){}
-inline QChar::QChar(SpecialCharacter s) : ucs(ushort(s)) {}
-inline QChar::QChar(QLatin1Char ch) : ucs(ch.unicode()) {}
+inline QChar::QChar(const uchar c, uchar r) : ucs(ushort((r << 8) | c)){}
+inline QChar::QChar(const ushort rc) : ucs(rc){}
+inline QChar::QChar(const short rc) : ucs(ushort(rc)){}
+inline QChar::QChar(const uint rc) : ucs(ushort(rc & 0xffff)){}
+inline QChar::QChar(const int rc) : ucs(ushort(rc & 0xffff)){}
+inline QChar::QChar(const SpecialCharacter s) : ucs(ushort(s)) {}
+inline QChar::QChar(const QLatin1Char ch) : ucs(ch.unicode()) {}
 
-inline void QChar::setCell(uchar acell)
+inline void QChar::setCell(const uchar acell)
 { ucs = ushort((ucs & 0xff00) + acell); }
-inline void QChar::setRow(uchar arow)
+inline void QChar::setRow(const uchar arow)
 { ucs = ushort((ushort(arow)<<8) + (ucs&0xff)); }
 
 inline bool operator==(QChar c1, QChar c2) { return c1.unicode() == c2.unicode(); }
