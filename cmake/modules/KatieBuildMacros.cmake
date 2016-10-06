@@ -245,9 +245,12 @@ endfunction()
 macro(KATIE_OPTIMIZE_HEADERS DIR)
     find_program(unifdef NAMES unifdef)
     if(unifdef)
+        # since CMAKE_INSTALL_PREFIX is removed due to previous calls to katie_setup_paths()
+        # add it to HEADERS_DIRECTORY explicitly. that would not be a problem when
+        # GNUInstallDirs is used and the full path alternative is passed to this macro
         install(
             CODE "set(UNIFDEF_EXECUTABLE \"${unifdef}\")"
-            CODE "set(HEADERS_DIRECTORY \"${DIR}\")"
+            CODE "set(HEADERS_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${DIR}\")"
             CODE "set(HEADERS_DEFINITIONS \"${ARGN}\")"
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
         )
