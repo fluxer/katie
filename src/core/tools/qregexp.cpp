@@ -3983,7 +3983,7 @@ Qt::CaseSensitivity QRegExp::caseSensitivity() const
 */
 void QRegExp::setCaseSensitivity(Qt::CaseSensitivity cs)
 {
-    if ((bool)cs != (bool)priv->engineKey.cs) {
+    if (cs != priv->engineKey.cs) {
         invalidateEngine(priv);
         priv->engineKey.cs = cs;
     }

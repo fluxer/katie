@@ -1057,7 +1057,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
             const QStringList *slist = v_cast<QStringList>(d);
             for (int i = 0; i < slist->size(); ++i)
                 lst->append(QVariant(slist->at(i)));
-        } else if (qstrcmp(QMetaType::typeName(d->type), "QList<QVariant>") == 0) {
+        } else if (d->type == QVariant::List) {
             *static_cast<QVariantList *>(result) =
                 *static_cast<QList<QVariant> *>(d->data.shared->ptr);
 #ifndef QT_BOOTSTRAPPED
@@ -1073,7 +1073,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
         break;
     case QVariant::Map:
-        if (qstrcmp(QMetaType::typeName(d->type), "QMap<QString, QVariant>") == 0) {
+        if (d->type == QVariant::Map) {
             *static_cast<QVariantMap *>(result) =
                 *static_cast<QMap<QString, QVariant> *>(d->data.shared->ptr);
 #ifndef QT_BOOTSTRAPPED
@@ -1089,7 +1089,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
         break;
     case QVariant::Hash:
-        if (qstrcmp(QMetaType::typeName(d->type), "QHash<QString, QVariant>") == 0) {
+        if (d->type == QVariant::Hash) {
             *static_cast<QVariantHash *>(result) =
                 *static_cast<QHash<QString, QVariant> *>(d->data.shared->ptr);
 #ifndef QT_BOOTSTRAPPED

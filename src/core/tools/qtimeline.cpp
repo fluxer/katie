@@ -655,7 +655,7 @@ qreal QTimeLine::valueForTime(int msec) const
     Q_D(const QTimeLine);
     msec = qMin(qMax(msec, 0), d->duration);
 
-    qreal value = msec / qreal(d->duration);
+    const qreal value = msec / qreal(d->duration);
     return d->easingCurve.valueForProgress(value);
 }
 
