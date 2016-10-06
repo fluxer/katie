@@ -66,7 +66,6 @@ static QEvent *cloneEvent(QEvent *e)
     case QEvent::FocusOut:
         return new QFocusEvent(*static_cast<QFocusEvent*>(e));
     case QEvent::Enter:
-        return new QEvent(*e);
     case QEvent::Leave:
         return new QEvent(*e);
         break;
@@ -90,11 +89,8 @@ static QEvent *cloneEvent(QEvent *e)
     case QEvent::Close:
         return new QCloseEvent(*static_cast<QCloseEvent*>(e));
     case QEvent::Quit:
-        return new QEvent(*e);
     case QEvent::ParentChange:
-        return new QEvent(*e);
     case QEvent::ParentAboutToChange:
-        return new QEvent(*e);
     case QEvent::ThreadChange:
         return new QEvent(*e);
 
@@ -103,7 +99,6 @@ static QEvent *cloneEvent(QEvent *e)
         return new QEvent(*e);
 
     case QEvent::ShowToParent:
-        return new QEvent(*e);
     case QEvent::HideToParent:
         return new QEvent(*e);
 #ifndef QT_NO_WHEELEVENT
@@ -111,17 +106,11 @@ static QEvent *cloneEvent(QEvent *e)
         return new QWheelEvent(*static_cast<QWheelEvent*>(e));
 #endif //QT_NO_WHEELEVENT
     case QEvent::WindowTitleChange:
-        return new QEvent(*e);
     case QEvent::WindowIconChange:
-        return new QEvent(*e);
     case QEvent::ApplicationWindowIconChange:
-        return new QEvent(*e);
     case QEvent::ApplicationFontChange:
-        return new QEvent(*e);
     case QEvent::ApplicationLayoutDirectionChange:
-        return new QEvent(*e);
     case QEvent::ApplicationPaletteChange:
-        return new QEvent(*e);
     case QEvent::PaletteChange:
         return new QEvent(*e);
     case QEvent::Clipboard:
@@ -134,7 +123,6 @@ static QEvent *cloneEvent(QEvent *e)
         Q_ASSERT_X(false, "cloneEvent()", "not implemented");
         break;
     case QEvent::SockAct:
-        return new QEvent(*e);
     case QEvent::DeferredDelete:
         return new QEvent(*e);
 #ifndef QT_NO_DRAGANDDROP 
@@ -156,22 +144,15 @@ static QEvent *cloneEvent(QEvent *e)
     case QEvent::ChildRemoved:
         return new QChildEvent(*static_cast<QChildEvent*>(e));
     case QEvent::ShowWindowRequest:
-        return new QEvent(*e);
     case QEvent::PolishRequest:
-        return new QEvent(*e);
     case QEvent::Polish:
-        return new QEvent(*e);
     case QEvent::LayoutRequest:
-        return new QEvent(*e);
     case QEvent::UpdateRequest:
-        return new QEvent(*e);
     case QEvent::UpdateLater:
         return new QEvent(*e);
 
     case QEvent::EmbeddingControl:
-        return new QEvent(*e);
     case QEvent::ActivateControl:
-        return new QEvent(*e);
     case QEvent::DeactivateControl:
         return new QEvent(*e);
 
@@ -188,11 +169,8 @@ static QEvent *cloneEvent(QEvent *e)
         return new QTabletEvent(*static_cast<QTabletEvent*>(e));
 #endif //QT_NO_TABLETEVENT
     case QEvent::LocaleChange:
-        return new QEvent(*e);
     case QEvent::LanguageChange:
-        return new QEvent(*e);
     case QEvent::LayoutDirectionChange:
-        return new QEvent(*e);
     case QEvent::Style:
         return new QEvent(*e);
 #ifndef QT_NO_TABLETEVENT
@@ -202,7 +180,6 @@ static QEvent *cloneEvent(QEvent *e)
         return new QTabletEvent(*static_cast<QTabletEvent*>(e));
 #endif //QT_NO_TABLETEVENT
     case QEvent::OkRequest:
-        return new QEvent(*e);
     case QEvent::HelpRequest:
         return new QEvent(*e);
 
@@ -210,22 +187,15 @@ static QEvent *cloneEvent(QEvent *e)
         return new QIconDragEvent(*static_cast<QIconDragEvent*>(e));
 
     case QEvent::FontChange:
-        return new QEvent(*e);
     case QEvent::EnabledChange:
-        return new QEvent(*e);
     case QEvent::ActivationChange:
-        return new QEvent(*e);
     case QEvent::StyleChange:
-        return new QEvent(*e);
     case QEvent::IconTextChange:
-        return new QEvent(*e);
     case QEvent::ModifiedChange:
-        return new QEvent(*e);
     case QEvent::MouseTrackingChange:
         return new QEvent(*e);
 
     case QEvent::WindowBlocked:
-        return new QEvent(*e);
     case QEvent::WindowUnblocked:
         return new QEvent(*e);
     case QEvent::WindowStateChange:
@@ -267,14 +237,12 @@ static QEvent *cloneEvent(QEvent *e)
 #endif //QT_NO_TOOLBAR
 
     case QEvent::ApplicationActivate:
-        return new QEvent(*e);
     case QEvent::ApplicationDeactivate:
         return new QEvent(*e);
 
     case QEvent::QueryWhatsThis:
         return new QHelpEvent(*static_cast<QHelpEvent*>(e));
     case QEvent::EnterWhatsThisMode:
-        return new QEvent(*e);
     case QEvent::LeaveWhatsThisMode:
         return new QEvent(*e);
 
@@ -295,7 +263,6 @@ static QEvent *cloneEvent(QEvent *e)
 
 #ifdef QT_KEYPAD_NAVIGATION
     case QEvent::EnterEditFocus:
-        return new QEvent(*e);
     case QEvent::LeaveEditFocus:
         return new QEvent(*e);
 #endif
@@ -423,7 +390,6 @@ static QEvent *cloneEvent(QEvent *e)
     }
 #endif
     case QEvent::CursorChange:
-        return new QEvent(*e);
     case QEvent::ToolTipChange:
         return new QEvent(*e);
 
@@ -459,6 +425,7 @@ static QEvent *cloneEvent(QEvent *e)
     default:
         ;
     }
+
     return qcoreStateMachineHandler()->cloneEvent(e);
 }
 
