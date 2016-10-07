@@ -30,9 +30,9 @@ set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Netw
 set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer qscript qtconfig")
 
 # for CPack
-string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
 set(KATIE_BUGREPORT "xakepa10@gmail.com")
 # for config.cpp.cmake
+string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
 set(KATIE_LICENSE "Open Source")
 set(KATIE_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
 
@@ -178,7 +178,6 @@ set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 add_definitions(
-    -DKATIE_DATE="${KATIE_DATE}"
     -DQT_USE_QSTRINGBUILDER
     -DQT_ASCII_CAST_WARNINGS
     # -DQT_STRICT_ITERATORS
