@@ -78,7 +78,8 @@ public:
     QTextBoundaryFinder(BoundaryType type, const QString &string);
     QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length);
 
-    inline bool isValid() const { return d; }
+    inline bool isValid() const
+        { return !string().isEmpty(); }
 
     inline BoundaryType type() const { return t; }
     QString string() const;
