@@ -76,7 +76,6 @@ katie_generate_misc("${XMLPATTERNS_HEADERS}" QtXmlPatterns)
 katie_generate_public("${XMLPATTERNS_PUBLIC_HEADERS}" QtXmlPatterns)
 katie_generate_package(KtXmlPatterns "KtCore KtNetwork")
 katie_setup_target(KtXmlPatterns ${XMLPATTERNS_SOURCES} ${XMLPATTERNS_HEADERS})
-katie_setup_paths()
 
 # the component requires exceptions
 set_source_files_properties(${XMLPATTERNS_SOURCES} PROPERTIES COMPILE_FLAGS "-fexceptions")
@@ -92,13 +91,13 @@ set_target_properties(KtXmlPatterns PROPERTIES
 install(
     TARGETS KtXmlPatterns
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtXmlPatterns
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtXmlPatterns)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtXmlPatterns)

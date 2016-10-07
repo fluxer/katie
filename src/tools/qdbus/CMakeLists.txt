@@ -12,8 +12,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtDBus
 )
 
-katie_setup_paths()
-
 add_executable(qdbus ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.cpp)
 target_link_libraries(qdbus ${EXTRA_QDBUS_LIBS})
 
@@ -26,7 +24,7 @@ target_link_libraries(qdbusxml2cpp ${EXTRA_QDBUS_LIBS})
 install(
     TARGETS qdbus qdbuscpp2xml qdbusxml2cpp
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
@@ -35,5 +33,5 @@ install(
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbus.1
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbuscpp2xml.1
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusxml2cpp.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

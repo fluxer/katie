@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Katie Designer
 Comment=Design GUIs for Katie applications
-Exec=@QT_BINARIES_PATH@/designer
-Icon=@PIXMAPS_INSTALL_PATH@/designer.png
+Exec=@KATIE_BINARIES_FULL@/designer@CMAKE_EXECUTABLE_SUFFIX@
+Icon=@KATIE_PIXMAPS_FULL@/designer.png
 MimeType=application/x-designer;
 Terminal=false
 Encoding=UTF-8

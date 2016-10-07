@@ -21,5 +21,5 @@ set_target_properties(qsqlpsqlplugin PROPERTIES OUTPUT_NAME qsqlpsql)
 
 install(
     TARGETS qsqlpsqlplugin
-    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
 )

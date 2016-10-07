@@ -21,5 +21,5 @@ set_target_properties(qsqlmysqlplugin PROPERTIES OUTPUT_NAME qsqlmysql)
 
 install(
     TARGETS qsqlmysqlplugin
-    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
 )

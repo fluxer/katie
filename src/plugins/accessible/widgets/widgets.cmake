@@ -28,5 +28,5 @@ target_include_directories(qtaccessiblewidgetsplugin PRIVATE ${CMAKE_CURRENT_SOU
 
 install(
     TARGETS qtaccessiblewidgetsplugin
-    DESTINATION ${QT_PLUGINS_PATH}/accessible
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/accessible
 )

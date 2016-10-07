@@ -14,5 +14,5 @@ set_target_properties(qcncodecsplugin PROPERTIES OUTPUT_NAME qcncodecs)
 
 install(
     TARGETS qcncodecsplugin
-    DESTINATION ${QT_PLUGINS_PATH}/codecs
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/codecs
 )

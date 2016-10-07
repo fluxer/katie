@@ -20,5 +20,5 @@ set_target_properties(qimsw-multiplugin PROPERTIES OUTPUT_NAME qimsw-multi)
 
 install(
     TARGETS qimsw-multiplugin
-    DESTINATION ${QT_PLUGINS_PATH}/inputmethods
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/inputmethods
 )

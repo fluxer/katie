@@ -22,7 +22,6 @@ set(QSCRIPT_HEADERS
 )
 
 katie_setup_target(qscript ${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
-katie_setup_paths()
 
 add_executable(qscript ${qscript_SOURCES})
 target_link_libraries(qscript ${EXTRA_QTSCRIPT_LIBS})
@@ -30,12 +29,12 @@ target_link_libraries(qscript ${EXTRA_QTSCRIPT_LIBS})
 install(
     TARGETS qscript
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/qscript.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

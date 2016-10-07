@@ -72,7 +72,6 @@ katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
 katie_generate_package(KtSvg "KtCore KtGui")
 katie_setup_target(KtSvg ${SVG_SOURCES} ${SVG_HEADERS})
-katie_setup_paths()
 
 add_library(KtSvg ${KATIE_TYPE} ${KtSvg_SOURCES})
 target_link_libraries(KtSvg ${EXTRA_SVG_LIBS})
@@ -85,13 +84,13 @@ set_target_properties(KtSvg PROPERTIES
 install(
     TARGETS KtSvg
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtSvg
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtSvg)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtSvg)

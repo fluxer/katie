@@ -28,7 +28,6 @@ set(UIC_SOURCES
 )
 
 katie_setup_target(uic ${UIC_SOURCES})
-katie_setup_paths()
 
 add_executable(uic ${uic_SOURCES})
 target_link_libraries(uic ${EXTRA_UIC_LIBS})
@@ -36,11 +35,11 @@ target_link_libraries(uic ${EXTRA_UIC_LIBS})
 install(
     TARGETS uic
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/uic.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

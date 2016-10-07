@@ -38,10 +38,8 @@ configure_file(
 )
 
 katie_setup_target(qtconfig ${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS})
-katie_setup_paths()
 
 add_executable(qtconfig
-    WIN32 # TODO: MACOSX_BUNDLE
     ${qtconfig_SOURCES}
 )
 target_link_libraries(qtconfig ${EXTRA_QTCONFIG_LIBS})
@@ -49,17 +47,17 @@ target_link_libraries(qtconfig ${EXTRA_QTCONFIG_LIBS})
 install(
     TARGETS qtconfig
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qtconfig.desktop
-    DESTINATION ${APPLICATIONS_INSTALL_PATH}
+    DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
     COMPONENT Devel
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qtconfig.png
-    DESTINATION ${PIXMAPS_INSTALL_PATH}
+    DESTINATION ${KATIE_PIXMAPS_RELATIVE}
     COMPONENT Devel
 )

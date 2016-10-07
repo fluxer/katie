@@ -497,7 +497,6 @@ katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_package(KtGui "KtCore")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
-katie_setup_paths()
 
 # those are set after katie_setup_target() because they are known to cause
 # trouble for all-in-one build
@@ -538,13 +537,13 @@ set_target_properties(KtGui PROPERTIES
 install(
     TARGETS KtGui
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtGui
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtGui)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtGui)

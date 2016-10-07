@@ -65,7 +65,6 @@ katie_generate_misc("${SQL_HEADERS}" QtSql)
 katie_generate_public("${SQL_PUBLIC_HEADERS}" QtSql)
 katie_generate_package(KtSql "KtCore")
 katie_setup_target(KtSql ${SQL_SOURCES} ${SQL_HEADERS})
-katie_setup_paths()
 
 add_library(KtSql ${KATIE_TYPE} ${KtSql_SOURCES})
 target_link_libraries(KtSql ${EXTRA_SQL_LIBS})
@@ -78,13 +77,13 @@ set_target_properties(KtSql PROPERTIES
 install(
     TARGETS KtSql
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtSql
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtSql)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtSql)

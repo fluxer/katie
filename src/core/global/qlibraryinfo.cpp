@@ -192,15 +192,6 @@ QLibraryInfo::location(LibraryLocation loc)
         case SettingsPath:
             ret = QString::fromLocal8Bit(qt_configure_settings_path_str);
             break;
-        case DocumentationPath:
-            ret = QString::fromLocal8Bit(qt_configure_documentation_path_str);
-            break;
-        case ExamplesPath:
-            ret = QString::fromLocal8Bit(qt_configure_examples_path_str);
-            break;
-        case DemosPath:
-            ret = QString::fromLocal8Bit(qt_configure_demos_path_str);
-            break;
         default:
             break;
     }
@@ -246,7 +237,6 @@ QLibraryInfo::location(LibraryLocation loc)
     specifier:
 
     \value PrefixPath The default prefix for all paths.
-    \value DocumentationPath The location for documentation upon install.
     \value HeadersPath The location for all headers.
     \value LibrariesPath The location of installed libraries.
     \value BinariesPath The location of installed Qt binaries (tools and applications).
@@ -255,8 +245,6 @@ QLibraryInfo::location(LibraryLocation loc)
     \value DataPath The location of general Qt data.
     \value TranslationsPath The location of translation information for Qt strings.
     \value SettingsPath The location for Qt settings.
-    \value ExamplesPath The location for examples upon install.
-    \value DemosPath The location for demos upon install.
 
     \sa location()
 */

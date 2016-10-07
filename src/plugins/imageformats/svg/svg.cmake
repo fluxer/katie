@@ -15,5 +15,5 @@ set_target_properties(qsvgplugin PROPERTIES OUTPUT_NAME qsvg)
 
 install(
     TARGETS qsvgplugin
-    DESTINATION ${QT_PLUGINS_PATH}/imageformats
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
 )

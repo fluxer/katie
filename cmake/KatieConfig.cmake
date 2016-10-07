@@ -22,7 +22,7 @@ include("${KATIE_CMAKE_DIR}/KatieBinaryTargets.cmake")
 
 # These are pre-set and dynamically set variables, some use IMPORTED targets
 set(KATIE_DEFINITIONS @KATIE_DEFINITIONS@)
-set(KATIE_INCLUDES "@QT_HEADERS_PATH@")
+set(KATIE_INCLUDES "@KATIE_HEADERS_FULL@")
 set(KATIE_LIBRARIES)
 set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
 set(KATIE_TOOLS @KATIE_TOOLS@)
@@ -32,11 +32,11 @@ set(KATIE_MKSPECS "${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 foreach(component ${KATIE_COMPONENTS})
     string(TOUPPER ${component} uppercomp)
     if(uppercomp STREQUAL "MAIN")
-        set(KATIE_INCLUDES ${KATIE_INCLUDES} "@QT_HEADERS_PATH@")
-        set(KATIE_${uppercomp}_INCLUDES "@QT_HEADERS_PATH@")
+        set(KATIE_INCLUDES ${KATIE_INCLUDES} "@KATIE_HEADERS_FULL@")
+        set(KATIE_${uppercomp}_INCLUDES "@KATIE_HEADERS_FULL@")
     else()
-        set(KATIE_INCLUDES ${KATIE_INCLUDES} "@QT_HEADERS_PATH@/Qt${component}")
-        set(KATIE_${uppercomp}_INCLUDES "@QT_HEADERS_PATH@/Qt${component}")
+        set(KATIE_INCLUDES ${KATIE_INCLUDES} "@KATIE_HEADERS_FULL@/Qt${component}")
+        set(KATIE_${uppercomp}_INCLUDES "@KATIE_HEADERS_FULL@/Qt${component}")
     endif()
     set(KATIE_LIBRARIES ${KATIE_LIBRARIES} Katie::${component})
 
@@ -60,25 +60,21 @@ else()
 endif()
 
 # The stored configuration paths that vendors usually change
-set(LDCONF_INSTALL_PATH "@LDCONF_INSTALL_PATH@")
-set(PROFILE_INSTALL_PATH "@PROFILE_INSTALL_PATH@")
-set(MAN_INSTALL_PATH "@MAN_INSTALL_PATH@")
-set(CMAKE_INSTALL_PATH "@CMAKE_INSTALL_PATH@")
-set(APPLICATIONS_INSTALL_PATH "@APPLICATIONS_INSTALL_PATH@")
-set(PIXMAPS_INSTALL_PATH "@PIXMAPS_INSTALL_PATH@")
-
-set(QT_PREFIX_PATH "@QT_PREFIX_PATH@")
-set(QT_HEADERS_PATH "@QT_HEADERS_PATH@")
-set(QT_LIBRARIES_PATH "@QT_LIBRARIES_PATH@")
-set(QT_BINARIES_PATH "@QT_BINARIES_PATH@")
-set(QT_PLUGINS_PATH "@QT_PLUGINS_PATH@")
-set(QT_IMPORTS_PATH "@QT_IMPORTS_PATH@")
-set(QT_DATA_PATH "@QT_DATA_PATH@")
-set(QT_TRANSLATIONS_PATH "@QT_TRANSLATIONS_PATH@")
-set(QT_DOCUMENTATION_PATH "@QT_DOCUMENTATION_PATH@")
-set(QT_EXAMPLES_PATH "@QT_EXAMPLES_PATH@")
-set(QT_DEMOS_PATH "@QT_DEMOS_PATH@")
-set(QT_SETTINGS_PATH "@QT_SETTINGS_PATH@")
+set(KATIE_PREFIX_PATH "@KATIE_PREFIX_FULL@")
+set(KATIE_HEADERS_PATH "@KATIE_HEADERS_FULL@")
+set(KATIE_LIBRARIES_PATH "@KATIE_LIBRARIES_FULL@")
+set(KATIE_BINARIES_PATH "@KATIE_BINARIES_FULL@")
+set(KATIE_PLUGINS_PATH "@KATIE_PLUGINS_FULL@")
+set(KATIE_IMPORTS_PATH "@KATIE_IMPORTS_FULL@")
+set(KATIE_DATA_PATH "@KATIE_DATA_FULL@")
+set(KATIE_TRANSLATIONS_PATH "@KATIE_TRANSLATIONS_FULL@")
+set(KATIE_SETTINGS_PATH "@KATIE_SETTINGS_FULL@")
+set(KATIE_LDCONF_PATH "@KATIE_LDCONF_FULL@")
+set(KATIE_PROFILE_PATH "@KATIE_PROFILE_FULL@")
+set(KATIE_MAN_PATH "@KATIE_MAN_FULL@")
+set(KATIE_CMAKE_PATH "@KATIE_CMAKE_FULL@")
+set(KATIE_APPLICATIONS_PATH "@KATIE_APPLICATIONS_FULL@")
+set(KATIE_PIXMAPS_PATH "@KATIE_PIXMAPS_FULL@")
 
 if(NOT "${KATIE_FIND_QUIETLY}")
     message(STATUS "Found Katie version: ${KATIE_VERSION}")
@@ -102,10 +98,9 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     set(QT_USE_FILE ${KATIE_MKSPECS})
     set(QT_MKSPECS_DIR ${KATIE_MKSPECS_DIR})
 
-    set(_binsuffix "${CMAKE_EXECUTABLE_SUFFIX}")
     # those are exceptions because they have "q" prefix which the macros from Qt4Macros do not expect
-    set(QT_DBUSXML2CPP_EXECUTABLE "@QT_BINARIES_PATH@/qdbusxml2cpp${_binsuffix}")
-    set(QT_DBUSCPP2XML_EXECUTABLE "@QT_BINARIES_PATH@/qdbuscpp2xml${_binsuffix}")
+    set(QT_DBUSXML2CPP_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbusxml2cpp${CMAKE_EXECUTABLE_SUFFIX}")
+    set(QT_DBUSCPP2XML_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbuscpp2xml${CMAKE_EXECUTABLE_SUFFIX}")
 
     if(NOT KATIE_COMPAT_ISSET)
         set(KATIE_COMPAT_ISSET CACHE BOOL TRUE "")
@@ -121,10 +116,10 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
             set_property(
                 TARGET Qt4::${tool}
                 PROPERTY
-                IMPORTED_LOCATION "@QT_BINARIES_PATH@/${tool}${_binsuffix}"
+                IMPORTED_LOCATION "${KATIE_BINARIES_PATH}/${tool}${CMAKE_EXECUTABLE_SUFFIX}"
             )
             string(TOUPPER ${tool} uppertool)
-            set(QT_${uppertool}_EXECUTABLE "@QT_BINARIES_PATH@/${tool}${_binsuffix}")
+            set(QT_${uppertool}_EXECUTABLE "${KATIE_BINARIES_PATH}/${tool}${CMAKE_EXECUTABLE_SUFFIX}")
         endforeach()
 
         foreach(component ${KATIE_COMPONENTS})
@@ -132,7 +127,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
             set_property(
                 TARGET Qt4::Qt${component}
                 PROPERTY
-                IMPORTED_LOCATION "@QT_LIBRARIES_PATH@/libKt${component}${_libsuffix}"
+                IMPORTED_LOCATION "${KATIE_LIBRARIES_PATH}/libKt${component}${_libsuffix}"
             )
         endforeach()
     endif()
@@ -151,8 +146,8 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
         set(QT4_QT${uppercomp}_LIBRARY "${KATIE_${uppercomp}_LIBRARIES}")
         set(QT_QT${uppercomp}_LIBRARIES "${KATIE_${uppercomp}_LIBRARIES}")
         set(QT4_QT${uppercomp}_LIBRARIES "${KATIE_${uppercomp}_LIBRARIES}")
-        set(QT_QT${uppercomp}_INCLUDE_DIR "@QT_HEADERS_PATH@" "${KATIE_${uppercomp}_INCLUDES}")
-        set(QT4_QT${uppercomp}_INCLUDE_DIR "@QT_HEADERS_PATH@" "${KATIE_${uppercomp}_INCLUDES}")
+        set(QT_QT${uppercomp}_INCLUDE_DIR "${KATIE_HEADERS_PATH}" "${KATIE_${uppercomp}_INCLUDES}")
+        set(QT4_QT${uppercomp}_INCLUDE_DIR "${KATIE_HEADERS_PATH}" "${KATIE_${uppercomp}_INCLUDES}")
         # TODO: component definitions
     endforeach()
 

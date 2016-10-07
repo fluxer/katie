@@ -26,7 +26,6 @@ set(LRELEASE_HEADERS
 )
 
 katie_setup_target(lrelease ${LRELEASE_SOURCES} ${LRELEASE_HEADERS})
-katie_setup_paths()
 
 add_executable(lrelease ${lrelease_SOURCES}
     $<TARGET_OBJECTS:sharedlinguist>
@@ -36,11 +35,11 @@ target_link_libraries(lrelease ${EXTRA_LRELEASE_LIBS})
 install(
     TARGETS lrelease
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/lrelease.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

@@ -109,7 +109,6 @@ katie_generate_misc("${DBUS_HEADERS}" QtDBus)
 katie_generate_public("${DBUS_PUBLIC_HEADERS}" QtDBus)
 katie_generate_package(KtDBus "KtCore KtXml")
 katie_setup_target(KtDBus ${DBUS_SOURCES} ${DBUS_HEADERS})
-katie_setup_paths()
 
 add_library(KtDBus ${KATIE_TYPE} ${KtDBus_SOURCES})
 target_link_libraries(KtDBus ${EXTRA_DBUS_LIBS})
@@ -122,13 +121,13 @@ set_target_properties(KtDBus PROPERTIES
 install(
     TARGETS KtDBus
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDBus
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtDBus)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtDBus)

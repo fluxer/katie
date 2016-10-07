@@ -24,7 +24,6 @@ set(QHELPGENERATOR_HEADERS
 )
 
 katie_setup_target(qhelpgenerator ${QHELPGENERATOR_SOURCES} ${QHELPGENERATOR_HEADERS})
-katie_setup_paths()
 
 add_executable(qhelpgenerator ${qhelpgenerator_SOURCES}
     $<TARGET_OBJECTS:sharedhelp>
@@ -34,11 +33,11 @@ target_link_libraries(qhelpgenerator ${EXTRA_QHELPGENERATOR_LIBS})
 install(
     TARGETS qhelpgenerator
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/qhelpgenerator.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

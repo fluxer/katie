@@ -167,7 +167,6 @@ katie_generate_misc("${OPENGL_HEADERS}" QtOpenGL)
 katie_generate_public("${OPENGL_PUBLIC_HEADERS}" QtOpenGL)
 katie_generate_package(KtOpenGL "KtCore KtGui")
 katie_setup_target(KtOpenGL ${OPENGL_SOURCES} ${OPENGL_HEADERS})
-katie_setup_paths()
 
 add_library(KtOpenGL ${KATIE_TYPE} ${KtOpenGL_SOURCES})
 target_link_libraries(KtOpenGL ${EXTRA_OPENGL_LIBS})
@@ -180,13 +179,13 @@ set_target_properties(KtOpenGL PROPERTIES
 install(
     TARGETS KtOpenGL
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtOpenGL
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtOpenGL)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtOpenGL)

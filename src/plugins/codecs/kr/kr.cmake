@@ -16,5 +16,5 @@ set_target_properties(qkrcodecsplugin PROPERTIES OUTPUT_NAME qkrcodecs)
 
 install(
     TARGETS qkrcodecsplugin
-    DESTINATION ${QT_PLUGINS_PATH}/codecs
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/codecs
 )

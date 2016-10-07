@@ -339,7 +339,6 @@ katie_generate_misc("${CORE_HEADERS}" QtCore)
 katie_generate_public("${CORE_PUBLIC_HEADERS}" QtCore)
 katie_generate_package(KtCore "")
 katie_setup_target(KtCore ${CORE_SOURCES} ${CORE_HEADERS})
-katie_setup_paths()
 
 add_library(KtCore ${KATIE_TYPE} ${KtCore_SOURCES})
 target_link_libraries(KtCore ${EXTRA_CORE_LIBS})
@@ -352,13 +351,13 @@ set_target_properties(KtCore PROPERTIES
 install(
     TARGETS KtCore
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtCore
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtCore)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtCore)

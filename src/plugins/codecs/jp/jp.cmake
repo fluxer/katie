@@ -23,5 +23,5 @@ set_target_properties(qjpcodecsplugin PROPERTIES OUTPUT_NAME qjpcodecs)
 
 install(
     TARGETS qjpcodecsplugin
-    DESTINATION ${QT_PLUGINS_PATH}/codecs
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/codecs
 )

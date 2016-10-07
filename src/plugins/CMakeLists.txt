@@ -1,7 +1,5 @@
 add_definitions(-DQT_PLUGIN)
 
-katie_setup_paths()
-
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude

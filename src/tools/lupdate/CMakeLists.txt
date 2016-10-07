@@ -27,7 +27,6 @@ set(LUPDATE_HEADERS
 )
 
 katie_setup_target(lupdate ${LUPDATE_SOURCES} ${LUPDATE_HEADERS})
-katie_setup_paths()
 
 add_executable(lupdate ${lupdate_SOURCES}
     $<TARGET_OBJECTS:sharedlinguist>
@@ -37,11 +36,11 @@ target_link_libraries(lupdate ${EXTRA_LUPDATE_LIBS})
 install(
     TARGETS lupdate
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/lupdate.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

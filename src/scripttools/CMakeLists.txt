@@ -32,7 +32,6 @@ katie_generate_misc("${SCRIPTTOOLS_HEADERS}" QtScriptTools)
 katie_generate_public("${SCRIPTTOOLS_PUBLIC_HEADERS}" QtScriptTools)
 katie_generate_package(KtScriptTools "KtCore KtGui KtScript")
 katie_setup_target(KtScriptTools ${SCRIPTTOOLS_SOURCES} ${SCRIPTTOOLS_HEADERS})
-katie_setup_paths()
 
 add_library(KtScriptTools ${KATIE_TYPE} ${KtScriptTools_SOURCES})
 target_link_libraries(KtScriptTools ${EXTRA_SCRIPTTOOLS_LIBS})
@@ -45,13 +44,13 @@ set_target_properties(KtScriptTools PROPERTIES
 install(
     TARGETS KtScriptTools
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtScriptTools
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtScriptTools)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtScriptTools)

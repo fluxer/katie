@@ -1,4 +1,3 @@
-string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
 set(KATIE_MAJOR "4")
 set(KATIE_MINOR "9")
 set(KATIE_MICRO "0")
@@ -6,10 +5,6 @@ set(KATIE_HEX "0x040900")
 set(KATIE_NAME "Katie")
 set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 set(KATIE_STRING "katie ${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
-set(KATIE_BUGREPORT "xakepa10@gmail.com")
-set(KATIE_URL "http://github.com/fluxer/katie")
-set(QT_LICENSE "Open Source")
-set(QT_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
 
 # KatieConfig overrides that
 if(NOT KATIE_MKSPECS_DIR)
@@ -99,31 +94,9 @@ elseif("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
 
-# TODO: make use of GNUInstallDirs
-set(QT_PREFIX_PATH "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
-set(QT_HEADERS_PATH "${QT_PREFIX_PATH}/include/katie" CACHE PATH "Headers installation path")
-set(QT_LIBRARIES_PATH "${QT_PREFIX_PATH}/lib/katie" CACHE PATH "Libraries installation path")
-set(QT_BINARIES_PATH "${QT_LIBRARIES_PATH}/bin" CACHE PATH "Binaries installation path")
-set(QT_PLUGINS_PATH "${QT_LIBRARIES_PATH}/plugins" CACHE PATH "Plugins installation path")
-set(QT_IMPORTS_PATH "${QT_LIBRARIES_PATH}/imports" CACHE PATH "Declerative imports installation path")
-set(QT_DATA_PATH "${QT_PREFIX_PATH}/share" CACHE PATH "Generic data installation path")
-set(QT_TRANSLATIONS_PATH "${QT_DATA_PATH}/translations" CACHE PATH "Translations instllation path")
-set(QT_DOCUMENTATION_PATH "${QT_DATA_PATH}/doc" CACHE PATH "Documenation installation path")
-set(QT_EXAMPLES_PATH "${QT_DATA_PATH}/examples" CACHE PATH "Examples installation path")
-set(QT_DEMOS_PATH "${QT_DATA_PATH}/demos" CACHE PATH "Demos installation path")
-set(QT_SETTINGS_PATH "/etc/xdg" CACHE PATH "Settings runtime path")
-
 if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
     include(${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
 endif()
-
-# misc paths, relevant mostly for UNIX-like platforms
-set(CMAKE_INSTALL_PATH "${QT_DATA_PATH}/cmake/Katie" CACHE PATH "CMake aware modules path")
-set(LDCONF_INSTALL_PATH "${QT_DATA_PATH}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs path (UNIX)")
-set(PROFILE_INSTALL_PATH "${QT_DATA_PATH}/profile.d" CACHE PATH "Shell profile scripts path (UNIX)")
-set(MAN_INSTALL_PATH "${QT_DATA_PATH}/man" CACHE PATH "Manual pages path (UNIX)")
-set(APPLICATIONS_INSTALL_PATH "${QT_DATA_PATH}/applications" CACHE PATH "Desktop applications register path (UNIX)")
-set(PIXMAPS_INSTALL_PATH "${QT_DATA_PATH}/pixmaps" CACHE PATH "Desktop applications icon path (UNIX)")
 
 # for distributions to override build specifications, do note that paths specified on the command
 # line during configuration override even that file

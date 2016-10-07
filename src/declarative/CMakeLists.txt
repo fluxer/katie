@@ -69,7 +69,6 @@ katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)
 katie_generate_public("${DECLARATIVE_PUBLIC_HEADERS}" QtDeclarative)
 katie_generate_package(KtDeclarative "KtCore KtGui KtNetwork KtScript")
 katie_setup_target(KtDeclarative ${DECLARATIVE_SOURCES} ${DECLARATIVE_HEADERS})
-katie_setup_paths()
 
 add_library(KtDeclarative ${KATIE_TYPE} ${KtDeclarative_SOURCES})
 target_link_libraries(KtDeclarative ${EXTRA_DECLARATIVE_LIBS})
@@ -82,13 +81,13 @@ set_target_properties(KtDeclarative PROPERTIES
 install(
     TARGETS KtDeclarative
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDeclarative
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtDeclarative)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtDeclarative)

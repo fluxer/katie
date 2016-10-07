@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Katie D-Bus Viewer
 Comment=Debug D-Bus applications
-Exec=@QT_BINARIES_PATH@/qdbusviewer
-Icon=@PIXMAPS_INSTALL_PATH@/qdbusviewer.png
+Exec=@KATIE_BINARIES_FULL@/qdbusviewer@CMAKE_EXECUTABLE_SUFFIX@
+Icon=@KATIE_PIXMAPS_FULL@/qdbusviewer.png
 Terminal=false
 Encoding=UTF-8
 Type=Application

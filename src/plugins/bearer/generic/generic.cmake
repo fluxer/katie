@@ -23,5 +23,5 @@ set_target_properties(qgenericbearerplugin PROPERTIES OUTPUT_NAME qgenericbearer
 
 install(
     TARGETS qgenericbearerplugin
-    DESTINATION ${QT_PLUGINS_PATH}/bearer
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/bearer
 )

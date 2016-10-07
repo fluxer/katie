@@ -24,5 +24,5 @@ endif()
 
 install(
     TARGETS qsqlodbcplugin
-    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
 )

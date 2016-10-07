@@ -110,7 +110,6 @@ katie_generate_misc("${TEST_HEADERS}" QtTest)
 katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
 katie_generate_package(KtTest "KtCore")
 katie_setup_target(KtTest ${TEST_SOURCES} ${TEST_HEADERS})
-katie_setup_paths()
 
 add_library(KtTest ${KATIE_TYPE} ${KtTest_SOURCES})
 target_link_libraries(KtTest ${EXTRA_TEST_LIBS})
@@ -123,13 +122,13 @@ set_target_properties(KtTest PROPERTIES
 install(
     TARGETS KtTest
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtTest
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtTest)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtTest)

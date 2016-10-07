@@ -94,7 +94,7 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
         katie_setup_paths()
         install(
             FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
-            DESTINATION ${QT_LIBRARIES_PATH}/pkgconfig
+            DESTINATION ${KATIE_PKGCONFIG_RELATIVE}
         )
     endif()
 endmacro()
@@ -220,23 +220,14 @@ endmacro()
 function(KATIE_SETUP_PATHS)
     set(instpaths
         _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
-        _TRANSLATIONS _DOCUMENTATION _EXAMPLES _DEMOS _SETTINGS
-    )
-    set(miscpaths
-        CMAKE_ LDCONF_ PROFILE_ MAN_ APPLICATIONS_ PIXMAPS_
+        _TRANSLATIONS _SETTINGS
+        _CMAKE _LDCONF _PROFILE _MAN _APPLICATIONS _PIXMAPS _PKGCONFIG
     )
     foreach(instpath ${instpaths})
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${QT${instpath}_PATH}")
+        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
-        set(QT${instpath}_PATH "${modpath}" PARENT_SCOPE)
-        # message(STATUS "QT${instpath}_PATH: ${modpath}")
-    endforeach()
-
-    foreach(instpath ${miscpaths})
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${${instpath}INSTALL_PATH}")
-        string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}" "" modpath "${modpath}")
-        set(${instpath}INSTALL_PATH "${modpath}" PARENT_SCOPE)
-        # message(STATUS "${instpath}INSTALL_PATH: ${modpath}")
+        set(KATIE${instpath}_RELATIVE "${modpath}" PARENT_SCOPE)
+        # message(STATUS "KATIE${instpath}_RELATIVE: ${modpath}")
     endforeach()
 endfunction()
 
@@ -245,12 +236,9 @@ endfunction()
 macro(KATIE_OPTIMIZE_HEADERS DIR)
     find_program(unifdef NAMES unifdef)
     if(unifdef)
-        # since CMAKE_INSTALL_PREFIX is removed due to previous calls to katie_setup_paths()
-        # add it to HEADERS_DIRECTORY explicitly. that would not be a problem when
-        # GNUInstallDirs is used and the full path alternative is passed to this macro
         install(
             CODE "set(UNIFDEF_EXECUTABLE \"${unifdef}\")"
-            CODE "set(HEADERS_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/${DIR}\")"
+            CODE "set(HEADERS_DIRECTORY \"${DIR}\")"
             CODE "set(HEADERS_DEFINITIONS \"${ARGN}\")"
             SCRIPT "${CMAKE_SOURCE_DIR}/cmake/modules/OptimizeHeaders.cmake"
         )

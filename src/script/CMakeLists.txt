@@ -222,7 +222,6 @@ katie_generate_misc("${SCRIPT_HEADERS}" QtScript)
 katie_generate_public("${SCRIPT_PUBLIC_HEADERS}" QtScript)
 katie_generate_package(KtScript "KtCore")
 katie_setup_target(KtScript ${SCRIPT_SOURCES} ${SCRIPT_HEADERS})
-katie_setup_paths()
 
 add_library(KtScript ${KATIE_TYPE} ${KtScript_SOURCES})
 target_link_libraries(KtScript ${EXTRA_SCRIPT_LIBS})
@@ -235,13 +234,13 @@ set_target_properties(KtScript PROPERTIES
 install(
     TARGETS KtScript
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtScript
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtScript)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtScript)

@@ -26,7 +26,6 @@ set(QCOLLECTIONGENERATOR_HEADERS
 )
 
 katie_setup_target(qcollectiongenerator ${QCOLLECTIONGENERATOR_SOURCES} ${QCOLLECTIONGENERATOR_HEADERS})
-katie_setup_paths()
 
 add_executable(qcollectiongenerator ${qcollectiongenerator_SOURCES}
     $<TARGET_OBJECTS:sharedhelp>
@@ -36,11 +35,11 @@ target_link_libraries(qcollectiongenerator ${EXTRA_QCOLLECTIONGENERATOR_LIBS})
 install(
     TARGETS qcollectiongenerator
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/qcollectiongenerator.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

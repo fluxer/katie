@@ -19,5 +19,5 @@ target_compile_definitions(qdeclarativeviewplugin PRIVATE -DQDESIGNER_SDK_LIBRAR
 
 install(
     TARGETS qdeclarativeviewplugin
-    DESTINATION ${QT_PLUGINS_PATH}/designer
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/designer
 )

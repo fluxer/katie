@@ -19,8 +19,6 @@ set(MOC_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/token.cpp
 )
 
-katie_setup_paths()
-
 add_executable(bootstrap_moc $<TARGET_OBJECTS:bootstrap> ${MOC_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
@@ -30,11 +28,11 @@ target_link_libraries(moc ${EXTRA_MOC_LIBS})
 install(
     TARGETS moc
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
-    DESTINATION ${MAN_INSTALL_PATH}/man1
+    DESTINATION ${KATIE_MAN_RELATIVE}/man1
 )

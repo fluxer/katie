@@ -31,5 +31,5 @@ target_include_directories(qconnmanbearerplugin PRIVATE
 
 install(
     TARGETS qconnmanbearerplugin
-    DESTINATION ${QT_PLUGINS_PATH}/bearer
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/bearer
 )

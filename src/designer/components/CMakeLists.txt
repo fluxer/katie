@@ -86,7 +86,6 @@ katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
 katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript")
 katie_setup_target(KtDesignerComponents ${DESIGNERCOMPONENTS_SOURCES} ${DESIGNERCOMPONENTS_HEADERS})
-katie_setup_paths()
 
 add_library(KtDesignerComponents ${KATIE_TYPE} ${KtDesignerComponents_SOURCES}
     $<TARGET_OBJECTS:sharedfindwidget>
@@ -105,11 +104,11 @@ katie_setup_object(KtDesignerComponents sharedfindwidget sharedqtpropertybrowser
 install(
     TARGETS KtDesignerComponents
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )

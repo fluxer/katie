@@ -15,5 +15,5 @@ set_target_properties(qtwcodecsplugin PROPERTIES OUTPUT_NAME qtwcodecs)
 
 install(
     TARGETS qtwcodecsplugin
-    DESTINATION ${QT_PLUGINS_PATH}/codecs
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/codecs
 )

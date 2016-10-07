@@ -57,7 +57,6 @@ katie_generate_misc("${UITOOLS_HEADERS}" QtUiTools)
 katie_generate_public("${UITOOLS_PUBLIC_HEADERS}" QtUiTools)
 katie_generate_package(KtUiTools "KtCore KtGui KtXml KtScript")
 katie_setup_target(KtUiTools ${UITOOLS_SOURCES} ${UITOOLS_HEADERS})
-katie_setup_paths()
 
 add_library(KtUiTools ${KATIE_TYPE} ${KtUiTools_SOURCES})
 target_link_libraries(KtUiTools ${EXTRA_UITOOLS_LIBS})
@@ -70,13 +69,13 @@ set_target_properties(KtUiTools PROPERTIES
 install(
     TARGETS KtUiTools
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtUiTools
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtUiTools)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtUiTools)

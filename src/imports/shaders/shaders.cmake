@@ -23,16 +23,15 @@ set(SHADERS_HEADERS
 include_directories(${OPENGL_INCLUDE_DIR})
 
 katie_setup_target(qmlshadersplugin ${SHADERS_SOURCES} ${SHADERS_HEADERS})
-katie_setup_paths()
 
 add_library(qmlshadersplugin ${KATIE_TYPE} ${qmlshadersplugin_SOURCES})
 target_link_libraries(qmlshadersplugin ${EXTRA_SHADERS_LIBS})
 
 install(
     TARGETS qmlshadersplugin
-    DESTINATION ${QT_IMPORTS_PATH}/Qt/labs/shaders
+    DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/shaders
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/shaders/qmldir
-    DESTINATION ${QT_IMPORTS_PATH}/Qt/labs/shaders
+    DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/shaders
 )

@@ -121,7 +121,6 @@ katie_generate_misc("${DESIGNER_HEADERS}" QtDesigner)
 katie_generate_public("${DESIGNER_PUBLIC_HEADERS}" QtDesigner)
 katie_generate_package(KtDesigner "KtCore KtGui KtXml KtUiTools")
 katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
-katie_setup_paths()
 
 add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}
     $<TARGET_OBJECTS:sharedqtgradienteditor>
@@ -141,13 +140,13 @@ katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sha
 install(
     TARGETS KtDesigner
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    DESTINATION ${QT_LIBRARIES_PATH}
+    DESTINATION ${KATIE_LIBRARIES_RELATIVE}
 )
 
 install(
     DIRECTORY ${CMAKE_BINARY_DIR}/include/QtDesigner
-    DESTINATION ${QT_HEADERS_PATH}
+    DESTINATION ${KATIE_HEADERS_RELATIVE}
     COMPONENT Devel
 )
 
-katie_optimize_headers(${QT_HEADERS_PATH}/QtDesigner)
+katie_optimize_headers(${KATIE_HEADERS_FULL}/QtDesigner)

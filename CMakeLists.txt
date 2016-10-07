@@ -29,6 +29,32 @@ include(KatieBuildMacros)
 set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer qscript qtconfig")
 
+# for CPack
+string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
+set(KATIE_BUGREPORT "xakepa10@gmail.com")
+# for config.cpp.cmake
+set(KATIE_LICENSE "Open Source")
+set(KATIE_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
+
+include(GNUInstallDirs)
+set(KATIE_PREFIX_FULL "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
+set(KATIE_HEADERS_FULL "${CMAKE_INSTALL_FULL_INCLUDEDIR}/katie" CACHE PATH "Headers installation path")
+set(KATIE_LIBRARIES_FULL "${CMAKE_INSTALL_FULL_LIBDIR}/katie" CACHE PATH "Libraries installation path")
+set(KATIE_BINARIES_FULL "${CMAKE_INSTALL_FULL_BINDIR}" CACHE PATH "Binaries installation path")
+set(KATIE_PLUGINS_FULL "${KATIE_LIBRARIES_FULL}/plugins" CACHE PATH "Plugins installation path")
+set(KATIE_IMPORTS_FULL "${KATIE_LIBRARIES_FULL}/imports" CACHE PATH "Declerative imports installation path")
+set(KATIE_DATA_FULL "${CMAKE_INSTALL_FULL_DATADIR}" CACHE PATH "Generic data installation path")
+set(KATIE_TRANSLATIONS_FULL "${KATIE_DATA_FULL}/translations" CACHE PATH "Translations instllation path")
+set(KATIE_SETTINGS_FULL "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg" CACHE PATH "Settings runtime path")
+set(KATIE_CMAKE_FULL "${KATIE_DATA_FULL}/cmake/Katie" CACHE PATH "CMake aware modules path")
+set(KATIE_LDCONF_FULL "${KATIE_DATA_FULL}/ld.so.conf.d" CACHE PATH "Run-time linker/loader configs path (UNIX)")
+set(KATIE_PROFILE_FULL "${KATIE_DATA_FULL}/profile.d" CACHE PATH "Shell profile scripts path (UNIX)")
+set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages path (UNIX)")
+set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register path (UNIX)")
+set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon path (UNIX)")
+set(KATIE_PKGCONFIG_FULL "${KATIE_DATA_FULL}/pkgconfig" CACHE PATH "Desktop applications icon path (UNIX)")
+katie_setup_paths()
+
 # optional package
 option(WITH_THREADS "Build threads support" ON)
 add_feature_info(threads WITH_THREADS "an open source something")
@@ -968,13 +994,12 @@ configure_file(
     @ONLY
 )
 
-katie_setup_paths()
 file(GLOB TRANSLATIONS "translations/*.ts")
 katie_translations(${TRANSLATIONS})
 
 install(
     DIRECTORY mkspecs
-    DESTINATION ${CMAKE_INSTALL_PATH}
+    DESTINATION ${KATIE_CMAKE_RELATIVE}
     COMPONENT Devel
 )
 
@@ -983,31 +1008,31 @@ install(
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
-    DESTINATION ${CMAKE_INSTALL_PATH}
+    DESTINATION ${KATIE_CMAKE_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     EXPORT KatieLibraryTargets
     NAMESPACE Katie::
-    DESTINATION ${CMAKE_INSTALL_PATH}
+    DESTINATION ${KATIE_CMAKE_RELATIVE}
     FILE KatieLibraryTargets.cmake
 )
 
 install(
     EXPORT KatieBinaryTargets
     NAMESPACE Katie::
-    DESTINATION ${CMAKE_INSTALL_PATH}
+    DESTINATION ${KATIE_CMAKE_RELATIVE}
     FILE KatieBinaryTargets.cmake
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
-    DESTINATION ${LDCONF_INSTALL_PATH}
+    DESTINATION ${KATIE_LDCONF_RELATIVE}
 )
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
-    DESTINATION ${PROFILE_INSTALL_PATH}
+    DESTINATION ${KATIE_PROFILE_RELATIVE}
 )
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 

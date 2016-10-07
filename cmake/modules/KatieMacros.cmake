@@ -80,7 +80,7 @@ macro(KATIE_DBUS_INTERFACE SRCIN)
 endmacro()
 
 macro(KATIE_TRANSLATIONS TRANSLATIONS)
-    if(NOT QT_TRANSLATIONS_PATH)
+    if(NOT KATIE_TRANSLATIONS_RELATIVE)
         message(SEND_ERROR "Directory where the translation should be installed is not set")
     endif()
     foreach(translation ${TRANSLATIONS} ${ARGN})
@@ -94,7 +94,7 @@ macro(KATIE_TRANSLATIONS TRANSLATIONS)
             COMMAND "${KATIE_LRELEASE}" "${translation}" -qm "${trout}"
         )
         set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
-        install(FILES ${trout} DESTINATION ${QT_TRANSLATIONS_PATH})
+        install(FILES ${trout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
     endforeach()
 endmacro()
 

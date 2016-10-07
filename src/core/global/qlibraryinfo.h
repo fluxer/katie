@@ -66,7 +66,6 @@ public:
     enum LibraryLocation
     {
         PrefixPath,
-        DocumentationPath,
         HeadersPath,
         LibrariesPath,
         BinariesPath,
@@ -74,11 +73,9 @@ public:
         DataPath,
         TranslationsPath,
         SettingsPath,
-        DemosPath,
-        ExamplesPath,
         ImportsPath
     };
-    static QString location(LibraryLocation); // ### Qt 5: consider renaming it to path()
+    static QString location(LibraryLocation);
 
 private:
     QLibraryInfo();

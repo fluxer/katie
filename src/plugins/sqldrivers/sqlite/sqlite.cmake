@@ -21,5 +21,5 @@ set_target_properties(qsqliteplugin PROPERTIES OUTPUT_NAME qsqlite)
 
 install(
     TARGETS qsqliteplugin
-    DESTINATION ${QT_PLUGINS_PATH}/sqldrivers
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
 )

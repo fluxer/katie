@@ -49,8 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_CORE_EXPORT const QStateMachinePrivate::Handler *qcoreStateMachineHandler();
-
 static QEvent *cloneEvent(QEvent *e)
 {
     switch (e->type()) {

@@ -11,5 +11,5 @@ set_target_properties(qgifplugin PROPERTIES OUTPUT_NAME qgif)
 
 install(
     TARGETS qgifplugin
-    DESTINATION ${QT_PLUGINS_PATH}/imageformats
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
 )

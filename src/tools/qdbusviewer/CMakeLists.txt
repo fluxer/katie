@@ -38,7 +38,6 @@ configure_file(
 
 
 katie_setup_target(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
-katie_setup_paths()
 
 add_executable(qdbusviewer
     ${qdbusviewer_SOURCES}
@@ -48,17 +47,17 @@ target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
 install(
     TARGETS qdbusviewer
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
-    RUNTIME DESTINATION ${QT_BINARIES_PATH}
+    RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
     COMPONENT Devel
 )
 
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
-    DESTINATION ${APPLICATIONS_INSTALL_PATH}
+    DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
     COMPONENT Devel
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
-    DESTINATION ${PIXMAPS_INSTALL_PATH}
+    DESTINATION ${KATIE_PIXMAPS_RELATIVE}
     COMPONENT Devel
 )

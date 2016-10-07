@@ -12,5 +12,5 @@ set_target_properties(qglgraphicssystemplugin PROPERTIES OUTPUT_NAME qglgraphics
 
 install(
     TARGETS qglgraphicssystemplugin
-    DESTINATION ${QT_PLUGINS_PATH}/graphicssystems
+    DESTINATION ${KATIE_PLUGINS_RELATIVE}/graphicssystems
 )
