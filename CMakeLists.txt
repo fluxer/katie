@@ -29,12 +29,10 @@ include(KatieBuildMacros)
 set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer qscript qtconfig")
 
-# for CPack
-set(KATIE_BUGREPORT "xakepa10@gmail.com")
 # for config.cpp.cmake
 string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
 set(KATIE_LICENSE "Open Source")
-set(KATIE_PRODUCT "AwesomeSauce") # it's not a bug, it's a feature!
+set(KATIE_PRODUCT "AwesomeSauce")
 
 include(GNUInstallDirs)
 set(KATIE_PREFIX_FULL "${CMAKE_INSTALL_PREFIX}" CACHE PATH "General installation prefix")
@@ -152,7 +150,7 @@ include(mkspecs/mkspecs.cmake)
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 framework")
 set(CPACK_PACKAGE_VENDOR "Katie")
-set(CPACK_PACKAGE_CONTACT "${KATIE_BUGREPORT}")
+set(CPACK_PACKAGE_CONTACT "xakepa10@gmail.com")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
 # set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/Copyright.txt")
 set(CPACK_PACKAGE_VERSION_MAJOR ${KATIE_MAJOR})
