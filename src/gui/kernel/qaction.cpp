@@ -80,7 +80,7 @@ static QString qt_strippedText(QString s)
 
 
 QActionPrivate::QActionPrivate() : group(0), enabled(1),
-                                   visible(1), checkable(0), checked(0), separator(0), fontSet(false),
+                                   visible(1), checkable(0), checked(0), separator(0),
                                    menuRole(QAction::TextHeuristicRole),
                                    priority(QAction::NormalPriority)
 {
@@ -557,7 +557,6 @@ void QAction::setFont(const QFont &font)
     if (d->font == font)
         return;
 
-    d->fontSet = true;
     d->font = font;
     d->sendDataChanged();
 }

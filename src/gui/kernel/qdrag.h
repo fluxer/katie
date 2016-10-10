@@ -78,8 +78,8 @@ public:
     QWidget *target() const;
 
     Qt::DropAction start(Qt::DropActions supportedActions = Qt::CopyAction);
-    Qt::DropAction exec(Qt::DropActions supportedActions = Qt::MoveAction);
-    Qt::DropAction exec(Qt::DropActions supportedActions, Qt::DropAction defaultAction);
+    Qt::DropAction exec(Qt::DropActions supportedActions = Qt::MoveAction,
+                        Qt::DropAction defaultAction = Qt::IgnoreAction);
 
     void setDragCursor(const QPixmap &cursor, Qt::DropAction action);
 

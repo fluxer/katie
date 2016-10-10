@@ -52,10 +52,10 @@ const QRect QDesktopWidget::screenGeometry(const QWidget *widget) const
                  "to get the screen geometry of a null widget");
         return QRect();
     }
-    QRect rect = QWidgetPrivate::screenGeometry(widget);
+    const QRect rect = QWidgetPrivate::screenGeometry(widget);
     if (rect.isNull())
         return screenGeometry(screenNumber(widget));
-    else return rect;
+    return rect;
 }
 
 const QRect QDesktopWidget::availableGeometry(const QWidget *widget) const
@@ -65,11 +65,10 @@ const QRect QDesktopWidget::availableGeometry(const QWidget *widget) const
                  "to get the available geometry of a null widget");
         return QRect();
     }
-    QRect rect = QWidgetPrivate::screenGeometry(widget);
+    const QRect rect = QWidgetPrivate::screenGeometry(widget);
     if (rect.isNull())
         return availableGeometry(screenNumber(widget));
-    else
-        return rect;
+    return rect;
 }
 
 QT_END_NAMESPACE

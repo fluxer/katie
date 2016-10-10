@@ -97,7 +97,6 @@ public:
     uint checkable : 1;
     uint checked : 1;
     uint separator : 1;
-    uint fontSet : 1;
 
     QFont font;
     QPointer<QMenu> menu;

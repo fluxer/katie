@@ -264,9 +264,8 @@ static Qt::Alignment fixedAlignment(Qt::Alignment alignment, Qt::LayoutDirection
         return Qt::Alignment((alignment & ~(Qt::AlignLeft | Qt::AlignRight | Qt::AlignAbsolute))
                              | ((alignment & Qt::AlignRight) ? Qt::AlignLeft : 0)
                              | ((alignment & Qt::AlignLeft) ? Qt::AlignRight : 0));
-    } else {
-        return alignment & ~Qt::AlignAbsolute;
     }
+    return alignment & ~Qt::AlignAbsolute;
 }
 
 static int storageIndexFromLayoutItem(const QFormLayoutPrivate::ItemMatrix &m,

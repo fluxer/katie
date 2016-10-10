@@ -224,26 +224,6 @@ QWidget *QDrag::target() const
 
     Starts the drag and drop operation and returns a value indicating the requested
     drop action when it is completed. The drop actions that the user can choose
-    from are specified in \a supportedActions. The default proposed action will be selected
-    among the allowed actions in the following order: Move, Copy and Link.
-
-    \bold{Note:} On Linux and Mac OS X, the drag and drop operation
-    can take some time, but this function does not block the event
-    loop. Other events are still delivered to the application while
-    the operation is performed. On Windows, the Qt event loop is
-    blocked while during the operation.
-*/
-
-Qt::DropAction QDrag::exec(Qt::DropActions supportedActions)
-{
-    return exec(supportedActions, Qt::IgnoreAction);
-}
-
-/*!
-    \since 4.3
-
-    Starts the drag and drop operation and returns a value indicating the requested
-    drop action when it is completed. The drop actions that the user can choose
     from are specified in \a supportedActions.
 
     The \a defaultDropAction determines which action will be proposed when the user performs a

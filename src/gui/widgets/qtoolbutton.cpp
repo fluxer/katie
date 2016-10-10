@@ -929,8 +929,7 @@ void QToolButton::setDefaultAction(QAction *action)
     setCheckable(action->isCheckable());
     setChecked(action->isChecked());
     setEnabled(action->isEnabled());
-    if (action->d_func()->fontSet)
-        setFont(action->font());
+    setFont(action->font());
 }
 
 
