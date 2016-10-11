@@ -16,6 +16,7 @@ macro(KATIE_RESOURCES RESOURCES)
                 add_custom_command(
                     OUTPUT ${rscout}
                     COMMAND ${KATIE_UIC} "${resource}" -o "${rscout}"
+                    OUTPUT "${rscout}"
                     MAIN_DEPENDENCY ${resource}
                 )
             elseif("${rscext}" STREQUAL ".qrc")
@@ -24,6 +25,7 @@ macro(KATIE_RESOURCES RESOURCES)
                 add_custom_command(
                     OUTPUT ${rscout}
                     COMMAND ${KATIE_RCC} "${resource}" -o "${rscout}" -name "${rscname}"
+                    OUTPUT "${rscout}"
                     MAIN_DEPENDENCY ${resource}
                 )
                 set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
@@ -46,10 +48,9 @@ macro(KATIE_RESOURCES RESOURCES)
                     add_custom_command(
                         OUTPUT ${rscout}
                         COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
+                        OUTPUT "${rscout}"
                     )
                     set_property(SOURCE ${resource} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
-                    # XXX: this can be troublesome but common sources can cause multiple rules on the same file
-                    set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
                 endif()
             endif()
         endif()
@@ -92,8 +93,8 @@ macro(KATIE_TRANSLATIONS TRANSLATIONS)
         add_custom_target(
             ${trname}_translation ALL
             COMMAND "${KATIE_LRELEASE}" "${translation}" -qm "${trout}"
+            OUTPUT "${trout}"
         )
-        set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
         install(FILES ${trout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
     endforeach()
 endmacro()

@@ -43,6 +43,19 @@ if(WITH_ACCESSIBILITY)
 endif()
 
 
+set(SHAREDBEARER_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
+)
+set(SHAREDBEARER_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine_impl.h
+)
+katie_setup_target(sharedbearer ${SHAREDBEARER_SOURCES} ${SHAREDBEARER_HEADERS})
+add_library(sharedbearer OBJECT ${sharedbearer_SOURCES})
+target_include_directories(sharedbearer PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/bearer
+)
+
 if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
     include(bearer/generic/generic.cmake)
     if(WITH_DBUS AND DBUS_FOUND)

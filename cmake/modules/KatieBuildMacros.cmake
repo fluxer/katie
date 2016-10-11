@@ -126,38 +126,30 @@ function(KATIE_SETUP_TARGET FORTARGET)
         get_filename_component(rscext ${resource} EXT)
         get_filename_component(rscname ${resource} NAME_WE)
         get_filename_component(rscpath ${resource} PATH)
-        get_source_file_property(skip ${resource} SKIP_RESOURCE)
         string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
         if("${rscext}" STREQUAL ".ui")
             set(rscout "${rscpath}/ui_${rscname}.h")
             set(targetresources ${targetresources} ${rscout})
-            if(NOT skip)
-                make_directory(${rscpath})
-                add_custom_command(
-                    OUTPUT "${rscout}"
-                    COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
-                )
-            endif()
+            make_directory(${rscpath})
+            add_custom_command(
+                OUTPUT "${rscout}"
+                COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
+                OUTPUT "${rscout}"
+            )
         elseif("${rscext}" STREQUAL ".qrc")
             set(rscout "${rscpath}/qrc_${rscname}.cpp")
             set(targetresources ${targetresources} ${rscout})
-            if(NOT skip)
-                make_directory(${rscpath})
-                add_custom_command(
-                    OUTPUT "${rscout}"
-                    COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
-                )
-            endif()
+            make_directory(${rscpath})
+            add_custom_command(
+                OUTPUT "${rscout}"
+                COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                OUTPUT "${rscout}"
+            )
         elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
             file(READ "${resource}" rsccontent)
-            if(NOT "${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
-                set(skip TRUE)
-            else()
+            if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
                 set(targetresources ${targetresources} ${rscout})
-            endif()
-
-            if(NOT skip)
                 get_directory_property(dirdefs COMPILE_DEFINITIONS)
                 get_directory_property(dirincs INCLUDE_DIRECTORIES)
                 set(mocargs)
@@ -172,9 +164,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 add_custom_command(
                     OUTPUT "${rscout}"
                     COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    OUTPUT "${rscout}"
                 )
-                # common sources can cause multiple rules on the same file
-                set_source_files_properties(${resource} PROPERTIES SKIP_RESOURCE TRUE)
             endif()
         endif()
     endforeach()

@@ -5,21 +5,22 @@ include_directories(
 
 set(QGENERICBEARERPLUGIN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qbearerengine_impl.h
 )
 
 set(QGENERICBEARERPLUGIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericmain.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
 )
 
 katie_setup_target(qgenericbearerplugin ${QGENERICBEARERPLUGIN_SOURCES} ${QGENERICBEARERPLUGIN_HEADERS})
 
-add_library(qgenericbearerplugin MODULE ${qgenericbearerplugin_SOURCES})
+add_library(qgenericbearerplugin MODULE ${qgenericbearerplugin_SOURCES}
+    $<TARGET_OBJECTS:sharedbearer>
+)
 target_link_libraries(qgenericbearerplugin KtCore KtNetwork)
 set_target_properties(qgenericbearerplugin PROPERTIES OUTPUT_NAME qgenericbearer)
+
+katie_setup_object(qgenericbearerplugin sharedbearer)
 
 install(
     TARGETS qgenericbearerplugin
