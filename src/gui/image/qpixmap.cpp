@@ -1087,11 +1087,9 @@ QPixmap QPixmap::grabWidget(QWidget * widget, const QRect &rect)
 
 Qt::HANDLE QPixmap::handle() const
 {
-#if defined(Q_WS_X11)
     const QPixmapData *pd = pixmapData();
     if (pd && pd->classId() == QPixmapData::X11Class)
         return static_cast<const QX11PixmapData*>(pd)->handle();
-#endif
     return 0;
 }
 #endif

@@ -55,9 +55,9 @@
 
 #include "qwindowsurface_p.h"
 #if defined(Q_WS_X11)
-# include "qpixmap_raster_p.h"
+# include "qpixmap_x11_p.h"
 #else
-#error QGraphicsSystem::createDefaultPixmapData() not implemented
+# include "qpixmap_raster_p.h"
 #endif
 
 
@@ -73,7 +73,11 @@ public:
     virtual ~QGraphicsSystem();
 
     static inline QPixmapData *createDefaultPixmapData(QPixmapData::PixelType type)
+#if defined(Q_WS_X11)
+        { return new QX11PixmapData(type); };
+#else
         { return new QRasterPixmapData(type); };
+#endif
 };
 
 QT_END_NAMESPACE
