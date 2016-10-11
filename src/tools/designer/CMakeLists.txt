@@ -88,10 +88,7 @@ configure_file(
 
 katie_setup_target(designer ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 
-add_executable(designer
-    ${designer_SOURCES}
-    $<TARGET_OBJECTS:shareddeviceskin>
-)
+add_executable(designer ${designer_SOURCES})
 target_link_libraries(designer ${EXTRA_DESIGNERBIN_LIBS})
 
 install(
