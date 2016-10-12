@@ -93,8 +93,8 @@ macro(KATIE_TRANSLATIONS TRANSLATIONS)
         add_custom_target(
             ${trname}_translation ALL
             COMMAND "${KATIE_LRELEASE}" "${translation}" -qm "${trout}"
-            OUTPUT "${trout}"
         )
+        set_source_files_properties(${trout} PROPERTIES GENERATED TRUE)
         install(FILES ${trout} DESTINATION ${KATIE_TRANSLATIONS_RELATIVE})
     endforeach()
 endmacro()
