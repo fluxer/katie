@@ -14,7 +14,6 @@ macro(KATIE_RESOURCES RESOURCES)
                 set(rscout ${rscpath}/ui_${rscname}.h)
                 make_directory(${rscpath})
                 add_custom_command(
-                    OUTPUT ${rscout}
                     COMMAND ${KATIE_UIC} "${resource}" -o "${rscout}"
                     OUTPUT "${rscout}"
                     MAIN_DEPENDENCY ${resource}
@@ -23,7 +22,6 @@ macro(KATIE_RESOURCES RESOURCES)
                 set(rscout ${rscpath}/qrc_${rscname}.cpp)
                 make_directory(${rscpath})
                 add_custom_command(
-                    OUTPUT ${rscout}
                     COMMAND ${KATIE_RCC} "${resource}" -o "${rscout}" -name "${rscname}"
                     OUTPUT "${rscout}"
                     MAIN_DEPENDENCY ${resource}
@@ -46,7 +44,6 @@ macro(KATIE_RESOURCES RESOURCES)
                     endforeach()
                     make_directory(${rscpath})
                     add_custom_command(
-                        OUTPUT ${rscout}
                         COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
                         OUTPUT "${rscout}"
                     )
@@ -62,9 +59,9 @@ macro(KATIE_DBUS_ADAPTOR SRCDEP SRCIN OUTNAME)
     set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}.h)
     set(mocout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}.moc)
     add_custom_command(
-        OUTPUT "${rscout}"
         COMMAND "${KATIE_QDBUSXML2CPP}" -m "${resource}" -a "${rscout}" -p "${OUTNAME}" ${ARGN}
         COMMAND "${KATIE_MOC}" -nw "${rscout}" -o "${mocout}" -i
+        OUTPUT "${rscout}"
     )
     set_property(SOURCE ${SRCDEP} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()
@@ -74,8 +71,8 @@ macro(KATIE_DBUS_INTERFACE SRCIN)
     string(TOLOWER ${SRCIN} SRCIN)
     set(rscout ${CMAKE_CURRENT_BINARY_DIR}/${OUTNAME}ineterface.h)
     add_custom_command(
-        OUTPUT "${rscout}"
         COMMAND "${KATIE_QDBUSXML2CPP}" -m "${SRCIN}" -a "${rscout}" -p "${OUTNAME}ineterface" ${ARGN}
+        OUTPUT "${rscout}"
     )
     set_property(SOURCE ${SRCIN} APPEND PROPERTY OBJECT_DEPENDS ${rscout})
 endmacro()

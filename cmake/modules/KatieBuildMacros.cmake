@@ -132,7 +132,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                OUTPUT "${rscout}"
                 COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
                 OUTPUT "${rscout}"
             )
@@ -141,7 +140,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
             add_custom_command(
-                OUTPUT "${rscout}"
                 COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
                 OUTPUT "${rscout}"
             )
@@ -162,7 +160,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
                 endforeach()
                 make_directory(${rscpath})
                 add_custom_command(
-                    OUTPUT "${rscout}"
                     COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
                     OUTPUT "${rscout}"
                 )
