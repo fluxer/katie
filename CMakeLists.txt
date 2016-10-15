@@ -26,7 +26,7 @@ include(KatieMacros)
 include(KatieBuildMacros)
 
 # components and tools that will be build, changed depending on the requirements availability
-set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
+set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
 
 # for config.cpp.cmake
@@ -606,7 +606,6 @@ if(NOT KATIE_BOOTSTRAP)
     add_subdirectory(src/svg)
     add_subdirectory(src/test)
     add_subdirectory(src/uitools)
-    add_subdirectory(src/xmlpatterns)
     if(ENABLE_TESTING)
         add_subdirectory(tests)
     endif()
