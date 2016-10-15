@@ -56,6 +56,14 @@ if(WITH_GTK2 AND GTK2_FOUND)
     )
     add_definitions(-DQT_STYLE_CLEANLOOKS ${GTK2_DEFINITIONS})
     include_directories(${GTK2_INCLUDE_DIRS})
+
+    if(WITH_GCONF2 AND GCONF2_FOUND)
+        set(EXTRA_GUI_LIBS
+            ${EXTRA_GUI_LIBS}
+            ${GCONF2_LIBRARIES}
+        )
+        include_directories(${GCONF2_INCLUDES})
+    endif()
 else()
     add_definitions(-DQT_NO_STYLE_GTK -DQT_NO_STYLE_CLEANLOOKS)
 endif()

@@ -96,6 +96,9 @@ add_feature_info(dbus WITH_DBUS "an open source something")
 option(WITH_GTK2 "Build gtk2 support" ON)
 add_feature_info(gtk2 WITH_GTK2 "an open source something")
 
+option(WITH_GCONF2 "Build gconf2 support" ON)
+add_feature_info(gconf2 WITH_GCONF2 "an open source something")
+
 option(WITH_EGL "Build egl support" OFF)
 add_feature_info(egl WITH_EGL "an open source something")
 
@@ -376,6 +379,14 @@ set_package_properties(GTK2 PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(GConf2)
+set_package_properties(GConf2 PROPERTIES
+    PURPOSE "Required for GTK style and application integration support"
+    DESCRIPTION "System for storing application preferences"
+    URL "https://projects.gnome.org/gconf/"
+    TYPE RECOMMENDED
+)
+
 find_package(EGL)
 set_package_properties(EGL PROPERTIES
     PURPOSE "Required for EGL support"
@@ -530,6 +541,10 @@ endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
+endif()
+
+if(NOT WITH_GCONF2 OR NOT GCONF2_FOUND)
+    katie_definition(-DQT_NO_GCONF2)
 endif()
 
 # conditional features

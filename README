@@ -17,8 +17,8 @@ There are several things you should be aware before considering Katie:
   - QIconEnginePluginV{2} classes have been merged
   - QIconEngineFactoryInterfaceV{2} classes and interfaces have been merged
   - QKeyEventEx and QKeyEvent classes have been merged
-  - OpenSSL and D-Bus cannot be runtime dependencies, they must be linked to
-    during build
+  - OpenSSL, D-Bus, CUPS, GTK2 and GConf2 cannot be runtime dependencies, they
+    must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease and idc are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)

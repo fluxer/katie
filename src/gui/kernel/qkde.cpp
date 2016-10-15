@@ -41,7 +41,6 @@
 
 
 #include "qkde_p.h"
-#include <QtCore/QLibrary>
 #include <QtCore/QDir>
 #include <QtCore/qdebug.h>
 #include <QtCore/QSettings>

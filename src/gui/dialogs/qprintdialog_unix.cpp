@@ -64,8 +64,6 @@
 #  include <qcups_p.h>
 #  include <cups/cups.h>
 #  include <qpdf_p.h>
-#else
-#  include <QtCore/qlibrary.h>
 #endif
 
 #include <qprinterinfo_unix_p.h>

@@ -213,6 +213,7 @@
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
 #cmakedefine QT_NO_STYLE_PLASTIQUE
 #cmakedefine QT_NO_STYLE_STYLESHEET
+#cmakedefine QT_NO_GCONF2
 
 /* Utilities */
 #cmakedefine QT_NO_ACCESSIBILITY

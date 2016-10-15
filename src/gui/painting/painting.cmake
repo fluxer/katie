@@ -54,7 +54,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qrgb.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix_p.h
 )
 
@@ -101,7 +100,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_raster.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qprinterinfo_unix.cpp
 )
 
@@ -118,4 +116,20 @@ if(WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp
     )
+endif()
+
+if(WITH_CUPS AND CUPS_FOUND)
+    set(GUI_HEADERS
+        ${GUI_HEADERS}
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups_p.h
+    )
+    set(GUI_SOURCES
+        ${GUI_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcups.cpp
+    )
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${CUPS_LIBRARIES}
+    )
+    include_directories(${CUPS_INCLUDE_DIR})
 endif()
