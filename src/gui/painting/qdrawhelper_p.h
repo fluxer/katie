@@ -289,7 +289,6 @@ struct QSpanData
         Texture
     } type;
     int txop;
-    int fast_matrix;
     bool bilinear;
     QImage *tempImage;
     union {

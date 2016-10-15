@@ -504,83 +504,46 @@ static const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *,
 
     const uint *end = buffer + length;
     uint *b = buffer;
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        int fdx = (int)(data->m11 * fixed_scale);
-        int fdy = (int)(data->m12 * fixed_scale);
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-        int fx = int((data->m21 * cy
-                      + data->m11 * cx + data->dx) * fixed_scale);
-        int fy = int((data->m22 * cy
-                      + data->m12 * cx + data->dy) * fixed_scale);
+    qreal fx = data->m21 * cy + data->m11 * cx + data->dx;
+    qreal fy = data->m22 * cy + data->m12 * cx + data->dy;
+    qreal fw = data->m23 * cy + data->m13 * cx + data->m33;
 
-        while (b < end) {
-            int px = fx >> 16;
-            int py = fy >> 16;
+    while (b < end) {
+        const qreal iw = fw == 0 ? 1 : 1 / fw;
+        const qreal tx = fx * iw;
+        const qreal ty = fy * iw;
+        int px = int(tx) - (tx < 0);
+        int py = int(ty) - (ty < 0);
 
-            if (blendType == BlendTransformedTiled) {
-                px %= image_width;
-                py %= image_height;
-                if (px < 0) px += image_width;
-                if (py < 0) py += image_height;
+        if (blendType == BlendTransformedTiled) {
+            px %= image_width;
+            py %= image_height;
+            if (px < 0) px += image_width;
+            if (py < 0) py += image_height;
 
+            const uchar *scanLine = data->texture.scanLine(py);
+            *b = fetch(scanLine, px, data->texture.colorTable);
+        } else {
+            if ((px < 0) || (px >= image_width)
+                || (py < 0) || (py >= image_height)) {
+                *b = uint(0);
+            } else {
                 const uchar *scanLine = data->texture.scanLine(py);
                 *b = fetch(scanLine, px, data->texture.colorTable);
-            } else {
-                if ((px < 0) || (px >= image_width)
-                    || (py < 0) || (py >= image_height)) {
-                    *b = uint(0);
-                } else {
-                    const uchar *scanLine = data->texture.scanLine(py);
-                    *b = fetch(scanLine, px, data->texture.colorTable);
-                }
             }
-            fx += fdx;
-            fy += fdy;
-            ++b;
         }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
-
-        qreal fx = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal fy = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal fw = data->m23 * cy + data->m13 * cx + data->m33;
-
-        while (b < end) {
-            const qreal iw = fw == 0 ? 1 : 1 / fw;
-            const qreal tx = fx * iw;
-            const qreal ty = fy * iw;
-            int px = int(tx) - (tx < 0);
-            int py = int(ty) - (ty < 0);
-
-            if (blendType == BlendTransformedTiled) {
-                px %= image_width;
-                py %= image_height;
-                if (px < 0) px += image_width;
-                if (py < 0) py += image_height;
-
-                const uchar *scanLine = data->texture.scanLine(py);
-                *b = fetch(scanLine, px, data->texture.colorTable);
-            } else {
-                if ((px < 0) || (px >= image_width)
-                    || (py < 0) || (py >= image_height)) {
-                    *b = uint(0);
-                } else {
-                    const uchar *scanLine = data->texture.scanLine(py);
-                    *b = fetch(scanLine, px, data->texture.colorTable);
-                }
-            }
-            fx += fdx;
-            fy += fdy;
+        fx += fdx;
+        fy += fdy;
+        fw += fdw;
+        //force increment to avoid /0
+        if (!fw) {
             fw += fdw;
-            //force increment to avoid /0
-            if (!fw) {
-                fw += fdw;
-            }
-            ++b;
         }
+        ++b;
     }
 
     return buffer;
@@ -647,253 +610,52 @@ static const uint * QT_FASTCALL fetchTransformedBilinear(uint *buffer, const Ope
 
     uint *end = buffer + length;
     uint *b = buffer;
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        int fdx = (int)(data->m11 * fixed_scale);
-        int fdy = (int)(data->m12 * fixed_scale);
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-        int fx = int((data->m21 * cy
-                      + data->m11 * cx + data->dx) * fixed_scale);
-        int fy = int((data->m22 * cy
-                      + data->m12 * cx + data->dy) * fixed_scale);
+    qreal fx = data->m21 * cy + data->m11 * cx + data->dx;
+    qreal fy = data->m22 * cy + data->m12 * cx + data->dy;
+    qreal fw = data->m23 * cy + data->m13 * cx + data->m33;
 
-        fx -= half_point;
-        fy -= half_point;
+    while (b < end) {
+        const qreal iw = fw == 0 ? 1 : 1 / fw;
+        const qreal px = fx * iw - qreal(0.5);
+        const qreal py = fy * iw - qreal(0.5);
 
-        if (fdy == 0) { //simple scale, no rotation
-            int y1 = (fy >> 16);
-            int y2;
-            fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
-            const uchar *s1 = data->texture.scanLine(y1);
-            const uchar *s2 = data->texture.scanLine(y2);
+        int x1 = int(px) - (px < 0);
+        int x2;
+        int y1 = int(py) - (py < 0);
+        int y2;
 
-            if (fdx <= fixed_scale && fdx > 0) { // scale up on X
-                int disty = (fy & 0x0000ffff) >> 8;
-                int idisty = 256 - disty;
-                int x = fx >> 16;
+        int distx = int((px - x1) * 256);
+        int disty = int((py - y1) * 256);
+        int idistx = 256 - distx;
+        int idisty = 256 - disty;
 
-                // The idea is first to do the interpolation between the row s1 and the row s2
-                // into an intermediate buffer, then we interpolate between two pixel of this buffer.
+        fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
+        fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
 
-                // intermediate_buffer[0] is a buffer of red-blue component of the pixel, in the form 0x00RR00BB
-                // intermediate_buffer[1] is the alpha-green component of the pixel, in the form 0x00AA00GG
-                quint32 intermediate_buffer[2][buffer_size + 2];
-                // count is the size used in the intermediate_buffer.
-                int count = qCeil(length * data->m11) + 2; //+1 for the last pixel to interpolate with, and +1 for rounding errors.
-                Q_ASSERT(count <= buffer_size + 2); //length is supposed to be <= buffer_size and data->m11 < 1 in this case
-                int f = 0;
-                int lim = count;
-                if (blendType == BlendTransformedBilinearTiled) {
-                    x %= image_width;
-                    if (x < 0) x += image_width;
-                } else {
-                    lim = qMin(count, image_x2-x+1);
-                    if (x < image_x1) {
-                        Q_ASSERT(x <= image_x2);
-                        uint t = fetch(s1, image_x1, data->texture.colorTable);
-                        uint b = fetch(s2, image_x1, data->texture.colorTable);
-                        quint32 rb = (((t & 0xff00ff) * idisty + (b & 0xff00ff) * disty) >> 8) & 0xff00ff;
-                        quint32 ag = ((((t>>8) & 0xff00ff) * idisty + ((b>>8) & 0xff00ff) * disty) >> 8) & 0xff00ff;
-                        do {
-                            intermediate_buffer[0][f] = rb;
-                            intermediate_buffer[1][f] = ag;
-                            f++;
-                            x++;
-                        } while (x < image_x1 && f < lim);
-                    }
-                }
+        const uchar *s1 = data->texture.scanLine(y1);
+        const uchar *s2 = data->texture.scanLine(y2);
 
-                for (; f < count; f++) { // Same as above but without sse2
-                    if (blendType == BlendTransformedBilinearTiled) {
-                        if (x >= image_width) x -= image_width;
-                    } else {
-                        x = qMin(x, image_x2);
-                    }
+        uint tl = fetch(s1, x1, data->texture.colorTable);
+        uint tr = fetch(s1, x2, data->texture.colorTable);
+        uint bl = fetch(s2, x1, data->texture.colorTable);
+        uint br = fetch(s2, x2, data->texture.colorTable);
 
-                    uint t = fetch(s1, x, data->texture.colorTable);
-                    uint b = fetch(s2, x, data->texture.colorTable);
+        uint xtop = INTERPOLATE_PIXEL_256(tl, idistx, tr, distx);
+        uint xbot = INTERPOLATE_PIXEL_256(bl, idistx, br, distx);
+        *b = INTERPOLATE_PIXEL_256(xtop, idisty, xbot, disty);
 
-                    intermediate_buffer[0][f] = (((t & 0xff00ff) * idisty + (b & 0xff00ff) * disty) >> 8) & 0xff00ff;
-                    intermediate_buffer[1][f] = ((((t>>8) & 0xff00ff) * idisty + ((b>>8) & 0xff00ff) * disty) >> 8) & 0xff00ff;
-                    x++;
-                }
-                // Now interpolate the values from the intermediate_buffer to get the final result.
-                fx &= fixed_scale - 1;
-                Q_ASSERT((fx >> 16) == 0);
-                while (b < end) {
-                    int x1 = (fx >> 16);
-                    int x2 = x1 + 1;
-                    Q_ASSERT(x1 >= 0);
-                    Q_ASSERT(x2 < count);
-
-                    int distx = (fx & 0x0000ffff) >> 8;
-                    int idistx = 256 - distx;
-                    int rb = ((intermediate_buffer[0][x1] * idistx + intermediate_buffer[0][x2] * distx) >> 8) & 0xff00ff;
-                    int ag = (intermediate_buffer[1][x1] * idistx + intermediate_buffer[1][x2] * distx) & 0xff00ff00;
-                    *b = rb | ag;
-                    b++;
-                    fx += fdx;
-                }
-            } else if ((fdx < 0 && fdx > -(fixed_scale / 8)) || fabs(data->m22) < (1./8.)) { // scale up more than 8x
-                int y1 = (fy >> 16);
-                int y2;
-                fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
-                const uchar *s1 = data->texture.scanLine(y1);
-                const uchar *s2 = data->texture.scanLine(y2);
-                int disty = (fy & 0x0000ffff) >> 8;
-                int idisty = 256 - disty;
-                while (b < end) {
-                    int x1 = (fx >> 16);
-                    int x2;
-                    fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-                    uint tl = fetch(s1, x1, data->texture.colorTable);
-                    uint tr = fetch(s1, x2, data->texture.colorTable);
-                    uint bl = fetch(s2, x1, data->texture.colorTable);
-                    uint br = fetch(s2, x2, data->texture.colorTable);
-
-                    int distx = (fx & 0x0000ffff) >> 8;
-                    int idistx = 256 - distx;
-
-                    uint xtop = INTERPOLATE_PIXEL_256(tl, idistx, tr, distx);
-                    uint xbot = INTERPOLATE_PIXEL_256(bl, idistx, br, distx);
-                    *b = INTERPOLATE_PIXEL_256(xtop, idisty, xbot, disty);
-
-                    fx += fdx;
-                    ++b;
-                }
-            } else { //scale down
-                int y1 = (fy >> 16);
-                int y2;
-                fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
-                const uchar *s1 = data->texture.scanLine(y1);
-                const uchar *s2 = data->texture.scanLine(y2);
-                int disty = (fy & 0x0000ffff) >> 12;
-
-                while (b < end) {
-                    int x1 = (fx >> 16);
-                    int x2;
-                    fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-                    uint tl = fetch(s1, x1, data->texture.colorTable);
-                    uint tr = fetch(s1, x2, data->texture.colorTable);
-                    uint bl = fetch(s2, x1, data->texture.colorTable);
-                    uint br = fetch(s2, x2, data->texture.colorTable);
-                    int distx = (fx & 0x0000ffff) >> 12;
-                    *b = interpolate_4_pixels_16(tl, tr, bl, br, distx, disty);
-                    fx += fdx;
-                    ++b;
-                }
-            }
-        } else { //rotation
-            if (fabs(data->m11) > 8 || fabs(data->m22) > 8) {
-                //if we are zooming more than 8 times, we use 8bit precision for the position.
-                while (b < end) {
-                    int x1 = (fx >> 16);
-                    int x2;
-                    int y1 = (fy >> 16);
-                    int y2;
-
-                    fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-                    fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
-
-                    const uchar *s1 = data->texture.scanLine(y1);
-                    const uchar *s2 = data->texture.scanLine(y2);
-
-                    uint tl = fetch(s1, x1, data->texture.colorTable);
-                    uint tr = fetch(s1, x2, data->texture.colorTable);
-                    uint bl = fetch(s2, x1, data->texture.colorTable);
-                    uint br = fetch(s2, x2, data->texture.colorTable);
-
-                    int distx = (fx & 0x0000ffff) >> 8;
-                    int disty = (fy & 0x0000ffff) >> 8;
-                    int idistx = 256 - distx;
-                    int idisty = 256 - disty;
-
-                    uint xtop = INTERPOLATE_PIXEL_256(tl, idistx, tr, distx);
-                    uint xbot = INTERPOLATE_PIXEL_256(bl, idistx, br, distx);
-                    *b = INTERPOLATE_PIXEL_256(xtop, idisty, xbot, disty);
-
-                    fx += fdx;
-                    fy += fdy;
-                    ++b;
-                }
-            } else {
-                //we are zooming less than 8x, use 4bit precision
-                while (b < end) {
-                    int x1 = (fx >> 16);
-                    int x2;
-                    int y1 = (fy >> 16);
-                    int y2;
-
-                    fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-                    fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
-
-                    const uchar *s1 = data->texture.scanLine(y1);
-                    const uchar *s2 = data->texture.scanLine(y2);
-
-                    uint tl = fetch(s1, x1, data->texture.colorTable);
-                    uint tr = fetch(s1, x2, data->texture.colorTable);
-                    uint bl = fetch(s2, x1, data->texture.colorTable);
-                    uint br = fetch(s2, x2, data->texture.colorTable);
-
-                    int distx = (fx & 0x0000ffff) >> 12;
-                    int disty = (fy & 0x0000ffff) >> 12;
-
-                    *b = interpolate_4_pixels_16(tl, tr, bl, br, distx, disty);
-
-                    fx += fdx;
-                    fy += fdy;
-                    ++b;
-                }
-            }
-        }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
-
-        qreal fx = data->m21 * cy + data->m11 * cx + data->dx;
-        qreal fy = data->m22 * cy + data->m12 * cx + data->dy;
-        qreal fw = data->m23 * cy + data->m13 * cx + data->m33;
-
-        while (b < end) {
-            const qreal iw = fw == 0 ? 1 : 1 / fw;
-            const qreal px = fx * iw - qreal(0.5);
-            const qreal py = fy * iw - qreal(0.5);
-
-            int x1 = int(px) - (px < 0);
-            int x2;
-            int y1 = int(py) - (py < 0);
-            int y2;
-
-            int distx = int((px - x1) * 256);
-            int disty = int((py - y1) * 256);
-            int idistx = 256 - distx;
-            int idisty = 256 - disty;
-
-            fetchTransformedBilinear_pixelBounds<blendType>(image_width, image_x1, image_x2, x1, x2);
-            fetchTransformedBilinear_pixelBounds<blendType>(image_height, image_y1, image_y2, y1, y2);
-
-            const uchar *s1 = data->texture.scanLine(y1);
-            const uchar *s2 = data->texture.scanLine(y2);
-
-            uint tl = fetch(s1, x1, data->texture.colorTable);
-            uint tr = fetch(s1, x2, data->texture.colorTable);
-            uint bl = fetch(s2, x1, data->texture.colorTable);
-            uint br = fetch(s2, x2, data->texture.colorTable);
-
-            uint xtop = INTERPOLATE_PIXEL_256(tl, idistx, tr, distx);
-            uint xbot = INTERPOLATE_PIXEL_256(bl, idistx, br, distx);
-            *b = INTERPOLATE_PIXEL_256(xtop, idisty, xbot, disty);
-
-            fx += fdx;
-            fy += fdy;
+        fx += fdx;
+        fy += fdy;
+        fw += fdw;
+        //force increment to avoid /0
+        if (!fw) {
             fw += fdw;
-            //force increment to avoid /0
-            if (!fw) {
-                fw += fdw;
-            }
-            ++b;
         }
+        ++b;
     }
 
     return buffer;
@@ -4755,207 +4517,97 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
     const int src_miny = data->texture.y1;
     const int src_maxx = data->texture.x2 - 1;
     const int src_maxy = data->texture.y2 - 1;
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        const int fdx = (int)(data->m11 * fixed_scale);
-        const int fdy = (int)(data->m12 * fixed_scale);
-
-        while (count--) {
-            const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-            if (coverage == 0) {
-                ++spans;
-                continue;
-            }
-
-            DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
-                        + spans->x;
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
-            int x = int((data->m21 * cy
-                         + data->m11 * cx + data->dx) * fixed_scale) - half_point;
-            int y = int((data->m22 * cy
-                         + data->m12 * cx + data->dy) * fixed_scale) - half_point;
-            int length = spans->len;
-
-            while (length) {
-                const int l = qMin(length, buffer_size);
-
-                const SRC *end = buffer + l;
-                SRC *b = buffer;
-                while (b < end) {
-                    int x1 = (x >> 16);
-                    int x2;
-                    int y1 = (y >> 16);
-                    int y2;
-
-                    const int distx = (x & 0x0000ffff) >> 8;
-                    const int disty = (y & 0x0000ffff) >> 8;
-
-                    if (x1 < src_minx) {
-                        x2 = x1 = src_minx;
-                    } else if (x1 >= src_maxx) {
-                        x2 = x1 = src_maxx;
-                    } else {
-                        x2 = x1 + 1;
-                    }
-                    if (y1 < src_miny) {
-                        y2 = y1 = src_miny;
-                    } else if (y1 >= src_maxy) {
-                        y2 = y1 = src_maxy;
-                    } else {
-                        y2 = y1 + 1;
-                    }
-#if 0
-                    if (x1 == x2) {
-                        if (y1 == y2) {
-                            *b = ((SRC*)data->texture.scanLine(y1))[x1];
-                        } else {
-                            *b = ((SRC*)data->texture.scanLine(y1))[x1];
-                            const SRC t = data->texture.scanLine(y2)[x1];
-                            interpolate_pixel(*b, SRC::ialpha(disty),
-                                              t, SRC::alpha(disty));
-                        }
-                    } else if (y1 == y2) {
-                        *b = ((SRC*)data->texture.scanLine(y1))[x1];
-                        const SRC t = ((SRC*)data->texture.scanLine(y1))[x2];
-                        interpolate_pixel(*b, SRC::ialpha(distx),
-                                          t, SRC::alpha(distx));
-                    } else
-#endif
-                    {
-                        const SRC *src1 = (SRC*)data->texture.scanLine(y1);
-                        const SRC *src2 = (SRC*)data->texture.scanLine(y2);
-                        SRC tl = src1[x1];
-                        const SRC tr = src1[x2];
-                        SRC bl = src2[x1];
-                        const SRC br = src2[x2];
-                        const quint8 ax = SRC::alpha(distx);
-                        const quint8 iax = SRC::ialpha(distx);
-
-                        interpolate_pixel(tl, iax, tr, ax);
-                        interpolate_pixel(bl, iax, br, ax);
-                        interpolate_pixel(tl, SRC::ialpha(disty),
-                                          bl, SRC::alpha(disty));
-                        *b = tl;
-                    }
-                    ++b;
-
-                    x += fdx;
-                    y += fdy;
-                }
-
-                if (!SRC::hasAlpha() && coverage == 255) {
-                    qt_memconvert(dest, buffer, l);
-                } else if (sizeof(DST) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-                {
-                    blendUntransformed_dest24(dest, buffer, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                    blendUntransformed_dest16(dest, buffer, coverage, l);
-                } else {
-                    blendUntransformed_unaligned(dest, buffer, coverage, l);
-                }
-
-                dest += l;
-                length -= l;
-            }
+    while (count--) {
+        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
+        if (coverage == 0) {
             ++spans;
+            continue;
         }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
 
-        while (count--) {
-            const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-            if (coverage == 0) {
-                ++spans;
-                continue;
-            }
+        DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
+                    + spans->x;
 
-            DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
-                        + spans->x;
+        const qreal cx = spans->x + qreal(0.5);
+        const qreal cy = spans->y + qreal(0.5);
 
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
+        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
+        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
+        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
 
-            qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-            qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-            qreal w = data->m23 * cy + data->m13 * cx + data->m33;
+        int length = spans->len;
+        while (length) {
+            const int l = qMin(length, buffer_size);
+            const SRC *end = buffer + l;
+            SRC *b = buffer;
+            while (b < end) {
+                const qreal iw = w == 0 ? 1 : 1 / w;
+                const qreal px = x * iw - qreal(0.5);
+                const qreal py = y * iw - qreal(0.5);
 
-            int length = spans->len;
-            while (length) {
-                const int l = qMin(length, buffer_size);
-                const SRC *end = buffer + l;
-                SRC *b = buffer;
-                while (b < end) {
-                    const qreal iw = w == 0 ? 1 : 1 / w;
-                    const qreal px = x * iw - qreal(0.5);
-                    const qreal py = y * iw - qreal(0.5);
+                int x1 = int(px) - (px < 0);
+                int x2;
+                int y1 = int(py) - (py < 0);
+                int y2;
 
-                    int x1 = int(px) - (px < 0);
-                    int x2;
-                    int y1 = int(py) - (py < 0);
-                    int y2;
+                const int distx = int((px - x1) * 256);
+                const int disty = int((py - y1) * 256);
 
-                    const int distx = int((px - x1) * 256);
-                    const int disty = int((py - y1) * 256);
-
-                    if (x1 < src_minx) {
-                        x2 = x1 = src_minx;
-                    } else if (x1 >= src_maxx) {
-                        x2 = x1 = src_maxx;
-                    } else {
-                        x2 = x1 + 1;
-                    }
-                    if (y1 < src_miny) {
-                        y2 = y1 = src_miny;
-                    } else if (y1 >= src_maxy) {
-                        y2 = y1 = src_maxy;
-                    } else {
-                        y2 = y1 + 1;
-                    }
-
-                    const SRC *src1 = (SRC*)data->texture.scanLine(y1);
-                    const SRC *src2 = (SRC*)data->texture.scanLine(y2);
-                    SRC tl = src1[x1];
-                    const SRC tr = src1[x2];
-                    SRC bl = src2[x1];
-                    const SRC br = src2[x2];
-                    const quint8 ax = SRC::alpha(distx);
-                    const quint8 iax = SRC::ialpha(distx);
-
-                    interpolate_pixel(tl, iax, tr, ax);
-                    interpolate_pixel(bl, iax, br, ax);
-                    interpolate_pixel(tl, SRC::ialpha(disty),
-                                      bl, SRC::alpha(disty));
-                    *b = tl;
-                    ++b;
-
-                    x += fdx;
-                    y += fdy;
-                    w += fdw;
-                }
-                if (!SRC::hasAlpha() && coverage == 255) {
-                    qt_memconvert(dest, buffer, l);
-                } else if (sizeof(DST) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-                {
-                    blendUntransformed_dest24(dest, buffer, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                    blendUntransformed_dest16(dest, buffer, coverage, l);
+                if (x1 < src_minx) {
+                    x2 = x1 = src_minx;
+                } else if (x1 >= src_maxx) {
+                    x2 = x1 = src_maxx;
                 } else {
-                    blendUntransformed_unaligned(dest, buffer, coverage, l);
+                    x2 = x1 + 1;
+                }
+                if (y1 < src_miny) {
+                    y2 = y1 = src_miny;
+                } else if (y1 >= src_maxy) {
+                    y2 = y1 = src_maxy;
+                } else {
+                    y2 = y1 + 1;
                 }
 
-                dest += l;
-                length -= l;
+                const SRC *src1 = (SRC*)data->texture.scanLine(y1);
+                const SRC *src2 = (SRC*)data->texture.scanLine(y2);
+                SRC tl = src1[x1];
+                const SRC tr = src1[x2];
+                SRC bl = src2[x1];
+                const SRC br = src2[x2];
+                const quint8 ax = SRC::alpha(distx);
+                const quint8 iax = SRC::ialpha(distx);
+
+                interpolate_pixel(tl, iax, tr, ax);
+                interpolate_pixel(bl, iax, br, ax);
+                interpolate_pixel(tl, SRC::ialpha(disty),
+                                    bl, SRC::alpha(disty));
+                *b = tl;
+                ++b;
+
+                x += fdx;
+                y += fdy;
+                w += fdw;
             }
-            ++spans;
+            if (!SRC::hasAlpha() && coverage == 255) {
+                qt_memconvert(dest, buffer, l);
+            } else if (sizeof(DST) == 3 && l >= 4 &&
+                        (quintptr(dest) & 3) == (quintptr(buffer) & 3))
+            {
+                blendUntransformed_dest24(dest, buffer, coverage, l);
+            } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
+                        (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
+                blendUntransformed_dest16(dest, buffer, coverage, l);
+            } else {
+                blendUntransformed_unaligned(dest, buffer, coverage, l);
+            }
+
+            dest += l;
+            length -= l;
         }
+        ++spans;
     }
 }
 
@@ -5027,98 +4679,52 @@ static void blend_transformed_argb(int count, const QSpan *spans, void *userData
     int image_width = data->texture.width;
     int image_height = data->texture.height;
     const int scanline_offset = data->texture.bytesPerLine / 4;
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        int fdx = (int)(data->m11 * fixed_scale);
-        int fdy = (int)(data->m12 * fixed_scale);
+    while (count--) {
+        void *t = data->rasterBuffer->scanLine(spans->y);
 
-        while (count--) {
-            void *t = data->rasterBuffer->scanLine(spans->y);
+        uint *target = ((uint *)t) + spans->x;
+        uint *image_bits = (uint *)data->texture.imageData;
 
-            uint *target = ((uint *)t) + spans->x;
-            uint *image_bits = (uint *)data->texture.imageData;
+        const qreal cx = spans->x + qreal(0.5);
+        const qreal cy = spans->y + qreal(0.5);
 
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
+        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
+        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
+        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
 
-            int x = int((data->m21 * cy
-                         + data->m11 * cx + data->dx) * fixed_scale);
-            int y = int((data->m22 * cy
-                         + data->m12 * cx + data->dy) * fixed_scale);
+        int length = spans->len;
+        const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
+        while (length) {
+            int l = qMin(length, buffer_size);
+            const uint *end = buffer + l;
+            uint *b = buffer;
+            while (b < end) {
+                const qreal iw = w == 0 ? 1 : 1 / w;
+                const qreal tx = x * iw;
+                const qreal ty = y * iw;
+                const int px = int(tx) - (tx < 0);
+                const int py = int(ty) - (ty < 0);
 
-            int length = spans->len;
-            const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-            while (length) {
-                int l = qMin(length, buffer_size);
-                const uint *end = buffer + l;
-                uint *b = buffer;
-                while (b < end) {
-                    int px = x >> 16;
-                    int py = y >> 16;
+                bool out = (px < 0) || (px >= image_width)
+                            || (py < 0) || (py >= image_height);
 
-                    bool out = (px < 0) || (px >= image_width)
-                               || (py < 0) || (py >= image_height);
+                int y_offset = py * scanline_offset;
+                *b = out ? uint(0) : image_bits[y_offset + px];
+                x += fdx;
+                y += fdy;
+                w += fdw;
 
-                    int y_offset = py * scanline_offset;
-                    *b = out ? uint(0) : image_bits[y_offset + px];
-                    x += fdx;
-                    y += fdy;
-                    ++b;
-                }
-                func(target, buffer, l, coverage);
-                target += l;
-                length -= l;
+                ++b;
             }
-            ++spans;
+            func(target, buffer, l, coverage);
+            target += l;
+            length -= l;
         }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
-        while (count--) {
-            void *t = data->rasterBuffer->scanLine(spans->y);
-
-            uint *target = ((uint *)t) + spans->x;
-            uint *image_bits = (uint *)data->texture.imageData;
-
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
-
-            qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-            qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-            qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-            int length = spans->len;
-            const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-            while (length) {
-                int l = qMin(length, buffer_size);
-                const uint *end = buffer + l;
-                uint *b = buffer;
-                while (b < end) {
-                    const qreal iw = w == 0 ? 1 : 1 / w;
-                    const qreal tx = x * iw;
-                    const qreal ty = y * iw;
-                    const int px = int(tx) - (tx < 0);
-                    const int py = int(ty) - (ty < 0);
-
-                    bool out = (px < 0) || (px >= image_width)
-                               || (py < 0) || (py >= image_height);
-
-                    int y_offset = py * scanline_offset;
-                    *b = out ? uint(0) : image_bits[y_offset + px];
-                    x += fdx;
-                    y += fdy;
-                    w += fdw;
-
-                    ++b;
-                }
-                func(target, buffer, l, coverage);
-                target += l;
-                length -= l;
-            }
-            ++spans;
-        }
+        ++spans;
     }
 }
 
@@ -5136,135 +4742,70 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
     SRC buffer[buffer_size];
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        const int fdx = (int)(data->m11 * fixed_scale);
-        const int fdy = (int)(data->m12 * fixed_scale);
-
-        while (count--) {
-            const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-            if (coverage == 0) {
-                ++spans;
-                continue;
-            }
-
-            DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
-                        + spans->x;
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
-            int x = int((data->m21 * cy
-                         + data->m11 * cx + data->dx) * fixed_scale);
-            int y = int((data->m22 * cy
-                         + data->m12 * cx + data->dy) * fixed_scale);
-            int length = spans->len;
-
-            while (length) {
-                const int l = qMin(length, buffer_size);
-
-                const SRC *end = buffer + l;
-                SRC *b = buffer;
-                while (b < end) {
-                    const int px = (x >> 16);
-                    const int py = (y >> 16);
-
-                    if ((px < 0) || (px >= image_width) ||
-                        (py < 0) || (py >= image_height))
-                    {
-                        *b = 0;
-                    } else {
-                        *b = ((SRC*)data->texture.scanLine(py))[px];
-                    }
-                    ++b;
-
-                    x += fdx;
-                    y += fdy;
-                }
-
-                if (!SRC::hasAlpha() && coverage == 255) {
-                    qt_memconvert(dest, buffer, l);
-                } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-                {
-                    blendUntransformed_dest24(dest, buffer, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                    blendUntransformed_dest16(dest, buffer, coverage, l);
-                } else {
-                    blendUntransformed_unaligned(dest, buffer, coverage, l);
-                }
-
-                dest += l;
-                length -= l;
-            }
+    while (count--) {
+        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
+        if (coverage == 0) {
             ++spans;
+            continue;
         }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
 
-        while (count--) {
-            const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-            if (coverage == 0) {
-                ++spans;
-                continue;
-            }
+        DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
+                    + spans->x;
 
-            DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
-                        + spans->x;
+        const qreal cx = spans->x + qreal(0.5);
+        const qreal cy = spans->y + qreal(0.5);
 
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
+        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
+        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
+        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
 
-            qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-            qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-            qreal w = data->m23 * cy + data->m13 * cx + data->m33;
+        int length = spans->len;
+        while (length) {
+            const int l = qMin(length, buffer_size);
+            const SRC *end = buffer + l;
+            SRC *b = buffer;
+            while (b < end) {
+                const qreal iw = w == 0 ? 1 : 1 / w;
+                const qreal tx = x * iw;
+                const qreal ty = y * iw;
 
-            int length = spans->len;
-            while (length) {
-                const int l = qMin(length, buffer_size);
-                const SRC *end = buffer + l;
-                SRC *b = buffer;
-                while (b < end) {
-                    const qreal iw = w == 0 ? 1 : 1 / w;
-                    const qreal tx = x * iw;
-                    const qreal ty = y * iw;
+                const int px = int(tx) - (tx < 0);
+                const int py = int(ty) - (ty < 0);
 
-                    const int px = int(tx) - (tx < 0);
-                    const int py = int(ty) - (ty < 0);
-
-                    if ((px < 0) || (px >= image_width) ||
-                        (py < 0) || (py >= image_height))
-                    {
-                        *b = 0;
-                    } else {
-                        *b = ((SRC*)data->texture.scanLine(py))[px];
-                    }
-                    ++b;
-
-                    x += fdx;
-                    y += fdy;
-                    w += fdw;
-                }
-                if (!SRC::hasAlpha() && coverage == 255) {
-                    qt_memconvert(dest, buffer, l);
-                } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3))
+                if ((px < 0) || (px >= image_width) ||
+                    (py < 0) || (py >= image_height))
                 {
-                    blendUntransformed_dest24(dest, buffer, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                    blendUntransformed_dest16(dest, buffer, coverage, l);
+                    *b = 0;
                 } else {
-                    blendUntransformed_unaligned(dest, buffer, coverage, l);
+                    *b = ((SRC*)data->texture.scanLine(py))[px];
                 }
+                ++b;
 
-                dest += l;
-                length -= l;
+                x += fdx;
+                y += fdy;
+                w += fdw;
             }
-            ++spans;
+            if (!SRC::hasAlpha() && coverage == 255) {
+                qt_memconvert(dest, buffer, l);
+            } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
+                        (quintptr(dest) & 3) == (quintptr(buffer) & 3))
+            {
+                blendUntransformed_dest24(dest, buffer, coverage, l);
+            } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
+                        (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
+                blendUntransformed_dest16(dest, buffer, coverage, l);
+            } else {
+                blendUntransformed_unaligned(dest, buffer, coverage, l);
+            }
+
+            dest += l;
+            length -= l;
         }
+        ++spans;
     }
 }
 
@@ -5344,110 +4885,60 @@ static void blend_transformed_tiled_argb(int count, const QSpan *spans, void *us
     int image_width = data->texture.width;
     int image_height = data->texture.height;
     const int scanline_offset = data->texture.bytesPerLine / 4;
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        int fdx = (int)(data->m11 * fixed_scale);
-        int fdy = (int)(data->m12 * fixed_scale);
+    while (count--) {
+        void *t = data->rasterBuffer->scanLine(spans->y);
 
-        while (count--) {
-            void *t = data->rasterBuffer->scanLine(spans->y);
+        uint *target = ((uint *)t) + spans->x;
+        uint *image_bits = (uint *)data->texture.imageData;
 
-            uint *target = ((uint *)t) + spans->x;
-            uint *image_bits = (uint *)data->texture.imageData;
+        const qreal cx = spans->x + qreal(0.5);
+        const qreal cy = spans->y + qreal(0.5);
 
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
+        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
+        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
+        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
 
-            int x = int((data->m21 * cy
-                         + data->m11 * cx + data->dx) * fixed_scale);
-            int y = int((data->m22 * cy
-                         + data->m12 * cx + data->dy) * fixed_scale);
+        const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
+        int length = spans->len;
+        while (length) {
+            int l = qMin(length, buffer_size);
+            const uint *end = buffer + l;
+            uint *b = buffer;
+            while (b < end) {
+                const qreal iw = w == 0 ? 1 : 1 / w;
+                const qreal tx = x * iw;
+                const qreal ty = y * iw;
+                int px = int(tx) - (tx < 0);
+                int py = int(ty) - (ty < 0);
 
-            const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-            int length = spans->len;
-            while (length) {
-                int l = qMin(length, buffer_size);
-                const uint *end = buffer + l;
-                uint *b = buffer;
-                while (b < end) {
-                    int px = x >> 16;
-                    int py = y >> 16;
-                    px %= image_width;
-                    py %= image_height;
-                    if (px < 0) px += image_width;
-                    if (py < 0) py += image_height;
-                    int y_offset = py * scanline_offset;
+                px %= image_width;
+                py %= image_height;
+                if (px < 0) px += image_width;
+                if (py < 0) py += image_height;
+                int y_offset = py * scanline_offset;
 
-                    Q_ASSERT(px >= 0 && px < image_width);
-                    Q_ASSERT(py >= 0 && py < image_height);
+                Q_ASSERT(px >= 0 && px < image_width);
+                Q_ASSERT(py >= 0 && py < image_height);
 
-                    *b = image_bits[y_offset + px];
-                    x += fdx;
-                    y += fdy;
-                    ++b;
-                }
-                func(target, buffer, l, coverage);
-                target += l;
-                length -= l;
-            }
-            ++spans;
-        }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
-        while (count--) {
-            void *t = data->rasterBuffer->scanLine(spans->y);
-
-            uint *target = ((uint *)t) + spans->x;
-            uint *image_bits = (uint *)data->texture.imageData;
-
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
-
-            qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-            qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-            qreal w = data->m23 * cy + data->m13 * cx + data->m33;
-
-            const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-            int length = spans->len;
-            while (length) {
-                int l = qMin(length, buffer_size);
-                const uint *end = buffer + l;
-                uint *b = buffer;
-                while (b < end) {
-                    const qreal iw = w == 0 ? 1 : 1 / w;
-                    const qreal tx = x * iw;
-                    const qreal ty = y * iw;
-                    int px = int(tx) - (tx < 0);
-                    int py = int(ty) - (ty < 0);
-
-                    px %= image_width;
-                    py %= image_height;
-                    if (px < 0) px += image_width;
-                    if (py < 0) py += image_height;
-                    int y_offset = py * scanline_offset;
-
-                    Q_ASSERT(px >= 0 && px < image_width);
-                    Q_ASSERT(py >= 0 && py < image_height);
-
-                    *b = image_bits[y_offset + px];
-                    x += fdx;
-                    y += fdy;
+                *b = image_bits[y_offset + px];
+                x += fdx;
+                y += fdy;
+                w += fdw;
+                //force increment to avoid /0
+                if (!w) {
                     w += fdw;
-                    //force increment to avoid /0
-                    if (!w) {
-                        w += fdw;
-                    }
-                    ++b;
                 }
-                func(target, buffer, l, coverage);
-                target += l;
-                length -= l;
+                ++b;
             }
-            ++spans;
+            func(target, buffer, l, coverage);
+            target += l;
+            length -= l;
         }
+        ++spans;
     }
 }
 
@@ -5465,138 +4956,74 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
     SRC buffer[buffer_size];
     const int image_width = data->texture.width;
     const int image_height = data->texture.height;
+    const qreal fdx = data->m11;
+    const qreal fdy = data->m12;
+    const qreal fdw = data->m13;
 
-    if (data->fast_matrix) {
-        // The increment pr x in the scanline
-        const int fdx = (int)(data->m11 * fixed_scale);
-        const int fdy = (int)(data->m12 * fixed_scale);
-
-        while (count--) {
-            const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-            if (coverage == 0) {
-                ++spans;
-                continue;
-            }
-
-            DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
-                        + spans->x;
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
-            int x = int((data->m21 * cy
-                         + data->m11 * cx + data->dx) * fixed_scale);
-            int y = int((data->m22 * cy
-                         + data->m12 * cx + data->dy) * fixed_scale);
-            int length = spans->len;
-
-            while (length) {
-                const int l = qMin(length, buffer_size);
-
-                const SRC *end = buffer + l;
-                SRC *b = buffer;
-                while (b < end) {
-                    int px = (x >> 16) % image_width;
-                    int py = (y >> 16) % image_height;
-
-                    if (px < 0)
-                        px += image_width;
-                    if (py < 0)
-                        py += image_height;
-
-                    *b = ((SRC*)data->texture.scanLine(py))[px];
-                    ++b;
-
-                    x += fdx;
-                    y += fdy;
-                }
-
-                if (!SRC::hasAlpha() && coverage == 255) {
-                    qt_memconvert(dest, buffer, l);
-                } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-                {
-                    blendUntransformed_dest24(dest, buffer, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                    blendUntransformed_dest16(dest, buffer, coverage, l);
-                } else {
-                    blendUntransformed_unaligned(dest, buffer, coverage, l);
-                }
-
-                dest += l;
-                length -= l;
-            }
+    while (count--) {
+        const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
+        if (coverage == 0) {
             ++spans;
+            continue;
         }
-    } else {
-        const qreal fdx = data->m11;
-        const qreal fdy = data->m12;
-        const qreal fdw = data->m13;
 
-        while (count--) {
-            const quint8 coverage = (data->texture.const_alpha * spans->coverage) >> 8;
-            if (coverage == 0) {
-                ++spans;
-                continue;
-            }
+        DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
+                    + spans->x;
 
-            DST *dest = (DST*)data->rasterBuffer->scanLine(spans->y)
-                        + spans->x;
+        const qreal cx = spans->x + qreal(0.5);
+        const qreal cy = spans->y + qreal(0.5);
 
-            const qreal cx = spans->x + qreal(0.5);
-            const qreal cy = spans->y + qreal(0.5);
+        qreal x = data->m21 * cy + data->m11 * cx + data->dx;
+        qreal y = data->m22 * cy + data->m12 * cx + data->dy;
+        qreal w = data->m23 * cy + data->m13 * cx + data->m33;
 
-            qreal x = data->m21 * cy + data->m11 * cx + data->dx;
-            qreal y = data->m22 * cy + data->m12 * cx + data->dy;
-            qreal w = data->m23 * cy + data->m13 * cx + data->m33;
+        int length = spans->len;
+        while (length) {
+            const int l = qMin(length, buffer_size);
+            const SRC *end = buffer + l;
+            SRC *b = buffer;
+            while (b < end) {
+                const qreal iw = w == 0 ? 1 : 1 / w;
+                const qreal tx = x * iw;
+                const qreal ty = y * iw;
 
-            int length = spans->len;
-            while (length) {
-                const int l = qMin(length, buffer_size);
-                const SRC *end = buffer + l;
-                SRC *b = buffer;
-                while (b < end) {
-                    const qreal iw = w == 0 ? 1 : 1 / w;
-                    const qreal tx = x * iw;
-                    const qreal ty = y * iw;
+                int px = int(tx) - (tx < 0);
+                int py = int(ty) - (ty < 0);
 
-                    int px = int(tx) - (tx < 0);
-                    int py = int(ty) - (ty < 0);
+                px %= image_width;
+                py %= image_height;
+                if (px < 0)
+                    px += image_width;
+                if (py < 0)
+                    py += image_height;
 
-                    px %= image_width;
-                    py %= image_height;
-                    if (px < 0)
-                        px += image_width;
-                    if (py < 0)
-                        py += image_height;
+                *b = ((SRC*)data->texture.scanLine(py))[px];
+                ++b;
 
-                    *b = ((SRC*)data->texture.scanLine(py))[px];
-                    ++b;
-
-                    x += fdx;
-                    y += fdy;
+                x += fdx;
+                y += fdy;
+                w += fdw;
+                // force increment to avoid /0
+                if (!w)
                     w += fdw;
-                    // force increment to avoid /0
-                    if (!w)
-                        w += fdw;
-                }
-                if (!SRC::hasAlpha() && coverage == 255) {
-                    qt_memconvert(dest, buffer, l);
-                } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3))
-                {
-                    blendUntransformed_dest24(dest, buffer, coverage, l);
-                } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
-                           (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
-                    blendUntransformed_dest16(dest, buffer, coverage, l);
-                } else {
-                    blendUntransformed_unaligned(dest, buffer, coverage, l);
-                }
-
-                dest += l;
-                length -= l;
             }
-            ++spans;
+            if (!SRC::hasAlpha() && coverage == 255) {
+                qt_memconvert(dest, buffer, l);
+            } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
+                        (quintptr(dest) & 3) == (quintptr(buffer) & 3))
+            {
+                blendUntransformed_dest24(dest, buffer, coverage, l);
+            } else if (sizeof(DST) == 2 && sizeof(SRC) == 2 && l >= 2 &&
+                        (quintptr(dest) & 3) == (quintptr(buffer) & 3)) {
+                blendUntransformed_dest16(dest, buffer, coverage, l);
+            } else {
+                blendUntransformed_unaligned(dest, buffer, coverage, l);
+            }
+
+            dest += l;
+            length -= l;
         }
+        ++spans;
     }
 }
 

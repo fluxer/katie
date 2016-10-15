@@ -901,7 +901,6 @@ void QRasterPaintEnginePrivate::updateMatrixData(QSpanData *spanData, const QBru
         spanData->dy = -m.dy();
         spanData->txop = m.type();
         spanData->bilinear = bilinear;
-        spanData->fast_matrix = qAbs(m.dx()) < 1e4 && qAbs(m.dy()) < 1e4;
         spanData->adjustSpanMethods();
     } else {
         spanData->setupMatrix(m, bilinear);
@@ -4051,13 +4050,6 @@ void QSpanData::setupMatrix(const QTransform &matrix, int bilin)
     dy = inv.dy();
     txop = inv.type();
     bilinear = bilin;
-
-    const bool affine = !m13 && !m23;
-    fast_matrix = affine
-        && m11 * m11 + m21 * m21 < 1e4
-        && m12 * m12 + m22 * m22 < 1e4
-        && qAbs(dx) < 1e4
-        && qAbs(dy) < 1e4;
 
     adjustSpanMethods();
 }
