@@ -626,22 +626,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QProgressDialog", "QtGui/qprogressdialog.h"},
     { "QWizard", "QtGui/qwizard.h"},
     { "QWizardPage", "QtGui/qwizard.h"},
-    { "QAbstractMessageHandler", "QtXmlPatterns/qabstractmessagehandler.h"},
-    { "QAbstractUriResolver", "QtXmlPatterns/qabstracturiresolver.h"},
-    { "QXmlNodeModelIndex", "QtXmlPatterns/qabstractxmlnodemodel.h"},
-    { "QAbstractXmlNodeModel", "QtXmlPatterns/qabstractxmlnodemodel.h"},
-    { "QXmlItem", "QtXmlPatterns/qabstractxmlnodemodel.h"},
-    { "QAbstractXmlReceiver", "QtXmlPatterns/qabstractxmlreceiver.h"},
-    { "QSimpleXmlNodeModel", "QtXmlPatterns/qsimplexmlnodemodel.h"},
-    { "QSourceLocation", "QtXmlPatterns/qsourcelocation.h"},
-    { "QXmlFormatter", "QtXmlPatterns/qxmlformatter.h"},
-    { "QXmlName", "QtXmlPatterns/qxmlname.h"},
-    { "QXmlNamePool", "QtXmlPatterns/qxmlnamepool.h"},
-    { "QXmlQuery", "QtXmlPatterns/qxmlquery.h"},
-    { "QXmlResultItems", "QtXmlPatterns/qxmlresultitems.h"},
-    { "QXmlSchema", "QtXmlPatterns/qxmlschema.h"},
-    { "QXmlSchemaValidator", "QtXmlPatterns/qxmlschemavalidator.h"},
-    { "QXmlSerializer", "QtXmlPatterns/qxmlserializer.h"},
     { "QScriptEngineDebugger", "QtScriptTools/qscriptenginedebugger.h"},
     { "QDeclarativeComponent", "QtDeclarative/qdeclarativecomponent.h"},
     { "QDeclarativeContext", "QtDeclarative/qdeclarativecontext.h"},
@@ -752,6 +736,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 746;
+static const int qclass_lib_count = 730;
 
 #endif
