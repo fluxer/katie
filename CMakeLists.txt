@@ -26,8 +26,8 @@ include(KatieMacros)
 include(KatieBuildMacros)
 
 # components and tools that will be build, changed depending on the requirements availability
-set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Help Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
-set(KATIE_TOOLS "moc uic rcc qhelpgenerator qcollectiongenerator lupdate lrelease lconvert designer qscript qtconfig")
+set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Network Sql Svg Xml XmlPatterns Script ScriptTools Test UiTools")
+set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
 
 # for config.cpp.cmake
 string(TIMESTAMP KATIE_DATE "%Y-%m-%d")
@@ -199,7 +199,7 @@ if(KATIE_ALLINONE)
     add_definitions(-DQT_ALLINONE)
 endif()
 
-# for 3rd party source used in help and test components
+# for 3rd party source used in test components
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
 if(HAVE_SYS_TIME_H)
     add_definitions(-DTIME_WITH_SYS_TIME=1 -DHAVE_SYS_TIME_H)
@@ -579,7 +579,6 @@ include(src/shared/linguist/linguist.cmake)
 include(src/shared/bootstrap.cmake)
 if(NOT KATIE_BOOTSTRAP)
     include(src/shared/deviceskin/deviceskin.cmake)
-    include(src/shared/help/help.cmake)
     include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
     include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
     include(src/shared/findwidget/findwidget.cmake)
@@ -595,7 +594,6 @@ if(NOT KATIE_BOOTSTRAP)
     add_subdirectory(src/declarative)
     add_subdirectory(src/designer)
     add_subdirectory(src/gui)
-    add_subdirectory(src/help)
     add_subdirectory(src/imports)
     add_subdirectory(src/network)
     if(WITH_OPENGL AND OPENGL_FOUND)

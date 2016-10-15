@@ -232,17 +232,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "TaskMenuComponent", "QtDesigner/taskmenu_component.h"},
     { "QExtensionFactory", "QtDesigner/default_extensionfactory.h"},
     { "QExtensionManager", "QtDesigner/qextensionmanager.h"},
-    { "QHelpContentItem", "QtHelp/qhelpcontentwidget.h"},
-    { "QHelpContentModel", "QtHelp/qhelpcontentwidget.h"},
-    { "QHelpContentWidget", "QtHelp/qhelpcontentwidget.h"},
-    { "QHelpEngine", "QtHelp/qhelpengine.h"},
-    { "QHelpEngineCore", "QtHelp/qhelpenginecore.h"},
-    { "QHelpIndexModel", "QtHelp/qhelpindexwidget.h"},
-    { "QHelpIndexWidget", "QtHelp/qhelpindexwidget.h"},
-    { "QHelpSearchQuery", "QtHelp/qhelpsearchengine.h"},
-    { "QHelpSearchEngine", "QtHelp/qhelpsearchengine.h"},
-    { "QHelpSearchQueryWidget", "QtHelp/qhelpsearchquerywidget.h"},
-    { "QHelpSearchResultWidget", "QtHelp/qhelpsearchresultwidget.h"},
     { "QScriptable", "QtScript/qscriptable.h"},
     { "QScriptClass", "QtScript/qscriptclass.h"},
     { "QScriptClassPropertyIterator", "QtScript/qscriptclasspropertyiterator.h"},
@@ -763,6 +752,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 757;
+static const int qclass_lib_count = 746;
 
 #endif
