@@ -1371,7 +1371,7 @@ Options:
 <context>
     <name>NewForm</name>
     <message>
-        <location filename="../src/tools/designer/newform.cpp" line="+78"/>
+        <location filename="../src/tools/designer/newform.cpp" line="+74"/>
         <source>Show this Dialog on Startup</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1715,115 +1715,6 @@ Options:
         <location/>
         <source>&lt;p&gt;&lt;a href=&quot;http://qt.nokia.com&quot;&gt;http://qt.nokia.com&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://www.kde.org&quot;&gt;http://www.kde.org&lt;/a&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QCollectionGenerator</name>
-    <message>
-        <location filename="../src/tools/qcollectiongenerator/qcollectiongenerator.cpp" line="+137"/>
-        <source>Unknown token at line %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Unknown token at line %1. Expected &quot;QtHelpCollectionProject&quot;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Missing end tags.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+145"/>
-        <source>Missing input or output file for help file generation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+59"/>
-        <source>Missing output file name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Qt Collection Generator version 1.0 (Qt %1)
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Missing collection config file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Usage:
-    qcollectiongenerator [options] &lt;collection-config-file&gt;
-
-Options:
-    -h
-    -help
-           Display this information and exit.
-
-    -o &lt;collection-file&gt;
-           Generates a collection file called
-           &lt;collection-file&gt;. If this option is not
-           specified a default name will be used.
-
-    -v
-           Displays the version of qcollectiongenerator and exit.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Could not open %1.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Reading collection config file...
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Collection config file error: %1
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Generating help for %1...
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Creating collection file...
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>The file %1 cannot be overwritten.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+61"/>
-        <location line="+21"/>
-        <location line="+22"/>
-        <source>Cannot open %1.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Cannot open referenced image file %1.
-</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2364,12 +2255,12 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+180"/>
+        <location line="+179"/>
         <source>Widget Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+297"/>
+        <location line="+293"/>
         <source>Save Forms?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2418,56 +2309,6 @@ Would you like to retry?</source>
     </message>
 </context>
 <context>
-    <name>QHelpGenerator</name>
-    <message>
-        <location filename="../src/tools/qhelpgenerator/qhelpgenerator.cpp" line="+90"/>
-        <source>Missing output file name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Qt Help Generator version 1.0 (Qt %1)
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Missing Qt help project file.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Usage:
-    qhelpgenerator [options] &lt;help-project-file&gt;
-
-Options:
-    -o &lt;compressed-file&gt;
-           Generates a Qt compressed help file called &lt;compressed-file&gt;.
-           If this option is not specified a default name will be used.
-
-    -c
-           Checks whether all links in HTML files point to files in this
-           help project.
-
-    -v
-           Displays the version of qhelpgenerator.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>Could not open %1.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Could not create output directory: %1
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QObject</name>
     <message>
         <location filename="../src/tools/lupdate/lupdate.cpp" line="-139"/>
@@ -2476,7 +2317,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+65"/>
+        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+62"/>
         <source>Session Bus</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2514,7 +2355,7 @@ Options:
 <context>
     <name>QtDBusViewer</name>
     <message>
-        <location line="-20"/>
+        <location line="-19"/>
         <source>Qt D-Bus Viewer</source>
         <translation type="unfinished"></translation>
     </message>

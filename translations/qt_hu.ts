@@ -168,7 +168,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
         <source>Close Tab</source>
         <translation>Fül bezárása</translation>
     </message>
@@ -925,7 +925,7 @@
 <context>
     <name>FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1758"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,44 +1013,6 @@
         <source>XX Icon Selected off</source>
         <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
-        <source>Services</source>
-        <translation>Szolgáltatások</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide %1</source>
-        <translation>%1 elrejtése</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Others</source>
-        <translation>Minden más elrejtése</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show All</source>
-        <translation>Mindet mutat</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Preferences...</source>
-        <translation>Beállítások...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit %1</source>
-        <translation>Kilépés: %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>About %1</source>
-        <translation>%1 névjegye</translation>
     </message>
 </context>
 <context>
@@ -1156,7 +1118,7 @@
     <name>QAbstractSocket</name>
     <message>
         <location filename="../src/network/socket/qabstractsocket.cpp" line="+555"/>
-        <location line="+822"/>
+        <location line="+810"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>A művelet nem támogatott socketeken</translation>
@@ -1164,7 +1126,7 @@
     <message>
         <location line="-686"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+652"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>A kiszolgáló nem található</translation>
@@ -1201,7 +1163,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1253"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1242"/>
         <source>&amp;Step up</source>
         <translation>Lépés &amp;felfelé</translation>
     </message>
@@ -1242,7 +1204,7 @@
         <translation>Aktiválás</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>&apos;%1&apos; program Qt %2-t igényel (Qt %3 van telepítve).</translation>
     </message>
@@ -1252,7 +1214,7 @@
         <translation>Hiba: inkompatíbilis Qt függvénykönyvtár</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2086"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1284,7 +1246,7 @@
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1373"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
         <source>Hu&amp;e:</source>
         <translation>Á&amp;rnyalat:</translation>
     </message>
@@ -1324,7 +1286,7 @@
         <translation>Szín választás</translation>
     </message>
     <message>
-        <location line="+181"/>
+        <location line="+131"/>
         <source>&amp;Basic colors</source>
         <translation>Ala&amp;p színek</translation>
     </message>
@@ -1371,7 +1333,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>Displays this help.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1491,7 +1453,7 @@
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2267"/>
         <source>AM</source>
         <translation>DE</translation>
     </message>
@@ -2751,7 +2713,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+743"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2845,14 +2807,9 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+607"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
         <source>What&apos;s This?</source>
         <translation>Mi ez?</translation>
-    </message>
-    <message>
-        <location line="-127"/>
-        <source>Done</source>
-        <translation>Kész</translation>
     </message>
 </context>
 <context>
@@ -2991,19 +2948,13 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Méret</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>Kind</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>Típus</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>Date Modified</source>
         <translation>Módosítás dátuma</translation>
     </message>
@@ -3042,7 +2993,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+193"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+164"/>
         <source>Debug Message:</source>
         <translation>Debug üzenet:</translation>
     </message>
@@ -3057,7 +3008,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Végzetes hiba:</translation>
     </message>
     <message>
-        <location line="+195"/>
+        <location line="+192"/>
         <source>&amp;Show this message again</source>
         <translation>Üzenet megjelenítése i&amp;smét</translation>
     </message>
@@ -3114,8 +3065,8 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+576"/>
-        <location line="+540"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+546"/>
+        <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Minden fájl (*)</translation>
     </message>
@@ -3127,23 +3078,23 @@ Container pages should only be added by specifying them in XML returned by the d
     <message>
         <location line="-3"/>
         <location line="+55"/>
-        <location line="+1551"/>
+        <location line="+1480"/>
         <source>&amp;Open</source>
         <translation>&amp;Megnyitás</translation>
     </message>
     <message>
-        <location line="-1606"/>
+        <location line="-1535"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>Menté&amp;s</translation>
     </message>
     <message>
-        <location line="-786"/>
+        <location line="-761"/>
         <source>Open</source>
         <translation>Megnyitás</translation>
     </message>
     <message>
-        <location line="+1576"/>
+        <location line="+1486"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 már létezik.
@@ -3164,7 +3115,7 @@ Ellenőrizze, hogy jól adta-e meg a fájl nevét.</translation>
         <translation>Számítógép</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1565"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1475"/>
         <source>&amp;Rename</source>
         <translation>Át&amp;nevezés</translation>
     </message>
@@ -3180,13 +3131,13 @@ Ellenőrizze, hogy jól adta-e meg a fájl nevét.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+699"/>
+        <location line="+674"/>
         <source>Directory:</source>
         <translation>Könyvtár:</translation>
     </message>
     <message>
-        <location line="+804"/>
-        <location line="+866"/>
+        <location line="+739"/>
+        <location line="+860"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -3217,12 +3168,12 @@ Biztosan törölni akarja?</translation>
         <translation>Legutóbbi helyek</translation>
     </message>
     <message>
-        <location line="-2613"/>
+        <location line="-2517"/>
         <source>Save As</source>
         <translation>Mentés másként</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+483"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
         <source>Drive</source>
         <translation>Meghajtó</translation>
     </message>
@@ -3233,31 +3184,19 @@ Biztosan törölni akarja?</translation>
         <translation>Fájl</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>File Folder</source>
-        <comment>Match Windows Explorer</comment>
-        <translation>Mappa</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Folder</source>
         <comment>All other platforms</comment>
         <translation>Mappa</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Alias</source>
-        <comment>Mac OS X Finder</comment>
-        <translation>Link</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
         <translation>Parancsikon</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Unknown</source>
         <translation>Ismeretlen</translation>
     </message>
@@ -3272,41 +3211,39 @@ Biztosan törölni akarja?</translation>
         <translation>Megjelenítés </translation>
     </message>
     <message>
-        <location line="+2031"/>
+        <location line="+1935"/>
         <source>New Folder</source>
         <translation>Új könyvtár</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-1928"/>
         <source>&amp;New Folder</source>
         <translation>Ú&amp;j könyvtár</translation>
     </message>
     <message>
-        <location line="+707"/>
+        <location line="+682"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>&amp;Kiválasztás</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
         <source>Remove</source>
         <translation>Törlés</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-743"/>
-        <location line="+703"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-718"/>
+        <location line="+678"/>
         <source>File &amp;name:</source>
         <translation>Fájl &amp;neve:</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Look in:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Back</source>
         <translation type="unfinished">Vissza</translation>
     </message>
@@ -3317,7 +3254,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Forward</source>
         <translation type="unfinished">Előre</translation>
     </message>
@@ -3328,7 +3264,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Parent Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3339,7 +3274,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Create New Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3350,7 +3284,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>List View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3361,7 +3294,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Detail View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3372,7 +3304,6 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Files of type:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3380,7 +3311,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+858"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+741"/>
         <source>Invalid filename</source>
         <translation>Érvénytelen fájlnév</translation>
     </message>
@@ -3417,18 +3348,13 @@ Biztosan törölni akarja?</translation>
         <translation>Módosítás dátuma</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
-        <source>My Computer</source>
-        <translation>Számítógép</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
         <source>Computer</source>
         <translation>Számítógép</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-177"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-157"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
@@ -3464,56 +3390,56 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
-        <location line="+1205"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
+        <location line="+1140"/>
         <source>Normal</source>
         <translation>Normál</translation>
     </message>
     <message>
-        <location line="-1202"/>
+        <location line="-1137"/>
         <location line="+12"/>
-        <location line="+1178"/>
+        <location line="+1113"/>
         <source>Bold</source>
         <translation>Kövér</translation>
     </message>
     <message>
-        <location line="-1187"/>
-        <location line="+1189"/>
+        <location line="-1122"/>
+        <location line="+1124"/>
         <source>Demi Bold</source>
         <translation>Félkövér</translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1121"/>
         <location line="+18"/>
-        <location line="+1164"/>
+        <location line="+1099"/>
         <source>Black</source>
         <translation>Fekete</translation>
     </message>
     <message>
-        <location line="-1174"/>
+        <location line="-1109"/>
         <source>Demi</source>
         <translation>Félkövér</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1174"/>
+        <location line="+1109"/>
         <source>Light</source>
         <translation>Világos</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1027"/>
+        <location line="-959"/>
+        <location line="+962"/>
         <source>Italic</source>
         <translation>Dőlt</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1026"/>
+        <location line="-959"/>
+        <location line="+961"/>
         <source>Oblique</source>
         <translation>Ferde</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+708"/>
         <source>Any</source>
         <translation>Bármelyik</translation>
     </message>
@@ -3686,7 +3612,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+746"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
         <source>&amp;Font</source>
         <translation>&amp;Betűtípus</translation>
     </message>
@@ -3726,7 +3652,7 @@ Biztosan törölni akarja?</translation>
         <translation>Í&amp;rásmód</translation>
     </message>
     <message>
-        <location line="-575"/>
+        <location line="-564"/>
         <source>Select Font</source>
         <translation>Betűtípus kiválasztása</translation>
     </message>
@@ -4055,8 +3981,8 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Hozzáférés megtagadva</translation>
     </message>
@@ -4079,7 +4005,7 @@ Biztosan törölni akarja?</translation>
         <translation>Nincs több hely az eszközön</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
         <source>Unknown error</source>
         <translation>Ismeretlen hiba</translation>
     </message>
@@ -4087,7 +4013,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QInputContext</name>
     <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+242"/>
+        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
         <source>XIM</source>
         <translation>XIM</translation>
     </message>
@@ -4095,16 +4021,6 @@ Biztosan törölni akarja?</translation>
         <location line="+23"/>
         <source>XIM input method</source>
         <translation>XIM beviteli mód</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Windows input method</source>
-        <translation>Windows beviteli mód</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Mac OS X input method</source>
-        <translation>Mac OS X beviteli mód</translation>
     </message>
 </context>
 <context>
@@ -4196,7 +4112,7 @@ Biztosan törölni akarja?</translation>
         <translation>Plugin ellenőrző adat eltérés: &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+407"/>
+        <location line="+322"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>A(z) &apos;%1&apos; plugin inkompatíbilis Qt függvénykönyvtárat használ. (%2.%3.%4) [%5]</translation>
     </message>
@@ -4206,8 +4122,8 @@ Biztosan törölni akarja?</translation>
         <translation>Ismeretlen hiba</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+127"/>
+        <location line="-444"/>
+        <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Az osztott függvénykönyvtár nem található.</translation>
@@ -4608,7 +4524,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
         <source>Corner Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4616,18 +4532,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1198"/>
-        <source>Help</source>
-        <translation>Súgó</translation>
-    </message>
-    <message>
-        <location line="-818"/>
-        <location line="+817"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location line="+486"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1485"/>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4637,7 +4542,7 @@ Biztosan törölni akarja?</translation>
         <translation>A Qt névjegye</translation>
     </message>
     <message>
-        <location line="-1580"/>
+        <location line="-1390"/>
         <source>Show Details...</source>
         <translation>Részletek megjelenítése...</translation>
     </message>
@@ -4647,7 +4552,7 @@ Biztosan törölni akarja?</translation>
         <translation>Részletek elrejtése...</translation>
     </message>
     <message>
-        <location line="+1545"/>
+        <location line="+1355"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Qt névjegye&lt;/h3&gt;&lt;p&gt;Ez a program a Qt %1 verzióját használja.&lt;/p&gt;</translation>
     </message>
@@ -4817,7 +4722,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
         <source>Invalid URI: %1</source>
         <translation>Érvénytelen cím: %1</translation>
     </message>
@@ -4843,14 +4748,14 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
         <source>Request for opening non-local file %1</source>
         <translation>Nem helyi fájl megnyitásának kísérlete: %1</translation>
     </message>
     <message>
-        <location line="+45"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+36"/>
+        <location line="+44"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+35"/>
         <source>Error opening %1: %2</source>
         <translation>Hiba a(z) %1 megnyitásakor: %2</translation>
     </message>
@@ -5555,12 +5460,12 @@ Válasszon másik fájlnevet.</translation>
         <translation>Oldalbeállítás</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+81"/>
         <source>Print Preview</source>
         <translation>Nyomtatási kép</translation>
     </message>
@@ -5640,12 +5545,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>Oldalbeállítás</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>Bezárás</translation>
-    </message>
-    <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Export to PDF</source>
         <translation>Exportálás PDF-be</translation>
     </message>
@@ -5827,29 +5727,28 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+883"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Hiba a folyamat kimenetéről olvasáskor</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Hiba a folyamat bemenetére íráskor</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="+63"/>
         <source>Process crashed</source>
         <translation>A folyamat összeomlott</translation>
     </message>
     <message>
-        <location line="+977"/>
+        <location line="+909"/>
         <source>No program defined</source>
         <translation>A programnév nincs megadva</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
         <source>Could not open input redirection for reading</source>
         <translation>Az átirányított bemenet megnyitása olvasásra sikertelen</translation>
     </message>
@@ -5859,12 +5758,12 @@ Válasszon másik fájlnevet.</translation>
         <translation>Az átirányított kimenet megnyitása írásra sikertelen</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+220"/>
         <source>Resource error (fork failure): %1</source>
         <translation>A forkolás sikertelen: %1</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+249"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -6369,7 +6268,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+408"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+402"/>
         <source>Scroll here</source>
         <translation>Görgetés itt</translation>
     </message>
@@ -6454,7 +6353,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+262"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1:a kulcs beállítása sikertelen a zároláson</translation>
     </message>
@@ -6464,8 +6363,8 @@ Válasszon másik fájlnevet.</translation>
         <translation>%1: a megadott méret kissebb mint 0</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+176"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+174"/>
         <source>%1: unable to lock</source>
         <translation>%1: a zárolás sikertelen</translation>
     </message>
@@ -6545,7 +6444,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+396"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+309"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Szóköz</translation>
@@ -7620,41 +7519,41 @@ Válasszon másik fájlnevet.</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+601"/>
-        <location line="+135"/>
+        <location line="+477"/>
+        <location line="+87"/>
         <source>Ctrl</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+138"/>
+        <location line="-86"/>
+        <location line="+90"/>
         <source>Shift</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-137"/>
-        <location line="+135"/>
+        <location line="-89"/>
+        <location line="+87"/>
         <source>Alt</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+130"/>
+        <location line="-86"/>
+        <location line="+82"/>
         <source>Meta</source>
         <translation></translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-11"/>
         <source>+</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+31"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-945"/>
+        <location line="-772"/>
         <source>Home Page</source>
         <translation>Kezdőoldal</translation>
     </message>
@@ -7776,7 +7675,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
         <source>Unable to write data: %1</source>
         <translation>Az adat nem írható: %1</translation>
     </message>
@@ -7802,7 +7701,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>SSL kézfogás hiba: %1</translation>
     </message>
     <message>
-        <location line="-798"/>
+        <location line="-697"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Az SSL kontextus létrehozása sikertelen (%1)</translation>
     </message>
@@ -8029,7 +7928,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8485,7 +8384,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
         <source>What&apos;s This?</source>
         <translation>Mi ez?</translation>
     </message>
@@ -8493,7 +8392,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5484"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8501,7 +8400,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+598"/>
         <source>Go Back</source>
         <translation>Visszalépés</translation>
     </message>
@@ -8511,7 +8410,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>Folytatás</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Commit</source>
         <translation>Véglegesítés</translation>
     </message>
@@ -8526,12 +8425,12 @@ Válasszon másik fájlnevet.</translation>
         <translation>Súgó</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-13"/>
         <source>&lt; &amp;Back</source>
         <translation>&lt; &amp;Vissza</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>&amp;Finish</source>
         <translation>&amp;Befejezés</translation>
     </message>
@@ -8547,11 +8446,6 @@ Válasszon másik fájlnevet.</translation>
     </message>
     <message>
         <location line="-8"/>
-        <source>&amp;Next</source>
-        <translation>&amp;Következő</translation>
-    </message>
-    <message>
-        <location line="+0"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Következő &gt;</translation>
     </message>
@@ -8559,7 +8453,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1076"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1034"/>
         <source>&amp;Restore</source>
         <translation>&amp;Visszaállítás</translation>
     </message>
@@ -8606,7 +8500,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="-1799"/>
+        <location line="-1757"/>
         <source>Minimize</source>
         <translation>Kis méret</translation>
     </message>
@@ -8621,7 +8515,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>Bezárás</translation>
     </message>
     <message>
-        <location line="+2015"/>
+        <location line="+1973"/>
         <source>&amp;Unshade</source>
         <translation>&amp;Lenyitás</translation>
     </message>
@@ -8742,34 +8636,6 @@ Válasszon másik fájlnevet.</translation>
         <location line="+1"/>
         <source>error in the text declaration of an external entity</source>
         <translation>hiba egy külső entitás szövegdeklarációjában</translation>
-    </message>
-</context>
-<context>
-    <name>QXmlPatternistCLI</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
-        <source>Warning in %1, at line %2, column %3: %4</source>
-        <translation>Figyelmeztetés a(z) %1 helyen, sor %2, oszlop %3: %4</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning in %1: %2</source>
-        <translation>Figyelmeztetés a(z) %1 helyen: %2</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unknown location</source>
-        <translation>Ismeretlen hely</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error %1 in %2, at line %3, column %4: %5</source>
-        <translation>%1 hiba a(z) %2 %3. sorának %4. oszlopában: %5</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Error %1 in %2: %3</source>
-        <translation>%1 hiba a(z) %2 helyen: %3</translation>
     </message>
 </context>
 <context>
@@ -9268,2478 +9134,6 @@ to
         <location line="+252"/>
         <source>Select Resource</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtXmlPatterns</name>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+344"/>
-        <source>%1 is an unsupported encoding.</source>
-        <translation>%1 nem támogatott kódolás.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains octets which are disallowed in the requested encoding %2.</source>
-        <translation>%1 olyan okteteket tartalmaz, amelyek nem megengedettek a kért %2 kódolásban.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
-        <translation>%1 kódrészlet %2 helyen, %3 kódolással érvénytelen XML karakter.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
-        <source>Network timeout.</source>
-        <translation>Hálózati időtúllépés.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
-        <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
-        <translation>%1 elem nem szerializálható, mert a document elemen kívül szerepel.</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <source>Attribute %1 can&apos;t be serialized because it appears at the top level.</source>
-        <translation>%1 attribútum nem szerializálható, mert legfelső szinten szerepel.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+80"/>
-        <source>Year %1 is invalid because it begins with %2.</source>
-        <translation>%1 év érvénytelen, mert %2-vel kezdődik.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Day %1 is outside the range %2..%3.</source>
-        <translation>A(z) %1. nap nem esik %2 és %3 közé.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Month %1 is outside the range %2..%3.</source>
-        <translation>A(z) %1. hónap nem esik %2 és %3 közé.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Overflow: Can&apos;t represent date %1.</source>
-        <translation>Túlcsordulás: A(z) %1 dátum nem reprezentálható.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Day %1 is invalid for month %2.</source>
-        <translation>Nincs %1 nap %2 hónapban.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>Time 24:%1:%2.%3 is invalid. Hour is 24, but minutes, seconds, and milliseconds are not all 0; </source>
-        <translation>Az 24:%1:%2.%3 időpont érvénytelen, mert az óra értéke 24, de a többi érték nem 0; </translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Time %1:%2:%3.%4 is invalid.</source>
-        <translation>Az %1:%2:%3.%4 időpont érvénytelen.</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Overflow: Date can&apos;t be represented.</source>
-        <translation>Túlcsordulás: A dátum nem reprezentálható.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="+99"/>
-        <location line="+15"/>
-        <source>At least one component must be present.</source>
-        <translation>Legalább egy komponenst meg kell adni.</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>At least one time component must appear after the %1-delimiter.</source>
-        <translation>Legalább egy időkomponenst meg kell adni a(z) %1 elválasztó után.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qanyuri_p.h" line="+132"/>
-        <source>%1 is not a valid value of type %2.</source>
-        <translation>%1 nem érvényes %2 típusú érték.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomiccasters_p.h" line="+223"/>
-        <source>When casting to %1 from %2, the source value cannot be %3.</source>
-        <translation>Ha %2-t %1-re kényszerítünk, a kiinduló érték nem lehet %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+65"/>
-        <source>Integer division (%1) by zero (%2) is undefined.</source>
-        <translation>A nullával (%2) való egészosztás (%1) nincs értelmezve.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Division (%1) by zero (%2) is undefined.</source>
-        <translation>A nullával (%2) való osztás (%1) nincs értelmezve.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Modulus division (%1) by zero (%2) is undefined.</source>
-        <translation>A nullával (%2) való maradékos osztás (%1) nincs értelmezve.</translation>
-    </message>
-    <message>
-        <location line="+122"/>
-        <location line="+32"/>
-        <source>Dividing a value of type %1 by %2 (not-a-number) is not allowed.</source>
-        <translation>%1 típusú érték %2-vel osztása nem megengedett, mert az nem szám.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Dividing a value of type %1 by %2 or %3 (plus or minus zero) is not allowed.</source>
-        <translation>%1 típusú érték osztása %2 vagy %3 (pozitív vagy negatív nulla) értékkel nem megengedett.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Multiplication of a value of type %1 by %2 or %3 (plus or minus infinity) is not allowed.</source>
-        <translation>%1 típusú érték szorzása %2 vagy %3 (pozitív vagy negatív végtelen) típusú értékkel nem megengedett.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicvalue.cpp" line="+79"/>
-        <source>A value of type %1 cannot have an Effective Boolean Value.</source>
-        <translation>%1 típusú érték nem kaphat effektív logikai értéket.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qboolean.cpp" line="+78"/>
-        <source>Effective Boolean Value cannot be calculated for a sequence containing two or more atomic values.</source>
-        <translation>Effektív logikai érték nem számítható olyan sorozatra, melyben kettő vagy több atomi érték szerepel.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+402"/>
-        <source>Value %1 of type %2 exceeds maximum (%3).</source>
-        <translation>A(z) %2 típusú %1 érték meghaladja a maximumot (%3).</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Value %1 of type %2 is below minimum (%3).</source>
-        <translation>A(z) %2 típusú %1 érték kisebb, mint a minimum (%3).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+91"/>
-        <source>A value of type %1 must contain an even number of digits. The value %2 does not.</source>
-        <translation>%1 típusú értékben páros számú számjegynek kell szerepelnie. A(z) %2 érték nem megfelelő.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>%1 is not valid as a value of type %2.</source>
-        <translation>%1 nem érvényes %2 típusú érték.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qapplytemplate.cpp" line="+119"/>
-        <source>Ambiguous rule match.</source>
-        <translation>Nem egyértelmű szabály illeszkedés.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+207"/>
-        <source>Operator %1 cannot be used on type %2.</source>
-        <translation>%1 operátor nem használható %2 típuson.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Operator %1 cannot be used on atomic values of type %2 and %3.</source>
-        <translation>%1 operátor nem használható %2 és %3 típusok atomi értékein.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="+66"/>
-        <source>The namespace URI in the name for a computed attribute cannot be %1.</source>
-        <translation>Egy számított attribútum nevében szereplő névtér URI-je nem lehet %1.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The name for a computed attribute cannot have the namespace URI %1 with the local name %2.</source>
-        <translation>Számított attribútum neve nem szerepelhet %1 névtér URI-ben  %2 lokális névvel.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+88"/>
-        <source>Type error in cast, expected %1, received %2.</source>
-        <translation>Típushiba a kényszerítés során, várt %1, kapott %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>When casting to %1 or types derived from it, the source value must be of the same type, or it must be a string literal. Type %2 is not allowed.</source>
-        <translation>%1 vagy belőle származó típusra való kényszerítéskor a kiindulási értéknek azonos típusúnak vagy sztring literálnak kell lennie. %2 típus nem megengedett.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+67"/>
-        <source>A comment cannot contain %1</source>
-        <translation>Megjegyzésben nem szerepelhet %1</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>A comment cannot end with a %1.</source>
-        <translation>Egy megjegyzés nem végződhet a következőre: %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+69"/>
-        <source>In a namespace constructor, the value for a namespace cannot be an empty string.</source>
-        <translation>Egy névtér konstruktorában a névtér értéke nem lehet üres karaktersorozat.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>The prefix must be a valid %1, which %2 is not.</source>
-        <translation>A prefixum érvényes %1 kell legyen, aminek %2 nem tesz eleget.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>The prefix %1 cannot be bound.</source>
-        <translation>%1 prefixum nem köthető.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Only the prefix %1 can be bound to %2 and vice versa.</source>
-        <translation>Csak %1 prefixum köthető %2 kifejezéshez és fordítva.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qdocumentcontentvalidator.cpp" line="+86"/>
-        <source>An attribute node cannot be a child of a document node. Therefore, the attribute %1 is out of place.</source>
-        <translation>Attribútum csomópont nem lehet egy document csomópont gyermeke. Emiatt a(z) %1 attribútum nem ide való.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
-        <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
-        <translation>Egy könyvtár modult nem lehet közvetlenül kiértékelni. Mindenképp egy fő modulból kell importálni.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No template by name %1 exists.</source>
-        <translation>Nem létezik %1 nevű sablon.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="+106"/>
-        <source>A value of type %1 cannot be a predicate. A predicate must have either a numeric type or an Effective Boolean Value type.</source>
-        <translation>Egy %1 típusú érték nem lehet predikátum. Egy predikátumnak szám vagy effektív logikai érték típusúnak kell lennie.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>A positional predicate must evaluate to a single numeric value.</source>
-        <translation>Egy pozicionális predikátumnak egyetlen numerikus értékké kell kiértékelődnie.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
-        <translation>Feldolgozási utasításban a célnév nem lehet %1 semmilyen kis- vagy nagybetűs formában. Emiatt %2 érvénytelen.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>%1 is not a valid target name in a processing instruction. It must be a %2 value, e.g. %3.</source>
-        <translation>%1 érvénytelen célnév egy feldolgozási utasításban. Értéke %2 típusú kell legyen, mint pl. %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qpath.cpp" line="+109"/>
-        <source>The last step in a path must contain either nodes or atomic values. It cannot be a mixture between the two.</source>
-        <translation>Egy útvonal utolsó lépésének vagy csomópontokat vagy atomi értékeket kell tartalmaznia. Nem lehet a kettő keveréke.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qprocessinginstructionconstructor.cpp" line="+84"/>
-        <source>The data of a processing instruction cannot contain the string %1</source>
-        <translation>Egy feldolgozási utasítás adata nem tartalmazhatja %1 sztringet</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor.cpp" line="+82"/>
-        <source>No namespace binding exists for the prefix %1</source>
-        <translation>Nincs névtér kötés a(z) %1 prefixumhoz</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="+156"/>
-        <source>No namespace binding exists for the prefix %1 in %2</source>
-        <translation>Nincs névtér kötés a(z) %1 prefixumhoz %2 helyen</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+69"/>
-        <source>%1 is an invalid %2</source>
-        <translation>%1 egy érvénytelen %2</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="+74"/>
-        <source>The parameter %1 is passed, but no corresponding %2 exists.</source>
-        <translation>Az átadott paraméter %1, de nincs megfelelő %2.</translation>
-    </message>
-    <message>
-        <location line="+71"/>
-        <source>The parameter %1 is required, but no corresponding %2 is supplied.</source>
-        <translation>%1 paraméter kötelező, de nincs megadva megfelelő %2.</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+77"/>
-        <source>%1 takes at most %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 maximum %n argumentumot fogad, így %2 érvénytelen.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+11"/>
-        <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 legalább %n argumentumot fogad, így %2 érvénytelen.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+120"/>
-        <source>The first argument to %1 cannot be of type %2. It must be a numeric type, xs:yearMonthDuration or xs:dayTimeDuration.</source>
-        <translation>%1 első paramétere nem lehet %2 típusú. Csak numerikus típus, xs:yearMonthDuration vagy xs:dayTimeDuration lehet.</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>The first argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>%1 első argumentuma nem lehet %2 típusú. Csak %3, %4 vagy %5 megengedett.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>The second argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>%1 második argumentuma nem lehet %2 típusú. Csak %3, %4 vagy %5 megengedett.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qassemblestringfns.cpp" line="+88"/>
-        <source>%1 is not a valid XML 1.0 character.</source>
-        <translation>%1 érvénytelen XML 1.0 karakter.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcontextnodechecker.cpp" line="+54"/>
-        <source>The root node of the second argument to function %1 must be a document node. %2 is not a document node.</source>
-        <translation>%1 függvény második argumentumának gyökér csomópontja document típusú kell legyen. %2 nem document csomópont.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qdatetimefn.cpp" line="+86"/>
-        <source>If both values have zone offsets, they must have the same zone offset. %1 and %2 are not the same.</source>
-        <translation>Ha mindkét értékben zóna eltolás van, akkor annak azonosnak kell lennie. %1 és %2 nem egyezik.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qerrorfn.cpp" line="+61"/>
-        <source>%1 was called.</source>
-        <translation>%1 meghívva.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="+94"/>
-        <source>%1 must be followed by %2 or %3, not at the end of the replacement string.</source>
-        <translation>%1-t %2 vagy %3 kell kövesse, nem a helyettesítő karakterlánc végén.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>In the replacement string, %1 must be followed by at least one digit when not escaped.</source>
-        <translation>A csereszövegben %1-t legalább egy számjegy kell kövesse, amennyiben az nincs escapelve.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>In the replacement string, %1 can only be used to escape itself or %2, not %3</source>
-        <translation>A csereszövegben %1 csak önmaga vagy %2 escapelésére használható, %3-ra nem</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+92"/>
-        <source>%1 matches newline characters</source>
-        <translation>%1 illeszkedik az újsor karakterekre</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>%1 and %2 match the start and end of a line.</source>
-        <translation>%1 és %2 a sor elejére és végére is illeszkedik.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Matches are case insensitive</source>
-        <translation>Az illeszkedések nem nagybetű-érzékenyek</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Whitespace characters are removed, except when they appear in character classes</source>
-        <translation>A nem nyomtatható karakterek törlésre kerülnek, kivétel, ha karakter osztályokban szerepelnek</translation>
-    </message>
-    <message>
-        <location line="+100"/>
-        <source>%1 is an invalid regular expression pattern: %2</source>
-        <translation>%1 érvénytelen reguláris kifejezés minta: %2</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>%1 is an invalid flag for regular expressions. Valid flags are:</source>
-        <translation>%1 érvénytelen kapcsoló reguláris kifejezésekhez. Az érvényes kapcsolók:</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+17"/>
-        <source>If the first argument is the empty sequence or a zero-length string (no namespace), a prefix cannot be specified. Prefix %1 was specified.</source>
-        <translation>Ha az első argumentum az üres szekvencia vagy egy nulla hosszúságú sztring (névtér nélkül), akkor nem adható meg prefixum. %1 prefixum lett megadva.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencefns.cpp" line="+346"/>
-        <source>It will not be possible to retrieve %1.</source>
-        <translation>Nem lesz lehetséges %1 lekérése.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+282"/>
-        <source>The default collection is undefined</source>
-        <translation>Nincs meghatározva az alapértelmezett kollekció</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>%1 cannot be retrieved</source>
-        <translation>%1-t nem lehet lekérni</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qstringvaluefns.cpp" line="+252"/>
-        <source>The normalization form %1 is unsupported. The supported forms are %2, %3, %4, and %5, and none, i.e. the empty string (no normalization).</source>
-        <translation>%1 normalizáló formája nem támogatott. A támogatott formák %2, %3, %4 és %5 vagy semmi, pl. az üres sztring (normalizáció nélkül).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+87"/>
-        <source>A zone offset must be in the range %1..%2 inclusive. %3 is out of range.</source>
-        <translation>Egy zónaeltolásnak a(z) %1..%2 nyílt intervallumba kell esnie. %3 az értékhatáron kívül van.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1 is not a whole number of minutes.</source>
-        <translation>%1 nem egész számú perc.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qunparsedtextfn.cpp" line="+65"/>
-        <source>The URI cannot have a fragment</source>
-        <translation>A URI nem tartalmazhat töredéket</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qcardinalityverifier.cpp" line="+58"/>
-        <source>Required cardinality is %1; got cardinality %2.</source>
-        <translation>Az elvárt kardinalitás %1; azonban %2 lett megadva.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qitemverifier.cpp" line="+67"/>
-        <source>The item %1 did not match the required type %2.</source>
-        <translation>%1 elem nem egyezik a várt %2 típussal.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
-        <source>The variable %1 is unused</source>
-        <translation>A(z) %1 változó nincs használva</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+295"/>
-        <source>W3C XML Schema identity constraint selector</source>
-        <translation>W3C XML séma azonosító szabály kiválasztó</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>W3C XML Schema identity constraint field</source>
-        <translation>W3C XML séma azonosító megszorítás mező</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>A construct was encountered which is disallowed in the current language(%1).</source>
-        <translation>Olyan szerkezetet találtam, ami az aktuális nyelvben nem megengedett(%1).</translation>
-    </message>
-    <message>
-        <location line="+50"/>
-        <location line="+7323"/>
-        <source>%1 is an unknown schema type.</source>
-        <translation>%1 ismeretlen séma típus.</translation>
-    </message>
-    <message>
-        <location line="-7254"/>
-        <source>A template with name %1 has already been declared.</source>
-        <translation>%1 nevű sablon már van deklarálva.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>%1 is not a valid numeric literal.</source>
-        <translation>%1 érvénytelen numerikus literál.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Only one %1 declaration can occur in the query prolog.</source>
-        <translation>Csak egy %1 deklaráció szerepelhet a lekérdezés bevezetésben.</translation>
-    </message>
-    <message>
-        <location line="+188"/>
-        <source>The initialization of variable %1 depends on itself</source>
-        <translation>%1 változó inicializálása önmagától függ</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>No variable with name %1 exists</source>
-        <translation>Nem létezik %1 nevű változó</translation>
-    </message>
-    <message>
-        <location line="+2841"/>
-        <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
-        <translation>A(z) %1 verzió nem támogatott. A támogatott XQuery verzió 1.0.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>The encoding %1 is invalid. It must contain Latin characters only, must not contain whitespace, and must match the regular expression %2.</source>
-        <translation>%1 kódolás érvénytelen. Csak Latin karaktereket tartalmazhat, nem nyomtatható karakterek nélkül, és illeszkednie kell %2 reguláris kifejezésre.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>No function with signature %1 is available</source>
-        <translation>%1 szignaturájú függvény nem található</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <location line="+10"/>
-        <source>A default namespace declaration must occur before function, variable, and option declarations.</source>
-        <translation>Egy alapértelmezett névtér deklarációnak meg kell előznie a függvény-, változó- és opció deklarációkat.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace declarations must occur before function, variable, and option declarations.</source>
-        <translation>A névtér deklarációknak meg kell előzniük a függvény-, változó- és opció deklarációkat.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Module imports must occur before function, variable, and option declarations.</source>
-        <translation>Modul importoknak meg kell előzniük a függvény-, változó- és opció deklarációkat.</translation>
-    </message>
-    <message>
-        <location line="+102"/>
-        <source>The keyword %1 cannot occur with any other mode name.</source>
-        <translation>%1 kulcsszó nem szerepelhet együtt semmilyen más mód névvel.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
-        <translation>%1 attribútum értékének %2 típusúnak kell lennie, %3 nem az.</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <source>It is not possible to redeclare prefix %1.</source>
-        <translation>%1 prefixum újradeklarálása nem lehetséges.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
-        <translation>%1 prefixum nem köthető. Alapértelmezés szerint már kötött %2 névtérhez.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Prefix %1 is already declared in the prolog.</source>
-        <translation>%1 prefixum már deklarálva van a bevezetésben.</translation>
-    </message>
-    <message>
-        <location line="+95"/>
-        <source>The name of an option must have a prefix. There is no default namespace for options.</source>
-        <translation>Egy opció nevének kötelező prefixumot megadni. Nics alapértelmezett névetér az opciók számára.</translation>
-    </message>
-    <message>
-        <location line="+171"/>
-        <source>The Schema Import feature is not supported, and therefore %1 declarations cannot occur.</source>
-        <translation>A Schema Import szolgáltatás nem támogatott, így %1 deklarációk nem fogadhatók el.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>The target namespace of a %1 cannot be empty.</source>
-        <translation>Egy %1 cél-névtere nem lehet üres.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The module import feature is not supported</source>
-        <translation>A modul import szolgáltatás nem támogatott</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>A variable with name %1 has already been declared.</source>
-        <translation>Egy %1 nevű változó már deklarálva van.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>No value is available for the external variable with name %1.</source>
-        <translation>%1 nevű külső változóhoz nem érhető el érték.</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <source>A stylesheet function must have a prefixed name.</source>
-        <translation>Egy stíluslap függvénynek prefixummal ellátott neve kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
-        <translation>A(z) %1 névtér fenntartott, így felhasználói függvények nem használhatják. Próbálja meg a(z) %2 prefixumot, ami ilyen esetekre van.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The namespace of a user defined function in a library module must be equivalent to the module namespace. In other words, it should be %1 instead of %2</source>
-        <translation>Egy függvénytár modulban definiált felhasználói függvény névtere meg kell egyezzen a modul névterével. Más szóval %1 kellene legyen %2 helyett</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>A function already exists with the signature %1.</source>
-        <translation>%1 szignaturájú függvény már létezik.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>No external functions are supported. All supported functions can be used directly, without first declaring them as external</source>
-        <translation>Külső függvények nem támogatottak. Minden támogatott függvény használható, külső függvényként való deklarálás nélkül</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
-        <translation>%1 nevű argumentum már deklarálva van. Minden argumentumnévnek egyedinek kell lennie.</translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>When function %1 is used for matching inside a pattern, the argument must be a variable reference or a string literal.</source>
-        <translation>%1 függvény minta belsejében történő illesztésekor, az argumentumnak változó hivatkozásnak vagy szöveges literálnak kell lennie.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a string literal, when used for matching.</source>
-        <translation>Egy XSL-T mintában %1 függvény első argumentumának szöveges literálnak kell lennie, ha illesztéshez használjuk.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a literal or a variable reference, when used for matching.</source>
-        <translation>Egy XSL-T mintában %1 függvény első argumentumának szöveges literálnak vagy változó hivatkozásnak kell lennie, ha illesztéshez használjuk.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>In an XSL-T pattern, function %1 cannot have a third argument.</source>
-        <translation>Egy XSL-T mintában %1 függénynek nem lehet harmadik argumentuma.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>In an XSL-T pattern, only function %1 and %2, not %3, can be used for matching.</source>
-        <translation>Egy XSL-T mintában csak %1 és %2 függvények használhatók illesztéshez, %3 nem.</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>In an XSL-T pattern, axis %1 cannot be used, only axis %2 or %3 can.</source>
-        <translation>Egy XSL-T mintában %1 tengely nem, csak %2 vagy %3 tengely használható.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 is an invalid template mode name.</source>
-        <translation>%1 érvénytelen sablon mód név.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>The name of a variable bound in a for-expression must be different from the positional variable. Hence, the two variables named %1 collide.</source>
-        <translation>Egy for-kifejezésben kötött változó nevének különbözőnek kell lennie, mint a pozicionális változó neve. Így a két %1 nevű változó ütközik.</translation>
-    </message>
-    <message>
-        <location line="+778"/>
-        <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
-        <translation>A Schema Validation szolgáltatás nem támogatott. Ennélfogva %1-kifejezések nem használhatók.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
-        <translation>Pragma kifejezések egyike sem támogatott. Ennélfogva léteznie kell egy alapértelmezett kifejezésnek</translation>
-    </message>
-    <message>
-        <location line="+269"/>
-        <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
-        <translation>Minden sablonparaméter neve egyedi kell legyen, %1 azonban duplán szerepel.</translation>
-    </message>
-    <message>
-        <location line="+129"/>
-        <source>The %1-axis is unsupported in XQuery</source>
-        <translation>A(z) %1-tengely nem támogatott XQuery-ben</translation>
-    </message>
-    <message>
-        <location line="+333"/>
-        <source>No function with name %1 is available.</source>
-        <translation>Nem létezik %1 nevű függvény.</translation>
-    </message>
-    <message>
-        <location line="+102"/>
-        <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
-        <translation>Prefixumhoz kötés esetén a névtér URI nem lehet az üres sztring, %1.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 is an invalid namespace URI.</source>
-        <translation>%1 érvénytelen névtér URI.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>It is not possible to bind to the prefix %1</source>
-        <translation>Nem lehet kötni %1 prefixumhoz</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Namespace %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>%1 névtér csak %2-hoz köthető (és minden esetben előre deklarált).</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Prefix %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>%1 prefixum csak %2-hoz köthető (és minden esetben előre deklarált).</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Two namespace declaration attributes have the same name: %1.</source>
-        <translation>Két névtér-deklaráció attribútum neve azonos: %1.</translation>
-    </message>
-    <message>
-        <location line="+89"/>
-        <source>The namespace URI must be a constant and cannot use enclosed expressions.</source>
-        <translation>Egy névtér URI-nek konstansnak kell lennie és nem használhat bennfoglalt kifejezéseket.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>An attribute with name %1 has already appeared on this element.</source>
-        <translation>%1 nevű attribútum már szerepelt ebben az elemben.</translation>
-    </message>
-    <message>
-        <location line="+61"/>
-        <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
-        <translation>Egy közvetlen elem konstruktor nem jól formázott. %1-t %2 zárja le.</translation>
-    </message>
-    <message>
-        <location line="+458"/>
-        <source>The name %1 does not refer to any schema type.</source>
-        <translation>A(z) %1 név nem mutat semmilyen séma típusra.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 is an complex type. Casting to complex types is not possible. However, casting to atomic types such as %2 works.</source>
-        <translation>%1 komplex típus. Komplex típusra való kényszerítés nem lehetséges. Azonban atomi típusokra, mint pl. %2 történő kényszerítés igen.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 is not an atomic type. Casting is only possible to atomic types.</source>
-        <translation>%1 nem atomi típus. Típuskényszerítés csak atomi típusra történhet.</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>%1 is not a valid name for a processing-instruction.</source>
-        <translation>%1 érvénytelen feldogozási utasítás név.</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <location line="+71"/>
-        <source>%1 is not in the in-scope attribute declarations. Note that the schema import feature is not supported.</source>
-        <translation>%1 nem a láthatóságon belüli attribútum deklarációk között van. A séma import szolgáltatás nem támogatott.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The name of an extension expression must be in a namespace.</source>
-        <translation>Egy kiterjesztés kifejezés nevének névtérben kell lennie.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+519"/>
-        <source>Element %1 is not allowed at this location.</source>
-        <translation>%1 elem nem megengedett ezen a helyen.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Text nodes are not allowed at this location.</source>
-        <translation>Szöveg csomópontok nem megengedettek ezen a helyen.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Parse error: %1</source>
-        <translation>Értelmezési hiba: %1</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>The value of the XSL-T version attribute must be a value of type %1, which %2 isn&apos;t.</source>
-        <translation>Az XSL-T verzió attribútum értékének %1 típusúnak kell lennie, %2 pedig nem az.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Running an XSL-T 1.0 stylesheet with a 2.0 processor.</source>
-        <translation>XSL-T 1.0 stíluslap futtatása 2.0 verziójú feldolgozóval.</translation>
-    </message>
-    <message>
-        <location line="+106"/>
-        <source>Unknown XSL-T attribute %1.</source>
-        <translation>Ismeretlen XSL-T attributum: %1.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 and %2 are mutually exclusive.</source>
-        <translation>%1 és %2 attribútumok kölcsönösen kizáróak.</translation>
-    </message>
-    <message>
-        <location line="+166"/>
-        <source>In a simplified stylesheet module, attribute %1 must be present.</source>
-        <translation>Egy egyszerűsített stíluslap modulban a(z) %1 attribútumnak jelen kell lennie.</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>If element %1 has no attribute %2, it cannot have attribute %3 or %4.</source>
-        <translation>Ha %1 elemnek nincs %2 attribútuma, akkor %3 vagy %4 attribútuma sem lehet.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Element %1 must have at least one of the attributes %2 or %3.</source>
-        <translation>%1 elemnek valamelyik attribútumát meg kell adni %2 vagy %3 közül.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>At least one mode must be specified in the %1-attribute on element %2.</source>
-        <translation>%2 elem %1-attribútumában legalább egy módot meg kell adni.</translation>
-    </message>
-    <message>
-        <location line="+123"/>
-        <source>Element %1 must come last.</source>
-        <translation>%1 elemnek az utoljára kell szerepelnie.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>At least one %1-element must occur before %2.</source>
-        <translation>Legalább egy %1-elemnek szerepelnie kell %2 előtt.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Only one %1-element can appear.</source>
-        <translation>Csak egy %1-elem jelenhet meg.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>At least one %1-element must occur inside %2.</source>
-        <translation>Legalább egy %1-elemnek meg kell jelennie %2-n belül.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>When attribute %1 is present on %2, a sequence constructor cannot be used.</source>
-        <translation>Ha %2-n meg van adva %1 attribútum, akkor nem használható szekvencia konstruktor.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 must have either a %2-attribute or a sequence constructor.</source>
-        <translation>%1 elemnek vagy %2-attribútumának vagy szekvencia konstruktorának lennie kell.</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <source>When a parameter is required, a default value cannot be supplied through a %1-attribute or a sequence constructor.</source>
-        <translation>Ha paraméter az elvárt, akkor alapértelmezett értéket nem lehet %1-attribútumon vagy szekvencia konstruktoron keresztül átadni.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Element %1 cannot have children.</source>
-        <translation>%1 elemnek nem lehetnek gyermekei.</translation>
-    </message>
-    <message>
-        <location line="+434"/>
-        <source>Element %1 cannot have a sequence constructor.</source>
-        <translation>%1 elemnek nem lehet szekvencia konstruktora.</translation>
-    </message>
-    <message>
-        <location line="+86"/>
-        <location line="+9"/>
-        <source>The attribute %1 cannot appear on %2, when it is a child of %3.</source>
-        <translation>%1 attribútum nem szerepelhet %2-n, ha az %3 gyermeke.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>A parameter in a function cannot be declared to be a tunnel.</source>
-        <translation>Egy függvényparaméter nem definiálható mint tunnel.</translation>
-    </message>
-    <message>
-        <location line="+149"/>
-        <source>This processor is not Schema-aware and therefore %1 cannot be used.</source>
-        <translation>Ez a feldolgozó nem sémafüggő, ezért %1 nem használható.</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>Top level stylesheet elements must be in a non-null namespace, which %1 isn&apos;t.</source>
-        <translation>Felső szintű stíluslap elemeknek egy nem üres névtérben kell lenniük, ezért %1 nem jó.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The value for attribute %1 on element %2 must either be %3 or %4, not %5.</source>
-        <translation>%2 elem %1 attribútumának értéke %3 vagy %4 kell legyen, de nem %5.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Attribute %1 cannot have the value %2.</source>
-        <translation>%1 attribútum értéke nem lehet %2.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>The attribute %1 can only appear on the first %2 element.</source>
-        <translation>%1 attribútum csak az első %2 elem esetén jelenhet meg.</translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>At least one %1 element must appear as child of %2.</source>
-        <translation>Legalább egy %1 elemnek %2 gyermekeként meg kell jelennie.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
-        <source>Empty particle cannot be derived from non-empty particle.</source>
-        <translation>Üres részecske nem származtatható nem üres részecskéből.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Derived particle is missing element %1.</source>
-        <translation>Származtatott részecskéből hiányzik %1 elem.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
-        <translation>%1 származtatott elemből hiányzik az ős részecskében definiált érték megszorítás.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived element %1 has weaker value constraint than base particle.</source>
-        <translation>%1 származtatott elem érték megkötése gyengébb, mint az ős részecskéé.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
-        <translation>%1 elem rögzített érték megkötése különbözik az ős részecskében megadott érték megkötéstől.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
-        <translation>%1 elem nem lehet nil-feltételű, mert az ős eleme sem nil-feltételű.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
-        <translation>%1 származtatott elem blokk megkötései nem lehetnek gyengébbek, mint az ős elemben.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>%1 származtatott elem egyszerű típusa nem származtatható érvényesen az ős elemből.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>%1 származtatott elem komplex típusa nem származtatható érvényesen az ős elemből.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Element %1 is missing in derived particle.</source>
-        <translation>%1 elem hiányzik a származtatott részecskéből.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
-        <translation>%1 elem nem illeszkedik az ős részecskében megadott névtér helyettesítő mintájára.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
-        <translation>Származtatott részecske helyettesítő mintája érvénytelen részhalmaza az ős részecske helyettesítő mintájának.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
-        <translation>Származtatott elem mintájának processContent értéke gyengébb, mint az ős részecske mintája.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Derived particle allows content that is not allowed in the base particle.</source>
-        <translation>Származtatott részecske olyan tartalmat is engedélyez, ami nem megengedett az ős részecskében.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
-        <source>%1 has inheritance loop in its base type %2.</source>
-        <translation>%1 öröklődési hurkot tartalmaz %2 szülő típusában.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+24"/>
-        <source>Circular inheritance of base type %1.</source>
-        <translation>Körkörös %1 őstípusú öröklődés.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Circular inheritance of union %1.</source>
-        <translation>%1 union körkörös öröklődése.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
-        <translation>%1 nem származhat %2-ből megkötéssel, mert utóbbi final-ként definiálja.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
-        <translation>%1 nem származhat %2-ből kiterjesztéssel, mert utóbbi final-ként definiálja.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Base type of simple type %1 cannot be complex type %2.</source>
-        <translation>%1 egyszerű típus őstípusa nem lehet %2 komplex típus.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Simple type %1 cannot have direct base type %2.</source>
-        <translation>%1 egyszerű típus közvetlen őstípusa nem lehet %2.</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location line="+9"/>
-        <source>Simple type %1 is not allowed to have base type %2.</source>
-        <translation>%1 egyszerű típus őstípusa nem lehet %2.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Simple type %1 can only have simple atomic type as base type.</source>
-        <translation>%1 egyszerű típus őse csak egyszerű atomi típus lehet.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
-        <translation>%1 nem származhat %2-ből, mert utóbbi final megkötést definiál.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <location line="+484"/>
-        <source>Variety of item type of %1 must be either atomic or union.</source>
-        <translation>%1 elemtípus választéka csak atomic vagy union lehet.</translation>
-    </message>
-    <message>
-        <location line="-474"/>
-        <location line="+483"/>
-        <source>Variety of member types of %1 must be atomic.</source>
-        <translation>%1 tagtípusok választéka csak atomi lehet.</translation>
-    </message>
-    <message>
-        <location line="-470"/>
-        <location line="+451"/>
-        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
-        <translation>%1 nem származhat %2-ből listával, mert utóbbi final-ként definiálja.</translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Simple type %1 is only allowed to have %2 facet.</source>
-        <translation>%1 egyszerű típusnak csak %2 facet-je lehet.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Base type of simple type %1 must have variety of type list.</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
-        <translation>%1 egyszerű típus őstípusa a megkötéssel történő származtatást final-ként definiálta.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Item type of base type does not match item type of %1.</source>
-        <translation>Az ős típusa nem egyezik %1 elemtípussal.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+93"/>
-        <source>Simple type %1 contains not allowed facet type %2.</source>
-        <translation>%1 egyszerű típus nem megengedett %2 facet típust tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+413"/>
-        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
-        <translation>%1 nemm származhat %2-ből union-nal, mert utóbbi final-ként definiálta.</translation>
-    </message>
-    <message>
-        <location line="-404"/>
-        <source>%1 is not allowed to have any facets.</source>
-        <translation>%1 nem birtokolhat facet-eket.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base type %1 of simple type %2 must have variety of union.</source>
-        <translation>%2 típusú %1 őstípusnak union választéka kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
-        <translation>%2 egyszerű típusú %1 őstípusnak nem lehet megkötést adni %3 attribútumban.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
-        <translation>%1 tag típus nem származhat %2 tag típusból, %3-nak %4 őstípusából.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
-        <translation>%1 származtatási módja kiterjesztés kell legyen, mert %2 őstípus egyszerű típus.</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Complex type %1 has duplicated element %2 in its content model.</source>
-        <translation>%1 komplex típus tartalom modelljében %2 elem duplán szerepel.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 has non-deterministic content.</source>
-        <translation>%1 komplex típus tartalma nem determinisztikus.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
-        <translation>%1 komplex típus attribútumai nem érvényes kiterjesztései %2 őstípus attribútumainak: %3.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
-        <translation>%1 komplex típus tartalom modellje nem érvényes kiterjesztése %2 tartalom modelljének.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Complex type %1 must have simple content.</source>
-        <translation>%1 komplex típusnak egyszerű tartalma kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Complex type %1 must have the same simple type as its base class %2.</source>
-        <translation>%1 komplex típusnak ugyanazzal az egyszerű típussal kell rendelkeznie, mint %2 ősosztályának.</translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Complex type %1 cannot be derived from base type %2%3.</source>
-        <translation>%1 komplex típus nem származhat %2%3 őstípusból.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
-        <translation>%1 komplex típus attribútumai nem érvényes megszorítások %2 őstípus attribútumai alapján: %3.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
-        <translation>%1 egyszerű tartalmú komplex típus nem származhat %2 komplex típusból.</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Item type of simple type %1 cannot be a complex type.</source>
-        <translation>%1 egyszerű típusú elem típusa nem lehet komplex típus.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Member type of simple type %1 cannot be a complex type.</source>
-        <translation>%1 egyszerű típusú tag típus nem lehet komplex típus.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 is not allowed to have a member type with the same name as itself.</source>
-        <translation>%1 nem tartalmazhat olyan tag típust, melynek neve egyezik önmaga nevével.</translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <location line="+29"/>
-        <location line="+34"/>
-        <source>%1 facet collides with %2 facet.</source>
-        <translation>%1 facet ütközik %2 facet-tel.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1 facet must have the same value as %2 facet of base type.</source>
-        <translation>%1 facet-nek %2 facet-ével azonos őstípusú értéke kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
-        <translation>%1 facet-nek egyenlőnek vagy nagyobbnak kell lennie %2 facet-nél őstípus alapján.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+125"/>
-        <location line="+55"/>
-        <location line="+12"/>
-        <location line="+91"/>
-        <location line="+58"/>
-        <location line="+34"/>
-        <location line="+35"/>
-        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
-        <translation>%1 facet-nek egyenlőnek vagy kisebbnek kell lennie %2 facet-nél őstípus alapján.</translation>
-    </message>
-    <message>
-        <location line="-389"/>
-        <source>%1 facet contains invalid regular expression</source>
-        <translation>%1 facet érvénytelen reguláris kifejezést tartalmaz</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unknown notation %1 used in %2 facet.</source>
-        <translation>Ismeretlen jelölés %1 a(z) %2 facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>%1 facet contains invalid value %2: %3.</source>
-        <translation>%1 facet értéke érvénytelen %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
-        <translation>%1 facet nem lehet %2 vagy %3, ha %4 facet, mint őstípus %5.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
-        <translation>%1 facet nem lehet %2, ha %3 facet, mint őstípus %4.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <location line="+55"/>
-        <location line="+230"/>
-        <source>%1 facet must be less than or equal to %2 facet.</source>
-        <translation>%1 facet-nek kisebbnek vagy egyenlőnek kell lennie, mint %2 facet.</translation>
-    </message>
-    <message>
-        <location line="-257"/>
-        <location line="+134"/>
-        <location line="+82"/>
-        <source>%1 facet must be less than %2 facet of base type.</source>
-        <translation>%1 facet-nek kisebbnek kell lennie %2 facet-nél, mint őstípusnál.</translation>
-    </message>
-    <message>
-        <location line="-201"/>
-        <location line="+79"/>
-        <source>%1 facet and %2 facet cannot appear together.</source>
-        <translation>%1 és %2 facet-ek nem jelenhetnek meg együttesen.</translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <location line="+12"/>
-        <location line="+113"/>
-        <source>%1 facet must be greater than %2 facet of base type.</source>
-        <translation>%1 facet-nek nagyobbnak kell lennei, %2 facet-nél, mint őstípusnál.</translation>
-    </message>
-    <message>
-        <location line="-86"/>
-        <location line="+58"/>
-        <source>%1 facet must be less than %2 facet.</source>
-        <translation>%1 facet kisebb kell legyen, mint %2 facet.</translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+58"/>
-        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
-        <translation>%1 facet-nek egyenlőnek vagy nagyobbnak kell lennie %2 facet-nél mint őstípusnál.</translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>Simple type contains not allowed facet %1.</source>
-        <translation>Egyszerű típus nem megengedett %1 facet-et tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
-        <translation>%1, %2, %3, %4, %5 és %6 facet-ek nem megengedettek, ha lista alapján származtatunk.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Only %1 and %2 facets are allowed when derived by union.</source>
-        <translation>Csak %1 és %2 facet-ek engedélyezettek union típusú származtatás esetén.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+16"/>
-        <source>%1 contains %2 facet with invalid data: %3.</source>
-        <translation>%1 érvénytelen adattartalmú %2 facet-et tartalmaz: %3.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Attribute group %1 contains attribute %2 twice.</source>
-        <translation>%1 attribútum csoport kétszer tartalmazza %2 attribútumot.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>%1 attribútum csoport két különböző attribútumot tartalmaz, melyek típusa %2-ből származtatott.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>%1 attribútum csoport %2 attribútumot tartalmaz, aminek érték megkötése van, de típusa %3-ból származik.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 contains attribute %2 twice.</source>
-        <translation>%1 komplex típus %2 attribútumot kétszer tartalmazza.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>%1 komplex típus két különböző attribútumot tartalmaz, melyek típusa %2-ből származtatott.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>%1 komplex típus %2 attribútumot tartalmaz, aminek érték megkötése van, de típusa %3-ból származik.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
-        <translation>%1 elemre nem lehet érték megkötés, ha őstípusa komplex.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
-        <translation>%1 elemre nem lehet érték megkötés, ha típusa %2-ből származtatott.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Value constraint of element %1 is not of elements type: %2.</source>
-        <translation>%1 elem érték megkötése nem a következő elemtípusú: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
-        <translation>%1 elemnek nem lehet helyettesítő csoport kapcsolata, mivel nem globális elem.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
-        <translation>%1 elem típusa nem származhat helyettesítő csoport kapcsolat típusból.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
-        <translation>%1 attribútum érték megkötése nem az attribútum típusával egyező: %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 has value constraint but has type derived from %2.</source>
-        <translation>%1 attribútumnak érték megkötése van, de típusa %2-ből származtatott.</translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
-        <translation>%1 attribútumnak %2-nek kell lennie a származtatott komplex típusban, úgy mint az őstípusban.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
-        <translation>Származtatott komplex típusban %1 attribútumnak %2 érték megkötésének kell lennie, mint az őstípusban.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
-        <translation>Származtatott komplex típusban %1 attribútumnak %2 érték megkötésének kell lennie, mint az őstípusban.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
-        <translation>Származtatott komplex típus %1 attribútumának %2 érték megkötésének kell lennie.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
-        <translation>Az ős helyettesítő kifejezésének processContent-je gyengébb kell legyen, mint a származtatott helyettesítő.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <location line="+15"/>
-        <source>Element %1 exists twice with different types.</source>
-        <translation>%1 elem kétszer létezik eltérő típussal.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Particle contains non-deterministic wildcards.</source>
-        <translation>A részecske nem determinisztikus helyettesítőket tartalmaz.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
-        <location line="+63"/>
-        <source>Base attribute %1 is required but derived attribute is not.</source>
-        <translation>%1 ős attribútum megkövetelt, de a származtatott nem.</translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
-        <translation>%1 származtatott attribútum típusa nem származtatható érvényesen az ős attribútum típusából.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
-        <translation>%1 származtatott attribútum érték megkötése nem egyezik az ős attribútuméval.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived attribute %1 does not exist in the base definition.</source>
-        <translation>%1 származtatott attribútum nem létezik az ős definíciójában.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
-        <translation>%1 származtatott attribútum nem illeszkedik az ősben megadott helyettesítőre.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Base attribute %1 is required but missing in derived definition.</source>
-        <translation>%1 ős attribútum megkövetelt, de hiányzik a leszármazott definíciójából.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
-        <translation>A leszármazott definíciója olyan %1 elemet tartalmaz, ami nem létezik az ős definíciójában</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived wildcard is not a subset of the base wildcard.</source>
-        <translation>A származtatott helyettesítő nem részhalmaza az ősnek.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
-        <translation>Leszármazott helyettesítő %1 része nem érvényes korlátozása az ős %2 részének</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 from base type is missing in derived type.</source>
-        <translation>Az őstípus %1 attribútuma hiányzik a származtatott típusból.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Type of derived attribute %1 differs from type of base attribute.</source>
-        <translation>%1 származtatott attribútum típusa eltér az ős attribútum típusától.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base definition contains an %1 element that is missing in the derived definition</source>
-        <translation>Az ős definíciója tartalmaz olyan %1 elemet, ami hiányzik a leszármazott definíciójából</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
-        <source>Can not process unknown element %1, expected elements are: %2.</source>
-        <translation>%1 ismeretlen elemet nem lehet feldolgozni, a várt elemek: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
-        <translation>%1 elem nem megengedett ebben a hatókörben, a lehetséges elemek: %2.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Child element is missing in that scope, possible child elements are: %1.</source>
-        <translation>Gyermek elem hiányzik abból a hatókörből, lehetséges gyermek elemek: %1.</translation>
-    </message>
-    <message>
-        <location line="+143"/>
-        <source>Document is not a XML schema.</source>
-        <translation>A dokumentum nem egy XML séma.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
-        <translation>%2 elem %1 attribútuma érvénytelen tartalmú: {%3} érvénytelen %4 típusú érték.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
-        <translation>%2 elem %1 attribútuma érvénytelen tartalmú: {%3}.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
-        <translation>%1 beemelt séma cél-névtere különbözik a beemelő sémában definiált %2 cél-névtértől.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+11"/>
-        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
-        <translation>%1 importált séma cél-névtere különbözik az importáló sémában definiált %2 cél-névtértől.</translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
-        <translation>%1 elemnek nem lehet ugyanaz a %2 attribútum értéke, mint %3 cél-névtérnek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
-        <translation>%2 attribútum nélküli %1 elem nem engedélyezett cél-névtér nélküli séma belsejében.</translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <location line="+158"/>
-        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
-        <translation>%1 elem nem megengedett %2 elemen belül, ha %3 attribútum meg van adva.</translation>
-    </message>
-    <message>
-        <location line="-97"/>
-        <location line="+119"/>
-        <location line="+89"/>
-        <source>%1 element has neither %2 attribute nor %3 child element.</source>
-        <translation>%1 elemnek sem %2 attribútuma, sem %3 gyermek eleme nincs.</translation>
-    </message>
-    <message>
-        <location line="+835"/>
-        <location line="+1474"/>
-        <location line="+232"/>
-        <location line="+7"/>
-        <location line="+260"/>
-        <location line="+17"/>
-        <location line="+258"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <source>%1 element with %2 child element must not have a %3 attribute.</source>
-        <translation>%2 gyermek elemmel rendelkező %1 elemnek nem lehet %3 attribútuma.</translation>
-    </message>
-    <message>
-        <location line="-1325"/>
-        <source>%1 attribute of %2 element must be %3 or %4.</source>
-        <translation>%2 elem %1 attribútumának értéke %3 vagy %4 kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>%1 attribute of %2 element must have a value of %3.</source>
-        <translation>%2 elem %1 attribútumának értéke %3 kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+34"/>
-        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
-        <translation>%2 elem %1 attribútumának értéke %3 vagy %4 kell legyen.</translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <location line="+129"/>
-        <location line="+9"/>
-        <location line="+7"/>
-        <location line="+7"/>
-        <location line="+327"/>
-        <location line="+203"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+77"/>
-        <source>%1 element must not have %2 and %3 attribute together.</source>
-        <translation>%1 elemnek nem lehet egyidejűleg %2 és %3 attribútuma.</translation>
-    </message>
-    <message>
-        <location line="-768"/>
-        <location line="+222"/>
-        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
-        <translation>%2 elem %1 attribútumának tartalma nem lehet %3 névtérből való.</translation>
-    </message>
-    <message>
-        <location line="-215"/>
-        <location line="+222"/>
-        <source>%1 attribute of %2 element must not be %3.</source>
-        <translation>%2 elem %1 attribútuma nem lehet %3.</translation>
-    </message>
-    <message>
-        <location line="-64"/>
-        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
-        <translation>%2 elem %1 attribútumának értéke %3 kell legyen, mert a(z) %4 attribútum van megadva.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
-        <translation>use=&apos;prohibited&apos; megadása egy attribútum csoporton belül hatástalan.</translation>
-    </message>
-    <message>
-        <location line="+353"/>
-        <source>%1 element must have either %2 or %3 attribute.</source>
-        <translation>%1 elemnek vagy %2 vagy %3 attribútumának lennie kell.</translation>
-    </message>
-    <message>
-        <location line="+554"/>
-        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
-        <translation>%1 elemnek vagy %2 attribútumának, vagy %3 vagy %4 gyermek elemének lennie kell.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>%1 element requires either %2 or %3 attribute.</source>
-        <translation>%1 elemnek %2 vagy %3 attribútumát meg kell adni.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Text or entity references not allowed inside %1 element</source>
-        <translation>Szöveg és entitás referenciák nem engedélyezettek %1 elemen belül</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <location line="+112"/>
-        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
-        <translation>%2 elem %1 attribútumának %3-t, %4-t vagy URI-k listáját kell tartalmaznia.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 element is not allowed in this context.</source>
-        <translation>%1 elem nem megengedett ebben a kontextusban.</translation>
-    </message>
-    <message>
-        <location line="+53"/>
-        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
-        <translation>%2 elem %1 attribútumának értéka nagyobb, mint a(z) %3 attribútumé.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Prefix of qualified name %1 is not defined.</source>
-        <translation>%1 kvalifikált név prefixuma nincs definiálva.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <location line="+61"/>
-        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
-        <translation>%2 elem %1 attribútumának vagy %3-t vagy a többi értéket kell tartalmaznia.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>Component with ID %1 has been defined previously.</source>
-        <translation>%1 ID-jű komponens már lett definiálva korábban.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Element %1 already defined.</source>
-        <translation>%1 elem már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 already defined.</source>
-        <translation>%1 attribútum már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Type %1 already defined.</source>
-        <translation>%1 típus már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute group %1 already defined.</source>
-        <translation>%1 attribútum csoport már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Element group %1 already defined.</source>
-        <translation>%1 elemcsoport már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notation %1 already defined.</source>
-        <translation>%1 jelölés már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Identity constraint %1 already defined.</source>
-        <translation>%1 identitás megkötés már definiálva van.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Duplicated facets in simple type %1.</source>
-        <translation>Duplikált facet-ek %1 egyszerű típusban.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
-        <source>%1 references unknown %2 or %3 element %4.</source>
-        <translatorcomment>CHECKIT</translatorcomment>
-        <translation>%1 érvénytelen %2 vagy %3 %4 elemre hivatkozik.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
-        <translation>%1 %2 identitás megkötésre hivatkozik, ami nem %3 vagy %4 elem.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
-        <translation>%1 eltérő számú mezőt tartalmaz, mint az általa hivatkozott %2 identitás megkötés.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Base type %1 of %2 element cannot be resolved.</source>
-        <translation>%2 elem %1 őstípusa nem feloldható.</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Item type %1 of %2 element cannot be resolved.</source>
-        <translation>%2 elem %1 elemtípusa nem feloldható.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Member type %1 of %2 element cannot be resolved.</source>
-        <translation>%2 elem %1 tagtípusa nem feloldható.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <location line="+415"/>
-        <location line="+30"/>
-        <source>Type %1 of %2 element cannot be resolved.</source>
-        <translation>%2 elem %1 típusa nem oldható fel.</translation>
-    </message>
-    <message>
-        <location line="-423"/>
-        <source>Base type %1 of complex type cannot be resolved.</source>
-        <translation>Komplex típus %1 őstípusa nem oldható fel.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 cannot have complex base type that has a %2.</source>
-        <translation>%1-nek nem lehet %2-t tartalmazó komplex őstípusa.</translation>
-    </message>
-    <message>
-        <location line="+286"/>
-        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
-        <translation>%1 komplex típus nem származhat kiterjesztéssel %2-ból, mivel utóbbi %3 elemet tartalmaz a tartalom modelljében.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Type of %1 element must be a simple type, %2 is not.</source>
-        <translation>%1 elem típusának egyszerű típusnak kell lennie, %2 nem az.</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>Substitution group %1 of %2 element cannot be resolved.</source>
-        <translation>%2 elem %1 részcsoportja nem oldható fel.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Substitution group %1 has circular definition.</source>
-        <translation>%1 részcsoport körkörös definíciót tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+120"/>
-        <location line="+7"/>
-        <source>Duplicated element names %1 in %2 element.</source>
-        <translation>Duplikált %1 elemnevek a(z) %2 elemben.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location line="+52"/>
-        <location line="+71"/>
-        <location line="+28"/>
-        <source>Reference %1 of %2 element cannot be resolved.</source>
-        <translation>%2 elem %1 referenciája nem oldható fel.</translation>
-    </message>
-    <message>
-        <location line="-138"/>
-        <source>Circular group reference for %1.</source>
-        <translation>Körkörös csoport referencia %1-nél.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 element is not allowed in this scope</source>
-        <translation>%1 elem nem megengedett ebben a hatókörben</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 element cannot have %2 attribute with value other than %3.</source>
-        <translation>%1 elem %2 attribútumának nem lehet más értéke, mint %3.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
-        <translation>%1 elem %2 attribútumának nem lehet más értéke, mint %3 vagy %4.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
-        <translation>%3 referencia %1 vagy %2 attribútuma nem egyezik %4 attribútum deklarációval.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Attribute group %1 has circular reference.</source>
-        <translation>%1 attribútum csoport körkörös referenciát tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
-        <translation>%2 %1 attribútuma %3 kell legyen, úgy, mint %4 őstípusban.</translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
-        <translation>%1 attribútum helyettesítője nem érvényes megkötése %2 őstípus helyettesítőjének.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 has attribute wildcard but its base type %2 has not.</source>
-        <translation>%1-nak van attribútum helyettesítője, de %2 őstípusnak nincs.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
-        <translation>%1 típus attribútum helyettesítőjének és %2 őstípusa helyettesítőjének uniója nem kiefjezhető.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
-        <translation>Érvénytelen tartalom felsorolás facet-ben: {%1} érvénytelen érték %2 típusban.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace prefix of qualified name %1 is not defined.</source>
-        <translation>%1 névtér prefixum vagy kvalifikált név nincs definiálva.</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <location line="+18"/>
-        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
-        <translation>%1 elem érvénytelen %2 megkötése az általa felüldefiniált %3 elemre: %4.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
-        <location line="+7"/>
-        <location line="+21"/>
-        <source>%1 is not valid according to %2.</source>
-        <translation>%2 alapján %1 érvénytelen.</translation>
-    </message>
-    <message>
-        <location line="+167"/>
-        <source>String content does not match the length facet.</source>
-        <translation>A karakterlánc tartalom nem felel meg a hossz facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the minLength facet.</source>
-        <translation>A karakterlánc tartalom nem felel meg a minLength facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the maxLength facet.</source>
-        <translation>A karakterlánc tartalom nem felel meg a maxLength facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content does not match pattern facet.</source>
-        <translation>A karakterlánc tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content is not listed in the enumeration facet.</source>
-        <translation>A karakterlánc tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Signed integer content does not match the maxInclusive facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a maxInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the maxExclusive facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a maxExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minInclusive facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a minInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minExclusive facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a minExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content is not listed in the enumeration facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a felsorolás facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content does not match pattern facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Signed integer content does not match in the totalDigits facet.</source>
-        <translation>Előjeles egész szám tartalom nem felel meg a totalDigits facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unsigned integer content does not match the maxInclusive facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem felel meg a maxInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the maxExclusive facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem felel meg a maxExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minInclusive facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem felel meg a minInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minExclusive facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem felel meg a minExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content is not listed in the enumeration facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content does not match pattern facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unsigned integer content does not match in the totalDigits facet.</source>
-        <translation>Előjel nélküli egész szám tartalom nem felel meg a totalDigits facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Double content does not match the maxInclusive facet.</source>
-        <translation>Dupla pontosságú szám tartalom nem felel meg a maxInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the maxExclusive facet.</source>
-        <translation>Dupla pontosságú szám tartalom nem felel meg a maxExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minInclusive facet.</source>
-        <translation>Dupla pontosságú szám tartalom nem felel meg a minInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minExclusive facet.</source>
-        <translation>Dupla pontosságú szám tartalom nem felel meg a minExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Double content is not listed in the enumeration facet.</source>
-        <translation>Dupla pontosságú szám tartalom nem felel meg a felsorolás facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Double content does not match pattern facet.</source>
-        <translation>Dupla pontosságú szám tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Decimal content does not match in the fractionDigits facet.</source>
-        <translation>Decimális tartalom nem felel meg a fractionDigits facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Decimal content does not match in the totalDigits facet.</source>
-        <translation>Decimális tartalom nem felel meg a totalDigits facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Date time content does not match the maxInclusive facet.</source>
-        <translation>Dátum-idő tartalom nem felel meg a maxInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the maxExclusive facet.</source>
-        <translation>Dátum-idő tartalom nem felel meg a maxExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minInclusive facet.</source>
-        <translation>Dátum-idő tartalom nem felel meg a minInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minExclusive facet.</source>
-        <translation>Dátum-idő tartalom nem felel meg a minExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content is not listed in the enumeration facet.</source>
-        <translation>Dátum-idő tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content does not match pattern facet.</source>
-        <translation>Dátum-idő tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Duration content does not match the maxInclusive facet.</source>
-        <translation>Időtartam tartalom nem felel meg a maxInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the maxExclusive facet.</source>
-        <translation>Időtartam tartalom nem felel meg a maxExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minInclusive facet.</source>
-        <translation>Időtartam tartalom nem felel meg a minInclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minExclusive facet.</source>
-        <translation>Időtartam tartalom nem felel meg a minExclusive facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content is not listed in the enumeration facet.</source>
-        <translation>Időtartam tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content does not match pattern facet.</source>
-        <translation>Időtartam tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Boolean content does not match pattern facet.</source>
-        <translation>Logikai tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Binary content does not match the length facet.</source>
-        <translation>Bináris tartalom nem felel meg a hossz facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the minLength facet.</source>
-        <translation>Bináris tartalom nem felel meg a minLength facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the maxLength facet.</source>
-        <translation>Bináris tartalom nem felel meg a maxLength facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Binary content is not listed in the enumeration facet.</source>
-        <translation>Bináris tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Invalid QName content: %1.</source>
-        <translation>Érvénytelen QName tartalom: %1.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>QName content is not listed in the enumeration facet.</source>
-        <translation>QName tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>QName content does not match pattern facet.</source>
-        <translation>QName tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Notation content is not listed in the enumeration facet.</source>
-        <translation>Jelölő tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>List content does not match length facet.</source>
-        <translation>Lista tartalom nem felel meg a hossz facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match minLength facet.</source>
-        <translation>Lista tartalom nem felel meg a minLength facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match maxLength facet.</source>
-        <translation>Lista tartalom nem felel meg a maxLength facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>List content is not listed in the enumeration facet.</source>
-        <translation>Lista tartalom nem szerepl a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List content does not match pattern facet.</source>
-        <translation>Lista tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Union content is not listed in the enumeration facet.</source>
-        <translation>Union tartalom nem szerepel a felsorolás facet-ben.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Union content does not match pattern facet.</source>
-        <translation>Union tartalom nem felel meg a minta facet-nek.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Data of type %1 are not allowed to be empty.</source>
-        <translation>%1 típusú adat  nem lehet üres.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
-        <source>Element %1 is missing child element.</source>
-        <translation>Hiányzó gyermek elem %1 elemben.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>There is one IDREF value with no corresponding ID: %1.</source>
-        <translation>Egy IDREF érték van hozzátartozó ID nélkül: %1.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Loaded schema file is invalid.</source>
-        <translatorcomment>A betöltött sémafájl érvénytelen.</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains invalid data.</source>
-        <translation>%1 érvénytelen adatot tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
-        <translation>%1 xsi:schemaLocation névtér már szerepelt korábban a példány dokumentumban.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
-        <translation>xsi:noNamespaceSchemaLocation nem szerepelhet az első nem-névtérbeli elem vagy attribútum után.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>No schema defined for validation.</source>
-        <translation>Nincs megadva séma a validáláshoz.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>No definition for element %1 available.</source>
-        <translation>%1 elem definíciója nem érhető el.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+49"/>
-        <location line="+142"/>
-        <source>Specified type %1 is not known to the schema.</source>
-        <translation>A megadott %1 típus ismeretlen a séma számára.</translation>
-    </message>
-    <message>
-        <location line="-176"/>
-        <source>Element %1 is not defined in this scope.</source>
-        <translation>%1 elem nem ebben a hatókörben lett definiálva.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Declaration for element %1 does not exist.</source>
-        <translation>%1 elem deklarációja nem létezik.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Element %1 contains invalid content.</source>
-        <translation>%1 elemben érvénytelen tartalom van.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>Element %1 is declared as abstract.</source>
-        <translation>%1 elem absztraktként lett definiálva.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not nillable.</source>
-        <translation>%1 elem nem nil-feltételű.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 contains invalid data: %2</source>
-        <translation>%1 attribútum érvénytelen adatot tartalmaz: %2</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Element contains content although it is nillable.</source>
-        <translation>Az elem annak ellenére tartalmaz adatot, hogy nil-feltételű.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Fixed value constraint not allowed if element is nillable.</source>
-        <translation>Az elemre rögzített érték megkötés nem adható, ha az nil-feltételű.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Specified type %1 is not validly substitutable with element type %2.</source>
-        <translation>A megadott %1 típus nem helyettesíthető érvényesen %2 elemtípussal.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 is not allowed to be abstract.</source>
-        <translation>%1 komplex típus nem lehet absztrakt.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Element %1 contains not allowed attributes.</source>
-        <translation>%1 elem nem megengedett attribútumokat tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+97"/>
-        <source>Element %1 contains not allowed child element.</source>
-        <translation>%1 elem nem megengedett gyermek elemet tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location line="+93"/>
-        <source>Content of element %1 does not match its type definition: %2.</source>
-        <translation>%1 elem tartalma nem egyezik típusának definíciójával: %2.</translation>
-    </message>
-    <message>
-        <location line="-85"/>
-        <location line="+92"/>
-        <location line="+41"/>
-        <source>Content of element %1 does not match defined value constraint.</source>
-        <translation>%1 elem tartalma nem egyezik a definiált érték megkötéssel.</translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <source>Element %1 contains not allowed child content.</source>
-        <translation>%1 elem nem megengedett gyermek tartalmat tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Element %1 contains not allowed text content.</source>
-        <translation>%1 elemben nem megengedett szövegtartalom található.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is missing required attribute %2.</source>
-        <translation>%1 elemből hiányzik a kötelező %2 attribútum.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Attribute %1 does not match the attribute wildcard.</source>
-        <translation>%1 attribútum nem egyezik az attribútum helyettesítővel.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Declaration for attribute %1 does not exist.</source>
-        <translation>%1 attribútum deklarációja nem létezik.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Element %1 contains two attributes of type %2.</source>
-        <translation>%1 elem két %2 típusú attribútumot tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 contains invalid content.</source>
-        <translation>%1 attribútumban érvénytelen tartalom szerepel.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 contains unknown attribute %2.</source>
-        <translation>%1 elem a(z) %2 ismeretlen attribútumot tartalmazza.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match its type definition: %2.</source>
-        <translation>%1 attribútum tartalma nem egyezik a típus definícióban megadottakkal: %2.</translation>
-    </message>
-    <message>
-        <location line="-38"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match defined value constraint.</source>
-        <translation>%1 attribútum tartalma nem egyezik a definiált érték megkötéssel.</translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Non-unique value found for constraint %1.</source>
-        <translation>%1 megkötés nem egyedi értéket tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Key constraint %1 contains absent fields.</source>
-        <translation>%1 kulcs megkötés hiányzó mezőket tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Key constraint %1 contains references nillable element %2.</source>
-        <translation>%1 kulcsfeltétel %2 nil-feltételű elemre vonatkozó hivatkozást tartalmaz.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No referenced value found for key reference %1.</source>
-        <translation>Nem található hivatkozott érték %1 kulcs referenciához.</translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>More than one value found for field %1.</source>
-        <translation>%1 mezőhöz egynél több érték létezik.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Field %1 has no simple type.</source>
-        <translation>%1 mezőnek nincs egyszerű típusa.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>ID value &apos;%1&apos; is not unique.</source>
-        <translation>&apos;%1&apos; ID érték nem egyedi.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
-        <translation>&apos;%1% attribútum érvénytelen QName adatot tartalmaz: %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+55"/>
-        <source>empty</source>
-        <translation>üres</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or one</source>
-        <translation>nulla vagy egy</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>exactly one</source>
-        <translation>pontosan egy</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>one or more</source>
-        <translation>egy vagy több</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or more</source>
-        <translation>nulla vagy több</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="+63"/>
-        <source>Required type is %1, but %2 was found.</source>
-        <translation>Az elvárt típus %1, de a kapott %2.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Promoting %1 to %2 may cause loss of precision.</source>
-        <translation>%1 átalakítása %2 típusra a pontosság elvesztését okozhatja.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>The focus is undefined.</source>
-        <translation>A fókusz nincs definiálva.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="+86"/>
-        <source>It&apos;s not possible to add attributes after any other kind of node.</source>
-        <translation>Semmilyen más csomópont után nem adható meg attribútum.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>An attribute by name %1 has already been created.</source>
-        <translation>%1 nevű attribútum már létre van hozva.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qxpathhelper_p.h" line="+120"/>
-        <source>Only the Unicode Codepoint Collation is supported(%1). %2 is unsupported.</source>
-        <translation>Csak a Unicode Codepoint Collation támogatott(%1). %2 nem támogatott.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+64"/>
-        <source>No operand in an integer division, %1, can be %2.</source>
-        <translation type="unfinished">Nincs operandus az egészosztásnál (%1), akár %2 is lehet.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The first operand in an integer division, %1, cannot be infinity (%2).</source>
-        <translation type="unfinished">Az egészosztás (%1) első operandusa nem lehet végtelen (%2).</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The second operand in a division, %1, cannot be zero (%2).</source>
-        <translation type="unfinished">Az osztás (%1) második operandusa nem lehet nulla (%2).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+216"/>
-        <source>An %1-attribute with value %2 has already been declared.</source>
-        <translation type="unfinished">Egy %1-attribútum %2 értékkel már deklarálva van.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>An %1-attribute must have a valid %2 as value, which %3 isn&apos;t.</source>
-        <translation type="unfinished">Egy %1-attribútumnak érvényes %2 értékkel kell rendelkeznie, azonban %3 nem az.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
-        <source>Circularity detected</source>
-        <translation type="unfinished">Körkörös hivatkozás</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+167"/>
-        <source>No comparisons can be done involving the type %1.</source>
-        <translation type="unfinished">%1 típus nem szerepelhet összehasonlításban.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Operator %1 is not available between atomic values of type %2 and %3.</source>
-        <translation type="unfinished">%1 operátor nem használható %2 és %3 típusok atomi értékei között.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
-        <source>No casting is possible with %1 as the target type.</source>
-        <translation type="unfinished">%1 típusra való konverzió nem lehetséges.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>It is not possible to cast from %1 to %2.</source>
-        <translation type="unfinished">Nem lehetséges %1 típusról %2 típusra konvertálni.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Casting to %1 is not possible because it is an abstract type, and can therefore never be instantiated.</source>
-        <translation type="unfinished">%1 típusra való konverzió nem lehetséges, mivel absztrakt típus és emiatt nem példányosítható.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>It&apos;s not possible to cast the value %1 of type %2 to %3</source>
-        <translation type="unfinished">A(z) %2 típusú %1 érték konverziója %3 típusra nem lehetséges</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Failure when casting from %1 to %2: %3</source>
-        <translation type="unfinished">Hiba történt %1 típus %2 típusra történő konvertálásakor: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
-        <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
-        <translation type="unfinished">A(z) %1 attribútum nem jelenhet meg %2 elemben. Csak szabványos attribútumok szerepelhetnek.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Attribute %1 cannot appear on the element %2. Only %3 is allowed, and the standard attributes.</source>
-        <translation type="unfinished">A(z) %1 attribútum nem jelenhet meg %2 elemben. Csak %3 és a szabványos attribútumok szerepelhetnek.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, %4, and the standard attributes.</source>
-        <translation type="unfinished">A(z) %1 attribútum nem jelenhet meg %2 elemben. Csak %3, %4 és a szabványos attribútumok szerepelhetnek.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, and the standard attributes.</source>
-        <translation type="unfinished">A(z) %1 attribútum nem jelenhet meg %2 elemben. Csak %3 és a szabványos attribútumok szerepelhetnek.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>XSL-T attributes on XSL-T elements must be in the null namespace, not in the XSL-T namespace which %1 is.</source>
-        <translation type="unfinished">Az XSL-T elemekhez tartozó XSL-T attribútumoknak a null névtérben kell szerepelniük, nem a(z) %1 XSL-T névtérben.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The attribute %1 must appear on element %2.</source>
-        <translation type="unfinished">A(z) %1 attribútumnak %2 elemben kell megjelennie.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The element with local name %1 does not exist in XSL-T.</source>
-        <translation type="unfinished">%1 lokális nevű elem nem létezik az XSL-T-ben.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcomparingaggregator.cpp" line="+197"/>
-        <source>The first argument to %1 cannot be of type %2.</source>
-        <translation type="unfinished">%1 első argumentuma nem lehet %2 típusú.</translation>
     </message>
 </context>
 <context>
@@ -12641,7 +10035,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1325"/>
         <source>Edit contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12651,7 +10045,7 @@ to
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+775"/>
+        <location line="+771"/>
         <source>Insert widget &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13666,7 +11060,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PluginDialog</name>
     <message>
-        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+68"/>
         <source>Components</source>
         <translation type="unfinished"></translation>
     </message>

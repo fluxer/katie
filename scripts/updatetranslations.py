@@ -3,11 +3,9 @@
 import os, glob, subprocess, shlex
 
 components = ('core', 'declarative', 'gui', 'multimedia', 'network', 'opengl',
-    'plugins', 'script', 'scripttools', 'sql', 'svg', 'xml', 'xmlpatterns',
-    'designer')
-tools = ('lrelease', 'uic', 'moc', 'lupdate', 'idc', 'qcollectiongenerator',
-    'rcc', 'lconvert', 'qhelpgenerator', 'qdbus', 'designer', 'qdbusviewer',
-    'qscript', 'qtconfig')
+    'plugins', 'script', 'scripttools', 'sql', 'svg', 'xml', 'designer')
+tools = ('lrelease', 'uic', 'moc', 'lupdate', 'rcc', 'lconvert', 'qdbus',
+    'designer', 'qdbusviewer', 'qscript', 'qtconfig')
 cfiles = []
 tfiles = []
 

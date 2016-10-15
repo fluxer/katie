@@ -168,7 +168,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
         <source>Close Tab</source>
         <translation>Zavřít kartu</translation>
     </message>
@@ -933,7 +933,7 @@
 <context>
     <name>FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1758"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1021,44 +1021,6 @@
         <source>XX Icon Selected off</source>
         <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
-        <source>Services</source>
-        <translation>Služby</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide %1</source>
-        <translation>Skrýt %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Others</source>
-        <translation>Skrýt ostatní</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show All</source>
-        <translation>Ukázat vše</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Preferences...</source>
-        <translation>Nastavení...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit %1</source>
-        <translation>Ukončit %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>About %1</source>
-        <translation>O %1</translation>
     </message>
 </context>
 <context>
@@ -1163,9 +1125,9 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+916"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+652"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>Nepodařilo se najít počítač</translation>
@@ -1199,8 +1161,8 @@
         <translation>Síť není dosažitelná</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1252"/>
-        <location line="+822"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1240"/>
+        <location line="+810"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>Tato socket operace není podporována</translation>
@@ -1209,7 +1171,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1255"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1244"/>
         <source>Step &amp;down</source>
         <translation>Krok &amp;dolů</translation>
     </message>
@@ -1255,7 +1217,7 @@
         <translation>Spustit</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Použití &apos;%1&apos; vyžaduje Qt %2; bylo ale nalezeno Qt %3.</translation>
     </message>
@@ -1265,7 +1227,7 @@
         <translation>Qt není slučitelná</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2086"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1292,7 +1254,7 @@
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1376"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1270"/>
         <source>&amp;Red:</source>
         <translation>&amp;Červená:</translation>
     </message>
@@ -1317,12 +1279,12 @@
         <translation>Vybrat barvu</translation>
     </message>
     <message>
-        <location line="+183"/>
+        <location line="+133"/>
         <source>&amp;Add to Custom Colors</source>
         <translation>&amp;Přidat k uživatelem stanoveným barvám</translation>
     </message>
     <message>
-        <location line="-285"/>
+        <location line="-235"/>
         <source>Bl&amp;ue:</source>
         <translation>&amp;Modrá:</translation>
     </message>
@@ -1332,7 +1294,7 @@
         <translation>&amp;Zelená:</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+234"/>
         <source>&amp;Basic colors</source>
         <translation>Základní &amp;barvy</translation>
     </message>
@@ -1342,7 +1304,7 @@
         <translation>&amp;Uživatelem stanovené barvy</translation>
     </message>
     <message>
-        <location line="-283"/>
+        <location line="-233"/>
         <source>A&amp;lpha channel:</source>
         <translation>A&amp;lfa kanál:</translation>
     </message>
@@ -1379,7 +1341,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>Displays this help.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1499,7 +1461,7 @@
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2267"/>
         <source>AM</source>
         <translation>AM</translation>
     </message>
@@ -2754,7 +2716,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+743"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2848,12 +2810,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+480"/>
-        <source>Done</source>
-        <translation>Hotovo</translation>
-    </message>
-    <message>
-        <location line="+127"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
         <source>What&apos;s This?</source>
         <translation>Co je toto?</translation>
     </message>
@@ -2994,19 +2951,13 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>Druh</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>Typ</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>Date Modified</source>
         <translation>Datum změny</translation>
     </message>
@@ -3045,22 +2996,22 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+395"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+363"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
     <message>
-        <location line="-196"/>
+        <location line="-193"/>
         <source>Fatal Error:</source>
         <translation>Osudová chyba:</translation>
     </message>
     <message>
-        <location line="+195"/>
+        <location line="+192"/>
         <source>&amp;Show this message again</source>
         <translation>Toto hlášení &amp;ukázat ještě jednou</translation>
     </message>
     <message>
-        <location line="-201"/>
+        <location line="-198"/>
         <source>Debug Message:</source>
         <translation>Hlášení o odladění:</translation>
     </message>
@@ -3117,88 +3068,76 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+486"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+243"/>
         <location line="+1"/>
         <source>File</source>
         <translation>Soubor</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>File Folder</source>
-        <comment>Match Windows Explorer</comment>
-        <translation>Souborová složka</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Folder</source>
         <comment>All other platforms</comment>
         <translation>Složka</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Alias</source>
-        <comment>Mac OS X Finder</comment>
-        <translation>Přezdívka</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
         <translation>Zkratka</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+559"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+529"/>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
     <message>
-        <location line="+731"/>
+        <location line="+706"/>
         <location line="+55"/>
-        <location line="+1551"/>
+        <location line="+1480"/>
         <source>&amp;Open</source>
         <translation>&amp;Otevřít</translation>
     </message>
     <message>
-        <location line="-1606"/>
+        <location line="-1535"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="-22"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="-13"/>
         <source>Drive</source>
         <translation>Disková jednotka</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-759"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-734"/>
         <source>Show </source>
         <translation>Ukázat </translation>
     </message>
     <message>
-        <location line="+2159"/>
+        <location line="+2063"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; je chráněn proti zápisu.
 Přesto chcete soubor smazat?</translation>
     </message>
     <message>
-        <location line="-2145"/>
-        <location line="+703"/>
+        <location line="-2049"/>
+        <location line="+678"/>
         <source>File &amp;name:</source>
         <translation>Název &amp;souboru:</translation>
     </message>
     <message>
-        <location line="+1314"/>
+        <location line="+1243"/>
         <source>New Folder</source>
         <translation>Nová složka</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-1928"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Nová složka</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
         <source>Remove</source>
         <translation>Odstranit</translation>
     </message>
@@ -3218,18 +3157,18 @@ Přesto chcete soubor smazat?</translation>
         <translation>&amp;Ukázat skryté soubory</translation>
     </message>
     <message>
-        <location line="+2158"/>
+        <location line="+2062"/>
         <source>Are sure you want to delete &apos;%1&apos;?</source>
         <translation>Jste si jistý, že %1 chcete smazat?</translation>
     </message>
     <message>
-        <location line="-2189"/>
+        <location line="-2093"/>
         <source>Save As</source>
         <translation>Uložit jako</translation>
     </message>
     <message>
-        <location line="+1540"/>
-        <location line="+866"/>
+        <location line="+1450"/>
+        <location line="+860"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -3238,19 +3177,19 @@ Adresář se nepodařilo nalézt.
 Ověřte, prosím, že byl zadán správný název adresáře.</translation>
     </message>
     <message>
-        <location line="-1667"/>
+        <location line="-1596"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>&amp;Vybrat</translation>
     </message>
     <message>
-        <location line="-752"/>
+        <location line="-727"/>
         <source>&amp;Delete</source>
         <translation>&amp;Smazat</translation>
     </message>
     <message>
         <location line="-15"/>
-        <location line="+540"/>
+        <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Všechny soubory (*)</translation>
     </message>
@@ -3260,40 +3199,40 @@ Ověřte, prosím, že byl zadán správný název adresáře.</translation>
         <translation>Adresáře</translation>
     </message>
     <message>
-        <location line="-703"/>
+        <location line="-678"/>
         <source>&amp;Rename</source>
         <translation>&amp;Přejmenovat</translation>
     </message>
     <message>
-        <location line="+2175"/>
+        <location line="+2079"/>
         <source>Could not delete directory.</source>
         <translation>Adresář se nepodařilo smazat.</translation>
     </message>
     <message>
-        <location line="-2167"/>
-        <location line="+699"/>
+        <location line="-2071"/>
+        <location line="+674"/>
         <source>Directory:</source>
         <translation>Adresář:</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+29"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+17"/>
         <source>Unknown</source>
         <translation>Neznámý</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+838"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+773"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>Soubor %1 již existuje.
 Chcete jej nahradit?</translation>
     </message>
     <message>
-        <location line="+1039"/>
+        <location line="+1033"/>
         <source>Recent Places</source>
         <translation>Naposledy navštívené</translation>
     </message>
     <message>
-        <location line="-1019"/>
+        <location line="-1013"/>
         <source>%1
 File not found.
 Please verify the correct file name was given.</source>
@@ -3303,13 +3242,11 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Look in:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Back</source>
         <translation type="unfinished">Zpět</translation>
     </message>
@@ -3320,7 +3257,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Forward</source>
         <translation type="unfinished">Dopředu</translation>
     </message>
@@ -3331,7 +3267,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Parent Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3342,7 +3277,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Create New Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3353,7 +3287,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>List View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3364,7 +3297,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Detail View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3375,7 +3307,6 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Files of type:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3383,7 +3314,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+923"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+806"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -3393,8 +3324,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Velikost</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+484"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-162"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+414"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-142"/>
         <source>%1 GB</source>
         <translation>%1 GB</translation>
     </message>
@@ -3417,27 +3348,22 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>%1 TB</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+98"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+78"/>
         <source>&lt;b&gt;The name &quot;%1&quot; can not be used.&lt;/b&gt;&lt;p&gt;Try using another name, with fewer characters or no punctuations marks.</source>
         <translation>&lt;b&gt;Název &quot;%1&quot; nelze použít.&lt;/b&gt;&lt;p&gt;Zkuste použít jiný název, s menším počtem znaků nebo bez zvláštních znaků.</translation>
     </message>
     <message>
-        <location line="-91"/>
+        <location line="-71"/>
         <source>%1 bytes</source>
         <translation>%1 bytů</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
-        <source>My Computer</source>
-        <translation>Můj počítač</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
         <source>Computer</source>
         <translation>Počítač</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+90"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+70"/>
         <source>Invalid filename</source>
         <translation>Neplatný název souboru</translation>
     </message>
@@ -3467,7 +3393,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+2029"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+1939"/>
         <source>Any</source>
         <translation>Všechna</translation>
     </message>
@@ -3477,31 +3403,31 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Laoské</translation>
     </message>
     <message>
-        <location line="-1988"/>
+        <location line="-1902"/>
         <location line="+12"/>
-        <location line="+1178"/>
+        <location line="+1113"/>
         <source>Bold</source>
         <translation>Tučné</translation>
     </message>
     <message>
-        <location line="-1176"/>
+        <location line="-1111"/>
         <source>Demi</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="+1971"/>
+        <location line="+1885"/>
         <source>Thai</source>
         <translation>Thajské</translation>
     </message>
     <message>
-        <location line="-1979"/>
+        <location line="-1893"/>
         <location line="+18"/>
-        <location line="+1164"/>
+        <location line="+1099"/>
         <source>Black</source>
         <translation>Černé</translation>
     </message>
     <message>
-        <location line="+746"/>
+        <location line="+725"/>
         <source>Greek</source>
         <translation>Řecké</translation>
     </message>
@@ -3516,13 +3442,13 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Latinské</translation>
     </message>
     <message>
-        <location line="-1911"/>
-        <location line="+1174"/>
+        <location line="-1825"/>
+        <location line="+1109"/>
         <source>Light</source>
         <translation>Jemné</translation>
     </message>
     <message>
-        <location line="+827"/>
+        <location line="+806"/>
         <source>Ogham</source>
         <translation>Ogamské</translation>
     </message>
@@ -3567,13 +3493,13 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>N&apos;Ko</translation>
     </message>
     <message>
-        <location line="-2024"/>
-        <location line="+1189"/>
+        <location line="-1938"/>
+        <location line="+1124"/>
         <source>Demi Bold</source>
         <translation>Polotučné</translation>
     </message>
     <message>
-        <location line="+754"/>
+        <location line="+733"/>
         <source>Arabic</source>
         <translation>Arabské</translation>
     </message>
@@ -3588,30 +3514,30 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Myanmar</translation>
     </message>
     <message>
-        <location line="-1824"/>
-        <location line="+1027"/>
+        <location line="-1738"/>
+        <location line="+962"/>
         <source>Italic</source>
         <translation>Kurzíva</translation>
     </message>
     <message>
-        <location line="+815"/>
+        <location line="+794"/>
         <source>Korean</source>
         <translation>Korejské</translation>
     </message>
     <message>
-        <location line="-2015"/>
-        <location line="+1205"/>
+        <location line="-1929"/>
+        <location line="+1140"/>
         <source>Normal</source>
         <translation>Normální</translation>
     </message>
     <message>
-        <location line="-1029"/>
-        <location line="+1026"/>
+        <location line="-964"/>
+        <location line="+961"/>
         <source>Oblique</source>
         <translation>Skloněné</translation>
     </message>
     <message>
-        <location line="+774"/>
+        <location line="+753"/>
         <source>Telugu</source>
         <translation>Telugu</translation>
     </message>
@@ -3689,7 +3615,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+746"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
         <source>&amp;Font</source>
         <translation>&amp;Písmo</translation>
     </message>
@@ -3714,12 +3640,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Způsob &amp;psaní</translation>
     </message>
     <message>
-        <location line="-575"/>
+        <location line="-564"/>
         <source>Select Font</source>
         <translation>Vybrat písmo</translation>
     </message>
     <message>
-        <location line="+573"/>
+        <location line="+562"/>
         <source>&amp;Underline</source>
         <translation>&amp;Podtrhnout</translation>
     </message>
@@ -4058,8 +3984,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2038"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+97"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1637"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+64"/>
         <source>No such file or directory</source>
         <translation>Nepodařilo se najít žádný takový soubor nebo adresář</translation>
     </message>
@@ -4076,7 +4002,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Na zařízení není žádný volný úložný prostor</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
@@ -4090,24 +4016,14 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QInputContext</name>
     <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+242"/>
+        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
         <source>XIM</source>
         <translation>XIM</translation>
     </message>
     <message>
-        <location line="+27"/>
-        <source>Windows input method</source>
-        <translation>Windows-vstupní metoda</translation>
-    </message>
-    <message>
-        <location line="-4"/>
+        <location line="+23"/>
         <source>XIM input method</source>
         <translation>XIM-vstupní metoda</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Mac OS X input method</source>
-        <translation>Mac OS X-vstupní metoda</translation>
     </message>
 </context>
 <context>
@@ -4204,7 +4120,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+805"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+720"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (%2.%3.%4) [%5]</translation>
     </message>
@@ -4214,12 +4130,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="-407"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="-322"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Ověřovací data přídavného nesouhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+416"/>
+        <location line="+331"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (Knihovny vytvořené v režimu ladění a vydání nemohou být používány společně.)</translation>
     </message>
@@ -4229,8 +4145,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Soubor &apos;%1&apos; není platným přídavným modulem Qt.</translation>
     </message>
     <message>
-        <location line="-129"/>
-        <location line="+127"/>
+        <location line="-86"/>
+        <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Nepodařilo se nalézt sdílenou knihovnu.</translation>
@@ -4611,7 +4527,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
         <source>Corner Toolbar</source>
         <translation>Rohový nástrojový pruh</translation>
     </message>
@@ -4619,23 +4535,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+380"/>
-        <location line="+817"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Help</source>
-        <translation>Nápověda</translation>
-    </message>
-    <message>
-        <location line="-1065"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+125"/>
         <source>Show Details...</source>
         <translation>Ukázat podrobnosti...</translation>
     </message>
     <message>
-        <location line="+1545"/>
+        <location line="+1355"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;O Qt&lt;/h3&gt;&lt;p&gt;Tento program používá Qt-verze %1.&lt;/p&gt;</translation>
     </message>
@@ -4650,7 +4555,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location line="-1580"/>
+        <location line="-1390"/>
         <source>Hide Details...</source>
         <translation>Skrýt podrobnosti...</translation>
     </message>
@@ -4820,7 +4725,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
         <source>Invalid URI: %1</source>
         <translation>Neplatný URI: %1</translation>
     </message>
@@ -4846,19 +4751,19 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
         <source>Request for opening non-local file %1</source>
         <translation>Požadavek na otevření souboru přes síť %1</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+145"/>
         <source>Read error reading from %1: %2</source>
         <translation>Při čtení ze souboru %1 nastala chyba: %2</translation>
     </message>
     <message>
         <location line="-21"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+23"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+22"/>
         <source>Cannot open %1: Path is a directory</source>
         <translation>%1 nelze otevřít: Jedná se o adresář</translation>
     </message>
@@ -5551,22 +5456,17 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QPrintPreviewDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+81"/>
         <source>Print Preview</source>
         <translation>Náhled tisku</translation>
     </message>
     <message>
-        <location line="+96"/>
-        <source>Close</source>
-        <translation>Zavřít</translation>
-    </message>
-    <message>
-        <location line="-7"/>
+        <location line="+89"/>
         <source>Print</source>
         <translation>Tisk</translation>
     </message>
@@ -5632,12 +5532,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Ukázat jednotlivé strany</translation>
     </message>
     <message>
-        <location line="+172"/>
+        <location line="+168"/>
         <source>Export to PDF</source>
         <translation>Vyvést do PDF</translation>
     </message>
     <message>
-        <location line="-213"/>
+        <location line="-209"/>
         <source>Previous page</source>
         <translation>Předchozí strana</translation>
     </message>
@@ -5652,7 +5552,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Ukázat strany ležící naproti</translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+170"/>
         <source>Export to PostScript</source>
         <translation>Vyvést do PostScriptu</translation>
     </message>
@@ -5829,29 +5729,28 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+982"/>
-        <location line="+844"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+938"/>
         <source>Error writing to process</source>
         <translation>Zápis do procesu se nezdařil</translation>
     </message>
     <message>
-        <location line="+202"/>
+        <location line="+972"/>
         <source>No program defined</source>
         <translation>Nestanoven žádný program</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+722"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+644"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Potíže se zdroji (selhání rozcestí - &quot;fork failure&quot;): %1</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="-1145"/>
+        <location filename="../src/core/io/qprocess.cpp" line="-1071"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Čtení z procesu se nezdařilo</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="-292"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="-232"/>
         <source>Could not open input redirection for reading</source>
         <translation>Vstupní přesměrování se nepodařilo otevřít pro čtení</translation>
     </message>
@@ -5861,7 +5760,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Výstupní přesměrování se nepodařilo otevřít pro zápis</translation>
     </message>
     <message>
-        <location line="+626"/>
+        <location line="+469"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -5869,7 +5768,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Překročení času u procesu</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+116"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+110"/>
         <source>Process crashed</source>
         <translation>Proces spadl</translation>
     </message>
@@ -6370,7 +6269,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+410"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+404"/>
         <source>Top</source>
         <translation>Začátek</translation>
     </message>
@@ -6482,7 +6381,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Neplatný údaj u klíče (prázdný)</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+346"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+327"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: Údaj o velikosti vytvoření je menší než nula</translation>
     </message>
@@ -6512,7 +6411,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Nepodařilo se nastavit klíč pro uzavření</translation>
     </message>
     <message>
-        <location line="+282"/>
+        <location line="+280"/>
         <source>%1: unable to unlock</source>
         <translation>%1: Uzavření se nepodařilo zrušit</translation>
     </message>
@@ -6537,7 +6436,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1: Nepřipojen</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
         <location filename="../src/core/kernel/qsharedmemory.cpp" line="-22"/>
         <source>%1: unable to lock</source>
         <translation>%1: Uzavření se nezdařilo</translation>
@@ -6546,12 +6445,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1330"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1100"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="-752"/>
+        <location line="-609"/>
         <source>No</source>
         <translation>Ne</translation>
     </message>
@@ -6561,18 +6460,18 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nahoru</translation>
     </message>
     <message>
-        <location line="+828"/>
-        <location line="+135"/>
+        <location line="+704"/>
+        <location line="+87"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-987"/>
+        <location line="-814"/>
         <source>Del</source>
         <translation>Delete</translation>
     </message>
@@ -6613,13 +6512,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Volání</translation>
     </message>
     <message>
-        <location line="+650"/>
-        <location line="+135"/>
+        <location line="+526"/>
+        <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-959"/>
+        <location line="-787"/>
         <source>Down</source>
         <translation>Dolů</translation>
     </message>
@@ -6829,13 +6728,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Hangul zvláštní</translation>
     </message>
     <message>
-        <location line="+604"/>
-        <location line="+130"/>
+        <location line="+480"/>
+        <location line="+82"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-956"/>
+        <location line="-784"/>
         <source>PgUp</source>
         <translation>PgUp</translation>
     </message>
@@ -6865,13 +6764,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Vpravo</translation>
     </message>
     <message>
-        <location line="+826"/>
-        <location line="+138"/>
+        <location line="+702"/>
+        <location line="+90"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-980"/>
+        <location line="-808"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Mezerník</translation>
@@ -7768,7 +7667,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+463"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+452"/>
         <source>Error creating SSL session: %1</source>
         <translation>Nepodařilo se vytvořit sezení SSL: %1</translation>
     </message>
@@ -7788,7 +7687,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Soukromý klíč nedosvědčuje veřejný klíč, %1</translation>
     </message>
     <message>
-        <location line="+425"/>
+        <location line="+324"/>
         <source>Unable to write data: %1</source>
         <translation>Data se nepodařilo zapsat: %1</translation>
     </message>
@@ -7808,7 +7707,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Během startu SSL protokolu se vyskytla chyba: %1</translation>
     </message>
     <message>
-        <location line="-703"/>
+        <location line="-602"/>
         <source>Error loading local certificate, %1</source>
         <translation>Nepodařilo se nahrát místní osvědčení, %1</translation>
     </message>
@@ -7823,13 +7722,13 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nepodařilo se vytvořit žádný kontext SSL (%1)</translation>
     </message>
     <message>
-        <location line="+693"/>
+        <location line="+592"/>
         <location line="+10"/>
         <source>Error while reading: %1</source>
         <translation>Při čtení se vyskytla chyba: %1</translation>
     </message>
     <message>
-        <location line="-593"/>
+        <location line="-492"/>
         <source>Error loading private key, %1</source>
         <translation>Soukromý klíč se nepodařilo nahrát, %1</translation>
     </message>
@@ -8019,7 +7918,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8475,7 +8374,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
         <source>What&apos;s This?</source>
         <translation>Co je toto?</translation>
     </message>
@@ -8483,7 +8382,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5484"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8491,7 +8390,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+689"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+607"/>
         <source>Done</source>
         <translation>Hotovo</translation>
     </message>
@@ -8506,12 +8405,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>&amp;Nápověda</translation>
     </message>
     <message>
-        <location line="-8"/>
-        <source>&amp;Next</source>
-        <translation>&amp;Další</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="-2"/>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
@@ -8521,12 +8415,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Použít</translation>
     </message>
     <message>
-        <location line="-5"/>
+        <location line="-4"/>
         <source>Continue</source>
         <translation>Pokračovat</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>&amp;Finish</source>
         <translation>Do&amp;končit</translation>
     </message>
@@ -8536,7 +8430,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>&amp;Další &gt;</translation>
     </message>
     <message>
-        <location line="-6"/>
+        <location line="-5"/>
         <source>Go Back</source>
         <translation>Jít zpět</translation>
     </message>
@@ -8549,7 +8443,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1077"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1035"/>
         <source>&amp;Move</source>
         <translation>Po&amp;sunout</translation>
     </message>
@@ -8559,7 +8453,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Změnit &amp;velikost</translation>
     </message>
     <message>
-        <location line="-965"/>
+        <location line="-923"/>
         <source>Close</source>
         <translation>Zavřít</translation>
     </message>
@@ -8569,7 +8463,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Zmenšit</translation>
     </message>
     <message>
-        <location line="+975"/>
+        <location line="+933"/>
         <source>Stay on &amp;Top</source>
         <translation>Zůstat v &amp;popředí</translation>
     </message>
@@ -8611,7 +8505,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Zvě&amp;tšit</translation>
     </message>
     <message>
-        <location line="-965"/>
+        <location line="-923"/>
         <source>Restore Down</source>
         <translation>Obnovit</translation>
     </message>
@@ -8732,34 +8626,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <location line="-9"/>
         <source>error occurred while parsing document type definition</source>
         <translation>při vyhodnocení definice typu dokumentu se vyskytla chyba</translation>
-    </message>
-</context>
-<context>
-    <name>QXmlPatternistCLI</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
-        <source>Warning in %1, at line %2, column %3: %4</source>
-        <translation>Varování v %1, na řádku %2, sloupec %3: %4</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning in %1: %2</source>
-        <translation>Varování v %1: %2</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unknown location</source>
-        <translation>Neznámé umístění</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error %1 in %2, at line %3, column %4: %5</source>
-        <translation>Chyba %1 v %2, na řádku %3, sloupec %4: %5</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Error %1 in %2: %3</source>
-        <translation>Chyba %1 v %2: %3</translation>
     </message>
 </context>
 <context>
@@ -9258,2480 +9124,6 @@ to
         <location line="+252"/>
         <source>Select Resource</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtXmlPatterns</name>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+67"/>
-        <source>A comment cannot contain %1</source>
-        <translation>Poznámka nesmí obsahovat %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+3726"/>
-        <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
-        <translation>Verze %1 není podporována. Podporovanou verzí XQuery je 1.0.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcontextnodechecker.cpp" line="+54"/>
-        <source>The root node of the second argument to function %1 must be a document node. %2 is not a document node.</source>
-        <translation>Nadřízený uzel druhého agumentu funkce %1 musí být uzlem dokumentu, což není případ %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="+145"/>
-        <source>The parameter %1 is required, but no corresponding %2 is supplied.</source>
-        <translation>Pro vyžadovaný parametr %1 nebyl zadán odpovídající %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+163"/>
-        <source>Namespace declarations must occur before function, variable, and option declarations.</source>
-        <translation>Deklarace jmenných prostorů musí stát před prohlášeními funkcí, proměnných nebo prohlášeními voleb.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+55"/>
-        <source>empty</source>
-        <translation>prázdný</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2895"/>
-        <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
-        <translation>Jmenný prostor-URI nesmí být prázdný, když je spojen s prefixem %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+6"/>
-        <source>A comment cannot end with a %1.</source>
-        <translation>Poznámka nesmí končit na %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+2435"/>
-        <source>Top level stylesheet elements must be in a non-null namespace, which %1 isn&apos;t.</source>
-        <translation>Úplně nahoře stojící prvky prováděcího listu se nesmí nacházet v nulovém jmenném prostoru, což je případ %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+65"/>
-        <source>Integer division (%1) by zero (%2) is undefined.</source>
-        <translation>Celočíselné dělení (%1) nulou (%2) není stanoveno.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
-        <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
-        <translation>Knihovní modul nemůže být posouzen přímo, musí být zaveden z hlavního modulu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+187"/>
-        <source>Time %1:%2:%3.%4 is invalid.</source>
-        <translation>Časový údaj %1:%2:%3.%4 je neplatný.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
-        <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
-        <translation type="unfinished">Prvek %2 může mít pouze obvyklé vlastnosti, ne však %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+91"/>
-        <source>A value of type %1 must contain an even number of digits. The value %2 does not.</source>
-        <translation>Počet míst hodnoty typu %1 musí být stejný. To není případ %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+14"/>
-        <source>Modulus division (%1) by zero (%2) is undefined.</source>
-        <translation>Dělení absolutní hodnoty (%1) nulou(%2) není stanoveno.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2987"/>
-        <source>No function with signature %1 is available</source>
-        <translation>Neexistuje žádná funkce s podpisem %1</translation>
-    </message>
-    <message>
-        <location line="+2154"/>
-        <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
-        <translation>Musí být přítomen záložní výraz, neboť nejsou podporovány žádné věcné výrazy</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="+159"/>
-        <source>In the replacement string, %1 can only be used to escape itself or %2, not %3</source>
-        <translation>V nahrazení může být použit pouze %1, aby se chránil sám, nebo %2, ne však pro %3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+382"/>
-        <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
-        <translation>Kódovací bod %1 z %2 s kódováním %3 není platným znakem XML.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
-        <source>Network timeout.</source>
-        <translation>Časový limit síťové operace byl překročen.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
-        <source>No casting is possible with %1 as the target type.</source>
-        <translation type="unfinished">Nelze provádět žádné výběrové (&quot;cast&quot;) operace s typem %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-1567"/>
-        <source>The Schema Import feature is not supported, and therefore %1 declarations cannot occur.</source>
-        <translation>Deklarace %1 je nepřípustná, protože není podporováno zavedení schémat.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-1676"/>
-        <source>Attribute %1 and %2 are mutually exclusive.</source>
-        <translation>Vlastnosti %1 a %2 se vzájemně vylučující.</translation>
-    </message>
-    <message>
-        <location line="-211"/>
-        <source>Parse error: %1</source>
-        <translation>Chyba vyhodnocení: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+86"/>
-        <source>If the first argument is the empty sequence or a zero-length string (no namespace), a prefix cannot be specified. Prefix %1 was specified.</source>
-        <translation>Nelze zadat žádnou předponu, jestliže je první argument prázdný nebo je prázdný řetězec znaků (žádný jmenný prostor). Byla zadána předpona %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+497"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a literal or a variable reference, when used for matching.</source>
-        <translation>V XSL-T vyhledávacím vzoru musí být první argument k funkci %1 při použití k hledání odkaz tvořený písmeny nebo proměnný.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="+99"/>
-        <location line="+15"/>
-        <source>At least one component must be present.</source>
-        <translation>Alespoň jedna součást musí být přítomna.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="+93"/>
-        <source>An attribute by name %1 has already been created.</source>
-        <translation>Již byla vytvořena jedna vlastnost s názvem %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+236"/>
-        <source>%1 is an invalid flag for regular expressions. Valid flags are:</source>
-        <translation>%1 není pro regulérní výrazy platným příznakem. Platnými příznaky jsou:</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+671"/>
-        <source>At least one %1-element must occur inside %2.</source>
-        <translation>V %2 se musí vyskytovat alespoň jeden %1-prvek.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qxpathhelper_p.h" line="+120"/>
-        <source>Only the Unicode Codepoint Collation is supported(%1). %2 is unsupported.</source>
-        <translation>Je podporován pouze Unicode Codepoint Collation (%1). %2 není podporován.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="-134"/>
-        <source>Matches are case insensitive</source>
-        <translation>Na psaní velkých/malých písmen není brán zřetel</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2853"/>
-        <source>The name of an extension expression must be in a namespace.</source>
-        <translation>Název výrazu rozšíření se musí nacházet ve jmenném prostoru.</translation>
-    </message>
-    <message>
-        <location line="-1514"/>
-        <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
-        <translation>Názvy parametrů předloh musí být jednoznačné, %1 již existuje.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-185"/>
-        <source>At least one mode must be specified in the %1-attribute on element %2.</source>
-        <translation>Ve %1-vlastnosti prvku %2 musí být zadán alespoň jeden způsob.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="-10"/>
-        <source>%1 matches newline characters</source>
-        <translation>Výraz &apos;%1&apos; odpovídá znakům pro nový řádek</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="-107"/>
-        <source>Year %1 is invalid because it begins with %2.</source>
-        <translation>%1 není platným údajem pro rok, protože začíná %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+285"/>
-        <source>The second argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>Druhý argument %1 nemůže být typ %2. Musí to být typ %3, %4 nebo %5.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+651"/>
-        <source>Element %1 cannot have children.</source>
-        <translation>Prvek %1 nemůže mít podprvky.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+6"/>
-        <source>Attribute %1 cannot appear on the element %2. Only %3 is allowed, and the standard attributes.</source>
-        <translation type="unfinished">Prvek %2 může mít jen vlastnost %3 nebo vlastnosti, které jsou obvyklé, ne však %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-497"/>
-        <source>Only one %1-element can appear.</source>
-        <translation>Může být jen jeden jediný %1-prvek.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="+75"/>
-        <source>The name for a computed attribute cannot have the namespace URI %1 with the local name %2.</source>
-        <translation>Název počítané vlastnosti nesmí mít jmenný prostor-URI %1 s místním názvem %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="+138"/>
-        <source>A positional predicate must evaluate to a single numeric value.</source>
-        <translation>Poziční predikát se musí vyhodnotit jako jednoduchá, číselná hodnota.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
-        <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
-        <translation>Prvek %1 nemůže být vydáván na pokračování, protože se objevuje mimo prvky dokumentu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+4"/>
-        <source>%1 and %2 match the start and end of a line.</source>
-        <translation>Výrazy %1 a %2 vždy odpovídají začátku nebo konci libovolného řádku.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-558"/>
-        <source>Running an XSL-T 1.0 stylesheet with a 2.0 processor.</source>
-        <translation>Je zpracováván jeden XSL-T 1.0 stylový list jedním procesorem verze 2.0.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-1667"/>
-        <source>A stylesheet function must have a prefixed name.</source>
-        <translation>Název funkce stylového listu musí mít předponu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+295"/>
-        <source>%1 cannot be retrieved</source>
-        <translation>%1 nelze určit</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+65"/>
-        <source>It&apos;s not possible to cast the value %1 of type %2 to %3</source>
-        <translation type="unfinished">Nelze provést operaci předvedení hodnoty %1 typu %2 k %3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-20"/>
-        <source>The value of the XSL-T version attribute must be a value of type %1, which %2 isn&apos;t.</source>
-        <translation>Hodnota XSL-T vlastnosti verze musí být hodnotou typu %1, což není případ %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+69"/>
-        <source>In a namespace constructor, the value for a namespace cannot be an empty string.</source>
-        <translation>Ve staviteli jmenného prostoru nesmí mýt hodnota jmenného prostoru prázdným řetězcem.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>The prefix %1 cannot be bound.</source>
-        <translation>Předponu %1 nelze spojit.</translation>
-    </message>
-    <message>
-        <location line="-14"/>
-        <source>The prefix must be a valid %1, which %2 is not.</source>
-        <translation>Předpona musí být platný %1, což není případ %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-551"/>
-        <source>The keyword %1 cannot occur with any other mode name.</source>
-        <translation>Klíčové slovo %1 se nemůže používat dohromady s jiným názvem způsobu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+88"/>
-        <source>Type error in cast, expected %1, received %2.</source>
-        <translation>Chyba typu při přetypování, bylo očekáváno %1, ale přijato %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-3555"/>
-        <source>%1 is not a valid numeric literal.</source>
-        <translation>%1 není platný číselný údaj tvořený písmeny.</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+77"/>
-        <source>%1 takes at most %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 má jen %n argument; údaj %2 z tohoto důvodu neplatný.</numerusform>
-            <numerusform>%1 má jen %n argumenty; údaj %2 z tohoto důvodu neplatný.</numerusform>
-            <numerusform>%1 má jen %n argumenty; údaj %2 z tohoto důvodu neplatný.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
-        <source>Circularity detected</source>
-        <translation type="unfinished">byla zjištěna cirkulární závislost</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+229"/>
-        <source>An %1-attribute must have a valid %2 as value, which %3 isn&apos;t.</source>
-        <translation type="unfinished">Vlastnost s názvem %1 musí mít platnou %2-hodnotu. %3 není platnou hodnotou.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+387"/>
-        <source>If element %1 has no attribute %2, it cannot have attribute %3 or %4.</source>
-        <translation>Prvek %1 nesmí mít vlastnost %3 nebo %4, pokud nemá vlastnost %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+4170"/>
-        <source>A function already exists with the signature %1.</source>
-        <translation>Již existuje funkce s podpisem %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomiccasters_p.h" line="+223"/>
-        <source>When casting to %1 from %2, the source value cannot be %3.</source>
-        <translation>Při přetypování z %1 na %2 nesmí být zdrojová hodnota %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+60"/>
-        <source>Attribute %1 can&apos;t be serialized because it appears at the top level.</source>
-        <translation>Vlastnost %1 nemůže být vydáván na pokračování, protože se objevuje na nejvyšší rovině.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+167"/>
-        <source>No comparisons can be done involving the type %1.</source>
-        <translation type="unfinished">S typem %1 nemohou být prováděny žádné srovnávací operace.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qitemverifier.cpp" line="+67"/>
-        <source>The item %1 did not match the required type %2.</source>
-        <translation>Prvek %1 neodpovídá požadovanému typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+1122"/>
-        <source>Element %1 cannot have a sequence constructor.</source>
-        <translation>Prvek %1 nemůže mít stavitele posloupnosti.</translation>
-    </message>
-    <message>
-        <location line="-842"/>
-        <source>When attribute %1 is present on %2, a sequence constructor cannot be used.</source>
-        <translation>Nelze používat žádného stavitele posloupnosti, když %2 má vlastnost %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+6"/>
-        <source>one or more</source>
-        <translation>jeden nebo více</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-875"/>
-        <source>The encoding %1 is invalid. It must contain Latin characters only, must not contain whitespace, and must match the regular expression %2.</source>
-        <translation>Kódování %1 je neplatné; smí sestávat pouze z latinských písmen a musí odpovídat pravidelnéu výrazu %2.</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+11"/>
-        <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 vyžaduje alespoň %n argument; údaj %2 je z toho důvodu neplatný.</numerusform>
-            <numerusform>%1 vyžaduje alespoň %n argumenty; údaj %2 je z toho důvodu neplatný.</numerusform>
-            <numerusform>%1 vyžaduje alespoň %n argumenty; údaj %2 je z toho důvodu neplatný.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="+156"/>
-        <source>The focus is undefined.</source>
-        <translation>Není stanoveno ohnisko.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-3390"/>
-        <location line="+7323"/>
-        <source>%1 is an unknown schema type.</source>
-        <translation>%1 je neznámým typem schematu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+1206"/>
-        <source>The value for attribute %1 on element %2 must either be %3 or %4, not %5.</source>
-        <translation>Hodnota vlastnosti %1 prvku %2 může být jen %3 nebo %4, ne však %5.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="-26"/>
-        <source>In the replacement string, %1 must be followed by at least one digit when not escaped.</source>
-        <translation>V nahrazovacím řetězci musí po %1 následovat alespoň jedna číslice, když není chráněn znakem Escape.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2712"/>
-        <source>In an XSL-T pattern, axis %1 cannot be used, only axis %2 or %3 can.</source>
-        <translation>V XSL-T vyhledávacím vzoru se smějí používat jen osy %2 nebo %3, ne však %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+71"/>
-        <source>The first operand in an integer division, %1, cannot be infinity (%2).</source>
-        <translation type="unfinished">První veličina, operand, celočíselného dělení %1 nesmí být nekonečno (%2).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qanyuri_p.h" line="+132"/>
-        <source>%1 is not a valid value of type %2.</source>
-        <translation>%1 není platnou hodnotou typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+166"/>
-        <source>Multiplication of a value of type %1 by %2 or %3 (plus or minus infinity) is not allowed.</source>
-        <translation>Násobení hodnoty typu %1 s %2 nebo %3 (kladné nebo záporné nekonečno) není přípustné.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
-        <source>The variable %1 is unused</source>
-        <translation>Proměnná %1 se nepoužívá</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+1386"/>
-        <source>The %1-axis is unsupported in XQuery</source>
-        <translation>Osa %1 není v XQuery podporována</translation>
-    </message>
-    <message>
-        <location line="+333"/>
-        <source>No function with name %1 is available.</source>
-        <translation>Neexistuje žádná funkce s názvem %1.</translation>
-    </message>
-    <message>
-        <location line="+250"/>
-        <source>An attribute with name %1 has already appeared on this element.</source>
-        <translation>Prvek má již vlastnost s názvem %1.</translation>
-    </message>
-    <message>
-        <location line="+61"/>
-        <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
-        <translation>Byl nalezen chybný stavitel přímého prvku. %1 končí %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="-32"/>
-        <source>Dividing a value of type %1 by %2 or %3 (plus or minus zero) is not allowed.</source>
-        <translation>Dělení hodnoty typu %1 prostřednictvím %2 nebo %3 (kladná nebo záporná nula) není přípustné.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+20"/>
-        <source>Attribute %1 cannot have the value %2.</source>
-        <translation>Vlastnost %1 nesmí mít hodnotu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencefns.cpp" line="+346"/>
-        <source>It will not be possible to retrieve %1.</source>
-        <translation>%1 nelze určit.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2103"/>
-        <source>In an XSL-T pattern, function %1 cannot have a third argument.</source>
-        <translation>V XSL-T vyhledávacím vzoru nesmí mít funkce %1 třetí argument.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="-9"/>
-        <source>The namespace URI in the name for a computed attribute cannot be %1.</source>
-        <translation>URI jmenného prostoru v názvu vypočítané vlastnosti nesmí být %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
-        <translation>Cílový název příkazu pro zpracování nemůže být %1 (nezávisle na psaní velkých/malých písmen). %2 je z toho důvodu neplatný.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>%1 is not a valid target name in a processing instruction. It must be a %2 value, e.g. %3.</source>
-        <translation>%1 není platným cílovým názvem pokynu pro zpracování. Musí to být hodnota %2 jakou je například %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2571"/>
-        <source>%1 is an complex type. Casting to complex types is not possible. However, casting to atomic types such as %2 works.</source>
-        <translation>%1 je složeným typem. Přetypování u složených typů není možné. Může se ovšem provádět přetypování do atomických typů jako %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="-4"/>
-        <source>zero or one</source>
-        <translation>žádný nebo jeden</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="-7"/>
-        <source>No operand in an integer division, %1, can be %2.</source>
-        <translation type="unfinished">U celočíselného dělení %1 nesmí být veličina, operand, %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+50"/>
-        <source>The element with local name %1 does not exist in XSL-T.</source>
-        <translation type="unfinished">V XSL-T neexistuje žádný prvek s místním názvem %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-634"/>
-        <source>Two namespace declaration attributes have the same name: %1.</source>
-        <translation>Byly nalezeny dvě vlastnosti deklarace jmenného prostoru se stejným názvem (%1).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qboolean.cpp" line="+78"/>
-        <source>Effective Boolean Value cannot be calculated for a sequence containing two or more atomic values.</source>
-        <translation>Skutečná booleanská hodnota nemůže být vypočítána pro posloupnost ze dvou nebo více atomických hodnot.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="+168"/>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="-17"/>
-        <source>%1 is an invalid %2</source>
-        <translation>%1 je neplatný %2</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="-165"/>
-        <source>The first argument to %1 cannot be of type %2. It must be a numeric type, xs:yearMonthDuration or xs:dayTimeDuration.</source>
-        <translation>První argument k %1 nesmí být typu %2; musí to být číselný typ, xs:yearMonthDuration nebo xs:dayTimeDuration.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="-141"/>
-        <source>Division (%1) by zero (%2) is undefined.</source>
-        <translation>Dělení (%1) nulou (%2) není stanoveno.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+40"/>
-        <source>No template by name %1 exists.</source>
-        <translation>Neexistuje žádná předloha s názvem %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="-8"/>
-        <source>The attribute %1 must appear on element %2.</source>
-        <translation type="unfinished">Prvek %2 musí mít vlastnost %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="-13"/>
-        <source>The default collection is undefined</source>
-        <translation>Pro sbírku není stanovena žádná předloha</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+24"/>
-        <source>Only the prefix %1 can be bound to %2 and vice versa.</source>
-        <translation>S %2 může být spojena pouze předpona %1 (a obráceně).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+402"/>
-        <source>Value %1 of type %2 exceeds maximum (%3).</source>
-        <translation>Hodnota %1 typu %2 překračuje maximum (%3).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+10"/>
-        <source>Whitespace characters are removed, except when they appear in character classes</source>
-        <translation>Prázdné znaky jsou odstraněny v případě, že se neobjeví ve znakových třídách</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="-23"/>
-        <source>Casting to %1 is not possible because it is an abstract type, and can therefore never be instantiated.</source>
-        <translation type="unfinished">Nemohou se provádět žádné operace předvedení k typu %1, protože je to abstraktní typ ist a nelze je doložit příkladem.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+207"/>
-        <source>Operator %1 cannot be used on type %2.</source>
-        <translation>Operátor %1 nelze použít na typ %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2256"/>
-        <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
-        <translation>Jmenný prostor %1 je vyhrazen a z toho důvodu jej nemohou používat uživatelem stanovené funkce (pro tento účel je tu předstanovená předpona %2).</translation>
-    </message>
-    <message>
-        <location line="-174"/>
-        <source>The target namespace of a %1 cannot be empty.</source>
-        <translation>Cílový jmenný prostor %1 nesmí být prázdný.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="-39"/>
-        <source>%1 must be followed by %2 or %3, not at the end of the replacement string.</source>
-        <translation>Po %1 musí následovat %2 nebo %3; nesmí se objevit na konci nahrazovacího řetězce.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2394"/>
-        <source>%1 is an invalid namespace URI.</source>
-        <translation>%1 není platným jmenným prostorem-URI.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-298"/>
-        <location line="+9"/>
-        <source>The attribute %1 cannot appear on %2, when it is a child of %3.</source>
-        <translation>%2 nesmí mít vlastnost %1 v případě, že je potomkem %3.</translation>
-    </message>
-    <message>
-        <location line="+347"/>
-        <source>The attribute %1 can only appear on the first %2 element.</source>
-        <translation>Pouze první %2-prvek smí mít vlastnost %1.</translation>
-    </message>
-    <message>
-        <location line="-1271"/>
-        <source>Element %1 must have either a %2-attribute or a sequence constructor.</source>
-        <translation>Prvek %1 musí mít buď jednu %2-vlastnost nebo se musí používat stavitel posloupnosti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2891"/>
-        <source>Module imports must occur before function, variable, and option declarations.</source>
-        <translation>Zavedení modulů musí nastat před deklaracemi funkcí, proměnných a voleb.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+19"/>
-        <source>Day %1 is outside the range %2..%3.</source>
-        <translation>Údaj dne %1 je mimo rozsah %2..%3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="-22"/>
-        <source>%1 contains octets which are disallowed in the requested encoding %2.</source>
-        <translation>%1 obsahuje oktety, které v kódování %2 nejsou přípustné.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+125"/>
-        <source>When a parameter is required, a default value cannot be supplied through a %1-attribute or a sequence constructor.</source>
-        <translation>Výchozí hodnota požadovaného parametru nemůže být zadána ani prostřednictvím %1-vlastnosti ani přes stavitele posloupnosti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+967"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a string literal, when used for matching.</source>
-        <translation>V XSL-T vyhledávacím vzoru musí být první argument k funkci %1 při použití k hledání řetězec tvořený písmeny.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-887"/>
-        <source>Text nodes are not allowed at this location.</source>
-        <translation>Na tomto místě nesmí stát žádné textové uzly.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="-32"/>
-        <source>A value of type %1 cannot be a predicate. A predicate must have either a numeric type or an Effective Boolean Value type.</source>
-        <translation>Hodnoty typu %1 nesmí být predikátem. Pro predikáty jsou přípustné pouze typ číselný nebo účinný booleánský.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2679"/>
-        <source>%1 is not a valid name for a processing-instruction.</source>
-        <translation>%1 není platným názvem pokynu pro zpracování.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qerrorfn.cpp" line="+61"/>
-        <source>%1 was called.</source>
-        <translation>%1 byl volán.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="-7"/>
-        <source>It&apos;s not possible to add attributes after any other kind of node.</source>
-        <translation>Vlastnosti nesmí následovat za jinými druhy uzlů.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+653"/>
-        <source>At least one %1-element must occur before %2.</source>
-        <translation>Před %2 musí stát alespoň jeden %1-prvek.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qstringvaluefns.cpp" line="+252"/>
-        <source>The normalization form %1 is unsupported. The supported forms are %2, %3, %4, and %5, and none, i.e. the empty string (no normalization).</source>
-        <translation>Tato forma normalizování %1 není podporována. Podporovanými formami normalizování jsou %2, %3, %4 a %5, a &quot;žádný&quot; (prázdný znakový řetězec zastupuje &quot;žádné normalizování&quot;).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+29"/>
-        <source>When casting to %1 or types derived from it, the source value must be of the same type, or it must be a string literal. Type %2 is not allowed.</source>
-        <translation>Při přetypování na typ %1 nebo do odvozených typů musí být zdrojovou hodnotou řetězec znaků tvořený písmeny nebo hodnota stejného typu. Typ %2 je neplatný.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+1048"/>
-        <source>A parameter in a function cannot be declared to be a tunnel.</source>
-        <translation>Parameter funkce nelze prohlásit za tunel.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="-12"/>
-        <source>XSL-T attributes on XSL-T elements must be in the null namespace, not in the XSL-T namespace which %1 is.</source>
-        <translation type="unfinished">XSL-T vlastnosti XSL-T prvku musí být v nulovém jmenném prostoru, nikoli v XSL-T jmenném prostoru, jako %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2963"/>
-        <source>The namespace of a user defined function in a library module must be equivalent to the module namespace. In other words, it should be %1 instead of %2</source>
-        <translation>Jmenný prostor uživatelem stanovené funkce v modulu knihovny musí odpovídat jmennému prostoru modulu (Jinými slovy by měl být %1 namísto %2) </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+26"/>
-        <source>Day %1 is invalid for month %2.</source>
-        <translation>Ǔdaj o dni %1 je neplatným pro měsíc %2.</translation>
-    </message>
-    <message>
-        <location line="-9"/>
-        <source>Overflow: Can&apos;t represent date %1.</source>
-        <translation>Nelze představit datum %1 (Přetečení).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-1304"/>
-        <source>In a simplified stylesheet module, attribute %1 must be present.</source>
-        <translation>Ve zjednodušeném modulu stylového listu musí být přítomna vlastnost %1.</translation>
-    </message>
-    <message>
-        <location line="-189"/>
-        <source>Unknown XSL-T attribute %1.</source>
-        <translation>Neznámá XSL-T vlastnost: %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-483"/>
-        <source>It is not possible to redeclare prefix %1.</source>
-        <translation>Předponu %1 nelze prohlásit.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+2"/>
-        <source>exactly one</source>
-        <translation>přesně jeden</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+100"/>
-        <source>%1 is an invalid regular expression pattern: %2</source>
-        <translation>%1 není platným pravidelným výrazem: %2</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-217"/>
-        <source>Element %1 is not allowed at this location.</source>
-        <translation>Prvek %1 nesmí stát na tomto místě.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+1811"/>
-        <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
-        <translation>%1-výrazy se nemohou používat, protože funkce ověřování platnosti schématu není podporována.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+2141"/>
-        <source>At least one %1 element must appear as child of %2.</source>
-        <translation>Alespoň jeden %1-prvek musí být potomkem %2.</translation>
-    </message>
-    <message>
-        <location line="-282"/>
-        <source>This processor is not Schema-aware and therefore %1 cannot be used.</source>
-        <translation>%1 se nemůže používat, protože tento procesor nepodporuje žádné schéma.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="-13"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, and the standard attributes.</source>
-        <translation type="unfinished">Prvek %2 může mít jen %3 nebo obvyklé vlastnosti, ne však %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+129"/>
-        <location line="+32"/>
-        <source>Dividing a value of type %1 by %2 (not-a-number) is not allowed.</source>
-        <translation>Dělení hodnoty typu %1 prostřednictvím %2 (není číselnou hodnotou) není přípustné.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qcardinalityverifier.cpp" line="+58"/>
-        <source>Required cardinality is %1; got cardinality %2.</source>
-        <translation>Požadované kardinální číslo (mohutnost množiny) je %1 (v současnosti %2).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qunparsedtextfn.cpp" line="+65"/>
-        <source>The URI cannot have a fragment</source>
-        <translation>URI nesmí obsahovat kousek</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+1559"/>
-        <source>%1 is not an atomic type. Casting is only possible to atomic types.</source>
-        <translation>%1 není atomickým typem. Přetypování se dá provádět pouze s atomickými typy.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcomparingaggregator.cpp" line="+197"/>
-        <source>The first argument to %1 cannot be of type %2.</source>
-        <translation type="unfinished">První argument %1 nemůže být typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-554"/>
-        <source>The namespace URI must be a constant and cannot use enclosed expressions.</source>
-        <translation>Jmenný prostor-URI musí být konstantou a nesmí používat vložené výrazy.</translation>
-    </message>
-    <message>
-        <location line="-2798"/>
-        <source>Prefix %1 is already declared in the prolog.</source>
-        <translation>Předpona %1 byla prohlášena již v předmluvě (prologu).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qapplytemplate.cpp" line="+119"/>
-        <source>Ambiguous rule match.</source>
-        <translation>Víceznačné pravidlo.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="-49"/>
-        <source>Promoting %1 to %2 may cause loss of precision.</source>
-        <translation>Postoupení od %1 k %2 může vést ke ztrátě přesnosti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+782"/>
-        <source>In an XSL-T pattern, only function %1 and %2, not %3, can be used for matching.</source>
-        <translation>V XSL-T vyhledávacím vzoru se smějí pro srovnávání používat jen funkce %1 a %2, ne však %3.</translation>
-    </message>
-    <message>
-        <location line="-1031"/>
-        <location line="+10"/>
-        <source>A default namespace declaration must occur before function, variable, and option declarations.</source>
-        <translation>Deklarace výchozích jmenných prostorů musí stát před deklaracemi funkcí-, proměnných- nebo deklaracemi voleb.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+17"/>
-        <source>Operator %1 cannot be used on atomic values of type %2 and %3.</source>
-        <translation>Operátor %1 se nemůže používat u atomických hodnot typů %2 a %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+526"/>
-        <source>The module import feature is not supported</source>
-        <translation>Funkce zavedení modulu není podporována</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="-71"/>
-        <source>The parameter %1 is passed, but no corresponding %2 exists.</source>
-        <translation>Neexistuje žádný odpovídající %2 pro předaný parameter %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicvalue.cpp" line="+79"/>
-        <source>A value of type %1 cannot have an Effective Boolean Value.</source>
-        <translation>Hodnota typu %1 nemůže mít žádnou účinnou booleánskou hodnotu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qprocessinginstructionconstructor.cpp" line="+84"/>
-        <source>The data of a processing instruction cannot contain the string %1</source>
-        <translation>Data pokynu pro zpracování nesmí obsahovat řetězec znaků %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+58"/>
-        <source>Time 24:%1:%2.%3 is invalid. Hour is 24, but minutes, seconds, and milliseconds are not all 0; </source>
-        <translation>Časový údaj 24:%1:%2.%3 je neplatný. U hodinového údaje je 24, ale minuty, sekundy a milisekundy musí být všechny 0; </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2392"/>
-        <source>It is not possible to bind to the prefix %1</source>
-        <translation>Předponu %1 nelze spojit</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+9"/>
-        <source>Value %1 of type %2 is below minimum (%3).</source>
-        <translation>Hodnota %1 typu %2 zůstává pod minimem (%3).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="-44"/>
-        <source>Required type is %1, but %2 was found.</source>
-        <translation>Požadovaný typ je %1, byl ale zadán %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="-16"/>
-        <source>%1 is an unsupported encoding.</source>
-        <translation>Kódování %1 není podporováno.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-2584"/>
-        <source>The name of an option must have a prefix. There is no default namespace for options.</source>
-        <translation>Název volby musí mít předponu. Pro volby není žádná předloha pro jmenný prostor.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-1221"/>
-        <source>Element %1 must come last.</source>
-        <translation>Prvek %1 musí stát jako poslední.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="-9"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, %4, and the standard attributes.</source>
-        <translation type="unfinished">Prvek %2 může mít jen vlastnost %3, %4 nebo vlastnosti, které jsou obvyklé, ne však %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="-12"/>
-        <source>No namespace binding exists for the prefix %1 in %2</source>
-        <translation>Neexistuje žádné svázání jmenného prostoru pro předponu %1 v %2</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+3238"/>
-        <source>The name %1 does not refer to any schema type.</source>
-        <translation>Název %1 nemá žádnou spojitost s jakýmkoli typem schématu.</translation>
-    </message>
-    <message>
-        <location line="-639"/>
-        <source>Prefix %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>Předponu %1 lze spojit pouze s %2. Toto je prohlášeno již dopředu..</translation>
-    </message>
-    <message>
-        <location line="-6517"/>
-        <source>W3C XML Schema identity constraint selector</source>
-        <translation>Přepínač omezení totožnosti W3C XML schéma</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>W3C XML Schema identity constraint field</source>
-        <translation>Pole omezení totožnosti W3C XML schéma</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>A construct was encountered which is disallowed in the current language(%1).</source>
-        <translation>Narazilo se na výtvor, který v nynějším jazyce není povolen (%1).</translation>
-    </message>
-    <message>
-        <location line="+119"/>
-        <source>A template with name %1 has already been declared.</source>
-        <translation>Předloha s názvem %1 již existuje.</translation>
-    </message>
-    <message>
-        <location line="+401"/>
-        <source>The initialization of variable %1 depends on itself</source>
-        <translation>Inicializace proměnné %1 je závislá na její vlastní hodnotě</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qdocumentcontentvalidator.cpp" line="+86"/>
-        <source>An attribute node cannot be a child of a document node. Therefore, the attribute %1 is out of place.</source>
-        <translation>Uzel vlastnosti se nesmí objevit jako potomek uzlu dokumentu. Objevil se uzel vlastnosti s názvem %1, který je proto nevhodný.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="-68"/>
-        <source>Month %1 is outside the range %2..%3.</source>
-        <translation>Údaj o měsíci %1 je mimo rozsah %2..%3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+4311"/>
-        <source>The name of a variable bound in a for-expression must be different from the positional variable. Hence, the two variables named %1 collide.</source>
-        <translation>Název proměnné úzce spojené s pro-výrazem se musí lišit od poziční proměnné. Dvě proměnné s názvem %1 se z tohoto důvodu střetávají.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor.cpp" line="+82"/>
-        <source>No namespace binding exists for the prefix %1</source>
-        <translation>Neexistuje žádné svázání jmenného prostoru pro předponu %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="-13"/>
-        <source>An %1-attribute with value %2 has already been declared.</source>
-        <translation type="unfinished">Prvek má již jednu vlastnost s názvem %1 s hodnotou %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+19"/>
-        <source>%1 is not valid as a value of type %2.</source>
-        <translation>%1 není platný jako hodnota typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+4"/>
-        <source>zero or more</source>
-        <translation>žádný nebo více</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2482"/>
-        <location line="+71"/>
-        <source>%1 is not in the in-scope attribute declarations. Note that the schema import feature is not supported.</source>
-        <translation>%1 se nenachází v oblasti pod prohlášením vlastností. Všimněte si, že funkce zavedení schématu není podporována.</translation>
-    </message>
-    <message>
-        <location line="-2830"/>
-        <source>When function %1 is used for matching inside a pattern, the argument must be a variable reference or a string literal.</source>
-        <translation>Při použití funkce %1 k vyhodnocování uvnitř vyhledávacího vzoru musí být argumentem odkaz na proměnnou nebo řetězec tvořený písmeny.</translation>
-    </message>
-    <message>
-        <location line="-3971"/>
-        <source>No variable with name %1 exists</source>
-        <translation>Neexistuje žádná proměnná s názvem %1</translation>
-    </message>
-    <message>
-        <location line="+3146"/>
-        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
-        <translation>Hodnota vlastnosti %1 musí být typu %2. %3 není platnou hodnotou.</translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
-        <translation>Předpona %1 nemůže být spojena. Ve výchozím nastavení je již spojena se jmenným prostorem %2.</translation>
-    </message>
-    <message>
-        <location line="+312"/>
-        <source>A variable with name %1 has already been declared.</source>
-        <translation>Proměnná s názvem %1 již byla prohlášena.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>No value is available for the external variable with name %1.</source>
-        <translation>Pro vnější proměnnou s názvem %1 není dostupná žádná hodnota.</translation>
-    </message>
-    <message>
-        <location line="+105"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
-        <translation>Jmenný prostor uživatelem stanovené funkce nesmí být prázdný (pro tento účel je přednastavena předpona (prefix) %1)</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
-        <translation>Již byl prohlášen jeden argument s názvem %1. Názvy argumentů musí být jednoznačné.</translation>
-    </message>
-    <message>
-        <location line="+412"/>
-        <source>%1 is an invalid template mode name.</source>
-        <translation>%1 není platným názvem pro řežim předlohy.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="-7"/>
-        <source>At least one time component must appear after the %1-delimiter.</source>
-        <translation>Po %1-oddělovači se musí objevit alespoň jedna složka času.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+196"/>
-        <source>Overflow: Date can&apos;t be represented.</source>
-        <translation>Nelze představit datum (Přetečení).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+14"/>
-        <source>Operator %1 is not available between atomic values of type %2 and %3.</source>
-        <translation type="unfinished">Operátor %1 se nemůže používat u atomárních hodnot typů %2 a %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+87"/>
-        <source>A zone offset must be in the range %1..%2 inclusive. %3 is out of range.</source>
-        <translation>Rozdíl v časové zóně musí ležet v oblasti %1..%2 (včetně). %3 leží mimo oblast.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qassemblestringfns.cpp" line="+88"/>
-        <source>%1 is not a valid XML 1.0 character.</source>
-        <translation>%1 není platný znak XML 1.0.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+74"/>
-        <source>The first argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>První argument %1 nemůže být typu %2. Musí to být typ %3, %4 nebo %5.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+12"/>
-        <source>%1 is not a whole number of minutes.</source>
-        <translation>%1 není celočíselným údajem o minutách.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+31"/>
-        <source>Failure when casting from %1 to %2: %3</source>
-        <translation type="unfinished">Operace předvedení od %1 do %2 se nepodařila: %3</translation>
-    </message>
-    <message>
-        <location line="-58"/>
-        <source>It is not possible to cast from %1 to %2.</source>
-        <translation type="unfinished">Nelze provádět žádnou operaci předvedení od %1 do %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+1715"/>
-        <source>Namespace %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>Jmenný prostor %1 lze spojit pouze s %2. Toto je stanoveno již dopředu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+13"/>
-        <source>The second operand in a division, %1, cannot be zero (%2).</source>
-        <translation type="unfinished">Druhá veličina, operand, dělení %1 nesmí být nula (%2).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-6170"/>
-        <source>Only one %1 declaration can occur in the query prolog.</source>
-        <translation>Prolog k dotazu smí obsahovat pouze jednu %1 deklaraci.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="-151"/>
-        <source>Element %1 must have at least one of the attributes %2 or %3.</source>
-        <translation>Prvek %1 musí mít alespoň jednu z vlastností %2 nebo %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qdatetimefn.cpp" line="+86"/>
-        <source>If both values have zone offsets, they must have the same zone offset. %1 and %2 are not the same.</source>
-        <translation>Když jsou zadány obě hodnoty s časovými zónami, musí mít ten samý rozdíl v časové zóně. %1 a %2 nejsou to samé a jsou tím pádem nepřípustné.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+4006"/>
-        <source>No external functions are supported. All supported functions can be used directly, without first declaring them as external</source>
-        <translation>Nejsou podporovány vnější funkce. Všechny podporované funkce se dají používat přímo, bez toho, že by byly nejprve prohlášeny za vnější</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qpath.cpp" line="+109"/>
-        <source>The last step in a path must contain either nodes or atomic values. It cannot be a mixture between the two.</source>
-        <translation>Poslední krok cesty musí obsahovat buď jen uzly nebo jen atomické hodnoty. Nesmí se vyskytovat společně.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
-        <source>Empty particle cannot be derived from non-empty particle.</source>
-        <translation>Prázdnou částici nelze odvodit z částice, která není prázdná.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Derived particle is missing element %1.</source>
-        <translation>V odvozené částici chybí prvek %1.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
-        <translation>V odvozeném prvku %1 chybí omezení hodnoty, jak je to stanoveno v základní částici.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived element %1 has weaker value constraint than base particle.</source>
-        <translation>Odvozený prvek %1 má slabší omezení hodnoty než má základní částice.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
-        <translation>Pevné omezení hodnoty prvku %1 se liší od omezení hodnoty základní částici.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
-        <translation>Odvozený prvek %1 nemůže mít žádnou vlastnost &apos;nillable&apos;, neboť základní prvek žádnou nestanovuje.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
-        <translation>Omezení bloku odvozeného prvku %1 nesmí být slabší než v základním prvku.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>Jednoduchý typ odvozeného prvku %1 nemůže být platně odvozen ze základního prvku.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>Složitý typ odvozeného prvku %1 nemůže být platně odvozen ze základního prvku.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Element %1 is missing in derived particle.</source>
-        <translation>Prvek %1 chybí v odvozené částici.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
-        <translation>Prvek %1 neodpovídá omezení jmenného prostoru zástupného symbolu (vzor hledání) v základní částici.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
-        <translation>Zástupný symbol (vzor hledání) v odvozené částici není platnou dílčí množinou zástupného symbolu v základní částici.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
-        <translation>Vlastnost processContent zástupného symbolu (vzor hledání) odvozené částice je slabší než zástupný symbol (vzor hledání) v základní částici.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Derived particle allows content that is not allowed in the base particle.</source>
-        <translation>Odvozená částice dovoluje obsah, který není přípustný pro základní částici.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
-        <source>%1 has inheritance loop in its base type %2.</source>
-        <translation>%1 má ve svém základním typu  %2 v kruzích prováděnou dědičnost.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+24"/>
-        <source>Circular inheritance of base type %1.</source>
-        <translation>V kruzích prováděná dědičnost v základním typu %1.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Circular inheritance of union %1.</source>
-        <translation>V kruzích prováděná dědičnost při sjednocení %1.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
-        <translation>%1 není dovoleno odvodit z %2 pomocí omezení, neboť posledně uvedený ji určuje jako konečnou.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
-        <translation>%1 není dovoleno odvodit z %2 pomocí rozšíření, neboť posledně uvedený ji určuje jako konečnou.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Base type of simple type %1 cannot be complex type %2.</source>
-        <translation>Složitý typ %2 nemůže být základním typem jednoduchého typu %1.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Simple type %1 cannot have direct base type %2.</source>
-        <translation>Jednoduchý typ %1 nemůže mít přímý základní typ %2.</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location line="+9"/>
-        <source>Simple type %1 is not allowed to have base type %2.</source>
-        <translation>Jednoduchý typ %1 nesmí mít základní typ %2.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Simple type %1 can only have simple atomic type as base type.</source>
-        <translation>Jednoduchý typ %1 může mít jen jednoduchý atomický základní typ.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
-        <translation>Jednoduchý typ %1 nesmí být odvozen z %2 , kterýžto určuje omezení jako konečné.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <location line="+484"/>
-        <source>Variety of item type of %1 must be either atomic or union.</source>
-        <translation>Typ prvku %1 musí být druhu atomického anebo druhu sjednocení.</translation>
-    </message>
-    <message>
-        <location line="-474"/>
-        <location line="+483"/>
-        <source>Variety of member types of %1 must be atomic.</source>
-        <translation>Typy členů %1 musí být druhu atomického.</translation>
-    </message>
-    <message>
-        <location line="-470"/>
-        <location line="+451"/>
-        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
-        <translation>%1 není dovoleno odvodit z %2 pomocí seznamu, neboť posledně uvedený ji určuje jako konečnou.</translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Simple type %1 is only allowed to have %2 facet.</source>
-        <translation>Jednoduchý typ %1 může mít jen omezující vlastnosti %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Base type of simple type %1 must have variety of type list.</source>
-        <translation>Základní typ jednoduchého typu %1 musí být druhu seznamu typů.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
-        <translation>Základní typ jednoduchého typu %1 určuje sjednocení pomocí omezení jako konečné.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Item type of base type does not match item type of %1.</source>
-        <translation>Složkový typ základního typu neodpovídá složkovému typu %1.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+93"/>
-        <source>Simple type %1 contains not allowed facet type %2.</source>
-        <translation>Jednoduchý typ %1 obsahuje nedovolený typ omezující vlastnosti %2.</translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+413"/>
-        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
-        <translation>%1 není dovoleno odvodit z %2 pomocí sjednocení, neboť posledně uvedený ji určuje jako konečnou.</translation>
-    </message>
-    <message>
-        <location line="-404"/>
-        <source>%1 is not allowed to have any facets.</source>
-        <translation>%1 nesmí mít žádné omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base type %1 of simple type %2 must have variety of union.</source>
-        <translation>Základní typ %1 jednoduchého typu %2 musí být druhu sjednocení.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
-        <translation>Základní typ %1 jednoduchého typu %2 nesmí mít žádné omezení vlastnosti %3.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
-        <translation>Členský typ %1 nemůže být odvozen z členského typu %2 ze základního typu %4 %3.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
-        <translation>Rozšíření musí používat jako způsob dědičnosti (odvození) pro %1, neboť základní typ %2 je jednoduchým typem.</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Complex type %1 has duplicated element %2 in its content model.</source>
-        <translation>Složitý typ %1 má zdvojený prvek %2 ve svém modelu obsahu.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 has non-deterministic content.</source>
-        <translation>Složitý typ %1 nemá deterministický obsah.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
-        <translation>Vlastnosti složitého typu %1 nejsou žádným platným rozšířením vlastností základního typu %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
-        <translation>Model obsahu složitého typu %1 není žádným platným rozšířením modelu obsahu %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Complex type %1 must have simple content.</source>
-        <translation>Složitý typ %1 musí mít jednoduchý obsah.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Complex type %1 must have the same simple type as its base class %2.</source>
-        <translation>Složitý typ %1 musí mít jednoduchý obsah.</translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Complex type %1 cannot be derived from base type %2%3.</source>
-        <translation>Složitý typ %2 nemůže být odvozen ze základního typu %2%3.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
-        <translation>Vlastnosti složitého typu %1  nejsou žádným platným omezením vlastností základního typu %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
-        <translation>Složitý typ %1 s jednoduchým obsahem nemůže být odvozen ze složitého základního typu %2.</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Item type of simple type %1 cannot be a complex type.</source>
-        <translation>Složkový typ jednoduchého typu %1 nemůže být složitým typem.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Member type of simple type %1 cannot be a complex type.</source>
-        <translation>Členský typ jednoduchého typu %1 nemůže být složitým typem.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 is not allowed to have a member type with the same name as itself.</source>
-        <translation>%1 nesmí mít členský typ se stejným názvem, jaký má sám.</translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <location line="+29"/>
-        <location line="+34"/>
-        <source>%1 facet collides with %2 facet.</source>
-        <translation>Omezující vlastnost %1 se střetává s omezující vlastností %2.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1 facet must have the same value as %2 facet of base type.</source>
-        <translation>Omezující vlastnost %1 musí mít tutéž hodnotu, jakou má omezující vlastnost %2 základního typu.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
-        <translation>Omezující vlastnost %1 musí být stejná nebo větší než omezující vlastnost %2 základního typu.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+125"/>
-        <location line="+55"/>
-        <location line="+12"/>
-        <location line="+91"/>
-        <location line="+58"/>
-        <location line="+34"/>
-        <location line="+35"/>
-        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
-        <translation>Omezující vlastnost %1 musí být menší nebo stejná jako omezující vlastnost %2 základního typu.</translation>
-    </message>
-    <message>
-        <location line="-389"/>
-        <source>%1 facet contains invalid regular expression</source>
-        <translation>Omezující vlastnost %1 obsahuje neplatný pravidelný výraz</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unknown notation %1 used in %2 facet.</source>
-        <translation>Omezující vlastnost %2 obsahuje neplatný zápis %1.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>%1 facet contains invalid value %2: %3.</source>
-        <translation>Omezující vlastnost %1 obsahuje neplatnou hodnotu %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
-        <translation>Omezující vlastnost %1 nesmí být %2 nebo %3, pokud je omezující vlastnost %4 základního typu %5.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
-        <translation>Omezující vlastnost %1 nesmí být %2, pokud je omezující vlastnost %3 základního typu %4.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <location line="+55"/>
-        <location line="+230"/>
-        <source>%1 facet must be less than or equal to %2 facet.</source>
-        <translation>Omezující vlastnost %1 musí být menší nebo stejná jako omezující vlastnost %2.</translation>
-    </message>
-    <message>
-        <location line="-257"/>
-        <location line="+134"/>
-        <location line="+82"/>
-        <source>%1 facet must be less than %2 facet of base type.</source>
-        <translation>Omezující vlastnost %1 musí být menší než omezující vlastnost %2 základního typu.</translation>
-    </message>
-    <message>
-        <location line="-201"/>
-        <location line="+79"/>
-        <source>%1 facet and %2 facet cannot appear together.</source>
-        <translation>Omezující vlastnosti %1 a %2 se nemohou objevit spolu.</translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <location line="+12"/>
-        <location line="+113"/>
-        <source>%1 facet must be greater than %2 facet of base type.</source>
-        <translation>Omezující vlastnost %1 musí být větší než omezující vlastnost %2 základního typu.</translation>
-    </message>
-    <message>
-        <location line="-86"/>
-        <location line="+58"/>
-        <source>%1 facet must be less than %2 facet.</source>
-        <translation>Omezující vlastnost %1 musí být menší než omezující vlastnost %2.</translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+58"/>
-        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
-        <translation>Omezující vlastnost %1 musí být větší nebo stejná jako omezující vlastnost %2 základního typu.</translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>Simple type contains not allowed facet %1.</source>
-        <translation>Jednoduchý typ obsahuje nedovolenou omezující vlastnost %1.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
-        <translation>Omezující vlastnosti %1, %2, %3, %4, %5 a %6 nejsou při odvození (dědičnosti) pomocí seznamu dovoleny.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Only %1 and %2 facets are allowed when derived by union.</source>
-        <translation>Při odvození (dědičnosti) pomocí sjednocení jsou dovoleny pouze omezující vlastnosti %1 a %2.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+16"/>
-        <source>%1 contains %2 facet with invalid data: %3.</source>
-        <translation>%1 obsahuje omezující vlastnost %2 s neplatnými daty: %3.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Attribute group %1 contains attribute %2 twice.</source>
-        <translation>Skupina vlastností %1 obsahuje vlastnost %2 dvakrát.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>Skupina vlastností %1 obsahuje dvě rozdílné vlastnosti, obě s typy, které jsou odvozeny z %2.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>Skupina vlastností %1 obsahuje vlastnost %2 s omezením hodnoty, typ je ale odvozen z %3.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 contains attribute %2 twice.</source>
-        <translation>Složitý typ %1 obsahuje vlastnost %2 dvakrát.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>Složitý typ %1 obsahuje dvě rozdílné vlastnosti, obě s typy, které jsou odvozeny z %2.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>Složitý typ %1 obsahuje vlastnost %2 s omezením hodnoty, typ je ale odvozen z %3.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
-        <translation>Prvek %1 nesmí mít omezení hodnoty, když je základní typ složitý.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
-        <translation>Prvek %1 nesmí mít omezení hodnoty, když je jeho typ odvozen z %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Value constraint of element %1 is not of elements type: %2.</source>
-        <translation>Omezení hodnoty prvku %1 není z typu prvku: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
-        <translation>Prvek %1 nesmí patřit k skupině nahrazení, neboť není celkovým prvkem.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
-        <translation>Typ prvku %1 nemůže být odvozen z typu příslušné skupiny nahrazení.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
-        <translation>Omezení hodnoty vlastnosti %1 není z typu vlastnosti: %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 has value constraint but has type derived from %2.</source>
-        <translation>Vlastnost %1 má mezení hodnoty, ale její typ je odvozen z %2.</translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
-        <translation>Vlastnost %1 v odvozeném složitém typu musí být jako v základním typu %2.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
-        <translation>Vlastnost %1 v odvozeném složitém typu musí mít omezení hodnoty jako v základním typu %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
-        <translation>Vlastnost %1 v odvozeném složitém typu musí mít stejné omezení hodnoty %2 jako v základním typu.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
-        <translation>Vlastnost %1 v odvozeném složitém typu musí omezení hodnoty %2.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
-        <translation>Vlastnost &apos;processContent&apos; základního zástupného symbolu (vzor hledání) musí být slabší než odvozený zástupný symbol (vzor hledání).</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <location line="+15"/>
-        <source>Element %1 exists twice with different types.</source>
-        <translation>Prvek %1 existuje dvakrát s rozdílnými typy.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Particle contains non-deterministic wildcards.</source>
-        <translation>Částice má nedeterministické zástupné symboly (vzory hledání).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
-        <location line="+63"/>
-        <source>Base attribute %1 is required but derived attribute is not.</source>
-        <translation>Základní vlastnost %1 je vyžadována, ale odvozená vlastnost není.</translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
-        <translation>Typ odvozené vlastnosti %1 nemůže být platně odvozen z typu základní vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
-        <translation>Omezení hodnoty odvozené vlastnosti %1 neodpovídá omezení hodnoty základní vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived attribute %1 does not exist in the base definition.</source>
-        <translation>Odvozená vlastnost %1 neexistuje v základní definici.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
-        <translation>Odvozená vlastnost %1 neodpovídá zástupnému symbolu (vzoru hledání) v základní definici.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Base attribute %1 is required but missing in derived definition.</source>
-        <translation>Základní vlastnost %1 je vyžadována, ale chybí v odvozené definici.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
-        <translation>Odvozená definice obsahuje prvek %1, který v základní definici neexistuje</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived wildcard is not a subset of the base wildcard.</source>
-        <translation>Odvozený zástupný symbol (vzor hledání) není žádnou dílčí množinou základního zástupného symbolu (vzoru hledání).</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
-        <translation>Vlastnost %1 odvozeného zástupného symbolu (vzoru hledání) není platným omezením %2 základního zástupného symbolu (vzoru hledání)</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 from base type is missing in derived type.</source>
-        <translation>Vlastnost %1 základního typu chybí v odvozeném typu.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Type of derived attribute %1 differs from type of base attribute.</source>
-        <translation>Typ odvozené vlastnosti %1 se liší od typu základní vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base definition contains an %1 element that is missing in the derived definition</source>
-        <translation>Základní definice obsahuje prvek %1, který v odvozené definici chybí</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
-        <source>Can not process unknown element %1, expected elements are: %2.</source>
-        <translation>Nelze zpracovat neznámý prvek %1, očekávanými prvky jsou: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
-        <translation>Prvek %1 není v této oblasti dovolen; možnými prvky jsou: %2.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Child element is missing in that scope, possible child elements are: %1.</source>
-        <translation>Podprvek v oblasti chybí; možnými podprvky jsou: %1.</translation>
-    </message>
-    <message>
-        <location line="+143"/>
-        <source>Document is not a XML schema.</source>
-        <translation>Dokument není schématem XML.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
-        <translation>Vlastnost %1 prvku %2 obsahuje neplatný obsah: {%3} není hodnotou typu %4.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
-        <translation>Vlastnost %1 prvku %2 obsahuje neplatný obsah: {%3}.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
-        <translation>Cílový jmenný prostor %1 zahrnutého schématu se liší od jím vymezeného cílového jmenného prostoru %2.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+11"/>
-        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
-        <translation>Cílový jmenný prostor %1 zavedeného schématu se liší od jím vymezeného cílového jmenného prostoru %2.</translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
-        <translation>Prvek %1 nemůže stanovit cílový jmenný prostor %3 jako hodnotu vlastnosti %2.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
-        <translation>Ve schématu bez jmenného prostoru musí mít prvek %1 vlastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <location line="+158"/>
-        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
-        <translation>Když je přítomna vlastnost %3, nesmí se vyskytovat prvek %1 v prvku %2.</translation>
-    </message>
-    <message>
-        <location line="-97"/>
-        <location line="+119"/>
-        <location line="+89"/>
-        <source>%1 element has neither %2 attribute nor %3 child element.</source>
-        <translation>Prvek %1 nemá ani vlastnost %2 ani podprvek %3.</translation>
-    </message>
-    <message>
-        <location line="+835"/>
-        <location line="+1474"/>
-        <location line="+232"/>
-        <location line="+7"/>
-        <location line="+260"/>
-        <location line="+17"/>
-        <location line="+258"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <source>%1 element with %2 child element must not have a %3 attribute.</source>
-        <translation>Prvek %1 nesmí mít vlastnost %3, když existuje podprvek %2.</translation>
-    </message>
-    <message>
-        <location line="-1325"/>
-        <source>%1 attribute of %2 element must be %3 or %4.</source>
-        <translation>Vlastnost %1 prvku %2 může být jen %3 nebo %4.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>%1 attribute of %2 element must have a value of %3.</source>
-        <translation>Vlastnost %1 prvku %2 musí mít hodnotu %3.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+34"/>
-        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
-        <translation>Vlastnost %1 prvku %2 může mít jen jednu z hodnot %3 nebo %4.</translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <location line="+129"/>
-        <location line="+9"/>
-        <location line="+7"/>
-        <location line="+7"/>
-        <location line="+327"/>
-        <location line="+203"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+77"/>
-        <source>%1 element must not have %2 and %3 attribute together.</source>
-        <translation>Vlastnosti %2 a %3 se v prvku %1 nemohou objevit společně.</translation>
-    </message>
-    <message>
-        <location line="-768"/>
-        <location line="+222"/>
-        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
-        <translation>Obsah vlastnosti %1 prvku %2 nemůže pocházet ze jmenného prostoru %3.</translation>
-    </message>
-    <message>
-        <location line="-215"/>
-        <location line="+222"/>
-        <source>%1 attribute of %2 element must not be %3.</source>
-        <translation>Vlastnost %1 prvku %2 nemůže být %3.</translation>
-    </message>
-    <message>
-        <location line="-64"/>
-        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
-        <translation>Vlastnost %1 prvku %2 musí mít hodnotu %3, protože je nastavena vlastnost %4.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
-        <translation>Zadání use=&apos;prohibited&apos; ve skupině vlastností nemá naprosto žádný účinek.</translation>
-    </message>
-    <message>
-        <location line="+353"/>
-        <source>%1 element must have either %2 or %3 attribute.</source>
-        <translation>Prvek %1 musí mít buď vlastnost %2 nebo %3.</translation>
-    </message>
-    <message>
-        <location line="+554"/>
-        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
-        <translation>Prvek %1 musí mít buď vlastnost %2, nebo mít %3 nebo %4 jako podprvek.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>%1 element requires either %2 or %3 attribute.</source>
-        <translation>Prvek %1 vyžaduje buď vlastnost %2 nebo %3.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Text or entity references not allowed inside %1 element</source>
-        <translation>Text nebo odkazy na entitu nejsou v prvku %1 dovoleny</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <location line="+112"/>
-        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
-        <translation>Vlastnost %1 prvku %2 musí obsahovat %3, %4 nebo seznam adres (URL).</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 element is not allowed in this context.</source>
-        <translation>Prvek %1 není v této souvislosti dovolen.</translation>
-    </message>
-    <message>
-        <location line="+53"/>
-        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
-        <translation>Hodnota vlastnosti %1 prvku %2 je větší než hodnota vlastnosti %3.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Prefix of qualified name %1 is not defined.</source>
-        <translation>Předpona způsobilého názvu %1 není stanovena.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <location line="+61"/>
-        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
-        <translation>Hodnota vlastnosti %1 prvku %2 musí obsahovat buď %3 nebo jiné hodnoty.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>Component with ID %1 has been defined previously.</source>
-        <translation>Součást s ID %1 je již stanovena.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Element %1 already defined.</source>
-        <translation>Prvek %1 je již stanoven.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 already defined.</source>
-        <translation>Vlastnost %1 je již stanovena.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Type %1 already defined.</source>
-        <translation>Typ %1 je již stanoven.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute group %1 already defined.</source>
-        <translation>Skupina vlastností %1 je již stanovena.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Element group %1 already defined.</source>
-        <translation>Skupina prvků %1 je již stanovena.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notation %1 already defined.</source>
-        <translation>Zápis %1 je již stanoven.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Identity constraint %1 already defined.</source>
-        <translation>Omezení totožnosti %1 je již stanoveno.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Duplicated facets in simple type %1.</source>
-        <translation>Zdvojené omezující vlastnosti v jednoduchém typu %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
-        <source>%1 references unknown %2 or %3 element %4.</source>
-        <translation>%1 odkazuje na neznámý prvek %4 (%2 nebo %3).</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
-        <translation>%1 odkazuje na omezení totožnosti %2, které není ani prvek &apos;%3&apos; ani &apos;%4&apos;.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
-        <translation>U %1 se liší počet polí od omezení totožnosti %2, na kterou odkazuje.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Base type %1 of %2 element cannot be resolved.</source>
-        <translation>Základní typ %1 prvku %2 nemůže být vyřešen.</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Item type %1 of %2 element cannot be resolved.</source>
-        <translation>Složkový typ %1 prvku %2 nemůže být vyřešen.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Member type %1 of %2 element cannot be resolved.</source>
-        <translation>Členský typ %1 prvku %2 nemůže být vyřešen.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <location line="+415"/>
-        <location line="+30"/>
-        <source>Type %1 of %2 element cannot be resolved.</source>
-        <translation>Typ %1 prvku %2 nemůže být vyřešen.</translation>
-    </message>
-    <message>
-        <location line="-423"/>
-        <source>Base type %1 of complex type cannot be resolved.</source>
-        <translation>Základní typ %1 složitého typu nemůže být vyřešen.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 cannot have complex base type that has a %2.</source>
-        <translation>%1 nelze mít žádný složitý základní typ, který má %2.</translation>
-    </message>
-    <message>
-        <location line="+286"/>
-        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
-        <translation>Model obsahu složitého typu %1 obsahuje prvek %2; nelze jej proto odvodit pomocí rozšíření z neprázdného typu.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
-        <translation>Složitý typ %1 nemůže být odvozen pomocí rozšíření z %2, neboť poslední obsahuje prvek &apos;%3&apos; ve svém modelu obsahu.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Type of %1 element must be a simple type, %2 is not.</source>
-        <translation>Typ prvku %1 musí být jednoduchým prvkem, což %2 není.</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>Substitution group %1 of %2 element cannot be resolved.</source>
-        <translation>Skupina nahrazení %1 prvku %2 nemůže být vyřešena.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Substitution group %1 has circular definition.</source>
-        <translation>Skupina nahrazení %1 má má cyklickou definici.</translation>
-    </message>
-    <message>
-        <location line="+120"/>
-        <location line="+7"/>
-        <source>Duplicated element names %1 in %2 element.</source>
-        <translation>Název prvku %1 se vyskytuje v prvku %2 vícekrát.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location line="+52"/>
-        <location line="+71"/>
-        <location line="+28"/>
-        <source>Reference %1 of %2 element cannot be resolved.</source>
-        <translation>Odkaz %1 prvku %2 nemůže být vyřešen.</translation>
-    </message>
-    <message>
-        <location line="-138"/>
-        <source>Circular group reference for %1.</source>
-        <translation>V kruzích prováděný skupinový odkaz pro %1.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 element is not allowed in this scope</source>
-        <translation>Prvek %1 není v této oblasti dovolen</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 element cannot have %2 attribute with value other than %3.</source>
-        <translation>Hodnota vlastnosti %2 prvku %1 může být pouze %3.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
-        <translation>Hodnota vlastnosti %2 prvku %1 může být pouze %3 nebo %4.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
-        <translation>Vlastnost %1 nebo %2 odkazu %3 neodpovídá prohlášení vlastnosti %4.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Attribute group %1 has circular reference.</source>
-        <translation>Skupina vlastnosti %1 má cyklický odkaz.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
-        <translation>Vlastnost %1 v %2 musí mít použití &apos;%3&apos; jako v základním typu %4.</translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
-        <translation>Zástupný symbol vlastnosti (vzor hledání) %1není platným omezením zástupného symbolu vlastnosti (vzoru hledání) základního typu %2.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 has attribute wildcard but its base type %2 has not.</source>
-        <translation>%1 má zástupný symbol vlastnosti (vzor hledání), ale jeho základní typ %2 nemá.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
-        <translation>Sjednocení zástupného symbolu vlastnosti (vzoru hledání) typu %1 a zástupného symbolu vlastnosti (vzoru hledání) jeho základního typu %2 není vyjádřitelné.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
-        <translation>Výčtová omezující vlastnost obsahuje neplatný obsah: {%1} není hodnotou typu %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace prefix of qualified name %1 is not defined.</source>
-        <translation>Předpona jmenného prostoru způsobilého názvu %1 není stanovena.</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <location line="+18"/>
-        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
-        <translation>Prvek %2 (%1) není platným omezením přepisovaného prvku (%3): %4.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
-        <location line="+7"/>
-        <location line="+21"/>
-        <source>%1 is not valid according to %2.</source>
-        <translation>%1 je podle %2 neplatné.</translation>
-    </message>
-    <message>
-        <location line="+167"/>
-        <source>String content does not match the length facet.</source>
-        <translation>Obsah řetězce znaků neodpovídá omezující vlastnosti délky.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the minLength facet.</source>
-        <translation>Obsah řetězce znaků neodpovídá omezující vlastnosti délky (nejmenší; &apos;minLength&apos;).</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the maxLength facet.</source>
-        <translation>Obsah řetězce znaků neodpovídá omezující vlastnosti délky (největší; &apos;maxLength&apos;).</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content does not match pattern facet.</source>
-        <translation>Obsah řetězce znaků neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content is not listed in the enumeration facet.</source>
-        <translation>Obsah řetězce znaků není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Signed integer content does not match the maxInclusive facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem neodpovídá omezující vlastnosti &apos;maxInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the maxExclusive facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem neodpovídá omezující vlastnosti &apos;maxExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minInclusive facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem neodpovídá omezující vlastnosti &apos;minInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minExclusive facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem neodpovídá omezující vlastnosti &apos;minExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content is not listed in the enumeration facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem není obsažena ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content does not match pattern facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Signed integer content does not match in the totalDigits facet.</source>
-        <translation>Celočíselná hodnota označená znaménkem neodpovídá omezující vlastnosti &apos;totalDigits&apos;.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unsigned integer content does not match the maxInclusive facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka neodpovídá omezující vlastnosti &apos;maxInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the maxExclusive facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka neodpovídá omezující vlastnosti &apos;maxExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minInclusive facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka neodpovídá omezující vlastnosti &apos;minInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minExclusive facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka neodpovídá omezující vlastnosti &apos;minExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content is not listed in the enumeration facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka není obsažena ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content does not match pattern facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unsigned integer content does not match in the totalDigits facet.</source>
-        <translation>Celočíselná hodnota jsoucí bez znaménka neodpovídá omezující vlastnosti &apos;totalDigits&apos;.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Double content does not match the maxInclusive facet.</source>
-        <translation>Číslo s pohyblivou čárkou neodpovídá omezující vlastnosti &apos;maxInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the maxExclusive facet.</source>
-        <translation>Číslo s pohyblivou čárkou neodpovídá omezující vlastnosti &apos;maxExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minInclusive facet.</source>
-        <translation>Číslo s pohyblivou čárkou neodpovídá omezující vlastnosti &apos;minInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minExclusive facet.</source>
-        <translation>Číslo s pohyblivou čárkou neodpovídá omezující vlastnosti &apos;minExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Double content is not listed in the enumeration facet.</source>
-        <translation>Číslo s pohyblivou čárkou není obsaženo ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Double content does not match pattern facet.</source>
-        <translation>Číslo s pohyblivou čárkou neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Decimal content does not match in the fractionDigits facet.</source>
-        <translation>Desetinné číslo neodpovídá omezující vlastnosti &apos;fractionDigits&apos;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Decimal content does not match in the totalDigits facet.</source>
-        <translation>Desetinné číslo neodpovídá omezující vlastnosti &apos;totalDigits&apos;.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Date time content does not match the maxInclusive facet.</source>
-        <translation>Údaj o datu neodpovídá omezující vlastnosti &apos;maxInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the maxExclusive facet.</source>
-        <translation>Údaj o datu neodpovídá omezující vlastnosti &apos;maxExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minInclusive facet.</source>
-        <translation>Údaj o datu neodpovídá omezující vlastnosti &apos;minInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minExclusive facet.</source>
-        <translation>Údaj o datu neodpovídá omezující vlastnosti &apos;minExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content is not listed in the enumeration facet.</source>
-        <translation>Údaj o datu není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content does not match pattern facet.</source>
-        <translation>Údaj o datu neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Duration content does not match the maxInclusive facet.</source>
-        <translation>Údaj o době trvání neodpovídá omezující vlastnosti &apos;maxInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the maxExclusive facet.</source>
-        <translation>Údaj o době trvání neodpovídá omezující vlastnosti &apos;maxExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minInclusive facet.</source>
-        <translation>Údaj o době trvání neodpovídá omezující vlastnosti &apos;minInclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minExclusive facet.</source>
-        <translation>Údaj o době trvání neodpovídá omezující vlastnosti &apos;minExclusive&apos;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content is not listed in the enumeration facet.</source>
-        <translation>Údaj o době trvání není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content does not match pattern facet.</source>
-        <translation>Údaj o době trvání neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Boolean content does not match pattern facet.</source>
-        <translation>Booleánská hodnota neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Binary content does not match the length facet.</source>
-        <translation>Binární obsah neodpovídá omezující vlastnosti délky.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the minLength facet.</source>
-        <translation>Binární obsah neodpovídá omezující vlastnosti &apos;minLength&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the maxLength facet.</source>
-        <translation>Binární obsah neodpovídá omezující vlastnosti &apos;maxLength&apos;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Binary content is not listed in the enumeration facet.</source>
-        <translation>Binární obsah není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Invalid QName content: %1.</source>
-        <translation>Obsah způsobilého názvu (&apos;QName&apos;) je neplatný: %1.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>QName content is not listed in the enumeration facet.</source>
-        <translation>Obsah způsobilého názvu (&apos;QName&apos;) není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>QName content does not match pattern facet.</source>
-        <translation>Obsah způsobilého názvu (&apos;QName&apos;) neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Notation content is not listed in the enumeration facet.</source>
-        <translation>Obsah zápisu není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>List content does not match length facet.</source>
-        <translation>Obsah seznamu neodpovídá omezující vlastnosti délky.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match minLength facet.</source>
-        <translation>Obsah seznamu neodpovídá omezující vlastnosti &apos;minLength&apos;.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match maxLength facet.</source>
-        <translation>Obsah seznamu neodpovídá omezující vlastnosti &apos;maxLength&apos;.</translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>List content is not listed in the enumeration facet.</source>
-        <translation>Obsah seznamu není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List content does not match pattern facet.</source>
-        <translation>Obsah seznamu neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Union content is not listed in the enumeration facet.</source>
-        <translation>Obsah sjednocení není obsažen ve výčtové omezující vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Union content does not match pattern facet.</source>
-        <translation>Obsah sjednocení neodpovídá omezující vlastnosti vzoru pro hledání.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Data of type %1 are not allowed to be empty.</source>
-        <translation>Data typu %1 nemohou být prázdná.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
-        <source>Element %1 is missing child element.</source>
-        <translation>U prvku %1 chybí podprvek.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>There is one IDREF value with no corresponding ID: %1.</source>
-        <translation>Existuje hodnota IDREF, pro kterou neexistuje příslušné ID: %1.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Loaded schema file is invalid.</source>
-        <translation>Nahraný soubor se schématem je neplatný.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains invalid data.</source>
-        <translation>%1 obsahuje neplatná data.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
-        <translation>Jmenný prostor xsi:schemaLocation %1 byl již dříve v případovém dokumentu stanoven.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
-        <translation>xsi:noNamespaceSchemaLocation se nemůže objevit po prvním prvku nebo vlastnosti bez jmenného prostoru.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>No schema defined for validation.</source>
-        <translation>Pro schválení není stanoveno žádné schéma.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>No definition for element %1 available.</source>
-        <translation>Pro prvek %1 není dostupná žádná definice.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+49"/>
-        <location line="+142"/>
-        <source>Specified type %1 is not known to the schema.</source>
-        <translation>Zadaný typ %1 není ve schématu stanoven.</translation>
-    </message>
-    <message>
-        <location line="-176"/>
-        <source>Element %1 is not defined in this scope.</source>
-        <translation>Prvek %1 není v této oblasti stanoven.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Declaration for element %1 does not exist.</source>
-        <translation>Pro prvek %1 není dostupná žádná deklarace.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Element %1 contains invalid content.</source>
-        <translation>Prvek %1 obsahuje neplatný obsah.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>Element %1 is declared as abstract.</source>
-        <translation>Prvek %1 je prohlášen jako abstraktní.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not nillable.</source>
-        <translation>Prvek %1 nemá zadánu vlastnost &apos;nillable&apos;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 contains invalid data: %2</source>
-        <translation>Vlastnost %1 obsahuje neplatná data: %2</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Element contains content although it is nillable.</source>
-        <translation>Prvek má obsah, ačkoli je &apos;nillable&apos;.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Fixed value constraint not allowed if element is nillable.</source>
-        <translation>Pevné omezení hodnoty není dovoleno, pokud je prvek &apos;nillable&apos;.</translation>
-    </message>
-    <message>
-        <location line="+230"/>
-        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
-        <translation>Prvek %1 nesmí obsahovat žádné jiné prvky, protože má pevný obsah.</translation>
-    </message>
-    <message>
-        <location line="-198"/>
-        <source>Specified type %1 is not validly substitutable with element type %2.</source>
-        <translation>Zadaný typ %1 není platně nahraditelný typem prvku %2.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 is not allowed to be abstract.</source>
-        <translation>Složitý typ %1 nemůže být abstraktní.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Element %1 contains not allowed attributes.</source>
-        <translation>Prvek %1 obsahuje nepřípustné vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+97"/>
-        <source>Element %1 contains not allowed child element.</source>
-        <translation>Prvek %1 obsahuje nepřípustný podprvek.</translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location line="+93"/>
-        <source>Content of element %1 does not match its type definition: %2.</source>
-        <translation>Obsah prvku %1 neodpovídá definici svého typu: %2.</translation>
-    </message>
-    <message>
-        <location line="-85"/>
-        <location line="+92"/>
-        <location line="+41"/>
-        <source>Content of element %1 does not match defined value constraint.</source>
-        <translation>Obsah prvku %1 neodpovídá stanovenému omezení hodnoty.</translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <source>Element %1 contains not allowed child content.</source>
-        <translation>Prvek %1 obsahuje nepřípustný podobsah.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Element %1 contains not allowed text content.</source>
-        <translation>Prvek %1 obsahuje nepřípustný textový obsah.</translation>
-    </message>
-    <message>
-        <location line="+61"/>
-        <source>Element %1 is missing required attribute %2.</source>
-        <translation>U prvku %1 chybí vyžadovaná vlastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Attribute %1 does not match the attribute wildcard.</source>
-        <translation>Vlastnost %1 neodpovídá zástupnému symbolu (vzoru hledání) vlastnosti.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Declaration for attribute %1 does not exist.</source>
-        <translation>Pro vlastnost %1 není dostupná žádná deklarace.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Element %1 contains two attributes of type %2.</source>
-        <translation>Prvek %1 obsahuje dvě vlastnosti typu %2.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 contains invalid content.</source>
-        <translation>Vlastnost %1 má neplatný obsah.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 contains unknown attribute %2.</source>
-        <translation>Prvek %1 obsahuje neznámou vlastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match its type definition: %2.</source>
-        <translation>Obsah vlastnosti %1 neodpovídá definici svého typu: %2.</translation>
-    </message>
-    <message>
-        <location line="-38"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match defined value constraint.</source>
-        <translation>Obsah vlastnosti %1 neodpovídá stanovenému omezení hodnoty.</translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Non-unique value found for constraint %1.</source>
-        <translation>Pro omezení %1 byla nalezena ne jednoznačně stanovená hodnota.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Key constraint %1 contains absent fields.</source>
-        <translation>Omezení klíče %1 obsahuje nepřítomná pole.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Key constraint %1 contains references nillable element %2.</source>
-        <translation>Omezení klíče %1 obsahuje odkazy na prvek %2, který je &apos;nillable&apos;.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No referenced value found for key reference %1.</source>
-        <translation>Odkazovanou hodnotu odkazu na klíč %1 se nepodařilo najít.</translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>More than one value found for field %1.</source>
-        <translation>Pro pole %1 bylo nalezeno více hodnot.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Field %1 has no simple type.</source>
-        <translation>Pole %1 nemá žádný jednoduchý typ.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>ID value &apos;%1&apos; is not unique.</source>
-        <translation>Hodnota ID %1 není jednoznačná.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
-        <translation>Vlastnost %1 obsahuje neplatný způsobilý název: %2.</translation>
     </message>
 </context>
 <context>
@@ -12639,7 +10031,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1325"/>
         <source>Edit contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12649,7 +10041,7 @@ to
         <translation type="unfinished">F2</translation>
     </message>
     <message>
-        <location line="+775"/>
+        <location line="+771"/>
         <source>Insert widget &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13668,7 +11060,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PluginDialog</name>
     <message>
-        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+68"/>
         <source>Components</source>
         <translation type="unfinished"></translation>
     </message>

@@ -168,7 +168,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
         <source>Close Tab</source>
         <translation>Zapri zavihek</translation>
     </message>
@@ -937,7 +937,7 @@
 <context>
     <name>FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1758"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1025,44 +1025,6 @@
         <source>XX Icon Selected off</source>
         <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
-        <source>Services</source>
-        <translation>Storitve</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide %1</source>
-        <translation>Skrij %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Others</source>
-        <translation>Skrij druge</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show All</source>
-        <translation>Prikaži vse</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Preferences...</source>
-        <translation>Nastavitve ...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit %1</source>
-        <translation>Končaj %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>About %1</source>
-        <translation>O %1</translation>
     </message>
 </context>
 <context>
@@ -1167,9 +1129,9 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+916"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+652"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>Ni moč najti gostitelja</translation>
@@ -1187,8 +1149,8 @@
         <translation>Čas za povezavo je potekel</translation>
     </message>
     <message>
-        <location line="-550"/>
-        <location line="+822"/>
+        <location line="-538"/>
+        <location line="+810"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>Dejanje na vtičnici ni podprto</translation>
@@ -1213,7 +1175,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1253"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1242"/>
         <source>&amp;Step up</source>
         <translation>Korak &amp;gor</translation>
     </message>
@@ -1254,7 +1216,7 @@
         <translation>Aktiviraj</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Izvršljiva datoteka »%1« potrebuje Qt %2, najden pa je bil Qt %3.</translation>
     </message>
@@ -1264,7 +1226,7 @@
         <translation>Napaka nezdružljivosti knjižnice Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2086"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1296,7 +1258,7 @@
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1373"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
         <source>Hu&amp;e:</source>
         <translation>&amp;Odtenek:</translation>
     </message>
@@ -1336,7 +1298,7 @@
         <translation>Izberite barvo</translation>
     </message>
     <message>
-        <location line="+181"/>
+        <location line="+131"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Osnovne barve</translation>
     </message>
@@ -1383,7 +1345,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>Displays this help.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1503,7 +1465,7 @@
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2267"/>
         <source>AM</source>
         <translation>dop.</translation>
     </message>
@@ -2758,7 +2720,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+743"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2852,14 +2814,9 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+607"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
         <source>What&apos;s This?</source>
         <translation>Kaj je to?</translation>
-    </message>
-    <message>
-        <location line="-127"/>
-        <source>Done</source>
-        <translation>Opravljeno</translation>
     </message>
 </context>
 <context>
@@ -2998,19 +2955,13 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Velikost</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>Vrste</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>Vrsta</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>Date Modified</source>
         <translation>Datum spremembe</translation>
     </message>
@@ -3049,7 +3000,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+193"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+164"/>
         <source>Debug Message:</source>
         <translation>Sporočilo razhroščevanja:</translation>
     </message>
@@ -3064,7 +3015,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Usodna napaka:</translation>
     </message>
     <message>
-        <location line="+195"/>
+        <location line="+192"/>
         <source>&amp;Show this message again</source>
         <translation>&amp;To sporočilo naslednjič spet prikaži</translation>
     </message>
@@ -3121,8 +3072,8 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+576"/>
-        <location line="+540"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+546"/>
+        <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Vse datoteke (*)</translation>
     </message>
@@ -3134,23 +3085,23 @@ Container pages should only be added by specifying them in XML returned by the d
     <message>
         <location line="-3"/>
         <location line="+55"/>
-        <location line="+1551"/>
+        <location line="+1480"/>
         <source>&amp;Open</source>
         <translation>&amp;Odpri</translation>
     </message>
     <message>
-        <location line="-1606"/>
+        <location line="-1535"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Shrani</translation>
     </message>
     <message>
-        <location line="-786"/>
+        <location line="-761"/>
         <source>Open</source>
         <translation>Odpri</translation>
     </message>
     <message>
-        <location line="+1576"/>
+        <location line="+1486"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 že obstaja.
@@ -3171,7 +3122,7 @@ Preverite, ali je bilo podano pravilno ime datoteke.</translation>
         <translation>Moj računalnik</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1565"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1475"/>
         <source>&amp;Rename</source>
         <translation>Pre&amp;imenuj</translation>
     </message>
@@ -3187,13 +3138,13 @@ Preverite, ali je bilo podano pravilno ime datoteke.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+699"/>
+        <location line="+674"/>
         <source>Directory:</source>
         <translation>Mapa:</translation>
     </message>
     <message>
-        <location line="+804"/>
-        <location line="+866"/>
+        <location line="+739"/>
+        <location line="+860"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -3224,12 +3175,12 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Nedavna mesta</translation>
     </message>
     <message>
-        <location line="-2613"/>
+        <location line="-2517"/>
         <source>Save As</source>
         <translation>Shrani kot</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+483"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
         <source>Drive</source>
         <translation>Pogon</translation>
     </message>
@@ -3240,31 +3191,19 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Datoteka</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>File Folder</source>
-        <comment>Match Windows Explorer</comment>
-        <translation>Mapa z datotekami</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Folder</source>
         <comment>All other platforms</comment>
         <translation>Mapa</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Alias</source>
-        <comment>Mac OS X Finder</comment>
-        <translation>Drugo ime</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
         <translation>Bližnjica</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Unknown</source>
         <translation>Neznano</translation>
     </message>
@@ -3279,41 +3218,39 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Prikaži </translation>
     </message>
     <message>
-        <location line="+2031"/>
+        <location line="+1935"/>
         <source>New Folder</source>
         <translation>Nova mapa</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-1928"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Nova mapa</translation>
     </message>
     <message>
-        <location line="+707"/>
+        <location line="+682"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>Iz&amp;berite</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
         <source>Remove</source>
         <translation>Odstrani</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-743"/>
-        <location line="+703"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-718"/>
+        <location line="+678"/>
         <source>File &amp;name:</source>
         <translation>Ime &amp;datoteke:</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Look in:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Back</source>
         <translation type="unfinished">Predhodna</translation>
     </message>
@@ -3324,7 +3261,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Forward</source>
         <translation type="unfinished">Naslednja</translation>
     </message>
@@ -3335,7 +3271,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Parent Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3346,7 +3281,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Create New Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3357,7 +3291,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>List View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3368,7 +3301,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Detail View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3379,7 +3311,6 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Files of type:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3387,7 +3318,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+858"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+741"/>
         <source>Invalid filename</source>
         <translation>Napačno ime datoteke</translation>
     </message>
@@ -3424,18 +3355,13 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Datum spremembe</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
-        <source>My Computer</source>
-        <translation>Moj računalnik</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
         <source>Computer</source>
         <translation>Računalnik</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-177"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="-157"/>
         <source>%1 TB</source>
         <translation>%1 TiB</translation>
     </message>
@@ -3471,56 +3397,56 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
-        <location line="+1205"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
+        <location line="+1140"/>
         <source>Normal</source>
         <translation>Običajno</translation>
     </message>
     <message>
-        <location line="-1202"/>
+        <location line="-1137"/>
         <location line="+12"/>
-        <location line="+1178"/>
+        <location line="+1113"/>
         <source>Bold</source>
         <translation>Polkrepko</translation>
     </message>
     <message>
-        <location line="-1187"/>
-        <location line="+1189"/>
+        <location line="-1122"/>
+        <location line="+1124"/>
         <source>Demi Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1121"/>
         <location line="+18"/>
-        <location line="+1164"/>
+        <location line="+1099"/>
         <source>Black</source>
         <translation>Krepko</translation>
     </message>
     <message>
-        <location line="-1174"/>
+        <location line="-1109"/>
         <source>Demi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1174"/>
+        <location line="+1109"/>
         <source>Light</source>
         <translation>Lahko</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1027"/>
+        <location line="-959"/>
+        <location line="+962"/>
         <source>Italic</source>
         <translation>Ležeče</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1026"/>
+        <location line="-959"/>
+        <location line="+961"/>
         <source>Oblique</source>
         <translation>Nagnjeno</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+708"/>
         <source>Any</source>
         <translation>Katerikoli</translation>
     </message>
@@ -3693,7 +3619,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+746"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
         <source>&amp;Font</source>
         <translation>&amp;Pisava</translation>
     </message>
@@ -3733,7 +3659,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>S&amp;istem pisanja</translation>
     </message>
     <message>
-        <location line="-575"/>
+        <location line="-564"/>
         <source>Select Font</source>
         <translation>Izberite pisavo</translation>
     </message>
@@ -4062,8 +3988,8 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Nimate dovoljenja</translation>
     </message>
@@ -4086,7 +4012,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Ni prostora na napravi</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
         <source>Unknown error</source>
         <translation>Neznana napaka</translation>
     </message>
@@ -4094,7 +4020,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QInputContext</name>
     <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+242"/>
+        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
         <source>XIM</source>
         <translation>XIM</translation>
     </message>
@@ -4102,16 +4028,6 @@ Ali jo kljub temu želite izbrisati?</translation>
         <location line="+23"/>
         <source>XIM input method</source>
         <translation>Način za vnašanje XIM</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Windows input method</source>
-        <translation>Način za vnašanje Windows</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Mac OS X input method</source>
-        <translation>Način za vnašanje Mac OS X</translation>
     </message>
 </context>
 <context>
@@ -4203,7 +4119,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Neujemanje podatkov za potrjevanje vstavkov v »%1«</translation>
     </message>
     <message>
-        <location line="+407"/>
+        <location line="+322"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Vstavek »%1« uporablja nezdružljivo knjižnico Qt. (%2.%3.%4) [%5]</translation>
     </message>
@@ -4213,8 +4129,8 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Neznana napaka</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+127"/>
+        <location line="-444"/>
+        <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Deljena knjižnica ni bila najdena.</translation>
@@ -4615,7 +4531,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
         <source>Corner Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4623,18 +4539,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1198"/>
-        <source>Help</source>
-        <translation>Pomoč</translation>
-    </message>
-    <message>
-        <location line="-818"/>
-        <location line="+817"/>
-        <source>OK</source>
-        <translation>V redu</translation>
-    </message>
-    <message>
-        <location line="+481"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1480"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;O Qt&lt;/h3&gt;&lt;p&gt;Ta program uporablja Qt različice %1.&lt;/p&gt;</translation>
     </message>
@@ -4649,7 +4554,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>O Qt</translation>
     </message>
     <message>
-        <location line="-1580"/>
+        <location line="-1390"/>
         <source>Show Details...</source>
         <translation>Prikaži podrobnosti ...</translation>
     </message>
@@ -4824,7 +4729,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
         <source>Invalid URI: %1</source>
         <translation>Neveljaven URI: %1</translation>
     </message>
@@ -4850,14 +4755,14 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
         <source>Request for opening non-local file %1</source>
         <translation>Zahtevek za odprtje ne-krajevne datoteke %1</translation>
     </message>
     <message>
-        <location line="+45"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+36"/>
+        <location line="+44"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+35"/>
         <source>Error opening %1: %2</source>
         <translation>Napaka pri odpiranju %1: %2</translation>
     </message>
@@ -5561,12 +5466,12 @@ Izberite drugo ime datoteke.</translation>
         <translation>Nastavitve strani</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
         <source>%1%</source>
         <translation>%1 %</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+81"/>
         <source>Print Preview</source>
         <translation>Ogled tiskanja</translation>
     </message>
@@ -5646,12 +5551,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Nastavitve strani</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>Zapri</translation>
-    </message>
-    <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Export to PDF</source>
         <translation>Izvozi v PDF</translation>
     </message>
@@ -5833,7 +5733,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
         <source>Could not open input redirection for reading</source>
         <translation>Preusmeritve vhoda ni bilo moč odpreti za branje</translation>
     </message>
@@ -5843,12 +5743,12 @@ Izberite drugo ime datoteke.</translation>
         <translation>Preusmeritve izhoda ni bilo moč odpreti za pisanje</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+220"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Napaka vira (spodletela odcepitev): %1</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+249"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -5856,24 +5756,23 @@ Izberite drugo ime datoteke.</translation>
         <translation>Čas za dejanje procesa je potekel</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+883"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Napaka pri branju iz procesa</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Napak pri pisanju v proces</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="+63"/>
         <source>Process crashed</source>
         <translation>Program se je sesul</translation>
     </message>
     <message>
-        <location line="+977"/>
+        <location line="+909"/>
         <source>No program defined</source>
         <translation>Določenega ni nobenega programa</translation>
     </message>
@@ -6374,7 +6273,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+408"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+402"/>
         <source>Scroll here</source>
         <translation>Premakni sem</translation>
     </message>
@@ -6459,7 +6358,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+262"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: ni moč nastaviti ključa na zaklep</translation>
     </message>
@@ -6469,8 +6368,8 @@ Izberite drugo ime datoteke.</translation>
         <translation>%1: velikost je manjša od 0</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+176"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+174"/>
         <source>%1: unable to lock</source>
         <translation>%1: ni moč zakleniti</translation>
     </message>
@@ -6550,7 +6449,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+396"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+309"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Preslednica</translation>
@@ -7616,41 +7515,41 @@ Izberite drugo ime datoteke.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+601"/>
-        <location line="+135"/>
+        <location line="+477"/>
+        <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+138"/>
+        <location line="-86"/>
+        <location line="+90"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-137"/>
-        <location line="+135"/>
+        <location line="-89"/>
+        <location line="+87"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+130"/>
+        <location line="-86"/>
+        <location line="+82"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-11"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+31"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-945"/>
+        <location line="-772"/>
         <source>Home Page</source>
         <translation>Domača stran</translation>
     </message>
@@ -7772,7 +7671,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
         <source>Unable to write data: %1</source>
         <translation>Ni moč zapisati podatkov: %1</translation>
     </message>
@@ -7798,7 +7697,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Napaka med rokovanjem SSL: %1</translation>
     </message>
     <message>
-        <location line="-798"/>
+        <location line="-697"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Napaka pri ustvarjanju konteksta SSL (%1)</translation>
     </message>
@@ -8023,7 +7922,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8479,7 +8378,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
         <source>What&apos;s This?</source>
         <translation>Kaj je to?</translation>
     </message>
@@ -8487,7 +8386,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5484"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8495,7 +8394,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+598"/>
         <source>Go Back</source>
         <translation>Pojdi nazaj</translation>
     </message>
@@ -8505,7 +8404,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Nadaljuj</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Commit</source>
         <translation>Uveljavi</translation>
     </message>
@@ -8520,12 +8419,12 @@ Izberite drugo ime datoteke.</translation>
         <translation>Pomoč</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-13"/>
         <source>&lt; &amp;Back</source>
         <translation>&lt; Na&amp;zaj</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>&amp;Finish</source>
         <translation>&amp;Zaključi</translation>
     </message>
@@ -8541,11 +8440,6 @@ Izberite drugo ime datoteke.</translation>
     </message>
     <message>
         <location line="-8"/>
-        <source>&amp;Next</source>
-        <translation>&amp;Naprej</translation>
-    </message>
-    <message>
-        <location line="+0"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Naprej &gt;</translation>
     </message>
@@ -8553,7 +8447,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1076"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1034"/>
         <source>&amp;Restore</source>
         <translation>&amp;Obnovi</translation>
     </message>
@@ -8600,7 +8494,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="-1799"/>
+        <location line="-1757"/>
         <source>Minimize</source>
         <translation>Pomanjšaj</translation>
     </message>
@@ -8615,7 +8509,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Zapri</translation>
     </message>
     <message>
-        <location line="+2015"/>
+        <location line="+1973"/>
         <source>&amp;Unshade</source>
         <translation>Razv&amp;ij</translation>
     </message>
@@ -8736,34 +8630,6 @@ Izberite drugo ime datoteke.</translation>
         <location line="+1"/>
         <source>error in the text declaration of an external entity</source>
         <translation>napaka v besedilni deklaraciji zunanje entitete</translation>
-    </message>
-</context>
-<context>
-    <name>QXmlPatternistCLI</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
-        <source>Warning in %1, at line %2, column %3: %4</source>
-        <translation>Opozorilo v %1, vrstica %2, stolpec %3: %4</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning in %1: %2</source>
-        <translation>Opozorilo v %1: %2</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unknown location</source>
-        <translation>Neznana lokacija</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error %1 in %2, at line %3, column %4: %5</source>
-        <translation>Napaka %1 v %2, vrstica %3, stolpec %4: %5</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Error %1 in %2: %3</source>
-        <translation>Napaka %1 v %2: %3</translation>
     </message>
 </context>
 <context>
@@ -9261,2482 +9127,6 @@ to
     <message>
         <location line="+252"/>
         <source>Select Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtXmlPatterns</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
-        <source>Network timeout.</source>
-        <translation>Čas za omrežje je potekel.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
-        <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
-        <translation>Elementa %1 ni moč serializirati, ker se nahaja zunaj elementa dokumenta.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+80"/>
-        <source>Year %1 is invalid because it begins with %2.</source>
-        <translation>Leto %1 ni veljavno, ker se začne z %2.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Day %1 is outside the range %2..%3.</source>
-        <translation>Dan %1 je izven obsega %2..%3.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Month %1 is outside the range %2..%3.</source>
-        <translation>Mesec %1 je izven obsega %2..%3.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Overflow: Can&apos;t represent date %1.</source>
-        <translation>Prekoračitev: ni moč predstaviti datuma %1.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Day %1 is invalid for month %2.</source>
-        <translation>Dan %1 za mesec %2 ni veljaven.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>Time 24:%1:%2.%3 is invalid. Hour is 24, but minutes, seconds, and milliseconds are not all 0; </source>
-        <translation>Čas 24:%1:%2.%3 ni veljaven. Ura je 24, vendar minute, sekunde in milisekunde niso vse 0; </translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Time %1:%2:%3.%4 is invalid.</source>
-        <translation>Čas %1:%2:%3.%4 ni veljaven.</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Overflow: Date can&apos;t be represented.</source>
-        <translation>Prekoračitev: datuma ni moč predstaviti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="+99"/>
-        <location line="+15"/>
-        <source>At least one component must be present.</source>
-        <translation>Prisotna mora biti vsaj ena komponenta.</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>At least one time component must appear after the %1-delimiter.</source>
-        <translation>Za razmejiteljem %1 se mora pojaviti vsaj ena časovna komponenta.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qanyuri_p.h" line="+132"/>
-        <source>%1 is not a valid value of type %2.</source>
-        <translation>%1 ni veljavna vrednost vrste %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomiccasters_p.h" line="+223"/>
-        <source>When casting to %1 from %2, the source value cannot be %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+65"/>
-        <source>Integer division (%1) by zero (%2) is undefined.</source>
-        <translation>Deljenje celega števila (%1) z nič (%2) ni določeno.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Division (%1) by zero (%2) is undefined.</source>
-        <translation>Deljenje (%1) z nič (%2) ni določeno.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Modulus division (%1) by zero (%2) is undefined.</source>
-        <translation>Ostanek deljenja (%1) z nič (%2) ni določen.</translation>
-    </message>
-    <message>
-        <location line="+122"/>
-        <location line="+32"/>
-        <source>Dividing a value of type %1 by %2 (not-a-number) is not allowed.</source>
-        <translation>Deljenje vrednosti vrste %1 z %2 (ni število) ni dovoljeno.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Dividing a value of type %1 by %2 or %3 (plus or minus zero) is not allowed.</source>
-        <translation>Deljenje vrednosti vrste %1 z %2 ali %3 (pozitivna ali negativna nič) ni dovoljeno.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Multiplication of a value of type %1 by %2 or %3 (plus or minus infinity) is not allowed.</source>
-        <translation>Množenje vrednosti vrste %1 z %2 ali %3 (pozitivna ali negativna neskončnost) ni dovoljeno.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicvalue.cpp" line="+79"/>
-        <source>A value of type %1 cannot have an Effective Boolean Value.</source>
-        <translation>Vrednost vrste %1 ne more imeti dejanske logične vrednosti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qboolean.cpp" line="+78"/>
-        <source>Effective Boolean Value cannot be calculated for a sequence containing two or more atomic values.</source>
-        <translation>Dejanske logične vrednosti ni moč izračunati za zaporedje, ki vsebuje dve ali več atomičnih vrednosti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+402"/>
-        <source>Value %1 of type %2 exceeds maximum (%3).</source>
-        <translation>Vrednost %1 vrste %2 presega maksimum (%3).</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Value %1 of type %2 is below minimum (%3).</source>
-        <translation>Vrednost %1 vrste %2 je pod minimumom (%3).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+91"/>
-        <source>A value of type %1 must contain an even number of digits. The value %2 does not.</source>
-        <translation>Vrednost vrste %1 mora vsebovati sodo število števk. Vrednost %2 temu ne zadošča.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>%1 is not valid as a value of type %2.</source>
-        <translation>%1 ni veljavna kot vrednost vrste %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+207"/>
-        <source>Operator %1 cannot be used on type %2.</source>
-        <translation>Operatorja %1 ni moč uporabiti na vrsti %2.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Operator %1 cannot be used on atomic values of type %2 and %3.</source>
-        <translation>Operatorja %1 ni moč uporabiti na atomičnih vrednostih vrst %2 in %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="+66"/>
-        <source>The namespace URI in the name for a computed attribute cannot be %1.</source>
-        <translation>URI imenskega prostora v imenu izračunane lastnosti ne more biti %1.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The name for a computed attribute cannot have the namespace URI %1 with the local name %2.</source>
-        <translation>Ime izračunane lastnosti ne more imeti URI-ja imenskega prostora %1 s krajevnim imenom %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+88"/>
-        <source>Type error in cast, expected %1, received %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>When casting to %1 or types derived from it, the source value must be of the same type, or it must be a string literal. Type %2 is not allowed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+67"/>
-        <source>A comment cannot contain %1</source>
-        <translation>Komentar ne more vsebovati %1</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>A comment cannot end with a %1.</source>
-        <translation>Komentar se ne more končati z %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qdocumentcontentvalidator.cpp" line="+86"/>
-        <source>An attribute node cannot be a child of a document node. Therefore, the attribute %1 is out of place.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
-        <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
-        <translation>Modula knjižnice ni moč ovrednotiti neposredno. Uvoziti ga je potrebno iz glavnega modula.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No template by name %1 exists.</source>
-        <translation>Predloga z imenom %1 ne obstaja.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="+106"/>
-        <source>A value of type %1 cannot be a predicate. A predicate must have either a numeric type or an Effective Boolean Value type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>A positional predicate must evaluate to a single numeric value.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>%1 is not a valid target name in a processing instruction. It must be a %2 value, e.g. %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qpath.cpp" line="+109"/>
-        <source>The last step in a path must contain either nodes or atomic values. It cannot be a mixture between the two.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qprocessinginstructionconstructor.cpp" line="+84"/>
-        <source>The data of a processing instruction cannot contain the string %1</source>
-        <translation>Podatki ukaza za obdelavo ne morejo vsebovati niza %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor.cpp" line="+82"/>
-        <source>No namespace binding exists for the prefix %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="+156"/>
-        <source>No namespace binding exists for the prefix %1 in %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+69"/>
-        <source>%1 is an invalid %2</source>
-        <translation>%1 ni veljaven %2</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+77"/>
-        <source>%1 takes at most %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 potrebuje največ %n argument. %2 zato ni veljavno.</numerusform>
-            <numerusform>%1 potrebuje največ %n argumenta. %2 zato ni veljavno.</numerusform>
-            <numerusform>%1 potrebuje največ %n argumente. %2 zato ni veljavno.</numerusform>
-            <numerusform>%1 potrebuje največ %n argumentov. %2 zato ni veljavno.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+11"/>
-        <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 potrebuje najmanj %n argument. %2 zato ni veljavno.</numerusform>
-            <numerusform>%1 potrebuje najmanj %n argumenta. %2 zato ni veljavno.</numerusform>
-            <numerusform>%1 potrebuje najmanj %n argumente. %2 zato ni veljavno.</numerusform>
-            <numerusform>%1 potrebuje najmanj %n argumentov. %2 zato ni veljavno.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+120"/>
-        <source>The first argument to %1 cannot be of type %2. It must be a numeric type, xs:yearMonthDuration or xs:dayTimeDuration.</source>
-        <translation>Prvi argument za %1 ne more biti vrste %2. Mora biti številčne vrste, xs:yearMonthDuration ali xs:dayTimeDuration.</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>The first argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>Prvi argument za %1 ne more biti vrste %2. Mora biti vrste %3, %4 ali %5.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>The second argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>Drugi argument za %1 ne more biti vrste %2. Mora biti vrste %3, %4 ali %5.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qassemblestringfns.cpp" line="+88"/>
-        <source>%1 is not a valid XML 1.0 character.</source>
-        <translation>%1 ni veljaven znak XML 1.0.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qdatetimefn.cpp" line="+86"/>
-        <source>If both values have zone offsets, they must have the same zone offset. %1 and %2 are not the same.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qerrorfn.cpp" line="+61"/>
-        <source>%1 was called.</source>
-        <translation>%1 je bila klicana.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="+94"/>
-        <source>%1 must be followed by %2 or %3, not at the end of the replacement string.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>In the replacement string, %1 must be followed by at least one digit when not escaped.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>In the replacement string, %1 can only be used to escape itself or %2, not %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+92"/>
-        <source>%1 matches newline characters</source>
-        <translation>%1 se ujema z znaki za novo vrstico</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>%1 and %2 match the start and end of a line.</source>
-        <translation>%1 in %2 se ujemata z začetkom in koncem vrstice.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Matches are case insensitive</source>
-        <translation>Ujemanja niso občutljiva na velikost črk</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Whitespace characters are removed, except when they appear in character classes</source>
-        <translation>Znaki za presledke so odstranjeni, razen ko se pojavijo v znakovnih razredih</translation>
-    </message>
-    <message>
-        <location line="+100"/>
-        <source>%1 is an invalid regular expression pattern: %2</source>
-        <translation>%1 ni veljaven vzorec regularnega izraza: %2</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>%1 is an invalid flag for regular expressions. Valid flags are:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+17"/>
-        <source>If the first argument is the empty sequence or a zero-length string (no namespace), a prefix cannot be specified. Prefix %1 was specified.</source>
-        <translation>Če je prvi argument prazno zaporedje, ali pa niz z dolžino nič (brez imenskega prostora), predpone ni moč določiti. Določena je bila predpona %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencefns.cpp" line="+346"/>
-        <source>It will not be possible to retrieve %1.</source>
-        <translation>%1 ne bo možno pridobiti.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcontextnodechecker.cpp" line="+54"/>
-        <source>The root node of the second argument to function %1 must be a document node. %2 is not a document node.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+282"/>
-        <source>The default collection is undefined</source>
-        <translation>Privzeta zbirka ni določena.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>%1 cannot be retrieved</source>
-        <translation>%1 ni moč pridobiti</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qstringvaluefns.cpp" line="+252"/>
-        <source>The normalization form %1 is unsupported. The supported forms are %2, %3, %4, and %5, and none, i.e. the empty string (no normalization).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+87"/>
-        <source>A zone offset must be in the range %1..%2 inclusive. %3 is out of range.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1 is not a whole number of minutes.</source>
-        <translation>%1 ni celovito število minut.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qcardinalityverifier.cpp" line="+58"/>
-        <source>Required cardinality is %1; got cardinality %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qitemverifier.cpp" line="+67"/>
-        <source>The item %1 did not match the required type %2.</source>
-        <translation>Postavka %1 se ne ujema z zahtevano vrsto %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+352"/>
-        <location line="+7323"/>
-        <source>%1 is an unknown schema type.</source>
-        <translation>%1 ni znana vrsta sheme.</translation>
-    </message>
-    <message>
-        <location line="-7254"/>
-        <source>A template with name %1 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+213"/>
-        <source>Only one %1 declaration can occur in the query prolog.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+188"/>
-        <source>The initialization of variable %1 depends on itself</source>
-        <translation>Inicializacija spremenljivke %1 je odvisna od same sebe.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
-        <source>The variable %1 is unused</source>
-        <translation>Spremenljivka %1 ni uporabljena</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2904"/>
-        <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
-        <translation>Različica %1 ni podprta. Podpra različica XQuery je 1.0.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>The encoding %1 is invalid. It must contain Latin characters only, must not contain whitespace, and must match the regular expression %2.</source>
-        <translation>Kodiranje %1 ni veljavno. Vsebovati mora le znake latinske abecede, ne sme vsebovati presledkov in se mora ujemati z regularnim izrazom %2.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>No function with signature %1 is available</source>
-        <translation>Na voljo ni nobene funkcije s podpisom %1</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <location line="+10"/>
-        <source>A default namespace declaration must occur before function, variable, and option declarations.</source>
-        <translation>Deklaracije privzetega imenskega prostora se mora pojaviti pred deklaracijami funkcij, spremenljivk in možnosti.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace declarations must occur before function, variable, and option declarations.</source>
-        <translation>Deklaracije imenskih prostorov se morajo pojaviti pred deklaracijami funkcij, spremenljivk in možnosti.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Module imports must occur before function, variable, and option declarations.</source>
-        <translation>Uvozi modulov se morajo pojaviti pred deklaracijami funkcij, spremenljivk in možnosti.</translation>
-    </message>
-    <message>
-        <location line="+200"/>
-        <source>It is not possible to redeclare prefix %1.</source>
-        <translation>Predpone %1 ni moč znova deklarirati.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Prefix %1 is already declared in the prolog.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+95"/>
-        <source>The name of an option must have a prefix. There is no default namespace for options.</source>
-        <translation>Ime možnosti mora vsebovati predpono. Privzeti imenski prostor za možnosti ne obstaja.</translation>
-    </message>
-    <message>
-        <location line="+171"/>
-        <source>The Schema Import feature is not supported, and therefore %1 declarations cannot occur.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>The target namespace of a %1 cannot be empty.</source>
-        <translation>Ciljni imenski prostor za %1 ne sme biti prazen.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The module import feature is not supported</source>
-        <translation>Zmožnost uvažanja modulov ni podprta</translation>
-    </message>
-    <message>
-        <location line="-403"/>
-        <source>The keyword %1 cannot occur with any other mode name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+551"/>
-        <source>A stylesheet function must have a prefixed name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
-        <translation>Imenski prostor %1 je rezerviran, zato ga uporabniško določene funkcije ne smejo uporabiti. Poskusite z vnaprej določeno predpono %2, ki obstaja za take primere.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The namespace of a user defined function in a library module must be equivalent to the module namespace. In other words, it should be %1 instead of %2</source>
-        <translation>Imenski prostor uporabniško določene funkcije v modulu knjižnice mora biti enak imenskemu prostoru modula. Z drugimi besedami, moral bi biti %1, namesto %2.</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>A function already exists with the signature %1.</source>
-        <translation>Funkcija s podpisom %1 že obstaja.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>No external functions are supported. All supported functions can be used directly, without first declaring them as external</source>
-        <translation>Zunanje funkcije niso podprte. Vse podprte funkcije je moč uporabiti neposredno, brez da bi jih najprej deklarirali kot zunanje.</translation>
-    </message>
-    <message>
-        <location line="-3755"/>
-        <source>No variable with name %1 exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3146"/>
-        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+312"/>
-        <source>A variable with name %1 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>No value is available for the external variable with name %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>When function %1 is used for matching inside a pattern, the argument must be a variable reference or a string literal.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a string literal, when used for matching.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a literal or a variable reference, when used for matching.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>In an XSL-T pattern, function %1 cannot have a third argument.</source>
-        <translation>V XSL-T vzorcu funkcija %1 ne more imeti tretjega argumenta.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>In an XSL-T pattern, only function %1 and %2, not %3, can be used for matching.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>In an XSL-T pattern, axis %1 cannot be used, only axis %2 or %3 can.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 is an invalid template mode name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>The name of a variable bound in a for-expression must be different from the positional variable. Hence, the two variables named %1 collide.</source>
-        <translation>Ime spremenljivke priklenjene v izrazu »for« se mora razlikovati od spremenljivke položaja. Spremenljivki z imenom %1 zato trčita.</translation>
-    </message>
-    <message>
-        <location line="+778"/>
-        <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+269"/>
-        <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+129"/>
-        <source>The %1-axis is unsupported in XQuery</source>
-        <translation>Os %1 v XQuery ni podprta</translation>
-    </message>
-    <message>
-        <location line="+333"/>
-        <source>No function with name %1 is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+250"/>
-        <source>An attribute with name %1 has already appeared on this element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+614"/>
-        <source>%1 is not a valid name for a processing-instruction.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-7099"/>
-        <source>%1 is not a valid numeric literal.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-152"/>
-        <source>W3C XML Schema identity constraint selector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>W3C XML Schema identity constraint field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>A construct was encountered which is disallowed in the current language(%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6482"/>
-        <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 is an invalid namespace URI.</source>
-        <translation>%1 ni veljaven URI imenskega prostora.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>It is not possible to bind to the prefix %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Namespace %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>Imenski prostor %1 je lahko navezan le na %2 (in je, v vsakem primeru, preddeklariran)</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Prefix %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>Predpona %1 je lahko navezana le na %2 (in je, v vsakem primeru, preddeklarirana)</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Two namespace declaration attributes have the same name: %1.</source>
-        <translation>Dva atributa deklaracije imenskega prostora imata isto ime: %1</translation>
-    </message>
-    <message>
-        <location line="+89"/>
-        <source>The namespace URI must be a constant and cannot use enclosed expressions.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+77"/>
-        <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+458"/>
-        <source>The name %1 does not refer to any schema type.</source>
-        <translation>Ime %1 se ne nanaša na nobeno vrsto sheme.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 is an complex type. Casting to complex types is not possible. However, casting to atomic types such as %2 works.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 is not an atomic type. Casting is only possible to atomic types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+145"/>
-        <location line="+71"/>
-        <source>%1 is not in the in-scope attribute declarations. Note that the schema import feature is not supported.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The name of an extension expression must be in a namespace.</source>
-        <translation>Ime razširitvenega izraza mora biti v imenskem prostoru.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+55"/>
-        <source>empty</source>
-        <translation>prazno</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or one</source>
-        <translation>nič ali en</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>exactly one</source>
-        <translation>točno en</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>one or more</source>
-        <translation>en ali več</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or more</source>
-        <translation>nič ali več</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="+63"/>
-        <source>Required type is %1, but %2 was found.</source>
-        <translation>Zahtevana vrsta je %1, najdena pa je bila %2.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Promoting %1 to %2 may cause loss of precision.</source>
-        <translation>Povišanje %1 v %2 lahko povzroči izgubo natančnosti.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>The focus is undefined.</source>
-        <translation>Fokus ni definiran.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="+86"/>
-        <source>It&apos;s not possible to add attributes after any other kind of node.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>An attribute by name %1 has already been created.</source>
-        <translation>Atribut z imenom %1 je že bil ustvarjen.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qxpathhelper_p.h" line="+120"/>
-        <source>Only the Unicode Codepoint Collation is supported(%1). %2 is unsupported.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+60"/>
-        <source>Attribute %1 can&apos;t be serialized because it appears at the top level.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+344"/>
-        <source>%1 is an unsupported encoding.</source>
-        <translation>%1 ni podprto kodiranje.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains octets which are disallowed in the requested encoding %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qapplytemplate.cpp" line="+119"/>
-        <source>Ambiguous rule match.</source>
-        <translation>Dvoumno ujemanje s pravilom.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+69"/>
-        <source>In a namespace constructor, the value for a namespace cannot be an empty string.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>The prefix must be a valid %1, which %2 is not.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>The prefix %1 cannot be bound.</source>
-        <translation>Predpone %1 ni moč navezati.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Only the prefix %1 can be bound to %2 and vice versa.</source>
-        <translation>Na %2 je lahko navezana le predpona %1 in obratno.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="+145"/>
-        <source>The parameter %1 is required, but no corresponding %2 is supplied.</source>
-        <translation>Potreben je parameter %1, vendar ustrezen %2 ni bil podan.</translation>
-    </message>
-    <message>
-        <location line="-71"/>
-        <source>The parameter %1 is passed, but no corresponding %2 exists.</source>
-        <translation>Podan je bil parameter %1, vendar ustrezen %2 ne obstaja.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qunparsedtextfn.cpp" line="+65"/>
-        <source>The URI cannot have a fragment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+519"/>
-        <source>Element %1 is not allowed at this location.</source>
-        <translation>Element %1 na tej lokaciji ni dovoljen.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Text nodes are not allowed at this location.</source>
-        <translation>Besedilna vozlišča na tej lokaciji niso dovoljena.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Parse error: %1</source>
-        <translation>Napaka pri razčlenjevanju: %1</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>The value of the XSL-T version attribute must be a value of type %1, which %2 isn&apos;t.</source>
-        <translation>Vrednost lastnosti različice XSL-T mora biti vrednost vrste %1, %2 pa to ni.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Running an XSL-T 1.0 stylesheet with a 2.0 processor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+106"/>
-        <source>Unknown XSL-T attribute %1.</source>
-        <translation>Neznana XSL-T lastnost %1.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 and %2 are mutually exclusive.</source>
-        <translation>Lastnosti %1 in %2 sta medsebojno izključujoči.</translation>
-    </message>
-    <message>
-        <location line="+166"/>
-        <source>In a simplified stylesheet module, attribute %1 must be present.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>If element %1 has no attribute %2, it cannot have attribute %3 or %4.</source>
-        <translation>Če element %1 nima lastnosti %2, ne more imeti lastnosti %3 ali %4.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Element %1 must have at least one of the attributes %2 or %3.</source>
-        <translation>Element %1 mora imeti vsaj eno izmed lastnosti %2 in %3.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>At least one mode must be specified in the %1-attribute on element %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+123"/>
-        <source>Element %1 must come last.</source>
-        <translation>Element %1 mora biti zadnji.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>At least one %1-element must occur before %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Only one %1-element can appear.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>At least one %1-element must occur inside %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>When attribute %1 is present on %2, a sequence constructor cannot be used.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 must have either a %2-attribute or a sequence constructor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <source>When a parameter is required, a default value cannot be supplied through a %1-attribute or a sequence constructor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Element %1 cannot have children.</source>
-        <translation>Element %1 ne more imeti podelementov.</translation>
-    </message>
-    <message>
-        <location line="+434"/>
-        <source>Element %1 cannot have a sequence constructor.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+86"/>
-        <location line="+9"/>
-        <source>The attribute %1 cannot appear on %2, when it is a child of %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>A parameter in a function cannot be declared to be a tunnel.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+149"/>
-        <source>This processor is not Schema-aware and therefore %1 cannot be used.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>Top level stylesheet elements must be in a non-null namespace, which %1 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The value for attribute %1 on element %2 must either be %3 or %4, not %5.</source>
-        <translation>Vrednost lastnosti %1 elementa %2 mora biti %3 ali %4 in ne %5.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Attribute %1 cannot have the value %2.</source>
-        <translation>Lastnost %1 ne more imeti vrednosti %2.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>The attribute %1 can only appear on the first %2 element.</source>
-        <translation>Lastnost %1 se lahko pojavi le pri prvem elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>At least one %1 element must appear as child of %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
-        <source>%1 has inheritance loop in its base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+24"/>
-        <source>Circular inheritance of base type %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Circular inheritance of union %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Base type of simple type %1 cannot be complex type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Simple type %1 cannot have direct base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location line="+9"/>
-        <source>Simple type %1 is not allowed to have base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Simple type %1 can only have simple atomic type as base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <location line="+484"/>
-        <source>Variety of item type of %1 must be either atomic or union.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-474"/>
-        <location line="+483"/>
-        <source>Variety of member types of %1 must be atomic.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-470"/>
-        <location line="+451"/>
-        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Simple type %1 is only allowed to have %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Base type of simple type %1 must have variety of type list.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Item type of base type does not match item type of %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+93"/>
-        <source>Simple type %1 contains not allowed facet type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+413"/>
-        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-404"/>
-        <source>%1 is not allowed to have any facets.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base type %1 of simple type %2 must have variety of union.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Complex type %1 has duplicated element %2 in its content model.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 has non-deterministic content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Complex type %1 must have simple content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Complex type %1 must have the same simple type as its base class %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Complex type %1 cannot be derived from base type %2%3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Item type of simple type %1 cannot be a complex type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Member type of simple type %1 cannot be a complex type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 is not allowed to have a member type with the same name as itself.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <location line="+29"/>
-        <location line="+34"/>
-        <source>%1 facet collides with %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1 facet must have the same value as %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+125"/>
-        <location line="+55"/>
-        <location line="+12"/>
-        <location line="+91"/>
-        <location line="+58"/>
-        <location line="+34"/>
-        <location line="+35"/>
-        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-389"/>
-        <source>%1 facet contains invalid regular expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unknown notation %1 used in %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>%1 facet contains invalid value %2: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <location line="+55"/>
-        <location line="+230"/>
-        <source>%1 facet must be less than or equal to %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-257"/>
-        <location line="+134"/>
-        <location line="+82"/>
-        <source>%1 facet must be less than %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-201"/>
-        <location line="+79"/>
-        <source>%1 facet and %2 facet cannot appear together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <location line="+12"/>
-        <location line="+113"/>
-        <source>%1 facet must be greater than %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-86"/>
-        <location line="+58"/>
-        <source>%1 facet must be less than %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+58"/>
-        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>Simple type contains not allowed facet %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Only %1 and %2 facets are allowed when derived by union.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+16"/>
-        <source>%1 contains %2 facet with invalid data: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Attribute group %1 contains attribute %2 twice.</source>
-        <translation>Skupina lastnosti %1 dvakrat vsebuje lastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 contains attribute %2 twice.</source>
-        <translation>Kompleksna vrsta %1 dvakrat vsebuje lastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Value constraint of element %1 is not of elements type: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 has value constraint but has type derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <location line="+15"/>
-        <source>Element %1 exists twice with different types.</source>
-        <translation>Element %1 obstaja dvakrat, z različnima vrstama.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Particle contains non-deterministic wildcards.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
-        <location line="+63"/>
-        <source>Base attribute %1 is required but derived attribute is not.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived attribute %1 does not exist in the base definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Base attribute %1 is required but missing in derived definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived wildcard is not a subset of the base wildcard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 from base type is missing in derived type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Type of derived attribute %1 differs from type of base attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base definition contains an %1 element that is missing in the derived definition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
-        <source>%1 references unknown %2 or %3 element %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Base type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Item type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Member type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <location line="+415"/>
-        <location line="+30"/>
-        <source>Type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-423"/>
-        <source>Base type %1 of complex type cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 cannot have complex base type that has a %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+286"/>
-        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Type of %1 element must be a simple type, %2 is not.</source>
-        <translation>Vrsta elementa %1 mora biti preprosta, %2 to ni.</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>Substitution group %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Substitution group %1 has circular definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+120"/>
-        <location line="+7"/>
-        <source>Duplicated element names %1 in %2 element.</source>
-        <translation>Podvojeni imeni elementov %1 v elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location line="+52"/>
-        <location line="+71"/>
-        <location line="+28"/>
-        <source>Reference %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-138"/>
-        <source>Circular group reference for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 element is not allowed in this scope</source>
-        <translation>Element %1 v tem obsegu ni dovoljen</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 element cannot have %2 attribute with value other than %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Attribute group %1 has circular reference.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 has attribute wildcard but its base type %2 has not.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace prefix of qualified name %1 is not defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <location line="+18"/>
-        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
-        <source>Empty particle cannot be derived from non-empty particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Derived particle is missing element %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived element %1 has weaker value constraint than base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>Preproste vrste izpeljanega elementa %1 ni moč veljavno izpeljati iz osnovnega elementa.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>Kompleksne vrste izpeljanega elementa %1 ni moč veljavno izpeljati iz osnovnega elementa.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Element %1 is missing in derived particle.</source>
-        <translation>Element %1 v izpeljanem delcu manjka.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
-        <translation>Vzorec v izpeljanem delcu ni veljavna podmnoživa vzorca iz osnovnega razreda.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
-        <translation>processContent vzorca v izpeljanem delcu je šibkejši kot vzorec v osnovnem delcu.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Derived particle allows content that is not allowed in the base particle.</source>
-        <translation>Izpeljani delec dovoljuje vsebino, ki v osnovnem delcu ni dovoljena.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
-        <source>Can not process unknown element %1, expected elements are: %2.</source>
-        <translation>Ni moč obdelati neznanega elementa %1, pričakovani elementi so: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
-        <translation>Element %1 v tem obsegu ni dovoljen, možni elementi so: %2.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Child element is missing in that scope, possible child elements are: %1.</source>
-        <translation>V tem obsegu manjka podelement, možni podelementi so: %1.</translation>
-    </message>
-    <message>
-        <location line="+143"/>
-        <source>Document is not a XML schema.</source>
-        <translation>Dokument ni shema XML.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
-        <translation>Lastnost %1 elementa %2 vsebuje neveljavno vsebino: {%3} ni vrednost vrste %4.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
-        <translation>Lastnost %1 elementa %2 vsebuje neveljavno vsebino: {%3}.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+11"/>
-        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <location line="+158"/>
-        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
-        <translation>Element %1 znotraj elementa %2 ni dovoljen, če je prisotna lastnost %3.</translation>
-    </message>
-    <message>
-        <location line="-97"/>
-        <location line="+119"/>
-        <location line="+89"/>
-        <source>%1 element has neither %2 attribute nor %3 child element.</source>
-        <translation>Element %1 nima niti lastnosti %2 niti podelementa %3.</translation>
-    </message>
-    <message>
-        <location line="+835"/>
-        <location line="+1474"/>
-        <location line="+232"/>
-        <location line="+7"/>
-        <location line="+260"/>
-        <location line="+17"/>
-        <location line="+258"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <source>%1 element with %2 child element must not have a %3 attribute.</source>
-        <translation>Element %1 s podelementom %2 ne sme imeti lastnosti %3.</translation>
-    </message>
-    <message>
-        <location line="-1325"/>
-        <source>%1 attribute of %2 element must be %3 or %4.</source>
-        <translation>Lastnost %1 elementa %2 mora biti %3 ali %4.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>%1 attribute of %2 element must have a value of %3.</source>
-        <translation>Lastnost %1 elementa %2 mora imeti vrednost %3.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+34"/>
-        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
-        <translation>Lastnost %1 elementa %2 mora imeti vrednost %3 ali %4.</translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <location line="+129"/>
-        <location line="+9"/>
-        <location line="+7"/>
-        <location line="+7"/>
-        <location line="+327"/>
-        <location line="+203"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+77"/>
-        <source>%1 element must not have %2 and %3 attribute together.</source>
-        <translation>Element %1 hkrati ne sme imeti lastnosti %2 in %3.</translation>
-    </message>
-    <message>
-        <location line="-768"/>
-        <location line="+222"/>
-        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
-        <translation>Vsebina lastnosti %1 elementa %2 ne sme biti iz imenskega prostora %3.</translation>
-    </message>
-    <message>
-        <location line="-215"/>
-        <location line="+222"/>
-        <source>%1 attribute of %2 element must not be %3.</source>
-        <translation>Lastnost %1 elementa %2 ne sme biti %3.</translation>
-    </message>
-    <message>
-        <location line="-64"/>
-        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
-        <translation>Lastnost %1 elementa %2 mora imeti vrednost %3, ker je nastavljena lastnost %4.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
-        <translation>Določitev use=&apos;prohibited&apos; znotraj skupine lastnosti nima nobenega učinka.</translation>
-    </message>
-    <message>
-        <location line="+353"/>
-        <source>%1 element must have either %2 or %3 attribute.</source>
-        <translation>Element %1 mora imeti lastnost %2 ali %3.</translation>
-    </message>
-    <message>
-        <location line="+554"/>
-        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
-        <translation>Element %1 mora imeti bodisi lastnost %2 bodisi vsebovati %3 ali %4 kot podelement.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>%1 element requires either %2 or %3 attribute.</source>
-        <translation>Element %1 potrebuje vsaj lastnost %2 ali %3.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Text or entity references not allowed inside %1 element</source>
-        <translation>Sklici na besedilo ali entiteto znotraj elementa %1 niso dovoljeni.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <location line="+112"/>
-        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
-        <translation>Lastnost %1 elementa %2 mora vsebovati %3, %4 ali pa seznam URI-jev.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 element is not allowed in this context.</source>
-        <translation>Element %1 v tem kontekstu ni dovoljen.</translation>
-    </message>
-    <message>
-        <location line="+53"/>
-        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
-        <translation>Lastnost %1 elementa %2 ima višjo vrednost kot lastnost %3.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Prefix of qualified name %1 is not defined.</source>
-        <translation>Predpona kvalificiranega imena %1 ni določena.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <location line="+61"/>
-        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
-        <translation>Lastnost %1 elementa %2 mora vsebovati bodisi %3 bodisi druge vrednosti.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>Component with ID %1 has been defined previously.</source>
-        <translation>Komponenta z ID-jem %1 je že bila definirana.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Element %1 already defined.</source>
-        <translation>Element %1 je že definiran.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 already defined.</source>
-        <translation>Lastnost %1 je že definirana.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Type %1 already defined.</source>
-        <translation>Vrsta %1 je že definirana.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute group %1 already defined.</source>
-        <translation>Skupina lastnosti %1 je že definirana.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Element group %1 already defined.</source>
-        <translation>Skupina elementov %1 je že definirana.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notation %1 already defined.</source>
-        <translation>Zapis %1 je že definiran.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Identity constraint %1 already defined.</source>
-        <translation>Omejitev identitete %1 je že določena.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Duplicated facets in simple type %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
-        <location line="+7"/>
-        <location line="+21"/>
-        <source>%1 is not valid according to %2.</source>
-        <translation>%1 glede na %2 ni veljaven.</translation>
-    </message>
-    <message>
-        <location line="+167"/>
-        <source>String content does not match the length facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the minLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the maxLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Signed integer content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Signed integer content does not match in the totalDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unsigned integer content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unsigned integer content does not match in the totalDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Double content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Double content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Double content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Decimal content does not match in the fractionDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Decimal content does not match in the totalDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Date time content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Duration content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Boolean content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Binary content does not match the length facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the minLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the maxLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Binary content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Invalid QName content: %1.</source>
-        <translation>Neveljavna vsebina QName: %1.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>QName content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>QName content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Notation content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>List content does not match length facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match minLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match maxLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>List content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Union content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Union content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Data of type %1 are not allowed to be empty.</source>
-        <translation>Podatki vrste %1 ne smejo biti prazni.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
-        <source>Element %1 is missing child element.</source>
-        <translation>Elementu %1 manjka podelement.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>There is one IDREF value with no corresponding ID: %1.</source>
-        <translation>Obstaja ena vrednost IDREF brez ustreznega ID-ja: %1</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Loaded schema file is invalid.</source>
-        <translation>Naložena datoteka s shemo ni veljavna.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains invalid data.</source>
-        <translation>%1 vsebuje neveljavne podatke.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>No schema defined for validation.</source>
-        <translation>Določene ni nobene sheme za potrjevanje.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>No definition for element %1 available.</source>
-        <translation>Definicija za element %1 ni na voljo.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+49"/>
-        <location line="+142"/>
-        <source>Specified type %1 is not known to the schema.</source>
-        <translation>Določena vrsta %1 shemi ni znana.</translation>
-    </message>
-    <message>
-        <location line="-176"/>
-        <source>Element %1 is not defined in this scope.</source>
-        <translation>Element %1 v tem obsegu ni definiran.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Declaration for element %1 does not exist.</source>
-        <translation>Deklaracija elementa %1 ne obstaja.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Element %1 contains invalid content.</source>
-        <translation>Element %1 vsebuje neveljavno vsebino.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>Element %1 is declared as abstract.</source>
-        <translation>Element %1 je deklariran kot abstrakten.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 contains invalid data: %2</source>
-        <translation>Lastnost %1 vsebuje neveljavne podatke: %2</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Element contains content although it is nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Fixed value constraint not allowed if element is nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Specified type %1 is not validly substitutable with element type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 is not allowed to be abstract.</source>
-        <translation>Kompleksna vrsta %1 ne sme biti abstraktna.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Element %1 contains not allowed attributes.</source>
-        <translation>Element %1 vsebuje nedovoljene lastnosti.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+97"/>
-        <source>Element %1 contains not allowed child element.</source>
-        <translation>Element %1 vsebuje nedovoljen podelement.</translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location line="+93"/>
-        <source>Content of element %1 does not match its type definition: %2.</source>
-        <translation>Vsebina elementa %1 ne ustreza zanj določeni vrsti: %2.</translation>
-    </message>
-    <message>
-        <location line="-85"/>
-        <location line="+92"/>
-        <location line="+41"/>
-        <source>Content of element %1 does not match defined value constraint.</source>
-        <translation>Vsebina elementa %1 ne ustreza določeni omejitvi vrednosti.</translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <source>Element %1 contains not allowed child content.</source>
-        <translation>Element %1 vsebuje nedovoljeno vsebino v podelementih.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Element %1 contains not allowed text content.</source>
-        <translation>Element %1 vsebuje nedovoljeno besedilno vsebino.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is missing required attribute %2.</source>
-        <translation>Elementu %1 manjka obvezna lastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Attribute %1 does not match the attribute wildcard.</source>
-        <translation>Lastnost %1 ne ustreza vzorcu za lastnost.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Declaration for attribute %1 does not exist.</source>
-        <translation>Deklaracija lastnosti %1 ne obstaja.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Element %1 contains two attributes of type %2.</source>
-        <translation>Element %1 vsebuje dve lastnosti vrste %2.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 contains invalid content.</source>
-        <translation>Lastnost %1 vsebuje neveljavno vsebino.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 contains unknown attribute %2.</source>
-        <translation>Element %1 vsebuje neznano lastnost %2.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match its type definition: %2.</source>
-        <translation>Vsebina lastnosti %1 ne ustreza zanjo določeni vrsti: %2.</translation>
-    </message>
-    <message>
-        <location line="-38"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match defined value constraint.</source>
-        <translation>Vsebina lastnosti %1 ne ustreza zanjo določeni omejitvi vrednosti.</translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Non-unique value found for constraint %1.</source>
-        <translation>Za omejitev %1 je bila najdena ne-edinstvena vrednost.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Key constraint %1 contains absent fields.</source>
-        <translation>Omejitev ključa %1 vsebuje manjkajoča polja.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Key constraint %1 contains references nillable element %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No referenced value found for key reference %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>More than one value found for field %1.</source>
-        <translation>Za polje %1 je bila najdena več kot ena vrednost.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Field %1 has no simple type.</source>
-        <translation>Polje %1 nima preproste vrste.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>ID value &apos;%1&apos; is not unique.</source>
-        <translation>Vrednost ID »%1« ni edinstvena.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
-        <translation>Lastnost »%1« vsebuje neveljavno vsebino QName: %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+64"/>
-        <source>No operand in an integer division, %1, can be %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The first operand in an integer division, %1, cannot be infinity (%2).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The second operand in a division, %1, cannot be zero (%2).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+216"/>
-        <source>An %1-attribute with value %2 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>An %1-attribute must have a valid %2 as value, which %3 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
-        <source>Circularity detected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+167"/>
-        <source>No comparisons can be done involving the type %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Operator %1 is not available between atomic values of type %2 and %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
-        <source>No casting is possible with %1 as the target type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>It is not possible to cast from %1 to %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Casting to %1 is not possible because it is an abstract type, and can therefore never be instantiated.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>It&apos;s not possible to cast the value %1 of type %2 to %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Failure when casting from %1 to %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
-        <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Attribute %1 cannot appear on the element %2. Only %3 is allowed, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, %4, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>XSL-T attributes on XSL-T elements must be in the null namespace, not in the XSL-T namespace which %1 is.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The attribute %1 must appear on element %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The element with local name %1 does not exist in XSL-T.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcomparingaggregator.cpp" line="+197"/>
-        <source>The first argument to %1 cannot be of type %2.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12648,7 +10038,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1325"/>
         <source>Edit contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12658,7 +10048,7 @@ to
         <translation type="unfinished">F2</translation>
     </message>
     <message>
-        <location line="+775"/>
+        <location line="+771"/>
         <source>Insert widget &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13679,7 +11069,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PluginDialog</name>
     <message>
-        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+68"/>
         <source>Components</source>
         <translation type="unfinished"></translation>
     </message>

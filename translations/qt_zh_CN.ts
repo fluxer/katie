@@ -168,7 +168,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
         <source>Close Tab</source>
         <translation>关闭标签页</translation>
     </message>
@@ -925,7 +925,7 @@
 <context>
     <name>FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1758"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,44 +1013,6 @@
         <source>XX Icon Selected off</source>
         <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
-        <source>Services</source>
-        <translation>服务</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide %1</source>
-        <translation>隐藏%1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Others</source>
-        <translation>隐藏其他</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show All</source>
-        <translation>全部显示</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Preferences...</source>
-        <translation>偏好设置…</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit %1</source>
-        <translation>退出 %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>About %1</source>
-        <translation>关于 %1</translation>
     </message>
 </context>
 <context>
@@ -1155,9 +1117,9 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+916"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+652"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>主机未找到</translation>
@@ -1175,8 +1137,8 @@
         <translation>连接超时</translation>
     </message>
     <message>
-        <location line="-550"/>
-        <location line="+822"/>
+        <location line="-538"/>
+        <location line="+810"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>Socket操作不被支持</translation>
@@ -1201,7 +1163,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1253"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1242"/>
         <source>&amp;Step up</source>
         <translation>增加(&amp;S)</translation>
     </message>
@@ -1242,7 +1204,7 @@
         <translation>激活</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>执行“%1”需要Qt %2，只找到了Qt %3。</translation>
     </message>
@@ -1252,7 +1214,7 @@
         <translation>不兼容的Qt错误</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2086"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1284,7 +1246,7 @@
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1373"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
         <source>Hu&amp;e:</source>
         <translation>色调(&amp;E)：</translation>
     </message>
@@ -1324,7 +1286,7 @@
         <translation>选择颜色</translation>
     </message>
     <message>
-        <location line="+181"/>
+        <location line="+131"/>
         <source>&amp;Basic colors</source>
         <translation>基本颜色(&amp;B)</translation>
     </message>
@@ -1371,7 +1333,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>Displays this help.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1491,7 +1453,7 @@
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2267"/>
         <source>AM</source>
         <translation>AM</translation>
     </message>
@@ -2746,7 +2708,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+743"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2840,14 +2802,9 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+607"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
         <source>What&apos;s This?</source>
         <translation>这是什么？</translation>
-    </message>
-    <message>
-        <location line="-127"/>
-        <source>Done</source>
-        <translation>完成</translation>
     </message>
 </context>
 <context>
@@ -2986,19 +2943,13 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>大小</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>类型</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>类型</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>Date Modified</source>
         <translation>日期被修改</translation>
     </message>
@@ -3037,7 +2988,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+193"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+164"/>
         <source>Debug Message:</source>
         <translation>调试消息：</translation>
     </message>
@@ -3052,7 +3003,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>致命错误：</translation>
     </message>
     <message>
-        <location line="+195"/>
+        <location line="+192"/>
         <source>&amp;Show this message again</source>
         <translation>再次显示这个消息(&amp;S)</translation>
     </message>
@@ -3109,8 +3060,8 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+576"/>
-        <location line="+540"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+546"/>
+        <location line="+515"/>
         <source>All Files (*)</source>
         <translation>所有文件 (*)</translation>
     </message>
@@ -3122,23 +3073,23 @@ Container pages should only be added by specifying them in XML returned by the d
     <message>
         <location line="-3"/>
         <location line="+55"/>
-        <location line="+1551"/>
+        <location line="+1480"/>
         <source>&amp;Open</source>
         <translation>打开(&amp;O)</translation>
     </message>
     <message>
-        <location line="-1606"/>
+        <location line="-1535"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location line="-786"/>
+        <location line="-761"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location line="+1576"/>
+        <location line="+1486"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1已经存在。
@@ -3159,7 +3110,7 @@ Please verify the correct file name was given.</source>
         <translation>我的计算机</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1565"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1475"/>
         <source>&amp;Rename</source>
         <translation>重命名(&amp;R)</translation>
     </message>
@@ -3175,13 +3126,13 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+699"/>
+        <location line="+674"/>
         <source>Directory:</source>
         <translation>目录：</translation>
     </message>
     <message>
-        <location line="+804"/>
-        <location line="+866"/>
+        <location line="+739"/>
+        <location line="+860"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -3212,12 +3163,12 @@ Do you want to delete it anyway?</source>
         <translation>最近的地方</translation>
     </message>
     <message>
-        <location line="-2613"/>
+        <location line="-2517"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+483"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
         <source>Drive</source>
         <translation>驱动器</translation>
     </message>
@@ -3228,31 +3179,19 @@ Do you want to delete it anyway?</source>
         <translation>文件</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>File Folder</source>
-        <comment>Match Windows Explorer</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Folder</source>
         <comment>All other platforms</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Alias</source>
-        <comment>Mac OS X Finder</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Unknown</source>
         <translation>未知的</translation>
     </message>
@@ -3267,41 +3206,39 @@ Do you want to delete it anyway?</source>
         <translation>显示 </translation>
     </message>
     <message>
-        <location line="+2031"/>
+        <location line="+1935"/>
         <source>New Folder</source>
         <translation>新建文件夹</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-1928"/>
         <source>&amp;New Folder</source>
         <translation>新建文件夹(&amp;N)</translation>
     </message>
     <message>
-        <location line="+707"/>
+        <location line="+682"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>选择(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
         <source>Remove</source>
         <translation>移除</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-743"/>
-        <location line="+703"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-718"/>
+        <location line="+678"/>
         <source>File &amp;name:</source>
         <translation>文件名称(&amp;N)：</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Look in:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Back</source>
         <translation type="unfinished">后退</translation>
     </message>
@@ -3312,7 +3249,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Forward</source>
         <translation type="unfinished">前进</translation>
     </message>
@@ -3323,7 +3259,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Parent Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3334,7 +3269,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Create New Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3345,7 +3279,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>List View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3356,7 +3289,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Detail View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3367,7 +3299,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Files of type:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3375,8 +3306,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+761"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
@@ -3409,7 +3340,7 @@ Do you want to delete it anyway?</source>
         <translation>%1字节</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+70"/>
         <source>Invalid filename</source>
         <translation>无效文件名</translation>
     </message>
@@ -3446,12 +3377,7 @@ Do you want to delete it anyway?</source>
         <translation>修改时间</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
-        <source>My Computer</source>
-        <translation>我的计算机</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
         <source>Computer</source>
         <translation>计算机</translation>
     </message>
@@ -3459,56 +3385,56 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
-        <location line="+1205"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
+        <location line="+1140"/>
         <source>Normal</source>
         <translation>普通</translation>
     </message>
     <message>
-        <location line="-1202"/>
+        <location line="-1137"/>
         <location line="+12"/>
-        <location line="+1178"/>
+        <location line="+1113"/>
         <source>Bold</source>
         <translation>粗体</translation>
     </message>
     <message>
-        <location line="-1187"/>
-        <location line="+1189"/>
+        <location line="-1122"/>
+        <location line="+1124"/>
         <source>Demi Bold</source>
         <translation>半粗体</translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1121"/>
         <location line="+18"/>
-        <location line="+1164"/>
+        <location line="+1099"/>
         <source>Black</source>
         <translation>黑体</translation>
     </message>
     <message>
-        <location line="-1174"/>
+        <location line="-1109"/>
         <source>Demi</source>
         <translation>半体</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1174"/>
+        <location line="+1109"/>
         <source>Light</source>
         <translation>轻体</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1027"/>
+        <location line="-959"/>
+        <location line="+962"/>
         <source>Italic</source>
         <translation>意大利体</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1026"/>
+        <location line="-959"/>
+        <location line="+961"/>
         <source>Oblique</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+708"/>
         <source>Any</source>
         <translation>任意</translation>
     </message>
@@ -3681,7 +3607,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+746"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+730"/>
         <source>&amp;Font</source>
         <translation>字体(&amp;F)</translation>
     </message>
@@ -3721,7 +3647,7 @@ Do you want to delete it anyway?</source>
         <translation>书写系统(&amp;I)</translation>
     </message>
     <message>
-        <location line="-575"/>
+        <location line="-564"/>
         <source>Select Font</source>
         <translation>选择字体</translation>
     </message>
@@ -4050,8 +3976,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>权限被拒绝</translation>
     </message>
@@ -4074,7 +4000,7 @@ Do you want to delete it anyway?</source>
         <translation>设备上没有空间了</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
         <source>Unknown error</source>
         <translation>未知的错误</translation>
     </message>
@@ -4082,7 +4008,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QInputContext</name>
     <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+242"/>
+        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
         <source>XIM</source>
         <translation>XIM</translation>
     </message>
@@ -4090,16 +4016,6 @@ Do you want to delete it anyway?</source>
         <location line="+23"/>
         <source>XIM input method</source>
         <translation>XIM输入法</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Windows input method</source>
-        <translation>Windows输入法</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Mac OS X input method</source>
-        <translation>Mac OS X输入法</translation>
     </message>
 </context>
 <context>
@@ -4191,7 +4107,7 @@ Do you want to delete it anyway?</source>
         <translation>“%1“中的插件验证数据不匹配</translation>
     </message>
     <message>
-        <location line="+407"/>
+        <location line="+322"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>插件“%1”使用了不兼容的Qt库。(%2.%3.%4) [%5]</translation>
     </message>
@@ -4201,8 +4117,8 @@ Do you want to delete it anyway?</source>
         <translation>未知的错误</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+127"/>
+        <location line="-444"/>
+        <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>共享库没有被找到。</translation>
@@ -4603,7 +4519,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
         <source>Corner Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4611,18 +4527,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1198"/>
-        <source>Help</source>
-        <translation>帮助</translation>
-    </message>
-    <message>
-        <location line="-818"/>
-        <location line="+817"/>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
-        <location line="+481"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1480"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4637,7 +4542,7 @@ Do you want to delete it anyway?</source>
         <translation>关于Qt</translation>
     </message>
     <message>
-        <location line="-1580"/>
+        <location line="-1390"/>
         <source>Show Details...</source>
         <translation>显示细节……</translation>
     </message>
@@ -4812,7 +4717,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
         <source>Invalid URI: %1</source>
         <translation type="unfinished">无效的 URI：%1</translation>
     </message>
@@ -4838,14 +4743,14 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
         <source>Request for opening non-local file %1</source>
         <translation>正在打开非本地文件 %1 的请求</translation>
     </message>
     <message>
-        <location line="+45"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+36"/>
+        <location line="+44"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+35"/>
         <source>Error opening %1: %2</source>
         <translation>打开 %1 错误：%2</translation>
     </message>
@@ -5549,12 +5454,12 @@ Please choose a different file name.</source>
         <translation>页面设置</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+81"/>
         <source>Print Preview</source>
         <translation>打印预览</translation>
     </message>
@@ -5634,12 +5539,7 @@ Please choose a different file name.</source>
         <translation>打印设置</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>关闭</translation>
-    </message>
-    <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Export to PDF</source>
         <translation>导出为PDF</translation>
     </message>
@@ -5821,7 +5721,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
         <source>Could not open input redirection for reading</source>
         <translation>无法打开用于读取的输入重定向</translation>
     </message>
@@ -5831,12 +5731,12 @@ Please choose a different file name.</source>
         <translation>无法打开用于写入的输出重定向</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+220"/>
         <source>Resource error (fork failure): %1</source>
         <translation>资源错误(fork失败)：%1</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+249"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -5844,24 +5744,23 @@ Please choose a different file name.</source>
         <translation>进程处理超时</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+883"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>从进程中读取时发生错误</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location line="+844"/>
         <source>Error writing to process</source>
         <translation>向进程写入时发生错误</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="+63"/>
         <source>Process crashed</source>
         <translation>进程已崩溃</translation>
     </message>
     <message>
-        <location line="+977"/>
+        <location line="+909"/>
         <source>No program defined</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6362,7 +6261,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+408"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+402"/>
         <source>Scroll here</source>
         <translation>滚动到这里</translation>
     </message>
@@ -6447,7 +6346,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+262"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1：无法设置锁定的键</translation>
     </message>
@@ -6457,8 +6356,8 @@ Please choose a different file name.</source>
         <translation>%1：创建的大小小于 0</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+176"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+174"/>
         <source>%1: unable to lock</source>
         <translation>%1：无法锁定</translation>
     </message>
@@ -6538,7 +6437,7 @@ Please choose a different file name.</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+396"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+309"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>空格</translation>
@@ -7604,41 +7503,41 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+601"/>
-        <location line="+135"/>
+        <location line="+477"/>
+        <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+138"/>
+        <location line="-86"/>
+        <location line="+90"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-137"/>
-        <location line="+135"/>
+        <location line="-89"/>
+        <location line="+87"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+130"/>
+        <location line="-86"/>
+        <location line="+82"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-11"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+31"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-945"/>
+        <location line="-772"/>
         <source>Home Page</source>
         <translation>主页</translation>
     </message>
@@ -7760,7 +7659,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
         <source>Unable to write data: %1</source>
         <translation>不能写入数据：%1</translation>
     </message>
@@ -7786,7 +7685,7 @@ Please choose a different file name.</source>
         <translation>SSL握手错误：%1</translation>
     </message>
     <message>
-        <location line="-798"/>
+        <location line="-697"/>
         <source>Error creating SSL context (%1)</source>
         <translation>创建SSL上下文错误（%1）</translation>
     </message>
@@ -8011,7 +7910,7 @@ Please choose a different file name.</source>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8053,7 +7952,7 @@ Please choose a different file name.</source>
     <message>
         <location line="+2"/>
         <source>Home</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Home</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -8467,7 +8366,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
         <source>What&apos;s This?</source>
         <translation>这是什么？</translation>
     </message>
@@ -8475,7 +8374,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5484"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8483,7 +8382,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+598"/>
         <source>Go Back</source>
         <translation>返回</translation>
     </message>
@@ -8493,7 +8392,7 @@ Please choose a different file name.</source>
         <translation>继续</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Commit</source>
         <translation>提交</translation>
     </message>
@@ -8508,12 +8407,12 @@ Please choose a different file name.</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-13"/>
         <source>&lt; &amp;Back</source>
         <translation>&lt; 上一步(&amp;B)</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>&amp;Finish</source>
         <translation>完成(&amp;F)</translation>
     </message>
@@ -8529,11 +8428,6 @@ Please choose a different file name.</source>
     </message>
     <message>
         <location line="-8"/>
-        <source>&amp;Next</source>
-        <translation>下一步(&amp;N)</translation>
-    </message>
-    <message>
-        <location line="+0"/>
         <source>&amp;Next &gt;</source>
         <translation>下一步(&amp;N) &gt;</translation>
     </message>
@@ -8541,7 +8435,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1076"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1034"/>
         <source>&amp;Restore</source>
         <translation>恢复(&amp;R)</translation>
     </message>
@@ -8588,7 +8482,7 @@ Please choose a different file name.</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="-1799"/>
+        <location line="-1757"/>
         <source>Minimize</source>
         <translation>最小化</translation>
     </message>
@@ -8603,7 +8497,7 @@ Please choose a different file name.</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location line="+2015"/>
+        <location line="+1973"/>
         <source>&amp;Unshade</source>
         <translation>展开(&amp;U)</translation>
     </message>
@@ -8724,34 +8618,6 @@ Please choose a different file name.</source>
         <location line="+1"/>
         <source>error in the text declaration of an external entity</source>
         <translation>在一个外部实体的文本声明里有错误</translation>
-    </message>
-</context>
-<context>
-    <name>QXmlPatternistCLI</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
-        <source>Warning in %1, at line %2, column %3: %4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning in %1: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unknown location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error %1 in %2, at line %3, column %4: %5</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Error %1 in %2: %3</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9249,2476 +9115,6 @@ to
     <message>
         <location line="+252"/>
         <source>Select Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtXmlPatterns</name>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+216"/>
-        <source>An %1-attribute with value %2 has already been declared.</source>
-        <translation>带有值 %2 的 %1 属性已经声明过了。</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>An %1-attribute must have a valid %2 as value, which %3 isn&apos;t.</source>
-        <translation>一个 %1 属性必须带有一个有效的 %2 作为值，但 %3 却不是。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
-        <source>Network timeout.</source>
-        <translation>网络超时。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
-        <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
-        <translation>元素 %1 不能被串行化，因为它出现在文档元素之外。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+80"/>
-        <source>Year %1 is invalid because it begins with %2.</source>
-        <translation>%1 年是无效的，因为应该从 %2 开始。</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Day %1 is outside the range %2..%3.</source>
-        <translation>%1 日是在 %2...%3 范围之外的。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Month %1 is outside the range %2..%3.</source>
-        <translation>%1 月是在 %2...%3 范围之外的。</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Overflow: Can&apos;t represent date %1.</source>
-        <translation>溢出：无法呈现数据 %1。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Day %1 is invalid for month %2.</source>
-        <translation>%1 日对于 %2 月是无效的。</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>Time 24:%1:%2.%3 is invalid. Hour is 24, but minutes, seconds, and milliseconds are not all 0; </source>
-        <translation>时间 24:%1:%2.%3 是无效的。小时是 24，但是分钟、秒和毫秒不全为 0； </translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Time %1:%2:%3.%4 is invalid.</source>
-        <translation>时间 %1:%2:%3.%4 是无效的。</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Overflow: Date can&apos;t be represented.</source>
-        <translation>溢出：数据无法被呈现。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="+99"/>
-        <location line="+15"/>
-        <source>At least one component must be present.</source>
-        <translation>至少有一个组件被呈现。</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>At least one time component must appear after the %1-delimiter.</source>
-        <translation>至少一个时间组件必须出现在这个 %1 界限之后。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+64"/>
-        <source>No operand in an integer division, %1, can be %2.</source>
-        <translation>在整数除法中没有操作数，%1，可以是 %2。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The first operand in an integer division, %1, cannot be infinity (%2).</source>
-        <translation>除法中的第一个操作数，%1，不能是无穷(%2)。</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The second operand in a division, %1, cannot be zero (%2).</source>
-        <translation>除法中的第二个操作数，%1，不能是零(%2)。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qanyuri_p.h" line="+132"/>
-        <source>%1 is not a valid value of type %2.</source>
-        <translation>%1 不是类型为 %2 的有效值。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomiccasters_p.h" line="+223"/>
-        <source>When casting to %1 from %2, the source value cannot be %3.</source>
-        <translation>当从 %2 抛出到 %1 时，源值不能是 %3。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+65"/>
-        <source>Integer division (%1) by zero (%2) is undefined.</source>
-        <translation>整数除法(%1)除零(%2)是未定义的。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Division (%1) by zero (%2) is undefined.</source>
-        <translation>除法(%1)除零(%2)是未定义的。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Modulus division (%1) by zero (%2) is undefined.</source>
-        <translation>求模除法(%1)除零(%2)是未定义的。</translation>
-    </message>
-    <message>
-        <location line="+122"/>
-        <location line="+32"/>
-        <source>Dividing a value of type %1 by %2 (not-a-number) is not allowed.</source>
-        <translation>一个类型为 %1 的值除以 %2(不是一个数值)是不允许的。</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Dividing a value of type %1 by %2 or %3 (plus or minus zero) is not allowed.</source>
-        <translation>一个类型为 %1 的值除以 %2 或者 %3(正负零)是不允许的。</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Multiplication of a value of type %1 by %2 or %3 (plus or minus infinity) is not allowed.</source>
-        <translation>一个类型为 %1 的值乘以 %2 或者 %3(正负无穷)是不允许的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicvalue.cpp" line="+79"/>
-        <source>A value of type %1 cannot have an Effective Boolean Value.</source>
-        <translation>一个类型为 %1 的值不能是一个有效的布尔值(Effective Boolean Value)。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qboolean.cpp" line="+78"/>
-        <source>Effective Boolean Value cannot be calculated for a sequence containing two or more atomic values.</source>
-        <translation>有效的布尔值(Effective Boolean Value)不能被用于计算一个包含两个或者更多原子值的序列。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+402"/>
-        <source>Value %1 of type %2 exceeds maximum (%3).</source>
-        <translation>类型为 %2 的值 %1 超过了最大值(%3)。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Value %1 of type %2 is below minimum (%3).</source>
-        <translation>类型为 %2 的值 %1 超过了最小值(%3)。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+91"/>
-        <source>A value of type %1 must contain an even number of digits. The value %2 does not.</source>
-        <translation>类型为 %1 的值必须包含偶数个数字。值 %2 不是这样的。</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>%1 is not valid as a value of type %2.</source>
-        <translation>%1 不是类型为 %2 的有效值。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+207"/>
-        <source>Operator %1 cannot be used on type %2.</source>
-        <translation>操作符 %1 不能被用于类型 %2。</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Operator %1 cannot be used on atomic values of type %2 and %3.</source>
-        <translation>操作符 %1 不能被用于类型为 %2 和 %3 的原子值。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="+66"/>
-        <source>The namespace URI in the name for a computed attribute cannot be %1.</source>
-        <translation>一个被计算的属性的名称中的命名空间 URI 不能是 %1。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The name for a computed attribute cannot have the namespace URI %1 with the local name %2.</source>
-        <translation>一个被计算的属性的名称不能使用带有本地名称 %2 的命名空间 URI %1。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+88"/>
-        <source>Type error in cast, expected %1, received %2.</source>
-        <translation>抛出类型错误，期望的是 %1，收到的是 %2。</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>When casting to %1 or types derived from it, the source value must be of the same type, or it must be a string literal. Type %2 is not allowed.</source>
-        <translation>当抛出到 %1 或者它的派生类时，源类型必须是同一类型，或者它必须是一个字符串类型。类型 %2 是不被允许的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
-        <source>No casting is possible with %1 as the target type.</source>
-        <translation>无法以 %1 为目标类型进行抛出。</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>It is not possible to cast from %1 to %2.</source>
-        <translation>无法从 %1 抛出到 %2。</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Casting to %1 is not possible because it is an abstract type, and can therefore never be instantiated.</source>
-        <translation>无法抛出到 %1，因为它是一个抽象类型，并且因此无法被实例化。</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>It&apos;s not possible to cast the value %1 of type %2 to %3</source>
-        <translation>无法从类型为 %2 的值 %1 抛出到 %3</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Failure when casting from %1 to %2: %3</source>
-        <translation>从 %2 抛出到 %1 失败：%3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+67"/>
-        <source>A comment cannot contain %1</source>
-        <translation>注释不能包含 %1</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>A comment cannot end with a %1.</source>
-        <translation>注释不能以 %1 结尾。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+167"/>
-        <source>No comparisons can be done involving the type %1.</source>
-        <translation>对于类型 %1 不能进行比较。</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Operator %1 is not available between atomic values of type %2 and %3.</source>
-        <translation>在类型 %2 和 %3 的原子值之间，操作符 %1 是不可用的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qdocumentcontentvalidator.cpp" line="+86"/>
-        <source>An attribute node cannot be a child of a document node. Therefore, the attribute %1 is out of place.</source>
-        <translation>一个属性节点不能是一个文档节点的子节点。因此，这个属性 %1 所在位置是不合适的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
-        <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
-        <translation>一个库模块不能被直接评估。它必须从一个主模块中导入。</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No template by name %1 exists.</source>
-        <translation>没有名为 %1 的模板存在。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="+106"/>
-        <source>A value of type %1 cannot be a predicate. A predicate must have either a numeric type or an Effective Boolean Value type.</source>
-        <translation>类型为 %1 的值不能被判断。一个判断必须是数值类型或者一个有效的布尔值(Effective Boolean Value)类型。</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>A positional predicate must evaluate to a single numeric value.</source>
-        <translation>一个定位判断必须评估一个单一数值。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>%1 is not a valid target name in a processing instruction. It must be a %2 value, e.g. %3.</source>
-        <translation>%1 不是处理指令的有效目标名称。它必须是值 %2，例如 %3。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qpath.cpp" line="+109"/>
-        <source>The last step in a path must contain either nodes or atomic values. It cannot be a mixture between the two.</source>
-        <translation>一个路径中的最后一步必须包含节点或者原子值。它不能是两者的一个组合。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qprocessinginstructionconstructor.cpp" line="+84"/>
-        <source>The data of a processing instruction cannot contain the string %1</source>
-        <translation>处理指令的数据不能包含字符串 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor.cpp" line="+82"/>
-        <source>No namespace binding exists for the prefix %1</source>
-        <translation>对于前缀 %1，没有存在绑定的命名空间。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="+156"/>
-        <source>No namespace binding exists for the prefix %1 in %2</source>
-        <translation>对于 %2 中的前缀 %1，没有存在绑定的命名空间。</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+69"/>
-        <source>%1 is an invalid %2</source>
-        <translation>%1 是一个无效的 %2。</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+77"/>
-        <source>%1 takes at most %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 最多可以有 %n 个参数。因此 %2 是无效的。</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+11"/>
-        <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 需要至少 %n 个参数。因此 %2 是无效的。</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+120"/>
-        <source>The first argument to %1 cannot be of type %2. It must be a numeric type, xs:yearMonthDuration or xs:dayTimeDuration.</source>
-        <translation>%1 的第一个参数不能是类型 %2 的。它必须是数字类型的，xs:yearMonthDuration 或者 xs:dayTimeDuration。</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>The first argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>%1 的第一个参数不能是类型 %2 的。它必须是类型 %3、%4 或者 %5 的。</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>The second argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>%1 的第二个参数不能是类型 %2 的。它必须是类型 %3、%4 或者 %5 的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qassemblestringfns.cpp" line="+88"/>
-        <source>%1 is not a valid XML 1.0 character.</source>
-        <translation>%1 不是一个有效的 XML 1.0 字符。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcomparingaggregator.cpp" line="+197"/>
-        <source>The first argument to %1 cannot be of type %2.</source>
-        <translation>%1 的第一个参数不能是类型 %2 的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qdatetimefn.cpp" line="+86"/>
-        <source>If both values have zone offsets, they must have the same zone offset. %1 and %2 are not the same.</source>
-        <translation>如果两个值都有区偏移(zone offset)，它们必须拥有相同的区偏移。%1 和 %2 的区偏移是不同的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qerrorfn.cpp" line="+61"/>
-        <source>%1 was called.</source>
-        <translation>%1 被调用了。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="+94"/>
-        <source>%1 must be followed by %2 or %3, not at the end of the replacement string.</source>
-        <translation>%1 必须被 %2 或者 %3 跟随，不能在替换字符串的末尾。</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>In the replacement string, %1 must be followed by at least one digit when not escaped.</source>
-        <translation>在这个替换字符串中，%1 在没有被转义的时候必须被至少一个数字跟随。</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>In the replacement string, %1 can only be used to escape itself or %2, not %3</source>
-        <translation>在这个替换字符串中，%1 只能被用于转义它本身或者 %2，而不是 %3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+92"/>
-        <source>%1 matches newline characters</source>
-        <translation>%1 匹配了换行符</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>%1 and %2 match the start and end of a line.</source>
-        <translation>%1 和 %2 匹配了一行的头和尾。</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Matches are case insensitive</source>
-        <translation>匹配是大小写不敏感的</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Whitespace characters are removed, except when they appear in character classes</source>
-        <translation>空白字符被移除了，除非当它们出现在字符类中</translation>
-    </message>
-    <message>
-        <location line="+100"/>
-        <source>%1 is an invalid regular expression pattern: %2</source>
-        <translation>%1 是正则表达式中的一个无效模式：%2</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>%1 is an invalid flag for regular expressions. Valid flags are:</source>
-        <translation>%1 是正则表达式中的一个无效标记。有效标记为：</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+17"/>
-        <source>If the first argument is the empty sequence or a zero-length string (no namespace), a prefix cannot be specified. Prefix %1 was specified.</source>
-        <translation>如果第一个参数是空序列或者零长度字符串(无命名空间)，那么就不能指定前缀。前缀 %1 被指定了。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencefns.cpp" line="+346"/>
-        <source>It will not be possible to retrieve %1.</source>
-        <translation>将不能获取 %1。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcontextnodechecker.cpp" line="+54"/>
-        <source>The root node of the second argument to function %1 must be a document node. %2 is not a document node.</source>
-        <translation>函数 %1 的第二个参数的根节点必须是一个文档节点。%2 不是一个文档节点。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+282"/>
-        <source>The default collection is undefined</source>
-        <translation>默认收集(collection)是未定义的</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>%1 cannot be retrieved</source>
-        <translation>无法获取 %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qstringvaluefns.cpp" line="+252"/>
-        <source>The normalization form %1 is unsupported. The supported forms are %2, %3, %4, and %5, and none, i.e. the empty string (no normalization).</source>
-        <translation>不支持正规化(normalization)表单 %1。被支持的表单是 %2、%3、%4 和 %5，以及无，例如空字符串(无正规化)。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+87"/>
-        <source>A zone offset must be in the range %1..%2 inclusive. %3 is out of range.</source>
-        <translation>区偏移(zone offset)必须在 %1...%2 范围之内。%3 是在范围之外的。</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1 is not a whole number of minutes.</source>
-        <translation>%1 不是分钟的整数。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qcardinalityverifier.cpp" line="+58"/>
-        <source>Required cardinality is %1; got cardinality %2.</source>
-        <translation>所需要的表间关系是 %1；得到的表间关系却是 %2。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qitemverifier.cpp" line="+67"/>
-        <source>The item %1 did not match the required type %2.</source>
-        <translation>项 %1 和所需的类型 %2 不匹配。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+352"/>
-        <location line="+7323"/>
-        <source>%1 is an unknown schema type.</source>
-        <translation>%1 是一个未知的方案类型。</translation>
-    </message>
-    <message>
-        <location line="-7041"/>
-        <source>Only one %1 declaration can occur in the query prolog.</source>
-        <translation>只有一个 %1 的声明可以出现在查询序言中。</translation>
-    </message>
-    <message>
-        <location line="+188"/>
-        <source>The initialization of variable %1 depends on itself</source>
-        <translation>变量 %1 的初始化依赖于它本身</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
-        <source>The variable %1 is unused</source>
-        <translation>变量 %1 没有被使用</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2904"/>
-        <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
-        <translation>不支持版本 %1。被支持的 XQuery 版本是 1.0。</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>The encoding %1 is invalid. It must contain Latin characters only, must not contain whitespace, and must match the regular expression %2.</source>
-        <translation>编码方式 %1 是无效的。它必须只包含拉丁字符，必须不包含空白符号，并且必须和正则表达式 %2 匹配。</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>No function with signature %1 is available</source>
-        <translation>没有签名为 %1 的可用函数。</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <location line="+10"/>
-        <source>A default namespace declaration must occur before function, variable, and option declarations.</source>
-        <translation>默认命名空间声明必须出现在函数、变量和选项声明之前。</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace declarations must occur before function, variable, and option declarations.</source>
-        <translation>命名空间声明必须出现在函数、变量和选项声明之前。</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Module imports must occur before function, variable, and option declarations.</source>
-        <translation>模块导入不能出现在函数、变量和选项声明之前。</translation>
-    </message>
-    <message>
-        <location line="+200"/>
-        <source>It is not possible to redeclare prefix %1.</source>
-        <translation>不能重复声明前缀 %1。</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Prefix %1 is already declared in the prolog.</source>
-        <translation>前缀 %1 在序言中已经声明过了。</translation>
-    </message>
-    <message>
-        <location line="+95"/>
-        <source>The name of an option must have a prefix. There is no default namespace for options.</source>
-        <translation>一个选项的名称必须带有前缀。对于选项没有默认命名空间。</translation>
-    </message>
-    <message>
-        <location line="+171"/>
-        <source>The Schema Import feature is not supported, and therefore %1 declarations cannot occur.</source>
-        <translation>不支持方案导入(Schema Import)特性，并且因此 %1 声明不能出现。</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>The target namespace of a %1 cannot be empty.</source>
-        <translation>%1 的目标命名空间不能为空。</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The module import feature is not supported</source>
-        <translation>不支持模块导入特性</translation>
-    </message>
-    <message>
-        <location line="-403"/>
-        <source>The keyword %1 cannot occur with any other mode name.</source>
-        <translation>任何其他模式名称不能出现关键字%1。</translation>
-    </message>
-    <message>
-        <location line="+551"/>
-        <source>A stylesheet function must have a prefixed name.</source>
-        <translation>样式表函数必须有一个前缀名。</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
-        <translation>命名空间 %1 是保留的；因此用户定义的函数不能使用它。请试试预定义的前缀 %2，它就是用于这种情况的。</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The namespace of a user defined function in a library module must be equivalent to the module namespace. In other words, it should be %1 instead of %2</source>
-        <translation>用户在一个库模块中定义的函数的命名空间必须和这个模块的命名空间一致。也就是说，它应该是 %1，而不是 %2</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>A function already exists with the signature %1.</source>
-        <translation>一个带有签名 %1 的函数已经存在。</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>No external functions are supported. All supported functions can be used directly, without first declaring them as external</source>
-        <translation>不支持外部函数。所有支持的函数必须可以被直接使用，不能把它们声明为外部的</translation>
-    </message>
-    <message>
-        <location line="-4345"/>
-        <source>W3C XML Schema identity constraint selector</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>W3C XML Schema identity constraint field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>A construct was encountered which is disallowed in the current language(%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+119"/>
-        <source>A template with name %1 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+464"/>
-        <source>No variable with name %1 exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3146"/>
-        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+312"/>
-        <source>A variable with name %1 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>No value is available for the external variable with name %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+105"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>When function %1 is used for matching inside a pattern, the argument must be a variable reference or a string literal.</source>
-        <translation>当函数%1被用于样式匹配时，参数必须是变量参考或者字符串。</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a string literal, when used for matching.</source>
-        <translation>在XSL-T样式中，函数%1的第一个参数必须是字符串，以便用于匹配。</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a literal or a variable reference, when used for matching.</source>
-        <translation>在XSL-T样式中，函数%1的第一个参数必须是文字或者变量参考，以便用于匹配。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>In an XSL-T pattern, function %1 cannot have a third argument.</source>
-        <translation>在XSL-T样式中，函数%1不能有第三个参数。</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>In an XSL-T pattern, only function %1 and %2, not %3, can be used for matching.</source>
-        <translation>在XSL-T样式中，只用函数%1和%2可以用于匹配，%3不可以。</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>In an XSL-T pattern, axis %1 cannot be used, only axis %2 or %3 can.</source>
-        <translation>在XSL-T仰视中，不能使用%1轴，只能使用%2轴或者%3轴。</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 is an invalid template mode name.</source>
-        <translation>%1不是一个合法的模板模式名称。</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>The name of a variable bound in a for-expression must be different from the positional variable. Hence, the two variables named %1 collide.</source>
-        <translation>一个在 for 表达式中绑定的变量的名称必须和这个定位变量不同。因此，这两个名称为 %1 的变量冲突。</translation>
-    </message>
-    <message>
-        <location line="+778"/>
-        <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
-        <translation>不支持方案验证特性(Schema Validation Feature)。因此，也许不能使用 %1 表达式。</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
-        <translation>不支持任何编译指示表达式(pragma expression)。因此，必须呈现一个回调表达式(fallback expression)。</translation>
-    </message>
-    <message>
-        <location line="+269"/>
-        <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
-        <translation>每一个模板参数的名称都必须是唯一的；%1是重复的。</translation>
-    </message>
-    <message>
-        <location line="+129"/>
-        <source>The %1-axis is unsupported in XQuery</source>
-        <translation>这个 %1 轴在 XQuery 中是不被支持的。</translation>
-    </message>
-    <message>
-        <location line="+333"/>
-        <source>No function with name %1 is available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+250"/>
-        <source>An attribute with name %1 has already appeared on this element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+614"/>
-        <source>%1 is not a valid name for a processing-instruction.</source>
-        <translation>%1不是一个处理指令的合法名称。</translation>
-    </message>
-    <message>
-        <location line="-7099"/>
-        <source>%1 is not a valid numeric literal.</source>
-        <translation>%1 不是一个有效的数字语义。</translation>
-    </message>
-    <message>
-        <location line="+6337"/>
-        <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
-        <translation>当这个命名空间 URI 被绑定到一个前缀 %1 时，它不能是空字符串。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 is an invalid namespace URI.</source>
-        <translation>%1 是一个无效的命名空间 URI。</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>It is not possible to bind to the prefix %1</source>
-        <translation>无法绑定到这个前缀 %1。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Namespace %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>命名空间 %1 只能和 %2 绑定(并且如果是这种情况，需要提前声明)。</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Prefix %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>前缀 %1 只能和 %2 绑定(并且如果是这种情况，需要提前声明)。</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Two namespace declaration attributes have the same name: %1.</source>
-        <translation>两个命名空间声明属性使用了相同的名称：%1。</translation>
-    </message>
-    <message>
-        <location line="+89"/>
-        <source>The namespace URI must be a constant and cannot use enclosed expressions.</source>
-        <translation>命名空间 URI 必须是一个常量并且不能使用封闭的表达式。</translation>
-    </message>
-    <message>
-        <location line="+77"/>
-        <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
-        <translation>一个直接元素构造器没有很好地形成。%1 后面跟着 %2。</translation>
-    </message>
-    <message>
-        <location line="+458"/>
-        <source>The name %1 does not refer to any schema type.</source>
-        <translation>名称 %1 没有指向任何方案类型。</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 is an complex type. Casting to complex types is not possible. However, casting to atomic types such as %2 works.</source>
-        <translation>%1 是一个复杂类型。无法抛出到复杂类型。因此，抛出到例如 %2 这样的原子类型是可以的。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 is not an atomic type. Casting is only possible to atomic types.</source>
-        <translation>%1 不是原子类型。只能抛出到原子类型。</translation>
-    </message>
-    <message>
-        <location line="+145"/>
-        <location line="+71"/>
-        <source>%1 is not in the in-scope attribute declarations. Note that the schema import feature is not supported.</source>
-        <translation>%1 不是范围内属性声明。注意方案导入特性是不被支持的。</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The name of an extension expression must be in a namespace.</source>
-        <translation>一个扩展表达式的名称必须在一个命名空间中。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+55"/>
-        <source>empty</source>
-        <translation>空白</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or one</source>
-        <translation>零或者一</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>exactly one</source>
-        <translation>确切地一</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>one or more</source>
-        <translation>一或者更多</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or more</source>
-        <translation>零或者更多</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="+63"/>
-        <source>Required type is %1, but %2 was found.</source>
-        <translation>需要的类型是 %1，但是找到的是 %2。</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Promoting %1 to %2 may cause loss of precision.</source>
-        <translation>把 %1 升级为 %2 会导致精度的损失。</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>The focus is undefined.</source>
-        <translation>焦点未定义。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="+86"/>
-        <source>It&apos;s not possible to add attributes after any other kind of node.</source>
-        <translation>不能在任何其它类型节点后添加属性。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>An attribute by name %1 has already been created.</source>
-        <translation>一个名称为 %1 的属性已经被创建。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qxpathhelper_p.h" line="+120"/>
-        <source>Only the Unicode Codepoint Collation is supported(%1). %2 is unsupported.</source>
-        <translation>只支持 Unicode 代码点校验(Unicode Codepoint Collation)(%1)。%2 是不被支持的。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+60"/>
-        <source>Attribute %1 can&apos;t be serialized because it appears at the top level.</source>
-        <translation>属性 %1 不能被串行化，因为它出现在最顶层。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+344"/>
-        <source>%1 is an unsupported encoding.</source>
-        <translation> %1 是不被支持的编码。</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains octets which are disallowed in the requested encoding %2.</source>
-        <translation>%1包含了在请求编码%2中不允许的八进位值。</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
-        <translation>在使用编码%3的%2中出现的代码点%1不是一个有效的XML字符。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qapplytemplate.cpp" line="+119"/>
-        <source>Ambiguous rule match.</source>
-        <translation>含糊规则匹配。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+69"/>
-        <source>In a namespace constructor, the value for a namespace cannot be an empty string.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>The prefix must be a valid %1, which %2 is not.</source>
-        <translation>前缀必须是有效的%1，而%2不是。</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>The prefix %1 cannot be bound.</source>
-        <translation>前缀%1不能被绑定。</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Only the prefix %1 can be bound to %2 and vice versa.</source>
-        <translation>只有前缀%1可以绑定到%2，反之也一样</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
-        <source>Circularity detected</source>
-        <translation>检测到环</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="+145"/>
-        <source>The parameter %1 is required, but no corresponding %2 is supplied.</source>
-        <translation>需要参数%1，但是没有提供对应的%2。</translation>
-    </message>
-    <message>
-        <location line="-71"/>
-        <source>The parameter %1 is passed, but no corresponding %2 exists.</source>
-        <translation>参数%1已传递，但没有相应的%2存在。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qunparsedtextfn.cpp" line="+65"/>
-        <source>The URI cannot have a fragment</source>
-        <translation>URI不能有片段</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+519"/>
-        <source>Element %1 is not allowed at this location.</source>
-        <translation>元素%1不能在这个位置。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Text nodes are not allowed at this location.</source>
-        <translation>文本节点不能在这个位置。</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Parse error: %1</source>
-        <translation>解析错误：%1</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>The value of the XSL-T version attribute must be a value of type %1, which %2 isn&apos;t.</source>
-        <translation>XSL-T版本属性的值必须是%1类型的值，而%2不是。</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Running an XSL-T 1.0 stylesheet with a 2.0 processor.</source>
-        <translation>在XSL-T 2.0处理器中运行一个1.0的样式表。</translation>
-    </message>
-    <message>
-        <location line="+106"/>
-        <source>Unknown XSL-T attribute %1.</source>
-        <translation>未知的XSL-T属性%1。</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 and %2 are mutually exclusive.</source>
-        <translation>属性%1和%2彼此互斥。</translation>
-    </message>
-    <message>
-        <location line="+166"/>
-        <source>In a simplified stylesheet module, attribute %1 must be present.</source>
-        <translation>在一个简化样式表模块中，属性%1必须存在。</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>If element %1 has no attribute %2, it cannot have attribute %3 or %4.</source>
-        <translation>如果元素%1没有属性%2，那么它也不能有属性%3或者%4。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Element %1 must have at least one of the attributes %2 or %3.</source>
-        <translation>元素%1必须至少有属性%2或者%3其中一个。</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>At least one mode must be specified in the %1-attribute on element %2.</source>
-        <translation>在元素%2的%1属性中至少要指定一个模式。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
-        <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
-        <translation>属性%1不能出现在元素%2上。只有标准属性可以出现。</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Attribute %1 cannot appear on the element %2. Only %3 is allowed, and the standard attributes.</source>
-        <translation>属性%1不能出现在元素%2上。只有%3和标准属性是允许的。</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, %4, and the standard attributes.</source>
-        <translation>属性%1不能出现在元素%2上。只有%3、%4和标准属性是允许的。</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, and the standard attributes.</source>
-        <translation>属性%1不能出现在元素%2上。只有%3和标准属性是允许的。</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>XSL-T attributes on XSL-T elements must be in the null namespace, not in the XSL-T namespace which %1 is.</source>
-        <translation>XSL-T元素中的XSL-T属性必须放在空(null)命名空间中，而不是在XSL-T命名空间中，%1却是这个样子。</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The attribute %1 must appear on element %2.</source>
-        <translation>属性%1必须出现在元素%2中。</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The element with local name %1 does not exist in XSL-T.</source>
-        <translation>有本地名称%1的元素在XSL-T中不存在。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+123"/>
-        <source>Element %1 must come last.</source>
-        <translation>元素%1必须最后出现。</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>At least one %1-element must occur before %2.</source>
-        <translation>至少一个元素%1要出现在%2之前。</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Only one %1-element can appear.</source>
-        <translation>只能出现一个元素%1。</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>At least one %1-element must occur inside %2.</source>
-        <translation>至少一个元素%1要出现在%2之内。</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>When attribute %1 is present on %2, a sequence constructor cannot be used.</source>
-        <translation>当属性%1出现在%2中时，不能使用顺序构造。</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 must have either a %2-attribute or a sequence constructor.</source>
-        <translation>元素%1必须有在一个%2属性或者顺序构造。</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <source>When a parameter is required, a default value cannot be supplied through a %1-attribute or a sequence constructor.</source>
-        <translation>当需要参数时，不能通过属性%1或者顺序构造提供默认值。</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Element %1 cannot have children.</source>
-        <translation>元素%1不能有子元素。</translation>
-    </message>
-    <message>
-        <location line="+434"/>
-        <source>Element %1 cannot have a sequence constructor.</source>
-        <translation>元素%1不能有顺序构造。</translation>
-    </message>
-    <message>
-        <location line="+86"/>
-        <location line="+9"/>
-        <source>The attribute %1 cannot appear on %2, when it is a child of %3.</source>
-        <translation>属性%1不能出现在%2中，因为它是%3的子元素。</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>A parameter in a function cannot be declared to be a tunnel.</source>
-        <translation>函数内的参数不能被声明为通道(tunnel)。</translation>
-    </message>
-    <message>
-        <location line="+149"/>
-        <source>This processor is not Schema-aware and therefore %1 cannot be used.</source>
-        <translation>这个处理器不能感知Schema，因此%1不能被使用。</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>Top level stylesheet elements must be in a non-null namespace, which %1 isn&apos;t.</source>
-        <translation>顶级样式表元素必须是在非空命名空间中的，而%1不是。</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The value for attribute %1 on element %2 must either be %3 or %4, not %5.</source>
-        <translation>元素%2中属性%1的值必须是%3或者%4，而不是%5。</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Attribute %1 cannot have the value %2.</source>
-        <translation>属性%1的值不能是%2。</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>The attribute %1 can only appear on the first %2 element.</source>
-        <translation>属性%1只能出现在前%2个元素中。</translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>At least one %1 element must appear as child of %2.</source>
-        <translation>%2必须至少又一个子元素%1。</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
-        <source>Empty particle cannot be derived from non-empty particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Derived particle is missing element %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived element %1 has weaker value constraint than base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Element %1 is missing in derived particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Derived particle allows content that is not allowed in the base particle.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
-        <location line="+63"/>
-        <source>Base attribute %1 is required but derived attribute is not.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived attribute %1 does not exist in the base definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Base attribute %1 is required but missing in derived definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived wildcard is not a subset of the base wildcard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 from base type is missing in derived type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Type of derived attribute %1 differs from type of base attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base definition contains an %1 element that is missing in the derived definition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
-        <source>%1 has inheritance loop in its base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+24"/>
-        <source>Circular inheritance of base type %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Circular inheritance of union %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Base type of simple type %1 cannot be complex type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Simple type %1 cannot have direct base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location line="+9"/>
-        <source>Simple type %1 is not allowed to have base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Simple type %1 can only have simple atomic type as base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <location line="+484"/>
-        <source>Variety of item type of %1 must be either atomic or union.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-474"/>
-        <location line="+483"/>
-        <source>Variety of member types of %1 must be atomic.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-470"/>
-        <location line="+451"/>
-        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Simple type %1 is only allowed to have %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Base type of simple type %1 must have variety of type list.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Item type of base type does not match item type of %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+93"/>
-        <source>Simple type %1 contains not allowed facet type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+413"/>
-        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-404"/>
-        <source>%1 is not allowed to have any facets.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base type %1 of simple type %2 must have variety of union.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Complex type %1 has duplicated element %2 in its content model.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 has non-deterministic content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Complex type %1 must have simple content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Complex type %1 must have the same simple type as its base class %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Complex type %1 cannot be derived from base type %2%3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Item type of simple type %1 cannot be a complex type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Member type of simple type %1 cannot be a complex type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 is not allowed to have a member type with the same name as itself.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <location line="+29"/>
-        <location line="+34"/>
-        <source>%1 facet collides with %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1 facet must have the same value as %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+125"/>
-        <location line="+55"/>
-        <location line="+12"/>
-        <location line="+91"/>
-        <location line="+58"/>
-        <location line="+34"/>
-        <location line="+35"/>
-        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-389"/>
-        <source>%1 facet contains invalid regular expression</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unknown notation %1 used in %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>%1 facet contains invalid value %2: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <location line="+55"/>
-        <location line="+230"/>
-        <source>%1 facet must be less than or equal to %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-257"/>
-        <location line="+134"/>
-        <location line="+82"/>
-        <source>%1 facet must be less than %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-201"/>
-        <location line="+79"/>
-        <source>%1 facet and %2 facet cannot appear together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <location line="+12"/>
-        <location line="+113"/>
-        <source>%1 facet must be greater than %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-86"/>
-        <location line="+58"/>
-        <source>%1 facet must be less than %2 facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+58"/>
-        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>Simple type contains not allowed facet %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Only %1 and %2 facets are allowed when derived by union.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+16"/>
-        <source>%1 contains %2 facet with invalid data: %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Attribute group %1 contains attribute %2 twice.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 contains attribute %2 twice.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Value constraint of element %1 is not of elements type: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 has value constraint but has type derived from %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <location line="+15"/>
-        <source>Element %1 exists twice with different types.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Particle contains non-deterministic wildcards.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
-        <source>Element %1 is missing child element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>There is one IDREF value with no corresponding ID: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Loaded schema file is invalid.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains invalid data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>No schema defined for validation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>No definition for element %1 available.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+49"/>
-        <location line="+142"/>
-        <source>Specified type %1 is not known to the schema.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-176"/>
-        <source>Element %1 is not defined in this scope.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Declaration for element %1 does not exist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Element %1 contains invalid content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>Element %1 is declared as abstract.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 contains invalid data: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Element contains content although it is nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Fixed value constraint not allowed if element is nillable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Specified type %1 is not validly substitutable with element type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 is not allowed to be abstract.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Element %1 contains not allowed attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+97"/>
-        <source>Element %1 contains not allowed child element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location line="+93"/>
-        <source>Content of element %1 does not match its type definition: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-85"/>
-        <location line="+92"/>
-        <location line="+41"/>
-        <source>Content of element %1 does not match defined value constraint.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <source>Element %1 contains not allowed child content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Element %1 contains not allowed text content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is missing required attribute %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Attribute %1 does not match the attribute wildcard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Declaration for attribute %1 does not exist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Element %1 contains two attributes of type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 contains invalid content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 contains unknown attribute %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match its type definition: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-38"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match defined value constraint.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Non-unique value found for constraint %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Key constraint %1 contains absent fields.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Key constraint %1 contains references nillable element %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No referenced value found for key reference %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>More than one value found for field %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Field %1 has no simple type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>ID value &apos;%1&apos; is not unique.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
-        <source>%1 references unknown %2 or %3 element %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Base type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Item type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Member type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <location line="+415"/>
-        <location line="+30"/>
-        <source>Type %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-423"/>
-        <source>Base type %1 of complex type cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 cannot have complex base type that has a %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+286"/>
-        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Type of %1 element must be a simple type, %2 is not.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>Substitution group %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Substitution group %1 has circular definition.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+120"/>
-        <location line="+7"/>
-        <source>Duplicated element names %1 in %2 element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location line="+52"/>
-        <location line="+71"/>
-        <location line="+28"/>
-        <source>Reference %1 of %2 element cannot be resolved.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-138"/>
-        <source>Circular group reference for %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 element is not allowed in this scope</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 element cannot have %2 attribute with value other than %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Attribute group %1 has circular reference.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 has attribute wildcard but its base type %2 has not.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace prefix of qualified name %1 is not defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <location line="+18"/>
-        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
-        <location line="+7"/>
-        <location line="+21"/>
-        <source>%1 is not valid according to %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+167"/>
-        <source>String content does not match the length facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the minLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the maxLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Signed integer content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Signed integer content does not match in the totalDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unsigned integer content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unsigned integer content does not match in the totalDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Double content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Double content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Double content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Decimal content does not match in the fractionDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Decimal content does not match in the totalDigits facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Date time content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Duration content does not match the maxInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the maxExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minInclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minExclusive facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Boolean content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Binary content does not match the length facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the minLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the maxLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Binary content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Invalid QName content: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>QName content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>QName content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Notation content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>List content does not match length facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match minLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match maxLength facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>List content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Union content is not listed in the enumeration facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Union content does not match pattern facet.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Data of type %1 are not allowed to be empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
-        <source>Can not process unknown element %1, expected elements are: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Child element is missing in that scope, possible child elements are: %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+143"/>
-        <source>Document is not a XML schema.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+11"/>
-        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <location line="+158"/>
-        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-97"/>
-        <location line="+119"/>
-        <location line="+89"/>
-        <source>%1 element has neither %2 attribute nor %3 child element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+835"/>
-        <location line="+1474"/>
-        <location line="+232"/>
-        <location line="+7"/>
-        <location line="+260"/>
-        <location line="+17"/>
-        <location line="+258"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <source>%1 element with %2 child element must not have a %3 attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-1325"/>
-        <source>%1 attribute of %2 element must be %3 or %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>%1 attribute of %2 element must have a value of %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+34"/>
-        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <location line="+129"/>
-        <location line="+9"/>
-        <location line="+7"/>
-        <location line="+7"/>
-        <location line="+327"/>
-        <location line="+203"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+77"/>
-        <source>%1 element must not have %2 and %3 attribute together.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-768"/>
-        <location line="+222"/>
-        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-215"/>
-        <location line="+222"/>
-        <source>%1 attribute of %2 element must not be %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-64"/>
-        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+353"/>
-        <source>%1 element must have either %2 or %3 attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+554"/>
-        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>%1 element requires either %2 or %3 attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Text or entity references not allowed inside %1 element</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <location line="+112"/>
-        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 element is not allowed in this context.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+53"/>
-        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Prefix of qualified name %1 is not defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <location line="+61"/>
-        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>Component with ID %1 has been defined previously.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Element %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Type %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute group %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Element group %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notation %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Identity constraint %1 already defined.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Duplicated facets in simple type %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12621,7 +10017,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1325"/>
         <source>Edit contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12631,7 +10027,7 @@ to
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+775"/>
+        <location line="+771"/>
         <source>Insert widget &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13646,7 +11042,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PluginDialog</name>
     <message>
-        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+68"/>
         <source>Components</source>
         <translation type="unfinished"></translation>
     </message>

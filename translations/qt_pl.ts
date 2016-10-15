@@ -168,7 +168,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
         <source>Close Tab</source>
         <translation>Zamknij kartę</translation>
     </message>
@@ -933,7 +933,7 @@
 <context>
     <name>FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1758"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1021,44 +1021,6 @@
         <source>XX Icon Selected off</source>
         <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
-        <source>Services</source>
-        <translation>Usługi</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide %1</source>
-        <translation>Ukryj %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Others</source>
-        <translation>Ukryj pozostałe</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show All</source>
-        <translation>Pokaż wszystko</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Preferences...</source>
-        <translation>Preferencje…</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit %1</source>
-        <translation>Zakończ %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>About %1</source>
-        <translation>%1…</translation>
     </message>
 </context>
 <context>
@@ -1163,9 +1125,9 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+963"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+951"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+678"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+682"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+678"/>
         <source>Connection refused</source>
         <translation>Połączenie odrzucone</translation>
     </message>
@@ -1183,8 +1145,8 @@
         <translation>Przekroczony czas połączenia</translation>
     </message>
     <message>
-        <location line="-550"/>
-        <location line="+822"/>
+        <location line="-538"/>
+        <location line="+810"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>Operacja na gnieździe nie jest obsługiwana</translation>
@@ -1209,7 +1171,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1255"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1244"/>
         <source>Step &amp;down</source>
         <translation>Krok w &amp;dół</translation>
     </message>
@@ -1255,7 +1217,7 @@
         <translation>Uaktywnia główne okno programu</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Program &apos;%1&apos; wymaga do uruchomienia Qt %2, znaleziono Qt %3.</translation>
     </message>
@@ -1265,7 +1227,7 @@
         <translation>Niekompatybilność biblioteki Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2086"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1292,12 +1254,12 @@
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1663"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1507"/>
         <source>&amp;Add to Custom Colors</source>
         <translation>&amp;Dodaj do własnych kolorów</translation>
     </message>
     <message>
-        <location line="-284"/>
+        <location line="-234"/>
         <source>A&amp;lpha channel:</source>
         <translation>Kanał &amp;alfa:</translation>
     </message>
@@ -1307,22 +1269,22 @@
         <translation>Wybierz kolor</translation>
     </message>
     <message>
-        <location line="+181"/>
+        <location line="+131"/>
         <source>&amp;Basic colors</source>
         <translation>&amp;Kolory podstawowe</translation>
     </message>
     <message>
-        <location line="-283"/>
+        <location line="-233"/>
         <source>Bl&amp;ue:</source>
         <translation>Błęki&amp;t:</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+234"/>
         <source>&amp;Custom colors</source>
         <translation>Wła&amp;sne kolory</translation>
     </message>
     <message>
-        <location line="-285"/>
+        <location line="-235"/>
         <source>&amp;Green:</source>
         <translation>&amp;Zieleń:</translation>
     </message>
@@ -1379,7 +1341,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>Displays this help.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1499,7 +1461,7 @@
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2267"/>
         <source>am</source>
         <translation>am</translation>
     </message>
@@ -2754,7 +2716,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+743"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2848,14 +2810,9 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+607"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
         <source>What&apos;s This?</source>
         <translation>Co to jest?</translation>
-    </message>
-    <message>
-        <location line="-127"/>
-        <source>Done</source>
-        <translation>Zrobione</translation>
     </message>
 </context>
 <context>
@@ -2984,18 +2941,12 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDirModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+450"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+444"/>
         <source>Date Modified</source>
         <translation>Data modyfikacji</translation>
     </message>
     <message>
-        <location line="-8"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>Typ</translation>
-    </message>
-    <message>
-        <location line="-4"/>
+        <location line="-6"/>
         <source>Name</source>
         <translation>Nazwa</translation>
     </message>
@@ -3005,7 +2956,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Rozmiar</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>Rodzaj</translation>
@@ -3045,7 +2996,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+193"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+164"/>
         <source>Debug Message:</source>
         <translation>Komunikat dla programisty:</translation>
     </message>
@@ -3055,7 +3006,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>Błąd krytyczny:</translation>
     </message>
     <message>
-        <location line="+196"/>
+        <location line="+193"/>
         <source>&amp;OK</source>
         <translation>&amp;OK</translation>
     </message>
@@ -3065,7 +3016,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>&amp;Pokaż ten komunikat ponownie</translation>
     </message>
     <message>
-        <location line="-198"/>
+        <location line="-195"/>
         <source>Warning:</source>
         <translation>Ostrzeżenie:</translation>
     </message>
@@ -3117,22 +3068,22 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+2135"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+2015"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 już istnieje.
 Czy chcesz zamienić?</translation>
     </message>
     <message>
-        <location line="+610"/>
+        <location line="+604"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; jest zabezpieczony przed zapisem.
 Czy na pewno chcesz go skasować?</translation>
     </message>
     <message>
-        <location line="-644"/>
-        <location line="+866"/>
+        <location line="-638"/>
+        <location line="+860"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -3141,7 +3092,7 @@ Katalog nie znaleziony.
 Sprawdź podaną nazwę katalogu.</translation>
     </message>
     <message>
-        <location line="-812"/>
+        <location line="-806"/>
         <source>%1
 File not found.
 Please verify the correct file name was given.</source>
@@ -3150,7 +3101,7 @@ Plik nie znaleziony.
 Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
-        <location line="+595"/>
+        <location line="+589"/>
         <source>Are sure you want to delete &apos;%1&apos;?</source>
         <translation>Czy na pewno chcesz skasować &apos;%1&apos;?</translation>
     </message>
@@ -3165,23 +3116,23 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Nie można skasować katalogu.</translation>
     </message>
     <message>
-        <location line="-2174"/>
+        <location line="-2078"/>
         <source>&amp;Delete</source>
         <translation>&amp;Skasuj</translation>
     </message>
     <message>
-        <location line="+702"/>
+        <location line="+677"/>
         <source>Directories</source>
         <translation>Katalogi</translation>
     </message>
     <message>
-        <location line="-695"/>
-        <location line="+699"/>
+        <location line="-670"/>
+        <location line="+674"/>
         <source>Directory:</source>
         <translation>Katalog:</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+483"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
         <source>Drive</source>
         <translation>Urządzenie</translation>
     </message>
@@ -3192,59 +3143,47 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Plik</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>File Folder</source>
-        <comment>Match Windows Explorer</comment>
-        <translation>Katalog</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Folder</source>
         <comment>All other platforms</comment>
         <translation>Katalog</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Alias</source>
-        <comment>Mac OS X Finder</comment>
-        <translation>Alias</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
         <translation>Skrót</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+408"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+405"/>
         <source>My Computer</source>
         <translation>Mój komputer</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-7"/>
         <location line="+55"/>
-        <location line="+1551"/>
+        <location line="+1480"/>
         <source>&amp;Open</source>
         <translation>&amp;Otwórz</translation>
     </message>
     <message>
-        <location line="-2306"/>
+        <location line="-2210"/>
         <source>&amp;Rename</source>
         <translation>&amp;Zmień nazwę</translation>
     </message>
     <message>
-        <location line="+700"/>
+        <location line="+675"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Zachowaj</translation>
     </message>
     <message>
-        <location line="-753"/>
+        <location line="-728"/>
         <source>Show &amp;hidden files</source>
         <translation>Pokaż &amp;ukryte pliki</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+7"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+4"/>
         <source>Unknown</source>
         <translation>Nieznany</translation>
     </message>
@@ -3269,47 +3208,45 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Pokaż </translation>
     </message>
     <message>
-        <location line="+2031"/>
+        <location line="+1935"/>
         <source>New Folder</source>
         <translation>Nowy katalog</translation>
     </message>
     <message>
-        <location line="-2024"/>
+        <location line="-1928"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Nowy katalog</translation>
     </message>
     <message>
-        <location line="+707"/>
+        <location line="+682"/>
         <location line="+43"/>
         <source>&amp;Choose</source>
         <translation>&amp;Wybierz</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-767"/>
-        <location line="+540"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-742"/>
+        <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <location line="-516"/>
-        <location line="+703"/>
+        <location line="-491"/>
+        <location line="+678"/>
         <source>File &amp;name:</source>
         <translation>Nazwa &amp;pliku:</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Look in:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Back</source>
         <translation type="unfinished">Back</translation>
     </message>
@@ -3320,7 +3257,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Forward</source>
         <translation type="unfinished">Do przodu</translation>
     </message>
@@ -3331,7 +3267,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Parent Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3342,7 +3277,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Create New Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3353,7 +3287,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>List View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3364,7 +3297,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Detail View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3375,7 +3307,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Files of type:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3383,8 +3314,8 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+761"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
@@ -3412,7 +3343,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>%1 bajtów</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+70"/>
         <source>Invalid filename</source>
         <translation>Niepoprawna nazwa pliku</translation>
     </message>
@@ -3449,12 +3380,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Data modyfikacji</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
-        <source>My Computer</source>
-        <translation>Mój komputer</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
         <source>Computer</source>
         <translation>Komputer</translation>
     </message>
@@ -3467,58 +3393,58 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
-        <location line="+1205"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
+        <location line="+1140"/>
         <source>Normal</source>
         <translation>Normalny</translation>
     </message>
     <message>
-        <location line="-1202"/>
+        <location line="-1137"/>
         <location line="+12"/>
-        <location line="+1178"/>
+        <location line="+1113"/>
         <source>Bold</source>
         <translation>Pogrubiony</translation>
     </message>
     <message>
-        <location line="-1187"/>
-        <location line="+1189"/>
+        <location line="-1122"/>
+        <location line="+1124"/>
         <source>Demi Bold</source>
         <translation>Na wpół pogrubiony</translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1121"/>
         <location line="+18"/>
-        <location line="+1164"/>
+        <location line="+1099"/>
         <source>Black</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Bardzo gruby</translation>
     </message>
     <message>
-        <location line="-1174"/>
+        <location line="-1109"/>
         <source>Demi</source>
         <translation>Na wpół</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1174"/>
+        <location line="+1109"/>
         <source>Light</source>
         <translatorcomment>it&apos;s about font weight</translatorcomment>
         <translation>Cienki</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1027"/>
+        <location line="-959"/>
+        <location line="+962"/>
         <source>Italic</source>
         <translation>Kursywa</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1026"/>
+        <location line="-959"/>
+        <location line="+961"/>
         <source>Oblique</source>
         <translation>Pochyły</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+708"/>
         <source>Any</source>
         <translation>Każdy</translation>
     </message>
@@ -3691,7 +3617,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+751"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+735"/>
         <source>Effects</source>
         <translation>Efekty</translation>
     </message>
@@ -3711,12 +3637,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Przykład</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-563"/>
         <source>Select Font</source>
         <translation>Wybierz czcionkę</translation>
     </message>
     <message>
-        <location line="+568"/>
+        <location line="+557"/>
         <source>&amp;Size</source>
         <translation>&amp;Rozmiar</translation>
     </message>
@@ -4060,8 +3986,8 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2041"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+100"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1640"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+67"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
     </message>
@@ -4084,7 +4010,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Zbyt wiele otwartych plików</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
     </message>
@@ -4092,17 +4018,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QInputContext</name>
     <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+273"/>
-        <source>Mac OS X input method</source>
-        <translation>Metoda wprowadzania Mac OS X</translation>
-    </message>
-    <message>
-        <location line="-4"/>
-        <source>Windows input method</source>
-        <translation>Metoda wprowadzania Windows</translation>
-    </message>
-    <message>
-        <location line="-27"/>
+        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
         <source>XIM</source>
         <translation>XIM</translation>
     </message>
@@ -4201,7 +4117,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Niezgodność podczas weryfikacji danych we wtyczce &quot;%1&quot;</translation>
     </message>
     <message>
-        <location line="+407"/>
+        <location line="+322"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Wtyczka &apos;%1&apos; używa niepoprawnej wersji biblioteki QT. (%2.%3.%4) [%5]</translation>
     </message>
@@ -4211,8 +4127,8 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Nieznany błąd</translation>
     </message>
     <message>
-        <location line="-487"/>
-        <location line="+127"/>
+        <location line="-444"/>
+        <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Biblioteka współdzielona niedostępna.</translation>
@@ -4613,7 +4529,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
         <source>Corner Toolbar</source>
         <translation>Narożny pasek narzędzi</translation>
     </message>
@@ -4621,28 +4537,17 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1713"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1515"/>
         <source>About Qt</source>
         <translation>Informacje o Qt</translation>
     </message>
     <message>
-        <location line="-515"/>
-        <source>Help</source>
-        <translation>Pomoc</translation>
-    </message>
-    <message>
-        <location line="-1065"/>
+        <location line="-1390"/>
         <source>Hide Details...</source>
         <translation>Ukryj szczegóły...</translation>
     </message>
     <message>
-        <location line="+247"/>
-        <location line="+817"/>
-        <source>OK</source>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <location line="+481"/>
+        <location line="+1355"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;Informacje o Qt&lt;/h3&gt;&lt;p&gt; Ten program używa Qt w wersji %1.&lt;/p&gt;</translation>
     </message>
@@ -4652,7 +4557,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1550"/>
+        <location line="-1360"/>
         <source>Show Details...</source>
         <translation>Pokaż szczegóły...</translation>
     </message>
@@ -4822,7 +4727,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
         <source>Invalid URI: %1</source>
         <translation>Niepoprawny URI: %1</translation>
     </message>
@@ -4848,14 +4753,14 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
         <source>Request for opening non-local file %1</source>
         <translation>Żądanie otwarcia zdalnego pliku %1</translation>
     </message>
     <message>
-        <location line="+45"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+36"/>
+        <location line="+44"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+35"/>
         <source>Error opening %1: %2</source>
         <translation>Błąd otwierania %1: %2</translation>
     </message>
@@ -5553,12 +5458,12 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QPrintPreviewDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+81"/>
         <source>Print Preview</source>
         <translation>Podgląd wydruku</translation>
     </message>
@@ -5638,12 +5543,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Ustawienia strony</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>Zamknij</translation>
-    </message>
-    <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Export to PDF</source>
         <translation>Wyeksportuj do PDF</translation>
     </message>
@@ -5831,7 +5731,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
         <source>Could not open input redirection for reading</source>
         <translation>Nie można otworzyć wejściowego przekierowania do odczytu</translation>
     </message>
@@ -5841,12 +5741,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Nie można otworzyć wyjściowego przekierowania do zapisu</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+220"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Błąd zasobów (błąd forkowania): %1</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+249"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -5854,24 +5754,23 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Przekroczony czas operacji procesu</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+883"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Błąd odczytywania z procesu</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location line="+844"/>
         <source>Error writing to process</source>
         <translation>Błąd zapisywania do procesu</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="+63"/>
         <source>Process crashed</source>
         <translation>Wystąpił błąd w procesie - proces zakończony</translation>
     </message>
     <message>
-        <location line="+977"/>
+        <location line="+909"/>
         <source>No program defined</source>
         <translation>Nie zdefiniowano programu</translation>
     </message>
@@ -6372,7 +6271,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+411"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+405"/>
         <source>Bottom</source>
         <translation>W dół</translation>
     </message>
@@ -6457,13 +6356,13 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+346"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+327"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: rozmiar przy tworzeniu mniejszy od 0</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+176"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+174"/>
         <source>%1: unable to lock</source>
         <translation>%1: nie można zablokować</translation>
     </message>
@@ -6540,7 +6439,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>%1: niepoprawny rozmiar</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="-282"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="-280"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: nie można ustawić klucza na zablokowanym segmencie pamięci współdzielonej</translation>
     </message>
@@ -6548,18 +6447,18 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1330"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+1100"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="-91"/>
-        <location line="+135"/>
+        <location line="-72"/>
+        <location line="+87"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-949"/>
+        <location line="-777"/>
         <source>Back</source>
         <translation>Back</translation>
     </message>
@@ -7262,13 +7161,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+601"/>
-        <location line="+135"/>
+        <location line="+477"/>
+        <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-968"/>
+        <location line="-796"/>
         <source>Del</source>
         <translation>Del</translation>
     </message>
@@ -7303,12 +7202,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Escape</translation>
     </message>
     <message>
-        <location line="+820"/>
+        <location line="+647"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-944"/>
+        <location line="-771"/>
         <source>Favorites</source>
         <translation>Ulubione</translation>
     </message>
@@ -7479,13 +7378,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Menu</translation>
     </message>
     <message>
-        <location line="+821"/>
-        <location line="+130"/>
+        <location line="+697"/>
+        <location line="+82"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-792"/>
+        <location line="-620"/>
         <source>No</source>
         <translation>Nie</translation>
     </message>
@@ -7581,13 +7480,13 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Wybierz</translation>
     </message>
     <message>
-        <location line="+662"/>
-        <location line="+138"/>
+        <location line="+538"/>
+        <location line="+90"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-980"/>
+        <location line="-808"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Spacja</translation>
@@ -7770,7 +7669,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+832"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
         <source>Unable to write data: %1</source>
         <translation></translation>
     </message>
@@ -7796,7 +7695,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Błąd podczas nawiązania sesji SSL: %1</translation>
     </message>
     <message>
-        <location line="-798"/>
+        <location line="-697"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Błąd tworzenia kontekstu (%1)</translation>
     </message>
@@ -8021,7 +7920,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8477,7 +8376,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
         <source>What&apos;s This?</source>
         <translation>Co to jest?</translation>
     </message>
@@ -8485,7 +8384,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5484"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8493,7 +8392,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+598"/>
         <source>Go Back</source>
         <translation>Wróć</translation>
     </message>
@@ -8503,7 +8402,7 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Kontynuuj</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Commit</source>
         <translation>Dokonaj</translation>
     </message>
@@ -8518,12 +8417,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Pomoc</translation>
     </message>
     <message>
-        <location line="-14"/>
+        <location line="-13"/>
         <source>&lt; &amp;Back</source>
         <translation>&lt; &amp;Wstecz</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>&amp;Finish</source>
         <translation>&amp;Zakończ</translation>
     </message>
@@ -8539,11 +8438,6 @@ Proszę wybrać inną nazwę pliku.</translation>
     </message>
     <message>
         <location line="-8"/>
-        <source>&amp;Next</source>
-        <translation>&amp;Dalej</translation>
-    </message>
-    <message>
-        <location line="+0"/>
         <source>&amp;Next &gt;</source>
         <translation>&amp;Dalej &gt;</translation>
     </message>
@@ -8551,18 +8445,18 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWorkspace</name>
     <message>
-        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1854"/>
+        <location filename="../src/gui/widgets/qworkspace.cpp" line="+1812"/>
         <location line="+60"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="-1801"/>
+        <location line="-1759"/>
         <source>Close</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location line="+971"/>
+        <location line="+929"/>
         <source>&amp;Close</source>
         <translation>&amp;Zamknij</translation>
     </message>
@@ -8572,12 +8466,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>Zma&amp;ksymalizuj</translation>
     </message>
     <message>
-        <location line="-967"/>
+        <location line="-925"/>
         <source>Minimize</source>
         <translation>Zminimalizuj</translation>
     </message>
     <message>
-        <location line="+965"/>
+        <location line="+923"/>
         <source>Mi&amp;nimize</source>
         <translation>Zmi&amp;nimalizuj</translation>
     </message>
@@ -8592,12 +8486,12 @@ Proszę wybrać inną nazwę pliku.</translation>
         <translation>&amp;Przywróć</translation>
     </message>
     <message>
-        <location line="-959"/>
+        <location line="-917"/>
         <source>Restore Down</source>
         <translation>Przywróć pod spód</translation>
     </message>
     <message>
-        <location line="+976"/>
+        <location line="+934"/>
         <location line="+1039"/>
         <source>Sh&amp;ade</source>
         <translation>&amp;Zwiń</translation>
@@ -8734,34 +8628,6 @@ Proszę wybrać inną nazwę pliku.</translation>
         <location line="+1"/>
         <source>wrong value for standalone declaration</source>
         <translation>błędna wartość dla deklaracji &quot;standalone&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>QXmlPatternistCLI</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
-        <source>Warning in %1, at line %2, column %3: %4</source>
-        <translation>Ostrzeżenie w %1, wiersz %2, kolumna %3: %4</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning in %1: %2</source>
-        <translation>Ostrzeżenie w %1: %2</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unknown location</source>
-        <translation>Nieznane położenie</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error %1 in %2, at line %3, column %4: %5</source>
-        <translation>Błąd %1 w %2, wiersz %3, kolumna %4: %5</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Error %1 in %2: %3</source>
-        <translation>Błąd %1 w %2: %3</translation>
     </message>
 </context>
 <context>
@@ -9259,2481 +9125,6 @@ to
     <message>
         <location line="+252"/>
         <source>Select Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtXmlPatterns</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
-        <source>Network timeout.</source>
-        <translation>Przekroczony czas połączenia.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
-        <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
-        <translation>Element %1 nie może być zserializowany ponieważ pojawił się poza elementem &quot;document&quot;.</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <source>Attribute %1 can&apos;t be serialized because it appears at the top level.</source>
-        <translation>Atrybut %1 nie może być zserializowany ponieważ pojawił się na najwyższym poziomie.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+80"/>
-        <source>Year %1 is invalid because it begins with %2.</source>
-        <translation>Rok %1 jest niepoprawny ponieważ rozpoczyna się: %2.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Day %1 is outside the range %2..%3.</source>
-        <translation>Dzień %1 jest poza zakresem %2..%3.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Month %1 is outside the range %2..%3.</source>
-        <translation>Miesiąc %1 jest poza zakresem %2..%3.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Overflow: Can&apos;t represent date %1.</source>
-        <translation>Przepełnienie: Nie można wyrazić daty %1.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Day %1 is invalid for month %2.</source>
-        <translation>Dzień %1 jest niepoprawny dla miesiąca %2.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>Time 24:%1:%2.%3 is invalid. Hour is 24, but minutes, seconds, and milliseconds are not all 0; </source>
-        <translation>Czas 24:%1:%2:%3 jest niepoprawny. Godzina jest 24, ale minuty, sekundy i milisekundy nie są równocześnie zerami;</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Time %1:%2:%3.%4 is invalid.</source>
-        <translation>Czas %1:%2:%3.%4 jest niepoprawny.</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Overflow: Date can&apos;t be represented.</source>
-        <translation>Przepełnienie: Data nie może być wyrażona.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="+99"/>
-        <location line="+15"/>
-        <source>At least one component must be present.</source>
-        <translation>Przynajmniej jeden komponent musi być obecny.</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>At least one time component must appear after the %1-delimiter.</source>
-        <translation>Przynajmniej jeden komponent musi wystąpić po nawiasie %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qanyuri_p.h" line="+132"/>
-        <source>%1 is not a valid value of type %2.</source>
-        <translation>%1 nie jest poprawną wartością dla typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomiccasters_p.h" line="+223"/>
-        <source>When casting to %1 from %2, the source value cannot be %3.</source>
-        <translation>W rzutowaniu %1 na %2 wartość źródłowa nie może być %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+201"/>
-        <location line="+32"/>
-        <source>Dividing a value of type %1 by %2 (not-a-number) is not allowed.</source>
-        <translation>Dzielenie wartości typu %1 przez %2 (typ nienumeryczny) jest niedozwolone.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Dividing a value of type %1 by %2 or %3 (plus or minus zero) is not allowed.</source>
-        <translation>Dzielenie wartości typu %1 przez %2 lub %3 (plus lub minus zero) jest niedozwolone.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Multiplication of a value of type %1 by %2 or %3 (plus or minus infinity) is not allowed.</source>
-        <translation>Mnożenie wartości typu %1 przez %2 lub %3 (plus lub minus nieskończoność) jest niedozwolone.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicvalue.cpp" line="+79"/>
-        <source>A value of type %1 cannot have an Effective Boolean Value.</source>
-        <translation>Wartość typu %1 nie może posiadać efektywnej wartości boolowskiej (EBV).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qboolean.cpp" line="+78"/>
-        <source>Effective Boolean Value cannot be calculated for a sequence containing two or more atomic values.</source>
-        <translation>Efektywna wartość boolowska (EBV) nie może być obliczona dla sekwencji zawierającej dwie lub więcej wartości atomowe.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+402"/>
-        <source>Value %1 of type %2 exceeds maximum (%3).</source>
-        <translation>Wartość %1 typu %2 przekracza maksimum (%3).</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Value %1 of type %2 is below minimum (%3).</source>
-        <translation>Wartość %1 typu %2 jest poniżej minimum (%3).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+91"/>
-        <source>A value of type %1 must contain an even number of digits. The value %2 does not.</source>
-        <translation>Wartość typu %1 musi zawierać parzystą liczbę cyfr. Wartość %2 nie zawiera.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>%1 is not valid as a value of type %2.</source>
-        <translation>Wartość %1 nie jest poprawna jako wartość typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+207"/>
-        <source>Operator %1 cannot be used on type %2.</source>
-        <translation>Operator %1 nie może być użyty dla typu %2.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Operator %1 cannot be used on atomic values of type %2 and %3.</source>
-        <translation>Operator %1 nie może być użyty dla atomowych wartości typu %2 i %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="+66"/>
-        <source>The namespace URI in the name for a computed attribute cannot be %1.</source>
-        <translation>Przestrzeń nazw URI nie może być %1 w nazwie dla obliczonego atrybutu.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The name for a computed attribute cannot have the namespace URI %1 with the local name %2.</source>
-        <translation>Nazwa dla wyliczonego atrybutu nie może zawierać przestrzeni nazw URI %1 z lokalną nazwą %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+88"/>
-        <source>Type error in cast, expected %1, received %2.</source>
-        <translation>Błąd typów w rzutowaniu: oczekiwano %1, otrzymano %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>When casting to %1 or types derived from it, the source value must be of the same type, or it must be a string literal. Type %2 is not allowed.</source>
-        <translation>Podczas rzutowania na %1 lub na typ pochodny, wartość źródłowa musi być tego samego typu lub musi być literałem znakowym. Typ %2 nie jest dozwolony.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+67"/>
-        <source>A comment cannot contain %1</source>
-        <translation>Komentarz nie może zawierać %1</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>A comment cannot end with a %1.</source>
-        <translation>Komentarz nie może kończyć się: %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qdocumentcontentvalidator.cpp" line="+86"/>
-        <source>An attribute node cannot be a child of a document node. Therefore, the attribute %1 is out of place.</source>
-        <translation>Węzeł &quot;attribute&quot; nie może być podelementem węzła &quot;document&quot;. Dlatego atrybut %1 jest w złym miejscu.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
-        <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
-        <translation>Moduł biblioteki nie może być bezpośrednio oceniony. On musi być zaimportowany z głównego modułu.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No template by name %1 exists.</source>
-        <translation>Szablon o nazwie %1 nie istnieje.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="+106"/>
-        <source>A value of type %1 cannot be a predicate. A predicate must have either a numeric type or an Effective Boolean Value type.</source>
-        <translation>Wartość typu %1 nie może być predykatem. Predykat musi być typu liczbowego lub Efektywną Wartość Logiczną.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>A positional predicate must evaluate to a single numeric value.</source>
-        <translation>Wynikiem predykatu pozycyjnego musi być pojedyncza wartość liczbowa.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
-        <translation>Docelowa nazwa w instrukcji przetwarzania nie może być %1 w żadnej kombinacji wielkich i małych liter. Dlatego nazwa %2 jest niepoprawna.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>%1 is not a valid target name in a processing instruction. It must be a %2 value, e.g. %3.</source>
-        <translation>%1 nie jest poprawną nazwą docelową w instrukcji przetwarzania. Nazwa musi być wartością %2, np. %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qpath.cpp" line="+109"/>
-        <source>The last step in a path must contain either nodes or atomic values. It cannot be a mixture between the two.</source>
-        <translation>Ostatni krok w ścieżce musi zawierać albo węzły albo wartości atomowe. Nie może zawierać obu jednocześnie.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qprocessinginstructionconstructor.cpp" line="+84"/>
-        <source>The data of a processing instruction cannot contain the string %1</source>
-        <translation>Dane instrukcji przetwarzania nie mogą zawierać ciągu %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor.cpp" line="+82"/>
-        <source>No namespace binding exists for the prefix %1</source>
-        <translation>Żadna przestrzeń nazw nie jest powiązana z przedrostkiem %1</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="+156"/>
-        <source>No namespace binding exists for the prefix %1 in %2</source>
-        <translation>Żadna przestrzeń nazw nie jest powiązana z przedrostkiem %1 w %2</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+69"/>
-        <source>%1 is an invalid %2</source>
-        <translation>%1 jest niepoprawnym %2</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+120"/>
-        <source>The first argument to %1 cannot be of type %2. It must be a numeric type, xs:yearMonthDuration or xs:dayTimeDuration.</source>
-        <translation>Pierwszy argument w %1 nie może być typu %2. Musi on być typu liczbowego: xs:yearMonthDuration lub xs:dayTimeDuration.</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>The first argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>Pierwszy argument w %1 nie może być typu %2. Musi on być typu: %3, %4 lub %5.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>The second argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>Drugi argument w %1 nie może być typu %2. Musi on być typu: %3, %4 lub %5.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qassemblestringfns.cpp" line="+88"/>
-        <source>%1 is not a valid XML 1.0 character.</source>
-        <translation>%1 nie jest poprawnym znakiem XML 1.0.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qdatetimefn.cpp" line="+86"/>
-        <source>If both values have zone offsets, they must have the same zone offset. %1 and %2 are not the same.</source>
-        <translation>Jeśli oba argumenty mają przesunięcia strefowe, muszą one być takie same. %1 i %2 nie są takie same.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qerrorfn.cpp" line="+61"/>
-        <source>%1 was called.</source>
-        <translation>Wywołano %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="+94"/>
-        <source>%1 must be followed by %2 or %3, not at the end of the replacement string.</source>
-        <translation>Po %1 musi następować %2 lub %3, lecz nie na końcu zastępczego ciągu.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>In the replacement string, %1 must be followed by at least one digit when not escaped.</source>
-        <translation>W ciągu zastępczym, po %1 musi następować przynajmniej jedna cyfra pod warunkiem, że nie jest ona w sekwencji escape.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>In the replacement string, %1 can only be used to escape itself or %2, not %3</source>
-        <translation>W ciągu zastępczym, %1 może być użyte tylko do zabezpieczenia samej siebie lub %2, nigdy %3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+92"/>
-        <source>%1 matches newline characters</source>
-        <translation>%1 dopasowało znak nowej linii</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>%1 and %2 match the start and end of a line.</source>
-        <translation>%1 i %2 dopasowały początek i koniec linii.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Matches are case insensitive</source>
-        <translation>Dopasowania uwzględniają wielkość liter</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Whitespace characters are removed, except when they appear in character classes</source>
-        <translation>Spacje są usuwane z wyjątkiem kiedy pojawią się w klasach znakowych</translation>
-    </message>
-    <message>
-        <location line="+100"/>
-        <source>%1 is an invalid regular expression pattern: %2</source>
-        <translation>%1 jest niepoprawnym wzorcem wyrażenia regularnego: %2</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>%1 is an invalid flag for regular expressions. Valid flags are:</source>
-        <translation>%1 jest niepoprawną flagą dla wyrażeń regularnych. Poprawnymi flagami są:</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+17"/>
-        <source>If the first argument is the empty sequence or a zero-length string (no namespace), a prefix cannot be specified. Prefix %1 was specified.</source>
-        <translation>Jeśli pierwszy argument jest pustą sekwencją lub zerowej długości ciągiem (przy braku przestrzeni nazw), przedrostek nie może wystąpić. Podano przedrostek %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencefns.cpp" line="+346"/>
-        <source>It will not be possible to retrieve %1.</source>
-        <translation>Nie będzie można odzyskać %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+282"/>
-        <source>The default collection is undefined</source>
-        <translation>Domyślna kolekcja jest niezdefiniowana</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>%1 cannot be retrieved</source>
-        <translation>%1 nie może być odzyskane</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qstringvaluefns.cpp" line="+252"/>
-        <source>The normalization form %1 is unsupported. The supported forms are %2, %3, %4, and %5, and none, i.e. the empty string (no normalization).</source>
-        <translation>Znormalizowana forma %1 nie jest obsługiwana. Obsługiwanymi formami są: %2, %3, %4 i %5 oraz pusta forma (brak normalizacji).</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+87"/>
-        <source>A zone offset must be in the range %1..%2 inclusive. %3 is out of range.</source>
-        <translation>Przesunięcie strefowe musi być w zakresie %1..%2 włącznie. %3 jest poza tym zakresem.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qcardinalityverifier.cpp" line="+58"/>
-        <source>Required cardinality is %1; got cardinality %2.</source>
-        <translation>Wymagana liczność wynosi %1; otrzymano %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qitemverifier.cpp" line="+67"/>
-        <source>The item %1 did not match the required type %2.</source>
-        <translation>Element %1 nie został dopasowany do wymaganego typu %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+352"/>
-        <location line="+7323"/>
-        <source>%1 is an unknown schema type.</source>
-        <translation>%1 jest nieznanym typem schematu.</translation>
-    </message>
-    <message>
-        <location line="-7254"/>
-        <source>A template with name %1 has already been declared.</source>
-        <translation>Szablon o nazwie %1 został już zadeklarowany.</translation>
-    </message>
-    <message>
-        <location line="+213"/>
-        <source>Only one %1 declaration can occur in the query prolog.</source>
-        <translation>Tylko jedna deklaracja %1 może się pojawić w prologu zapytania.</translation>
-    </message>
-    <message>
-        <location line="+188"/>
-        <source>The initialization of variable %1 depends on itself</source>
-        <translation>Inicjalizacja zmiennej %1 zależy od niej samej</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
-        <source>The variable %1 is unused</source>
-        <translation>Zmienna %1 jest nieużywana</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+2904"/>
-        <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
-        <translation>Wersja %1 nie jest obsługiwana. Obsługiwaną wersją XQuery jest wersja 1.0.</translation>
-    </message>
-    <message>
-        <location line="+71"/>
-        <source>No function with signature %1 is available</source>
-        <translation>Żadna funkcja w postaci %1 nie jest dostępna</translation>
-    </message>
-    <message>
-        <location line="+303"/>
-        <source>It is not possible to redeclare prefix %1.</source>
-        <translation>Nie jest możliwe ponowne zadeklarowanie przedrostka %1.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Prefix %1 is already declared in the prolog.</source>
-        <translation>Przedrostek %1 jest już zadeklarowany w prologu.</translation>
-    </message>
-    <message>
-        <location line="+95"/>
-        <source>The name of an option must have a prefix. There is no default namespace for options.</source>
-        <translation>Nazwa opcji musi posiadać przedrostek. Nie istnieje domyślna przestrzeń nazw dla opcji.</translation>
-    </message>
-    <message>
-        <location line="+171"/>
-        <source>The Schema Import feature is not supported, and therefore %1 declarations cannot occur.</source>
-        <translation>Cecha &quot;Import schematu&quot; nie jest obsługiwana, dlatego deklaracje %1 nie mogą pojawić.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>The target namespace of a %1 cannot be empty.</source>
-        <translation>Docelowa przestrzeń nazw dla %1 nie może być pusta.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The module import feature is not supported</source>
-        <translation>Cecha &quot;Import modułu&quot; nie jest obsługiwana</translation>
-    </message>
-    <message>
-        <location line="+157"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
-        <translation>Przestrzeń nazw dla funkcji zdefiniowanej przez użytkownika nie może być pusta (spróbuj predefiniowany przedrostek %1, który stworzono specjalnie do takich sytuacji)</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
-        <translation>Przestrzeń nazw %1 jest zarezerwowana, dlatego funkcje zdefiniowane przez użytkownika nie mogą jej użyć. Spróbuj predefiniowany przedrostek %2, który istnieje w takich przypadkach.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The namespace of a user defined function in a library module must be equivalent to the module namespace. In other words, it should be %1 instead of %2</source>
-        <translation>Przestrzeń nazw dla funkcji zdefiniowanej przez użytkownika w module bibliotecznym musi odpowiadać przestrzeni nazw modułu. Powinna to być %1 zamiast %2</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>A function already exists with the signature %1.</source>
-        <translation>Funkcja w postaci %1 już istnieje.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>No external functions are supported. All supported functions can be used directly, without first declaring them as external</source>
-        <translation>Zewnętrzne funkcje nie są obsługiwane. Wszystkie obsługiwane funkcje mogą być używane bezpośrednio, bez ich uprzedniego deklarowania jako zewnętrzne</translation>
-    </message>
-    <message>
-        <location line="+493"/>
-        <source>The name of a variable bound in a for-expression must be different from the positional variable. Hence, the two variables named %1 collide.</source>
-        <translation>Nazwa zmiennej powiązanej w wyrażeniu &quot;for&quot; musi być inna od zmiennej pozycjonującej. W związku z tym dwie zmienne o nazwie %1 kolidują ze sobą.</translation>
-    </message>
-    <message>
-        <location line="+778"/>
-        <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
-        <translation>Cecha &quot;Walidacja schematu&quot; nie jest obsługiwana. Dlatego też wyrażenia %1 nie mogą być użyte.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
-        <translation>Wyrażenia &quot;pragma&quot; nie są obsługiwane. Dlatego musi wystąpić wyrażenie zastępcze</translation>
-    </message>
-    <message>
-        <location line="+398"/>
-        <source>The %1-axis is unsupported in XQuery</source>
-        <translation>Oś %1 nie jest obsługiwana w XQuery</translation>
-    </message>
-    <message>
-        <location line="-5902"/>
-        <source>%1 is not a valid numeric literal.</source>
-        <translation>%1 nie jest poprawnym literałem liczbowym.</translation>
-    </message>
-    <message>
-        <location line="-152"/>
-        <source>W3C XML Schema identity constraint selector</source>
-        <translation>Selektor narzucenia niepowtarzalności W3C XML Schema</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>W3C XML Schema identity constraint field</source>
-        <translation>Pole narzucenia niepowtarzalności W3C XML Schema</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>A construct was encountered which is disallowed in the current language(%1).</source>
-        <translation>Wystąpiła konstrukcja która jest niedozwolona w bieżącym języku (%1).</translation>
-    </message>
-    <message>
-        <location line="+3700"/>
-        <source>The keyword %1 cannot occur with any other mode name.</source>
-        <translation>Słowo kluczowe %1 nie może wystąpić z inną nazwą trybu.</translation>
-    </message>
-    <message>
-        <location line="-3117"/>
-        <source>No variable with name %1 exists</source>
-        <translation>Zmienna o nazwie %1 nie istnieje</translation>
-    </message>
-    <message>
-        <location line="+3146"/>
-        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
-        <translation>Wartość atrybutu %1 musi być typu %2, którym nie jest %3.</translation>
-    </message>
-    <message>
-        <location line="+75"/>
-        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
-        <translation>Przedrostek %1 nie może być powiązany. Jest on domyślnie powiązany z przestrzenią nazw %2.</translation>
-    </message>
-    <message>
-        <location line="+312"/>
-        <source>A variable with name %1 has already been declared.</source>
-        <translation>Zmienna o nazwie %1 została już zadeklarowana.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>No value is available for the external variable with name %1.</source>
-        <translation>Brak wartości dla zewnętrznej zmiennej o nazwie %1.</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <source>A stylesheet function must have a prefixed name.</source>
-        <translation>Funkcja arkusza stylu musi zawierać nazwę z przedrostkiem.</translation>
-    </message>
-    <message>
-        <location line="+124"/>
-        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
-        <translation>Argument o nazwie %1 został już zadeklarowany. Każda nazwa argumentu musi być unikatowa.</translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>When function %1 is used for matching inside a pattern, the argument must be a variable reference or a string literal.</source>
-        <translation>Gdy funkcja %1 jest wykorzystana do dopasowania wewnątrz wzorca, jej argument musi być referencją do zmiennej lub literałem znakowym.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a string literal, when used for matching.</source>
-        <translation>We wzorze XSL-T pierwszy argument w funkcji %1 musi być literałem znakowym podczas dopasowywania.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a literal or a variable reference, when used for matching.</source>
-        <translation>We wzorze XSL-T pierwszy argument w funkcji %1 musi być literałem znakowym lub nazwą zmiennej podczas dopasowywania.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>In an XSL-T pattern, function %1 cannot have a third argument.</source>
-        <translation>We wzorze XSL-T funkcja %1 nie może zawierać trzeciego argumentu.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>In an XSL-T pattern, only function %1 and %2, not %3, can be used for matching.</source>
-        <translation>We wzorze XSL-T tylko funkcje %1 i %2 mogą być użyte do dopasowania, zaś funkcja %3 nie.</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>In an XSL-T pattern, axis %1 cannot be used, only axis %2 or %3 can.</source>
-        <translation>We wzorze XSL-T tylko osie %2 i %3 mogą być użyte, zaś oś %1 nie.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 is an invalid template mode name.</source>
-        <translation>%1 nie jest poprawną nazwa trybu szablonu.</translation>
-    </message>
-    <message>
-        <location line="+1131"/>
-        <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
-        <translation>Każda nazwa parametru szablonu musi być unikatowa; %1 się powtarza.</translation>
-    </message>
-    <message>
-        <location line="+462"/>
-        <source>No function with name %1 is available.</source>
-        <translation>Żadna funkcja o nazwie %1 nie jest dostępna.</translation>
-    </message>
-    <message>
-        <location line="+250"/>
-        <source>An attribute with name %1 has already appeared on this element.</source>
-        <translation>Atrybut o nazwie %1 już się pojawił w tym elemencie.</translation>
-    </message>
-    <message>
-        <location line="-148"/>
-        <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
-        <translation>Przestrzeń nazw URI nie może być pustym ciągiem w powiązaniu z przedrostkiem, %1.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 is an invalid namespace URI.</source>
-        <translation>%1 jest niepoprawną przestrzenią nazw URI.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>It is not possible to bind to the prefix %1</source>
-        <translation>Nie jest możliwe powiązanie z przedrostkiem %1</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Namespace %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>Przestrzeń nazw %1 może być jedynie powiązana z %2 (w przeciwnym wypadku jest ona domyślnie zadeklarowana).</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Prefix %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>Przedrostek %1 może być jedynie powiązany z %2 (w przeciwnym wypadku jest on domyślnie zadeklarowany).</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Two namespace declaration attributes have the same name: %1.</source>
-        <translation>Atrybuty deklaracji przestrzeni nazw mają tą samą nazwę: %1.</translation>
-    </message>
-    <message>
-        <location line="+89"/>
-        <source>The namespace URI must be a constant and cannot use enclosed expressions.</source>
-        <translation>Przestrzeń nazw URI nie może być stałą i nie może używać zawartych w niej wyrażeń.</translation>
-    </message>
-    <message>
-        <location line="+77"/>
-        <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
-        <translation>Konstruktor elementu bezpośredniego nie jest dobrze sformatowany. %1 jest zakończony %2.</translation>
-    </message>
-    <message>
-        <location line="+458"/>
-        <source>The name %1 does not refer to any schema type.</source>
-        <translation>Nazwa %1 nie odpowiada żadnemu typowi schematu.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 is an complex type. Casting to complex types is not possible. However, casting to atomic types such as %2 works.</source>
-        <translation>%1 jest typem złożonym. Rzutowanie na typy złożone nie jest możliwe. Jednakże rzutowanie na typy atomowe np.: %2 jest dozwolone.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 is not an atomic type. Casting is only possible to atomic types.</source>
-        <translation>%1 nie jest typem atomowym. Możliwe jest rzutowanie tylko na typy atomowe.</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>%1 is not a valid name for a processing-instruction.</source>
-        <translation>%1 nie jest poprawną nazwą dla instrukcji przetwarzającej.</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <location line="+71"/>
-        <source>%1 is not in the in-scope attribute declarations. Note that the schema import feature is not supported.</source>
-        <translation>%1 nie jest wewnątrz zakresu deklaracji atrybutów. Zwróć uwagę że importowanie schematów nie jest obsługiwane.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The name of an extension expression must be in a namespace.</source>
-        <translation>Nazwa dodatkowego wyrażenia musi znajdować sie w przestrzeni nazw.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+55"/>
-        <source>empty</source>
-        <translation>pusty</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or one</source>
-        <translation>zero lub jeden</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>exactly one</source>
-        <translation>dokładnie jeden</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>one or more</source>
-        <translation>jeden lub więcej</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or more</source>
-        <translation>zero lub więcej</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="+63"/>
-        <source>Required type is %1, but %2 was found.</source>
-        <translation>Odnaleziono typ %2, lecz wymaganym typem jest %1.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Promoting %1 to %2 may cause loss of precision.</source>
-        <translation>Przekształcenie %1 do %2 może spowodować utratę precyzji.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>The focus is undefined.</source>
-        <translation>Fokus jest niezdefiniowany.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="+86"/>
-        <source>It&apos;s not possible to add attributes after any other kind of node.</source>
-        <translation>Dodanie atrybutu poza węzłami nie jest możliwe.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>An attribute by name %1 has already been created.</source>
-        <translation>Atrybut o nazwie %1 został już utworzony.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qxpathhelper_p.h" line="+120"/>
-        <source>Only the Unicode Codepoint Collation is supported(%1). %2 is unsupported.</source>
-        <translation>Obsługiwane jest jedynie &quot;Unicode Codepoint Collation&quot; (%1), %2 nie jest obsługiwane.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="-180"/>
-        <source>Integer division (%1) by zero (%2) is undefined.</source>
-        <translation>Dzielenie w dziedzinie liczb całkowitych (%1) przez zero (%2) jest niezdefiniowane.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Division (%1) by zero (%2) is undefined.</source>
-        <translation>Dzielenie (%1) przez zero (%2) jest niezdefiniowane.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Modulus division (%1) by zero (%2) is undefined.</source>
-        <translation>Dzielenie modulo (%1) przez zero (%2) jest niezdefiniowane.</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+77"/>
-        <source>%1 takes at most %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 przyjmuje co najwyżej %n argument. %2 jest dlatego niepoprawne.</numerusform>
-            <numerusform>%1 przyjmuje co najwyżej %n argumenty. %2 jest dlatego niepoprawne.</numerusform>
-            <numerusform>%1 przyjmuje co najwyżej %n argumentów. %2 jest dlatego niepoprawne.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+11"/>
-        <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 wymaga przynajmniej %n argumentu. %2 jest dlatego niepoprawne.</numerusform>
-            <numerusform>%1 wymaga przynajmniej %n argumentów. %2 jest dlatego niepoprawne.</numerusform>
-            <numerusform>%1 wymaga przynajmniej %n argumentów. %2 jest dlatego niepoprawne.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcontextnodechecker.cpp" line="+54"/>
-        <source>The root node of the second argument to function %1 must be a document node. %2 is not a document node.</source>
-        <translation>Głównym węzłem drugiego argumentu w funkcji %1 musi być węzeł &quot;document&quot;. %2 nie jest węzłem &quot;document&quot;.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+12"/>
-        <source>%1 is not a whole number of minutes.</source>
-        <translation>%1 nie jest całkowitą liczbą minut.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="-3992"/>
-        <source>The encoding %1 is invalid. It must contain Latin characters only, must not contain whitespace, and must match the regular expression %2.</source>
-        <translation>Enkodowanie %1 jest niepoprawne. Może ono zawierać jedynie znaki alfabetu łacińskiego, nie może zawierać spacji i musi być dopasowane do wyrażenia regularnego %2.</translation>
-    </message>
-    <message>
-        <location line="+127"/>
-        <location line="+10"/>
-        <source>A default namespace declaration must occur before function, variable, and option declarations.</source>
-        <translation>Domyślna deklaracja przestrzeni nazw musi pojawić się przed deklaracjami funkcji, zmiennych i opcji.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace declarations must occur before function, variable, and option declarations.</source>
-        <translation>Deklaracje przestrzeni nazw muszą pojawić się przed deklaracjami funkcji, zmiennych i opcji.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Module imports must occur before function, variable, and option declarations.</source>
-        <translation>Importy modułów muszą pojawić się przed deklaracjami funkcji, zmiennych i opcji.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+344"/>
-        <source>%1 is an unsupported encoding.</source>
-        <translation>Nieobsługiwane kodowanie %1.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains octets which are disallowed in the requested encoding %2.</source>
-        <translation>%1 zawiera bity które są niedozwolone w zażądanym kodowaniu %2.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
-        <translation>Kod %1 który pojawił się w %2 i który używa kodowania %3 jest niepoprawnym znakiem XML.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qapplytemplate.cpp" line="+119"/>
-        <source>Ambiguous rule match.</source>
-        <translation>Dopasowano niejednoznaczną regułę.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+69"/>
-        <source>In a namespace constructor, the value for a namespace cannot be an empty string.</source>
-        <translation>W konstruktorze przestrzeni nazw wartość przestrzeni nazw nie może być pustym ciągiem.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>The prefix must be a valid %1, which %2 is not.</source>
-        <translation>Przedrostek musi być poprawnym %1, którym %2 nie jest.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>The prefix %1 cannot be bound.</source>
-        <translation>Przedrostek %1 nie może być powiązany.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Only the prefix %1 can be bound to %2 and vice versa.</source>
-        <translation>Tylko przedrostek %1 może być powiązany z %2 i vice versa.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="+145"/>
-        <source>The parameter %1 is required, but no corresponding %2 is supplied.</source>
-        <translation>Wymagany jest parametr %1 lecz żaden odpowiadający mu  %2 nie został dostarczony.</translation>
-    </message>
-    <message>
-        <location line="-71"/>
-        <source>The parameter %1 is passed, but no corresponding %2 exists.</source>
-        <translation>Przekazany jest parametr %1 lecz żaden odpowiadający mu %2 nie istnieje.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qunparsedtextfn.cpp" line="+65"/>
-        <source>The URI cannot have a fragment</source>
-        <translation>URI nie może posiadać fragmentu</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+519"/>
-        <source>Element %1 is not allowed at this location.</source>
-        <translation>Element %1 jest niedozwolony w tym miejscu.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Text nodes are not allowed at this location.</source>
-        <translation>Węzły tekstowe są niedozwolone w tym miejscu.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Parse error: %1</source>
-        <translation>Błąd parsowania: %1</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>The value of the XSL-T version attribute must be a value of type %1, which %2 isn&apos;t.</source>
-        <translation>Wartość atrybutu wersji XSL-T musi być typu %1, którym %2 nie jest.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Running an XSL-T 1.0 stylesheet with a 2.0 processor.</source>
-        <translation>Przetwarzanie arkusza XSL-T w wersji 1.0 przez procesor w wersji 2.0.</translation>
-    </message>
-    <message>
-        <location line="+106"/>
-        <source>Unknown XSL-T attribute %1.</source>
-        <translation>Nieznany atrybut %1 XSL-T.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 and %2 are mutually exclusive.</source>
-        <translation>Atrybuty %1 i %2 wzajemnie się wykluczającą.</translation>
-    </message>
-    <message>
-        <location line="+166"/>
-        <source>In a simplified stylesheet module, attribute %1 must be present.</source>
-        <translation>W uproszczonym module arkuszu stylu musi wystąpić atrybut %1.</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>If element %1 has no attribute %2, it cannot have attribute %3 or %4.</source>
-        <translation>Jeśli element %1 nie posiada atrybutu %2, nie może on również posiadać atrybutu %3 ani %4.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Element %1 must have at least one of the attributes %2 or %3.</source>
-        <translation>Element %1 musi posiadać przynajmniej jeden z atrybutów: %2 lub %3.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>At least one mode must be specified in the %1-attribute on element %2.</source>
-        <translation>Przynajmniej jeden tryb musi być podany w atrybucie %1 elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+123"/>
-        <source>Element %1 must come last.</source>
-        <translation>Element %1 musi wystąpić jako ostatni.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>At least one %1-element must occur before %2.</source>
-        <translation>Przynajmniej jeden element %1 musi wystąpić przed %2.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Only one %1-element can appear.</source>
-        <translation>Może wystąpić tylko jeden element %1.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>At least one %1-element must occur inside %2.</source>
-        <translation>Przynajmniej jeden element %1 musi wystąpić wewnątrz %2.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>When attribute %1 is present on %2, a sequence constructor cannot be used.</source>
-        <translation>Kiedy atrybut %1 występuje w %2 konstruktor sekwencyjny nie może być użyty.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 must have either a %2-attribute or a sequence constructor.</source>
-        <translation>Element %1 musi posiadać albo atrybut %2 albo sekwencyjny konstruktor.</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <source>When a parameter is required, a default value cannot be supplied through a %1-attribute or a sequence constructor.</source>
-        <translation>Kiedy wymagany jest parametr, domyślna wartość nie może być dostarczona przez atrybut %1 ani przez sekwencyjny konstruktor.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Element %1 cannot have children.</source>
-        <translation>Element %1 nie może posiadać potomków.</translation>
-    </message>
-    <message>
-        <location line="+434"/>
-        <source>Element %1 cannot have a sequence constructor.</source>
-        <translation>Element %1 nie może posiadać sekwencyjnego konstruktora.</translation>
-    </message>
-    <message>
-        <location line="+86"/>
-        <location line="+9"/>
-        <source>The attribute %1 cannot appear on %2, when it is a child of %3.</source>
-        <translation>Atrybut %1 nie może wystąpić w %2 kiedy jest on potomkiem %3.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>A parameter in a function cannot be declared to be a tunnel.</source>
-        <translation>Parametr funkcji nie może być zadeklarowany jako tunelowy.</translation>
-    </message>
-    <message>
-        <location line="+149"/>
-        <source>This processor is not Schema-aware and therefore %1 cannot be used.</source>
-        <translation>Procesor nie obsługuje schematów, więc %1 nie może zostać użyte.</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>Top level stylesheet elements must be in a non-null namespace, which %1 isn&apos;t.</source>
-        <translation>Elementy arkusza stylu najwyższego poziomu muszą być w niezerowej przestrzeni nazw, którą %1 nie jest.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The value for attribute %1 on element %2 must either be %3 or %4, not %5.</source>
-        <translation>Wartością atrybutu %1 w elemencie %2 musi być %3 albo %4, lecz nie %5.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Attribute %1 cannot have the value %2.</source>
-        <translation>Atrybut %1 nie może posiadać wartości %2.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>The attribute %1 can only appear on the first %2 element.</source>
-        <translation>Atrybut %1 może wystąpić jedynie w pierwszym elemencie %2.</translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>At least one %1 element must appear as child of %2.</source>
-        <translation>Przynajmniej jeden element %1 musi wystąpić jako potomek %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
-        <source>%1 has inheritance loop in its base type %2.</source>
-        <translation>%1 ma pętlę w dziedziczeniu w jego podstawowym typie %2.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+24"/>
-        <source>Circular inheritance of base type %1.</source>
-        <translation>Cykliczne dziedziczenie podstawowego typu %1.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Circular inheritance of union %1.</source>
-        <translation>Cykliczne dziedziczenie unii %1.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
-        <translation>Nie można wywieść %1 z %2 ograniczając go ponieważ jest on zdefiniowany jako końcowy.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
-        <translation>Nie można wywieść %1 z %2 rozszerzając go ponieważ jest on zdefiniowany jako końcowy.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Base type of simple type %1 cannot be complex type %2.</source>
-        <translation>Typ podstawowy dla typu prostego %1 nie może być typem złożonym %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Simple type %1 cannot have direct base type %2.</source>
-        <translation>Typ prosty %1 nie może mieć bezpośredniego typu podstawowego %2.</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location line="+9"/>
-        <source>Simple type %1 is not allowed to have base type %2.</source>
-        <translation>Typ prosty %1 nie może mieć typu podstawowego %2.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Simple type %1 can only have simple atomic type as base type.</source>
-        <translation>Typem podstawowym typu prostego %1 może być tylko typ atomowy.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
-        <translation>Typ prosty %1 nie może wywodzić się z %2 ponieważ ten ostatni jest zdefiniowany jako końcowy.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <location line="+484"/>
-        <source>Variety of item type of %1 must be either atomic or union.</source>
-        <translation>Typem elementów listy %1 musi być albo typ atomowy albo unia.</translation>
-    </message>
-    <message>
-        <location line="-474"/>
-        <location line="+483"/>
-        <source>Variety of member types of %1 must be atomic.</source>
-        <translation>Typy składników %1 muszą być atomowe.</translation>
-    </message>
-    <message>
-        <location line="-470"/>
-        <location line="+451"/>
-        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
-        <translation>Nie można wywieść %1 z %2 poprzez listę ponieważ jest to zdefiniowane ostatecznie w typie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Simple type %1 is only allowed to have %2 facet.</source>
-        <translation>Typ prosty %1 może jedynie posiadać aspekt %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Base type of simple type %1 must have variety of type list.</source>
-        <translation>Typ podstawowy dla typu prostego %1 musi być listą typów.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
-        <translation>Typ podstawowy dla typu prostego %1 ma zdefiniowane wywodzenie poprzez ograniczenie jako końcowe.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Item type of base type does not match item type of %1.</source>
-        <translation>Typ elementów listy typu podstawowego nie pasuje do typu elementów listy %1.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+93"/>
-        <source>Simple type %1 contains not allowed facet type %2.</source>
-        <translation>Typ prosty %1 posiada niedozwolony aspekt %2.</translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+413"/>
-        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
-        <translation>Nie można wywieść %1 z %2 poprzez unię ponieważ jest to zdefiniowane ostatecznie w typie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="-404"/>
-        <source>%1 is not allowed to have any facets.</source>
-        <translation>%1 nie może posiadać żadnych aspektów.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base type %1 of simple type %2 must have variety of union.</source>
-        <translation>Typ podstawowy %1 dla typu prostego %2 musi być unią.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
-        <translation>Typ podstawowy %1 dla typu prostego %2 nie może posiadać ograniczenia dla atrybutu %3.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
-        <translation>Typ %1 składnika nie może być wywiedziony z typu %2 który jest typem składnika %3 typu podstawowego %4.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
-        <translation>Metodą wywodzenia z %1 musi być rozszerzenie ponieważ typ podstawowy %2 jest typem prostym.</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Complex type %1 has duplicated element %2 in its content model.</source>
-        <translation>Typ złożony %1 posiada powielony element %2 w jego modelu zawartości.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 has non-deterministic content.</source>
-        <translation>Typ złożony %1 posiada nieokreśloną zawartość.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
-        <translation>Atrybuty typu złożonego %1 nie są poprawnym rozszerzeniem atrybutów typu podstawowego %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
-        <translation>Model zawartości typu złożonego %1 nie jest poprawnym rozszerzeniem modelu zawartości %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Complex type %1 must have simple content.</source>
-        <translation>Typ złożony %1 musi mieć prostą zawartość.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Complex type %1 must have the same simple type as its base class %2.</source>
-        <translation>Typ złożony %1 musi posiadać ten sam prosty typ jaki posiada jego klasa podstawowa %2.</translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Complex type %1 cannot be derived from base type %2%3.</source>
-        <translation>Typ złożony %1 nie może być wywiedziony z typu %2%3.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
-        <translation>Atrybuty typu złożonego %1 nie są poprawnym ograniczeniem atrybutów typu podstawowego %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
-        <translation>Typ złożony %1 z prostą zawartością nie może być wywiedziony z podstawowego typu złożonego %2.</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Item type of simple type %1 cannot be a complex type.</source>
-        <translation>Typ elementów listy w prostym typie %1 nie może być typem złożonym.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Member type of simple type %1 cannot be a complex type.</source>
-        <translation>Typ składnika typu prostego %1 nie może być typem złożonym.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 is not allowed to have a member type with the same name as itself.</source>
-        <translation>%1 nie może posiadać typu składnika o tej samej nazwie jaką on sam posiada.</translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <location line="+29"/>
-        <location line="+34"/>
-        <source>%1 facet collides with %2 facet.</source>
-        <translation>Aspekt %1 koliduje z aspektem %2.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1 facet must have the same value as %2 facet of base type.</source>
-        <translation>Aspekt %1 musi mieć tą samą wartość jaką ma aspekt %2 typu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
-        <translation>Wartość aspektu %1 musi większa od lub równa wartości aspektu %2 typu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+125"/>
-        <location line="+55"/>
-        <location line="+12"/>
-        <location line="+91"/>
-        <location line="+58"/>
-        <location line="+34"/>
-        <location line="+35"/>
-        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
-        <translation>Wartość aspektu %1 musi być mniejsza od lub równa wartości aspektu %2 typu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="-389"/>
-        <source>%1 facet contains invalid regular expression</source>
-        <translation>Aspekt %1 zawiera niepoprawne wyrażenie regularne</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unknown notation %1 used in %2 facet.</source>
-        <translation>Nieznany zapis %1 użyty w aspekcie %2.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>%1 facet contains invalid value %2: %3.</source>
-        <translation>Aspekt %1 zawiera niepoprawną wartość %2: %3.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
-        <translation>Aspektem %1 nie może być %2 ani %3 jeśli aspektem %4 typu podstawowego jest %5.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
-        <translation>Aspektem %1 nie może być %2 jeśli aspektem %3 typu podstawowego jest %4.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <location line="+55"/>
-        <location line="+230"/>
-        <source>%1 facet must be less than or equal to %2 facet.</source>
-        <translation>Wartość aspektu %1 musi być mniejsza od lub równa wartości aspektu %2.</translation>
-    </message>
-    <message>
-        <location line="-257"/>
-        <location line="+134"/>
-        <location line="+82"/>
-        <source>%1 facet must be less than %2 facet of base type.</source>
-        <translation>Wartość aspektu %1 musi być mniejsza od wartości aspektu %2 typu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="-201"/>
-        <location line="+79"/>
-        <source>%1 facet and %2 facet cannot appear together.</source>
-        <translation>Aspekty %1 i %2 nie mogą wystąpić jednocześnie.</translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <location line="+12"/>
-        <location line="+113"/>
-        <source>%1 facet must be greater than %2 facet of base type.</source>
-        <translation>Wartość aspektu %1 musi być większa od wartości aspektu %2 typu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="-86"/>
-        <location line="+58"/>
-        <source>%1 facet must be less than %2 facet.</source>
-        <translation>Wartość aspektu %1 musi być mniejsza od wartości aspektu %2.</translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+58"/>
-        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
-        <translation>Wartość aspektu %1 musi być większa od lub równa wartości aspektu %2 typu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>Simple type contains not allowed facet %1.</source>
-        <translation>Typ prosty zawiera niedozwolony aspekt %1.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
-        <translation>Aspekty %1, %2, %3, %4, %5 i %6 nie są dozwolone podczas wywodzenia z listy.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Only %1 and %2 facets are allowed when derived by union.</source>
-        <translation>Dozwolone są jedynie aspekty %1 i %2 podczas wywodzenia z unii.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+16"/>
-        <source>%1 contains %2 facet with invalid data: %3.</source>
-        <translation>%1 zawiera aspekt %2 z niepoprawnymi danymi: %3.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Attribute group %1 contains attribute %2 twice.</source>
-        <translation>Grupa atrybutów %1 zawiera dwukrotnie atrybut %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>Grupa atrybutów %1 zawiera dwa różne atrybuty których typy są wywiedzione z %2.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>Grupa atrybutów %1 zawiera atrybut %2 który ma ograniczenie wartości ale typ wywodzi się z %3.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 contains attribute %2 twice.</source>
-        <translation>Typ złożony %1 zawiera atrybut %2 dwukrotnie.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>Typ złożony %1 zawiera dwa różne atrybuty których typy są wywiedzione z %2.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>Typ złożony %1 zawiera atrybut %2 który ma ograniczenie wartości ale typ wywodzi się z %3.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
-        <translation>Element %1 nie może zawierać ograniczenia wartości gdy jego typ podstawowy jest złożony.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
-        <translation>Element %1 nie może zawierać ograniczenia wartości gdy jego typ jest wywiedziony z %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Value constraint of element %1 is not of elements type: %2.</source>
-        <translation>Ograniczenie wartości elementu %1 nie jest typu: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
-        <translation>Element %1 nie może przynależeć do grupy zastępującej ponieważ nie jest on elementem globalnym.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
-        <translation>Typ elementu %1 nie może być wywiedziony z typu przynależnego do grupy zastępującej.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
-        <translation>Ograniczenie wartości atrybutu %1 nie jest typu: %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 has value constraint but has type derived from %2.</source>
-        <translation>Atrybut %1 posiada ograniczenie wartości lecz jego typ wywodzi się z %2.</translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
-        <translation>Atrybut %1 w wywiedzionym typie złożonym musi być %2 jak w typie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
-        <translation>Atrybut %1 w wywiedzionym typie złożonym musi zawierać ograniczenie wartości %2 jak w typie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
-        <translation>Atrybut %1 w wywiedzionym typie złożonym musi zawierać te same ograniczenie wartości %2 jak w typie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
-        <translation>Atrybut %1 w wywiedzionym typie złożonym musi zawierać ograniczenie wartości %2.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
-        <translation>&quot;processContent&quot; podstawowego dżokera musi być słabszy od wywiedzionego dżokera.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <location line="+15"/>
-        <source>Element %1 exists twice with different types.</source>
-        <translation>Istnieją dwa elementy %1 o różnych typach.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Particle contains non-deterministic wildcards.</source>
-        <translation>Element zawiera nieokreślone dżokery.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
-        <location line="+63"/>
-        <source>Base attribute %1 is required but derived attribute is not.</source>
-        <translation>Wymagany jest bazowy atrybut %1, wywiedziony zaś nie.</translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
-        <translation>Typ wywiedzionego atrybutu %1 nie może być poprawnie wywiedziony z typu podstawowego atrybutu.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
-        <translation>Ograniczenie wartości wywiedzionego atrybutu %1 nie pasuje do ograniczenia wartości podstawowego atrybutu.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived attribute %1 does not exist in the base definition.</source>
-        <translation>Wywiedziony atrybut %1 nie istnieje w podstawowej definicji.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
-        <translation>Wywiedziony atrybut %1 nie pasuje do dżokera w podstawowej definicji.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Base attribute %1 is required but missing in derived definition.</source>
-        <translation>Brak wymaganego bazowego atrybutu %1 w wywiedzionej definicji.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
-        <translation>Wywiedziona definicja zawiera element %1 który nie istnieje w definicji podstawowej</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived wildcard is not a subset of the base wildcard.</source>
-        <translation>Wywiedziony dżoker nie jest podzbiorem podstawowego dżokera.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
-        <translation>%1 wywiedzionego dżokera nie jest poprawnym ograniczeniem %2 podstawowego dżokera</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 from base type is missing in derived type.</source>
-        <translation>Brak atrybutu %1 typu bazowego w wywiedzionej definicji.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Type of derived attribute %1 differs from type of base attribute.</source>
-        <translation>Typ wywiedzionego atrybutu %1 różni się od typu podstawowego atrybutu.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base definition contains an %1 element that is missing in the derived definition</source>
-        <translation>Podstawowa definicja zawiera element %1 którego brakuje w wywiedzionej definicji</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
-        <source>%1 references unknown %2 or %3 element %4.</source>
-        <translation>%1 odwołuje się do nieznanego elementu %2 lub %3: %4.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
-        <translation>%1 odwołuje się do narzucenia niepowtarzalności %2 które nie jest elementem %3 ani %4.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
-        <translation>%1 posiada inna liczbę pól od narzucenia niepowtarzalności %2 które się do niego odwołuje.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Base type %1 of %2 element cannot be resolved.</source>
-        <translation>Nie można rozwiązać typu podstawowego %1 elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Item type %1 of %2 element cannot be resolved.</source>
-        <translation>Nie można rozwiązać typu elementów listy %1 w elemencie %2.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Member type %1 of %2 element cannot be resolved.</source>
-        <translation>Nie można rozwiązać typu %1 składnika elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <location line="+415"/>
-        <location line="+30"/>
-        <source>Type %1 of %2 element cannot be resolved.</source>
-        <translation>Nie można rozwiązać typu %1 elementu %2.</translation>
-    </message>
-    <message>
-        <location line="-423"/>
-        <source>Base type %1 of complex type cannot be resolved.</source>
-        <translation>Nie można rozwiązać typu podstawowego %1 dla typu złożonego.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 cannot have complex base type that has a %2.</source>
-        <translation>%1 nie może mieć złożonego typu podstawowego który ma %2.</translation>
-    </message>
-    <message>
-        <location line="+286"/>
-        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
-        <translation>Model zawartości typu złożonego %1, posiada element %2, więc nie może być on wywiedziony poprzez rozszerzenie niepustego typu.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
-        <translation>Typ złożony %1 nie może być wywiedziony z %2 poprzez rozszerzenie ponieważ ten ostatni zawiera element %3 w jego modelu zawartości.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Type of %1 element must be a simple type, %2 is not.</source>
-        <translation>Typem elementu %1 musi być typ prosty, %2 nim nie jest.</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>Substitution group %1 of %2 element cannot be resolved.</source>
-        <translation>Nie można rozwiązać grupy zastępującej %1 elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Substitution group %1 has circular definition.</source>
-        <translation>Grupa zastępująca %1 posiada cykliczną definicję.</translation>
-    </message>
-    <message>
-        <location line="+120"/>
-        <location line="+7"/>
-        <source>Duplicated element names %1 in %2 element.</source>
-        <translation>Powielona nazwa elementu %1 w elemencie %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location line="+52"/>
-        <location line="+71"/>
-        <location line="+28"/>
-        <source>Reference %1 of %2 element cannot be resolved.</source>
-        <translation>Nie można rozwiązać odwołania %1 do elementu %2.</translation>
-    </message>
-    <message>
-        <location line="-138"/>
-        <source>Circular group reference for %1.</source>
-        <translation>Cykliczne odwołanie do grupy dla %1.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 element is not allowed in this scope</source>
-        <translation>Element %1 nie jest dozwolony w tym zakresie</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 element cannot have %2 attribute with value other than %3.</source>
-        <translation>Element %1 nie może mieć atrybutu %2 z wartością inną niż %3.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
-        <translation>Element %1 nie może mieć atrybutu %2 z wartością inną niż %3 lub %4.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
-        <translation>Atrybut %1 lub %2 odwołania %3 nie pasuje do deklaracji atrybutu %4.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Attribute group %1 has circular reference.</source>
-        <translation>Grupa atrybutów %1 posiada cykliczne odwołanie.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
-        <translation>Atrybut %1 w %2 powinien używać %3 jak w typie podstawowym %4.</translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
-        <translation>Atrybut dżokera %1 nie jest poprawnym ograniczeniem atrybutu dżokera typu podstawowego %2.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 has attribute wildcard but its base type %2 has not.</source>
-        <translation>%1 posiada atrybut dżokera lecz jego typ podstawowy %2 go nie posiada.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
-        <translation>Nie można wyrazić unii atrybutu dżokera typu %1 i atrybutu dżokera jego typu podstawowego %2.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
-        <translation>Aspekt &quot;enumeration&quot; posiada niepoprawną zawartość: {%1} nie jest wartością typu %2.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace prefix of qualified name %1 is not defined.</source>
-        <translation>Przedrostek przestrzeni nazw występujący w pełnej nazwie %1 nie jest zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <location line="+18"/>
-        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
-        <translation>Element %1 (%2) nie jest poprawnym ograniczeniem elementu %3 który redefiniuje: %4.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
-        <source>Empty particle cannot be derived from non-empty particle.</source>
-        <translation>Pusty element nie może być wywiedziony z niepustego elementu.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Derived particle is missing element %1.</source>
-        <translation>Brak elementu %1 w wywiedzionym elemencie.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
-        <translation>Brak ograniczenia wartości w wywiedzionym elemencie %1 takiego jak w podstawowym elemencie.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived element %1 has weaker value constraint than base particle.</source>
-        <translation>Wywiedziony element %1 posiada słabsze ograniczenie wartości niż element podstawowy.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
-        <translation>Ograniczenie stałej wartości elementu %1 różni się od ograniczenia wartości w podstawowym elemencie.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
-        <translation>Wywiedziony element %1 może być zerowalny ponieważ element podstawowy nie jest zerowalny.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
-        <translation>Ograniczenia blokujące dla wywiedzionego elementu %1 nie mogą być słabsze od ograniczeń w elemencie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>Typ prosty w elemencie wywiedzionym %1 nie może być poprawnie wywiedziony z elementu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>Typ złożony w elemencie wywiedzionym %1 nie może być poprawnie wywiedziony z elementu podstawowego.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Element %1 is missing in derived particle.</source>
-        <translation>Brak elementu %1 w wywiedzionym elemencie.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
-        <translation>Element %1 nie pasuje do ograniczenia przestrzeni nazw dżokera w elemencie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
-        <translation>Dżoker w wywiedzionym elemencie nie jest poprawnym podzbiorem dżokera w elemencie podstawowym.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
-        <translation>&quot;processContent&quot; dżokera w wywiedzionym elemencie jest słabszy od dżokera w podstawowym elemencie.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Derived particle allows content that is not allowed in the base particle.</source>
-        <translation>Wywiedziony element pozwala na zawartość która jest niedozwolona w podstawowym elemencie.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
-        <source>Can not process unknown element %1, expected elements are: %2.</source>
-        <translation>Nie można przetworzyć nieznanego elementu %1, oczekiwanymi elementami są: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
-        <translation>Element %1 jest niedozwolony w tym zakresie, możliwymi elementami są: %2.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Child element is missing in that scope, possible child elements are: %1.</source>
-        <translation>Brak podelementu w tym zakresie, możliwymi podelementami są: %1.</translation>
-    </message>
-    <message>
-        <location line="+143"/>
-        <source>Document is not a XML schema.</source>
-        <translation>Dokument nie jest schematem XML.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
-        <translation>Atrybut %1 elementu %2 posiada niepoprawną zawartość: {%3} nie jest wartością typu %4.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
-        <translation>Atrybut %1 elementu %2 posiada niepoprawną zawartość: {%3}.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
-        <translation>Docelowa przestrzeń nazw %1 załączonego schematu jest różna od docelowej przestrzeni nazw %2 która jest zdefiniowana w schemacie załączającym.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+11"/>
-        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
-        <translation>Docelowa przestrzeń nazw %1 zaimportowanego schematu jest różna od docelowej przestrzeni nazw %2 która jest zdefiniowana w schemacie importującym.</translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
-        <translation>Element %1 nie może zawierać tej samej wartości atrybutu %2 co docelowa przestrzeń nazw %3.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
-        <translation>Element %1 bez atrybutu %2 jest niedozwolony wewnątrz schematu bez docelowej przestrzeni nazw.</translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <location line="+158"/>
-        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
-        <translation>Element %1 jest niedozwolony wewnątrz elementu %2 jeśli jest obecny atrybut %3.</translation>
-    </message>
-    <message>
-        <location line="-97"/>
-        <location line="+119"/>
-        <location line="+89"/>
-        <source>%1 element has neither %2 attribute nor %3 child element.</source>
-        <translation>Element %1 nie posiada ani atrybutu %2 ani podelementu %3.</translation>
-    </message>
-    <message>
-        <location line="+835"/>
-        <location line="+1474"/>
-        <location line="+232"/>
-        <location line="+7"/>
-        <location line="+260"/>
-        <location line="+17"/>
-        <location line="+258"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <source>%1 element with %2 child element must not have a %3 attribute.</source>
-        <translation>Element %1 z podelementem %2 nie może mieć atrybutu %3.</translation>
-    </message>
-    <message>
-        <location line="-1325"/>
-        <source>%1 attribute of %2 element must be %3 or %4.</source>
-        <translation>Atrybutem %1 elementu %2 musi być %3 lub %4.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>%1 attribute of %2 element must have a value of %3.</source>
-        <translation>Atrybut %1 elementu %2 musi posiadać wartość %3.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+34"/>
-        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
-        <translation>Atrybut %1 elementu %2 musi posiadać wartość %3 lub %4.</translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <location line="+129"/>
-        <location line="+9"/>
-        <location line="+7"/>
-        <location line="+7"/>
-        <location line="+327"/>
-        <location line="+203"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+77"/>
-        <source>%1 element must not have %2 and %3 attribute together.</source>
-        <translation>Element %1 nie może posiadać jednocześnie atrybutów %2 i %3.</translation>
-    </message>
-    <message>
-        <location line="-768"/>
-        <location line="+222"/>
-        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
-        <translation>Zawartość atrybutu %1 elementu %2 nie może pochodzić z przestrzeni nazw %3.</translation>
-    </message>
-    <message>
-        <location line="-215"/>
-        <location line="+222"/>
-        <source>%1 attribute of %2 element must not be %3.</source>
-        <translation>Atrybut %1 elementu %2 nie może być %3.</translation>
-    </message>
-    <message>
-        <location line="-64"/>
-        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
-        <translation>Atrybut %1 elementu %2 musi zawierać wartość %3 ponieważ atrybut %4 jest ustawiony.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
-        <translation>Podawanie: use=&apos;prohibited&apos; wewnątrz grupy atrybutów nie przynosi żadnego efektu.</translation>
-    </message>
-    <message>
-        <location line="+353"/>
-        <source>%1 element must have either %2 or %3 attribute.</source>
-        <translation>Element %1 musi zawierać atrybut %2 albo %3.</translation>
-    </message>
-    <message>
-        <location line="+554"/>
-        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
-        <translation>Element %1 musi zawierać albo atrybut %2 albo %3 lub %4 jako podelement.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>%1 element requires either %2 or %3 attribute.</source>
-        <translation>Element %1 wymaga atrybutu %2 albo %3.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Text or entity references not allowed inside %1 element</source>
-        <translation>Tekst ani odwołanie nie są dozwolone wewnątrz elementu %1</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <location line="+112"/>
-        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
-        <translation>Atrybut %1 elementu %2 musi zawierać %3, %4 lub listę URI.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 element is not allowed in this context.</source>
-        <translation>Element %1 jest niedozwolony w tym kontekście.</translation>
-    </message>
-    <message>
-        <location line="+53"/>
-        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
-        <translation>Atrybut %1 elementu %2 posiada większą wartość niż atrybut %3.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Prefix of qualified name %1 is not defined.</source>
-        <translation>Przedrostek w pełnej nazwie %1 nie jest zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <location line="+61"/>
-        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
-        <translation>Atrybut %1 elementu %2 musi zawierać albo %3 albo inne wartości.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>Component with ID %1 has been defined previously.</source>
-        <translation>Komponent o identyfikatorze %1 został uprzednio zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Element %1 already defined.</source>
-        <translation>Element %1 jest już zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 already defined.</source>
-        <translation>Atrybut %1 jest już zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Type %1 already defined.</source>
-        <translation>Typ %1 jest już zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute group %1 already defined.</source>
-        <translation>Grupa atrybutów %1 jest już zdefiniowana.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Element group %1 already defined.</source>
-        <translation>Grupa elementów %1 jest już zdefiniowana.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notation %1 already defined.</source>
-        <translation>Zapis %1 jest już zdefiniowany.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Identity constraint %1 already defined.</source>
-        <translation>Narzucenie niepowtarzalności %1 jest już zdefiniowane.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Duplicated facets in simple type %1.</source>
-        <translation>Powielone aspekty w prostym typie %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
-        <location line="+7"/>
-        <location line="+21"/>
-        <source>%1 is not valid according to %2.</source>
-        <translatorcomment>Ponieważ nie wiadomo co jest podmiotem nie można stwierdzić czy to ma być &quot;poprawnym&quot;, &quot;poprawną&quot; czy &quot;poprawne&quot;</translatorcomment>
-        <translation>%1 nie jest poprawne według %2.</translation>
-    </message>
-    <message>
-        <location line="+167"/>
-        <source>String content does not match the length facet.</source>
-        <translation>Wartość ciągu koliduje z aspektem &quot;length&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the minLength facet.</source>
-        <translation>Wartość ciągu koliduje z aspektem &quot;minLength&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the maxLength facet.</source>
-        <translation>Wartość ciągu koliduje z aspektem &quot;maxLength&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content does not match pattern facet.</source>
-        <translation>Wartość ciągu koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content is not listed in the enumeration facet.</source>
-        <translation>Wartość ciągu nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Signed integer content does not match the maxInclusive facet.</source>
-        <translation>Wartość liczby całkowitej koliduje z aspektem &quot;maxInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the maxExclusive facet.</source>
-        <translation>Wartość liczby całkowitej koliduje z aspektem &quot;maxExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minInclusive facet.</source>
-        <translation>Wartość liczby całkowitej koliduje z aspektem &quot;minInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minExclusive facet.</source>
-        <translation>Wartość liczby całkowitej koliduje z aspektem &quot;minExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content is not listed in the enumeration facet.</source>
-        <translation>Wartość liczby całkowitej nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content does not match pattern facet.</source>
-        <translation>Wartość liczby całkowitej koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Signed integer content does not match in the totalDigits facet.</source>
-        <translation>Wartość liczby całkowitej koliduje z aspektem &quot;totalDigits&quot;.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unsigned integer content does not match the maxInclusive facet.</source>
-        <translation>Wartość liczby naturalnej koliduje z aspektem &quot;maxInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the maxExclusive facet.</source>
-        <translation>Wartość liczby naturalnej koliduje z aspektem &quot;maxExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minInclusive facet.</source>
-        <translation>Wartość liczby naturalnej koliduje z aspektem &quot;minInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minExclusive facet.</source>
-        <translation>Wartość liczby naturalnej koliduje z aspektem &quot;minExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content is not listed in the enumeration facet.</source>
-        <translation>Wartość liczby naturalnej nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content does not match pattern facet.</source>
-        <translation>Wartość liczby naturalnej koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unsigned integer content does not match in the totalDigits facet.</source>
-        <translation>Wartość liczby naturalnej koliduje z aspektem &quot;totalDigits&quot;.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Double content does not match the maxInclusive facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;maxInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the maxExclusive facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;maxExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minInclusive facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;minInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minExclusive facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;minExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Double content is not listed in the enumeration facet.</source>
-        <translation>Wartość liczby rzeczywistej nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Double content does not match pattern facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Decimal content does not match in the fractionDigits facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;fractionDigits&quot;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Decimal content does not match in the totalDigits facet.</source>
-        <translation>Wartość liczby rzeczywistej koliduje z aspektem &quot;totalDigits&quot;.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Date time content does not match the maxInclusive facet.</source>
-        <translation>Zawartość daty i czasu koliduje z aspektem &quot;maxInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the maxExclusive facet.</source>
-        <translation>Zawartość daty i czasu koliduje z aspektem &quot;maxExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minInclusive facet.</source>
-        <translation>Zawartość daty i czasu koliduje z aspektem &quot;minInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minExclusive facet.</source>
-        <translation>Zawartość daty i czasu koliduje z aspektem &quot;minExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content is not listed in the enumeration facet.</source>
-        <translation>Zawartość daty i czasu nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content does not match pattern facet.</source>
-        <translation>Zawartość daty i czasu koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Duration content does not match the maxInclusive facet.</source>
-        <translation>Wartość czasu trwania koliduje z aspektem &quot;maxInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the maxExclusive facet.</source>
-        <translation>Wartość czasu trwania koliduje z aspektem &quot;maxExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minInclusive facet.</source>
-        <translation>Wartość czasu trwania koliduje z aspektem &quot;minInclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minExclusive facet.</source>
-        <translation>Wartość czasu trwania koliduje z aspektem &quot;minExclusive&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content is not listed in the enumeration facet.</source>
-        <translation>Wartość czasu trwania nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content does not match pattern facet.</source>
-        <translation>Wartość czasu trwania koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Boolean content does not match pattern facet.</source>
-        <translation>Wartość boolowska koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Binary content does not match the length facet.</source>
-        <translation>Wartość binarna koliduje z aspektem &quot;length&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the minLength facet.</source>
-        <translation>Wartość binarna koliduje z aspektem &quot;minLength&quot;.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the maxLength facet.</source>
-        <translation>Wartość binarna koliduje z aspektem &quot;maxLength&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Binary content is not listed in the enumeration facet.</source>
-        <translation>Wartość binarna nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Invalid QName content: %1.</source>
-        <translation>Niepoprawna zawartość QName: %1.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>QName content is not listed in the enumeration facet.</source>
-        <translation>Zawartość QName nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>QName content does not match pattern facet.</source>
-        <translation>Zawartość QName koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Notation content is not listed in the enumeration facet.</source>
-        <translation>Zapis zawartości nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>List content does not match length facet.</source>
-        <translation>Zawartość listy koliduje z aspektem &quot;length&quot;.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match minLength facet.</source>
-        <translation>Zawartość listy koliduje z aspektem &quot;minLength&quot;.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match maxLength facet.</source>
-        <translation>Zawartość listy koliduje z aspektem &quot;maxLength&quot;.</translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>List content is not listed in the enumeration facet.</source>
-        <translation>Zawartość listy nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List content does not match pattern facet.</source>
-        <translation>Zawartość listy koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Union content is not listed in the enumeration facet.</source>
-        <translation>Zawartość unii nie widnieje na liście aspektu &quot;enumeration&quot;.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Union content does not match pattern facet.</source>
-        <translation>Zawartość unii koliduje z aspektem &quot;pattern&quot;.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Data of type %1 are not allowed to be empty.</source>
-        <translation>Dane typu %1 nie mogą być puste.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
-        <source>Element %1 is missing child element.</source>
-        <translation>Brak wymaganego podelementu w elemencie %1.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>There is one IDREF value with no corresponding ID: %1.</source>
-        <translation>Istnieje wartość IDREF bez odpowiadającej jej wartości ID: %1.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Loaded schema file is invalid.</source>
-        <translation>Załadowany plik nie jest poprawnym plikiem ze schematem.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains invalid data.</source>
-        <translation>%1 zawiera niepoprawne dane.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
-        <translation>Przestrzeń nazw &quot;xsi:schemaLocation&quot; %1 wystąpiła już wcześniej w dokumencie.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
-        <translation>&quot;xsi:noNamespaceSchemaLocation&quot; nie może wystąpić po pierwszym elemencie lub atrybucie który nie jest przestrzenią nazw.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>No schema defined for validation.</source>
-        <translation>Brak zdefiniowanego schematu dla walidacji.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>No definition for element %1 available.</source>
-        <translation>Brak dostępnej definicji dla elementu %1.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+49"/>
-        <location line="+142"/>
-        <source>Specified type %1 is not known to the schema.</source>
-        <translation>Podany typ %1 nie jest schematowi znany.</translation>
-    </message>
-    <message>
-        <location line="-176"/>
-        <source>Element %1 is not defined in this scope.</source>
-        <translation>Element %1 nie jest zdefiniowany w tym zakresie.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Declaration for element %1 does not exist.</source>
-        <translation>Brak deklaracji dla elementu %1.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Element %1 contains invalid content.</source>
-        <translation>Element %1 posiada niepoprawną zawartość.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>Element %1 is declared as abstract.</source>
-        <translation>Element %1 jest zadeklarowany jako abstrakcyjny.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not nillable.</source>
-        <translation>Element %1 nie jest zerowalny.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 contains invalid data: %2</source>
-        <translation>Atrybut %1 zawiera niepoprawne dane: %2</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Element contains content although it is nillable.</source>
-        <translation>Element posiada zawartość chociaż jest zerowalny.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Fixed value constraint not allowed if element is nillable.</source>
-        <translation>Ograniczenie stałej wartości jest niedozwolone gdy element jest zerowalny.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Specified type %1 is not validly substitutable with element type %2.</source>
-        <translation>Podany typ %1 nie jest poprawnie zastępowalny typem elementu %2.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 is not allowed to be abstract.</source>
-        <translation>Typ złożony %1 nie może być abstrakcyjny.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Element %1 contains not allowed attributes.</source>
-        <translation>Element %1 zawiera niedozwolone atrybuty.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+97"/>
-        <source>Element %1 contains not allowed child element.</source>
-        <translation>Element %1 zawiera niedozwolony podelement.</translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location line="+93"/>
-        <source>Content of element %1 does not match its type definition: %2.</source>
-        <translation>Zawartość elementu %1 nie pasuje do jego definicji typu: %2.</translation>
-    </message>
-    <message>
-        <location line="-85"/>
-        <location line="+92"/>
-        <location line="+41"/>
-        <source>Content of element %1 does not match defined value constraint.</source>
-        <translation>Zawartość elementu %1 nie pasuje do zdefiniowanego ograniczenia wartości.</translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <source>Element %1 contains not allowed child content.</source>
-        <translation>Element %1 zawiera niedozwolony podelement.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Element %1 contains not allowed text content.</source>
-        <translation>Element %1 zawiera niedozwolony text.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
-        <translation>Element %1 nie może zawierać innych elementów, ponieważ posiada on stałą zawartość.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is missing required attribute %2.</source>
-        <translation>Brak wymaganego atrybutu %2 w elemencie %1.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Attribute %1 does not match the attribute wildcard.</source>
-        <translation>Atrybut %1 nie pasuje do atrybutu dżokera.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Declaration for attribute %1 does not exist.</source>
-        <translation>Brak deklaracji atrybutu %1.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Element %1 contains two attributes of type %2.</source>
-        <translation>Element %1 posiada dwa atrybuty typu %2.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 contains invalid content.</source>
-        <translation>Atrybut %1 posiada niepoprawną zawartość.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 contains unknown attribute %2.</source>
-        <translation>Element %1 posiada nieznany atrybut %2.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match its type definition: %2.</source>
-        <translation>Zawartość atrybutu %1 nie pasuje do jego definicji typu: %2.</translation>
-    </message>
-    <message>
-        <location line="-38"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match defined value constraint.</source>
-        <translation>Zawartość elementu %1 nie pasuje do zdefiniowanego ograniczenia wartości.</translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Non-unique value found for constraint %1.</source>
-        <translation>Znaleziono nieunikatową wartość dla ograniczenia %1.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Key constraint %1 contains absent fields.</source>
-        <translation>Ograniczenie klucza %1 zawiera nieobecne pola.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Key constraint %1 contains references nillable element %2.</source>
-        <translation>Ograniczenie klucza %1 zawiera odwołania do elementu zerowalnego %2.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No referenced value found for key reference %1.</source>
-        <translation>Brak wartości do której odwołuje się klucz %1.</translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>More than one value found for field %1.</source>
-        <translation>Znaleziono więcej niż jedną wartość dla pola %1.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Field %1 has no simple type.</source>
-        <translation>Pole %1 nie posiada prostego typu.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>ID value &apos;%1&apos; is not unique.</source>
-        <translation>Wartość ID &quot;%1&quot; nie jest unikatowa.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
-        <translation>Atrybut &quot;%1&quot; zawiera niepoprawną zawartość QName: %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+64"/>
-        <source>No operand in an integer division, %1, can be %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The first operand in an integer division, %1, cannot be infinity (%2).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The second operand in a division, %1, cannot be zero (%2).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+216"/>
-        <source>An %1-attribute with value %2 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>An %1-attribute must have a valid %2 as value, which %3 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
-        <source>Circularity detected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+167"/>
-        <source>No comparisons can be done involving the type %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Operator %1 is not available between atomic values of type %2 and %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
-        <source>No casting is possible with %1 as the target type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>It is not possible to cast from %1 to %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Casting to %1 is not possible because it is an abstract type, and can therefore never be instantiated.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>It&apos;s not possible to cast the value %1 of type %2 to %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Failure when casting from %1 to %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
-        <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Attribute %1 cannot appear on the element %2. Only %3 is allowed, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, %4, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>XSL-T attributes on XSL-T elements must be in the null namespace, not in the XSL-T namespace which %1 is.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The attribute %1 must appear on element %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The element with local name %1 does not exist in XSL-T.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcomparingaggregator.cpp" line="+197"/>
-        <source>The first argument to %1 cannot be of type %2.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12642,7 +10033,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1325"/>
         <source>Edit contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12652,7 +10043,7 @@ to
         <translation type="unfinished">F2</translation>
     </message>
     <message>
-        <location line="+775"/>
+        <location line="+771"/>
         <source>Insert widget &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13671,7 +11062,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PluginDialog</name>
     <message>
-        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+68"/>
         <source>Components</source>
         <translation type="unfinished"></translation>
     </message>

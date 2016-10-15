@@ -168,7 +168,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2282"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
         <source>Close Tab</source>
         <translation>بستن برگه</translation>
     </message>
@@ -925,7 +925,7 @@
 <context>
     <name>FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1762"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="+1758"/>
         <source>Unexpected element &lt;%1&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1013,44 +1013,6 @@
         <source>XX Icon Selected off</source>
         <extracomment>Sample string to determinate the width for the first column of the list item property browser</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MAC_APPLICATION_MENU</name>
-    <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2191"/>
-        <source>Services</source>
-        <translation>خدمات</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide %1</source>
-        <translation> مخفی کردن %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hide Others</source>
-        <translation>مخفی کردن بقیه</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Show All</source>
-        <translation>نمایش همه</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Preferences...</source>
-        <translation>ترجیهات...</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Quit %1</source>
-        <translation>اتمام %1</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>About %1</source>
-        <translation>درباره %1</translation>
     </message>
 </context>
 <context>
@@ -1155,14 +1117,14 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1807"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1795"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
         <source>Socket operation timed out</source>
         <translation>پایان زمان عملیات سوکت</translation>
     </message>
     <message>
-        <location line="-1252"/>
-        <location line="+822"/>
+        <location line="-1240"/>
+        <location line="+810"/>
         <location line="+225"/>
         <source>Operation on socket is not supported</source>
         <translation>عملیات روی سوکت پشتیبانی نمی‌شود</translation>
@@ -1170,7 +1132,7 @@
     <message>
         <location line="-686"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+652"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>میزبان یافت نشد</translation>
@@ -1201,7 +1163,7 @@
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1247"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1236"/>
         <source>&amp;Select All</source>
         <translation>انتخاب &amp;همه</translation>
     </message>
@@ -1247,7 +1209,7 @@
         <translation>پنجره اصلی برنامه را فعال می‌کند</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+244"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>برنامهٔ «%1»نیازمند کیوت %2 است، کیوت %3 یافت شد.</translation>
     </message>
@@ -1257,7 +1219,7 @@
         <translation>خطای کتابخانه ناسازگار کیوت</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="-13"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+2086"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -1284,7 +1246,7 @@
 <context>
     <name>QColorDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1373"/>
+        <location filename="../src/gui/dialogs/qcolordialog.cpp" line="+1267"/>
         <source>Hu&amp;e:</source>
         <translation>&amp;شدت:</translation>
     </message>
@@ -1324,7 +1286,7 @@
         <translation>انتخاب رنگ</translation>
     </message>
     <message>
-        <location line="+181"/>
+        <location line="+131"/>
         <source>&amp;Basic colors</source>
         <translation>رن&amp;گ‌های پایه</translation>
     </message>
@@ -1371,7 +1333,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+24"/>
         <source>Displays this help.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1491,7 +1453,7 @@
 <context>
     <name>QDateTimeEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2289"/>
+        <location filename="../src/gui/widgets/qdatetimeedit.cpp" line="+2267"/>
         <source>AM</source>
         <translation>ق‌ظ</translation>
     </message>
@@ -2746,7 +2708,7 @@
 <context>
     <name>QDesignerPropertySheet</name>
     <message>
-        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+748"/>
+        <location filename="../src/designer/shared/qdesigner_propertysheet.cpp" line="+743"/>
         <source>Dynamic Properties</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2840,12 +2802,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+480"/>
-        <source>Done</source>
-        <translation>انجام شد</translation>
-    </message>
-    <message>
-        <location line="+127"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
         <source>What&apos;s This?</source>
         <translation>این چیست؟</translation>
     </message>
@@ -2986,19 +2943,13 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>حجم</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>نوع</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>نوع</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+3"/>
         <source>Date Modified</source>
         <translation>تاریخ تغییر</translation>
     </message>
@@ -3037,7 +2988,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QErrorMessage</name>
     <message>
-        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+193"/>
+        <location filename="../src/gui/dialogs/qerrormessage.cpp" line="+164"/>
         <source>Debug Message:</source>
         <translation>پیغام اشکال‌زدایی:</translation>
     </message>
@@ -3052,7 +3003,7 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>خطای مهلک:</translation>
     </message>
     <message>
-        <location line="+195"/>
+        <location line="+192"/>
         <source>&amp;Show this message again</source>
         <translation>این پیغام را &amp;دوباره نمایش بده</translation>
     </message>
@@ -3109,7 +3060,7 @@ Container pages should only be added by specifying them in XML returned by the d
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+557"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+527"/>
         <source>Find Directory</source>
         <translation>یافتن پوشه</translation>
     </message>
@@ -3125,12 +3076,12 @@ Container pages should only be added by specifying them in XML returned by the d
     </message>
     <message>
         <location line="+15"/>
-        <location line="+540"/>
+        <location line="+515"/>
         <source>All Files (*)</source>
         <translation>تمام پرونده‌ها (*)</translation>
     </message>
     <message>
-        <location line="-530"/>
+        <location line="-505"/>
         <source>Show </source>
         <translation>نمایش</translation>
     </message>
@@ -3156,25 +3107,25 @@ Container pages should only be added by specifying them in XML returned by the d
     </message>
     <message>
         <location line="+5"/>
-        <location line="+699"/>
+        <location line="+674"/>
         <source>Directory:</source>
         <translation>پوشه:</translation>
     </message>
     <message>
-        <location line="-697"/>
-        <location line="+703"/>
+        <location line="-672"/>
+        <location line="+678"/>
         <source>File &amp;name:</source>
         <translation>&amp;نام پرونده:</translation>
     </message>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1551"/>
+        <location line="+1480"/>
         <source>&amp;Open</source>
         <translation>&amp;بازکردن</translation>
     </message>
     <message>
-        <location line="-1606"/>
+        <location line="-1535"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;ذخیره</translation>
@@ -3191,8 +3142,8 @@ Container pages should only be added by specifying them in XML returned by the d
         <translation>&amp;انتخاب</translation>
     </message>
     <message>
-        <location line="+758"/>
-        <location line="+866"/>
+        <location line="+693"/>
+        <location line="+860"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -3201,7 +3152,7 @@ Please verify the correct directory name was given.</source>
 لطفا بررسی کنید که نام مسیر به‌درستی داده شده باشد.</translation>
     </message>
     <message>
-        <location line="-832"/>
+        <location line="-826"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 از قبل موجود است.
@@ -3217,7 +3168,7 @@ Please verify the correct file name was given.</source>
 لطفا درستی نام پرونده داده شده را بررسی کنید.</translation>
     </message>
     <message>
-        <location line="+462"/>
+        <location line="+456"/>
         <source>New Folder</source>
         <translation>پوشهٔ جدید</translation>
     </message>
@@ -3244,7 +3195,7 @@ Do you want to delete it anyway?</source>
         <translation>مکان‌های اخیر</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+442"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
         <source>Remove</source>
         <translation>حذف</translation>
     </message>
@@ -3254,7 +3205,7 @@ Do you want to delete it anyway?</source>
         <translation>رایانه من</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+483"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
         <source>Drive</source>
         <translation>درایو</translation>
     </message>
@@ -3265,43 +3216,29 @@ Do you want to delete it anyway?</source>
         <translation>پرونده</translation>
     </message>
     <message>
-        <location line="+5"/>
-        <source>File Folder</source>
-        <comment>Match Windows Explorer</comment>
-        <translation>پوشه پرونده</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Folder</source>
         <comment>All other platforms</comment>
         <translation>پوشه</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Alias</source>
-        <comment>Mac OS X Finder</comment>
-        <translation>نام مستعار</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>Shortcut</source>
         <comment>All other platforms</comment>
         <translation>میان‌بر</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+4"/>
         <source>Unknown</source>
         <translation>ناشناخته</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.ui"/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Look in:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Back</source>
         <translation type="unfinished">Back</translation>
     </message>
@@ -3312,7 +3249,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Forward</source>
         <translation type="unfinished">Forward</translation>
     </message>
@@ -3323,7 +3259,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Parent Directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3334,7 +3269,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Create New Folder</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3345,7 +3279,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>List View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3356,7 +3289,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Detail View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3367,7 +3299,6 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location/>
-        <location filename="../src/gui/dialogs/qfiledialog_embedded.ui"/>
         <source>Files of type:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3375,8 +3306,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFileSystemModel</name>
     <message>
-        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+482"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+761"/>
+        <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
         <source>%1 TB</source>
         <translation>%1 ترابایت</translation>
     </message>
@@ -3404,7 +3335,7 @@ Do you want to delete it anyway?</source>
         <translation>%1 بایت</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+70"/>
         <source>Invalid filename</source>
         <translation>نام نامعتبر پرونده</translation>
     </message>
@@ -3441,12 +3372,7 @@ Do you want to delete it anyway?</source>
         <translation>تاریخ تغییر</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+261"/>
-        <source>My Computer</source>
-        <translation>رایانه من</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
         <source>Computer</source>
         <translation>رایانه</translation>
     </message>
@@ -3459,56 +3385,56 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDatabase</name>
     <message>
-        <location filename="../src/gui/text/qfontdatabase.cpp" line="+98"/>
-        <location line="+1205"/>
+        <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
+        <location line="+1140"/>
         <source>Normal</source>
         <translation>عادی</translation>
     </message>
     <message>
-        <location line="-1202"/>
+        <location line="-1137"/>
         <location line="+12"/>
-        <location line="+1178"/>
+        <location line="+1113"/>
         <source>Bold</source>
         <translation>توپر</translation>
     </message>
     <message>
-        <location line="-1187"/>
-        <location line="+1189"/>
+        <location line="-1122"/>
+        <location line="+1124"/>
         <source>Demi Bold</source>
         <translation>نیمه‌توپر</translation>
     </message>
     <message>
-        <location line="-1186"/>
+        <location line="-1121"/>
         <location line="+18"/>
-        <location line="+1164"/>
+        <location line="+1099"/>
         <source>Black</source>
         <translation>سیاه</translation>
     </message>
     <message>
-        <location line="-1174"/>
+        <location line="-1109"/>
         <source>Demi</source>
         <translation>نیمه</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1174"/>
+        <location line="+1109"/>
         <source>Light</source>
         <translation>سبک</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1027"/>
+        <location line="-959"/>
+        <location line="+962"/>
         <source>Italic</source>
         <translation>کج</translation>
     </message>
     <message>
-        <location line="-1024"/>
-        <location line="+1026"/>
+        <location line="-959"/>
+        <location line="+961"/>
         <source>Oblique</source>
         <translation>اریب</translation>
     </message>
     <message>
-        <location line="+729"/>
+        <location line="+708"/>
         <source>Any</source>
         <translation>همه</translation>
     </message>
@@ -3681,12 +3607,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFontDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+180"/>
+        <location filename="../src/gui/dialogs/qfontdialog.cpp" line="+175"/>
         <source>Select Font</source>
         <translation>انتخاب فونت</translation>
     </message>
     <message>
-        <location line="+566"/>
+        <location line="+555"/>
         <source>&amp;Font</source>
         <translation>&amp;فونت</translation>
     </message>
@@ -4050,8 +3976,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+2032"/>
-        <location filename="../src/core/kernel/qsystemerror.cpp" line="+91"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>حق دسترسی رد شد</translation>
     </message>
@@ -4074,7 +4000,7 @@ Do you want to delete it anyway?</source>
         <translation>فضایی در دستگاه باقی نمانده است</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1615"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
         <source>Unknown error</source>
         <translation>خطای ناشناخته</translation>
     </message>
@@ -4082,7 +4008,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QInputContext</name>
     <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+242"/>
+        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
         <source>XIM</source>
         <translation>XIM</translation>
     </message>
@@ -4090,16 +4016,6 @@ Do you want to delete it anyway?</source>
         <location line="+23"/>
         <source>XIM input method</source>
         <translation>روش ورودی XIM</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Windows input method</source>
-        <translation>روش ورودی ویندوز</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Mac OS X input method</source>
-        <translation>روش ورودی مکینتاش</translation>
     </message>
 </context>
 <context>
@@ -4191,8 +4107,8 @@ Do you want to delete it anyway?</source>
         <translation>داده اعتبارسنجی افزونه در «%1» تطابق ندارد</translation>
     </message>
     <message>
-        <location line="+263"/>
-        <location line="+127"/>
+        <location line="+221"/>
+        <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>کتابخانه اشتراکی پیدا نشد.</translation>
@@ -4603,7 +4519,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1790"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
         <source>Corner Toolbar</source>
         <translation>نوار ابزار گوشه</translation>
     </message>
@@ -4611,7 +4527,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+133"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+125"/>
         <source>Show Details...</source>
         <translation>نمایش جزئیات...</translation>
     </message>
@@ -4621,18 +4537,7 @@ Do you want to delete it anyway?</source>
         <translation>مخفی کردن جزئیات...</translation>
     </message>
     <message>
-        <location line="+247"/>
-        <location line="+817"/>
-        <source>OK</source>
-        <translation>تأیید</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Help</source>
-        <translation>کمک</translation>
-    </message>
-    <message>
-        <location line="+480"/>
+        <location line="+1355"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;دربارهٔ کیوت&lt;/h3&gt;&lt;p&gt;این برنامه از کیوت نسخهٔ %1 استفاده می‌کند.&lt;/p&gt;</translation>
     </message>
@@ -4812,7 +4717,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessDataBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+94"/>
+        <location filename="../src/network/access/qnetworkreplydataimpl.cpp" line="+81"/>
         <source>Invalid URI: %1</source>
         <translation>نشانی اینترنتی نامعتبر: %1</translation>
     </message>
@@ -4838,14 +4743,14 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessFileBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+108"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+79"/>
+        <location filename="../src/network/access/qnetworkaccessfilebackend.cpp" line="+107"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+74"/>
         <source>Request for opening non-local file %1</source>
         <translation>درخواست برای باز‌کردن پروندهٔ غیر محلی %1</translation>
     </message>
     <message>
-        <location line="+125"/>
-        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+23"/>
+        <location line="+124"/>
+        <location filename="../src/network/access/qnetworkreplyfileimpl.cpp" line="+22"/>
         <source>Cannot open %1: Path is a directory</source>
         <translation>نمی‌توان %1 را باز کرد: مسیر یک پوشه است</translation>
     </message>
@@ -5549,12 +5454,12 @@ Do you want to overwrite it?</source>
         <translation>پیکربندی صفحه</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+249"/>
+        <location filename="../src/gui/dialogs/qprintpreviewdialog.cpp" line="+246"/>
         <source>%1%</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+81"/>
         <source>Print Preview</source>
         <translation>پیش‌نمایش چاپ</translation>
     </message>
@@ -5634,12 +5539,7 @@ Do you want to overwrite it?</source>
         <translation>پیکربندی صفحه</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Close</source>
-        <translation>بستن</translation>
-    </message>
-    <message>
-        <location line="+148"/>
+        <location line="+150"/>
         <source>Export to PDF</source>
         <translation>خروجی گرفتن به PDF</translation>
     </message>
@@ -5821,29 +5721,28 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+883"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>خطای خواندن از پردازش</translation>
     </message>
     <message>
         <location line="+47"/>
-        <location line="+844"/>
         <source>Error writing to process</source>
         <translation>خطای نوشتن روی پردازش</translation>
     </message>
     <message>
-        <location line="-775"/>
+        <location line="+63"/>
         <source>Process crashed</source>
         <translation>پردازش خراب‌ شد</translation>
     </message>
     <message>
-        <location line="+977"/>
+        <location line="+909"/>
         <source>No program defined</source>
         <translation>هیچ برنامه‌ای تعریف نشده است</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+430"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
         <source>Could not open input redirection for reading</source>
         <translation>نمی‌توان تغییر مسیر ورودی را برای خواندن باز کرد</translation>
     </message>
@@ -5853,12 +5752,12 @@ Do you want to overwrite it?</source>
         <translation>نمی‌توان تغییر مسیر خروجی را برای نوشتن باز کرد</translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+220"/>
         <source>Resource error (fork failure): %1</source>
         <translation>خطای منبع (خرابی انشعاب): %1</translation>
     </message>
     <message>
-        <location line="+346"/>
+        <location line="+249"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -6362,7 +6261,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QScrollBar</name>
     <message>
-        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+408"/>
+        <location filename="../src/gui/widgets/qscrollbar.cpp" line="+402"/>
         <source>Scroll here</source>
         <translation>لغزش به اینجا</translation>
     </message>
@@ -6447,7 +6346,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+262"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: نمی‌توان کلید را روی قفل تنظیم کرد</translation>
     </message>
@@ -6457,8 +6356,8 @@ Do you want to overwrite it?</source>
         <translation>%1: اندازهٔ ساخت کمتر از صفر است</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+151"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+176"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+174"/>
         <source>%1: unable to lock</source>
         <translation>%1: نمی‌توان قفل کرد</translation>
     </message>
@@ -6538,7 +6437,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QShortcut</name>
     <message>
-        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+396"/>
+        <location filename="../src/gui/kernel/qkeysequence.cpp" line="+309"/>
         <source>Space</source>
         <extracomment>This and all following &quot;incomprehensible&quot; strings in QShortcut context are key names. Please use the localized names appearing on actual keyboards or whatever is commonly used.</extracomment>
         <translation>Space</translation>
@@ -7609,36 +7508,36 @@ Do you want to overwrite it?</source>
         <translation>Hangul Special</translation>
     </message>
     <message>
-        <location line="+601"/>
-        <location line="+135"/>
+        <location line="+477"/>
+        <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+138"/>
+        <location line="-86"/>
+        <location line="+90"/>
         <source>Shift</source>
         <translation>Shift</translation>
     </message>
     <message>
-        <location line="-137"/>
-        <location line="+135"/>
+        <location line="-89"/>
+        <location line="+87"/>
         <source>Alt</source>
         <translation>Alt</translation>
     </message>
     <message>
-        <location line="-134"/>
-        <location line="+130"/>
+        <location line="-86"/>
+        <location line="+82"/>
         <source>Meta</source>
         <translation>Meta</translation>
     </message>
     <message>
-        <location line="-40"/>
+        <location line="-11"/>
         <source>+</source>
         <translation>+</translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+31"/>
         <source>F%1</source>
         <translation>F%1</translation>
     </message>
@@ -7875,7 +7774,7 @@ Do you want to overwrite it?</source>
         <translation>خطای ناشناخته</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+290"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+279"/>
         <source>Error creating SSL context (%1)</source>
         <translation>خطای ایجاد زمینهٔ SSL (%1)</translation>
     </message>
@@ -7915,7 +7814,7 @@ Do you want to overwrite it?</source>
         <translation>خطای ایجاد جلسهٔ SSL: %1</translation>
     </message>
     <message>
-        <location line="+369"/>
+        <location line="+268"/>
         <source>Unable to write data: %1</source>
         <translation>نمی‌توان روی داده نوشت: %1</translation>
     </message>
@@ -8011,7 +7910,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QStandardPaths</name>
     <message>
-        <location filename="../src/core/io/qstandardpaths.cpp" line="+430"/>
+        <location filename="../src/core/io/qstandardpaths.cpp" line="+373"/>
         <source>Desktop</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8467,7 +8366,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWhatsThisAction</name>
     <message>
-        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+518"/>
+        <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
         <source>What&apos;s This?</source>
         <translation>این چیست؟</translation>
     </message>
@@ -8475,7 +8374,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5654"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5484"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -8483,7 +8382,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWizard</name>
     <message>
-        <location filename="../src/gui/dialogs/qwizard.cpp" line="+679"/>
+        <location filename="../src/gui/dialogs/qwizard.cpp" line="+598"/>
         <source>Go Back</source>
         <translation>برو عقب</translation>
     </message>
@@ -8498,12 +8397,7 @@ Do you want to overwrite it?</source>
         <translation>ادامه</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>&amp;Next</source>
-        <translation>بع&amp;دی</translation>
-    </message>
-    <message>
-        <location line="+0"/>
+        <location line="+2"/>
         <source>&amp;Next &gt;</source>
         <translation>بع&amp;دی &gt;</translation>
     </message>
@@ -8556,7 +8450,7 @@ Do you want to overwrite it?</source>
         <translation>بازیابی به پایین</translation>
     </message>
     <message>
-        <location line="+959"/>
+        <location line="+917"/>
         <source>&amp;Restore</source>
         <translation>با&amp;زیابی</translation>
     </message>
@@ -8724,34 +8618,6 @@ Do you want to overwrite it?</source>
         <location line="+1"/>
         <source>error in the text declaration of an external entity</source>
         <translation>خطا در بیان متنی یک موجودیت خارجی</translation>
-    </message>
-</context>
-<context>
-    <name>QXmlPatternistCLI</name>
-    <message>
-        <location filename="../src/xmlpatterns/api/qcoloringmessagehandler.cpp" line="+87"/>
-        <source>Warning in %1, at line %2, column %3: %4</source>
-        <translation>اخطار در %1 ،در خط %2 ، ستون %3: %4</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Warning in %1: %2</source>
-        <translation>اخطار در %1: %2</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Unknown location</source>
-        <translation>موقعیت ناشناخته</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Error %1 in %2, at line %3, column %4: %5</source>
-        <translation>خطای %1 در %2 ،در خط %3 ، ستون %4: %5</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Error %1 in %2: %3</source>
-        <translation>خطای %1 در %2: %3</translation>
     </message>
 </context>
 <context>
@@ -9250,2476 +9116,6 @@ to
     <message>
         <location line="+252"/>
         <source>Select Resource</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QtXmlPatterns</name>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreeresourceloader.cpp" line="+344"/>
-        <source>%1 is an unsupported encoding.</source>
-        <translation>%1 یک کدگذاری پشتیبانی نشده است.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains octets which are disallowed in the requested encoding %2.</source>
-        <translation>%1 شامل هشتایی‌هایی است که در کدگذاری درخواست شده توسط %2 مجاز نیستند.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>The codepoint %1, occurring in %2 using encoding %3, is an invalid XML character.</source>
-        <translation>کد‌نقطهٔ %1، در %2 واقع می‌شود از کدگذاری %3 استفاده می‌کند، یک نویسهٔ XML نامعتبر است.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qiodevicedelegate.cpp" line="+83"/>
-        <source>Network timeout.</source>
-        <translation>وقفهٔ زمانی شبکه.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/api/qxmlserializer.cpp" line="+336"/>
-        <source>Element %1 can&apos;t be serialized because it appears outside the document element.</source>
-        <translation>عنصر %1 نمی‌تواند سریالیزه شود زیرا خارج از عنصر سند به نظر می‌رسد.</translation>
-    </message>
-    <message>
-        <location line="+60"/>
-        <source>Attribute %1 can&apos;t be serialized because it appears at the top level.</source>
-        <translation>صفت %1 نمی‌تواند مرتب شود زیرا در سطح بالا به نظر می‌رسد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractdatetime.cpp" line="+80"/>
-        <source>Year %1 is invalid because it begins with %2.</source>
-        <translation>سال %1 نامعتبر است زیرا با %2 شروع می‌شود.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Day %1 is outside the range %2..%3.</source>
-        <translation>روز %1 خارج از دامنهٔ %2 است..%3.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Month %1 is outside the range %2..%3.</source>
-        <translation>ماه %1 خارج از دامنهٔ %2 است..%3.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Overflow: Can&apos;t represent date %1.</source>
-        <translation>سرریز: نمی‌توان تاریخ %1 را نمایش داد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Day %1 is invalid for month %2.</source>
-        <translation>روز %1 برای ماه %2 نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>Time 24:%1:%2.%3 is invalid. Hour is 24, but minutes, seconds, and milliseconds are not all 0; </source>
-        <translation>زمان ۲۴ ساعتی: %1 %2 %3 نامعتبر است. زمان ۲۴ ساعتی است اما دقیقه، ثانیه و میلی‌ثانیه صفر نیستند؛</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Time %1:%2:%3.%4 is invalid.</source>
-        <translation>زمان %1:%2:%3.%4 نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+115"/>
-        <source>Overflow: Date can&apos;t be represented.</source>
-        <translation>سرریز: نمی‌توان تاریخ را نمایش داد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractduration.cpp" line="+99"/>
-        <location line="+15"/>
-        <source>At least one component must be present.</source>
-        <translation>حداقل یک جزء باید نمایش داده شود.</translation>
-    </message>
-    <message>
-        <location line="-7"/>
-        <source>At least one time component must appear after the %1-delimiter.</source>
-        <translation>حداقل یک جزء زمان باید بعد از حائل‌ %1 ظاهر شود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qanyuri_p.h" line="+132"/>
-        <source>%1 is not a valid value of type %2.</source>
-        <translation>%1 یک مقدار معتبر از نوع %2 نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomiccasters_p.h" line="+223"/>
-        <source>When casting to %1 from %2, the source value cannot be %3.</source>
-        <translation>هنگام تبدیل از %2 به %1، مقدار مبدأ نمی‌تواند %3 شود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicmathematicians.cpp" line="+65"/>
-        <source>Integer division (%1) by zero (%2) is undefined.</source>
-        <translation>تقسیم صحیح (%1) بر صفر (%2) تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Division (%1) by zero (%2) is undefined.</source>
-        <translation>تقسیم (%1) بر صفر (%2) تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Modulus division (%1) by zero (%2) is undefined.</source>
-        <translation>باقیمانده‌گیری (%1) از صفر (%2) تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+122"/>
-        <location line="+32"/>
-        <source>Dividing a value of type %1 by %2 (not-a-number) is not allowed.</source>
-        <translation>تقسیم مقادیر از نوع %1 بر %2 (غیر عددی) مجاز نیست.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>Dividing a value of type %1 by %2 or %3 (plus or minus zero) is not allowed.</source>
-        <translation>تقسیم مقادیر از نوع %1 بر %2 یا %3 (+  یا - صفر) مجاز نیست.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Multiplication of a value of type %1 by %2 or %3 (plus or minus infinity) is not allowed.</source>
-        <translation>ضرب مقادیر از نوع %1 در %2 یا %3 (+  یا - بی‌نهایت) مجاز نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qatomicvalue.cpp" line="+79"/>
-        <source>A value of type %1 cannot have an Effective Boolean Value.</source>
-        <translation>مقدار از نوع %1 نمی‌تواند مقدار مؤثر منطقی داشته‌باشد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qboolean.cpp" line="+78"/>
-        <source>Effective Boolean Value cannot be calculated for a sequence containing two or more atomic values.</source>
-        <translation>مقدار مؤثر بولین نمی‌تواند برای رشته‌ای با دو یا چند مقدار اتمی محاسبه شود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qderivedinteger_p.h" line="+402"/>
-        <source>Value %1 of type %2 exceeds maximum (%3).</source>
-        <translation>مقدار %1 از نوع %2 از حد ماکزیمم (%3) تجاوز می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Value %1 of type %2 is below minimum (%3).</source>
-        <translation>مقدار %1 از نوع %2 زیر حد کمینه (%3) است.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qhexbinary.cpp" line="+91"/>
-        <source>A value of type %1 must contain an even number of digits. The value %2 does not.</source>
-        <translation>یک مقدار از نوع %1 باید تعداد زوج اعداد باشد. مقدار %2 این طور نیست.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>%1 is not valid as a value of type %2.</source>
-        <translation>%1 به عنوان مقداری از نوع %2 معتبر نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qapplytemplate.cpp" line="+119"/>
-        <source>Ambiguous rule match.</source>
-        <translation>قاعدهٔ تطبیق مبهم.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qarithmeticexpression.cpp" line="+207"/>
-        <source>Operator %1 cannot be used on type %2.</source>
-        <translation>عملگر %1 روی نوع %2 قابل اجرا نیست.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Operator %1 cannot be used on atomic values of type %2 and %3.</source>
-        <translation>عملگر %1 روی مقادیر اتمی از نوع %2 و %3 قابل اجرا نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qattributenamevalidator.cpp" line="+66"/>
-        <source>The namespace URI in the name for a computed attribute cannot be %1.</source>
-        <translation>نام فضای‌نامی URL برای یک صفت محاسبه شده نمی‌تواند %1 باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The name for a computed attribute cannot have the namespace URI %1 with the local name %2.</source>
-        <translation>نام صفت محاسبه شده نمی‌تواند فضای نامی URL %1 را با نام محلی %2 داشته باشد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastas.cpp" line="+88"/>
-        <source>Type error in cast, expected %1, received %2.</source>
-        <translation>خطای نوع در تبدیل، مورد انتظار %1، دریافت شده %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>When casting to %1 or types derived from it, the source value must be of the same type, or it must be a string literal. Type %2 is not allowed.</source>
-        <translation>هنگامی که به %1 تبدیل می‌کنیم با انواع از آن مشتق می‌شوند، مقدار اولیه باید همان یا رشته باشد. نوع %2 مجاز نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcommentconstructor.cpp" line="+67"/>
-        <source>A comment cannot contain %1</source>
-        <translation>یک توضیح نمی‌تواند شامل %1 باشد</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>A comment cannot end with a %1.</source>
-        <translation>یک توضیح نمی‌تواند با یک %1 تمام شود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomputednamespaceconstructor.cpp" line="+69"/>
-        <source>In a namespace constructor, the value for a namespace cannot be an empty string.</source>
-        <translation>در یک سازندهٔ فضای‌نامی، مقدار فضای‌نامی نمی‌تواند یک رشتهٔ خالی باشد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>The prefix must be a valid %1, which %2 is not.</source>
-        <translation>پیشوند باید یک %1 معتبر باشد، که %2 نیست.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>The prefix %1 cannot be bound.</source>
-        <translation>پیشوند %1 نمی‌تواند مقید شود.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Only the prefix %1 can be bound to %2 and vice versa.</source>
-        <translation>فقط پیشوند %1 می‌تواند به %2 مقید شود و برعکس.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qdocumentcontentvalidator.cpp" line="+86"/>
-        <source>An attribute node cannot be a child of a document node. Therefore, the attribute %1 is out of place.</source>
-        <translation>یک گرهٔ صفت نمی‌تواند فرزند یک گرهٔ سند باشد. بنابراین، صفت %1 خارج از مکان است.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qexpressionfactory.cpp" line="+162"/>
-        <source>A library module cannot be evaluated directly. It must be imported from a main module.</source>
-        <translation>یک ماژول کتابخانه‌ای نمی‌تواند به تنهایی بررسی شود. آن باید از یک ماژول اصلی وارد شود.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No template by name %1 exists.</source>
-        <translation>هیچ قالبی با نام %1 وجود ندارد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qgenericpredicate.cpp" line="+106"/>
-        <source>A value of type %1 cannot be a predicate. A predicate must have either a numeric type or an Effective Boolean Value type.</source>
-        <translation>یک نوع نامعتبر %1 نمی‌تواند مستند باشد. یک مستند باید یک نوع عددی یا یک نوع مؤثر بولین داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>A positional predicate must evaluate to a single numeric value.</source>
-        <translation>یک مستند وابسته به موقعیت باید نسبت به یک مقدار عددی تک ارزیابی شود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qncnameconstructor_p.h" line="+113"/>
-        <source>The target name in a processing instruction cannot be %1 in any combination of upper and lower case. Therefore, %2 is invalid.</source>
-        <translation>نام هدف در دستورالعمل پردازش نمی‌تواند در هر ترکیب از حروف بزرگ و کوچک %1 باشد. بنابراین، %2 نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>%1 is not a valid target name in a processing instruction. It must be a %2 value, e.g. %3.</source>
-        <translation>%1 یک نام هدف معتبر در دستورالعمل پردازش نیست. آن باید یک مقدار %2 باشد، برای مثال %3.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qpath.cpp" line="+109"/>
-        <source>The last step in a path must contain either nodes or atomic values. It cannot be a mixture between the two.</source>
-        <translation>آخرین گام در یک مسیر باید شامل گره یا مقدار اتمی باشد. آن نمی‌تواند ترکیبی بین هردو باشد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qprocessinginstructionconstructor.cpp" line="+84"/>
-        <source>The data of a processing instruction cannot contain the string %1</source>
-        <translation>دادهٔ دستورالعمل پردازش نمی‌تواند شامل رشتهٔ %1 باشد</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor.cpp" line="+82"/>
-        <source>No namespace binding exists for the prefix %1</source>
-        <translation>هیچ مقید‌سازی فضای‌نامی برای پیشوند %1 وجود ندارد</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qqnameconstructor_p.h" line="+156"/>
-        <source>No namespace binding exists for the prefix %1 in %2</source>
-        <translation>هیچ مقید‌سازی فضای‌نامی برای پیشوند %1 در %2 وجود ندارد</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+69"/>
-        <source>%1 is an invalid %2</source>
-        <translation>%1 یک %2 نامعتبر است</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qtemplate.cpp" line="+74"/>
-        <source>The parameter %1 is passed, but no corresponding %2 exists.</source>
-        <translation>پارامتر %1 پاس شده است، اما مترادف %2 وجود ندارد.</translation>
-    </message>
-    <message>
-        <location line="+71"/>
-        <source>The parameter %1 is required, but no corresponding %2 is supplied.</source>
-        <translation>پارامتر %1 مورد نیاز است است، اما مترادف %2 تأمین نشده است.</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../src/xmlpatterns/functions/qabstractfunctionfactory.cpp" line="+77"/>
-        <source>%1 takes at most %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 حداکثر %n آرگومان می‌گیرد. بنابراین %2 نامعتبر است.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <location line="+11"/>
-        <source>%1 requires at least %n argument(s). %2 is therefore invalid.</source>
-        <translation>
-            <numerusform>%1 لااقل %n آرگومان نیاز دارد. بنابراین %2 نامعتبر است.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qaggregatefns.cpp" line="+120"/>
-        <source>The first argument to %1 cannot be of type %2. It must be a numeric type, xs:yearMonthDuration or xs:dayTimeDuration.</source>
-        <translation>اولین آرگومان به %1 نمی‌تواند از نوع %2 باشد. آن باید یک نوع عددی، xs:yearMonthDuratin یا xs::dayTimeDuration باشد.</translation>
-    </message>
-    <message>
-        <location line="+74"/>
-        <source>The first argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>اولین آرگومان به %1 نمی‌تواند از نوع %2 باشد. آن باید از نوع %3، %4 یا %5 باشد.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>The second argument to %1 cannot be of type %2. It must be of type %3, %4, or %5.</source>
-        <translation>دومین آرگومان به %1 نمی‌تواند از نوع %2 باشد. آن باید از نوع %3، %4 یا %5 باشد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qassemblestringfns.cpp" line="+88"/>
-        <source>%1 is not a valid XML 1.0 character.</source>
-        <translation>%1 یک کاراکتر معتبر 1.0 XML نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcontextnodechecker.cpp" line="+54"/>
-        <source>The root node of the second argument to function %1 must be a document node. %2 is not a document node.</source>
-        <translation>گره ریشهٔ دومین آرگومان به تابع %1 باید یک گره سند باشد. %2 یک گره سند نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qdatetimefn.cpp" line="+86"/>
-        <source>If both values have zone offsets, they must have the same zone offset. %1 and %2 are not the same.</source>
-        <translation>اگر هر دو مقدار انحراف ناحیه‌ای دارند انحراف ناحیه‌ای آن‌ها باید برابر باشد. %1 و %2 یکی نیستند.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qerrorfn.cpp" line="+61"/>
-        <source>%1 was called.</source>
-        <translation>%1 فراخوانی شده بود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternmatchingfns.cpp" line="+94"/>
-        <source>%1 must be followed by %2 or %3, not at the end of the replacement string.</source>
-        <translation>%1 باید با %2 یا %3 همراه شود، نه در پایان رشتهٔ جایگزین.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>In the replacement string, %1 must be followed by at least one digit when not escaped.</source>
-        <translation>در رشتهٔ جایگزین، %1 هنگامی که شناسهٔ فرار نیست باید حداقل با یک رقم همراه شود.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>In the replacement string, %1 can only be used to escape itself or %2, not %3</source>
-        <translation>در رشتهٔ جایگزین، %1 فقط باید برای فرار از %2 یا خودش استفاده شود، نه %3</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qpatternplatform.cpp" line="+92"/>
-        <source>%1 matches newline characters</source>
-        <translation>%1 با کاراکتر خط‌جدید مطابقت دارد</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>%1 and %2 match the start and end of a line.</source>
-        <translation>%1 و %2 شروع و پایان یک خط را جور می‌کنند.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Matches are case insensitive</source>
-        <translation>تطابق‌ها حساس به حالت هستند</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Whitespace characters are removed, except when they appear in character classes</source>
-        <translation>کاراکتر‌های فضای خالی حذف می‌شوند به جز مواردی که در رده‌های کاراکتر پیدا شوند</translation>
-    </message>
-    <message>
-        <location line="+100"/>
-        <source>%1 is an invalid regular expression pattern: %2</source>
-        <translation>%1 یک الگوی عبارت منظم نامعتبر است: %2</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>%1 is an invalid flag for regular expressions. Valid flags are:</source>
-        <translation>%1 یک پرچم نامعتبر برای عبارات منظم است. پرچم‌های معتبر این‌ها هستند:</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qqnamefns.cpp" line="+17"/>
-        <source>If the first argument is the empty sequence or a zero-length string (no namespace), a prefix cannot be specified. Prefix %1 was specified.</source>
-        <translation>اگر اولین آرگومان خالی یا یک رشته با طول صفر باشد، یک پیشوند نمی‌تواند مشخص شود. پیشوند %1 مشخص شده بود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencefns.cpp" line="+346"/>
-        <source>It will not be possible to retrieve %1.</source>
-        <translation>امکان بازیابی %1 وجود ندارد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qsequencegeneratingfns.cpp" line="+282"/>
-        <source>The default collection is undefined</source>
-        <translation>مجموعهٔ پیش‌فرض تعریف نشده است</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>%1 cannot be retrieved</source>
-        <translation>نمی‌توان %1 را بازیابی کرد</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qstringvaluefns.cpp" line="+252"/>
-        <source>The normalization form %1 is unsupported. The supported forms are %2, %3, %4, and %5, and none, i.e. the empty string (no normalization).</source>
-        <translation>نرمال‌سازی از %1 پشتیبانی نشده است. شکل‌های پشتیبانی شده %2، %3، %4، %5 و رشته خالی هستند.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qtimezonefns.cpp" line="+87"/>
-        <source>A zone offset must be in the range %1..%2 inclusive. %3 is out of range.</source>
-        <translation>یک انحراف ناحیه‌ای باید شامل محدودهٔ %1 تا %2 باشد. %3 خارج از محدوده است.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1 is not a whole number of minutes.</source>
-        <translation>%1 تمام عدد دقیقه‌ها نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qunparsedtextfn.cpp" line="+65"/>
-        <source>The URI cannot have a fragment</source>
-        <translation>URL نمی‌تواند شکستگی داشته باشد</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qcardinalityverifier.cpp" line="+58"/>
-        <source>Required cardinality is %1; got cardinality %2.</source>
-        <translation>اصلیت %1 درخواست شد؛ %2 حاصل شد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/janitors/qitemverifier.cpp" line="+67"/>
-        <source>The item %1 did not match the required type %2.</source>
-        <translation>آیتم %1 با نوع موردنیاز %2 مطابقت ندارد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qparsercontext.cpp" line="+93"/>
-        <source>The variable %1 is unused</source>
-        <translation>متغیر %1 استفاده نشده است</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qquerytransformparser.cpp" line="+295"/>
-        <source>W3C XML Schema identity constraint selector</source>
-        <translation>موجودیت طرح XML W3C انتخاب‌کننده را محدود می‌کند</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>W3C XML Schema identity constraint field</source>
-        <translation>موجودیت طرح XML W3C رشته را محدود می‌کند</translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>A construct was encountered which is disallowed in the current language(%1).</source>
-        <translation>برخورد با ساختار غیرمجاز در زبان جاری (%1)..</translation>
-    </message>
-    <message>
-        <location line="+50"/>
-        <location line="+7323"/>
-        <source>%1 is an unknown schema type.</source>
-        <translation>%1 نوع ناشناختهٔ طرح نوع.</translation>
-    </message>
-    <message>
-        <location line="-7254"/>
-        <source>A template with name %1 has already been declared.</source>
-        <translation>یک قالب با نام %1 هم‌اکنون بیان شده است.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>%1 is not a valid numeric literal.</source>
-        <translation>%1 یک لفظ عددی نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Only one %1 declaration can occur in the query prolog.</source>
-        <translation>فقط اعلان یک %1می‌تواند در prolog پرس‌وجویی اتفاق بیفتد.</translation>
-    </message>
-    <message>
-        <location line="+188"/>
-        <source>The initialization of variable %1 depends on itself</source>
-        <translation>فرمت متغیر %1 به خودش وابسته است</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>No variable with name %1 exists</source>
-        <translation>هیچ متغییری با نام %1 وجود ندارد</translation>
-    </message>
-    <message>
-        <location line="+2841"/>
-        <source>Version %1 is not supported. The supported XQuery version is 1.0.</source>
-        <translation>نسخهٔ %1 پشتیبانی نشده است. نسخهٔ پشتیبانی شدهٔ XQuery 1.0است.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>The encoding %1 is invalid. It must contain Latin characters only, must not contain whitespace, and must match the regular expression %2.</source>
-        <translation>کدگذاری %1 نامعتبر است. آن فقط باید شامل حروف لاتین باشد و نباید شامل فضای خالی باشد و همچنین باید با عبارت منظم %2 تطابق داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>No function with signature %1 is available</source>
-        <translation>تابعی با امضای %1 در دسترس نیست</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <location line="+10"/>
-        <source>A default namespace declaration must occur before function, variable, and option declarations.</source>
-        <translation>اعلان یک فضای‌نامی پیش‌فرض باید قبل از اعلان تابع، متغیر و گزینه‌ها اتفاق بیفتد.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace declarations must occur before function, variable, and option declarations.</source>
-        <translation>اعلان فضای‌نامی باید قبل از اعلان تابع، متغیر و گزینه‌ها اتفاق بیفتد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Module imports must occur before function, variable, and option declarations.</source>
-        <translation>وارد‌کردن ماژول باید قبل از اعلان تابع، متغیر و گزینه‌ها اتفاق بیفتد.</translation>
-    </message>
-    <message>
-        <location line="+102"/>
-        <source>The keyword %1 cannot occur with any other mode name.</source>
-        <translation>کلیدواژهٔ %1 نمی‌تواند با هیچ اسم حالت دیگری اتفاق بیفتد.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>The value of attribute %1 must be of type %2, which %3 isn&apos;t.</source>
-        <translation>مقدار صفت %1 باید از نوع %2 باشد، در حالی که %3 نیست.</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <source>It is not possible to redeclare prefix %1.</source>
-        <translation>نمی‌توان پیشوند %1 را دوباره اعلان کرد.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The prefix %1 cannot be bound. By default, it is already bound to the namespace %2.</source>
-        <translation>پیشوند %1 نمی‌تواند مقید شود. به طور پیش‌فرض، آن به فضای‌نامی %2 مقید شده است.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Prefix %1 is already declared in the prolog.</source>
-        <translation>پیشوند %1 هم‌اکنون در prolog اعلان شده است.</translation>
-    </message>
-    <message>
-        <location line="+95"/>
-        <source>The name of an option must have a prefix. There is no default namespace for options.</source>
-        <translation>نام گزینه باید پیشوند داشته باشد. فضای‌نامی پیش‌فرضی برای گزینه‌ها وجود ندارد.</translation>
-    </message>
-    <message>
-        <location line="+171"/>
-        <source>The Schema Import feature is not supported, and therefore %1 declarations cannot occur.</source>
-        <translation>ویژگی وارد‌کردن طرح پشتیبانی نشده است، بنابراین اعلان %1 نمی‌تواند اتفاق بیفتد.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>The target namespace of a %1 cannot be empty.</source>
-        <translation>فضای‌نامی هدف %1 نمی‌تواند خالی باشد.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The module import feature is not supported</source>
-        <translation>ویژگی وارد‌کردن ماژول پشتیبانی نشده است</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>A variable with name %1 has already been declared.</source>
-        <translation>یک متغیر با نام %1 هم‌اکنون اعلان شده است.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>No value is available for the external variable with name %1.</source>
-        <translation>مقداری برای متغیر خارجی با نام %1 در دسترس نیست.</translation>
-    </message>
-    <message>
-        <location line="+96"/>
-        <source>A stylesheet function must have a prefixed name.</source>
-        <translation>یک تابع مجموعه‌تعاریف باید یک نام پیشوندی داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The namespace for a user defined function cannot be empty (try the predefined prefix %1, which exists for cases like this)</source>
-        <translation>فضای نام برای تابع تعریف شده توسط کاربر نمی‌تواند تهی باشد. (پیشوند ازقبل تعریف‌شدهٔ %1 را که برای این‌گونه موارد درنظر گرفته شده، امتحان کنید)</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>The namespace %1 is reserved; therefore user defined functions may not use it. Try the predefined prefix %2, which exists for these cases.</source>
-        <translation>فضای‌نامی %1 رزرو شده است؛ بنابراین توابع تعریف شده توسط کاربر نمی‌توانند از آن استفاده کنند. پیشوند از پیش تعریف شدهٔ %2 را که برای این موارد وجود دارد امتحان کنید.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The namespace of a user defined function in a library module must be equivalent to the module namespace. In other words, it should be %1 instead of %2</source>
-        <translation>فضای‌نامی یک تابع تعریف شده توسط کاربر در یک ماژول کتابخانه‌ای باید هم‌ارز فضای‌نامی ماژول باشد. به بیان دیگر، باید %1 به‌جای %2 باشد</translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>A function already exists with the signature %1.</source>
-        <translation>یک تابع با امضای %1 هم‌اکنون وجود دارد.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>No external functions are supported. All supported functions can be used directly, without first declaring them as external</source>
-        <translation>هیچ تابع خارجی پشتیبانی نشده است. تمام توابع پشتیبانی شده می‌توانند بدون بیان به صورت خارجی در ابتدا، به طور مستقیم استفاده شوند</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>An argument with name %1 has already been declared. Every argument name must be unique.</source>
-        <translation>یک آرگومان با نام %1 هم‌اکنون اعلان شده است. نام هر آرگومان باید یکتا باشد.</translation>
-    </message>
-    <message>
-        <location line="+179"/>
-        <source>When function %1 is used for matching inside a pattern, the argument must be a variable reference or a string literal.</source>
-        <translation>هنگامی که تابع %1 برای تطابق داخل الگو استفاده می‌شود، آرگومان باید یک اشاره‌گر به متغر یا رشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a string literal, when used for matching.</source>
-        <translation>در یک الگوی XSL-T، آرگومان اول تابع %1 هنگامی که برای تطابق استفاده می‌شود باید رشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>In an XSL-T pattern, the first argument to function %1 must be a literal or a variable reference, when used for matching.</source>
-        <translation>در یک الگوی XSL-T، آرگومان اول تابع %1 هنگامی که برای تطابق استفاده می‌شود باید لفظ یا اشاره‌گر به متغیر باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>In an XSL-T pattern, function %1 cannot have a third argument.</source>
-        <translation>در یک الگوی XSL-T، تابع %1 نمی‌تواند آرگومان سوم داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>In an XSL-T pattern, only function %1 and %2, not %3, can be used for matching.</source>
-        <translation>در یک الگوی XSL-T، فقط توابع %1 و %2 نه %3 می‌تواند برای تطابق استفاده شوند.</translation>
-    </message>
-    <message>
-        <location line="+63"/>
-        <source>In an XSL-T pattern, axis %1 cannot be used, only axis %2 or %3 can.</source>
-        <translation>در یک الگوی XSL-T، فقط الگو‌های %2 و %3 نه %1 می‌توانند استفاده شوند.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 is an invalid template mode name.</source>
-        <translation>%1 یک نام حالت قالب نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>The name of a variable bound in a for-expression must be different from the positional variable. Hence, the two variables named %1 collide.</source>
-        <translation>نام یک متغیر مقید شده برای عبارت باید متفاوت از نام یک متغیر موقعیتی باشد. بنابراین دو متغیر با نام %1 برخورد دارند.</translation>
-    </message>
-    <message>
-        <location line="+778"/>
-        <source>The Schema Validation Feature is not supported. Hence, %1-expressions may not be used.</source>
-        <translation>ویژگی اعتبار‌سنجی طرح پشتیبانی نشده است. بنابراین، عبارات-%1 ممکن است استفاده نشود.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>None of the pragma expressions are supported. Therefore, a fallback expression must be present</source>
-        <translation>هیچ عبارت عملی پشتیبانی نشده اسن.  بنابراین، یک عبارت عقب‌نشینی باید ارائه شود</translation>
-    </message>
-    <message>
-        <location line="+269"/>
-        <source>Each name of a template parameter must be unique; %1 is duplicated.</source>
-        <translation>هر نام پارامتر قالب باید یگانه باشد؛ %1 چندگانه است.</translation>
-    </message>
-    <message>
-        <location line="+129"/>
-        <source>The %1-axis is unsupported in XQuery</source>
-        <translation>محور %1 در XQuery پشتیبانی نشده است</translation>
-    </message>
-    <message>
-        <location line="+333"/>
-        <source>No function with name %1 is available.</source>
-        <translation>هیچ تابعی با نام %1 در دسترس نیست.</translation>
-    </message>
-    <message>
-        <location line="+102"/>
-        <source>The namespace URI cannot be the empty string when binding to a prefix, %1.</source>
-        <translation>فضای‌نامی URL هنگامی که به یک پیشوند مقید می‌شود نمی‌تواند رشتهٔ خالی باشد، %1.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 is an invalid namespace URI.</source>
-        <translation>%1 یک فضای نامی URL نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>It is not possible to bind to the prefix %1</source>
-        <translation>مقید کردن به پیشوند %1 ممکن نیست</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Namespace %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>فضای‌نامی %1 فقط می‌تواند به %2 مقید شود (در هر حالتی پیش اعلان شده است).</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Prefix %1 can only be bound to %2 (and it is, in either case, pre-declared).</source>
-        <translation>پیشوند %1 فقط می‌تواند به %2 مقید شود (در هر حالتی پیش اعلان شده است).</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Two namespace declaration attributes have the same name: %1.</source>
-        <translation>صفت‌های اعلان دو فضای نام دارای یک نام هستند: %1.</translation>
-    </message>
-    <message>
-        <location line="+89"/>
-        <source>The namespace URI must be a constant and cannot use enclosed expressions.</source>
-        <translation>فضای‌نامی URL باید ثابت باشد و نمی‌تواند به عبارات بپیوندد.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>An attribute with name %1 has already appeared on this element.</source>
-        <translation>یک صفت با نام %1 هم‌اکنون در این عنصر شده است.</translation>
-    </message>
-    <message>
-        <location line="+61"/>
-        <source>A direct element constructor is not well-formed. %1 is ended with %2.</source>
-        <translation>سازندهٔ مستقیم یک عنصر خوش‌فرم نیست. %1 با %2 تمام شده است.</translation>
-    </message>
-    <message>
-        <location line="+458"/>
-        <source>The name %1 does not refer to any schema type.</source>
-        <translation>نام %1 به هیچ نوع طرحی اشاره نمی‌کند.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 is an complex type. Casting to complex types is not possible. However, casting to atomic types such as %2 works.</source>
-        <translation>%1 یک نوع پیچیده است. تبدیل به نوع پیچیده غیرممکن است. اما تبدیل به انواع اتمی مثل %2 کار می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 is not an atomic type. Casting is only possible to atomic types.</source>
-        <translation>%1 یک نوع اتمی نیست. تبدیل فقط برای انواع اتمی ممکن است.</translation>
-    </message>
-    <message>
-        <location line="+76"/>
-        <source>%1 is not a valid name for a processing-instruction.</source>
-        <translation>%1 یک نام معتبر برای دستوراعمل پردازش نیست.</translation>
-    </message>
-    <message>
-        <location line="+69"/>
-        <location line="+71"/>
-        <source>%1 is not in the in-scope attribute declarations. Note that the schema import feature is not supported.</source>
-        <translation>%1 یک اعلان صفت درون قلمرویی نیست. توجه کنید که ویژگی وارد‌کردن طرح پشتیبانی نشده است.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The name of an extension expression must be in a namespace.</source>
-        <translation>نام یک عبارت توسعه داده شده باید در فضای‌نامی باشد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qxslttokenizer.cpp" line="+519"/>
-        <source>Element %1 is not allowed at this location.</source>
-        <translation>عنصر %1 در این مکان مجاز نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Text nodes are not allowed at this location.</source>
-        <translation>گره‌های متن در این مکان مجاز نیستند.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Parse error: %1</source>
-        <translation>خطای تحلیل: %1</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>The value of the XSL-T version attribute must be a value of type %1, which %2 isn&apos;t.</source>
-        <translation>مقدار صفت ورژن XSL-T باید از نوع %1 باشد در حالی که %2 نیست.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Running an XSL-T 1.0 stylesheet with a 2.0 processor.</source>
-        <translation>اجرای یک مجموعه‌تعاریف 1.0 XSL-T با یک پردازنده 2.0.</translation>
-    </message>
-    <message>
-        <location line="+106"/>
-        <source>Unknown XSL-T attribute %1.</source>
-        <translation>صفت ناشناخته %1 XSL-T.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 and %2 are mutually exclusive.</source>
-        <translation>صفات %1 و %2 متقابلاً انحصاری هستند.</translation>
-    </message>
-    <message>
-        <location line="+166"/>
-        <source>In a simplified stylesheet module, attribute %1 must be present.</source>
-        <translation>در یک ماژول مجموعه تعاریف ساده شده، صفت %1 باید ارائه شود.</translation>
-    </message>
-    <message>
-        <location line="+72"/>
-        <source>If element %1 has no attribute %2, it cannot have attribute %3 or %4.</source>
-        <translation>اگر عنصر %1 صفت %2 را نداشته باشد، نمی‌تواند صفت %3 یا %4 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Element %1 must have at least one of the attributes %2 or %3.</source>
-        <translation>عنصر %1 باید حداقل یکی از صفات %2 یا %3 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>At least one mode must be specified in the %1-attribute on element %2.</source>
-        <translation>حداقل یک حالت باید به صورت صفت %1 در عنصر %2 مشخص شود.</translation>
-    </message>
-    <message>
-        <location line="+123"/>
-        <source>Element %1 must come last.</source>
-        <translation>عنصر %1 باید در آخر بیاید.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>At least one %1-element must occur before %2.</source>
-        <translation>حداقل یک عنصر %1 قبل از %2 باید واقع شود.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Only one %1-element can appear.</source>
-        <translation>فقط یک عنصر %1 می‌تواند ظاهر شود.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>At least one %1-element must occur inside %2.</source>
-        <translation>حداقل یک عنصر %1 باید داخل %2 واقع شود.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>When attribute %1 is present on %2, a sequence constructor cannot be used.</source>
-        <translation>هنگامی که صفت %1 روی %2 ارائه می‌شود، یک سازندهٔ رشته نمی‌تواند استفاده شود.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 must have either a %2-attribute or a sequence constructor.</source>
-        <translation>عنصر %1 باید یک صفت %2 یا یک سازندهٔ رشته داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+125"/>
-        <source>When a parameter is required, a default value cannot be supplied through a %1-attribute or a sequence constructor.</source>
-        <translation>هنگامی که یک پارامتر موردنیاز است، یک مقدار پیش‌فرض نمی‌تواند به واسطهٔ صفت %1 یا سازندهٔ رشته تأمین شود.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Element %1 cannot have children.</source>
-        <translation>عنصر %1 نمی‌تواند فرزند داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+434"/>
-        <source>Element %1 cannot have a sequence constructor.</source>
-        <translation>عنصر %1 نمی‌تواند سازندهٔ رشته داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+86"/>
-        <location line="+9"/>
-        <source>The attribute %1 cannot appear on %2, when it is a child of %3.</source>
-        <translation>صفت %1 نمی‌تواند روی %2 ظاهر شود، در حالی که فرزند %3 است.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>A parameter in a function cannot be declared to be a tunnel.</source>
-        <translation>یک پارامتر در یک تابع نمی‌تواند به عنوان تونل اعلان شود.</translation>
-    </message>
-    <message>
-        <location line="+149"/>
-        <source>This processor is not Schema-aware and therefore %1 cannot be used.</source>
-        <translation>این پردازنده طرح-آگاه نیست بنابراین %1 نمی‌تواند استفاده شود.</translation>
-    </message>
-    <message>
-        <location line="+57"/>
-        <source>Top level stylesheet elements must be in a non-null namespace, which %1 isn&apos;t.</source>
-        <translation>عنصر مجموعهٔ تعریف سطح بالا باید یک فضای‌نامی غیر‌تهی باشد، در حالی که %1 نیست.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>The value for attribute %1 on element %2 must either be %3 or %4, not %5.</source>
-        <translation>مقدار صفت %1 روی عنصر %2 باید %3 یا %4 باشد، نه %5.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Attribute %1 cannot have the value %2.</source>
-        <translation>صفت %1 نمی‌تواند مقدار %2 داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+58"/>
-        <source>The attribute %1 can only appear on the first %2 element.</source>
-        <translation>صفت %1 فقط می‌تواند روی %2 عنصر اول به نظر برسد.</translation>
-    </message>
-    <message>
-        <location line="+99"/>
-        <source>At least one %1 element must appear as child of %2.</source>
-        <translation>حداقل یک عنصر %1 باید به عنوان فرزند %2 ظاهر شود.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdparticlechecker.cpp" line="+165"/>
-        <source>Empty particle cannot be derived from non-empty particle.</source>
-        <translation>یک ذرهٔ تهی نمی‌تواند از یک ذرهٔ غیرتهی مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Derived particle is missing element %1.</source>
-        <translation>ذرهٔ مشتق شده عنصر گمشدهٔ %1 است.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 is missing value constraint as defined in base particle.</source>
-        <translation>عنصر مشتق شدهٔ %1 مقدار گمشده‌ایست که در ذرهٔ پایهٔ به عنوان تعریف شده مقید شده.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived element %1 has weaker value constraint than base particle.</source>
-        <translation>عنصر مشتق شده %1 مقدار ضعیف‌تری دارد که از عنصر پایه مقید می‌شود.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Fixed value constraint of element %1 differs from value constraint in base particle.</source>
-        <translation>مقدار اصلاح شده‌ای که از عنصر %1 مقید می‌شود از مقداری که از عنصر پایه مقید می‌شود متفاوت است.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Derived element %1 cannot be nillable as base element is not nillable.</source>
-        <translation>عنصر مشتق شده %1 همان طور که عنصر پایه‌اش nillable نیست نمی‌تواند nillable باشد.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Block constraints of derived element %1 must not be more weaker than in the base element.</source>
-        <translation>بلاکی که از عنصر مشتق شده %1 مقید می‌شود نباید از عنصر پایه ضعیف‌تر باشد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Simple type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>نوع سادهٔ مشتق شده از عنصر %1 نمی‌تواند به طور معتبر از عنصر پایه مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Complex type of derived element %1 cannot be validly derived from base element.</source>
-        <translation>نوع پیچیدهٔ مشتق شده از عنصر %1 نمی‌تواند به طور معتبر از عنصر پایه مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Element %1 is missing in derived particle.</source>
-        <translation>عنصر %1 در جزء مشتق‌شده گم شده است.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 does not match namespace constraint of wildcard in base particle.</source>
-        <translation>عنصر %1 با فضای‌نامی که از حرف جایگزین شونده در عنصر پایه مقید می‌شود تطابق ندارد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Wildcard in derived particle is not a valid subset of wildcard in base particle.</source>
-        <translation>حرف جایگزین شونده در عنصر مشتق شده یک زیر‌مجموعه معتبر از حرف جایگزین شونده در عنصر پایه نیست.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>processContent of wildcard in derived particle is weaker than wildcard in base particle.</source>
-        <translation>محتویات پردازش حرف جایگزین شونده در عنصر مشتق شده از حرف جایگزین شونده در عنصر پایه ضعیف‌تر است.</translation>
-    </message>
-    <message>
-        <location line="+270"/>
-        <source>Derived particle allows content that is not allowed in the base particle.</source>
-        <translation>محتویات غیرمجاز در عنصر پایه در عنصر مشتق شده مجازند.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemachecker.cpp" line="+227"/>
-        <source>%1 has inheritance loop in its base type %2.</source>
-        <translation>%1 در نوع %2 پایه‌اش حلقهٔ وراثت دارد.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <location line="+24"/>
-        <source>Circular inheritance of base type %1.</source>
-        <translation>وراثت گردشی پایهٔ نوع %1.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Circular inheritance of union %1.</source>
-        <translation>وراثت گردشی اتحاد %1.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>%1 is not allowed to derive from %2 by restriction as the latter defines it as final.</source>
-        <translation>%1 نمی‌تواند با شرط از %2 مشتق شود مانند نویسه‌ای که آن را به عنوان نهایی تعریف می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 is not allowed to derive from %2 by extension as the latter defines it as final.</source>
-        <translation>%1 نمی‌تواند با پسوند از %2 مشتق شود مانند نویسه‌ای که آن را به عنوان نهایی تعریف می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Base type of simple type %1 cannot be complex type %2.</source>
-        <translation>نوع پایهٔ نوع سادهٔ %1 نمی‌تواند نوع پیچیدهٔ %2 باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Simple type %1 cannot have direct base type %2.</source>
-        <translation>نوع سادهٔ %1 نمی‌تواند نوع پایهٔ مستقیم %2 را باشد.</translation>
-    </message>
-    <message>
-        <location line="+33"/>
-        <location line="+9"/>
-        <source>Simple type %1 is not allowed to have base type %2.</source>
-        <translation>نوع سادهٔ %1 مجاز نیست نوع پایهٔ مستقیم %2 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Simple type %1 can only have simple atomic type as base type.</source>
-        <translation>نوع سادهٔ %1 فقط می‌تواند نوع سادهٔ اتمی را به عنوان نوع پایه داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Simple type %1 cannot derive from %2 as the latter defines restriction as final.</source>
-        <translation>%1 نمی‌تواند از %2 مشتق شود مانند نویسه‌ای که قید را به عنوان نهایی تعریف می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <location line="+484"/>
-        <source>Variety of item type of %1 must be either atomic or union.</source>
-        <translation>نوع آیتم نوع %1 باید اتمی یا اتحاد باشد.</translation>
-    </message>
-    <message>
-        <location line="-474"/>
-        <location line="+483"/>
-        <source>Variety of member types of %1 must be atomic.</source>
-        <translation>نوع عضو نوع %1 باید اتمی باشد.</translation>
-    </message>
-    <message>
-        <location line="-470"/>
-        <location line="+451"/>
-        <source>%1 is not allowed to derive from %2 by list as the latter defines it as final.</source>
-        <translation>%1 نمی‌تواند با لیست از %2 مشتق شود مانند نویسه‌ای که آن را به عنوان نهایی تعریف می‌کند.</translation>
-    </message>
-    <message>
-        <location line="-431"/>
-        <source>Simple type %1 is only allowed to have %2 facet.</source>
-        <translation>نوع سادهٔ %1 فقط مجاز است رویهٔ %2 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Base type of simple type %1 must have variety of type list.</source>
-        <translation>نوع پایهٔ نوع سادهٔ %1 باید از نوع لیست باشد.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Base type of simple type %1 has defined derivation by restriction as final.</source>
-        <translation>نوع پایهٔ نوع سادهٔ %1 اشتقاق را با قید پایانی تعریف کرده است.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Item type of base type does not match item type of %1.</source>
-        <translation>آیتم نوع پایه با آیتم نوع %1 مطابقت ندارد.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <location line="+93"/>
-        <source>Simple type %1 contains not allowed facet type %2.</source>
-        <translation>نوع سادهٔ %1 شامل رویهٔ غیر‌مجاز نوع %2 است.</translation>
-    </message>
-    <message>
-        <location line="-72"/>
-        <location line="+413"/>
-        <source>%1 is not allowed to derive from %2 by union as the latter defines it as final.</source>
-        <translation>%1 نمی‌تواند با اتحاد از %2 مشتق شود مانند نویسه‌ای که آن را به عنوان نهایی تعریف می‌کند.</translation>
-    </message>
-    <message>
-        <location line="-404"/>
-        <source>%1 is not allowed to have any facets.</source>
-        <translation>نوع سادهٔ %1 مجاز نیست هیچ رویه‌ای داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base type %1 of simple type %2 must have variety of union.</source>
-        <translation>نوع پایهٔ %1 نوع سادهٔ %2 بایدازنوع اتحاد باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Base type %1 of simple type %2 is not allowed to have restriction in %3 attribute.</source>
-        <translation>نوع پایهٔ %1 نوع سادهٔ %2 مجاز نیست در صفت %3 محدودیت داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Member type %1 cannot be derived from member type %2 of %3&apos;s base type %4.</source>
-        <translation>نوع %1 نمی‌تواند از نوع %2 نوع %4 پایهٔ %3 مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <source>Derivation method of %1 must be extension because the base type %2 is a simple type.</source>
-        <translation>روش اشتقاق %1 باید پسوند باشد زیرا پایهٔ نوع %2 ساده است.</translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>Complex type %1 has duplicated element %2 in its content model.</source>
-        <translation>نوع پیچیدهٔ %1 در مدل محتویاتش عنصر چندگانهٔ %2 را دارد.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 has non-deterministic content.</source>
-        <translation>نوع پیچیدهٔ %1 محتویات غیرقطعی دارد.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Attributes of complex type %1 are not a valid extension of the attributes of base type %2: %3.</source>
-        <translation>صفات نوع پیچیدهٔ %1 پسوند معتبر صفات نوع پایهٔ %2 نیستند: %3.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>Content model of complex type %1 is not a valid extension of content model of %2.</source>
-        <translation>مدل محتویات نوع پیچیدهٔ %1 پسوند معتبر مدل محتویات %2 نیستند.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Complex type %1 must have simple content.</source>
-        <translation>نوع پیچیدهٔ %1 باید محتویات ساده داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Complex type %1 must have the same simple type as its base class %2.</source>
-        <translation>نوع پیچیدهٔ %1 باید همان انواع ساده را مانند کلاس %2  پایه‌اش داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+67"/>
-        <source>Complex type %1 cannot be derived from base type %2%3.</source>
-        <translation>نوع پیچیدهٔ %1 نمی‌تواند از نوع %2%3 مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Attributes of complex type %1 are not a valid restriction from the attributes of base type %2: %3.</source>
-        <translation>صفات نوع پیچیدهٔ %1 قید معتبری از صفات نوع پایهٔ %2 نیستند: %3.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Complex type %1 with simple content cannot be derived from complex base type %2.</source>
-        <translation>نوع پیچیدهٔ %1 با محتویات ساده نمی‌تواند از نوع پیچیدهٔ %2 مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+35"/>
-        <source>Item type of simple type %1 cannot be a complex type.</source>
-        <translation>نوع آیتم نوع سادهٔ %1 نمی‌تواند نوع پیچیده باشد.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Member type of simple type %1 cannot be a complex type.</source>
-        <translation>اعضای نوع سادهٔ %1 نمی‌توانند پیچیده باشند.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 is not allowed to have a member type with the same name as itself.</source>
-        <translation>%1 نمی‌تواند عضوی هم‌نام خودش داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+83"/>
-        <location line="+29"/>
-        <location line="+34"/>
-        <source>%1 facet collides with %2 facet.</source>
-        <translation>رویهٔ %1 با %2 تداخل دارد.</translation>
-    </message>
-    <message>
-        <location line="-20"/>
-        <source>%1 facet must have the same value as %2 facet of base type.</source>
-        <translation>رویهٔ %1 باید همان مقدار رویهٔ %2 نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="+37"/>
-        <source>%1 facet must be equal or greater than %2 facet of base type.</source>
-        <translation>رویهٔ %1 باید بزرگتر یا مساوی رویهٔ %2 نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <location line="+125"/>
-        <location line="+55"/>
-        <location line="+12"/>
-        <location line="+91"/>
-        <location line="+58"/>
-        <location line="+34"/>
-        <location line="+35"/>
-        <source>%1 facet must be less than or equal to %2 facet of base type.</source>
-        <translation>رویهٔ %1 باید کوچکتر یا مساوی رویهٔ %2 نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="-389"/>
-        <source>%1 facet contains invalid regular expression</source>
-        <translation>رویهٔ %1 شامل عبارت منظم نامعتبر است</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Unknown notation %1 used in %2 facet.</source>
-        <translation>نشانه‌گذاری ناشناختهٔ %1 در رویهٔ %2 استفاده شده است.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>%1 facet contains invalid value %2: %3.</source>
-        <translation>رویه %1 شامل مقدار نامعتبر %2 است: %3.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 facet cannot be %2 or %3 if %4 facet of base type is %5.</source>
-        <translation>رویهٔ %1 نمی‌تواند %2 یا %3 باشد اگر رویهٔ %4 نوع پایه %5 باشد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>%1 facet cannot be %2 if %3 facet of base type is %4.</source>
-        <translation>رویهٔ %1 نمی‌تواند %2 باشد اگر رویهٔ %3 نوع پایه %4 باشد.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <location line="+55"/>
-        <location line="+230"/>
-        <source>%1 facet must be less than or equal to %2 facet.</source>
-        <translation>رویهٔ %1 باید کوچکتر یا مساوی رویهٔ %2 باشد.</translation>
-    </message>
-    <message>
-        <location line="-257"/>
-        <location line="+134"/>
-        <location line="+82"/>
-        <source>%1 facet must be less than %2 facet of base type.</source>
-        <translation>رویهٔ %1 باید کوچکتر از رویهٔ %2 نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="-201"/>
-        <location line="+79"/>
-        <source>%1 facet and %2 facet cannot appear together.</source>
-        <translation>رویه‌های %1 و %2 نمی‌توانند با هم ظاهر شوند.</translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <location line="+12"/>
-        <location line="+113"/>
-        <source>%1 facet must be greater than %2 facet of base type.</source>
-        <translation>رویهٔ %1 باید بزرگتر از رویهٔ %2 نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="-86"/>
-        <location line="+58"/>
-        <source>%1 facet must be less than %2 facet.</source>
-        <translation>رویهٔ %1 باید کوچکتر از رویهٔ %2 باشد.</translation>
-    </message>
-    <message>
-        <location line="-42"/>
-        <location line="+58"/>
-        <source>%1 facet must be greater than or equal to %2 facet of base type.</source>
-        <translation>رویهٔ %1 باید بزرگتر یا مساوی رویهٔ %2 نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="+113"/>
-        <source>Simple type contains not allowed facet %1.</source>
-        <translation>نوع ساده شامل رویهٔ غیر مجاز %1 است.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>%1, %2, %3, %4, %5 and %6 facets are not allowed when derived by list.</source>
-        <translation>رویه‌های %1، %2، %3، %4، %5 و %6 هنگامی که به‌وسیلهٔ لیست مشتق می‌شوند مجاز نیستند.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Only %1 and %2 facets are allowed when derived by union.</source>
-        <translation>فقط رویه‌های %1 و %2 هنگامی که به‌وسیلهٔ اتحاد مشتق می‌شوند مجاز هستند.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <location line="+16"/>
-        <source>%1 contains %2 facet with invalid data: %3.</source>
-        <translation>%1 شامل رویهٔ %2 با دادهٔ نامعتبر است: %3.</translation>
-    </message>
-    <message>
-        <location line="+24"/>
-        <source>Attribute group %1 contains attribute %2 twice.</source>
-        <translation>گروه صفت %1 صفت %2 را دوبار شامل است.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute group %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>گروه صفت %1 شامل دو صفت متفاوت است که هر دو از  %2 مشتق شده‌اند.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute group %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>گروه صفت %1 شامل صفت %2 است.که قید مقدار دارد اما نوع را از %3 به ارث می‌برد.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 contains attribute %2 twice.</source>
-        <translation>نوع پیچیدهٔ %1 صفت %2 را دوبار شامل است.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Complex type %1 contains two different attributes that both have types derived from %2.</source>
-        <translation>نوع پیچیدهٔ %1 شامل دو صفت متفاوت است که هر دو از  %2 مشتق شده‌اند.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Complex type %1 contains attribute %2 that has value constraint but type that inherits from %3.</source>
-        <translation>نوع پیچیدهٔ %1 شامل صفت %2 است.که قید مقدار دارد اما نوع را از %3 به ارث می‌برد.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is not allowed to have a value constraint if its base type is complex.</source>
-        <translation>نوع %1 مجاز به داشتن قید مقدار نیست اگر نوع پایه‌اش پیچیده باشد.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not allowed to have a value constraint if its type is derived from %2.</source>
-        <translation>نوع %1 مجاز به داشتن قید مقدار نیست اگر از %2 مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <location line="+11"/>
-        <source>Value constraint of element %1 is not of elements type: %2.</source>
-        <translation>قید مقدار عنصر %1 از نوع عنصر نیست: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed to have substitution group affiliation as it is no global element.</source>
-        <translation>نوع %1 مجاز به داشتن وابستگی مجموعهٔ زیرحالت نیست مادامی که عنصر سراسری نباشد.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Type of element %1 cannot be derived from type of substitution group affiliation.</source>
-        <translation>نوع عنصر %1 نمی‌تواند از نوع وابستگی مجموعهٔ زیرحالت مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Value constraint of attribute %1 is not of attributes type: %2.</source>
-        <translation>مقدار قید صفت %1 نوع صفت نیست: %2.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 has value constraint but has type derived from %2.</source>
-        <translation>صفت %1 مقدار قید دارد اما از نوع %2 مشتق شده است.</translation>
-    </message>
-    <message>
-        <location line="+56"/>
-        <source>%1 attribute in derived complex type must be %2 like in base type.</source>
-        <translation>%1 صفت در نوع پیچیدهٔ مشتق شده باید مانند %2 در نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint like in base type.</source>
-        <translation>%1 صفت در نوع پیچیدهٔ مشتق شده باید %2 مانند نوع پایه باشد.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 in derived complex type must have the same %2 value constraint like in base type.</source>
-        <translation>صفت %1 در نوع پیچیدهٔ مشتق شده باید همان %2 قید مقدار را مانند نوع پایه داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Attribute %1 in derived complex type must have %2 value constraint.</source>
-        <translation>صفت %1 در نوع پیچیدهٔ مشتق شده باید %2 قید مقدار داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>processContent of base wildcard must be weaker than derived wildcard.</source>
-        <translation>محتویات پردازش در حروف جایگزین شونده پایه باید از حروف جایگزین شوندهٔ مشتق شده ضعیف‌تر باشند.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <location line="+15"/>
-        <source>Element %1 exists twice with different types.</source>
-        <translation>عنصر %1 دوبار با انواع متفاوت وجود دارد.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Particle contains non-deterministic wildcards.</source>
-        <translation>ذره شامل حروف جایگزین شوندهٔ قطعی نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemahelper.cpp" line="+678"/>
-        <location line="+63"/>
-        <source>Base attribute %1 is required but derived attribute is not.</source>
-        <translation>صفت پایهٔ %1 مورد نیاز است اما صفت مشتق شده نه.</translation>
-    </message>
-    <message>
-        <location line="-57"/>
-        <source>Type of derived attribute %1 cannot be validly derived from type of base attribute.</source>
-        <translation>نوع صفت مشتق شدهٔ %1 نمی‌تواند به طور معتبر از صفت پایه مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <source>Value constraint of derived attribute %1 does not match value constraint of base attribute.</source>
-        <translation>قید مقدار صفت مشتق شدهٔ %1 با قید مقدار صفت پایه مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived attribute %1 does not exist in the base definition.</source>
-        <translation>صفت مشتق شدهٔ %1 در تعریف پایه وجود ندارد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Derived attribute %1 does not match the wildcard in the base definition.</source>
-        <translation>صفت مشتق شدهٔ %1 با کلمات جایگزین شونده در تعریف پایه مطابقت ندارد.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Base attribute %1 is required but missing in derived definition.</source>
-        <translation>صفت پایهٔ %1 مورد نیاز است اما صفت مشتق شده مفقود شده است.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Derived definition contains an %1 element that does not exists in the base definition</source>
-        <translation>تعریف مشتق شده شامل صفت %1 است که در تعریف پایه وجود ندارد</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Derived wildcard is not a subset of the base wildcard.</source>
-        <translation>حروف جایگزین شوندهٔ مشتق شده زیر مجموعه‌ای از حروف جایگزین شوندهٔ پایه نیستند.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 of derived wildcard is not a valid restriction of %2 of base wildcard</source>
-        <translation>%1 حروف جایگزین شونده مشتق شده، قید معتبر %2 حروف جایگزین شوندهٔ پایه نیستند</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute %1 from base type is missing in derived type.</source>
-        <translation>صفت %1 از نوع پایه در نوع مشتق شده مفقود شده است.</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Type of derived attribute %1 differs from type of base attribute.</source>
-        <translation>نوع صفت مشتق شده %1 از نوع صفت پایه متفاوت است.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Base definition contains an %1 element that is missing in the derived definition</source>
-        <translation>تعریف پایه شامل عنصر %1 است که در تعریف مشتق شده مفقود شده است</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaparser.cpp" line="+170"/>
-        <source>Can not process unknown element %1, expected elements are: %2.</source>
-        <translation>نمی‌توان عنصر ناشناختهٔ %1 را پردازش کرد، عناصر مورد انتظار این‌ها هستند: %2.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Element %1 is not allowed in this scope, possible elements are: %2.</source>
-        <translation>عنصر %1 در این قلمرو مجاز نیست، عناصر ممکن این‌ها هستند: %2.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>Child element is missing in that scope, possible child elements are: %1.</source>
-        <translation>عنصر فرزند در این قلمرو مفقود شده است، عناصر فرزند ممکن این‌ها هستند: %1.</translation>
-    </message>
-    <message>
-        <location line="+143"/>
-        <source>Document is not a XML schema.</source>
-        <translation>سند یک الگوی XML نیست.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3} is not a value of type %4.</source>
-        <translation>صفت %1 از عنصر %2 شامل محتویات غیر‌مجاز است: {%3} یک مقدار از نوع %4 نیست.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1 attribute of %2 element contains invalid content: {%3}.</source>
-        <translation>صفت %1 از عنصر %2 شامل محتویات غیر‌مجاز است: {%3}.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Target namespace %1 of included schema is different from the target namespace %2 as defined by the including schema.</source>
-        <translation>فضای‌نامی هدف %1 طرح شامل شده متفاوت از فضای‌نامی هدف %2 آن‌گونه که به وسلیهٔ طرح شامل تعریف شده است می‌باشد.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <location line="+11"/>
-        <source>Target namespace %1 of imported schema is different from the target namespace %2 as defined by the importing schema.</source>
-        <translation>فضای‌نامی %1 طرح وارد شده متفاوت از فضای‌نامی هدف %2 آن‌گونه که به وسلیهٔ طرح وارد شده تعریف شده است می‌باشد.</translation>
-    </message>
-    <message>
-        <location line="+243"/>
-        <source>%1 element is not allowed to have the same %2 attribute value as the target namespace %3.</source>
-        <translation>عنصر %1 مجاز نیست که صفت %2 ی یکسان بافضای‌نام هدف %3 داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element without %2 attribute is not allowed inside schema without target namespace.</source>
-        <translation>عنصر %1 بدون صفت %2 در طرح بدون فضای‌نامی هدف مجاز نیست.</translation>
-    </message>
-    <message>
-        <location line="+851"/>
-        <location line="+158"/>
-        <source>%1 element is not allowed inside %2 element if %3 attribute is present.</source>
-        <translation>عنصر %1 در عنصر %2 اگر صفت %3 ارائه شده باشد مجاز نیست.</translation>
-    </message>
-    <message>
-        <location line="-97"/>
-        <location line="+119"/>
-        <location line="+89"/>
-        <source>%1 element has neither %2 attribute nor %3 child element.</source>
-        <translation>عنصر %1 نه صفت %2 را دارد نه عنصر فرزند %3 را دارد.</translation>
-    </message>
-    <message>
-        <location line="+835"/>
-        <location line="+1474"/>
-        <location line="+232"/>
-        <location line="+7"/>
-        <location line="+260"/>
-        <location line="+17"/>
-        <location line="+258"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+6"/>
-        <location line="+17"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <location line="+11"/>
-        <source>%1 element with %2 child element must not have a %3 attribute.</source>
-        <translation>عنصر %1 با فرزند %2 نباید صفت %3 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="-1325"/>
-        <source>%1 attribute of %2 element must be %3 or %4.</source>
-        <translation>صفت %1 از عنصر %2 باید %3 یا %4 باشد.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>%1 attribute of %2 element must have a value of %3.</source>
-        <translation>صفت %1 از عنصر %2 باید مقدار %3 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <location line="+34"/>
-        <source>%1 attribute of %2 element must have a value of %3 or %4.</source>
-        <translation>صفت %1 از عنصر %2 باید مقدار %3 یا %4 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+319"/>
-        <location line="+129"/>
-        <location line="+9"/>
-        <location line="+7"/>
-        <location line="+7"/>
-        <location line="+327"/>
-        <location line="+203"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+6"/>
-        <location line="+77"/>
-        <source>%1 element must not have %2 and %3 attribute together.</source>
-        <translation>عنصر %1 نباید صفات %2 و %3 را با هم داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="-768"/>
-        <location line="+222"/>
-        <source>Content of %1 attribute of %2 element must not be from namespace %3.</source>
-        <translation>محتویات صفت %1 از عنصر %2 نباید از فضای‌نامی %3 باشد.</translation>
-    </message>
-    <message>
-        <location line="-215"/>
-        <location line="+222"/>
-        <source>%1 attribute of %2 element must not be %3.</source>
-        <translation>صفت %1 از عنصر %2 نباید %3 باشد.</translation>
-    </message>
-    <message>
-        <location line="-64"/>
-        <source>%1 attribute of %2 element must have the value %3 because the %4 attribute is set.</source>
-        <translation>صفت %1 از عنصر %2 باید مقدار %3 را داشته باشد زیرا صفت %4 تنظیم شده است.</translation>
-    </message>
-    <message>
-        <location line="+187"/>
-        <source>Specifying use=&apos;prohibited&apos; inside an attribute group has no effect.</source>
-        <translation>تعیین استفاده = &apos;ممنوع&apos; در گروه صفت هیچ تأثیری ندارد.</translation>
-    </message>
-    <message>
-        <location line="+353"/>
-        <source>%1 element must have either %2 or %3 attribute.</source>
-        <translation>عنصر %1 باید یکی از صفات %2 یا %3 را داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+554"/>
-        <source>%1 element must have either %2 attribute or %3 or %4 as child element.</source>
-        <translation>عنصر %1 باید صفت %2 یا %3 یا %4 را به عنوان فرزند داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+55"/>
-        <source>%1 element requires either %2 or %3 attribute.</source>
-        <translation>عنصر %1 یکی از صفات %2 یا %3 را نیاز دارد..</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>Text or entity references not allowed inside %1 element</source>
-        <translation>ارجاع متن یا موجودیت در عنصر %1 مجاز نیست</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <location line="+112"/>
-        <source>%1 attribute of %2 element must contain %3, %4 or a list of URIs.</source>
-        <translation>صفت %1 از عنصر %2 باید شامل %3، %4 یا لیستی از URLها باشد.</translation>
-    </message>
-    <message>
-        <location line="+126"/>
-        <source>%1 element is not allowed in this context.</source>
-        <translation>عنصر %1 در این زمینه مجاز نیست.</translation>
-    </message>
-    <message>
-        <location line="+53"/>
-        <source>%1 attribute of %2 element has larger value than %3 attribute.</source>
-        <translation>صفت %1 از عنصر %2 مقداری بزرگتر از صفت %3 دارد.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Prefix of qualified name %1 is not defined.</source>
-        <translation>پیشوند نام دارای شرایط %1 تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+65"/>
-        <location line="+61"/>
-        <source>%1 attribute of %2 element must either contain %3 or the other values.</source>
-        <translation>صفت %1 از عنصر %2 باید شامل %3 یا مقادیر دیگری باشد.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>Component with ID %1 has been defined previously.</source>
-        <translation>جزئی با ID %1 قبلاً تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Element %1 already defined.</source>
-        <translation>عنصر %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 already defined.</source>
-        <translation>صفت %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Type %1 already defined.</source>
-        <translation>نوع %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Attribute group %1 already defined.</source>
-        <translation>گروه صفت %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Element group %1 already defined.</source>
-        <translation>گروه عنصر %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notation %1 already defined.</source>
-        <translation>نشانه‌گذاری %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Identity constraint %1 already defined.</source>
-        <translation>قید هویت %1 هم‌اکنون تعریف شده است.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Duplicated facets in simple type %1.</source>
-        <translation>رویهٔ چندگانه در نوع سادهٔ %1.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdschemaresolver.cpp" line="+354"/>
-        <source>%1 references unknown %2 or %3 element %4.</source>
-        <translation>%1 %2 یا %3 نامشخص عنصر %4 مراجعه می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 references identity constraint %2 that is no %3 or %4 element.</source>
-        <translation>%1 به قید هویت %2 که عنصر %3 یا %4 نیست مراجعه می‌کند.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>%1 has a different number of fields from the identity constraint %2 that it references.</source>
-        <translation>%1 فیلد عددی متفاوتی از قید هویت %2 که به آن اشاره می‌کند دارد.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Base type %1 of %2 element cannot be resolved.</source>
-        <translation>نمی‌توان در مورد نوع پایهٔ %1 از عنصر %2 تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="+84"/>
-        <source>Item type %1 of %2 element cannot be resolved.</source>
-        <translation>نمی‌توان در مورد آیتم نوع %1 از عنصر %2 تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="+31"/>
-        <source>Member type %1 of %2 element cannot be resolved.</source>
-        <translation>نمی‌توان در مورد عضو نوع %1 از عنصر %2 تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="+28"/>
-        <location line="+415"/>
-        <location line="+30"/>
-        <source>Type %1 of %2 element cannot be resolved.</source>
-        <translation>نمی‌توان در مورد نوع %1 از عنصر %2 تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="-423"/>
-        <source>Base type %1 of complex type cannot be resolved.</source>
-        <translation>نمی‌توان در مورد نوع پایهٔ %1 از نوع پیچیده تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>%1 cannot have complex base type that has a %2.</source>
-        <translation>%1 نمی‌تواند نوع پیچیدهٔ پایه‌ای که یک %2 دارد داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+286"/>
-        <source>Content model of complex type %1 contains %2 element, so it cannot be derived by extension from a non-empty type.</source>
-        <translation>محتویات مدل نوع پیچیدهٔ %1 شامل %2 است، بنابراین نمی‌تواند با پسوند از نوع غیر‌تهی مشتق شود.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Complex type %1 cannot be derived by extension from %2 as the latter contains %3 element in its content model.</source>
-        <translation>نوع پیچیدهٔ %1 نمی‌تواند با پسوند از %2 مشتق شود همچنان که اخیراً شامل عنصر %3 در مدل محتویاتش است.</translation>
-    </message>
-    <message>
-        <location line="+101"/>
-        <source>Type of %1 element must be a simple type, %2 is not.</source>
-        <translation>نوع عنصر %1 باید ساده باشد، در حالی که %2 نیست.</translation>
-    </message>
-    <message>
-        <location line="+62"/>
-        <source>Substitution group %1 of %2 element cannot be resolved.</source>
-        <translation>نمی‌توان در مورد جانشینی گروه %1 از عنصر %2 تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Substitution group %1 has circular definition.</source>
-        <translation>جانشینی گروه %1 تعریف حلقوی دارد.</translation>
-    </message>
-    <message>
-        <location line="+120"/>
-        <location line="+7"/>
-        <source>Duplicated element names %1 in %2 element.</source>
-        <translation>نام‌های چندگانهٔ %1 در عنصر %2.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <location line="+52"/>
-        <location line="+71"/>
-        <location line="+28"/>
-        <source>Reference %1 of %2 element cannot be resolved.</source>
-        <translation>نمی‌توان در مورد ارجاع %1 از عنصر %2 تصمیم گرفت.</translation>
-    </message>
-    <message>
-        <location line="-138"/>
-        <source>Circular group reference for %1.</source>
-        <translation>ارجاع گروهی حلقوی برای %1.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 element is not allowed in this scope</source>
-        <translation>عنصر %1 در این قلمرو مجاز نیست</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>%1 element cannot have %2 attribute with value other than %3.</source>
-        <translation>عنصر %1 نمی‌تواند صفت %2 را با مقداری متفاوت از %3 داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>%1 element cannot have %2 attribute with value other than %3 or %4.</source>
-        <translation>عنصر %1 نمی‌تواند صفت %2 را با مقداری متفاوت از %3 یا %4 داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+91"/>
-        <source>%1 or %2 attribute of reference %3 does not match with the attribute declaration %4.</source>
-        <translation>صفت %1 یا %2 از ارجاع %3 با اعلان صفت %4 مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+25"/>
-        <source>Attribute group %1 has circular reference.</source>
-        <translation>گروه صفت %1 ارجاع حلقوی دارد.</translation>
-    </message>
-    <message>
-        <location line="+131"/>
-        <source>%1 attribute in %2 must have %3 use like in base type %4.</source>
-        <translation>صفت %1 در %2 باید استفادهٔ %3 را مانند نوع پایهٔ %4 داشته باشد.</translation>
-    </message>
-    <message>
-        <location line="+52"/>
-        <source>Attribute wildcard of %1 is not a valid restriction of attribute wildcard of base type %2.</source>
-        <translation>صفت wildcard %1 قید معتبر صفت wildcard نوع پایهٔ %2 نیست.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>%1 has attribute wildcard but its base type %2 has not.</source>
-        <translation>%1 wildcard صفت دارد اما نوع پایهٔ %2 اش ندارد.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Union of attribute wildcard of type %1 and attribute wildcard of its base type %2 is not expressible.</source>
-        <translation>اتحاد wildcars صفت نوع %1 و wildcard صفت نوع پایهٔ %2 آن قابل بیان نیست.</translation>
-    </message>
-    <message>
-        <location line="+48"/>
-        <source>Enumeration facet contains invalid content: {%1} is not a value of type %2.</source>
-        <translation>رویهٔ شمارش شامل محتویات غیر مجاز است: {%1} یک مقدار از نوع %2 نیست.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>Namespace prefix of qualified name %1 is not defined.</source>
-        <translation>پیشوند فضای‌نامی نام مشخص شدهٔ %1 تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+51"/>
-        <location line="+18"/>
-        <source>%1 element %2 is not a valid restriction of the %3 element it redefines: %4.</source>
-        <translation>%1 عنصر %2 یک قید معتبر عنصر %3 که %4 را بازتعریف می‌کند نیست.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdtypechecker.cpp" line="+235"/>
-        <location line="+7"/>
-        <location line="+21"/>
-        <source>%1 is not valid according to %2.</source>
-        <translation>%1 بر طبق %2 معتبر نیست.</translation>
-    </message>
-    <message>
-        <location line="+167"/>
-        <source>String content does not match the length facet.</source>
-        <translation>محتوای رشته با رویهٔ طول مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the minLength facet.</source>
-        <translation>محتوای رشته با رویهٔ طول مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>String content does not match the maxLength facet.</source>
-        <translation>محتوای رشته با رویهٔ طول ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content does not match pattern facet.</source>
-        <translation>محتوای رشته با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>String content is not listed in the enumeration facet.</source>
-        <translation>محتوای رشته در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Signed integer content does not match the maxInclusive facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار با رویهٔ شامل ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the maxExclusive facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار با رویهٔ فقط ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minInclusive facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار با رویهٔ شامل مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Signed integer content does not match the minExclusive facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار با رویهٔ فقط مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content is not listed in the enumeration facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Signed integer content does not match pattern facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Signed integer content does not match in the totalDigits facet.</source>
-        <translation>محتوای عدد صحیح علامت‌دار با رویهٔ مجموع ارقام مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Unsigned integer content does not match the maxInclusive facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ با رویهٔ شامل ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the maxExclusive facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ با رویهٔ فقط ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minInclusive facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ با رویهٔ شامل مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Unsigned integer content does not match the minExclusive facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ با رویهٔ فقط مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content is not listed in the enumeration facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Unsigned integer content does not match pattern facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unsigned integer content does not match in the totalDigits facet.</source>
-        <translation>محتوای عدد صحیح بدون علامت‌ با رویهٔ مجموع ارقام مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Double content does not match the maxInclusive facet.</source>
-        <translation>محتوای عدد اعشاری با رویهٔ شامل ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the maxExclusive facet.</source>
-        <translation>محتوای عدد اعشاری با رویهٔ فقط ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minInclusive facet.</source>
-        <translation>محتوای عدد اعشاری با رویهٔ شامل مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Double content does not match the minExclusive facet.</source>
-        <translation>محتوای عدد اعشاری با رویهٔ فقط مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+26"/>
-        <source>Double content is not listed in the enumeration facet.</source>
-        <translation>محتوای عدد اعشاری در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Double content does not match pattern facet.</source>
-        <translation>محتوای عدد اعشاری با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Decimal content does not match in the fractionDigits facet.</source>
-        <translation>محتوای عدد ده‌دهی با رویهٔ ارقام کسری مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Decimal content does not match in the totalDigits facet.</source>
-        <translation>محتوای عدد ده‌دهی با رویهٔ مجموع ارقام مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Date time content does not match the maxInclusive facet.</source>
-        <translation>محتوای تاریخ زمان با رویهٔ شامل ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the maxExclusive facet.</source>
-        <translation>محتوای تاریخ زمان با رویهٔ فقط ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minInclusive facet.</source>
-        <translation>محتوای تاریخ زمان با رویهٔ شامل مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Date time content does not match the minExclusive facet.</source>
-        <translation>محتوای تاریخ زمان با رویهٔ فقط مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content is not listed in the enumeration facet.</source>
-        <translation>محتوای تاریخ زمان در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Date time content does not match pattern facet.</source>
-        <translation>محتوای تاریخ زمان با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Duration content does not match the maxInclusive facet.</source>
-        <translation>محتوای مدت با رویهٔ شامل ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the maxExclusive facet.</source>
-        <translation>محتوای مدت با رویهٔ فقط ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minInclusive facet.</source>
-        <translation>محتوای مدت با رویهٔ شامل مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Duration content does not match the minExclusive facet.</source>
-        <translation>محتوای مدت با رویهٔ فقط مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content is not listed in the enumeration facet.</source>
-        <translation>محتوای مدت در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Duration content does not match pattern facet.</source>
-        <translation>محتوای مدت با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Boolean content does not match pattern facet.</source>
-        <translation>محتوای بولین با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>Binary content does not match the length facet.</source>
-        <translation>محتوای دودویی با رویهٔ طول مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the minLength facet.</source>
-        <translation>محتوای دودویی با رویهٔ طول مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Binary content does not match the maxLength facet.</source>
-        <translation>محتوای دودویی با رویهٔ طول  ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Binary content is not listed in the enumeration facet.</source>
-        <translation>محتوای دودویی در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Invalid QName content: %1.</source>
-        <translation>محتوای نامعتبر QName: %1.</translation>
-    </message>
-    <message>
-        <location line="+17"/>
-        <source>QName content is not listed in the enumeration facet.</source>
-        <translation>محتوای QName در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>QName content does not match pattern facet.</source>
-        <translation>محتوای QName با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+36"/>
-        <source>Notation content is not listed in the enumeration facet.</source>
-        <translation>محتوای علامت‌گذاری در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+19"/>
-        <source>List content does not match length facet.</source>
-        <translation>محتوای لیست با رویهٔ طول مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match minLength facet.</source>
-        <translation>محتوای لیست با رویهٔ طول مینیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>List content does not match maxLength facet.</source>
-        <translation>محتوای لیست با رویهٔ طول ماکزیمم مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+90"/>
-        <source>List content is not listed in the enumeration facet.</source>
-        <translation>محتوای لیست در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>List content does not match pattern facet.</source>
-        <translation>محتوای لیست با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>Union content is not listed in the enumeration facet.</source>
-        <translation>محتوای اتحاد در رویهٔ شمارش لیست نشده.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Union content does not match pattern facet.</source>
-        <translation>محتوای اتحاد با رویهٔ الگو مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Data of type %1 are not allowed to be empty.</source>
-        <translation>داده نوع %1 نمی‌تواند خالی باشد.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/schema/qxsdvalidatinginstancereader.cpp" line="+160"/>
-        <source>Element %1 is missing child element.</source>
-        <translation>عنصر %1 عنصر فرزند را گم کرده است.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>There is one IDREF value with no corresponding ID: %1.</source>
-        <translation>هیچ IDREF‌ ای با مقدار ID مترادف وجود ندارد: %1.</translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Loaded schema file is invalid.</source>
-        <translation>فایل طرح بارشده نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+16"/>
-        <source>%1 contains invalid data.</source>
-        <translation>%1 شامل دادهٔ نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>xsi:schemaLocation namespace %1 has already appeared earlier in the instance document.</source>
-        <translation>فضای‌نامی xsi:chemalocation %1 هم‌اکنون در ابتدای سند نمونه ظاهر شده.</translation>
-    </message>
-    <message>
-        <location line="+22"/>
-        <source>xsi:noNamespaceSchemaLocation cannot appear after the first no-namespace element or attribute.</source>
-        <translation>xsi:noNamespaceShemaLocation نمی‌تواند بعد از اولین عنصر یا صفت بدون فضای‌نامی ظاهر شود.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>No schema defined for validation.</source>
-        <translation>طرحی برای اعتبارسنجی تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+10"/>
-        <source>No definition for element %1 available.</source>
-        <translation>تعریفی برای عنصر %1  در دسترس نیست.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <location line="+49"/>
-        <location line="+142"/>
-        <source>Specified type %1 is not known to the schema.</source>
-        <translation>نوع مشخص شدهٔ %1 برای طرح ناشناخته است.</translation>
-    </message>
-    <message>
-        <location line="-176"/>
-        <source>Element %1 is not defined in this scope.</source>
-        <translation>عنصر %1 در این قلمرو تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Declaration for element %1 does not exist.</source>
-        <translation>برای عنصر %1 اعلانی وجود ندارد.</translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>Element %1 contains invalid content.</source>
-        <translation>عنصر %1 شامل محتوای نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>Element %1 is declared as abstract.</source>
-        <translation>عنصر %1 به صورت انتزاعی اعلان است.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 is not nillable.</source>
-        <translation>عنصر %1 nillable نیست.</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 contains invalid data: %2</source>
-        <translation>صفت %1 شامل دادهٔ نامعتبر است: %2</translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Element contains content although it is nillable.</source>
-        <translation>عنصر شامل محتویاتی است اگرچه nillable است.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Fixed value constraint not allowed if element is nillable.</source>
-        <translation>قید عنصر ثابت مجاز نیست اگر عنصر nillable باشد.</translation>
-    </message>
-    <message>
-        <location line="+32"/>
-        <source>Specified type %1 is not validly substitutable with element type %2.</source>
-        <translation>عنصر مشخص شده نوع %1 نمی‌تواند به طور معتبر با عنصر نوع %2 جایگزین شود.</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>Complex type %1 is not allowed to be abstract.</source>
-        <translation>نوع پیچیدهٔ %1 نمی‌تواند انتزاعی باشد.</translation>
-    </message>
-    <message>
-        <location line="+21"/>
-        <source>Element %1 contains not allowed attributes.</source>
-        <translation>عنصر %1 شامل صفت غیرمجاز است.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+97"/>
-        <source>Element %1 contains not allowed child element.</source>
-        <translation>عنصر %1 شامل عنصر فرزند غیرمجاز است.</translation>
-    </message>
-    <message>
-        <location line="-76"/>
-        <location line="+93"/>
-        <source>Content of element %1 does not match its type definition: %2.</source>
-        <translation>محتویات عنصر %1 با تعریفش مطابق نیست: %2.</translation>
-    </message>
-    <message>
-        <location line="-85"/>
-        <location line="+92"/>
-        <location line="+41"/>
-        <source>Content of element %1 does not match defined value constraint.</source>
-        <translation>محتویات عنصر %1 با قید مقدار تعریف شده مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="-73"/>
-        <source>Element %1 contains not allowed child content.</source>
-        <translation>عنصر %1 شامل محتویات فرزند غیرمجاز است.</translation>
-    </message>
-    <message>
-        <location line="+41"/>
-        <source>Element %1 contains not allowed text content.</source>
-        <translation>عنصر %1 شامل محتویات متن غیرمجاز است.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Element %1 cannot contain other elements, as it has fixed content.</source>
-        <translation>از آنجایی که عنصر %1 محتویات ثابت دارد، نمی‌تواند شامل تمام دیگر عنصرها باشد.</translation>
-    </message>
-    <message>
-        <location line="+43"/>
-        <source>Element %1 is missing required attribute %2.</source>
-        <translation>عنصر %1 صفت گم‌شدهٔ موردنیاز %2 است.</translation>
-    </message>
-    <message>
-        <location line="+29"/>
-        <source>Attribute %1 does not match the attribute wildcard.</source>
-        <translation>صفت %1 با کاراکتر جایگزین شونده مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Declaration for attribute %1 does not exist.</source>
-        <translation>برای صفت %1 اعلانی وجود ندارد.</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Element %1 contains two attributes of type %2.</source>
-        <translation>عنصر %1 دو صفت از نوع %2 دارد.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Attribute %1 contains invalid content.</source>
-        <translation>صفت %1 شامل محتویات نامعتبر است.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Element %1 contains unknown attribute %2.</source>
-        <translation>عنصر %1 شامل صفت ناشناختهٔ %2 است.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match its type definition: %2.</source>
-        <translation>محتویات صفت %1 با تعریف نوعش مطابق نیست: %2.</translation>
-    </message>
-    <message>
-        <location line="-38"/>
-        <location line="+46"/>
-        <source>Content of attribute %1 does not match defined value constraint.</source>
-        <translation>محتویات صفت %1 با قید مقدار تعریف شده مطابق نیست.</translation>
-    </message>
-    <message>
-        <location line="+88"/>
-        <source>Non-unique value found for constraint %1.</source>
-        <translation>مقدار غیر یکتا برای قید %1 پیدا شد.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Key constraint %1 contains absent fields.</source>
-        <translation>قید کلید %1 شامل فیلد مفقود است.</translation>
-    </message>
-    <message>
-        <location line="+18"/>
-        <source>Key constraint %1 contains references nillable element %2.</source>
-        <translation>قید کلید %1 شامل ارجاع‌های عنصر nillable %2 است.</translation>
-    </message>
-    <message>
-        <location line="+40"/>
-        <source>No referenced value found for key reference %1.</source>
-        <translation>هیچ عنصر مراجعه شده‌ای برای کلید مرجع %1 پیدا نشد.</translation>
-    </message>
-    <message>
-        <location line="+64"/>
-        <source>More than one value found for field %1.</source>
-        <translation>بیش از یک مقدار برای میدان %1 پیدا شد.</translation>
-    </message>
-    <message>
-        <location line="+20"/>
-        <source>Field %1 has no simple type.</source>
-        <translation>فیلد %1 نوع ساده‌ای ندارد.</translation>
-    </message>
-    <message>
-        <location line="+73"/>
-        <source>ID value &apos;%1&apos; is not unique.</source>
-        <translation>مقدار ID «%1» یکتا نیست.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>&apos;%1&apos; attribute contains invalid QName content: %2.</source>
-        <translation>صفت «%1» شامل محتوای نامعتبر QName است: %2.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qcardinality.cpp" line="+55"/>
-        <source>empty</source>
-        <translation>خالی</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or one</source>
-        <translation>صفر یا یک</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>exactly one</source>
-        <translation>دقیقاً یک</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>one or more</source>
-        <translation>یک یا بیشتر</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>zero or more</source>
-        <translation>صفر یا بیشتر</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/type/qtypechecker.cpp" line="+63"/>
-        <source>Required type is %1, but %2 was found.</source>
-        <translation>نوع درخواستی %1 است اما %2 پیدا شد.</translation>
-    </message>
-    <message>
-        <location line="+44"/>
-        <source>Promoting %1 to %2 may cause loss of precision.</source>
-        <translation>بالا بردن %1 نسبت به %2 ممکن است باعث از‌دست‌رفتن دقت شود.</translation>
-    </message>
-    <message>
-        <location line="+49"/>
-        <source>The focus is undefined.</source>
-        <translation>کانون تعریف نشده است.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qoutputvalidator.cpp" line="+86"/>
-        <source>It&apos;s not possible to add attributes after any other kind of node.</source>
-        <translation>بعد از هر نوع گره امکان اضافه‌کردن صفت وجود ندارد.</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>An attribute by name %1 has already been created.</source>
-        <translation>یک صفت با نام %1 هم‌اکنون ساخته شده است.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/utils/qxpathhelper_p.h" line="+120"/>
-        <source>Only the Unicode Codepoint Collation is supported(%1). %2 is unsupported.</source>
-        <translation>فقط تطبیق کد یونی‌کد پشتیبانی شده است (%1). %2 پشتیبانی نشده است.</translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/data/qabstractfloatmathematician.cpp" line="+64"/>
-        <source>No operand in an integer division, %1, can be %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>The first operand in an integer division, %1, cannot be infinity (%2).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>The second operand in a division, %1, cannot be zero (%2).</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/acceltree/qacceltreebuilder.cpp" line="+216"/>
-        <source>An %1-attribute with value %2 has already been declared.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>An %1-attribute must have a valid %2 as value, which %3 isn&apos;t.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qevaluationcache.cpp" line="+116"/>
-        <source>Circularity detected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcomparisonplatform.cpp" line="+167"/>
-        <source>No comparisons can be done involving the type %1.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Operator %1 is not available between atomic values of type %2 and %3.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/expr/qcastingplatform.cpp" line="+136"/>
-        <source>No casting is possible with %1 as the target type.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>It is not possible to cast from %1 to %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+27"/>
-        <source>Casting to %1 is not possible because it is an abstract type, and can therefore never be instantiated.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>It&apos;s not possible to cast the value %1 of type %2 to %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Failure when casting from %1 to %2: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/parser/qmaintainingreader.cpp" line="+184"/>
-        <source>Attribute %1 cannot appear on the element %2. Only the standard attributes can appear.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Attribute %1 cannot appear on the element %2. Only %3 is allowed, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, %4, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Attribute %1 cannot appear on the element %2. Allowed is %3, and the standard attributes.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>XSL-T attributes on XSL-T elements must be in the null namespace, not in the XSL-T namespace which %1 is.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+12"/>
-        <source>The attribute %1 must appear on element %2.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>The element with local name %1 does not exist in XSL-T.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/xmlpatterns/functions/qcomparingaggregator.cpp" line="+197"/>
-        <source>The first argument to %1 cannot be of type %2.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12622,7 +10018,7 @@ to
 <context>
     <name>qdesigner_internal::FormWindow</name>
     <message>
-        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1329"/>
+        <location filename="../src/designer/components/formeditor/formwindow.cpp" line="-1325"/>
         <source>Edit contents</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12632,7 +10028,7 @@ to
         <translation type="unfinished">F2</translation>
     </message>
     <message>
-        <location line="+775"/>
+        <location line="+771"/>
         <source>Insert widget &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -13647,7 +11043,7 @@ Please select another name.</source>
 <context>
     <name>qdesigner_internal::PluginDialog</name>
     <message>
-        <location filename="../src/designer/shared/plugindialog.cpp" line="+72"/>
+        <location filename="../src/designer/shared/plugindialog.cpp" line="+68"/>
         <source>Components</source>
         <translation type="unfinished"></translation>
     </message>
