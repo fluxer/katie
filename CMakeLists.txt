@@ -130,6 +130,9 @@ add_feature_info(mysql WITH_MYSQL "the world's most popular open source database
 option(WITH_SQLITE "Build SQLite database plugin" ON)
 add_feature_info(sqlite WITH_SQLITE "the world's most popular open source database")
 
+option(WITH_RESOLV "Build resolv support" ON)
+add_feature_info(resolv WITH_RESOLV "an open source something")
+
 option(WITH_X11 "Build X11/X.Org support" ON)
 add_feature_info(x11 WITH_X11 "an open source something")
 
@@ -435,6 +438,14 @@ set_package_properties(Sqlite PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(Resolv)
+set_package_properties(Resolv PROPERTIES
+    PURPOSE "Required for domain resolving support"
+    DESCRIPTION ""
+    URL ""
+    TYPE RECOMMENDED
+)
+
 if(NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 
@@ -545,6 +556,10 @@ endif()
 
 if(NOT WITH_GCONF2 OR NOT GCONF2_FOUND)
     katie_definition(-DQT_NO_GCONF2)
+endif()
+
+if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
+    katie_definition(-DQT_NO_RESOLV)
 endif()
 
 # conditional features

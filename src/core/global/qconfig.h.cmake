@@ -191,6 +191,7 @@
 #cmakedefine QT_NO_UDPSOCKET
 #cmakedefine QT_NO_URLINFO
 #cmakedefine QT_NO_FTP
+#cmakedefine QT_NO_RESOLV
 
 /* Painting */
 #cmakedefine QT_NO_COLORNAMES

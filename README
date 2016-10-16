@@ -17,12 +17,12 @@ There are several things you should be aware before considering Katie:
   - QIconEnginePluginV{2} classes have been merged
   - QIconEngineFactoryInterfaceV{2} classes and interfaces have been merged
   - QKeyEventEx and QKeyEvent classes have been merged
-  - OpenSSL, D-Bus, CUPS, GTK2 and GConf2 cannot be runtime dependencies, they
-    must be linked to during build
+  - OpenSSL, D-Bus, CUPS, GTK2, GConf2 and resolv cannot be runtime
+    dependencies, they must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease and idc are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
-  - Symbian, QWS and QPA, Mac and Windows are no longer supported platforms
+  - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
@@ -37,6 +37,7 @@ There are several things you should be aware before considering Katie:
   - command line parser
   - standard directories handler
   - building against IODBC instead of unixODBC is possible
+  - building without resolv is possible
   - building with LTO is possible and supported, if the toolchain can handle it
   - alternative libc implementations support
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)

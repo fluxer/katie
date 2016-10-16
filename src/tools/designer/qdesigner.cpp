@@ -238,16 +238,15 @@ void QDesigner::initialize()
 
 bool QDesigner::event(QEvent *ev)
 {
-    bool eaten;
     switch (ev->type()) {
     case QEvent::FileOpen:
         // Set it true first since, if it's a Qt 3 form, the messagebox from convert will fire the timer.
         m_suppressNewFormShow = true;
         if (!m_workbench->readInForm(static_cast<QFileOpenEvent *>(ev)->file()))
             m_suppressNewFormShow = false;
-        eaten = true;
-        break;
+        return true;
     case QEvent::Close: {
+        bool eaten = true
         QCloseEvent *closeEvent = static_cast<QCloseEvent *>(ev);
         closeEvent->setAccepted(m_workbench->handleClose());
         if (closeEvent->isAccepted()) {
@@ -256,14 +255,12 @@ bool QDesigner::event(QEvent *ev)
                 m_mainWindow->setCloseEventPolicy(MainWindowBase::AcceptCloseEvents);
             eaten = QApplication::event(ev);
         }
-        eaten = true;
-        break;
+        return eaten;
     }
     default:
-        eaten = QApplication::event(ev);
-        break;
+        return QApplication::event(ev);
     }
-    return eaten;
+    Q_UNREACHABLE();
 }
 
 void QDesigner::setMainWindow(MainWindowBase *tw)

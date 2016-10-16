@@ -15,7 +15,7 @@ endif()
 
 if(NOT WIN32)
     include(FindPkgConfig)
-    pkg_check_modules(PC_SQLITE QUIET gconf-2.0)
+    pkg_check_modules(PC_GCONF2 QUIET gconf-2.0)
 endif()
 
 find_path(GCONF2_INCLUDES
@@ -23,7 +23,7 @@ find_path(GCONF2_INCLUDES
     gconf/gconf.h
     PATH_SUFFIXES gconf/2
     HINTS
-    $ENV{SQLITEDIR}/include
+    $ENV{GCONF2DIR}/include
     ${PC_GCONF2_INCLUDEDIR}
     /usr/include
     /usr/local/include
@@ -33,7 +33,7 @@ find_path(GCONF2_INCLUDES
 find_library(GCONF2_LIBRARIES
     gconf-2
     HINTS
-    $ENV{SQLITEDIR}/lib
+    $ENV{GCONF2DIR}/lib
     ${PC_GCONF2_LIBDIR}
     /usr/lib
     /usr/local/lib

@@ -62,7 +62,7 @@ if(NOT KATIE_ARCHITECTURE)
     endif()
 endif()
 
-# FIXME: Plan9 does not supporting dynamic libraries
+# FIXME: Plan9/NaCL does not supporting dynamic libraries
 if(NOT KATIE_TYPE)
     set(KATIE_TYPE SHARED)
     katie_definition(-DQT_SHARED)

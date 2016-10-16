@@ -64,7 +64,6 @@
 #include <qdebug.h>
 #include <qvector.h>
 #include <qdir.h>
-#include "qelfparser_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -287,9 +286,6 @@ static bool qt_parse_pattern(const char *s, uint *version, bool *debug)
 
     return ret;
 }
-#endif // QT_NO_PLUGIN_CHECK
-
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_PLUGIN_CHECK)
 
 static long qt_find_pattern(const char *s, ulong s_len,
                              const char *pattern, ulong p_len)
@@ -364,32 +360,9 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     /*
        ELF binaries on GNU, have .qplugin sections.
     */
-    long pos = 0;
     const char pattern[] = "pattern=QT_PLUGIN_VERIFICATION_DATA";
     const ulong plen = qstrlen(pattern);
-#if defined (Q_OF_ELF) && defined(Q_CC_GNU)
-    int r = QElfParser().parse(filedata, fdlen, library, lib, &pos, &fdlen);
-    if (r == QElfParser::NoQtSection) {
-        if (pos > 0) {
-            // find inside .rodata
-            long rel = qt_find_pattern(filedata + pos, fdlen, pattern, plen);
-            if (rel < 0) {
-                pos = -1;
-            } else {
-                pos += rel;
-            }
-        } else {
-            pos = qt_find_pattern(filedata, fdlen, pattern, plen);
-        }
-    } else if (r != QElfParser::Ok) {
-        if (lib && qt_debug_component()) {
-            qWarning("QElfParser: %s",qPrintable(lib->errorString));
-        }
-        return false;
-    }
-#else
-    pos = qt_find_pattern(filedata, fdlen, pattern, plen);
-#endif // defined(Q_OF_ELF) && defined(Q_CC_GNU)
+    const long pos = qt_find_pattern(filedata, fdlen, pattern, plen);
     bool ret = false;
     if (pos >= 0)
         ret = qt_parse_pattern(filedata + pos, version, debug);
@@ -400,7 +373,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     return ret;
 }
 
-#endif // Q_OS_UNIX && !Q_OS_MAC && !defined(QT_NO_PLUGIN_CHECK)
+#endif // QT_NO_PLUGIN_CHECK
 
 typedef QMap<QString, QLibraryPrivate*> LibraryMap;
 
@@ -770,8 +743,6 @@ bool QLibrary::load()
     If other instances of QLibrary are using the same library, the
     call will fail, and unloading will only happen when every instance
     has called unload().
-
-    Note that on Mac OS X 10.3 (Panther), dynamic libraries cannot be unloaded.
 
     \sa resolve(), load()
 */

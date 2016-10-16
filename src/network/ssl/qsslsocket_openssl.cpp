@@ -62,7 +62,6 @@
 #include <QtCore/qthread.h>
 #include <QtCore/qurl.h>
 #include <QtCore/qvarlengtharray.h>
-#include <QLibrary> // for loading the security lib for the CA store
 
 #if OPENSSL_VERSION_NUMBER >= 0x0090806fL && !defined(OPENSSL_NO_TLSEXT)
 // Symbian does not seem to have the symbol for SNI defined

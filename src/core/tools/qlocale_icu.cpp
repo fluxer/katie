@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "qglobal.h"
-#include "qlibrary.h"
 #include "qdebug.h"
 
 #include <unicode/ucol.h>

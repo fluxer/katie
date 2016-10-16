@@ -317,9 +317,7 @@ QDBusXmlParser::object() const
         objData->introspection = QLatin1String("<node/>\n");
     }
 
-    QSharedDataPointer<QDBusIntrospection::Object> retval;
-    retval = objData;
-    return retval;
+    return QSharedDataPointer<QDBusIntrospection::Object>(objData);
 }
 
 QSharedDataPointer<QDBusIntrospection::ObjectTree>

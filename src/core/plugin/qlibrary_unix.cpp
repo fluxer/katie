@@ -49,15 +49,11 @@
 
 #ifndef QT_NO_LIBRARY
 
-#ifdef Q_OS_MAC
-#  include <qcore_mac_p.h>
-#endif
-
 #if defined(QT_AOUT_UNDERSCORE)
 #include <string.h>
 #endif
 
-#if (defined(Q_OS_VXWORKS) && !defined(VXWORKS_RTP)) || defined (Q_OS_NACL)
+#if defined (Q_OS_NACL)
 #define QT_NO_DYNAMIC_LIBRARY
 #endif
 
@@ -133,14 +129,6 @@ bool QLibraryPrivate::load_sys()
             suffixes << QLatin1String(".so");
         }
 #endif
-# ifdef Q_OS_MAC
-        if (!fullVersion.isEmpty()) {
-            suffixes << QString::fromLatin1(".%1.bundle").arg(fullVersion);
-            suffixes << QString::fromLatin1(".%1.dylib").arg(fullVersion);
-        } else {
-            suffixes << QLatin1String(".bundle") << QLatin1String(".dylib");
-        }
-#endif
     }
     int dlFlags = 0;
 #if defined(QT_HPUX_LD)
@@ -158,15 +146,9 @@ bool QLibraryPrivate::load_sys()
     }
     if (loadHints & QLibrary::ExportExternalSymbolsHint) {
         dlFlags |= RTLD_GLOBAL;
-    }
-#if !defined(Q_OS_CYGWIN)
-    else {
-#if defined(Q_OS_MAC)
-        if (QSysInfo::MacintoshVersion >= QSysInfo::MV_10_4)
-#endif
+    } else {
         dlFlags |= RTLD_LOCAL;
     }
-#endif
 #if defined(Q_OS_AIX)	// Not sure if any other platform actually support this thing.
     if (loadHints & QLibrary::LoadArchiveMemberHint) {
         dlFlags |= RTLD_MEMBER;
@@ -222,20 +204,6 @@ bool QLibraryPrivate::load_sys()
         }
     }
 
-#ifdef Q_OS_MAC
-    if (!pHnd) {
-        QByteArray utf8Bundle = fileName.toUtf8();
-        QCFType<CFURLRef> bundleUrl = CFURLCreateFromFileSystemRepresentation(NULL, reinterpret_cast<const UInt8*>(utf8Bundle.data()), utf8Bundle.length(), true);
-        QCFType<CFBundleRef> bundle = CFBundleCreate(NULL, bundleUrl);
-        if(bundle) {
-            QCFType<CFURLRef> url = CFBundleCopyExecutableURL(bundle);
-            char executableFile[FILENAME_MAX];
-            CFURLGetFileSystemRepresentation(url, true, reinterpret_cast<UInt8*>(executableFile), FILENAME_MAX);
-            attempt = QString::fromUtf8(executableFile);
-            pHnd = dlopen(QFile::encodeName(attempt), dlFlags);
-        }
-    }
-#endif
 #endif // QT_NO_DYNAMIC_LIBRARY
     if (!pHnd) {
         errorString = QLibrary::tr("Cannot load library %1: %2").arg(fileName).arg(qdlerror());
@@ -262,13 +230,6 @@ bool QLibraryPrivate::unload_sys()
     errorString.clear();
     return true;
 }
-
-#ifdef Q_OS_MAC
-Q_CORE_EXPORT void *qt_mac_resolve_sys(void *handle, const char *symbol)
-{
-    return dlsym(handle, symbol);
-}
-#endif
 
 void* QLibraryPrivate::resolve_sys(const char* symbol)
 {

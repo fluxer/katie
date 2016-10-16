@@ -73,12 +73,12 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/ssl
 )
 
-if(NOT WITH_ZLIB OR NOT ZLIB_FOUND)
-    set(NETWORK_SOURCES
-        ${NETWORK_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/miniz/miniz.c
+if(WITH_RESOLV AND RESOLV_FOUND)
+    set(EXTRA_NETWORK_LIBS
+        ${EXTRA_NETWORK_LIBS}
+        ${RESOLV_LIBRARIES}
     )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
+    include_directories(${RESOLV_INCLUDES})
 endif()
 
 set(NETWORK_HEADERS

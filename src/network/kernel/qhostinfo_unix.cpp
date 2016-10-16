@@ -47,7 +47,6 @@
 #include "qnativesocketengine_p.h"
 #include "qiodevice.h"
 #include <qbytearray.h>
-#include <qlibrary.h>
 #include <qurl.h>
 #include <qfile.h>
 #include <qmutexpool_p.h>
@@ -56,11 +55,10 @@
 #include <sys/types.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-#if defined(Q_OS_VXWORKS)
-#  include <hostLib.h>
-#else
-#  include <resolv.h>
-#endif
+
+#ifndef QT_NO_RESOLV
+#include <resolv.h>
+#endif // QT_NO_RESOLV
 
 #if defined (QT_NO_GETADDRINFO)
 #include <qmutex.h>
@@ -77,44 +75,11 @@ QT_BEGIN_NAMESPACE
 #  define Q_ADDRCONFIG          AI_ADDRCONFIG
 #endif
 
-typedef struct __res_state *res_state_ptr;
-
-typedef int (*res_init_proto)(void);
-static res_init_proto local_res_init = 0;
-typedef int (*res_ninit_proto)(res_state_ptr);
-static res_ninit_proto local_res_ninit = 0;
-typedef void (*res_nclose_proto)(res_state_ptr);
-static res_nclose_proto local_res_nclose = 0;
-static res_state_ptr local_res = 0;
-
-static void resolveLibrary()
-{
-#if !defined(QT_NO_LIBRARY) && !defined(Q_OS_QNX)
-    QLibrary lib(QLatin1String("resolv"));
-    lib.setLoadHints(QLibrary::ImprovedSearchHeuristics);
-    if (!lib.load())
-        return;
-
-    local_res_init = res_init_proto(lib.resolve("__res_init"));
-    if (!local_res_init)
-        local_res_init = res_init_proto(lib.resolve("res_init"));
-
-    local_res_ninit = res_ninit_proto(lib.resolve("__res_ninit"));
-    if (!local_res_ninit)
-        local_res_ninit = res_ninit_proto(lib.resolve("res_ninit"));
-
-    if (!local_res_ninit) {
-        // if we can't get a thread-safe context, we have to use the global _res state
-        local_res = res_state_ptr(lib.resolve("_res"));
-    } else {
-        local_res_nclose = res_nclose_proto(lib.resolve("res_nclose"));
-        if (!local_res_nclose)
-            local_res_nclose = res_nclose_proto(lib.resolve("__res_nclose"));
-        if (!local_res_nclose)
-            local_res_ninit = 0;
-    }
-#endif
-}
+// a dirty way to support both thread-safe/unsafe
+#if !defined(QT_NO_RESOLV) && !defined(res_ninit)
+// if we can't get a thread-safe context, we have to use the global _res state
+static __res_state* local_res = _res;
+#endif // QT_NO_RESOLV
 
 QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 {
@@ -125,19 +90,10 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
            hostName.toLatin1().constData());
 #endif
 
-    // Load res_init on demand.
-    static volatile bool triedResolve = false;
-    if (!triedResolve) {
-        QMutexLocker locker(QMutexPool::globalInstanceGet(&local_res_init));
-        if (!triedResolve) {
-            resolveLibrary();
-            triedResolve = true;
-        }
-    }
-
+#ifndef QT_NO_RESOLV
     // If res_init is available, poll it.
-    if (local_res_init)
-        local_res_init();
+    res_init();
+#endif // QT_NO_RESOLV
 
     QHostAddress address;
     if (address.setAddress(hostName)) {
@@ -327,38 +283,34 @@ QString QHostInfo::localHostName()
 
 QString QHostInfo::localDomainName()
 {
-#if !defined(Q_OS_VXWORKS)
-    resolveLibrary();
-    if (local_res_ninit) {
-        // using thread-safe version
-        res_state_ptr state = res_state_ptr(malloc(sizeof(*state)));
-        Q_CHECK_PTR(state);
-        memset(state, 0, sizeof(*state));
-        local_res_ninit(state);
-        QString domainName = QUrl::fromAce(state->defdname);
-        if (domainName.isEmpty())
-            domainName = QUrl::fromAce(state->dnsrch[0]);
-        local_res_nclose(state);
-        free(state);
+#if !defined(QT_NO_RESOLV) && defined(res_ninit)
+    // using thread-safe version
+    res_state state = static_cast<res_state>(malloc(sizeof(res_state)));
+    Q_CHECK_PTR(state);
+    memset(state, 0, sizeof(state));
+    res_ninit(state);
+    QString domainName = QUrl::fromAce(state->defdname);
+    if (domainName.isEmpty())
+        domainName = QUrl::fromAce(state->dnsrch[0]);
+    res_nclose(state);
+    free(state);
 
-        return domainName;
-    }
-
-    if (local_res_init && local_res) {
-        // using thread-unsafe version
+    return domainName;
+#elif !defined(QT_NO_RESOLV)
+    // using thread-unsafe version
 
 #if defined(QT_NO_GETADDRINFO)
-        // We have to call res_init to be sure that _res was initialized
-        // So, for systems without getaddrinfo (which is thread-safe), we lock the mutex too
-        QMutexLocker locker(::getHostByNameMutex());
+    // We have to call res_init to be sure that _res was initialized
+    // So, for systems without getaddrinfo (which is thread-safe), we lock the mutex too
+    QMutexLocker locker(::getHostByNameMutex());
 #endif
-        local_res_init();
-        QString domainName = QUrl::fromAce(local_res->defdname);
-        if (domainName.isEmpty())
-            domainName = QUrl::fromAce(local_res->dnsrch[0]);
-        return domainName;
-    }
-#endif
+    res_init();
+    QString domainName = QUrl::fromAce(local_res->defdname);
+    if (domainName.isEmpty())
+        domainName = QUrl::fromAce(local_res->dnsrch[0]);
+    return domainName;
+#else
+
     // nothing worked, try doing it by ourselves:
     QFile resolvconf;
 #if defined(_PATH_RESCONF)
@@ -387,6 +339,7 @@ QString QHostInfo::localDomainName()
 
     // return the fallen-back-to searched domain
     return domainName;
+#endif // QT_NO_RESOLV
 }
 
 QT_END_NAMESPACE

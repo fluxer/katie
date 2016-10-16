@@ -84,32 +84,18 @@
 #include <QStack>
 #include <QMap>
 #include <QPluginLoader>
-#include <QtGui/qapplication.h>
-#include <QtGui/qfontdatabase.h>
-#include <QtCore/qlibraryinfo.h>
-#include <QtCore/qthreadstorage.h>
-#include <QtCore/qthread.h>
-#include <QtCore/qcoreapplication.h>
-#include <QtCore/qdir.h>
-#include <QtCore/qmutex.h>
-#include <QtGui/qcolor.h>
-#include <QtGui/qvector3d.h>
-#include <QtGui/qsound.h>
-#include <QtCore/qcryptographichash.h>
+#include <QDateTime>
+#include <QFontDatabase>
+#include <QDir>
+#include <QMutexLocker>
+#include <QColor>
+#include <QVector3D>
+#include <QCryptographicHash>
 
 #include <qobject_p.h>
 #include <qscriptdeclarativeclass_p.h>
-
 #include <qdeclarativeitemsmodule_p.h>
 #include <qdeclarativeutilmodule_p.h>
-
-#ifdef Q_OS_WIN // for %APPDATA%
-#include <qt_windows.h>
-#include <qlibrary.h>
-#include <windows.h>
-
-#define CSIDL_APPDATA		0x001a	// <username>\Application Data
-#endif
 
 Q_DECLARE_METATYPE(QDeclarativeProperty)
 

@@ -280,7 +280,7 @@ void QPluginLoader::setFileName(const QString &fileName)
         did_load = false;
     }
 
-    QString fn = QFileInfo(fileName).canonicalFilePath();
+    const QString fn = QFileInfo(fileName).canonicalFilePath();
 
     d = QLibraryPrivate::findOrCreate(fn);
     d->loadHints = lh;

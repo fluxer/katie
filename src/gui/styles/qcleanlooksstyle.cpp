@@ -64,7 +64,6 @@
 #include <qprogressbar.h>
 #include <qtoolbar.h>
 #include <qwizard.h>
-#include <qlibrary.h>
 #include <qstylehelper_p.h>
 #include <qpen.h>
 #include "qguicommon_p.h"
