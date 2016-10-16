@@ -56,6 +56,8 @@ macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     file(WRITE ${metaout} "${metadata}")
 endmacro()
 
+# a macro to copy headers into specific directory based on their base names
+# ultimately suitable for copy operation of their destination
 macro(KATIE_GENERATE_MISC MISC_INCLUDES SUBDIR)
     foreach(mischeader ${MISC_INCLUDES})
         get_filename_component(headername ${mischeader} NAME)
@@ -75,28 +77,27 @@ macro(KATIE_GENERATE_OBSOLETE OBSOLETE_INCLUDE SUBDIR REDIRECT)
     endif()
 endmacro()
 
+# a macro for creating pkgconfig files for major components
 macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
-    if(UNIX)
-        string(REPLACE "Kt" "Qt" PACKAGE_FAKE "${FORTARGET}")
-        set(PACKAGE_NAME ${FORTARGET})
-        set(PACKAGE_REQUIRES ${REQUIRES})
-        set(PACKAGE_FLAGS)
-        # adding the definitions to other components is simply redundant since
-        # they all components require the core component
-        if("${FORTARGET}" STREQUAL "KtCore")
-            katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
-            set(PACKAGE_FLAGS "${KATIE_DEFINITIONS}")
-        endif()
-        configure_file(
-            ${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake
-            ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
-        )
-        katie_setup_paths()
-        install(
-            FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
-            DESTINATION ${KATIE_PKGCONFIG_RELATIVE}
-        )
+    string(REPLACE "Kt" "Qt" PACKAGE_FAKE "${FORTARGET}")
+    set(PACKAGE_NAME ${FORTARGET})
+    set(PACKAGE_REQUIRES ${REQUIRES})
+    set(PACKAGE_FLAGS)
+    # adding the definitions to other components is simply redundant since
+    # they all components require the core component
+    if("${FORTARGET}" STREQUAL "KtCore")
+        katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
+        set(PACKAGE_FLAGS "${KATIE_DEFINITIONS}")
     endif()
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/cmake/pkgconfig.cmake
+        ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
+    )
+    katie_setup_paths()
+    install(
+        FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
+        DESTINATION ${KATIE_PKGCONFIG_RELATIVE}
+    )
 endmacro()
 
 # the purpose of this function is to ensure that (1) the output string is not
@@ -114,13 +115,15 @@ function(KATIE_FIXUP_STRING INSTR OUTSTR)
     endif()
 endfunction()
 
+# a function to create an array of source files for a target while taking into
+# account all-in-one target build setting up proper dependency for the
+# moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
     set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
     if(NOT EXISTS "${resourcesdep}")
         file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
     endif()
     set(targetresources)
-    # TODO: make use of continue() once CMake 3.2 is required
     foreach(tmpres ${ARGN})
         get_filename_component(resource ${tmpres} ABSOLUTE)
         get_filename_component(rscext ${resource} EXT)
@@ -188,7 +191,8 @@ function(KATIE_SETUP_TARGET FORTARGET)
 endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
-# are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC
+# are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC or
+# PIC has been enabled for all module/library/executable targets
 macro(KATIE_SETUP_OBJECT FORTARGET)
     get_target_property(targets_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
     if(CMAKE_POSITION_INDEPENDENT_CODE OR targets_pic)
@@ -242,7 +246,8 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    # TODO: make GUI access optional, it is required by many tests so it should still be default
+    # TODO: make GUI access optional, it is required by many tests so it should
+    # still be default
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(
         ${TESTNAME} PRIVATE
