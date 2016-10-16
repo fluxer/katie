@@ -127,8 +127,6 @@ public:
     virtual void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
     virtual void drawPixmapFragments(const QPainter::PixmapFragment *fragments, int fragmentCount, const QPixmap &pixmap,
                                      QPainter::PixmapFragmentHints hints);
-    virtual void drawPixmapFragments(const QRectF *targetRects, const QRectF *sourceRects, int fragmentCount, const QPixmap &pixmap,
-                                     QPainter::PixmapFragmentHints hints);
     virtual void drawImage(const QRectF &r, const QImage &pm, const QRectF &sr,
                            Qt::ImageConversionFlags flags = Qt::AutoColor);
     virtual void drawTextItem(const QPointF &p, const QTextItem &textItem);
@@ -207,8 +205,6 @@ public:
     void stroke(const QVectorPath &path, const QPen &pen);
     void drawTexture(const QGLRect& dest, const QGLRect& src, const QSize &textureSize, bool opaque, bool pattern = false);
     void drawPixmapFragments(const QPainter::PixmapFragment *fragments, int fragmentCount, const QPixmap &pixmap, const QSize &size,
-                             QPainter::PixmapFragmentHints hints);
-    void drawPixmapFragments(const QRectF *targetRects, const QRectF *sourceRects, int fragmentCount, const QPixmap &pixmap, const QSize &size,
                              QPainter::PixmapFragmentHints hints);
     void drawCachedGlyphs(QFontEngineGlyphCache::Type glyphType, QStaticTextItem *staticTextItem);
 

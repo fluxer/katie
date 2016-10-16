@@ -377,8 +377,6 @@ public:
 
     void drawPixmapFragments(const PixmapFragment *fragments, int fragmentCount,
                              const QPixmap &pixmap, PixmapFragmentHints hints = 0);
-    void drawPixmapFragments(const QRectF *targetRects, const QRectF *sourceRects, int fragmentCount,
-                             const QPixmap &pixmap, PixmapFragmentHints hints = 0);
 
     void drawImage(const QRectF &targetRect, const QImage &image, const QRectF &sourceRect,
                    Qt::ImageConversionFlags flags = Qt::AutoColor);

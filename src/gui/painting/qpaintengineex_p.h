@@ -71,19 +71,6 @@ class QPaintEngineExPrivate;
 class QStaticTextItem;
 struct StrokeHandler;
 
-struct QIntRect {
-    int x1, y1, x2, y2;
-    inline void set(const QRect &r) {
-        x1 = r.x();
-        y1 = r.y();
-        x2 = r.right() + 1;
-        y2 = r.bottom() + 1;
-        // We will assume normalized for later...
-        Q_ASSERT(x2 >= x1);
-        Q_ASSERT(y2 >= y1);
-    }
-};
-
 class QRectVectorPath : public QVectorPath {
 public:
     inline void set(const QRect &r) {
@@ -196,8 +183,6 @@ public:
     virtual void drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPointF &s);
 
     virtual void drawPixmapFragments(const QPainter::PixmapFragment *fragments, int fragmentCount, const QPixmap &pixmap,
-                                     QPainter::PixmapFragmentHints hints);
-    virtual void drawPixmapFragments(const QRectF *targetRects, const QRectF *sourceRects, int fragmentCount, const QPixmap &pixmap,
                                      QPainter::PixmapFragmentHints hints);
 
     virtual void updateState(const QPaintEngineState &state);

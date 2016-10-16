@@ -2618,28 +2618,6 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
         op.mode = QPainter::CompositionMode_Source;
 
     op.dest_fetch = destFetchProc[data->rasterBuffer->format];
-    if (op.mode == QPainter::CompositionMode_Source) {
-        switch (data->rasterBuffer->format) {
-        case QImage::Format_RGB32:
-        case QImage::Format_ARGB32_Premultiplied:
-            // don't clear dest_fetch as it sets up the pointer correctly to save one copy
-            break;
-        default: {
-            const QSpan *lastSpan = spans + spanCount;
-            bool alphaSpans = false;
-            while (spans < lastSpan) {
-                if (spans->coverage != 255) {
-                    alphaSpans = true;
-                    break;
-                }
-                ++spans;
-            }
-            if (!alphaSpans)
-                op.dest_fetch = 0;
-        }
-        }
-    }
-
     op.dest_store = destStoreProc[data->rasterBuffer->format];
 
     op.funcSolid = functionForModeSolid[op.mode];
@@ -2682,153 +2660,11 @@ static void blend_color_argb(int count, const QSpan *spans, void *userData)
 
     Operator op = getOperator(data, spans, count);
 
-    if (op.mode == QPainter::CompositionMode_Source) {
-        // inline for performance
-        while (count--) {
-            uint *target = ((uint *)data->rasterBuffer->scanLine(spans->y)) + spans->x;
-            if (spans->coverage == 255) {
-                QT_MEMFILL_UINT(target, spans->len, data->solid.color);
-            } else {
-                uint c = BYTE_MUL(data->solid.color, spans->coverage);
-                int ialpha = 255 - spans->coverage;
-                for (int i = 0; i < spans->len; ++i)
-                    target[i] = c + BYTE_MUL(target[i], ialpha);
-            }
-            ++spans;
-        }
-        return;
-    }
-
     while (count--) {
         uint *target = ((uint *)data->rasterBuffer->scanLine(spans->y)) + spans->x;
         op.funcSolid(target, spans->len, data->solid.color, spans->coverage);
         ++spans;
     }
-}
-
-template <class T>
-static void blendColor(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-    Operator op = getOperator(data, spans, count);
-
-    if (op.mode == QPainter::CompositionMode_Source) {
-        const T c = qt_colorConvert<T, quint32p>(quint32p::fromRawData(data->solid.color), 0);
-        while (count--) {
-            T *target = ((T*)data->rasterBuffer->scanLine(spans->y))
-                        + spans->x;
-            if (spans->coverage == 255) {
-                qt_memfill(target, c, spans->len);
-            } else {
-                const quint8 alpha = T::alpha(spans->coverage);
-                const T color = c.byte_mul(alpha);
-                const int ialpha = T::ialpha(spans->coverage);
-                const T *end = target + spans->len;
-                while (target < end) {
-                    *target = color + target->byte_mul(ialpha);
-                    ++target;
-                }
-            }
-            ++spans;
-        }
-        return;
-    }
-
-    if (op.mode == QPainter::CompositionMode_SourceOver) {
-        while (count--) {
-            const quint32 color = BYTE_MUL(data->solid.color, spans->coverage);
-            const T c = qt_colorConvert<T, quint32p>(quint32p::fromRawData(color), 0);
-            const quint8 ialpha = T::alpha(qAlpha(~color));
-            T *target = ((T*)data->rasterBuffer->scanLine(spans->y)) + spans->x;
-            const T *end = target + spans->len;
-            while (target != end) {
-                *target = c + target->byte_mul(ialpha);
-                ++target;
-            }
-            ++spans;
-        }
-        return;
-    }
-
-    blend_color_generic(count, spans, userData);
-}
-
-#define SPANFUNC_POINTER_BLENDCOLOR(DST) blendColor<DST>
-
-static void blend_color_rgb16(int count, const QSpan *spans, void *userData)
-{
-    QSpanData *data = reinterpret_cast<QSpanData *>(userData);
-
-    /*
-        We duplicate a little logic from getOperator() and calculate the
-        composition mode directly.  This allows blend_color_rgb16 to be used
-        from qt_gradient_quint16 with minimal overhead.
-     */
-    QPainter::CompositionMode mode = data->rasterBuffer->compositionMode;
-    if (mode == QPainter::CompositionMode_SourceOver &&
-        qAlpha(data->solid.color) == 255)
-        mode = QPainter::CompositionMode_Source;
-
-    if (mode == QPainter::CompositionMode_Source) {
-        // inline for performance
-        ushort c = qConvertRgb32To16(data->solid.color);
-        while (count--) {
-            ushort *target = ((ushort *)data->rasterBuffer->scanLine(spans->y)) + spans->x;
-            if (spans->coverage == 255) {
-                QT_MEMFILL_USHORT(target, spans->len, c);
-            } else {
-                ushort color = BYTE_MUL_RGB16(c, spans->coverage);
-                int ialpha = 255 - spans->coverage;
-                const ushort *end = target + spans->len;
-                while (target < end) {
-                    *target = color + BYTE_MUL_RGB16(*target, ialpha);
-                    ++target;
-                }
-            }
-            ++spans;
-        }
-        return;
-    }
-
-    if (mode == QPainter::CompositionMode_SourceOver) {
-        while (count--) {
-            uint color = BYTE_MUL(data->solid.color, spans->coverage);
-            int ialpha = qAlpha(~color);
-            ushort c = qConvertRgb32To16(color);
-            ushort *target = ((ushort *)data->rasterBuffer->scanLine(spans->y)) + spans->x;
-            int len = spans->len;
-            bool pre = (((quintptr)target) & 0x3) != 0;
-            bool post = false;
-            if (pre) {
-                // skip to word boundary
-                *target = c + BYTE_MUL_RGB16(*target, ialpha);
-                ++target;
-                --len;
-            }
-            if (len & 0x1) {
-                post = true;
-                --len;
-            }
-            uint *target32 = (uint*)target;
-            uint c32 = c | (c<<16);
-            len >>= 1;
-            uint salpha = (ialpha+1) >> 3; // calculate here rather than in loop
-            while (len--) {
-                // blend full words
-                *target32 = c32 + BYTE_MUL_RGB16_32(*target32, salpha);
-                ++target32;
-                target += 2;
-            }
-            if (post) {
-                // one last pixel beyond a full word
-                *target = c + BYTE_MUL_RGB16(*target, ialpha);
-            }
-            ++spans;
-        }
-        return;
-    }
-
-    blend_color_generic(count, spans, userData);
 }
 
 template <typename T>
@@ -5366,7 +5202,7 @@ static void qt_gradient_quint16(int count, const QSpan *spans, void *userData)
             quint32 color = qt_gradient_pixel_fixed(&data->gradient, yinc * y + off);
 
             data->solid.color = color;
-            blend_color_rgb16(1, spans, userData);
+            blend_color_generic(1, spans, userData);
             ++spans;
         }
         data->solid.color = oldColor;
@@ -5703,7 +5539,7 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     },
     // Format_RGB16
     {
-        blend_color_rgb16,
+        blend_color_generic,
         qt_gradient_quint16,
         qt_bitmapblit_quint16,
         qt_alphamapblit_quint16,
@@ -5712,56 +5548,56 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     },
     // Format_ARGB8565_Premultiplied
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qargb8565),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb8565
     },
     // Format_RGB666
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qrgb666),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb666
     },
     // Format_ARGB6666_Premultiplied
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qargb6666),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb6666
     },
     // Format_RGB555
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qrgb555),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb555
     },
     // Format_ARGB8555_Premultiplied
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qargb8555),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb8555
     },
     // Format_RGB888
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qrgb888),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb888
     },
     // Format_RGB444
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qrgb444),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qrgb444
     },
     // Format_ARGB4444_Premultiplied
     {
-        SPANFUNC_POINTER_BLENDCOLOR(qargb4444),
+        blend_color_generic,
         blend_src_generic,
         0, 0, 0,
         qt_rectfill_qargb4444

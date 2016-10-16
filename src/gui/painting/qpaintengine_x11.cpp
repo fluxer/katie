@@ -550,8 +550,8 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
     QPixmap::x11SetDefaultScreen(d->xinfo->screen());
 
     if (w && w->testAttribute(Qt::WA_PaintUnclipped)) {  // paint direct on device
- 	updatePen(QPen(Qt::black));
- 	updateBrush(QBrush(Qt::white), QPoint());
+        updatePen(QPen(Qt::black));
+        updateBrush(QBrush(Qt::white), QPoint());
         XSetSubwindowMode(d->dpy, d->gc, IncludeInferiors);
         XSetSubwindowMode(d->dpy, d->gc_brush, IncludeInferiors);
 #ifndef QT_NO_XRENDER
@@ -576,10 +576,10 @@ bool QX11PaintEngine::end()
 #if !defined(QT_NO_XRENDER)
     if (d->picture) {
         // reset clipping/subwindow mode on our render picture
-	XRenderPictureAttributes attrs;
-	attrs.subwindow_mode = ClipByChildren;
+        XRenderPictureAttributes attrs;
+        attrs.subwindow_mode = ClipByChildren;
         attrs.clip_mask = XNone;
-	XRenderChangePicture(d->dpy, d->picture, CPClipMask|CPSubwindowMode, &attrs);
+        XRenderChangePicture(d->dpy, d->picture, CPClipMask|CPSubwindowMode, &attrs);
     }
 #endif
 
