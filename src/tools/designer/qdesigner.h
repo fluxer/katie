@@ -53,8 +53,6 @@ QT_BEGIN_NAMESPACE
 class QDesignerWorkbench;
 class QDesignerToolWindow;
 class MainWindowBase;
-class QDesignerServer;
-class QDesignerClient;
 class QErrorMessage;
 
 class QDesigner: public QApplication
@@ -65,7 +63,6 @@ public:
     virtual ~QDesigner();
 
     QDesignerWorkbench *workbench() const;
-    QDesignerServer *server() const;
     MainWindowBase *mainWindow() const;
     void setMainWindow(MainWindowBase *tw);
 
@@ -86,8 +83,6 @@ private:
     bool parseCommandLineArgs(QStringList &fileNames, QString &resourceDir);
     void showErrorMessageBox(const QString &);
 
-    QDesignerServer *m_server;
-    QDesignerClient *m_client;
     QDesignerWorkbench *m_workbench;
     QPointer<MainWindowBase> m_mainWindow;
     QPointer<QErrorMessage> m_errorMessageDialog;

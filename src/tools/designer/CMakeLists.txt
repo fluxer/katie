@@ -38,7 +38,6 @@ set(DESIGNERBIN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_workbench.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_settings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_actions.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_server.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_appearanceoptions.h
     ${CMAKE_CURRENT_SOURCE_DIR}/saveformastemplate.h
     ${CMAKE_CURRENT_SOURCE_DIR}/newform.h
@@ -59,7 +58,6 @@ set(DESIGNERBIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_formwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_workbench.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_settings.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_server.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_actions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_appearanceoptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/saveformastemplate.cpp

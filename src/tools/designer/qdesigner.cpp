@@ -42,7 +42,6 @@
 // designer
 #include "qdesigner.h"
 #include "qdesigner_actions.h"
-#include "qdesigner_server.h"
 #include "qdesigner_settings.h"
 #include "qdesigner_workbench.h"
 #include "mainwindow.h"
@@ -85,8 +84,6 @@ static void designerMessageHandler(QtMsgType type, const char *msg)
 
 QDesigner::QDesigner(int &argc, char **argv)
     : QApplication(argc, argv),
-      m_server(0),
-      m_client(0),
       m_workbench(0), m_suppressNewFormShow(false)
 {
     setOrganizationName(QLatin1String("Trolltech"));
@@ -101,10 +98,6 @@ QDesigner::~QDesigner()
 {
     if (m_workbench)
         delete m_workbench;
-    if (m_server)
-        delete m_server;
-    if (m_client)
-        delete m_client;
 }
 
 void QDesigner::showErrorMessage(const char *message)
@@ -150,11 +143,6 @@ QDesignerWorkbench *QDesigner::workbench() const
     return m_workbench;
 }
 
-QDesignerServer *QDesigner::server() const
-{
-    return m_server;
-}
-
 bool QDesigner::parseCommandLineArgs(QStringList &fileNames, QString &resourceDir)
 {
     const QStringList args = arguments();
@@ -170,27 +158,6 @@ bool QDesigner::parseCommandLineArgs(QStringList &fileNames, QString &resourceDi
                 break;
             }
             // Options
-            if (argument == QLatin1String("-server")) {
-                m_server = new QDesignerServer();
-                printf("%d\n", m_server->serverPort());
-                fflush(stdout);
-                break;
-            }
-            if (argument == QLatin1String("-client")) {
-                bool ok = true;
-                if (++it == acend) {
-                    qWarning("** WARNING The option -client requires an argument");
-                    return false;
-                }
-                const quint16 port = it->toUShort(&ok);
-                if (ok) {
-                    m_client = new QDesignerClient(port, this);
-                } else {
-                    qWarning("** WARNING Non-numeric argument specified for -client");
-                    return false;
-                }
-                break;
-            }
             if (argument == QLatin1String("-resourcedir")) {
                 if (++it == acend) {
                     qWarning("** WARNING The option -resourcedir requires an argument");
