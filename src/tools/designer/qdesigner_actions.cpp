@@ -444,27 +444,6 @@ QActionGroup *QDesignerActions::createHelpActions()
 {
     QActionGroup *helpActions = createActionGroup(this);
 
-#ifndef QT_JAMBI_BUILD
-    QAction *mainHelpAction = new QAction(tr("Qt Designer &Help"), this);
-    mainHelpAction->setObjectName(QLatin1String("__qt_designer_help_action"));
-    connect(mainHelpAction, SIGNAL(triggered()), this, SLOT(showDesignerHelp()));
-    mainHelpAction->setShortcut(Qt::CTRL + Qt::Key_Question);
-    helpActions->addAction(mainHelpAction);
-
-    helpActions->addAction(createSeparator(this));
-    QAction *widgetHelp = new QAction(tr("Current Widget Help"), this);
-    widgetHelp->setObjectName(QLatin1String("__qt_current_widget_help_action"));
-    widgetHelp->setShortcut(Qt::Key_F1);
-    connect(widgetHelp, SIGNAL(triggered()), this, SLOT(showWidgetSpecificHelp()));
-    helpActions->addAction(widgetHelp);
-
-    helpActions->addAction(createSeparator(this));
-    QAction *whatsNewAction = new QAction(tr("What's New in Qt Designer?"), this);
-    whatsNewAction->setObjectName(QLatin1String("__qt_whats_new_in_qt_designer_action"));
-    connect(whatsNewAction, SIGNAL(triggered()), this, SLOT(showWhatsNew()));
-    helpActions->addAction(whatsNewAction);
-#endif
-
     helpActions->addAction(createSeparator(this));
     QAction *aboutPluginsAction = new QAction(tr("About Plugins"), this);
     aboutPluginsAction->setObjectName(QLatin1String("__qt_about_plugins_action"));
@@ -1042,34 +1021,6 @@ QAction *QDesignerActions::minimizeAction() const
     return m_minimizeAction;
 }
 
-void QDesignerActions::showDesignerHelp()
-{
-    QString url = AssistantClient::designerManualUrl();
-    url += QLatin1String("designer-manual.html");
-    showHelp(url);
-}
-
-void QDesignerActions::showWhatsNew()
-{
-    QString url = AssistantClient::qtReferenceManualUrl();
-    url += QLatin1String("qt4-designer.html");
-    showHelp(url);
-}
-
-void QDesignerActions::helpRequested(const QString &manual, const QString &document)
-{
-    QString url = AssistantClient::documentUrl(manual);
-    url += document;
-    showHelp(url);
-}
-
-void QDesignerActions::showHelp(const QString &url)
-{
-    QString errorMessage;
-    if (!m_assistantClient.showPage(url, &errorMessage))
-        QMessageBox::warning(core()->topLevel(), tr("Assistant"), errorMessage);
-}
-
 void QDesignerActions::aboutDesigner()
 {
     VersionDialog mb(core()->topLevel());
@@ -1085,23 +1036,6 @@ void QDesignerActions::aboutDesigner()
 QAction *QDesignerActions::editWidgets() const
 {
     return m_editWidgetsAction;
-}
-
-void QDesignerActions::showWidgetSpecificHelp()
-{
-    QString helpId;
-    if (const qdesigner_internal::QDesignerIntegration *integration = qobject_cast<qdesigner_internal::QDesignerIntegration *>(core()->integration()))
-        helpId = integration->contextHelpId();
-
-    if (helpId.isEmpty()) {
-        showDesignerHelp();
-        return;
-    }
-
-    QString errorMessage;
-    const bool rc = m_assistantClient.activateIdentifier(helpId, &errorMessage);
-    if (!rc)
-        QMessageBox::warning(core()->topLevel(), tr("Assistant"), errorMessage);
 }
 
 void QDesignerActions::updateCloseAction()

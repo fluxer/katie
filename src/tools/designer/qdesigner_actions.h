@@ -42,7 +42,6 @@
 #ifndef QDESIGNER_ACTIONS_H
 #define QDESIGNER_ACTIONS_H
 
-#include "assistantclient.h"
 #include "qdesigner_settings.h"
 
 #include <QtCore/QObject>
@@ -121,7 +120,6 @@ public slots:
     void activeFormWindowChanged(QDesignerFormWindowInterface *formWindow);
     void createForm();
     void slotOpenForm();
-    void helpRequested(const QString &manual, const QString &document);
 
 signals:
     void useBigIcons(bool);
@@ -138,10 +136,7 @@ private slots:
     void openRecentForm();
     void clearRecentFiles();
     void closeForm();
-    void showDesignerHelp();
-    void showWhatsNew();
     void aboutDesigner();
-    void showWidgetSpecificHelp();
     void backupForms();
     void showNewFormDialog(const QString &fileName);
     void showPreferencesDialog();
@@ -158,7 +153,6 @@ private:
     void fixActionContext();
     void updateRecentFileActions();
     void addRecentFile(const QString &fileName);
-    void showHelp(const QString &help);
     void closePreview();
     QRect fixDialogRect(const QRect &rect) const;
     QString fixResourceFileBackupPath(QDesignerFormWindowInterface *fwi, const QDir& backupDir);
@@ -172,7 +166,6 @@ private:
     QDesignerWorkbench *m_workbench;
     QDesignerFormEditorInterface *m_core;
     QDesignerSettings m_settings;
-    AssistantClient m_assistantClient;
     QString m_openDirectory;
     QString m_saveDirectory;
 

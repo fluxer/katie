@@ -230,9 +230,6 @@ QDesignerWorkbench::QDesignerWorkbench()  :
         if (i == QDesignerToolWindow::WidgetBox)
             connect(toolWindow, SIGNAL(closeEventReceived(QCloseEvent*)), this, SLOT(handleCloseEvent(QCloseEvent*)));
     }
-    // Integration
-    m_integration = new qdesigner_internal::QDesignerIntegration(m_core, this);
-    connect(m_integration, SIGNAL(helpRequested(QString,QString)), m_actionManager, SLOT(helpRequested(QString,QString)));
 
     // remaining view options (config toolbars)
     viewMenu->addSeparator();

@@ -45,7 +45,6 @@ set(DESIGNERBIN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/designer_enums.h
     ${CMAKE_CURRENT_SOURCE_DIR}/appfontdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/preferencesdialog.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/assistantclient.h
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.h
     ${SHAREDDEVICESKIN_HEADERS}
 )
@@ -65,7 +64,6 @@ set(DESIGNERBIN_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/versiondialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/appfontdialog.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/preferencesdialog.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/assistantclient.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/saveformastemplate.ui
     ${CMAKE_CURRENT_SOURCE_DIR}/preferencesdialog.ui

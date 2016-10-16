@@ -76,10 +76,6 @@ class QDesignerFormEditorInterface;
 class QDesignerFormWindowInterface;
 class QDesignerFormWindowManagerInterface;
 
-namespace qdesigner_internal {
-class QDesignerIntegration;
-}
-
 class QDesignerWorkbench: public QObject
 {
     Q_OBJECT
@@ -161,7 +157,6 @@ private:
     void saveSettings() const;
 
     QDesignerFormEditorInterface *m_core;
-    qdesigner_internal::QDesignerIntegration *m_integration;
 
     QDesignerActions *m_actionManager;
     QActionGroup *m_windowActions;
