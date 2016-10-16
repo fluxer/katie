@@ -55,7 +55,6 @@
 #endif
 
 #include <qglframebufferobject.h>
-#include <qlibrary.h>
 #include <qimage.h>
 
 QT_BEGIN_NAMESPACE

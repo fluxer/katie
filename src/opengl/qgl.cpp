@@ -84,7 +84,6 @@
 #include <qimagepixmapcleanuphooks_p.h>
 #include "qcolormap.h"
 #include "qfile.h"
-#include "qlibrary.h"
 #include <qmutex.h>
 
 #if defined(QT_OPENGL_ES) && !defined(QT_NO_EGL)

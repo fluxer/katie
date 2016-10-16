@@ -246,7 +246,7 @@ bool QDesigner::event(QEvent *ev)
             m_suppressNewFormShow = false;
         return true;
     case QEvent::Close: {
-        bool eaten = true
+        bool eaten = true;
         QCloseEvent *closeEvent = static_cast<QCloseEvent *>(ev);
         closeEvent->setAccepted(m_workbench->handleClose());
         if (closeEvent->isAccepted()) {

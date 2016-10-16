@@ -38,7 +38,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <qlibrary.h>
+
 #include <qdebug.h>
 #include <qgl_p.h>
 #include <qt_x11_p.h>

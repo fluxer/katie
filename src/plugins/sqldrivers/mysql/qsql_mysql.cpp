@@ -1089,7 +1089,7 @@ bool QMYSQLResult::exec()
 static int qMySqlConnectionCount = 0;
 static bool qMySqlInitHandledByUser = false;
 
-static void qLibraryInit()
+static inline void qLibraryInit()
 {
 #ifndef Q_NO_MYSQL_EMBEDDED
 # if MYSQL_VERSION_ID >= 40000
@@ -1107,7 +1107,7 @@ static void qLibraryInit()
 #endif // Q_NO_MYSQL_EMBEDDED
 }
 
-static void qLibraryEnd()
+static inline void qLibraryEnd()
 {
 #ifndef Q_NO_MYSQL_EMBEDDED
 # if MYSQL_VERSION_ID > 40000

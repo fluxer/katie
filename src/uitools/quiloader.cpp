@@ -49,15 +49,14 @@
 #include <textbuilder_p.h>
 #include <ui4_p.h>
 
-#include <QtCore/qdebug.h>
+#include <QtCore/QDebug>
+#include <QtCore/QDir>
+#include <QtCore/QMap>
 #include <QtGui/QAction>
 #include <QtGui/QActionGroup>
 #include <QtGui/QApplication>
-#include <QtCore/QDir>
-#include <QtCore/QLibraryInfo>
 #include <QtGui/QLayout>
 #include <QtGui/QWidget>
-#include <QtCore/QMap>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTreeWidget>
 #include <QtGui/QListWidget>
