@@ -78,55 +78,6 @@ typedef unsigned long XID;
 
 QT_BEGIN_NAMESPACE
 
-// ### Qt 4.7 - merge with QLatin1Literal
-class QHashableLatin1Literal
-{
-public:
-    int size() const { return m_size; }
-    const char *data() const { return m_data; }
-
-#ifdef __SUNPRO_CC
-        QHashableLatin1Literal(const char* str)
-        : m_size(strlen(str)), m_data(str) {}
-#else
-    template <int N>
-        QHashableLatin1Literal(const char (&str)[N])
-        : m_size(N - 1), m_data(str) {}
-#endif
-
-    QHashableLatin1Literal(const QHashableLatin1Literal &other)
-        : m_size(other.m_size), m_data(other.m_data)
-    {}
-
-    QHashableLatin1Literal &operator=(const QHashableLatin1Literal &other)
-    {
-        if (this == &other)
-            return *this;
-        *const_cast<int *>(&m_size) = other.m_size;
-        *const_cast<char **>(&m_data) = const_cast<char *>(other.m_data);
-        return *this;
-    }
-
-    QString toString() const { return QString::fromLatin1(m_data, m_size); }
-
-    static QHashableLatin1Literal fromData(const char *str)
-    {
-        return QHashableLatin1Literal(str, qstrlen(str));
-    }
-
-private:
-    QHashableLatin1Literal(const char *str, int length)
-        : m_size(length), m_data(str)
-    {}
-
-    const int m_size;
-    const char *m_data;
-};
-
-bool operator==(const QHashableLatin1Literal &l1, const QHashableLatin1Literal &l2);
-inline bool operator!=(const QHashableLatin1Literal &l1, const QHashableLatin1Literal &l2) { return !operator==(l1, l2); }
-uint qHash(const QHashableLatin1Literal &key);
-
 typedef QStringList (*_qt_filedialog_open_filenames_hook)(QWidget * parent, const QString &caption, const QString &dir,
                                                           const QString &filter, QString *selectedFilter, QFileDialog::Options options);
 typedef QString (*_qt_filedialog_open_filename_hook)     (QWidget * parent, const QString &caption, const QString &dir,
@@ -185,8 +136,8 @@ public:
 
     QGtkStyleFilter filter;
 
-    static GtkWidget* gtkWidget(const QHashableLatin1Literal &path);
-    static GtkStyle* gtkStyle(const QHashableLatin1Literal &path = QHashableLatin1Literal("GtkWindow"));
+    static GtkWidget* gtkWidget(const QString &path);
+    static GtkStyle* gtkStyle(const QString &path = QLatin1String("GtkWindow"));
 
     virtual void initGtkMenu() const;
     virtual void initGtkTreeview() const;
@@ -223,10 +174,10 @@ public:
     static Ptr_gnome_icon_lookup_sync gnome_icon_lookup_sync;
     static Ptr_gnome_vfs_init gnome_vfs_init;
 
-    virtual QPalette gtkWidgetPalette(const QHashableLatin1Literal &gtkWidgetName) const;
+    virtual QPalette gtkWidgetPalette(const QString &gtkWidgetName) const;
 
 protected:
-    typedef QHash<QHashableLatin1Literal, GtkWidget*> WidgetMap;
+    typedef QHash<QString, GtkWidget*> WidgetMap;
 
     static inline void destroyWidgetMap()
     {
@@ -251,7 +202,7 @@ protected:
     static void addWidgetToMap(GtkWidget* widget);
     static void addAllSubWidgets(GtkWidget *widget, gpointer v = 0);
     static void addWidget(GtkWidget *widget);
-    static void removeWidgetFromMap(const QHashableLatin1Literal &path);
+    static void removeWidgetFromMap(const QString &path);
 
     virtual void init();
 

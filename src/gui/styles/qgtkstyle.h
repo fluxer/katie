@@ -76,31 +76,20 @@ public:
                      QPainter *painter, const QWidget *widget) const;
     void drawComplexControl(ComplexControl control, const QStyleOptionComplex *option,
                             QPainter *painter, const QWidget *widget) const;
-    void drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
-                        const QPixmap &pixmap) const;
-    void drawItemText(QPainter *painter, const QRect &rect, int alignment, const QPalette &pal,
-                      bool enabled, const QString& text, QPalette::ColorRole textRole) const;
 
     int pixelMetric(PixelMetric metric, const QStyleOption *option = 0,
                     const QWidget *widget = 0) const;
     int styleHint(StyleHint hint, const QStyleOption *option,
                   const QWidget *widget, QStyleHintReturn *returnData) const;
 
-    QStyle::SubControl hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
-                              const QPoint &pt, const QWidget *w) const;
-
     QRect subControlRect(ComplexControl control, const QStyleOptionComplex *option,
                          SubControl subControl, const QWidget *widget) const;
     QRect subElementRect(SubElement sr, const QStyleOption *opt, const QWidget *w) const;
-    QRect itemPixmapRect(const QRect &r, int flags, const QPixmap &pixmap) const;
-
 
     QSize sizeFromContents(ContentsType type, const QStyleOption *option,
                            const QSize &size, const QWidget *widget) const;
     QPixmap standardPixmap(StandardPixmap sp, const QStyleOption *option,
                            const QWidget *widget) const;
-    QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
-                                const QStyleOption *opt) const;
 
     void polish(QWidget *widget);
     void polish(QApplication *app);
