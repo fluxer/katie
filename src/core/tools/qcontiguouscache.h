@@ -267,7 +267,7 @@ void QContiguousCache<T>::clear()
 template <typename T>
 inline QContiguousCacheData *QContiguousCache<T>::allocate(int aalloc)
 {
-    return ::malloc(sizeOfTypedData() + (aalloc - 1) * sizeof(T));
+    return static_cast<QContiguousCacheData*>(::malloc(sizeOfTypedData() + (aalloc - 1) * sizeof(T)));
 }
 
 template <typename T>
