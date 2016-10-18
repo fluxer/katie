@@ -200,13 +200,11 @@ void BlendBench::unalignedBlendArgb32()
 {
     const int dimension = 1024;
 
-    // We use dst aligned by design. We don't want to test all the combination of alignemnt for src and dst.
-    // Moreover, it make sense for us to align dst in the implementation because it is accessed more often.
-    uchar *dstMemory = static_cast<uchar*>(qMallocAligned((dimension * dimension * sizeof(quint32)), 16));
+    uchar *dstMemory = static_cast<uchar*>(::malloc(dimension * dimension * sizeof(quint32)));
     QImage destination(dstMemory, dimension, dimension, QImage::Format_ARGB32_Premultiplied);
     destination.fill(0x12345678); // avoid special cases of alpha
 
-    uchar *srcMemory = static_cast<uchar*>(qMallocAligned((dimension * dimension * sizeof(quint32)) + 16, 16));
+    uchar *srcMemory = static_cast<uchar*>(::malloc(dimension * dimension * sizeof(quint32)) + 16);
     QFETCH(int, offset);
     uchar *imageSrcMemory = srcMemory + (offset * sizeof(quint32));
 
@@ -218,8 +216,8 @@ void BlendBench::unalignedBlendArgb32()
         painter.drawImage(QPoint(), src);
     }
 
-    qFreeAligned(srcMemory);
-    qFreeAligned(dstMemory);
+    ::free(srcMemory);
+    ::free(dstMemory);
 }
 
 QTEST_MAIN(BlendBench)
