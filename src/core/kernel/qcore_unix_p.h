@@ -56,22 +56,13 @@
 #include "qplatformdefs.h"
 #include "qatomic.h"
 
-#ifndef Q_OS_UNIX
-# error "qcore_unix_p.h included on a non-Unix system"
-#endif
-
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-
 #include <sys/wait.h>
 #include <errno.h>
 #include <fcntl.h>
-
-#if defined(Q_OS_VXWORKS)
-#  include <ioLib.h>
-#endif
 
 struct sockaddr;
 

@@ -56,16 +56,6 @@ void QContiguousCacheData::dump() const
 }
 #endif
 
-QContiguousCacheData *QContiguousCacheData::allocate(int size, int alignment)
-{
-    return static_cast<QContiguousCacheData *>(qMallocAligned(size, alignment));
-}
-
-void QContiguousCacheData::freeData(QContiguousCacheData *data)
-{
-    qFreeAligned(data);
-}
-
 /*! \class QContiguousCache
     \brief The QContiguousCache class is a template class that provides a contiguous cache.
     \ingroup tools

@@ -62,14 +62,6 @@ struct Q_CORE_EXPORT QContiguousCacheData
     int offset;
     uint sharable : 1;
 
-    // total is 24 bytes (HP-UX aCC: 40 bytes)
-    // the next entry is already aligned to 8 bytes
-    // there will be an 8 byte gap here if T requires 16-byte alignment
-    //  (such as long double on 64-bit platforms, __int128, __float128)
-
-    static QContiguousCacheData *allocate(int size, int alignment);
-    static void freeData(QContiguousCacheData *data);
-
 #ifdef QT_QCONTIGUOUSCACHE_DEBUG
     void dump() const;
 #endif
@@ -81,7 +73,7 @@ struct QContiguousCacheTypedData: private QContiguousCacheData
     // private inheritance to avoid aliasing warningss
     T array[1];
 
-    static inline void free(QContiguousCacheTypedData *data) { QContiguousCacheData::freeData(data); }
+    static inline void free(QContiguousCacheTypedData *data) { ::free(data); }
 };
 
 template<typename T>
@@ -160,20 +152,12 @@ public:
 private:
     void detach_helper();
 
-    QContiguousCacheData *malloc(int aalloc);
+    QContiguousCacheData *allocate(int aalloc);
     void free(Data *x);
     int sizeOfTypedData() {
         // this is more or less the same as sizeof(Data), except that it doesn't
         // count the padding at the end
         return reinterpret_cast<const char *>(&(reinterpret_cast<const Data *>(this))->array[1]) - reinterpret_cast<const char *>(this);
-    }
-    int alignOfTypedData() const
-    {
-#ifdef Q_ALIGNOF
-        return qMax<int>(sizeof(void*), Q_ALIGNOF(Data));
-#else
-        return 0;
-#endif
     }
 };
 
@@ -182,7 +166,7 @@ void QContiguousCache<T>::detach_helper()
 {
     union { QContiguousCacheData *d; QContiguousCacheTypedData<T> *p; } x;
 
-    x.d = malloc(d->alloc);
+    x.d = allocate(d->alloc);
     x.d->ref = 1;
     x.d->count = d->count;
     x.d->start = d->start;
@@ -219,7 +203,7 @@ void QContiguousCache<T>::setCapacity(int asize)
         return;
     detach();
     union { QContiguousCacheData *d; QContiguousCacheTypedData<T> *p; } x;
-    x.d = malloc(asize);
+    x.d = allocate(asize);
     x.d->alloc = asize;
     x.d->count = qMin(d->count, asize);
     x.d->offset = d->offset + d->count - x.d->count;
@@ -270,7 +254,7 @@ void QContiguousCache<T>::clear()
         d->count = d->start = d->offset = 0;
     } else {
         union { QContiguousCacheData *d; QContiguousCacheTypedData<T> *p; } x;
-        x.d = malloc(d->alloc);
+        x.d = allocate(d->alloc);
         x.d->ref = 1;
         x.d->alloc = d->alloc;
         x.d->count = x.d->start = x.d->offset = 0;
@@ -281,15 +265,15 @@ void QContiguousCache<T>::clear()
 }
 
 template <typename T>
-inline QContiguousCacheData *QContiguousCache<T>::malloc(int aalloc)
+inline QContiguousCacheData *QContiguousCache<T>::allocate(int aalloc)
 {
-    return QContiguousCacheData::allocate(sizeOfTypedData() + (aalloc - 1) * sizeof(T), alignOfTypedData());
+    return ::malloc(sizeOfTypedData() + (aalloc - 1) * sizeof(T));
 }
 
 template <typename T>
 QContiguousCache<T>::QContiguousCache(int cap)
 {
-    d = malloc(cap);
+    d = allocate(cap);
     d->ref = 1;
     d->alloc = cap;
     d->count = d->start = d->offset = 0;
