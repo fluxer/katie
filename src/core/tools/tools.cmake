@@ -23,7 +23,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qmargins.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcontiguouscache.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpodlist_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpoint.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qqueue.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qrect.h

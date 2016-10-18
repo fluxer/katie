@@ -49,6 +49,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+class QDebug;
 
 #ifndef QT_NO_SHORTCUT
 

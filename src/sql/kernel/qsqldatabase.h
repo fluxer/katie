@@ -49,7 +49,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
+class QDebug;
 class QSqlError;
 class QSqlDriver;
 class QSqlIndex;

@@ -775,8 +775,6 @@ static JSC::JSValue JSC_HOST_CALL functionQsTranslate(JSC::ExecState*, JSC::JSOb
 static JSC::JSValue JSC_HOST_CALL functionQsTranslateNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 static JSC::JSValue JSC_HOST_CALL functionQsTr(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 static JSC::JSValue JSC_HOST_CALL functionQsTrNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionQsTrId(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionQsTrIdNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 
 JSC::JSValue JSC_HOST_CALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
 {
@@ -882,28 +880,6 @@ JSC::JSValue JSC_HOST_CALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JS
 }
 
 JSC::JSValue JSC_HOST_CALL functionQsTrNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
-{
-    if (args.size() < 1)
-        return JSC::jsUndefined();
-    return args.at(0);
-}
-
-JSC::JSValue JSC_HOST_CALL functionQsTrId(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
-{
-    if (args.size() < 1)
-        return JSC::throwError(exec, JSC::GeneralError, "qsTrId() requires at least one argument");
-    if (!args.at(0).isString())
-        return JSC::throwError(exec, JSC::TypeError, "qsTrId(): first argument (id) must be a string");
-    if ((args.size() > 1) && !args.at(1).isNumber())
-        return JSC::throwError(exec, JSC::TypeError, "qsTrId(): second argument (n) must be a number");
-    JSC::UString id = args.at(0).toString(exec);
-    int n = -1;
-    if (args.size() > 1)
-        n = args.at(1).toInt32(exec);
-    return JSC::jsString(exec, qtTrId(id.UTF8String(), n));
-}
-
-JSC::JSValue JSC_HOST_CALL functionQsTrIdNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
 {
     if (args.size() < 1)
         return JSC::jsUndefined();
@@ -3547,8 +3523,6 @@ void QScriptEngine::registerCustomType(int type, MarshalFunction mf,
     \row    \o QT_TR_NOOP() \o QT_TR_NOOP()
     \row    \o qsTranslate() \o QCoreApplication::translate()
     \row    \o QT_TRANSLATE_NOOP() \o QT_TRANSLATE_NOOP()
-    \row    \o qsTrId() (since 4.7) \o qtTrId()
-    \row    \o QT_TRID_NOOP() (since 4.7) \o QT_TRID_NOOP()
     \endtable
 
   \sa {Internationalization with Qt}
@@ -3569,8 +3543,6 @@ void QScriptEngine::installTranslatorFunctions(const QScriptValue &object)
     JSC::asObject(jscObject)->putDirectFunction(exec, new (exec)JSC::NativeFunctionWrapper(exec, glob->prototypeFunctionStructure(), 2, JSC::Identifier(exec, "QT_TRANSLATE_NOOP"), QScript::functionQsTranslateNoOp));
     JSC::asObject(jscObject)->putDirectFunction(exec, new (exec)JSC::NativeFunctionWrapper(exec, glob->prototypeFunctionStructure(), 3, JSC::Identifier(exec, "qsTr"), QScript::functionQsTr));
     JSC::asObject(jscObject)->putDirectFunction(exec, new (exec)JSC::NativeFunctionWrapper(exec, glob->prototypeFunctionStructure(), 1, JSC::Identifier(exec, "QT_TR_NOOP"), QScript::functionQsTrNoOp));
-    JSC::asObject(jscObject)->putDirectFunction(exec, new (exec)JSC::NativeFunctionWrapper(exec, glob->prototypeFunctionStructure(), 1, JSC::Identifier(exec, "qsTrId"), QScript::functionQsTrId));
-    JSC::asObject(jscObject)->putDirectFunction(exec, new (exec)JSC::NativeFunctionWrapper(exec, glob->prototypeFunctionStructure(), 1, JSC::Identifier(exec, "QT_TRID_NOOP"), QScript::functionQsTrIdNoOp));
 #endif
 
     glob->stringPrototype()->putDirectFunction(exec, new (exec)JSC::NativeFunctionWrapper(exec, glob->prototypeFunctionStructure(), 1, JSC::Identifier(exec, "arg"), QScript::stringProtoFuncArg));

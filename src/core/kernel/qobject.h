@@ -67,6 +67,7 @@ class QObjectPrivate;
 class QObject;
 class QThread;
 class QWidget;
+class QDebug;
 #ifndef QT_NO_REGEXP
 class QRegExp;
 #endif

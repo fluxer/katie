@@ -1116,7 +1116,6 @@ inline void qt_noop(void) {}
    System information
 */
 
-class QString;
 class Q_CORE_EXPORT QSysInfo {
 public:
     enum Sizes {
@@ -1165,6 +1164,7 @@ Q_CORE_EXPORT bool qSharedBuild();
 #  define QT_DEBUG
 #endif
 
+class QString;
 #ifndef qPrintable
 #  define qPrintable(string) QString(string).toLocal8Bit().constData()
 #endif
@@ -1181,7 +1181,6 @@ Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
 #endif
 ;
 
-class QString;
 Q_CORE_EXPORT QString qt_error_string(int errorCode = -1);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
 #if defined(Q_CC_GNU) && !defined(__INSURE__)
@@ -1200,37 +1199,6 @@ Q_CORE_EXPORT void qErrnoWarning(const char *msg, ...);
 #if (defined(QT_NO_DEBUG_OUTPUT) || defined(QT_NO_TEXTSTREAM)) && !defined(QT_NO_DEBUG_STREAM)
 #define QT_NO_DEBUG_STREAM
 #endif
-
-/*
-  Forward declarations only.
-
-  In order to use the qDebug() stream, you must #include<QDebug>
-*/
-class QDebug;
-class QNoDebug;
-#ifndef QT_NO_DEBUG_STREAM
-Q_CORE_EXPORT_INLINE QDebug qDebug();
-#ifndef QT_NO_WARNING_OUTPUT
-Q_CORE_EXPORT_INLINE QDebug qWarning();
-#endif
-Q_CORE_EXPORT_INLINE QDebug qCritical();
-#else
-inline QNoDebug qDebug();
-#endif
-
-#ifdef QT_NO_WARNING_OUTPUT
-inline QNoDebug qWarning();
-#endif
-
-#define QT_NO_QDEBUG_MACRO while (false) qDebug
-#ifdef QT_NO_DEBUG_OUTPUT
-#  define qDebug QT_NO_QDEBUG_MACRO
-#endif
-#define QT_NO_QWARNING_MACRO while (false) qWarning
-#ifdef QT_NO_WARNING_OUTPUT
-#  define qWarning QT_NO_QWARNING_MACRO
-#endif
-
 
 Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
 
@@ -1836,13 +1804,6 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
 #define QT_TRANSLATE_NOOP3_UTF8(scope, x, comment) {x, comment}
 
 #ifndef QT_NO_TRANSLATION // ### This should enclose the NOOPs above
-
-// Defined in qcoreapplication.cpp
-// The better name qTrId() is reserved for an upcoming function which would
-// return a much more powerful QStringFormatter instead of a QString.
-Q_CORE_EXPORT QString qtTrId(const char *id, int n = -1);
-
-#define QT_TRID_NOOP(id) id
 
 #endif // QT_NO_TRANSLATION
 

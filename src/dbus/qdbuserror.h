@@ -52,7 +52,7 @@ struct DBusError;
 
 QT_BEGIN_NAMESPACE
 
-
+class QDebug;
 class QDBusMessage;
 
 class Q_DBUS_EXPORT QDBusError

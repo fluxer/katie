@@ -771,8 +771,12 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
 
     FD_CLR(sockfd, fds);                        // clear fd bit
     FD_CLR(sockfd, sn->queue);
-    d->sn_pending_list.removeAll(sn);                // remove from activation list
-    list.removeAt(i);                                // remove notifier found above
+    // remove from activation list
+    for (int i = 0; i < d->sn_pending_list.count(); i++) {
+        if (d->sn_pending_list.at(i) == sn)
+            d->sn_pending_list.remove(i);
+    }
+    list.remove(i);                                  // remove notifier found above
     delete sn;
 
     if (d->sn_highest == sockfd) {                // find highest fd
@@ -845,7 +849,8 @@ int QEventDispatcherUNIX::activateSocketNotifiers()
     int n_act = 0;
     QEvent event(QEvent::SockAct);
     while (!d->sn_pending_list.isEmpty()) {
-        QSockNot *sn = d->sn_pending_list.takeFirst();
+        QSockNot *sn = d->sn_pending_list.value(0);
+        d->sn_pending_list.remove(0);
         if (FD_ISSET(sn->fd, sn->queue)) {
             FD_CLR(sn->fd, sn->queue);
             QCoreApplication::sendEvent(sn->obj, &event);

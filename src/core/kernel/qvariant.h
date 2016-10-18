@@ -77,6 +77,7 @@ class QTextLength;
 class QUrl;
 class QVariant;
 class QVariantComparisonHelper;
+class QDebug;
 
 template <typename T>
 inline QVariant qVariantFromValue(const T &);

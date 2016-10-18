@@ -286,7 +286,7 @@ private:
 
     enum {
         Tok_Eof, Tok_class, Tok_friend, Tok_namespace, Tok_using, Tok_return,
-        Tok_tr, Tok_trUtf8, Tok_translate, Tok_translateUtf8, Tok_trid,
+        Tok_tr, Tok_trUtf8, Tok_translate, Tok_translateUtf8,
         Tok_Q_OBJECT, Tok_Q_DECLARE_TR_FUNCTIONS,
         Tok_Ident, Tok_Comment, Tok_String, Tok_Arrow, Tok_Colon, Tok_ColonColon,
         Tok_Equals, Tok_LeftBracket, Tok_RightBracket,
@@ -475,7 +475,6 @@ bool CppParser::getMacroArgs()
 STRING(Q_OBJECT);
 STRING(Q_DECLARE_TR_FUNCTIONS);
 STRING(QT_TR_NOOP);
-STRING(QT_TRID_NOOP);
 STRING(QT_TRANSLATE_NOOP);
 STRING(QT_TRANSLATE_NOOP3);
 STRING(QT_TR_NOOP_UTF8);
@@ -487,7 +486,6 @@ STRING(findMessage);
 STRING(friend);
 STRING(namespace);
 STRING(operator);
-STRING(qtTrId);
 STRING(return);
 STRING(struct);
 STRING(TR);
@@ -715,8 +713,6 @@ uint CppParser::getToken()
                     return Tok_Q_DECLARE_TR_FUNCTIONS;
                 if (yyWord == strQT_TR_NOOP)
                     return Tok_tr;
-                if (yyWord == strQT_TRID_NOOP)
-                    return Tok_trid;
                 if (yyWord == strQT_TRANSLATE_NOOP)
                     return Tok_translate;
                 if (yyWord == strQT_TRANSLATE_NOOP3)
@@ -764,10 +760,6 @@ uint CppParser::getToken()
                            || yyCh == '[' || yyCh == ']')
                         yyCh = getChar();
                 }
-                break;
-            case 'q':
-                if (yyWord == strqtTrId)
-                    return Tok_trid;
                 break;
             case 'r':
                 if (yyWord == strreturn)
@@ -1978,24 +1970,6 @@ void CppParser::parseInternal(ConversionData &cd, const QStringList &includeStac
                 recordMessage(line, context, text, comment, extracomment, msgid, extra, utf8, plural);
             }
             sourcetext.clear(); // Will have warned about that already
-            extracomment.clear();
-            msgid.clear();
-            extra.clear();
-            break;
-        case Tok_trid:
-            if (!tor)
-                goto case_default;
-            if (!msgid.isEmpty())
-                yyMsg() << qPrintable(LU::tr("//= cannot be used with qtTrId() / QT_TRID_NOOP(). Ignoring\n"));
-            //utf8 = false; // Maybe use //%% or something like that
-            line = yyLineNo;
-            yyTok = getToken();
-            if (match(Tok_LeftParen) && matchString(&msgid) && !msgid.isEmpty()) {
-                bool plural = match(Tok_Comma);
-                recordMessage(line, QString(), sourcetext, QString(), extracomment,
-                              msgid, extra, false, plural);
-            }
-            sourcetext.clear();
             extracomment.clear();
             msgid.clear();
             extra.clear();

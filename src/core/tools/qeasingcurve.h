@@ -43,6 +43,7 @@
 #define QEASINGCURVE_H
 
 #include <QtCore/qobjectdefs.h>
+#include <QtCore/qdebug.h>
 
 QT_BEGIN_HEADER
 

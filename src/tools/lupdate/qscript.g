@@ -1739,26 +1739,6 @@ case $rule_number: {
         extracomment.clear();
         msgid.clear();
         extra.clear();
-    } else if ((name == QLatin1String("qsTrId")) || (name == QLatin1String("QT_TRID_NOOP"))) {
-        if (!msgid.isEmpty())
-            yyMsg(identLineNo) << qPrintable(LU::tr("//= cannot be used with %1(). Ignoring\n").arg(name));
-        QVariantList args = sym(2).toList();
-        if (args.size() < 1) {
-            yyMsg(identLineNo) << qPrintable(LU::tr("%1() requires at least one argument.\n").arg(name));
-        } else {
-            if (args.at(0).type() != QVariant::String) {
-                yyMsg(identLineNo) << qPrintable(LU::tr("%1(): identifier must be a literal string.\n").arg(name));
-            } else {
-                msgid = args.at(0).toString();
-                bool plural = (args.size() > 1);
-                recordMessage(translator, QString(), sourcetext, QString(), extracomment,
-                              msgid, extra, plural, fileName(), identLineNo);
-            }
-        }
-        sourcetext.clear();
-        extracomment.clear();
-        msgid.clear();
-        extra.clear();
     }
 } break;
 ./

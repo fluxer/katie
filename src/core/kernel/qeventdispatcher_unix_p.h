@@ -56,13 +56,11 @@
 #include "QtCore/qabstracteventdispatcher.h"
 #include "qabstracteventdispatcher_p.h"
 #include "qcore_unix_p.h"
-#include "qpodlist_p.h"
+#include "qvarlengtharray.h"
 
-#if !defined(Q_OS_VXWORKS)
-#  include <sys/time.h>
-#  if (!defined(Q_OS_HPUX) || defined(__ia64)) && !defined(Q_OS_NACL)
-#    include <sys/select.h>
-#  endif
+#include <sys/time.h>
+#if (!defined(Q_OS_HPUX) || defined(__ia64)) && !defined(Q_OS_NACL)
+#  include <sys/select.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -124,7 +122,7 @@ public:
     QSockNotType();
     ~QSockNotType();
 
-    typedef QPodList<QSockNot*, 32> List;
+    typedef QVarLengthArray<QSockNot*, 32> List;
 
     List list;
     fd_set select_fds;

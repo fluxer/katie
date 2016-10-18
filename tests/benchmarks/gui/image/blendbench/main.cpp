@@ -204,7 +204,7 @@ void BlendBench::unalignedBlendArgb32()
     QImage destination(dstMemory, dimension, dimension, QImage::Format_ARGB32_Premultiplied);
     destination.fill(0x12345678); // avoid special cases of alpha
 
-    uchar *srcMemory = static_cast<uchar*>(::malloc(dimension * dimension * sizeof(quint32)) + 16);
+    uchar *srcMemory = static_cast<uchar*>(::malloc((dimension * dimension * sizeof(quint32)) + 16);
     QFETCH(int, offset);
     uchar *imageSrcMemory = srcMemory + (offset * sizeof(quint32));
 
