@@ -71,6 +71,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/kernel
     ${CMAKE_CURRENT_BINARY_DIR}/socket
     ${CMAKE_CURRENT_BINARY_DIR}/ssl
+    ${OPENSSL_INCLUDE_DIR}
 )
 
 if(WITH_RESOLV AND RESOLV_FOUND)

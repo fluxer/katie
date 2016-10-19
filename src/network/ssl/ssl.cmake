@@ -25,11 +25,3 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ssl/qsslsocket_openssl.cpp
 )
-
-if(WITH_OPENSSL AND OPENSSL_FOUND)
-    set(EXTRA_NETWORK_LIBS
-        ${EXTRA_NETWORK_LIBS}
-        ${OPENSSL_LIBRARIES}
-    )
-    include_directories(${OPENSSL_INCLUDE_DIR})
-endif()

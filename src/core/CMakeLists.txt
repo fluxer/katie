@@ -301,6 +301,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/tools
     ${CMAKE_CURRENT_BINARY_DIR}/xml
     ${ZLIB_INCLUDE_DIRS}
+    ${OPENSSL_INCLUDE_DIR}
 )
 
 if(WITH_GLIB2 AND GLIB2_FOUND)

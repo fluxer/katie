@@ -52,21 +52,8 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/core/tools
     ${CMAKE_SOURCE_DIR}/src/gui/painting
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
+    ${ZLIB_INCLUDE_DIRS}
 )
-
-if(WITH_ZLIB AND ZLIB_FOUND)
-    set(EXTRA_SVG_LIBS
-        ${EXTRA_SVG_LIBS}
-        ${ZLIB_LIBRARIES}
-    )
-    include_directories(${ZLIB_INCLUDE_DIRS})
-else()
-    set(SVG_SOURCES
-        ${SVG_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/miniz/miniz.c
-    )
-    include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/miniz)
-endif()
 
 katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
