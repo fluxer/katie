@@ -140,9 +140,7 @@ Q_SIGNALS:
 #endif
     void authenticationRequired(QNetworkReply *reply, QAuthenticator *authenticator);
     void finished(QNetworkReply *reply);
-#ifndef QT_NO_OPENSSL
     void sslErrors(QNetworkReply *reply, const QList<QSslError> &errors);
-#endif
 
 #if !defined(QT_NO_BEARERMANAGEMENT)
     void networkSessionConnected();

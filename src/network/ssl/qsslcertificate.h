@@ -50,14 +50,9 @@
 #include <QtCore/qsharedpointer.h>
 #include <QtNetwork/qssl.h>
 
-typedef struct x509_st X509; // ### check if this works
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
-
-#ifndef QT_NO_OPENSSL
 
 class QDateTime;
 class QIODevice;
@@ -128,8 +123,6 @@ class QDebug;
 Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QSslCertificate &certificate);
 Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, QSslCertificate::SubjectInfo info);
 #endif
-
-#endif // QT_NO_OPENSSL
 
 QT_END_NAMESPACE
 

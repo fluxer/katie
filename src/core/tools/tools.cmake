@@ -123,9 +123,3 @@ set(EXTRA_CORE_LIBS
     ${EXTRA_CORE_LIBS}
     m
 )
-
-include_directories(
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/md5
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/md4
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/sha3
-)

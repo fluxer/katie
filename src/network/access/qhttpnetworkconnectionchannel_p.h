@@ -55,6 +55,8 @@
 #include <QtNetwork/qnetworkrequest.h>
 #include <QtNetwork/qnetworkreply.h>
 #include <QtNetwork/qabstractsocket.h>
+#include <QtNetwork/qsslsocket.h>
+#include <QtNetwork/qsslerror.h>
 
 #include <qobject_p.h>
 #include <qauthenticator.h>
@@ -68,13 +70,6 @@
 #include <qhttpnetworkconnection_p.h>
 
 #ifndef QT_NO_HTTP
-
-#ifndef QT_NO_OPENSSL
-#    include <QtNetwork/qsslsocket.h>
-#    include <QtNetwork/qsslerror.h>
-#else
-#   include <QtNetwork/qtcpsocket.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -115,10 +110,8 @@ public:
     QAuthenticator proxyAuthenticator;
     bool authenticationCredentialsSent;
     bool proxyCredentialsSent;
-#ifndef QT_NO_OPENSSL
     bool ignoreAllSslErrors;
     QList<QSslError> ignoreSslErrorsList;
-#endif
 #ifndef QT_NO_BEARERMANAGEMENT
     QSharedPointer<QNetworkSession> networkSession;
 #endif
@@ -178,11 +171,9 @@ public:
 
     void _q_uploadDataReadyRead();
 
-#ifndef QT_NO_OPENSSL
     void _q_encrypted(); // start sending request (https)
     void _q_sslErrors(const QList<QSslError> &errors); // ssl errors from the socket
     void _q_encryptedBytesWritten(qint64 bytes); // proceed sending
-#endif
 };
 
 QT_END_NAMESPACE

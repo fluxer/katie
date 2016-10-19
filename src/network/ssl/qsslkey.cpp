@@ -55,10 +55,6 @@
     \sa QSslSocket, QSslCertificate, QSslCipher
 */
 
-#include <QtCore/qglobal.h>
-
-#ifndef QT_NO_OPENSSL
-
 #include "qsslsocket_openssl_p.h"
 #include "qsslkey.h"
 #include "qsslkey_p.h"
@@ -462,7 +458,3 @@ QDebug operator<<(QDebug debug, const QSslKey &key)
 #endif
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_OPENSSL
-
-

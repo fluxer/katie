@@ -143,7 +143,6 @@ public:
 
     QHttpNetworkConnection* connection();
 
-#ifndef QT_NO_OPENSSL
     QSslConfiguration sslConfiguration() const;
     void setSslConfiguration(const QSslConfiguration &config);
     void ignoreSslErrors();
@@ -151,7 +150,6 @@ public:
 
 Q_SIGNALS:
     void sslErrors(const QList<QSslError> &errors);
-#endif
 
 Q_SIGNALS:
     void readyRead();

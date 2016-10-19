@@ -132,10 +132,8 @@ public:
     QVariant attribute(Attribute code, const QVariant &defaultValue = QVariant()) const;
     void setAttribute(Attribute code, const QVariant &value);
 
-#ifndef QT_NO_OPENSSL
     QSslConfiguration sslConfiguration() const;
     void setSslConfiguration(const QSslConfiguration &configuration);
-#endif
 
     void setOriginatingObject(QObject *object);
     QObject *originatingObject() const;

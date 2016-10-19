@@ -88,9 +88,7 @@ public:
 
     // incoming
     bool ssl;
-#ifndef QT_NO_OPENSSL
     QSslConfiguration incomingSslConfiguration;
-#endif
     QHttpNetworkRequest httpRequest;
     qint64 downloadBufferMaximumSize;
     qint64 readBufferMaxSize;
@@ -134,10 +132,8 @@ signals:
 #ifndef QT_NO_NETWORKPROXY
     void proxyAuthenticationRequired(const QNetworkProxy &, QAuthenticator *);
 #endif
-#ifndef QT_NO_OPENSSL
     void sslErrors(const QList<QSslError> &, bool *, QList<QSslError> *);
     void sslConfigurationChanged(const QSslConfiguration);
-#endif
     void downloadMetaData(QList<QPair<QByteArray,QByteArray> >,int,QString,bool,QSharedPointer<char>,qint64);
     void downloadProgress(qint64, qint64);
     void downloadData(QByteArray);
@@ -162,9 +158,7 @@ protected slots:
     void synchronousHeaderChangedSlot();
     void dataReadProgressSlot(int done, int total);
     void cacheCredentialsSlot(const QHttpNetworkRequest &request, QAuthenticator *authenticator);
-#ifndef QT_NO_OPENSSL
     void sslErrorsSlot(const QList<QSslError> &errors);
-#endif
 
     void synchronousAuthenticationRequiredSlot(const QHttpNetworkRequest &request, QAuthenticator *);
 #ifndef QT_NO_NETWORKPROXY

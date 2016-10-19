@@ -133,11 +133,9 @@ public:
     // attributes
     QVariant attribute(QNetworkRequest::Attribute code) const;
 
-#ifndef QT_NO_OPENSSL
     QSslConfiguration sslConfiguration() const;
     void setSslConfiguration(const QSslConfiguration &configuration);
     void ignoreSslErrors(const QList<QSslError> &errors);
-#endif
 
 public Q_SLOTS:
     virtual void ignoreSslErrors();
@@ -146,9 +144,7 @@ Q_SIGNALS:
     void metaDataChanged();
     void finished();
     void error(QNetworkReply::NetworkError);
-#ifndef QT_NO_OPENSSL
     void sslErrors(const QList<QSslError> &errors);
-#endif
 
     void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);

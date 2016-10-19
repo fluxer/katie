@@ -45,17 +45,12 @@
 
 #include <QtCore/qlist.h>
 #include <QtCore/qregexp.h>
-#ifndef QT_NO_OPENSSL
-#   include <QtNetwork/qtcpsocket.h>
-#   include <QtNetwork/qsslerror.h>
-#endif
+#include <QtNetwork/qtcpsocket.h>
+#include <QtNetwork/qsslerror.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
-
-#ifndef QT_NO_OPENSSL
 
 class QDir;
 class QSslCipher;
@@ -213,13 +208,9 @@ private:
     friend class QSslSocketBackendPrivate;
 };
 
-#endif // QT_NO_OPENSSL
-
 QT_END_NAMESPACE
 
-#ifndef QT_NO_OPENSSL
 Q_DECLARE_METATYPE(QList<QSslError>)
-#endif
 
 QT_END_HEADER
 

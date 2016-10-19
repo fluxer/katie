@@ -56,6 +56,8 @@
 #include <QtNetwork/qnetworkreply.h>
 #include <QtNetwork/qabstractsocket.h>
 #include <QtNetwork/qnetworksession.h>
+#include <QtNetwork/qsslsocket.h>
+#include <QtNetwork/qsslerror.h>
 
 #include <qobject_p.h>
 #include <qauthenticator.h>
@@ -69,13 +71,6 @@
 #include <qhttpnetworkconnectionchannel_p.h>
 
 #ifndef QT_NO_HTTP
-
-#ifndef QT_NO_OPENSSL
-#    include <QtNetwork/qsslsocket.h>
-#    include <QtNetwork/qsslerror.h>
-#else
-#   include <QtNetwork/qtcpsocket.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -118,11 +113,9 @@ public:
 
     QHttpNetworkConnectionChannel *channels() const;
 
-#ifndef QT_NO_OPENSSL
     void setSslConfiguration(const QSslConfiguration &config);
     void ignoreSslErrors(int channel = -1);
     void ignoreSslErrors(const QList<QSslError> &errors, int channel = -1);
-#endif
 
 private:
     Q_DECLARE_PRIVATE(QHttpNetworkConnection)

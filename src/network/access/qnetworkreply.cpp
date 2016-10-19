@@ -557,7 +557,6 @@ QVariant QNetworkReply::attribute(QNetworkRequest::Attribute code) const
     return d_func()->attributes.value(code);
 }
 
-#ifndef QT_NO_OPENSSL
 /*!
     Returns the SSL configuration and state associated with this
     reply, if SSL was used. It will contain the remote server's
@@ -629,7 +628,6 @@ void QNetworkReply::ignoreSslErrors(const QList<QSslError> &errors)
         qt_metacall(QMetaObject::InvokeMetaMethod, id, arr);
     }
 }
-#endif
 
 /*!
     If this function is called, SSL errors related to network

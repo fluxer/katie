@@ -1002,9 +1002,7 @@ QNetworkReply *QNetworkAccessManager::createRequest(QNetworkAccessManager::Opera
         priv->backend->reply = priv;
     }
 
-#ifndef QT_NO_OPENSSL
     reply->setSslConfiguration(request.sslConfiguration());
-#endif
 
     // fourth step: setup the reply
     priv->setup(op, request, outgoingData);
@@ -1032,14 +1030,10 @@ void QNetworkAccessManagerPrivate::_q_replyFinished()
 
 void QNetworkAccessManagerPrivate::_q_replySslErrors(const QList<QSslError> &errors)
 {
-#ifndef QT_NO_OPENSSL
     Q_Q(QNetworkAccessManager);
     QNetworkReply *reply = qobject_cast<QNetworkReply *>(q->sender());
     if (reply)
         emit q->sslErrors(reply, errors);
-#else
-    Q_UNUSED(errors);
-#endif
 }
 
 QNetworkReply *QNetworkAccessManagerPrivate::postProcess(QNetworkReply *reply)
@@ -1047,11 +1041,7 @@ QNetworkReply *QNetworkAccessManagerPrivate::postProcess(QNetworkReply *reply)
     Q_Q(QNetworkAccessManager);
     QNetworkReplyPrivate::setManager(reply, q);
     q->connect(reply, SIGNAL(finished()), SLOT(_q_replyFinished()));
-#ifndef QT_NO_OPENSSL
-    /* In case we're compiled without SSL support, we don't have this signal and we need to
-     * avoid getting a connection error. */
     q->connect(reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(_q_replySslErrors(QList<QSslError>)));
-#endif
 #ifndef QT_NO_BEARERMANAGEMENT
     activeReplyCount++;
 #endif

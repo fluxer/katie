@@ -65,9 +65,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef QT_NO_OPENSSL
-
 template<typename T> class QList;
 class QSslCertificate;
 class QSslCipher;
@@ -130,8 +127,6 @@ private:
     QSslConfiguration(QSslConfigurationPrivate *dd);
     QSharedDataPointer<QSslConfigurationPrivate> d;
 };
-
-#endif  // QT_NO_OPENSSL
 
 QT_END_NAMESPACE
 

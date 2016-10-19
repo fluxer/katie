@@ -50,9 +50,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef QT_NO_OPENSSL
-
 class QSslErrorPrivate;
 class Q_NETWORK_EXPORT QSslError
 {
@@ -113,8 +110,6 @@ class QDebug;
 Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QSslError &error);
 Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QSslError::SslError &error);
 #endif
-
-#endif // QT_NO_OPENSSL
 
 QT_END_NAMESPACE
 

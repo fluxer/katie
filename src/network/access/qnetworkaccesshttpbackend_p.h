@@ -88,13 +88,11 @@ public:
     virtual void emitReadBufferFreed(qint64 size);
 
     virtual void copyFinished(QIODevice *);
-#ifndef QT_NO_OPENSSL
     virtual void ignoreSslErrors();
     virtual void ignoreSslErrors(const QList<QSslError> &errors);
 
     virtual void fetchSslConfiguration(QSslConfiguration &configuration) const;
     virtual void setSslConfiguration(const QSslConfiguration &configuration);
-#endif
     QNetworkCacheMetaData fetchCacheMetaData(const QNetworkCacheMetaData &metaData) const;
 
     // we return true since HTTP needs to send PUT/POST data again after having authenticated
@@ -121,10 +119,8 @@ private slots:
     void replyDownloadProgressSlot(qint64,qint64);
     void httpAuthenticationRequired(const QHttpNetworkRequest &request, QAuthenticator *auth);
     void httpError(QNetworkReply::NetworkError error, const QString &errorString);
-#ifndef QT_NO_OPENSSL
     void replySslErrors(const QList<QSslError> &, bool *, QList<QSslError> *);
     void replySslConfigurationChanged(const QSslConfiguration&);
-#endif
 
     // From QNonContiguousByteDeviceThreadForwardImpl in HTTP thread:
     void resetUploadDataSlot(bool *r);
@@ -145,11 +141,9 @@ private:
     QByteDataBuffer pendingDownloadData;
     bool usingZerocopyDownloadBuffer;
 
-#ifndef QT_NO_OPENSSL
     QSslConfiguration *pendingSslConfiguration;
     bool pendingIgnoreAllSslErrors;
     QList<QSslError> pendingIgnoreSslErrorsList;
-#endif
 
     quint64 resumeOffset;
 

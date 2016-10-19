@@ -51,9 +51,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef QT_NO_OPENSSL
-
 class QSslCipherPrivate;
 class Q_NETWORK_EXPORT QSslCipher
 {
@@ -86,8 +83,6 @@ private:
 class QDebug;
 Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QSslCipher &cipher);
 #endif
-
-#endif // QT_NO_OPENSSL
 
 QT_END_NAMESPACE
 

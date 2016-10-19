@@ -197,9 +197,8 @@ QNetworkAccessHttpBackend::QNetworkAccessHttpBackend()
     , pendingDownloadProgressEmissions(new QAtomicInt())
     , loadingFromCache(false)
     , usingZerocopyDownloadBuffer(false)
-#ifndef QT_NO_OPENSSL
-    , pendingSslConfiguration(0), pendingIgnoreAllSslErrors(false)
-#endif
+    , pendingSslConfiguration(0)
+    , pendingIgnoreAllSslErrors(false)
     , resumeOffset(0)
 {
 }
@@ -209,9 +208,7 @@ QNetworkAccessHttpBackend::~QNetworkAccessHttpBackend()
     // This will do nothing if the request was already finished or aborted
     emit abortHttpRequest();
 
-#ifndef QT_NO_OPENSSL
     delete pendingSslConfiguration;
-#endif
 }
 
 /*
@@ -375,10 +372,8 @@ void QNetworkAccessHttpBackend::postRequest()
 #ifndef QT_NO_NETWORKPROXY
         qRegisterMetaType<QNetworkProxy>("QNetworkProxy");
 #endif
-#ifndef QT_NO_OPENSSL
         qRegisterMetaType<QList<QSslError> >("QList<QSslError>");
         qRegisterMetaType<QSslConfiguration>("QSslConfiguration");
-#endif
         qRegisterMetaType<QList<QPair<QByteArray,QByteArray> > >("QList<QPair<QByteArray,QByteArray> >");
         qRegisterMetaType<QHttpNetworkRequest>("QHttpNetworkRequest");
         qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
@@ -538,10 +533,8 @@ void QNetworkAccessHttpBackend::postRequest()
     delegate->transparentProxy = transparentProxy;
 #endif
     delegate->ssl = ssl;
-#ifndef QT_NO_OPENSSL
     if (ssl)
         delegate->incomingSslConfiguration = request().sslConfiguration();
-#endif
 
     // Do we use synchronous HTTP?
     delegate->synchronous = isSynchronous();
@@ -575,11 +568,9 @@ void QNetworkAccessHttpBackend::postRequest()
         connect(delegate, SIGNAL(error(QNetworkReply::NetworkError,QString)),
                 this, SLOT(httpError(QNetworkReply::NetworkError,QString)),
                 Qt::QueuedConnection);
-#ifndef QT_NO_OPENSSL
         connect(delegate, SIGNAL(sslConfigurationChanged(QSslConfiguration)),
                 this, SLOT(replySslConfigurationChanged(QSslConfiguration)),
                 Qt::QueuedConnection);
-#endif
         // Those need to report back, therefire BlockingQueuedConnection
         connect(delegate, SIGNAL(authenticationRequired(QHttpNetworkRequest,QAuthenticator*)),
                 this, SLOT(httpAuthenticationRequired(QHttpNetworkRequest,QAuthenticator*)),
@@ -589,11 +580,9 @@ void QNetworkAccessHttpBackend::postRequest()
                  this, SLOT(proxyAuthenticationRequired(QNetworkProxy,QAuthenticator*)),
                  Qt::BlockingQueuedConnection);
 #endif
-#ifndef QT_NO_OPENSSL
         connect(delegate, SIGNAL(sslErrors(QList<QSslError>,bool*,QList<QSslError>*)),
                 this, SLOT(replySslErrors(QList<QSslError>,bool*,QList<QSslError>*)),
                 Qt::BlockingQueuedConnection);
-#endif
         // This signal we will use to start the request.
         connect(this, SIGNAL(startHttpRequest()), delegate, SLOT(startRequest()));
         connect(this, SIGNAL(abortHttpRequest()), delegate, SLOT(abortRequest()));
@@ -888,7 +877,6 @@ void QNetworkAccessHttpBackend::httpError(QNetworkReply::NetworkError errorCode,
     error(errorCode, errorString);
 }
 
-#ifndef QT_NO_OPENSSL
 void QNetworkAccessHttpBackend::replySslErrors(
         const QList<QSslError> &list, bool *ignoreAll, QList<QSslError> *toBeIgnored)
 {
@@ -909,7 +897,6 @@ void QNetworkAccessHttpBackend::replySslConfigurationChanged(const QSslConfigura
     else if (!c.isNull())
         pendingSslConfiguration = new QSslConfiguration(c);
 }
-#endif
 
 // Coming from QNonContiguousByteDeviceThreadForwardImpl in HTTP thread
 void QNetworkAccessHttpBackend::resetUploadDataSlot(bool *r)
@@ -1006,7 +993,6 @@ void QNetworkAccessHttpBackend::copyFinished(QIODevice *dev)
     finished();
 }
 
-#ifndef QT_NO_OPENSSL
 void QNetworkAccessHttpBackend::ignoreSslErrors()
 {
     pendingIgnoreAllSslErrors = true;
@@ -1033,7 +1019,6 @@ void QNetworkAccessHttpBackend::setSslConfiguration(const QSslConfiguration &new
     // her/his QSslConfiguration on the QNetworkRequest.
     Q_UNUSED(newconfig);
 }
-#endif
 
 QNetworkCacheMetaData QNetworkAccessHttpBackend::fetchCacheMetaData(const QNetworkCacheMetaData &oldMetaData) const
 {

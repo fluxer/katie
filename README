@@ -41,7 +41,6 @@ There are several things you should be aware before considering Katie:
   - building with LTO is possible and supported, if the toolchain can handle it
   - alternative libc implementations support
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
-  - support for generating SHA3-224, SHA3-256, SHA3-384, SHA3-512 hash sums
   - desktop files, Shell profile and dynamic linker/loader config are installed
     to ease vendors and deployment in general
 

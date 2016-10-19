@@ -57,12 +57,6 @@ katie_setup_paths()
 option(WITH_THREADS "Build threads support" ON)
 add_feature_info(threads WITH_THREADS "an open source something")
 
-option(WITH_OPENSSL "Build openssl support" ON)
-add_feature_info(openssl WITH_OPENSSL "an open source something")
-
-option(WITH_ZLIB "Build zlib support" ON)
-add_feature_info(zlib WITH_ZLIB "an open source something")
-
 option(WITH_NIS "Build nis support" ON)
 add_feature_info(nis WITH_NIS "an open source something")
 
@@ -246,19 +240,19 @@ set_package_properties(ZLIB PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(PythonInterp)
-set_package_properties(PythonInterp PROPERTIES
-    PURPOSE "UI class maps generator script"
-    DESCRIPTION "Programming language that lets you work quickly"
-    URL "https://www.python.org/"
-    TYPE RECOMMENDED
-)
-
 find_package(OpenSSL)
 set_package_properties(OpenSSL PROPERTIES
     PURPOSE "Required for HTTPS support"
     DESCRIPTION "Support for secure network communications (SSL and TLS)"
     URL "http://openssl.org"
+    TYPE REQUIRED
+)
+
+find_package(PythonInterp)
+set_package_properties(PythonInterp PROPERTIES
+    PURPOSE "UI class maps generator script"
+    DESCRIPTION "Programming language that lets you work quickly"
+    URL "https://www.python.org/"
     TYPE RECOMMENDED
 )
 
@@ -494,10 +488,6 @@ endif()
 
 if(NOT WITH_EGL OR NOT EGL_FOUND)
     katie_definition(-DQT_NO_EGL)
-endif()
-
-if(NOT WITH_OPENSSL OR NOT OPENSSL_FOUND)
-    katie_definition(-DQT_NO_OPENSSL)
 endif()
 
 if(NOT WITH_FREETYPE OR NOT FREETYPE_FOUND)

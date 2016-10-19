@@ -46,11 +46,9 @@
 
 #ifndef QT_NO_HTTP
 
-#ifndef QT_NO_OPENSSL
-#    include <QtNetwork/qsslkey.h>
-#    include <QtNetwork/qsslcipher.h>
-#    include <QtNetwork/qsslconfiguration.h>
-#endif
+#include <QtNetwork/qsslkey.h>
+#include <QtNetwork/qsslcipher.h>
+#include <QtNetwork/qsslconfiguration.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -957,8 +955,6 @@ void QHttpNetworkReplyPrivate::eraseData()
 
 
 // SSL support below
-#ifndef QT_NO_OPENSSL
-
 QSslConfiguration QHttpNetworkReply::sslConfiguration() const
 {
     Q_D(const QHttpNetworkReply);
@@ -993,9 +989,6 @@ void QHttpNetworkReply::ignoreSslErrors(const QList<QSslError> &errors)
     if (d->connection)
         d->connection->ignoreSslErrors(errors);
 }
-
-
-#endif //QT_NO_OPENSSL
 
 
 QT_END_NAMESPACE

@@ -57,14 +57,10 @@
 
 #ifndef QT_NO_HTTP
 
-#ifndef QT_NO_OPENSSL
-#    include <qsslsocket_p.h>
-#    include <QtNetwork/qsslkey.h>
-#    include <QtNetwork/qsslcipher.h>
-#    include <QtNetwork/qsslconfiguration.h>
-#endif
-
-
+#include <qsslsocket_p.h>
+#include <QtNetwork/qsslkey.h>
+#include <QtNetwork/qsslcipher.h>
+#include <QtNetwork/qsslconfiguration.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -131,11 +127,9 @@ void QHttpNetworkConnectionPrivate::pauseConnection()
 
     // Disable all socket notifiers
     for (int i = 0; i < channelCount; i++) {
-#ifndef QT_NO_OPENSSL
         if (encrypt)
             QSslSocketPrivate::pauseSocketNotifiers(static_cast<QSslSocket*>(channels[i].socket));
         else
-#endif
             QAbstractSocketPrivate::pauseSocketNotifiers(channels[i].socket);
     }
 }
@@ -145,11 +139,9 @@ void QHttpNetworkConnectionPrivate::resumeConnection()
     state = RunningState;
     // Enable all socket notifiers
     for (int i = 0; i < channelCount; i++) {
-#ifndef QT_NO_OPENSSL
         if (encrypt)
             QSslSocketPrivate::resumeSocketNotifiers(static_cast<QSslSocket*>(channels[i].socket));
         else
-#endif
             QAbstractSocketPrivate::resumeSocketNotifiers(channels[i].socket);
 
         // Resume pending upload if needed
@@ -974,7 +966,6 @@ QNetworkProxy QHttpNetworkConnection::transparentProxy() const
 
 
 // SSL support below
-#ifndef QT_NO_OPENSSL
 void QHttpNetworkConnection::setSslConfiguration(const QSslConfiguration &config)
 {
     Q_D(QHttpNetworkConnection);
@@ -1021,8 +1012,6 @@ void QHttpNetworkConnection::ignoreSslErrors(const QList<QSslError> &errors, int
         d->channels[channel].ignoreSslErrorsList = errors;
     }
 }
-
-#endif //QT_NO_OPENSSL
 
 #ifndef QT_NO_NETWORKPROXY
 // only called from QHttpNetworkConnectionChannel::_q_proxyAuthenticationRequired, not

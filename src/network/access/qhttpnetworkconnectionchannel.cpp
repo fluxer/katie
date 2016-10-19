@@ -42,17 +42,13 @@
 #include "qhttpnetworkconnection_p.h"
 #include "qhttpnetworkconnectionchannel_p.h"
 #include "qnoncontiguousbytedevice_p.h"
-
+#include <QtNetwork/qsslkey.h>
+#include <QtNetwork/qsslcipher.h>
+#include <QtNetwork/qsslconfiguration.h>
 #include <qpair.h>
 #include <qdebug.h>
 
 #ifndef QT_NO_HTTP
-
-#ifndef QT_NO_OPENSSL
-#    include <QtNetwork/qsslkey.h>
-#    include <QtNetwork/qsslcipher.h>
-#    include <QtNetwork/qsslconfiguration.h>
-#endif
 
 #ifndef QT_NO_BEARERMANAGEMENT
 #include "qnetworksession_p.h"
@@ -77,9 +73,7 @@ QHttpNetworkConnectionChannel::QHttpNetworkConnectionChannel()
     , proxyAuthMethod(QAuthenticatorPrivate::None)
     , authenticationCredentialsSent(false)
     , proxyCredentialsSent(false)
-#ifndef QT_NO_OPENSSL
     , ignoreAllSslErrors(false)
-#endif
     , pipeliningSupported(PipeliningSupportUnknown)
     , connection(0)
 {
@@ -89,14 +83,10 @@ QHttpNetworkConnectionChannel::QHttpNetworkConnectionChannel()
 
 void QHttpNetworkConnectionChannel::init()
 {
-#ifndef QT_NO_OPENSSL
     if (connection->d_func()->encrypt)
         socket = new QSslSocket;
     else
         socket = new QTcpSocket;
-#else
-    socket = new QTcpSocket;
-#endif
 #ifndef QT_NO_BEARERMANAGEMENT
     //push session down to socket
     if (networkSession)
@@ -142,7 +132,6 @@ void QHttpNetworkConnectionChannel::init()
                      Qt::DirectConnection);
 #endif
 
-#ifndef QT_NO_OPENSSL
     QSslSocket *sslSocket = qobject_cast<QSslSocket*>(socket);
     if (sslSocket) {
         // won't be a sslSocket if encrypt is false
@@ -156,7 +145,6 @@ void QHttpNetworkConnectionChannel::init()
                          this, SLOT(_q_encryptedBytesWritten(qint64)),
                          Qt::QueuedConnection);
     }
-#endif
 }
 
 
@@ -261,16 +249,10 @@ bool QHttpNetworkConnectionChannel::sendRequest()
         const qint64 socketWriteMaxSize = 16*1024;
 
 
-#ifndef QT_NO_OPENSSL
         QSslSocket *sslSocket = qobject_cast<QSslSocket*>(socket);
         // if it is really an ssl socket, check more than just bytesToWrite()
         while ((socket->bytesToWrite() + (sslSocket ? sslSocket->encryptedBytesToWrite() : 0))
-                <= socketBufferFill && bytesTotal != written)
-#else
-        while (socket->bytesToWrite() <= socketBufferFill
-               && bytesTotal != written)
-#endif
-        {
+                <= socketBufferFill && bytesTotal != written) {
             // get pointer to upload data
             qint64 currentReadSize = 0;
             qint64 desiredReadSize = qMin(socketWriteMaxSize, bytesTotal - written);
@@ -615,7 +597,6 @@ bool QHttpNetworkConnectionChannel::ensureConnection()
         }
 #endif
         if (ssl) {
-#ifndef QT_NO_OPENSSL
             QSslSocket *sslSocket = qobject_cast<QSslSocket*>(socket);
             sslSocket->connectToHostEncrypted(connectHost, connectPort);
             if (ignoreAllSslErrors)
@@ -626,9 +607,6 @@ bool QHttpNetworkConnectionChannel::ensureConnection()
             // the QHttpNetworkReply anyway, so let's grow only that and not
             // here and there.
             socket->setReadBufferSize(64*1024);
-#else
-            connection->d_func()->emitReplyError(socket, reply, QNetworkReply::ProtocolUnknownError);
-#endif
         } else {
             // In case of no proxy we can use the Unbuffered QTcpSocket
 #ifndef QT_NO_NETWORKPROXY
@@ -1111,9 +1089,8 @@ void QHttpNetworkConnectionChannel::_q_error(QAbstractSocket::SocketError socket
                 // in memory and we will not recieve more data on the socket.
                 reply->setReadBufferSize(0);
                 _q_receiveReply();
-#ifndef QT_NO_OPENSSL
                 if (ssl) {
-                    // QT_NO_OPENSSL. The QSslSocket can still have encrypted bytes in the plainsocket.
+                    // The QSslSocket can still have encrypted bytes in the plainsocket.
                     // So we need to check this if the socket is a QSslSocket. When the socket is flushed
                     // it will force a decrypt of the encrypted data in the plainsocket.
                     QSslSocket *sslSocket = static_cast<QSslSocket*>(socket);
@@ -1127,7 +1104,6 @@ void QHttpNetworkConnectionChannel::_q_error(QAbstractSocket::SocketError socket
                         beforeFlush = afterFlush;
                     }
                 }
-#endif
             }
 
             errorCode = QNetworkReply::RemoteHostClosedError;
@@ -1191,7 +1167,6 @@ void QHttpNetworkConnectionChannel::_q_uploadDataReadyRead()
     }
 }
 
-#ifndef QT_NO_OPENSSL
 void QHttpNetworkConnectionChannel::_q_encrypted()
 {
     if (!socket)
@@ -1227,8 +1202,6 @@ void QHttpNetworkConnectionChannel::_q_encryptedBytesWritten(qint64 bytes)
         sendRequest();
     // otherwise we do nothing
 }
-
-#endif
 
 void QHttpNetworkConnectionChannel::setConnection(QHttpNetworkConnection *c)
 {

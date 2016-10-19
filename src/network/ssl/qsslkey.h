@@ -52,9 +52,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-#ifndef QT_NO_OPENSSL
-
 template <typename A, typename B> struct QPair;
 
 class QIODevice;
@@ -100,8 +97,6 @@ private:
 class QDebug;
 Q_NETWORK_EXPORT QDebug operator<<(QDebug debug, const QSslKey &key);
 #endif
-
-#endif // QT_NO_OPENSSL
 
 QT_END_NAMESPACE
 

@@ -87,12 +87,10 @@ public:
     virtual qint64 readData(char *data, qint64 maxlen);
     virtual bool event(QEvent *);
 
-#ifndef QT_NO_OPENSSL
     Q_INVOKABLE QSslConfiguration sslConfigurationImplementation() const;
     Q_INVOKABLE void setSslConfigurationImplementation(const QSslConfiguration &configuration);
     virtual void ignoreSslErrors();
     Q_INVOKABLE virtual void ignoreSslErrorsImplementation(const QList<QSslError> &errors);
-#endif
 
     Q_DECLARE_PRIVATE(QNetworkReplyImpl)
     Q_PRIVATE_SLOT(d_func(), void _q_startOperation())

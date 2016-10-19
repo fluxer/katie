@@ -107,10 +107,6 @@
     \value StateOrProvinceName "ST" The state or province.
 */
 
-#include <QtCore/qglobal.h>
-
-#ifndef QT_NO_OPENSSL
-
 #include "qsslsocket_openssl_p.h"
 #include "qsslcertificate.h"
 #include "qsslcertificate_p.h"
@@ -985,7 +981,3 @@ QDebug operator<<(QDebug debug, QSslCertificate::SubjectInfo info)
 #endif
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_OPENSSL
-
-

@@ -42,10 +42,6 @@
 //#define QSSLSOCKET_DEBUG
 //#define QT_DECRYPT_SSL_TRAFFIC
 
-#include <QtCore/qglobal.h>
-
-#ifndef QT_NO_OPENSSL
-
 #include "qsslsocket_openssl_p.h"
 #include "qsslsocket.h"
 #include "qsslcertificate_p.h"
@@ -504,7 +500,6 @@ bool QSslSocketPrivate::supportsSsl()
 
 bool QSslSocketPrivate::ensureLibraryLoaded()
 {
-#ifndef QT_NO_OPENSSL
     // Check if the library itself needs to be initialized.
     QMutexLocker locker(openssl_locks()->initLock());
     if (!s_libraryLoaded) {
@@ -529,12 +524,8 @@ bool QSslSocketPrivate::ensureLibraryLoaded()
             int attempts = 500;
             do {
                 if (attempts < 500) {
-#ifdef Q_OS_UNIX
                     struct timespec ts = {0, 33333333};
                     nanosleep(&ts, 0);
-#else
-                    Sleep(3);
-#endif
                     randomish.msec = attempts;
                 }
                 randomish.stack = (void *)&randomish;
@@ -547,9 +538,6 @@ bool QSslSocketPrivate::ensureLibraryLoaded()
         }
     }
     return true;
-#else
-    return false;
-#endif // QT_NO_OPENSSL
 }
 
 void QSslSocketPrivate::ensureCiphersAndCertsLoaded()
@@ -1242,7 +1230,3 @@ bool QSslSocketBackendPrivate::isMatchingHostname(const QString &cn, const QStri
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_OPENSSL
-
-

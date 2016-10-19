@@ -91,10 +91,6 @@
     \sa QSslError::errorString()
 */
 
-#include <QtCore/qglobal.h>
-
-#ifndef QT_NO_OPENSSL
-
 #include "qsslerror.h"
 #include "qsslsocket.h"
 #ifndef QT_NO_DEBUG_STREAM
@@ -323,7 +319,3 @@ QDebug operator<<(QDebug debug, const QSslError::SslError &error)
 #endif
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_OPENSSL
-
-

@@ -39,10 +39,6 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qglobal.h>
-
-#ifndef QT_NO_OPENSSL
-
 #include "qsslconfiguration.h"
 #include "qsslconfiguration_p.h"
 #include "qsslsocket.h"
@@ -576,7 +572,3 @@ void QSslConfiguration::setDefaultConfiguration(const QSslConfiguration &configu
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_OPENSSL
-
-

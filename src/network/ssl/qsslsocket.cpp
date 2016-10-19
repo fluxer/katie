@@ -292,10 +292,6 @@
     \sa peerVerifyError()
 */
 
-#include <QtCore/qglobal.h>
-
-#ifndef QT_NO_OPENSSL
-
 #include "qsslcipher.h"
 #include "qsslsocket.h"
 #include "qsslsocket_openssl_p.h"
@@ -2315,8 +2311,6 @@ QList<QByteArray> QSslSocketPrivate::unixRootCertDirectories()
 }
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_OPENSSL
 
 #include "moc_qsslsocket.h"
 

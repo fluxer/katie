@@ -273,12 +273,10 @@ void QHttpThreadDelegate::startRequest()
 #else
         httpConnection = new QNetworkAccessCachedHttpConnection(urlCopy.host(), urlCopy.port(), ssl, networkSession);
 #endif
-#ifndef QT_NO_OPENSSL
         // Set the QSslConfiguration from this QNetworkRequest.
         if (ssl && incomingSslConfiguration != QSslConfiguration::defaultConfiguration()) {
             httpConnection->setSslConfiguration(incomingSslConfiguration);
         }
-#endif
 
 #ifndef QT_NO_NETWORKPROXY
         httpConnection->setTransparentProxy(transparentProxy);
@@ -315,9 +313,7 @@ void QHttpThreadDelegate::startRequest()
         // some signals are only interesting when normal asynchronous style is used
         connect(httpReply,SIGNAL(readyRead()), this, SLOT(readyReadSlot()));
         connect(httpReply,SIGNAL(dataReadProgress(int,int)), this, SLOT(dataReadProgressSlot(int,int)));
-#ifndef QT_NO_OPENSSL
         connect(httpReply,SIGNAL(sslErrors(QList<QSslError>)), this, SLOT(sslErrorsSlot(QList<QSslError>)));
-#endif
 
         // In the asynchronous HTTP case we can just forward those signals
         // Connect the reply signals that we can directly forward
@@ -424,10 +420,8 @@ void QHttpThreadDelegate::finishedSlot()
         emit downloadData(httpReply->readAny());
     }
 
-#ifndef QT_NO_OPENSSL
     if (ssl)
         emit sslConfigurationChanged(httpReply->sslConfiguration());
-#endif
 
     if (httpReply->statusCode() >= 400) {
             // it's an error reply
@@ -476,10 +470,8 @@ void QHttpThreadDelegate::finishedWithErrorSlot(QNetworkReply::NetworkError erro
     qDebug() << "QHttpThreadDelegate::finishedWithErrorSlot() thread=" << QThread::currentThreadId() << "error=" << errorCode << detail;
 #endif
 
-#ifndef QT_NO_OPENSSL
     if (ssl)
         emit sslConfigurationChanged(httpReply->sslConfiguration());
-#endif
     emit error(errorCode,detail);
     emit downloadFinished();
 
@@ -515,10 +507,8 @@ void QHttpThreadDelegate::headerChangedSlot()
     qDebug() << "QHttpThreadDelegate::headerChangedSlot() thread=" << QThread::currentThreadId();
 #endif
 
-#ifndef QT_NO_OPENSSL
     if (ssl)
         emit sslConfigurationChanged(httpReply->sslConfiguration());
-#endif
 
     // Is using a zerocopy buffer allowed by user and possible with this reply?
     if (httpReply->supportsUserProvidedDownloadBuffer()
@@ -578,8 +568,6 @@ void QHttpThreadDelegate::cacheCredentialsSlot(const QHttpNetworkRequest &reques
     authenticationManager->cacheCredentials(request.url(), authenticator);
 }
 
-
-#ifndef QT_NO_OPENSSL
 void QHttpThreadDelegate::sslErrorsSlot(const QList<QSslError> &errors)
 {
     if (!httpReply)
@@ -595,7 +583,6 @@ void QHttpThreadDelegate::sslErrorsSlot(const QList<QSslError> &errors)
     if (!specificErrors.isEmpty())
         httpReply->ignoreSslErrors(specificErrors);
 }
-#endif
 
 void QHttpThreadDelegate::synchronousAuthenticationRequiredSlot(const QHttpNetworkRequest &request, QAuthenticator *a)
 {
