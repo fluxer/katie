@@ -44,10 +44,6 @@
 
 #include <QtCore/qiodevice.h>
 
-#ifdef Status
-#error qdatastream.h must be included before any header file that defines Status
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -90,7 +86,7 @@ public:
         LittleEndian = QSysInfo::LittleEndian
     };
 
-    enum Status {
+    enum StreamStatus {
         Ok,
         ReadPastEnd,
         ReadCorruptData,
@@ -113,8 +109,8 @@ public:
 
     bool atEnd() const;
 
-    Status status() const;
-    void setStatus(Status status);
+    StreamStatus status() const;
+    void setStatus(StreamStatus status);
     void resetStatus();
 
     FloatingPointPrecision floatingPointPrecision() const;
@@ -172,7 +168,7 @@ private:
     bool noswap;
     ByteOrder byteorder;
     int ver;
-    Status q_status;
+    StreamStatus q_status;
 };
 
 
@@ -325,7 +321,7 @@ QDataStream& operator<<(QDataStream &out, const QSet<T> &set)
 template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator>>(QDataStream &in, QHash<Key, T> &hash)
 {
-    QDataStream::Status oldStatus = in.status();
+    QDataStream::StreamStatus oldStatus = in.status();
     in.resetStatus();
     hash.clear();
 
@@ -364,7 +360,7 @@ Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QHash<Key, 
 template <class aKey, class aT>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator>>(QDataStream &in, QMap<aKey, aT> &map)
 {
-    QDataStream::Status oldStatus = in.status();
+    QDataStream::StreamStatus oldStatus = in.status();
     in.resetStatus();
     map.clear();
 
