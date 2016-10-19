@@ -445,7 +445,7 @@ double JSCallbackObject<Base>::toNumber(ExecState* exec) const
         return NaN;
     JSContextRef ctx = toRef(exec);
     JSObjectRef thisRef = toRef(this);
-    
+
     for (JSClassRef jsClass = classRef(); jsClass; jsClass = jsClass->parentClass)
         if (JSObjectConvertToTypeCallback convertToType = jsClass->convertToType) {
             JSValueRef exception = 0;
@@ -459,11 +459,12 @@ double JSCallbackObject<Base>::toNumber(ExecState* exec) const
                 return 0;
             }
 
-            double dValue;
-            if (value)
+            if (value) {
+                double dValue;
                 return toJS(exec, value).getNumber(dValue) ? dValue : NaN;
+            }
         }
-            
+
     return Base::toNumber(exec);
 }
 

@@ -108,6 +108,8 @@ namespace JSC {
             : ExecutableBase(NUM_PARAMETERS_NOT_COMPILED)
             , m_source(source)
             , m_features(0)
+            , m_firstLine(0)
+            , m_lastLine(0)
         {
 #if ENABLE(CODEBLOCK_SAMPLING)
             if (SamplingTool* sampler = globalData->interpreter->sampler())
@@ -121,6 +123,8 @@ namespace JSC {
             : ExecutableBase(NUM_PARAMETERS_NOT_COMPILED)
             , m_source(source)
             , m_features(0)
+            , m_firstLine(0)
+            , m_lastLine(0)
         {
 #if ENABLE(CODEBLOCK_SAMPLING)
             if (SamplingTool* sampler = exec->globalData().interpreter->sampler())

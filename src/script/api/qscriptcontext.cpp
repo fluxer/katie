@@ -263,8 +263,7 @@ QScriptValue QScriptContext::argument(int index) const
         return QScriptValue();
     if (index >= argumentCount())
         return QScriptValue(QScriptValue::UndefinedValue);
-    QScriptValue v = argumentsObject().property(index);
-    return v;
+    return argumentsObject().property(index);
 }
 
 /*!
@@ -680,8 +679,8 @@ QString QScriptContext::toString() const
     }
     result.append(QLatin1Char(')'));
 
-    QString fileName = info.fileName();
-    int lineNumber = info.lineNumber();
+    const QString fileName = info.fileName();
+    const int lineNumber = info.lineNumber();
     result.append(QLatin1String(" at "));
     if (!fileName.isEmpty()) {
         result.append(fileName);

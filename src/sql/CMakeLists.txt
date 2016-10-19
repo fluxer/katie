@@ -3,14 +3,8 @@ set(EXTRA_SQL_LIBS KtCore)
 
 set(SQL_PUBLIC_HEADERS
     ${SQL_PUBLIC_HEADERS}
-    QDB2Driver
-    QDB2Result
-    QIBaseDriver
-    QIBaseResult
     QMYSQLDriver
     QMYSQLResult
-    QOCIDriver
-    QOCIResult
     QODBCDriver
     QODBCResult
     QPSQLDriver
@@ -34,8 +28,6 @@ set(SQL_PUBLIC_HEADERS
     QSqlRelationalTableModel
     QSqlResult
     QSqlTableModel
-    QTDSDriver
-    QTDSResult
 )
 
 include(kernel/kernel.cmake)

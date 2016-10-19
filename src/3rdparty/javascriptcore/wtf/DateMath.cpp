@@ -135,12 +135,12 @@ static inline bool isLeapYear(int year)
     return true;
 }
 
-static inline int daysInYear(int year)
+static inline int daysInYear(const int year)
 {
     return 365 + isLeapYear(year);
 }
 
-static inline double daysFrom1970ToYear(int year)
+static inline double daysFrom1970ToYear(const int year)
 {
     // The Gregorian Calendar rules for leap years:
     // Every fourth year is a leap year.  2004, 2008, and 2012 are leap years.
@@ -159,7 +159,7 @@ static inline double daysFrom1970ToYear(int year)
     return 365.0 * (year - 1970) + yearsToAddBy4Rule - yearsToExcludeBy100Rule + yearsToAddBy400Rule;
 }
 
-static inline double msToDays(double ms)
+static inline double msToDays(const double ms)
 {
     return floor(ms / msPerDay);
 }
@@ -175,7 +175,7 @@ int msToYear(double ms)
     return approxYear;
 }
 
-int dayInYear(double ms, int year)
+int dayInYear(const double ms, const int year)
 {
     return static_cast<int>(msToDays(ms) - daysFrom1970ToYear(year));
 }
@@ -223,31 +223,30 @@ static inline int msToHours(double ms)
 
 int monthFromDayInYear(int dayInYear, bool leapYear)
 {
-    const int d = dayInYear;
     int step;
 
-    if (d < (step = 31))
+    if (dayInYear < (step = 31))
         return 0;
     step += (leapYear ? 29 : 28);
-    if (d < step)
+    if (dayInYear < step)
         return 1;
-    if (d < (step += 31))
+    if (dayInYear < (step += 31))
         return 2;
-    if (d < (step += 30))
+    if (dayInYear < (step += 30))
         return 3;
-    if (d < (step += 31))
+    if (dayInYear < (step += 31))
         return 4;
-    if (d < (step += 30))
+    if (dayInYear < (step += 30))
         return 5;
-    if (d < (step += 31))
+    if (dayInYear < (step += 31))
         return 6;
-    if (d < (step += 31))
+    if (dayInYear < (step += 31))
         return 7;
-    if (d < (step += 30))
+    if (dayInYear < (step += 30))
         return 8;
-    if (d < (step += 31))
+    if (dayInYear < (step += 31))
         return 9;
-    if (d < (step += 30))
+    if (dayInYear < (step += 30))
         return 10;
     return 11;
 }
@@ -259,37 +258,36 @@ static inline bool checkMonth(int dayInYear, int& startDayOfThisMonth, int& star
     return (dayInYear <= startDayOfNextMonth);
 }
 
-int dayInMonthFromDayInYear(int dayInYear, bool leapYear)
+int dayInMonthFromDayInYear(const int dayInYear, const bool leapYear)
 {
-    const int d = dayInYear;
     int step;
     int next = 30;
 
-    if (d <= next)
-        return d + 1;
+    if (dayInYear <= next)
+        return dayInYear + 1;
     const int daysInFeb = (leapYear ? 29 : 28);
-    if (checkMonth(d, step, next, daysInFeb))
-        return d - step;
-    if (checkMonth(d, step, next, 31))
-        return d - step;
-    if (checkMonth(d, step, next, 30))
-        return d - step;
-    if (checkMonth(d, step, next, 31))
-        return d - step;
-    if (checkMonth(d, step, next, 30))
-        return d - step;
-    if (checkMonth(d, step, next, 31))
-        return d - step;
-    if (checkMonth(d, step, next, 31))
-        return d - step;
-    if (checkMonth(d, step, next, 30))
-        return d - step;
-    if (checkMonth(d, step, next, 31))
-        return d - step;
-    if (checkMonth(d, step, next, 30))
-        return d - step;
+    if (checkMonth(dayInYear, step, next, daysInFeb))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 31))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 30))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 31))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 30))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 31))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 31))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 30))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 31))
+        return dayInYear - step;
+    if (checkMonth(dayInYear, step, next, 30))
+        return dayInYear - step;
     step = next;
-    return d - step;
+    return dayInYear - step;
 }
 
 static inline int monthToDayInYear(int month, bool isLeapYear)

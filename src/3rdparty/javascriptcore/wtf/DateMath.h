@@ -104,11 +104,11 @@ const double msPerDay = 24.0 * 60.0 * 60.0 * 1000.0;
 const double msPerMonth = 2592000000.0;
 
 // Returns the number of days from 1970-01-01 to the specified date.
-double dateToDaysFrom1970(int year, int month, int day);
-int msToYear(double ms);
-int dayInYear(double ms, int year);
-int monthFromDayInYear(int dayInYear, bool leapYear);
-int dayInMonthFromDayInYear(int dayInYear, bool leapYear);
+double dateToDaysFrom1970(const int year, int month, int day);
+int msToYear(const double ms);
+int dayInYear(const double ms, const int year);
+int monthFromDayInYear(const int dayInYear, const bool leapYear);
+int dayInMonthFromDayInYear(const int dayInYear, const bool leapYear);
 
 // Returns combined offset in millisecond (UTC + DST).
 LocalTimeOffset calculateLocalTimeOffset(double utcInMilliseconds);

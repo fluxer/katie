@@ -25,7 +25,6 @@
 #define QSCRIPTSTRING_H
 
 #include <QtCore/qstring.h>
-
 #include <QtCore/qsharedpointer.h>
 
 QT_BEGIN_HEADER

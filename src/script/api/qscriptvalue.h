@@ -25,7 +25,6 @@
 #define QSCRIPTVALUE_H
 
 #include <QtCore/qstring.h>
-
 #include <QtCore/qlist.h>
 #include <QtCore/qsharedpointer.h>
 
@@ -52,7 +51,6 @@ typedef double qsreal;
 
 class QScriptValuePrivate;
 class QScriptEnginePrivate;
-struct QScriptValuePrivatePointerDeleter;
 class Q_SCRIPT_EXPORT QScriptValue
 {
 public:
@@ -197,9 +195,9 @@ public:
     qint64 objectId() const;
 
 private:
-    // force compile error, prevent QScriptValue(bool) to be called
+    // force compile error, prevent QScriptValue(pointer) to be called
     QScriptValue(void *);
-    // force compile error, prevent QScriptValue(QScriptEngine*, bool) to be called
+    // force compile error, prevent QScriptValue(QScriptEngine*, pointer) to be called
     QScriptValue(QScriptEngine *, void *);
 
     QScriptValue(QScriptValuePrivate*);
