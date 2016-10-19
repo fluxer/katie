@@ -335,13 +335,6 @@ void QCoreApplicationPrivate::appendApplicationPathToLibraryPaths()
 #endif
 }
 
-QString qAppName()
-{
-    if (!QCoreApplicationPrivate::checkInstance("qAppName"))
-        return QString();
-    return QCoreApplication::instance()->d_func()->appName();
-}
-
 /*!
     \class QCoreApplication
     \brief The QCoreApplication class provides an event loop for console Qt

@@ -5605,7 +5605,7 @@ static void sm_performSaveYourself(QSessionManagerPrivate* smd)
     restart  << argument0 << QLatin1String("-session")
              << smd->sessionId + QLatin1Char('_') + smd->sessionKey;
     if (qstricmp(appName, QX11Info::appClass()) != 0)
-        restart << QLatin1String("-name") << qAppName();
+        restart << QLatin1String("-name") << QApplication::applicationName();
     sm->setRestartCommand(restart);
     QStringList discard;
     sm->setDiscardCommand(discard);

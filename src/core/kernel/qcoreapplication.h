@@ -155,7 +155,6 @@ protected:
 
     virtual bool compressEvent(QEvent *, QObject *receiver, QPostEventList *);
 
-protected:
     QCoreApplication(QCoreApplicationPrivate &p);
 
 private:
@@ -165,7 +164,7 @@ private:
     void init();
 
     static QCoreApplication *self;
-    
+
     Q_DISABLE_COPY(QCoreApplication)
 
     friend class QEventDispatcherUNIXPrivate;
@@ -176,7 +175,6 @@ private:
     friend class QWidget;
     friend class QWidgetPrivate;
     friend bool qt_sendSpontaneousEvent(QObject*, QEvent*);
-    friend Q_CORE_EXPORT QString qAppName();
 };
 
 inline bool QCoreApplication::sendEvent(QObject *receiver, QEvent *event)
@@ -216,7 +214,6 @@ typedef void (*QtCleanUpFunction)();
 
 Q_CORE_EXPORT void qAddPostRoutine(QtCleanUpFunction);
 Q_CORE_EXPORT void qRemovePostRoutine(QtCleanUpFunction);
-Q_CORE_EXPORT QString qAppName();                // get application name
 
 QT_END_NAMESPACE
 

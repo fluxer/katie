@@ -778,7 +778,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         wm_hints.window_group = X11->wm_client_leader;
 
         XClassHint class_hint;
-        QByteArray appName = qAppName().toLatin1();
+        QByteArray appName = QApplication::applicationName().toLatin1();
         class_hint.res_name = appName.data(); // application name
         class_hint.res_class = const_cast<char *>(QX11Info::appClass());   // application class
 
