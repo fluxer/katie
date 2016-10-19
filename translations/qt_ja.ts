@@ -1118,7 +1118,7 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+901"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1140,19 +1140,19 @@
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translatorcomment>抽象ソケットクラスでのソケットのエラー</translatorcomment>
         <translation>このソケットへのこの操作はサポートされていません</translation>
     </message>
     <message>
-        <location line="+205"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="+199"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>ソケット操作がタイムアウトしました</translation>
     </message>
     <message>
-        <location line="+437"/>
+        <location line="+431"/>
         <source>Socket is not connected</source>
         <translation>ソケットが接続されていません</translation>
     </message>
@@ -3784,7 +3784,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>ホストが見つかりません</translation>
@@ -3814,28 +3814,23 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+370"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>HTTPSによる接続が要求されましたが、SSLのサポートがコンパイル時に組み込まれていないため、接続できません</translation>
-    </message>
-    <message>
-        <location line="+1212"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>要求が中止されました</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>接続が設定されているサーバがありません</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+156"/>
         <source>Wrong content length</source>
         <translation>コンテンツの長さが正しくありません</translation>
     </message>
@@ -3845,7 +3840,7 @@ Do you want to delete it anyway?</source>
         <translation>サーバの接続が予期せず閉じられました</translation>
     </message>
     <message>
-        <location line="+200"/>
+        <location line="+194"/>
         <source>Unknown authentication method</source>
         <translation>非対応の認証方法が要求されました</translation>
     </message>
@@ -3861,7 +3856,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="-325"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-319"/>
         <source>Host %1 not found</source>
         <translation>ホスト %1 が見つかりません</translation>
     </message>
@@ -3871,7 +3866,7 @@ Do you want to delete it anyway?</source>
         <translation>HTTP要求に失敗しました</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+88"/>
         <source>Invalid HTTP response header</source>
         <translation>無効なHTTP応答ヘッダです</translation>
     </message>
@@ -3897,7 +3892,7 @@ Do you want to delete it anyway?</source>
         <translation>認証が必要です</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-153"/>
         <source>Connection refused (or timed out)</source>
         <translation>接続が拒否されたか、タイムアウトしました</translation>
     </message>
@@ -4104,7 +4099,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>&apos;%1&apos; でプラグイン検証データが一致しません</translation>
     </message>
@@ -4114,12 +4109,12 @@ Do you want to delete it anyway?</source>
         <translation>プラグイン &apos;%1&apos; は、互換性のない Qt ライブラリを使用しています。(%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+343"/>
+        <location line="+341"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location line="-444"/>
+        <location line="-442"/>
         <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
@@ -4136,7 +4131,7 @@ Do you want to delete it anyway?</source>
         <translation>プラグイン &apos;%1&apos; はこの Qt と互換性のないライブラリを使用しています。 (デバック版とリリース版のライブラリを同時に使用することはできません)</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>ライブラリ &apos;%1&apos; を読み込めません: %2</translation>
     </message>
@@ -4146,34 +4141,9 @@ Do you want to delete it anyway?</source>
         <translation>ライブラリ %1 を解放できません: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>&apos;%2&apos;に含まれる識別子 &quot;%1&quot; を解決できません: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation>&apos;%1&apos; は ELF オブジェクトではありません(%2)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation>&apos;%1&apos; は ELF オブジェクトではありません</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation>&apos;%1&apos; は無効な ELF オブジェクトです(%2)</translation>
     </message>
 </context>
 <context>
@@ -4805,7 +4775,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>適切なプロキシーがみつかりません</translation>
     </message>
@@ -4813,7 +4783,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>ネットワークへのアクセスが禁止されています。</translation>
     </message>
@@ -4821,13 +4791,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>%1 をダウンロード中にエラーが発生しました。サーバの返答: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>プロトコル &quot;%1&quot; はサポートされていません</translation>
     </message>
@@ -4851,7 +4821,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>操作はキャンセルされました</translation>
@@ -5033,7 +5003,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
@@ -7665,7 +7635,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+279"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+274"/>
         <source>Error creating SSL context (%1)</source>
         <translation>SSL context の作成に失敗しました (%1)</translation>
     </message>
@@ -7705,7 +7675,7 @@ Please choose a different file name.</source>
         <translation>SSL セッションを作成できません: %1</translation>
     </message>
     <message>
-        <location line="+268"/>
+        <location line="+260"/>
         <source>Unable to write data: %1</source>
         <translation>書き込みできません: %1</translation>
     </message>
@@ -7731,7 +7701,7 @@ Please choose a different file name.</source>
         <translation>SSL ハンドシェーク時にエラーが発生しました: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+290"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+286"/>
         <source>The peer certificate is blacklisted</source>
         <translation>通信相手の証明書がブラックリストに載っています</translation>
     </message>

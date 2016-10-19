@@ -1121,7 +1121,7 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+901"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1143,18 +1143,18 @@
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>Socket-operation ikke understøttet</translation>
     </message>
     <message>
-        <location line="+205"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="+199"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Socket-operation timed out</translation>
     </message>
     <message>
-        <location line="+437"/>
+        <location line="+431"/>
         <source>Socket is not connected</source>
         <translation>Socket ikke forbundet</translation>
     </message>
@@ -3786,7 +3786,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Vært ikke fundet</translation>
@@ -3816,23 +3816,23 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1582"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>Forespørgsel blev annulleret</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>Ingen server at forbinde til</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+156"/>
         <source>Wrong content length</source>
         <translation>Forkert indholdslængde</translation>
     </message>
@@ -3842,7 +3842,7 @@ Do you want to delete it anyway?</source>
         <translation>Serveren afsluttede uventet forbindelsen</translation>
     </message>
     <message>
-        <location line="+200"/>
+        <location line="+194"/>
         <source>Unknown authentication method</source>
         <translation>Ukendt autentifikationsmetode</translation>
     </message>
@@ -3858,7 +3858,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="-325"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-319"/>
         <source>Host %1 not found</source>
         <translation>Vært %1 ikke fundet</translation>
     </message>
@@ -3868,7 +3868,7 @@ Do you want to delete it anyway?</source>
         <translation>HTTP anmodning mislykkedes</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+88"/>
         <source>Invalid HTTP response header</source>
         <translation>Ugyldig HTTP-svar-header</translation>
     </message>
@@ -3894,7 +3894,7 @@ Do you want to delete it anyway?</source>
         <translation>Autentificering påkrævet</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-153"/>
         <source>Connection refused (or timed out)</source>
         <translation>Forbindelse blev afvist (eller tid udløb)</translation>
     </message>
@@ -3922,11 +3922,6 @@ Do you want to delete it anyway?</source>
         <location line="+3"/>
         <source>SSL handshake failed</source>
         <translation>SSL handshake mislykkedes</translation>
-    </message>
-    <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-2266"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>Der blevet anmodet om en HTTPS-forbindelse, men SSL understøttelse er ikke kompileret ind</translation>
     </message>
 </context>
 <context>
@@ -4106,7 +4101,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Plugin-verifikationsdata er sat forkert sammen i &apos;%1&apos;</translation>
     </message>
@@ -4116,12 +4111,12 @@ Do you want to delete it anyway?</source>
         <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+343"/>
+        <location line="+341"/>
         <source>Unknown error</source>
         <translation>Ukendt fejl&apos;</translation>
     </message>
     <message>
-        <location line="-444"/>
+        <location line="-442"/>
         <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
@@ -4138,7 +4133,7 @@ Do you want to delete it anyway?</source>
         <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. (Ikke muligt at mikse debug og release-biblioteker)</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>Kan ikke indlæse bibliotek %1: %2</translation>
     </message>
@@ -4148,34 +4143,9 @@ Do you want to delete it anyway?</source>
         <translation>Kan ikke afregistrere bibliotek %1: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Kan ikke løse symbol &quot;%1&quot; i %2: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4806,7 +4776,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Ingen passende proxy blev fundet</translation>
     </message>
@@ -4814,7 +4784,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4822,13 +4792,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Der opstod fejl i at downloade %1 - serveren svarede: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Protokollen &quot;%1&quot; er ukendt</translation>
     </message>
@@ -4852,7 +4822,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Handling blev annulleret</translation>
@@ -5034,7 +5004,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Navn</translation>
     </message>
@@ -7663,7 +7633,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
         <source>Unable to write data: %1</source>
         <translation>Kunne ikke skrive data: %1</translation>
     </message>
@@ -7689,7 +7659,7 @@ Vælg et andet filnavn.</translation>
         <translation>Der opstod en fejl under SSL handshake: %1</translation>
     </message>
     <message>
-        <location line="-697"/>
+        <location line="-689"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Der opstod fejl under oprettelse af SSL-kontekst (%1)</translation>
     </message>
@@ -7729,7 +7699,7 @@ Vælg et andet filnavn.</translation>
         <translation>Der opstod fejl under indlæsning af privat nøgle, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation type="unfinished"></translation>
     </message>

@@ -1121,7 +1121,7 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+901"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1143,18 +1143,18 @@
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>Diese Socket-Operation wird nicht unterstützt</translation>
     </message>
     <message>
-        <location line="+205"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="+199"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Das Zeitlimit für die Operation wurde überschritten</translation>
     </message>
     <message>
-        <location line="+437"/>
+        <location line="+431"/>
         <source>Socket is not connected</source>
         <translation>Nicht verbunden</translation>
     </message>
@@ -3786,7 +3786,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Rechner konnte nicht gefunden werden</translation>
@@ -3822,7 +3822,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="+2639"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+2616"/>
         <source>Host %1 not found</source>
         <translation>Rechner %1 konnte nicht gefunden werden</translation>
     </message>
@@ -3842,28 +3842,28 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Verbindung beendet</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-1077"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-1065"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Unbekannter Fehler</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>Anfrage wurde abgebrochen</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>Für die Verbindung wurde kein Server-Rechner angegeben</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+160"/>
         <source>Server closed connection unexpectedly</source>
         <translation>Der Server hat die Verbindung unerwartet geschlossen</translation>
     </message>
     <message>
-        <location line="+172"/>
+        <location line="+166"/>
         <source>Invalid HTTP response header</source>
         <translation>Der Kopfteil der HTTP-Antwort ist ungültig</translation>
     </message>
@@ -3919,14 +3919,9 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Es wurde ein unbekanntes Protokoll angegeben</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-159"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-153"/>
         <source>Connection refused (or timed out)</source>
         <translation>Verbindung verweigert oder Zeitlimit überschritten</translation>
-    </message>
-    <message>
-        <location line="-2266"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>Die angeforderte HTTPS-Verbindung kann nicht aufgebaut werden, da keine SSL-Unterstützung vorhanden ist</translation>
     </message>
 </context>
 <context>
@@ -4106,7 +4101,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Die Prüfdaten des Plugins &apos;%1&apos; stimmen nicht überein</translation>
     </message>
@@ -4116,12 +4111,12 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Das Plugin &apos;%1&apos; verwendet eine inkompatible Qt-Bibliothek. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+343"/>
+        <location line="+341"/>
         <source>Unknown error</source>
         <translation>Unbekannter Fehler</translation>
     </message>
     <message>
-        <location line="-444"/>
+        <location line="-442"/>
         <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
@@ -4138,7 +4133,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Das Plugin &apos;%1&apos; verwendet eine inkompatible Qt-Bibliothek. (Im Debug- bzw. Release-Modus erstellte Bibliotheken können nicht zusammen verwendet werden.)</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>Die Bibliothek %1 kann nicht geladen werden: %2</translation>
     </message>
@@ -4148,34 +4143,9 @@ Möchten Sie die Datei trotzdem löschen?</translation>
         <translation>Die Bibliothek %1 kann nicht entladen werden: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Das Symbol &quot;%1&quot; kann in %2 nicht aufgelöst werden: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation>&apos;%1&apos; ist keine ELF-Objektdatei (%2)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation>&apos;%1&apos; ist keine ELF-Objektdatei</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation>&apos;%1&apos; ist keine gültige ELF-Objektdatei (%2)</translation>
     </message>
 </context>
 <context>
@@ -4806,7 +4776,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Es konnte kein geeigneter Proxy-Server gefunden werden</translation>
     </message>
@@ -4814,7 +4784,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>Der Zugriff auf das Netzwerk ist nicht gestattet.</translation>
     </message>
@@ -4822,13 +4792,13 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Beim Herunterladen von %1 trat ein Fehler auf - Die Antwort des Servers ist: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Das Protokoll &quot;%1&quot; ist unbekannt</translation>
     </message>
@@ -4852,7 +4822,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Operation abgebrochen</translation>
@@ -5034,7 +5004,7 @@ Möchten Sie die Datei trotzdem löschen?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Name</translation>
     </message>
@@ -7663,7 +7633,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
         <source>Unable to write data: %1</source>
         <translation>Die Daten konnten nicht geschrieben werden: %1</translation>
     </message>
@@ -7689,7 +7659,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
         <translation>Im Ablauf des SSL-Protokolls ist ein Fehler aufgetreten: %1</translation>
     </message>
     <message>
-        <location line="-697"/>
+        <location line="-689"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Es konnte keine SSL-Kontextstruktur erzeugt werden (%1)</translation>
     </message>
@@ -7714,7 +7684,7 @@ Bitte wählen Sie einen anderen Dateinamen.</translation>
         <translation>Es konnte keine SSL-Sitzung erzeugt werden: %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+290"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+286"/>
         <source>The peer certificate is blacklisted</source>
         <translation>Das Zertifikat der Gegenstelle ist in einer Schwarzen Liste enthalten</translation>
     </message>

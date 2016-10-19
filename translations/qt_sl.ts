@@ -1129,7 +1129,7 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+901"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1151,18 +1151,18 @@
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>Dejanje na vtičnici ni podprto</translation>
     </message>
     <message>
-        <location line="+205"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="+199"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Čas za dejanje na vtičnici je potekel</translation>
     </message>
     <message>
-        <location line="+437"/>
+        <location line="+431"/>
         <source>Socket is not connected</source>
         <translation>Vtičnica ni povezana.</translation>
     </message>
@@ -3794,7 +3794,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Ni moč najti gostitelja</translation>
@@ -3824,23 +3824,23 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1582"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Neznana napaka</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>Zahteva prekinjena</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>Strežnik za povezavo ni nastavljen</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+156"/>
         <source>Wrong content length</source>
         <translation>Napačna dolžina vsebine</translation>
     </message>
@@ -3850,7 +3850,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Strežnik je nepričakovano prekinil povezavo</translation>
     </message>
     <message>
-        <location line="+200"/>
+        <location line="+194"/>
         <source>Unknown authentication method</source>
         <translation>Neznan način overjanja</translation>
     </message>
@@ -3866,7 +3866,7 @@ Ali jo kljub temu želite izbrisati?</translation>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="-325"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-319"/>
         <source>Host %1 not found</source>
         <translation>Gostitelj %1 ni bil najden</translation>
     </message>
@@ -3876,7 +3876,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Zahtevek HTTP ni uspel</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+88"/>
         <source>Invalid HTTP response header</source>
         <translation>Neveljavna glava odgovora HTTP</translation>
     </message>
@@ -3902,7 +3902,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Potrebna je overitev</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-153"/>
         <source>Connection refused (or timed out)</source>
         <translation>Povezava je bila zavrnjena (ali pa je potekel čas)</translation>
     </message>
@@ -3930,11 +3930,6 @@ Ali jo kljub temu želite izbrisati?</translation>
         <location line="+3"/>
         <source>SSL handshake failed</source>
         <translation>Rokovanje SSL ni uspelo</translation>
-    </message>
-    <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-2266"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>Zahtevana je bila povezava HTTPS, a podpora za SSL ni bila vgrajena</translation>
     </message>
 </context>
 <context>
@@ -4114,7 +4109,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Neujemanje podatkov za potrjevanje vstavkov v »%1«</translation>
     </message>
@@ -4124,12 +4119,12 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Vstavek »%1« uporablja nezdružljivo knjižnico Qt. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+343"/>
+        <location line="+341"/>
         <source>Unknown error</source>
         <translation>Neznana napaka</translation>
     </message>
     <message>
-        <location line="-444"/>
+        <location line="-442"/>
         <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
@@ -4146,7 +4141,7 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Vstavek »%1« uporablja nezdružljivo knjižnico Qt. (Ni moč mešati knjižnic za razhroščevanje in izdajo.)</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>Ni moč naložiti knjižnice %1: %2</translation>
     </message>
@@ -4156,34 +4151,9 @@ Ali jo kljub temu želite izbrisati?</translation>
         <translation>Ni moč odstraniti knjižnice %1: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Ni moč razrešiti simbola »%1« v %2: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4814,7 +4784,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Najden ni bil noben primeren posrednik</translation>
     </message>
@@ -4822,7 +4792,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>Omrežni dostop je onemogočen.</translation>
     </message>
@@ -4830,13 +4800,13 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Napaka med prejemanjem %1 - strežnikov odgovor: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Neznan protokol »%1«</translation>
     </message>
@@ -4860,7 +4830,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Postopek je bil preklican</translation>
@@ -5042,7 +5012,7 @@ Ali jo kljub temu želite izbrisati?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Ime</translation>
     </message>
@@ -7671,7 +7641,7 @@ Izberite drugo ime datoteke.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
         <source>Unable to write data: %1</source>
         <translation>Ni moč zapisati podatkov: %1</translation>
     </message>
@@ -7697,7 +7667,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Napaka med rokovanjem SSL: %1</translation>
     </message>
     <message>
-        <location line="-697"/>
+        <location line="-689"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Napaka pri ustvarjanju konteksta SSL (%1)</translation>
     </message>
@@ -7737,7 +7707,7 @@ Izberite drugo ime datoteke.</translation>
         <translation>Napaka pri nalaganju zasebnega ključa, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation>Brez napake</translation>
     </message>

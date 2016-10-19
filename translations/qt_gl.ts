@@ -1121,20 +1121,20 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1795"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1784"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>A operación do socket esgotou o tempo-límite</translation>
     </message>
     <message>
-        <location line="-1240"/>
+        <location line="-1232"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>Non se permite usar a operación no socket</translation>
     </message>
     <message>
-        <location line="-686"/>
+        <location line="-684"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1154,7 +1154,7 @@
         <translation>A conexión esgotou o tempo-límite</translation>
     </message>
     <message>
-        <location line="+1139"/>
+        <location line="+1125"/>
         <source>Socket is not connected</source>
         <translation>O socket non está conectado</translation>
     </message>
@@ -3787,7 +3787,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+192"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+148"/>
         <source>No host name given</source>
         <translation>Non se indicou o nome do servidor</translation>
     </message>
@@ -3852,28 +3852,23 @@ Desexa aínda así borralo?</translation>
         <translation>Fallou a negociación de SSL</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+370"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>Pediuse unha conexión HTTPS pero non se compilou con implementación de SSL</translation>
-    </message>
-    <message>
-        <location line="+1212"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Erro descoñecido</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>Interrompeuse o pedido</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>Non se indicou ningún servidor co que conectar</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+156"/>
         <source>Wrong content length</source>
         <translation>Lonxitude do contido incorrecta</translation>
     </message>
@@ -3899,7 +3894,7 @@ Desexa aínda así borralo?</translation>
         <translation>O pedido HTTP fallou</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+88"/>
         <source>Invalid HTTP response header</source>
         <translation>A cabeceira da resposta HTTP non é válida</translation>
     </message>
@@ -4107,7 +4102,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Erro de concordancia na verificación dos datos do complemento en «%1»</translation>
     </message>
@@ -4134,12 +4129,12 @@ Desexa aínda así borralo?</translation>
         <translation>O complemento «%1» utiliza unha biblioteca Qt non compatíbel (Non é posíbel mesturar as bibliotecas de depuración coas publicadas).</translation>
     </message>
     <message>
-        <location line="+334"/>
+        <location line="+332"/>
         <source>Unknown error</source>
         <translation>Erro descoñecido</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>Non foi posíbel cargar a biblioteca %1: %2</translation>
     </message>
@@ -4149,34 +4144,9 @@ Desexa aínda así borralo?</translation>
         <translation>Non foi posíbel descargar a biblioteca %1: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Non é posíbel resolver o símbolo «%1» en %2: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation>«%1» non é un obxecto ELF (%2)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation>«%1» non é un obxecto ELF</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation>«%1» non é un obxecto ELF válido (%2)</translation>
     </message>
 </context>
 <context>
@@ -4808,7 +4778,7 @@ texto</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Non se atopou ningún proxy axeitado</translation>
     </message>
@@ -4816,7 +4786,7 @@ texto</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>O acceso á rede está desactivado.</translation>
     </message>
@@ -4824,13 +4794,13 @@ texto</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Aconteceu un erro ao descargar %1, o servidor respondeu: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Non se coñece o protocolo «%1»</translation>
     </message>
@@ -4854,7 +4824,7 @@ texto</translation>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Cancelouse a operación</translation>
@@ -5037,7 +5007,7 @@ atributo da sentenza. Comprobe a configuración do controlador ODBC</translation
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Nome</translation>
     </message>
@@ -7666,7 +7636,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation>Sen erros</translation>
     </message>
@@ -7786,7 +7756,7 @@ Desexa sobrescribilo?</translation>
         <translation>Erro descoñecido</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+279"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+274"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Aconteceu un erro ao crear o contexto SSL (%1)</translation>
     </message>
@@ -7826,7 +7796,7 @@ Desexa sobrescribilo?</translation>
         <translation>Aconteceu un erro ao crear a sesión SSL: %1</translation>
     </message>
     <message>
-        <location line="+268"/>
+        <location line="+260"/>
         <source>Unable to write data: %1</source>
         <translation>Non foi posíbel escribir os datos: %1</translation>
     </message>

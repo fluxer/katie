@@ -1117,14 +1117,14 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+555"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+552"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>A művelet nem támogatott socketeken</translation>
     </message>
     <message>
-        <location line="-686"/>
+        <location line="-684"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1144,13 +1144,13 @@
         <translation>A kapcsolat várakozási ideje lejárt</translation>
     </message>
     <message>
-        <location line="+702"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="+694"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Socket művelet időtúllépés</translation>
     </message>
     <message>
-        <location line="+437"/>
+        <location line="+431"/>
         <source>Socket is not connected</source>
         <translation>A socket nem kapcsolódott</translation>
     </message>
@@ -3787,7 +3787,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>A kiszolgáló nem található</translation>
@@ -3817,23 +3817,23 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+1582"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Ismeretlen hiba</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>A kérés megszakítva</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>Nincs szerver megadva</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+156"/>
         <source>Wrong content length</source>
         <translation>Rossz tartalomhossz</translation>
     </message>
@@ -3843,7 +3843,7 @@ Biztosan törölni akarja?</translation>
         <translation>A szerver váratlanul bezárta a kapcsolatot</translation>
     </message>
     <message>
-        <location line="+383"/>
+        <location line="+377"/>
         <source>Error writing response to device</source>
         <translation>Hiba a válasz eszközre írása során</translation>
     </message>
@@ -3854,7 +3854,7 @@ Biztosan törölni akarja?</translation>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="-325"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-319"/>
         <source>Host %1 not found</source>
         <translation>%1 kiszolgáló nem található</translation>
     </message>
@@ -3864,7 +3864,7 @@ Biztosan törölni akarja?</translation>
         <translation>A HTTP kérés nem sikerült</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+88"/>
         <source>Invalid HTTP response header</source>
         <translation>Érvénytelen HTTP válasz-fejléc</translation>
     </message>
@@ -3895,12 +3895,7 @@ Biztosan törölni akarja?</translation>
         <translation>Azonosítás szükséges</translation>
     </message>
     <message>
-        <location line="-2425"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>HTTPS kapcsolat kiépítése szükséges, de nincs SSL támogatás</translation>
-    </message>
-    <message>
-        <location line="+2266"/>
+        <location line="-153"/>
         <source>Connection refused (or timed out)</source>
         <translation>A kapcsolat elutasítva (vagy időtúllépés történt)</translation>
     </message>
@@ -4107,7 +4102,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Plugin ellenőrző adat eltérés: &apos;%1&apos;</translation>
     </message>
@@ -4117,12 +4112,12 @@ Biztosan törölni akarja?</translation>
         <translation>A(z) &apos;%1&apos; plugin inkompatíbilis Qt függvénykönyvtárat használ. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+343"/>
+        <location line="+341"/>
         <source>Unknown error</source>
         <translation>Ismeretlen hiba</translation>
     </message>
     <message>
-        <location line="-444"/>
+        <location line="-442"/>
         <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
@@ -4139,7 +4134,7 @@ Biztosan törölni akarja?</translation>
         <translation>A(z) &apos;%1&apos; plugin inkompatíbilis Qt könyvtárat használ. (A debug és a release könyvtárak nem keverhetők.)</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>A(z) %1 könyvtár nem tölthető be: %2</translation>
     </message>
@@ -4149,34 +4144,9 @@ Biztosan törölni akarja?</translation>
         <translation>A(z) %1 könyvtár nem távolítható el: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>A(z) &quot;%1&quot; szimbólum nem oldható fel a(z) %2 könyvtárban: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4807,7 +4777,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Nincs megfelelő proxy</translation>
     </message>
@@ -4815,7 +4785,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>A hozzáférés a hálózathoz le van tiltva.</translation>
     </message>
@@ -4823,13 +4793,13 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Hiba %1 letöltésekor - a szerver válasza: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Ismeretlen protokoll: &quot;%1&quot;</translation>
     </message>
@@ -4854,7 +4824,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>A művelet megszakítva</translation>
@@ -5036,7 +5006,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Név</translation>
     </message>
@@ -7675,7 +7645,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
         <source>Unable to write data: %1</source>
         <translation>Az adat nem írható: %1</translation>
     </message>
@@ -7701,7 +7671,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>SSL kézfogás hiba: %1</translation>
     </message>
     <message>
-        <location line="-697"/>
+        <location line="-689"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Az SSL kontextus létrehozása sikertelen (%1)</translation>
     </message>
@@ -7741,7 +7711,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>Hiba a titkos kulcs betöltése közben, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation>Nincs hiba</translation>
     </message>

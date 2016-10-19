@@ -1125,7 +1125,7 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+901"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1145,13 +1145,13 @@
         <translation>Časový limit pro spojení byl překročen</translation>
     </message>
     <message>
-        <location line="+1139"/>
+        <location line="+1125"/>
         <source>Socket is not connected</source>
         <translation>Socket není spojen</translation>
     </message>
     <message>
-        <location line="-437"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="-431"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Časový limit pro socket operaci byl překročen</translation>
     </message>
@@ -1161,9 +1161,9 @@
         <translation>Síť není dosažitelná</translation>
     </message>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1240"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="-1232"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>Tato socket operace není podporována</translation>
     </message>
@@ -3790,7 +3790,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>Nepodařilo se najít počítač</translation>
@@ -3820,7 +3820,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+2636"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+2613"/>
         <source>Connection refused (or timed out)</source>
         <translation>Spojení bylo odmítnuto (nebo byl překročen časový limit)</translation>
     </message>
@@ -3841,14 +3841,9 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Hostitelský počítač požaduje autentizaci</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+325"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+319"/>
         <source>Error writing response to device</source>
         <translation>Při psaní odpovědi výstupnímu zařízení se vyskytla chyba</translation>
-    </message>
-    <message>
-        <location line="-2594"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>Požadované HTTPS spojení nelze vytvořit, protože neexistuje žádná SSL podpora</translation>
     </message>
     <message>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="-12"/>
@@ -3856,7 +3851,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Spojení bylo odmítnuto</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+2421"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-173"/>
         <source>Proxy authentication required</source>
         <translation>Požadována proxy autentizace</translation>
     </message>
@@ -3866,7 +3861,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Byl zadán neznámý protokol</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-132"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-126"/>
         <source>HTTP request failed</source>
         <translation>HTTP dotaz se nezdařil</translation>
     </message>
@@ -3876,7 +3871,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Proxy server požaduje autentizaci</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+136"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+130"/>
         <source>Authentication required</source>
         <translation>Požadována autentizace</translation>
     </message>
@@ -3892,18 +3887,18 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Obsah (chunked body - rozkouskované tělo) HTTP je neplatný</translation>
     </message>
     <message>
-        <location line="-349"/>
+        <location line="-343"/>
         <source>Wrong content length</source>
         <translation>Neplatný údaj o délce obsahu</translation>
     </message>
     <message>
-        <location line="-995"/>
-        <location line="+820"/>
+        <location line="-983"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
     </message>
     <message>
-        <location line="+351"/>
+        <location line="+337"/>
         <source>Invalid HTTP response header</source>
         <translation>Hlavička HTTP odpovědi není platná</translation>
     </message>
@@ -3918,17 +3913,17 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Spojení ukončeno</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-368"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-354"/>
         <source>No server set to connect to</source>
         <translation>Pro spojení nebyl nastaven žádný počítač - server</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+160"/>
         <source>Server closed connection unexpectedly</source>
         <translation>Server neočekávaně uzavřel spojení</translation>
     </message>
     <message>
-        <location line="-747"/>
+        <location line="-735"/>
         <source>Request aborted</source>
         <translation>Požadavek byl zrušen</translation>
     </message>
@@ -4110,7 +4105,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+258"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+226"/>
         <source>Cannot unload library %1: %2</source>
         <translation>Knihovnu %1 nelze vyjmout: %2</translation>
     </message>
@@ -4120,12 +4115,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+720"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+693"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+51"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+44"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
@@ -4152,34 +4147,9 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Nepodařilo se nalézt sdílenou knihovnu.</translation>
     </message>
     <message>
-        <location line="+360"/>
+        <location line="+358"/>
         <source>Unknown error</source>
         <translation>Neznámá chyba</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation>&apos;%1&apos; není objekt ELF (%2)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation>&apos;%1&apos; není objekt ELF</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation>&apos;%1&apos; je neplatný objekt ELF (%2)</translation>
     </message>
 </context>
 <context>
@@ -4810,7 +4780,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Nepodařilo se najít žádný vhodný proxy server</translation>
     </message>
@@ -4818,7 +4788,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>Přístup k síti není dovolen.</translation>
     </message>
@@ -4826,13 +4796,13 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Při stahování %1 se vyskytla chyba - Odpověď serveru je: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Protokol &quot;%1&quot; není znám</translation>
     </message>
@@ -4856,7 +4826,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Operace byla zrušena</translation>
@@ -5038,7 +5008,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Název</translation>
     </message>
@@ -7667,7 +7637,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+452"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+447"/>
         <source>Error creating SSL session: %1</source>
         <translation>Nepodařilo se vytvořit sezení SSL: %1</translation>
     </message>
@@ -7687,7 +7657,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Soukromý klíč nedosvědčuje veřejný klíč, %1</translation>
     </message>
     <message>
-        <location line="+324"/>
+        <location line="+316"/>
         <source>Unable to write data: %1</source>
         <translation>Data se nepodařilo zapsat: %1</translation>
     </message>
@@ -7707,7 +7677,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Během startu SSL protokolu se vyskytla chyba: %1</translation>
     </message>
     <message>
-        <location line="-602"/>
+        <location line="-594"/>
         <source>Error loading local certificate, %1</source>
         <translation>Nepodařilo se nahrát místní osvědčení, %1</translation>
     </message>
@@ -7722,18 +7692,18 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Nepodařilo se vytvořit žádný kontext SSL (%1)</translation>
     </message>
     <message>
-        <location line="+592"/>
+        <location line="+584"/>
         <location line="+10"/>
         <source>Error while reading: %1</source>
         <translation>Při čtení se vyskytla chyba: %1</translation>
     </message>
     <message>
-        <location line="-492"/>
+        <location line="-484"/>
         <source>Error loading private key, %1</source>
         <translation>Soukromý klíč se nepodařilo nahrát, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation>Žádná chyba</translation>
     </message>

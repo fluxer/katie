@@ -114,24 +114,6 @@
     </message>
 </context>
 <context>
-    <name>AssistantClient</name>
-    <message>
-        <location filename="../src/tools/designer/assistantclient.cpp" line="+100"/>
-        <source>Unable to send request: Assistant is not responding.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+39"/>
-        <source>The binary &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Unable to launch assistant (%1).</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FindDialog</name>
     <message>
         <source></source>
@@ -394,31 +376,18 @@ Options:
     </message>
     <message>
         <location line="+19"/>
-        <location line="+21"/>
         <source>%1() requires at least one argument.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-18"/>
+        <location line="+3"/>
         <source>%1(): text to translate must be a literal string.
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>//= cannot be used with %1(). Ignoring
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>%1(): identifier must be a literal string.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>Discarding unconsumed meta data
 </source>
         <translation type="unfinished"></translation>
@@ -450,7 +419,7 @@ Options:
 <context>
     <name>LUpdate</name>
     <message>
-        <location filename="../src/tools/lupdate/cpp.cpp" line="+630"/>
+        <location filename="../src/tools/lupdate/cpp.cpp" line="+628"/>
         <source>Parenthesis/bracket/brace mismatch between #if and #else branches; using #if branch
 </source>
         <translation type="unfinished"></translation>
@@ -463,7 +432,7 @@ Options:
     </message>
     <message>
         <location line="+27"/>
-        <location line="+144"/>
+        <location line="+138"/>
         <source>Unterminated C++ comment
 </source>
         <translation type="unfinished"></translation>
@@ -536,13 +505,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
-        <source>//= cannot be used with qtTrId() / QT_TRID_NOOP(). Ignoring
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+67"/>
+        <location line="+104"/>
         <source>Unexpected character in meta string
 </source>
         <translation type="unfinished"></translation>
@@ -1806,12 +1769,12 @@ Options:
 <context>
     <name>QDesigner</name>
     <message>
-        <location filename="../src/tools/designer/qdesigner.cpp" line="+139"/>
+        <location filename="../src/tools/designer/qdesigner.cpp" line="+132"/>
         <source>%1 - warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+70"/>
         <source>Qt Designer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1871,12 +1834,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+925"/>
+        <location line="+859"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-924"/>
+        <location line="-858"/>
         <source>Save &amp;Image...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1937,32 +1900,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="+31"/>
-        <source>Qt Designer &amp;Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Current Widget Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>What&apos;s New in Qt Designer?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
         <source>About Plugins</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+601"/>
+        <location line="+573"/>
         <source>About Qt Designer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-595"/>
+        <location line="-567"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2067,13 +2015,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+158"/>
-        <location line="+34"/>
-        <source>Assistant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+153"/>
         <source>&amp;Close Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2256,7 +2198,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+20"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>

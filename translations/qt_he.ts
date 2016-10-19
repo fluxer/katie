@@ -1121,7 +1121,7 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+904"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+901"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1143,18 +1143,18 @@
     <message>
         <location line="-538"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>פעולה על שקע אינה נתמכת</translation>
     </message>
     <message>
-        <location line="+205"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location line="+199"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>תם זמן פעולת שקע</translation>
     </message>
     <message>
-        <location line="+437"/>
+        <location line="+431"/>
         <source>Socket is not connected</source>
         <translation>שקע לא מחובר</translation>
     </message>
@@ -3788,7 +3788,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+260"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
         <location line="+32"/>
         <source>Host not found</source>
         <translation>מארח לא נמצא</translation>
@@ -3824,7 +3824,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="-3"/>
-        <location filename="../src/network/access/qhttp.cpp" line="+2639"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+2616"/>
         <source>Host %1 not found</source>
         <translation>מארח %1 לא נמצא</translation>
     </message>
@@ -3834,12 +3834,7 @@ Do you want to delete it anyway?</source>
         <translation>אורך תוכן שגוי</translation>
     </message>
     <message>
-        <location line="-2207"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>התבקש חיבור HTTPS אבל תמיכת SSL לא מקומפלת אל הספרייה</translation>
-    </message>
-    <message>
-        <location line="+2289"/>
+        <location line="+82"/>
         <source>HTTP request failed</source>
         <translation>בקשת HTTP נכשלה</translation>
     </message>
@@ -3849,28 +3844,28 @@ Do you want to delete it anyway?</source>
         <translation>חיבור נסגר</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="-1077"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="-1065"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>טיפול בבקשה הופסק</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>לא נקבע שרת להתחבר אליו</translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+160"/>
         <source>Server closed connection unexpectedly</source>
         <translation>שרת סגר חיבור באופן לא צפוי</translation>
     </message>
     <message>
-        <location line="+172"/>
+        <location line="+166"/>
         <source>Invalid HTTP response header</source>
         <translation>התקבלה כותרת לא תקינה בתשובת HTTP</translation>
     </message>
@@ -3901,7 +3896,7 @@ Do you want to delete it anyway?</source>
         <translation>נדרש אימות</translation>
     </message>
     <message>
-        <location line="-159"/>
+        <location line="-153"/>
         <source>Connection refused (or timed out)</source>
         <translation>חיבור נדחה (או פג זמנו)</translation>
     </message>
@@ -4108,7 +4103,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>חוסר התאמה במידע אימות תוסף בתוך &apos;%1&apos;</translation>
     </message>
@@ -4118,12 +4113,12 @@ Do you want to delete it anyway?</source>
         <translation>התוסף &apos;%1&apos; משתמש בספריית Qt שאינה תואמת (%2.%3.%4) [%5]</translation>
     </message>
     <message>
-        <location line="+343"/>
+        <location line="+341"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
     <message>
-        <location line="-444"/>
+        <location line="-442"/>
         <location line="+84"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
@@ -4140,7 +4135,7 @@ Do you want to delete it anyway?</source>
         <translation>התוסף &apos;%1&apos; משתמש בספריית Qt שאינה תואמת (לא ניתן לערבב ספריית debug וספריית release.)</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>אין אפשרות לטעון ספרייה %1: %2</translation>
     </message>
@@ -4150,34 +4145,9 @@ Do you want to delete it anyway?</source>
         <translation>אין אפשרות לפרוק ספרייה %1: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>אין אפשרות לפתור סמל &quot;%1&quot; בתוך %2: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation>&apos;%1&apos; אינו אובייקט ELF (%2)</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation>&apos;%1&apos; אינו אובייקט ELF</translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation>&apos;%1&apos; אינו אובייקט ELF תקין (%2)</translation>
     </message>
 </context>
 <context>
@@ -4809,7 +4779,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>לא נמצא שרת מתווך מתאים</translation>
     </message>
@@ -4817,7 +4787,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>גישת רשת הינה מנוטרלת.</translation>
     </message>
@@ -4825,13 +4795,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>שגיאה בהורדת %1 - שרת ענה: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>פרוטוקול &quot;%1&quot; אינו מוכר</translation>
     </message>
@@ -4855,7 +4825,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>פעולה בוטלה</translation>
@@ -5037,7 +5007,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>שם</translation>
     </message>
@@ -7668,7 +7638,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+720"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
         <source>Unable to write data: %1</source>
         <translation>אין אפשרות לרשום נתונים: %1</translation>
     </message>
@@ -7694,7 +7664,7 @@ Please choose a different file name.</source>
         <translation>שגיאה בעת לחיצת יד SSL‏: %1</translation>
     </message>
     <message>
-        <location line="-697"/>
+        <location line="-689"/>
         <source>Error creating SSL context (%1)</source>
         <translation>שגיאה ביצירת הקשר SSL‏ (%1)</translation>
     </message>
@@ -7734,7 +7704,7 @@ Please choose a different file name.</source>
         <translation>שגיאה בטעינת מפתח פרטי, %1</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation>אין שגיאה</translation>
     </message>

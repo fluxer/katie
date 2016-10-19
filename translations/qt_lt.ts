@@ -1125,20 +1125,20 @@
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1795"/>
-        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+698"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1784"/>
+        <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Baigėsi operacijai su lizdu skirtas laikas</translation>
     </message>
     <message>
-        <location line="-1240"/>
+        <location line="-1232"/>
         <location line="+810"/>
-        <location line="+225"/>
+        <location line="+223"/>
         <source>Operation on socket is not supported</source>
         <translation>Operacija su lizdu nepalaikoma</translation>
     </message>
     <message>
-        <location line="-686"/>
+        <location line="-684"/>
         <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
         <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
         <location line="+26"/>
@@ -1158,7 +1158,7 @@
         <translation>Baigėsi ryšiui skirtas laikas</translation>
     </message>
     <message>
-        <location line="+1139"/>
+        <location line="+1125"/>
         <source>Socket is not connected</source>
         <translation>Lizdas neprijungtas</translation>
     </message>
@@ -3790,7 +3790,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+192"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+148"/>
         <source>No host name given</source>
         <translation>Nepateiktas mazgo vardas</translation>
     </message>
@@ -3820,28 +3820,23 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QHttp</name>
     <message>
-        <location filename="../src/network/access/qhttp.cpp" line="+370"/>
-        <source>HTTPS connection requested but SSL support not compiled in</source>
-        <translation>Pareikalauta HTTPS ryšio, tačiau SSL palaikymas nebuvo įkompiliuotas</translation>
-    </message>
-    <message>
-        <location line="+1212"/>
-        <location line="+820"/>
+        <location filename="../src/network/access/qhttp.cpp" line="+1571"/>
+        <location line="+816"/>
         <source>Unknown error</source>
         <translation>Nežinoma klaida</translation>
     </message>
     <message>
-        <location line="-568"/>
+        <location line="-564"/>
         <source>Request aborted</source>
         <translation>Užklausos vykdymas nutrauktas</translation>
     </message>
     <message>
-        <location line="+579"/>
+        <location line="+575"/>
         <source>No server set to connect to</source>
         <translation>Nenurodytas serveris, prie kurio reikėtų jungtis</translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+156"/>
         <source>Wrong content length</source>
         <translation>Neteisinga turinio apimtis</translation>
     </message>
@@ -3867,7 +3862,7 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>HTTP užlklausa nesėkminga</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+88"/>
         <source>Invalid HTTP response header</source>
         <translation>Netinkama HTTP atsako antraštė</translation>
     </message>
@@ -4110,7 +4105,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+398"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4137,12 +4132,12 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Papildinys „%1“ naudoja nesuderinamą „Qt“ bibliotekos versiją (negalima maišyti derinimui ir galutinėms laidoms skirtų bibliotekų).</translation>
     </message>
     <message>
-        <location line="+334"/>
+        <location line="+332"/>
         <source>Unknown error</source>
         <translation>Nežinoma klaida</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+241"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
         <source>Cannot load library %1: %2</source>
         <translation>Nepavyko įkelti bibliotekos %1: %2</translation>
     </message>
@@ -4152,34 +4147,9 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Nepavyko iškelti bibliotekos %1: %2</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+27"/>
         <source>Cannot resolve symbol &quot;%1&quot; in %2: %3</source>
         <translation>Nepavyko rasti simbolio „%1“ bibliotekoje %2: %3</translation>
-    </message>
-    <message>
-        <location filename="../src/core/plugin/qelfparser_p.cpp" line="+77"/>
-        <source>&apos;%1&apos; is not an ELF object (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>&apos;%1&apos; is not an ELF object</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <location line="+10"/>
-        <location line="+6"/>
-        <location line="+20"/>
-        <location line="+12"/>
-        <location line="+11"/>
-        <location line="+15"/>
-        <location line="+11"/>
-        <location line="+22"/>
-        <location line="+14"/>
-        <location line="+13"/>
-        <source>&apos;%1&apos; is an invalid ELF object (%2)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4810,7 +4780,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QNetworkAccessHttpBackend</name>
     <message>
-        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+429"/>
+        <location filename="../src/network/access/qnetworkaccesshttpbackend.cpp" line="+424"/>
         <source>No suitable proxy found</source>
         <translation>Nerastas tinkamas įgaliotasis serveris</translation>
     </message>
@@ -4818,7 +4788,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1112"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
         <source>Network access is disabled.</source>
         <translation>Prieiga prie tinklo išjungta.</translation>
     </message>
@@ -4826,13 +4796,13 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+434"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Klaida parsiunčiant %1. Serveris atsakė: %2</translation>
     </message>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1025"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="-1019"/>
         <source>Protocol &quot;%1&quot; is unknown</source>
         <translation>Protokolas „%1“ nežinomas</translation>
     </message>
@@ -4856,7 +4826,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QNetworkReplyImpl</name>
     <message>
-        <location line="+119"/>
+        <location line="+115"/>
         <location line="+30"/>
         <source>Operation canceled</source>
         <translation>Operacija atšaukta</translation>
@@ -5038,7 +5008,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QPPDOptionsModel</name>
     <message>
-        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1231"/>
+        <location filename="../src/gui/dialogs/qprintdialog_unix.cpp" line="+1229"/>
         <source>Name</source>
         <translation>Vardas</translation>
     </message>
@@ -7667,7 +7637,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslerror.cpp" line="+218"/>
+        <location filename="../src/network/ssl/qsslerror.cpp" line="+214"/>
         <source>No error</source>
         <translation>Klaidų nėra</translation>
     </message>
@@ -7782,7 +7752,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Nežinoma klaida</translation>
     </message>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+279"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+274"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Klaida sukuriant SSL kontekstą (%1)</translation>
     </message>
@@ -7822,7 +7792,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Klaida kuriant SSL sesiją: %1</translation>
     </message>
     <message>
-        <location line="+268"/>
+        <location line="+260"/>
         <source>Unable to write data: %1</source>
         <translation>Nepavyko rašyti duomenų: %1</translation>
     </message>
