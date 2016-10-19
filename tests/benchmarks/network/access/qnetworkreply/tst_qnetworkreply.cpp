@@ -459,10 +459,8 @@ class tst_qnetworkreply : public QObject
 private slots:
     void httpLatency();
 
-#ifndef QT_NO_OPENSSL
     void echoPerformance_data();
     void echoPerformance();
-#endif
 
     void downloadPerformance();
     void uploadPerformance();
@@ -487,7 +485,6 @@ void tst_qnetworkreply::httpLatency()
     }
 }
 
-#ifndef QT_NO_OPENSSL
 void tst_qnetworkreply::echoPerformance_data()
 {
      QTest::addColumn<bool>("ssl");
@@ -519,7 +516,6 @@ void tst_qnetworkreply::echoPerformance()
         delete reply;
     }
 }
-#endif
 
 void tst_qnetworkreply::downloadPerformance()
 {
