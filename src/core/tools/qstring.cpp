@@ -7187,7 +7187,7 @@ QString &QString::setRawData(const QChar *unicode, int size)
 */
 
 
-#if !defined(QT_NO_DATASTREAM) || defined(QT_BOOTSTRAPPED)
+#if !defined(QT_NO_DATASTREAM)
 /*!
     \fn QDataStream &operator<<(QDataStream &stream, const QString &string)
     \relates QString

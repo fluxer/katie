@@ -43,7 +43,6 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/global/qnumeric.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qabstractfileengine.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qbuffer.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/io/qdatastream.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdir.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qdiriterator.cpp
     ${CMAKE_SOURCE_DIR}/src/core/io/qfile.cpp
