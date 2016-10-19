@@ -268,10 +268,6 @@ incmap = {
         'QXmlContentHandler': 'qxml.h',
         'QXmlInputSource': 'qxml.h',
         },
-    'QtXmlPatterns': {
-        'QXmlItem': 'qabstractxmlnodemodel.h',
-        'QXmlNodeModelIndex': 'qabstractxmlnodemodel.h',
-        },
     'QtDeclarative': {
         'QDeclarativeListProperty': 'qdeclarativelist.h',
         },
@@ -333,10 +329,6 @@ incmap = {
         'QDesignerMetaDataBaseItemInterface': 'abstractmetadatabase.h',
         'QDesignerDnDItemInterface': 'abstractdnditem.h',
         'QDesignerComponents': 'qdesigner_components.h',
-        },
-    'QtHelp': {
-        'QHelpIndexModel': 'qhelpindexwidget.h',
-        'QHelpContentModel': 'qhelpcontentwidget.h',
         },
     }
 
