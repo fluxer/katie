@@ -52,15 +52,13 @@ class QCryptographicHashPrivate
 {
 public:
     QCryptographicHash::Algorithm method;
-    union {
-        MD4_CTX md4Context;
-        MD5_CTX md5Context;
-        SHA_CTX sha1Context;
-        SHA256_CTX sha224Context;
-        SHA256_CTX sha256Context;
-        SHA512_CTX sha384Context;
-        SHA512_CTX sha512Context;
-    };
+    MD4_CTX md4Context;
+    MD5_CTX md5Context;
+    SHA_CTX sha1Context;
+    SHA256_CTX sha224Context;
+    SHA256_CTX sha256Context;
+    SHA512_CTX sha384Context;
+    SHA512_CTX sha512Context;
     QByteArray result;
 };
 
@@ -116,27 +114,34 @@ QCryptographicHash::~QCryptographicHash()
 void QCryptographicHash::reset()
 {
     switch (d->method) {
-    case Md4:
-        MD4_Init(&d->md4Context);
-        break;
-    case Md5:
-        MD5_Init(&d->md5Context);
-        break;
-    case Sha1:
-        SHA1_Init(&d->sha1Context);
-        break;
-    case Sha224:
-        SHA224_Init(&d->sha224Context);
-        break;
-    case Sha256:
-        SHA256_Init(&d->sha256Context);
-        break;
-    case Sha384:
-        SHA384_Init(&d->sha384Context);
-        break;
-    case Sha512:
-        SHA512_Init(&d->sha512Context);
-        break;
+        case QCryptographicHash::Md4: {
+            MD4_Init(&d->md4Context);
+            break;
+        }
+        case QCryptographicHash::Md5: {
+            MD5_Init(&d->md5Context);
+            break;
+        }
+        case QCryptographicHash::Sha1: {
+            SHA1_Init(&d->sha1Context);
+            break;
+        }
+        case QCryptographicHash::Sha224: {
+            SHA224_Init(&d->sha224Context);
+            break;
+        }
+        case QCryptographicHash::Sha256: {
+            SHA256_Init(&d->sha256Context);
+            break;
+        }
+        case QCryptographicHash::Sha384: {
+            SHA384_Init(&d->sha384Context);
+            break;
+        }
+        case QCryptographicHash::Sha512: {
+            SHA512_Init(&d->sha512Context);
+            break;
+        }
     }
     d->result.clear();
 }
@@ -148,27 +153,34 @@ void QCryptographicHash::reset()
 void QCryptographicHash::addData(const char *data, int length)
 {
     switch (d->method) {
-    case Md4:
-        MD4_Update(&d->md4Context, (const unsigned char *)data, length);
-        break;
-    case Md5:
-        MD5_Update(&d->md5Context, (const unsigned char *)data, length);
-        break;
-    case Sha1:
-        SHA1_Update(&d->sha1Context, (const unsigned char *)data, length);
-        break;
-    case Sha224:
-        SHA224_Update(&d->sha224Context, reinterpret_cast<const unsigned char *>(data), length);
-        break;
-    case Sha256:
-        SHA256_Update(&d->sha256Context, reinterpret_cast<const unsigned char *>(data), length);
-        break;
-    case Sha384:
-        SHA384_Update(&d->sha384Context, reinterpret_cast<const unsigned char *>(data), length);
-        break;
-    case Sha512:
-        SHA512_Update(&d->sha512Context, reinterpret_cast<const unsigned char *>(data), length);
-        break;
+        case QCryptographicHash::Md4: {
+            MD4_Update(&d->md4Context, data, length);
+            break;
+        }
+        case QCryptographicHash::Md5: {
+            MD5_Update(&d->md5Context, data, length);
+            break;
+        }
+        case QCryptographicHash::Sha1: {
+            SHA1_Update(&d->sha1Context, data, length);
+            break;
+        }
+        case QCryptographicHash::Sha224: {
+            SHA224_Update(&d->sha224Context, data, length);
+            break;
+        }
+        case QCryptographicHash::Sha256: {
+            SHA256_Update(&d->sha256Context, data, length);
+            break;
+        }
+        case QCryptographicHash::Sha384: {
+            SHA384_Update(&d->sha384Context, data, length);
+            break;
+        }
+        case QCryptographicHash::Sha512: {
+            SHA512_Update(&d->sha512Context, data, length);
+            break;
+        }
     }
     d->result.clear();
 }
@@ -207,48 +219,48 @@ QByteArray QCryptographicHash::result() const
         return d->result;
 
     switch (d->method) {
-    case Md4: {
-        MD4_CTX copy = d->md4Context;
-        d->result.resize(16);
-        MD4_Final((unsigned char *)d->result.data(), &copy);
-        break;
-    }
-    case Md5: {
-        MD5_CTX copy = d->md5Context;
-        d->result.resize(16);
-        MD5_Final((unsigned char *)d->result.data(), &copy);
-        break;
-    }
-    case Sha1: {
-        SHA_CTX copy = d->sha1Context;
-        d->result.resize(20);
-        SHA1_Final((unsigned char *)d->result.data(), &copy);
-        break;
-    }
-    case Sha224: {
-        SHA256_CTX copy = d->sha224Context;
-        d->result.resize(57);
-        SHA224_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-        break;
-    }
-    case Sha256:{
-        SHA256_CTX copy = d->sha256Context;
-        d->result.resize(65);
-        SHA256_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-        break;
-    }
-    case Sha384:{
-        SHA512_CTX copy = d->sha384Context;
-        d->result.resize(97);
-        SHA384_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-        break;
-    }
-    case Sha512:{
-        SHA512_CTX copy = d->sha512Context;
-        d->result.resize(129);
-        SHA512_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
-        break;
-    }
+        case QCryptographicHash::Md4: {
+            MD4_CTX copy = d->md4Context;
+            d->result.resize(16);
+            MD4_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
+        case QCryptographicHash::Md5: {
+            MD5_CTX copy = d->md5Context;
+            d->result.resize(16);
+            MD5_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
+        case QCryptographicHash::Sha1: {
+            SHA_CTX copy = d->sha1Context;
+            d->result.resize(20);
+            SHA1_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
+        case QCryptographicHash::Sha224: {
+            SHA256_CTX copy = d->sha224Context;
+            d->result.resize(57);
+            SHA224_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
+        case QCryptographicHash::Sha256:{
+            SHA256_CTX copy = d->sha256Context;
+            d->result.resize(65);
+            SHA256_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
+        case QCryptographicHash::Sha384:{
+            SHA512_CTX copy = d->sha384Context;
+            d->result.resize(97);
+            SHA384_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
+        case QCryptographicHash::Sha512:{
+            SHA512_CTX copy = d->sha512Context;
+            d->result.resize(129);
+            SHA512_Final(reinterpret_cast<unsigned char *>(d->result.data()), &copy);
+            break;
+        }
     }
     return d->result;
 }

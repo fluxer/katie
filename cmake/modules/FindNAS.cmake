@@ -21,8 +21,6 @@ find_path(NAS_INCLUDES
     PATH_SUFFIXES audio
     HINTS
     $ENV{NASDIR}/include
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -30,8 +28,6 @@ find_library(NAS_LIBRARIES
     audio
     HINTS
     $ENV{NASDIR}/lib
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

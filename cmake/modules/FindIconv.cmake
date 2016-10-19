@@ -20,8 +20,6 @@ find_path(ICONV_INCLUDES
     iconv.h
     HINTS
     $ENV{ICONVDIR}/include
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -30,8 +28,6 @@ find_library(ICONV_LIBRARIES
     iconv libiconv libiconv-2 c
     HINTS
     $ENV{ICONVDIR}/lib
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

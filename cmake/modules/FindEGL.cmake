@@ -25,8 +25,6 @@ find_path(EGL_INCLUDES
     HINTS
     $ENV{EGLDIR}/include
     ${PC_EGL_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -35,8 +33,6 @@ find_library(EGL_LIBRARIES
     HINTS
     $ENV{EGLDIR}/lib
     ${PC_EGL_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

@@ -21,8 +21,6 @@ find_path(MYSQL_INCLUDES
     PATH_SUFFIXES mysql
     HINTS
     $ENV{MYSQLDIR}/include
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -30,8 +28,6 @@ find_library(MYSQL_LIBRARIES
     mysqld
     HINTS
     $ENV{MYSQLDIR}/lib
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

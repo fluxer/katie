@@ -24,8 +24,6 @@ find_path(ICU_INCLUDES
     HINTS
     $ENV{ICUDIR}/include
     ${PC_ICU_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -34,8 +32,6 @@ find_library(ICU_LIBRARIES
     HINTS
     $ENV{ICUDIR}/lib
     ${PC_ICU_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 
@@ -44,8 +40,6 @@ find_library(ICUUC_LIBRARIES
     HINTS
     $ENV{ICUDIR}/lib
     ${PC_ICU_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

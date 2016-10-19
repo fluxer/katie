@@ -25,8 +25,6 @@ find_path(MNG_INCLUDES
     HINTS
     $ENV{MNGDIR}/include
     ${PC_MNG_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -35,8 +33,6 @@ find_library(MNG_LIBRARIES
     HINTS
     $ENV{MNGDIR}/lib
     ${PC_MNG_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

@@ -24,8 +24,6 @@ find_path(FONTCONFIG_INCLUDES
     HINTS
     $ENV{FONTCONFIGDIR}/include
     ${PC_FONTCONFIG_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -34,8 +32,6 @@ find_library(FONTCONFIG_LIBRARIES
     HINTS
     $ENV{FONTCONFIGDIR}/lib
     ${PC_FONTCONFIG_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

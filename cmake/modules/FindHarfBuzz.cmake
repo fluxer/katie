@@ -25,8 +25,6 @@ find_path(HARFBUZZ_INCLUDES
     HINTS
     $ENV{HARFBUZZDIR}/include
     ${PC_HARFBUZZ_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -35,8 +33,6 @@ find_library(HARFBUZZ_LIBRARIES
     HINTS
     $ENV{HARFBUZZDIR}/lib
     ${PC_HARFBUZZ_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

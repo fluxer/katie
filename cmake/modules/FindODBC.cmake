@@ -21,8 +21,6 @@ find_path(ODBC_INCLUDES
     PATH_SUFFIXES iodbc libiodbc
     HINTS
     $ENV{ODBCDIR}/include
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -30,8 +28,6 @@ find_library(ODBC_LIBRARIES
     odbc iodbc
     HINTS
     $ENV{ODBCDIR}/lib
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

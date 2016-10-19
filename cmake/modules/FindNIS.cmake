@@ -20,8 +20,6 @@ find_path(NIS_INCLUDES
     rpc/rpc.h
     HINTS
     $ENV{NISDIR}/include
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -29,8 +27,6 @@ find_library(NIS_LIBRARIES
     nsl
     HINTS
     $ENV{NISDIR}/lib
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

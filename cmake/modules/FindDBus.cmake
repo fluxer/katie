@@ -26,8 +26,6 @@ find_path(DBUS_INCLUDES
     HINTS
     $ENV{DBUSDIR}/include
     ${PC_DBUS_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -40,10 +38,6 @@ find_path(DBUS_ARCH_INCLUDES
     $ENV{DBUSDIR}/lib
     ${PC_DBUS_INCLUDEDIR}
     ${PC_DBUS_LIBDIR}
-    /usr/include
-    /usr/local/include
-    /usr/lib
-    /usr/local/lib
     ${INCLUDE_INSTALL_DIR}
     ${LIB_INSTALL_DIR}
 )
@@ -57,8 +51,6 @@ find_library(DBUS_LIBRARIES
     HINTS
     $ENV{DBUSDIR}/lib
     ${PC_DBUS_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

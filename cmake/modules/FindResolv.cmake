@@ -20,8 +20,6 @@ find_path(RESOLV_INCLUDES
     resolv.h
     HINTS
     $ENV{RESOLVDIR}/include
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -30,8 +28,6 @@ find_library(RESOLV_LIBRARIES
     resolv  c
     HINTS
     $ENV{RESOLVDIR}/lib
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

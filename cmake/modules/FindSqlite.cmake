@@ -25,8 +25,6 @@ find_path(SQLITE_INCLUDES
     HINTS
     $ENV{SQLITEDIR}/include
     ${PC_SQLITE_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -35,8 +33,6 @@ find_library(SQLITE_LIBRARIES
     HINTS
     $ENV{SQLITEDIR}/lib
     ${PC_SQLITE_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

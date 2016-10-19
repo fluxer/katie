@@ -26,8 +26,6 @@ find_path(GLIB2_INCLUDES
     HINTS
     $ENV{GLIB2DIR}/include
     ${PC_GLIB2_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -40,10 +38,6 @@ find_path(GLIB2_CONFIG_INCLUDES
     $ENV{GLIB2DIR}/lib
     ${PC_GLIB2_INCLUDEDIR}
     ${PC_GLIB2_LIBDIR}
-    /usr/include
-    /usr/local/include
-    /usr/lib
-    /usr/local/lib
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -56,8 +50,6 @@ find_library(GLIB2_LIBRARIES
     HINTS
     $ENV{GLIB2DIR}/lib
     ${PC_GLIB2_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 

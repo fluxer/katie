@@ -25,8 +25,6 @@ find_path(GCONF2_INCLUDES
     HINTS
     $ENV{GCONF2DIR}/include
     ${PC_GCONF2_INCLUDEDIR}
-    /usr/include
-    /usr/local/include
     ${INCLUDE_INSTALL_DIR}
 )
 
@@ -35,8 +33,6 @@ find_library(GCONF2_LIBRARIES
     HINTS
     $ENV{GCONF2DIR}/lib
     ${PC_GCONF2_LIBDIR}
-    /usr/lib
-    /usr/local/lib
     ${LIB_INSTALL_DIR}
 )
 
