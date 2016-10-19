@@ -170,8 +170,7 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
             FD_ZERO(&sn_vec[2].select_fds);
         }
 
-        int wakeUpFd = initThreadWakeUp();
-        highest = qMax(highest, wakeUpFd);
+        highest = qMax(highest, initThreadWakeUp());
 
         nsel = q->select(highest + 1,
                          &sn_vec[0].select_fds,
@@ -230,7 +229,7 @@ int QEventDispatcherUNIXPrivate::doSelect(QEventLoop::ProcessEventsFlags flags, 
         }
     }
 
-    int nevents = processThreadWakeUp(nsel);
+    const int nevents = processThreadWakeUp(nsel);
 
     // activate socket notifiers
     if (! (flags & QEventLoop::ExcludeSocketNotifiers) && nsel > 0 && sn_highest >= 0) {
@@ -259,15 +258,10 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
     if (nsel > 0 && FD_ISSET(thread_pipe[0], &sn_vec[0].select_fds)) {
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
-#if defined(Q_OS_VXWORKS)
-        char c[16];
-        ::read(thread_pipe[0], c, sizeof(c));
-        ::ioctl(thread_pipe[0], FIOFLUSH, 0);
-#else
         char c[16];
         while (::read(thread_pipe[0], c, sizeof(c)) > 0)
             ;
-#endif
+
         if (!wakeUps.testAndSetRelease(1, 0)) {
             // hopefully, this is dead code
             qWarning("QEventDispatcherUNIX: internal error, wakeUps.testAndSetRelease(1, 0) failed!");
@@ -284,7 +278,7 @@ int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
 
 QTimerInfoList::QTimerInfoList()
 {
-#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) && !defined(Q_OS_MAC) && !defined(Q_OS_NACL)
+#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) && !defined(Q_OS_NACL)
     if (!QElapsedTimer::isMonotonic()) {
         // not using monotonic timers, initialize the timeChanged() machinery
         previousTime = qt_gettime();
@@ -311,7 +305,7 @@ timeval QTimerInfoList::updateCurrentTime()
     return (currentTime = qt_gettime());
 }
 
-#if ((_POSIX_MONOTONIC_CLOCK-0 <= 0) && !defined(Q_OS_MAC) && !defined(Q_OS_INTEGRITY)) || defined(QT_BOOTSTRAPPED)
+#if (_POSIX_MONOTONIC_CLOCK-0 <= 0) || defined(QT_BOOTSTRAPPED)
 
 timeval qAbsTimeval(const timeval &t)
 {
@@ -766,7 +760,7 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
         if(sn->obj == notifier && sn->fd == sockfd)
             break;
     }
-    if (i == list.size()) // not found
+    if (!sn) // not found
         return;
 
     FD_CLR(sockfd, fds);                        // clear fd bit
@@ -806,13 +800,12 @@ void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
     Q_D(QEventDispatcherUNIX);
     QSockNotType::List &list = d->sn_vec[type].list;
     QSockNot *sn = 0;
-    int i;
-    for (i = 0; i < list.size(); ++i) {
+    for (int i = 0; i < list.size(); ++i) {
         sn = list[i];
         if(sn->obj == notifier && sn->fd == sockfd)
             break;
     }
-    if (i == list.size()) // not found
+    if (!sn) // not found
         return;
 
     // We choose a random activation order to be more fair under high load.
@@ -860,6 +853,7 @@ int QEventDispatcherUNIX::activateSocketNotifiers()
     return n_act;
 }
 
+// return true if we handled events, false otherwise
 bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
 {
     Q_D(QEventDispatcherUNIX);
@@ -869,7 +863,6 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
     emit awake();
     QCoreApplicationPrivate::sendPostedEvents(0, 0, d->threadData);
 
-    int nevents = 0;
     const bool canWait = (d->threadData->canWaitLocked()
                           && !d->interrupt
                           && (flags & QEventLoop::WaitForMoreEvents));
@@ -895,15 +888,16 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
             tm->tv_usec = 0l;
         }
 
-        nevents = d->doSelect(flags, tm);
+        int nevents = d->doSelect(flags, tm);
 
         // activate timers
         if (! (flags & QEventLoop::X11ExcludeTimers)) {
             nevents += activateTimers();
         }
+        return (nevents > 0);
     }
-    // return true if we handled events, false otherwise
-    return (nevents > 0);
+
+    return false;
 }
 
 bool QEventDispatcherUNIX::hasPendingEvents()
