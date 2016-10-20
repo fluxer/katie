@@ -2425,7 +2425,6 @@ void QStyle::setProxy(QStyle *style)
     d->proxyStyle = style;
 }
 
-
 #include "moc_qstyle.h"
 #include "qrc_qstyle.cpp"
 

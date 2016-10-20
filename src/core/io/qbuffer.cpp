@@ -359,7 +359,7 @@ qint64 QBuffer::size() const
 /*!
     \reimp
 */
-bool QBuffer::seek(qint64 pos)
+bool QBuffer::seek(const qint64 pos)
 {
     Q_D(QBuffer);
     if (pos > d->buf->size() && isWritable()) {
@@ -411,9 +411,9 @@ qint64 QBuffer::readData(char *data, qint64 len)
 qint64 QBuffer::writeData(const char *data, qint64 len)
 {
     Q_D(QBuffer);
-    int extraBytes = d->ioIndex + len - d->buf->size();
+    const int extraBytes = d->ioIndex + len - d->buf->size();
     if (extraBytes > 0) { // overflow
-        int newSize = d->buf->size() + extraBytes;
+        const int newSize = d->buf->size() + extraBytes;
         d->buf->resize(newSize);
         if (d->buf->size() != newSize) { // could not resize
             qWarning("QBuffer::writeData: Memory allocation error");
@@ -421,7 +421,7 @@ qint64 QBuffer::writeData(const char *data, qint64 len)
         }
     }
 
-    memcpy(d->buf->data() + d->ioIndex, (uchar *)data, int(len));
+    memcpy(d->buf->data() + d->ioIndex, data, int(len));
     d->ioIndex += int(len);
 
 #ifndef QT_NO_QOBJECT
@@ -461,4 +461,3 @@ QT_END_NAMESPACE
 #ifndef QT_NO_QOBJECT
 # include "moc_qbuffer.h"
 #endif
-

@@ -64,13 +64,13 @@ public:
     inline bool isActive() const { return id >= 0; }
     int timerId() const { return id; }
 
-    void setInterval(int msec);
+    void setInterval(const int msec);
     int interval() const { return inter; }
 
     inline void setSingleShot(bool singleShot);
     inline bool isSingleShot() const { return single; }
 
-    static void singleShot(int msec, QObject *receiver, const char *member);
+    static void singleShot(const int msec, QObject *receiver, const char *member);
 
 public Q_SLOTS:
     void start(int msec);

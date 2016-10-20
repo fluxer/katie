@@ -40,9 +40,7 @@
 ****************************************************************************/
 
 #include "qsocketnotifier.h"
-
 #include "qplatformdefs.h"
-
 #include "qabstracteventdispatcher.h"
 #include "qcoreapplication.h"
 

@@ -68,19 +68,7 @@
 #include "qcoreapplication.h"
 #endif
 
-#ifdef Q_OS_VXWORKS
-#  include <ioLib.h>
-#endif
-
 #include <stdlib.h>
-
-#ifndef CSIDL_COMMON_APPDATA
-#define CSIDL_COMMON_APPDATA	0x0023  // All Users\Application Data
-#endif
-
-#ifndef CSIDL_APPDATA
-#define CSIDL_APPDATA		0x001a	// <username>\Application Data
-#endif
 
 #ifdef Q_AUTOTEST_EXPORT
 #  define Q_AUTOTEST_EXPORT_HELPER Q_AUTOTEST_EXPORT

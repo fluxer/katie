@@ -72,13 +72,14 @@ public:
     void setBuffer(QByteArray *a);
 
     void setData(const QByteArray &data);
-    inline void setData(const char *data, int len);
+    inline void setData(const char *data, const int len)
+        { setData(QByteArray(data, len)); }
     const QByteArray &data() const;
 
     bool open(OpenMode openMode);
 
     qint64 size() const;
-    bool seek(qint64 off);
+    bool seek(const qint64 off);
     bool canReadLine() const;
 
 protected:
@@ -95,9 +96,6 @@ private:
 
     Q_PRIVATE_SLOT(d_func(), void _q_emitSignals())
 };
-
-inline void QBuffer::setData(const char *adata, int alen)
-{ setData(QByteArray(adata, alen)); }
 
 QT_END_NAMESPACE
 

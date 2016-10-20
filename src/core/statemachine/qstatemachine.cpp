@@ -1012,14 +1012,14 @@ QAbstractState *QStateMachinePrivate::findErrorState(QAbstractState *context)
         if (errorState == 0)
             errorState = findErrorState(context->parentState());
     }
-    
-    return errorState;   
+
+    return errorState;
 }
 
 void QStateMachinePrivate::setError(QStateMachine::Error errorCode, QAbstractState *currentContext)
 {
     Q_Q(QStateMachine);
-    
+
     error = errorCode;
     switch (errorCode) {
     case QStateMachine::NoInitialStateError:        
@@ -1053,11 +1053,11 @@ void QStateMachinePrivate::setError(QStateMachine::Error errorCode, QAbstractSta
 
     // Avoid infinite loop if the error state itself has an error
     if (currentContext == currentErrorState)
-        currentErrorState = 0;    
+        currentErrorState = 0;
 
     Q_ASSERT(currentErrorState != rootState());
 
-    if (currentErrorState != 0) {    
+    if (currentErrorState != 0) {
         QState *lca = findLCA(QList<QAbstractState*>() << currentErrorState << currentContext);
         addStatesToEnter(currentErrorState, lca, pendingErrorStates, pendingErrorStatesForDefaultEntry);
     } else {
@@ -1384,7 +1384,7 @@ void QStateMachinePrivate::cancelAllDelayedEvents()
     QMutexLocker locker(&delayedEventsMutex);
     QHash<int, QEvent*>::const_iterator it;
     for (it = delayedEvents.constBegin(); it != delayedEvents.constEnd(); ++it) {
-        int id = it.key();
+        const int id = it.key();
         QEvent *e = it.value();
         q->killTimer(id);
         delete e;
@@ -1440,7 +1440,7 @@ void QStateMachinePrivate::goToState(QAbstractState *targetState)
         }
     } else {
         sourceState = startState();
-    }    
+    }
 
     Q_ASSERT(sourceState != 0);
     // Reuse previous GoToStateTransition in case of several calls to
@@ -1520,7 +1520,7 @@ void QStateMachinePrivate::registerSignalTransition(QSignalTransition *transitio
     if (connectedSignalIndexes.at(signalIndex) == 0) {
         if (!signalEventGenerator)
             signalEventGenerator = new QSignalEventGenerator(q);
-        bool ok = QMetaObject::connect(sender, signalIndex, signalEventGenerator,
+        const bool ok = QMetaObject::connect(sender, signalIndex, signalEventGenerator,
                                        signalEventGenerator->metaObject()->methodOffset());
         if (!ok) {
 #ifdef QSTATEMACHINE_DEBUG

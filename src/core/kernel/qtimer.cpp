@@ -259,14 +259,14 @@ class QSingleShotTimer : public QObject
     int timerId;
 public:
     ~QSingleShotTimer();
-    QSingleShotTimer(int msec, QObject *r, const char * m);
+    QSingleShotTimer(const int msec, QObject *r, const char * m);
 Q_SIGNALS:
     void timeout();
 protected:
     void timerEvent(QTimerEvent *);
 };
 
-QSingleShotTimer::QSingleShotTimer(int msec, QObject *receiver, const char *member)
+QSingleShotTimer::QSingleShotTimer(const int msec, QObject *receiver, const char *member)
     : QObject(QAbstractEventDispatcher::instance())
 {
     connect(this, SIGNAL(timeout()), receiver, member);
@@ -319,7 +319,7 @@ QT_END_INCLUDE_NAMESPACE
     \sa start()
 */
 
-void QTimer::singleShot(int msec, QObject *receiver, const char *member)
+void QTimer::singleShot(const int msec, QObject *receiver, const char *member)
 {
     if (receiver && member) {
         if (msec == 0) {
@@ -359,7 +359,7 @@ void QTimer::singleShot(int msec, QObject *receiver, const char *member)
 
     \sa singleShot
 */
-void QTimer::setInterval(int msec)
+void QTimer::setInterval(const int msec)
 {
     inter = msec;
     if (id != INV_TIMER) {                        // create new timer

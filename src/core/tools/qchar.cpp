@@ -1502,7 +1502,7 @@ struct UCS2Pair {
 
 inline bool operator<(const ushort u1, const UCS2Pair &ligature)
 { return u1 < ligature.u1; }
-inline bool operator<(const UCS2Pair &ligature, ushort u1)
+inline bool operator<(const UCS2Pair &ligature, const ushort u1)
 { return ligature.u1 < u1; }
 
 static ushort ligatureHelper(const ushort u1, const ushort u2)
@@ -1565,7 +1565,7 @@ static void composeHelper(QString *str, const QChar::UnicodeVersion version, con
             ++pos;
             continue;
         }
-        int combining = p->combiningClass;
+        const int combining = p->combiningClass;
         if ((starter == pos - 1 || combining > lastCombining) && starter >= from) {
             // allowed to form ligature with S
             QChar ligature = ligatureHelper(s.at(starter).unicode(), uc);

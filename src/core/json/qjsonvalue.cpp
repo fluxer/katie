@@ -1,5 +1,6 @@
 /***********************************************************************
 *
+* Copyright (c) 2016 Ivailo Monev
 * Copyright (c) 2012-2015 Barbara Geller
 * Copyright (c) 2012-2015 Ansel Sermersheim
 * Copyright (c) 2012-2014 Digia Plc and/or its subsidiary(-ies).
@@ -97,14 +98,7 @@ QJsonValue::QJsonValue(QJsonPrivate::Data *data, QJsonPrivate::Base *base, const
          dbl = v.toDouble(base);
          break;
       case String: {
-         /* Qt 5 Beta 1
-              QString s = v.toString(base);
-              stringData = s.data_ptr();
-              stringData->ref.ref();
-         */
-         // Temporary for QStringData
-         QString *s = new QString(v.toString(base));
-         stringData = s;
+         stringData = new QString(v.toString(base));
          break;
       }
       case Array:
@@ -164,11 +158,6 @@ QJsonValue::QJsonValue(qint64 n)
 QJsonValue::QJsonValue(const QString &s)
    : d(0), t(String)
 {
-   /* Qt 5 Beta 1
-   stringData = *(QStringData **)(&s);
-   stringData->ref.ref();
-   */
-   // Temporary for QStringData
    stringData = new QString(s);
 }
 
@@ -178,13 +167,6 @@ QJsonValue::QJsonValue(const QString &s)
 QJsonValue::QJsonValue(QLatin1String s)
    : d(0), t(String)
 {
-   // ### FIXME: Avoid creating the temp QString below
-   /* Qt 5 Beta 1
-   QString str(s);
-   stringData = *(QStringData **)(&str);
-   stringData->ref.ref();
-   */
-   // Temporary for QStringData
    stringData = new QString(s);
 }
 
@@ -218,11 +200,6 @@ QJsonValue::QJsonValue(const QJsonObject &o)
  */
 QJsonValue::~QJsonValue()
 {
-   /* Qt 5 Beta 1
-   if (t == String && stringData && !stringData->ref.deref())
-       free(stringData);
-   */
-   // Temporary for QStringData
    if (t == String) {
       delete stringData;
    }
@@ -245,12 +222,7 @@ QJsonValue::QJsonValue(const QJsonValue &other)
    }
 
    if (t == String && stringData) {
-      /* Qt 5 Beta 1
-      stringData->ref.ref();
-      */
-      // Temporary for QStringData
-      QString *tmp = new QString(*stringData);
-      stringData = tmp;
+      stringData = new QString(*stringData);
    }
 }
 
@@ -259,11 +231,6 @@ QJsonValue::QJsonValue(const QJsonValue &other)
  */
 QJsonValue &QJsonValue::operator =(const QJsonValue &other)
 {
-   /* Qt 5 Beta 1
-   if (t == String && stringData && !stringData->ref.deref())
-       free(stringData);
-   */
-   // Temporary for QStringData
    if (t == String) {
       delete stringData;
    }
@@ -284,12 +251,7 @@ QJsonValue &QJsonValue::operator =(const QJsonValue &other)
    }
 
    if (t == String && stringData) {
-      /* Qt 5 Beta 1
-      stringData->ref.ref();
-      */
-      // Temporary for QStringData
-      QString *tmp = new QString(*stringData);
-      stringData = tmp;
+      stringData = new QString(*stringData);
    }
 
    return *this;
@@ -516,12 +478,6 @@ QString QJsonValue::toString(const QString &defaultValue) const
    if (t != String) {
       return defaultValue;
    }
-   /* Qt 5 Beta 1
-   stringData->ref.ref(); // the constructor below doesn't add a ref.
-   QStringDataPtr holder = { stringData };
-   return QString(holder);
-   */
-   // Temporary for QStringData
    return *stringData;
 }
 
