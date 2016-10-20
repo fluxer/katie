@@ -18,6 +18,7 @@ incmap = {
         'QWeakPointer': 'qsharedpointer.h',
         'QArgument': 'qobjectdefs.h',
         'QByteRef': 'qbytearray.h',
+        'QEvent': 'qcoreevent.h',
         'QChildEvent': 'qcoreevent.h',
         'QMultiMap': 'qmap.h',
         'QMetaEnum': 'qmetaobject.h',
