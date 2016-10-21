@@ -371,6 +371,7 @@ set(GUI_PUBLIC_HEADERS
     QDragEnterEvent
     QPaintEvent
     QHelpEvent
+    QDropEvent
     QContextMenuEvent
     QGraphicsSceneEvent
     QGraphicsSceneHelpEvent
