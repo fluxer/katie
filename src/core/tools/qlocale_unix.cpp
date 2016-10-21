@@ -106,7 +106,7 @@ QLocale QSystemLocale::fallbackLocale() const
         lang = qgetenv("LC_MESSAGES");
     if (lang.isEmpty())
         lang = qgetenv("LANG");
-    return QLocale(lang);
+    return QLocale(QString::fromLatin1(lang));
 }
 
 QVariant QSystemLocale::query(QueryType type, QVariant in) const
