@@ -51,7 +51,6 @@ QT_BEGIN_NAMESPACE
 class QCryptographicHashPrivate
 {
 public:
-    QCryptographicHash::Algorithm method;
     MD4_CTX md4Context;
     MD5_CTX md5Context;
     SHA_CTX sha1Context;
@@ -59,6 +58,7 @@ public:
     SHA256_CTX sha256Context;
     SHA512_CTX sha384Context;
     SHA512_CTX sha512Context;
+    QCryptographicHash::Algorithm method;
     QByteArray result;
 };
 
@@ -93,7 +93,7 @@ public:
 /*!
   Constructs an object that can be used to create a cryptographic hash from data using \a method.
 */
-QCryptographicHash::QCryptographicHash(Algorithm method)
+QCryptographicHash::QCryptographicHash(QCryptographicHash::Algorithm method)
     : d(new QCryptographicHashPrivate)
 {
     d->method = method;
@@ -268,7 +268,7 @@ QByteArray QCryptographicHash::result() const
 /*!
   Returns the hash of \a data using \a method.
 */
-QByteArray QCryptographicHash::hash(const QByteArray &data, Algorithm method)
+QByteArray QCryptographicHash::hash(const QByteArray &data, QCryptographicHash::Algorithm method)
 {
     QCryptographicHash hash(method);
     hash.addData(data);

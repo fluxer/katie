@@ -164,11 +164,11 @@ public:
     QByteRef operator[](uint i);
 
     int indexOf(char c, int from = 0) const;
-    int indexOf(const char *c, int from = 0) const;
-    int indexOf(const QByteArray &a, int from = 0) const;
-    int lastIndexOf(char c, int from = -1) const;
-    int lastIndexOf(const char *c, int from = -1) const;
-    int lastIndexOf(const QByteArray &a, int from = -1) const;
+    int indexOf(const char *c, const int from = 0) const;
+    int indexOf(const QByteArray &a, const int from = 0) const;
+    int lastIndexOf(char c, const int from = -1) const;
+    int lastIndexOf(const char *c, const int from = -1) const;
+    int lastIndexOf(const QByteArray &a, const int from = -1) const;
 
     bool contains(char c) const;
     bool contains(const char *a) const;
@@ -231,18 +231,18 @@ public:
 
     QList<QByteArray> split(char sep) const;
 
-    QByteArray repeated(int times) const;
+    QByteArray repeated(const int times) const;
 
 #ifndef QT_NO_CAST_TO_ASCII
     QT_ASCII_CAST_WARN QByteArray &append(const QString &s);
-    QT_ASCII_CAST_WARN QByteArray &insert(int i, const QString &s);
+    QT_ASCII_CAST_WARN QByteArray &insert(const int i, const QString &s);
     QT_ASCII_CAST_WARN QByteArray &replace(const QString &before, const char *after);
     QT_ASCII_CAST_WARN QByteArray &replace(char c, const QString &after);
     QT_ASCII_CAST_WARN QByteArray &replace(const QString &before, const QByteArray &after);
 
     QT_ASCII_CAST_WARN QByteArray &operator+=(const QString &s);
-    QT_ASCII_CAST_WARN int indexOf(const QString &s, int from = 0) const;
-    QT_ASCII_CAST_WARN int lastIndexOf(const QString &s, int from = -1) const;
+    QT_ASCII_CAST_WARN int indexOf(const QString &s, const int from = 0) const;
+    QT_ASCII_CAST_WARN int lastIndexOf(const QString &s, int const from = -1) const;
 #endif
 #ifndef QT_NO_CAST_FROM_ASCII
     inline QT_ASCII_CAST_WARN bool operator==(const QString &s2) const;

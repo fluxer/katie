@@ -2183,7 +2183,7 @@ QList<QByteArray> QByteArray::split(char sep) const
         ba.repeated(4);             // returns "abababab"
     \endcode
 */
-QByteArray QByteArray::repeated(int times) const
+QByteArray QByteArray::repeated(const int times) const
 {
     if (d->size == 0)
         return *this;
@@ -2229,7 +2229,7 @@ QByteArray QByteArray::repeated(int times) const
     \sa lastIndexOf(), contains(), count()
 */
 
-int QByteArray::indexOf(const QByteArray &ba, int from) const
+int QByteArray::indexOf(const QByteArray &ba, const int from) const
 {
     const int ol = ba.d->size;
     if (ol == 0)
@@ -2271,7 +2271,7 @@ int QByteArray::indexOf(const QByteArray &ba, int from) const
     \a str in the byte array, searching forward from index position \a
     from. Returns -1 if \a str could not be found.
 */
-int QByteArray::indexOf(const char *c, int from) const
+int QByteArray::indexOf(const char *c, const int from) const
 {
     const int ol = qstrlen(c);
     if (ol == 1)
@@ -2575,7 +2575,7 @@ bool QByteArray::endsWith(const char *str) const
 {
     if (!str || !*str)
         return true;
-    int len = qstrlen(str);
+    const int len = qstrlen(str);
     if (d->size < len)
         return false;
     return qstrncmp(d->data + d->size - len, str, len) == 0;
@@ -2681,11 +2681,9 @@ QByteArray QByteArray::toLower() const
 {
     QByteArray s(*this);
     uchar *p = reinterpret_cast<uchar *>(s.data());
-    if (p) {
-        while (*p) {
-            *p = QChar::toLower((ushort)*p);
-            p++;
-        }
+    while (*p) {
+        *p = QChar::toLower((ushort)*p);
+        p++;
     }
     return s;
 }
@@ -2704,11 +2702,9 @@ QByteArray QByteArray::toUpper() const
 {
     QByteArray s(*this);
     uchar *p = reinterpret_cast<uchar *>(s.data());
-    if (p) {
-        while (*p) {
-            *p = QChar::toUpper((ushort)*p);
-            p++;
-        }
+    while (*p) {
+        *p = QChar::toUpper((ushort)*p);
+        p++;
     }
     return s;
 }

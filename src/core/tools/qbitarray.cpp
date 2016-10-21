@@ -154,37 +154,10 @@ QBitArray::QBitArray(int size, bool value)
 int QBitArray::count(bool on) const
 {
     int numBits = 0;
-    int len = size();
-#if 0
+    const int len = size();
     for (int i = 0; i < len; ++i)
         numBits += testBit(i);
-#else
-    // See http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
-    const quint8 *bits = reinterpret_cast<const quint8 *>(d.data()) + 1;
-    while (len >= 32) {
-        quint32 v = quint32(bits[0]) | (quint32(bits[1]) << 8) | (quint32(bits[2]) << 16) | (quint32(bits[3]) << 24);
-        quint32 c = ((v & 0xfff) * Q_UINT64_C(0x1001001001001) & Q_UINT64_C(0x84210842108421)) % 0x1f;
-        c += (((v & 0xfff000) >> 12) * Q_UINT64_C(0x1001001001001) & Q_UINT64_C(0x84210842108421)) % 0x1f;
-        c += ((v >> 24) * Q_UINT64_C(0x1001001001001) & Q_UINT64_C(0x84210842108421)) % 0x1f;
-        len -= 32;
-        bits += 4;
-        numBits += int(c);
-    }
-    while (len >= 24) {
-        quint32 v = quint32(bits[0]) | (quint32(bits[1]) << 8) | (quint32(bits[2]) << 16);
-        quint32 c =  ((v & 0xfff) * Q_UINT64_C(0x1001001001001) & Q_UINT64_C(0x84210842108421)) % 0x1f;
-        c += (((v & 0xfff000) >> 12) * Q_UINT64_C(0x1001001001001) & Q_UINT64_C(0x84210842108421)) % 0x1f;    
-        len -= 24;
-        bits += 3;
-        numBits += int(c);
-    }
-    while (len >= 0) {
-        if (bits[len / 8] & (1 << ((len - 1) & 7)))
-            ++numBits;
-        --len;
-    }
-#endif
-    return on ? numBits : size() - numBits;
+    return on ? numBits : len - numBits;
 }
 
 /*!
@@ -694,8 +667,8 @@ QDataStream &operator>>(QDataStream &in, QBitArray &ba)
     quint32 len;
     in >> len;
     if (len == 0) {
-	ba.clear();
-	return in;
+        ba.clear();
+        return in;
     }
 
     const quint32 Step = 8 * 1024 * 1024;

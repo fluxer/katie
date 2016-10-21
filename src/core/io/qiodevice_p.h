@@ -86,7 +86,7 @@ public:
     bool isEmpty() const {
         return len == 0;
     }
-    void skip(int n) {
+    void skip(const int n) {
         if (n >= len) {
             clear();
         } else {
@@ -97,30 +97,30 @@ public:
     int getChar() {
         if (len == 0)
             return -1;
-        int ch = uchar(*first);
+        const int ch = uchar(*first);
         len--;
         first++;
         return ch;
     }
-    int read(char* target, int size) {
-        int r = qMin(size, len);
+    int read(char* target, const int size) {
+        const int r = qMin(size, len);
         memcpy(target, first, r);
         len -= r;
         first += r;
         return r;
     }
-    int peek(char* target, int size) {
-        int r = qMin(size, len);
+    int peek(char* target, const int size) {
+        const int r = qMin(size, len);
         memcpy(target, first, r);
         return r;
     }
-    char* reserve(int size) {
+    char* reserve(const int size) {
         makeSpace(size + len, freeSpaceAtEnd);
         char* writePtr = first + len;
         len += size;
         return writePtr;
     }
-    void chop(int size) {
+    void chop(const int size) {
         if (size >= len) {
             clear();
         } else {
@@ -129,7 +129,7 @@ public:
     }
     QByteArray readAll() {
         char* f = first;
-        int l = len;
+        const int l = len;
         clear();
         return QByteArray(f, l);
     }
@@ -171,7 +171,7 @@ private:
         size_t newCapacity = qMax(capacity, size_t(QIODEVICE_BUFFERSIZE));
         while (newCapacity < required)
             newCapacity *= 2;
-        int moveOffset = (where == freeSpaceAtEnd) ? 0 : newCapacity - len;
+        const int moveOffset = (where == freeSpaceAtEnd) ? 0 : newCapacity - len;
         if (newCapacity > capacity) {
             // allocate more space
             char* newBuf = new char[newCapacity];
@@ -186,7 +186,6 @@ private:
         first = buf + moveOffset;
     }
 
-private:
     // length of the unread data
     int len;
     // start of the unread data
@@ -197,7 +196,7 @@ private:
     size_t capacity;
 };
 
-class Q_CORE_EXPORT QIODevicePrivate
+class QIODevicePrivate
 #ifndef QT_NO_QOBJECT
     : public QObjectPrivate
 #endif

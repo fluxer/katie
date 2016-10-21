@@ -78,7 +78,7 @@ void debugBinaryString(const QByteArray &input)
     printf("\n\n");
 }
 
-void debugBinaryString(const char *data, qint64 maxlen)
+inline void debugBinaryString(const char *data, qint64 maxlen)
 {
     debugBinaryString(QByteArray(data, maxlen));
 }
