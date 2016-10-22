@@ -181,7 +181,6 @@ QListView::QListView(QWidget *parent)
 {
     setViewMode(ListMode);
     setSelectionMode(SingleSelection);
-    setAttribute(Qt::WA_MacShowFocusRect);
     Q_D(QListView);               // We rely on a qobject_cast for PM_DefaultFrameWidth to change
     d->updateStyledFrameWidths(); // hence we have to force an update now that the object has been constructed
 }
@@ -194,7 +193,6 @@ QListView::QListView(QListViewPrivate &dd, QWidget *parent)
 {
     setViewMode(ListMode);
     setSelectionMode(SingleSelection);
-    setAttribute(Qt::WA_MacShowFocusRect);
     Q_D(QListView);               // We rely on a qobject_cast for PM_DefaultFrameWidth to change
     d->updateStyledFrameWidths(); // hence we have to force an update now that the object has been constructed
 }

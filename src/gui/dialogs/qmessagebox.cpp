@@ -626,7 +626,7 @@ void QMessageBoxPrivate::_q_buttonClicked(QAbstractButton *button)
 
 */
 QMessageBox::QMessageBox(QWidget *parent)
-    : QDialog(*new QMessageBoxPrivate, parent, Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint)
+    : QDialog(*new QMessageBoxPrivate, parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint)
 {
     Q_D(QMessageBox);
     d->init();
@@ -651,7 +651,7 @@ QMessageBox::QMessageBox(QWidget *parent)
 QMessageBox::QMessageBox(Icon icon, const QString &title, const QString &text,
                          StandardButtons buttons, QWidget *parent,
                          Qt::WindowFlags f)
-: QDialog(*new QMessageBoxPrivate, parent, f | Qt::MSWindowsFixedSizeDialogHint | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint)
+: QDialog(*new QMessageBoxPrivate, parent, f | Qt::WindowTitleHint | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint)
 {
     Q_D(QMessageBox);
     d->init(title, text);

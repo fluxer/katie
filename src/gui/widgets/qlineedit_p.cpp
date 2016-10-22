@@ -206,8 +206,6 @@ void QLineEditPrivate::init(const QString& txt)
     q->setAttribute(Qt::WA_KeyCompression);
     q->setMouseTracking(true);
     q->setAcceptDrops(true);
-
-    q->setAttribute(Qt::WA_MacShowFocusRect);
 }
 
 QRect QLineEditPrivate::adjustedContentsRect() const

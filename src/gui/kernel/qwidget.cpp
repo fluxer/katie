@@ -1183,14 +1183,6 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     data.in_show = 0;
     data.in_destructor = false;
 
-    // Widgets with Qt::MSWindowsOwnDC (typically QGLWidget) must have a window handle.
-    if (f & Qt::MSWindowsOwnDC)
-        q->setAttribute(Qt::WA_NativeWindow);
-
-//#ifdef Q_WS_MAC
-//    q->setAttribute(Qt::WA_NativeWindow);
-//#endif
-
     q->setAttribute(Qt::WA_QuitOnClose); // might be cleared in adjustQuitOnCloseAttribute()
     adjustQuitOnCloseAttribute();
 
@@ -9375,14 +9367,8 @@ void QWidget::setParent(QWidget *parent, Qt::WindowFlags f)
     d->resolveLocale();
 
     // Note: GL widgets under WGL or EGL will always need a ParentChange
-    // event to handle recreation/rebinding of the GL context, hence the
-    // (f & Qt::MSWindowsOwnDC) clause (which is set on QGLWidgets on all
-    // platforms).
-    if (newParent
-#if defined(QT_OPENGL_ES)
-        || (f & Qt::MSWindowsOwnDC)
-#endif
-        ) {
+    // event to handle recreation/rebinding of the GL context.
+    if (newParent) {
         // propagate enabled updates enabled state to non-windows
         if (!isWindow()) {
             if (!testAttribute(Qt::WA_ForceDisabled))
@@ -9760,44 +9746,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         break;
     case Qt::WA_NoChildEventsFromChildren:
         d->receiveChildEvents = !on;
-        break;
-    case Qt::WA_MacBrushedMetal:
-#ifdef Q_WS_MAC
-        d->setStyle_helper(style(), false, true);  // Make sure things get unpolished/polished correctly.
-        // fall through since changing the metal attribute affects the opaque size grip.
-    case Qt::WA_MacOpaqueSizeGrip:
-        d->macUpdateOpaqueSizeGrip();
-        break;
-    case Qt::WA_MacShowFocusRect:
-        if (hasFocus()) {
-            clearFocus();
-            setFocus();
-        }
-        break;
-    case Qt::WA_Hover:
-        qt_mac_update_mouseTracking(this);
-        break;
-#endif
-    case Qt::WA_MacAlwaysShowToolWindow:
-#ifdef Q_WS_MAC
-        d->macUpdateHideOnSuspend();
-#endif
-        break;
-    case Qt::WA_MacNormalSize:
-    case Qt::WA_MacSmallSize:
-    case Qt::WA_MacMiniSize:
-#ifdef Q_WS_MAC
-        {
-            // We can only have one of these set at a time
-            const Qt::WidgetAttribute MacSizes[] = { Qt::WA_MacNormalSize, Qt::WA_MacSmallSize,
-                                                     Qt::WA_MacMiniSize };
-            for (int i = 0; i < 3; ++i) {
-                if (MacSizes[i] != attribute)
-                    setAttribute_internal(MacSizes[i], false, data, d);
-            }
-            d->macUpdateSizeAttribute();
-        }
-#endif
         break;
     case Qt::WA_ShowModal:
         if (!on) {

@@ -773,7 +773,6 @@ void QColumnView::initializeColumn(QAbstractItemView *column) const
     column->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     column->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
     column->setMinimumWidth(100);
-    column->setAttribute(Qt::WA_MacShowFocusRect, false);
 
 #ifndef QT_NO_DRAGANDDROP
     column->setDragDropMode(dragDropMode());

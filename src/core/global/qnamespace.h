@@ -247,29 +247,24 @@ public:
         SubWindow =  0x00000012,
 
         WindowType_Mask = 0x000000ff,
-        MSWindowsFixedSizeDialogHint = 0x00000100,
-        MSWindowsOwnDC = 0x00000200,
-        X11BypassWindowManagerHint = 0x00000400,
-        FramelessWindowHint = 0x00000800,
-        WindowTitleHint = 0x00001000,
-        WindowSystemMenuHint = 0x00002000,
-        WindowMinimizeButtonHint = 0x00004000,
-        WindowMaximizeButtonHint = 0x00008000,
+        X11BypassWindowManagerHint = 0x00000100,
+        FramelessWindowHint = 0x00000200,
+        WindowTitleHint = 0x00000400,
+        WindowSystemMenuHint = 0x00000800,
+        WindowMinimizeButtonHint = 0x00001000,
+        WindowMaximizeButtonHint = 0x00002000,
         WindowMinMaxButtonsHint = WindowMinimizeButtonHint | WindowMaximizeButtonHint,
-        WindowContextHelpButtonHint = 0x00010000,
-        WindowShadeButtonHint = 0x00020000,
-        WindowStaysOnTopHint = 0x00040000,
-        CustomizeWindowHint = 0x00080000,
-        WindowStaysOnBottomHint = 0x00100000,
-        WindowCloseButtonHint = 0x00200000,
-        MacWindowToolBarButtonHint = 0x04000000,
-        BypassGraphicsProxyWidget = 0x08000000,
-        WindowOkButtonHint = 0x10000000,
-        WindowCancelButtonHint = 0x20000000,
-        WindowSoftkeysVisibleHint = 0x40000000,
-        WindowSoftkeysRespondHint = 0x80000000
-
-
+        WindowContextHelpButtonHint = 0x00004000,
+        WindowShadeButtonHint = 0x00008000,
+        WindowStaysOnTopHint = 0x00010000,
+        CustomizeWindowHint = 0x00020000,
+        WindowStaysOnBottomHint = 0x00040000,
+        WindowCloseButtonHint = 0x00080000,
+        BypassGraphicsProxyWidget = 0x00100000,
+        WindowOkButtonHint = 0x01000000,
+        WindowCancelButtonHint = 0x02000000,
+        WindowSoftkeysVisibleHint = 0x04000000,
+        WindowSoftkeysRespondHint = 0x08000000
     };
 
     Q_DECLARE_FLAGS(WindowFlags, WindowType)
@@ -292,135 +287,119 @@ public:
         WA_OpaquePaintEvent = 4,
         WA_NoBackground = WA_OpaquePaintEvent, // ## deprecated
         WA_StaticContents = 5,
-        WA_LaidOut = 7,
-        WA_PaintOnScreen = 8,
-        WA_NoSystemBackground = 9,
-        WA_UpdatesDisabled = 10,
-        WA_Mapped = 11,
-        WA_MacNoClickThrough = 12, // Mac only
-        WA_PaintOutsidePaintEvent = 13,
-        WA_InputMethodEnabled = 14,
-        WA_WState_Visible = 15,
-        WA_WState_Hidden = 16,
+        WA_LaidOut = 6,
+        WA_PaintOnScreen = 7,
+        WA_NoSystemBackground = 8,
+        WA_UpdatesDisabled = 9,
+        WA_Mapped = 10,
+        WA_PaintOutsidePaintEvent = 11,
+        WA_InputMethodEnabled = 12,
+        WA_WState_Visible = 13,
+        WA_WState_Hidden = 14,
 
-        WA_ForceDisabled = 32,
-        WA_KeyCompression = 33,
-        WA_PendingMoveEvent = 34,
-        WA_PendingResizeEvent = 35,
-        WA_SetPalette = 36,
-        WA_SetFont = 37,
-        WA_SetCursor = 38,
-        WA_NoChildEventsFromChildren = 39,
-        WA_WindowModified = 41,
-        WA_Resized = 42,
-        WA_Moved = 43,
-        WA_PendingUpdate = 44,
-        WA_InvalidSize = 45,
-        WA_MacBrushedMetal = 46, // Mac only
-        WA_CustomWhatsThis = 47,
-        WA_LayoutOnEntireRect = 48,
-        WA_OutsideWSRange = 49,
-        WA_GrabbedShortcut = 50,
-        WA_TransparentForMouseEvents = 51,
-        WA_PaintUnclipped = 52,
-        WA_SetWindowIcon = 53,
-        WA_NoMouseReplay = 54,
-        WA_DeleteOnClose = 55,
-        WA_RightToLeft = 56,
-        WA_SetLayoutDirection = 57,
-        WA_NoChildEventsForParent = 58,
-        WA_ForceUpdatesDisabled = 59,
+        WA_ForceDisabled = 15,
+        WA_KeyCompression = 16,
+        WA_PendingMoveEvent = 17,
+        WA_PendingResizeEvent = 18,
+        WA_SetPalette = 19,
+        WA_SetFont = 20,
+        WA_SetCursor = 21,
+        WA_NoChildEventsFromChildren = 22,
+        WA_WindowModified = 23,
+        WA_Resized = 24,
+        WA_Moved = 25,
+        WA_PendingUpdate = 26,
+        WA_InvalidSize = 27,
+        WA_CustomWhatsThis = 28,
+        WA_LayoutOnEntireRect = 29,
+        WA_OutsideWSRange = 30,
+        WA_GrabbedShortcut = 31,
+        WA_TransparentForMouseEvents = 32,
+        WA_PaintUnclipped = 33,
+        WA_SetWindowIcon = 34,
+        WA_NoMouseReplay = 35,
+        WA_DeleteOnClose = 36,
+        WA_RightToLeft = 37,
+        WA_SetLayoutDirection = 38,
+        WA_NoChildEventsForParent = 39,
+        WA_ForceUpdatesDisabled = 40,
 
-        WA_WState_Created = 60,
-        WA_WState_CompressKeys = 61,
-        WA_WState_InPaintEvent = 62,
-        WA_WState_Reparented = 63,
-        WA_WState_ConfigPending = 64,
-        WA_WState_Polished = 66,
-        WA_WState_DND = 67, // ## deprecated
-        WA_WState_OwnSizePolicy = 68,
-        WA_WState_ExplicitShowHide = 69,
+        WA_WState_Created = 41,
+        WA_WState_CompressKeys = 42,
+        WA_WState_InPaintEvent = 43,
+        WA_WState_Reparented = 44,
+        WA_WState_ConfigPending = 45,
+        WA_WState_Polished = 46,
+        WA_WState_DND = 47, // ## deprecated
+        WA_WState_OwnSizePolicy = 48,
+        WA_WState_ExplicitShowHide = 49,
 
-        WA_ShowModal = 70, // ## deprecated
-        WA_MouseNoMask = 71,
-        WA_GroupLeader = 72, // ## deprecated
-        WA_NoMousePropagation = 73, // ## for now, might go away.
-        WA_Hover = 74,
-        WA_InputMethodTransparent = 75, // Don't reset IM when user clicks on this (for virtual keyboards on embedded)
-        WA_QuitOnClose = 76,
+        WA_ShowModal = 50, // ## deprecated
+        WA_MouseNoMask = 51,
+        WA_GroupLeader = 52, // ## deprecated
+        WA_NoMousePropagation = 53, // ## for now, might go away.
+        WA_Hover = 54,
+        WA_InputMethodTransparent = 55, // Don't reset IM when user clicks on this (for virtual keyboards on embedded)
+        WA_QuitOnClose = 56,
 
-        WA_KeyboardFocusChange = 77,
+        WA_KeyboardFocusChange = 57,
 
-        WA_AcceptDrops = 78,
-        WA_DropSiteRegistered = 79, // internal
+        WA_AcceptDrops = 58,
+        WA_DropSiteRegistered = 59, // internal
 
-        WA_WindowPropagation = 80,
+        WA_WindowPropagation = 60,
 
-        WA_NoX11EventCompression = 81,
-        WA_TintedBackground = 82,
-        WA_X11OpenGLOverlay = 83,
-        WA_AlwaysShowToolTips = 84,
-        WA_MacOpaqueSizeGrip = 85,
-        WA_SetStyle = 86,
+        WA_NoX11EventCompression = 61,
+        WA_TintedBackground = 62,
+        WA_X11OpenGLOverlay = 63,
+        WA_AlwaysShowToolTips = 64,
+        WA_SetStyle = 65,
 
-        WA_SetLocale = 87,
-        WA_MacShowFocusRect = 88,
+        WA_SetLocale = 66,
 
-        WA_MacNormalSize = 89,  // Mac only
-        WA_MacSmallSize = 90,   // Mac only
-        WA_MacMiniSize = 91,    // Mac only
+        WA_LayoutUsesWidgetRect = 67,
+        WA_StyledBackground = 68, // internal
+        WA_CanHostQMdiSubWindowTitleBar = 69, // Internal
 
-        WA_LayoutUsesWidgetRect = 92,
-        WA_StyledBackground = 93, // internal
-        WA_MSWindowsUseDirect3D = 94, // Win only
-        WA_CanHostQMdiSubWindowTitleBar = 95, // Internal
+        WA_StyleSheet = 70, // internal
 
-        WA_MacAlwaysShowToolWindow = 96, // Mac only
+        WA_ShowWithoutActivating = 71,
 
-        WA_StyleSheet = 97, // internal
+        WA_X11BypassTransientForHint = 72,
 
-        WA_ShowWithoutActivating = 98,
+        WA_NativeWindow = 73,
+        WA_DontCreateNativeAncestors = 74,
 
-        WA_X11BypassTransientForHint = 99,
-
-        WA_NativeWindow = 100,
-        WA_DontCreateNativeAncestors = 101,
-
-        WA_MacVariableSize = 102,    // Mac only
-
-        WA_DontShowOnScreen = 103,
+        WA_DontShowOnScreen = 75,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 104,
-        WA_X11NetWmWindowTypeDock = 105,
-        WA_X11NetWmWindowTypeToolBar = 106,
-        WA_X11NetWmWindowTypeMenu = 107,
-        WA_X11NetWmWindowTypeUtility = 108,
-        WA_X11NetWmWindowTypeSplash = 109,
-        WA_X11NetWmWindowTypeDialog = 110,
-        WA_X11NetWmWindowTypeDropDownMenu = 111,
-        WA_X11NetWmWindowTypePopupMenu = 112,
-        WA_X11NetWmWindowTypeToolTip = 113,
-        WA_X11NetWmWindowTypeNotification = 114,
-        WA_X11NetWmWindowTypeCombo = 115,
-        WA_X11NetWmWindowTypeDND = 116,
+        WA_X11NetWmWindowTypeDesktop = 76,
+        WA_X11NetWmWindowTypeDock = 77,
+        WA_X11NetWmWindowTypeToolBar = 78,
+        WA_X11NetWmWindowTypeMenu = 79,
+        WA_X11NetWmWindowTypeUtility = 80,
+        WA_X11NetWmWindowTypeSplash = 81,
+        WA_X11NetWmWindowTypeDialog = 82,
+        WA_X11NetWmWindowTypeDropDownMenu = 83,
+        WA_X11NetWmWindowTypePopupMenu = 84,
+        WA_X11NetWmWindowTypeToolTip = 85,
+        WA_X11NetWmWindowTypeNotification = 86,
+        WA_X11NetWmWindowTypeCombo = 87,
+        WA_X11NetWmWindowTypeDND = 88,
 
-        WA_MacFrameworkScaled  = 117,
+        WA_SetWindowModality = 89,
+        WA_WState_WindowOpacitySet = 90, // internal
+        WA_TranslucentBackground = 91,
 
-        WA_SetWindowModality = 118,
-        WA_WState_WindowOpacitySet = 119, // internal
-        WA_TranslucentBackground = 120,
+        WA_AcceptTouchEvents = 92,
+        WA_WState_AcceptedTouchBeginEvent = 93,
+        WA_TouchPadAcceptSingleTouchEvents = 94,
 
-        WA_AcceptTouchEvents = 121,
-        WA_WState_AcceptedTouchBeginEvent = 122,
-        WA_TouchPadAcceptSingleTouchEvents = 123,
+        WA_LockPortraitOrientation = 95,
+        WA_LockLandscapeOrientation = 96,
+        WA_AutoOrientation = 97,
 
-        WA_LockPortraitOrientation = 124,
-        WA_LockLandscapeOrientation = 125,
-        WA_AutoOrientation = 126,
-
-        WA_X11DoNotAcceptFocus = 127,
-        WA_MacNoShadow = 128,
+        WA_X11DoNotAcceptFocus = 98,
 
         // Add new attributes before this line
         WA_AttributeCount
@@ -429,15 +408,12 @@ public:
     enum ApplicationAttribute
     {
         AA_ImmediateWidgetCreation = 0,
-        AA_MSWindowsUseDirect3DByDefault = 1, // Win only
-        AA_DontShowIconsInMenus = 2,
-        AA_NativeWindows = 3,
-        AA_DontCreateNativeWidgetSiblings = 4,
-        AA_MacPluginApplication = 5,
-        AA_DontUseNativeMenuBar = 6,
-        AA_MacDontSwapCtrlAndMeta = 7,
-        AA_X11InitThreads = 8,
-        AA_CaptureMultimediaKeys = 9,
+        AA_DontShowIconsInMenus = 1,
+        AA_NativeWindows = 2,
+        AA_DontCreateNativeWidgetSiblings = 3,
+        AA_DontUseNativeMenuBar = 4,
+        AA_X11InitThreads = 5,
+        AA_CaptureMultimediaKeys = 6,
 
         // Add new attributes before this line
         AA_AttributeCount
@@ -1504,9 +1480,8 @@ public:
         Pbuffer       = 0x06,    // GL pbuffer
         FramebufferObject = 0x07, // GL framebuffer object
         CustomRaster  = 0x08,
-        MacQuartz     = 0x09,
-        PaintBuffer   = 0x0a,
-        OpenGL        = 0x0b
+        PaintBuffer   = 0x09,
+        OpenGL        = 0x0a
     };
     enum RelayoutType {
         RelayoutNormal,

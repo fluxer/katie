@@ -928,7 +928,6 @@ void QDateTimeEdit::setCalendarPopup(bool enable)
     Q_D(QDateTimeEdit);
     if (enable == d->calendarPopup)
         return;
-    setAttribute(Qt::WA_MacShowFocusRect, !enable);
     d->calendarPopup = enable;
 #ifdef QT_KEYPAD_NAVIGATION
     if (!enable)

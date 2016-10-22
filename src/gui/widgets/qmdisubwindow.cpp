@@ -1121,10 +1121,7 @@ void QMdiSubWindowPrivate::updateGeometryConstraints()
         resizeEnabled = false;
     } else {
         moveEnabled = true;
-        if ((q->windowFlags() & Qt::MSWindowsFixedSizeDialogHint) || q->isShaded())
-            resizeEnabled = false;
-        else
-            resizeEnabled = true;
+        resizeEnabled = !q->isShaded();
     }
     updateDirtyRegions();
 }
@@ -2073,7 +2070,7 @@ void QMdiSubWindowPrivate::setWindowFlags(Qt::WindowFlags windowFlags)
     }
 
     Qt::WindowFlags windowType = windowFlags & Qt::WindowType_Mask;
-    if (windowType == Qt::Dialog || windowFlags & Qt::MSWindowsFixedSizeDialogHint)
+    if (windowType == Qt::Dialog)
         windowFlags |= Qt::WindowTitleHint | Qt::WindowSystemMenuHint;
 
     // Set standard flags if none of the customize flags are set

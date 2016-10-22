@@ -2443,7 +2443,6 @@ QWorkspaceChild::QWorkspaceChild(QWidget* window, QWorkspace *parent, Qt::Window
 
     setBackgroundRole(QPalette::Window);
     if (window) {
-        flags |= (window->windowFlags() & Qt::MSWindowsOwnDC);
         if (flags)
             window->setParent(this, flags & ~Qt::WindowType_Mask);
         else

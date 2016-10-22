@@ -1546,8 +1546,6 @@ void QAbstractSpinBoxPrivate::init()
     q->setFocusPolicy(Qt::WheelFocus);
     q->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed, QSizePolicy::SpinBox));
     q->setAttribute(Qt::WA_InputMethodEnabled);
-
-    q->setAttribute(Qt::WA_MacShowFocusRect);
 }
 
 /*!

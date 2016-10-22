@@ -3617,7 +3617,7 @@ void QGLContextPrivate::setCurrentContext(QGLContext *context)
 */
 
 QGLWidget::QGLWidget(QWidget *parent, const QGLWidget* shareWidget, Qt::WindowFlags f)
-    : QWidget(*(new QGLWidgetPrivate), parent, f | Qt::MSWindowsOwnDC)
+    : QWidget(*(new QGLWidgetPrivate), parent, f)
 {
     Q_D(QGLWidget);
     setAttribute(Qt::WA_PaintOnScreen);
@@ -3657,7 +3657,7 @@ QGLWidget::QGLWidget(QWidget *parent, const QGLWidget* shareWidget, Qt::WindowFl
 
 QGLWidget::QGLWidget(const QGLFormat &format, QWidget *parent, const QGLWidget* shareWidget,
                      Qt::WindowFlags f)
-    : QWidget(*(new QGLWidgetPrivate), parent, f | Qt::MSWindowsOwnDC)
+    : QWidget(*(new QGLWidgetPrivate), parent, f)
 {
     Q_D(QGLWidget);
     setAttribute(Qt::WA_PaintOnScreen);
@@ -3693,7 +3693,7 @@ QGLWidget::QGLWidget(const QGLFormat &format, QWidget *parent, const QGLWidget* 
 */
 QGLWidget::QGLWidget(QGLContext *context, QWidget *parent, const QGLWidget *shareWidget,
                      Qt::WindowFlags f)
-    : QWidget(*(new QGLWidgetPrivate), parent, f | Qt::MSWindowsOwnDC)
+    : QWidget(*(new QGLWidgetPrivate), parent, f)
 {
     Q_D(QGLWidget);
     setAttribute(Qt::WA_PaintOnScreen);

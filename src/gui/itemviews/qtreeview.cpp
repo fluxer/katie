@@ -2852,7 +2852,6 @@ void QTreeViewPrivate::initialize()
     q->setSelectionBehavior(QAbstractItemView::SelectRows);
     q->setSelectionMode(QAbstractItemView::SingleSelection);
     q->setHorizontalScrollMode(QAbstractItemView::ScrollPerPixel);
-    q->setAttribute(Qt::WA_MacShowFocusRect);
 
     QHeaderView *header = new QHeaderView(Qt::Horizontal, q);
     header->setMovable(true);

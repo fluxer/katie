@@ -1511,7 +1511,7 @@ void QColorDialogPrivate::retranslateStrings()
 }
 
 static const Qt::WindowFlags DefaultColorWindowFlags =
-        Qt::Dialog | Qt::WindowTitleHint | Qt::MSWindowsFixedSizeDialogHint
+        Qt::Dialog | Qt::WindowTitleHint
         | Qt::WindowSystemMenuHint | Qt::WindowCloseButtonHint;
 
 /*!

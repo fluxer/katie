@@ -159,9 +159,7 @@ QStyleOptionMenuItem QComboMenuDelegate::getStyleOption(const QStyleOptionViewIt
 
     // Make sure fonts set on the combo box also overrides the font for the popup menu.
     if (mCombo->testAttribute(Qt::WA_SetFont)
-            || mCombo->testAttribute(Qt::WA_MacSmallSize)
-            || mCombo->testAttribute(Qt::WA_MacMiniSize)
-            || mCombo->font() != qt_app_fonts_hash()->value("QComboBox", QFont()))
+        || mCombo->font() != qt_app_fonts_hash()->value("QComboBox", QFont()))
         menuOption.font = mCombo->font();
     else
         menuOption.font = qt_app_fonts_hash()->value("QComboMenuItem", mCombo->font());
@@ -518,7 +516,6 @@ void QComboBoxPrivateContainer::setItemView(QAbstractItemView *itemView)
     // setup the item view
     view = itemView;
     view->setParent(this);
-    view->setAttribute(Qt::WA_MacShowFocusRect, false);
     qobject_cast<QBoxLayout*>(layout())->insertWidget(top ? 2 : 0, view);
     view->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     view->installEventFilter(this);
@@ -1676,7 +1673,6 @@ void QComboBox::setLineEdit(QLineEdit *edit)
     d->lineEdit->setFrame(false);
     d->lineEdit->setContextMenuPolicy(Qt::NoContextMenu);
     d->lineEdit->setFocusProxy(this);
-    d->lineEdit->setAttribute(Qt::WA_MacShowFocusRect, false);
 #ifndef QT_NO_COMPLETER
     setAutoCompletion(d->autoCompletion);
 #endif
