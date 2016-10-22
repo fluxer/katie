@@ -9,7 +9,7 @@
 
 cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 
-project(Katie C CXX ASM)
+project(Katie C CXX)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_AUTOMOC FALSE)
