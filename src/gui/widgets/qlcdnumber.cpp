@@ -436,24 +436,22 @@ void QLCDNumber::setDigitCount(int numDigits)
         bool doDisplay = d->ndigits == 0;
         if (numDigits == d->ndigits)             // no change
             return;
-        register int i;
-        int dif;
         if (numDigits > d->ndigits) {            // expand
-            dif = numDigits - d->ndigits;
+            int dif = numDigits - d->ndigits;
             QString buf;
             buf.fill(QLatin1Char(' '), dif);
             d->digitStr.insert(0, buf);
             d->points.resize(numDigits);
-            for (i=numDigits-1; i>=dif; i--)
+            for (int i=numDigits-1; i>=dif; i--)
                 d->points.setBit(i, d->points.testBit(i-dif));
-            for (i=0; i<dif; i++)
+            for (int i=0; i<dif; i++)
                 d->points.clearBit(i);
         } else {                                        // shrink
-            dif = d->ndigits - numDigits;
+            int dif = d->ndigits - numDigits;
             d->digitStr = d->digitStr.right(numDigits);
             QBitArray tmpPoints = d->points;
             d->points.resize(numDigits);
-            for (i=0; i<(int)numDigits; i++)
+            for (int i=0; i<numDigits; i++)
                 d->points.setBit(i, tmpPoints.testBit(i+dif));
         }
         d->ndigits = numDigits;

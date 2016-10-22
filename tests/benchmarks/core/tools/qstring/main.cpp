@@ -189,7 +189,7 @@ static bool equals2_shortwise(const ushort *p1, const ushort *p2, int len)
 {
     if (p1 == p2 || !len)
         return true;
-//    for (register int counter; counter < len; ++counter)
+//    for (int counter; counter < len; ++counter)
 //        if (p1[counter] != p2[counter])
 //            return false;
     while (len--) {
@@ -203,7 +203,7 @@ static bool equals2_intwise(const ushort *p1, const ushort *p2, int length)
 {
     if (p1 == p2 || !length)
         return true;
-    register union {
+    union {
         const quint16 *w;
         const quint32 *d;
         quintptr value;
@@ -228,7 +228,7 @@ static bool equals2_intwise(const ushort *p1, const ushort *p2, int length)
 
         // both addresses are 4-bytes aligned
         // do a fast 32-bit comparison
-        register const quint32 *e = sa.d + (length >> 1);
+        const quint32 *e = sa.d + (length >> 1);
         for ( ; sa.d != e; ++sa.d, ++sb.d) {
             if (*sa.d != *sb.d)
                 return false;
@@ -238,7 +238,7 @@ static bool equals2_intwise(const ushort *p1, const ushort *p2, int length)
         return (length & 1) ? *sa.w == *sb.w : true;
     } else {
         // one of the addresses isn't 4-byte aligned but the other is
-        register const quint16 *e = sa.w + length;
+        const quint16 *e = sa.w + length;
         for ( ; sa.w != e; ++sa.w, ++sb.w) {
             if (*sa.w != *sb.w)
                 return false;
