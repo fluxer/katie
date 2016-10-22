@@ -220,14 +220,8 @@ static QString generateInterfaceXml(const QMetaObject *mo, int flags, int method
         if ((flags & wantedMask) != wantedMask)
             continue;
 
-        if (qDBusCheckAsyncTag(mm.tag()))
-            // add the no-reply annotation
-            xml += QLatin1String("      <annotation name=\"" ANNOTATION_NO_WAIT "\""
-                                 " value=\"true\"/>\n");
-
-        retval += xml;
-        retval += QString::fromLatin1("    </%1>\n")
-                  .arg(isSignal ? QLatin1String("signal") : QLatin1String("method"));
+        retval += xml + QString::fromLatin1("    </%1>\n")
+                        .arg(isSignal ? QLatin1String("signal") : QLatin1String("method"));
     }
 
     return retval;

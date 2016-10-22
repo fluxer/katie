@@ -74,7 +74,6 @@ private:
     struct Method {
         QByteArray parameters;
         QByteArray typeName;
-        QByteArray tag;
         QByteArray name;
         QByteArray inputSignature;
         QByteArray outputSignature;
@@ -276,10 +275,6 @@ void QDBusMetaObjectGenerator::parseMethods()
             prototype.append(')');
         }
 
-        // check the async tag
-        if (m.annotations.value(QLatin1String(ANNOTATION_NO_WAIT)) == QLatin1String("true"))
-            mm.tag = "Q_NOREPLY";
-
         // meta method flags
         mm.flags = AccessPublic | MethodSlot | MethodScriptable;
 
@@ -443,8 +438,6 @@ void QDBusMetaObjectGenerator::write(QDBusMetaObject *obj)
             stringdata += mm.typeName;
             stringdata += null;
             idata[offset++] = stringdata.length();
-            stringdata += mm.tag;
-            stringdata += null;
             idata[offset++] = mm.flags;
 
             idata[signatureOffset++] = stringdata.length();

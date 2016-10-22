@@ -54,21 +54,6 @@
 
 QT_BEGIN_NAMESPACE
 
-bool qDBusCheckAsyncTag(const char *tag)
-{
-    static const char noReplyTag[] = "Q_NOREPLY";
-    if (!tag || !*tag)
-        return false;
-
-    const char *p = strstr(tag, noReplyTag);
-    if (p != NULL &&
-        (p == tag || *(p-1) == ' ') &&
-        (p[sizeof noReplyTag - 1] == '\0' || p[sizeof noReplyTag - 1] == ' '))
-        return true;
-
-    return false;
-}
-
 int qDBusNameToTypeId(const char *name)
 {
     int id = static_cast<int>( QVariant::nameToType(name) );

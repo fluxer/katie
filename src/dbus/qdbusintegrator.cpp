@@ -651,13 +651,8 @@ static int findSlot(const QMetaObject *mo, const QByteArray &name, int flags,
         if (paren != name.length() || !slotname.startsWith(name))
             continue;
 
-        int returnType = qDBusNameToTypeId(mm.typeName());
-        bool isAsync = qDBusCheckAsyncTag(mm.tag());
-        bool isScriptable = mm.attributes() & QMetaMethod::Scriptable;
-
-        // consistency check:
-        if (isAsync && returnType != QMetaType::Void)
-            continue;
+        const int returnType = qDBusNameToTypeId(mm.typeName());
+        const bool isScriptable = mm.attributes() & QMetaMethod::Scriptable;
 
         int inputCount = qDBusParametersForMethod(mm, metaTypes);
         if (inputCount == -1)
@@ -703,7 +698,7 @@ static int findSlot(const QMetaObject *mo, const QByteArray &name, int flags,
             continue;
 
         // consistency check:
-        if (isAsync && metaTypes.count() > i + 1)
+        if (returnType == QMetaType::Void && metaTypes.count() > i + 1)
             continue;
 
         if (mm.methodType() == QMetaMethod::Slot) {

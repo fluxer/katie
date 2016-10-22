@@ -451,11 +451,15 @@ QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
                 // hopefully, nobody is overloading asynchronous and synchronous methods with
                 // the same name
 
-                QList<QByteArray> tags = QByteArray(mm.tag()).split(' ');
-                if (tags.contains("Q_NOREPLY"))
-                    mode = QDBus::NoBlock;
+                // check type:
+                if (mm.methodType() != QMetaMethod::Slot && mm.methodType() != QMetaMethod::Method)
+                    continue;
 
-                break;
+                const int returnType = qDBusNameToTypeId(mm.typeName());
+                if (returnType == QMetaType::Void) {
+                    mode = QDBus::NoBlock;
+                    break;
+                }
             }
         }
     }
