@@ -1034,17 +1034,7 @@ bool QFile::open(OpenMode mode)
            you cannot use this QFile with a QFileInfo.
     \endlist
 
-    \note For Windows CE you may not be able to call resize().
-
     \sa close(), {qmake Variable Reference#CONFIG}{qmake Variable Reference}
-
-    \bold{Note for the Windows Platform}
-
-    \a fh must be opened in binary mode (i.e., the mode string must contain
-    'b', as in "rb" or "wb") when accessing files and other random-access
-    devices. Qt will translate the end-of-line characters if you pass
-    QIODevice::Text to \a mode. Sequential devices, such as stdin and stdout,
-    are unaffected by this limitation.
 
     You need to enable support for console applications in order to use the
     stdin, stdout and stderr streams at the console. To do this, add the
@@ -1054,7 +1044,6 @@ bool QFile::open(OpenMode mode)
 */
 bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
 {
-    Q_D(QFile);
     if (isOpen()) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
@@ -1066,6 +1055,7 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
         qWarning("QFile::open: File access not specified");
         return false;
     }
+    Q_D(QFile);
     if (d->openExternalFile(mode, fh, handleFlags)) {
         QIODevice::open(mode);
         if (mode & Append) {
@@ -1107,9 +1097,6 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
     those cases, size() returns \c 0.  See QIODevice::isSequential()
     for more information.
 
-    \warning For Windows CE you may not be able to call seek(), setSize(),
-    fileTime(). size() returns \c 0.
-
     \warning Since this function opens the file without specifying the file name,
              you cannot use this QFile with a QFileInfo.
 
@@ -1117,7 +1104,6 @@ bool QFile::open(FILE *fh, OpenMode mode, FileHandleFlags handleFlags)
 */
 bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
 {
-    Q_D(QFile);
     if (isOpen()) {
         qWarning("QFile::open: File (%s) already open", qPrintable(fileName()));
         return false;
@@ -1129,12 +1115,13 @@ bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
         qWarning("QFile::open: File access not specified");
         return false;
     }
+    Q_D(QFile);
     if (d->openExternalFile(mode, fd, handleFlags)) {
         QIODevice::open(mode);
         if (mode & Append) {
             seek(size());
         } else {
-            qint64 pos = (qint64)QT_LSEEK(fd, QT_OFF_T(0), SEEK_CUR);
+            const qint64 pos = (qint64)QT_LSEEK(fd, QT_OFF_T(0), SEEK_CUR);
             if (pos != -1)
                 seek(pos);
         }
@@ -1154,20 +1141,10 @@ bool QFile::open(int fd, OpenMode mode, FileHandleFlags handleFlags)
 
   If the file is not open, or there is an error, handle() returns -1.
 
-  This function is not supported on Windows CE.
-
-  On Symbian, this function returns -1 if the file was opened normally,
-  as Symbian OS native file handles do not fit in an int, and are
-  incompatible with C library functions that the handle would be used for.
-  If the file was opened using the overloads that take an open C library
-  file handle / file descriptor, then this function returns that same
-  handle.
-
   \sa QSocketNotifier
 */
 
-int
-QFile::handle() const
+int QFile::handle() const
 {
     Q_D(const QFile);
     if (!isOpen() || !d->fileEngine)
@@ -1197,8 +1174,6 @@ QFile::handle() const
     Any mapping options can be passed through \a flags.
 
     Returns a pointer to the memory or 0 if there is an error.
-
-    \note On Windows CE 5.0 the file will be closed before mapping occurs.
 
     \sa unmap(), QAbstractFileEngine::supportsExtension()
  */
@@ -1230,7 +1205,7 @@ bool QFile::unmap(uchar *address)
     if (fileEngine()
         && d->fileEngine->supportsExtension(QAbstractFileEngine::UnMapExtension)) {
         unsetError();
-        bool success = d->fileEngine->unmap(address);
+        const bool success = d->fileEngine->unmap(address);
         if (!success)
             d->setError(d->fileEngine->error(), d->fileEngine->errorString());
         return success;
@@ -1260,8 +1235,7 @@ bool QFile::unmap(uchar *address)
     \sa size(), setFileName()
 */
 
-bool
-QFile::resize(qint64 sz)
+bool QFile::resize(qint64 sz)
 {
     Q_D(QFile);
     if (!d->ensureFlushed())
@@ -1290,8 +1264,7 @@ QFile::resize(qint64 sz)
     \sa resize()
 */
 
-bool
-QFile::resize(const QString &fileName, qint64 sz)
+bool QFile::resize(const QString &fileName, qint64 sz)
 {
     return QFile(fileName).resize(sz);
 }
@@ -1303,8 +1276,7 @@ QFile::resize(const QString &fileName, qint64 sz)
     \sa setPermissions(), setFileName()
 */
 
-QFile::Permissions
-QFile::permissions() const
+QFile::Permissions QFile::permissions() const
 {
     QAbstractFileEngine::FileFlags perms = fileEngine()->fileFlags(QAbstractFileEngine::PermsMask) & QAbstractFileEngine::PermsMask;
     return QFile::Permissions((int)perms); //ewww
@@ -1317,8 +1289,7 @@ QFile::permissions() const
     QFile::Permission for \a fileName.
 */
 
-QFile::Permissions
-QFile::permissions(const QString &fileName)
+QFile::Permissions QFile::permissions(const QString &fileName)
 {
     return QFile(fileName).permissions();
 }
@@ -1331,8 +1302,7 @@ QFile::permissions(const QString &fileName)
     \sa permissions(), setFileName()
 */
 
-bool
-QFile::setPermissions(Permissions permissions)
+bool QFile::setPermissions(Permissions permissions)
 {
     Q_D(QFile);
     if(fileEngine()->setPermissions(permissions)) {
@@ -1349,15 +1319,14 @@ QFile::setPermissions(Permissions permissions)
     Sets the permissions for \a fileName file to \a permissions.
 */
 
-bool
-QFile::setPermissions(const QString &fileName, Permissions permissions)
+bool QFile::setPermissions(const QString &fileName, Permissions permissions)
 {
     return QFile(fileName).setPermissions(permissions);
 }
 
 static inline qint64 _qfile_writeData(QAbstractFileEngine *engine, QRingBuffer *buffer)
 {
-    qint64 ret = engine->write(buffer->readPointer(), buffer->nextDataBlockSize());
+    const qint64 ret = engine->write(buffer->readPointer(), buffer->nextDataBlockSize());
     if (ret > 0)
         buffer->free(ret);
     return ret;
@@ -1368,8 +1337,7 @@ static inline qint64 _qfile_writeData(QAbstractFileEngine *engine, QRingBuffer *
     otherwise returns false.
 */
 
-bool
-QFile::flush()
+bool QFile::flush()
 {
     Q_D(QFile);
     if (!d->fileEngine) {
@@ -1378,7 +1346,7 @@ QFile::flush()
     }
 
     if (!d->writeBuffer.isEmpty()) {
-        qint64 size = d->writeBuffer.size();
+        const qint64 size = d->writeBuffer.size();
         if (_qfile_writeData(d->fileEngine, &d->writeBuffer) != size) {
             QFile::FileError err = d->fileEngine->error();
             if(err == QFile::UnspecifiedError)
@@ -1403,13 +1371,12 @@ QFile::flush()
 
   \sa QIODevice::close()
 */
-void
-QFile::close()
+void QFile::close()
 {
     Q_D(QFile);
     if(!isOpen())
         return;
-    bool flushed = flush();
+    const bool flushed = flush();
     QIODevice::close();
 
     // reset write buffer
@@ -1678,8 +1645,7 @@ QAbstractFileEngine *QFile::fileEngine() const
     \sa unsetError()
 */
 
-QFile::FileError
-QFile::error() const
+QFile::FileError QFile::error() const
 {
     Q_D(const QFile);
     return d->error;
@@ -1690,8 +1656,7 @@ QFile::error() const
 
     \sa error()
 */
-void
-QFile::unsetError()
+void QFile::unsetError()
 {
     Q_D(QFile);
     d->setError(QFile::NoError);

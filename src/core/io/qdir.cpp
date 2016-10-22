@@ -1260,12 +1260,12 @@ QFileInfoList QDir::entryInfoList(const QStringList &nameFilters, Filters filter
 // ### Qt5: behaviour when directory already exists should be made consistent for mkdir and mkpath
 bool QDir::mkdir(const QString &dirName) const
 {
-    const QDirPrivate* d = d_ptr.constData();
-
     if (dirName.isEmpty()) {
         qWarning("QDir::mkdir: Empty or null file name(s)");
         return false;
     }
+
+    const QDirPrivate* d = d_ptr.constData();
 
     QString fn = filePath(dirName);
     if (d->fileEngine.isNull())
@@ -1284,12 +1284,12 @@ bool QDir::mkdir(const QString &dirName) const
 */
 bool QDir::rmdir(const QString &dirName) const
 {
-    const QDirPrivate* d = d_ptr.constData();
-
     if (dirName.isEmpty()) {
         qWarning("QDir::rmdir: Empty or null file name(s)");
         return false;
     }
+
+    const QDirPrivate* d = d_ptr.constData();
 
     QString fn = filePath(dirName);
     if (d->fileEngine.isNull())
@@ -1313,12 +1313,12 @@ bool QDir::rmdir(const QString &dirName) const
 // ### Qt5: behaviour when directory already exists should be made consistent for mkdir and mkpath
 bool QDir::mkpath(const QString &dirPath) const
 {
-    const QDirPrivate* d = d_ptr.constData();
-
     if (dirPath.isEmpty()) {
         qWarning("QDir::mkpath: Empty or null file name(s)");
         return false;
     }
+
+    const QDirPrivate* d = d_ptr.constData();
 
     QString fn = filePath(dirPath);
     if (d->fileEngine.isNull())
@@ -1339,12 +1339,12 @@ bool QDir::mkpath(const QString &dirPath) const
 */
 bool QDir::rmpath(const QString &dirPath) const
 {
-    const QDirPrivate* d = d_ptr.constData();
-
     if (dirPath.isEmpty()) {
         qWarning("QDir::rmpath: Empty or null file name(s)");
         return false;
     }
+
+    const QDirPrivate* d = d_ptr.constData();
 
     QString fn = filePath(dirPath);
     if (d->fileEngine.isNull())

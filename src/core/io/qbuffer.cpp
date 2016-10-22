@@ -244,11 +244,11 @@ QBuffer::~QBuffer()
 
 void QBuffer::setBuffer(QByteArray *byteArray)
 {
-    Q_D(QBuffer);
     if (isOpen()) {
         qWarning("QBuffer::setBuffer: Buffer is open");
         return;
     }
+    Q_D(QBuffer);
     if (byteArray) {
         d->buf = byteArray;
     } else {
@@ -308,11 +308,11 @@ const QByteArray &QBuffer::data() const
 */
 void QBuffer::setData(const QByteArray &data)
 {
-    Q_D(QBuffer);
     if (isOpen()) {
         qWarning("QBuffer::setData: Buffer is open");
         return;
     }
+    Q_D(QBuffer);
     *d->buf = data;
     d->ioIndex = 0;
 }
@@ -331,8 +331,6 @@ void QBuffer::setData(const QByteArray &data)
 */
 bool QBuffer::open(OpenMode flags)
 {
-    Q_D(QBuffer);
-
     if ((flags & (Append | Truncate)) != 0)
         flags |= WriteOnly;
     if ((flags & (ReadOnly | WriteOnly)) == 0) {
@@ -340,6 +338,7 @@ bool QBuffer::open(OpenMode flags)
         return false;
     }
 
+    Q_D(QBuffer);
     if ((flags & Truncate) == Truncate)
         d->buf->resize(0);
     d->ioIndex = (flags & Append) == Append ? d->buf->size() : 0;
@@ -385,10 +384,10 @@ bool QBuffer::seek(const qint64 pos)
 */
 bool QBuffer::canReadLine() const
 {
-    Q_D(const QBuffer);
     if (!isOpen())
         return false;
 
+    Q_D(const QBuffer);
     return d->buf->indexOf('\n', int(pos())) != -1 || QIODevice::canReadLine();
 }
 
