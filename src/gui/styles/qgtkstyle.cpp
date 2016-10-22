@@ -1699,10 +1699,7 @@ void QGtkStyle::drawComplexControl(ComplexControl control, const QStyleOptionCom
 
 
             GtkRange *range = (GtkRange*)(horizontal ? gtkHScrollBar : gtkVScrollBar);
-            GtkAdjustment *adjustment = 0;
-
-            if (gtk_adjustment_configure)
-                adjustment = gtk_range_get_adjustment(range);
+            GtkAdjustment *adjustment = gtk_range_get_adjustment(range);
             if (adjustment) {
                 gtk_adjustment_configure(adjustment, fakePos, 0, maximum, 0, 0, 0);
             } else {
@@ -1987,9 +1984,7 @@ void QGtkStyle::drawComplexControl(ComplexControl control, const QStyleOptionCom
             if ((option->subControls & SC_SliderGroove) && groove.isValid()) {
 
                 GtkRange *range = (GtkRange*)scaleWidget;
-                GtkAdjustment *adjustment = 0;
-                if (gtk_adjustment_configure)
-                    adjustment = gtk_range_get_adjustment(range);
+                GtkAdjustment *adjustment = gtk_range_get_adjustment(range);
                 if (adjustment) {
                     gtk_adjustment_configure(adjustment,
                                                 slider->sliderPosition,
