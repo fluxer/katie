@@ -98,7 +98,7 @@ public:
                       const QVariant &arg5 = QVariant(),
                       const QVariant &arg6 = QVariant(),
                       const QVariant &arg7 = QVariant(),
-                      const QVariant &arg8 = QVariant());
+                      const QVariant &arg8 = QVariant()) const;
 
     QDBusMessage call(QDBus::CallMode mode,
                       const QString &method,
@@ -130,9 +130,9 @@ public:
                                const QVariant &arg5 = QVariant(),
                                const QVariant &arg6 = QVariant(),
                                const QVariant &arg7 = QVariant(),
-                               const QVariant &arg8 = QVariant());
+                               const QVariant &arg8 = QVariant()) const;
     QDBusPendingCall asyncCallWithArgumentList(const QString &method,
-                                               const QList<QVariant> &args);
+                                               const QList<QVariant> &args) const;
 
 protected:
     QDBusAbstractInterface(const QString &service, const QString &path, const char *interface,

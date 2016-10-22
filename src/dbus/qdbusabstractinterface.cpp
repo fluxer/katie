@@ -492,9 +492,9 @@ QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
     \threadsafe
 */
 QDBusPendingCall QDBusAbstractInterface::asyncCallWithArgumentList(const QString& method,
-                                                                   const QList<QVariant>& args)
+                                                                   const QList<QVariant>& args) const
 {
-    Q_D(QDBusAbstractInterface);
+    Q_D(const QDBusAbstractInterface);
 
     if (!d->isValid || !d->canMakeCalls())
         return QDBusPendingCall::fromError(d->lastError);
@@ -666,7 +666,7 @@ QDBusMessage QDBusAbstractInterface::call(const QString &method, const QVariant 
                                           const QVariant &arg5,
                                           const QVariant &arg6,
                                           const QVariant &arg7,
-                                          const QVariant &arg8)
+                                          const QVariant &arg8) const
 {
     return call(QDBus::AutoDetect, method, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
 }
@@ -758,7 +758,7 @@ QDBusPendingCall QDBusAbstractInterface::asyncCall(const QString &method, const 
                                                    const QVariant &arg5,
                                                    const QVariant &arg6,
                                                    const QVariant &arg7,
-                                                   const QVariant &arg8)
+                                                   const QVariant &arg8) const
 {
     QList<QVariant> argList;
     int count = 0 + arg1.isValid() + arg2.isValid() + arg3.isValid() + arg4.isValid() +
