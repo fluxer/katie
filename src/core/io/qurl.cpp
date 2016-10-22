@@ -6184,22 +6184,10 @@ bool QUrl::isDetached() const
 */
 QUrl QUrl::fromLocalFile(const QString &localFile)
 {
+    const QString deslashified = QDir::fromNativeSeparators(localFile);
     QUrl url;
     url.setScheme(QLatin1String("file"));
-    QString deslashified = QDir::fromNativeSeparators(localFile);
-
-    // magic for drives on windows
-    if (deslashified.length() > 1 && deslashified.at(1) == QLatin1Char(':') && deslashified.at(0) != QLatin1Char('/')) {
-        url.setPath(QLatin1Char('/') + deslashified);
-    // magic for shared drive on windows
-    } else if (deslashified.startsWith(QLatin1String("//"))) {
-        int indexOfPath = deslashified.indexOf(QLatin1Char('/'), 2);
-        url.setHost(deslashified.mid(2, indexOfPath - 2));
-        if (indexOfPath > 2)
-            url.setPath(deslashified.right(deslashified.length() - indexOfPath));
-    } else {
-        url.setPath(deslashified);
-    }
+    url.setPath(deslashified);
 
     return url;
 }
@@ -6208,10 +6196,6 @@ QUrl QUrl::fromLocalFile(const QString &localFile)
     Returns the path of this URL formatted as a local file path. The path
     returned will use forward slashes, even if it was originally created
     from one with backslashes.
-
-    If this URL contains a non-empty hostname, it will be encoded in the
-    returned value in the form found on SMB networks (for example,
-    "//servername/path/to/file.txt").
 
     If this is a relative URL, in Qt 4.x this function returns the path to
     maintain backward compatability. This will change from 5.0 onwards. Then
@@ -6228,23 +6212,7 @@ QString QUrl::toLocalFile() const
     if (!isLocalFile() && !scheme().isEmpty())
         return QString();
 
-    QString tmp;
-    QString ourPath = path();
-
-    QMutexLocker lock(&d->mutex); // for d->host
-
-    // magic for shared drive on windows
-    if (!d->host.isEmpty()) {
-        tmp = QLatin1String("//") + d->host + (ourPath.length() > 0 && ourPath.at(0) != QLatin1Char('/')
-                                               ? QLatin1Char('/') + ourPath :  ourPath);
-    } else {
-        tmp = ourPath;
-        // magic for drives on windows
-        if (ourPath.length() > 2 && ourPath.at(0) == QLatin1Char('/') && ourPath.at(2) == QLatin1Char(':'))
-            tmp.remove(0, 1);
-    }
-
-    return tmp;
+    return path();
 }
 
 /*!
@@ -6576,13 +6544,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 QUrl QUrl::fromUserInput(const QString &userInput)
 {
-    QString trimmedString = userInput.trimmed();
+    const QString trimmedString = userInput.trimmed();
 
     // Check first for files, since on Windows drive letters can be interpretted as schemes
     if (QDir::isAbsolutePath(trimmedString))
         return QUrl::fromLocalFile(trimmedString);
 
-    QUrl url = QUrl::fromEncoded(trimmedString.toUtf8(), QUrl::TolerantMode);
+    const QUrl url = QUrl::fromEncoded(trimmedString.toUtf8(), QUrl::TolerantMode);
     QUrl urlPrepended = QUrl::fromEncoded("http://" + trimmedString.toUtf8(), QUrl::TolerantMode);
 
     // Check the most common case of a valid url with a scheme

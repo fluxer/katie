@@ -210,13 +210,11 @@ public:
 
     QString errorString() const;
 
-protected:
-
 private:
     void detach(QMutexLocker &locker);
     QUrlPrivate *d;
 public:
-    typedef QUrlPrivate * DataPtr;
+    typedef QUrlPrivate* DataPtr;
     inline DataPtr &data_ptr() { return d; }
 };
 
