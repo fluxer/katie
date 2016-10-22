@@ -425,9 +425,9 @@ int QDBusAbstractInterface::timeout() const
 */
 QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
                                                           const QString& method,
-                                                          const QList<QVariant>& args)
+                                                          const QList<QVariant>& args) const
 {
-    Q_D(QDBusAbstractInterface);
+    Q_D(const QDBusAbstractInterface);
 
     if (!d->isValid || !d->canMakeCalls())
         return QDBusMessage::createError(d->lastError);
@@ -442,7 +442,7 @@ QDBusMessage QDBusAbstractInterface::callWithArgumentList(QDBus::CallMode mode,
         // determine if this a sync or async call
         mode = QDBus::Block;
         const QMetaObject *mo = metaObject();
-        QByteArray match = m.toLatin1() + '(';
+        const QByteArray match = m.toLatin1() + '(';
 
         for (int i = staticMetaObject.methodCount(); i < mo->methodCount(); ++i) {
             QMetaMethod mm = mo->method(i);
@@ -700,7 +700,7 @@ QDBusMessage QDBusAbstractInterface::call(QDBus::CallMode mode, const QString &m
                                           const QVariant &arg5,
                                           const QVariant &arg6,
                                           const QVariant &arg7,
-                                          const QVariant &arg8)
+                                          const QVariant &arg8) const
 {
     QList<QVariant> argList;
     int count = 0 + arg1.isValid() + arg2.isValid() + arg3.isValid() + arg4.isValid() +
@@ -784,17 +784,6 @@ QDBusPendingCall QDBusAbstractInterface::asyncCall(const QString &method, const 
     }
 
     return asyncCallWithArgumentList(method, argList);
-}
-
-/*!
-    \internal
-*/
-QDBusMessage QDBusAbstractInterface::internalConstCall(QDBus::CallMode mode,
-                                                       const QString &method,
-                                                       const QList<QVariant> &args) const
-{
-    // ### move the code here, and make the other functions call this
-    return const_cast<QDBusAbstractInterface*>(this)->callWithArgumentList(mode, method, args);
 }
 
 QT_END_NAMESPACE

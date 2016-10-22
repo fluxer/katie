@@ -109,11 +109,11 @@ public:
                       const QVariant &arg5 = QVariant(),
                       const QVariant &arg6 = QVariant(),
                       const QVariant &arg7 = QVariant(),
-                      const QVariant &arg8 = QVariant());
+                      const QVariant &arg8 = QVariant()) const;
 
     QDBusMessage callWithArgumentList(QDBus::CallMode mode,
                                       const QString &method,
-                                      const QList<QVariant> &args);
+                                      const QList<QVariant> &args) const;
 
     bool callWithCallback(const QString &method,
                           const QList<QVariant> &args,
@@ -143,9 +143,6 @@ protected:
     void disconnectNotify(const char *signal);
     QVariant internalPropGet(const char *propname) const;
     void internalPropSet(const char *propname, const QVariant &value);
-    QDBusMessage internalConstCall(QDBus::CallMode mode,
-                                   const QString &method,
-                                   const QList<QVariant> &args = QList<QVariant>()) const;
 
 private:
     Q_DECLARE_PRIVATE(QDBusAbstractInterface)

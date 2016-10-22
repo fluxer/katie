@@ -184,7 +184,7 @@ QDBusConnectionInterface::~QDBusConnectionInterface()
 */
 QDBusReply<QString> QDBusConnectionInterface::serviceOwner(const QString &name) const
 {
-    return internalConstCall(QDBus::AutoDetect, QLatin1String("GetNameOwner"), QList<QVariant>() << name);
+    return callWithArgumentList(QDBus::AutoDetect, QLatin1String("GetNameOwner"), QList<QVariant>() << name);
 }
 
 /*!
@@ -195,7 +195,8 @@ QDBusReply<QString> QDBusConnectionInterface::serviceOwner(const QString &name) 
 */
 QDBusReply<QStringList> QDBusConnectionInterface::registeredServiceNames() const
 {
-    return internalConstCall(QDBus::AutoDetect, QLatin1String("ListNames"));
+    return callWithArgumentList(QDBus::AutoDetect, QLatin1String("ListNames"),
+                             QList<QVariant>());
 }
 
 /*!
@@ -204,7 +205,7 @@ QDBusReply<QStringList> QDBusConnectionInterface::registeredServiceNames() const
 */
 QDBusReply<bool> QDBusConnectionInterface::isServiceRegistered(const QString &serviceName) const
 {
-    return internalConstCall(QDBus::AutoDetect, QLatin1String("NameHasOwner"),
+    return callWithArgumentList(QDBus::AutoDetect, QLatin1String("NameHasOwner"),
                              QList<QVariant>() << serviceName);
 }
 
@@ -214,7 +215,7 @@ QDBusReply<bool> QDBusConnectionInterface::isServiceRegistered(const QString &se
 */
 QDBusReply<uint> QDBusConnectionInterface::servicePid(const QString &serviceName) const
 {
-    return internalConstCall(QDBus::AutoDetect, QLatin1String("GetConnectionUnixProcessID"),
+    return callWithArgumentList(QDBus::AutoDetect, QLatin1String("GetConnectionUnixProcessID"),
                              QList<QVariant>() << serviceName);
 }
 
@@ -224,7 +225,7 @@ QDBusReply<uint> QDBusConnectionInterface::servicePid(const QString &serviceName
 */
 QDBusReply<uint> QDBusConnectionInterface::serviceUid(const QString &serviceName) const
 {
-    return internalConstCall(QDBus::AutoDetect, QLatin1String("GetConnectionUnixUser"),
+    return callWithArgumentList(QDBus::AutoDetect, QLatin1String("GetConnectionUnixUser"),
                              QList<QVariant>() << serviceName);
 }
 
