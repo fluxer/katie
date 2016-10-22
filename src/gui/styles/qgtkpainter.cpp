@@ -134,12 +134,12 @@ QPixmap QGtkPainter::renderTheme(uchar *bdata, uchar *wdata, const QRect &rect)
                                                 rect.width(), rect.height());                      \
             uchar* wdata = (uchar*)gdk_pixbuf_get_pixels(imgw);                                    \
             cache = renderTheme(bdata, wdata, rect);                                               \
-            gdk_pixbuf_unref(imgw);                                                          \
+            g_object_unref(imgw);                                                          \
         } else {                                                                                   \
             cache = renderTheme(bdata, 0, rect);                                                   \
         }                                                                                          \
         gdk_drawable_unref(pixmap);                                                          \
-        gdk_pixbuf_unref(imgb);                                                              \
+        g_object_unref(imgb);                                                              \
     }
 
 QGtkPainter::QGtkPainter(QPainter *_painter)
@@ -213,7 +213,7 @@ QPixmap QGtkPainter::getIcon(const char* iconName, GtkIconSize size)
         tdata[index + QT_ALPHA] = data[index + GTK_ALPHA];
     }
 
-    gdk_pixbuf_unref(icon);
+    g_object_unref(icon);
 
     // should we free iconset?
     return QPixmap::fromImage(converted);

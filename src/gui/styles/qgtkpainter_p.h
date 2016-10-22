@@ -66,7 +66,6 @@ QT_BEGIN_NAMESPACE
 
 class QGtkPainter
 {
-
 public:
     QGtkPainter(QPainter *painter);
     GtkStyle *getStyle(GtkWidget *gtkWidget);
