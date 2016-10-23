@@ -369,11 +369,6 @@
 #define QT_NO_SPLITTER
 #endif
 
-// State machine
-#if !defined(QT_NO_STATEMACHINE) && (defined(QT_NO_PROPERTIES))
-#define QT_NO_STATEMACHINE
-#endif
-
 // QCDEStyle
 #if !defined(QT_NO_STYLE_CDE) && (defined(QT_NO_STYLE_MOTIF))
 #define QT_NO_STYLE_CDE

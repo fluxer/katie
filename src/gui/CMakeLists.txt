@@ -408,7 +408,6 @@ include(itemviews/itemviews.cmake)
 include(kernel/kernel.cmake)
 include(math3d/math3d.cmake)
 include(painting/painting.cmake)
-include(statemachine/statemachine.cmake)
 include(styles/styles.cmake)
 include(text/text.cmake)
 include(util/util.cmake)
@@ -433,7 +432,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d
     ${CMAKE_CURRENT_SOURCE_DIR}/painting
-    ${CMAKE_CURRENT_SOURCE_DIR}/statemachine
     ${CMAKE_CURRENT_SOURCE_DIR}/styles
     ${CMAKE_CURRENT_SOURCE_DIR}/text
     ${CMAKE_CURRENT_SOURCE_DIR}/util
@@ -451,7 +449,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/kernel
     ${CMAKE_CURRENT_BINARY_DIR}/math3d
     ${CMAKE_CURRENT_BINARY_DIR}/painting
-    ${CMAKE_CURRENT_BINARY_DIR}/statemachine
     ${CMAKE_CURRENT_BINARY_DIR}/styles
     ${CMAKE_CURRENT_BINARY_DIR}/text
     ${CMAKE_CURRENT_BINARY_DIR}/util

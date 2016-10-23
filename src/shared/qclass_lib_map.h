@@ -112,16 +112,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QThread", "QtCore/qthread.h"},
     { "QThreadStorageData", "QtCore/qthreadstorage.h"},
     { "QWaitCondition", "QtCore/qwaitcondition.h"},
-    { "QAbstractState", "QtCore/qabstractstate.h"},
-    { "QAbstractTransition", "QtCore/qabstracttransition.h"},
-    { "QEventTransition", "QtCore/qeventtransition.h"},
-    { "QFinalState", "QtCore/qfinalstate.h"},
-    { "QHistoryState", "QtCore/qhistorystate.h"},
-    { "QSignalTransition", "QtCore/qsignaltransition.h"},
-    { "QState", "QtCore/qstate.h"},
-    { "QStateMachine", "QtCore/qstatemachine.h"},
-    { "SignalEvent", "QtCore/qstatemachine.h"},
-    { "WrappedEvent", "QtCore/qstatemachine.h"},
     { "QFactoryInterface", "QtCore/qfactoryinterface.h"},
     { "QLibrary", "QtCore/qlibrary.h"},
     { "QPluginLoader", "QtCore/qpluginloader.h"},
@@ -370,8 +360,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QAccessibleFactoryInterface", "QtGui/qaccessibleplugin.h"},
     { "QAccessiblePlugin", "QtGui/qaccessibleplugin.h"},
     { "QAccessibleWidget", "QtGui/qaccessiblewidget.h"},
-    { "QKeyEventTransition", "QtGui/qkeyeventtransition.h"},
-    { "QMouseEventTransition", "QtGui/qmouseeventtransition.h"},
     { "QBrush", "QtGui/qbrush.h"},
     { "QGradient", "QtGui/qbrush.h"},
     { "QLinearGradient", "QtGui/qbrush.h"},
@@ -736,6 +724,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSslKey", "QtNetwork/qsslkey.h"},
     { "QSslSocket", "QtNetwork/qsslsocket.h"},
 };
-static const int qclass_lib_count = 730;
+static const int qclass_lib_count = 718;
 
 #endif

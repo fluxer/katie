@@ -32,7 +32,6 @@ set(CORE_PUBLIC_HEADERS
     QMultiHash
     QObjectCleanupHandler
     QAbstractFileEngine
-    QHistoryState
     QTranslator
     QFuture
     QCryptographicHash
@@ -149,7 +148,6 @@ set(CORE_PUBLIC_HEADERS
     QFileInfoList
     QCoreApplication
     QRegExp
-    QStateMachine
     QVariantComparisonHelper
     QMetaObject
     QPauseAnimation
@@ -185,7 +183,6 @@ set(CORE_PUBLIC_HEADERS
     QtConcurrentFilter
     QCache
     QLatin1String
-    QAbstractState
     QAbstractEventDispatcher
     QResource
     QRunnable
@@ -196,7 +193,6 @@ set(CORE_PUBLIC_HEADERS
     QtContainerFwd
     QTimeLine
     QForeachContainerBase
-    QFinalState
     QMutableFutureIterator
     QtPluginInstanceFunction
     QTextCodec
@@ -209,7 +205,6 @@ set(CORE_PUBLIC_HEADERS
     QMapPayloadNode
     QBasicTimer
     QThread
-    QState
     QSocketNotifier
     QJsonArray
     QJsonDocument
@@ -266,7 +261,6 @@ include(json/json.cmake)
 include(kernel/kernel.cmake)
 #include(mimetypes/mimetypes.cmake)
 include(plugin/plugin.cmake)
-include(statemachine/statemachine.cmake)
 include(thread/thread.cmake)
 include(tools/tools.cmake)
 include(xml/xml.cmake)
@@ -284,7 +278,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/json
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
-    ${CMAKE_CURRENT_SOURCE_DIR}/statemachine
     ${CMAKE_CURRENT_SOURCE_DIR}/thread
     ${CMAKE_CURRENT_SOURCE_DIR}/tools
     ${CMAKE_CURRENT_SOURCE_DIR}/xml
@@ -296,7 +289,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/json
     ${CMAKE_CURRENT_BINARY_DIR}/kernel
     ${CMAKE_CURRENT_BINARY_DIR}/plugin
-    ${CMAKE_CURRENT_BINARY_DIR}/statemachine
     ${CMAKE_CURRENT_BINARY_DIR}/thread
     ${CMAKE_CURRENT_BINARY_DIR}/tools
     ${CMAKE_CURRENT_BINARY_DIR}/xml

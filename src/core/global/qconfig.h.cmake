@@ -79,6 +79,7 @@
 #define QT_NO_STYLE_WINDOWSVISTA
 #define QT_NO_STYLE_MAC
 #define QT_NO_STYLE_S60
+#define QT_NO_STATEMACHINE
 
 /* Qt build specs */
 #ifndef QT_EDITION

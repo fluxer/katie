@@ -3007,10 +3007,8 @@ const void *QVariant::constData() const
 void* QVariant::data()
 {
     detach();
-    return const_cast<void *>(constData());
+    return d.is_shared ? d.data.shared->ptr : &d.data.ptr;
 }
-
-
 
 /*!
   Returns true if this is a NULL variant, false otherwise.
