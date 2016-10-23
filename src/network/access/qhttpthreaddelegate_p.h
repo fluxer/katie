@@ -168,7 +168,7 @@ protected slots:
 protected:
     // Cache for all the QHttpNetworkConnection objects.
     // This is per thread.
-    static QThreadStorage<QNetworkAccessCache *> connections;
+    static thread_local QNetworkAccessCache* connections;
 
 };
 

@@ -47,16 +47,14 @@
 
 QT_BEGIN_NAMESPACE
 
-QThreadStorage<QSharedNetworkSessionManager *> tls;
+thread_local QSharedNetworkSessionManager* tls;
 
 inline QSharedNetworkSessionManager* sharedNetworkSessionManager()
 {
-    QSharedNetworkSessionManager* rv = tls.localData();
-    if (!rv) {
-        rv = new QSharedNetworkSessionManager;
-        tls.setLocalData(rv);
+    if (!tls) {
+        tls = new QSharedNetworkSessionManager;
     }
-    return rv;
+    return tls;
 }
 
 static void doDeleteLater(QObject* obj)

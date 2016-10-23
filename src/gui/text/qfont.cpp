@@ -2525,40 +2525,20 @@ static const int slow_timeout = 300000; //  5m
 
 const uint QFontCache::min_cost = 4*1024; // 4mb
 
-#ifdef QT_NO_THREAD
-Q_GLOBAL_STATIC(QFontCache, theFontCache)
+thread_local QFontCache* theFontCache;
 
 QFontCache *QFontCache::instance()
 {
-    return theFontCache();
+    if (!theFontCache)
+        theFontCache = new QFontCache;
+    return theFontCache;
 }
 
 void QFontCache::cleanup()
 {
+    if (theFontCache)
+        theFontCache = 0;
 }
-#else
-Q_GLOBAL_STATIC(QThreadStorage<QFontCache *>, theFontCache)
-
-QFontCache *QFontCache::instance()
-{
-    QFontCache *&fontCache = theFontCache()->localData();
-    if (!fontCache)
-        fontCache = new QFontCache;
-    return fontCache;
-}
-
-void QFontCache::cleanup()
-{
-    QThreadStorage<QFontCache *> *cache = 0;
-    QT_TRY {
-        cache = theFontCache();
-    } QT_CATCH (const std::bad_alloc &) {
-        // no cache - just ignore
-    }
-    if (cache && cache->hasLocalData())
-        cache->setLocalData(0);
-}
-#endif // QT_NO_THREAD
 
 QFontCache::QFontCache()
     : QObject(), total_cost(0), max_cost(min_cost),

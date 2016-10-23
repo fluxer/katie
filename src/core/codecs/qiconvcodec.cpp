@@ -43,7 +43,6 @@
 #include "qtextcodec_p.h"
 #include <qlibrary.h>
 #include <qdebug.h>
-#include <qthreadstorage.h>
 
 #include <errno.h>
 #include <locale.h>
@@ -123,7 +122,7 @@ static void qIconvCodecStateFree(QTextCodec::ConverterState *state)
     delete reinterpret_cast<QIconvCodec::IconvState *>(state->d);
 }
 
-Q_GLOBAL_STATIC(QThreadStorage<QIconvCodec::IconvState *>, toUnicodeState)
+thread_local QIconvCodec::IconvState* toUnicodeState;
 
 QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState *convState) const
 {
@@ -149,15 +148,14 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
             QTextCodecUnalignedPointer::encode(convState->state_data, qIconvCodecStateFree);
         }
     } else {
-        QThreadStorage<QIconvCodec::IconvState *> *ts = toUnicodeState();
-        if (!qt_locale_initialized || !ts) {
+        if (!qt_locale_initialized || !toUnicodeState) {
             // we're running after the Q_GLOBAL_STATIC has been deleted
             // or before the QCoreApplication initialization
             // bad programmer, no cookie for you
             pstate = &temporaryState;
         } else {
             // stateless conversion -- use thread-local data
-            pstate = &toUnicodeState()->localData();
+            pstate = &toUnicodeState;
         }
     }
 
@@ -259,7 +257,7 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
     return s;
 }
 
-Q_GLOBAL_STATIC(QThreadStorage<QIconvCodec::IconvState *>, fromUnicodeState)
+thread_local QIconvCodec::IconvState* fromUnicodeState;
 
 static bool setByteOrder(iconv_t cd)
 {
@@ -291,8 +289,7 @@ QByteArray QIconvCodec::convertFromUnicode(const QChar *uc, int len, ConverterSt
     char **inBytesPtr = &inBytes;
 
     IconvState *temporaryState = 0;
-    QThreadStorage<QIconvCodec::IconvState *> *ts = fromUnicodeState();
-    IconvState *&state = (qt_locale_initialized && ts) ? ts->localData() : temporaryState;
+    IconvState *&state = (qt_locale_initialized && fromUnicodeState) ? fromUnicodeState : temporaryState;
     if (!state) {
         iconv_t cd = QIconvCodec::createIconv_t(0, UTF16);
         if (cd != reinterpret_cast<iconv_t>(-1)) {

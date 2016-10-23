@@ -173,7 +173,7 @@ public:
 };
 
 
-QThreadStorage<QNetworkAccessCache *> QHttpThreadDelegate::connections;
+thread_local QNetworkAccessCache* QHttpThreadDelegate::connections;
 
 
 QHttpThreadDelegate::~QHttpThreadDelegate()
@@ -185,8 +185,8 @@ QHttpThreadDelegate::~QHttpThreadDelegate()
 
     // Get the object cache that stores our QHttpNetworkConnection objects
     // and release the entry for this QHttpNetworkConnection
-    if (connections.hasLocalData() && !cacheKey.isEmpty()) {
-        connections.localData()->releaseEntry(cacheKey);
+    if (connections && !cacheKey.isEmpty()) {
+        connections->releaseEntry(cacheKey);
     }
 }
 
@@ -228,8 +228,8 @@ void QHttpThreadDelegate::startRequestSynchronously()
     QMetaObject::invokeMethod(this, "startRequest", Qt::QueuedConnection);
     synchronousRequestLoop.exec();
 
-    connections.localData()->releaseEntry(cacheKey);
-    connections.setLocalData(0);
+    connections->releaseEntry(cacheKey);
+    connections = 0;
 
 #ifdef QHTTPTHREADDELEGATE_DEBUG
     qDebug() << "QHttpThreadDelegate::startRequestSynchronously() thread=" << QThread::currentThreadId() << "finished";
@@ -245,8 +245,8 @@ void QHttpThreadDelegate::startRequest()
 #endif
     // Check QThreadStorage for the QNetworkAccessCache
     // If not there, create this connection cache
-    if (!connections.hasLocalData()) {
-        connections.setLocalData(new QNetworkAccessCache());
+    if (!connections) {
+        connections = new QNetworkAccessCache();
     }
 
     // check if we have an open connection to this host
@@ -264,7 +264,7 @@ void QHttpThreadDelegate::startRequest()
 
 
     // the http object is actually a QHttpNetworkConnection
-    httpConnection = static_cast<QNetworkAccessCachedHttpConnection *>(connections.localData()->requestEntryNow(cacheKey));
+    httpConnection = static_cast<QNetworkAccessCachedHttpConnection *>(connections->requestEntryNow(cacheKey));
     if (httpConnection == 0) {
         // no entry in cache; create an object
         // the http object is actually a QHttpNetworkConnection
@@ -284,7 +284,7 @@ void QHttpThreadDelegate::startRequest()
 #endif
 
         // cache the QHttpNetworkConnection corresponding to this cache key
-        connections.localData()->addEntry(cacheKey, httpConnection);
+        connections->addEntry(cacheKey, httpConnection);
     }
 
 

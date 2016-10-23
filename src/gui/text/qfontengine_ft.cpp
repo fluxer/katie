@@ -140,24 +140,14 @@ public:
     QHash<QFontEngine::FaceId, QFreetypeFace *> faces;
 };
 
-#ifdef QT_NO_THREAD
-Q_GLOBAL_STATIC(QtFreetypeData, theFreetypeData)
+thread_local QtFreetypeData* theFreetypeData;
 
 QtFreetypeData *qt_getFreetypeData()
 {
-    return theFreetypeData();
+    if (!theFreetypeData)
+        theFreetypeData = new QtFreetypeData;
+    return theFreetypeData;
 }
-#else
-Q_GLOBAL_STATIC(QThreadStorage<QtFreetypeData *>, theFreetypeData)
-
-QtFreetypeData *qt_getFreetypeData()
-{
-    QtFreetypeData *&freetypeData = theFreetypeData()->localData();
-    if (!freetypeData)
-        freetypeData = new QtFreetypeData;
-    return freetypeData;
-}
-#endif
 
 FT_Library qt_getFreetype()
 {
