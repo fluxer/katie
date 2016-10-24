@@ -524,12 +524,10 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
         device->setTextModeEnabled(false);
 
     // read raw data into a temporary buffer
-    char buf[QTEXTSTREAM_BUFFERSIZE];
-    qint64 bytesRead = 0;
-    if (maxBytes != -1)
-        bytesRead = device->read(buf, qMin<qint64>(sizeof(buf), maxBytes));
-    else
-        bytesRead = device->read(buf, sizeof(buf));
+    if (maxBytes < 1 || maxBytes > QTEXTSTREAM_BUFFERSIZE)
+        maxBytes = QTEXTSTREAM_BUFFERSIZE;
+    const QByteArray buffer = device->read(maxBytes);
+    int bytesRead = buffer.size();
 
 #ifndef QT_NO_TEXTCODEC
     // codec auto detection, explicitly defaults to locale encoding if the
@@ -537,7 +535,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     if (!codec || autoDetectUnicode) {
         autoDetectUnicode = false;
 
-        codec = QTextCodec::codecForUtfText(QByteArray::fromRawData(buf, bytesRead), codec);
+        codec = QTextCodec::codecForUtfText(buffer, codec);
         if (!codec) {
             codec = QTextCodec::codecForLocale();
             writeConverterState.flags |= QTextCodec::IgnoreHeader;
@@ -551,7 +549,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
 
 #if defined (QTEXTSTREAM_DEBUG)
     qDebug("QTextStreamPrivate::fillReadBuffer(), device->read(\"%s\", %d) == %d",
-           qt_prettyDebug(buf, qMin(32,int(bytesRead)) , int(bytesRead)).constData(), sizeof(buf), int(bytesRead));
+           qt_prettyDebug(buffer, qMin(32,bytesRead), bytesRead).constData(), int(maxBytes), bytesRead);
 #endif
 
     if (bytesRead <= 0)
@@ -560,9 +558,9 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     int oldReadBufferSize = readBuffer.size();
 #ifndef QT_NO_TEXTCODEC
     // convert to unicode
-    readBuffer += codec->toUnicode(buf, bytesRead, &readConverterState);
+    readBuffer += codec->toUnicode(buffer, bytesRead, &readConverterState);
 #else
-    readBuffer += QString::fromLatin1(QByteArray(buf, bytesRead).constData());
+    readBuffer += QString::fromLatin1(buffer.constData());
 #endif
 
     // reset the Text flag.
@@ -600,7 +598,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     }
 
 #if defined (QTEXTSTREAM_DEBUG)
-    qDebug("QTextStreamPrivate::fillReadBuffer() read %d bytes from device. readBuffer = [%s]", int(bytesRead),
+    qDebug("QTextStreamPrivate::fillReadBuffer() read %d bytes from device. readBuffer = [%s]", bytesRead,
            qt_prettyDebug(readBuffer.toLatin1(), readBuffer.size(), readBuffer.size()).data());
 #endif
     return true;

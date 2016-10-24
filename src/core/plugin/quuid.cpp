@@ -40,9 +40,10 @@
 ****************************************************************************/
 
 #include "quuid.h"
-
 #include "qdatastream.h"
 #include "qendian.h"
+
+#include <stdlib.h> // for RAND_MAX
 
 QT_BEGIN_NAMESPACE
 
@@ -796,13 +797,6 @@ bool QUuid::operator>(const QUuid &other) const
 
     \sa variant(), version()
 */
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "qdatetime.h"
-#include "qfile.h"
-#include "qthreadstorage.h"
-#include <stdlib.h> // for RAND_MAX
-QT_END_INCLUDE_NAMESPACE
 
 QUuid QUuid::createUuid()
 {

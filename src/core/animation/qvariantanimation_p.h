@@ -105,12 +105,14 @@ public:
 };
 
 //this should make the interpolation faster
-template<typename T> inline T _q_interpolate(const T &f, const T &t, qreal progress)
+template<typename T>
+inline T _q_interpolate(const T &f, const T &t, qreal progress)
 {
     return T(f + (t - f) * progress);
 }
 
-template<typename T > inline QVariant _q_interpolateVariant(const T &from, const T &to, qreal progress)
+template<typename T >
+inline QVariant _q_interpolateVariant(const T &from, const T &to, qreal progress)
 {
     return _q_interpolate(from, to, progress);
 }

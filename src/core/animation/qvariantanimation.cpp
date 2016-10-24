@@ -452,9 +452,8 @@ QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int in
 #ifndef QT_NO_THREAD
     QMutexLocker locker(QMutexPool::globalInstanceGet(interpolators));
 #endif
-    QVariantAnimation::Interpolator ret = 0;
     if (interpolationType < interpolators->count()) {
-        ret = interpolators->at(interpolationType);
+        QVariantAnimation::Interpolator ret = interpolators->at(interpolationType);
         if (ret) return ret;
     }
 
