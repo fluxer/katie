@@ -41,13 +41,6 @@
 
 #include "QtCore/qxmlstream.h"
 
-#if defined(QT_BUILD_XML_LIB) && defined(Q_OS_MAC64)
-// No need to define this in the 64-bit Mac libraries.
-// Since Qt 4.4 and previous weren't supported in 64-bit, there are
-// no QXmlStream* symbols to keep compatibility with
-# define QT_NO_XMLSTREAM
-#endif
-
 #ifndef QT_NO_XMLSTREAM
 
 #include "qxmlutils_p.h"
@@ -57,24 +50,8 @@
 #include <qtextcodec.h>
 #include <qstack.h>
 #include <qbuffer.h>
-#ifndef QT_BOOTSTRAPPED
 #include <qcoreapplication.h>
-#else
-// This specialization of Q_DECLARE_TR_FUNCTIONS is not in qcoreapplication.h,
-// because that header depends on QObject being available, which is not the
-// case for most bootstrapped applications.
-#define Q_DECLARE_TR_FUNCTIONS(context) \
-public: \
-    static inline QString tr(const char *sourceText, const char *comment = 0) \
-        { Q_UNUSED(comment); return QString::fromLatin1(sourceText); } \
-    static inline QString trUtf8(const char *sourceText, const char *comment = 0) \
-        { Q_UNUSED(comment); return QString::fromLatin1(sourceText); } \
-    static inline QString tr(const char *sourceText, const char*, int) \
-        { return QString::fromLatin1(sourceText); } \
-    static inline QString trUtf8(const char *sourceText, const char*, int) \
-        { return QString::fromLatin1(sourceText); } \
-private:
-#endif
+
 QT_BEGIN_NAMESPACE
 
 #include "qxmlstream_p.h"

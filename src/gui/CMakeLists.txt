@@ -506,7 +506,7 @@ if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
     include_directories(${HARFBUZZ_INCLUDE_DIRS})
 else()
     # TODO: move to main CMakeLists?
-    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT)
+    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT -DQT_NO_OPENTYPE)
     set(KtGui_SOURCES
         ${KtGui_SOURCES}
         ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c

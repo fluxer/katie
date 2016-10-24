@@ -25,7 +25,7 @@ find_path(RESOLV_INCLUDES
 
 find_library(RESOLV_LIBRARIES
     NAMES
-    resolv  c
+    resolv c
     HINTS
     $ENV{RESOLVDIR}/lib
     ${LIB_INSTALL_DIR}

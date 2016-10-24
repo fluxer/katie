@@ -80,9 +80,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qglyphrun.cpp
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src)
-add_definitions(-DQT_NO_OPENTYPE)
-
 if(WITH_FREETYPE AND FREETYPE_FOUND)
     set(EXTRA_GUI_LIBS
         ${EXTRA_GUI_LIBS}
