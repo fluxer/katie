@@ -39,6 +39,9 @@
 **
 ****************************************************************************/
 
+#ifndef RECOGNIZER_H
+#define RECOGNIZER_H
+
 #include <QtCore/QDebug>
 #include <QtCore/QString>
 #include <QtCore/QFile>
@@ -109,3 +112,5 @@ protected:
   QString _M_current_value;
   bool _M_no_lines;
 };
+
+#endif // RECOGNIZER_H
