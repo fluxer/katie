@@ -229,8 +229,8 @@ GLSLParser::GLSLParser():
 GLSLParser::~GLSLParser()
 {
     if (stack_size) {
-        qFree(sym_stack);
-        qFree(state_stack);
+        ::free(sym_stack);
+        ::free(state_stack);
     }
 }
 
