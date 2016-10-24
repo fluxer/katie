@@ -45,7 +45,7 @@ There are several things you should be aware before considering Katie:
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - desktop files, Shell profile and dynamic linker/loader config are installed
     to ease vendors and deployment in general
-  - automatic async DBus calls based on method return type
+  - automatic async DBus calls based on return type, no Q_NOREPLY needed
 
 Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,

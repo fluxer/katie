@@ -424,15 +424,8 @@ void QHttpPartPrivate::checkHeaderCreated() const
     }
 }
 
-thread_local bool seedCreatedStorage;
-
 QHttpMultiPartPrivate::QHttpMultiPartPrivate() : contentType(QHttpMultiPart::MixedType), device(new QHttpMultiPartIODevice(this))
 {
-    if (!seedCreatedStorage) {
-        qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()) ^ reinterpret_cast<quintptr>(this));
-        seedCreatedStorage = true;
-    }
-
     boundary = QByteArray("boundary_.oOo._")
                + QByteArray::number(qrand()).toBase64()
                + QByteArray::number(qrand()).toBase64()

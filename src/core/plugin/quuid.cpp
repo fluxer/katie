@@ -790,17 +790,9 @@ bool QUuid::operator>(const QUuid &other) const
 /*!
     \fn QUuid QUuid::createUuid()
 
-    On any platform other than Windows, this function returns a new
-    UUID with variant QUuid::DCE and version QUuid::Random.  If
-    the /dev/urandom device exists, then the numbers used to construct
-    the UUID will be of cryptographic quality, which will make the UUID
-    unique.  Otherwise, the numbers of the UUID will be obtained from
-    the local pseudo-random number generator (qrand(), which is seeded
-    by qsrand()) which is usually not of cryptograhic quality, which
-    means that the UUID can't be guaranteed to be unique.
-
-    On a Windows platform, a GUID is generated, which almost certainly
-    \e{will} be unique, on this or any other system, networked or not.
+    This function returns a new UUID with variant QUuid::DCE and
+    version QUuid::Random.  The randomness of the created UUID depends
+    on qrand().
 
     \sa variant(), version()
 */
