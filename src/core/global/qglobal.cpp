@@ -2016,12 +2016,12 @@ void qsrand(uint seed)
 
     \sa qsrand()
 */
+thread_local bool almostrandom = false;
 int qrand()
 {
     // Seed the PRNG once per thread with a combination of current time, a
     // stack address and a serial counter (since thread stack addresses are
     // re-used).
-    static bool almostrandom = false;
     if (!almostrandom) {
         uint *pseed = new uint;
         static QAtomicInt serial = QAtomicInt(2);
