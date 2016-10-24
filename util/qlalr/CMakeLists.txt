@@ -31,5 +31,5 @@ set(QLALR_HEADERS
 
 katie_setup_target(qlalr ${QLALR_SOURCES} ${QLALR_HEADERS})
 
-add_executable(qlalr EXCLUDE_FROM_ALL ${qlalr_SOURCES})
+add_executable(qlalr ${qlalr_SOURCES})
 target_link_libraries(qlalr ${EXTRA_QLALR_LIBS})

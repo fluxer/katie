@@ -15,5 +15,5 @@ set(QURLGENERATE_SOURCES
 
 katie_setup_target(qurl-generateTLDs ${QURLGENERATE_SOURCES})
 
-add_executable(qurl-generateTLDs EXCLUDE_FROM_ALL ${qurl-generateTLDs_SOURCES})
+add_executable(qurl-generateTLDs ${qurl-generateTLDs_SOURCES})
 target_link_libraries(qurl-generateTLDs ${EXTRA_QURLGENERATE_LIBS})

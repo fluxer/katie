@@ -17,5 +17,5 @@ set(GENERATERUN_SOURCES
 
 katie_setup_target(generaterun ${GENERATERUN_SOURCES})
 
-add_executable(generaterun EXCLUDE_FROM_ALL ${generaterun_SOURCES})
+add_executable(generaterun ${generaterun_SOURCES})
 target_link_libraries(generaterun ${EXTRA_GENERATERUN_LIBS})

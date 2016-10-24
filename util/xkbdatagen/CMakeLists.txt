@@ -17,5 +17,5 @@ set(XKBDATAGEN_SOURCES
 
 katie_setup_target(xkbdatagen ${XKBDATAGEN_SOURCES})
 
-add_executable(xkbdatagen EXCLUDE_FROM_ALL ${xkbdatagen_SOURCES})
+add_executable(xkbdatagen ${xkbdatagen_SOURCES})
 target_link_libraries(xkbdatagen ${EXTRA_XKBDATAGEN_LIBS})

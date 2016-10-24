@@ -15,5 +15,5 @@ set(PLUGINTEST_SOURCES
 
 katie_setup_target(plugintest ${PLUGINTEST_SOURCES})
 
-add_executable(plugintest EXCLUDE_FROM_ALL ${plugintest_SOURCES})
+add_executable(plugintest ${plugintest_SOURCES})
 target_link_libraries(plugintest ${EXTRA_PLUGINTEST_LIBS})

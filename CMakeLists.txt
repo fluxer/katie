@@ -134,6 +134,9 @@ add_feature_info(x11 WITH_X11 "an open source something")
 option(KATIE_BOOTSTRAP "Build only core tools" OFF)
 add_feature_info(bootstrap KATIE_BOOTSTRAP "internal build option")
 
+option(KATIE_UTILS "Build maintainance utilities" OFF)
+add_feature_info(utils KATIE_UTILS "developers build option")
+
 option(KATIE_ALLINONE "Build targets from single source file" OFF)
 add_feature_info(allinone KATIE_ALLINONE "experimental build option")
 
@@ -178,6 +181,7 @@ set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 add_definitions(
     -DQT_USE_QSTRINGBUILDER
     -DQT_ASCII_CAST_WARNINGS
+    -DQT_POSIX_IPC
     # -DQT_STRICT_ITERATORS
     # maybe one day, this forces it onto other projects which (most likely)
     # means source code adjustments!
@@ -633,16 +637,18 @@ endif()
 add_subdirectory(src/tools)
 
 # utilities needed for Katie maintainance
-add_subdirectory(util/fixnonlatin1)
-add_subdirectory(util/gencmap)
-add_subdirectory(util/lexgen)
-add_subdirectory(util/normalize)
-add_subdirectory(util/plugintest)
-add_subdirectory(util/qlalr)
-add_subdirectory(util/qurl-generateTLDs)
-add_subdirectory(util/unicode)
-add_subdirectory(util/xkbdatagen)
-add_subdirectory(util/generaterun)
+if(KATIE_UTILS)
+    add_subdirectory(util/fixnonlatin1)
+    add_subdirectory(util/gencmap)
+    add_subdirectory(util/lexgen)
+    add_subdirectory(util/normalize)
+    add_subdirectory(util/plugintest)
+    add_subdirectory(util/qlalr)
+    add_subdirectory(util/qurl-generateTLDs)
+    add_subdirectory(util/unicode)
+    add_subdirectory(util/xkbdatagen)
+    add_subdirectory(util/generaterun)
+endif()
 
 # the macro calls bellow are generted via the incfsck script
 katie_generate_obsolete(qxmlstreamnotationdeclaration.h QtCore qxmlstream.h)

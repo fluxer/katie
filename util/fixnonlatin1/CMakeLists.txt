@@ -15,5 +15,5 @@ set(FIXONLATIN1_SOURCES
 
 katie_setup_target(fixonlatin1 ${FIXONLATIN1_SOURCES})
 
-add_executable(fixonlatin1 EXCLUDE_FROM_ALL ${fixonlatin1_SOURCES})
+add_executable(fixonlatin1 ${fixonlatin1_SOURCES})
 target_link_libraries(fixonlatin1 ${EXTRA_FIXONLATIN1_LIBS})
