@@ -28,6 +28,8 @@ set(XML_PUBLIC_HEADERS
     QXmlLocator
     QXmlNamespaceSupport
     QXmlReader
+    QXmlDefaultHandler
+    QXmlInputSource
     # both in core and xml
     QXmlStreamAttribute
     QXmlStreamAttributes

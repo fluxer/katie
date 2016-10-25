@@ -267,6 +267,7 @@ incmap = {
         'QXmlParseException': 'qxml.h',
         'QXmlContentHandler': 'qxml.h',
         'QXmlInputSource': 'qxml.h',
+        'QXmlDefaultHandler': 'qxml.h',
         },
     'QtDeclarative': {
         'QDeclarativeListProperty': 'qdeclarativelist.h',
