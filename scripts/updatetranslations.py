@@ -2,10 +2,8 @@
 
 import os, glob, subprocess, shlex
 
-components = ('core', 'declarative', 'gui', 'multimedia', 'network', 'opengl',
-    'plugins', 'script', 'scripttools', 'sql', 'svg', 'xml', 'designer')
-tools = ('lrelease', 'uic', 'moc', 'lupdate', 'rcc', 'lconvert', 'qdbus',
-    'designer', 'qdbusviewer', 'qscript', 'qtconfig')
+components = ('core', 'dbus', 'declarative', 'gui', 'network', 'opengl',
+    'plugins', 'script', 'scripttools', 'sql', 'svg', 'test', 'uitools', 'xml')
 cfiles = []
 tfiles = []
 
@@ -20,8 +18,8 @@ def list_files(sdir):
 for c in components:
     cfiles.extend(list_files('src/%s' % c))
 
-for t in tools:
-    tfiles.extend(list_files('src/tools/%s' % t))
+for t in glob.glob('src/tools/*'):
+    tfiles.extend(list_files(t))
 
 for t in glob.glob('translations/qt*.ts'):
     if 'tools' in t:
