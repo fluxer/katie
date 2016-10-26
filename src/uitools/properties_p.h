@@ -53,13 +53,10 @@
 #ifndef UILIBPROPERTIES_H
 #define UILIBPROPERTIES_H
 
-#include <uilib_global.h>
-
 #include <QtCore/QObject>
 #include <QtCore/qmetaobject.h>
 #include <QtCore/QLocale>
 #include <QtCore/QCoreApplication>
-
 #include <QtGui/QWidget>
 
 #include "formbuilderextra_p.h"
@@ -74,11 +71,11 @@ namespace QFormInternal
 class QAbstractFormBuilder;
 class DomProperty;
 
-QDESIGNER_UILIB_EXPORT DomProperty *variantToDomProperty(QAbstractFormBuilder *abstractFormBuilder, const QMetaObject *meta, const QString &propertyName, const QVariant &value);
+Q_UITOOLS_EXPORT DomProperty *variantToDomProperty(QAbstractFormBuilder *abstractFormBuilder, const QMetaObject *meta, const QString &propertyName, const QVariant &value);
 
 
-QDESIGNER_UILIB_EXPORT QVariant domPropertyToVariant(const DomProperty *property);
-QDESIGNER_UILIB_EXPORT QVariant domPropertyToVariant(QAbstractFormBuilder *abstractFormBuilder, const QMetaObject *meta, const  DomProperty *property);
+Q_UITOOLS_EXPORT QVariant domPropertyToVariant(const DomProperty *property);
+Q_UITOOLS_EXPORT QVariant domPropertyToVariant(QAbstractFormBuilder *abstractFormBuilder, const QMetaObject *meta, const  DomProperty *property);
 
 // This class exists to provide meta information
 // for enumerations only.

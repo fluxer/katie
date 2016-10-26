@@ -1,4 +1,4 @@
-add_definitions(-DQT_BUILD_UITOOLS_LIB -DQDESIGNER_UILIB_LIBRARY)
+add_definitions(-DQT_BUILD_UITOOLS_LIB)
 set(EXTRA_UITOOLS_LIBS KtCore KtGui KtXml KtScript)
 
 set(UITOOLS_PUBLIC_HEADERS
@@ -19,7 +19,6 @@ set(UITOOLS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/resourcebuilder_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/textbuilder_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ui4_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/uilib_global.h
 )
 
 set(UITOOLS_SOURCES

@@ -112,11 +112,6 @@ QDBusConnectionManager* QDBusConnectionManager::instance()
     return _q_manager();
 }
 
-Q_DBUS_EXPORT void qDBusBindToApplication();
-void qDBusBindToApplication()
-{
-}
-
 void QDBusConnectionManager::setConnection(const QString &name, QDBusConnectionPrivate *c)
 {
     connectionHash[name] = c;

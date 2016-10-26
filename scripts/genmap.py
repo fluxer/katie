@@ -15,7 +15,7 @@ components = {
     'Script': 'Q_SCRIPT_EXPORT',
     'ScriptTools': 'Q_SCRIPTTOOLS_EXPORT',
     'Test': 'Q_TEST_EXPORT',
-    'UiTools': 'QDESIGNER_UILIB_EXPORT',
+    'UiTools': 'Q_UITOOLS_EXPORT',
     'OpenGL': 'Q_OPENGL_EXPORT',
 }
 mapoutput = 'src/shared/qclass_lib_map.h'

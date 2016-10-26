@@ -53,8 +53,6 @@
 // We mean it.
 //
 
-#include "uilib_global.h"
-
 #ifndef QT_FORMBUILDER_NO_SCRIPT
 #    include "formscriptrunner_p.h"
 #endif
@@ -88,7 +86,7 @@ class QAbstractFormBuilder;
 class QResourceBuilder;
 class QTextBuilder;
 
-class QDESIGNER_UILIB_EXPORT QFormBuilderExtra
+class Q_UITOOLS_EXPORT QFormBuilderExtra
 {
     QFormBuilderExtra();
     ~QFormBuilderExtra();
@@ -195,7 +193,7 @@ private:
 void uiLibWarning(const QString &message);
 
 // Struct with static accessor that provides most strings used in the form builder.
-struct QDESIGNER_UILIB_EXPORT QFormBuilderStrings {
+struct Q_UITOOLS_EXPORT QFormBuilderStrings {
     QFormBuilderStrings();
 
     static const QFormBuilderStrings &instance();

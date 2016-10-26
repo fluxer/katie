@@ -53,7 +53,6 @@
 // We mean it.
 //
 
-#include <uilib_global.h>
 #include <QtCore/QList>
 #include <QtCore/QString>
 
@@ -70,7 +69,7 @@ namespace QFormInternal
 class DomProperty;
 class DomResourceIcon;
 
-class QDESIGNER_UILIB_EXPORT QResourceBuilder
+class Q_UITOOLS_EXPORT QResourceBuilder
 {
 public:
     enum IconStateFlags {

@@ -42,7 +42,6 @@
 #ifndef FORMBUILDER_H
 #define FORMBUILDER_H
 
-#include <uilib_global.h>
 #include <abstractformbuilder.h>
 
 #include <QtCore/QStringList>
@@ -59,7 +58,7 @@ namespace QFormInternal
 {
 #endif
 
-class QDESIGNER_UILIB_EXPORT QFormBuilder: public QAbstractFormBuilder
+class Q_UITOOLS_EXPORT QFormBuilder: public QAbstractFormBuilder
 {
 public:
     QFormBuilder();

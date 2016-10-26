@@ -89,8 +89,6 @@ QT_BEGIN_NAMESPACE
 static int inpaint=0;
 static int inpaint_clearcache=0;
 
-extern Q_GUI_EXPORT bool qt_applefontsmoothing_enabled;
-
 /*!
     Marks areas of the cache that intersect with the given \a rect as dirty and
     in need of being refreshed.

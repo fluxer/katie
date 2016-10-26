@@ -42,8 +42,6 @@
 #ifndef QUILOADER_H
 #define QUILOADER_H
 
-#include <uilib_global.h>
-
 #include <QtCore/QObject>
 #include <QtCore/QScopedPointer>
 
@@ -60,7 +58,7 @@ class QIODevice;
 class QDir;
 
 class QUiLoaderPrivate;
-class QDESIGNER_UILIB_EXPORT QUiLoader : public QObject
+class Q_UITOOLS_EXPORT QUiLoader : public QObject
 {
     Q_OBJECT
 public:

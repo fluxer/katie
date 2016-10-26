@@ -1039,7 +1039,6 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #  if defined(QT_SHARED)
 #    define Q_CORE_EXPORT Q_DECL_EXPORT
 #    define Q_GUI_EXPORT Q_DECL_EXPORT
-#    define Q_HELP_EXPORT Q_DECL_EXPORT
 #    define Q_SQL_EXPORT Q_DECL_EXPORT
 #    define Q_NETWORK_EXPORT Q_DECL_EXPORT
 #    define Q_SVG_EXPORT Q_DECL_EXPORT
@@ -1047,14 +1046,13 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #    define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
 #    define Q_OPENGL_EXPORT Q_DECL_EXPORT
 #    define Q_XML_EXPORT Q_DECL_EXPORT
-#    define Q_XMLPATTERNS_EXPORT Q_DECL_EXPORT
 #    define Q_SCRIPT_EXPORT Q_DECL_EXPORT
 #    define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
 #    define Q_DBUS_EXPORT Q_DECL_EXPORT
+#    define Q_UITOOLS_EXPORT Q_DECL_EXPORT
 #  else
 #    define Q_CORE_EXPORT
 #    define Q_GUI_EXPORT
-#    define Q_HELP_EXPORT
 #    define Q_SQL_EXPORT
 #    define Q_NETWORK_EXPORT
 #    define Q_SVG_EXPORT
@@ -1062,10 +1060,10 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #    define Q_DECLARATIVE_EXPORT
 #    define Q_OPENGL_EXPORT
 #    define Q_XML_EXPORT
-#    define Q_XMLPATTERNS_EXPORT
 #    define Q_SCRIPT_EXPORT
 #    define Q_SCRIPTTOOLS_EXPORT
 #    define Q_DBUS_EXPORT
+#    define Q_UITOOLS_EXPORT
 #  endif
 #endif
 

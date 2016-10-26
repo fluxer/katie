@@ -42,12 +42,9 @@
 #ifndef ABSTRACTFORMBUILDER_H
 #define ABSTRACTFORMBUILDER_H
 
-#include <uilib_global.h>
-
 #include <QtCore/QList>
 #include <QtCore/QHash>
 #include <QtCore/QDir>
-
 #include <QtGui/QSizePolicy>
 #include <QtGui/QPalette>
 
@@ -105,7 +102,7 @@ class QTextBuilder;
 class QFormScriptRunner;
 #endif
 
-class QDESIGNER_UILIB_EXPORT QAbstractFormBuilder
+class Q_UITOOLS_EXPORT QAbstractFormBuilder
 {
 public:
     QAbstractFormBuilder();
@@ -270,8 +267,8 @@ private:
     QAbstractFormBuilder(const QAbstractFormBuilder &other);
     void operator = (const QAbstractFormBuilder &other);
 
-    friend QDESIGNER_UILIB_EXPORT DomProperty *variantToDomProperty(QAbstractFormBuilder *abstractFormBuilder, const QMetaObject *meta, const QString &propertyName, const QVariant &value);
-    friend QDESIGNER_UILIB_EXPORT QVariant domPropertyToVariant(QAbstractFormBuilder *abstractFormBuilder,const QMetaObject *meta, const DomProperty *property);
+    friend Q_UITOOLS_EXPORT DomProperty *variantToDomProperty(QAbstractFormBuilder *abstractFormBuilder, const QMetaObject *meta, const QString &propertyName, const QVariant &value);
+    friend Q_UITOOLS_EXPORT QVariant domPropertyToVariant(QAbstractFormBuilder *abstractFormBuilder,const QMetaObject *meta, const DomProperty *property);
 };
 
 #ifdef QFORMINTERNAL_NAMESPACE

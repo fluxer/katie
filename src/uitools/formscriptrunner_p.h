@@ -53,7 +53,6 @@
 // We mean it.
 //
 
-#include <uilib_global.h>
 #include <QtCore/QList>
 #include <QtCore/qglobal.h>
 #include <QtCore/QString>
@@ -69,7 +68,7 @@ namespace QFormInternal
 
 class DomWidget;
 
-class QDESIGNER_UILIB_EXPORT QFormScriptRunner
+class Q_UITOOLS_EXPORT QFormScriptRunner
 {
 public:
     QFormScriptRunner();
