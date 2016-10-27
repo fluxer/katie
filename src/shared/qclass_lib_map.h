@@ -611,7 +611,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QMetaType", "QtCore/qmetatype.h"},
     { "QMimeData", "QtCore/qmimedata.h"},
     { "QObject", "QtCore/qobject.h"},
-    { "QObjectUserData", "QtCore/qobject.h"},
     { "QObjectCleanupHandler", "QtCore/qobjectcleanuphandler.h"},
     { "QGenericArgument", "QtCore/qobjectdefs.h"},
     { "QGenericReturnArgument", "QtCore/qobjectdefs.h"},
@@ -724,6 +723,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 718;
+static const int qclass_lib_count = 717;
 
 #endif

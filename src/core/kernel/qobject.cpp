@@ -157,12 +157,9 @@ QObjectPrivate::~QObjectPrivate()
     QAbstractDynamicMetaObject* mobject = static_cast<QAbstractDynamicMetaObject*>(metaObject);
     if (mobject)
         delete mobject;
-#ifndef QT_NO_USERDATA
     if (extraData) {
-        qDeleteAll(extraData->userData);
         delete extraData;
     }
-#endif
 }
 
 
@@ -518,30 +515,6 @@ void QMetaCallEvent::placeMetaCall(QObject *object)
     \sa QMetaObject, QPointer, QObjectCleanupHandler, Q_DISABLE_COPY()
     \sa {Object Trees & Ownership}
 */
-
-/*!
-    \relates QObject
-
-    Returns a pointer to the object named \a name that inherits \a
-    type and with a given \a parent.
-
-    Returns 0 if there is no such child.
-
-    \snippet doc/src/snippets/code/src_corelib_kernel_qobject.cpp 0
-*/
-
-void *qt_find_obj_child(QObject *parent, const char *type, const QString &name)
-{
-    QObjectList list = parent->children();
-    if (list.size() == 0) return 0;
-    for (int i = 0; i < list.size(); ++i) {
-        QObject *obj = list.at(i);
-        if (name == obj->objectName() && obj->inherits(type))
-            return obj;
-    }
-    return 0;
-}
-
 
 /*****************************************************************************
   QObject member functions
@@ -3443,49 +3416,6 @@ void QObject::dumpObjectInfo()
     }
 #endif
 }
-
-#ifndef QT_NO_USERDATA
-/*!\internal
- */
-uint QObject::registerUserData()
-{
-    static int user_data_registration = 0;
-    return user_data_registration++;
-}
-
-/*!\internal
- */
-QObjectUserData::~QObjectUserData()
-{
-}
-
-/*!\internal
- */
-void QObject::setUserData(uint id, QObjectUserData* data)
-{
-    Q_D(QObject);
-    if (!d->extraData)
-        d->extraData = new QObjectPrivate::ExtraData;
-
-    if (d->extraData->userData.size() <= (int) id)
-        d->extraData->userData.resize((int) id + 1);
-    d->extraData->userData[id] = data;
-}
-
-/*!\internal
- */
-QObjectUserData* QObject::userData(uint id) const
-{
-    Q_D(const QObject);
-    if (!d->extraData)
-        return 0;
-    if ((int)id < d->extraData->userData.size())
-        return d->extraData->userData.at(id);
-    return 0;
-}
-
-#endif // QT_NO_USERDATA
-
 
 #ifndef QT_NO_DEBUG_STREAM
 QDebug operator<<(QDebug dbg, const QObject *o) {

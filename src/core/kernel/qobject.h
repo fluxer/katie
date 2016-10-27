@@ -71,9 +71,6 @@ class QDebug;
 #ifndef QT_NO_REGEXP
 class QRegExp;
 #endif
-#ifndef QT_NO_USERDATA
-class QObjectUserData;
-#endif
 
 typedef QList<QObject*> QObjectList;
 
@@ -212,12 +209,6 @@ public:
     QList<QByteArray> dynamicPropertyNames() const;
 #endif // QT_NO_PROPERTIES
 
-#ifndef QT_NO_USERDATA
-    static uint registerUserData();
-    void setUserData(uint id, QObjectUserData* data);
-    QObjectUserData* userData(uint id) const;
-#endif // QT_NO_USERDATA
-
 Q_SIGNALS:
     void destroyed(QObject * = 0);
 
@@ -263,14 +254,6 @@ private:
     Q_DISABLE_COPY(QObject)
     Q_PRIVATE_SLOT(d_func(), void _q_reregisterTimers(void *))
 };
-
-#ifndef QT_NO_USERDATA
-class Q_CORE_EXPORT QObjectUserData {
-public:
-    virtual ~QObjectUserData();
-};
-#endif
-
 
 template <class T>
 inline T qobject_cast(QObject *object)
