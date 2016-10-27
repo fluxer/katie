@@ -1555,30 +1555,6 @@ QString QFileDialog::labelText(DialogLabel label) const
     return QString();
 }
 
-/*
-    For the native file dialogs
-*/
-
-#if defined(Q_WS_WIN)
-extern QString qt_win_get_open_file_name(const QFileDialogArgs &args,
-                                         QString *initialDirectory,
-                                         QString *selectedFilter);
-
-extern QString qt_win_get_save_file_name(const QFileDialogArgs &args,
-                                         QString *initialDirectory,
-                                         QString *selectedFilter);
-
-extern QStringList qt_win_get_open_file_names(const QFileDialogArgs &args,
-                                              QString *initialDirectory,
-                                              QString *selectedFilter);
-
-extern QString qt_win_get_existing_directory(const QFileDialogArgs &args);
-#endif
-
-/*
-    For Symbian file dialogs
-*/
-
 /*!
     This is a convenience static function that returns an existing file
     selected by the user. If the user presses Cancel, it returns a null string.
@@ -2827,7 +2803,7 @@ void QFileDialogPrivate::_q_goToDirectory(const QString &path)
     if (!index.isValid())
         index = mapFromSource(model->index(getEnvironmentVariable(path)));
     else {
-        path2 = index.data(UrlRole).toUrl().toLocalFile();
+        path2 = index.data(QUrlModel::UrlRole).toUrl().toLocalFile();
         index = mapFromSource(model->index(path2));
     }
     QDir dir(path2);

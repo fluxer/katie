@@ -107,8 +107,6 @@ struct QFileDialogArgs
     QFileDialog::Options options;
 };
 
-#define UrlRole (Qt::UserRole + 1)
-
 class Q_AUTOTEST_EXPORT QFileDialogPrivate : public QDialogPrivate
 {
     Q_DECLARE_PUBLIC(QFileDialog)
