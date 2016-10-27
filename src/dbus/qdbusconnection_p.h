@@ -155,7 +155,6 @@ public:
         DataList children;
     };
 
-public:
     // typedefs
     typedef QMultiHash<int, Watcher> WatcherHash;
     typedef QHash<int, DBusTimeout *> TimeoutHash;
@@ -175,7 +174,6 @@ public:
     };
     typedef QHash<QString, WatchedServiceData> WatchedServicesHash;
 
-public:
     // public methods are entry points from other objects
     explicit QDBusConnectionPrivate(QObject *parent = 0);
     ~QDBusConnectionPrivate();
@@ -256,7 +254,6 @@ public slots:
     void objectDestroyed(QObject *o);
     void relaySignal(QObject *obj, const QMetaObject *, int signalId, const QVariantList &args);
 
-private slots:
     void serviceOwnerChangedNoLock(const QString &name, const QString &oldOwner, const QString &newOwner);
     void registerServiceNoLock(const QString &serviceName);
     void unregisterServiceNoLock(const QString &serviceName);
@@ -305,7 +302,6 @@ public:
     QMutex callDeliveryMutex;
     QDBusCallDeliveryEvent *callDeliveryState; // protected by the callDeliveryMutex mutex
 
-public:
     // static methods
     static int findSlot(QObject *obj, const QByteArray &normalizedName, QList<int>& params);
     static bool prepareHook(QDBusConnectionPrivate::SignalHook &hook, QString &key,
