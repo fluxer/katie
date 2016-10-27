@@ -139,7 +139,7 @@ public:
                           int timeout = -1) const;
     bool callWithCallback(const QDBusMessage &message, QObject *receiver,
                           const char *slot, int timeout = -1) const;
-    QDBusMessage call(const QDBusMessage &message, QDBus::CallMode mode = QDBus::Block,
+    QDBusMessage call(const QDBusMessage &message, QDBus::CallMode mode = QDBus::AutoDetect,
                       int timeout = -1) const;
     QDBusPendingCall asyncCall(const QDBusMessage &message, int timeout = -1) const;
 
