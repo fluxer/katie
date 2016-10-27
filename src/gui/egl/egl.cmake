@@ -16,11 +16,5 @@ if(WITH_EGL AND EGL_FOUND)
         ${EGL_LIBRARIES}
     )
     include_directories(${EGL_INCLUDES})
-else()
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/egl/qegl_stub.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/egl/qeglproperties_stub.cpp
-    )
 endif()
 
