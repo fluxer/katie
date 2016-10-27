@@ -56,7 +56,6 @@
 #include "QtCore/qpointer.h"
 #include "QtCore/qsharedpointer.h"
 #include "QtCore/qcoreevent.h"
-#include "QtCore/qvector.h"
 #include "QtCore/qreadwritelock.h"
 #include "QtCore/qmetaobject.h"
 #include "QtCore/qvarlengtharray.h"
