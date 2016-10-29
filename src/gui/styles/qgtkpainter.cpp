@@ -156,13 +156,11 @@ static QString uniqueName(const QString &key, GtkStateType state, GtkShadowType 
                           const QSize &size, GtkWidget *widget = 0)
 {
     // Note the widget arg should ideally use the widget path, though would compromise performance
-    QString tmp = key
-                  % HexString<uint>(state)
-                  % HexString<uint>(shadow)
-                  % HexString<uint>(size.width())
-                  % HexString<uint>(size.height())
-                  % HexString<quint64>(quint64(widget));
-    return tmp;
+    return key + HexString(state)
+               + HexString(shadow)
+               + HexString(size.width())
+               + HexString(size.height())
+               + HexString(quint64(widget));;
 }
 
 
@@ -242,9 +240,9 @@ void QGtkPainter::paintBoxGap(GtkWidget *gtkWidget, const gchar* part,
         rect.setHeight(2 * border + 1);
 
     QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size(), gtkWidget)
-                         % HexString<uchar>(gap_side)
-                         % HexString<gint>(width)
-                         % HexString<gint>(x);
+                         + HexString(gap_side)
+                         + HexString(width)
+                         + HexString(x);
 
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_box_gap (style,
@@ -309,7 +307,7 @@ void QGtkPainter::paintBox(GtkWidget *gtkWidget, const gchar* part,
         rect.setHeight(2 * border + 1);
 
     QString pixmapName = uniqueName(QLS(part), state, shadow,
-                                    rect.size(), gtkWidget) % pmKey;
+                                    rect.size(), gtkWidget) + pmKey;
 
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_box (style,
@@ -360,10 +358,10 @@ void QGtkPainter::paintHline(GtkWidget *gtkWidget, const gchar* part,
 
     QPixmap cache;
     QString pixmapName = uniqueName(QLS(part), state, GTK_SHADOW_NONE, rect.size(), gtkWidget)
-                         % HexString<int>(x1)
-                         % HexString<int>(x2)
-                         % HexString<int>(y)
-                         % pmKey;
+                         + HexString(x1)
+                         + HexString(x2)
+                         + HexString(y)
+                         + pmKey;
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_hline (style,
                                        pixmap,
@@ -389,10 +387,10 @@ void QGtkPainter::paintVline(GtkWidget *gtkWidget, const gchar* part,
 
     QPixmap cache;
     QString pixmapName = uniqueName(QLS(part), state, GTK_SHADOW_NONE, rect.size(), gtkWidget)
-                        % HexString<int>(y1)
-                        % HexString<int>(y2)
-                        % HexString<int>(x)
-                        % pmKey;
+                        + HexString(y1)
+                        + HexString(y2)
+                        + HexString(x)
+                        + pmKey;
 
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_vline (style,
@@ -420,8 +418,8 @@ void QGtkPainter::paintExpander(GtkWidget *gtkWidget,
 
     QPixmap cache;
     QString pixmapName = uniqueName(QLS(part), state, GTK_SHADOW_NONE, rect.size(), gtkWidget)
-                         % HexString<uchar>(expander_state)
-                         % pmKey;
+                         + HexString(expander_state)
+                         + pmKey;
 
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_expander (style, pixmap,
@@ -445,7 +443,7 @@ void QGtkPainter::paintFocus(GtkWidget *gtkWidget, const gchar* part,
         return;
 
     QPixmap cache;
-    QString pixmapName = uniqueName(QLS(part), state, GTK_SHADOW_NONE, rect.size(), gtkWidget) % pmKey;
+    QString pixmapName = uniqueName(QLS(part), state, GTK_SHADOW_NONE, rect.size(), gtkWidget) + pmKey;
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_focus (style, pixmap, state, NULL,
                                        gtkWidget,
@@ -470,7 +468,7 @@ void QGtkPainter::paintResizeGrip(GtkWidget *gtkWidget, const gchar* part,
         return;
 
     QPixmap cache;
-    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size(), gtkWidget) % pmKey;
+    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size(), gtkWidget) + pmKey;
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_resize_grip (style, pixmap, state,
                                              NULL, gtkWidget,
@@ -496,8 +494,8 @@ void QGtkPainter::paintArrow(GtkWidget *gtkWidget, const gchar* part,
 
     QPixmap cache;
     QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size())
-                         % HexString<uchar>(arrow_type)
-                         % pmKey;
+                         + HexString(arrow_type)
+                         + pmKey;
 
     GdkRectangle gtkCliprect = {0, 0, rect.width(), rect.height()};
     int xOffset = m_cliprect.isValid() ? arrowrect.x() - m_cliprect.x() : 0;
@@ -528,7 +526,7 @@ void QGtkPainter::paintHandle(GtkWidget *gtkWidget, const gchar* part, const QRe
 
     QPixmap cache;
     QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size())
-                         % HexString<uchar>(orientation);
+                         + HexString(orientation);
 
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_handle (style,
@@ -557,7 +555,7 @@ void QGtkPainter::paintSlider(GtkWidget *gtkWidget, const gchar* part, const QRe
         return;
 
     QPixmap cache;
-    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size(), gtkWidget) % pmKey;
+    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size(), gtkWidget) + pmKey;
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_slider (style,
                                         pixmap,
@@ -587,7 +585,7 @@ void QGtkPainter::paintShadow(GtkWidget *gtkWidget, const gchar* part,
         return;
 
     QPixmap cache;
-    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size()) % pmKey;
+    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size()) + pmKey;
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_shadow(style, pixmap, state, shadow, NULL,
                                        gtkWidget, part, 0, 0, rect.width(), rect.height()));
@@ -605,7 +603,7 @@ void QGtkPainter::paintFlatBox(GtkWidget *gtkWidget, const gchar* part,
     if (!rect.isValid())
         return;
     QPixmap cache;
-    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size()) % pmKey;
+    QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size()) + pmKey;
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_flat_box (style,
                                           pixmap,
@@ -632,7 +630,7 @@ void QGtkPainter::paintExtention(GtkWidget *gtkWidget,
 
     QPixmap cache;
     QString pixmapName = uniqueName(QLS(part), state, shadow, rect.size(), gtkWidget)
-                         % HexString<uchar>(gap_pos);
+                         + HexString(gap_pos);
 
     if (!m_usePixmapCache || !QPixmapCache::find(pixmapName, cache)) {
         DRAW_TO_CACHE(gtk_paint_extension (style, pixmap, state, shadow,

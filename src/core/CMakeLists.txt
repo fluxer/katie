@@ -94,7 +94,6 @@ set(CORE_PUBLIC_HEADERS
     QStdWString
     QtAlgorithms
     QAbstractItemModel
-    QStringBuilder
     QSignalTransition
     QTextBoundaryFinder
     QExplicitlySharedDataPointer
@@ -175,7 +174,6 @@ set(CORE_PUBLIC_HEADERS
     QCharRef
     QReturnArgument
     QMetaObjectAccessor
-    QConcatenable
     QLocale
     QMetaType
     QVariant

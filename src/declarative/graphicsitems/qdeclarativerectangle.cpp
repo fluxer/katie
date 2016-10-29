@@ -43,8 +43,7 @@
 #include "qdeclarativerectangle_p_p.h"
 
 #include <QPainter>
-#include <QStringBuilder>
-#include <QtCore/qmath.h>
+#include <qmath.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -403,9 +402,9 @@ void QDeclarativeRectangle::generateRoundedRect()
         const int pw = d->pen && d->pen->isValid() ? d->pen->width() : 0;
         const int radius = qCeil(d->radius);    //ensure odd numbered width/height so we get 1-pixel center
 
-        QString key = QLatin1String("q_") % QString::number(pw) % d->color.name() % QString::number(d->color.alpha(), 16) % QLatin1Char('_') % QString::number(radius);
+        QString key = QLatin1String("q_") + QString::number(pw) + d->color.name() + QString::number(d->color.alpha(), 16) + QLatin1Char('_') + QString::number(radius);
         if (d->pen && d->pen->isValid())
-            key += d->pen->color().name() % QString::number(d->pen->color().alpha(), 16);
+            key += d->pen->color().name() + QString::number(d->pen->color().alpha(), 16);
 
         if (!QPixmapCache::find(key, &d->rectImage)) {
             d->rectImage = QPixmap(radius*2 + 3 + pw*2, radius*2 + 3 + pw*2);
@@ -438,9 +437,9 @@ void QDeclarativeRectangle::generateBorderedRect()
     if (d->rectImage.isNull()) {
         const int pw = d->pen && d->pen->isValid() ? d->pen->width() : 0;
 
-        QString key = QLatin1String("q_") % QString::number(pw) % d->color.name() % QString::number(d->color.alpha(), 16);
+        QString key = QLatin1String("q_") + QString::number(pw) + d->color.name() + QString::number(d->color.alpha(), 16);
         if (d->pen && d->pen->isValid())
-            key += d->pen->color().name() % QString::number(d->pen->color().alpha(), 16);
+            key += d->pen->color().name() + QString::number(d->pen->color().alpha(), 16);
 
         if (!QPixmapCache::find(key, &d->rectImage)) {
             // Adding 5 here makes qDrawBorderPixmap() paint correctly with smooth: true

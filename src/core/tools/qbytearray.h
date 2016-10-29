@@ -233,25 +233,22 @@ public:
 
     QByteArray repeated(const int times) const;
 
-#ifndef QT_NO_CAST_TO_ASCII
-    QT_ASCII_CAST_WARN QByteArray &append(const QString &s);
-    QT_ASCII_CAST_WARN QByteArray &insert(const int i, const QString &s);
-    QT_ASCII_CAST_WARN QByteArray &replace(const QString &before, const char *after);
-    QT_ASCII_CAST_WARN QByteArray &replace(char c, const QString &after);
-    QT_ASCII_CAST_WARN QByteArray &replace(const QString &before, const QByteArray &after);
+    QByteArray &append(const QString &s);
+    QByteArray &insert(const int i, const QString &s);
+    QByteArray &replace(const QString &before, const char *after);
+    QByteArray &replace(char c, const QString &after);
+    QByteArray &replace(const QString &before, const QByteArray &after);
 
-    QT_ASCII_CAST_WARN QByteArray &operator+=(const QString &s);
-    QT_ASCII_CAST_WARN int indexOf(const QString &s, const int from = 0) const;
-    QT_ASCII_CAST_WARN int lastIndexOf(const QString &s, int const from = -1) const;
-#endif
-#ifndef QT_NO_CAST_FROM_ASCII
-    inline QT_ASCII_CAST_WARN bool operator==(const QString &s2) const;
-    inline QT_ASCII_CAST_WARN bool operator!=(const QString &s2) const;
-    inline QT_ASCII_CAST_WARN bool operator<(const QString &s2) const;
-    inline QT_ASCII_CAST_WARN bool operator>(const QString &s2) const;
-    inline QT_ASCII_CAST_WARN bool operator<=(const QString &s2) const;
-    inline QT_ASCII_CAST_WARN bool operator>=(const QString &s2) const;
-#endif
+    QByteArray &operator+=(const QString &s);
+    int indexOf(const QString &s, const int from = 0) const;
+    int lastIndexOf(const QString &s, int const from = -1) const;
+
+    inline bool operator==(const QString &s2) const;
+    inline bool operator!=(const QString &s2) const;
+    inline bool operator<(const QString &s2) const;
+    inline bool operator>(const QString &s2) const;
+    inline bool operator<=(const QString &s2) const;
+    inline bool operator>=(const QString &s2) const;
 
     short toShort(bool *ok = 0, int base = 10) const;
     ushort toUShort(bool *ok = 0, int base = 10) const;
@@ -483,7 +480,6 @@ inline bool operator>=(const QByteArray &a1, const char *a2)
 { return qstrcmp(a1, a2) >= 0; }
 inline bool operator>=(const char *a1, const QByteArray &a2)
 { return qstrcmp(a1, a2) >= 0; }
-#if !defined(QT_USE_QSTRINGBUILDER)
 inline const QByteArray operator+(const QByteArray &a1, const QByteArray &a2)
 { return QByteArray(a1) += a2; }
 inline const QByteArray operator+(const QByteArray &a1, const char *a2)
@@ -494,7 +490,6 @@ inline const QByteArray operator+(const char *a1, const QByteArray &a2)
 { return QByteArray(a1) += a2; }
 inline const QByteArray operator+(char a1, const QByteArray &a2)
 { return QByteArray(&a1, 1) += a2; }
-#endif // QT_USE_QSTRINGBUILDER
 inline bool QByteArray::contains(const char *c) const
 { return indexOf(c) != -1; }
 inline QByteArray &QByteArray::replace(char before, const char *c)
@@ -541,9 +536,5 @@ Q_DECLARE_SHARED(QByteArray)
 QT_END_NAMESPACE
 
 QT_END_HEADER
-
-#ifdef QT_USE_QSTRINGBUILDER
-#include <QtCore/qstring.h>
-#endif
 
 #endif // QBYTEARRAY_H

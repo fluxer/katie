@@ -39,19 +39,9 @@
 **
 ****************************************************************************/
 
-// Don't define it while compiling this module, or USERS of Qt will
-// not be able to link.
-#ifdef QT_NO_CAST_FROM_ASCII
-#  undef QT_NO_CAST_FROM_ASCII
-#endif
-#ifdef QT_NO_CAST_TO_ASCII
-#  undef QT_NO_CAST_TO_ASCII
-#endif
 #include "qchar.h"
-
 #include "qdatastream.h"
 #include "qtextcodec.h"
-
 #include "qunicodetables_p.h"
 #include "qunicodetables.cpp"
 
@@ -156,14 +146,6 @@ QT_BEGIN_NAMESPACE
     0), row() (gives the Unicode row), cell() (gives the Unicode
     cell), digitValue() (gives the integer value of any of the
     numerous digit characters), and a host of constructors.
-
-    QChar provides constructors and cast operators that make it easy
-    to convert to and from traditional 8-bit \c{char}s. If you
-    defined \c QT_NO_CAST_FROM_ASCII and \c QT_NO_CAST_TO_ASCII, as
-    explained in the QString documentation, you will need to
-    explicitly call fromAscii() or fromLatin1(), or use QLatin1Char,
-    to construct a QChar from an 8-bit \c char, and you will need to
-    call toAscii() or toLatin1() to get the 8-bit value back.
 
     \sa QString, Unicode, QLatin1Char
 */

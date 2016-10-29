@@ -1540,19 +1540,14 @@ QVariant::QVariant(QDataStream &s)
     variant and QVariant::type() will return QMetaType::QString for
     the variant.
 
-    You can disable this operator by defining \c
-    QT_NO_CAST_FROM_ASCII when you compile your applications.
-
     \sa QTextCodec::setCodecForCStrings()
 */
 
-#ifndef QT_NO_CAST_FROM_ASCII
 QVariant::QVariant(const char *val)
 {
     QString s = QString::fromAscii(val);
     create(String, &s);
 }
-#endif
 
 /*!
   \fn QVariant::QVariant(const QStringList &val)

@@ -1380,8 +1380,8 @@ void QWindowsStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, 
             int size = qMin(r.height(), r.width());
             QPixmap pixmap;
             QString pixmapName = QStyleHelper::uniqueName(QLatin1String("$qt_ia-")
-                                                          % QLatin1String(metaObject()->className()), opt, QSize(size, size))
-                                 % HexString<uint>(pe);
+                                                          + QLatin1String(metaObject()->className()), opt, QSize(size, size))
+                                                          + HexString(pe);
             if (!QPixmapCache::find(pixmapName, pixmap)) {
                 int border = size/5;
                 int sqsize = 2*(size/2);
