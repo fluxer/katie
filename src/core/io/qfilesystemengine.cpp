@@ -42,7 +42,6 @@
 #include "qfilesystemengine_p.h"
 #include <QtCore/qdir.h>
 #include <QtCore/qset.h>
-#include <QtCore/qstringbuilder.h>
 #include <qabstractfileengine_p.h>
 #ifdef QT_BUILD_CORE_LIB
 #include <qresource_p.h>
@@ -149,7 +148,7 @@ static bool _q_resolveEntryAndCreateLegacyEngine_recursive(QFileSystemEntry &ent
 
             const QStringList &paths = QDir::searchPaths(filePath.left(prefixSeparator));
             for (int i = 0; i < paths.count(); i++) {
-                entry = QFileSystemEntry(QDir::cleanPath(paths.at(i) % QLatin1Char('/') % filePath.mid(prefixSeparator + 1)));
+                entry = QFileSystemEntry(QDir::cleanPath(paths.at(i) + QLatin1Char('/') + filePath.mid(prefixSeparator + 1)));
                 // Recurse!
                 if (_q_resolveEntryAndCreateLegacyEngine_recursive(entry, data, engine, true))
                     return true;

@@ -163,7 +163,6 @@ set(CORE_PUBLIC_HEADERS
     QLinkedListData
     QLatin1Char
     QAnimationDriver
-    QLatin1Literal
     QBBSystemLocaleData
     QDir
     QObject

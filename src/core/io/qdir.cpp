@@ -57,7 +57,6 @@
 #include "qfilesystementry_p.h"
 #include "qfilesystemmetadata_p.h"
 #include "qfilesystemengine_p.h"
-#include <qstringbuilder.h>
 
 #ifdef QT_BUILD_CORE_LIB
 #  include "qresource.h"
@@ -684,8 +683,8 @@ QString QDir::absoluteFilePath(const QString &fileName) const
     if (fileName.isEmpty())
         return d->absoluteDirEntry.filePath();
     if (!d->absoluteDirEntry.isRoot())
-        return d->absoluteDirEntry.filePath() % QLatin1Char('/') % fileName;
-    return d->absoluteDirEntry.filePath() % fileName;
+        return d->absoluteDirEntry.filePath() + QLatin1Char('/') + fileName;
+    return d->absoluteDirEntry.filePath() + fileName;
 }
 
 /*!
@@ -782,7 +781,7 @@ bool QDir::cd(const QString &dirName)
                 return false;
             newPath = d->dirEntry.filePath();
         } else {
-            newPath = d->dirEntry.filePath() % QLatin1Char('/');
+            newPath = d->dirEntry.filePath() + QLatin1Char('/');
         }
 
         newPath += dirName;

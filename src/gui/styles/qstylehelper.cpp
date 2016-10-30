@@ -47,7 +47,6 @@
 #include <qmath.h>
 #include <qpen.h>
 #include "qstylehelper_p.h"
-#include <qstringbuilder.h>
 
 QT_BEGIN_NAMESPACE
 

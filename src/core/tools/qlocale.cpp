@@ -50,7 +50,6 @@
 #include "qdatetime.h"
 #include "qstringlist.h"
 #include "qvariant.h"
-#include "qstringbuilder.h"
 #include "qnumeric.h"
 
 QT_BEGIN_NAMESPACE
@@ -804,9 +803,9 @@ QString QLocale::quoteString(const QStringRef &str, QuotationStyle style) const
 #endif
 
     if (style == QLocale::StandardQuotation)
-        return QChar(d()->m_quotation_start) % str % QChar(d()->m_quotation_end);
+        return QChar(d()->m_quotation_start) + str.toString() + QChar(d()->m_quotation_end);
     else
-        return QChar(d()->m_alternate_quotation_start) % str % QChar(d()->m_alternate_quotation_end);
+        return QChar(d()->m_alternate_quotation_start) + str.toString() + QChar(d()->m_alternate_quotation_end);
 }
 
 /*!

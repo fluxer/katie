@@ -40,8 +40,6 @@
 ****************************************************************************/
 
 #include "qlocale_p.h"
-
-#include "qstringbuilder.h"
 #include "qdatetime.h"
 #include "qstringlist.h"
 #include "qvariant.h"
@@ -217,7 +215,7 @@ QVariant QSystemLocale::query(QueryType type, QVariant in) const
                                 lang, script, cntry)) {
                 if (!cntry.length() && lang.length())
                     return QStringList(lang);
-                return QStringList(lang % QLatin1Char('-') % cntry);
+                return QStringList(lang + QLatin1Char('-') + cntry);
             }
         }
         return QVariant();

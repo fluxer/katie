@@ -681,12 +681,6 @@ const QString::Null QString::null = { };
     then called \e{once} to get the required space, and the substrings
     are copied into it one by one.
 
-    \c{QLatin1Literal} is a second internal class that can replace
-    QLatin1String, which can't be changed for compatibility reasons.
-    \c{QLatin1Literal} stores its length, thereby saving time when
-    \c{QStringBuilder} computes the amount of memory required for the
-    final string.
-
     Additional efficiency is gained by inlining and reduced reference
     counting (the QString created from a \c{QStringBuilder} typically
     has a ref count of 1, whereas QString::append() needs an extra

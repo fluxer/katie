@@ -253,7 +253,7 @@ QPixmap QPixmapIconEngine::pixmap(const QSize &size, QIcon::Mode mode, QIcon::St
     if (!actualSize.isNull() && (actualSize.width() > size.width() || actualSize.height() > size.height()))
         actualSize.scale(size, Qt::KeepAspectRatio);
 
-    QString key = QLatin1Literal("qt_")
+    QString key = QLatin1String("qt_")
                   % HexString<quint64>(pm.cacheKey())
                   % HexString<uint>(pe->mode)
                   % HexString<quint64>(QApplication::palette().cacheKey())
