@@ -558,7 +558,33 @@ const QString::Null QString::null = { };
     QString more convenient to use if all strings are US-ASCII or
     Latin-1, but there is always the risk that an implicit conversion
     from or to \c{const char *} is done using the wrong 8-bit
-    encoding.
+    encoding. To minimize these risks, you can turn off these implicit
+    conversions by defining the following two preprocessor symbols:
+
+    \list
+    \o \c QT_NO_CAST_FROM_ASCII disables automatic conversions from
+       C string literals and pointers to Unicode.
+    \o \c QT_NO_CAST_TO_ASCII disables automatic conversion from QString
+       to C strings.
+    \endlist
+
+    One way to define these preprocessor symbols globally for your
+    application is to add the following entry to your
+    \l{qmake Project Files}{qmake project file}:
+
+    \snippet doc/src/snippets/code/src_corelib_tools_qstring.cpp 0
+
+    You then need to explicitly call fromAscii(), fromLatin1(),
+    fromUtf8(), or fromLocal8Bit() to construct a QString from an
+    8-bit string, or use the lightweight QLatin1String class, for
+    example:
+
+    \snippet doc/src/snippets/code/src_corelib_tools_qstring.cpp 1
+
+    Similarly, you must call toAscii(), toLatin1(), toUtf8(), or
+    toLocal8Bit() explicitly to convert the QString to an 8-bit
+    string.  (Other encodings are supported through the QTextCodec
+    class.)
 
     \table 100 %
     \header
@@ -637,6 +663,50 @@ const QString::Null QString::null = { };
 
     Second, QLatin1String does not store its length internally but
     calls qstrlen() when it needs to know its length.
+
+    In 4.6, an internal template class \c{QStringBuilder} has been
+    added along with a few helper functions. This class is marked
+    internal and does not appear in the documentation, because you
+    aren't meant to instantiate it in your code. Its use will be
+    automatic, as described below. The class is found in
+    \c {src/corelib/tools/qstringbuilder.cpp} if you want to have a
+    look at it.
+
+    \c{QStringBuilder} uses expression templates and reimplements the
+    \c{'%'} operator so that when you use \c{'%'} for string
+    concatenation instead of \c{'+'}, multiple substring
+    concatenations will be postponed until the final result is about
+    to be assigned to a QString. At this point, the amount of memory
+    required for the final result is known. The memory allocator is
+    then called \e{once} to get the required space, and the substrings
+    are copied into it one by one.
+
+    \c{QLatin1Literal} is a second internal class that can replace
+    QLatin1String, which can't be changed for compatibility reasons.
+    \c{QLatin1Literal} stores its length, thereby saving time when
+    \c{QStringBuilder} computes the amount of memory required for the
+    final string.
+
+    Additional efficiency is gained by inlining and reduced reference
+    counting (the QString created from a \c{QStringBuilder} typically
+    has a ref count of 1, whereas QString::append() needs an extra
+    test).
+
+    There are three ways you can access this improved method of string
+    construction. The straightforward way is to include
+    \c{QStringBuilder} wherever you want to use it, and use the
+    \c{'%'} operator instead of \c{'+'} when concatenating strings:
+
+    \snippet doc/src/snippets/qstring/stringbuilder.cpp 5
+
+    A more global approach which is the most convenient but
+    not entirely source compatible, is to this define in your
+    .pro file:
+
+    \snippet doc/src/snippets/qstring/stringbuilder.cpp 3
+
+    and the \c{'+'} will automatically be performed as the
+    \c{QStringBuilder} \c{'%'} everywhere.
 
     \sa fromRawData(), QChar, QLatin1String, QByteArray, QStringRef
 */
@@ -766,6 +836,11 @@ int QString::grow(int size)
     Constructs a string initialized with the 8-bit string \a str. The
     given const char pointer is converted to Unicode using the
     fromAscii() function.
+
+    You can disable this constructor by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 
     \sa fromAscii(), fromLatin1(), fromLocal8Bit(), fromUtf8()
 */
@@ -1024,6 +1099,11 @@ QString::QString(QChar ch)
     copying at the first 0 character, otherwise copies the entire byte
     array.
 
+    You can disable this constructor by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
+
     \sa fromAscii(), fromLatin1(), fromLocal8Bit(), fromUtf8()
 */
 
@@ -1251,6 +1331,11 @@ QString &QString::operator=(const QString &other)
     Assigns \a ba to this string. The byte array is converted to Unicode
     using the fromAscii() function. This function stops conversion at the
     first NUL character found, or the end of the \a ba byte array.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn QString &QString::operator=(const char *str)
@@ -1259,6 +1344,11 @@ QString &QString::operator=(const QString &other)
 
     Assigns \a str to this string. The const char pointer is converted
     to Unicode using the fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn QString &QString::operator=(char ch)
@@ -1267,6 +1357,11 @@ QString &QString::operator=(const QString &other)
 
     Assigns character \a ch to this string. The character is converted
     to Unicode using the fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*!
@@ -1426,6 +1521,11 @@ QString &QString::append(const QLatin1String &str)
 
     Appends the byte array \a ba to this string. The given byte array
     is converted to Unicode using the fromAscii() function.
+
+    You can disable this function by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn QString &QString::append(const char *str)
@@ -1434,6 +1534,11 @@ QString &QString::append(const QLatin1String &str)
 
     Appends the string \a str to this string. The given const char
     pointer is converted to Unicode using the fromAscii() function.
+
+    You can disable this function by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*!
@@ -1475,6 +1580,11 @@ QString &QString::append(QChar ch)
 
     Prepends the byte array \a ba to this string. The byte array is
     converted to Unicode using the fromAscii() function.
+
+    You can disable this function by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn QString &QString::prepend(const char *str)
@@ -1483,6 +1593,11 @@ QString &QString::append(QChar ch)
 
     Prepends the string \a str to this string. The const char pointer
     is converted to Unicode using the fromAscii() function.
+
+    You can disable this function by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn QString &QString::prepend(QChar ch)
@@ -2010,6 +2125,11 @@ bool QString::operator==(const QLatin1String &other) const
     The \a other byte array is converted to a QString using the
     fromAscii() function. This function stops conversion at the
     first NUL character found, or the end of the byte array.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QString::operator==(const char *other) const
@@ -2018,6 +2138,11 @@ bool QString::operator==(const QLatin1String &other) const
 
     The \a other const char pointer is converted to a QString using
     the fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*!
@@ -2062,6 +2187,11 @@ bool QString::operator<(const QLatin1String &other) const
     The \a other byte array is converted to a QString using the
     fromAscii() function. If any NUL characters ('\0') are embedded
     in the byte array, they will be included in the transformation.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QString::operator<(const char *other) const
@@ -2070,6 +2200,11 @@ bool QString::operator<(const QLatin1String &other) const
 
     The \a other const char pointer is converted to a QString using
     the fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QString::operator<=(const QString &other) const
@@ -2095,6 +2230,11 @@ bool QString::operator<(const QLatin1String &other) const
     The \a other byte array is converted to a QString using the
     fromAscii() function. If any NUL characters ('\0') are embedded
     in the byte array, they will be included in the transformation.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QString::operator<=(const char *other) const
@@ -2103,6 +2243,11 @@ bool QString::operator<(const QLatin1String &other) const
 
     The \a other const char pointer is converted to a QString using
     the fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QString::operator>(const QString &other) const
@@ -2144,6 +2289,11 @@ bool QString::operator>(const QLatin1String &other) const
     The \a other byte array is converted to a QString using the
     fromAscii() function. If any NUL characters ('\0') are embedded
     in the byte array, they will be included in the transformation.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QString::operator>(const char *other) const
@@ -2152,6 +2302,11 @@ bool QString::operator>(const QLatin1String &other) const
 
     The \a other const char pointer is converted to a QString using
     the fromAscii() function.
+
+    You can disable this operator by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn bool QString::operator>=(const QString &other) const
@@ -2177,6 +2332,11 @@ bool QString::operator>(const QLatin1String &other) const
     The \a other byte array is converted to a QString using the
     fromAscii() function. If any NUL characters ('\0') are embedded in
     the byte array, they will be included in the transformation.
+
+    You can disable this operator by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn bool QString::operator>=(const char *other) const
@@ -2185,6 +2345,11 @@ bool QString::operator>(const QLatin1String &other) const
 
     The \a other const char pointer is converted to a QString using
     the fromAscii() function.
+
+    You can disable this operator by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn bool QString::operator!=(const QString &other) const
@@ -2210,6 +2375,11 @@ bool QString::operator>(const QLatin1String &other) const
     The \a other byte array is converted to a QString using the
     fromAscii() function. If any NUL characters ('\0') are embedded
     in the byte array, they will be included in the transformation.
+
+    You can disable this operator by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn bool QString::operator!=(const char *other) const
@@ -2218,6 +2388,11 @@ bool QString::operator>(const QLatin1String &other) const
 
     The \a other const char pointer is converted to a QString using
     the fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*!
@@ -3995,6 +4170,11 @@ QString& QString::fill(QChar ch, int size)
     to Unicode using the fromAscii() function. If any NUL characters ('\0')
     are embedded in the \a ba byte array, they will be included in the
     transformation.
+
+    You can disable this function by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn QString &QString::operator+=(const char *str)
@@ -4003,6 +4183,11 @@ QString& QString::fill(QChar ch, int size)
 
     Appends the string \a str to this string. The const char pointer
     is converted to Unicode using the fromAscii() function.
+
+    You can disable this function by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn QString &QString::operator+=(const QStringRef &str)
@@ -4018,6 +4203,11 @@ QString& QString::fill(QChar ch, int size)
 
     Appends the character \a ch to this string. The character is
     converted to Unicode using the fromAscii() function.
+
+    You can disable this function by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*! \fn QString &QString::operator+=(QChar ch)
@@ -6757,10 +6947,12 @@ QString &QString::setRawData(const QChar *unicode, int size)
     because it doesn't construct four temporary QString objects and
     make a deep copy of the character data.
 
-    To provide an efficient way of specifying constant Latin-1
-    strings, Qt provides the QLatin1String, which is just a very
-    thin wrapper around a \c{const char *}. Using QLatin1String,
-    the example code above becomes
+    Applications that define \c QT_NO_CAST_FROM_ASCII (as explained
+    in the QString documentation) don't have access to QString's
+    \c{const char *} API. To provide an efficient way of specifying
+    constant Latin-1 strings, Qt provides the QLatin1String, which is
+    just a very thin wrapper around a \c{const char *}. Using
+    QLatin1String, the example code above becomes
 
     \snippet doc/src/snippets/code/src_corelib_tools_qstring.cpp 5
 
@@ -6820,6 +7012,11 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
     The \a other const char pointer is converted to a QString using
     the QString::fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QLatin1String::operator!=(const QString &other) const
@@ -6840,6 +7037,11 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
     The \a other const char pointer is converted to a QString using
     the QString::fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*!
@@ -6861,6 +7063,11 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
     The \a other const char pointer is converted to a QString using
     the QString::fromAscii() function.
+
+    You can disable this operator by defining \c QT_NO_CAST_FROM_ASCII
+    when you compile your applications. This can be useful if you want
+    to ensure that all user-visible strings go through QObject::tr(),
+    for example.
 */
 
 /*!
@@ -6882,6 +7089,11 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
     The \a other const char pointer is converted to a QString using
     the QString::fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*!
@@ -6903,6 +7115,11 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
     The \a other const char pointer is converted to a QString using
     the QString::fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 /*! \fn bool QLatin1String::operator<=(const QString &other) const
@@ -6923,6 +7140,11 @@ QString &QString::setRawData(const QChar *unicode, int size)
 
     The \a other const char pointer is converted to a QString using
     the QString::fromAscii() function.
+
+    You can disable this operator by defining \c
+    QT_NO_CAST_FROM_ASCII when you compile your applications. This
+    can be useful if you want to ensure that all user-visible strings
+    go through QObject::tr(), for example.
 */
 
 

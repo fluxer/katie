@@ -100,9 +100,9 @@ QPixmap qt_pixmapForBrush(int brushStyle, bool invert)
 {
 
     QPixmap pm;
-    const QString key = QLatin1String("$qt-brush$")
-                  + HexString(brushStyle)
-                  + QLatin1Char(invert ? '1' : '0');
+    QString key = QLatin1Literal("$qt-brush$")
+                  % HexString<uint>(brushStyle)
+                  % QLatin1Char(invert ? '1' : '0');
     if (!QPixmapCache::find(key, pm)) {
         pm = QBitmap::fromData(QSize(8, 8), qt_patternForBrush(brushStyle, invert),
                                QImage::Format_MonoLSB);

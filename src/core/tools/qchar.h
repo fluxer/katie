@@ -66,8 +66,10 @@ private:
 class Q_CORE_EXPORT QChar {
 public:
     QChar();
-    QChar(const char c);
-    QChar(const uchar c);
+#ifndef QT_NO_CAST_FROM_ASCII
+    QT_ASCII_CAST_WARN_CONSTRUCTOR QChar(const char c);
+    QT_ASCII_CAST_WARN_CONSTRUCTOR QChar(const uchar c);
+#endif
     QChar(const QLatin1Char ch);
     QChar(const uchar c, uchar r);
     QChar(const ushort rc);
@@ -310,6 +312,10 @@ public:
 
 
 private:
+#ifdef QT_NO_CAST_FROM_ASCII
+    QChar(const char c);
+    QChar(const uchar c);
+#endif
     ushort ucs;
 };
 

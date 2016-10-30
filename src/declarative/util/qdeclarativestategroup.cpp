@@ -48,6 +48,7 @@
 
 #include "qdebug.h"
 #include "qobject_p.h"
+#include "qstringbuilder.h"
 #include "qdeclarativeinfo.h"
 
 QT_BEGIN_NAMESPACE
@@ -301,7 +302,7 @@ void QDeclarativeStateGroup::componentComplete()
     for (int ii = 0; ii < d->states.count(); ++ii) {
         QDeclarativeState *state = d->states.at(ii);
         if (!state->isNamed())
-            state->setName(QLatin1String("anonymousState") + QString::number(++d->unnamedCount));
+            state->setName(QLatin1String("anonymousState") % QString::number(++d->unnamedCount));
     }
 
     if (d->updateAutoState()) {

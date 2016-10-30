@@ -47,6 +47,7 @@
 // built-in handlers
 #include "qfsfileengine.h"
 #include "qdiriterator.h"
+#include "qstringbuilder.h"
 
 #include <qfilesystementry_p.h>
 #include <qfilesystemmetadata_p.h>

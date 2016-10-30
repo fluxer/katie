@@ -484,9 +484,9 @@ static void qBrushSetAlphaF(QBrush *brush, qreal alpha)
         // Modify the texture - ridiculously expensive.
         QPixmap texture = brush->texture();
         QPixmap pixmap;
-        QString name = QLatin1String("qbrushtexture-alpha")
-                       + HexString(alpha)
-                       + HexString(texture.cacheKey());
+        QString name = QLatin1Literal("qbrushtexture-alpha")
+                       % HexString<qreal>(alpha)
+                       % HexString<qint64>(texture.cacheKey());
         if (!QPixmapCache::find(name, pixmap)) {
             QImage image = texture.toImage();
             QRgb *rgb = reinterpret_cast<QRgb *>(image.bits());
@@ -547,9 +547,9 @@ static QBrush qBrushLight(QBrush brush, int light)
         // Modify the texture - ridiculously expensive.
         QPixmap texture = brush.texture();
         QPixmap pixmap;
-        QString name = QLatin1String("qbrushtexture-light")
-                       + HexString(light)
-                       + HexString(texture.cacheKey());
+        QString name = QLatin1Literal("qbrushtexture-light")
+                       % HexString<int>(light)
+                       % HexString<qint64>(texture.cacheKey());
 
         if (!QPixmapCache::find(name, pixmap)) {
             QImage image = texture.toImage();
@@ -609,9 +609,9 @@ static QBrush qBrushDark(QBrush brush, int dark)
         // Modify the texture - ridiculously expensive.
         QPixmap texture = brush.texture();
         QPixmap pixmap;
-        QString name = QLatin1String("qbrushtexture-dark")
-                       + HexString(dark)
-                       + HexString(texture.cacheKey());
+        QString name = QLatin1Literal("qbrushtexture-dark")
+                       % HexString<int>(dark)
+                       % HexString<qint64>(texture.cacheKey());
 
         if (!QPixmapCache::find(name, pixmap)) {
             QImage image = texture.toImage();
@@ -726,11 +726,11 @@ static void qt_plastique_draw_frame(QPainter *painter, const QRect &rect, const 
 static void qt_plastique_draw_gradient(QPainter *painter, const QRect &rect, const QColor &gradientStart,
                                        const QColor &gradientStop)
 {
-    QString gradientName = QLatin1String("qplastique-g")
-                   + HexString(rect.width())
-                   + HexString(rect.height())
-                   + HexString(gradientStart.rgba())
-                   + HexString(gradientStop.rgba());
+    QString gradientName = QLatin1Literal("qplastique-g")
+                   % HexString<int>(rect.width())
+                   % HexString<int>(rect.height())
+                   % HexString<QRgb>(gradientStart.rgba())
+                   % HexString<QRgb>(gradientStop.rgba());
 
     QPixmap cache;
     QPainter *p = painter;
@@ -906,7 +906,7 @@ static QString elliditide(const QString &text, const QFontMetrics &fontMetrics, 
     // Chop and insert ellide into title if text is too wide
     QString title = text;
     int width = textWidth ? *textWidth : fontMetrics.width(text);
-    const QString ellipsis = QLatin1String("...");
+    QString ellipsis = QLatin1String("...");
     if (width > rect.width()) {
         QString leftHalf = title.left(title.size() / 2);
         QString rightHalf = title.mid(leftHalf.size() + 1);
@@ -2667,7 +2667,7 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
             // contents
             painter->setPen(QPen());
 
-            const QString progressBarName = QStyleHelper::uniqueName(QLatin1String("progressBarContents"),
+            QString progressBarName = QStyleHelper::uniqueName(QLatin1String("progressBarContents"),
                                                  option, rect.size());
             QPixmap cache;
             if (!QPixmapCache::find(progressBarName, cache) && rect.height() > 7) {
@@ -2974,8 +2974,7 @@ void QPlastiqueStyle::drawControl(ControlElement element, const QStyleOption *op
         // Draws a menu bar item; File, Edit, Help etc..
         if ((option->state & State_Selected)) {
             QPixmap cache;
-            const QString pixmapName = QStyleHelper::uniqueName(QLatin1String("menubaritem"),
-                                                                option, option->rect.size());
+            QString pixmapName = QStyleHelper::uniqueName(QLatin1String("menubaritem"), option, option->rect.size());
             if (!QPixmapCache::find(pixmapName, cache)) {
                 cache = QPixmap(option->rect.size());
                 cache.fill(Qt::white);

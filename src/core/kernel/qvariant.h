@@ -173,7 +173,9 @@ class Q_CORE_EXPORT QVariant
     QVariant(bool b);
     QVariant(double d);
     QVariant(float f) { d.is_null = false; d.type = QMetaType::Float; d.data.f = f; }
-    QVariant(const char *str);
+#ifndef QT_NO_CAST_FROM_ASCII
+    QT_ASCII_CAST_WARN_CONSTRUCTOR QVariant(const char *str);
+#endif
 
     QVariant(const QByteArray &bytearray);
     QVariant(const QBitArray &bitarray);
@@ -387,6 +389,10 @@ protected:
 private:
     // force compile error, prevent QVariant(bool) to be called
     inline QVariant(void *) { Q_ASSERT(false); }
+#ifdef QT_NO_CAST_FROM_ASCII
+    // force compile error when implicit conversion is not wanted
+    inline QVariant(const char *) { Q_ASSERT(false); }
+#endif
     // force compile error, prevent QVariant(QVariant::Type, int) to be called
     inline QVariant(bool, int) { Q_ASSERT(false); }
 public:

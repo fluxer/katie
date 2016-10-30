@@ -57,6 +57,7 @@
 #include <QPoint>
 #include <QSize>
 #include <QRect>
+#include <QStringBuilder>
 #include <QDebug>
 
 QT_BEGIN_NAMESPACE

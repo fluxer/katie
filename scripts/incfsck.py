@@ -10,7 +10,7 @@ incmap = {
         'QGenericArgument': 'qobjectdefs.h',
         'QProcessEnvironment': 'qprocess.h',
         'QMutableHashIterator': 'qhash.h',
-        'QLatin1Literal': 'qstring.h',
+        'QLatin1Literal': 'qstringbuilder.h',
         'QObjectList': 'qobject.h',
         'QMapIterator': 'qmap.h',
         'QMutexLocker': 'qmutex.h',

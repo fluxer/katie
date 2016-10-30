@@ -57,6 +57,7 @@
 #if !defined(QT_NO_STYLE_GTK)
 
 #include <QtCore/qstring.h>
+#include <QtCore/qstringbuilder.h>
 #include <QtCore/qcoreapplication.h>
 
 #include <QtGui/QFileDialog>
