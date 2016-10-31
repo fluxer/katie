@@ -254,6 +254,7 @@ public slots:
     void objectDestroyed(QObject *o);
     void relaySignal(QObject *obj, const QMetaObject *, int signalId, const QVariantList &args);
 
+private slots:
     void serviceOwnerChangedNoLock(const QString &name, const QString &oldOwner, const QString &newOwner);
     void registerServiceNoLock(const QString &serviceName);
     void unregisterServiceNoLock(const QString &serviceName);
