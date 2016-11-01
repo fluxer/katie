@@ -251,15 +251,15 @@ void QFileInfoGatherer::getFileInfos(const QString &path, const QStringList &fil
 #endif
         QFileInfoList infoList;
         if (files.isEmpty()) {
-            infoList << QFieInfo(QDir::rootPath());
+            infoList << QFileInfo(QDir::rootPath());
         } else {
             for (int i = 0; i < files.count(); ++i)
                 infoList << QFileInfo(files.at(i));
         }
         for (int i = infoList.count() - 1; i >= 0; --i) {
-            QString driveName = infoList.at(i);
+            QFileInfo driveName = infoList.at(i);
             QList<QPair<QString,QFileInfo> > updatedFiles;
-            updatedFiles.append(QPair<QString,QFileInfo>(driveName.absoluteFilePath(), infoList.at(i)));
+            updatedFiles.append(QPair<QString,QFileInfo>(driveName.absoluteFilePath(), driveName));
             emit updates(path, updatedFiles);
         }
         return;
