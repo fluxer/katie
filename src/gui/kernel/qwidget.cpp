@@ -2119,7 +2119,7 @@ void QWidgetPrivate::paintBackground(QPainter *painter, const QRegion &rgn, int 
     //If we are painting the viewport of a scrollarea, we must apply an offset to the brush in case we are drawing a texture
     QAbstractScrollArea *scrollArea = qobject_cast<QAbstractScrollArea *>(parent);
     if (scrollArea && scrollArea->viewport() == q) {
-        QObjectData *scrollPrivate = static_cast<QWidget *>(scrollArea)->d_ptr.data();
+        QObjectData *scrollPrivate = static_cast<QWidget *>(scrollArea)->d_ptr;
         QAbstractScrollAreaPrivate *priv = static_cast<QAbstractScrollAreaPrivate *>(scrollPrivate);
         oldBrushOrigin = painter->brushOrigin();
         resetBrushOrigin = true;

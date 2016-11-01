@@ -111,6 +111,11 @@ public:
             metaData = QFileSystemMetaData();
     }
 
+    inline ~QFileInfoPrivate()
+    {
+        delete fileEngine;
+    }
+
     inline void clearFlags() const {
         fileFlags = 0;
         cachedFlags = 0;
@@ -134,7 +139,7 @@ public:
     QFileSystemEntry fileEntry;
     mutable QFileSystemMetaData metaData;
 
-    QScopedPointer<QAbstractFileEngine> const fileEngine;
+    QAbstractFileEngine* const fileEngine;
 
     mutable QString fileNames[QAbstractFileEngine::NFileNames];
     mutable QString fileOwners[2];

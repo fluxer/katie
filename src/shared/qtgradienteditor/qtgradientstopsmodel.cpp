@@ -87,6 +87,7 @@ QtGradientStop::QtGradientStop(QtGradientStopsModel *model)
 
 QtGradientStop::~QtGradientStop()
 {
+    delete d_ptr;
 }
 
 class QtGradientStopsModelPrivate
@@ -112,6 +113,7 @@ QtGradientStopsModel::QtGradientStopsModel(QObject *parent)
 QtGradientStopsModel::~QtGradientStopsModel()
 {
     clear();
+    delete d_ptr;
 }
 
 QtGradientStopsModel::PositionStopMap QtGradientStopsModel::stops() const

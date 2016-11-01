@@ -53,6 +53,7 @@
 #include "qstringmatcher.h"
 #include "qvector.h"
 #include "qfunctions_p.h"
+#include "qscopedpointer.h"
 
 #include <limits.h>
 

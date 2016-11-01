@@ -260,6 +260,7 @@ QT_BEGIN_NAMESPACE
 
 QDataStream::QDataStream()
 {
+    d = Q_NULLPTR;
     dev = 0;
     owndev = false;
     byteorder = BigEndian;
@@ -280,9 +281,10 @@ QDataStream::QDataStream()
     \sa setDevice(), device()
 */
 
-QDataStream::QDataStream(QIODevice *d)
+QDataStream::QDataStream(QIODevice *device)
 {
-    dev = d;                                // set device
+    d = Q_NULLPTR;
+    dev = device;                                // set device
     owndev = false;
     byteorder = BigEndian;                        // default byte order
     ver = QDataStream::Qt_Default;
@@ -306,6 +308,7 @@ QDataStream::QDataStream(QIODevice *d)
 
 QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
 {
+    d = Q_NULLPTR;
     QBuffer *buf = new QBuffer(a);
 #ifndef QT_NO_QOBJECT
     buf->blockSignals(true);
@@ -329,6 +332,7 @@ QDataStream::QDataStream(QByteArray *a, QIODevice::OpenMode flags)
 */
 QDataStream::QDataStream(const QByteArray &a)
 {
+    d = Q_NULLPTR;
     QBuffer *buf = new QBuffer;
 #ifndef QT_NO_QOBJECT
     buf->blockSignals(true);
@@ -356,6 +360,7 @@ QDataStream::~QDataStream()
 {
     if (owndev)
         delete dev;
+    delete d;
 }
 
 
@@ -433,7 +438,7 @@ QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 void QDataStream::setFloatingPointPrecision(QDataStream::FloatingPointPrecision precision)
 {
     if (d == 0)
-        d.reset(new QDataStreamPrivate());
+        d = new QDataStreamPrivate();
     d->floatingPointPrecision = precision;
 }
 

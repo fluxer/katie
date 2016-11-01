@@ -50,6 +50,8 @@ QT_BEGIN_NAMESPACE
 class QColor;
 
 class QtGradientStopsModel;
+class QtGradientStopPrivate;
+class QtGradientStopsModelPrivate;
 
 class QtGradientStop
 {
@@ -64,7 +66,7 @@ private:
     friend class QtGradientStopsModel;
     QtGradientStop(QtGradientStopsModel *model = 0);
     ~QtGradientStop();
-    QScopedPointer<class QtGradientStopPrivate> d_ptr;
+    QtGradientStopPrivate* d_ptr;
 };
 
 class QtGradientStopsModel : public QObject
@@ -111,7 +113,7 @@ signals:
     void currentStopChanged(QtGradientStop *stop);
 
 private:
-    QScopedPointer<class QtGradientStopsModelPrivate> d_ptr;
+    QtGradientStopsModelPrivate* d_ptr;
     Q_DECLARE_PRIVATE(QtGradientStopsModel)
     Q_DISABLE_COPY(QtGradientStopsModel)
 };

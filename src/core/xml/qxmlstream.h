@@ -339,7 +339,7 @@ public:
 private:
     Q_DISABLE_COPY(QXmlStreamReader)
     Q_DECLARE_PRIVATE(QXmlStreamReader)
-    QScopedPointer<QXmlStreamReaderPrivate> d_ptr;
+    QXmlStreamReaderPrivate* d_ptr;
 
 };
 #endif // QT_NO_XMLSTREAMREADER
@@ -414,7 +414,7 @@ public:
 private:
     Q_DISABLE_COPY(QXmlStreamWriter)
     Q_DECLARE_PRIVATE(QXmlStreamWriter)
-    QScopedPointer<QXmlStreamWriterPrivate> d_ptr;
+    QXmlStreamWriterPrivate* d_ptr;
 };
 #endif // QT_NO_XMLSTREAMWRITER
 

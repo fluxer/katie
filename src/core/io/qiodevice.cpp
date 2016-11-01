@@ -405,6 +405,9 @@ QIODevice::~QIODevice()
 #if defined QIODEVICE_DEBUG
     printf("%p QIODevice::~QIODevice()\n", this);
 #endif
+#ifdef QT_NO_QOBJECT
+    delete d_ptr;
+#endif
 }
 
 /*!

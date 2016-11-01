@@ -293,7 +293,7 @@ QHostInfo::QHostInfo(int id)
     Constructs a copy of \a other.
 */
 QHostInfo::QHostInfo(const QHostInfo &other)
-    : d(new QHostInfoPrivate(*other.d.data()))
+    : d(new QHostInfoPrivate(*other.d))
 {
 }
 
@@ -303,7 +303,7 @@ QHostInfo::QHostInfo(const QHostInfo &other)
 */
 QHostInfo &QHostInfo::operator=(const QHostInfo &other)
 {
-    *d.data() = *other.d.data();
+    d = other.d;
     return *this;
 }
 
@@ -312,6 +312,7 @@ QHostInfo &QHostInfo::operator=(const QHostInfo &other)
 */
 QHostInfo::~QHostInfo()
 {
+    delete d;
 }
 
 /*!

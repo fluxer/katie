@@ -161,7 +161,7 @@ public:
 private:
     Q_DISABLE_COPY(QDataStream)
 
-    QScopedPointer<QDataStreamPrivate> d;
+    QDataStreamPrivate* d;
 
     QIODevice *dev;
     bool owndev;

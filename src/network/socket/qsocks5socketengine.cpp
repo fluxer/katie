@@ -58,6 +58,7 @@
 #include "qendian.h"
 #include "qnetworkinterface.h"
 #include "qnetworkcommon_p.h"
+#include "qscopedpointer.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -45,10 +45,11 @@
 #include "qmutexpool_p.h"
 #include "qreadwritelock.h"
 #include "qabstracteventdispatcher.h"
-#include <qeventloop.h>
-#include <qhash.h>
+#include "qeventloop.h"
+#include "qhash.h"
 #include "qthread_p.h"
 #include "qcoreapplication_p.h"
+#include "qscopedpointer.h"
 
 QT_BEGIN_NAMESPACE
 

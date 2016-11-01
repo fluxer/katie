@@ -43,7 +43,6 @@
 #define QHOSTINFO_H
 
 #include <QtCore/qlist.h>
-#include <QtCore/qscopedpointer.h>
 #include <QtNetwork/qhostaddress.h>
 
 QT_BEGIN_HEADER
@@ -91,7 +90,7 @@ public:
     static QString localDomainName();
 
 private:
-    QScopedPointer<QHostInfoPrivate> d;
+    QHostInfoPrivate* d;
 };
 
 QT_END_NAMESPACE

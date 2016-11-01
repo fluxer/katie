@@ -426,6 +426,7 @@ QXmlStreamReader::~QXmlStreamReader()
     Q_D(QXmlStreamReader);
     if (d->deleteDevice)
         delete d->device;
+    delete d_ptr;
 }
 
 /*! \fn bool QXmlStreamReader::hasError() const
@@ -3225,6 +3226,7 @@ QXmlStreamWriter::QXmlStreamWriter(QString *string)
 */
 QXmlStreamWriter::~QXmlStreamWriter()
 {
+    delete d_ptr;
 }
 
 

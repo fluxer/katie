@@ -83,7 +83,7 @@ public:
 private:
     Q_DISABLE_COPY(QDirIterator)
 
-    QScopedPointer<QDirIteratorPrivate> d;
+    QDirIteratorPrivate* d;
     friend class QDir;
 };
 

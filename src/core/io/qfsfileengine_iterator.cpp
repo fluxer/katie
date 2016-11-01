@@ -50,19 +50,21 @@ QT_BEGIN_NAMESPACE
 
 QFSFileEngineIterator::QFSFileEngineIterator(QDir::Filters filters, const QStringList &filterNames)
     : QAbstractFileEngineIterator(filters, filterNames)
+    , nativeIterator(Q_NULLPTR)
     , done(false)
 {
 }
 
 QFSFileEngineIterator::~QFSFileEngineIterator()
 {
+    delete nativeIterator;
 }
 
 bool QFSFileEngineIterator::hasNext() const
 {
     if (!done && !nativeIterator) {
-        nativeIterator.reset(new QFileSystemIterator(QFileSystemEntry(path()),
-                    filters(), nameFilters()));
+        nativeIterator = new QFileSystemIterator(QFileSystemEntry(path()),
+                    filters(), nameFilters());
         advance();
     }
 
@@ -88,7 +90,8 @@ void QFSFileEngineIterator::advance() const
         nextInfo = QFileInfo(new QFileInfoPrivate(entry, data));
     } else {
         done = true;
-        nativeIterator.reset();
+        delete nativeIterator;
+        nativeIterator = Q_NULLPTR;
     }
 }
 

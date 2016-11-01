@@ -54,6 +54,7 @@
 #include <QtCore/qdir.h>
 #include <QtCore/qprocess.h>
 #include <QtCore/qdebug.h>
+#include <QtCore/qscopedpointer.h>
 
 #include "QtTest/qtestlog_p.h"
 #include "QtTest/qtesttable_p.h"

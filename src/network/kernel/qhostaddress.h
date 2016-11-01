@@ -44,7 +44,6 @@
 
 #include <QtCore/qpair.h>
 #include <QtCore/qstring.h>
-#include <QtCore/qscopedpointer.h>
 #include <QtNetwork/qabstractsocket.h>
 
 struct sockaddr;
@@ -122,7 +121,7 @@ public:
     static QPair<QHostAddress, int> parseSubnet(const QString &subnet);
 
 protected:
-    QScopedPointer<QHostAddressPrivate> d;
+    QHostAddressPrivate* d;
 };
 
 inline bool operator ==(QHostAddress::SpecialAddress address1, const QHostAddress &address2)

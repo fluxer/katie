@@ -191,7 +191,7 @@ private:
 
     Q_DISABLE_COPY(QTextStream)
 
-    QScopedPointer<QTextStreamPrivate> d_ptr;
+    QTextStreamPrivate* d_ptr;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTextStream::NumberFlags)

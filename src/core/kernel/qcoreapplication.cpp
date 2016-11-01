@@ -65,6 +65,7 @@
 #include <qfunctions_p.h>
 #include <qlocale_p.h>
 #include <qmutexpool_p.h>
+#include <qscopedpointer.h>
 
 #if !defined(QT_NO_GLIB)
 #  include "qeventdispatcher_glib_p.h"

@@ -46,7 +46,6 @@
 #include <QtCore/qstringlist.h>
 #include <QtCore/qmap.h>
 #include <QtCore/qpair.h>
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 
@@ -108,7 +107,7 @@ protected:
 
     QHttpHeader(QHttpHeaderPrivate &dd, const QString &str = QString());
     QHttpHeader(QHttpHeaderPrivate &dd, const QHttpHeader &header);
-    QScopedPointer<QHttpHeaderPrivate> d_ptr;
+    QHttpHeaderPrivate* d_ptr;
 
 private:
     Q_DECLARE_PRIVATE(QHttpHeader)

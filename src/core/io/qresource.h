@@ -88,7 +88,7 @@ protected:
     QStringList children() const;
 
 protected:
-    QScopedPointer<QResourcePrivate> d_ptr;
+    QResourcePrivate* d_ptr;
 
 private:
     Q_DECLARE_PRIVATE(QResource)

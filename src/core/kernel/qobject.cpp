@@ -560,7 +560,7 @@ QObject::QObject(QObject *parent)
     : d_ptr(new QObjectPrivate)
 {
     Q_D(QObject);
-    d_ptr->q_ptr = this;
+    d->q_ptr = this;
     d->threadData = (parent && !parent->thread()) ? parent->d_func()->threadData : QThreadData::current();
     d->threadData->ref();
     if (parent) {
@@ -583,7 +583,7 @@ QObject::QObject(QObjectPrivate &dd, QObject *parent)
     : d_ptr(&dd)
 {
     Q_D(QObject);
-    d_ptr->q_ptr = this;
+    d->q_ptr = this;
     d->threadData = (parent && !parent->thread()) ? parent->d_func()->threadData : QThreadData::current();
     d->threadData->ref();
     if (parent) {
@@ -744,6 +744,8 @@ QObject::~QObject()
 
     if (d->parent)        // remove it from parent object
         d->setParent_helper(0);
+
+    delete d_ptr;
 }
 
 QObjectPrivate::Connection::~Connection()

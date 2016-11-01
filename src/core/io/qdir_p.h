@@ -55,6 +55,7 @@ public:
             QDir::Filters filters_ = QDir::AllEntries);
 
     QDirPrivate(const QDirPrivate &copy);
+    ~QDirPrivate();
 
     bool exists() const;
 
@@ -78,7 +79,7 @@ public:
     QDir::Filters filters;
 
 
-    QScopedPointer<QAbstractFileEngine> fileEngine;
+    QAbstractFileEngine* fileEngine;
 
     mutable bool fileListsInitialized;
     mutable QStringList files;

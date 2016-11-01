@@ -2472,6 +2472,7 @@ QSettings::~QSettings()
             ; // ok. then don't flush but at least don't throw in the destructor
         }
     }
+    delete d_ptr;
 }
 
 /*!

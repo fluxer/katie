@@ -83,11 +83,7 @@ public:
         UnspecifiedError = -1
     };
 
-    // RVCT compiler in debug build does not like about default values in const-
-    // So as an workaround we define all constructor overloads here explicitly
-    QSslError();
-    QSslError(SslError error);
-    QSslError(SslError error, const QSslCertificate &certificate);
+    QSslError(SslError error = QSslError::NoError, const QSslCertificate &certificate = QSslCertificate());
 
     QSslError(const QSslError &other);
 
@@ -100,9 +96,9 @@ public:
     SslError error() const;
     QString errorString() const;
     QSslCertificate certificate() const;
-    
+
 private:
-    QScopedPointer<QSslErrorPrivate> d;
+    QSslErrorPrivate* d;
 };
 
 #ifndef QT_NO_DEBUG_STREAM

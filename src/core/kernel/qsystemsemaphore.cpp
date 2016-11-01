@@ -181,6 +181,7 @@ QSystemSemaphore::QSystemSemaphore(const QString &key, int initialValue, AccessM
 QSystemSemaphore::~QSystemSemaphore()
 {
     d->cleanHandle();
+    delete d;
 }
 
 /*!

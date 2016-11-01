@@ -103,7 +103,7 @@ QSslCipher::QSslCipher(const QString &name, QSsl::SslProtocol protocol)
 QSslCipher::QSslCipher(const QSslCipher &other)
     : d(new QSslCipherPrivate)
 {
-    *d.data() = *other.d.data();
+    d = other.d;
 }
 
 /*!
@@ -111,6 +111,7 @@ QSslCipher::QSslCipher(const QSslCipher &other)
 */
 QSslCipher::~QSslCipher()
 {
+    delete d;
 }
 
 /*!
@@ -119,7 +120,7 @@ QSslCipher::~QSslCipher()
 */
 QSslCipher &QSslCipher::operator=(const QSslCipher &other)
 {
-    *d.data() = *other.d.data();
+    d = other.d;
     return *this;
 }
 

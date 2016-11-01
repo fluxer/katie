@@ -47,9 +47,9 @@
 #include <QtCore/qobjectdefs.h>
 #include <QtCore/qstring.h>
 #include <QtCore/qlist.h>
-#include <QtCore/qscopedpointer.h>
 
 #ifdef QT_INCLUDE_COMPAT
+#include <QtCore/qscopedpointer.h>
 #include <QtCore/qcoreevent.h>
 #endif
 
@@ -233,12 +233,9 @@ protected:
     virtual void connectNotify(const char *signal);
     virtual void disconnectNotify(const char *signal);
 
-
-protected:
     QObject(QObjectPrivate &dd, QObject *parent = 0);
 
-protected:
-    QScopedPointer<QObjectData> d_ptr;
+    QObjectData* d_ptr;
 
     static const QMetaObject staticQtMetaObject;
 

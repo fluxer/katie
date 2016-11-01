@@ -362,6 +362,7 @@ QAbstractFileEngine::QAbstractFileEngine(QAbstractFileEnginePrivate &dd) : d_ptr
  */
 QAbstractFileEngine::~QAbstractFileEngine()
 {
+    delete d_ptr;
 }
 
 /*!
@@ -889,6 +890,7 @@ QAbstractFileEngineIterator::QAbstractFileEngineIterator(QDir::Filters filters,
 */
 QAbstractFileEngineIterator::~QAbstractFileEngineIterator()
 {
+    delete d;
 }
 
 /*!

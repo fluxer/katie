@@ -46,7 +46,6 @@
 #include <QtCore/qobject.h>
 #else
 #include <QtCore/qobjectdefs.h>
-#include <QtCore/qscopedpointer.h>
 #endif
 #include <QtCore/qstring.h>
 
@@ -160,7 +159,7 @@ protected:
     void setErrorString(const QString &errorString);
 
 #ifdef QT_NO_QOBJECT
-    QScopedPointer<QIODevicePrivate> d_ptr;
+    QIODevicePrivate* d_ptr;
 #endif
 
 private:

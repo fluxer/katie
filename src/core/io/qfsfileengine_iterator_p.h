@@ -79,7 +79,7 @@ public:
 
 private:
     void advance() const;
-    mutable QScopedPointer<QFileSystemIterator> nativeIterator;
+    mutable QFileSystemIterator* nativeIterator;
     mutable QFileInfo currentInfo;
     mutable QFileInfo nextInfo;
     mutable bool done;

@@ -50,6 +50,7 @@
 #include <qendian.h>
 #include <qdebug.h>
 #include <qdir.h>
+#include <qscopedpointer.h>
 
 #if 0
 #define ZDEBUG qDebug
