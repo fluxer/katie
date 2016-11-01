@@ -376,11 +376,6 @@ bool QProxyStyle::event(QEvent *e)
   information required to find the appropriate icon. The \a widget
   argument is optional and can also be used to help find the icon.
 
-  \note Because of binary compatibility constraints, standardIcon()
-  introduced in Qt 4.1 is not virtual. Therefore it must dynamically
-  detect and call \e this slot.  This default implementation simply
-  calls standardIcon() with the given parameters.
-
   \sa standardIcon()
  */
 QIcon QProxyStyle::standardIcon(StandardPixmap standardIcon,
