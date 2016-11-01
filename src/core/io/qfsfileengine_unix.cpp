@@ -458,13 +458,6 @@ QString QFSFileEngine::tempPath()
     return QFileSystemEngine::tempPath();
 }
 
-QFileInfoList QFSFileEngine::drives()
-{
-    QFileInfoList ret;
-    ret.append(QFileInfo(rootPath()));
-    return ret;
-}
-
 bool QFSFileEnginePrivate::doStat(QFileSystemMetaData::MetaDataFlags flags) const
 {
     if (!tried_stat || !metaData.hasFlags(flags)) {

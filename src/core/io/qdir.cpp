@@ -450,12 +450,6 @@ inline void QDirPrivate::initFileEngine()
     If you want to find the directory containing the application's executable,
     see \l{QCoreApplication::applicationDirPath()}.
 
-    The drives() static function provides a list of root directories for each
-    device that contains a filing system. On Unix systems this returns a list
-    containing a single root directory "/"; on Windows the list will usually
-    contain \c{C:/}, and possibly other drive letters such as \c{D:/}, depending
-    on the configuration of the user's system.
-
     \section1 Path Manipulation and Strings
 
     Paths containing "." elements that reference the current directory at that
@@ -1622,24 +1616,6 @@ bool QDir::exists(const QString &name) const
 }
 
 /*!
-    Returns a list of the root directories on this system.
-
-    On Windows this returns a list of QFileInfo objects containing "C:/",
-    "D:/", etc. On other operating systems, it returns a list containing
-    just one root directory (i.e. "/").
-
-    \sa root(), rootPath()
-*/
-QFileInfoList QDir::drives()
-{
-#ifdef QT_NO_FSFILEENGINE
-    return QFileInfoList();
-#else
-    return QFSFileEngine::drives();
-#endif
-}
-
-/*!
     \fn QChar QDir::separator()
     Returns the native directory separator: "/" under Unix (including
     Mac OS X) and "\\" under Windows.
@@ -1703,7 +1679,7 @@ QString QDir::currentPath()
 
     See homePath() for details.
 
-    \sa drives(), current(), root(), temp()
+    \sa current(), root(), temp()
 */
 
 /*!
@@ -1765,7 +1741,7 @@ QString QDir::homePath()
 
     See tempPath() for details.
 
-    \sa drives(), current(), home(), root()
+    \sa current(), home(), root()
 */
 
 /*!
@@ -1794,7 +1770,7 @@ QString QDir::tempPath()
 
     See rootPath() for details.
 
-    \sa drives(), current(), home(), temp()
+    \sa current(), home(), temp()
 */
 
 /*!
@@ -1803,7 +1779,7 @@ QString QDir::tempPath()
     For Unix operating systems this returns "/". For Windows and Symbian file
     systems this normally returns "c:/". I.E. the root of the system drive.
 
-    \sa root(), drives(), currentPath(), homePath(), tempPath()
+    \sa root(), currentPath(), homePath(), tempPath()
 */
 QString QDir::rootPath()
 {

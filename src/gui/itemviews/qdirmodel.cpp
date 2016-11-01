@@ -230,7 +230,7 @@ QDirModel::QDirModel(const QStringList &nameFilters,
     : QAbstractItemModel(*new QDirModelPrivate, parent)
 {
     Q_D(QDirModel);
-    // we always start with QDir::drives()
+    // we always start with QDir::rootPath()
     d->nameFilters = nameFilters.isEmpty() ? QStringList(QLatin1String("*")) : nameFilters;
     d->filters = filters;
     d->sort = sort;
@@ -1140,7 +1140,7 @@ QVector<QDirModelPrivate::QDirNode> QDirModelPrivate::children(QDirNode *parent,
     QFileInfoList infoList;
     if (parent == &root) {
         parent = 0;
-        infoList = QDir::drives();
+        infoList << QFileInfo(QDir::rootPath());
     } else if (parent->info.isDir()) {
         //resolve directory links only if requested.
         if (parent->info.isSymLink() && resolveSymlinks) {

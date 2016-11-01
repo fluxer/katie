@@ -229,11 +229,6 @@ QExtendedInformation QFileInfoGatherer::getInfo(const QFileInfo &fileInfo) const
     return info;
 }
 
-QString QFileInfoGatherer::translateDriveName(const QFileInfo &drive) const
-{
-    return drive.absoluteFilePath();
-}
-
 /*
     Get specific file info's, batch the files so update when we have 100
     items and every 200ms after that
@@ -256,15 +251,15 @@ void QFileInfoGatherer::getFileInfos(const QString &path, const QStringList &fil
 #endif
         QFileInfoList infoList;
         if (files.isEmpty()) {
-            infoList = QDir::drives();
+            infoList << QFieInfo(QDir::rootPath());
         } else {
             for (int i = 0; i < files.count(); ++i)
                 infoList << QFileInfo(files.at(i));
         }
         for (int i = infoList.count() - 1; i >= 0; --i) {
-            QString driveName = translateDriveName(infoList.at(i));
+            QString driveName = infoList.at(i);
             QList<QPair<QString,QFileInfo> > updatedFiles;
-            updatedFiles.append(QPair<QString,QFileInfo>(driveName, infoList.at(i)));
+            updatedFiles.append(QPair<QString,QFileInfo>(driveName.absoluteFilePath(), infoList.at(i)));
             emit updates(path, updatedFiles);
         }
         return;

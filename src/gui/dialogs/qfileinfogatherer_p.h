@@ -177,7 +177,6 @@ protected:
 
 private:
     void fetch(const QFileInfo &info, QElapsedTimer &base, bool &firstTime, QList<QPair<QString, QFileInfo> > &updatedFiles, const QString &path);
-    QString translateDriveName(const QFileInfo &drive) const;
 
     QMutex mutex;
     QWaitCondition condition;

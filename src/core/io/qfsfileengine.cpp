@@ -809,15 +809,6 @@ bool QFSFileEngine::supportsExtension(Extension extension) const
   \sa setCurrentPath()
 */
 
-/*! \fn QFileInfoList QFSFileEngine::drives()
-  For Windows, returns the list of drives in the file system as a list
-  of QFileInfo objects. On unix, Mac OS X and Windows CE, only the
-  root path is returned.  On Windows, this function returns all drives
-  (A:\, C:\, D:\, etc.).
-
-  For Unix, the list contains just the root path "/".
-*/
-
 /*! \fn QString QFSFileEngine::fileName(FileName file) const
   \reimp
 */

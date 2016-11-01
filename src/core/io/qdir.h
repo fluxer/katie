@@ -182,8 +182,6 @@ public:
     bool rename(const QString &oldName, const QString &newName);
     bool exists(const QString &name) const;
 
-    static QFileInfoList drives();
-
     static bool setCurrent(const QString &path);
     static inline QDir current() { return QDir(currentPath()); }
     static QString currentPath();

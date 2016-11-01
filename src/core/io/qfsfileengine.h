@@ -109,7 +109,6 @@ public:
     static QString homePath();
     static QString rootPath();
     static QString tempPath();
-    static QFileInfoList drives();
 
 protected:
     QFSFileEngine(QFSFileEnginePrivate &dd);
