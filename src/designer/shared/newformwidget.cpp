@@ -427,7 +427,6 @@ void NewFormWidget::loadFrom(const QString &path, bool resourceFile, const QStri
         if (index2 != -1)
             index = index2;
         visiblePath = visiblePath.mid(index + 1);
-        visiblePath = QDir::toNativeSeparators(visiblePath);
     }
 
     const QChar underscore = QLatin1Char('_');

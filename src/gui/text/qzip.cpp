@@ -51,49 +51,6 @@
 #include <qdebug.h>
 #include <qdir.h>
 
-#if defined(Q_OS_WIN)
-#  undef S_IFREG
-#  define S_IFREG 0100000
-#  ifndef S_IFDIR
-#    define S_IFDIR 0040000
-#  endif
-#  ifndef S_ISDIR
-#    define S_ISDIR(x) ((x) & S_IFDIR) > 0
-#  endif
-#  ifndef S_ISREG
-#    define S_ISREG(x) ((x) & 0170000) == S_IFREG
-#  endif
-#  define S_IFLNK 020000
-#  define S_ISLNK(x) ((x) & S_IFLNK) > 0
-#  ifndef S_IRUSR
-#    define S_IRUSR 0400
-#  endif
-#  ifndef S_IWUSR
-#    define S_IWUSR 0200
-#  endif
-#  ifndef S_IXUSR
-#    define S_IXUSR 0100
-#  endif
-#  ifndef S_IRGRP
-#    define S_IRGRP 0040
-#  endif
-#  ifndef S_IWGRP
-#    define S_IWGRP 0020
-#  endif
-#  ifndef S_IXGRP
-#    define S_IXGRP 0010
-#  endif
-#  ifndef S_IROTH
-#    define S_IROTH 0004
-#  endif
-#  ifndef S_IWOTH
-#    define S_IWOTH 0002
-#  endif
-#  ifndef S_IXOTH
-#    define S_IXOTH 0001
-#  endif
-#endif
-
 #if 0
 #define ZDEBUG qDebug
 #else
@@ -1180,7 +1137,7 @@ QFile::Permissions QZipWriter::creationPermissions() const
 */
 void QZipWriter::addFile(const QString &fileName, const QByteArray &data)
 {
-    d->addEntry(QZipWriterPrivate::File, QDir::fromNativeSeparators(fileName), data);
+    d->addEntry(QZipWriterPrivate::File, fileName, data);
 }
 
 /*!
@@ -1202,7 +1159,7 @@ void QZipWriter::addFile(const QString &fileName, QIODevice *device)
             return;
         }
     }
-    d->addEntry(QZipWriterPrivate::File, QDir::fromNativeSeparators(fileName), device->readAll());
+    d->addEntry(QZipWriterPrivate::File, fileName, device->readAll());
     if (opened)
         device->close();
 }
@@ -1213,7 +1170,7 @@ void QZipWriter::addFile(const QString &fileName, QIODevice *device)
 */
 void QZipWriter::addDirectory(const QString &dirName)
 {
-    QString name(QDir::fromNativeSeparators(dirName));
+    QString name(dirName);
     // separator is mandatory
     if (!name.endsWith(QLatin1Char('/')))
         name.append(QLatin1Char('/'));
@@ -1227,7 +1184,7 @@ void QZipWriter::addDirectory(const QString &dirName)
 */
 void QZipWriter::addSymLink(const QString &fileName, const QString &destination)
 {
-    d->addEntry(QZipWriterPrivate::Symlink, QDir::fromNativeSeparators(fileName), QFile::encodeName(destination));
+    d->addEntry(QZipWriterPrivate::Symlink, fileName, QFile::encodeName(destination));
 }
 
 /*!

@@ -97,7 +97,6 @@ public:
     void addUrls(const QList<QUrl> &urls, int row = -1, bool move = true);
     QList<QUrl> urls() const;
     void setFileSystemModel(QFileSystemModel *model);
-    bool showFullPath;
 
 private Q_SLOTS:
     void dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight);

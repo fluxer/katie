@@ -1418,9 +1418,8 @@ void QFileDialogComboBox::setHistory(const QStringList &paths)
     m_history = paths;
     // Only populate the first item, showPopup will populate the rest if needed
     QList<QUrl> list;
-    QModelIndex idx = d_ptr->model->index(d_ptr->rootPath());
-    //On windows the popup display the "C:\", convert to nativeSeparators
-    QUrl url = QUrl::fromLocalFile(QDir::toNativeSeparators(idx.data(QFileSystemModel::FilePathRole).toString()));
+    const QModelIndex idx = d_ptr->model->index(d_ptr->rootPath());
+    const QUrl url = QUrl::fromLocalFile(idx.data().toString());
     if (url.isValid())
         list.append(url);
     urlModel->setUrls(list);
@@ -1433,8 +1432,7 @@ QStringList QFileDialog::history() const
 {
     Q_D(const QFileDialog);
     QStringList currentHistory = d->qFileDialogUi->lookInCombo->history();
-    //On windows the popup display the "C:\", convert to nativeSeparators
-    QString newHistory = QDir::toNativeSeparators(d->rootIndex().data(QFileSystemModel::FilePathRole).toString());
+    const QString newHistory = d->rootIndex().data().toString();
     if (!currentHistory.contains(newHistory))
         currentHistory << newHistory;
     return currentHistory;
@@ -2392,11 +2390,11 @@ void QFileDialogPrivate::_q_pathChanged(const QString &newPath)
     qFileDialogUi->sidebar->selectUrl(QUrl::fromLocalFile(newPath));
     q->setHistory(qFileDialogUi->lookInCombo->history());
 
-    if (currentHistoryLocation < 0 || currentHistory.value(currentHistoryLocation) != QDir::toNativeSeparators(newPath)) {
+    if (currentHistoryLocation < 0 || currentHistory.value(currentHistoryLocation) != newPath) {
         while (currentHistoryLocation >= 0 && currentHistoryLocation + 1 < currentHistory.count()) {
             currentHistory.removeLast();
         }
-        currentHistory.append(QDir::toNativeSeparators(newPath));
+        currentHistory.append(newPath);
         ++currentHistoryLocation;
     }
     qFileDialogUi->forwardButton->setEnabled(currentHistory.size() - currentHistoryLocation > 1);
@@ -2986,7 +2984,6 @@ QString QFileDialogPrivate::getEnvironmentVariable(const QString &string)
 void QFileDialogComboBox::init(QFileDialogPrivate *d_pointer) {
     d_ptr = d_pointer;
     urlModel = new QUrlModel(this);
-    urlModel->showFullPath = true;
     urlModel->setFileSystemModel(d_ptr->model);
     setModel(urlModel);
 }
@@ -3186,7 +3183,7 @@ QStringList QFSCompleter::splitPath(const QString &path) const
         return QStringList(completionPrefix());
 
     bool expanded;
-    QString pathCopy = qt_tildeExpansion(QDir::toNativeSeparators(path), &expanded);
+    QString pathCopy = qt_tildeExpansion(path, &expanded);
     if (expanded) {
         QFileSystemModel *dirModel;
         if (proxyModel)
@@ -3207,7 +3204,7 @@ QStringList QFSCompleter::splitPath(const QString &path) const
             dirModel = qobject_cast<const QFileSystemModel *>(proxyModel->sourceModel());
         else
             dirModel = sourceModel;
-        const QString currentLocation = QDir::toNativeSeparators(dirModel->rootPath());
+        const QString currentLocation = dirModel->rootPath();
         if (currentLocation.contains(QDir::separator()) && path != currentLocation) {
             QStringList currentLocationList = splitPath(currentLocation);
             while (!currentLocationList.isEmpty()

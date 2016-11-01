@@ -318,9 +318,7 @@ QFileSystemModelPrivate::QFileSystemNode *QFileSystemModelPrivate::node(const QS
 
     // ### TODO can we use bool QAbstractFileEngine::caseSensitive() const?
     QStringList pathElements = absolutePath.split(QLatin1Char('/'), QString::SkipEmptyParts);
-    if ((pathElements.isEmpty())
-        && QDir::fromNativeSeparators(path) != QLatin1String("/")
-        )
+    if (pathElements.isEmpty() && path != QLatin1String("/"))
         return const_cast<QFileSystemModelPrivate::QFileSystemNode*>(&root);
     QModelIndex index = QModelIndex(); // start with "My Computer"
     // add the "/" item, since it is a valid path element on Unix
@@ -735,7 +733,7 @@ bool QFileSystemModel::setData(const QModelIndex &idx, const QVariant &value, in
         return true;
 
     if (newName.isEmpty()
-        || QDir::toNativeSeparators(newName).contains(QDir::separator())
+        || newName.contains(QDir::separator())
         || !QDir(filePath(parent(idx))).rename(oldName, newName)) {
 #ifndef QT_NO_MESSAGEBOX
         QMessageBox::information(0, QFileSystemModel::tr("Invalid filename"),
@@ -1178,7 +1176,7 @@ QString QFileSystemModelPrivate::filePath(const QModelIndex &index) const
             path.prepend(dirNode->fileName);
         idx = idx.parent();
     }
-    QString fullPath = QDir::fromNativeSeparators(path.join(QDir::separator()));
+    QString fullPath = path.join(QDir::separator());
     if ((fullPath.length() > 2) && fullPath[0] == QLatin1Char('/') && fullPath[1] == QLatin1Char('/'))
         fullPath = fullPath.mid(1);
     return fullPath;

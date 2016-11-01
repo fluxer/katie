@@ -60,7 +60,7 @@ QFileSystemEntry::QFileSystemEntry()
    of '/' and the native separator.
  */
 QFileSystemEntry::QFileSystemEntry(const QString &filePath)
-    : m_filePath(QDir::fromNativeSeparators(filePath)),
+    : m_filePath(filePath),
     m_lastSeparator(-2),
     m_firstDotInFileName(-2),
     m_lastDotInFileName(0)
@@ -93,7 +93,7 @@ QFileSystemEntry::QFileSystemEntry(const NativePath &nativeFilePath, FromNativeP
 }
 
 QFileSystemEntry::QFileSystemEntry(const QString &filePath, const NativePath &nativeFilePath)
-    : m_filePath(QDir::fromNativeSeparators(filePath)),
+    : m_filePath(filePath),
     m_nativeFilePath(nativeFilePath),
     m_lastSeparator(-2),
     m_firstDotInFileName(-2),
@@ -116,14 +116,14 @@ QFileSystemEntry::NativePath QFileSystemEntry::nativeFilePath() const
 void QFileSystemEntry::resolveFilePath() const
 {
     if (m_filePath.isEmpty() && !m_nativeFilePath.isEmpty()) {
-        m_filePath = QDir::fromNativeSeparators(QFile::decodeName(m_nativeFilePath));
+        m_filePath = QFile::decodeName(m_nativeFilePath);
     }
 }
 
 void QFileSystemEntry::resolveNativeFilePath() const
 {
     if (!m_filePath.isEmpty() && m_nativeFilePath.isEmpty()) {
-        m_nativeFilePath = QFile::encodeName(QDir::toNativeSeparators(m_filePath));
+        m_nativeFilePath = QFile::encodeName(m_filePath);
     }
 }
 

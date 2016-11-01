@@ -86,7 +86,7 @@ public:
         cache_enabled(copy.cache_enabled), fileFlags(0), cachedFlags(0), fileSize(0)
     {}
     inline QFileInfoPrivate(const QString &file)
-        : fileEntry(QDir::fromNativeSeparators(file)),
+        : fileEntry(file),
         fileEngine(QFileSystemEngine::resolveEntryAndCreateLegacyEngine(fileEntry, metaData)),
 #ifndef QT_NO_FSFILEENGINE
         isDefaultConstructed(false),

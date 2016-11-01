@@ -5323,11 +5323,9 @@ int QPlastiqueStyle::styleHint(StyleHint hint, const QStyleOption *option, const
         ret = true;
         break;
 #endif
-#ifndef Q_OS_WIN
     case SH_Menu_AllowActiveAndDisabled:
         ret = false;
         break;
-#endif
     default:
         ret = QWindowsStyle::styleHint(hint, option, widget, returnData);
         break;

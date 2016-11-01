@@ -73,7 +73,7 @@ void QSideBarDelegate::initStyleOption(QStyleOptionViewItem *option,
 
     Example usage: File dialog sidebar and combo box
  */
-QUrlModel::QUrlModel(QObject *parent) : QStandardItemModel(parent), showFullPath(false), fileSystemModel(0)
+QUrlModel::QUrlModel(QObject *parent) : QStandardItemModel(parent), fileSystemModel(0)
 {
 }
 
@@ -166,13 +166,7 @@ bool QUrlModel::setData(const QModelIndex &index, const QVariant &value, int rol
     if (value.type() == QVariant::Url) {
         QUrl url = value.toUrl();
         QModelIndex dirIndex = fileSystemModel->index(url.toLocalFile());
-        //On windows the popup display the "C:\", convert to nativeSeparators
-        if (showFullPath)
-            QStandardItemModel::setData(index, QDir::toNativeSeparators(fileSystemModel->data(dirIndex, QFileSystemModel::FilePathRole).toString()));
-        else {
-            QStandardItemModel::setData(index, QDir::toNativeSeparators(fileSystemModel->data(dirIndex, QFileSystemModel::FilePathRole).toString()), Qt::ToolTipRole);
-            QStandardItemModel::setData(index, fileSystemModel->data(dirIndex).toString());
-        }
+        QStandardItemModel::setData(index, fileSystemModel->data(dirIndex, QFileSystemModel::FilePathRole).toString());
         QStandardItemModel::setData(index, fileSystemModel->data(dirIndex, Qt::DecorationRole),
                                                Qt::DecorationRole);
         QStandardItemModel::setData(index, url, UrlRole);
@@ -188,14 +182,7 @@ void QUrlModel::setUrl(const QModelIndex &index, const QUrl &url, const QModelIn
         setData(index, fileSystemModel->myComputer());
         setData(index, fileSystemModel->myComputer(Qt::DecorationRole), Qt::DecorationRole);
     } else {
-        QString newName;
-        if (showFullPath) {
-            //On windows the popup display the "C:\", convert to nativeSeparators
-            newName = QDir::toNativeSeparators(dirIndex.data(QFileSystemModel::FilePathRole).toString());
-        } else {
-            newName = dirIndex.data().toString();
-        }
-
+        QString newName = dirIndex.data(QFileSystemModel::FilePathRole).toString();
         QIcon newIcon = qvariant_cast<QIcon>(dirIndex.data(Qt::DecorationRole));
         if (!dirIndex.isValid()) {
             newIcon = fileSystemModel->iconProvider()->icon(QFileIconProvider::Folder);
