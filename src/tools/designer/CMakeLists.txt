@@ -1,5 +1,5 @@
 # add_definitions()
-set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtNetwork KtDesigner KtDesignerComponents)
+set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtXml KtDesigner KtDesignerComponents KtUiTools)
 
 include(fontpanel/fontpanel.cmake)
 include(qttoolbardialog/qttoolbardialog.cmake)
@@ -11,8 +11,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
-    ${CMAKE_BINARY_DIR}/include/QtNetwork
-    ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtDesigner
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtDesignerComponents

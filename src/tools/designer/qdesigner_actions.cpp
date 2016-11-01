@@ -77,7 +77,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QActionGroup>
 #include <QtGui/QStyleFactory>
-#include <QtGui/qevent.h>
+#include <QtGui/QCloseEvent>
 #include <QtGui/QFileDialog>
 #include <QtGui/QMenu>
 #include <QtGui/QMessageBox>
@@ -90,18 +90,18 @@
 #include <QtGui/QPainter>
 #include <QtGui/QTransform>
 #include <QtGui/QCursor>
-#include <QtCore/qsize.h>
 
+#include <QtCore/QSize>
 #include <QtCore/QLibraryInfo>
 #include <QtCore/QBuffer>
 #include <QtCore/QPluginLoader>
-#include <QtCore/qdebug.h>
+#include <QtCore/QTextStream>
 #include <QtCore/QTimer>
 #include <QtCore/QMetaObject>
 #include <QtCore/QFileInfo>
 #include <QtGui/QStatusBar>
 #include <QtGui/QDesktopWidget>
-#include <QtXml/qdom.h>
+#include <QtXml/QDomDocument>
 
 QT_BEGIN_NAMESPACE
 
