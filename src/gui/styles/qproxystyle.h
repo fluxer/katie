@@ -95,10 +95,9 @@ public:
 protected:
     bool event(QEvent *e);
 
-protected Q_SLOTS:
-    QIcon standardIconImplementation(StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const;
-    int layoutSpacingImplementation(QSizePolicy::ControlType control1, QSizePolicy::ControlType control2,
-                                    Qt::Orientation orientation, const QStyleOption *option = 0, const QWidget *widget = 0) const;
+    QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *option, const QWidget *widget) const;
+    int layoutSpacing(QSizePolicy::ControlType control1, QSizePolicy::ControlType control2,
+                      Qt::Orientation orientation, const QStyleOption *option = 0, const QWidget *widget = 0) const;
 private:
     Q_DISABLE_COPY(QProxyStyle)
     Q_DECLARE_PRIVATE(QProxyStyle)

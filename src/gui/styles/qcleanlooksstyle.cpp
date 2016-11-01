@@ -4353,16 +4353,6 @@ QRect QCleanlooksStyle::subElementRect(SubElement sr, const QStyleOption *opt, c
 }
 
 /*!
-    \internal
-*/
-QIcon QCleanlooksStyle::standardIconImplementation(StandardPixmap standardIcon,
-                                                  const QStyleOption *option,
-                                                  const QWidget *widget) const
-{
-    return QWindowsStyle::standardIconImplementation(standardIcon, option, widget);
-}
-
-/*!
  \reimp
  */
 QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,

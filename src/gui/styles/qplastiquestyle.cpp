@@ -5696,51 +5696,6 @@ void QPlastiqueStyle::unpolish(QWidget *widget)
 #endif
 }
 
-/*!
-  \reimp
-*/
-void QPlastiqueStyle::polish(QApplication *app)
-{
-    QWindowsStyle::polish(app);
-}
-
-/*!
-  \reimp
-*/
-void QPlastiqueStyle::polish(QPalette &pal)
-{
-    QWindowsStyle::polish(pal);
-#ifdef Q_WS_MAC
-    pal.setBrush(QPalette::Shadow, Qt::black);
-#endif
-}
-
-/*!
-  \reimp
-*/
-void QPlastiqueStyle::unpolish(QApplication *app)
-{
-    QWindowsStyle::unpolish(app);
-}
-
-/*!
-    \internal
-*/
-QIcon QPlastiqueStyle::standardIconImplementation(StandardPixmap standardIcon, const QStyleOption *option,
-                                                  const QWidget *widget) const
-{
-    return QWindowsStyle::standardIconImplementation(standardIcon, option, widget);
-}
-
-/*!
-    \reimp
-*/
-QPixmap QPlastiqueStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
-                                        const QWidget *widget) const
-{
-    return QWindowsStyle::standardPixmap(standardPixmap, opt, widget);
-}
-
 // this works as long as we have at most 16 different control types
 #define CT1(c) CT2(c, c)
 #define CT2(c1, c2) (((uint)c1 << 16) | (uint)c2)
@@ -5748,11 +5703,11 @@ QPixmap QPlastiqueStyle::standardPixmap(StandardPixmap standardPixmap, const QSt
 /*!
     \internal
 */
-int QPlastiqueStyle::layoutSpacingImplementation(QSizePolicy::ControlType control1,
-                                                 QSizePolicy::ControlType control2,
-                                                 Qt::Orientation orientation,
-                                                 const QStyleOption * /* option */,
-                                                 const QWidget * /* widget */) const
+int QPlastiqueStyle::layoutSpacing(QSizePolicy::ControlType control1,
+                                  QSizePolicy::ControlType control2,
+                                  Qt::Orientation orientation,
+                                  const QStyleOption * /* option */,
+                                  const QWidget * /* widget */) const
 {
     const int ButtonMask = QSizePolicy::ButtonBox | QSizePolicy::PushButton;
 

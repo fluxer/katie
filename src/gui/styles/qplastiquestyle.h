@@ -80,25 +80,16 @@ public:
 
     int pixelMetric(PixelMetric metric, const QStyleOption *option = 0, const QWidget *widget = 0) const;
 
-    QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
-                           const QWidget *widget = 0) const;
-    
     void polish(QWidget *widget);
-    void polish(QApplication *app);
-    void polish(QPalette &pal);
     void unpolish(QWidget *widget);
-    void unpolish(QApplication *app);
 
     QPalette standardPalette() const;
 
-protected Q_SLOTS:
-    QIcon standardIconImplementation(StandardPixmap standardIcon, const QStyleOption *opt = 0,
-                                     const QWidget *widget = 0) const;
-    int layoutSpacingImplementation(QSizePolicy::ControlType control1,
-                                    QSizePolicy::ControlType control2, 
-                                    Qt::Orientation orientation,
-                                    const QStyleOption *option = 0, 
-                                    const QWidget *widget = 0) const;
+    int layoutSpacing(QSizePolicy::ControlType control1,
+                      QSizePolicy::ControlType control2, 
+                      Qt::Orientation orientation,
+                      const QStyleOption *option = 0, 
+                      const QWidget *widget = 0) const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);

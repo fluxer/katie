@@ -89,9 +89,8 @@ public:
     void unpolish(QWidget *widget);
     void unpolish(QApplication *application);
 
-protected Q_SLOTS:
-    QIcon standardIconImplementation(StandardPixmap standardIcon, const QStyleOption *opt = 0,
-                                     const QWidget *widget = 0) const;
+    virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *opt = 0,
+                       const QWidget *widget = 0) const;
 
 protected:
     QCommonStyle(QCommonStylePrivate &dd);

@@ -5268,13 +5268,13 @@ QPixmap QCommonStyle::standardPixmap(StandardPixmap sp, const QStyleOption *opti
 /*!
     \internal
 */
-QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, const QStyleOption *option,
+QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption *option,
                                                const QWidget *widget) const
 {
     QIcon icon;
     const bool rtl = (option && option->direction == Qt::RightToLeft) || (!option && QApplication::isRightToLeft());
     if (QApplication::desktopSettingsAware() && !QIcon::themeName().isEmpty()) {
-        switch (standardIcon) {
+        switch (standardicon) {
         case SP_DirHomeIcon:
                 icon = QIcon::fromTheme(QLatin1String("user-home"));
                 break;
@@ -5406,17 +5406,17 @@ QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, cons
                 break;
         case SP_ArrowForward:
             if (rtl)
-                return standardIconImplementation(SP_ArrowLeft, option, widget);
-            return standardIconImplementation(SP_ArrowRight, option, widget);
+                return standardIcon(SP_ArrowLeft, option, widget);
+            return standardIcon(SP_ArrowRight, option, widget);
         case SP_ArrowBack:
             if (rtl)
-                return standardIconImplementation(SP_ArrowRight, option, widget);
-            return standardIconImplementation(SP_ArrowLeft, option, widget);
+                return standardIcon(SP_ArrowRight, option, widget);
+            return standardIcon(SP_ArrowLeft, option, widget);
         case SP_FileLinkIcon:
             {
                 QIcon linkIcon = QIcon::fromTheme(QLatin1String("emblem-symbolic-link"));
                 if (!linkIcon.isNull()) {
-                    QIcon baseIcon = standardIconImplementation(SP_FileIcon, option, widget);
+                    QIcon baseIcon = standardIcon(SP_FileIcon, option, widget);
                     const QList<QSize> sizes = baseIcon.availableSizes(QIcon::Normal, QIcon::Off);
                     for (int i = 0 ; i < sizes.size() ; ++i) {
                         int size = sizes[i].width();
@@ -5433,7 +5433,7 @@ QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, cons
             {
                 QIcon linkIcon = QIcon::fromTheme(QLatin1String("emblem-symbolic-link"));
                 if (!linkIcon.isNull()) {
-                    QIcon baseIcon = standardIconImplementation(SP_DirIcon, option, widget);
+                    QIcon baseIcon = standardIcon(SP_DirIcon, option, widget);
                     const QList<QSize> sizes = baseIcon.availableSizes(QIcon::Normal, QIcon::Off);
                     for (int i = 0 ; i < sizes.size() ; ++i) {
                         int size = sizes[i].width();
@@ -5453,7 +5453,7 @@ QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, cons
         if (!icon.isNull())
             return icon;
 
-    switch (standardIcon) {
+    switch (standardicon) {
 #ifndef QT_NO_IMAGEFORMAT_PNG
      case SP_FileDialogNewFolder:
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/newdirectory-16.png"), QSize(16, 16));
@@ -5461,9 +5461,9 @@ QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, cons
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/newdirectory-128.png"), QSize(128, 128));
         break;
     case SP_FileDialogBack:
-        return standardIconImplementation(SP_ArrowBack, option, widget);
+        return standardIcon(SP_ArrowBack, option, widget);
     case SP_FileDialogToParent:
-        return standardIconImplementation(SP_ArrowUp, option, widget);
+        return standardIcon(SP_ArrowUp, option, widget);
     case SP_FileDialogDetailedView:
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/viewdetailed-16.png"), QSize(16, 16));
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/viewdetailed-32.png"), QSize(32, 32));
@@ -5541,12 +5541,12 @@ QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, cons
         break;
     case SP_ArrowForward:
         if (rtl)
-            return standardIconImplementation(SP_ArrowLeft, option, widget);
-        return standardIconImplementation(SP_ArrowRight, option, widget);
+            return standardIcon(SP_ArrowLeft, option, widget);
+        return standardIcon(SP_ArrowRight, option, widget);
     case SP_ArrowBack:
         if (rtl)
-            return standardIconImplementation(SP_ArrowRight, option, widget);
-        return standardIconImplementation(SP_ArrowLeft, option, widget);
+            return standardIcon(SP_ArrowRight, option, widget);
+        return standardIcon(SP_ArrowLeft, option, widget);
     case SP_ArrowLeft:
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/left-16.png"), QSize(16, 16));
         icon.addFile(QLatin1String(":/trolltech/styles/commonstyle/images/left-32.png"), QSize(32, 32));
@@ -5651,7 +5651,7 @@ QIcon QCommonStyle::standardIconImplementation(StandardPixmap standardIcon, cons
         break;
 #endif // QT_NO_IMAGEFORMAT_PNG
     default:
-        icon.addPixmap(proxy()->standardPixmap(standardIcon, option, widget));
+        icon.addPixmap(proxy()->standardPixmap(standardicon, option, widget));
         break;
     }
     return icon;

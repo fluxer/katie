@@ -383,9 +383,9 @@ bool QProxyStyle::event(QEvent *e)
 
   \sa standardIcon()
  */
-QIcon QProxyStyle::standardIconImplementation(StandardPixmap standardIcon,
-                                              const QStyleOption *option,
-                                              const QWidget *widget) const
+QIcon QProxyStyle::standardIcon(StandardPixmap standardIcon,
+                                const QStyleOption *option,
+                                const QWidget *widget) const
 {
     Q_D (const QProxyStyle);
     d->ensureBaseStyle();
@@ -404,11 +404,11 @@ QIcon QProxyStyle::standardIconImplementation(StandardPixmap standardIcon,
 
   \sa layoutSpacing(), combinedLayoutSpacing()
  */
-int QProxyStyle::layoutSpacingImplementation(QSizePolicy::ControlType control1,
-                                             QSizePolicy::ControlType control2,
-                                             Qt::Orientation orientation,
-                                             const QStyleOption *option,
-                                             const QWidget *widget) const
+int QProxyStyle::layoutSpacing(QSizePolicy::ControlType control1,
+                               QSizePolicy::ControlType control2,
+                               Qt::Orientation orientation,
+                               const QStyleOption *option,
+                               const QWidget *widget) const
 {
     Q_D (const QProxyStyle);
     d->ensureBaseStyle();

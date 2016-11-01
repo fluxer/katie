@@ -291,15 +291,6 @@ QPalette QCDEStyle::standardPalette() const
     return palette;
 }
 
-/*!
-    \internal
-*/
-QIcon QCDEStyle::standardIconImplementation(StandardPixmap standardIcon, const QStyleOption *opt,
-                                            const QWidget *widget) const
-{
-    return QMotifStyle::standardIconImplementation(standardIcon, opt, widget);
-}
-
 QT_END_NAMESPACE
 
 
