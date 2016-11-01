@@ -1,5 +1,5 @@
-add_definitions(${SHAREDDEVICESKIN_DEFINITIONS})
-set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtNetwork KtDesigner KtDesignerComponents m)
+# add_definitions()
+set(EXTRA_DESIGNERBIN_LIBS KtCore KtGui KtNetwork KtDesigner KtDesignerComponents)
 
 include(fontpanel/fontpanel.cmake)
 include(qttoolbardialog/qttoolbardialog.cmake)
@@ -23,11 +23,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/qttoolbardialog
     ${CMAKE_CURRENT_BINARY_DIR}/fontpanel
     ${CMAKE_CURRENT_BINARY_DIR}/qttoolbardialog
-    ${CMAKE_SOURCE_DIR}/src/designer/sdk
-    ${CMAKE_SOURCE_DIR}/src/designer/extension
-    ${CMAKE_SOURCE_DIR}/src/designer/shared
-    ${CMAKE_SOURCE_DIR}/src/designer
-    ${SHAREDDEVICESKIN_INCLUDES}
 )
 
 set(DESIGNERBIN_HEADERS
@@ -46,7 +41,6 @@ set(DESIGNERBIN_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/appfontdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/preferencesdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/mainwindow.h
-    ${SHAREDDEVICESKIN_HEADERS}
 )
 
 set(DESIGNERBIN_SOURCES
@@ -80,7 +74,6 @@ configure_file(
     ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
     @ONLY
 )
-
 
 katie_setup_target(designer ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 

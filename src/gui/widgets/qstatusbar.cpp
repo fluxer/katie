@@ -89,10 +89,6 @@ public:
 
     int savedStrut;
 
-#ifdef Q_WS_MAC
-    QPoint dragStart;
-#endif
-
     int indexToLastNonPermanentWidget() const
     {
         int i = items.size() - 1;
