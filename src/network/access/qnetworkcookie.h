@@ -112,9 +112,6 @@ Q_NETWORK_EXPORT QDebug operator<<(QDebug, const QNetworkCookie &);
 
 QT_END_NAMESPACE
 
-// ### Qt5 remove this include
-#include <QtNetwork/QNetworkCookieJar>
-
 #ifndef QT_ALLINONE
 Q_DECLARE_METATYPE(QNetworkCookie)
 Q_DECLARE_METATYPE(QList<QNetworkCookie>)

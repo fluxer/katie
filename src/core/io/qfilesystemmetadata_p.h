@@ -193,7 +193,6 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QFileSystemMetaData::MetaDataFlags)
 
-#if defined(Q_OS_UNIX)
 inline QDateTime QFileSystemMetaData::fileTime(QAbstractFileEngine::FileTime time) const
 {
     switch (time) {
@@ -209,9 +208,7 @@ inline QDateTime QFileSystemMetaData::fileTime(QAbstractFileEngine::FileTime tim
 
     return QDateTime();
 }
-#endif
 
-#if defined(Q_OS_UNIX)
 inline QDateTime QFileSystemMetaData::creationTime() const          { return QDateTime::fromTime_t(creationTime_); }
 inline QDateTime QFileSystemMetaData::modificationTime() const      { return QDateTime::fromTime_t(modificationTime_); }
 inline QDateTime QFileSystemMetaData::accessTime() const            { return QDateTime::fromTime_t(accessTime_); }
@@ -223,10 +220,8 @@ inline uint QFileSystemMetaData::ownerId(QAbstractFileEngine::FileOwner owner) c
 {
     if (owner == QAbstractFileEngine::OwnerUser)
         return userId();
-    else
-        return groupId();
+    return groupId();
 }
-#endif
 
 QT_END_NAMESPACE
 

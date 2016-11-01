@@ -47,6 +47,7 @@
 #include "QtCore/qdatetime.h"
 #include "QtNetwork/qsslconfiguration.h"
 #include "QtNetwork/qnetworksession.h"
+#include "QtNetwork/qnetworkcookiejar.h"
 #include "qnetworkaccesshttpbackend_p.h"
 #include "qnetworkaccessmanager_p.h"
 #include "qnetworkcommon_p.h"
