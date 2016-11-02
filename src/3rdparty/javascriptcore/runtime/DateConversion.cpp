@@ -40,7 +40,7 @@
  * version of this file under any of the LGPL, the MPL or the GPL.
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "DateConversion.h"
 
 #include "CallFrame.h"

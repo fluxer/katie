@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptprogram.h"
 #include "qscriptprogram_p.h"
 #include "qscriptengine.h"

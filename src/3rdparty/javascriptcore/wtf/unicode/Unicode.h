@@ -28,8 +28,6 @@
 #include <QChar>
 #include <QString>
 
-#include <config.h>
-
 // ugly hack to make UChar compatible with JSChar in API/JSStringRef.h
 typedef uint16_t UChar;
 typedef uint32_t UChar32;

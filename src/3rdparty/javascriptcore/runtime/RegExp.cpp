@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "RegExp.h"
 #include "Lexer.h"
 #include <stdio.h>

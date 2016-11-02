@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptvalue.h"
 
 #include "qscriptvalue_p.h"

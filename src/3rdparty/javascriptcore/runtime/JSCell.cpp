@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "JSCell.h"
 
 #include "JSFunction.h"

@@ -17,7 +17,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "Lookup.h"
 
 #include "JSFunction.h"

@@ -23,7 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "JIT.h"
 
 // This probably does not belong here; adding here for now as a quick Windows build fix.

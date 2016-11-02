@@ -22,7 +22,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "GlobalEvalFunction.h"
 
 #include "JSGlobalObject.h"

@@ -23,7 +23,7 @@
 *
 */
 
-#include "config.h"
+#include "Platform.h"
 #include "Nodes.h"
 #include "NodeConstructors.h"
 

@@ -387,40 +387,6 @@
 #define WTF_OS_AIX 1
 #endif
 
-/* OS(DARWIN) - Any Darwin-based OS, including Mac OS X and iPhone OS */
-#ifdef __APPLE__
-#define WTF_OS_DARWIN 1
-
-/* FIXME: BUILDING_ON_.., and TARGETING... macros should be folded into the OS() system */
-#include <AvailabilityMacros.h>
-#if !defined(MAC_OS_X_VERSION_10_5) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_5
-#define BUILDING_ON_TIGER 1
-#elif !defined(MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_6
-#define BUILDING_ON_LEOPARD 1
-#elif !defined(MAC_OS_X_VERSION_10_7) || MAC_OS_X_VERSION_MAX_ALLOWED < MAC_OS_X_VERSION_10_7
-#define BUILDING_ON_SNOW_LEOPARD 1
-#endif
-#if !defined(MAC_OS_X_VERSION_10_5) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_5
-#define TARGETING_TIGER 1
-#elif !defined(MAC_OS_X_VERSION_10_6) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_6
-#define TARGETING_LEOPARD 1
-#elif !defined(MAC_OS_X_VERSION_10_7) || MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_7
-#define TARGETING_SNOW_LEOPARD 1
-#endif
-#include <TargetConditionals.h>
-
-#endif
-
-/* OS(IPHONE_OS) - iPhone OS */
-/* OS(MAC_OS_X) - Mac OS X (not including iPhone OS) */
-#if OS(DARWIN) && ((defined(TARGET_OS_EMBEDDED) && TARGET_OS_EMBEDDED)  \
-    || (defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE)                   \
-    || (defined(TARGET_IPHONE_SIMULATOR) && TARGET_IPHONE_SIMULATOR))
-#define WTF_OS_IPHONE_OS 1
-#elif OS(DARWIN) && defined(TARGET_OS_MAC) && TARGET_OS_MAC
-#define WTF_OS_MAC_OS_X 1
-#endif
-
 /* OS(FREEBSD) - FreeBSD */
 #ifdef __FreeBSD__
 #define WTF_OS_FREEBSD 1
@@ -454,37 +420,20 @@
 #define WTF_OS_OPENBSD 1
 #endif
 
-/* OS(QNX) - QNX */
-#if defined(__QNXNTO__)
-#define WTF_OS_QNX 1
-#endif
-
 /* OS(SOLARIS) - Solaris */
 #if defined(sun) || defined(__sun)
 #define WTF_OS_SOLARIS 1
 #endif
 
-/* OS(WINCE) - Windows CE; note that for this platform OS(WINDOWS) is also defined */
-#if defined(_WIN32_WCE)
-#define WTF_OS_WINCE 1
-#endif
-
-/* OS(WINDOWS) - Any version of Windows */
-#if defined(WIN32) || defined(_WIN32)
-#define WTF_OS_WINDOWS 1
-#endif
-
 /* OS(UNIX) - Any Unix-like system */
 #if   OS(AIX)              \
     || OS(ANDROID)          \
-    || OS(DARWIN)           \
     || OS(FREEBSD)          \
     || OS(HAIKU)            \
     || OS(HPUX)             \
     || OS(LINUX)            \
     || OS(NETBSD)           \
     || OS(OPENBSD)          \
-    || OS(QNX)              \
     || OS(SOLARIS)          \
     || defined(unix)        \
     || defined(__unix)      \
@@ -521,19 +470,8 @@
 #define WTF_PLATFORM_ANDROID 1
 #endif
 
-/* OS(WINCE)
-   We can not determine the endianess at compile time. For
-   Qt for Windows CE the endianess is specified in the
-   device specific makespec
-*/
-#if OS(WINCE)
-#   undef WTF_CPU_BIG_ENDIAN
-#   undef WTF_CPU_MIDDLE_ENDIAN
-#   if Q_BYTE_ORDER == Q_BIG_ENDIAN
-#       define WTF_CPU_BIG_ENDIAN 1
-#   endif
-
-#   include <ce_time.h>
+#if OS(FREEBSD) || OS(OPENBSD)
+#define HAVE_PTHREAD_NP_H 1
 #endif
 
 /* On Windows, use QueryPerformanceCounter by default */
@@ -545,7 +483,7 @@
 #define HAVE_SIGNAL_H 1
 #endif
 
-#if !OS(WINDOWS) && !OS(SOLARIS) && !OS(QNX) \
+#if !OS(SOLARIS) \
      && !OS(HAIKU) && !OS(ANDROID) \
      && !OS(AIX) && !OS(HPUX)
 #define HAVE_TM_GMTOFF 1
@@ -553,53 +491,7 @@
 #define HAVE_TIMEGM 1
 #endif
 
-#if OS(DARWIN)
-
-#define HAVE_ERRNO_H 1
-#define HAVE_LANGINFO_H 1
-#define HAVE_MMAP 1
-#define HAVE_MERGESORT 1
-#define HAVE_SBRK 1
-#define HAVE_STRINGS_H 1
-#define HAVE_SYS_PARAM_H 1
-#define HAVE_SYS_TIME_H 1
-#define HAVE_SYS_TIMEB_H 1
-
-#if !defined(TARGETING_TIGER) && !defined(TARGETING_LEOPARD)
-
-#define HAVE_DISPATCH_H 1
-
-#if !PLATFORM(IPHONE)
-#define HAVE_MADV_FREE_REUSE 1
-#define HAVE_MADV_FREE 1
-#define HAVE_PTHREAD_SETNAME_NP 1
-#endif
-
-#endif
-
-#if PLATFORM(IPHONE)
-#define HAVE_MADV_FREE 1
-#endif
-
-#elif OS(WINDOWS)
-
-#if OS(WINCE)
-#define HAVE_ERRNO_H 0
-#else
-#define HAVE_SYS_TIMEB_H 1
-#endif
-#define HAVE_VIRTUALALLOC 1
-
-#elif OS(QNX)
-
-#define HAVE_ERRNO_H 1
-#define HAVE_MMAP 1
-#define HAVE_SBRK 1
-#define HAVE_STRINGS_H 1
-#define HAVE_SYS_PARAM_H 1
-#define HAVE_SYS_TIME_H 1
-
-#elif OS(ANDROID)
+#if OS(ANDROID)
 
 #define HAVE_ERRNO_H 1
 #define HAVE_LANGINFO_H 0
@@ -610,8 +502,6 @@
 #define HAVE_SYS_TIME_H 1
 
 #else
-
-/* FIXME: is this actually used or do other platforms generate their own config.h? */
 
 #define HAVE_ERRNO_H 1
 /* As long as Haiku doesn't have a complete support of locale this will be disabled. */
@@ -644,7 +534,7 @@
 #endif
 
 #if !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64)
-#if (CPU(X86_64) && (OS(UNIX) || OS(WINDOWS) || OS(SOLARIS) || OS(HPUX))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(AIX64) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
+#if (CPU(X86_64) && (OS(UNIX) || OS(SOLARIS) || OS(HPUX))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(AIX64) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
 #define WTF_USE_JSVALUE64 1
 #elif CPU(ARM) || CPU(PPC64)
 #define WTF_USE_JSVALUE32 1
@@ -659,32 +549,11 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 
 #if !defined(ENABLE_JIT)
 
-/* The JIT is tested & working on x86_64 Mac */
-#if CPU(X86_64) && PLATFORM(MAC)
-    #define ENABLE_JIT 1
-/* The JIT is tested & working on x86 Mac */
-#elif CPU(X86) && PLATFORM(MAC)
-    #define ENABLE_JIT 1
-    #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
-#elif CPU(ARM_THUMB2) && PLATFORM(IPHONE)
-    #define ENABLE_JIT 1
-/* The JIT is tested & working on x86 Windows */
-#elif CPU(X86) && PLATFORM(WIN)
+#if CPU(ARM_THUMB2) && PLATFORM(IPHONE)
     #define ENABLE_JIT 1
 #endif
 
-#if CPU(X86_64) && OS(DARWIN)
-    #define ENABLE_JIT 1
-#elif CPU(X86) && OS(DARWIN)
-    #define ENABLE_JIT 1
-    #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
-#elif CPU(X86) && OS(WINDOWS) && COMPILER(MINGW) && GCC_VERSION >= 40100
-    #define ENABLE_JIT 1
-    #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
-#elif CPU(X86) && OS(WINDOWS) && COMPILER(MSVC)
-    #define ENABLE_JIT 1
-    #define WTF_USE_JIT_STUB_ARGUMENT_REGISTER 1
-#elif CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100
+#if CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100
     #define ENABLE_JIT 1
     #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
 #elif CPU(X86_64) && OS(LINUX) && GCC_VERSION >= 40100
@@ -722,10 +591,7 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #if !defined(ENABLE_YARR_JIT)
 
 /* YARR supports x86 & x86-64, and has been tested on Mac, Windows and Linux. */
-#if (CPU(X86) && OS(WINDOWS) && COMPILER(MINGW) && GCC_VERSION >= 40100) \
-    || (CPU(X86_64) && OS(WINDOWS) && COMPILER(MINGW64) && GCC_VERSION >= 40100) \
-    || (CPU(X86) && OS(WINDOWS) && COMPILER(MSVC)) \
-    || (CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100) \
+#if (CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100) \
     || (CPU(X86_64) && OS(LINUX) && GCC_VERSION >= 40100) \
     || (CPU(ARM_TRADITIONAL) && OS(LINUX))
 #define ENABLE_YARR 1

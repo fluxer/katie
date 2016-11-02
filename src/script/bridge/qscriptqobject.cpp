@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptqobject_p.h"
 
 #include <QtCore/qmetaobject.h>

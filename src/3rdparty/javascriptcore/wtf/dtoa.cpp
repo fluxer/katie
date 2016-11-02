@@ -132,7 +132,7 @@
  *    the result overflows to +-Infinity or underflows to 0.
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "dtoa.h"
 
 #if HAVE(ERRNO_H)

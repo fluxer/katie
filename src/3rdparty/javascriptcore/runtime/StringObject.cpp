@@ -18,7 +18,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "StringObject.h"
 
 #include "PropertyNameArray.h"

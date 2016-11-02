@@ -74,7 +74,7 @@
 // * allocation of a reasonably complicated struct
 //   goes from about 1100 ns to about 300 ns.
 
-#include "config.h"
+#include "Platform.h"
 #include "FastMalloc.h"
 
 #include "Assertions.h"

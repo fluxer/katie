@@ -22,7 +22,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "Arguments.h"
 
 #include "JSActivation.h"

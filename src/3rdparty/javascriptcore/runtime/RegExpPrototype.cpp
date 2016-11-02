@@ -18,7 +18,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "RegExpPrototype.h"
 
 #include "ArrayPrototype.h"

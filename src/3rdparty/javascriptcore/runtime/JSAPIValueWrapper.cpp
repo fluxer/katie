@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "JSAPIValueWrapper.h"
 
 #include "NumberObject.h"

@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptactivationobject_p.h"
 
 #include "JSVariableObject.h"

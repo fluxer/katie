@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "DateConstructor.h"
 
 #include "DateConversion.h"

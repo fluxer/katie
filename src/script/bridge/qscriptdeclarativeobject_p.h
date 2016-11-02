@@ -37,7 +37,7 @@
 
 #include <QtCore/qobjectdefs.h>
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptobject_p.h"
 #include "qscriptdeclarativeclass_p.h"
 

@@ -22,7 +22,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "JSGlobalObjectFunctions.h"
 
 #include "CallFrame.h"

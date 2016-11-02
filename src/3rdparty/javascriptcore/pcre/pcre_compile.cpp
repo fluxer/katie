@@ -41,7 +41,7 @@ POSSIBILITY OF SUCH DAMAGE.
 /* This module contains the external function jsRegExpExecute(), along with
 supporting internal functions that are not used by other modules. */
 
-#include "config.h"
+#include "Platform.h"
 
 #include "pcre_internal.h"
 

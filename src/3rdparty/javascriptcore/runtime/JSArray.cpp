@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "JSArray.h"
 
 #include "ArrayPrototype.h"

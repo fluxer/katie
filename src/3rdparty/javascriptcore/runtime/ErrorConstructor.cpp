@@ -18,7 +18,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "ErrorConstructor.h"
 
 #include "ErrorPrototype.h"

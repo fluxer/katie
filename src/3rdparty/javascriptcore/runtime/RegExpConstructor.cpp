@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "RegExpConstructor.h"
 
 #include "ArrayPrototype.h"

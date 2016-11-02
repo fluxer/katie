@@ -25,7 +25,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 
 #include "JSObject.h"
 #include "JSString.h"

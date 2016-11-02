@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "InternalFunction.h"
 
 #include "FunctionPrototype.h"

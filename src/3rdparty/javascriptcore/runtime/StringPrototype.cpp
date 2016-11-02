@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "StringPrototype.h"
 
 #include "CachedCall.h"

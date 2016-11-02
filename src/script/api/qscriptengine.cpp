@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptengine.h"
 #include "qscriptsyntaxchecker_p.h"
 
@@ -2509,25 +2509,6 @@ QScriptValue QScriptEngine::newQMetaObject(
   Q_SCRIPT_DECLARE_QMETAOBJECT() macro. Example:
 
   \snippet doc/src/snippets/code/src_script_qscriptengine.cpp 13
-
-  \sa QScriptEngine::newQMetaObject()
-*/
-
-/*!
-  \fn QScriptValue qScriptValueFromQMetaObject(QScriptEngine *engine)
-  \since 4.3
-  \relates QScriptEngine
-  \obsolete
-
-  Uses \a engine to create a QScriptValue that represents the Qt class
-  \c{T}.
-
-  This function is equivalent to
-  QScriptEngine::scriptValueFromQMetaObject().
-
-  \note This function was provided as a workaround for MSVC 6
-  which did not support member template functions. It is advised
-  to use the other form in new code.
 
   \sa QScriptEngine::newQMetaObject()
 */

@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptvariant_p.h"
 
 #include "../api/qscriptengine.h"

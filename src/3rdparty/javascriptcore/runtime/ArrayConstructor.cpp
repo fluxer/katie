@@ -21,7 +21,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "ArrayConstructor.h"
 
 #include "ArrayPrototype.h"

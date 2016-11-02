@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "Parser.h"
 
 #include "Lexer.h"

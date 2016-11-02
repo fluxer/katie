@@ -21,7 +21,7 @@
 **
 ****************************************************************************/
 
-#include "config.h"
+#include "Platform.h"
 #include "qscriptcontextinfo.h"
 
 #include "qscriptcontext_p.h"

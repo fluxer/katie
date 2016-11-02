@@ -18,7 +18,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "Collector.h"
 
 #include "ArgList.h"

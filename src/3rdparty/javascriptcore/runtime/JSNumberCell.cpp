@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "JSNumberCell.h"
 
 #if USE(JSVALUE32)

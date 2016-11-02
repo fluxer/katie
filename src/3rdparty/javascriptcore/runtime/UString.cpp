@@ -21,7 +21,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "UString.h"
 
 #include "JSGlobalObjectFunctions.h"

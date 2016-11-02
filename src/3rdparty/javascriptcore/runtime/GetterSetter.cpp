@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "GetterSetter.h"
 
 #include "JSObject.h"

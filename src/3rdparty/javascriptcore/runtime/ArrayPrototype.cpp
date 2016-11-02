@@ -21,7 +21,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "ArrayPrototype.h"
 
 #include "CodeBlock.h"

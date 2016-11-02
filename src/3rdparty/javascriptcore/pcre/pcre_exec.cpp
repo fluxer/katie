@@ -42,7 +42,7 @@ POSSIBILITY OF SUCH DAMAGE.
 that does pattern matching using an NFA algorithm, following the rules from
 the JavaScript specification. There are also some supporting functions. */
 
-#include "config.h"
+#include "Platform.h"
 #include "pcre_internal.h"
 
 #include <limits.h>

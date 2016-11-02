@@ -27,7 +27,7 @@
  */
 
 
-#include "config.h"
+#include "Platform.h"
 #include "JSNotAnObject.h"
 
 namespace JSC {

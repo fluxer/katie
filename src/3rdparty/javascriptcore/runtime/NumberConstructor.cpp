@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "NumberConstructor.h"
 
 #include "NumberObject.h"

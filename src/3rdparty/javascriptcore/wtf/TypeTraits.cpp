@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "TypeTraits.h"
 
 #include "Assertions.h"

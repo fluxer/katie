@@ -19,7 +19,7 @@
  *
  */
 
-#include "config.h"
+#include "Platform.h"
 #include "DateInstance.h"
 
 #include "JSGlobalObject.h"

@@ -24,7 +24,7 @@
  */
 
 
-#include "config.h"
+#include "Platform.h"
 
 #include "PropertyDescriptor.h"
 
