@@ -414,6 +414,7 @@ QScriptContext * QScriptDeclarativeClass::pushCleanContext(QScriptEngine *engine
 
 QScriptDeclarativeClass::~QScriptDeclarativeClass()
 {
+    delete d_ptr;
 }
 
 QScriptEngine *QScriptDeclarativeClass::engine() const

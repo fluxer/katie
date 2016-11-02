@@ -116,7 +116,7 @@ void QHostAddressPrivate::setAddress(const Q_IPV6ADDR &a_)
 
 static bool parseIp4(const QString& address, quint32 *addr)
 {
-    QStringList ipv4 = address.split(QLatin1String("."));
+    const QStringList ipv4 = address.split(QLatin1String("."));
     if (ipv4.count() != 4)
         return false;
 
@@ -146,12 +146,12 @@ static bool parseIp6(const QString &address, quint8 *addr, QString *scopeId)
         scopeId->clear();
     }
 
-    QStringList ipv6 = tmp.split(QLatin1String(":"));
-    int count = ipv6.count();
+    const QStringList ipv6 = tmp.split(QLatin1String(":"));
+    const int count = ipv6.count();
     if (count < 3 || count > 8)
         return false;
 
-    int colonColon = tmp.count(QLatin1String("::"));
+    const int colonColon = tmp.count(QLatin1String("::"));
     if(count == 8 && colonColon > 1)
         return false;
 
@@ -222,7 +222,7 @@ bool QHostAddressPrivate::parse()
 {
     isParsed = true;
     protocol = QAbstractSocket::UnknownNetworkLayerProtocol;
-    QString a = ipString.simplified();
+    const QString a = ipString.simplified();
 
     // All IPv6 addresses contain a ':', and may contain a '.'.
     if (a.contains(QLatin1Char(':'))) {
@@ -522,7 +522,8 @@ QHostAddress::QHostAddress(SpecialAddress address)
 */
 QHostAddress::~QHostAddress()
 {
-    delete d;
+    // ###: leaking pointer, something is accessing it?
+    // delete d;
 }
 
 /*!

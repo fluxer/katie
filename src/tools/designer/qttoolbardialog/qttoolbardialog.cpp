@@ -119,7 +119,7 @@ signals:
     void toolBarChanged(QToolBar *toolBar, const QList<QAction *> &actions);
 
 private:
-    QScopedPointer<QtFullToolBarManagerPrivate> d_ptr;
+    QtFullToolBarManagerPrivate* d_ptr;
     Q_DECLARE_PRIVATE(QtFullToolBarManager)
     Q_DISABLE_COPY(QtFullToolBarManager)
 };
@@ -450,6 +450,7 @@ QtFullToolBarManager::QtFullToolBarManager(QObject *parent)
 
 QtFullToolBarManager::~QtFullToolBarManager()
 {
+    delete d_ptr;
 }
 
 void QtFullToolBarManager::setMainWindow(QMainWindow *mainWindow)
@@ -841,6 +842,7 @@ QtToolBarManager::QtToolBarManager(QObject *parent)
 */
 QtToolBarManager::~QtToolBarManager()
 {
+    delete d_ptr;
 }
 
 /*!
@@ -1829,6 +1831,7 @@ QtToolBarDialog::QtToolBarDialog(QWidget *parent, Qt::WindowFlags flags)
 QtToolBarDialog::~QtToolBarDialog()
 {
     d_ptr->clearOld();
+    delete d_ptr;
 }
 
 /*!

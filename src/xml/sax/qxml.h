@@ -47,7 +47,6 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qlist.h>
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 
@@ -196,7 +195,7 @@ public:
     QString message() const;
 
 private:
-    QScopedPointer<QXmlParseExceptionPrivate> d;
+    QXmlParseExceptionPrivate* d;
 };
 
 
@@ -265,7 +264,7 @@ public:
 private:
     Q_DISABLE_COPY(QXmlSimpleReader)
     Q_DECLARE_PRIVATE(QXmlSimpleReader)
-    QScopedPointer<QXmlSimpleReaderPrivate> d_ptr;
+    QXmlSimpleReaderPrivate* d_ptr;
 
     friend class QXmlSimpleReaderLocator;
 };
@@ -403,7 +402,6 @@ public:
     QString errorString() const;
 
 private:
-    QXmlDefaultHandlerPrivate *d;
     Q_DISABLE_COPY(QXmlDefaultHandler)
 };
 

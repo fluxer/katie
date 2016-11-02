@@ -49,7 +49,6 @@
 #include <QtCore/qnamespace.h>
 #include <QtCore/qiodevice.h>
 #include <QtCore/qobjectdefs.h>
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 
@@ -102,7 +101,7 @@ protected:
     int metric(QPaintDevice::PaintDeviceMetric metric) const;
 
 private:
-    QScopedPointer<QSvgGeneratorPrivate> d_ptr;
+    QSvgGeneratorPrivate* d_ptr;
 };
 
 QT_END_NAMESPACE

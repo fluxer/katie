@@ -242,6 +242,7 @@ QScriptEngineAgent::QScriptEngineAgent(QScriptEngineAgentPrivate &dd, QScriptEng
 QScriptEngineAgent::~QScriptEngineAgent()
 {
     d_ptr->engine->agentDeleted(this); //### TODO: Can this throw?
+    delete d_ptr;
 }
 
 /*!

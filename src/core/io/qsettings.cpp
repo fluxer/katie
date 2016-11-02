@@ -390,7 +390,7 @@ void QSettingsPrivate::setStatus(QSettings::Status status) const
 
 void QSettingsPrivate::update()
 {
-    flush();
+    sync();
     pendingChanges = false;
 }
 
@@ -1286,11 +1286,6 @@ void QConfFileSettingsPrivate::sync()
     }
 }
 
-void QConfFileSettingsPrivate::flush()
-{
-    sync();
-}
-
 QString QConfFileSettingsPrivate::fileName() const
 {
     QConfFile *confFile = confFiles[spec].data();
@@ -2138,10 +2133,6 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     drive and Secure ID (UID3) of the application. If the application is
     built-in on the ROM, the drive used for SystemScope is \c c:.
 
-    \note Symbian SystemScope settings are by default private to the
-    application and not shared between applications, unlike other
-    environments.
-
     The paths for the \c .ini and \c .conf files can be changed using
     setPath(). On Unix, the user can override them by setting the
     \c XDG_CONFIG_HOME environment variable; see setPath() for details.
@@ -2467,12 +2458,14 @@ QSettings::~QSettings()
     Q_D(QSettings);
     if (d->pendingChanges) {
         QT_TRY {
-            d->flush();
+            d->sync();
         } QT_CATCH(...) {
-            ; // ok. then don't flush but at least don't throw in the destructor
+            ; // ok. then don't sync but at least don't throw in the destructor
         }
     }
+#ifdef QT_NO_QOBJECT
     delete d_ptr;
+#endif
 }
 
 /*!

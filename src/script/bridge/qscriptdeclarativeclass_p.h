@@ -148,7 +148,7 @@ public:
     QScriptContext *context() const;
 protected:
     friend class QScriptDeclarativeClassPrivate;
-    QScopedPointer<QScriptDeclarativeClassPrivate> d_ptr;
+    QScriptDeclarativeClassPrivate* d_ptr;
 };
 
 QT_END_NAMESPACE

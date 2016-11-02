@@ -140,7 +140,7 @@ QScriptValueIterator::QScriptValueIterator(const QScriptValue &object)
     : d_ptr(0)
 {
     if (object.isObject()) {
-        d_ptr.reset(new QScriptValueIteratorPrivate());
+        d_ptr = new QScriptValueIteratorPrivate();
         d_ptr->objectValue = object;
     }
 }
@@ -150,6 +150,7 @@ QScriptValueIterator::QScriptValueIterator(const QScriptValue &object)
 */
 QScriptValueIterator::~QScriptValueIterator()
 {
+    delete d_ptr;
 }
 
 /*!
@@ -351,9 +352,9 @@ void QScriptValueIterator::remove()
 */
 QScriptValueIterator& QScriptValueIterator::operator=(QScriptValue &object)
 {
-    d_ptr.reset();
+    delete d_ptr;
     if (object.isObject()) {
-        d_ptr.reset(new QScriptValueIteratorPrivate());
+        d_ptr = new QScriptValueIteratorPrivate();
         d_ptr->objectValue = object;
     }
     return *this;

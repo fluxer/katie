@@ -645,6 +645,7 @@ QUiLoader::QUiLoader(QObject *parent)
 */
 QUiLoader::~QUiLoader()
 {
+    delete d_ptr;
 }
 
 /*!

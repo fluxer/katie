@@ -560,6 +560,7 @@ QSvgGenerator::~QSvgGenerator()
     if (d->owns_iodevice)
         delete d->engine->outputDevice();
     delete d->engine;
+    delete d_ptr;
 }
 
 /*!

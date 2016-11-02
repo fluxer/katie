@@ -1730,12 +1730,10 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
     emit aboutToShow();
     const bool actionListChanged = d->itemsDirty;
     d->updateActionRects();
-    QPoint pos;
+    QPoint pos = p;
     QPushButton *causedButton = qobject_cast<QPushButton*>(d->causedPopup.widget);
     if (actionListChanged && causedButton)
         pos = QPushButtonPrivate::get(causedButton)->adjustedMenuPosition();
-    else
-        pos = p;
 
     QSize size = sizeHint();
     QRect screen;

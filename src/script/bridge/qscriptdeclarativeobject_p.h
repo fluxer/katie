@@ -56,7 +56,7 @@ public:
     bool supportsCall:1;
 
     static QScriptDeclarativeClassPrivate *get(QScriptDeclarativeClass *c) {
-        return c->d_ptr.data();
+        return c->d_ptr;
     }
 };
 

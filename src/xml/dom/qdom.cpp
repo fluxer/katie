@@ -58,6 +58,8 @@
 #include <qmap.h>
 #include <qshareddata.h>
 #include <qdebug.h>
+#include <qscopedpointer.h>
+
 #include <stdio.h>
 
 QT_BEGIN_NAMESPACE

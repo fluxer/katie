@@ -156,6 +156,7 @@ QScriptClass::QScriptClass(QScriptEngine *engine, QScriptClassPrivate &dd)
 */
 QScriptClass::~QScriptClass()
 {
+    delete d_ptr;
 }
 
 /*!

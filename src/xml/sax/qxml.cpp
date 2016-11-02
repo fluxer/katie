@@ -263,10 +263,6 @@ class QXmlLocatorPrivate
 {
 };
 
-class QXmlDefaultHandlerPrivate
-{
-};
-
 class QXmlSimpleReaderPrivate
 {
 public:
@@ -358,7 +354,7 @@ private:
     bool contentCharDataRead;
 
     // helper classes
-    QScopedPointer<QXmlLocator> locator;
+    QXmlLocator* locator;
     QXmlNamespaceSupport namespaceSupport;
 
     // error string
@@ -587,6 +583,7 @@ QXmlParseException::QXmlParseException(const QXmlParseException& other) :
 */
 QXmlParseException::~QXmlParseException()
 {
+    delete d;
 }
 
 /*!
@@ -2732,7 +2729,7 @@ QXmlSimpleReaderPrivate::QXmlSimpleReaderPrivate(QXmlSimpleReader *reader)
     q_ptr = reader;
     parseStack = 0;
 
-    locator.reset(new QXmlSimpleReaderLocator(reader));
+    locator = new QXmlSimpleReaderLocator(reader);
     entityRes  = 0;
     dtdHnd     = 0;
     contentHnd = 0;
@@ -2750,6 +2747,7 @@ QXmlSimpleReaderPrivate::QXmlSimpleReaderPrivate(QXmlSimpleReader *reader)
 QXmlSimpleReaderPrivate::~QXmlSimpleReaderPrivate()
 {
     delete parseStack;
+    delete locator;
 }
 
 void QXmlSimpleReaderPrivate::initIncrementalParsing()
@@ -3133,6 +3131,7 @@ QXmlSimpleReader::QXmlSimpleReader()
 */
 QXmlSimpleReader::~QXmlSimpleReader()
 {
+    delete d_ptr;
 }
 
 /*!
@@ -3419,7 +3418,7 @@ bool QXmlSimpleReader::parse(const QXmlInputSource *input, bool incremental)
 
     // call the handler
     if (d->contentHnd) {
-        d->contentHnd->setDocumentLocator(d->locator.data());
+        d->contentHnd->setDocumentLocator(d->locator);
         if (!d->contentHnd->startDocument()) {
             d->reportParseError(d->contentHnd->errorString());
             d->tags.clear();

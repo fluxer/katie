@@ -25,9 +25,7 @@
 #define QSCRIPTENGINEAGENT_H
 
 #include <QtCore/qobjectdefs.h>
-
 #include <QtCore/qvariant.h>
-#include <QtCore/qscopedpointer.h>
 
 QT_BEGIN_HEADER
 
@@ -76,7 +74,7 @@ public:
 
 protected:
     QScriptEngineAgent(QScriptEngineAgentPrivate &dd, QScriptEngine *engine);
-    QScopedPointer<QScriptEngineAgentPrivate> d_ptr;
+    QScriptEngineAgentPrivate* d_ptr;
 
 private:
     Q_DECLARE_PRIVATE(QScriptEngineAgent)

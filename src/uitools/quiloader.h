@@ -43,7 +43,6 @@
 #define QUILOADER_H
 
 #include <QtCore/QObject>
-#include <QtCore/QScopedPointer>
 
 QT_BEGIN_HEADER
 
@@ -91,7 +90,7 @@ public:
     bool isTranslationEnabled() const;
 
 private:
-    QScopedPointer<QUiLoaderPrivate> d_ptr;
+    QUiLoaderPrivate* d_ptr;
     Q_DECLARE_PRIVATE(QUiLoader)
     Q_DISABLE_COPY(QUiLoader)
 };

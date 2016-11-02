@@ -262,7 +262,7 @@ private:
 
 protected:
 #ifdef QT_NO_QOBJECT
-    QScopedPointer<QScriptEnginePrivate> d_ptr;
+    QScriptEnginePrivate* d_ptr;
 
     QScriptEngine(QScriptEnginePrivate &dd);
 #else
