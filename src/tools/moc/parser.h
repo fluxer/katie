@@ -72,9 +72,9 @@ public:
     inline const Symbol &symbol() { return symbols.at(index-1);}
 
     void error(int rollback);
-    void error(const char *msg = 0);
-    void warning(const char * = 0);
-    void note(const char * = 0);
+    void error(const char *msg = Q_NULLPTR);
+    void warning(const char * = Q_NULLPTR);
+    void note(const char * = Q_NULLPTR);
 
 };
 

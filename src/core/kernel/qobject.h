@@ -233,7 +233,7 @@ protected:
     virtual void connectNotify(const char *signal);
     virtual void disconnectNotify(const char *signal);
 
-    QObject(QObjectPrivate &dd, QObject *parent = 0);
+    QObject(QObjectPrivate &dd, QObject *parent = Q_NULLPTR);
 
     QObjectData* d_ptr;
 

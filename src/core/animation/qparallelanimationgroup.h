@@ -57,7 +57,7 @@ class Q_CORE_EXPORT QParallelAnimationGroup : public QAnimationGroup
     Q_OBJECT
 
 public:
-    QParallelAnimationGroup(QObject *parent = 0);
+    QParallelAnimationGroup(QObject *parent = Q_NULLPTR);
     ~QParallelAnimationGroup();
 
     int duration() const;

@@ -455,7 +455,7 @@ QDebug operator<<(QDebug dbg, const QPersistentModelIndex &idx)
 class QEmptyItemModel : public QAbstractItemModel
 {
 public:
-    explicit QEmptyItemModel(QObject *parent = 0) : QAbstractItemModel(parent) {}
+    explicit QEmptyItemModel(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent) {}
     QModelIndex index(int, int, const QModelIndex &) const { return QModelIndex(); }
     QModelIndex parent(const QModelIndex &) const { return QModelIndex(); }
     int rowCount(const QModelIndex &) const { return 0; }

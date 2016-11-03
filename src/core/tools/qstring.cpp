@@ -5231,7 +5231,7 @@ qint64 QString::toLongLong(bool *ok, int base) const
     QLocale def_locale;
     qint64 result = def_locale.d()->stringToLongLong(*this, base, &my_ok, QLocalePrivate::FailOnGroupSeparators);
     if (my_ok) {
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = true;
         return result;
     }
@@ -5272,7 +5272,7 @@ quint64 QString::toULongLong(bool *ok, int base) const
     QLocale def_locale;
     quint64 result = def_locale.d()->stringToUnsLongLong(*this, base, &my_ok, QLocalePrivate::FailOnGroupSeparators);
     if (my_ok) {
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = true;
         return result;
     }
@@ -5508,7 +5508,7 @@ double QString::toDouble(bool *ok) const
     QLocale def_locale;
     double result = def_locale.d()->stringToDouble(*this, &my_ok, QLocalePrivate::FailOnGroupSeparators);
     if (my_ok) {
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = true;
         return result;
     }
@@ -5537,11 +5537,11 @@ float QString::toFloat(bool *ok) const
     bool myOk;
     double d = toDouble(&myOk);
     if (!myOk || d > QT_MAX_FLOAT || d < -QT_MAX_FLOAT) {
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = false;
         return 0.0;
     }
-    if (ok != 0)
+    if (ok != Q_NULLPTR)
         *ok = true;
     return (float) d;
 }

@@ -488,9 +488,9 @@ void QTextStreamPrivate::reset()
     realNumberNotation = QTextStream::SmartNotation;
     numberFlags = 0;
 
-    device = 0;
+    device = Q_NULLPTR;
     deleteDevice = false;
-    string = 0;
+    string = Q_NULLPTR;
     stringOffset = 0;
     stringOpenMode = QIODevice::NotOpen;
 
@@ -503,7 +503,7 @@ void QTextStreamPrivate::reset()
     resetCodecConverterStateHelper(&readConverterState);
     resetCodecConverterStateHelper(&writeConverterState);
     delete readConverterSavedState;
-    readConverterSavedState = 0;
+    readConverterSavedState = Q_NULLPTR;
     writeConverterState.flags |= QTextCodec::IgnoreHeader;
     autoDetectUnicode = true;
 #endif

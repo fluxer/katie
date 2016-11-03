@@ -68,8 +68,8 @@ class Q_CORE_EXPORT QEventDispatcherGlib : public QAbstractEventDispatcher
     Q_DECLARE_PRIVATE(QEventDispatcherGlib)
 
 public:
-    explicit QEventDispatcherGlib(QObject *parent = 0);
-    explicit QEventDispatcherGlib(GMainContext *context, QObject *parent = 0);
+    explicit QEventDispatcherGlib(QObject *parent = Q_NULLPTR);
+    explicit QEventDispatcherGlib(GMainContext *context, QObject *parent = Q_NULLPTR);
     ~QEventDispatcherGlib();
 
     bool processEvents(QEventLoop::ProcessEventsFlags flags);

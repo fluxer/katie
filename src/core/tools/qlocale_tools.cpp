@@ -304,7 +304,7 @@ qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok)
     qulonglong qbase, cutoff;
     int any, cutlim;
 
-    if (ok != 0)
+    if (ok != Q_NULLPTR)
         *ok = true;
 
     /*
@@ -315,7 +315,7 @@ qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok)
         c = *s++;
     } while (isspace(c));
     if (c == '-') {
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = false;
         if (endptr != 0)
             *endptr = s - 1;
@@ -355,11 +355,11 @@ qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok)
         }
     }
     if (any == 0) {
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = false;
     } else if (any < 0) {
         acc = ULLONG_MAX;
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = false;
     }
     if (endptr != 0)
@@ -454,7 +454,7 @@ qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok)
     }
     if (any < 0) {
         acc = neg ? LLONG_MIN : LLONG_MAX;
-        if (ok != 0)
+        if (ok != Q_NULLPTR)
             *ok = false;
     } else if (neg) {
         acc = (~acc) + 1;
@@ -462,7 +462,7 @@ qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok)
     if (endptr != 0)
         *endptr = (any >= 0 ? s - 1 : nptr);
 
-    if (ok != 0)
+    if (ok != Q_NULLPTR)
         *ok = any > 0;
 
     return acc;
@@ -1573,7 +1573,7 @@ double qstrtod(const char *s00, const char **se, bool *ok)
       #else
       const char decimal_point = '.';
       #endif */
-    if (ok != 0)
+    if (ok != Q_NULLPTR)
         *ok = true;
 
     const char decimal_point = '.';
@@ -1767,7 +1767,7 @@ double qstrtod(const char *s00, const char **se, bool *ok)
             if (e1 > DBL_MAX_10_EXP) {
             ovfl:
                 //                                errno = ERANGE;
-                if (ok != 0)
+                if (ok != Q_NULLPTR)
                     *ok = false;
 #ifdef __STDC__
                 rv = HUGE_VAL;
@@ -1830,7 +1830,7 @@ double qstrtod(const char *s00, const char **se, bool *ok)
                         undfl:
                             rv = 0.;
                             //                                        errno = ERANGE;
-                            if (ok != 0)
+                            if (ok != Q_NULLPTR)
                                 *ok = false;
                             if (bd0)
                                 goto retfree;

@@ -122,7 +122,7 @@ public:
         CrashExit
     };
 
-    explicit QProcess(QObject *parent = 0);
+    explicit QProcess(QObject *parent = Q_NULLPTR);
     virtual ~QProcess();
 
     void start(const QString &program, const QStringList &arguments, OpenMode mode = ReadWrite);

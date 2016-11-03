@@ -236,14 +236,14 @@ class Q_CORE_EXPORT QVariant
     void detach();
     inline bool isDetached() const;
 
-    int toInt(bool *ok = 0) const;
-    uint toUInt(bool *ok = 0) const;
-    qlonglong toLongLong(bool *ok = 0) const;
-    qulonglong toULongLong(bool *ok = 0) const;
+    int toInt(bool *ok = Q_NULLPTR) const;
+    uint toUInt(bool *ok = Q_NULLPTR) const;
+    qlonglong toLongLong(bool *ok = Q_NULLPTR) const;
+    qulonglong toULongLong(bool *ok = Q_NULLPTR) const;
     bool toBool() const;
-    double toDouble(bool *ok = 0) const;
-    float toFloat(bool *ok = 0) const;
-    qreal toReal(bool *ok = 0) const;
+    double toDouble(bool *ok = Q_NULLPTR) const;
+    float toFloat(bool *ok = Q_NULLPTR) const;
+    qreal toReal(bool *ok = Q_NULLPTR) const;
     QByteArray toByteArray() const;
     QBitArray toBitArray() const;
     QString toString() const;
@@ -487,7 +487,7 @@ inline bool operator!=(const QVariant &v1, const QVariantComparisonHelper &v2)
 #ifndef QT_MOC
 template<typename T> inline T qvariant_cast(const QVariant &v)
 {
-    const int vid = qMetaTypeId<T>(static_cast<T *>(0));
+    const int vid = qMetaTypeId<T>(static_cast<T *>(Q_NULLPTR));
     if (vid == v.userType())
         return *reinterpret_cast<const T *>(v.constData());
     if (vid < int(QMetaType::User)) {

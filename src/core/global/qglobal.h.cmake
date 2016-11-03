@@ -1332,14 +1332,14 @@ public:
     inline ~QGlobalStaticDeleter()
     {
         delete globalStatic.pointer;
-        globalStatic.pointer = 0;
+        globalStatic.pointer = Q_NULLPTR;
         globalStatic.destroyed = true;
     }
 };
 
 #define Q_GLOBAL_STATIC_INIT(TYPE, NAME)                                      \
         static QGlobalStatic<TYPE > this_ ## NAME                             \
-                            = { QAtomicPointer<TYPE>(0), false }
+                            = { QAtomicPointer<TYPE>(Q_NULLPTR), false }
 
 #define Q_GLOBAL_STATIC(TYPE, NAME)                                           \
     static TYPE *NAME()                                                       \
@@ -1347,7 +1347,7 @@ public:
         Q_GLOBAL_STATIC_INIT(TYPE, _StaticVar_);                              \
         if (!this__StaticVar_.pointer && !this__StaticVar_.destroyed) {       \
             TYPE *x = new TYPE;                                               \
-            if (!this__StaticVar_.pointer.testAndSetOrdered(0, x))            \
+            if (!this__StaticVar_.pointer.testAndSetOrdered(Q_NULLPTR, x))    \
                 delete x;                                                     \
             else                                                              \
                 static QGlobalStaticDeleter<TYPE > cleanup(this__StaticVar_); \

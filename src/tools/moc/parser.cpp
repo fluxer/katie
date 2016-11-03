@@ -50,7 +50,7 @@ QT_BEGIN_NAMESPACE
 Symbol::LexemStore Symbol::lexemStore;
 #endif
 
-static const char *error_msg = 0;
+static const char *error_msg = Q_NULLPTR;
 
 void Parser::error(int rollback) {
     index -= rollback;

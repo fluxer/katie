@@ -371,7 +371,7 @@ void Generator::generateCode()
 // Generate smart cast function
 //
     fprintf(out, "\nvoid *%s::qt_metacast(const char *_clname)\n{\n", cdef->qualified.constData());
-    fprintf(out, "    if (!_clname) return 0;\n");
+    fprintf(out, "    if (!_clname) return Q_NULLPTR;\n");
     fprintf(out, "    if (!strcmp(_clname, qt_meta_stringdata_%s))\n"
                   "        return static_cast<void*>(const_cast< %s*>(this));\n",
             qualifiedClassNameIdentifier.constData(), cdef->classname.constData());

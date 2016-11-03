@@ -97,7 +97,7 @@ public:
     {
         T *oldD = this->d;
         Cleanup::cleanup(oldD);
-        this->d = 0;
+        this->d = Q_NULLPTR;
     }
 
     inline T &operator*() const

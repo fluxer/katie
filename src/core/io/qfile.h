@@ -175,7 +175,7 @@ protected:
 #ifdef QT_NO_QOBJECT
     QFile(QFilePrivate &dd);
 #else
-    QFile(QFilePrivate &dd, QObject *parent = 0);
+    QFile(QFilePrivate &dd, QObject *parent = Q_NULLPTR);
 #endif
 
     qint64 readData(char *data, qint64 maxlen);

@@ -139,7 +139,7 @@ class Q_CORE_EXPORT QEventDispatcherUNIX : public QAbstractEventDispatcher
     Q_DECLARE_PRIVATE(QEventDispatcherUNIX)
 
 public:
-    explicit QEventDispatcherUNIX(QObject *parent = 0);
+    explicit QEventDispatcherUNIX(QObject *parent = Q_NULLPTR);
     ~QEventDispatcherUNIX();
 
     bool processEvents(QEventLoop::ProcessEventsFlags flags);
@@ -158,7 +158,7 @@ public:
     void flush();
 
 protected:
-    QEventDispatcherUNIX(QEventDispatcherUNIXPrivate &dd, QObject *parent = 0);
+    QEventDispatcherUNIX(QEventDispatcherUNIXPrivate &dd, QObject *parent = Q_NULLPTR);
 
     void setSocketNotifierPending(QSocketNotifier *notifier);
 

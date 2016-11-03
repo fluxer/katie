@@ -161,7 +161,7 @@ class Q_CORE_EXPORT QAbstractItemModel : public QObject
     friend class QIdentityProxyModel;
 public:
 
-    explicit QAbstractItemModel(QObject *parent = 0);
+    explicit QAbstractItemModel(QObject *parent = Q_NULLPTR);
     virtual ~QAbstractItemModel();
 
     bool hasIndex(int row, int column, const QModelIndex &parent = QModelIndex()) const;
@@ -261,7 +261,7 @@ public Q_SLOTS:
     virtual void revert();
 
 protected:
-    QAbstractItemModel(QAbstractItemModelPrivate &dd, QObject *parent = 0);
+    QAbstractItemModel(QAbstractItemModelPrivate &dd, QObject *parent = Q_NULLPTR);
 
     inline QModelIndex createIndex(int row, int column, void *data = 0) const;
     inline QModelIndex createIndex(int row, int column, int id) const;
@@ -329,7 +329,7 @@ class Q_CORE_EXPORT QAbstractTableModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit QAbstractTableModel(QObject *parent = 0);
+    explicit QAbstractTableModel(QObject *parent = Q_NULLPTR);
     ~QAbstractTableModel();
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
@@ -349,7 +349,7 @@ class Q_CORE_EXPORT QAbstractListModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit QAbstractListModel(QObject *parent = 0);
+    explicit QAbstractListModel(QObject *parent = Q_NULLPTR);
     ~QAbstractListModel();
 
     QModelIndex index(int row, int column = 0, const QModelIndex &parent = QModelIndex()) const;

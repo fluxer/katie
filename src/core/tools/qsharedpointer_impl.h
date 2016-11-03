@@ -308,7 +308,7 @@ namespace QtSharedPointer {
             if (ptr)
                 d = new Data;
             else
-                d = 0;
+                d = Q_NULLPTR;
             internalFinishConstruction(ptr);
 #endif
         }
@@ -319,7 +319,7 @@ namespace QtSharedPointer {
             if (ptr)
                 d = ExternalRefCountWithCustomDeleter<T, Deleter>::create(ptr, deleter);
             else
-                d = 0;
+                d = Q_NULLPTR;
             internalFinishConstruction(ptr);
         }
 
@@ -457,7 +457,7 @@ public:
 
     template <class X>
     inline QSharedPointer(const QWeakPointer<X> &other) : BaseClass(Qt::Uninitialized)
-    { this->d = 0; *this = other; }
+    { this->d = Q_NULLPTR; *this = other; }
 
     template <class X>
     inline QSharedPointer<T> &operator=(const QWeakPointer<X> &other)
