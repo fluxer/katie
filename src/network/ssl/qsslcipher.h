@@ -44,6 +44,7 @@
 #define QSSLCIPHER_H
 
 #include <QtCore/qstring.h>
+#include <QtCore/qscopedpointer.h>
 #include <QtNetwork/qssl.h>
 
 QT_BEGIN_HEADER
@@ -74,7 +75,7 @@ public:
     QSsl::SslProtocol protocol() const;
 
 private:
-    QSslCipherPrivate* d;
+    QScopedPointer<QSslCipherPrivate> d;
     friend class QSslSocketBackendPrivate;
 };
 

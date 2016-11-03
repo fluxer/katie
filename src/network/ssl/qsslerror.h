@@ -44,6 +44,7 @@
 #define QSSLERROR_H
 
 #include <QtCore/qvariant.h>
+#include <QtCore/qscopedpointer.h>
 #include <QtNetwork/qsslcertificate.h>
 
 QT_BEGIN_HEADER
@@ -83,7 +84,11 @@ public:
         UnspecifiedError = -1
     };
 
-    QSslError(SslError error = QSslError::NoError, const QSslCertificate &certificate = QSslCertificate());
+    // RVCT compiler in debug build does not like about default values in const-
+    // So as an workaround we define all constructor overloads here explicitly
+    QSslError();
+    QSslError(SslError error);
+    QSslError(SslError error, const QSslCertificate &certificate);
 
     QSslError(const QSslError &other);
 
@@ -96,9 +101,9 @@ public:
     SslError error() const;
     QString errorString() const;
     QSslCertificate certificate() const;
-
+    
 private:
-    QSslErrorPrivate* d;
+    QScopedPointer<QSslErrorPrivate> d;
 };
 
 #ifndef QT_NO_DEBUG_STREAM

@@ -107,8 +107,34 @@ public:
 };
 
 /*!
-    Constructs a QSslError object. The two arguments specify the
-    \a error that occurred, and which \a certificate the error relates to.
+    Constructs a QSslError object with no error and default certificate. 
+
+*/
+
+// RVCT compiler in debug build does not like about default values in const-
+// So as an workaround we define all constructor overloads here explicitly
+QSslError::QSslError()
+    : d(new QSslErrorPrivate)
+{
+    d->error = QSslError::NoError;
+    d->certificate = QSslCertificate();
+}
+
+/*!
+    Constructs a QSslError object. The argument specifies the \a
+    error that occurred.
+
+*/
+QSslError::QSslError(SslError error)
+    : d(new QSslErrorPrivate)
+{
+    d->error = error;
+    d->certificate = QSslCertificate();
+}
+
+/*!
+    Constructs a QSslError object. The two arguments specify the \a
+    error that occurred, and which \a certificate the error relates to.
 
     \sa QSslCertificate
 */
@@ -125,7 +151,7 @@ QSslError::QSslError(SslError error, const QSslCertificate &certificate)
 QSslError::QSslError(const QSslError &other)
     : d(new QSslErrorPrivate)
 {
-    d = other.d;
+    *d.data() = *other.d.data();
 }
 
 /*!
@@ -133,7 +159,6 @@ QSslError::QSslError(const QSslError &other)
 */
 QSslError::~QSslError()
 {
-    delete d;
 }
 
 /*!
@@ -143,7 +168,7 @@ QSslError::~QSslError()
 */
 QSslError &QSslError::operator=(const QSslError &other)
 {
-    d = other.d;
+    *d.data() = *other.d.data();
     return *this;
 }
 

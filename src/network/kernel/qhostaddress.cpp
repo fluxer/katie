@@ -486,7 +486,7 @@ QHostAddress::QHostAddress(const struct sockaddr *sockaddr)
     Constructs a copy of the given \a address.
 */
 QHostAddress::QHostAddress(const QHostAddress &address)
-    : d(new QHostAddressPrivate(*address.d))
+    : d(new QHostAddressPrivate(*address.d.data()))
 {
 }
 
@@ -532,7 +532,7 @@ QHostAddress::~QHostAddress()
 */
 QHostAddress &QHostAddress::operator=(const QHostAddress &address)
 {
-    d = address.d;
+    *d.data() = *address.d.data();
     return *this;
 }
 
