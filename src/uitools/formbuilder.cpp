@@ -282,6 +282,22 @@ QLayout *QFormBuilder::createLayout(const QString &layoutName, QObject *parent, 
 /*!
     \internal
 */
+bool QFormBuilder::addItem(DomLayoutItem *ui_item, QLayoutItem *item, QLayout *layout)
+{
+    return QAbstractFormBuilder::addItem(ui_item, item, layout);
+}
+
+/*!
+    \internal
+*/
+bool QFormBuilder::addItem(DomWidget *ui_widget, QWidget *widget, QWidget *parentWidget)
+{
+    return QAbstractFormBuilder::addItem(ui_widget, widget, parentWidget);
+}
+
+/*!
+    \internal
+*/
 QWidget *QFormBuilder::widgetByName(QWidget *topLevel, const QString &name)
 {
     Q_ASSERT(topLevel);
@@ -333,6 +349,14 @@ void QFormBuilder::createConnections(DomConnections *ui_connections, QWidget *wi
 /*!
     \internal
 */
+QWidget *QFormBuilder::create(DomUI *ui, QWidget *parentWidget)
+{
+    return QAbstractFormBuilder::create(ui, parentWidget);
+}
+
+/*!
+    \internal
+*/
 QLayout *QFormBuilder::create(DomLayout *ui_layout, QLayout *layout, QWidget *parentWidget)
 {
     QFormBuilderExtra *fb = QFormBuilderExtra::instance(this);
@@ -362,6 +386,30 @@ QLayout *QFormBuilder::create(DomLayout *ui_layout, QLayout *layout, QWidget *pa
         fb->setProcessingLayoutWidget(false);
     }
     return l;
+}
+
+/*!
+    \internal
+*/
+QLayoutItem *QFormBuilder::create(DomLayoutItem *ui_layoutItem, QLayout *layout, QWidget *parentWidget)
+{
+    return QAbstractFormBuilder::create(ui_layoutItem, layout, parentWidget);
+}
+
+/*!
+    \internal
+*/
+QAction *QFormBuilder::create(DomAction *ui_action, QObject *parent)
+{
+    return QAbstractFormBuilder::create(ui_action, parent);
+}
+
+/*!
+    \internal
+*/
+QActionGroup *QFormBuilder::create(DomActionGroup *ui_action_group, QObject *parent)
+{
+    return QAbstractFormBuilder::create(ui_action_group, parent);
 }
 
 /*!
