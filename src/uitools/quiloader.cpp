@@ -442,7 +442,7 @@ QWidget *FormBuilderPrivate::create(DomUI *ui, QWidget *parentWidget)
     m_class = ui->elementClass().toUtf8();
     m_trwatch = 0;
     setTextBuilder(new TranslatingTextBuilder(trEnabled, m_class));
-    return QFormBuilder::create(ui, parentWidget);
+    return QAbstractFormBuilder::create(ui, parentWidget);
 }
 
 QWidget *FormBuilderPrivate::create(DomWidget *ui_widget, QWidget *parentWidget)
