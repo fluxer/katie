@@ -78,7 +78,7 @@ int main (int argc, char *argv[])
   bool no_lines = false;
   bool debug_info = true;
   bool troll_copyright = false;
-  QString file_name = 0;
+  QString file_name;
 
   QStringList args = app.arguments ();
   args.removeFirst ();
