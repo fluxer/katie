@@ -1121,15 +1121,6 @@ void WriteInitialization::writeProperties(const QString &varName,
 {
     const bool isTopLevel = m_widgetChain.count() == 1;
 
-    if (m_uic->customWidgetsInfo()->extends(className, QLatin1String("QAxWidget"))) {
-        DomPropertyMap properties = propertyMap(lst);
-        if (properties.contains(QLatin1String("control"))) {
-            DomProperty *p = properties.value(QLatin1String("control"));
-            m_output << m_indent << varName << "->setControl(QString::fromUtf8("
-                   << fixString(toString(p->elementString()), m_dindent) << "));\n";
-        }
-    }
-
     QString indent;
     if (!m_widgetChain.top()) {
         indent = m_option.indent;

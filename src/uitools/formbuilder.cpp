@@ -272,44 +272,11 @@ QLayout *QFormBuilder::createLayout(const QString &layoutName, QObject *parent, 
 
     if (l) {
         l->setObjectName(name);
-        if (parentLayout) {
-            QWidget *w = qobject_cast<QWidget *>(parentLayout->parent());
-            if (w && w->inherits("Q3GroupBox")) {
-                l->setContentsMargins(w->style()->pixelMetric(QStyle::PM_LayoutLeftMargin),
-                                    w->style()->pixelMetric(QStyle::PM_LayoutTopMargin),
-                                    w->style()->pixelMetric(QStyle::PM_LayoutRightMargin),
-                                    w->style()->pixelMetric(QStyle::PM_LayoutBottomMargin));
-                QGridLayout *grid = qobject_cast<QGridLayout *>(l);
-                if (grid) {
-                    grid->setHorizontalSpacing(-1);
-                    grid->setVerticalSpacing(-1);
-                } else {
-                    l->setSpacing(-1);
-                }
-                l->setAlignment(Qt::AlignTop);
-            }
-        }
     } else {
         qWarning() << QCoreApplication::translate("QFormBuilder", "The layout type `%1' is not supported.").arg(layoutName);
     }
 
     return l;
-}
-
-/*!
-    \internal
-*/
-bool QFormBuilder::addItem(DomLayoutItem *ui_item, QLayoutItem *item, QLayout *layout)
-{
-    return QAbstractFormBuilder::addItem(ui_item, item, layout);
-}
-
-/*!
-    \internal
-*/
-bool QFormBuilder::addItem(DomWidget *ui_widget, QWidget *widget, QWidget *parentWidget)
-{
-    return QAbstractFormBuilder::addItem(ui_widget, widget, parentWidget);
 }
 
 /*!
@@ -366,14 +333,6 @@ void QFormBuilder::createConnections(DomConnections *ui_connections, QWidget *wi
 /*!
     \internal
 */
-QWidget *QFormBuilder::create(DomUI *ui, QWidget *parentWidget)
-{
-    return QAbstractFormBuilder::create(ui, parentWidget);
-}
-
-/*!
-    \internal
-*/
 QLayout *QFormBuilder::create(DomLayout *ui_layout, QLayout *layout, QWidget *parentWidget)
 {
     QFormBuilderExtra *fb = QFormBuilderExtra::instance(this);
@@ -403,30 +362,6 @@ QLayout *QFormBuilder::create(DomLayout *ui_layout, QLayout *layout, QWidget *pa
         fb->setProcessingLayoutWidget(false);
     }
     return l;
-}
-
-/*!
-    \internal
-*/
-QLayoutItem *QFormBuilder::create(DomLayoutItem *ui_layoutItem, QLayout *layout, QWidget *parentWidget)
-{
-    return QAbstractFormBuilder::create(ui_layoutItem, layout, parentWidget);
-}
-
-/*!
-    \internal
-*/
-QAction *QFormBuilder::create(DomAction *ui_action, QObject *parent)
-{
-    return QAbstractFormBuilder::create(ui_action, parent);
-}
-
-/*!
-    \internal
-*/
-QActionGroup *QFormBuilder::create(DomActionGroup *ui_action_group, QObject *parent)
-{
-    return QAbstractFormBuilder::create(ui_action_group, parent);
 }
 
 /*!

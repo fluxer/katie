@@ -551,7 +551,7 @@ QGraphicsProxyWidget::~QGraphicsProxyWidget()
 
     Note that widgets with the Qt::WA_PaintOnScreen widget attribute
     set and widgets that wrap an external application or controller
-    cannot be embedded. Examples are QGLWidget and QAxWidget.
+    cannot be embedded. Example is QGLWidget.
 
     \sa widget()
 */

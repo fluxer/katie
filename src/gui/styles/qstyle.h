@@ -234,7 +234,6 @@ public:
         CE_HeaderSection,
         CE_HeaderLabel,
 
-        CE_Q3DockWindowEmptyArea,
         CE_ToolBoxTab,
         CE_SizeGrip,
         CE_Splitter,
@@ -407,10 +406,6 @@ public:
         SC_TitleBarContextHelpButton = 0x00000080,
         SC_TitleBarLabel =         0x00000100,
 
-        SC_Q3ListView =            0x00000001,
-        SC_Q3ListViewBranch =      0x00000002,
-        SC_Q3ListViewExpand =      0x00000004,
-
         SC_DialGroove =            0x00000001,
         SC_DialHandle =            0x00000002,
         SC_DialTickmarks =         0x00000004,
@@ -570,7 +565,6 @@ public:
         CT_ToolButton,
         CT_ComboBox,
         CT_Splitter,
-        CT_Q3DockWindow,
         CT_ProgressBar,
         CT_MenuItem,
         CT_MenuBarItem,
@@ -643,7 +637,6 @@ public:
         SH_TabBar_PreferNoArrows,
         SH_ScrollBar_LeftClickAbsolutePosition,
         SH_ListViewExpand_SelectMouseType,
-        SH_Q3ListViewExpand_SelectMouseType = SH_ListViewExpand_SelectMouseType, // obsolete
         SH_UnderlineShortcut,
         SH_SpinBox_AnimateButton,
         SH_SpinBox_KeyPressAutoRepeatRate,

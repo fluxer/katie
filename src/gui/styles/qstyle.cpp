@@ -815,8 +815,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value CE_MenuHMargin  The horizontal extra space on the left/right of a menu.
     \value CE_MenuVMargin  The vertical extra space on the top/bottom of a menu.
 
-    \value CE_Q3DockWindowEmptyArea  The empty area of a QDockWidget.
-
     \value CE_ToolBoxTab  The toolbox's tab and label within a QToolBox.
     \value CE_SizeGrip  Window resize handle; see also QSizeGrip.
 
@@ -1143,9 +1141,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
     \value SC_TitleBarUnshadeButton  Unshade button.
     \value SC_TitleBarContextHelpButton Context Help button.
 
-    \value SC_Q3ListView  The list view area.
-    \value SC_Q3ListViewExpand  Expand item (i.e., show/hide child items).
-
     \value SC_DialHandle The handle of the dial (i.e. what you use to control the dial).
     \value SC_DialGroove The groove for the dial.
     \value SC_DialTickmarks The tickmarks for the dial.
@@ -1163,7 +1158,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
                              in the menu bar.
 
     \value SC_All  Special value that matches all sub-controls.
-    \omitvalue SC_Q3ListViewBranch
     \omitvalue SC_CustomBase
 
     \sa ComplexControl

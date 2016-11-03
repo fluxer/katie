@@ -44,16 +44,13 @@
 
 #include <QtGui/qfont.h>
 #include <QtCore/qsharedpointer.h>
-#ifndef QT_INCLUDE_COMPAT
 #include <QtCore/qrect.h>
-#endif
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
 class QTextCodec;
-class QRect;
 
 class Q_GUI_EXPORT QFontMetrics
 {

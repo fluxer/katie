@@ -159,11 +159,6 @@ QDesignerPropertyEditor::StringPropertyParameters QDesignerPropertyEditor::textP
     if (propertyName.endsWith(QLatin1String("ToolTip")))
         return StringPropertyParameters(ValidationRichText, true);
 
-#ifdef Q_OS_WIN // No translation for the active X "control" property
-    if (propertyName == QLatin1String("control") && className == QLatin1String("QAxWidget"))
-        return StringPropertyParameters(ValidationSingleLine, false);
-#endif
-
     // default to single
     return StringPropertyParameters(ValidationSingleLine, true);
 }
