@@ -97,7 +97,7 @@ public:
     qint64 readLine(char *data, qint64 maxlen);
     qint64 write(const char *data, qint64 len);
 
-    bool extension(Extension extension, const ExtensionOption *option = 0, ExtensionReturn *output = 0);
+    bool extension(Extension extension, const ExtensionOption *option = Q_NULLPTR, ExtensionReturn *output = Q_NULLPTR);
     bool supportsExtension(Extension extension) const;
 
     //FS only!!

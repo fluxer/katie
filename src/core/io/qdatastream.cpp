@@ -415,7 +415,9 @@ bool QDataStream::atEnd() const
 */
 QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 {
-    return d == 0 ? QDataStream::DoublePrecision : d->floatingPointPrecision;
+    if (!d)
+        return QDataStream::DoublePrecision;
+    return d->floatingPointPrecision;
 }
 
 /*!
@@ -437,7 +439,7 @@ QDataStream::FloatingPointPrecision QDataStream::floatingPointPrecision() const
 */
 void QDataStream::setFloatingPointPrecision(QDataStream::FloatingPointPrecision precision)
 {
-    if (d == 0)
+    if (!d)
         d = new QDataStreamPrivate();
     d->floatingPointPrecision = precision;
 }

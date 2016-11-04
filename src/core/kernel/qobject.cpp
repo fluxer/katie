@@ -118,7 +118,7 @@ void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, 
 QObjectData::~QObjectData() {}
 
 QObjectPrivate::QObjectPrivate(int version)
-    : threadData(0), connectionLists(0), senders(0), currentSender(0), currentChildBeingDeleted(0)
+    : threadData(0), connectionLists(0), senders(0), currentSender(0), currentChildBeingDeleted(Q_NULLPTR)
 {
     if (version != QObjectPrivateVersion)
         qFatal("Cannot mix incompatible Qt library (version 0x%x) with this library (version 0x%x)",
@@ -1506,7 +1506,7 @@ void QObjectPrivate::deleteChildren()
         delete currentChildBeingDeleted;
     }
     children.clear();
-    currentChildBeingDeleted = 0;
+    currentChildBeingDeleted = Q_NULLPTR;
     wasDeleted = reallyWasDeleted;
 }
 
@@ -2180,7 +2180,7 @@ bool QObject::connect(const QObject *sender, const char *signal,
         return false;
     }
 
-    int *types = 0;
+    int *types = Q_NULLPTR;
     if ((type == Qt::QueuedConnection)
             && !(types = queuedConnectionTypes(smeta->method(signal_absolute_index).parameterTypes())))
         return false;
@@ -2268,7 +2268,7 @@ bool QObject::connect(const QObject *sender, const QMetaMethod &signal,
         return false;
     }
 
-    int *types = 0;
+    int *types = Q_NULLPTR;
     if ((type == Qt::QueuedConnection)
             && !(types = queuedConnectionTypes(signal.parameterTypes())))
         return false;

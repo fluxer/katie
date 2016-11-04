@@ -986,7 +986,7 @@ public:
     int fastScanLiteralContent();
     int fastScanSpace();
     int fastScanContentCharList();
-    int fastScanName(int *prefix = 0);
+    int fastScanName(int *prefix = Q_NULLPTR);
     inline int fastScanNMTOKEN();
 
 

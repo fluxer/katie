@@ -157,7 +157,7 @@ public:
         typedef T *pointer;
         typedef T &reference;
 
-        inline iterator() : i(0) {}
+        inline iterator() : i(Q_NULLPTR) {}
         inline iterator(T *n) : i(n) {}
         inline iterator(const iterator &o): i(o.i){}
         inline T &operator*() const { return *i; }

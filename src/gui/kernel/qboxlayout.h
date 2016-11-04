@@ -43,9 +43,6 @@
 #define QBOXLAYOUT_H
 
 #include <QtGui/qlayout.h>
-#ifdef QT_INCLUDE_COMPAT
-#include <QtGui/qwidget.h>
-#endif
 
 #include <limits.h>
 

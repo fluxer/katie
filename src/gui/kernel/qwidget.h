@@ -49,13 +49,8 @@
 #include <QtGui/qfontinfo.h>
 #include <QtGui/qsizepolicy.h>
 #include <QtGui/qcursor.h>
-
-#ifdef QT_INCLUDE_COMPAT
-#include <QtGui/qevent.h>
-#else
 #include <QtGui/qkeysequence.h>
 #include <QtGui/qregion.h>
-#endif
 
 QT_BEGIN_HEADER
 

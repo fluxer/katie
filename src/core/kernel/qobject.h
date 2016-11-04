@@ -48,11 +48,6 @@
 #include <QtCore/qstring.h>
 #include <QtCore/qlist.h>
 
-#ifdef QT_INCLUDE_COMPAT
-#include <QtCore/qscopedpointer.h>
-#include <QtCore/qcoreevent.h>
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -105,17 +100,17 @@ class Q_CORE_EXPORT QObject
     Q_DECLARE_PRIVATE(QObject)
 
 public:
-    Q_INVOKABLE explicit QObject(QObject *parent=0);
+    Q_INVOKABLE explicit QObject(QObject *parent = Q_NULLPTR);
     virtual ~QObject();
 
     virtual bool event(QEvent *);
     virtual bool eventFilter(QObject *, QEvent *);
 
 #ifdef QT_NO_TRANSLATION
-    static QString tr(const char *sourceText, const char * = 0, int = -1)
+    static QString tr(const char *sourceText, const char * = Q_NULLPTR, int = -1)
         { return QString::fromLatin1(sourceText); }
 #ifndef QT_NO_TEXTCODEC
-    static QString trUtf8(const char *sourceText, const char * = 0, int = -1)
+    static QString trUtf8(const char *sourceText, const char * = Q_NULLPTR, int = -1)
         { return QString::fromUtf8(sourceText); }
 #endif
 #endif //QT_NO_TRANSLATION
@@ -147,7 +142,7 @@ public:
             QList<void *> *voidList;
         } u;
         u.typedList = &list;
-        qt_qFindChildren_helper(this, aName, 0, reinterpret_cast<T>(0)->staticMetaObject, u.voidList);
+        qt_qFindChildren_helper(this, aName, Q_NULLPTR, reinterpret_cast<T>(0)->staticMetaObject, u.voidList);
         return list;
     }
 
@@ -194,11 +189,11 @@ public:
                            const QObject *receiver, const char *member);
     static bool disconnect(const QObject *sender, const QMetaMethod &signal,
                            const QObject *receiver, const QMetaMethod &member);
-    inline bool disconnect(const char *signal = 0,
-                           const QObject *receiver = 0, const char *member = 0)
+    inline bool disconnect(const char *signal = Q_NULLPTR,
+                           const QObject *receiver = Q_NULLPTR, const char *member = Q_NULLPTR)
         { return disconnect(this, signal, receiver, member); }
-    inline bool disconnect(const QObject *receiver, const char *member = 0)
-        { return disconnect(this, 0, receiver, member); }
+    inline bool disconnect(const QObject *receiver, const char *member = Q_NULLPTR)
+        { return disconnect(this, Q_NULLPTR, receiver, member); }
 
     void dumpObjectTree();
     void dumpObjectInfo();
@@ -210,13 +205,13 @@ public:
 #endif // QT_NO_PROPERTIES
 
 Q_SIGNALS:
-    void destroyed(QObject * = 0);
+    void destroyed(QObject * = Q_NULLPTR);
 
 public:
     inline QObject *parent() const { return d_ptr->parent; }
 
     inline bool inherits(const char *classname) const
-        { return const_cast<QObject *>(this)->qt_metacast(classname) != 0; }
+        { return const_cast<QObject *>(this)->qt_metacast(classname) != Q_NULLPTR; }
 
 public Q_SLOTS:
     void deleteLater();

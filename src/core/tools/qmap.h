@@ -227,7 +227,7 @@ public:
 
         // ### Qt 5: get rid of 'operator Node *'
         inline operator QMapData::Node *() const { return i; }
-        inline iterator() : i(0) { }
+        inline iterator() : i(Q_NULLPTR) { }
         inline iterator(QMapData::Node *node) : i(node) { }
 
         inline const Key &key() const { return concrete(i)->key; }

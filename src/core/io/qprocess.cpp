@@ -201,7 +201,7 @@ void QProcessEnvironmentPrivate::insert(const QProcessEnvironmentPrivate &other)
     environment variables to be removed.
 */
 QProcessEnvironment::QProcessEnvironment()
-    : d(0)
+    : d(Q_NULLPTR)
 {
 }
 

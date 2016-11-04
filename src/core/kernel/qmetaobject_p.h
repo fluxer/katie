@@ -139,8 +139,8 @@ struct QMetaObjectPrivate
                               int *signalIndex, int *methodIndex);
     static bool connect(const QObject *sender, int signal_index,
                         const QObject *receiver, int method_index_relative,
-                        const QMetaObject *rmeta = 0,
-                        int type = 0, int *types = 0);
+                        const QMetaObject *rmeta = Q_NULLPTR,
+                        int type = 0, int *types = Q_NULLPTR);
     static bool disconnect(const QObject *sender, int signal_index,
                            const QObject *receiver, int method_index,
                            DisconnectType = DisconnectAll);
@@ -249,7 +249,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
             { "struct ", 7 },
             { "class ", 6 },
             { "enum ", 5 },
-            { 0, 0 }
+            { Q_NULLPTR, 0 }
         };
         int i = 0;
         do {

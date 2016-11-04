@@ -336,7 +336,7 @@ namespace QtSharedPointer {
             if (ptr) d->setQObjectShared(ptr);
         }
 
-        inline ExternalRefCount() : d(0) { }
+        inline ExternalRefCount() : d(Q_NULLPTR) { }
         inline ExternalRefCount(Qt::Initialization i) : Basic<T>(i) { }
 
         inline ExternalRefCount(T *ptr) : Basic<T>(Qt::Uninitialized) // throws
@@ -527,18 +527,18 @@ public:
     typedef const value_type &const_reference;
     typedef qptrdiff difference_type;
 
-    inline bool isNull() const { return d == 0 || d->strongref == 0 || value == 0; }
+    inline bool isNull() const { return d == Q_NULLPTR || d->strongref == 0 || value == Q_NULLPTR; }
     inline operator RestrictedBool() const { return isNull() ? 0 : &QWeakPointer::value; }
     inline bool operator !() const { return isNull(); }
-    inline T *data() const { return d == 0 || d->strongref == 0 ? 0 : value; }
+    inline T *data() const { return d == Q_NULLPTR || d->strongref == 0 ? Q_NULLPTR : value; }
 
-    inline QWeakPointer() : d(0), value(0) { }
+    inline QWeakPointer() : d(Q_NULLPTR), value(Q_NULLPTR) { }
     inline ~QWeakPointer() { if (d && !d->weakref.deref()) delete d; }
 
 #ifndef QT_NO_QOBJECT
     // special constructor that is enabled only if X derives from QObject
     template <class X>
-    inline QWeakPointer(X *ptr) : d(ptr ? Data::getAndRef(ptr) : 0), value(ptr)
+    inline QWeakPointer(X *ptr) : d(ptr ? Data::getAndRef(ptr) : Q_NULLPTR), value(ptr)
     { }
 #endif
     template <class X>
@@ -562,7 +562,7 @@ public:
     }
 
     template <class X>
-    inline QWeakPointer(const QWeakPointer<X> &o) : d(0), value(0)
+    inline QWeakPointer(const QWeakPointer<X> &o) : d(Q_NULLPTR), value(Q_NULLPTR)
     { *this = o; }
 
     template <class X>
@@ -583,7 +583,7 @@ public:
     { return !(*this == o); }
 
     template <class X>
-    inline QWeakPointer(const QSharedPointer<X> &o) : d(0), value(0)
+    inline QWeakPointer(const QSharedPointer<X> &o) : d(Q_NULLPTR), value(Q_NULLPTR)
     { *this = o; }
 
     template <class X>

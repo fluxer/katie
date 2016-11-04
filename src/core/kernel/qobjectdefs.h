@@ -91,14 +91,14 @@ class QString;
 # ifndef QT_NO_TEXTCODEC
 // full set of tr functions
 #  define QT_TR_FUNCTIONS \
-    static inline QString tr(const char *s, const char *c = 0, int n = -1) \
+    static inline QString tr(const char *s, const char *c = Q_NULLPTR, int n = -1) \
         { return staticMetaObject.tr(s, c, n); } \
-    static inline QString trUtf8(const char *s, const char *c = 0, int n = -1) \
+    static inline QString trUtf8(const char *s, const char *c = Q_NULLPTR, int n = -1) \
         { return staticMetaObject.trUtf8(s, c, n); }
 # else
 // no QTextCodec, no utf8
 #  define QT_TR_FUNCTIONS \
-    static inline QString tr(const char *s, const char *c = 0, int n = -1) \
+    static inline QString tr(const char *s, const char *c = Q_NULLPTR, int n = -1) \
         { return staticMetaObject.tr(s, c, n); }
 # endif
 #else
@@ -345,7 +345,7 @@ struct Q_CORE_EXPORT QMetaObject
     static bool invokeMethod(QObject *obj, const char *member,
                              Qt::ConnectionType,
                              QGenericReturnArgument ret,
-                             QGenericArgument val0 = QGenericArgument(Q_NULLPTR),
+                             QGenericArgument val0 = QGenericArgument(),
                              QGenericArgument val1 = QGenericArgument(),
                              QGenericArgument val2 = QGenericArgument(),
                              QGenericArgument val3 = QGenericArgument(),
@@ -358,7 +358,7 @@ struct Q_CORE_EXPORT QMetaObject
 
     static inline bool invokeMethod(QObject *obj, const char *member,
                              QGenericReturnArgument ret,
-                             QGenericArgument val0 = QGenericArgument(Q_NULLPTR),
+                             QGenericArgument val0 = QGenericArgument(),
                              QGenericArgument val1 = QGenericArgument(),
                              QGenericArgument val2 = QGenericArgument(),
                              QGenericArgument val3 = QGenericArgument(),
@@ -375,7 +375,7 @@ struct Q_CORE_EXPORT QMetaObject
 
     static inline bool invokeMethod(QObject *obj, const char *member,
                              Qt::ConnectionType type,
-                             QGenericArgument val0 = QGenericArgument(Q_NULLPTR),
+                             QGenericArgument val0 = QGenericArgument(),
                              QGenericArgument val1 = QGenericArgument(),
                              QGenericArgument val2 = QGenericArgument(),
                              QGenericArgument val3 = QGenericArgument(),
@@ -391,7 +391,7 @@ struct Q_CORE_EXPORT QMetaObject
     }
 
     static inline bool invokeMethod(QObject *obj, const char *member,
-                             QGenericArgument val0 = QGenericArgument(Q_NULLPTR),
+                             QGenericArgument val0 = QGenericArgument(),
                              QGenericArgument val1 = QGenericArgument(),
                              QGenericArgument val2 = QGenericArgument(),
                              QGenericArgument val3 = QGenericArgument(),
@@ -406,7 +406,7 @@ struct Q_CORE_EXPORT QMetaObject
                 val1, val2, val3, val4, val5, val6, val7, val8, val9);
     }
 
-    QObject *newInstance(QGenericArgument val0 = QGenericArgument(Q_NULLPTR),
+    QObject *newInstance(QGenericArgument val0 = QGenericArgument(),
                          QGenericArgument val1 = QGenericArgument(),
                          QGenericArgument val2 = QGenericArgument(),
                          QGenericArgument val3 = QGenericArgument(),

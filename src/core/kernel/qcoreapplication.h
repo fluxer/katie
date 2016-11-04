@@ -45,10 +45,6 @@
 #include <QtCore/qcoreevent.h>
 #include <QtCore/qeventloop.h>
 
-#ifdef QT_INCLUDE_COMPAT
-#include <QtCore/qstringlist.h>
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE

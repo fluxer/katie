@@ -265,8 +265,11 @@ class QSemaphore;
 class Q_CORE_EXPORT QMetaCallEvent : public QEvent
 {
 public:
-    QMetaCallEvent(ushort method_offset, ushort method_relative, QObjectPrivate::StaticMetaCallFunction callFunction , const QObject *sender, int signalId,
-                   int nargs = 0, int *types = 0, void **args = 0, QSemaphore *semaphore = 0);
+    QMetaCallEvent(ushort method_offset, ushort method_relative,
+                   QObjectPrivate::StaticMetaCallFunction callFunction,
+                   const QObject *sender, int signalId,
+                   int nargs = 0, int *types = Q_NULLPTR, void **args = Q_NULLPTR,
+                   QSemaphore *semaphore = Q_NULLPTR);
     ~QMetaCallEvent();
 
     inline int id() const { return method_offset_ + method_relative_; }

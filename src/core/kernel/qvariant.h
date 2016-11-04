@@ -316,7 +316,7 @@ class Q_CORE_EXPORT QVariant
     };
     struct Private
     {
-        inline Private(): type(Invalid), is_shared(false), is_null(true) { data.ptr = 0; }
+        inline Private(): type(Invalid), is_shared(false), is_null(true) { data.ptr = Q_NULLPTR; }
         inline Private(const Private &other)
             : data(other.data), type(other.type),
               is_shared(other.is_shared), is_null(other.is_null)
@@ -405,7 +405,7 @@ typedef QMap<QString, QVariant> QVariantMap;
 typedef QHash<QString, QVariant> QVariantHash;
 
 inline bool qvariant_cast_helper(const QVariant &v, QVariant::Type tp, void *ptr)
-{ return QVariant::handler->convert(&v.d, tp, ptr, 0); }
+{ return QVariant::handler->convert(&v.d, tp, ptr, Q_NULLPTR); }
 
 template <typename T>
 inline QVariant qVariantFromValue(const T &t)
