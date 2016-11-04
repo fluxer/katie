@@ -900,7 +900,7 @@ class QCalendarView : public QTableView
 {
     Q_OBJECT
 public:
-    QCalendarView(QWidget *parent = 0);
+    QCalendarView(QWidget *parent = Q_NULLPTR);
 
     void internalUpdate() { updateGeometries(); }
     void setReadOnly(bool enable);

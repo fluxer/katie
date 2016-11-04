@@ -259,7 +259,7 @@ class QDESIGNER_SHARED_EXPORT QLayoutWidget: public QWidget
 {
     Q_OBJECT
 public:
-    explicit QLayoutWidget(QDesignerFormWindowInterface *formWindow, QWidget *parent = 0);
+    explicit QLayoutWidget(QDesignerFormWindowInterface *formWindow, QWidget *parent = Q_NULLPTR);
 
     int layoutLeftMargin() const;
     void setLayoutLeftMargin(int layoutMargin);

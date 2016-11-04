@@ -500,7 +500,7 @@ class InlineEditor : public QComboBox
     Q_OBJECT
     Q_PROPERTY(QString text READ text WRITE setText USER true)
 public:
-    InlineEditor(QWidget *parent = 0);
+    InlineEditor(QWidget *parent = Q_NULLPTR);
 
     QString text() const;
     void setText(const QString &text);
@@ -572,7 +572,7 @@ class ConnectionDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    ConnectionDelegate(QWidget *parent = 0);
+    ConnectionDelegate(QWidget *parent = Q_NULLPTR);
 
     void setForm(QDesignerFormWindowInterface *form);
 

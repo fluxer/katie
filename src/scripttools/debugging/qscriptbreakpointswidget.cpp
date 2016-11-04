@@ -64,7 +64,7 @@ class QScriptNewBreakpointWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QScriptNewBreakpointWidget(QWidget *parent = 0)
+    QScriptNewBreakpointWidget(QWidget *parent = Q_NULLPTR)
         : QWidget(parent) {
 	QString system = QLatin1String("win");
         QHBoxLayout *hboxLayout = new QHBoxLayout(this);

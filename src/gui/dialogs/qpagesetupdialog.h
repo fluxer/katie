@@ -69,8 +69,8 @@ public:
 
     Q_DECLARE_FLAGS(PageSetupDialogOptions, PageSetupDialogOption)
 
-    explicit QPageSetupDialog(QPrinter *printer, QWidget *parent = 0);
-    explicit QPageSetupDialog(QWidget *parent = 0);
+    explicit QPageSetupDialog(QPrinter *printer, QWidget *parent = Q_NULLPTR);
+    explicit QPageSetupDialog(QWidget *parent = Q_NULLPTR);
 
     // obsolete
     void addEnabledOption(PageSetupDialogOption option);

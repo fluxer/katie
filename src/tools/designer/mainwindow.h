@@ -71,7 +71,7 @@ class MainWindowBase: public QMainWindow
     Q_DISABLE_COPY(MainWindowBase)
     Q_OBJECT
 protected:
-    explicit MainWindowBase(QWidget *parent = 0, Qt::WindowFlags flags = Qt::Window);
+    explicit MainWindowBase(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = Qt::Window);
 
 public:
     enum CloseEventPolicy {
@@ -105,7 +105,7 @@ class DockedMdiArea : public QMdiArea
     Q_DISABLE_COPY(DockedMdiArea)
     Q_OBJECT
 public:
-    explicit DockedMdiArea(const QString &extension, QWidget *parent = 0);
+    explicit DockedMdiArea(const QString &extension, QWidget *parent = Q_NULLPTR);
 
 signals:
     void fileDropped(const QString &);

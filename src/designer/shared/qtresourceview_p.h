@@ -68,7 +68,7 @@ class QDESIGNER_SHARED_EXPORT QtResourceView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit QtResourceView(QDesignerFormEditorInterface *core, QWidget *parent = 0);
+    explicit QtResourceView(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
     ~QtResourceView();
 
     void setDragEnabled(bool dragEnabled);
@@ -120,7 +120,7 @@ class QDESIGNER_SHARED_EXPORT  QtResourceViewDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit QtResourceViewDialog(QDesignerFormEditorInterface *core, QWidget *parent = 0);
+    explicit QtResourceViewDialog(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
     virtual ~QtResourceViewDialog();
 
     QString selectedResource() const;

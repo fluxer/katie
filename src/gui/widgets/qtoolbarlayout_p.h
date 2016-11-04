@@ -80,7 +80,7 @@ class QToolBarLayout : public QLayout
     Q_OBJECT
 
 public:
-    QToolBarLayout(QWidget *parent = 0);
+    QToolBarLayout(QWidget *parent = Q_NULLPTR);
     ~QToolBarLayout();
 
     void addItem(QLayoutItem *item);

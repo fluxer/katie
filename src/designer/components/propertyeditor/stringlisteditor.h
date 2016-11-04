@@ -71,7 +71,7 @@ private slots:
     void currentValueChanged();
 
 private:
-    StringListEditor(QWidget *parent = 0);
+    StringListEditor(QWidget *parent = Q_NULLPTR);
     void updateUi();
     int currentIndex() const;
     void setCurrentIndex(int index);

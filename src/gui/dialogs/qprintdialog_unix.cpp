@@ -149,7 +149,7 @@ class QUnixPrintWidget : public QWidget
     Q_OBJECT
 
 public:
-    QUnixPrintWidget(QPrinter *printer, QWidget *parent = 0);
+    QUnixPrintWidget(QPrinter *printer, QWidget *parent = Q_NULLPTR);
     ~QUnixPrintWidget();
     void updatePrinter();
 

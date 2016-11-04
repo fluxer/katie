@@ -55,7 +55,7 @@ namespace {
 class QScriptErrorLogWidgetOutputEdit : public QTextEdit
 {
 public:
-    QScriptErrorLogWidgetOutputEdit(QWidget *parent = 0)
+    QScriptErrorLogWidgetOutputEdit(QWidget *parent = Q_NULLPTR)
         : QTextEdit(parent)
     {
         setReadOnly(true);

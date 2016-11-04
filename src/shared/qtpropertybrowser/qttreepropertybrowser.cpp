@@ -119,7 +119,7 @@ class QtPropertyEditorView : public QTreeWidget
 {
     Q_OBJECT
 public:
-    QtPropertyEditorView(QWidget *parent = 0);
+    QtPropertyEditorView(QWidget *parent = Q_NULLPTR);
 
     void setEditorPrivate(QtTreePropertyBrowserPrivate *editorPrivate)
         { m_editorPrivate = editorPrivate; }

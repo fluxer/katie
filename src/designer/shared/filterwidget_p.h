@@ -78,7 +78,7 @@ namespace qdesigner_internal {
 class QDESIGNER_SHARED_EXPORT HintLineEdit : public QLineEdit {
     Q_OBJECT
 public:
-    explicit HintLineEdit(QWidget *parent = 0);
+    explicit HintLineEdit(QWidget *parent = Q_NULLPTR);
 
     bool refuseFocus() const;
     void setRefuseFocus(bool v);
@@ -122,7 +122,7 @@ public:
         LayoutAlignNone
     };
 
-    explicit FilterWidget(QWidget *parent = 0, LayoutMode lm = LayoutAlignRight);
+    explicit FilterWidget(QWidget *parent = Q_NULLPTR, LayoutMode lm = LayoutAlignRight);
 
     QString text() const;
     void resizeEvent(QResizeEvent *);

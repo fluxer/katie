@@ -54,12 +54,12 @@ class QtGradientViewDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QtGradientViewDialog(QWidget *parent = 0);
+    QtGradientViewDialog(QWidget *parent = Q_NULLPTR);
 
     void setGradientManager(QtGradientManager *manager);
     QtGradientManager *gradientManager() const;
 
-    static QGradient getGradient(bool *ok, QtGradientManager *manager, QWidget *parent = 0, const QString &caption = tr("Select Gradient", 0));
+    static QGradient getGradient(bool *ok, QtGradientManager *manager, QWidget *parent = Q_NULLPTR, const QString &caption = tr("Select Gradient", 0));
 
 private slots:
     void slotGradientSelected(const QString &id);

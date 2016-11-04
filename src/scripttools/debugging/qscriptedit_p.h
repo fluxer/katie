@@ -66,7 +66,7 @@ class Q_AUTOTEST_EXPORT QScriptEdit : public QPlainTextEdit
 {
     Q_OBJECT
 public:
-    QScriptEdit(QWidget *parent = 0);
+    QScriptEdit(QWidget *parent = Q_NULLPTR);
     ~QScriptEdit();
 
     int baseLineNumber() const;

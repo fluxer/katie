@@ -73,7 +73,7 @@ public:
     typedef QDesignerWidgetBoxInterface::Category Category;
     typedef QDesignerWidgetBoxInterface::CategoryList CategoryList;
 
-    explicit WidgetBoxTreeWidget(QDesignerFormEditorInterface *core, QWidget *parent = 0);
+    explicit WidgetBoxTreeWidget(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
     ~WidgetBoxTreeWidget();
 
     int categoryCount() const;

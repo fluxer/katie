@@ -63,7 +63,7 @@ class Q_AUTOTEST_EXPORT QScriptBreakpointsWidget:
 {
     Q_OBJECT
 public:
-    QScriptBreakpointsWidget(QWidget *parent = 0);
+    QScriptBreakpointsWidget(QWidget *parent = Q_NULLPTR);
     ~QScriptBreakpointsWidget();
 
     QScriptBreakpointsModel *breakpointsModel() const;

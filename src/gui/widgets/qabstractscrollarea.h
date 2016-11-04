@@ -93,7 +93,7 @@ protected Q_SLOTS:
     void setupViewport(QWidget *viewport);
 
 protected:
-    QAbstractScrollArea(QAbstractScrollAreaPrivate &dd, QWidget *parent = 0);
+    QAbstractScrollArea(QAbstractScrollAreaPrivate &dd, QWidget *parent = Q_NULLPTR);
     void setViewportMargins(int left, int top, int right, int bottom);
     void setViewportMargins(const QMargins &margins);
 

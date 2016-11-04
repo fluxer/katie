@@ -86,7 +86,7 @@ class QDESIGNER_SHARED_EXPORT QDesignerMenuBar: public QMenuBar
 {
     Q_OBJECT
 public:
-    QDesignerMenuBar(QWidget *parent = 0);
+    QDesignerMenuBar(QWidget *parent = Q_NULLPTR);
     virtual ~QDesignerMenuBar();
 
     bool eventFilter(QObject *object, QEvent *event);

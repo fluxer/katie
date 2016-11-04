@@ -110,8 +110,8 @@ public:
 #ifndef QT_NO_MAINWINDOW
     QMainWindow *standardWindow() const;
 #endif
-    QToolBar *createStandardToolBar(QWidget *parent = 0);
-    QMenu *createStandardMenu(QWidget *parent = 0);
+    QToolBar *createStandardToolBar(QWidget *parent = Q_NULLPTR);
+    QMenu *createStandardMenu(QWidget *parent = Q_NULLPTR);
 
     QWidget *widget(DebuggerWidget widget) const;
     QAction *action(DebuggerAction action) const;

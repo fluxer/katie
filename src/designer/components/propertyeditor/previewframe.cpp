@@ -55,7 +55,7 @@ namespace qdesigner_internal {
 
     class PreviewMdiArea: public QMdiArea {
     public:
-        PreviewMdiArea(QWidget *parent = 0) : QMdiArea(parent) {}
+        PreviewMdiArea(QWidget *parent = Q_NULLPTR) : QMdiArea(parent) {}
     protected:
         bool viewportEvent ( QEvent * event );
     };

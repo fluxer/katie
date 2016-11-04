@@ -91,7 +91,7 @@ public:
     void emitNavigateToSlot(const QString &slotSignature);
 
     // Create a resource browser specific to integration. Language integration takes precedence
-    virtual QDesignerResourceBrowserInterface *createResourceBrowser(QWidget *parent = 0);
+    virtual QDesignerResourceBrowserInterface *createResourceBrowser(QWidget *parent = Q_NULLPTR);
 
     enum ResourceFileWatcherBehaviour {
         NoWatcher,

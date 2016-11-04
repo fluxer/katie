@@ -61,7 +61,7 @@ namespace {
 class PromptLabel : public QLabel
 {
 public:
-    PromptLabel(QWidget *parent = 0)
+    PromptLabel(QWidget *parent = Q_NULLPTR)
         : QLabel(parent)
     {
         setFrameShape(QFrame::NoFrame);
@@ -83,7 +83,7 @@ public:
 class InputEdit : public QLineEdit
 {
 public:
-    InputEdit(QWidget *parent = 0)
+    InputEdit(QWidget *parent = Q_NULLPTR)
         : QLineEdit(parent)
     {
         setFrame(false);
@@ -95,7 +95,7 @@ class CommandLine : public QWidget
 {
     Q_OBJECT
 public:
-    CommandLine(QWidget *parent = 0)
+    CommandLine(QWidget *parent = Q_NULLPTR)
         : QWidget(parent)
     {
         promptLabel = new PromptLabel();
@@ -166,7 +166,7 @@ private:
 class QScriptDebuggerConsoleWidgetOutputEdit : public QPlainTextEdit
 {
 public:
-    QScriptDebuggerConsoleWidgetOutputEdit(QWidget *parent = 0)
+    QScriptDebuggerConsoleWidgetOutputEdit(QWidget *parent = Q_NULLPTR)
         : QPlainTextEdit(parent)
     {
         setFrameShape(QFrame::NoFrame);

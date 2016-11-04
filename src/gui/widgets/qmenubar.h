@@ -63,7 +63,7 @@ class Q_GUI_EXPORT QMenuBar : public QWidget
     Q_PROPERTY(bool nativeMenuBar READ isNativeMenuBar WRITE setNativeMenuBar)
 
 public:
-    explicit QMenuBar(QWidget *parent = 0);
+    explicit QMenuBar(QWidget *parent = Q_NULLPTR);
     ~QMenuBar();
 
 #ifdef Q_NO_USING_KEYWORD

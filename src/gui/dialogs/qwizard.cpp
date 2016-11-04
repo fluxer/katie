@@ -255,9 +255,9 @@ class QWizardHeader : public QWidget
 public:
     enum RulerType { Ruler };
 
-    inline QWizardHeader(RulerType /* ruler */, QWidget *parent = 0)
+    inline QWizardHeader(RulerType /* ruler */, QWidget *parent = Q_NULLPTR)
         : QWidget(parent) { setFixedHeight(2); }
-    QWizardHeader(QWidget *parent = 0);
+    QWizardHeader(QWidget *parent = Q_NULLPTR);
 
     void setup(const QWizardLayoutInfo &info, const QString &title,
                const QString &subTitle, const QPixmap &logo, const QPixmap &banner,
@@ -383,7 +383,7 @@ void QWizardHeader::paintEvent(QPaintEvent * /* event */)
 class QWizardRuler : public QWizardHeader
 {
 public:
-    inline QWizardRuler(QWidget *parent = 0)
+    inline QWizardRuler(QWidget *parent = Q_NULLPTR)
         : QWizardHeader(Ruler, parent) {}
 };
 

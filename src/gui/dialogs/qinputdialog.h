@@ -92,7 +92,7 @@ public:
         DoubleInput
     };
 
-    QInputDialog(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    QInputDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
     ~QInputDialog();
 
     void setInputMode(InputMode mode);

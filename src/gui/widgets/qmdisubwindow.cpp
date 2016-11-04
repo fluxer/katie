@@ -368,7 +368,7 @@ class ControlLabel : public QWidget
 {
     Q_OBJECT
 public:
-    ControlLabel(QMdiSubWindow *subWindow, QWidget *parent = 0);
+    ControlLabel(QMdiSubWindow *subWindow, QWidget *parent = Q_NULLPTR);
 
     QSize sizeHint() const;
 
@@ -495,7 +495,7 @@ class ControllerWidget : public QWidget
 {
     Q_OBJECT
 public:
-    ControllerWidget(QMdiSubWindow *subWindow, QWidget *parent = 0);
+    ControllerWidget(QMdiSubWindow *subWindow, QWidget *parent = Q_NULLPTR);
     QSize sizeHint() const;
     void setControlVisible(QMdiSubWindowPrivate::WindowStateAction action, bool visible);
     inline bool hasVisibleControls() const

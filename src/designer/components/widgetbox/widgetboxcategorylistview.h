@@ -68,7 +68,7 @@ public:
     // Whether to access the filtered or unfiltered view
     enum AccessMode { FilteredAccess, UnfilteredAccess };
 
-    explicit WidgetBoxCategoryListView(QDesignerFormEditorInterface *core, QWidget *parent = 0);
+    explicit WidgetBoxCategoryListView(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
     void setViewMode(ViewMode vm);
 
     void dropWidgets(const QList<QDesignerDnDItemInterface*> &item_list);

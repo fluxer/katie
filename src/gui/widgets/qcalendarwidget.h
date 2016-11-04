@@ -93,7 +93,7 @@ public:
         SingleSelection
     };
 
-    explicit QCalendarWidget(QWidget *parent = 0);
+    explicit QCalendarWidget(QWidget *parent = Q_NULLPTR);
     ~QCalendarWidget();
 
     virtual QSize sizeHint() const;

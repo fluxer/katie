@@ -80,7 +80,7 @@ public:
     void ensureWidgetVisible(QWidget *childWidget, int xmargin = 50, int ymargin = 50);
 
 protected:
-    QScrollArea(QScrollAreaPrivate &dd, QWidget *parent = 0);
+    QScrollArea(QScrollAreaPrivate &dd, QWidget *parent = Q_NULLPTR);
     bool event(QEvent *);
     bool eventFilter(QObject *, QEvent *);
     void resizeEvent(QResizeEvent *);

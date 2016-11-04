@@ -180,10 +180,10 @@ class RichTextEditor : public QTextEdit
 {
     Q_OBJECT
 public:
-    explicit RichTextEditor(QWidget *parent = 0);
+    explicit RichTextEditor(QWidget *parent = Q_NULLPTR);
     void setDefaultFont(QFont font);
 
-    QToolBar *createToolBar(QDesignerFormEditorInterface *core, QWidget *parent = 0);
+    QToolBar *createToolBar(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
 
     bool simplifyRichText() const      { return m_simplifyRichText; }
 
@@ -207,7 +207,7 @@ class AddLinkDialog : public QDialog
     Q_OBJECT
 
 public:
-    AddLinkDialog(RichTextEditor *editor, QWidget *parent = 0);
+    AddLinkDialog(RichTextEditor *editor, QWidget *parent = Q_NULLPTR);
     ~AddLinkDialog();
 
     int showDialog();
@@ -276,7 +276,7 @@ class HtmlTextEdit : public QTextEdit
     Q_OBJECT
 
 public:
-    HtmlTextEdit(QWidget *parent = 0)
+    HtmlTextEdit(QWidget *parent = Q_NULLPTR)
         : QTextEdit(parent)
     {}
 
@@ -381,7 +381,7 @@ class RichTextEditorToolBar : public QToolBar
 public:
     RichTextEditorToolBar(QDesignerFormEditorInterface *core,
                           RichTextEditor *editor,
-                          QWidget *parent = 0);
+                          QWidget *parent = Q_NULLPTR);
 
 public slots:
     void updateActions();

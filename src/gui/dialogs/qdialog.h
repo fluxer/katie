@@ -61,7 +61,7 @@ class Q_GUI_EXPORT QDialog : public QWidget
     Q_PROPERTY(bool modal READ isModal WRITE setModal)
 
 public:
-    explicit QDialog(QWidget *parent = 0, Qt::WindowFlags f = 0);
+    explicit QDialog(QWidget *parent = Q_NULLPTR, Qt::WindowFlags f = 0);
     ~QDialog();
 
     enum DialogCode { Rejected, Accepted };

@@ -224,8 +224,8 @@ class Q_GUI_EXPORT QTableWidget : public QTableView
 
     friend class QTableModel;
 public:
-    explicit QTableWidget(QWidget *parent = 0);
-    QTableWidget(int rows, int columns, QWidget *parent = 0);
+    explicit QTableWidget(QWidget *parent = Q_NULLPTR);
+    QTableWidget(int rows, int columns, QWidget *parent = Q_NULLPTR);
     ~QTableWidget();
 
     void setRowCount(int rows);

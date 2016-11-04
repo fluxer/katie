@@ -66,7 +66,7 @@ class QDESIGNER_SHARED_EXPORT QDesignerDockWidget: public QDockWidget
     Q_PROPERTY(Qt::DockWidgetArea dockWidgetArea READ dockWidgetArea WRITE setDockWidgetArea DESIGNABLE docked STORED false)
     Q_PROPERTY(bool docked READ docked WRITE setDocked DESIGNABLE inMainWindow STORED false)
 public:
-    QDesignerDockWidget(QWidget *parent = 0);
+    QDesignerDockWidget(QWidget *parent = Q_NULLPTR);
     virtual ~QDesignerDockWidget();
 
     bool docked() const;

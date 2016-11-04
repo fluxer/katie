@@ -53,7 +53,7 @@ class TextEditFindWidget : public AbstractFindWidget
     Q_OBJECT
 
 public:
-    explicit TextEditFindWidget(FindFlags flags = FindFlags(), QWidget *parent = 0);
+    explicit TextEditFindWidget(FindFlags flags = FindFlags(), QWidget *parent = Q_NULLPTR);
 
     QTextEdit *textEdit() const
     { return m_textEdit; }

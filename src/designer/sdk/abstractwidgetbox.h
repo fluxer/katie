@@ -109,7 +109,7 @@ public:
     };
     typedef QList<Category> CategoryList;
 
-    QDesignerWidgetBoxInterface(QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    QDesignerWidgetBoxInterface(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
     virtual ~QDesignerWidgetBoxInterface();
 
     virtual int categoryCount() const = 0;

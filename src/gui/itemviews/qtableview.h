@@ -64,7 +64,7 @@ class Q_GUI_EXPORT QTableView : public QAbstractItemView
     Q_PROPERTY(bool cornerButtonEnabled READ isCornerButtonEnabled WRITE setCornerButtonEnabled)
 
 public:
-    explicit QTableView(QWidget *parent = 0);
+    explicit QTableView(QWidget *parent = Q_NULLPTR);
     ~QTableView();
 
     void setModel(QAbstractItemModel *model);

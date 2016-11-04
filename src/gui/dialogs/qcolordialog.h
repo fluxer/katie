@@ -70,8 +70,8 @@ public:
 
     Q_DECLARE_FLAGS(ColorDialogOptions, ColorDialogOption)
 
-    explicit QColorDialog(QWidget *parent = 0);
-    explicit QColorDialog(const QColor &initial, QWidget *parent = 0);
+    explicit QColorDialog(QWidget *parent = Q_NULLPTR);
+    explicit QColorDialog(const QColor &initial, QWidget *parent = Q_NULLPTR);
     ~QColorDialog();
 
     void setCurrentColor(const QColor &color);
@@ -93,11 +93,11 @@ public:
 
     void setVisible(bool visible);
 
-    static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = 0,
+    static QColor getColor(const QColor &initial = Qt::white, QWidget *parent = Q_NULLPTR,
                             const QString &title = QString(), ColorDialogOptions options = 0);
 
     // obsolete
-    static QRgb getRgba(QRgb rgba = 0xffffffff, bool *ok = 0, QWidget *parent = 0);
+    static QRgb getRgba(QRgb rgba = 0xffffffff, bool *ok = 0, QWidget *parent = Q_NULLPTR);
 
     // ### Qt 5: use QColor in signatures
     static int customCount();

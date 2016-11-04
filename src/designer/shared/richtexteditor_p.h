@@ -72,7 +72,7 @@ class QDESIGNER_SHARED_EXPORT RichTextEditorDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RichTextEditorDialog(QDesignerFormEditorInterface *core, QWidget *parent = 0);
+    explicit RichTextEditorDialog(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR);
     ~RichTextEditorDialog();
 
     int showDialog();

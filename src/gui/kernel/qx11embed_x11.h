@@ -54,7 +54,7 @@ class Q_GUI_EXPORT QX11EmbedWidget : public QWidget
 {
     Q_OBJECT
 public:
-    QX11EmbedWidget(QWidget *parent = 0);
+    QX11EmbedWidget(QWidget *parent = Q_NULLPTR);
     ~QX11EmbedWidget();
 
     void embedInto(WId id);
@@ -88,7 +88,7 @@ class Q_GUI_EXPORT QX11EmbedContainer : public QWidget
 {
     Q_OBJECT
 public:
-    QX11EmbedContainer(QWidget *parent = 0);
+    QX11EmbedContainer(QWidget *parent = Q_NULLPTR);
     ~QX11EmbedContainer();
 
     void embedClient(WId id);

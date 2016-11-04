@@ -76,7 +76,7 @@ class QT_PROPERTYEDITOR_EXPORT PropertyEditor: public QDesignerPropertyEditor
 {
     Q_OBJECT
 public:
-    explicit PropertyEditor(QDesignerFormEditorInterface *core, QWidget *parent = 0, Qt::WindowFlags flags = 0);
+    explicit PropertyEditor(QDesignerFormEditorInterface *core, QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
     virtual ~PropertyEditor();
 
     virtual QDesignerFormEditorInterface *core() const;

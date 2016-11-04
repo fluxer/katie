@@ -346,7 +346,7 @@ QDesignerWidgetBoxInterface::Widget WidgetBoxCategoryModel::widgetAt(int row) co
 class WidgetBoxCategoryEntryDelegate : public QItemDelegate
 {
 public:
-    explicit WidgetBoxCategoryEntryDelegate(QWidget *parent = 0) : QItemDelegate(parent) {}
+    explicit WidgetBoxCategoryEntryDelegate(QWidget *parent = Q_NULLPTR) : QItemDelegate(parent) {}
     QWidget *createEditor(QWidget *parent,
                           const QStyleOptionViewItem &option,
                           const QModelIndex &index) const;

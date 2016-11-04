@@ -53,7 +53,7 @@ class QtButtonPropertyBrowser : public QtAbstractPropertyBrowser
     Q_OBJECT
 public:
 
-    QtButtonPropertyBrowser(QWidget *parent = 0);
+    QtButtonPropertyBrowser(QWidget *parent = Q_NULLPTR);
     ~QtButtonPropertyBrowser();
 
     void setExpanded(QtBrowserItem *item, bool expanded);

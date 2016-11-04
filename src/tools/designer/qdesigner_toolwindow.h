@@ -85,7 +85,7 @@ protected:
                                  const QString &title,
                                  const QString &actionObjectName,
                                  Qt::DockWidgetArea dockAreaHint,
-                                 QWidget *parent = 0,
+                                 QWidget *parent = Q_NULLPTR,
                                  Qt::WindowFlags flags = Qt::Window);
 
 public:

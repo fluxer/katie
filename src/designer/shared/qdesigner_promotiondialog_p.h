@@ -82,7 +82,7 @@ namespace qdesigner_internal {
     public:
         explicit NewPromotedClassPanel(const QStringList &baseClasses,
                                        int selectedBaseClass = -1,
-                                       QWidget *parent = 0);
+                                       QWidget *parent = Q_NULLPTR);
 
         QString promotedHeaderSuffix() const           { return m_promotedHeaderSuffix; }
         void setPromotedHeaderSuffix(const QString &s) { m_promotedHeaderSuffix = s; }
@@ -124,7 +124,7 @@ namespace qdesigner_internal {
         enum Mode { ModeEdit, ModeEditChooseClass };
 
         explicit QDesignerPromotionDialog(QDesignerFormEditorInterface *core,
-                                          QWidget *parent = 0,
+                                          QWidget *parent = Q_NULLPTR,
                                           const QString &promotableWidgetClassName = QString(),
                                           QString *promoteTo = 0);
         // Return an alphabetically ordered list of base class names for adding new classes.

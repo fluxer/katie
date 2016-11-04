@@ -72,16 +72,16 @@ public:
     QString selectedResource() const;
 
     static QString editResources(QDesignerFormEditorInterface *core, QtResourceModel *model,
-                                 QDesignerDialogGuiInterface *dlgGui, QWidget *parent = 0);
+                                 QDesignerDialogGuiInterface *dlgGui, QWidget *parent = Q_NULLPTR);
 
     // Helper to display a message box with rcc logs in case of errors.
-    static void displayResourceFailures(const QString &logOutput, QDesignerDialogGuiInterface *dlgGui, QWidget *parent = 0);
+    static void displayResourceFailures(const QString &logOutput, QDesignerDialogGuiInterface *dlgGui, QWidget *parent = Q_NULLPTR);
 
 public slots:
     virtual void accept();
 
 private:
-    QtResourceEditorDialog(QDesignerFormEditorInterface *core, QDesignerDialogGuiInterface *dlgGui, QWidget *parent = 0);
+    QtResourceEditorDialog(QDesignerFormEditorInterface *core, QDesignerDialogGuiInterface *dlgGui, QWidget *parent = Q_NULLPTR);
     ~QtResourceEditorDialog();
 
     QScopedPointer<class QtResourceEditorDialogPrivate> d_ptr;

@@ -269,7 +269,7 @@ public:
 class QGLTemporaryContextPrivate;
 class QGLTemporaryContext {
 public:
-    QGLTemporaryContext(bool directRendering = true, QWidget *parent = 0);
+    QGLTemporaryContext(bool directRendering = true, QWidget *parent = Q_NULLPTR);
     ~QGLTemporaryContext();
 
 private:

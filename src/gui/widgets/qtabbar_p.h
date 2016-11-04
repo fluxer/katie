@@ -238,7 +238,7 @@ class CloseButton : public QAbstractButton
     Q_OBJECT
 
 public:
-    CloseButton(QWidget *parent = 0);
+    CloseButton(QWidget *parent = Q_NULLPTR);
 
     QSize sizeHint() const;
     inline QSize minimumSizeHint() const

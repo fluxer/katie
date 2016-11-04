@@ -56,12 +56,12 @@ class PaletteEditorAdvanced : public QDialog
 {
     Q_OBJECT
 public:
-    PaletteEditorAdvanced(QWidget *parent = 0);
+    PaletteEditorAdvanced(QWidget *parent = Q_NULLPTR);
     ~PaletteEditorAdvanced();
 
     static QPalette getPalette(bool *ok, const QPalette &pal,
                                QPalette::ColorRole backgroundRole = QPalette::Window,
-                               QWidget *parent = 0);
+                               QWidget *parent = Q_NULLPTR);
 
     static QPalette buildEffect(QPalette::ColorGroup colorGroup, const QPalette &basePalette);
 

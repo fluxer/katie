@@ -72,7 +72,7 @@ class Q_GUI_EXPORT QTabWidget : public QWidget
     Q_PROPERTY(bool movable READ isMovable WRITE setMovable)
 
 public:
-    explicit QTabWidget(QWidget *parent = 0);
+    explicit QTabWidget(QWidget *parent = Q_NULLPTR);
     ~QTabWidget();
 
     int addTab(QWidget *widget, const QString &);

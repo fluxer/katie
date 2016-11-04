@@ -67,7 +67,7 @@ class QFileSystemModel;
 class QSideBarDelegate : public QStyledItemDelegate
 {
  public:
-     QSideBarDelegate(QWidget *parent = 0) : QStyledItemDelegate(parent) {}
+     QSideBarDelegate(QWidget *parent = Q_NULLPTR) : QStyledItemDelegate(parent) {}
      void initStyleOption(QStyleOptionViewItem *option,
                           const QModelIndex &index) const;
 };
@@ -119,7 +119,7 @@ Q_SIGNALS:
     void goToUrl(const QUrl &url);
 
 public:
-    QSidebar(QWidget *parent = 0);
+    QSidebar(QWidget *parent = Q_NULLPTR);
     void init(QFileSystemModel *model, const QList<QUrl> &newUrls);
     ~QSidebar();
 

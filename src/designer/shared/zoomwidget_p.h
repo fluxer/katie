@@ -107,7 +107,7 @@ class QDESIGNER_SHARED_EXPORT ZoomView : public QGraphicsView
     Q_OBJECT
     Q_DISABLE_COPY(ZoomView)
 public:
-    ZoomView(QWidget *parent = 0);
+    ZoomView(QWidget *parent = Q_NULLPTR);
 
     /*  Zoom in percent (for easily implementing menus) and qreal zoomFactor
      * in sync */
@@ -177,7 +177,7 @@ class QDESIGNER_SHARED_EXPORT ZoomWidget : public ZoomView
     Q_DISABLE_COPY(ZoomWidget)
 
 public:
-    ZoomWidget(QWidget *parent = 0);
+    ZoomWidget(QWidget *parent = Q_NULLPTR);
     void setWidget(QWidget *w, Qt::WindowFlags wFlags = 0);
 
     const QGraphicsProxyWidget *proxy() const { return m_proxy; }

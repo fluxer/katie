@@ -68,8 +68,8 @@ class QCUPSSupport;
 class QPageSetupWidget : public QWidget {
     Q_OBJECT
 public:
-    QPageSetupWidget(QWidget *parent = 0);
-    QPageSetupWidget(QPrinter *printer, QWidget *parent = 0);
+    QPageSetupWidget(QWidget *parent = Q_NULLPTR);
+    QPageSetupWidget(QPrinter *printer, QWidget *parent = Q_NULLPTR);
     void setPrinter(QPrinter *printer);
     /// copy information from the widget and apply that to the printer.
     void setupPrinter() const;

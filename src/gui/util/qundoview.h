@@ -64,10 +64,10 @@ class Q_GUI_EXPORT QUndoView : public QListView
     Q_PROPERTY(QIcon cleanIcon READ cleanIcon WRITE setCleanIcon)
 
 public:
-    explicit QUndoView(QWidget *parent = 0);
-    explicit QUndoView(QUndoStack *stack, QWidget *parent = 0);
+    explicit QUndoView(QWidget *parent = Q_NULLPTR);
+    explicit QUndoView(QUndoStack *stack, QWidget *parent = Q_NULLPTR);
 #ifndef QT_NO_UNDOGROUP
-    explicit QUndoView(QUndoGroup *group, QWidget *parent = 0);
+    explicit QUndoView(QUndoGroup *group, QWidget *parent = Q_NULLPTR);
 #endif
     ~QUndoView();
 

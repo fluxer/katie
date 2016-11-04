@@ -139,7 +139,7 @@ class BrushEditor : public QWidget
 {
     Q_OBJECT
 public:
-    explicit BrushEditor(QWidget *parent = 0);
+    explicit BrushEditor(QWidget *parent = Q_NULLPTR);
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
@@ -157,7 +157,7 @@ class RoleEditor : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RoleEditor(QWidget *parent = 0);
+    explicit RoleEditor(QWidget *parent = Q_NULLPTR);
 
     void setLabel(const QString &label);
     void setEdited(bool on);

@@ -69,8 +69,8 @@ private:
     Q_PROPERTY(bool separatorsCollapsible READ separatorsCollapsible WRITE setSeparatorsCollapsible)
 
 public:
-    explicit QMenu(QWidget *parent = 0);
-    explicit QMenu(const QString &title, QWidget *parent = 0);
+    explicit QMenu(QWidget *parent = Q_NULLPTR);
+    explicit QMenu(const QString &title, QWidget *parent = Q_NULLPTR);
     ~QMenu();
 
 #ifdef Q_NO_USING_KEYWORD
@@ -112,7 +112,7 @@ public:
     QAction *exec(const QPoint &pos, QAction *at=0);
 
     static QAction *exec(QList<QAction*> actions, const QPoint &pos,
-            QAction *at = 0, QWidget *parent = 0);
+            QAction *at = 0, QWidget *parent = Q_NULLPTR);
 
     QSize sizeHint() const;
 

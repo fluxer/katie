@@ -70,7 +70,7 @@ class QT_PROPERTYEDITOR_EXPORT NewDynamicPropertyDialog: public QDialog
 {
     Q_OBJECT
 public:
-    explicit NewDynamicPropertyDialog(QDesignerDialogGuiInterface *dialogGui, QWidget *parent = 0);
+    explicit NewDynamicPropertyDialog(QDesignerDialogGuiInterface *dialogGui, QWidget *parent = Q_NULLPTR);
     ~NewDynamicPropertyDialog();
 
     void setReservedNames(const QStringList &names);

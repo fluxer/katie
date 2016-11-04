@@ -54,7 +54,7 @@ namespace {
 class QScriptDebugOutputWidgetOutputEdit : public QPlainTextEdit
 {
 public:
-    QScriptDebugOutputWidgetOutputEdit(QWidget *parent = 0)
+    QScriptDebugOutputWidgetOutputEdit(QWidget *parent = Q_NULLPTR)
         : QPlainTextEdit(parent)
     {
         setReadOnly(true);

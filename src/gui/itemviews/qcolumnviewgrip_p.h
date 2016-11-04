@@ -69,12 +69,12 @@ Q_SIGNALS:
     void gripMoved(int offset);
 
 public:
-    explicit QColumnViewGrip(QWidget *parent = 0);
+    explicit QColumnViewGrip(QWidget *parent = Q_NULLPTR);
     ~QColumnViewGrip();
     int moveGrip(int offset);
 
 protected:
-    QColumnViewGrip(QColumnViewGripPrivate &, QWidget *parent = 0, Qt::WFlags f = 0);
+    QColumnViewGrip(QColumnViewGripPrivate &, QWidget *parent = Q_NULLPTR, Qt::WFlags f = 0);
     void paintEvent(QPaintEvent *event);
     void mouseDoubleClickEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

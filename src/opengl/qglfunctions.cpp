@@ -65,7 +65,7 @@ QT_BEGIN_NAMESPACE
     {
         Q_OBJECT
     public:
-        MyGLWidget(QWidget *parent = 0) : QGLWidget(parent) {}
+        MyGLWidget(QWidget *parent = Q_NULLPTR) : QGLWidget(parent) {}
 
     protected:
         void initializeGL();

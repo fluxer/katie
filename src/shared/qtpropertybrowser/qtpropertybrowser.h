@@ -246,7 +246,7 @@ class QtAbstractPropertyBrowser : public QWidget
     Q_OBJECT
 public:
 
-    explicit QtAbstractPropertyBrowser(QWidget *parent = 0);
+    explicit QtAbstractPropertyBrowser(QWidget *parent = Q_NULLPTR);
     ~QtAbstractPropertyBrowser();
 
     QList<QtProperty *> properties() const;

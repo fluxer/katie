@@ -85,7 +85,7 @@ class Q_GUI_EXPORT QComboBox : public QWidget
     Q_PROPERTY(int modelColumn READ modelColumn WRITE setModelColumn)
 
 public:
-    explicit QComboBox(QWidget *parent = 0);
+    explicit QComboBox(QWidget *parent = Q_NULLPTR);
     ~QComboBox();
 
     int maxVisibleItems() const;

@@ -156,7 +156,7 @@ QWidget *ObjectInspectorDelegate::createEditor(QWidget *parent, const QStyleOpti
 
 class ObjectInspectorTreeView : public QTreeView {
 public:
-    ObjectInspectorTreeView(QWidget *parent = 0) :  QTreeView(parent) {}
+    ObjectInspectorTreeView(QWidget *parent = Q_NULLPTR) :  QTreeView(parent) {}
 
 protected:
     virtual void mouseMoveEvent (QMouseEvent * event);

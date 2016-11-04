@@ -54,7 +54,7 @@ class QtGradientEditor : public QWidget
     Q_PROPERTY(bool detailsVisible READ detailsVisible WRITE setDetailsVisible)
     Q_PROPERTY(bool detailsButtonVisible READ isDetailsButtonVisible WRITE setDetailsButtonVisible)
 public:
-    QtGradientEditor(QWidget *parent = 0);
+    QtGradientEditor(QWidget *parent = Q_NULLPTR);
     ~QtGradientEditor();
 
     void setGradient(const QGradient &gradient);
