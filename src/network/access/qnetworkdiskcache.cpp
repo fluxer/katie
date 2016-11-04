@@ -288,8 +288,7 @@ void QNetworkDiskCachePrivate::storeItem(QCacheItem *cacheItem)
         currentCacheSize += 1024 + cacheItem->size();
     currentCacheSize = q->expire();
     if (!cacheItem->file) {
-        QString templateName = tmpCacheFileName();
-        cacheItem->file = new QTemporaryFile(templateName, &cacheItem->data);
+        cacheItem->file = new QTemporaryFile(tmpCacheFileName(), &cacheItem->data);
         if (cacheItem->file->open()) {
             cacheItem->writeHeader(cacheItem->file);
             cacheItem->writeCompressedData(cacheItem->file);

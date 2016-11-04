@@ -57,9 +57,8 @@ QT_BEGIN_NAMESPACE
 
     On Unix this will be a file name
   */
-QString
-QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
-                                          const QString &prefix)
+QString QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
+                                                  const QString &prefix)
 {
     if (key.isEmpty())
         return QString();
@@ -407,7 +406,7 @@ bool QSharedMemory::attach(AccessMode mode)
 bool QSharedMemory::isAttached() const
 {
     Q_D(const QSharedMemory);
-    return (0 != d->memory);
+    return (d->memory != Q_NULLPTR);
 }
 
 /*!
