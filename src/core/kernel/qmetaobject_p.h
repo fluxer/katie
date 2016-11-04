@@ -168,7 +168,7 @@ static inline bool is_space(char s)
 #endif
 
 // This code is shared with moc.cpp
-static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool fixScope = false, bool adjustConst = true)
+static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool adjustConst = true)
 {
     int len = e - t;
     /*
@@ -177,8 +177,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     */
     QByteArray constbuf;
     for (int i = 1; i < len; i++) {
-        if ( t[i] == 'c'
-             && strncmp(t + i + 1, "onst", 4) == 0
+        if ( strncmp(t + i, "const", 5) == 0
              && (i + 5 >= len || !is_ident_char(t[i + 5]))
              && !is_ident_char(t[i-1])
              ) {
@@ -263,14 +262,6 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     bool star = false;
     while (t != e) {
         char c = *t++;
-        if (fixScope && c == ':' && *t == ':' ) {
-            ++t;
-            c = *t++;
-            int i = result.size() - 1;
-            while (i >= 0 && is_ident_char(result.at(i)))
-                --i;
-            result.resize(i + 1);
-        }
         star = star || c == '*';
         result += c;
         if (c == '<') {
@@ -284,7 +275,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
                 if (c == '>')
                     --templdepth;
                 if (templdepth == 0 || (templdepth == 1 && c == ',')) {
-                    result += normalizeTypeInternal(tt, t-1, fixScope, false);
+                    result += normalizeTypeInternal(tt, t-1, false);
                     result += c;
                     if (templdepth == 0) {
                         if (*t == '>')
