@@ -204,7 +204,7 @@ QObject *QMetaObject::newInstance(QGenericArgument val0,
     if (idx < 0)
         return Q_NULLPTR;
 
-    QVariant ret(QMetaType::QObjectStar, (void*)0);
+    QVariant ret(QMetaType::QObjectStar, Q_NULLPTR);
     void *param[] = {ret.data(), val0.data(), val1.data(), val2.data(), val3.data(), val4.data(),
                      val5.data(), val6.data(), val7.data(), val8.data(), val9.data()};
 
@@ -907,15 +907,10 @@ static void qRemoveWhitespace(const char *s, char *d)
     *d = '\0';
 }
 
-static char *qNormalizeType(char *d, int &templdepth, QByteArray &result)
+static char *qNormalizeType(char *d, QByteArray &result)
 {
     const char *t = d;
-    while (*d && (templdepth
-                   || (*d != ',' && *d != ')'))) {
-        if (*d == '<')
-            ++templdepth;
-        if (*d == '>')
-            --templdepth;
+    while (*d && (*d != ',' && *d != ')')) {
         ++d;
     }
     if (strncmp("void", t, d - t) != 0)
@@ -948,8 +943,7 @@ QByteArray QMetaObject::normalizedType(const char *type)
 
     QVarLengthArray<char> stackbuf(qstrlen(type) + 1);
     qRemoveWhitespace(type, stackbuf.data());
-    int templdepth = 0;
-    qNormalizeType(stackbuf.data(), templdepth, result);
+    qNormalizeType(stackbuf.data(), result);
 
     return result;
 }
@@ -978,10 +972,9 @@ QByteArray QMetaObject::normalizedSignature(const char *method)
     result.reserve(len);
 
     int argdepth = 0;
-    int templdepth = 0;
     while (*d) {
         if (argdepth == 1) {
-            d = qNormalizeType(d, templdepth, result);
+            d = qNormalizeType(d, result);
             if (!*d) //most likely an invalid signature.
                 break;
         }

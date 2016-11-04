@@ -679,7 +679,7 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size, QFile::MemoryMapFla
     QT_OFF_T realOffset = QT_OFF_T(offset);
     realOffset &= ~(QT_OFF_T(pageSize - 1));
 
-    void *mapAddress = QT_MMAP((void*)0, realSize,
+    void *mapAddress = QT_MMAP(Q_NULLPTR, realSize,
                    access, MAP_SHARED, nativeHandle(), realOffset);
     if (MAP_FAILED != mapAddress) {
         uchar *address = extra + static_cast<uchar*>(mapAddress);
