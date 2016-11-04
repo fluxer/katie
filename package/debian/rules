@@ -1,5 +1,9 @@
 #!/usr/bin/make -f
 
+# a dirty way to make dh_shlibdeps find the libraries, if you have better
+# solution I'd welcome it
+export LD_LIBRARY_PATH := $(shell pwd)/obj-$(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)/lib:$(LD_LIBRARY_PATH)
+
 %:
 	dh $@
 
