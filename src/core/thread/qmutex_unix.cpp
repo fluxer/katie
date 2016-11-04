@@ -83,7 +83,7 @@ bool QMutexPrivate::wait(int timeout)
             errorCode = pthread_cond_wait(&cond, &mutex);
         } else {
             struct timeval tv;
-            gettimeofday(&tv, 0);
+            gettimeofday(&tv, Q_NULLPTR);
 
             timespec ti;
             ti.tv_nsec = (tv.tv_usec + (timeout % 1000) * 1000) * 1000;

@@ -91,7 +91,7 @@ static qint64 getticks()
 
     // no clock_gettime(), fall back to wall time
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     return (tv.tv_sec * 1000000) + tv.tv_usec;
 
 #endif

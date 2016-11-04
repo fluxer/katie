@@ -119,7 +119,7 @@ public:
 
     inline operator RestrictedBool() const
     {
-        return isNull() ? 0 : &QScopedPointer::d;
+        return isNull() ? Q_NULLPTR : &QScopedPointer::d;
     }
 
     inline T *data() const
@@ -132,7 +132,7 @@ public:
         return !d;
     }
 
-    inline void reset(T *other = 0)
+    inline void reset(T *other = Q_NULLPTR)
     {
         if (d == other)
             return;
@@ -144,7 +144,7 @@ public:
     inline T *take()
     {
         T *oldD = d;
-        d = 0;
+        d = Q_NULLPTR;
         return oldD;
     }
 

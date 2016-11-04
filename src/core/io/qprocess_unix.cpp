@@ -1170,7 +1170,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
         struct sigaction noaction;
         memset(&noaction, 0, sizeof(noaction));
         noaction.sa_handler = SIG_IGN;
-        ::sigaction(SIGPIPE, &noaction, 0);
+        ::sigaction(SIGPIPE, &noaction, Q_NULLPTR);
 
         ::setsid();
 
@@ -1211,7 +1211,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
             struct sigaction noaction;
             memset(&noaction, 0, sizeof(noaction));
             noaction.sa_handler = SIG_IGN;
-            ::sigaction(SIGPIPE, &noaction, 0);
+            ::sigaction(SIGPIPE, &noaction, Q_NULLPTR);
 
             // '\1' means execv failed
             char c = '\1';
@@ -1222,7 +1222,7 @@ bool QProcessPrivate::startDetached(const QString &program, const QStringList &a
             struct sigaction noaction;
             memset(&noaction, 0, sizeof(noaction));
             noaction.sa_handler = SIG_IGN;
-            ::sigaction(SIGPIPE, &noaction, 0);
+            ::sigaction(SIGPIPE, &noaction, Q_NULLPTR);
 
             // '\2' means internal error
             char c = '\2';

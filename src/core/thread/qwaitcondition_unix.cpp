@@ -69,7 +69,7 @@ public:
         forever {
             if (time != ULONG_MAX) {
                 struct timeval tv;
-                gettimeofday(&tv, 0);
+                gettimeofday(&tv, Q_NULLPTR);
 
                 timespec ti;
                 ti.tv_nsec = (tv.tv_usec + (time % 1000) * 1000) * 1000;

@@ -83,29 +83,14 @@ QT_BEGIN_NAMESPACE
 
 enum { ThreadPriorityResetFlag = 0x80000000 };
 
-#if defined(Q_OS_LINUX) && defined(__GLIBC__) && (defined(Q_CC_GNU) || defined(Q_CC_INTEL))
-#define HAVE_TLS
-#endif
-#if defined(Q_CC_XLC) || defined (Q_CC_SUN)
-#define HAVE_TLS
-#endif
-
-#ifdef HAVE_TLS
-static __thread QThreadData *currentThreadData = 0;
-#endif
+static thread_local QThreadData *currentThreadData = Q_NULLPTR;
 
 static pthread_once_t current_thread_data_once = PTHREAD_ONCE_INIT;
 static pthread_key_t current_thread_data_key;
 
 static void destroy_current_thread_data(void *p)
 {
-#if defined(Q_OS_VXWORKS)
-    // Calling setspecific(..., 0) sets the value to 0 for ALL threads.
-    // The 'set to 1' workaround adds a bit of an overhead though,
-    // since this function is called twice now.
-    if (p == (void *)1)
-        return;
-#endif
+
     // POSIX says the value in our key is set to zero before calling
     // this destructor function, so we need to set it back to the
     // right value...
@@ -123,12 +108,7 @@ static void destroy_current_thread_data(void *p)
     // ... but we must reset it to zero before returning so we aren't
     // called again (POSIX allows implementations to call destructor
     // functions repeatedly until all values are zero)
-    pthread_setspecific(current_thread_data_key,
-#if defined(Q_OS_VXWORKS)
-                                                 (void *)1);
-#else
-                                                 0);
-#endif
+    pthread_setspecific(current_thread_data_key, Q_NULLPTR);
 }
 
 static void create_current_thread_data_key()
@@ -150,32 +130,18 @@ static void destroy_current_thread_data_key()
 Q_DESTRUCTOR_FUNCTION(destroy_current_thread_data_key)
 
 
-// Utility functions for getting, setting and clearing thread specific data.
-static QThreadData *get_thread_data()
-{
-#ifdef HAVE_TLS
-    return currentThreadData;
-#else
-    pthread_once(&current_thread_data_once, create_current_thread_data_key);
-    return reinterpret_cast<QThreadData *>(pthread_getspecific(current_thread_data_key));
-#endif
-}
-
+// Utility functions for setting and clearing thread specific data.
 static void set_thread_data(QThreadData *data)
 {
-#ifdef HAVE_TLS
     currentThreadData = data;
-#endif
     pthread_once(&current_thread_data_once, create_current_thread_data_key);
     pthread_setspecific(current_thread_data_key, data);
 }
 
 static void clear_thread_data()
 {
-#ifdef HAVE_TLS
-    currentThreadData = 0;
-#endif
-    pthread_setspecific(current_thread_data_key, 0);
+    currentThreadData = Q_NULLPTR;
+    pthread_setspecific(current_thread_data_key, Q_NULLPTR);
 }
 
 void QThreadData::clearCurrentThreadData()
@@ -185,7 +151,7 @@ void QThreadData::clearCurrentThreadData()
 
 QThreadData *QThreadData::current()
 {
-    QThreadData *data = get_thread_data();
+    QThreadData *data = currentThreadData;
     if (!data) {
         void *a;
         if (QInternal::activateCallbacks(QInternal::AdoptCurrentThread, &a)) {
@@ -204,7 +170,7 @@ QThreadData *QThreadData::current()
             } QT_CATCH(...) {
                 clear_thread_data();
                 data->deref();
-                data = 0;
+                data = Q_NULLPTR;
                 QT_RETHROW;
             }
             data->deref();
@@ -271,7 +237,7 @@ static void setCurrentThreadName(pthread_t threadId, const char *name)
 
 void *QThreadPrivate::start(void *arg)
 {
-    pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, Q_NULLPTR);
     pthread_cleanup_push(QThreadPrivate::finish, arg);
 
     QThread *thr = reinterpret_cast<QThread *>(arg);
@@ -306,13 +272,13 @@ void *QThreadPrivate::start(void *arg)
 #endif
 
     emit thr->started();
-    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, Q_NULLPTR);
     pthread_testcancel();
     thr->run();
 
     pthread_cleanup_pop(1);
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 void QThreadPrivate::finish(void *arg)
@@ -330,14 +296,14 @@ void QThreadPrivate::finish(void *arg)
     if (terminated)
         emit thr->terminated();
     emit thr->finished();
-    QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
+    QCoreApplication::sendPostedEvents(Q_NULLPTR, QEvent::DeferredDelete);
     QThreadStorageData::finish((void **)data);
     locker.relock();
     d->terminated = false;
 
     QAbstractEventDispatcher *eventDispatcher = d->data->eventDispatcher;
     if (eventDispatcher) {
-        d->data->eventDispatcher = 0;
+        d->data->eventDispatcher = Q_NULLPTR;
         locker.unlock();
         eventDispatcher->closingDown();
         delete eventDispatcher;
@@ -389,7 +355,7 @@ int QThread::idealThreadCount()
     int mib[2];
     mib[0] = CTL_HW;
     mib[1] = HW_NCPU;
-    if (sysctl(mib, 2, &cores, &len, NULL, 0) != 0) {
+    if (sysctl(mib, 2, &cores, &len, Q_NULLPTR, 0) != 0) {
         perror("sysctl");
         cores = -1;
     }
@@ -418,8 +384,8 @@ static void thread_sleep(struct timespec *ti)
     pthread_mutex_t mtx;
     pthread_cond_t cnd;
 
-    pthread_mutex_init(&mtx, 0);
-    pthread_cond_init(&cnd, 0);
+    pthread_mutex_init(&mtx, Q_NULLPTR);
+    pthread_cond_init(&cnd, Q_NULLPTR);
 
     pthread_mutex_lock(&mtx);
     (void) pthread_cond_timedwait(&cnd, &mtx, ti);
@@ -432,7 +398,7 @@ static void thread_sleep(struct timespec *ti)
 void QThread::sleep(unsigned long secs)
 {
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     struct timespec ti;
     ti.tv_sec = tv.tv_sec + secs;
     ti.tv_nsec = (tv.tv_usec * 1000);
@@ -442,7 +408,7 @@ void QThread::sleep(unsigned long secs)
 void QThread::msleep(unsigned long msecs)
 {
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     struct timespec ti;
 
     ti.tv_nsec = (tv.tv_usec + (msecs % 1000) * 1000) * 1000;
@@ -454,7 +420,7 @@ void QThread::msleep(unsigned long msecs)
 void QThread::usleep(unsigned long usecs)
 {
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     struct timespec ti;
 
     ti.tv_nsec = (tv.tv_usec + (usecs % 1000000)) * 1000;
@@ -641,12 +607,10 @@ bool QThread::wait(unsigned long time)
 
 void QThread::setTerminationEnabled(bool enabled)
 {
-    QThread *thr = currentThread();
-    Q_ASSERT_X(thr != 0, "QThread::setTerminationEnabled()",
+    Q_ASSERT_X(currentThread() != Q_NULLPTR, "QThread::setTerminationEnabled()",
                "Current thread was not started with QThread.");
 
-    Q_UNUSED(thr)
-    pthread_setcancelstate(enabled ? PTHREAD_CANCEL_ENABLE : PTHREAD_CANCEL_DISABLE, NULL);
+    pthread_setcancelstate(enabled ? PTHREAD_CANCEL_ENABLE : PTHREAD_CANCEL_DISABLE, Q_NULLPTR);
     if (enabled)
         pthread_testcancel();
 }

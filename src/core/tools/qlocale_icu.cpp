@@ -48,13 +48,13 @@ QT_BEGIN_NAMESPACE
 
 typedef int32_t (*Ptr_u_strToCase)(UChar *dest, int32_t destCapacity, const UChar *src, int32_t srcLength, const char *locale, UErrorCode *pErrorCode);
 
-static UCollator *icuCollator = 0;
+static UCollator *icuCollator = Q_NULLPTR;
 
 bool qt_initIcu(const QString &localeString)
 {
     if (icuCollator) {
         ucol_close(icuCollator);
-        icuCollator = 0;
+        icuCollator = Q_NULLPTR;
     }
 
     UErrorCode icuStatus = U_ZERO_ERROR;

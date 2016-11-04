@@ -257,7 +257,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
                 t += optional[i].len;
                 break;
             }
-        } while (optional[++i].keyword != 0);
+        } while (optional[++i].keyword != Q_NULLPTR);
     }
 
     bool star = false;

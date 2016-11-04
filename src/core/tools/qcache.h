@@ -52,9 +52,9 @@ template <class Key, class T>
 class QCache
 {
     struct Node {
-        inline Node() : keyPtr(0) {}
+        inline Node() : keyPtr(Q_NULLPTR) {}
         inline Node(T *data, int cost)
-            : keyPtr(0), t(data), c(cost), p(0), n(0) {}
+            : keyPtr(Q_NULLPTR), t(data), c(cost), p(Q_NULLPTR), n(Q_NULLPTR) {}
         const Key *keyPtr; T *t; int c; Node *p,*n;
     };
     Node *f, *l;
@@ -74,7 +74,7 @@ class QCache
     inline T *relink(const Key &key) {
         typename QHash<Key, Node>::iterator i = hash.find(key);
         if (typename QHash<Key, Node>::const_iterator(i) == hash.constEnd())
-            return 0;
+            return Q_NULLPTR;
 
         Node &n = *i;
         if (f != &n) {
@@ -122,12 +122,12 @@ private:
 
 template <class Key, class T>
 inline QCache<Key, T>::QCache(int amaxCost)
-    : f(0), l(0), mx(amaxCost), total(0) {}
+    : f(Q_NULLPTR), l(Q_NULLPTR), mx(amaxCost), total(0) {}
 
 template <class Key, class T>
 inline void QCache<Key,T>::clear()
 { while (f) { delete f->t; f = f->n; }
- hash.clear(); l = 0; total = 0; }
+ hash.clear(); l = Q_NULLPTR; total = 0; }
 
 template <class Key, class T>
 inline void QCache<Key,T>::setMaxCost(int m)
@@ -158,11 +158,11 @@ inline T *QCache<Key,T>::take(const Key &key)
 {
     typename QHash<Key, Node>::iterator i = hash.find(key);
     if (i == hash.end())
-        return 0;
+        return Q_NULLPTR;
 
     Node &n = *i;
     T *t = n.t;
-    n.t = 0;
+    n.t = Q_NULLPTR;
     unlink(n);
     return t;
 }

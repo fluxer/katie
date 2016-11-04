@@ -79,12 +79,12 @@ public:
     inline const char *readPointerAtPosition(qint64 pos, qint64 &length) const {
         if (buffers.isEmpty()) {
             length = 0;
-            return 0;
+            return Q_NULLPTR;
         }
 
         if (pos >= bufferSize) {
             length = 0;
-            return 0;
+            return Q_NULLPTR;
         }
 
         // special case: it is in the first buffer
@@ -97,7 +97,7 @@ public:
         // special case: we only had one buffer and tried to read over it
         if (buffers.length() == 1) {
             length = 0;
-            return 0;
+            return Q_NULLPTR;
         }
 
         // skip the first

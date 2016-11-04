@@ -2832,7 +2832,7 @@ QTime QTime::currentTime()
     QTime ct;
     // posix compliant system
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
@@ -2854,7 +2854,7 @@ QDateTime QDateTime::currentDateTime()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
@@ -2881,7 +2881,7 @@ QDateTime QDateTime::currentDateTimeUtc()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     time_t ltime = tv.tv_sec;
 
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS)
@@ -2905,7 +2905,7 @@ qint64 QDateTime::currentMSecsSinceEpoch()
     // posix compliant system
     // we have milliseconds
     struct timeval tv;
-    gettimeofday(&tv, 0);
+    gettimeofday(&tv, Q_NULLPTR);
     return qint64(tv.tv_sec) * Q_INT64_C(1000) + tv.tv_usec / 1000;
 }
 
@@ -4136,7 +4136,7 @@ bool QDateTimeParser::parseFormat(const QString &newFormat)
     QDTPDEBUGN("parseFormat: %s", newFormat.toLatin1().constData());
 
     QVector<SectionNode> newSectionNodes;
-    Sections newDisplay = 0;
+    Sections newDisplay = Q_NULLPTR;
     QStringList newSeparators;
     int i, index = 0;
     int add = 0;
@@ -5216,7 +5216,7 @@ int QDateTimeParser::maxChange(int index) const
 
 QDateTimeParser::FieldInfo QDateTimeParser::fieldInfo(int index) const
 {
-    FieldInfo ret = 0;
+    FieldInfo ret = Q_NULLPTR;
     const SectionNode &sn = sectionNode(index);
     const Section s = sn.type;
     switch (s) {

@@ -123,7 +123,7 @@ public:
     };
     // ConnectionList is a singly-linked list
     struct ConnectionList {
-        ConnectionList() : first(0), last(0) {}
+        ConnectionList() : first(Q_NULLPTR), last(Q_NULLPTR) {}
         Connection *first;
         Connection *last;
     };

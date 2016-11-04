@@ -297,7 +297,7 @@ QTimerInfoList::QTimerInfoList()
     }
 #endif
 
-    firstTimerInfo = 0;
+    firstTimerInfo = Q_NULLPTR;
 }
 
 timeval QTimerInfoList::updateCurrentTime()
@@ -412,7 +412,7 @@ bool QTimerInfoList::timerWait(timeval &tm)
     repairTimersIfNeeded();
 
     // Find first waiting timer not already active
-    QTimerInfo *t = 0;
+    QTimerInfo *t = Q_NULLPTR;
     for (QTimerInfoList::const_iterator it = constBegin(); it != constEnd(); ++it) {
         if (!(*it)->activateRef) {
             t = *it;
@@ -443,7 +443,7 @@ void QTimerInfoList::registerTimer(int timerId, int interval, QObject *object)
     t->interval.tv_usec = (interval % 1000) * 1000;
     t->timeout = updateCurrentTime() + t->interval;
     t->obj = object;
-    t->activateRef = 0;
+    t->activateRef = Q_NULLPTR;
 
     timerInsert(t);
 }
@@ -457,9 +457,9 @@ bool QTimerInfoList::unregisterTimer(int timerId)
             // found it
             removeAt(i);
             if (t == firstTimerInfo)
-                firstTimerInfo = 0;
+                firstTimerInfo = Q_NULLPTR;
             if (t->activateRef)
-                *(t->activateRef) = 0;
+                *(t->activateRef) = Q_NULLPTR;
 
             // release the timer id
             if (!QObjectPrivate::get(t->obj)->inThreadChangeEvent)
@@ -483,9 +483,9 @@ bool QTimerInfoList::unregisterTimers(QObject *object)
             // object found
             removeAt(i);
             if (t == firstTimerInfo)
-                firstTimerInfo = 0;
+                firstTimerInfo = Q_NULLPTR;
             if (t->activateRef)
-                *(t->activateRef) = 0;
+                *(t->activateRef) = Q_NULLPTR;
 
             // release the timer id
             if (!QObjectPrivate::get(t->obj)->inThreadChangeEvent)
@@ -519,7 +519,7 @@ int QTimerInfoList::activateTimers()
         return 0; // nothing to do
 
     int n_act = 0, maxCount = 0;
-    firstTimerInfo = 0;
+    firstTimerInfo = Q_NULLPTR;
 
     timeval currentTime = updateCurrentTime();
     repairTimersIfNeeded();
@@ -572,11 +572,11 @@ int QTimerInfoList::activateTimers()
             QCoreApplication::sendEvent(currentTimerInfo->obj, &e);
 
             if (currentTimerInfo)
-                currentTimerInfo->activateRef = 0;
+                currentTimerInfo->activateRef = Q_NULLPTR;
         }
     }
 
-    firstTimerInfo = 0;
+    firstTimerInfo = Q_NULLPTR;
     return n_act;
 }
 
@@ -591,7 +591,7 @@ QEventDispatcherUNIX::QEventDispatcherUNIX(QEventDispatcherUNIXPrivate &dd, QObj
 QEventDispatcherUNIX::~QEventDispatcherUNIX()
 {
     Q_D(QEventDispatcherUNIX);
-    d->threadData->eventDispatcher = 0;
+    d->threadData->eventDispatcher = Q_NULLPTR;
 }
 
 int QEventDispatcherUNIX::select(int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,
@@ -753,7 +753,7 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
     Q_D(QEventDispatcherUNIX);
     QSockNotType::List &list = d->sn_vec[type].list;
     fd_set *fds  =  &d->sn_vec[type].enabled_fds;
-    QSockNot *sn = 0;
+    QSockNot *sn = Q_NULLPTR;
     int i;
     for (i = 0; i < list.size(); ++i) {
         sn = list[i];
@@ -799,7 +799,7 @@ void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
 
     Q_D(QEventDispatcherUNIX);
     QSockNotType::List &list = d->sn_vec[type].list;
-    QSockNot *sn = 0;
+    QSockNot *sn = Q_NULLPTR;
     for (int i = 0; i < list.size(); ++i) {
         sn = list[i];
         if(sn->obj == notifier && sn->fd == sockfd)
@@ -872,7 +872,7 @@ bool QEventDispatcherUNIX::processEvents(QEventLoop::ProcessEventsFlags flags)
 
     if (!d->interrupt) {
         // return the maximum time we can wait for an event.
-        timeval *tm = 0;
+        timeval *tm = Q_NULLPTR;
         timeval wait_tm = { 0l, 0l };
         if (!(flags & QEventLoop::X11ExcludeTimers)) {
             if (d->timerList.timerWait(wait_tm))

@@ -62,7 +62,7 @@ public:
     ~QTranslator();
 
     QString translate(const char *context, const char *sourceText,
-                      const char *disambiguation = 0,
+                      const char *disambiguation = Q_NULLPTR,
                       int n = -1) const;
 
     virtual bool isEmpty() const;

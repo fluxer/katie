@@ -74,7 +74,7 @@ public:
     QEvent *event;
     int priority;
     inline QPostEvent()
-        : receiver(0), event(0), priority(0)
+        : receiver(Q_NULLPTR), event(Q_NULLPTR), priority(0)
     { }
     inline QPostEvent(QObject *r, QEvent *e, int p)
         : receiver(r), event(e), priority(p)
@@ -134,7 +134,7 @@ class QThreadPrivate : public QObjectPrivate
     Q_DECLARE_PUBLIC(QThread)
 
 public:
-    QThreadPrivate(QThreadData *d = 0);
+    QThreadPrivate(QThreadData *d = Q_NULLPTR);
     ~QThreadPrivate();
 
     mutable QMutex mutex;
@@ -216,7 +216,7 @@ public:
         FlaggedDebugSignatures() : idx(0)
         {
             for (uint i = 0; i < Count; ++i)
-                locations[i] = 0;
+                locations[i] = Q_NULLPTR;
         }
 
         void store(const char* method)
@@ -266,7 +266,7 @@ class QAdoptedThread : public QThread
     Q_DECLARE_PRIVATE(QThread)
 
 public:
-    QAdoptedThread(QThreadData *data = 0);
+    QAdoptedThread(QThreadData *data = Q_NULLPTR);
     ~QAdoptedThread();
     void init();
 
