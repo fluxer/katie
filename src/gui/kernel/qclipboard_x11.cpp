@@ -435,13 +435,13 @@ QClipboard::QClipboard(QObject *parent)
     (void)QApplication::desktop();
 
 #ifndef QT_NO_XFIXES
-    if (X11->use_xfixes && X11->ptrXFixesSelectSelectionInput) {
+    if (X11->use_xfixes && XFixesSelectSelectionInput) {
         const unsigned long eventMask =
             XFixesSetSelectionOwnerNotifyMask | XFixesSelectionWindowDestroyNotifyMask | XFixesSelectionClientCloseNotifyMask;
         for (int i = 0; i < X11->screenCount; ++i) {
-            X11->ptrXFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(i),
+            XFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(i),
                                                XA_PRIMARY, eventMask);
-            X11->ptrXFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(i),
+            XFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(i),
                                                ATOM(CLIPBOARD), eventMask);
         }
     }

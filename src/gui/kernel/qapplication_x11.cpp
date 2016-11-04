@@ -448,82 +448,6 @@ extern bool qt_xdnd_dragging;
 // gui or non-gui from qapplication.cpp
 extern bool qt_is_gui_used;
 
-#ifndef QT_NO_XINPUT
-# ifdef QT_RUNTIME_XINPUT
-/*!
-    \internal
-    Try to resolve a \a symbol from \a library with the version specified
-    by \a vernum.
-
-    Note that, in the case of the Xfixes library, \a vernum is not the same as
-    \c XFIXES_MAJOR - it is a part of soname and may differ from the Xfixes
-    version.
-*/
-static void* qt_load_library_runtime(const char *library, int vernum,
-                                     int highestVernum, const char *symbol)
-{
-    QList<int> versions;
-    // we try to load in the following order:
-    // explicit version -> the default one -> (from the highest (highestVernum) to the lowest (vernum) )
-    if (vernum != -1)
-        versions << vernum;
-    versions << -1;
-    if (vernum != -1) {
-        for(int i = highestVernum; i > vernum; --i)
-            versions << i;
-    }
-    Q_FOREACH(int version, versions) {
-        QLatin1String libName(library);
-        QLibrary xfixesLib(libName, version);
-        xfixesLib.setLoadHints(QLibrary::ImprovedSearchHeuristics);
-        void *ptr = xfixesLib.resolve(symbol);
-        if (ptr)
-            return ptr;
-    }
-    return 0;
-}
-# endif // QT_RUNTIME_XINPUT
-#endif // QT_NO_XINPUT
-
-#ifndef QT_NO_XINPUT
-# ifdef QT_RUNTIME_XINPUT
-#  define XINPUT_LOAD_RUNTIME(vernum, symbol, symbol_type) \
-    (symbol_type)qt_load_library_runtime("libXi", vernum, 6, #symbol);
-#  define XINPUT_LOAD(symbol) \
-    XINPUT_LOAD_RUNTIME(1, symbol, Ptr##symbol)
-# else // not runtime XInput
-#  define XINPUT_LOAD(symbol) symbol
-# endif // QT_RUNTIME_XINPUT
-#else // not using Xinput at all
-# define XINPUT_LOAD(symbol) 0
-#endif // QT_NO_XINPUT
-
-#ifndef QT_NO_XFIXES
-# ifdef QT_RUNTIME_XFIXES
-#  define XFIXES_LOAD_RUNTIME(vernum, symbol, symbol_type) \
-    (symbol_type)qt_load_library_runtime("libXfixes", vernum, 4, #symbol);
-#  define XFIXES_LOAD_V1(symbol) \
-    XFIXES_LOAD_RUNTIME(1, symbol, Ptr##symbol)
-#  define XFIXES_LOAD_V2(symbol) \
-    XFIXES_LOAD_RUNTIME(2, symbol, Ptr##symbol)
-
-# else // not runtime Xfixes
-
-#  if XFIXES_MAJOR >= 2
-#   define XFIXES_LOAD_V1(symbol) symbol
-#   define XFIXES_LOAD_V2(symbol) symbol
-#  elif XFIXES_MAJOR >= 1
-#   define XFIXES_LOAD_V1(symbol) symbol
-#   define XFIXES_LOAD_V2(symbol) 0
-#  else
-#   error Unsupported version of Xfixes
-#  endif
-# endif // QT_RUNTIME_XFIXES
-#else // not using Xfixes at all
-# define XFIXES_LOAD_V1(symbol) 0
-# define XFIXES_LOAD_V2(symbol) 0
-#endif // QT_NO_XFIXES
-
 #ifndef QT_NO_XFIXES
 
 struct qt_xfixes_selection_event_data
@@ -1998,36 +1922,7 @@ void qt_init(QApplicationPrivate *priv, int,
         if (XQueryExtension(X11->display, "RANDR", &X11->xrandr_major,
                             &X11->xrandr_eventbase, &X11->xrandr_errorbase)) {
 
-#  ifdef QT_RUNTIME_XRANDR
-            X11->ptrXRRSelectInput = 0;
-            X11->ptrXRRUpdateConfiguration = 0;
-            X11->ptrXRRRootToScreen = 0;
-            X11->ptrXRRQueryExtension = 0;
-            QLibrary xrandrLib(QLatin1String("Xrandr"), 2);
-            xrandrLib.setLoadHints(QLibrary::ImprovedSearchHeuristics);
-            if (!xrandrLib.load()) { // try without the version number
-                xrandrLib.setFileName(QLatin1String("Xrandr"));
-                xrandrLib.load();
-            }
-            if (xrandrLib.isLoaded()) {
-                X11->ptrXRRSelectInput =
-                    (PtrXRRSelectInput) xrandrLib.resolve("XRRSelectInput");
-                X11->ptrXRRUpdateConfiguration =
-                    (PtrXRRUpdateConfiguration) xrandrLib.resolve("XRRUpdateConfiguration");
-                X11->ptrXRRRootToScreen =
-                    (PtrXRRRootToScreen) xrandrLib.resolve("XRRRootToScreen");
-                X11->ptrXRRQueryExtension =
-                    (PtrXRRQueryExtension) xrandrLib.resolve("XRRQueryExtension");
-            }
-#  else
-            X11->ptrXRRSelectInput = XRRSelectInput;
-            X11->ptrXRRUpdateConfiguration = XRRUpdateConfiguration;
-            X11->ptrXRRRootToScreen = XRRRootToScreen;
-            X11->ptrXRRQueryExtension = XRRQueryExtension;
-#  endif
-
-            if (X11->ptrXRRQueryExtension
-                && X11->ptrXRRQueryExtension(X11->display, &X11->xrandr_eventbase, &X11->xrandr_errorbase)) {
+            if (XRRQueryExtension(X11->display, &X11->xrandr_eventbase, &X11->xrandr_errorbase)) {
                 // XRandR is supported
                 X11->use_xrandr = true;
             }
@@ -2052,14 +1947,8 @@ void qt_init(QApplicationPrivate *priv, int,
         // See if Xfixes is supported on the connected display
         if (XQueryExtension(X11->display, "XFIXES", &X11->xfixes_major,
                             &X11->xfixes_eventbase, &X11->xfixes_errorbase)) {
-            X11->ptrXFixesQueryExtension  = XFIXES_LOAD_V1(XFixesQueryExtension);
-            X11->ptrXFixesQueryVersion    = XFIXES_LOAD_V1(XFixesQueryVersion);
-            X11->ptrXFixesSetCursorName   = XFIXES_LOAD_V2(XFixesSetCursorName);
-            X11->ptrXFixesSelectSelectionInput = XFIXES_LOAD_V2(XFixesSelectSelectionInput);
-
-            if(X11->ptrXFixesQueryExtension && X11->ptrXFixesQueryVersion
-               && X11->ptrXFixesQueryExtension(X11->display, &X11->xfixes_eventbase,
-                                               &X11->xfixes_errorbase)) {
+            if(XFixesQueryExtension(X11->display, &X11->xfixes_eventbase,
+                                                  &X11->xfixes_errorbase)) {
                 // Xfixes is supported.
                 // Note: the XFixes protocol version is negotiated using QueryVersion.
                 // We supply the highest version we support, the X server replies with
@@ -2069,36 +1958,12 @@ void qt_init(QApplicationPrivate *priv, int,
                 // X server when it receives an XFixes request is undefined.
                 int major = 3;
                 int minor = 0;
-                X11->ptrXFixesQueryVersion(X11->display, &major, &minor);
+                XFixesQueryVersion(X11->display, &major, &minor);
                 X11->use_xfixes = (major >= 1);
                 X11->xfixes_major = major;
             }
-        } else {
-            X11->ptrXFixesQueryExtension  = 0;
-            X11->ptrXFixesQueryVersion    = 0;
-            X11->ptrXFixesSetCursorName   = 0;
-            X11->ptrXFixesSelectSelectionInput = 0;
         }
 #endif // QT_NO_XFIXES
-
-#ifndef QT_NO_XCURSOR
-#ifdef QT_RUNTIME_XCURSOR
-        X11->ptrXcursorLibraryLoadCursor = 0;
-        QLibrary xcursorLib(QLatin1String("Xcursor"), 1);
-        xcursorLib.setLoadHints(QLibrary::ImprovedSearchHeuristics);
-        bool xcursorFound = xcursorLib.load();
-        if (!xcursorFound) { //try without the version number
-            xcursorLib.setFileName(QLatin1String("Xcursor"));
-            xcursorFound = xcursorLib.load();
-        }
-        if (xcursorFound) {
-            X11->ptrXcursorLibraryLoadCursor =
-                (PtrXcursorLibraryLoadCursor) xcursorLib.resolve("XcursorLibraryLoadCursor");
-        }
-#else
-        X11->ptrXcursorLibraryLoadCursor = XcursorLibraryLoadCursor;
-#endif // QT_RUNTIME_XCURSOR
-#endif // QT_NO_XCURSOR
 
 #ifndef QT_NO_XSYNC
         int xsync_evbase, xsync_errbase;
@@ -2107,49 +1972,10 @@ void qt_init(QApplicationPrivate *priv, int,
             XSyncInitialize(X11->display, &major, &minor);
 #endif // QT_NO_XSYNC
 
-#ifndef QT_NO_XINERAMA
-#ifdef QT_RUNTIME_XINERAMA
-        X11->ptrXineramaQueryExtension = 0;
-        X11->ptrXineramaIsActive = 0;
-        X11->ptrXineramaQueryScreens = 0;
-        QLibrary xineramaLib(QLatin1String("Xinerama"), 1);
-        xineramaLib.setLoadHints(QLibrary::ImprovedSearchHeuristics);
-        bool xineramaFound = xineramaLib.load();
-        if (!xineramaFound) { //try without the version number
-            xineramaLib.setFileName(QLatin1String("Xinerama"));
-            xineramaFound = xineramaLib.load();
-        }
-        if (xineramaFound) {
-            X11->ptrXineramaQueryExtension =
-                (PtrXineramaQueryExtension) xineramaLib.resolve("XineramaQueryExtension");
-            X11->ptrXineramaIsActive =
-                (PtrXineramaIsActive) xineramaLib.resolve("XineramaIsActive");
-            X11->ptrXineramaQueryScreens =
-                (PtrXineramaQueryScreens) xineramaLib.resolve("XineramaQueryScreens");
-        }
-#else
-        X11->ptrXineramaQueryScreens = XineramaQueryScreens;
-        X11->ptrXineramaIsActive = XineramaIsActive;
-        X11->ptrXineramaQueryExtension = XineramaQueryExtension;
-#endif // QT_RUNTIME_XINERAMA
-#endif // QT_NO_XINERAMA
-
 #ifndef QT_NO_XINPUT
         // See if Xinput is supported on the connected display
-        X11->ptrXCloseDevice = 0;
-        X11->ptrXListInputDevices = 0;
-        X11->ptrXOpenDevice = 0;
-        X11->ptrXFreeDeviceList = 0;
-        X11->ptrXSelectExtensionEvent = 0;
         X11->use_xinput = XQueryExtension(X11->display, "XInputExtension", &X11->xinput_major,
                                           &X11->xinput_eventbase, &X11->xinput_errorbase);
-        if (X11->use_xinput) {
-            X11->ptrXCloseDevice = XINPUT_LOAD(XCloseDevice);
-            X11->ptrXListInputDevices = XINPUT_LOAD(XListInputDevices);
-            X11->ptrXOpenDevice = XINPUT_LOAD(XOpenDevice);
-            X11->ptrXFreeDeviceList = XINPUT_LOAD(XFreeDeviceList);
-            X11->ptrXSelectExtensionEvent = XINPUT_LOAD(XSelectExtensionEvent);
-        }
 #endif // QT_NO_XINPUT
 
 #ifndef QT_NO_XKB
@@ -2273,7 +2099,7 @@ void qt_init(QApplicationPrivate *priv, int,
 
 #ifndef QT_NO_XRANDR
             if (X11->use_xrandr)
-                X11->ptrXRRSelectInput(X11->display, QX11Info::appRootWindow(screen), True);
+                XRRSelectInput(X11->display, QX11Info::appRootWindow(screen), True);
 #endif // QT_NO_XRANDR
         }
     }
@@ -2283,8 +2109,8 @@ void qt_init(QApplicationPrivate *priv, int,
         // Use dbus if/when we can, but fall back to using windowManagerName() for now
 
 #ifndef QT_NO_XFIXES
-        if (X11->ptrXFixesSelectSelectionInput)
-            X11->ptrXFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
+        if (XFixesSelectSelectionInput)
+            XFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
                                        XFixesSetSelectionOwnerNotifyMask
                                        | XFixesSelectionWindowDestroyNotifyMask
                                        | XFixesSelectionClientCloseNotifyMask);
@@ -2388,8 +2214,8 @@ void qt_init(QApplicationPrivate *priv, int,
             XAxisInfoPtr a;
             XDevice *dev = 0;
 
-            if (X11->ptrXListInputDevices) {
-                devices = X11->ptrXListInputDevices(X11->display, &ndev);
+            if (XListInputDevices) {
+                devices = XListInputDevices(X11->display, &ndev);
                 if (!devices)
                     qWarning("QApplication: Failed to get list of tablet devices");
             }
@@ -2424,8 +2250,8 @@ void qt_init(QApplicationPrivate *priv, int,
                     continue;
 
                 if (gotStylus || gotEraser) {
-                    if (X11->ptrXOpenDevice)
-                        dev = X11->ptrXOpenDevice(X11->display, devs->id);
+                    if (XOpenDevice)
+                        dev = XOpenDevice(X11->display, devs->id);
 
                     if (!dev)
                         continue;
@@ -2545,8 +2371,8 @@ void qt_init(QApplicationPrivate *priv, int,
                     tablet_devices()->append(device_data);
                 } // if (gotStylus || gotEraser)
             }
-            if (X11->ptrXFreeDeviceList)
-                X11->ptrXFreeDeviceList(devices);
+            if (XFreeDeviceList)
+                XFreeDeviceList(devices);
         }
 #endif // QT_NO_TABLET
 
@@ -2626,9 +2452,9 @@ void qt_cleanup()
 
 #if !defined (QT_NO_TABLET)
         QTabletDeviceDataList *devices = qt_tablet_devices();
-        if (X11->ptrXCloseDevice)
+        if (XCloseDevice)
             for (int i = 0; i < devices->size(); ++i)
-                X11->ptrXCloseDevice(X11->display, (XDevice*)devices->at(i).device);
+                XCloseDevice(X11->display, (XDevice*)devices->at(i).device);
         devices->clear();
 #endif
     }
@@ -3309,10 +3135,10 @@ int QApplication::x11ProcessEvent(XEvent* event)
 #ifndef QT_NO_XRANDR
     if (X11->use_xrandr && event->type == (X11->xrandr_eventbase + RRScreenChangeNotify)) {
         // update Xlib internals with the latest screen configuration
-        X11->ptrXRRUpdateConfiguration(event);
+        XRRUpdateConfiguration(event);
 
         // update the size for desktop widget
-        int scr = X11->ptrXRRRootToScreen(X11->display, event->xany.window);
+        int scr = XRRRootToScreen(X11->display, event->xany.window);
         QDesktopWidget *desktop = QApplication::desktop();
         QWidget *w = desktop->screen(scr);
         QSize oldSize(w->size());

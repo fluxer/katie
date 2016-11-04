@@ -40,8 +40,6 @@
 ****************************************************************************/
 
 #include "qdialog.h"
-
-
 #include "qevent.h"
 #include "qdesktopwidget.h"
 #include "qpushbutton.h"
@@ -52,13 +50,14 @@
 #include "qmenu.h"
 #include "qcursor.h"
 #include "qdialog_p.h"
+
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
+
 #if defined(Q_WS_X11)
 #  include "../kernel/qt_x11_p.h"
 #endif
-
 
 #ifndef SPI_GETSNAPTODEFBUTTON
 #   define SPI_GETSNAPTODEFBUTTON  95
