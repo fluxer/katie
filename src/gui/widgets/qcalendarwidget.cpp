@@ -816,7 +816,7 @@ class QCalendarModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    QCalendarModel(QObject *parent = 0);
+    QCalendarModel(QObject *parent = Q_NULLPTR);
 
     int rowCount(const QModelIndex &) const
         { return RowCount + m_firstRow; }
@@ -1516,7 +1516,7 @@ class QCalendarDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    QCalendarDelegate(QCalendarWidgetPrivate *w, QObject *parent = 0)
+    QCalendarDelegate(QCalendarWidgetPrivate *w, QObject *parent = Q_NULLPTR)
         : QItemDelegate(parent), calendarWidgetPrivate(w)
             { }
     virtual void paint(QPainter *painter, const QStyleOptionViewItem &option,

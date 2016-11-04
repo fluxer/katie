@@ -82,7 +82,7 @@ class QHttpThreadDelegate : public QObject
 {
     Q_OBJECT
 public:
-    explicit QHttpThreadDelegate(QObject *parent = 0);
+    explicit QHttpThreadDelegate(QObject *parent = Q_NULLPTR);
 
     ~QHttpThreadDelegate();
 

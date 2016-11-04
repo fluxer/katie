@@ -67,7 +67,7 @@ class Q_GUI_EXPORT QIconEnginePlugin : public QObject, public QIconEngineFactory
     Q_OBJECT
     Q_INTERFACES(QIconEngineFactoryInterface:QFactoryInterface)
 public:
-    QIconEnginePlugin(QObject *parent = 0);
+    QIconEnginePlugin(QObject *parent = Q_NULLPTR);
     ~QIconEnginePlugin();
 
     virtual QStringList keys() const = 0;

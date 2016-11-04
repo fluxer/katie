@@ -63,7 +63,7 @@ Q_SIGNALS:
     void newConnection();
 
 public:
-    QLocalServer(QObject *parent = 0);
+    QLocalServer(QObject *parent = Q_NULLPTR);
     ~QLocalServer();
 
     void close();

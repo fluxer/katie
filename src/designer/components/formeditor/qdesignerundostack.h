@@ -59,7 +59,7 @@ class QDesignerUndoStack : public QObject
     Q_DISABLE_COPY(QDesignerUndoStack)
     Q_OBJECT
 public:
-    explicit QDesignerUndoStack(QObject *parent = 0);
+    explicit QDesignerUndoStack(QObject *parent = Q_NULLPTR);
     virtual ~QDesignerUndoStack();
 
     void push(QUndoCommand * cmd);

@@ -80,7 +80,7 @@ class QDeclarativeFolderListModel : public QAbstractListModel, public QDeclarati
 
 //![abslistmodel]
 public:
-    QDeclarativeFolderListModel(QObject *parent = 0);
+    QDeclarativeFolderListModel(QObject *parent = Q_NULLPTR);
     ~QDeclarativeFolderListModel();
 
     enum Roles { FileNameRole = Qt::UserRole+1, FilePathRole = Qt::UserRole+2 };

@@ -150,7 +150,7 @@ Q_SIGNALS:
     void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 protected:
-    QNetworkReply(QObject *parent = 0);
+    QNetworkReply(QObject *parent = Q_NULLPTR);
     QNetworkReply(QNetworkReplyPrivate &dd, QObject *parent);
     virtual qint64 writeData(const char *data, qint64 len);
 

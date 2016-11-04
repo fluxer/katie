@@ -82,7 +82,7 @@ public:
         ClosingState = QAbstractSocket::ClosingState
     };
 
-    QLocalSocket(QObject *parent = 0);
+    QLocalSocket(QObject *parent = Q_NULLPTR);
     ~QLocalSocket();
 
     void connectToServer(const QString &name, OpenMode openMode = ReadWrite);

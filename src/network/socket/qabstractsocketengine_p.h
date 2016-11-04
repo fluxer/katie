@@ -86,7 +86,7 @@ public:
     static QAbstractSocketEngine *createSocketEngine(QAbstractSocket::SocketType socketType, const QNetworkProxy &, QObject *parent);
     static QAbstractSocketEngine *createSocketEngine(int socketDescripter, QObject *parent);
 
-    QAbstractSocketEngine(QObject *parent = 0);
+    QAbstractSocketEngine(QObject *parent = Q_NULLPTR);
 
     enum SocketOption {
         NonBlockingSocketOption,

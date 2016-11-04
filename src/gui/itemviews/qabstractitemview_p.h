@@ -88,7 +88,7 @@ typedef QList<QItemViewPaintPair> QItemViewPaintPairs;
 class QEmptyModel : public QAbstractItemModel
 {
 public:
-    explicit QEmptyModel(QObject *parent = 0) : QAbstractItemModel(parent) {}
+    explicit QEmptyModel(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent) {}
     QModelIndex index(int, int, const QModelIndex &) const { return QModelIndex(); }
     QModelIndex parent(const QModelIndex &) const { return QModelIndex(); }
     int rowCount(const QModelIndex &) const { return 0; }

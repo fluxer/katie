@@ -70,7 +70,7 @@ class QT_FORMEDITOR_EXPORT FormWindowManager
 {
     Q_OBJECT
 public:
-    explicit FormWindowManager(QDesignerFormEditorInterface *core, QObject *parent = 0);
+    explicit FormWindowManager(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
     virtual ~FormWindowManager();
 
     virtual QDesignerFormEditorInterface *core() const;

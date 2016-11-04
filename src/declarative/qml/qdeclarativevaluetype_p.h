@@ -74,7 +74,7 @@ class Q_DECLARATIVE_PRIVATE_EXPORT QDeclarativeValueType : public QObject
 {
     Q_OBJECT
 public:
-    QDeclarativeValueType(QObject *parent = 0);
+    QDeclarativeValueType(QObject *parent = Q_NULLPTR);
     virtual void read(QObject *, int) = 0;
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags flags) = 0;
     virtual QVariant value() = 0;
@@ -106,7 +106,7 @@ class Q_AUTOTEST_EXPORT QDeclarativePointFValueType : public QDeclarativeValueTy
     Q_PROPERTY(qreal y READ y WRITE setY)
     Q_OBJECT
 public:
-    QDeclarativePointFValueType(QObject *parent = 0);
+    QDeclarativePointFValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -128,7 +128,7 @@ class Q_AUTOTEST_EXPORT QDeclarativePointValueType : public QDeclarativeValueTyp
     Q_PROPERTY(int y READ y WRITE setY)
     Q_OBJECT
 public:
-    QDeclarativePointValueType(QObject *parent = 0);
+    QDeclarativePointValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -150,7 +150,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeSizeFValueType : public QDeclarativeValueTyp
     Q_PROPERTY(qreal height READ height WRITE setHeight)
     Q_OBJECT
 public:
-    QDeclarativeSizeFValueType(QObject *parent = 0);
+    QDeclarativeSizeFValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -172,7 +172,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeSizeValueType : public QDeclarativeValueType
     Q_PROPERTY(int height READ height WRITE setHeight)
     Q_OBJECT
 public:
-    QDeclarativeSizeValueType(QObject *parent = 0);
+    QDeclarativeSizeValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -196,7 +196,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeRectFValueType : public QDeclarativeValueTyp
     Q_PROPERTY(qreal height READ height WRITE setHeight)
     Q_OBJECT
 public:
-    QDeclarativeRectFValueType(QObject *parent = 0);
+    QDeclarativeRectFValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -225,7 +225,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeRectValueType : public QDeclarativeValueType
     Q_PROPERTY(int height READ height WRITE setHeight)
     Q_OBJECT
 public:
-    QDeclarativeRectValueType(QObject *parent = 0);
+    QDeclarativeRectValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -252,7 +252,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeVector2DValueType : public QDeclarativeValue
     Q_PROPERTY(qreal y READ y WRITE setY)
     Q_OBJECT
 public:
-    QDeclarativeVector2DValueType(QObject *parent = 0);
+    QDeclarativeVector2DValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -275,7 +275,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeVector3DValueType : public QDeclarativeValue
     Q_PROPERTY(qreal z READ z WRITE setZ)
     Q_OBJECT
 public:
-    QDeclarativeVector3DValueType(QObject *parent = 0);
+    QDeclarativeVector3DValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -301,7 +301,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeVector4DValueType : public QDeclarativeValue
     Q_PROPERTY(qreal w READ w WRITE setW)
     Q_OBJECT
 public:
-    QDeclarativeVector4DValueType(QObject *parent = 0);
+    QDeclarativeVector4DValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -329,7 +329,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeQuaternionValueType : public QDeclarativeVal
     Q_PROPERTY(qreal z READ z WRITE setZ)
     Q_OBJECT
 public:
-    QDeclarativeQuaternionValueType(QObject *parent = 0);
+    QDeclarativeQuaternionValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -369,7 +369,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeMatrix4x4ValueType : public QDeclarativeValu
     Q_PROPERTY(qreal m44 READ m44 WRITE setM44)
     Q_OBJECT
 public:
-    QDeclarativeMatrix4x4ValueType(QObject *parent = 0);
+    QDeclarativeMatrix4x4ValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -450,7 +450,7 @@ public:
         SineCurve = QEasingCurve::SineCurve, CosineCurve = QEasingCurve::CosineCurve
     };
 
-    QDeclarativeEasingValueType(QObject *parent = 0);
+    QDeclarativeEasingValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);
@@ -501,7 +501,7 @@ public:
                            SmallCaps = QFont::SmallCaps,
                            Capitalize = QFont::Capitalize };
 
-    QDeclarativeFontValueType(QObject *parent = 0);
+    QDeclarativeFontValueType(QObject *parent = Q_NULLPTR);
 
     virtual void read(QObject *, int);
     virtual void write(QObject *, int, QDeclarativePropertyPrivate::WriteFlags);

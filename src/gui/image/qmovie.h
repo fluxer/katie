@@ -84,9 +84,9 @@ public:
         CacheAll
     };
 
-    QMovie(QObject *parent = 0);
-    explicit QMovie(QIODevice *device, const QByteArray &format = QByteArray(), QObject *parent = 0);
-    explicit QMovie(const QString &fileName, const QByteArray &format = QByteArray(), QObject *parent = 0);
+    QMovie(QObject *parent = Q_NULLPTR);
+    explicit QMovie(QIODevice *device, const QByteArray &format = QByteArray(), QObject *parent = Q_NULLPTR);
+    explicit QMovie(const QString &fileName, const QByteArray &format = QByteArray(), QObject *parent = Q_NULLPTR);
     ~QMovie();
 
     static QList<QByteArray> supportedFormats();

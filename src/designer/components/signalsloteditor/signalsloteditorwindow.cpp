@@ -409,7 +409,7 @@ class InlineEditorModel : public QStandardItemModel
 public:
     enum {  TitleItem = 1 };
 
-    InlineEditorModel(int rows, int cols, QObject *parent = 0);
+    InlineEditorModel(int rows, int cols, QObject *parent = Q_NULLPTR);
 
     void addTitle(const QString &title);
     void addTextList(const QMap<QString, bool> &text_list);

@@ -57,7 +57,7 @@ class ShaderEffect : public QGraphicsEffect
     Q_OBJECT
 
 public:
-    ShaderEffect(QObject *parent = 0);
+    ShaderEffect(QObject *parent = Q_NULLPTR);
     ~ShaderEffect();
     void addRenderTarget(ShaderEffectSource *target);
     void removeRenderTarget(ShaderEffectSource *target);

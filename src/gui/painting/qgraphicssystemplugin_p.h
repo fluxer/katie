@@ -77,7 +77,7 @@ class Q_GUI_EXPORT QGraphicsSystemPlugin : public QObject, public QGraphicsSyste
     Q_OBJECT
     Q_INTERFACES(QGraphicsSystemFactoryInterface:QFactoryInterface)
 public:
-    explicit QGraphicsSystemPlugin(QObject *parent = 0);
+    explicit QGraphicsSystemPlugin(QObject *parent = Q_NULLPTR);
     ~QGraphicsSystemPlugin();
 
     virtual QStringList keys() const = 0;

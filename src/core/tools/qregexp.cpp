@@ -929,10 +929,10 @@ struct QRegExpMatchState
 
     const QRegExpEngine *eng;
 
-    inline QRegExpMatchState() : bigArray(0), captured(0) {}
+    inline QRegExpMatchState() : bigArray(Q_NULLPTR), captured(Q_NULLPTR) {}
     inline ~QRegExpMatchState() { free(bigArray); }
 
-    void drain() { free(bigArray); bigArray = 0; captured = 0; } // to save memory
+    void drain() { free(bigArray); bigArray = Q_NULLPTR; captured = Q_NULLPTR; } // to save memory
     void prepareForMatch(QRegExpEngine *eng);
     void match(const QChar *str, int len, int pos, bool minimal,
         bool oneTest, int caretIndex);
@@ -1425,7 +1425,7 @@ void QRegExpMatchState::match(const QChar *str0, int len0, int pos0,
 #endif
     {
         in = str0;
-        if (in == 0)
+        if (!in)
             in = &char_null;
         pos = pos0;
         caretPos = caretIndex;
@@ -2875,7 +2875,7 @@ int QRegExpEngine::getEscape()
 #ifndef QT_NO_REGEXP_ESCAPE
     if ((prevCh & ~0xff) == 0) {
         const char *p = strchr(tab, prevCh);
-        if (p != 0)
+        if (p)
             return Tok_Char | backTab[p - tab];
     }
 #endif
@@ -3387,7 +3387,7 @@ int QRegExpEngine::parse(const QChar *pattern, int len)
 #endif
     box.cat(middleBox);
     box.cat(rightBox);
-    yyCharClass.reset(0);
+    yyCharClass.reset(Q_NULLPTR);
 
 #ifndef QT_NO_REGEXP_CAPTURE
     for (int i = 0; i < nf; ++i) {
@@ -3465,7 +3465,7 @@ int QRegExpEngine::parse(const QChar *pattern, int len)
 void QRegExpEngine::parseAtom(Box *box)
 {
 #ifndef QT_NO_REGEXP_LOOKAHEAD
-    QRegExpEngine *eng = 0;
+    QRegExpEngine *eng = Q_NULLPTR;
     bool neg;
     int len;
 #endif
@@ -3662,9 +3662,9 @@ struct QRegExpPrivate
     QRegExpMatchState matchState;
 
     inline QRegExpPrivate()
-        : eng(0), engineKey(QString(), QRegExp::RegExp, Qt::CaseSensitive), minimal(false) { }
+        : eng(Q_NULLPTR), engineKey(QString(), QRegExp::RegExp, Qt::CaseSensitive), minimal(false) { }
     inline QRegExpPrivate(const QRegExpEngineKey &key)
-        : eng(0), engineKey(key), minimal(false) {}
+        : eng(Q_NULLPTR), engineKey(key), minimal(false) {}
 };
 
 #if !defined(QT_NO_REGEXP_OPTIM)
@@ -3707,7 +3707,7 @@ static void prepareEngine_helper(QRegExpPrivate *priv)
     if (!priv->eng && globalEngineCache()) {
         QMutexLocker locker(regexpMutex());
         priv->eng = globalEngineCache()->take(priv->engineKey);
-        if (priv->eng != 0)
+        if (priv->eng)
             priv->eng->ref.ref();
     }
 #endif // QT_NO_REGEXP_OPTIM
@@ -3740,9 +3740,9 @@ static void prepareEngineForMatch(QRegExpPrivate *priv, const QString &str)
 
 static void invalidateEngine(QRegExpPrivate *priv)
 {
-    if (priv->eng != 0) {
+    if (priv->eng) {
         derefEngine(priv->eng, priv->engineKey);
-        priv->eng = 0;
+        priv->eng = Q_NULLPTR;
         priv->matchState.drain();
     }
 }

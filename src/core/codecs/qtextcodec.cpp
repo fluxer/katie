@@ -1345,13 +1345,13 @@ QTextCodec *QTextCodec::codecForHtml(const QByteArray &ba, QTextCodec *defaultCo
 {
     // determine charset
     int pos;
-    QTextCodec *c = 0;
-
-    c = QTextCodec::codecForUtfText(ba, c);
+    QTextCodec *c = QTextCodec::codecForUtfText(ba, c);
     if (!c) {
         QByteArray header = ba.left(512).toLower();
-        if ((pos = header.indexOf("http-equiv=")) != -1) {
-            if ((pos = header.lastIndexOf("meta ", pos)) != -1) {
+        int pos = pos = header.indexOf("http-equiv=");
+        if (pos != -1) {
+            pos = pos = header.lastIndexOf("meta ", pos);
+            if (pos != -1) {
                 pos = header.indexOf("charset=", pos) + int(strlen("charset="));
                 if (pos != -1) {
                     int pos2 = header.indexOf('\"', pos+1);

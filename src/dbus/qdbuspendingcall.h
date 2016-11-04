@@ -96,7 +96,7 @@ class Q_DBUS_EXPORT QDBusPendingCallWatcher: public QObject, public QDBusPending
 {
     Q_OBJECT
 public:
-    QDBusPendingCallWatcher(const QDBusPendingCall &call, QObject *parent = 0);
+    QDBusPendingCallWatcher(const QDBusPendingCall &call, QObject *parent = Q_NULLPTR);
     ~QDBusPendingCallWatcher();
 
     void waitForFinished();     // non-virtual override

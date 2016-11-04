@@ -157,7 +157,7 @@ Q_SIGNALS:
     void directoryLoaded(const QString &path);
 
 public:
-    QFileInfoGatherer(QObject *parent = 0);
+    QFileInfoGatherer(QObject *parent = Q_NULLPTR);
     ~QFileInfoGatherer();
 
     void clear();

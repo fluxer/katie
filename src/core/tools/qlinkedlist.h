@@ -154,7 +154,7 @@ public:
         typedef const T *pointer;
         typedef const T &reference;
         Node *i;
-        inline const_iterator() : i(0) {}
+        inline const_iterator() : i(Q_NULLPTR) {}
         inline const_iterator(Node *n) : i(n) {}
         inline const_iterator(const const_iterator &o) : i(o.i){}
         inline const_iterator(iterator ci) : i(ci.i){}

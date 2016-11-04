@@ -74,7 +74,7 @@ class QNetworkReplyImpl: public QNetworkReply
 {
     Q_OBJECT
 public:
-    QNetworkReplyImpl(QObject *parent = 0);
+    QNetworkReplyImpl(QObject *parent = Q_NULLPTR);
     ~QNetworkReplyImpl();
     virtual void abort();
 

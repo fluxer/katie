@@ -82,7 +82,7 @@ class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPlugi
     Q_OBJECT
     Q_INTERFACES(QGuiPlatformPluginInterface:QFactoryInterface)
     public:
-        explicit QGuiPlatformPlugin(QObject *parent = 0);
+        explicit QGuiPlatformPlugin(QObject *parent = Q_NULLPTR);
         ~QGuiPlatformPlugin();
 
         virtual QStringList keys() const {  return QStringList() << QLatin1String("default");  };

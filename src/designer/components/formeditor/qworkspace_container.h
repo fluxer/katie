@@ -57,7 +57,7 @@ class QWorkspaceContainer: public QObject, public QDesignerContainerExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QWorkspaceContainer(QWorkspace *widget, QObject *parent = 0);
+    explicit QWorkspaceContainer(QWorkspace *widget, QObject *parent = Q_NULLPTR);
 
     virtual int count() const;
     virtual QWidget *widget(int index) const;

@@ -157,7 +157,7 @@ public:
 
     static inline void unlock() {}
     static void relock() {}
-    static inline QMutex *mutex() { return 0; }
+    static inline QMutex *mutex() { return Q_NULLPTR; }
 
 private:
     Q_DISABLE_COPY(QMutexLocker)

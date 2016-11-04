@@ -69,7 +69,7 @@ class QDESIGNER_SHARED_EXPORT QDesignerMemberSheet: public QObject, public QDesi
     Q_INTERFACES(QDesignerMemberSheetExtension)
 
 public:
-    explicit QDesignerMemberSheet(QObject *object, QObject *parent = 0);
+    explicit QDesignerMemberSheet(QObject *object, QObject *parent = Q_NULLPTR);
     virtual ~QDesignerMemberSheet();
 
     virtual int indexOf(const QString &name) const;

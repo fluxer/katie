@@ -85,7 +85,7 @@ class SignatureModel : public QStandardItemModel {
     Q_OBJECT
 
 public:
-    SignatureModel(QObject *parent = 0);
+    SignatureModel(QObject *parent = Q_NULLPTR);
     virtual bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
 signals:

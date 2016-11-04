@@ -59,7 +59,7 @@ class QtGradientManager : public QObject
 {
     Q_OBJECT
 public:
-    QtGradientManager(QObject *parent = 0);
+    QtGradientManager(QObject *parent = Q_NULLPTR);
 
     QMap<QString, QGradient> gradients() const;
 

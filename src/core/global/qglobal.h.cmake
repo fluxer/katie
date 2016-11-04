@@ -1274,7 +1274,7 @@ class QGlobalStatic
 public:
     T *pointer;
     inline QGlobalStatic(T *p) : pointer(p) { }
-    inline ~QGlobalStatic() { pointer = 0; }
+    inline ~QGlobalStatic() { pointer = Q_NULLPTR; }
 };
 
 #define Q_GLOBAL_STATIC(TYPE, NAME)                                  \

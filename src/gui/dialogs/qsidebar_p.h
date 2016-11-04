@@ -82,7 +82,7 @@ public:
         EnabledRole = Qt::UserRole + 2
     };
 
-    QUrlModel(QObject *parent = 0);
+    QUrlModel(QObject *parent = Q_NULLPTR);
 
     QStringList mimeTypes() const;
     QMimeData *mimeData(const QModelIndexList &indexes) const;

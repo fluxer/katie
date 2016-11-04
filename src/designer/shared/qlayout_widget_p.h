@@ -178,7 +178,7 @@ class QDESIGNER_SHARED_EXPORT QLayoutSupport: public QObject, public QDesignerLa
     Q_INTERFACES(QDesignerLayoutDecorationExtension)
 
 protected:
-    QLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, LayoutHelper *helper, QObject *parent = 0);
+    QLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, LayoutHelper *helper, QObject *parent = Q_NULLPTR);
 
 public:
     virtual ~QLayoutSupport();
@@ -216,7 +216,7 @@ public:
     static bool canSimplifyQuickCheck(const QGridLayout *);
     static bool canSimplifyQuickCheck(const QFormLayout *fl);
     // Factory function, create layout support according to layout type of widget
-    static QLayoutSupport *createLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, QObject *parent = 0);
+    static QLayoutSupport *createLayoutSupport(QDesignerFormWindowInterface *formWindow, QWidget *widget, QObject *parent = Q_NULLPTR);
 
 protected:
     // figure out insertion position and mode from indicator on empty cell if supported

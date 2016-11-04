@@ -123,9 +123,9 @@ public:
     };
     Q_DECLARE_FLAGS(SceneLayers, SceneLayer)
 
-    QGraphicsScene(QObject *parent = 0);
-    QGraphicsScene(const QRectF &sceneRect, QObject *parent = 0);
-    QGraphicsScene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+    QGraphicsScene(QObject *parent = Q_NULLPTR);
+    QGraphicsScene(const QRectF &sceneRect, QObject *parent = Q_NULLPTR);
+    QGraphicsScene(qreal x, qreal y, qreal width, qreal height, QObject *parent = Q_NULLPTR);
     virtual ~QGraphicsScene();
 
     QRectF sceneRect() const;

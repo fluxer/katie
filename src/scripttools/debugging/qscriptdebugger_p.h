@@ -111,7 +111,7 @@ public:
         GoToLineAction
     };
 
-    QScriptDebugger(QObject *parent = 0);
+    QScriptDebugger(QObject *parent = Q_NULLPTR);
     ~QScriptDebugger();
 
     QScriptDebuggerFrontend *frontend() const;

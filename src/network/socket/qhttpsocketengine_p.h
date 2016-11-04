@@ -76,7 +76,7 @@ public:
         SendAuthentication,
         ReadResponseContent
     };
-    QHttpSocketEngine(QObject *parent = 0);
+    QHttpSocketEngine(QObject *parent = Q_NULLPTR);
     ~QHttpSocketEngine();
 
     bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol = QAbstractSocket::IPv4Protocol);

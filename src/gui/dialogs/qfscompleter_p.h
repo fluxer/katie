@@ -63,7 +63,7 @@ QT_BEGIN_NAMESPACE
   */
 class QFSCompleter :  public QCompleter {
 public:
-    QFSCompleter(QFileSystemModel *model, QObject *parent = 0)
+    QFSCompleter(QFileSystemModel *model, QObject *parent = Q_NULLPTR)
         : QCompleter(model, parent), proxyModel(0), sourceModel(model)
     {
     }

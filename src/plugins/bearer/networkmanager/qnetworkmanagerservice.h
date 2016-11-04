@@ -141,7 +141,7 @@ class QNetworkManagerInterface : public QObject
     
 public:
     
-    QNetworkManagerInterface(QObject *parent = 0);
+    QNetworkManagerInterface(QObject *parent = Q_NULLPTR);
     ~QNetworkManagerInterface();
     
     QList <QDBusObjectPath> getDevices() const;
@@ -214,7 +214,7 @@ public:
     
     Q_DECLARE_FLAGS(ApSecurityFlags, ApSecurityFlag)
     
-    explicit QNetworkManagerInterfaceAccessPoint(const QString &dbusPathName, QObject *parent = 0);
+    explicit QNetworkManagerInterfaceAccessPoint(const QString &dbusPathName, QObject *parent = Q_NULLPTR);
     ~QNetworkManagerInterfaceAccessPoint();
 
     QDBusInterface *connectionInterface() const;
@@ -247,7 +247,7 @@ class QNetworkManagerInterfaceDevice : public QObject
     
 public:
     
-    explicit QNetworkManagerInterfaceDevice(const QString &deviceObjectPath, QObject *parent = 0);
+    explicit QNetworkManagerInterfaceDevice(const QString &deviceObjectPath, QObject *parent = Q_NULLPTR);
     ~QNetworkManagerInterfaceDevice();
     
     QString udi() const;
@@ -277,7 +277,7 @@ class QNetworkManagerInterfaceDeviceWired : public QObject
 public:
     
     explicit QNetworkManagerInterfaceDeviceWired(const QString &ifaceDevicePath,
-                                                 QObject *parent = 0);
+                                                 QObject *parent = Q_NULLPTR);
     ~QNetworkManagerInterfaceDeviceWired();
     
     QDBusInterface  *connectionInterface() const;
@@ -312,7 +312,7 @@ public:
        };
     
     explicit QNetworkManagerInterfaceDeviceWireless(const QString &ifaceDevicePath,
-                                                    QObject *parent = 0);
+                                                    QObject *parent = Q_NULLPTR);
     ~QNetworkManagerInterfaceDeviceWireless();
     
     QDBusObjectPath path() const;
@@ -343,7 +343,7 @@ class QNetworkManagerSettings : public QObject
     
 public:
     
-    explicit QNetworkManagerSettings(const QString &settingsService, QObject *parent = 0);
+    explicit QNetworkManagerSettings(const QString &settingsService, QObject *parent = Q_NULLPTR);
     ~QNetworkManagerSettings();
     
     QDBusInterface  *connectionInterface() const;
@@ -364,7 +364,7 @@ class QNetworkManagerSettingsConnection : public QObject
     
 public:
     
-    QNetworkManagerSettingsConnection(const QString &settingsService, const QString &connectionObjectPath, QObject *parent = 0);
+    QNetworkManagerSettingsConnection(const QString &settingsService, const QString &connectionObjectPath, QObject *parent = Q_NULLPTR);
     ~QNetworkManagerSettingsConnection();
     
     QDBusInterface  *connectionInterface() const;
@@ -403,7 +403,7 @@ public:
         Activated = 2
        };
     
-    explicit QNetworkManagerConnectionActive(const QString &dbusPathName, QObject *parent = 0);
+    explicit QNetworkManagerConnectionActive(const QString &dbusPathName, QObject *parent = Q_NULLPTR);
     ~ QNetworkManagerConnectionActive();
     
     QDBusInterface  *connectionInterface() const;
@@ -431,7 +431,7 @@ class QNetworkManagerIp4Config : public QObject
     Q_OBJECT
     
 public:
-    explicit QNetworkManagerIp4Config(const QString &dbusPathName, QObject *parent = 0);
+    explicit QNetworkManagerIp4Config(const QString &dbusPathName, QObject *parent = Q_NULLPTR);
 	~QNetworkManagerIp4Config();
 
     QStringList domains() const;

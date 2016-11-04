@@ -65,7 +65,7 @@ namespace {
 class CustomProxyModel : public QSortFilterProxyModel
 {
 public:
-    CustomProxyModel(QObject *parent = 0)
+    CustomProxyModel(QObject *parent = Q_NULLPTR)
         : QSortFilterProxyModel(parent) {}
 
     bool hasChildren(const QModelIndex &parent) const
@@ -195,7 +195,7 @@ class QScriptDebuggerLocalsItemDelegate
 {
     Q_OBJECT
 public:
-    QScriptDebuggerLocalsItemDelegate(QObject *parent = 0);
+    QScriptDebuggerLocalsItemDelegate(QObject *parent = Q_NULLPTR);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;

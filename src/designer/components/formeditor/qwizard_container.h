@@ -64,7 +64,7 @@ class QWizardContainer: public QObject, public QDesignerContainerExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerContainerExtension)
 public:
-    explicit QWizardContainer(QWizard *widget, QObject *parent = 0);
+    explicit QWizardContainer(QWizard *widget, QObject *parent = Q_NULLPTR);
 
     virtual int count() const;
     virtual QWidget *widget(int index) const;
@@ -87,7 +87,7 @@ class QWizardPagePropertySheet: public QDesignerPropertySheet
 {
     Q_OBJECT
 public:
-    explicit QWizardPagePropertySheet(QWizardPage *object, QObject *parent = 0);
+    explicit QWizardPagePropertySheet(QWizardPage *object, QObject *parent = Q_NULLPTR);
 
     virtual bool reset(int index);
 
@@ -105,7 +105,7 @@ class QWizardPropertySheet: public QDesignerPropertySheet
 {
     Q_OBJECT
 public:
-    explicit QWizardPropertySheet(QWizard *object, QObject *parent = 0);
+    explicit QWizardPropertySheet(QWizard *object, QObject *parent = Q_NULLPTR);
     virtual bool isVisible(int index) const;
 
 private:

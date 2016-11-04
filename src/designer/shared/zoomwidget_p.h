@@ -75,7 +75,7 @@ class QDESIGNER_SHARED_EXPORT ZoomMenu : public QObject {
     Q_DISABLE_COPY(ZoomMenu)
 
 public:
-    ZoomMenu(QObject *parent = 0);
+    ZoomMenu(QObject *parent = Q_NULLPTR);
     void addActions(QMenu *m);
 
     int zoom() const;

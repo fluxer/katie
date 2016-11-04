@@ -69,7 +69,7 @@ QT_BEGIN_NAMESPACE
         Q_INTERFACES(QDeclarativeParserStatus)
 
     public:
-        MyObject(QObject *parent = 0);
+        MyObject(QObject *parent = Q_NULLPTR);
         ...
         void classBegin();
         void componentComplete();

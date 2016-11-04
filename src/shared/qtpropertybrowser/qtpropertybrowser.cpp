@@ -842,7 +842,7 @@ void QtAbstractPropertyManager::uninitializeProperty(QtProperty *property)
 */
 
 /*!
-    \fn QtAbstractEditorFactoryBase::QtAbstractEditorFactoryBase(QObject *parent = 0)
+    \fn QtAbstractEditorFactoryBase::QtAbstractEditorFactoryBase(QObject *parent = Q_NULLPTR)
 
     Creates an abstract editor factory with the given \a parent.
 */
@@ -937,7 +937,7 @@ void QtAbstractPropertyManager::uninitializeProperty(QtProperty *property)
 */
 
 /*!
-    \fn QtAbstractEditorFactory::QtAbstractEditorFactory(QObject *parent = 0)
+    \fn QtAbstractEditorFactory::QtAbstractEditorFactory(QObject *parent = Q_NULLPTR)
 
     Creates an editor factory with the given \a parent.
 

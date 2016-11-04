@@ -68,7 +68,7 @@ public:
     };
     Q_DECLARE_FLAGS(BindMode, BindFlag)
 
-    explicit QUdpSocket(QObject *parent = 0);
+    explicit QUdpSocket(QObject *parent = Q_NULLPTR);
     virtual ~QUdpSocket();
 
     bool bind(const QHostAddress &address, quint16 port, BindMode mode = DefaultForPlatform);

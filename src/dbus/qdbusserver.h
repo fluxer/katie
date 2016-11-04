@@ -59,7 +59,7 @@ class Q_DBUS_EXPORT QDBusServer: public QObject
 {
     Q_OBJECT
 public:
-    QDBusServer(const QString &address = QLatin1String("unix:tmpdir=/tmp"), QObject *parent = 0);
+    QDBusServer(const QString &address = QLatin1String("unix:tmpdir=/tmp"), QObject *parent = Q_NULLPTR);
     virtual ~QDBusServer();
 
     bool isConnected() const;

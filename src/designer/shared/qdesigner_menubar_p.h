@@ -76,7 +76,7 @@ class SpecialMenuAction: public QAction
 {
     Q_OBJECT
 public:
-    SpecialMenuAction(QObject *parent = 0);
+    SpecialMenuAction(QObject *parent = Q_NULLPTR);
     virtual ~SpecialMenuAction();
 };
 

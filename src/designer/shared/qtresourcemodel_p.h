@@ -97,7 +97,7 @@ class QDESIGNER_SHARED_EXPORT QtResourceModel : public QObject // one instance p
 {
     Q_OBJECT
 public:
-    QtResourceModel(QObject *parent = 0);
+    QtResourceModel(QObject *parent = Q_NULLPTR);
     ~QtResourceModel();
 
     QStringList loadedQrcFiles() const;

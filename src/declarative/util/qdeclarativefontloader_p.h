@@ -66,7 +66,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeFontLoader : public QObject
 public:
     enum Status { Null = 0, Ready, Loading, Error };
 
-    QDeclarativeFontLoader(QObject *parent = 0);
+    QDeclarativeFontLoader(QObject *parent = Q_NULLPTR);
     ~QDeclarativeFontLoader();
 
     QUrl source() const;

@@ -100,7 +100,7 @@ class Q_AUTOTEST_EXPORT QNativeSocketEngine : public QAbstractSocketEngine
 {
     Q_OBJECT
 public:
-    QNativeSocketEngine(QObject *parent = 0);
+    QNativeSocketEngine(QObject *parent = Q_NULLPTR);
     ~QNativeSocketEngine();
 
     bool initialize(QAbstractSocket::SocketType type, QAbstractSocket::NetworkLayerProtocol protocol = QAbstractSocket::IPv4Protocol);

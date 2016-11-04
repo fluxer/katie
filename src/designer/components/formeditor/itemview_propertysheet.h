@@ -59,8 +59,8 @@ class ItemViewPropertySheet: public QDesignerPropertySheet
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension)
 public:
-    explicit ItemViewPropertySheet(QTreeView *treeViewObject, QObject *parent = 0);
-    explicit ItemViewPropertySheet(QTableView *tableViewObject, QObject *parent = 0);
+    explicit ItemViewPropertySheet(QTreeView *treeViewObject, QObject *parent = Q_NULLPTR);
+    explicit ItemViewPropertySheet(QTableView *tableViewObject, QObject *parent = Q_NULLPTR);
     ~ItemViewPropertySheet();
 
     QHash<QString,QString> propertyNameMap() const;

@@ -98,7 +98,7 @@ public:
         SuspendedState
     };
 
-    QScriptEngineDebugger(QObject *parent = 0);
+    QScriptEngineDebugger(QObject *parent = Q_NULLPTR);
     ~QScriptEngineDebugger();
 
     void attachTo(QScriptEngine *engine);

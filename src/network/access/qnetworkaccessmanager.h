@@ -96,7 +96,7 @@ public:
     };
 #endif
 
-    explicit QNetworkAccessManager(QObject *parent = 0);
+    explicit QNetworkAccessManager(QObject *parent = Q_NULLPTR);
     ~QNetworkAccessManager();
 
 #ifndef QT_NO_NETWORKPROXY

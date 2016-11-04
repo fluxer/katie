@@ -114,7 +114,7 @@ class QConnmanManagerInterface : public  QDBusAbstractInterface
 
 public:
 
-    QConnmanManagerInterface( QObject *parent = 0);
+    QConnmanManagerInterface( QObject *parent = Q_NULLPTR);
     ~QConnmanManagerInterface();
 
      QDBusObjectPath path() const;
@@ -168,7 +168,7 @@ class QConnmanProfileInterface : public QDBusAbstractInterface
 
 public:
 
-    QConnmanProfileInterface(const QString &dbusPathName,QObject *parent = 0);
+    QConnmanProfileInterface(const QString &dbusPathName,QObject *parent = Q_NULLPTR);
     ~QConnmanProfileInterface();
 
     QVariantMap getProperties();
@@ -192,7 +192,7 @@ class QConnmanServiceInterface : public QDBusAbstractInterface
 
 public:
 
-    QConnmanServiceInterface(const QString &dbusPathName,QObject *parent = 0);
+    QConnmanServiceInterface(const QString &dbusPathName,QObject *parent = Q_NULLPTR);
     ~QConnmanServiceInterface();
 
     QVariantMap getProperties();
@@ -254,7 +254,7 @@ class QConnmanTechnologyInterface : public QDBusAbstractInterface
 
 public:
 
-    QConnmanTechnologyInterface(const QString &dbusPathName,QObject *parent = 0);
+    QConnmanTechnologyInterface(const QString &dbusPathName,QObject *parent = Q_NULLPTR);
     ~QConnmanTechnologyInterface();
 
     QVariantMap getProperties();
@@ -279,7 +279,7 @@ class QConnmanAgentInterface : public QDBusAbstractInterface
 
 public:
 
-    QConnmanAgentInterface(const QString &dbusPathName,QObject *parent = 0);
+    QConnmanAgentInterface(const QString &dbusPathName,QObject *parent = Q_NULLPTR);
     ~QConnmanAgentInterface();
 
     void release();
@@ -298,7 +298,7 @@ class QConnmanCounterInterface : public QDBusAbstractInterface
 
 public:
 
-    QConnmanCounterInterface(const QString &dbusPathName, QObject *parent = 0);
+    QConnmanCounterInterface(const QString &dbusPathName, QObject *parent = Q_NULLPTR);
     ~QConnmanCounterInterface();
 
 //    void release();
@@ -315,7 +315,7 @@ class QConnmanDBusHelper: public QObject, protected QDBusContext
  {
      Q_OBJECT
  public:
-    QConnmanDBusHelper(QObject *parent = 0);
+    QConnmanDBusHelper(QObject *parent = Q_NULLPTR);
     ~QConnmanDBusHelper();
 
  public slots:

@@ -62,7 +62,7 @@ class QT_TABORDEREDITOR_EXPORT TabOrderEditorTool: public QDesignerFormWindowToo
 {
     Q_OBJECT
 public:
-    explicit TabOrderEditorTool(QDesignerFormWindowInterface *formWindow, QObject *parent = 0);
+    explicit TabOrderEditorTool(QDesignerFormWindowInterface *formWindow, QObject *parent = Q_NULLPTR);
     virtual ~TabOrderEditorTool();
 
     virtual QDesignerFormEditorInterface *core() const;

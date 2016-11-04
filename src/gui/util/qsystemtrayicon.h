@@ -69,8 +69,8 @@ class Q_GUI_EXPORT QSystemTrayIcon : public QObject
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible DESIGNABLE false)
 
 public:
-    QSystemTrayIcon(QObject *parent = 0);
-    QSystemTrayIcon(const QIcon &icon, QObject *parent = 0);
+    QSystemTrayIcon(QObject *parent = Q_NULLPTR);
+    QSystemTrayIcon(const QIcon &icon, QObject *parent = Q_NULLPTR);
     ~QSystemTrayIcon();
 
     enum ActivationReason {

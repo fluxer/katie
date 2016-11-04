@@ -70,7 +70,7 @@ class QDESIGNER_SHARED_EXPORT QDesignerFormWindowManager
 {
     Q_OBJECT
 public:
-    explicit QDesignerFormWindowManager(QObject *parent = 0);
+    explicit QDesignerFormWindowManager(QObject *parent = Q_NULLPTR);
     virtual ~QDesignerFormWindowManager();
 
     virtual QAction *actionDefaultPreview() const;

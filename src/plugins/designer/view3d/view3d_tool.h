@@ -53,7 +53,7 @@ class VIEW3D_EXPORT QView3DTool : public QDesignerFormWindowToolInterface
     Q_OBJECT
 
 public:
-    explicit QView3DTool(QDesignerFormWindowInterface *formWindow, QObject *parent = 0);
+    explicit QView3DTool(QDesignerFormWindowInterface *formWindow, QObject *parent = Q_NULLPTR);
     virtual QDesignerFormEditorInterface *core() const;
     virtual QDesignerFormWindowInterface *formWindow() const;
     virtual QWidget *editor() const;

@@ -257,7 +257,7 @@ QConfFile *QConfFile::fromName(const QString &fileName, bool _userPerms)
     ConfFileHash *usedHash = usedHashFunc();
     ConfFileCache *unusedCache = unusedCacheFunc();
 
-    QConfFile *confFile = 0;
+    QConfFile *confFile = Q_NULLPTR;
     QMutexLocker locker(globalMutex());
 
     if (!(confFile = usedHash->value(absPath))) {

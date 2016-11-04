@@ -129,7 +129,7 @@ namespace qdesigner_internal {
 // Delegate with object name validator for the object name column
 class ObjectInspectorDelegate : public QItemDelegate {
 public:
-    explicit ObjectInspectorDelegate(QObject *parent = 0);
+    explicit ObjectInspectorDelegate(QObject *parent = Q_NULLPTR);
 
     virtual QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 };

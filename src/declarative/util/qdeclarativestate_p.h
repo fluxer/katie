@@ -118,7 +118,7 @@ class Q_DECLARATIVE_EXPORT QDeclarativeStateOperation : public QObject
 {
     Q_OBJECT
 public:
-    QDeclarativeStateOperation(QObject *parent = 0)
+    QDeclarativeStateOperation(QObject *parent = Q_NULLPTR)
         : QObject(parent) {}
     typedef QList<QDeclarativeAction> ActionList;
 
@@ -128,7 +128,7 @@ public:
     void setState(QDeclarativeState *state);
 
 protected:
-    QDeclarativeStateOperation(QObjectPrivate &dd, QObject *parent = 0);
+    QDeclarativeStateOperation(QObjectPrivate &dd, QObject *parent = Q_NULLPTR);
 
 private:
     Q_DECLARE_PRIVATE(QDeclarativeStateOperation)

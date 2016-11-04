@@ -219,7 +219,7 @@ class QtPropertyEditorDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    QtPropertyEditorDelegate(QObject *parent = 0)
+    QtPropertyEditorDelegate(QObject *parent = Q_NULLPTR)
         : QItemDelegate(parent), m_editorPrivate(0), m_editedItem(0), m_editedWidget(0)
         {}
 

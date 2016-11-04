@@ -59,7 +59,7 @@ class Q_GUI_EXPORT QAbstractProxyModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    QAbstractProxyModel(QObject *parent = 0);
+    QAbstractProxyModel(QObject *parent = Q_NULLPTR);
     ~QAbstractProxyModel();
 
     virtual void setSourceModel(QAbstractItemModel *sourceModel);

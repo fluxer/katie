@@ -76,7 +76,7 @@ class QDESIGNER_SHARED_EXPORT QDesignerIntegration: public QDesignerIntegrationI
 {
     Q_OBJECT
 public:
-    explicit QDesignerIntegration(QDesignerFormEditorInterface *core, QObject *parent = 0);
+    explicit QDesignerIntegration(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
     virtual ~QDesignerIntegration();
 
     static void requestHelp(const QDesignerFormEditorInterface *core, const QString &manual, const QString &document);

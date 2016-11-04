@@ -59,7 +59,7 @@ class TableWidgetTaskMenu: public QDesignerTaskMenu
 {
     Q_OBJECT
 public:
-    explicit TableWidgetTaskMenu(QTableWidget *button, QObject *parent = 0);
+    explicit TableWidgetTaskMenu(QTableWidget *button, QObject *parent = Q_NULLPTR);
     virtual ~TableWidgetTaskMenu();
 
     virtual QAction *preferredEditAction() const;

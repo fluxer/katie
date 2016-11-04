@@ -79,7 +79,7 @@ class Q_NETWORK_EXPORT QBearerEnginePlugin : public QObject, public QBearerEngin
     Q_INTERFACES(QBearerEngineFactoryInterface:QFactoryInterface)
 
 public:
-    explicit QBearerEnginePlugin(QObject *parent = 0);
+    explicit QBearerEnginePlugin(QObject *parent = Q_NULLPTR);
     virtual ~QBearerEnginePlugin();
 
     virtual QStringList keys() const = 0;

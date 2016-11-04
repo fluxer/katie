@@ -70,8 +70,8 @@ public:
     };
     Q_DECLARE_FLAGS(ShaderType, ShaderTypeBit)
 
-    explicit QGLShader(QGLShader::ShaderType type, QObject *parent = 0);
-    QGLShader(QGLShader::ShaderType type, const QGLContext *context, QObject *parent = 0);
+    explicit QGLShader(QGLShader::ShaderType type, QObject *parent = Q_NULLPTR);
+    QGLShader(QGLShader::ShaderType type, const QGLContext *context, QObject *parent = Q_NULLPTR);
     virtual ~QGLShader();
 
     QGLShader::ShaderType shaderType() const;
@@ -114,8 +114,8 @@ class Q_OPENGL_EXPORT QGLShaderProgram : public QObject
 {
     Q_OBJECT
 public:
-    explicit QGLShaderProgram(QObject *parent = 0);
-    explicit QGLShaderProgram(const QGLContext *context, QObject *parent = 0);
+    explicit QGLShaderProgram(QObject *parent = Q_NULLPTR);
+    explicit QGLShaderProgram(const QGLContext *context, QObject *parent = Q_NULLPTR);
     virtual ~QGLShaderProgram();
 
     bool addShader(QGLShader *shader);

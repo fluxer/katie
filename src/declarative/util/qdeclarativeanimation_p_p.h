@@ -100,8 +100,8 @@ class Q_AUTOTEST_EXPORT QActionAnimation : public QAbstractAnimation
 {
     Q_OBJECT
 public:
-    QActionAnimation(QObject *parent = 0) : QAbstractAnimation(parent), animAction(0), policy(KeepWhenStopped) {}
-    QActionAnimation(QAbstractAnimationAction *action, QObject *parent = 0)
+    QActionAnimation(QObject *parent = Q_NULLPTR) : QAbstractAnimation(parent), animAction(0), policy(KeepWhenStopped) {}
+    QActionAnimation(QAbstractAnimationAction *action, QObject *parent = Q_NULLPTR)
         : QAbstractAnimation(parent), animAction(action), policy(KeepWhenStopped) {}
     ~QActionAnimation() { if (policy == DeleteWhenStopped) { delete animAction; animAction = 0; } }
     virtual int duration() const { return 0; }
@@ -147,7 +147,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeBulkValueAnimator : public QVariantAnimation
 {
     Q_OBJECT
 public:
-    QDeclarativeBulkValueAnimator(QObject *parent = 0) : QVariantAnimation(parent), animValue(0), fromSourced(0), policy(KeepWhenStopped) {}
+    QDeclarativeBulkValueAnimator(QObject *parent = Q_NULLPTR) : QVariantAnimation(parent), animValue(0), fromSourced(0), policy(KeepWhenStopped) {}
     ~QDeclarativeBulkValueAnimator() { if (policy == DeleteWhenStopped) { delete animValue; animValue = 0; } }
     void setAnimValue(QDeclarativeBulkValueUpdater *value, DeletionPolicy p)
     {
@@ -193,7 +193,7 @@ class QTickAnimationProxy : public QAbstractAnimation
 {
     //Q_OBJECT //doesn't work with templating
 public:
-    QTickAnimationProxy(T *p, QObject *parent = 0) : QAbstractAnimation(parent), m_p(p) {}
+    QTickAnimationProxy(T *p, QObject *parent = Q_NULLPTR) : QAbstractAnimation(parent), m_p(p) {}
     virtual int duration() const { return -1; }
 protected:
     virtual void updateCurrentTime(int msec) { (m_p->*method)(msec); }

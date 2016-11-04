@@ -56,7 +56,7 @@ class QT_FORMEDITOR_EXPORT FormWindowCursor: public QObject, public QDesignerFor
 {
     Q_OBJECT
 public:
-    explicit FormWindowCursor(FormWindow *fw, QObject *parent = 0);
+    explicit FormWindowCursor(FormWindow *fw, QObject *parent = Q_NULLPTR);
     virtual ~FormWindowCursor();
 
     virtual QDesignerFormWindowInterface *formWindow() const;

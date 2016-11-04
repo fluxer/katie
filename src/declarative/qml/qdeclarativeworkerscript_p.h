@@ -93,7 +93,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeWorkerScript : public QObject, public QDecla
 
     Q_INTERFACES(QDeclarativeParserStatus)
 public:
-    QDeclarativeWorkerScript(QObject *parent = 0);
+    QDeclarativeWorkerScript(QObject *parent = Q_NULLPTR);
     virtual ~QDeclarativeWorkerScript();
 
     QUrl source() const;

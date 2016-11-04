@@ -58,8 +58,8 @@ class TextEditTaskMenu: public QDesignerTaskMenu
 {
     Q_OBJECT
 public:
-    explicit TextEditTaskMenu(QTextEdit *button, QObject *parent = 0);
-    explicit TextEditTaskMenu(QPlainTextEdit *button, QObject *parent = 0);
+    explicit TextEditTaskMenu(QTextEdit *button, QObject *parent = Q_NULLPTR);
+    explicit TextEditTaskMenu(QPlainTextEdit *button, QObject *parent = Q_NULLPTR);
 
     virtual ~TextEditTaskMenu();
 

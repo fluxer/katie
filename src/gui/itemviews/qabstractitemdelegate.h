@@ -72,7 +72,7 @@ public:
         RevertModelCache
     };
 
-    explicit QAbstractItemDelegate(QObject *parent = 0);
+    explicit QAbstractItemDelegate(QObject *parent = Q_NULLPTR);
     virtual ~QAbstractItemDelegate();
 
     // painting
@@ -119,7 +119,7 @@ Q_SIGNALS:
     void sizeHintChanged(const QModelIndex &);
 
 protected:
-    QAbstractItemDelegate(QObjectPrivate &, QObject *parent = 0);
+    QAbstractItemDelegate(QObjectPrivate &, QObject *parent = Q_NULLPTR);
 private:
     Q_DISABLE_COPY(QAbstractItemDelegate)
 };

@@ -364,7 +364,7 @@ public:
         typedef const T *pointer;
         typedef const T &reference;
 
-        inline const_iterator() : i(0) { }
+        inline const_iterator() : i(Q_NULLPTR) { }
         explicit inline const_iterator(void *node)
             : i(reinterpret_cast<QHashData::Node *>(node)) { }
 #ifdef QT_STRICT_ITERATORS

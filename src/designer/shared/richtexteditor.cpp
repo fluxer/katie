@@ -417,7 +417,7 @@ private:
 
 static QAction *createCheckableAction(const QIcon &icon, const QString &text,
                                       QObject *receiver, const char *slot,
-                                      QObject *parent = 0)
+                                      QObject *parent = Q_NULLPTR)
 {
     QAction *result = new QAction(parent);
     result->setIcon(icon);

@@ -60,7 +60,7 @@ class QDESIGNER_SDK_EXPORT QDesignerIntegrationInterface: public QObject
     Q_PROPERTY(bool headerLowercase READ isHeaderLowercase WRITE setHeaderLowercase)
 
 public:
-    QDesignerIntegrationInterface(QDesignerFormEditorInterface *core, QObject *parent = 0);
+    QDesignerIntegrationInterface(QDesignerFormEditorInterface *core, QObject *parent = Q_NULLPTR);
 
     inline QDesignerFormEditorInterface *core() const;
 

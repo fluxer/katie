@@ -444,7 +444,7 @@ class QDeclarativeLayoutMirroringAttached : public QObject
     Q_PROPERTY(bool childrenInherit READ childrenInherit WRITE setChildrenInherit NOTIFY childrenInheritChanged)
 
 public:
-    explicit QDeclarativeLayoutMirroringAttached(QObject *parent = 0);
+    explicit QDeclarativeLayoutMirroringAttached(QObject *parent = Q_NULLPTR);
 
     bool enabled() const;
     void setEnabled(bool);

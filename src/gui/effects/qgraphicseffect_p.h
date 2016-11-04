@@ -84,7 +84,7 @@ public:
                    QGraphicsEffect::PixmapPadMode mode = QGraphicsEffect::PadToEffectiveBoundingRect) const;
 
 protected:
-    QGraphicsEffectSource(QGraphicsEffectSourcePrivate &dd, QObject *parent = 0);
+    QGraphicsEffectSource(QGraphicsEffectSourcePrivate &dd, QObject *parent = Q_NULLPTR);
 
 private:
     Q_DECLARE_PRIVATE(QGraphicsEffectSource)

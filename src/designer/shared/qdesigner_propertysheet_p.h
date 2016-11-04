@@ -82,7 +82,7 @@ class QDESIGNER_SHARED_EXPORT QDesignerPropertySheet: public QObject, public QDe
     Q_OBJECT
     Q_INTERFACES(QDesignerPropertySheetExtension QDesignerDynamicPropertySheetExtension)
 public:
-    explicit QDesignerPropertySheet(QObject *object, QObject *parent = 0);
+    explicit QDesignerPropertySheet(QObject *object, QObject *parent = Q_NULLPTR);
     virtual ~QDesignerPropertySheet();
 
     virtual int indexOf(const QString &name) const;

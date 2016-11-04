@@ -231,7 +231,7 @@ class QPPDOptionsModel : public QAbstractItemModel
 {
     friend class QPPDOptionsEditor;
 public:
-    QPPDOptionsModel(QCUPSSupport *cups, QObject *parent = 0);
+    QPPDOptionsModel(QCUPSSupport *cups, QObject *parent = Q_NULLPTR);
     ~QPPDOptionsModel();
 
     int columnCount(const QModelIndex& parent = QModelIndex()) const;

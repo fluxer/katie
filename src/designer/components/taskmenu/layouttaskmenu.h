@@ -61,7 +61,7 @@ class LayoutWidgetTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit LayoutWidgetTaskMenu(QLayoutWidget *w, QObject *parent = 0);
+    explicit LayoutWidgetTaskMenu(QLayoutWidget *w, QObject *parent = Q_NULLPTR);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;
@@ -78,7 +78,7 @@ class SpacerTaskMenu : public QObject, public QDesignerTaskMenuExtension
     Q_OBJECT
     Q_INTERFACES(QDesignerTaskMenuExtension)
 public:
-    explicit SpacerTaskMenu(Spacer *bar, QObject *parent = 0);
+    explicit SpacerTaskMenu(Spacer *bar, QObject *parent = Q_NULLPTR);
 
     virtual QAction *preferredEditAction() const;
     virtual QList<QAction*> taskActions() const;

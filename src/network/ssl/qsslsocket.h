@@ -75,7 +75,7 @@ public:
         AutoVerifyPeer
     };
 
-    QSslSocket(QObject *parent = 0);
+    QSslSocket(QObject *parent = Q_NULLPTR);
     ~QSslSocket();
 
     // Autostarting the SSL client handshake.

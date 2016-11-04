@@ -605,7 +605,7 @@ static void writeProxy(const QString &filename, const QDBusIntrospection::Interf
 
         // constructors/destructors:
         hs << "public:" << endl
-           << "    " << className << "(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = 0);" << endl
+           << "    " << className << "(const QString &service, const QString &path, const QDBusConnection &connection, QObject *parent = Q_NULLPTR);" << endl
            << endl
            << "    ~" << className << "();" << endl
            << endl;

@@ -51,7 +51,7 @@ class QWebViewPlugin: public QObject, public QDesignerCustomWidgetInterface
     Q_OBJECT
     Q_INTERFACES(QDesignerCustomWidgetInterface)
 public:
-    QWebViewPlugin(QObject *parent = 0);
+    QWebViewPlugin(QObject *parent = Q_NULLPTR);
 
     virtual QString name() const;
     virtual QString group() const;

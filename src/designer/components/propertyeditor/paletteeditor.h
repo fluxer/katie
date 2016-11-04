@@ -107,7 +107,7 @@ class PaletteModel : public QAbstractTableModel
     Q_OBJECT
     Q_PROPERTY(QPalette::ColorRole colorRole READ colorRole)
 public:
-    explicit PaletteModel(QObject *parent = 0);
+    explicit PaletteModel(QObject *parent = Q_NULLPTR);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
@@ -176,7 +176,7 @@ class ColorDelegate : public QItemDelegate
     Q_OBJECT
 
 public:
-    explicit ColorDelegate(QObject *parent = 0);
+    explicit ColorDelegate(QObject *parent = Q_NULLPTR);
 
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                 const QModelIndex &index) const;

@@ -204,7 +204,7 @@ class QScriptBreakpointsItemDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 public:
-    QScriptBreakpointsItemDelegate(QObject *parent = 0)
+    QScriptBreakpointsItemDelegate(QObject *parent = Q_NULLPTR)
         : QStyledItemDelegate(parent) {}
 
     QWidget *createEditor(QWidget *parent,

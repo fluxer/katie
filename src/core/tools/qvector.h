@@ -190,7 +190,7 @@ public:
         typedef const T *pointer;
         typedef const T &reference;
 
-        inline const_iterator() : i(0) {}
+        inline const_iterator() : i(Q_NULLPTR) {}
         inline const_iterator(T *n) : i(n) {}
         inline const_iterator(const const_iterator &o): i(o.i) {}
         inline explicit const_iterator(const iterator &o): i(o.i) {}

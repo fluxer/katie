@@ -65,7 +65,7 @@ class QGuiEventDispatcherGlib : public QEventDispatcherGlib
     Q_DECLARE_PRIVATE(QGuiEventDispatcherGlib)
 
 public:
-    explicit QGuiEventDispatcherGlib(QObject *parent = 0);
+    explicit QGuiEventDispatcherGlib(QObject *parent = Q_NULLPTR);
     ~QGuiEventDispatcherGlib();
 
     bool processEvents(QEventLoop::ProcessEventsFlags flags);

@@ -95,7 +95,7 @@ class QtAbstractPropertyManager : public QObject
     Q_OBJECT
 public:
 
-    explicit QtAbstractPropertyManager(QObject *parent = 0);
+    explicit QtAbstractPropertyManager(QObject *parent = Q_NULLPTR);
     ~QtAbstractPropertyManager();
 
     QSet<QtProperty *> properties() const;
@@ -129,7 +129,7 @@ class QtAbstractEditorFactoryBase : public QObject
 public:
     virtual QWidget *createEditor(QtProperty *property, QWidget *parent) = 0;
 protected:
-    explicit QtAbstractEditorFactoryBase(QObject *parent = 0)
+    explicit QtAbstractEditorFactoryBase(QObject *parent = Q_NULLPTR)
         : QObject(parent) {}
 
     virtual void breakConnection(QtAbstractPropertyManager *manager) = 0;

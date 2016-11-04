@@ -68,7 +68,7 @@ class QtToolBarManager : public QObject
     Q_OBJECT
 public:
 
-    explicit QtToolBarManager(QObject *parent = 0);
+    explicit QtToolBarManager(QObject *parent = Q_NULLPTR);
     ~QtToolBarManager();
 
     void setMainWindow(QMainWindow *mainWindow);

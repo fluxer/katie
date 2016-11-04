@@ -175,7 +175,7 @@ public:
     typedef QHash<QString, WatchedServiceData> WatchedServicesHash;
 
     // public methods are entry points from other objects
-    explicit QDBusConnectionPrivate(QObject *parent = 0);
+    explicit QDBusConnectionPrivate(QObject *parent = Q_NULLPTR);
     ~QDBusConnectionPrivate();
     void deleteYourself();
 
