@@ -61,7 +61,7 @@ public:
     ~QPlastiqueStyle();
 
     void drawPrimitive(PrimitiveElement element, const QStyleOption *option,
-                       QPainter *painter, const QWidget *widget = 0) const;
+                       QPainter *painter, const QWidget *widget = Q_NULLPTR) const;
     void drawControl(ControlElement element, const QStyleOption *option,
                      QPainter *painter, const QWidget *widget) const;
     void drawComplexControl(ComplexControl control, const QStyleOptionComplex *option,
@@ -73,12 +73,12 @@ public:
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt,
                          SubControl sc, const QWidget *widget) const;
 
-    int styleHint(StyleHint hint, const QStyleOption *option = 0, const QWidget *widget = 0,
-                  QStyleHintReturn *returnData = 0) const;
+    int styleHint(StyleHint hint, const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR,
+                  QStyleHintReturn *returnData = Q_NULLPTR) const;
     SubControl hitTestComplexControl(ComplexControl control, const QStyleOptionComplex *option,
-                                     const QPoint &pos, const QWidget *widget = 0) const;
+                                     const QPoint &pos, const QWidget *widget = Q_NULLPTR) const;
 
-    int pixelMetric(PixelMetric metric, const QStyleOption *option = 0, const QWidget *widget = 0) const;
+    int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR) const;
 
     void polish(QWidget *widget);
     void unpolish(QWidget *widget);
@@ -88,8 +88,8 @@ public:
     int layoutSpacing(QSizePolicy::ControlType control1,
                       QSizePolicy::ControlType control2, 
                       Qt::Orientation orientation,
-                      const QStyleOption *option = 0, 
-                      const QWidget *widget = 0) const;
+                      const QStyleOption *option = Q_NULLPTR, 
+                      const QWidget *widget = Q_NULLPTR) const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event);

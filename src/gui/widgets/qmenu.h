@@ -80,8 +80,8 @@ public:
 #endif
     QAction *addAction(const QString &text);
     QAction *addAction(const QIcon &icon, const QString &text);
-    QAction *addAction(const QString &text, const QObject *receiver, const char* member, const QKeySequence &shortcut = 0);
-    QAction *addAction(const QIcon &icon, const QString &text, const QObject *receiver, const char* member, const QKeySequence &shortcut = 0);
+    QAction *addAction(const QString &text, const QObject *receiver, const char* member, const QKeySequence &shortcut = QKeySequence());
+    QAction *addAction(const QIcon &icon, const QString &text, const QObject *receiver, const char* member, const QKeySequence &shortcut = QKeySequence());
 
     QAction *addMenu(QMenu *menu);
     QMenu *addMenu(const QString &title);
@@ -107,12 +107,12 @@ public:
     void setActiveAction(QAction *act);
     QAction *activeAction() const;
 
-    void popup(const QPoint &pos, QAction *at=0);
+    void popup(const QPoint &pos, QAction *at = Q_NULLPTR);
     QAction *exec();
-    QAction *exec(const QPoint &pos, QAction *at=0);
+    QAction *exec(const QPoint &pos, QAction *at = Q_NULLPTR);
 
     static QAction *exec(QList<QAction*> actions, const QPoint &pos,
-            QAction *at = 0, QWidget *parent = Q_NULLPTR);
+            QAction *at = Q_NULLPTR, QWidget *parent = Q_NULLPTR);
 
     QSize sizeHint() const;
 
@@ -168,7 +168,7 @@ private:
 
 
 protected:
-    QMenu(QMenuPrivate &dd, QWidget* parent = 0);
+    QMenu(QMenuPrivate &dd, QWidget* parent = Q_NULLPTR);
 
 private:
     Q_DISABLE_COPY(QMenu)

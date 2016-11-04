@@ -63,7 +63,7 @@ class Q_GUI_EXPORT QWorkspace : public QWidget
     Q_PROPERTY(QBrush background READ background WRITE setBackground)
 
 public:
-    explicit QWorkspace(QWidget* parent=0);
+    explicit QWorkspace(QWidget *parent = Q_NULLPTR);
     ~QWorkspace();
 
     enum WindowOrder { CreationOrder, StackingOrder };

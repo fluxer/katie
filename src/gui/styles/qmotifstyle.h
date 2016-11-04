@@ -73,30 +73,30 @@ public:
     void unpolish(QApplication*);
 
     void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
-                        const QWidget *w = 0) const;
+                        const QWidget *w = Q_NULLPTR) const;
 
     void drawControl(ControlElement element, const QStyleOption *opt, QPainter *p,
-                      const QWidget *w = 0) const;
+                      const QWidget *w = Q_NULLPTR) const;
 
     void drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p,
-                            const QWidget *w = 0) const;
+                            const QWidget *w = Q_NULLPTR) const;
 
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt,
-                         SubControl sc, const QWidget *widget = 0) const;
+                         SubControl sc, const QWidget *widget = Q_NULLPTR) const;
 
-    int pixelMetric(PixelMetric metric, const QStyleOption *option = 0,
-                     const QWidget *widget = 0) const;
+    int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR,
+                     const QWidget *widget = Q_NULLPTR) const;
 
     QSize sizeFromContents(ContentsType ct, const QStyleOption *opt,
-                           const QSize &contentsSize, const QWidget *widget = 0) const;
+                           const QSize &contentsSize, const QWidget *widget = Q_NULLPTR) const;
 
-    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = 0) const;
+    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = Q_NULLPTR) const;
 
     QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt,
-                           const QWidget *widget = 0) const;
+                           const QWidget *widget = Q_NULLPTR) const;
 
-    int styleHint(StyleHint hint, const QStyleOption *opt = 0, const QWidget *widget = 0,
-                  QStyleHintReturn *returnData = 0) const;
+    int styleHint(StyleHint hint, const QStyleOption *opt = Q_NULLPTR, const QWidget *widget = Q_NULLPTR,
+                  QStyleHintReturn *returnData = Q_NULLPTR) const;
 
     bool event(QEvent *);
     QPalette standardPalette() const;

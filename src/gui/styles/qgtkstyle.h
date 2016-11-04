@@ -77,8 +77,8 @@ public:
     void drawComplexControl(ComplexControl control, const QStyleOptionComplex *option,
                             QPainter *painter, const QWidget *widget) const;
 
-    int pixelMetric(PixelMetric metric, const QStyleOption *option = 0,
-                    const QWidget *widget = 0) const;
+    int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR,
+                    const QWidget *widget = Q_NULLPTR) const;
     int styleHint(StyleHint hint, const QStyleOption *option,
                   const QWidget *widget, QStyleHintReturn *returnData) const;
 
@@ -98,11 +98,11 @@ public:
     void unpolish(QWidget *widget);
     void unpolish(QApplication *app);
 
-    static bool getGConfBool(const QString &key, bool fallback = 0);
+    static bool getGConfBool(const QString &key, bool fallback = false);
     static QString getGConfString(const QString &key, const QString &fallback = QString());
 
     QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *option,
-                       const QWidget *widget = 0) const;
+                       const QWidget *widget = Q_NULLPTR) const;
 };
 
 #endif //!defined(QT_NO_STYLE_QGTK)

@@ -58,12 +58,12 @@ public:
     explicit QCDEStyle(bool useHighlightCols = false);
     virtual ~QCDEStyle();
 
-    int pixelMetric(PixelMetric metric, const QStyleOption *option = 0,
-                    const QWidget *widget = 0) const;
+    int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR,
+                    const QWidget *widget = Q_NULLPTR) const;
     void drawControl(ControlElement element, const QStyleOption *opt, QPainter *p,
-                     const QWidget *w = 0) const;
+                     const QWidget *w = Q_NULLPTR) const;
     void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
-                       const QWidget *w = 0) const;
+                       const QWidget *w = Q_NULLPTR) const;
     QPalette standardPalette() const;
 };
 

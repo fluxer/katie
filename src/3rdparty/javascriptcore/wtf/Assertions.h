@@ -55,7 +55,7 @@
 #ifndef CRASH
 #define CRASH() do { \
     *(int *)(uintptr_t)0xbbadbeef = 0; \
-    ((void(*)())0)(); /* More reliable, but doesn't say BBADBEEF */ \
+    ((void(*)())Q_NULLPTR)(); /* More reliable, but doesn't say BBADBEEF */ \
 } while(false)
 #endif
 

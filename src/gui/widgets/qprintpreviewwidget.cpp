@@ -149,7 +149,7 @@ class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphicsView(QWidget* parent = 0)
+    GraphicsView(QWidget* parent = Q_NULLPTR)
         : QGraphicsView(parent)
     {
 #ifdef Q_WS_MAC

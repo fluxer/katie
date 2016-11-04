@@ -70,7 +70,7 @@ inline
 T *&qThreadStorage_localData(QThreadStorageData &d, T **)
 {
     void **v = d.get();
-    if (!v) v = d.set(0);
+    if (!v) v = d.set(Q_NULLPTR);
     return *(reinterpret_cast<T**>(v));
 }
 

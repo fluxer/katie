@@ -82,38 +82,38 @@ public:
     ~QStyleSheetStyle();
 
     void drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p,
-                            const QWidget *w = 0) const;
+                            const QWidget *w = Q_NULLPTR) const;
     void drawControl(ControlElement element, const QStyleOption *opt, QPainter *p,
-                     const QWidget *w = 0) const;
+                     const QWidget *w = Q_NULLPTR) const;
     void drawItemPixmap(QPainter *painter, const QRect &rect, int alignment, const QPixmap &pixmap) const;
     void drawItemText(QPainter *painter, const QRect& rect, int alignment, const QPalette &pal,
               bool enabled, const QString& text, QPalette::ColorRole textRole  = QPalette::NoRole) const;
     void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
-                       const QWidget *w = 0) const;
+                       const QWidget *w = Q_NULLPTR) const;
     QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
                                 const QStyleOption *option) const;
     SubControl hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
-                                     const QPoint &pt, const QWidget *w = 0) const;
+                                     const QPoint &pt, const QWidget *w = Q_NULLPTR) const;
     QRect itemPixmapRect(const QRect &rect, int alignment, const QPixmap &pixmap) const;
     QRect itemTextRect(const QFontMetrics &metrics, const QRect &rect, int alignment, bool enabled,
                        const QString &text) const;
-    int pixelMetric(PixelMetric metric, const QStyleOption *option = 0, const QWidget *widget = 0) const;
+    int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR) const;
     void polish(QWidget *widget);
     void polish(QApplication *app);
     void polish(QPalette &pal);
     QSize sizeFromContents(ContentsType ct, const QStyleOption *opt,
-                           const QSize &contentsSize, const QWidget *widget = 0) const;
+                           const QSize &contentsSize, const QWidget *widget = Q_NULLPTR) const;
     QPalette standardPalette() const;
-    QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *option = 0,
-                           const QWidget *w = 0 ) const;
+    QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *option = Q_NULLPTR,
+                           const QWidget *w = Q_NULLPTR ) const;
     int layoutSpacing(QSizePolicy::ControlType control1, QSizePolicy::ControlType control2,
-                          Qt::Orientation orientation, const QStyleOption *option = 0,
-                          const QWidget *widget = 0) const;
-    int styleHint(StyleHint sh, const QStyleOption *opt = 0, const QWidget *w = 0,
-                  QStyleHintReturn *shret = 0) const;
-    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = 0) const;
+                          Qt::Orientation orientation, const QStyleOption *option = Q_NULLPTR,
+                          const QWidget *widget = Q_NULLPTR) const;
+    int styleHint(StyleHint sh, const QStyleOption *opt = Q_NULLPTR, const QWidget *w = Q_NULLPTR,
+                  QStyleHintReturn *shret = Q_NULLPTR) const;
+    QRect subElementRect(SubElement r, const QStyleOption *opt, const QWidget *widget = Q_NULLPTR) const;
     QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt, SubControl sc,
-                         const QWidget *w = 0) const;
+                         const QWidget *w = Q_NULLPTR) const;
 
     // These functions are called from QApplication/QWidget. Be careful.
     QStyle *baseStyle() const;
@@ -133,8 +133,8 @@ public:
 
     bool styleSheetPalette(const QWidget* w, const QStyleOption* opt, QPalette* pal);
 
-    QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *opt = 0,
-                       const QWidget *widget = 0) const;
+    QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *opt = Q_NULLPTR,
+                       const QWidget *widget = Q_NULLPTR) const;
 
 protected:
     bool event(QEvent *e);

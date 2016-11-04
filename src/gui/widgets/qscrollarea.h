@@ -60,7 +60,7 @@ class Q_GUI_EXPORT QScrollArea : public QAbstractScrollArea
     Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment)
 
 public:
-    explicit QScrollArea(QWidget* parent=0);
+    explicit QScrollArea(QWidget* parent = Q_NULLPTR);
     ~QScrollArea();
 
     QWidget *widget() const;

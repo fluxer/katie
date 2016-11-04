@@ -684,7 +684,7 @@ void QCommonStyle::drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, Q
 
 #ifndef QT_NO_TOOLBUTTON
 static void drawArrow(const QStyle *style, const QStyleOptionToolButton *toolbutton,
-                      const QRect &rect, QPainter *painter, const QWidget *widget = 0)
+                      const QRect &rect, QPainter *painter, const QWidget *widget = Q_NULLPTR)
 {
     QStyle::PrimitiveElement pe;
     switch (toolbutton->arrowType) {

@@ -296,7 +296,7 @@ namespace WTF {
         void deallocateBuffer(T* bufferToDeallocate)
         {
             if (m_buffer == bufferToDeallocate) {
-                m_buffer = 0;
+                m_buffer = Q_NULLPTR;
                 m_capacity = 0;
             }
             fastFree(bufferToDeallocate);
@@ -310,14 +310,14 @@ namespace WTF {
         T* releaseBuffer()
         {
             T* buffer = m_buffer;
-            m_buffer = 0;
+            m_buffer = Q_NULLPTR;
             m_capacity = 0;
             return buffer;
         }
 
     protected:
         VectorBufferBase()
-            : m_buffer(0)
+            : m_buffer(Q_NULLPTR)
             , m_capacity(0)
         {
         }

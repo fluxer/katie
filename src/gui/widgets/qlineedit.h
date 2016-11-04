@@ -87,8 +87,8 @@ class Q_GUI_EXPORT QLineEdit : public QWidget
     Q_PROPERTY(Qt::CursorMoveStyle cursorMoveStyle READ cursorMoveStyle WRITE setCursorMoveStyle)
 
 public:
-    explicit QLineEdit(QWidget* parent=0);
-    explicit QLineEdit(const QString &, QWidget* parent=0);
+    explicit QLineEdit(QWidget* parent = Q_NULLPTR);
+    explicit QLineEdit(const QString &, QWidget* parent = Q_NULLPTR);
     ~QLineEdit();
 
     QString text() const;

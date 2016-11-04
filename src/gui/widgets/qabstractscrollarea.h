@@ -62,7 +62,7 @@ class Q_GUI_EXPORT QAbstractScrollArea : public QFrame
     Q_PROPERTY(Qt::ScrollBarPolicy horizontalScrollBarPolicy READ horizontalScrollBarPolicy WRITE setHorizontalScrollBarPolicy)
 
 public:
-    explicit QAbstractScrollArea(QWidget* parent=0);
+    explicit QAbstractScrollArea(QWidget* parent = Q_NULLPTR);
     ~QAbstractScrollArea();
 
     Qt::ScrollBarPolicy verticalScrollBarPolicy() const;

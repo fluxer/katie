@@ -197,7 +197,7 @@ public:
     };
 
     virtual void drawPrimitive(PrimitiveElement pe, const QStyleOption *opt, QPainter *p,
-                               const QWidget *w = 0) const = 0;
+                               const QWidget *w = Q_NULLPTR) const = 0;
     enum ControlElement {
         CE_PushButton,
         CE_PushButtonBevel,
@@ -267,7 +267,7 @@ public:
     };
 
     virtual void drawControl(ControlElement element, const QStyleOption *opt, QPainter *p,
-                             const QWidget *w = 0) const = 0;
+                             const QWidget *w = Q_NULLPTR) const = 0;
 
     enum SubElement {
         SE_PushButtonContents,
@@ -349,7 +349,7 @@ public:
     };
 
     virtual QRect subElementRect(SubElement subElement, const QStyleOption *option,
-                                 const QWidget *widget = 0) const = 0;
+                                 const QWidget *widget = Q_NULLPTR) const = 0;
 
 
     enum ComplexControl {
@@ -426,11 +426,11 @@ public:
 
 
     virtual void drawComplexControl(ComplexControl cc, const QStyleOptionComplex *opt, QPainter *p,
-                                    const QWidget *widget = 0) const = 0;
+                                    const QWidget *widget = Q_NULLPTR) const = 0;
     virtual SubControl hitTestComplexControl(ComplexControl cc, const QStyleOptionComplex *opt,
-                                             const QPoint &pt, const QWidget *widget = 0) const = 0;
+                                             const QPoint &pt, const QWidget *widget = Q_NULLPTR) const = 0;
     virtual QRect subControlRect(ComplexControl cc, const QStyleOptionComplex *opt,
-                                 SubControl sc, const QWidget *widget = 0) const = 0;
+                                 SubControl sc, const QWidget *widget = Q_NULLPTR) const = 0;
 
     enum PixelMetric {
         PM_ButtonMargin,
@@ -555,8 +555,8 @@ public:
         PM_CustomBase = 0xf0000000
     };
 
-    virtual int pixelMetric(PixelMetric metric, const QStyleOption *option = 0,
-                            const QWidget *widget = 0) const = 0;
+    virtual int pixelMetric(PixelMetric metric, const QStyleOption *option = Q_NULLPTR,
+                            const QWidget *widget = Q_NULLPTR) const = 0;
 
     enum ContentsType {
         CT_PushButton,
@@ -587,7 +587,7 @@ public:
     };
 
     virtual QSize sizeFromContents(ContentsType ct, const QStyleOption *opt,
-                                   const QSize &contentsSize, const QWidget *w = 0) const = 0;
+                                   const QSize &contentsSize, const QWidget *w = Q_NULLPTR) const = 0;
 
     enum RequestSoftwareInputPanel {
         RSIP_OnMouseClickAndAlreadyFocused,
@@ -699,8 +699,8 @@ public:
         SH_CustomBase = 0xf0000000
     };
 
-    virtual int styleHint(StyleHint stylehint, const QStyleOption *opt = 0,
-                          const QWidget *widget = 0, QStyleHintReturn* returnData = 0) const = 0;
+    virtual int styleHint(StyleHint stylehint, const QStyleOption *opt = Q_NULLPTR,
+                          const QWidget *widget = Q_NULLPTR, QStyleHintReturn* returnData = Q_NULLPTR) const = 0;
 
     enum StandardPixmap {
         SP_TitleBarMenuButton,
@@ -776,11 +776,11 @@ public:
         SP_CustomBase = 0xf0000000
     };
 
-    virtual QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt = 0,
-                                   const QWidget *widget = 0) const = 0;
+    virtual QPixmap standardPixmap(StandardPixmap standardPixmap, const QStyleOption *opt = Q_NULLPTR,
+                                   const QWidget *widget = Q_NULLPTR) const = 0;
 
-    virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *option = 0,
-                               const QWidget *widget = 0) const;
+    virtual QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *option = Q_NULLPTR,
+                               const QWidget *widget = Q_NULLPTR) const;
 
     virtual QPixmap generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
                                         const QStyleOption *opt) const = 0;
@@ -799,10 +799,10 @@ public:
 
     virtual int layoutSpacing(QSizePolicy::ControlType control1,
                               QSizePolicy::ControlType control2, Qt::Orientation orientation,
-                              const QStyleOption *option = 0, const QWidget *widget = 0) const;
+                              const QStyleOption *option = Q_NULLPTR, const QWidget *widget = Q_NULLPTR) const;
     int combinedLayoutSpacing(QSizePolicy::ControlTypes controls1,
                               QSizePolicy::ControlTypes controls2, Qt::Orientation orientation,
-                              QStyleOption *option = 0, QWidget *widget = 0) const;
+                              QStyleOption *option = Q_NULLPTR, QWidget *widget = Q_NULLPTR) const;
 
     const QStyle * proxy() const;
 

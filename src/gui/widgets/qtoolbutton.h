@@ -73,7 +73,7 @@ public:
         InstantPopup
     };
 
-    explicit QToolButton(QWidget * parent=0);
+    explicit QToolButton(QWidget *parent = Q_NULLPTR);
     ~QToolButton();
 
     QSize sizeHint() const;

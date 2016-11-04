@@ -49,8 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
-
 class QScriptDebugOutputWidgetOutputEdit : public QPlainTextEdit
 {
 public:
@@ -74,8 +72,6 @@ public:
         return width() / fm.maxWidth();
     }
 };
-
-} // namespace
 
 class QScriptDebugOutputWidgetPrivate
     : public QScriptDebugOutputWidgetInterfacePrivate
@@ -157,4 +153,5 @@ void QScriptDebugOutputWidget::clear()
 }
 
 QT_END_NAMESPACE
-#include <moc_qscriptdebugoutputwidget_p.h>
+
+#include "moc_qscriptdebugoutputwidget_p.h"
