@@ -854,12 +854,10 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         XSelectInput(dpy, id, stdWidgetEventMask);
 #if !defined (QT_NO_TABLET)
         QTabletDeviceDataList *tablet_list = qt_tablet_devices();
-        if (XSelectExtensionEvent) {
-            for (int i = 0; i < tablet_list->size(); ++i) {
-                QTabletDeviceData tablet = tablet_list->at(i);
-                XSelectExtensionEvent(dpy, id, reinterpret_cast<XEventClass*>(tablet.eventList),
-                                              tablet.eventCount);
-            }
+        for (int i = 0; i < tablet_list->size(); ++i) {
+            QTabletDeviceData tablet = tablet_list->at(i);
+            XSelectExtensionEvent(dpy, id, reinterpret_cast<XEventClass*>(tablet.eventList),
+                                            tablet.eventCount);
         }
 #endif
     }

@@ -2109,11 +2109,10 @@ void qt_init(QApplicationPrivate *priv, int,
         // Use dbus if/when we can, but fall back to using windowManagerName() for now
 
 #ifndef QT_NO_XFIXES
-        if (XFixesSelectSelectionInput)
-            XFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
-                                       XFixesSetSelectionOwnerNotifyMask
-                                       | XFixesSelectionWindowDestroyNotifyMask
-                                       | XFixesSelectionClientCloseNotifyMask);
+        XFixesSelectSelectionInput(X11->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
+                                   XFixesSetSelectionOwnerNotifyMask
+                                   | XFixesSelectionWindowDestroyNotifyMask
+                                   | XFixesSelectionClientCloseNotifyMask);
 #endif // QT_NO_XFIXES
         X11->compositingManagerRunning = XGetSelectionOwner(X11->display,
                                                             ATOM(_NET_WM_CM_S0));
@@ -2205,8 +2204,7 @@ void qt_init(QApplicationPrivate *priv, int,
             int ndev,
                 i,
                 j;
-            bool gotStylus,
-                gotEraser;
+            bool gotStylus, gotEraser;
             XDeviceInfo *devices = 0, *devs;
             XInputClassInfo *ip;
             XAnyClassPtr any;
@@ -2214,13 +2212,12 @@ void qt_init(QApplicationPrivate *priv, int,
             XAxisInfoPtr a;
             XDevice *dev = 0;
 
-            if (XListInputDevices) {
-                devices = XListInputDevices(X11->display, &ndev);
-                if (!devices)
-                    qWarning("QApplication: Failed to get list of tablet devices");
-            }
-            if (!devices)
+            devices = XListInputDevices(X11->display, &ndev);
+            if (!devices) {
+                qWarning("QApplication: Failed to get list of tablet devices");
                 ndev = -1;
+            }
+
             QTabletEvent::TabletDevice deviceType;
             for (devs = devices, i = 0; i < ndev && devs; i++, devs++) {
                 dev = 0;
@@ -2250,8 +2247,7 @@ void qt_init(QApplicationPrivate *priv, int,
                     continue;
 
                 if (gotStylus || gotEraser) {
-                    if (XOpenDevice)
-                        dev = XOpenDevice(X11->display, devs->id);
+                    dev = XOpenDevice(X11->display, devs->id);
 
                     if (!dev)
                         continue;
@@ -2371,8 +2367,7 @@ void qt_init(QApplicationPrivate *priv, int,
                     tablet_devices()->append(device_data);
                 } // if (gotStylus || gotEraser)
             }
-            if (XFreeDeviceList)
-                XFreeDeviceList(devices);
+            XFreeDeviceList(devices);
         }
 #endif // QT_NO_TABLET
 
@@ -2452,9 +2447,8 @@ void qt_cleanup()
 
 #if !defined (QT_NO_TABLET)
         QTabletDeviceDataList *devices = qt_tablet_devices();
-        if (XCloseDevice)
-            for (int i = 0; i < devices->size(); ++i)
-                XCloseDevice(X11->display, (XDevice*)devices->at(i).device);
+        for (int i = 0; i < devices->size(); ++i)
+            XCloseDevice(X11->display, (XDevice*)devices->at(i).device);
         devices->clear();
 #endif
     }

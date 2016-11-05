@@ -273,24 +273,22 @@ void QCursorData::update()
     };
 
 #ifndef QT_NO_XCURSOR
-    if (XcursorLibraryLoadCursor) {
-        // special case for non-standard dnd-* cursors
-        switch (cshape) {
-        case Qt::DragCopyCursor:
-            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-copy");
-            break;
-        case Qt::DragMoveCursor:
-            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-move");
-            break;
-        case Qt::DragLinkCursor:
-            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-link");
-            break;
-        default:
-            break;
-        }
-        if (!hcurs)
-            hcurs = XcursorLibraryLoadCursor(dpy, cursorNames[cshape]);
+    // special case for non-standard dnd-* cursors
+    switch (cshape) {
+    case Qt::DragCopyCursor:
+        hcurs = XcursorLibraryLoadCursor(dpy, "dnd-copy");
+        break;
+    case Qt::DragMoveCursor:
+        hcurs = XcursorLibraryLoadCursor(dpy, "dnd-move");
+        break;
+    case Qt::DragLinkCursor:
+        hcurs = XcursorLibraryLoadCursor(dpy, "dnd-link");
+        break;
+    default:
+        break;
     }
+    if (!hcurs)
+        hcurs = XcursorLibraryLoadCursor(dpy, cursorNames[cshape]);
     if (hcurs)
         return;
 #endif // QT_NO_XCURSOR
@@ -545,7 +543,7 @@ void QCursorData::update()
     if (hcurs)
     {
 #ifndef QT_NO_XFIXES
-        if (X11->use_xfixes && XFixesSetCursorName)
+        if (X11->use_xfixes)
             XFixesSetCursorName(dpy, hcurs, cursorNames[cshape]);
 #endif /* ! QT_NO_XFIXES */
         return;
@@ -630,7 +628,7 @@ void QCursorData::update()
     hcurs = XCreateFontCursor(dpy, sh);
 
 #ifndef QT_NO_XFIXES
-    if (X11->use_xfixes && XFixesSetCursorName)
+    if (X11->use_xfixes)
         XFixesSetCursorName(dpy, hcurs, cursorNames[cshape]);
 #endif /* ! QT_NO_XFIXES */
 }
