@@ -524,6 +524,14 @@ else()
     )
 endif()
 
+if(WITH_NSL AND NSL_FOUND)
+    include_directories(${NSL_INCLUDES})
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${NSL_LIBRARIES}
+    )
+endif()
+
 add_library(KtGui ${KATIE_TYPE} ${KtGui_SOURCES})
 target_link_libraries(KtGui ${EXTRA_GUI_LIBS})
 set_target_properties(KtGui PROPERTIES

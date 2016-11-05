@@ -48,8 +48,6 @@
 #include <qcursor.h>
 #include <X11/cursorfont.h>
 
-#include <qlibrary.h>
-
 #ifndef QT_NO_XCURSOR
 #  include <X11/Xcursor/Xcursor.h>
 #endif // QT_NO_XCURSOR

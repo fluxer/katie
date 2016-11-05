@@ -127,6 +127,9 @@ add_feature_info(sqlite WITH_SQLITE "the world's most popular open source databa
 option(WITH_RESOLV "Build resolv support" ON)
 add_feature_info(resolv WITH_RESOLV "an open source something")
 
+option(WITH_NSL "Build nsl support" ON)
+add_feature_info(nsl WITH_NSL "an open source something")
+
 option(WITH_X11 "Build X11/X.Org support" ON)
 add_feature_info(x11 WITH_X11 "an open source something")
 
@@ -443,6 +446,14 @@ set_package_properties(Resolv PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(NSL)
+set_package_properties(NSL PROPERTIES
+    PURPOSE "Required for printing information support"
+    DESCRIPTION ""
+    URL ""
+    TYPE RECOMMENDED
+)
+
 if(NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 
@@ -553,6 +564,10 @@ endif()
 
 if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
     katie_definition(-DQT_NO_RESOLV)
+endif()
+
+if(NOT WITH_NSL OR NOT NSL_FOUND)
+    katie_definition(-DQT_NO_NSL)
 endif()
 
 # conditional features

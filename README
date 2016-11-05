@@ -18,7 +18,7 @@ There are several things you should be aware before considering Katie:
   - QIconEngineFactoryInterfaceV{2} classes and interfaces have been merged
   - QKeyEventEx and QKeyEvent classes have been merged
   - zlib and OpenSSL are required for building
-  - OpenSSL, D-Bus, CUPS, GTK2, GConf2 and resolv cannot be runtime
+  - OpenSSL, D-Bus, CUPS, GTK2, GConf2, resolv and NSL cannot be runtime
     dependencies, they must be linked to during build
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease and idc are linked to components

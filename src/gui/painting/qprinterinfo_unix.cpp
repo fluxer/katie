@@ -46,13 +46,16 @@
 #include <qfileinfo.h>
 #include <qdir.h>
 #include <qprintdialog.h>
-#include <qlibrary.h>
 #include <qtextstream.h>
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
 #  include <qcups_p.h>
 #  include <cups/cups.h>
 #  include <qpdf_p.h>
+#endif
+
+#ifndef QT_NO_NSL
+#include <rpcsvc/ypclnt.h>
 #endif
 
 #include <qprinterinfo_unix_p.h>
@@ -439,31 +442,23 @@ int qt_pd_foreach(int /*status */, char * /*key */, int /*keyLen */,
 
 int qt_retrieveNisPrinters(QList<QPrinterDescription> *printers)
 {
-#ifndef QT_NO_LIBRARY
+#ifndef QT_NO_NSL
     typedef int (*WildCast)(int, char *, int, char *, int, char *);
     char printersConfByname[] = "printers.conf.byname";
     char *domain;
     int err;
 
-    QLibrary lib(QLatin1String("nsl"));
-    typedef int (*ypGetDefaultDomain)(char **);
-    ypGetDefaultDomain _ypGetDefaultDomain = (ypGetDefaultDomain)lib.resolve("yp_get_default_domain");
-    typedef int (*ypAll)(const char *, const char *, const struct ypall_callback *);
-    ypAll _ypAll = (ypAll)lib.resolve("yp_all");
-
-    if (_ypGetDefaultDomain && _ypAll) {
-        err = _ypGetDefaultDomain(&domain);
-        if (err == 0) {
-            ypall_callback cb;
-            // wild cast to support K&R-style system headers
-            (WildCast &) cb.foreach = (WildCast) qt_pd_foreach;
-            cb.data = (char *) printers;
-            err = _ypAll(domain, printersConfByname, &cb);
-        }
-        if (!err)
-            return Success;
+    err = yp_get_default_domain(&domain);
+    if (err == 0) {
+        ypall_callback cb;
+        // wild cast to support K&R-style system headers
+        (WildCast &) cb.foreach = (WildCast) qt_pd_foreach;
+        cb.data = (char *) printers;
+        err = yp_all(domain, printersConfByname, &cb);
     }
-#endif //QT_NO_LIBRARY
+    if (!err)
+        return Success;
+#endif //QT_NO_NSL
     return Unavail;
 }
 
