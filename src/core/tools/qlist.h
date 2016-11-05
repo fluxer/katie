@@ -49,7 +49,6 @@
 #include <iterator>
 #include <list>
 #ifdef Q_COMPILER_INITIALIZER_LISTS
-#include <iterator>
 #include <initializer_list>
 #endif
 
