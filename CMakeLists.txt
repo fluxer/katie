@@ -18,6 +18,34 @@ set(CMAKE_AUTORCC FALSE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/staticlib")
+set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
+
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 framework")
+set(CPACK_PACKAGE_VENDOR "Katie")
+set(CPACK_PACKAGE_CONTACT "xakepa10@gmail.com")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
+# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/Copyright.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR ${KATIE_MAJOR})
+set(CPACK_PACKAGE_VERSION_MINOR ${KATIE_MINOR})
+set(CPACK_PACKAGE_VERSION_PATCH ${KATIE_MICRO})
+set(CPACK_SET_DESTDIR TRUE)
+set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;${CPACK_SOURCE_IGNORE_FILES}")
+set(CPACK_STRIP_FILES TRUE)
+set(CPACK_GENERATOR "TXZ")
+set(CPACK_SOURCE_GENERATOR "TXZ")
+include(CPack)
+
+# 9 minutes timeout for the tests, Travis timeouts on 10min if there is no
+# output and I do not want some tests to be skipped because of one test. Like
+# the qpainter test - it does a lot of tests and can (and sometimes it does)
+# take more then 10min.
+set(CTEST_TEST_TIMEOUT 540)
+
+if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
+    cmake_policy(SET CMP0063 NEW)
+endif()
 
 include(CheckIncludeFile)
 include(CheckTypeSize)
@@ -154,33 +182,6 @@ add_feature_info(accessibility WITH_ACCESSIBILITY "an open source something")
 
 include(mkspecs/mkspecs.cmake)
 
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 framework")
-set(CPACK_PACKAGE_VENDOR "Katie")
-set(CPACK_PACKAGE_CONTACT "xakepa10@gmail.com")
-set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
-# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/Copyright.txt")
-set(CPACK_PACKAGE_VERSION_MAJOR ${KATIE_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${KATIE_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${KATIE_MICRO})
-set(CPACK_SET_DESTDIR TRUE)
-set(CPACK_SOURCE_IGNORE_FILES "/build/;/.git;${CPACK_SOURCE_IGNORE_FILES}")
-set(CPACK_STRIP_FILES TRUE)
-set(CPACK_GENERATOR "TXZ")
-set(CPACK_SOURCE_GENERATOR "TXZ")
-include(CPack)
-
-# 9 minutes timeout for the tests, Travis timeouts on 10min if there is no
-# output and I do not want some tests to be skipped because of one test. Like
-# the qpainter test - it does a lot of tests and can (and sometimes it does)
-# take more then 10min.
-set(CTEST_TEST_TIMEOUT 540)
-
-if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
-    cmake_policy(SET CMP0063 NEW)
-endif()
-set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 add_definitions(
     -DQT_ASCII_CAST_WARNINGS
     -DQT_POSIX_IPC
