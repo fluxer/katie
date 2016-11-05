@@ -128,9 +128,8 @@ void QRasterWindowSurface::beginPaint(const QRegion &rgn)
         QPainter p(d_ptr->image);
         p.setCompositionMode(QPainter::CompositionMode_Source);
         const QVector<QRect> rects = rgn.rects();
-        const QColor blank = Qt::transparent;
         for (QVector<QRect>::const_iterator it = rects.begin(); it != rects.end(); ++it) {
-            p.fillRect(*it, blank);
+            p.fillRect(*it, Qt::transparent);
         }
     }
 #else

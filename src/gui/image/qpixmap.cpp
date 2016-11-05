@@ -1251,8 +1251,7 @@ QPixmap QPixmap::scaled(const QSize& s, Qt::AspectRatioMode aspectMode, Qt::Tran
 
     QTransform wm = QTransform::fromScale((qreal)newSize.width() / width(),
                                           (qreal)newSize.height() / height());
-    QPixmap pix = transformed(wm, mode);
-    return pix;
+    return transformed(wm, mode);
 }
 
 /*!
@@ -1676,7 +1675,7 @@ QPixmap QPixmap::alphaChannel() const
 */
 QPaintEngine *QPixmap::paintEngine() const
 {
-    return data ? data->paintEngine() : 0;
+    return data ? data->paintEngine() : Q_NULLPTR;
 }
 
 /*!
@@ -1843,10 +1842,6 @@ QPixmap QPixmap::fromImageReader(QImageReader *imageReader, Qt::ImageConversionF
     overlying window.  The contents of the obscured areas in the
     pixmap will be undefined and uninitialized.
 
-    On Windows Vista and above grabbing a layered window, which is
-    created by setting the Qt::WA_TranslucentBackground attribute, will
-    not work. Instead grabbing the desktop widget should work.
-
     \warning In general, grabbing an area outside the screen is not
     safe. This depends on the underlying window system.
 
@@ -1861,80 +1856,8 @@ QPixmapData* QPixmap::pixmapData() const
     if (data)
         return data.data();
 
-    return 0;
+    return Q_NULLPTR;
 }
-
-
-/*!
-    \enum QPixmap::HBitmapFormat
-
-    \bold{Win32 only:} This enum defines how the conversion between \c
-    HBITMAP and QPixmap is performed.
-
-    \warning This enum is only available on Windows.
-
-    \value NoAlpha The alpha channel is ignored and always treated as
-    being set to fully opaque. This is preferred if the \c HBITMAP is
-    used with standard GDI calls, such as \c BitBlt().
-
-    \value PremultipliedAlpha The \c HBITMAP is treated as having an
-    alpha channel and premultiplied colors. This is preferred if the
-    \c HBITMAP is accessed through the \c AlphaBlend() GDI function.
-
-    \value Alpha The \c HBITMAP is treated as having a plain alpha
-    channel. This is the preferred format if the \c HBITMAP is going
-    to be used as an application icon or systray icon.
-
-    \sa fromWinHBITMAP(), toWinHBITMAP()
-*/
-
-/*! \fn HBITMAP QPixmap::toWinHBITMAP(HBitmapFormat format) const
-    \bold{Win32 only:} Creates a \c HBITMAP equivalent to the QPixmap,
-    based on the given \a format. Returns the \c HBITMAP handle.
-
-    It is the caller's responsibility to free the \c HBITMAP data
-    after use.
-
-    \warning This function is only available on Windows.
-
-    \sa fromWinHBITMAP(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-*/
-
-/*! \fn QPixmap QPixmap::fromWinHBITMAP(HBITMAP bitmap, HBitmapFormat format)
-    \bold{Win32 only:} Returns a QPixmap that is equivalent to the
-    given \a bitmap. The conversion is based on the specified \a
-    format.
-
-    \warning This function is only available on Windows.
-
-    \sa toWinHBITMAP(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-
-*/
-
-/*! \fn HICON QPixmap::toWinHICON() const
-    \since 4.6
-
-    \bold{Win32 only:} Creates a \c HICON equivalent to the QPixmap.
-    Returns the \c HICON handle.
-
-    It is the caller's responsibility to free the \c HICON data after use.
-
-    \warning This function is only available on Windows.
-
-    \sa fromWinHICON(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-*/
-
-/*! \fn QPixmap QPixmap::fromWinHICON(HICON icon)
-    \since 4.6
-
-    \bold{Win32 only:} Returns a QPixmap that is equivalent to the given
-    \a icon.
-
-    \warning This function is only available on Windows.
-
-    \sa toWinHICON(), {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-
-*/
 
 /*! \fn const QX11Info &QPixmap::x11Info() const
     \bold{X11 only:} Returns information about the configuration of
