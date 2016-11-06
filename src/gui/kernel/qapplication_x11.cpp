@@ -4097,9 +4097,9 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
     if (type == 0)                                // don't send event
         return false;
 
-    QWidget *popup = qApp->activePopupWidget();
-    if (popup) {                        // in popup mode
-        QWidget *activePopupWidget = qApp->activePopupWidget();
+    if (QApplicationPrivate::popupWidgets) {                        // in popup mode
+        QWidget *popup = QApplicationPrivate::popupWidgets->last();
+        QWidget *activePopupWidget = QApplicationPrivate::popupWidgets->last();
         if (popup != this) {
             if (event->type == LeaveNotify)
                 return false;
