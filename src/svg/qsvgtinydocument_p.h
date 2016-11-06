@@ -123,7 +123,7 @@ public:
     void setFramesPerSecond(int num);
 private:
     void mapSourceToTarget(QPainter *p, const QRectF &targetRect, const QRectF &sourceRect = QRectF());
-private:
+
     QSize  m_size;
     bool   m_widthPercent;
     bool   m_heightPercent;

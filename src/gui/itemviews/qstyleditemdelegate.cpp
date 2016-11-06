@@ -146,7 +146,6 @@ public:
     \row    \o \l Qt::AccessibleTextRole \o QString
     \endomit
     \row    \o \l Qt::BackgroundRole \o QBrush
-    \row    \o \l Qt::BackgroundColorRole \o QColor (obsolete; use Qt::BackgroundRole instead)
     \row    \o \l Qt::CheckStateRole \o Qt::CheckState
     \row    \o \l Qt::DecorationRole \o QIcon, QPixmap, QImage and QColor
     \row    \o \l Qt::DisplayRole \o QString and types with a string representation
@@ -158,7 +157,6 @@ public:
     \endomit
     \row    \o \l Qt::TextAlignmentRole \o Qt::Alignment
     \row    \o \l Qt::ForegroundRole \o QBrush
-    \row    \o \l Qt::TextColorRole \o QColor (obsolete; use Qt::ForegroundRole instead)
     \omit
     \row    \o \l Qt::ToolTipRole
     \row    \o \l Qt::WhatsThisRole

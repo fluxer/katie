@@ -260,11 +260,7 @@ public:
         CustomizeWindowHint = 0x00020000,
         WindowStaysOnBottomHint = 0x00040000,
         WindowCloseButtonHint = 0x00080000,
-        BypassGraphicsProxyWidget = 0x00100000,
-        WindowOkButtonHint = 0x01000000,
-        WindowCancelButtonHint = 0x02000000,
-        WindowSoftkeysVisibleHint = 0x04000000,
-        WindowSoftkeysRespondHint = 0x08000000
+        BypassGraphicsProxyWidget = 0x00100000
     };
 
     Q_DECLARE_FLAGS(WindowFlags, WindowType)
@@ -1279,9 +1275,7 @@ public:
         // Metadata
         FontRole = 6,
         TextAlignmentRole = 7,
-        BackgroundColorRole = 8,
         BackgroundRole = 8,
-        TextColorRole = 9,
         ForegroundRole = 9,
         CheckStateRole = 10,
         // Accessibility
@@ -1290,12 +1284,12 @@ public:
         // More general purpose
         SizeHintRole = 13,
         InitialSortOrderRole = 14,
-        // Internal UiLib roles. Start worrying when public roles go that high.
-        DisplayPropertyRole = 27,
-        DecorationPropertyRole = 28,
-        ToolTipPropertyRole = 29,
-        StatusTipPropertyRole = 30,
-        WhatsThisPropertyRole = 31,
+        // Internal UiLib roles
+        DisplayPropertyRole = 15,
+        DecorationPropertyRole = 16,
+        ToolTipPropertyRole = 17,
+        StatusTipPropertyRole = 18,
+        WhatsThisPropertyRole = 19,
         // Reserved
         UserRole = 32
     };

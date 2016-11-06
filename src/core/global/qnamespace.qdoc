@@ -115,9 +115,6 @@
            Therefore, if it is important to minimize resource
            consumption, do not set this attribute.
 
-    \value AA_MSWindowsUseDirect3DByDefault This value is obsolete and
-           has no effect.
-
     \value AA_DontShowIconsInMenus Actions with the Icon property won't be
            shown in any menus unless specifically set by the
            QAction::iconVisibleInMenu property. Changes in the
@@ -852,9 +849,6 @@
     \value WA_Moved Indicates that the widget has an explicit
     position. This is set/cleared by QWidget::move() and
     by QWidget::setGeometry().
-
-    \value WA_MSWindowsUseDirect3D This value is obsolete and has no
-    effect.
 
     \value WA_NoBackground This value is obsolete. Use
     WA_OpaquePaintEvent instead.
@@ -1981,20 +1975,6 @@
            on the bottom has a parent, the parent will also be left on
            the bottom.
 
-    \value WindowOkButtonHint Adds an OK button to the window decoration of a dialog.
-           Only supported for Windows CE.
-
-    \value WindowCancelButtonHint Adds a Cancel button to the window decoration of a dialog.
-           Only supported for Windows CE.
-
-    \value WindowSoftkeysVisibleHint Makes softkeys visible when widget is fullscreen.
-           Only supported for Symbian.
-
-    \value WindowSoftkeysRespondHint Makes softkeys to receive key events even
-           when invisible. With this hint the softkey actions are triggered
-           even the softkeys are invisible i.e. the window is displayed with
-           \c showFullscreen(). Only supported for Symbian.
-
     \value WindowType_Mask  A mask for extracting the window type
                             part of the window flags.
 
@@ -2462,11 +2442,9 @@
                                 default delegate. (Qt::AlignmentFlag)
     \value BackgroundRole       The background brush used for items rendered with
                                 the default delegate. (QBrush)
-    \value BackgroundColorRole  This role is obsolete. Use BackgroundRole instead.
     \value ForegroundRole       The foreground brush (text color, typically)
                                 used for items rendered with the default delegate.
                                 (QBrush)
-    \value TextColorRole        This role is obsolete. Use ForegroundRole instead.
     \value CheckStateRole       This role is used to obtain the checked state of
                                 an item. (Qt::CheckState)
     \value InitialSortOrderRole This role is used to obtain the initial sort order

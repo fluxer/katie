@@ -138,20 +138,10 @@ public:
     inline void setTextAlignment(int column, int alignment)
         { setData(column, Qt::TextAlignmentRole, alignment); }
 
-    inline QColor backgroundColor(int column) const
-        { return qvariant_cast<QColor>(data(column, Qt::BackgroundColorRole)); }
-    inline void setBackgroundColor(int column, const QColor &color)
-        { setData(column, Qt::BackgroundColorRole, color); }
-
     inline QBrush background(int column) const
         { return qvariant_cast<QBrush>(data(column, Qt::BackgroundRole)); }
     inline void setBackground(int column, const QBrush &brush)
         { setData(column, Qt::BackgroundRole, brush); }
-
-    inline QColor textColor(int column) const
-        { return qvariant_cast<QColor>(data(column, Qt::TextColorRole)); }
-    inline void setTextColor(int column, const QColor &color)
-        { setData(column, Qt::TextColorRole, color); }
 
     inline QBrush foreground(int column) const
         { return qvariant_cast<QBrush>(data(column, Qt::ForegroundRole)); }

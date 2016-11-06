@@ -118,20 +118,10 @@ public:
     inline void setTextAlignment(int alignment)
         { setData(Qt::TextAlignmentRole, alignment); }
 
-    inline QColor backgroundColor() const
-        { return qvariant_cast<QColor>(data(Qt::BackgroundColorRole)); }
-    virtual void setBackgroundColor(const QColor &color)
-        { setData(Qt::BackgroundColorRole, color); }
-
     inline QBrush background() const
         { return qvariant_cast<QBrush>(data(Qt::BackgroundRole)); }
     inline void setBackground(const QBrush &brush)
         { setData(Qt::BackgroundRole, brush); }
-
-    inline QColor textColor() const
-        { return qvariant_cast<QColor>(data(Qt::TextColorRole)); }
-    inline void setTextColor(const QColor &color)
-        { setData(Qt::TextColorRole, color); }
 
     inline QBrush foreground() const
         { return qvariant_cast<QBrush>(data(Qt::ForegroundRole)); }

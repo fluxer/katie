@@ -238,7 +238,7 @@ Q_CORE_EXPORT_INLINE QDebug qDebug() { return QDebug(QtDebugMsg); }
 #else // QT_NO_DEBUG_STREAM
 #undef qDebug
 inline QNoDebug qDebug() { return QNoDebug(); }
-#define qDebug QT_NO_QDEBUG_MACRO
+#define qDebug QNoDebug
 
 #endif
 
@@ -247,7 +247,7 @@ Q_CORE_EXPORT_INLINE QDebug qWarning() { return QDebug(QtWarningMsg); }
 #else
 #undef qWarning
 inline QNoDebug qWarning() { return QNoDebug(); }
-#define qWarning QT_NO_QWARNING_MACRO
+#define qWarning QNoDebug
 #endif
 
 QT_END_NAMESPACE
