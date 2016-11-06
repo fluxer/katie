@@ -445,13 +445,13 @@ FontHash *qt_app_fonts_hash()
     return app_fonts();
 }
 
-QWidgetList *QApplicationPrivate::popupWidgets = 0;        // has keyboard input focus
+QWidgetList *QApplicationPrivate::popupWidgets = Q_NULLPTR;  // has keyboard input focus
 
-QDesktopWidget *qt_desktopWidget = 0;                // root window widgets
+QDesktopWidget *qt_desktopWidget = Q_NULLPTR;                // root window widgets
 #ifndef QT_NO_CLIPBOARD
-QClipboard              *qt_clipboard = 0;        // global clipboard object
+QClipboard *qt_clipboard = Q_NULLPTR;                        // global clipboard object
 #endif
-QWidgetList * qt_modal_stack=0;                // stack of modal widgets
+QWidgetList *qt_modal_stack = Q_NULLPTR;                     // stack of modal widgets
 
 /*!
     \internal
@@ -2259,7 +2259,7 @@ void QApplication::setActiveWindow(QWidget* act)
         sendSpontaneousEvent(qApp, &appDeactivate);
     }
 
-    if (QApplicationPrivate::popupWidgets == 0) { // !inPopupMode()
+    if (!QApplicationPrivate::popupWidgets) { // !inPopupMode()
         // then focus events
         if (!QApplicationPrivate::active_window && QApplicationPrivate::focus_widget) {
             QApplicationPrivate::setFocusWidget(0, Qt::ActiveWindowFocusReason);
@@ -4421,7 +4421,7 @@ bool QApplicationPrivate::notify_helper(QObject *receiver, QEvent * e)
 
 bool QApplicationPrivate::inPopupMode() const
 {
-    return QApplicationPrivate::popupWidgets != 0;
+    return QApplicationPrivate::popupWidgets != Q_NULLPTR;
 }
 
 /*!

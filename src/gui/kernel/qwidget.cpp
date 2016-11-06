@@ -7364,7 +7364,7 @@ bool QWidget::close()
     \sa show() hide() isVisible()
 */
 
-bool QWidget::isVisibleTo(QWidget* ancestor) const
+bool QWidget::isVisibleTo(const QWidget* ancestor) const
 {
     if (!ancestor)
         return isVisible();

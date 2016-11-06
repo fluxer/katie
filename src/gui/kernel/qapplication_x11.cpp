@@ -3790,7 +3790,7 @@ void QApplicationPrivate::closePopup(QWidget *popup)
     }
     if (QApplicationPrivate::popupWidgets->count() == 0) {                // this was the last popup
         delete QApplicationPrivate::popupWidgets;
-        QApplicationPrivate::popupWidgets = 0;
+        QApplicationPrivate::popupWidgets = Q_NULLPTR;
         if (!qt_nograb() && popupGrabOk) {        // grabbing not disabled
             Display *dpy = X11->display;
             if (popup->geometry().contains(QPoint(mouseGlobalXPos, mouseGlobalYPos))
@@ -4097,9 +4097,9 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
     if (type == 0)                                // don't send event
         return false;
 
-    if (qApp->d_func()->inPopupMode()) {                        // in popup mode
+    QWidget *popup = qApp->activePopupWidget();
+    if (popup) {                        // in popup mode
         QWidget *activePopupWidget = qApp->activePopupWidget();
-        QWidget *popup = qApp->activePopupWidget();
         if (popup != this) {
             if (event->type == LeaveNotify)
                 return false;
