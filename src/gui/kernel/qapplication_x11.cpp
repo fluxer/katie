@@ -102,12 +102,6 @@ extern "C" {
 
 #include <qkeymapper_p.h>
 
-// Input method stuff
-#ifndef QT_NO_IM
-#include "qinputcontext.h"
-#include "qinputcontextfactory.h"
-#endif // QT_NO_IM
-
 #ifndef QT_NO_XFIXES
 #include <X11/extensions/Xfixes.h>
 #endif // QT_NO_XFIXES
@@ -302,9 +296,6 @@ static const char * x11_atomnames = {
     "XmTRANSFER_SUCCESS\0"
     "XmTRANSFER_FAILURE\0"
 
-    // Xkb
-    "_XKB_RULES_NAMES\0"
-
     // XEMBED
     "_XEMBED\0"
     "_XEMBED_INFO\0"
@@ -426,10 +417,6 @@ static bool qt_x11EventFilter(XEvent* ev)
     return qApp->x11EventFilter(ev);
 }
 
-#if !defined(QT_NO_XIM)
-XIMStyle        qt_xim_preferred_style = 0;
-#endif
-int qt_ximComposingKeycode=0;
 QTextCodec * qt_input_mapper = 0;
 
 extern bool qt_check_clipboard_sentinel(); //def in qclipboard_x11.cpp
@@ -651,10 +638,6 @@ static int qt_x_errhandler(Display *dpy, XErrorEvent *err)
             extensionName = "XInputExtension";
         else if (err->request_code == X11->mitshm_major)
             extensionName = "MIT-SHM";
-#ifndef QT_NO_XKB
-        else if(err->request_code == X11->xkb_major)
-            extensionName = "XKEYBOARD";
-#endif
 
         char minor_str[256];
         if (extensionName) {
@@ -953,29 +936,6 @@ bool QApplicationPrivate::x11_apply_settings()
     qt_use_rtl_extensions =
         settings.value(QLatin1String("useRtlExtensions"), false).toBool();
 
-#ifndef QT_NO_IM
-#ifndef QT_NO_XIM
-    if (qt_xim_preferred_style == 0) {
-        QString ximInputStyle = settings.value(QLatin1String("XIMInputStyle"),
-                                               QVariant(QLatin1String("on the spot"))).toString().toLower();
-        if (ximInputStyle == QLatin1String("on the spot"))
-            qt_xim_preferred_style = XIMPreeditCallbacks | XIMStatusNothing;
-        else if (ximInputStyle == QLatin1String("over the spot"))
-            qt_xim_preferred_style = XIMPreeditPosition | XIMStatusNothing;
-        else if (ximInputStyle == QLatin1String("off the spot"))
-            qt_xim_preferred_style = XIMPreeditArea | XIMStatusArea;
-        else if (ximInputStyle == QLatin1String("root"))
-            qt_xim_preferred_style = XIMPreeditNothing | XIMStatusNothing;
-    }
-#endif // QT_NO_XIM
-    QStringList inputMethods = QInputContextFactory::keys();
-    if (inputMethods.size() > 2 && inputMethods.contains(QLatin1String("imsw-multi"))) {
-        X11->default_im = QLatin1String("imsw-multi");
-    } else {
-        X11->default_im = settings.value(QLatin1String("DefaultInputMethod"),
-                                         QLatin1String("xim")).toString();
-    }
-#endif //QT_NO_IM
     settings.endGroup(); // Qt
 
     return true;
@@ -1597,11 +1557,6 @@ void qt_init(QApplicationPrivate *priv, int,
     X11->xinput_eventbase = 0;
     X11->xinput_errorbase = 0;
 
-    X11->use_xkb = false;
-    X11->xkb_major = 0;
-    X11->xkb_eventbase = 0;
-    X11->xkb_errorbase = 0;
-
     // MIT-SHM
     X11->use_mitshm = false;
     X11->use_mitshm_pixmaps = false;
@@ -1621,9 +1576,6 @@ void qt_init(QApplicationPrivate *priv, int,
     X11->seen_badwindow = false;
 
     X11->motifdnd_active = false;
-
-    X11->default_im = QLatin1String("imsw-multi");
-    priv->inputContext = 0;
 
     // colormap control
     X11->visual_class = -1;
@@ -1748,24 +1700,6 @@ void qt_init(QApplicationPrivate *priv, int,
                 else
                     X11->visual_id = static_cast<int>(strtol(argv[i], 0, 0));
             }
-#ifndef QT_NO_XIM
-        } else if (arg == "-inputstyle") {
-            if (++i < argc) {
-                QString s = QString::fromLocal8Bit(argv[i]).toLower();
-                if (s == QLatin1String("onthespot"))
-                    qt_xim_preferred_style = XIMPreeditCallbacks |
-                                             XIMStatusNothing;
-                else if (s == QLatin1String("overthespot"))
-                    qt_xim_preferred_style = XIMPreeditPosition |
-                                             XIMStatusNothing;
-                else if (s == QLatin1String("offthespot"))
-                    qt_xim_preferred_style = XIMPreeditArea |
-                                             XIMStatusArea;
-                else if (s == QLatin1String("root"))
-                    qt_xim_preferred_style = XIMPreeditNothing |
-                                             XIMStatusNothing;
-            }
-#endif
         } else if (arg == "-cmap") {    // xv uses this name
             if (!X11->colormap)
                 X11->custom_cmap = true;
@@ -1977,33 +1911,6 @@ void qt_init(QApplicationPrivate *priv, int,
         X11->use_xinput = XQueryExtension(X11->display, "XInputExtension", &X11->xinput_major,
                                           &X11->xinput_eventbase, &X11->xinput_errorbase);
 #endif // QT_NO_XINPUT
-
-#ifndef QT_NO_XKB
-        int xkblibMajor = XkbMajorVersion;
-        int xkblibMinor = XkbMinorVersion;
-        X11->use_xkb = XkbQueryExtension(X11->display,
-                                         &X11->xkb_major,
-                                         &X11->xkb_eventbase,
-                                         &X11->xkb_errorbase,
-                                         &xkblibMajor,
-                                         &xkblibMinor);
-        if (X11->use_xkb) {
-            // If XKB is detected, set the GrabsUseXKBState option so input method
-            // compositions continue to work (ie. deadkeys)
-            unsigned int state = XkbPCF_GrabsUseXKBStateMask;
-            (void) XkbSetPerClientControls(X11->display, state, &state);
-
-            // select for group change events
-            XkbSelectEventDetails(X11->display,
-                                  XkbUseCoreKbd,
-                                  XkbStateNotify,
-                                  XkbAllStateComponentsMask,
-                                  XkbGroupStateMask);
-
-            // current group state is queried when creating the keymapper, no need to do it here
-        }
-#endif
-
 
 #if !defined(QT_NO_FONTCONFIG)
         int dpi = 0;
@@ -2462,11 +2369,6 @@ void qt_cleanup()
         if (X11->pattern_fills[i].picture)
             XRenderFreePicture(X11->display, X11->pattern_fills[i].picture);
     }
-#endif
-
-#if !defined(QT_NO_IM)
-    delete QApplicationPrivate::inputContext;
-    QApplicationPrivate::inputContext = 0;
 #endif
 
     // Reset the error handlers
@@ -2989,55 +2891,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
         }
     }
 
-#ifndef QT_NO_IM
-    // Filtering input events by the input context. It has to be taken
-    // place before any other key event consumers such as eventfilters
-    // and accelerators because some input methods require quite
-    // various key combination and sequences. It often conflicts with
-    // accelerators and so on, so we must give the input context the
-    // filtering opportunity first to ensure all input methods work
-    // properly regardless of application design.
-
-    if(keywidget && keywidget->isEnabled() && keywidget->testAttribute(Qt::WA_InputMethodEnabled)) {
-        // block user interaction during session management
-	if((event->type==XKeyPress || event->type==XKeyRelease) && qt_sm_blockUserInput)
-	    return true;
-
-        // for XIM handling
-	QInputContext *qic = keywidget->inputContext();
-	if(qic && qic->x11FilterEvent(keywidget, event))
-	    return true;
-
-	// filterEvent() accepts QEvent *event rather than preexpanded
-	// key event attribute values. This is intended to pass other
-	// QInputEvent in future. Other non IM-related events should
-	// not be forwarded to input contexts to prevent weird event
-	// handling.
-	if ((event->type == XKeyPress || event->type == XKeyRelease)) {
-	    int code = -1;
-	    int count = 0;
-	    Qt::KeyboardModifiers modifiers;
-	    QEvent::Type type;
-	    QString text;
-            KeySym keySym;
-
-            qt_keymapper_private()->translateKeyEventInternal(keywidget, event, keySym, count,
-                                                              text, modifiers, code, type, false);
-
-	    // both key press/release is required for some complex
-	    // input methods. don't eliminate anything.
-	    QKeyEvent keyevent(type, code, modifiers,
-                                 event->xkey.keycode, keySym, event->xkey.state,
-                                 text, false, qMax(qMax(count, 1), text.length()));
-	    if(qic && qic->filterEvent(&keyevent))
-		return true;
-	}
-    } else
-#endif // QT_NO_IM
-        {
-            if (XFilterEvent(event, XNone))
-                return true;
-        }
+    if (XFilterEvent(event, XNone))
+        return true;
 
     if (qt_x11EventFilter(event))                // send through app filter
         return 1;
@@ -3049,24 +2904,6 @@ int QApplication::x11ProcessEvent(XEvent* event)
         QKeyMapper::changeKeyboard();
         return 0;
     }
-#ifndef QT_NO_XKB
-    else if (X11->use_xkb && event->type == X11->xkb_eventbase) {
-        XkbAnyEvent *xkbevent = (XkbAnyEvent *) event;
-        switch (xkbevent->xkb_type) {
-        case XkbStateNotify:
-            {
-                XkbStateNotifyEvent *xkbstateevent = (XkbStateNotifyEvent *) xkbevent;
-                if ((xkbstateevent->changed & XkbGroupStateMask) != 0) {
-                    qt_keymapper_private()->xkb_currentGroup = xkbstateevent->group;
-                    QKeyMapper::changeKeyboard();
-                }
-                break;
-            }
-        default:
-            break;
-        }
-    }
-#endif
 
     if (!widget) {                                // don't know this windows
         QWidget* popup = QApplication::activePopupWidget();

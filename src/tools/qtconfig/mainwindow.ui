@@ -47,7 +47,7 @@
     <x>0</x>
     <y>0</y>
     <width>815</width>
-    <height>716</height>
+    <height>546</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -854,54 +854,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="inputStyleLabel">
-          <property name="text">
-           <string>XIM Input Style:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="inputStyleCombo">
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <item>
-           <property name="text">
-            <string>On The Spot</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Over The Spot</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Off The Spot</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Root</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLabel" name="inputMethodLabel">
-          <property name="text">
-           <string>Default Input Method:</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QComboBox" name="inputMethodCombo">
-          <property name="currentIndex">
-           <number>-1</number>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -1059,8 +1011,8 @@
      <rect>
       <x>203</x>
       <y>114</y>
-      <width>121</width>
-      <height>110</height>
+      <width>106</width>
+      <height>85</height>
      </rect>
     </property>
     <property name="title">
@@ -1075,8 +1027,8 @@
      <rect>
       <x>543</x>
       <y>98</y>
-      <width>121</width>
-      <height>106</height>
+      <width>106</width>
+      <height>76</height>
      </rect>
     </property>
     <property name="title">
@@ -1172,8 +1124,6 @@
   <tabstop>strutWidthSpinBox</tabstop>
   <tabstop>strutHeightSpinBox</tabstop>
   <tabstop>rtlExtensionsCheckBox</tabstop>
-  <tabstop>inputStyleCombo</tabstop>
-  <tabstop>inputMethodCombo</tabstop>
   <tabstop>fontEmbeddingCheckBox</tabstop>
   <tabstop>fontpathListBox</tabstop>
   <tabstop>upFontpathButton</tabstop>

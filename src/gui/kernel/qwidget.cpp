@@ -66,7 +66,6 @@
 #include "qdebug.h"
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
-#include "qinputcontext_p.h"
 #include "qfileinfo.h"
 
 #if defined(Q_WS_X11)
@@ -209,9 +208,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , extraPaintEngine(0)
       , polished(0)
       , graphicsEffect(0)
-#if !defined(QT_NO_IM)
-      , imHints(Qt::ImhNone)
-#endif
       , inheritedFontResolveMask(0)
       , inheritedPaletteResolveMask(0)
       , leftmargin(0)
@@ -233,9 +229,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , isMoved(0)
       , isGLWidget(0)
       , usesDoubleBufferedGLContext(0)
-#ifndef QT_NO_IM
-      , inheritsInputMethodHints(0)
-#endif
       , inSetParent(0)
 #if defined(Q_WS_X11)
       , picture(0)
@@ -323,91 +316,6 @@ void QWidgetPrivate::scrollChildren(int dx, int dy)
             }
         }
     }
-}
-
-#ifndef QT_NO_IM
-QInputContext *QWidgetPrivate::assignedInputContext() const
-{
-    const QWidget *widget = q_func();
-    while (widget) {
-        if (QInputContext *qic = widget->d_func()->ic)
-            return qic;
-        widget = widget->parentWidget();
-    }
-    return 0;
-}
-
-QInputContext *QWidgetPrivate::inputContext() const
-{
-    if (QInputContext *qic = assignedInputContext())
-        return qic;
-    return qApp->inputContext();
-}
-
-/*!
-    This function returns the QInputContext for this widget. By
-    default the input context is inherited from the widgets
-    parent. For toplevels it is inherited from QApplication.
-
-    You can override this and set a special input context for this
-    widget by using the setInputContext() method.
-
-    \sa setInputContext()
-*/
-QInputContext *QWidget::inputContext()
-{
-    Q_D(QWidget);
-    if (!testAttribute(Qt::WA_InputMethodEnabled))
-        return 0;
-
-    return d->inputContext();
-}
-
-/*!
-  This function sets the input context \a context
-  on this widget.
-
-  Qt takes ownership of the given input \a context.
-
-  \sa inputContext()
-*/
-void QWidget::setInputContext(QInputContext *context)
-{
-    Q_D(QWidget);
-    if (!testAttribute(Qt::WA_InputMethodEnabled))
-        return;
-
-    if (context == d->ic)
-        return;
-    if (d->ic)
-        delete d->ic;
-    d->ic = context;
-    if (d->ic)
-        d->ic->setParent(this);
-}
-#endif // QT_NO_IM
-
-/*!
-    \obsolete
-
-    This function can be called on the widget that currently has focus
-    to reset the input method operating on it.
-
-    This function is providing for convenience, instead you should use
-    \l{QInputContext::}{reset()} on the input context that was
-    returned by inputContext().
-
-    \sa QInputContext, inputContext(), QInputContext::reset()
-*/
-void QWidget::resetInputContext()
-{
-    if (!hasFocus())
-        return;
-#ifndef QT_NO_IM
-    QInputContext *qic = this->inputContext();
-    if(qic)
-        qic->reset();
-#endif // QT_NO_IM
 }
 
 #ifdef QT_KEYPAD_NAVIGATION
@@ -3031,22 +2939,6 @@ void QWidgetPrivate::setEnabled_helper(bool enable)
         qt_x11_enforce_cursor(q);
     }
 #endif
-#if defined(Q_WS_MAC)
-    setEnabled_helper_sys(enable);
-#endif
-#ifndef QT_NO_IM
-    if (q->testAttribute(Qt::WA_InputMethodEnabled) && q->hasFocus()) {
-        QWidget *focusWidget = effectiveFocusWidget();
-        QInputContext *qic = focusWidget->d_func()->inputContext();
-        if (enable) {
-            if (focusWidget->testAttribute(Qt::WA_InputMethodEnabled))
-                qic->setFocusWidget(focusWidget);
-        } else {
-            qic->reset();
-            qic->setFocusWidget(0);
-        }
-    }
-#endif //QT_NO_IM
     QEvent e(QEvent::EnabledChange);
     QApplication::sendEvent(q, &e);
 }
@@ -7616,13 +7508,6 @@ bool QWidget::event(QEvent *event)
         break;
 
     case QEvent::MouseButtonPress:
-        // Don't reset input context here. Whether reset or not is
-        // a responsibility of input method. reset() will be
-        // called by mouseHandler() of input method if necessary
-        // via mousePressEvent() of text widgets.
-#if 0
-        resetInputContext();
-#endif
         mousePressEvent((QMouseEvent*)event);
         break;
 
@@ -8627,32 +8512,13 @@ QVariant QWidget::inputMethodQuery(Qt::InputMethodQuery query) const
 */
 Qt::InputMethodHints QWidget::inputMethodHints() const
 {
-#ifndef QT_NO_IM
-    const QWidgetPrivate *priv = d_func();
-    while (priv->inheritsInputMethodHints) {
-        priv = priv->q_func()->parentWidget()->d_func();
-        Q_ASSERT(priv);
-    }
-    return priv->imHints;
-#else //QT_NO_IM
+#warning noop
     return 0;
-#endif //QT_NO_IM
 }
 
 void QWidget::setInputMethodHints(Qt::InputMethodHints hints)
 {
-#ifndef QT_NO_IM
-    Q_D(QWidget);
-    if (d->imHints == hints)
-        return;
-    d->imHints = hints;
-    // Optimization to update input context only it has already been created.
-    if (d->ic || qApp->d_func()->inputContext) {
-        QInputContext *ic = inputContext();
-        if (ic)
-            ic->update();
-    }
-#endif //QT_NO_IM
+#warning noop
 }
 
 
@@ -9773,26 +9639,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         QApplication::sendEvent(this, &e);
         break; }
     case Qt::WA_NativeWindow: {
-#ifndef QT_NO_IM
-        QWidget *focusWidget = d->effectiveFocusWidget();
-        QInputContext *ic = 0;
-        if (on && !internalWinId() && hasFocus()
-            && focusWidget->testAttribute(Qt::WA_InputMethodEnabled)) {
-            ic = focusWidget->d_func()->inputContext();
-            if (ic) {
-                ic->reset();
-                ic->setFocusWidget(0);
-            }
-        }
-        if (!qApp->testAttribute(Qt::AA_DontCreateNativeWidgetSiblings) && parentWidget())
-            parentWidget()->d_func()->enforceNativeChildren();
-        if (on && !internalWinId() && testAttribute(Qt::WA_WState_Created))
-            d->createWinId();
-        if (ic && isEnabled() && focusWidget->isEnabled()
-            && focusWidget->testAttribute(Qt::WA_InputMethodEnabled)) {
-            ic->setFocusWidget(focusWidget);
-        }
-#endif //QT_NO_IM
         break;
     }
     case Qt::WA_PaintOnScreen:
@@ -9817,26 +9663,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         d->updateSystemBackground();
         break;
     case Qt::WA_TransparentForMouseEvents:
-#ifdef Q_WS_MAC
-        d->macUpdateIgnoreMouseEvents();
-#endif
-        break;
     case Qt::WA_InputMethodEnabled: {
-#ifndef QT_NO_IM
-        QWidget *focusWidget = d->effectiveFocusWidget();
-        QInputContext *ic = focusWidget->d_func()->assignedInputContext();
-        if (!ic && (!on || hasFocus()))
-            ic = focusWidget->d_func()->inputContext();
-        if (ic) {
-            if (on && hasFocus() && ic->focusWidget() != focusWidget && isEnabled()
-                && focusWidget->testAttribute(Qt::WA_InputMethodEnabled)) {
-                ic->setFocusWidget(focusWidget);
-            } else if (!on && ic->focusWidget() == focusWidget) {
-                ic->reset();
-                ic->setFocusWidget(0);
-            }
-        }
-#endif //QT_NO_IM
         break;
     }
     case Qt::WA_WindowPropagation:
@@ -10277,15 +10104,6 @@ void QWidget::setShortcutAutoRepeat(int id, bool enable)
 */
 void QWidget::updateMicroFocus()
 {
-#if !defined(QT_NO_IM) && defined(Q_WS_X11)
-    Q_D(QWidget);
-    // and optimization to update input context only it has already been created.
-    if (d->assignedInputContext() || qApp->d_func()->inputContext) {
-        QInputContext *ic = inputContext();
-        if (ic)
-            ic->update();
-    }
-#endif
 #ifndef QT_NO_ACCESSIBILITY
     if (isVisible()) {
         // ##### is this correct

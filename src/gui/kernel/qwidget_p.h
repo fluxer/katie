@@ -453,10 +453,6 @@ public:
     // sub-classes that their internals are about to be released.
     virtual void aboutToDestroy() {}
 
-#ifndef QT_NO_IM
-    QInputContext *assignedInputContext() const;
-    QInputContext *inputContext() const;
-#endif
     inline QWidget *effectiveFocusWidget() {
         QWidget *w = q_func();
         while (w->focusProxy())
@@ -583,10 +579,6 @@ public:
     // This should just ensure that all widgets are deleted by QApplication
     static QWidgetMapper *mapper;
     static QWidgetSet *allWidgets;
-#if !defined(QT_NO_IM)
-    QPointer<QInputContext> ic;
-    Qt::InputMethodHints imHints;
-#endif
 #ifdef QT_KEYPAD_NAVIGATION
     static QPointer<QWidget> editingWidget;
 #endif

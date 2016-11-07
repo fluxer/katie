@@ -27,7 +27,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs
     ${CMAKE_CURRENT_SOURCE_DIR}/imageformats
     ${CMAKE_CURRENT_SOURCE_DIR}/iconengines
-    ${CMAKE_CURRENT_SOURCE_DIR}/inputmethods
     ${CMAKE_CURRENT_SOURCE_DIR}/accessible
     ${CMAKE_CURRENT_SOURCE_DIR}/qmltooling
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
@@ -96,8 +95,6 @@ include(imageformats/tga/tga.cmake)
 if(WITH_TIFF AND TIFF_FOUND)
     include(imageformats/tiff/tiff.cmake)
 endif()
-
-include(inputmethods/imsw-multi/imsw-multi.cmake)
 
 
 if(WITH_DBUS AND DBUS_FOUND)

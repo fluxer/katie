@@ -60,9 +60,6 @@ class QDesktopWidget;
 class QStyle;
 class QEventLoop;
 class QIcon;
-#ifndef QT_NO_IM
-class QInputContext;
-#endif
 template <typename T> class QList;
 class QLocale;
 
@@ -210,11 +207,6 @@ public:
     QString sessionKey() const;
     virtual void commitData(QSessionManager& sm);
     virtual void saveState(QSessionManager& sm);
-#endif
-
-#ifndef QT_NO_IM
-    void setInputContext(QInputContext *);
-    QInputContext *inputContext() const;
 #endif
 
     static QLocale keyboardInputLocale();

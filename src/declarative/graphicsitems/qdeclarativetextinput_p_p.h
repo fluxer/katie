@@ -102,7 +102,6 @@ public:
     bool setHAlign(QDeclarativeTextInput::HAlignment, bool forceAlign = false);
     void mirrorChange();
     int calculateTextWidth();
-    bool sendMouseEventToInputContext(QGraphicsSceneMouseEvent *event, QEvent::Type eventType);
     void updateInputMethodHints();
 
     QLineControl* control;

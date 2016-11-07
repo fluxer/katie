@@ -741,7 +741,6 @@
 #include <QtGui/qpixmapcache.h>
 #include <QtGui/qstyleoption.h>
 #include <QtGui/qevent.h>
-#include <QtGui/qinputcontext.h>
 #include <QtGui/qgraphicseffect.h>
 #ifndef QT_NO_ACCESSIBILITY
 # include "qaccessible.h"
@@ -7300,15 +7299,6 @@ void QGraphicsItem::setInputMethodHints(Qt::InputMethodHints hints)
     if (!hasFocus())
         return;
     d->scene->d_func()->updateInputMethodSensitivityInViews();
-#if !defined(QT_NO_IM) && defined(Q_WS_X11)
-    QWidget *fw = QApplication::focusWidget();
-    if (!fw)
-        return;
-    for (int i = 0 ; i < scene()->views().count() ; ++i)
-        if (scene()->views().at(i) == fw)
-            if (QInputContext *inputContext = fw->inputContext())
-                inputContext->update();
-#endif
 }
 
 /*!
@@ -7320,25 +7310,7 @@ void QGraphicsItem::setInputMethodHints(Qt::InputMethodHints hints)
 */
 void QGraphicsItem::updateMicroFocus()
 {
-#if !defined(QT_NO_IM) && defined(Q_WS_X11)
-    if (QWidget *fw = QApplication::focusWidget()) {
-        if (scene()) {
-            for (int i = 0 ; i < scene()->views().count() ; ++i) {
-                if (scene()->views().at(i) == fw) {
-                    if (QInputContext *inputContext = fw->inputContext()) {
-                        inputContext->update();
-#ifndef QT_NO_ACCESSIBILITY
-                        // ##### is this correct
-                        if (toGraphicsObject())
-                            QAccessible::updateAccessibility(toGraphicsObject(), 0, QAccessible::StateChanged);
-#endif
-                        break;
-                    }
-                }
-            }
-        }
-    }
-#endif
+#warning noop
 }
 
 /*!
@@ -9919,18 +9891,6 @@ bool QGraphicsTextItem::sceneEvent(QEvent *event)
     case QEvent::GraphicsSceneMouseRelease:
     case QEvent::KeyPress:
     case QEvent::KeyRelease:
-        // Reset the focus widget's input context, regardless
-        // of how this item gained or lost focus.
-        if (QWidget *fw = qApp->focusWidget()) {
-#ifndef QT_NO_IM
-            if (QInputContext *qic = fw->inputContext()) {
-                if (event->type() == QEvent::FocusIn || event->type() == QEvent::FocusOut)
-                    qic->reset();
-                else
-                    qic->update();
-            }
-#endif //QT_NO_IM
-        }
         break;
     case QEvent::ShortcutOverride:
         dd->sendControlEvent(event);

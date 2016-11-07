@@ -120,10 +120,6 @@ public:
     Qt::LayoutDirection keyboardInputDirection;
 
 #if defined(Q_WS_X11)
-
-    QList<int> possibleKeysXKB(QKeyEvent *event);
-    QList<int> possibleKeysCore(QKeyEvent *event);
-
     bool translateKeyEventInternal(QWidget *keywidget,
                                    const XEvent *,
                                    KeySym &keysym,
@@ -137,7 +133,6 @@ public:
                            const XEvent *,
                            bool grab);
 
-    int xkb_currentGroup;
     QXCoreDesc coreDesc;
 #endif
 };

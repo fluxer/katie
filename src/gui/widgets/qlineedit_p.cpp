@@ -49,10 +49,6 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#ifndef QT_NO_IM
-#include "qinputcontext.h"
-#include "qlist.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -238,39 +234,6 @@ void QLineEditPrivate::updatePasswordEchoEditing(bool editing)
     Q_Q(QLineEdit);
     control->updatePasswordEchoEditing(editing);
     q->setAttribute(Qt::WA_InputMethodEnabled, shouldEnableInputMethod());
-}
-
-/*!
-  This function is not intended as polymorphic usage. Just a shared code
-  fragment that calls QInputContext::mouseHandler for this
-  class.
-*/
-bool QLineEditPrivate::sendMouseEventToInputContext( QMouseEvent *e )
-{
-#if !defined QT_NO_IM
-    Q_Q(QLineEdit);
-    if ( control->composeMode() ) {
-	int tmp_cursor = xToPos(e->pos().x());
-	int mousePos = tmp_cursor - control->cursor();
-	if ( mousePos < 0 || mousePos > control->preeditAreaText().length() ) {
-            mousePos = -1;
-	    // don't send move events outside the preedit area
-            if ( e->type() == QEvent::MouseMove )
-                return true;
-        }
-
-        QInputContext *qic = q->inputContext();
-        if ( qic )
-            // may be causing reset() in some input methods
-            qic->mouseHandler(mousePos, e);
-        if (!control->preeditAreaText().isEmpty())
-            return true;
-    }
-#else
-    Q_UNUSED(e);
-#endif
-
-    return false;
 }
 
 #ifndef QT_NO_DRAGANDDROP

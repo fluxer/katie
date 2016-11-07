@@ -76,7 +76,6 @@
 #include <qvariant.h>
 #include <qurl.h>
 #include <qdesktopservices.h>
-#include <qinputcontext.h>
 #include <qtooltip.h>
 #include <qstyleoption.h>
 #include <qlineedit.h>
@@ -1515,11 +1514,6 @@ void QTextControlPrivate::mousePressEvent(QEvent *e, Qt::MouseButton button, con
 {
     Q_Q(QTextControl);
 
-    if (sendMouseEventToInputContext(
-            e, QEvent::MouseButtonPress, button, pos, modifiers, buttons, globalPos)) {
-        return;
-    }
-
     if (interactionFlags & Qt::LinksAccessibleByMouse) {
         anchorOnMousePress = q->anchorAt(pos);
 
@@ -1614,11 +1608,6 @@ void QTextControlPrivate::mouseMoveEvent(QEvent *e, Qt::MouseButton button, cons
 {
     Q_Q(QTextControl);
 
-    if (sendMouseEventToInputContext(
-            e, QEvent::MouseMove, button, mousePos, modifiers, buttons, globalPos)) {
-        return;
-    }
-
     if (interactionFlags & Qt::LinksAccessibleByMouse) {
         QString anchor = q->anchorAt(mousePos);
         if (anchor != highlightedAnchor) {
@@ -1696,11 +1685,6 @@ void QTextControlPrivate::mouseReleaseEvent(QEvent *e, Qt::MouseButton button, c
 {
     Q_Q(QTextControl);
 
-    if (sendMouseEventToInputContext(
-            e, QEvent::MouseButtonRelease, button, pos, modifiers, buttons, globalPos)) {
-        return;
-    }
-
     const QTextCursor oldSelection = cursor;
     const int oldCursorPos = cursor.position();
 
@@ -1763,11 +1747,6 @@ void QTextControlPrivate::mouseDoubleClickEvent(QEvent *e, Qt::MouseButton butto
 {
     Q_Q(QTextControl);
 
-    if (sendMouseEventToInputContext(
-            e, QEvent::MouseButtonDblClick, button, pos, modifiers, buttons, globalPos)) {
-        return;
-    }
-
     if (button != Qt::LeftButton
         || !(interactionFlags & Qt::TextSelectableByMouse)) {
         e->ignore();
@@ -1799,45 +1778,6 @@ void QTextControlPrivate::mouseDoubleClickEvent(QEvent *e, Qt::MouseButton butto
 #endif
         emit q->cursorPositionChanged();
     }
-}
-
-bool QTextControlPrivate::sendMouseEventToInputContext(
-        QEvent *e, QEvent::Type eventType, Qt::MouseButton button, const QPointF &pos,
-        Qt::KeyboardModifiers modifiers, Qt::MouseButtons buttons, const QPoint &globalPos)
-{
-#if !defined(QT_NO_IM)
-    Q_Q(QTextControl);
-
-    QTextLayout *layout = cursor.block().layout();
-    if (contextWidget && layout && !layout->preeditAreaText().isEmpty()) {
-        QInputContext *ctx = inputContext();
-        int cursorPos = q->hitTest(pos, Qt::FuzzyHit) - cursor.position();
-
-        if (cursorPos < 0 || cursorPos > layout->preeditAreaText().length()) {
-            cursorPos = -1;
-            // don't send move events outside the preedit area
-            if (eventType == QEvent::MouseMove)
-                return true;
-        }
-        if (ctx) {
-            QMouseEvent ev(eventType, contextWidget->mapFromGlobal(globalPos), globalPos,
-                           button, buttons, modifiers);
-            ctx->mouseHandler(cursorPos, &ev);
-            e->setAccepted(ev.isAccepted());
-        }
-        if (!layout->preeditAreaText().isEmpty())
-            return true;
-    }
-#else
-    Q_UNUSED(e);
-    Q_UNUSED(eventType);
-    Q_UNUSED(button);
-    Q_UNUSED(pos);
-    Q_UNUSED(modifiers);
-    Q_UNUSED(buttons);
-    Q_UNUSED(globalPos);
-#endif
-    return false;
 }
 
 void QTextControlPrivate::contextMenuEvent(const QPoint &screenPos, const QPointF &docPos, QWidget *contextWidget)
@@ -2157,17 +2097,6 @@ QMenu *QTextControl::createStandardContextMenu(const QPointF &pos, QWidget *pare
         a = menu->addAction(tr("Select All") + ACCEL_KEY(QKeySequence::SelectAll), this, SLOT(selectAll()));
         a->setEnabled(!d->doc->isEmpty());
     }
-
-#if !defined(QT_NO_IM)
-    if (d->contextWidget) {
-        QInputContext *qic = d->inputContext();
-        if (qic) {
-            QList<QAction *> imActions = qic->actions();
-            for (int i = 0; i < imActions.size(); ++i)
-                menu->addAction(imActions.at(i));
-        }
-    }
-#endif
 
 #if defined(Q_WS_X11)
     if ((d->interactionFlags & Qt::TextEditable) && qt_use_rtl_extensions) {

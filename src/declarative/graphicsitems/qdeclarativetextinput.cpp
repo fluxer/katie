@@ -1111,8 +1111,6 @@ Handles the given mouse \a event.
 void QDeclarativeTextInput::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_D(QDeclarativeTextInput);
-    if (d->sendMouseEventToInputContext(event, QEvent::MouseButtonDblClick))
-        return;
     if (d->selectByMouse) {
         int cursor = d->xToPos(event->pos().x());
         d->control->selectWordAtPos(cursor);
@@ -1125,8 +1123,6 @@ void QDeclarativeTextInput::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *even
 void QDeclarativeTextInput::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_D(QDeclarativeTextInput);
-    if (d->sendMouseEventToInputContext(event, QEvent::MouseButtonPress))
-        return;
     if(d->focusOnPress){
         bool hadActiveFocus = hasActiveFocus();
         forceActiveFocus();
@@ -1155,8 +1151,6 @@ void QDeclarativeTextInput::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void QDeclarativeTextInput::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_D(QDeclarativeTextInput);
-    if (d->sendMouseEventToInputContext(event, QEvent::MouseMove))
-        return;
     if (d->selectPressed) {
         if (qAbs(int(event->pos().x() - d->pressPos.x())) > QApplication::startDragDistance())
             setKeepMouseGrab(true);
@@ -1174,8 +1168,6 @@ Handles the given mouse \a event.
 void QDeclarativeTextInput::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_D(QDeclarativeTextInput);
-    if (d->sendMouseEventToInputContext(event, QEvent::MouseButtonRelease))
-        return;
     if (d->selectPressed) {
         d->selectPressed = false;
         setKeepMouseGrab(false);
@@ -1193,54 +1185,6 @@ void QDeclarativeTextInput::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     d->control->processEvent(event);
     if (!event->isAccepted())
         QDeclarativePaintedItem::mouseReleaseEvent(event);
-}
-
-bool QDeclarativeTextInputPrivate::sendMouseEventToInputContext(
-        QGraphicsSceneMouseEvent *event, QEvent::Type eventType)
-{
-#if !defined QT_NO_IM
-    Q_Q(QDeclarativeTextInput);
-
-    QWidget *widget = event->widget();
-    // event->widget() is null, if this is delayed event from QDeclarativeFlickable.
-    if (!widget && qApp) {
-        QGraphicsView *view = qobject_cast<QGraphicsView*>(qApp->focusWidget());
-        if (view && view->scene() && view->scene() == q->scene())
-            widget = view->viewport();
-    }
-
-    if (widget && control->composeMode()) {
-        int tmp_cursor = xToPos(event->pos().x());
-        int mousePos = tmp_cursor - control->cursor();
-        if (mousePos < 0 || mousePos > control->preeditAreaText().length()) {
-            mousePos = -1;
-            // don't send move events outside the preedit area
-            if (eventType == QEvent::MouseMove)
-                return true;
-        }
-
-        QInputContext *qic = widget->inputContext();
-        if (qic) {
-            QMouseEvent mouseEvent(
-                    eventType,
-                    widget->mapFromGlobal(event->screenPos()),
-                    event->screenPos(),
-                    event->button(),
-                    event->buttons(),
-                    event->modifiers());
-            // may be causing reset() in some input methods
-            qic->mouseHandler(mousePos, &mouseEvent);
-            event->setAccepted(mouseEvent.isAccepted());
-        }
-        if (!control->preeditAreaText().isEmpty())
-            return true;
-    }
-#else
-    Q_UNUSED(event);
-    Q_UNUSED(eventType)
-#endif
-
-    return false;
 }
 
 bool QDeclarativeTextInput::sceneEvent(QEvent *event)

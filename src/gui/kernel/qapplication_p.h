@@ -75,7 +75,6 @@ QT_BEGIN_NAMESPACE
 class QClipboard;
 class QGraphicsScene;
 class QGraphicsSystem;
-class QInputContext;
 class QObject;
 class QWidget;
 class QSocketNotifier;
@@ -240,7 +239,6 @@ public:
     QShortcutMap shortcutMap;
 #endif
 
-    static QInputContext *inputContext;
     static Qt::MouseButtons mouse_buttons;
     static Qt::KeyboardModifiers modifier_buttons;
 

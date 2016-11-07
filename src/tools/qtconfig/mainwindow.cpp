@@ -61,8 +61,6 @@
 #include <QMessageBox>
 #include <QStyle>
 #include <QEvent>
-#include <QInputContext>
-#include <QInputContextFactory>
 #include <QDebug>
 #include <QPixmap>
 
@@ -125,10 +123,7 @@ static const char *interface_text = QT_TRANSLATE_NOOP("MainWindow",
 "<p>The Global Strut setting is useful for people who require a "
 "minimum size for all widgets (e.g. when using a touch panel or for users "
 "who are visually impaired).  Leaving the Global Strut width and height "
-"at 0 will disable the Global Strut feature</p>"
-"<p>XIM (Extended Input Methods) are used for entering characters in "
-"languages that have large character sets, for example, Chinese and "
-"Japanese.");
+"at 0 will disable the Global Strut feature.");
 // ### What does the 'Enhanced support for languages written R2L do?
 
 static const char *printer_text = QT_TRANSLATE_NOOP("MainWindow",
@@ -208,8 +203,6 @@ MainWindow::MainWindow()
     connect(ui->resolveLinksCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
     connect(ui->fontEmbeddingCheckBox, SIGNAL(clicked()), SLOT(somethingModified()));
     connect(ui->rtlExtensionsCheckBox, SIGNAL(toggled(bool)), SLOT(somethingModified()));
-    connect(ui->inputStyleCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
-    connect(ui->inputMethodCombo, SIGNAL(activated(int)), SLOT(somethingModified()));
     connect(ui->guiStyleCombo, SIGNAL(activated(QString)), SLOT(styleSelected(QString)));
     connect(ui->familySubstitutionCombo, SIGNAL(activated(QString)), SLOT(substituteSelected(QString)));
     connect(ui->tunePaletteButton, SIGNAL(clicked()), SLOT(tunePalette()));
@@ -368,38 +361,6 @@ MainWindow::MainWindow()
     ui->rtlExtensionsCheckBox->setChecked(settings.value(QLatin1String("useRtlExtensions"), false)
                                           .toBool());
 
-#ifdef Q_WS_X11
-    QString settingsInputStyle = settings.value(QLatin1String("XIMInputStyle")).toString();
-    if (!settingsInputStyle.isEmpty())
-      ui->inputStyleCombo->setCurrentIndex(ui->inputStyleCombo->findText(settingsInputStyle));
-#else
-    ui->inputStyleCombo->hide();
-    ui->inputStyleLabel->hide();
-#endif
-
-#if defined(Q_WS_X11) && !defined(QT_NO_XIM)
-    QStringList inputMethodCombo = QInputContextFactory::keys();
-    int inputMethodComboIndex = -1;
-    QString defaultInputMethod = settings.value(QLatin1String("DefaultInputMethod"), QLatin1String("xim")).toString();
-    for (int i = inputMethodCombo.size()-1; i >= 0; --i) {
-        const QString &im = inputMethodCombo.at(i);
-        if (im.contains(QLatin1String("imsw"))) {
-            inputMethodCombo.removeAt(i);
-            if (inputMethodComboIndex > i)
-                --inputMethodComboIndex;
-        } else if (im == defaultInputMethod) {
-            inputMethodComboIndex = i;
-        }
-    }
-    if (inputMethodComboIndex == -1 && !inputMethodCombo.isEmpty())
-        inputMethodComboIndex = 0;
-    ui->inputMethodCombo->addItems(inputMethodCombo);
-    ui->inputMethodCombo->setCurrentIndex(inputMethodComboIndex);
-#else
-    ui->inputMethodCombo->hide();
-    ui->inputMethodLabel->hide();
-#endif
-
     ui->fontEmbeddingCheckBox->setChecked(settings.value(QLatin1String("embedFonts"), true)
                                           .toBool());
     fontpaths = settings.value(QLatin1String("fontPath")).toStringList();
@@ -475,21 +436,6 @@ void MainWindow::fileSave()
         settings.setValue(QLatin1String("globalStrut/height"), strut.height());
 
         settings.setValue(QLatin1String("useRtlExtensions"), ui->rtlExtensionsCheckBox->isChecked());
-
-#ifdef Q_WS_X11
-        QString style = ui->inputStyleCombo->currentText();
-        QString str = QLatin1String("On The Spot");
-        if (style == tr("Over The Spot"))
-            str = QLatin1String("Over The Spot");
-        else if (style == tr("Off The Spot"))
-            str = QLatin1String("Off The Spot");
-        else if (style == tr("Root"))
-            str = QLatin1String("Root");
-        settings.setValue(QLatin1String("XIMInputStyle"), str);
-#endif
-#if defined(Q_WS_X11) && !defined(QT_NO_XIM)
-        settings.setValue(QLatin1String("DefaultInputMethod"), ui->inputMethodCombo->currentText());
-#endif
 
         QStringList effects;
         if (ui->effectsCheckBox->isChecked()) {

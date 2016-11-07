@@ -242,7 +242,6 @@
 #include <QtGui/qstyleoption.h>
 #include <QtGui/qtooltip.h>
 #include <QtGui/qtransform.h>
-#include <QtGui/qinputcontext.h>
 #include <QtGui/qgraphicseffect.h>
 #ifndef QT_NO_ACCESSIBILITY
 # include <QtGui/qaccessible.h>
@@ -812,23 +811,6 @@ void QGraphicsScenePrivate::setFocusItemHelper(QGraphicsItem *item,
 
     if (focusItem) {
         lastFocusItem = focusItem;
-
-#ifndef QT_NO_IM
-        if (lastFocusItem
-            && (lastFocusItem->flags() & QGraphicsItem::ItemAcceptsInputMethod)) {
-            // Close any external input method panel. This happens
-            // automatically by removing WA_InputMethodEnabled on
-            // the views, but if we are changing focus, we have to
-            // do it ourselves.
-            for (int i = 0; i < views.size(); ++i)
-                if (views.at(i)->inputContext())
-                    views.at(i)->inputContext()->reset();
-        }
-
-        focusItem = 0;
-        QFocusEvent event(QEvent::FocusOut, focusReason);
-        sendEvent(lastFocusItem, &event);
-#endif //QT_NO_IM
     }
 
     // This handles the case that the item has been removed from the

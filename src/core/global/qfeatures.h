@@ -419,16 +419,6 @@
 #define QT_NO_FTP
 #endif
 
-// QInputContext
-#if !defined(QT_NO_IM) && (defined(QT_NO_LIBRARY))
-#define QT_NO_IM
-#endif
-
-// Phonon::PlatformPlugin
-#if !defined(QT_NO_PHONON_PLATFORMPLUGIN) && (defined(QT_NO_LIBRARY))
-#define QT_NO_PHONON_PLATFORMPLUGIN
-#endif
-
 // QScrollArea
 #if !defined(QT_NO_SCROLLAREA) && (defined(QT_NO_SCROLLBAR))
 #define QT_NO_SCROLLAREA
@@ -757,11 +747,6 @@
 // QPrintPreviewDialog
 #if !defined(QT_NO_PRINTPREVIEWDIALOG) && (defined(QT_NO_PRINTPREVIEWWIDGET) || defined(QT_NO_PRINTDIALOG) || defined(QT_NO_TOOLBAR))
 #define QT_NO_PRINTPREVIEWDIALOG
-#endif
-
-//Input Method
-#if !defined(QT_NO_XIM) && defined(QT_NO_IM)
-#define QT_NO_XIM
 #endif
 
 #endif

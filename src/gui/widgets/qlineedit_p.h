@@ -119,8 +119,6 @@ public:
     static const int verticalMargin;
     static const int horizontalMargin;
 
-    bool sendMouseEventToInputContext(QMouseEvent *e);
-
     QRect adjustedContentsRect() const;
 
     void _q_handleWindowActivate();

@@ -48,10 +48,6 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#ifndef QT_NO_IM
-#include "qinputcontext.h"
-#include "qlist.h"
-#endif
 #include "qapplication.h"
 #ifndef QT_NO_GRAPHICSVIEW
 #include "qgraphicssceneevent.h"
@@ -313,7 +309,6 @@ void QLineControl::_q_deleteSelected()
         return;
 
     int priorState = m_undoState;
-    emit resetInputContext();
     removeSelectedText();
     separate();
     finishChange(priorState);
@@ -502,9 +497,6 @@ void QLineControl::processInputMethodEvent(QInputMethodEvent *event)
             cursorPositionChanged = true;
         }
     }
-#ifndef QT_NO_IM
-    setPreeditArea(m_cursor, event->preeditString());
-#endif //QT_NO_IM
     const int oldPreeditCursor = m_preeditCursor;
     m_preeditCursor = event->preeditString().length();
     m_hideCursor = false;
@@ -689,7 +681,6 @@ void QLineControl::internalSetText(const QString &txt, int pos, bool edited)
 {
     cancelPasswordEchoTimer();
     internalDeselect();
-    emit resetInputContext();
     QString oldText = m_text;
     if (m_maskData) {
         m_text = maskString(0, txt, true);

@@ -69,11 +69,6 @@
 
 //#define ALIEN_DEBUG
 
-#if !defined(QT_NO_IM)
-#include "qinputcontext.h"
-#include "qinputcontextfactory.h"
-#endif
-
 #include "qwidget_p.h"
 
 #define XCOORD_MAX 16383
@@ -889,13 +884,6 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
     if (extra && !extra->mask.isEmpty() && q->internalWinId())
         XShapeCombineRegion(X11->display, q->internalWinId(), ShapeBounding, 0, 0,
                             extra->mask.handle(), ShapeSet);
-#ifndef QT_NO_IM
-    if (q->hasFocus() && q->testAttribute(Qt::WA_InputMethodEnabled)) {
-        QInputContext *inputContext = q->inputContext();
-        if (inputContext)
-            inputContext->setFocusWidget(q);
-    }
-#endif
     if (destroyw) {
         qt_XDestroyWindow(q, dpy, destroyw);
         if (QTLWExtra *topData = maybeTopData()) {
@@ -1087,17 +1075,6 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
         extern void qPRCleanup(QWidget *widget); // from qapplication_x11.cpp
         if (testAttribute(Qt::WA_WState_Reparented))
             qPRCleanup(this);
-#ifndef QT_NO_IM
-        if(d->ic) {
-            delete d->ic;
-        } else {
-            // release previous focus information participating with
-            // preedit preservation of qic
-            QInputContext *qic = QApplicationPrivate::inputContext;
-            if (qic)
-                qic->widgetDestroyed(this);
-        }
-#endif
     }
 }
 
@@ -1279,9 +1256,6 @@ void QWidgetPrivate::setParent_sys(QWidget *parent, Qt::WindowFlags f)
         || (!q->isWindow() && q->parentWidget() && q->parentWidget()->testAttribute(Qt::WA_DropSiteRegistered))) {
         q->setAttribute(Qt::WA_DropSiteRegistered, true);
     }
-#if !defined(QT_NO_IM)
-    ic = 0;
-#endif
     invalidateBuffer(q->rect());
 #ifdef ALIEN_DEBUG
     qDebug() << "QWidgetPrivate::setParent_sys END" << q;

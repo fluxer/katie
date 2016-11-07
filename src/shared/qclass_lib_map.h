@@ -189,10 +189,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QPixmap", "QtGui/qpixmap.h"},
     { "QPixmapCache", "QtGui/qpixmapcache.h"},
     { "Key", "QtGui/qpixmapcache.h"},
-    { "QInputContext", "QtGui/qinputcontext.h"},
-    { "QInputContextFactory", "QtGui/qinputcontextfactory.h"},
-    { "QInputContextFactoryInterface", "QtGui/qinputcontextplugin.h"},
-    { "QInputContextPlugin", "QtGui/qinputcontextplugin.h"},
     { "QAccessible", "QtGui/qaccessible.h"},
     { "QAccessibleInterface", "QtGui/qaccessible.h"},
     { "QAccessibleEvent", "QtGui/qaccessible.h"},
@@ -723,6 +719,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 717;
+static const int qclass_lib_count = 713;
 
 #endif

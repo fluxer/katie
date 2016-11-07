@@ -122,10 +122,6 @@ set(GUI_PUBLIC_HEADERS
     QImageReader
     QImageTextKeyLang
     QImageWriter
-    QInputContext
-    QInputContextFactory
-    QInputContextFactoryInterface
-    QInputContextPlugin
     QInputDialog
     QInputMethodEvent
     QItemDelegate
@@ -403,7 +399,6 @@ include(effects/effects.cmake)
 include(egl/egl.cmake)
 include(graphicsview/graphicsview.cmake)
 include(image/image.cmake)
-include(inputmethod/inputmethod.cmake)
 include(itemviews/itemviews.cmake)
 include(kernel/kernel.cmake)
 include(math3d/math3d.cmake)
@@ -427,7 +422,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/egl
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview
     ${CMAKE_CURRENT_SOURCE_DIR}/image
-    ${CMAKE_CURRENT_SOURCE_DIR}/inputmethod
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel
     ${CMAKE_CURRENT_SOURCE_DIR}/math3d
@@ -444,7 +438,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/egl
     ${CMAKE_CURRENT_BINARY_DIR}/graphicsview
     ${CMAKE_CURRENT_BINARY_DIR}/image
-    ${CMAKE_CURRENT_BINARY_DIR}/inputmethod
     ${CMAKE_CURRENT_BINARY_DIR}/itemviews
     ${CMAKE_CURRENT_BINARY_DIR}/kernel
     ${CMAKE_CURRENT_BINARY_DIR}/math3d

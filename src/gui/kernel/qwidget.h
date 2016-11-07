@@ -81,9 +81,6 @@ class QDragLeaveEvent;
 class QDropEvent;
 class QShowEvent;
 class QHideEvent;
-#ifndef QT_NO_IM
-class QInputContext;
-#endif
 class QIcon;
 class QWindowSurface;
 class QLocale;
@@ -560,10 +557,6 @@ public:
     QPaintEngine *paintEngine() const;
 
     void ensurePolished() const;
-#ifndef QT_NO_IM
-    QInputContext *inputContext();
-    void setInputContext(QInputContext *);
-#endif
     bool isAncestorOf(const QWidget *child) const;
 
 #ifdef QT_KEYPAD_NAVIGATION
@@ -636,8 +629,6 @@ public:
     Qt::InputMethodHints inputMethodHints() const;
     void setInputMethodHints(Qt::InputMethodHints hints);
 
-protected:
-    void resetInputContext();
 protected Q_SLOTS:
     void updateMicroFocus();
 protected:

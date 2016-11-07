@@ -67,10 +67,6 @@
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif
-#ifndef QT_NO_IM
-#include "qinputcontext.h"
-#include "qlist.h"
-#endif
 #include "qabstractitemview.h"
 #include "qstylesheetstyle_p.h"
 
@@ -1200,7 +1196,6 @@ void QLineEdit::deselect()
 */
 void QLineEdit::insert(const QString &newText)
 {
-//     q->resetInputContext(); //#### FIX ME IN QT
     Q_D(QLineEdit);
     d->control->insert(newText);
 }
@@ -1213,7 +1208,6 @@ void QLineEdit::insert(const QString &newText)
 void QLineEdit::clear()
 {
     Q_D(QLineEdit);
-    resetInputContext();
     d->control->clear();
 }
 
@@ -1226,7 +1220,6 @@ void QLineEdit::clear()
 void QLineEdit::undo()
 {
     Q_D(QLineEdit);
-    resetInputContext();
     d->control->undo();
 }
 
@@ -1237,7 +1230,6 @@ void QLineEdit::undo()
 void QLineEdit::redo()
 {
     Q_D(QLineEdit);
-    resetInputContext();
     d->control->redo();
 }
 
@@ -1346,10 +1338,6 @@ bool QLineEdit::event(QEvent * e)
         else if (timerId == d->tripleClickTimer.timerId())
             d->tripleClickTimer.stop();
     } else if (e->type() == QEvent::ContextMenu) {
-#ifndef QT_NO_IM
-        if (d->control->composeMode())
-            return true;
-#endif
         //d->separate();
     } else if (e->type() == QEvent::WindowActivate) {
         QTimer::singleShot(0, this, SLOT(_q_handleWindowActivate()));
@@ -1391,8 +1379,6 @@ bool QLineEdit::event(QEvent * e)
 void QLineEdit::mousePressEvent(QMouseEvent* e)
 {
     Q_D(QLineEdit);
-    if (d->sendMouseEventToInputContext(e))
-        return;
     if (e->button() == Qt::RightButton)
         return;
 #ifdef QT_KEYPAD_NAVIGATION
@@ -1428,9 +1414,6 @@ void QLineEdit::mousePressEvent(QMouseEvent* e)
 void QLineEdit::mouseMoveEvent(QMouseEvent * e)
 {
     Q_D(QLineEdit);
-    if (d->sendMouseEventToInputContext(e))
-        return;
-
     if (e->buttons() & Qt::LeftButton) {
 #ifndef QT_NO_DRAGANDDROP
         if (d->dndTimer.isActive()) {
@@ -1449,8 +1432,6 @@ void QLineEdit::mouseMoveEvent(QMouseEvent * e)
 void QLineEdit::mouseReleaseEvent(QMouseEvent* e)
 {
     Q_D(QLineEdit);
-    if (d->sendMouseEventToInputContext(e))
-        return;
 #ifndef QT_NO_DRAGANDDROP
     if (e->button() == Qt::LeftButton) {
         if (d->dndTimer.isActive()) {
@@ -1481,8 +1462,6 @@ void QLineEdit::mouseReleaseEvent(QMouseEvent* e)
 void QLineEdit::mouseDoubleClickEvent(QMouseEvent* e)
 {
     Q_D(QLineEdit);
-    if (d->sendMouseEventToInputContext(e))
-        return;
     if (e->button() == Qt::LeftButton) {
         d->control->selectWordAtPos(d->xToPos(e->pos().x()));
         d->tripleClickTimer.start(QApplication::doubleClickInterval(), this);
@@ -2024,16 +2003,7 @@ QMenu *QLineEdit::createStandardContextMenu()
     d->selectAllAction = action;
     connect(action, SIGNAL(triggered()), SLOT(selectAll()));
 
-#if !defined(QT_NO_IM)
-    QInputContext *qic = inputContext();
-    if (qic) {
-        QList<QAction *> imActions = qic->actions();
-        for (int i = 0; i < imActions.size(); ++i)
-            popup->addAction(imActions.at(i));
-    }
-#endif
-
-#if defined(Q_WS_WIN) || defined(Q_WS_X11)
+#if defined(Q_WS_X11)
     if (!d->control->isReadOnly() && qt_use_rtl_extensions) {
 #else
     if (!d->control->isReadOnly()) {

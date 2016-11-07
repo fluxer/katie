@@ -71,15 +71,10 @@
 #include "qmessagebox.h"
 #include <QtGui/qgraphicsproxywidget.h>
 
-#include "qinputcontext.h"
 #include "qkeymapper_p.h"
 
 #ifdef Q_WS_X11
 #include <qt_x11_p.h>
-#endif
-
-#if defined(Q_WS_X11)
-#include "qinputcontextfactory.h"
 #endif
 
 #include "qguiplatformplugin_p.h"
@@ -131,8 +126,6 @@ Q_CORE_EXPORT void qt_call_post_routines();
 
 QApplication::Type qt_appType=QApplication::Tty;
 QApplicationPrivate *QApplicationPrivate::self = 0;
-
-QInputContext *QApplicationPrivate::inputContext = 0;
 
 bool QApplicationPrivate::quitOnLastWindowClosed = true;
 bool QApplicationPrivate::autoSipEnabled = true;
@@ -1870,20 +1863,6 @@ void QApplicationPrivate::setFocusWidget(QWidget *focus, Qt::FocusReason reason)
         }
         QWidget *prev = focus_widget;
         focus_widget = focus;
-#ifndef QT_NO_IM
-        if (prev && ((reason != Qt::PopupFocusReason && reason != Qt::MenuBarFocusReason
-            && prev->testAttribute(Qt::WA_InputMethodEnabled))
-            // Do reset the input context, in case the new focus widget won't accept keyboard input
-            // or it is not created fully yet.
-            || (focus_widget && (!focus_widget->testAttribute(Qt::WA_InputMethodEnabled)
-            || !focus_widget->testAttribute(Qt::WA_WState_Created))))) {
-             QInputContext *qic = prev->inputContext();
-            if(qic) {
-                qic->reset();
-                qic->setFocusWidget(0);
-            }
-        }
-#endif //QT_NO_IM
 
         if(focus_widget)
             focus_widget->d_func()->setFocus_sys();
@@ -1899,16 +1878,6 @@ void QApplicationPrivate::setFocusWidget(QWidget *focus, Qt::FocusReason reason)
                         prev->setEditFocus(false);
                 }
 #endif
-#ifndef QT_NO_IM
-                if (focus) {
-                    QInputContext *prevIc;
-                    prevIc = prev->inputContext();
-                    if (prevIc && prevIc != focus->inputContext()) {
-                        QEvent closeSIPEvent(QEvent::CloseSoftwareInputPanel);
-                        QApplication::sendEvent(prev, &closeSIPEvent);
-                    }
-                }
-#endif
                 QFocusEvent out(QEvent::FocusOut, reason);
                 QPointer<QWidget> that = prev;
                 QApplication::sendEvent(prev, &out);
@@ -1916,14 +1885,6 @@ void QApplicationPrivate::setFocusWidget(QWidget *focus, Qt::FocusReason reason)
                     QApplication::sendEvent(that->style(), &out);
             }
             if(focus && QApplicationPrivate::focus_widget == focus) {
-#ifndef QT_NO_IM
-                if (focus->testAttribute(Qt::WA_InputMethodEnabled)) {
-                    QInputContext *qic = focus->inputContext();
-                    if (qic && focus->testAttribute(Qt::WA_WState_Created)
-                        && focus->isEnabled())
-                        qic->setFocusWidget(focus);
-                }
-#endif //QT_NO_IM
                 QFocusEvent in(QEvent::FocusIn, reason);
                 QPointer<QWidget> that = focus;
                 QApplication::sendEvent(focus, &in);
@@ -3586,14 +3547,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
             QPoint relpos = mouse->pos();
 
             if (e->spontaneous()) {
-#ifndef QT_NO_IM
-                QInputContext *ic = w->inputContext();
-                if (ic
-                        && w->testAttribute(Qt::WA_InputMethodEnabled)
-                        && ic->filterEvent(mouse))
-                    return true;
-#endif
-
                 if (e->type() == QEvent::MouseButtonPress) {
                     QApplicationPrivate::giveFocusAccordingToFocusPolicy(w,
                                                                          Qt::ClickFocus,
@@ -3925,15 +3878,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
     }
     case QEvent::RequestSoftwareInputPanel:
     case QEvent::CloseSoftwareInputPanel:
-#ifndef QT_NO_IM
-        if (receiver->isWidgetType()) {
-            QWidget *w = static_cast<QWidget *>(receiver);
-            QInputContext *ic = w->inputContext();
-            if (ic && ic->filterEvent(e)) {
-                break;
-            }
-        }
-#endif
         res = d->notify_helper(receiver, e);
         break;
 
@@ -4756,59 +4700,6 @@ bool QApplication::keypadNavigationEnabled()
 
     \sa QCoreApplication::instance()
 */
-
-#ifndef QT_NO_IM
-// ************************************************************************
-// Input Method support
-// ************************************************************************
-
-/*!
-    This function replaces the QInputContext instance used by the application
-    with \a inputContext.
-
-    Qt takes ownership of the given \a inputContext.
-
-    \sa inputContext()
-*/
-void QApplication::setInputContext(QInputContext *inputContext)
-{
-    if (inputContext == QApplicationPrivate::inputContext)
-        return;
-    if (!inputContext) {
-        qWarning("QApplication::setInputContext: called with 0 input context");
-        return;
-    }
-    delete QApplicationPrivate::inputContext;
-    QApplicationPrivate::inputContext = inputContext;
-    QApplicationPrivate::inputContext->setParent(this);
-}
-
-/*!
-    Returns the QInputContext instance used by the application.
-
-    \sa setInputContext()
-*/
-QInputContext *QApplication::inputContext() const
-{
-    Q_D(const QApplication);
-    Q_UNUSED(d);// only static members being used.
-    if (QApplicationPrivate::is_app_closing)
-        return d->inputContext;
-#ifdef Q_WS_X11
-    if (!X11)
-        return 0;
-    if (!d->inputContext) {
-        QApplication *that = const_cast<QApplication *>(this);
-        QInputContext *qic = QInputContextFactory::create(X11->default_im, that);
-        // fallback to default X Input Method.
-        if (!qic)
-            qic = QInputContextFactory::create(QLatin1String("xim"), that);
-        that->d_func()->inputContext = qic;
-    }
-#endif
-    return d->inputContext;
-}
-#endif // QT_NO_IM
 
 //Returns the current platform used by keyBindings
 uint QApplicationPrivate::currentPlatform(){

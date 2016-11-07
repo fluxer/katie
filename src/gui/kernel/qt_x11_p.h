@@ -112,10 +112,6 @@
 # include "X11/extensions/sync.h"
 #endif
 
-#ifndef QT_NO_XKB
-#  include <X11/XKBlib.h>
-#endif // QT_NO_XKB
-
 #ifndef QT_NO_XCURSOR
 #include <X11/Xcursor/Xcursor.h>
 #endif // QT_NO_XCURSOR
@@ -262,12 +258,6 @@ struct QX11Data
     int xinput_eventbase;
     int xinput_errorbase;
 
-    // for XKEYBOARD support
-    bool use_xkb;
-    int xkb_major;
-    int xkb_eventbase;
-    int xkb_errorbase;
-
     QList<QWidget *> deferred_map;
     struct ScrollInProgress {
         long id;
@@ -293,8 +283,6 @@ struct QX11Data
 
     Time time;
     Time userTime;
-
-    QString default_im;
 
     // starts to ignore bad window errors from X
     void ignoreBadwindow() {
@@ -491,9 +479,6 @@ struct QX11Data
 
         XmTRANSFER_SUCCESS,
         XmTRANSFER_FAILURE,
-
-        // Xkb
-        _XKB_RULES_NAMES,
 
         // XEMBED
         _XEMBED,

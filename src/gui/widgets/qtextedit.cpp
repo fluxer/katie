@@ -59,15 +59,12 @@
 #include "qtextdocument_p.h"
 #include "qtextlist.h"
 #include "qtextcontrol_p.h"
-
 #include <qtextformat.h>
 #include <qdatetime.h>
 #include <qapplication.h>
 #include <limits.h>
 #include <qtexttable.h>
 #include <qvariant.h>
-
-#include <qinputcontext.h>
 #endif
 
 QT_BEGIN_NAMESPACE
