@@ -10,10 +10,12 @@ for root, subdirs, files in os.walk('%s/../src' % cwd):
     for sfile in files:
         if sfile.endswith(('.cpp', '.h')):
             sfull = '%s/%s' % (root, sfile)
-            with open(sfull, 'r') as f:
-                for smatch in regex.findall(f.read()):
-                    smatch = smatch.strip('"\'')
-                    if not smatch in lmatches:
-                        lmatches.append(smatch)
+            with open(sfull, 'rb') as f:
+                scontent = f.read()
+            scontent = scontent.decode('utf-8')
+            for smatch in regex.findall(scontent):
+                smatch = smatch.strip('"\'')
+                if not smatch in lmatches:
+                    lmatches.append(smatch)
 
 print('\n'.join(sorted(lmatches)))
