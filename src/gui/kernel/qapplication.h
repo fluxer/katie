@@ -247,7 +247,6 @@ public Q_SLOTS:
 
 protected:
     bool event(QEvent *);
-    bool compressEvent(QEvent *, QObject *receiver, QPostEventList *);
 
 private:
     Q_DISABLE_COPY(QApplication)

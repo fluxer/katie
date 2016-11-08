@@ -1065,45 +1065,6 @@ QWidget *QApplication::widgetAt(const QPoint &p)
     \internal
 */
 
-
-
-/*!
-    \internal
-*/
-bool QApplication::compressEvent(QEvent *event, QObject *receiver, QPostEventList *postedEvents)
-{
-    if ((event->type() == QEvent::UpdateRequest
-          || event->type() == QEvent::LayoutRequest
-          || event->type() == QEvent::Resize
-          || event->type() == QEvent::Move
-          || event->type() == QEvent::LanguageChange
-          || event->type() == QEvent::InputMethod)) {
-        for (QPostEventList::const_iterator it = postedEvents->constBegin(); it != postedEvents->constEnd(); ++it) {
-            const QPostEvent &cur = *it;
-            if (cur.receiver != receiver || cur.event == 0 || cur.event->type() != event->type())
-                continue;
-            if (cur.event->type() == QEvent::LayoutRequest
-                 || cur.event->type() == QEvent::UpdateRequest) {
-                ;
-            } else if (cur.event->type() == QEvent::Resize) {
-                ((QResizeEvent *)(cur.event))->s = ((QResizeEvent *)event)->s;
-            } else if (cur.event->type() == QEvent::Move) {
-                ((QMoveEvent *)(cur.event))->p = ((QMoveEvent *)event)->p;
-            } else if (cur.event->type() == QEvent::LanguageChange) {
-                ;
-            } else if ( cur.event->type() == QEvent::InputMethod ) {
-                *(QInputMethodEvent *)(cur.event) = *(QInputMethodEvent *)event;
-            } else {
-                continue;
-            }
-            delete event;
-            return true;
-        }
-        return false;
-    }
-    return QCoreApplication::compressEvent(event, receiver, postedEvents);
-}
-
 /*!
     \property QApplication::styleSheet
     \brief the application style sheet
