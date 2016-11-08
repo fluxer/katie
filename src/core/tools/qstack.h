@@ -57,23 +57,15 @@ public:
     inline ~QStack() {}
     inline void swap(QStack<T> &other) { QVector<T>::swap(other); } // prevent QVector<->QStack swaps
     inline void push(const T &t) { QVector<T>::append(t); }
-    T pop();
-    T &top();
-    const T &top() const;
+    inline T pop();
+    inline T &top() { return QVector<T>::last(); }; // for compatibility
+    const T &top() const { return QVector<T>::last(); }; // for compatibility
 };
 
 template<class T>
 inline T QStack<T>::pop()
 { Q_ASSERT(!this->isEmpty()); T t = this->data()[this->size() -1];
   this->resize(this->size()-1); return t; }
-
-template<class T>
-inline T &QStack<T>::top()
-{ Q_ASSERT(!this->isEmpty()); this->detach(); return this->data()[this->size()-1]; }
-
-template<class T>
-inline const T &QStack<T>::top() const
-{ Q_ASSERT(!this->isEmpty()); return this->data()[this->size()-1]; }
 
 QT_END_NAMESPACE
 
