@@ -1964,9 +1964,9 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
         if (!d->crgn.isEmpty()) {
             int num;
             XRectangle *rects = (XRectangle *)qt_getClipRects(d->crgn, num);
-            XSetClipRectangles(d->dpy, cgc, -x, -y, rects, num, Unsorted);
+            XSetClipRectangles(d->dpy, cgc, -x, -y, rects, num, XUnsorted);
         } else if (d->has_clipping) {
-            XSetClipRectangles(d->dpy, cgc, 0, 0, 0, 0, Unsorted);
+            XSetClipRectangles(d->dpy, cgc, 0, 0, 0, 0, XUnsorted);
         }
         XSetFillStyle(d->dpy, cgc, FillOpaqueStippled);
         XSetTSOrigin(d->dpy, cgc, -sx, -sy);
@@ -1988,7 +1988,7 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
             XFillRectangle(d->dpy, comb, cgc, 0, 0, sw, sh);
             int num;
             XRectangle *rects = (XRectangle *)qt_getClipRects(d->crgn, num);
-            XSetClipRectangles(d->dpy, cgc, -x, -y, rects, num, Unsorted);
+            XSetClipRectangles(d->dpy, cgc, -x, -y, rects, num, XUnsorted);
             XCopyArea(d->dpy, pixmap.handle(), comb, cgc, sx, sy, sw, sh, 0, 0);
             XFreeGC(d->dpy, cgc);
 
@@ -2039,7 +2039,7 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
         if (num == 0)
             XSetClipMask(d->dpy, d->gc, XNone);
         else
-            XSetClipRectangles(d->dpy, d->gc, 0, 0, rects, num, Unsorted);
+            XSetClipRectangles(d->dpy, d->gc, 0, 0, rects, num, XUnsorted);
     }
 }
 

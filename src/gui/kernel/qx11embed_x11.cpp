@@ -1309,7 +1309,7 @@ bool QX11EmbedContainer::eventFilter(QObject *o, QEvent *event)
             } else {
                 d->checkGrab();
                 if (hasFocus())
-                    XSetInputFocus(x11Info().display(), d->client, XRevertToParent, x11Time());
+                    XSetInputFocus(x11Info().display(), d->client, RevertToParent, x11Time());
             }
             if (!d->isEmbedded())
                 d->moveInputToProxy();
@@ -1352,7 +1352,7 @@ bool QX11EmbedContainer::eventFilter(QObject *o, QEvent *event)
 		}
 	    } else {
 		d->checkGrab();
-                XSetInputFocus(x11Info().display(), d->client, XRevertToParent, x11Time());
+                XSetInputFocus(x11Info().display(), d->client, RevertToParent, x11Time());
 	    }
 	}
 
@@ -1734,7 +1734,7 @@ void QX11EmbedContainerPrivate::acceptClient(WId window)
     if (!clientIsXEmbed) {
         checkGrab();
         if (q->hasFocus()) {
-            XSetInputFocus(q->x11Info().display(), client, XRevertToParent, x11Time());
+            XSetInputFocus(q->x11Info().display(), client, RevertToParent, x11Time());
         }
     } else {
         if (!isEmbedded())
@@ -1757,7 +1757,7 @@ void QX11EmbedContainerPrivate::moveInputToProxy()
     Q_Q(QX11EmbedContainer);
     // Following Owen Taylor's advice from the XEmbed specification to
     // always use CurrentTime when no explicit user action is involved.
-    XSetInputFocus(q->x11Info().display(), focusProxy->internalWinId(), XRevertToParent, CurrentTime);
+    XSetInputFocus(q->x11Info().display(), focusProxy->internalWinId(), RevertToParent, CurrentTime);
 }
 
 /*! \internal

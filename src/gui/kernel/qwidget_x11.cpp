@@ -1663,7 +1663,7 @@ void QWidget::activateWindow()
                        false, SubstructureNotifyMask | SubstructureRedirectMask, &e);
         } else {
             if (!qt_widget_private(tlw)->topData()->waitingForMapNotify)
-                XSetInputFocus(X11->display, tlw->internalWinId(), XRevertToParent, X11->time);
+                XSetInputFocus(X11->display, tlw->internalWinId(), RevertToParent, X11->time);
         }
     }
 }
