@@ -116,10 +116,6 @@
 #include <X11/Xcursor/Xcursor.h>
 #endif // QT_NO_XCURSOR
 
-#ifndef X11R4
-#  include <X11/Xlocale.h>
-#endif // X11R4
-
 #ifndef QT_NO_XSHM
 #  include <X11/extensions/XShm.h>
 #endif // QT_NO_XSHM

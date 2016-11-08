@@ -435,7 +435,7 @@ QClipboard::QClipboard(QObject *parent)
     (void)QApplication::desktop();
 
 #ifndef QT_NO_XFIXES
-    if (X11->use_xfixes && XFixesSelectSelectionInput) {
+    if (X11->use_xfixes) {
         const unsigned long eventMask =
             XFixesSetSelectionOwnerNotifyMask | XFixesSelectionWindowDestroyNotifyMask | XFixesSelectionClientCloseNotifyMask;
         for (int i = 0; i < X11->screenCount; ++i) {

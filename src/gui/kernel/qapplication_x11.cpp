@@ -1999,8 +1999,7 @@ void qt_init(QApplicationPrivate *priv, int,
     if(qt_is_gui_used) {
         qApp->setObjectName(QString::fromLocal8Bit(appName));
 
-        int screen;
-        for (screen = 0; screen < X11->screenCount; ++screen) {
+        for (int screen = 0; screen < X11->screenCount; ++screen) {
             XSelectInput(X11->display, QX11Info::appRootWindow(screen),
                          KeymapStateMask | EnterWindowMask | LeaveWindowMask | PropertyChangeMask);
 
