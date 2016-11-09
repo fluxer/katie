@@ -60,7 +60,6 @@ class Q_GUI_EXPORT QMenuBar : public QWidget
     Q_OBJECT
 
     Q_PROPERTY(bool defaultUp READ isDefaultUp WRITE setDefaultUp)
-    Q_PROPERTY(bool nativeMenuBar READ isNativeMenuBar WRITE setNativeMenuBar)
 
 public:
     explicit QMenuBar(QWidget *parent = Q_NULLPTR);
@@ -101,9 +100,6 @@ public:
 
     void setCornerWidget(QWidget *w, Qt::Corner corner = Qt::TopRightCorner);
     QWidget *cornerWidget(Qt::Corner corner = Qt::TopRightCorner) const;
-
-    bool isNativeMenuBar() const;
-    void setNativeMenuBar(bool nativeMenuBar);
 
 Q_SIGNALS:
     void triggered(QAction *action);
