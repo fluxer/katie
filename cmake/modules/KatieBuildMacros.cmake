@@ -34,6 +34,8 @@ macro(KATIE_WARNING MESSAGESTR)
     endif()
 endmacro()
 
+# a macro to create camel-case headers pointing to their lower-case alternative
+# with a dev warning for possibly non-existent headers
 macro(KATIE_GENERATE_PUBLIC PUBLIC_INCLUDES SUBDIR)
     set(metaout ${CMAKE_BINARY_DIR}/include/${SUBDIR}/${SUBDIR})
     set(metadata "#ifndef Qt${SUBDIR}_META_H\n#define Qt${SUBDIR}_META_H\n\n")
@@ -100,11 +102,10 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     )
 endmacro()
 
-# the purpose of this function is to ensure that (1) the output string is not
-# null so that when it is passed to another function/macro it does not complain
-# about inproper number of arguments and (2) it joins the input which if quoted
-# has semicolons in it (if it is a list) that the sub-command (e.g. gcc) can
-# not handle.
+# a function to ensure that (1) the output string is not null so that when it
+# is passed to another function/macro it does not complain about inproper
+# number of arguments and (2) it joins the input which if quoted has semicolons
+# in it (if it is a list) that the sub-command (e.g. gcc) can not handle
 function(KATIE_FIXUP_STRING INSTR OUTSTR)
     string(STRIP "${INSTR}" instrtrimmed)
     if("${instrtrimmed}" STREQUAL "")
