@@ -950,12 +950,8 @@ redefine to built-in booleans to make autotests work properly */
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
 #endif
 
-#if defined(__i386__)
-#  if defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
-#    define QT_FASTCALL __attribute__((regparm(3)))
-#  else
-#     define QT_FASTCALL
-#  endif
+#if defined(QT_ARCH_I386) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(Q_CC_INTEL)
+#  define QT_FASTCALL __attribute__((regparm(3)))
 #else
 #  define QT_FASTCALL
 #endif
