@@ -279,7 +279,6 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
         break;
     case QNativeSocketEngine::NonBlockingSocketOption: {
         // Make the socket nonblocking.
-#if !defined(Q_OS_VXWORKS)
         int flags = ::fcntl(socketDescriptor, F_GETFL, 0);
         if (flags == -1) {
 #ifdef QNATIVESOCKETENGINE_DEBUG
@@ -293,17 +292,6 @@ bool QNativeSocketEnginePrivate::setOption(QNativeSocketEngine::SocketOption opt
 #endif
             return false;
         }
-#else // Q_OS_VXWORKS
-        int onoff = 1;
-
-        if (qt_safe_ioctl(socketDescriptor, FIONBIO, &onoff) < 0) {
-
-#ifdef QNATIVESOCKETENGINE_DEBUG
-            perror("QNativeSocketEnginePrivate::setOption(): ioctl(FIONBIO, 1) failed");
-#endif
-            return false;
-        }
-#endif // Q_OS_VXWORKS
         return true;
     }
     case QNativeSocketEngine::AddressReusable:
@@ -548,7 +536,7 @@ bool QNativeSocketEnginePrivate::nativeBind(const QHostAddress &address, quint16
 
 bool QNativeSocketEnginePrivate::nativeListen(int backlog)
 {
-    if (qt_safe_listen(socketDescriptor, backlog) < 0) {
+    if (::listen(socketDescriptor, backlog) < 0) {
         switch (errno) {
         case EADDRINUSE:
             setError(QAbstractSocket::AddressInUseError,
@@ -753,7 +741,7 @@ qint64 QNativeSocketEnginePrivate::nativeBytesAvailable() const
     int nbytes = 0;
     // gives shorter than true amounts on Unix domain sockets.
     qint64 available = 0;
-    if (qt_safe_ioctl(socketDescriptor, FIONREAD, (char *) &nbytes) >= 0)
+    if (::ioctl(socketDescriptor, FIONREAD, (char *) &nbytes) >= 0)
         available = (qint64) nbytes;
 
 #if defined (QNATIVESOCKETENGINE_DEBUG)
@@ -1047,9 +1035,6 @@ qint64 QNativeSocketEnginePrivate::nativeRead(char *data, qint64 maxSize)
             //error string is now set in read(), not here in nativeRead()
             break;
         case ECONNRESET:
-#if defined(Q_OS_VXWORKS)
-        case ESHUTDOWN:
-#endif
             r = 0;
             break;
         default:

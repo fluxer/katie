@@ -40,13 +40,11 @@
 ****************************************************************************/
 
 #include "qplatformdefs.h"
-
 #include "qcoreapplication.h"
 #include "qpair.h"
 #include "qsocketnotifier.h"
 #include "qthread.h"
 #include "qelapsedtimer.h"
-
 #include "qeventdispatcher_unix_p.h"
 #include <qthread_p.h>
 #include <qcoreapplication_p.h>
@@ -55,16 +53,6 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
-
-// VxWorks doesn't correctly set the _POSIX_... options
-#if defined(Q_OS_VXWORKS)
-#  if defined(_POSIX_MONOTONIC_CLOCK) && (_POSIX_MONOTONIC_CLOCK <= 0)
-#    undef _POSIX_MONOTONIC_CLOCK
-#    define _POSIX_MONOTONIC_CLOCK 1
-#  endif
-#  include <pipeDrv.h>
-#  include <selectLib.h>
-#endif
 
 #if (_POSIX_MONOTONIC_CLOCK-0 <= 0) || defined(QT_BOOTSTRAPPED)
 #  include <sys/times.h>
@@ -86,24 +74,6 @@ static void signalHandler(int sig)
     signals_fired[sig] = 1;
     signal_received = 1;
 }
-
-
-#if defined(Q_OS_INTEGRITY) || defined(Q_OS_VXWORKS)
-static void initThreadPipeFD(int fd)
-{
-    int ret = fcntl(fd, F_SETFD, FD_CLOEXEC);
-    if (ret == -1)
-        perror("QEventDispatcherUNIXPrivate: Unable to init thread pipe");
-
-    int flags = fcntl(fd, F_GETFL);
-    if (flags == -1)
-        perror("QEventDispatcherUNIXPrivate: Unable to get flags on thread pipe");
-
-    ret = fcntl(fd, F_SETFL, flags | O_NONBLOCK);
-    if (ret == -1)
-        perror("QEventDispatcherUNIXPrivate: Unable to set flags on thread pipe");
-}
-#endif
 
 QEventDispatcherUNIXPrivate::QEventDispatcherUNIXPrivate()
 {

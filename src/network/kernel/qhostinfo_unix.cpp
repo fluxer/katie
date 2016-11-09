@@ -127,7 +127,7 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
         if (sa && getnameinfo(sa, saSize, hbuf, sizeof(hbuf), 0, 0, 0) == 0)
             results.setHostName(QString::fromLatin1(hbuf));
 #else
-        in_addr_t inetaddr = qt_safe_inet_addr(hostName.toLatin1().constData());
+        in_addr_t inetaddr = ::inet_addr(hostName.toLatin1().constData());
         struct hostent *ent = gethostbyaddr((const char *)&inetaddr, sizeof(inetaddr), AF_INET);
         if (ent)
             results.setHostName(QString::fromLatin1(ent->h_name));
@@ -241,12 +241,10 @@ QHostInfo QHostInfoAgent::fromName(const QString &hostName)
             results.setError(QHostInfo::UnknownError);
             results.setErrorString(tr("Unknown address type"));
         }
-#if !defined(Q_OS_VXWORKS)
     } else if (h_errno == HOST_NOT_FOUND || h_errno == NO_DATA
                || h_errno == NO_ADDRESS) {
         results.setError(QHostInfo::HostNotFound);
         results.setErrorString(tr("Host not found"));
-#endif
     } else {
         results.setError(QHostInfo::UnknownError);
         results.setErrorString(tr("Unknown error"));

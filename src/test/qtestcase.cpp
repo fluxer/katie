@@ -1712,14 +1712,6 @@ private:
 void FatalSignalHandler::signal(int signum)
 {
     qFatal("Received signal %d", signum);
-#if defined(Q_OS_INTEGRITY)
-    {
-        struct sigaction act;
-        memset(&act, 0, sizeof(struct sigaction));
-        act.sa_handler = SIG_DFL;
-        sigaction(signum, &act, NULL);
-    }
-#endif
 }
 
 FatalSignalHandler::FatalSignalHandler()
@@ -1734,9 +1726,7 @@ FatalSignalHandler::FatalSignalHandler()
     act.sa_handler = FatalSignalHandler::signal;
 
     // Remove the handler after it is invoked.
-#if !defined(Q_OS_INTEGRITY)
     act.sa_flags = SA_RESETHAND;
-#endif
     // Block all fatal signals in our signal handler so we don't try to close
     // the testlog twice.
     sigemptyset(&act.sa_mask);

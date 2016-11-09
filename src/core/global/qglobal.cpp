@@ -47,7 +47,6 @@
 #include "qdir.h"
 #include "qstringlist.h"
 #include "qdatetime.h"
-
 #include "qcorecommon_p.h"
 
 #ifndef QT_NO_QOBJECT
@@ -59,22 +58,12 @@
 #include <limits.h>
 #include <stdarg.h>
 #include <string.h>
+#include <errno.h>
 
 #ifndef QT_NO_EXCEPTIONS
 #  include <string>
 #  include <exception>
 #endif
-
-#include <errno.h>
-
-#if defined(Q_OS_VXWORKS) && defined(_WRS_KERNEL)
-#  include <envLib.h>
-#endif
-
-#if defined(Q_OS_MACX) && !defined(Q_OS_IOS)
-#include <CoreServices/CoreServices.h>
-#endif
-
 
 QT_BEGIN_NAMESPACE
 

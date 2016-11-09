@@ -135,7 +135,7 @@ static QSet<QByteArray> interfaceNames(int socket)
         interfaceList.ifc_len = storageBuffer.size();
 
         // get the interface list
-        if (qt_safe_ioctl(socket, SIOCGIFCONF, &interfaceList) >= 0) {
+        if (::ioctl(socket, SIOCGIFCONF, &interfaceList) >= 0) {
             if (int(interfaceList.ifc_len + sizeof(ifreq) + 64) < storageBuffer.size()) {
                 // if the buffer was big enough, break
                 storageBuffer.resize(interfaceList.ifc_len);

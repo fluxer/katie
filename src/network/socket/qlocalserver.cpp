@@ -89,8 +89,6 @@ QT_BEGIN_NAMESPACE
 QLocalServer::QLocalServer(QObject *parent)
         : QObject(*new QLocalServerPrivate, parent)
 {
-    Q_D(QLocalServer);
-    d->init();
 }
 
 /*!

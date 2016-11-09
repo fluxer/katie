@@ -48,24 +48,25 @@
 #include "qlist.h"
 #include "qfile.h"
 #include "qvarlengtharray.h"
+#include "qstringlist.h"
+#include "qlocale.h"
+#include "qlocale_tools_p.h"
+#include "qmutex.h"
+#include "qhash.h"
+#include "qiconvcodec_p.h"
+#include "qutfcodec_p.h"
+#include "qsimplecodec_p.h"
+#include "qlatincodec_p.h"
+
 #ifndef QT_NO_LIBRARY
 # include "qcoreapplication.h"
 # include "qtextcodecplugin.h"
 # include "qfactoryloader_p.h"
 #endif
-#include "qstringlist.h"
 
-#ifdef Q_OS_UNIX
-#  include "qiconvcodec_p.h"
-#endif
-
-#include "qutfcodec_p.h"
-#include "qsimplecodec_p.h"
-#include "qlatincodec_p.h"
 #ifndef QT_NO_CODECS
 #  include "qtsciicodec_p.h"
 #  include "qisciicodec_p.h"
-#if !defined(Q_OS_INTEGRITY)
 #  if defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED) && !defined(QT_CODEC_PLUGINS)
 // no iconv(3) support, must build all codecs into the library
 #    include "../../plugins/codecs/cn/qgb18030codec.h"
@@ -79,12 +80,7 @@
 #    include "qfontlaocodec_p.h"
 #    include "../../plugins/codecs/jp/qfontjpcodec.h"
 #  endif
-#endif // Q_OS_INTEGRITY
 #endif // QT_NO_CODECS
-#include "qlocale.h"
-#include "qlocale_tools_p.h"
-#include "qmutex.h"
-#include "qhash.h"
 
 #include <stdlib.h>
 #include <ctype.h>

@@ -54,15 +54,7 @@
 #include <qdir.h>
 #include <qdatetime.h>
 
-#ifdef Q_OS_VXWORKS
-#  include <selectLib.h>
-#endif
-
 QT_BEGIN_NAMESPACE
-
-void QLocalServerPrivate::init()
-{
-}
 
 bool QLocalServerPrivate::removeServer(const QString &name)
 {
@@ -126,7 +118,7 @@ bool QLocalServerPrivate::listen(const QString &requestedServerName)
     }
 
     // listen for connections
-    if (-1 == qt_safe_listen(listenSocket, 50)) {
+    if (-1 == ::listen(listenSocket, 50)) {
         setError(QLatin1String("QLocalServer::listen"));
         closeServer();
         listenSocket = -1;

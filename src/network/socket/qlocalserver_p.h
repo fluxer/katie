@@ -69,12 +69,11 @@ class QLocalServerPrivate : public QObjectPrivate
 
 public:
     QLocalServerPrivate() :
-            listenSocket(-1), socketNotifier(0),
+            listenSocket(-1), socketNotifier(Q_NULLPTR),
             maxPendingConnections(30), error(QAbstractSocket::UnknownSocketError)
     {
     }
 
-    void init();
     bool listen(const QString &name);
     static bool removeServer(const QString &name);
     void closeServer();

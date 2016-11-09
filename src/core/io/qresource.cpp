@@ -55,21 +55,9 @@
 #include <qshareddata.h>
 #include <qplatformdefs.h>
 #include "qabstractfileengine_p.h"
-
-#ifdef Q_OS_UNIX
-# include "qcore_unix_p.h"
-#endif
+#include "qcore_unix_p.h"
 
 //#define DEBUG_RESOURCE_MATCH
-
-#if defined(Q_OS_VXWORKS)
-#  if defined(m_data)
-#    undef m_data
-#  endif
-#  if defined(m_len)
-#    undef m_len
-#  endif
-#endif
 
 QT_BEGIN_NAMESPACE
 

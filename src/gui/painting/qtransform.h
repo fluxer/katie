@@ -43,10 +43,6 @@
 
 #include <QtGui/qpainterpath.h>
 
-#if defined(Q_OS_VXWORKS) && defined(m_type)
-#  undef m_type
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE

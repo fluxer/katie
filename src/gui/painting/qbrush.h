@@ -52,25 +52,22 @@
 #include <QtGui/qimage.h>
 #include <QtGui/qpixmap.h>
 
-#if defined(Q_OS_VXWORKS)
-#  if defined(m_data)
-#    undef m_data
-#  endif
-#  if defined(m_type)
-#    undef m_type
-#  endif
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-struct QBrushData;
 class QPixmap;
 class QGradient;
 class QVariant;
 struct QBrushDataPointerDeleter;
+
+struct QBrushData
+{
+    QAtomicInt ref;
+    Qt::BrushStyle style;
+    QColor color;
+    QTransform transform;
+};
 
 class Q_GUI_EXPORT QBrush
 {
@@ -164,14 +161,6 @@ Q_GUI_EXPORT QDataStream &operator>>(QDataStream &, QBrush &);
 #ifndef QT_NO_DEBUG_STREAM
 Q_GUI_EXPORT QDebug operator<<(QDebug, const QBrush &);
 #endif
-
-struct QBrushData
-{
-    QAtomicInt ref;
-    Qt::BrushStyle style;
-    QColor color;
-    QTransform transform;
-};
 
 inline Qt::BrushStyle QBrush::style() const { return d->style; }
 inline const QColor &QBrush::color() const { return d->color; }

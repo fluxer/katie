@@ -1237,7 +1237,7 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #if (defined(Q_CC_GNU) && !defined(Q_OS_SOLARIS)) || defined(Q_CC_HPACC) || defined(Q_CC_DIAB)
 #  define Q_FUNC_INFO __PRETTY_FUNCTION__
 #else
-#   if defined(Q_OS_SOLARIS) || defined(Q_CC_XLC) || defined(Q_OS_INTEGRITY)
+#   if defined(Q_OS_SOLARIS) || defined(Q_CC_XLC)
 #      define Q_FUNC_INFO __FILE__ "(line number unavailable)"
 #   else
         /* These two macros makes it possible to turn the builtin line expander into a

@@ -50,10 +50,6 @@
 
 #include <errno.h>
 
-#if defined(Q_OS_VXWORKS) && defined(wakeup)
-#undef wakeup
-#endif
-
 QT_BEGIN_NAMESPACE
 
 QMutexPrivate::QMutexPrivate(QMutex::RecursionMode mode)

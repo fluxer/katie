@@ -59,18 +59,9 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#if defined(Q_OS_VXWORKS)
-#  include <sockLib.h>
-#endif
-
 // for inet_addr
 #include <netdb.h>
 #include <arpa/inet.h>
-#if defined(Q_OS_VXWORKS)
-#  include <hostLib.h>
-#else
-#  include <resolv.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -136,12 +127,6 @@ static inline int qt_safe_accept(int s, struct sockaddr *addr, QT_SOCKLEN_T *add
     return fd;
 }
 
-// UnixWare 7 redefines listen -> _listen
-static inline int qt_safe_listen(int s, int backlog)
-{
-    return ::listen(s, backlog);
-}
-
 static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SOCKLEN_T addrlen)
 {
     int ret;
@@ -162,27 +147,6 @@ static inline int qt_safe_connect(int sockfd, const struct sockaddr *addr, QT_SO
 # undef listen
 #endif
 
-// VxWorks' headers specify 'int' instead of '...' for the 3rd ioctl() parameter.
-template <typename T>
-static inline int qt_safe_ioctl(int sockfd, int request, T arg)
-{
-#ifdef Q_OS_VXWORKS
-    return ::ioctl(sockfd, request, (int) arg);
-#else
-    return ::ioctl(sockfd, request, arg);
-#endif
-}
-
-// VxWorks' headers do not specify any const modifiers
-static inline in_addr_t qt_safe_inet_addr(const char *cp)
-{
-#ifdef Q_OS_VXWORKS
-    return ::inet_addr((char *) cp);
-#else
-    return ::inet_addr(cp);
-#endif
-}
-
 // VxWorks' headers do not specify any const modifiers
 static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int flags, const struct sockaddr *to, QT_SOCKLEN_T tolen)
 {
@@ -193,11 +157,7 @@ static inline int qt_safe_sendto(int sockfd, const void *buf, size_t len, int fl
 #endif
 
     int ret;
-#ifdef Q_OS_VXWORKS
-    EINTR_LOOP(ret, ::sendto(sockfd, (char *) buf, len, flags, (struct sockaddr *) to, tolen));
-#else
     EINTR_LOOP(ret, ::sendto(sockfd, buf, len, flags, to, tolen));
-#endif
     return ret;
 }
 

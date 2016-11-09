@@ -663,12 +663,8 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size, QFile::MemoryMapFla
     if (openMode & QIODevice::ReadOnly) access |= PROT_READ;
     if (openMode & QIODevice::WriteOnly) access |= PROT_WRITE;
 
-#if defined(Q_OS_INTEGRITY)
-    int pageSize = sysconf(_SC_PAGESIZE);
-#else
-    int pageSize = getpagesize();
-#endif
-    int extra = offset % pageSize;
+    const int pageSize = getpagesize();
+    const int extra = offset % pageSize;
 
     if (quint64(size + extra) > quint64((size_t)-1)) {
         q->setError(QFile::UnspecifiedError, qt_error_string(int(EINVAL)));
@@ -706,7 +702,6 @@ uchar *QFSFileEnginePrivate::map(qint64 offset, qint64 size, QFile::MemoryMapFla
 
 bool QFSFileEnginePrivate::unmap(uchar *ptr)
 {
-#if !defined(Q_OS_INTEGRITY)
     Q_Q(QFSFileEngine);
     if (!maps.contains(ptr)) {
         q->setError(QFile::PermissionsError, qt_error_string(EACCES));
@@ -721,9 +716,6 @@ bool QFSFileEnginePrivate::unmap(uchar *ptr)
     }
     maps.remove(ptr);
     return true;
-#else
-    return false;
-#endif
 }
 
 QT_END_NAMESPACE

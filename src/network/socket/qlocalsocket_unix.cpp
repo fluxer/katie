@@ -56,10 +56,6 @@
 #include <qdebug.h>
 #include <qelapsedtimer.h>
 
-#ifdef Q_OS_VXWORKS
-#  include <selectLib.h>
-#endif
-
 #define QT_CONNECT_TIMEOUT 30000
 
 QT_BEGIN_NAMESPACE

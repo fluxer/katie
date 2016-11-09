@@ -716,9 +716,6 @@ static inline void Storeinc(ULong *&a, const ULong &b, const ULong &c)
 #define Bletch 0x10
 #define Bndry_mask  0xfffff
 #define Bndry_mask1 0xfffff
-#if defined(LSB) && defined(Q_OS_VXWORKS)
-#undef LSB
-#endif
 #define LSB 1
 #define Sign_bit 0x80000000
 #define Log2P 1

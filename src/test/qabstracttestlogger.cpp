@@ -47,10 +47,7 @@
 #include "QtCore/qbytearray.h"
 
 #include <stdarg.h>
-
-#ifndef Q_OS_WIN
 #include <unistd.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -66,12 +63,8 @@ bool QAbstractTestLogger::isTtyOutput()
 {
     QTEST_ASSERT(QTest::stream);
 
-#if defined(Q_OS_WIN) || defined(Q_OS_INTEGRITY)
-    return true;
-#else
     static bool ttyoutput = isatty(fileno(QTest::stream));
     return ttyoutput;
-#endif
 }
 
 
@@ -84,12 +77,8 @@ void QAbstractTestLogger::startLogging()
         QTest::stream = stdout;
         return;
     }
-#if defined(_MSC_VER) && _MSC_VER >= 1400 && !defined(Q_OS_WINCE)
-    if (::fopen_s(&QTest::stream, out, "wt")) {
-#else
     QTest::stream = ::fopen(out, "wt");
     if (!QTest::stream) {
-#endif
         printf("Unable to open file for logging: %s", out);
         ::exit(1);
     }
