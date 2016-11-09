@@ -661,8 +661,6 @@ if(KATIE_UTILS)
     add_subdirectory(util/qlalr)
     add_subdirectory(util/qurl-generateTLDs)
     add_subdirectory(util/unicode)
-    add_subdirectory(util/xkbdatagen)
-    add_subdirectory(util/generaterun)
 endif()
 
 # the macro calls bellow are generted via the incfsck script
