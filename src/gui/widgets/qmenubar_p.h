@@ -57,10 +57,6 @@
 #include "qwidget_p.h"
 #include "qbasictimer.h"
 
-#ifdef Q_WS_X11
-#include "qabstractplatformmenubar_p.h"
-#endif
-
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_MENUBAR
@@ -72,21 +68,11 @@ class QMenuBarPrivate : public QWidgetPrivate
 public:
     QMenuBarPrivate() : itemsDirty(0), currentAction(0), mouseDown(0),
                          closePopupMode(0), defaultPopDown(1), popupState(0), keyboardState(0), altPressed(0)
-#ifndef Q_WS_X11
-                         , nativeMenuBar(-1)
-#endif
                          , doChildEffects(false)
-#ifdef Q_WS_X11
-                         , platformMenuBar(0)
-#endif
 
         { }
     ~QMenuBarPrivate()
-        {
-#ifdef Q_WS_X11
-            delete platformMenuBar;
-#endif
-        }
+        { }
 
     void init();
     QAction *getNextAction(const int start, const int increment) const;
@@ -117,9 +103,6 @@ public:
     uint keyboardState : 1, altPressed : 1;
     QPointer<QWidget> keyboardFocusWidget;
 
-#ifndef Q_WS_X11
-    int nativeMenuBar : 3;  // Only has values -1, 0, and 1
-#endif
     //firing of events
     void activateAction(QAction *, QAction::ActionEvent);
 
@@ -148,9 +131,6 @@ public:
     QPointer<QAction> defaultAction;
 
     QBasicTimer autoReleaseTimer;
-#ifdef Q_WS_X11
-    QAbstractPlatformMenuBar *platformMenuBar;
-#endif
 
 #ifdef Q_WS_X11
     void updateCornerWidgetToolBar();

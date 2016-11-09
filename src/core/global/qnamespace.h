@@ -407,9 +407,8 @@ public:
         AA_DontShowIconsInMenus = 1,
         AA_NativeWindows = 2,
         AA_DontCreateNativeWidgetSiblings = 3,
-        AA_DontUseNativeMenuBar = 4,
-        AA_X11InitThreads = 5,
-        AA_CaptureMultimediaKeys = 6,
+        AA_X11InitThreads = 4,
+        AA_CaptureMultimediaKeys = 5,
 
         // Add new attributes before this line
         AA_AttributeCount

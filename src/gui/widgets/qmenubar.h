@@ -105,9 +105,6 @@ public:
     bool isNativeMenuBar() const;
     void setNativeMenuBar(bool nativeMenuBar);
 
-public Q_SLOTS:
-    virtual void setVisible(bool visible);
-
 Q_SIGNALS:
     void triggered(QAction *action);
     void hovered(QAction *action);

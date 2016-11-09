@@ -146,14 +146,3 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qplaintextedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qprintpreviewwidget.cpp
 )
-
-if(WITH_X11 AND X11_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qabstractplatformmenubar_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qmenubar_x11.cpp
-    )
-endif()

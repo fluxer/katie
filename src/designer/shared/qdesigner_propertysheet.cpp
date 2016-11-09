@@ -603,12 +603,6 @@ QDesignerPropertySheet::QDesignerPropertySheet(QObject *object, QObject *parent)
         setVisible(createFakeProperty(QLatin1String("windowOpacity"), double(1.0)), false);
         if (qobject_cast<const QToolBar *>(d->m_object)) { // prevent toolbars from being dragged off
             createFakeProperty(QLatin1String("floatable"), QVariant(true));
-        } else {
-            if (qobject_cast<const QMenuBar *>(d->m_object)) {
-                // Keep the menu bar editable in the form even if a native menu bar is used.
-                const bool nativeMenuBarDefault = !qApp->testAttribute(Qt::AA_DontUseNativeMenuBar);
-                createFakeProperty(QLatin1String("nativeMenuBar"), QVariant(nativeMenuBarDefault));
-            }
         }
         if (d->m_canHaveLayoutAttributes) {
             static const QString layoutGroup = QLatin1String("Layout");
