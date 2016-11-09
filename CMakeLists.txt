@@ -193,14 +193,13 @@ add_definitions(
     # -DQT_NO_CAST_TO_ASCII
 )
 
-# this is how Qt4 does it
-if(NOT KATIE_PLATFORM STREQUAL "integrity" AND NOT MINGW)
-    set(QT_LARGEFILE_SUPPORT 64)
-    add_definitions(
-        -D_LARGEFILE64_SOURCE
-        -D_LARGEFILE_SOURCE
-    )
-endif()
+# this enabled on everything but Integrity and Windows (MinGW),
+# QT_LARGEFILE_SUPPORT is used in qconfig.h
+set(QT_LARGEFILE_SUPPORT 64)
+add_definitions(
+    -D_LARGEFILE64_SOURCE
+    -D_LARGEFILE_SOURCE
+)
 
 # some things just cannot be done right, yet
 if(KATIE_ALLINONE)

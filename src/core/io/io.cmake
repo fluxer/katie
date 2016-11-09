@@ -85,7 +85,7 @@ if(KATIE_PLATFORM STREQUAL "linux")
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_inotify_p.h
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_dnotify_p.h
     )
-elseif(KATIE_PLATFORM MATCHES "(freebsd|mac|darwin|openbsd)")
+elseif(KATIE_PLATFORM MATCHES "(freebsd|openbsd)")
     set(CORE_SOURCES
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/io/qfilesystemwatcher_kqueue.cpp
