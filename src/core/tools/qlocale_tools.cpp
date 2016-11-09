@@ -1092,7 +1092,7 @@ static Bigint *pow5mult(Bigint *b, int k)
     int i;
     static const int p05[3] = { 5, 25, 125 };
 
-    if ((i == k & 3) != 0)
+    if ((i = k & 3) != 0)
         b = multadd(b, p05[i-1], 0);
 
     if (!(k >>= 2))
