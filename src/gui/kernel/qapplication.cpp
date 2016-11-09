@@ -855,7 +855,7 @@ QApplication::Type QApplication::type()
 QWidget *QApplication::activePopupWidget()
 {
     if (QApplicationPrivate::popupWidgets)
-        QApplicationPrivate::popupWidgets->last();
+        return QApplicationPrivate::popupWidgets->last();
     return Q_NULLPTR;
 }
 
