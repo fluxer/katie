@@ -1003,10 +1003,6 @@ template <typename T>
 Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max)
 { return qMax(min, qMin(max, val)); }
 
-# include <QtCore/qfeatures.h>
-
-#define QT_SUPPORTS(FEATURE) (!defined(QT_NO_##FEATURE))
-
 #ifndef Q_DECL_EXPORT
 #  if defined(QT_VISIBILITY_AVAILABLE)
 #    define Q_DECL_EXPORT __attribute__((visibility("default")))
