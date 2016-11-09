@@ -32,8 +32,8 @@ namespace JSC {
 ASSERT_CLASS_FITS_IN_CELL(BooleanPrototype);
 
 // Functions
-static JSValue JSC_HOST_CALL booleanProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL booleanProtoFuncValueOf(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL booleanProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL booleanProtoFuncValueOf(ExecState*, JSObject*, JSValue, const ArgList&);
 
 // ECMA 15.6.4
 
@@ -51,7 +51,7 @@ BooleanPrototype::BooleanPrototype(ExecState* exec, NonNullPassRefPtr<Structure>
 
 // ECMA 15.6.4.2 + 15.6.4.3
 
-JSValue JSC_HOST_CALL booleanProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL booleanProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (thisValue == jsBoolean(false))
         return jsNontrivialString(exec, "false");
@@ -69,7 +69,7 @@ JSValue JSC_HOST_CALL booleanProtoFuncToString(ExecState* exec, JSObject*, JSVal
     return jsNontrivialString(exec, "true");
 }
 
-JSValue JSC_HOST_CALL booleanProtoFuncValueOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL booleanProtoFuncValueOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (thisValue.isBoolean())
         return thisValue;

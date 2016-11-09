@@ -70,15 +70,6 @@
 #define WTF_COMPILER_SUPPORTS_CXX_STATIC_ASSERT __has_feature(cxx_static_assert)
 #endif
 
-/* COMPILER(MSVC) Microsoft Visual C++ */
-/* COMPILER(MSVC7) Microsoft Visual C++ v7 or lower*/
-#if defined(_MSC_VER)
-#define WTF_COMPILER_MSVC 1
-#if _MSC_VER < 1400
-#define WTF_COMPILER_MSVC7 1
-#endif
-#endif
-
 /* COMPILER(GCC) - GNU Compiler Collection */
 #if defined(__GNUC__)
 #define WTF_COMPILER_GCC 1
@@ -551,9 +542,7 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 
 #if CPU(ARM_THUMB2) && PLATFORM(IPHONE)
     #define ENABLE_JIT 1
-#endif
-
-#if CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100
+#elif CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100
     #define ENABLE_JIT 1
     #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
 #elif CPU(X86_64) && OS(LINUX) && GCC_VERSION >= 40100
@@ -577,14 +566,6 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #ifndef ENABLE_JIT_OPTIMIZE_METHOD_CALLS
 #define ENABLE_JIT_OPTIMIZE_METHOD_CALLS 1
 #endif
-#endif
-
-#if CPU(X86) && COMPILER(MSVC)
-#define JSC_HOST_CALL __fastcall
-#elif CPU(X86) && COMPILER(GCC)
-#define JSC_HOST_CALL __attribute__ ((fastcall))
-#else
-#define JSC_HOST_CALL
 #endif
 
 /* Yet Another Regex Runtime. */

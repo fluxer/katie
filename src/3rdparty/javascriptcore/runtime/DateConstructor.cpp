@@ -49,9 +49,9 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(DateConstructor);
 
-static JSValue JSC_HOST_CALL dateParse(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateNow(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateUTC(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateParse(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateNow(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateUTC(ExecState*, JSObject*, JSValue, const ArgList&);
 
 DateConstructor::DateConstructor(ExecState* exec, NonNullPassRefPtr<Structure> structure, Structure* prototypeFunctionStructure, DatePrototype* datePrototype)
     : InternalFunction(&exec->globalData(), structure, Identifier(exec, datePrototype->classInfo()->className))
@@ -123,7 +123,7 @@ ConstructType DateConstructor::getConstructData(ConstructData& constructData)
 }
 
 // ECMA 15.9.2
-static JSValue JSC_HOST_CALL callDate(ExecState* exec, JSObject*, JSValue, const ArgList&)
+static JSValue QT_FASTCALL callDate(ExecState* exec, JSObject*, JSValue, const ArgList&)
 {
     GregorianDateTime ts;
     msToGregorianDateTime(exec, currentTimeMS(), false, ts);
@@ -140,17 +140,17 @@ CallType DateConstructor::getCallData(CallData& callData)
     return CallTypeHost;
 }
 
-static JSValue JSC_HOST_CALL dateParse(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+static JSValue QT_FASTCALL dateParse(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     return jsNumber(exec, parseDate(exec, args.at(0).toString(exec)));
 }
 
-static JSValue JSC_HOST_CALL dateNow(ExecState* exec, JSObject*, JSValue, const ArgList&)
+static JSValue QT_FASTCALL dateNow(ExecState* exec, JSObject*, JSValue, const ArgList&)
 {
     return jsNumber(exec, jsCurrentTime());
 }
 
-static JSValue JSC_HOST_CALL dateUTC(ExecState* exec, JSObject*, JSValue, const ArgList& args) 
+static JSValue QT_FASTCALL dateUTC(ExecState* exec, JSObject*, JSValue, const ArgList& args) 
 {
     int n = args.size();
     if (std::isnan(args.at(0).toNumber(exec))

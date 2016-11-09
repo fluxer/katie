@@ -39,8 +39,8 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(JSONObject);
 
-static JSValue JSC_HOST_CALL JSONProtoFuncParse(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL JSONProtoFuncStringify(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL JSONProtoFuncParse(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL JSONProtoFuncStringify(ExecState*, JSObject*, JSValue, const ArgList&);
 
 }
 
@@ -839,7 +839,7 @@ NEVER_INLINE JSValue Walker::walk(JSValue unfiltered)
 }
 
 // ECMA-262 v5 15.12.2
-JSValue JSC_HOST_CALL JSONProtoFuncParse(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL JSONProtoFuncParse(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (args.isEmpty())
         return throwError(exec, GeneralError, "JSON.parse requires at least one parameter");
@@ -865,7 +865,7 @@ JSValue JSC_HOST_CALL JSONProtoFuncParse(ExecState* exec, JSObject*, JSValue, co
 }
 
 // ECMA-262 v5 15.12.3
-JSValue JSC_HOST_CALL JSONProtoFuncStringify(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL JSONProtoFuncStringify(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (args.isEmpty())
         return throwError(exec, GeneralError, "No input to stringify");

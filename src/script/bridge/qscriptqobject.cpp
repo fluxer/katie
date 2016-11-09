@@ -1029,7 +1029,7 @@ JSC::JSValue QtFunction::execute(JSC::ExecState *exec, JSC::JSValue thisValue,
 
 const JSC::ClassInfo QtFunction::info = { "QtFunction", &InternalFunction::info, 0, 0 };
 
-JSC::JSValue JSC_HOST_CALL QtFunction::call(JSC::ExecState *exec, JSC::JSObject *callee,
+JSC::JSValue QT_FASTCALL QtFunction::call(JSC::ExecState *exec, JSC::JSObject *callee,
                                             JSC::JSValue thisValue, const JSC::ArgList &args)
 {
     if (!callee->inherits(&QtFunction::info))
@@ -1106,7 +1106,7 @@ JSC::CallType QtPropertyFunction::getCallData(JSC::CallData &callData)
     return JSC::CallTypeHost;
 }
 
-JSC::JSValue JSC_HOST_CALL QtPropertyFunction::call(
+JSC::JSValue QT_FASTCALL QtPropertyFunction::call(
     JSC::ExecState *exec, JSC::JSObject *callee,
     JSC::JSValue thisValue, const JSC::ArgList &args)
 {
@@ -1704,7 +1704,7 @@ bool QObjectDelegate::compareToObject(QScriptObject *, JSC::ExecState *exec, JSC
     return value() == static_cast<QObjectDelegate *>(delegate)->value();
 }
 
-static JSC::JSValue JSC_HOST_CALL qobjectProtoFuncFindChild(JSC::ExecState *exec, JSC::JSObject*,
+static JSC::JSValue QT_FASTCALL qobjectProtoFuncFindChild(JSC::ExecState *exec, JSC::JSObject*,
                                                             JSC::JSValue thisValue, const JSC::ArgList &args)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
@@ -1724,7 +1724,7 @@ static JSC::JSValue JSC_HOST_CALL qobjectProtoFuncFindChild(JSC::ExecState *exec
     return engine->newQObject(child, QScriptEngine::QtOwnership, opt);
 }
 
-static JSC::JSValue JSC_HOST_CALL qobjectProtoFuncFindChildren(JSC::ExecState *exec, JSC::JSObject*,
+static JSC::JSValue QT_FASTCALL qobjectProtoFuncFindChildren(JSC::ExecState *exec, JSC::JSObject*,
                                                                JSC::JSValue thisValue, const JSC::ArgList &args)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
@@ -1777,7 +1777,7 @@ static JSC::JSValue JSC_HOST_CALL qobjectProtoFuncFindChildren(JSC::ExecState *e
     return JSC::JSValue(result);
 }
 
-static JSC::JSValue JSC_HOST_CALL qobjectProtoFuncToString(JSC::ExecState *exec, JSC::JSObject*,
+static JSC::JSValue QT_FASTCALL qobjectProtoFuncToString(JSC::ExecState *exec, JSC::JSObject*,
                                                            JSC::JSValue thisValue, const JSC::ArgList&)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
@@ -1972,7 +1972,7 @@ JSC::ConstructType QMetaObjectWrapperObject::getConstructData(JSC::ConstructData
     return JSC::ConstructTypeHost;
 }
 
-JSC::JSValue JSC_HOST_CALL QMetaObjectWrapperObject::call(
+JSC::JSValue QT_FASTCALL QMetaObjectWrapperObject::call(
     JSC::ExecState *exec, JSC::JSObject *callee,
     JSC::JSValue thisValue, const JSC::ArgList &args)
 {
@@ -2051,7 +2051,7 @@ struct StaticQtMetaObject : public QObject
         { return &static_cast<StaticQtMetaObject*> (0)->staticQtMetaObject; }
 };
 
-static JSC::JSValue JSC_HOST_CALL qmetaobjectProtoFuncClassName(
+static JSC::JSValue QT_FASTCALL qmetaobjectProtoFuncClassName(
     JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue thisValue, const JSC::ArgList&)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);

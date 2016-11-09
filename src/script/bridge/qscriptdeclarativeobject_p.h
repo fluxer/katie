@@ -87,7 +87,7 @@ public:
                                      JSC::EnumerationMode mode = JSC::ExcludeDontEnumProperties);
 
     virtual JSC::CallType getCallData(QScriptObject*, JSC::CallData&);
-    static JSC::JSValue JSC_HOST_CALL call(JSC::ExecState*, JSC::JSObject*,
+    static JSC::JSValue QT_FASTCALL call(JSC::ExecState*, JSC::JSObject*,
                                            JSC::JSValue, const JSC::ArgList&);
 
     virtual JSC::ConstructType getConstructData(QScriptObject*, JSC::ConstructData&);

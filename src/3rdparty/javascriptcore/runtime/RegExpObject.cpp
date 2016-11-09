@@ -124,7 +124,7 @@ JSValue RegExpObject::exec(ExecState* exec, const ArgList& args)
     return jsNull();
 }
 
-static JSValue JSC_HOST_CALL callRegExpObject(ExecState* exec, JSObject* function, JSValue, const ArgList& args)
+static JSValue QT_FASTCALL callRegExpObject(ExecState* exec, JSObject* function, JSValue, const ArgList& args)
 {
     return asRegExpObject(function)->exec(exec, args);
 }

@@ -267,7 +267,7 @@ inline T qobject_cast(const QObject *object)
 
 
 template <class T> inline const char * qobject_interface_iid()
-{ return 0; }
+{ return Q_NULLPTR; }
 
 #ifndef Q_MOC_RUN
 #  define Q_DECLARE_INTERFACE(IFace, IId) \

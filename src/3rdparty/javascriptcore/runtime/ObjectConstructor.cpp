@@ -34,13 +34,13 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(ObjectConstructor);
 
-static JSValue JSC_HOST_CALL objectConstructorGetPrototypeOf(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL objectConstructorGetOwnPropertyDescriptor(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL objectConstructorGetOwnPropertyNames(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL objectConstructorKeys(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL objectConstructorDefineProperty(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL objectConstructorDefineProperties(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL objectConstructorCreate(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorGetPrototypeOf(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorGetOwnPropertyDescriptor(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorGetOwnPropertyNames(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorKeys(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorDefineProperty(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorDefineProperties(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL objectConstructorCreate(ExecState*, JSObject*, JSValue, const ArgList&);
 
 ObjectConstructor::ObjectConstructor(ExecState* exec, NonNullPassRefPtr<Structure> structure, ObjectPrototype* objectPrototype, Structure* prototypeFunctionStructure)
 : InternalFunction(&exec->globalData(), structure, Identifier(exec, "Object"))
@@ -80,7 +80,7 @@ ConstructType ObjectConstructor::getConstructData(ConstructData& constructData)
     return ConstructTypeHost;
 }
 
-static JSValue JSC_HOST_CALL callObjectConstructor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+static JSValue QT_FASTCALL callObjectConstructor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     return constructObject(exec, args);
 }
@@ -91,14 +91,14 @@ CallType ObjectConstructor::getCallData(CallData& callData)
     return CallTypeHost;
 }
 
-JSValue JSC_HOST_CALL objectConstructorGetPrototypeOf(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorGetPrototypeOf(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject())
         return throwError(exec, TypeError, "Requested prototype of a value that is not an object.");
     return asObject(args.at(0))->prototype();
 }
 
-JSValue JSC_HOST_CALL objectConstructorGetOwnPropertyDescriptor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorGetOwnPropertyDescriptor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject())
         return throwError(exec, TypeError, "Requested property descriptor of a value that is not an object.");
@@ -128,7 +128,7 @@ JSValue JSC_HOST_CALL objectConstructorGetOwnPropertyDescriptor(ExecState* exec,
 }
 
 // FIXME: Use the enumeration cache.
-JSValue JSC_HOST_CALL objectConstructorGetOwnPropertyNames(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorGetOwnPropertyNames(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject())
         return throwError(exec, TypeError, "Requested property names of a value that is not an object.");
@@ -142,7 +142,7 @@ JSValue JSC_HOST_CALL objectConstructorGetOwnPropertyNames(ExecState* exec, JSOb
 }
 
 // FIXME: Use the enumeration cache.
-JSValue JSC_HOST_CALL objectConstructorKeys(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorKeys(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject())
         return throwError(exec, TypeError, "Requested keys of a value that is not an object.");
@@ -241,7 +241,7 @@ static bool toPropertyDescriptor(ExecState* exec, JSValue in, PropertyDescriptor
     return true;
 }
 
-JSValue JSC_HOST_CALL objectConstructorDefineProperty(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorDefineProperty(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject())
         return throwError(exec, TypeError, "Properties can only be defined on Objects.");
@@ -292,7 +292,7 @@ static JSValue defineProperties(ExecState* exec, JSObject* object, JSObject* pro
     return object;
 }
 
-JSValue JSC_HOST_CALL objectConstructorDefineProperties(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorDefineProperties(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject())
         return throwError(exec, TypeError, "Properties can only be defined on Objects.");
@@ -301,7 +301,7 @@ JSValue JSC_HOST_CALL objectConstructorDefineProperties(ExecState* exec, JSObjec
     return defineProperties(exec, asObject(args.at(0)), asObject(args.at(1)));
 }
 
-JSValue JSC_HOST_CALL objectConstructorCreate(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL objectConstructorCreate(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (!args.at(0).isObject() && !args.at(0).isNull())
         return throwError(exec, TypeError, "Object prototype may only be an Object or null.");

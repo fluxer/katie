@@ -586,10 +586,10 @@ bool isFunction(JSC::JSValue value)
     return (JSC::asObject(value)->getCallData(callData) != JSC::CallTypeNone);
 }
 
-static JSC::JSValue JSC_HOST_CALL functionConnect(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionDisconnect(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 
-JSC::JSValue JSC_HOST_CALL functionDisconnect(JSC::ExecState *exec, JSC::JSObject * /*callee*/, JSC::JSValue thisObject, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL functionDisconnect(JSC::ExecState *exec, JSC::JSObject * /*callee*/, JSC::JSValue thisObject, const JSC::ArgList &args)
 {
 #ifndef QT_NO_QOBJECT
     if (args.size() == 0) {
@@ -653,7 +653,7 @@ JSC::JSValue JSC_HOST_CALL functionDisconnect(JSC::ExecState *exec, JSC::JSObjec
 #endif // QT_NO_QOBJECT
 }
 
-JSC::JSValue JSC_HOST_CALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /*callee*/, JSC::JSValue thisObject, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL functionConnect(JSC::ExecState *exec, JSC::JSObject * /*callee*/, JSC::JSValue thisObject, const JSC::ArgList &args)
 {
 #ifndef QT_NO_QOBJECT
     if (args.size() == 0) {
@@ -736,11 +736,11 @@ JSC::JSValue JSC_HOST_CALL functionConnect(JSC::ExecState *exec, JSC::JSObject *
 #endif // QT_NO_QOBJECT
 }
 
-static JSC::JSValue JSC_HOST_CALL functionPrint(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionGC(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionVersion(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionPrint(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionGC(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionVersion(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 
-JSC::JSValue JSC_HOST_CALL functionPrint(JSC::ExecState* exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList& args)
+JSC::JSValue QT_FASTCALL functionPrint(JSC::ExecState* exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList& args)
 {
     QString result;
     for (unsigned i = 0; i < args.size(); ++i) {
@@ -757,26 +757,26 @@ JSC::JSValue JSC_HOST_CALL functionPrint(JSC::ExecState* exec, JSC::JSObject*, J
     return JSC::jsUndefined();
 }
 
-JSC::JSValue JSC_HOST_CALL functionGC(JSC::ExecState* exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&)
+JSC::JSValue QT_FASTCALL functionGC(JSC::ExecState* exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
     engine->collectGarbage();
     return JSC::jsUndefined();
 }
 
-JSC::JSValue JSC_HOST_CALL functionVersion(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&)
+JSC::JSValue QT_FASTCALL functionVersion(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&)
 {
     return JSC::JSValue(exec, 1);
 }
 
 #ifndef QT_NO_TRANSLATION
 
-static JSC::JSValue JSC_HOST_CALL functionQsTranslate(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionQsTranslateNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionQsTr(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
-static JSC::JSValue JSC_HOST_CALL functionQsTrNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionQsTranslate(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionQsTranslateNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL functionQsTrNoOp(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 
-JSC::JSValue JSC_HOST_CALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
 {
     if (args.size() < 2)
         return JSC::throwError(exec, JSC::GeneralError, "qsTranslate() requires at least two arguments");
@@ -824,14 +824,14 @@ JSC::JSValue JSC_HOST_CALL functionQsTranslate(JSC::ExecState *exec, JSC::JSObje
     return JSC::jsString(exec, result);
 }
 
-JSC::JSValue JSC_HOST_CALL functionQsTranslateNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL functionQsTranslateNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
 {
     if (args.size() < 2)
         return JSC::jsUndefined();
     return args.at(1);
 }
 
-JSC::JSValue JSC_HOST_CALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
 {
     if (args.size() < 1)
         return JSC::throwError(exec, JSC::GeneralError, "qsTr() requires at least one argument");
@@ -879,7 +879,7 @@ JSC::JSValue JSC_HOST_CALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JS
     return JSC::jsString(exec, result);
 }
 
-JSC::JSValue JSC_HOST_CALL functionQsTrNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL functionQsTrNoOp(JSC::ExecState *, JSC::JSObject*, JSC::JSValue, const JSC::ArgList &args)
 {
     if (args.size() < 1)
         return JSC::jsUndefined();
@@ -887,9 +887,9 @@ JSC::JSValue JSC_HOST_CALL functionQsTrNoOp(JSC::ExecState *, JSC::JSObject*, JS
 }
 #endif // QT_NO_TRANSLATION
 
-static JSC::JSValue JSC_HOST_CALL stringProtoFuncArg(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
+static JSC::JSValue QT_FASTCALL stringProtoFuncArg(JSC::ExecState*, JSC::JSObject*, JSC::JSValue, const JSC::ArgList&);
 
-JSC::JSValue JSC_HOST_CALL stringProtoFuncArg(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue thisObject, const JSC::ArgList &args)
+JSC::JSValue QT_FASTCALL stringProtoFuncArg(JSC::ExecState *exec, JSC::JSObject*, JSC::JSValue thisObject, const JSC::ArgList &args)
 {
     QString value(thisObject.toString(exec));
     JSC::JSValue arg = (args.size() != 0) ? args.at(0) : JSC::jsUndefined();

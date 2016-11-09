@@ -68,7 +68,7 @@ QScriptObjectDelegate::Type QVariantDelegate::type() const
     return Variant;
 }
 
-static JSC::JSValue JSC_HOST_CALL variantProtoFuncValueOf(JSC::ExecState *exec, JSC::JSObject*,
+static JSC::JSValue QT_FASTCALL variantProtoFuncValueOf(JSC::ExecState *exec, JSC::JSObject*,
                                                           JSC::JSValue thisValue, const JSC::ArgList&)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);
@@ -106,7 +106,7 @@ static JSC::JSValue JSC_HOST_CALL variantProtoFuncValueOf(JSC::ExecState *exec, 
     return thisValue;
 }
 
-static JSC::JSValue JSC_HOST_CALL variantProtoFuncToString(JSC::ExecState *exec, JSC::JSObject *callee,
+static JSC::JSValue QT_FASTCALL variantProtoFuncToString(JSC::ExecState *exec, JSC::JSObject *callee,
                                                            JSC::JSValue thisValue, const JSC::ArgList &args)
 {
     QScriptEnginePrivate *engine = scriptEngineFromExec(exec);

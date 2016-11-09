@@ -2946,7 +2946,7 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
 {
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != 0)
+    if (overflow != Q_NULLPTR)
         *overflow = false;
 
     if (*num == '\0') {
@@ -2973,7 +2973,7 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
         // input string is overflow
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != 0)
+        if (overflow != Q_NULLPTR)
             *overflow = *endptr != '\0';
         return 0.0;
     }
@@ -2982,14 +2982,14 @@ double QLocalePrivate::bytearrayToDouble(const char *num, bool *ok, bool *overfl
         // we stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != 0)
+        if (overflow != Q_NULLPTR)
             *overflow = false;
         return 0.0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != 0)
+    if (overflow != Q_NULLPTR)
         *overflow = false;
     return d;
 }
@@ -3002,7 +3002,7 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     if (*num == '\0') {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != 0)
+        if (overflow != Q_NULLPTR)
             *overflow = false;
         return 0;
     }
@@ -3012,7 +3012,7 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
     if (!_ok) {
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != 0) {
+        if (overflow != Q_NULLPTR) {
             // the only way qstrtoll can fail with *endptr != '\0' on a non-empty
             // input string is overflow
             *overflow = *endptr != '\0';
@@ -3024,14 +3024,14 @@ qlonglong QLocalePrivate::bytearrayToLongLong(const char *num, int base, bool *o
         // we stopped at a non-digit character after converting some digits
         if (ok != Q_NULLPTR)
             *ok = false;
-        if (overflow != 0)
+        if (overflow != Q_NULLPTR)
             *overflow = false;
         return 0;
     }
 
     if (ok != Q_NULLPTR)
         *ok = true;
-    if (overflow != 0)
+    if (overflow != Q_NULLPTR)
         *overflow = false;
     return l;
 }

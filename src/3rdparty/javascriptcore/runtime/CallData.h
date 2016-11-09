@@ -46,7 +46,7 @@ namespace JSC {
         CallTypeJS
     };
 
-    typedef JSValue (JSC_HOST_CALL *NativeFunction)(ExecState*, JSObject*, JSValue thisValue, const ArgList&);
+    typedef JSValue (QT_FASTCALL *NativeFunction)(ExecState*, JSObject*, JSValue thisValue, const ArgList&);
 
     class NativeFuncWrapper
     {

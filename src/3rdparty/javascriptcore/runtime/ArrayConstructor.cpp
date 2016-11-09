@@ -35,7 +35,7 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(ArrayConstructor);
     
-static JSValue JSC_HOST_CALL arrayConstructorIsArray(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL arrayConstructorIsArray(ExecState*, JSObject*, JSValue, const ArgList&);
 
 ArrayConstructor::ArrayConstructor(ExecState* exec, NonNullPassRefPtr<Structure> structure, ArrayPrototype* arrayPrototype, Structure* prototypeFunctionStructure)
     : InternalFunction(&exec->globalData(), structure, Identifier(exec, arrayPrototype->classInfo()->className))
@@ -76,7 +76,7 @@ ConstructType ArrayConstructor::getConstructData(ConstructData& constructData)
     return ConstructTypeHost;
 }
 
-static JSValue JSC_HOST_CALL callArrayConstructor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+static JSValue QT_FASTCALL callArrayConstructor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     return constructArrayWithSizeQuirk(exec, args);
 }
@@ -89,7 +89,7 @@ CallType ArrayConstructor::getCallData(CallData& callData)
     return CallTypeHost;
 }
 
-JSValue JSC_HOST_CALL arrayConstructorIsArray(ExecState*, JSObject*, JSValue, const ArgList& args)
+JSValue QT_FASTCALL arrayConstructorIsArray(ExecState*, JSObject*, JSValue, const ArgList& args)
 {
     return jsBoolean(args.at(0).inherits(&JSArray::info));
 }

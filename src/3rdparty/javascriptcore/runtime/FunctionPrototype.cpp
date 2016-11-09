@@ -33,9 +33,9 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(FunctionPrototype);
 
-static JSValue JSC_HOST_CALL functionProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL functionProtoFuncApply(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL functionProtoFuncCall(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL functionProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL functionProtoFuncApply(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL functionProtoFuncCall(ExecState*, JSObject*, JSValue, const ArgList&);
 
 FunctionPrototype::FunctionPrototype(ExecState* exec, NonNullPassRefPtr<Structure> structure)
     : InternalFunction(&exec->globalData(), structure, exec->propertyNames().nullIdentifier)
@@ -52,7 +52,7 @@ void FunctionPrototype::addFunctionProperties(ExecState* exec, Structure* protot
     putDirectFunctionWithoutTransition(exec, *callFunction, DontEnum);
 }
 
-static JSValue JSC_HOST_CALL callFunctionPrototype(ExecState*, JSObject*, JSValue, const ArgList&)
+static JSValue QT_FASTCALL callFunctionPrototype(ExecState*, JSObject*, JSValue, const ArgList&)
 {
     return jsUndefined();
 }
@@ -82,7 +82,7 @@ static inline void insertSemicolonIfNeeded(UString& functionBody)
     }
 }
 
-JSValue JSC_HOST_CALL functionProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL functionProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (thisValue.inherits(&JSFunction::info)) {
         JSFunction* function = asFunction(thisValue);
@@ -103,7 +103,7 @@ JSValue JSC_HOST_CALL functionProtoFuncToString(ExecState* exec, JSObject*, JSVa
     return throwError(exec, TypeError, "Function.prototype.toString called on incompatible object");
 }
 
-JSValue JSC_HOST_CALL functionProtoFuncApply(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL functionProtoFuncApply(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     CallData callData;
     CallType callType = thisValue.getCallData(callData);
@@ -131,7 +131,7 @@ JSValue JSC_HOST_CALL functionProtoFuncApply(ExecState* exec, JSObject*, JSValue
     return call(exec, thisValue, callType, callData, args.at(0), applyArgs);
 }
 
-JSValue JSC_HOST_CALL functionProtoFuncCall(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL functionProtoFuncCall(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     CallData callData;
     CallType callType = thisValue.getCallData(callData);

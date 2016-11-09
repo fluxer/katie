@@ -43,40 +43,40 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(StringPrototype);
 
-static JSValue JSC_HOST_CALL stringProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncCharAt(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncCharCodeAt(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncConcat(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncIndexOf(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncLastIndexOf(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncMatch(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncReplace(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSearch(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSlice(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSplit(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSubstr(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSubstring(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncToLowerCase(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncToUpperCase(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncLocaleCompare(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncCharAt(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncCharCodeAt(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncConcat(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncIndexOf(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncLastIndexOf(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncMatch(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncReplace(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSearch(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSlice(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSplit(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSubstr(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSubstring(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncToLowerCase(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncToUpperCase(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncLocaleCompare(ExecState*, JSObject*, JSValue, const ArgList&);
 
-static JSValue JSC_HOST_CALL stringProtoFuncBig(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSmall(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncBlink(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncBold(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncFixed(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncItalics(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncStrike(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSub(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncSup(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncFontcolor(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncFontsize(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncAnchor(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncLink(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncBig(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSmall(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncBlink(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncBold(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncFixed(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncItalics(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncStrike(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSub(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncSup(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncFontcolor(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncFontsize(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncAnchor(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncLink(ExecState*, JSObject*, JSValue, const ArgList&);
 
-static JSValue JSC_HOST_CALL stringProtoFuncTrim(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncTrimLeft(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL stringProtoFuncTrimRight(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncTrim(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncTrimLeft(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL stringProtoFuncTrimRight(ExecState*, JSObject*, JSValue, const ArgList&);
 
 }
 
@@ -227,7 +227,7 @@ static inline int localeCompare(const UString& a, const UString& b)
     return Collator::userDefault()->collate(a.data(), a.size(), b.data(), b.size());
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncReplace(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncReplace(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     JSString* sourceVal = thisValue.toThisJSString(exec);
     const UString& source = sourceVal->value(exec);
@@ -380,7 +380,7 @@ JSValue JSC_HOST_CALL stringProtoFuncReplace(ExecState* exec, JSObject*, JSValue
     return jsString(exec, source.replaceRange(matchPos, matchLen, substituteBackreferences(replacementString, source, ovector, 0)));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     // Also used for valueOf.
 
@@ -393,7 +393,7 @@ JSValue JSC_HOST_CALL stringProtoFuncToString(ExecState* exec, JSObject*, JSValu
     return throwError(exec, TypeError);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncCharAt(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncCharAt(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     unsigned len = s.size();
@@ -410,7 +410,7 @@ JSValue JSC_HOST_CALL stringProtoFuncCharAt(ExecState* exec, JSObject*, JSValue 
     return jsEmptyString(exec);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncCharCodeAt(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncCharCodeAt(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     unsigned len = s.size();
@@ -427,7 +427,7 @@ JSValue JSC_HOST_CALL stringProtoFuncCharCodeAt(ExecState* exec, JSObject*, JSVa
     return jsNaN(exec);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncConcat(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncConcat(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (thisValue.isString() && (args.size() == 1)) {
         JSValue v = args.at(0);
@@ -439,7 +439,7 @@ JSValue JSC_HOST_CALL stringProtoFuncConcat(ExecState* exec, JSObject*, JSValue 
     return jsString(exec, thisValue, args);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncIndexOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncIndexOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     int len = s.size();
@@ -464,7 +464,7 @@ JSValue JSC_HOST_CALL stringProtoFuncIndexOf(ExecState* exec, JSObject*, JSValue
     return jsNumber(exec, s.find(u2, pos));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncLastIndexOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncLastIndexOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     int len = s.size();
@@ -481,7 +481,7 @@ JSValue JSC_HOST_CALL stringProtoFuncLastIndexOf(ExecState* exec, JSObject*, JSV
     return jsNumber(exec, s.rfind(u2, static_cast<int>(dpos)));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncMatch(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncMatch(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
 
@@ -532,7 +532,7 @@ JSValue JSC_HOST_CALL stringProtoFuncMatch(ExecState* exec, JSObject*, JSValue t
     return constructArray(exec, list);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSearch(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncSearch(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
 
@@ -557,7 +557,7 @@ JSValue JSC_HOST_CALL stringProtoFuncSearch(ExecState* exec, JSObject*, JSValue 
     return jsNumber(exec, pos);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSlice(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncSlice(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     int len = s.size();
@@ -581,7 +581,7 @@ JSValue JSC_HOST_CALL stringProtoFuncSlice(ExecState* exec, JSObject*, JSValue t
     return jsEmptyString(exec);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSplit(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncSplit(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
 
@@ -643,7 +643,7 @@ JSValue JSC_HOST_CALL stringProtoFuncSplit(ExecState* exec, JSObject*, JSValue t
     return result;
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSubstr(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncSubstr(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     int len = s.size();
@@ -665,7 +665,7 @@ JSValue JSC_HOST_CALL stringProtoFuncSubstr(ExecState* exec, JSObject*, JSValue 
     return jsSubstring(exec, s, static_cast<unsigned>(start), static_cast<unsigned>(length));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSubstring(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncSubstring(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     int len = s.size();
@@ -697,7 +697,7 @@ JSValue JSC_HOST_CALL stringProtoFuncSubstring(ExecState* exec, JSObject*, JSVal
     return jsSubstring(exec, s, static_cast<unsigned>(start), static_cast<unsigned>(end) - static_cast<unsigned>(start));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncToLowerCase(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncToLowerCase(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     JSString* sVal = thisValue.toThisJSString(exec);
     const UString& s = sVal->value(exec);
@@ -710,7 +710,7 @@ JSValue JSC_HOST_CALL stringProtoFuncToLowerCase(ExecState* exec, JSObject*, JSV
     return jsString(exec, UString(qs));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncToUpperCase(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncToUpperCase(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     JSString* sVal = thisValue.toThisJSString(exec);
     const UString& s = sVal->value(exec);
@@ -723,7 +723,7 @@ JSValue JSC_HOST_CALL stringProtoFuncToUpperCase(ExecState* exec, JSObject*, JSV
     return jsString(exec, UString(qs));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncLocaleCompare(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncLocaleCompare(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (args.size() < 1)
       return jsNumber(exec, 0);
@@ -733,68 +733,68 @@ JSValue JSC_HOST_CALL stringProtoFuncLocaleCompare(ExecState* exec, JSObject*, J
     return jsNumber(exec, localeCompare(s, a0.toString(exec)));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncBig(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncBig(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<big>", s, "</big>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSmall(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncSmall(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<small>", s, "</small>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncBlink(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncBlink(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<blink>", s, "</blink>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncBold(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncBold(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<b>", s, "</b>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncFixed(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncFixed(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsString(exec, makeString("<tt>", s, "</tt>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncItalics(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncItalics(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<i>", s, "</i>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncStrike(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncStrike(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<strike>", s, "</strike>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSub(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncSub(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<sub>", s, "</sub>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncSup(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncSup(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     UString s = thisValue.toThisString(exec);
     return jsNontrivialString(exec, makeString("<sup>", s, "</sup>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncFontcolor(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncFontcolor(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     JSValue a0 = args.at(0);
     return jsNontrivialString(exec, makeString("<font color=\"", a0.toString(exec), "\">", s, "</font>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncFontsize(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncFontsize(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     JSValue a0 = args.at(0);
@@ -836,14 +836,14 @@ JSValue JSC_HOST_CALL stringProtoFuncFontsize(ExecState* exec, JSObject*, JSValu
     return jsNontrivialString(exec, makeString("<font size=\"", a0.toString(exec), "\">", s, "</font>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncAnchor(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncAnchor(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     JSValue a0 = args.at(0);
     return jsNontrivialString(exec, makeString("<a name=\"", a0.toString(exec), "\">", s, "</a>"));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncLink(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL stringProtoFuncLink(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     UString s = thisValue.toThisString(exec);
     JSValue a0 = args.at(0);
@@ -907,17 +907,17 @@ static inline JSValue trimString(ExecState* exec, JSValue thisValue, int trimKin
     return jsString(exec, str.substr(left, right - left));
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncTrim(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncTrim(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     return trimString(exec, thisValue, TrimLeft | TrimRight);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncTrimLeft(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncTrimLeft(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     return trimString(exec, thisValue, TrimLeft);
 }
 
-JSValue JSC_HOST_CALL stringProtoFuncTrimRight(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL stringProtoFuncTrimRight(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     return trimString(exec, thisValue, TrimRight);
 }

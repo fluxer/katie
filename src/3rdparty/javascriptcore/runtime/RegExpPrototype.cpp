@@ -37,10 +37,10 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(RegExpPrototype);
 
-static JSValue JSC_HOST_CALL regExpProtoFuncTest(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL regExpProtoFuncExec(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL regExpProtoFuncCompile(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL regExpProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL regExpProtoFuncTest(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL regExpProtoFuncExec(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL regExpProtoFuncCompile(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL regExpProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
 
 // ECMA 15.10.5
 
@@ -57,21 +57,21 @@ RegExpPrototype::RegExpPrototype(ExecState* exec, NonNullPassRefPtr<Structure> s
 
 // ------------------------------ Functions ---------------------------
     
-JSValue JSC_HOST_CALL regExpProtoFuncTest(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL regExpProtoFuncTest(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&RegExpObject::info))
         return throwError(exec, TypeError);
     return asRegExpObject(thisValue)->test(exec, args);
 }
 
-JSValue JSC_HOST_CALL regExpProtoFuncExec(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL regExpProtoFuncExec(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&RegExpObject::info))
         return throwError(exec, TypeError);
     return asRegExpObject(thisValue)->exec(exec, args);
 }
 
-JSValue JSC_HOST_CALL regExpProtoFuncCompile(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL regExpProtoFuncCompile(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&RegExpObject::info))
         return throwError(exec, TypeError);
@@ -98,7 +98,7 @@ JSValue JSC_HOST_CALL regExpProtoFuncCompile(ExecState* exec, JSObject*, JSValue
     return jsUndefined();
 }
 
-JSValue JSC_HOST_CALL regExpProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL regExpProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&RegExpObject::info)) {
         if (thisValue.inherits(&RegExpPrototype::info))

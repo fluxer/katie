@@ -37,12 +37,12 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(NumberPrototype);
 
-static JSValue JSC_HOST_CALL numberProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL numberProtoFuncToLocaleString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL numberProtoFuncValueOf(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL numberProtoFuncToFixed(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL numberProtoFuncToExponential(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL numberProtoFuncToPrecision(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL numberProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL numberProtoFuncToLocaleString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL numberProtoFuncValueOf(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL numberProtoFuncToFixed(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL numberProtoFuncToExponential(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL numberProtoFuncToPrecision(ExecState*, JSObject*, JSValue, const ArgList&);
 
 // ECMA 15.7.4
 
@@ -136,7 +136,7 @@ static double intPow10(int e)
     return static_cast<double>(result);
 }
 
-JSValue JSC_HOST_CALL numberProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL numberProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     JSValue v = thisValue.getJSNumber();
     if (!v)
@@ -200,7 +200,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToString(ExecState* exec, JSObject*, JSValu
     return jsString(exec, startOfResultString);
 }
 
-JSValue JSC_HOST_CALL numberProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL numberProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     // FIXME: Not implemented yet.
 
@@ -211,7 +211,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToLocaleString(ExecState* exec, JSObject*, 
     return jsString(exec, v.toString(exec));
 }
 
-JSValue JSC_HOST_CALL numberProtoFuncValueOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL numberProtoFuncValueOf(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     JSValue v = thisValue.getJSNumber();
     if (!v)
@@ -220,7 +220,7 @@ JSValue JSC_HOST_CALL numberProtoFuncValueOf(ExecState* exec, JSObject*, JSValue
     return v;
 }
 
-JSValue JSC_HOST_CALL numberProtoFuncToFixed(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL numberProtoFuncToFixed(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     JSValue v = thisValue.getJSNumber();
     if (!v)
@@ -311,7 +311,7 @@ static void exponentialPartToString(char* buf, int& i, int decimalPoint)
     buf[i++] = static_cast<char>('0' + exponential % 10);
 }
 
-JSValue JSC_HOST_CALL numberProtoFuncToExponential(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL numberProtoFuncToExponential(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     JSValue v = thisValue.getJSNumber();
     if (!v)
@@ -383,7 +383,7 @@ JSValue JSC_HOST_CALL numberProtoFuncToExponential(ExecState* exec, JSObject*, J
     return jsString(exec, buf);
 }
 
-JSValue JSC_HOST_CALL numberProtoFuncToPrecision(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL numberProtoFuncToPrecision(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     JSValue v = thisValue.getJSNumber();
     if (!v)

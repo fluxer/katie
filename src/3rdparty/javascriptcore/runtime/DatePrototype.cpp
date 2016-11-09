@@ -60,52 +60,52 @@ namespace JSC {
 
 ASSERT_CLASS_FITS_IN_CELL(DatePrototype);
 
-static JSValue JSC_HOST_CALL dateProtoFuncGetDate(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetDay(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetHours(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetMilliSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetMonth(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetTime(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetTimezoneOffset(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCDate(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCDay(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCHours(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCMilliseconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCMonth(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetUTCSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncGetYear(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetDate(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetHours(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetMilliSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetMonth(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetTime(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCDate(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCHours(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCMilliseconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCMonth(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetUTCSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncSetYear(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToDateString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToGMTString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToLocaleDateString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToLocaleString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToLocaleTimeString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToTimeString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToUTCString(ExecState*, JSObject*, JSValue, const ArgList&);
-static JSValue JSC_HOST_CALL dateProtoFuncToISOString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetDate(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetDay(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetHours(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetMilliSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetMonth(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetTime(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetTimezoneOffset(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCDate(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCDay(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCHours(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCMilliseconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCMonth(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetUTCSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncGetYear(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetDate(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetHours(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetMilliSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetMonth(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetTime(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCDate(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCFullYear(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCHours(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCMilliseconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCMinutes(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCMonth(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetUTCSeconds(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncSetYear(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToDateString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToGMTString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToLocaleDateString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToLocaleString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToLocaleTimeString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToTimeString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToUTCString(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToISOString(ExecState*, JSObject*, JSValue, const ArgList&);
 
-static JSValue JSC_HOST_CALL dateProtoFuncToJSON(ExecState*, JSObject*, JSValue, const ArgList&);
+static JSValue QT_FASTCALL dateProtoFuncToJSON(ExecState*, JSObject*, JSValue, const ArgList&);
 
 }
 
@@ -330,7 +330,7 @@ bool DatePrototype::getOwnPropertyDescriptor(ExecState* exec, const Identifier& 
 
 // Functions
 
-JSValue JSC_HOST_CALL dateProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -347,7 +347,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToString(ExecState* exec, JSObject*, JSValue 
     return jsNontrivialString(exec, makeString(date, " ", time));
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToUTCString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToUTCString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -364,7 +364,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToUTCString(ExecState* exec, JSObject*, JSVal
     return jsNontrivialString(exec, makeString(date, " ", time));
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToISOString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToISOString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -382,7 +382,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToISOString(ExecState* exec, JSObject*, JSVal
     return jsNontrivialString(exec, buffer);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToDateString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToDateString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -397,7 +397,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToDateString(ExecState* exec, JSObject*, JSVa
     return jsNontrivialString(exec, date);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToTimeString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToTimeString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -412,7 +412,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToTimeString(ExecState* exec, JSObject*, JSVa
     return jsNontrivialString(exec, time);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncToLocaleString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -421,7 +421,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToLocaleString(ExecState* exec, JSObject*, JS
     return formatLocaleDate(exec, thisDateObj, thisDateObj->internalNumber(), LocaleDateAndTime, args);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToLocaleDateString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncToLocaleDateString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -430,7 +430,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToLocaleDateString(ExecState* exec, JSObject*
     return formatLocaleDate(exec, thisDateObj, thisDateObj->internalNumber(), LocaleDate, args);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToLocaleTimeString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncToLocaleTimeString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -439,7 +439,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToLocaleTimeString(ExecState* exec, JSObject*
     return formatLocaleDate(exec, thisDateObj, thisDateObj->internalNumber(), LocaleTime, args);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetTime(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetTime(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -447,7 +447,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetTime(ExecState* exec, JSObject*, JSValue t
     return asDateInstance(thisValue)->internalValue(); 
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -460,7 +460,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetFullYear(ExecState* exec, JSObject*, JSVal
     return jsNumber(exec, 1900 + gregorianDateTime->year);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -473,7 +473,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCFullYear(ExecState* exec, JSObject*, JS
     return jsNumber(exec, 1900 + gregorianDateTime->year);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToGMTString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToGMTString(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -490,7 +490,7 @@ JSValue JSC_HOST_CALL dateProtoFuncToGMTString(ExecState* exec, JSObject*, JSVal
     return jsNontrivialString(exec, makeString(date, " ", time));
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -503,7 +503,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetMonth(ExecState* exec, JSObject*, JSValue 
     return jsNumber(exec, gregorianDateTime->month);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -516,7 +516,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCMonth(ExecState* exec, JSObject*, JSVal
     return jsNumber(exec, gregorianDateTime->month);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -529,7 +529,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetDate(ExecState* exec, JSObject*, JSValue t
     return jsNumber(exec, gregorianDateTime->monthDay);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -542,7 +542,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCDate(ExecState* exec, JSObject*, JSValu
     return jsNumber(exec, gregorianDateTime->monthDay);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetDay(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetDay(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -555,7 +555,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetDay(ExecState* exec, JSObject*, JSValue th
     return jsNumber(exec, gregorianDateTime->weekDay);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCDay(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCDay(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -568,7 +568,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCDay(ExecState* exec, JSObject*, JSValue
     return jsNumber(exec, gregorianDateTime->weekDay);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -581,7 +581,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetHours(ExecState* exec, JSObject*, JSValue 
     return jsNumber(exec, gregorianDateTime->hour);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -594,7 +594,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCHours(ExecState* exec, JSObject*, JSVal
     return jsNumber(exec, gregorianDateTime->hour);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -607,7 +607,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetMinutes(ExecState* exec, JSObject*, JSValu
     return jsNumber(exec, gregorianDateTime->minute);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -620,7 +620,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCMinutes(ExecState* exec, JSObject*, JSV
     return jsNumber(exec, gregorianDateTime->minute);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -633,7 +633,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetSeconds(ExecState* exec, JSObject*, JSValu
     return jsNumber(exec, gregorianDateTime->second);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -646,7 +646,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCSeconds(ExecState* exec, JSObject*, JSV
     return jsNumber(exec, gregorianDateTime->second);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetMilliSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetMilliSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -661,7 +661,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetMilliSeconds(ExecState* exec, JSObject*, J
     return jsNumber(exec, ms);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetUTCMilliseconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetUTCMilliseconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -676,7 +676,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetUTCMilliseconds(ExecState* exec, JSObject*
     return jsNumber(exec, ms);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetTimezoneOffset(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetTimezoneOffset(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -689,7 +689,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetTimezoneOffset(ExecState* exec, JSObject*,
     return jsNumber(exec, -gregorianDateTime->utcOffset / minutesPerHour);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetTime(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetTime(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -777,91 +777,91 @@ static JSValue setNewValueFromDateArgs(ExecState* exec, JSValue thisValue, const
     return result;
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetMilliSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetMilliSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromTimeArgs(exec, thisValue, args, 1, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCMilliseconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCMilliseconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromTimeArgs(exec, thisValue, args, 1, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromTimeArgs(exec, thisValue, args, 2, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCSeconds(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromTimeArgs(exec, thisValue, args, 2, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromTimeArgs(exec, thisValue, args, 3, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCMinutes(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromTimeArgs(exec, thisValue, args, 3, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromTimeArgs(exec, thisValue, args, 4, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCHours(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromTimeArgs(exec, thisValue, args, 4, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromDateArgs(exec, thisValue, args, 1, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCDate(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromDateArgs(exec, thisValue, args, 1, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromDateArgs(exec, thisValue, args, 2, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCMonth(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromDateArgs(exec, thisValue, args, 2, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = false;
     return setNewValueFromDateArgs(exec, thisValue, args, 3, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetUTCFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetUTCFullYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     const bool inputIsUTC = true;
     return setNewValueFromDateArgs(exec, thisValue, args, 3, inputIsUTC);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncSetYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
+JSValue QT_FASTCALL dateProtoFuncSetYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -902,7 +902,7 @@ JSValue JSC_HOST_CALL dateProtoFuncSetYear(ExecState* exec, JSObject*, JSValue t
     return result;
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncGetYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncGetYear(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     if (!thisValue.inherits(&DateInstance::info))
         return throwError(exec, TypeError);
@@ -917,7 +917,7 @@ JSValue JSC_HOST_CALL dateProtoFuncGetYear(ExecState* exec, JSObject*, JSValue t
     return jsNumber(exec, gregorianDateTime->year);
 }
 
-JSValue JSC_HOST_CALL dateProtoFuncToJSON(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
+JSValue QT_FASTCALL dateProtoFuncToJSON(ExecState* exec, JSObject*, JSValue thisValue, const ArgList&)
 {
     JSObject* object = thisValue.toThisObject(exec);
     if (exec->hadException())

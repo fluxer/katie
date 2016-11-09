@@ -38,7 +38,7 @@ static NEVER_INLINE JSValue stringFromCharCodeSlowCase(ExecState* exec, const Ar
     return jsString(exec, impl);
 }
 
-static JSValue JSC_HOST_CALL stringFromCharCode(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+static JSValue QT_FASTCALL stringFromCharCode(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (Q_LIKELY(args.size() == 1))
         return jsSingleCharacterString(exec, args.at(0).toUInt32(exec));
@@ -75,7 +75,7 @@ ConstructType StringConstructor::getConstructData(ConstructData& constructData)
 }
 
 // ECMA 15.5.1
-static JSValue JSC_HOST_CALL callStringConstructor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
+static JSValue QT_FASTCALL callStringConstructor(ExecState* exec, JSObject*, JSValue, const ArgList& args)
 {
     if (args.isEmpty())
         return jsEmptyString(exec);

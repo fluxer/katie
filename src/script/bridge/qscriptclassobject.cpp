@@ -211,7 +211,7 @@ JSC::CallType ClassObjectDelegate::getCallData(QScriptObject*, JSC::CallData &ca
     return JSC::CallTypeHost;
 }
 
-JSC::JSValue JSC_HOST_CALL ClassObjectDelegate::call(JSC::ExecState *exec, JSC::JSObject *callee,
+JSC::JSValue QT_FASTCALL ClassObjectDelegate::call(JSC::ExecState *exec, JSC::JSObject *callee,
                                              JSC::JSValue thisValue, const JSC::ArgList &args)
 {
     if (!callee->inherits(&QScriptObject::info))

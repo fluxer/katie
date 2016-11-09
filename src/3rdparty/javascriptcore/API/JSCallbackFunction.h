@@ -48,7 +48,7 @@ private:
     virtual CallType getCallData(CallData&);
     virtual const ClassInfo* classInfo() const { return &info; }
 
-    static JSValue JSC_HOST_CALL call(ExecState*, JSObject*, JSValue, const ArgList&);
+    static JSValue QT_FASTCALL call(ExecState*, JSObject*, JSValue, const ArgList&);
 
     JSObjectCallAsFunctionCallback m_callback;
 };
