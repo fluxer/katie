@@ -1761,7 +1761,15 @@ inline const QForeachContainer<T> *qForeachContainer(const QForeachContainerBase
 #  endif
 #endif
 
-#define Q_UNREACHABLE() Q_ASSERT_X(false, "Q_UNREACHABLE()", "Q_UNREACHABLE was reached");
+#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
+#define Q_UNREACHABLE_IMPL() __builtin_unreachable()
+#else
+#define Q_UNREACHABLE_IMPL()
+#endif
+
+#define Q_UNREACHABLE() \
+    Q_ASSERT_X(false, "Q_UNREACHABLE()", "Q_UNREACHABLE was reached"); \
+    Q_UNREACHABLE_IMPL()
 
 template <typename T> static inline T *qGetPtrHelper(T *ptr) { return ptr; }
 template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelper(const Wrapper &p) { return p.data(); }
