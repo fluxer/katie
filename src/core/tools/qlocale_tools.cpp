@@ -1092,16 +1092,7 @@ static Bigint *pow5mult(Bigint *b, int k)
     int i;
     static const int p05[3] = { 5, 25, 125 };
 
-    if ((i = k & 3) != 0)
-#if defined(Q_OS_IRIX) && defined(Q_CC_GNU)
-    {
-        // work around a bug on 64 bit IRIX gcc
-        int *p = (int *) p05;
-        b = multadd(b, p[i-1], 0);
-    }
-#else
     b = multadd(b, p05[i-1], 0);
-#endif
 
     if (!(k >>= 2))
         return b;
@@ -1693,17 +1684,7 @@ double qstrtod(const char *s00, const char **se, bool *ok)
     if (!nd0)
         nd0 = nd;
     k = nd < DBL_DIG + 1 ? nd : DBL_DIG + 1;
-    rv = y;
-    if (k > 9)
-#if defined(Q_OS_IRIX) && defined(Q_CC_GNU)
-    {
-        // work around a bug on 64 bit IRIX gcc
-        double *t = (double *) tens;
-        rv = t[k - 9] * rv + z;
-    }
-#else
-    rv = tens[k - 9] * rv + z;
-#endif
+    rv = tens[k - 9] * y + z;
 
     bd0 = 0;
     if (nd <= DBL_DIG
@@ -2559,13 +2540,7 @@ static char *_qdtoa( double d, int mode, int ndigits, int *decpt, int *sign, cha
         else {
 #endif
             /* Generate ilim digits, then fix them up. */
-#if defined(Q_OS_IRIX) && defined(Q_CC_GNU)
-            // work around a bug on 64 bit IRIX gcc
-            double *t = (double *) tens;
-            eps *= t[ilim-1];
-#else
             eps *= tens[ilim-1];
-#endif
             for(i = 1;; i++, d *= 10.) {
                 L = Long(d);
                 d -= L;

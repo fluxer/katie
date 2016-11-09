@@ -1068,21 +1068,10 @@ bool QFtpPI::processReply()
             // reply codes not starting with 1 or 2 are not handled.
             return true;
         case Waiting:
-            if (static_cast<signed char>(replyCode[0]) < 0 || replyCode[0] > 5)
-                state = Failure;
-            else
-#if defined(Q_OS_IRIX) && defined(Q_CC_GNU)
-            {
-                // work around a crash on 64 bit gcc IRIX
-                State *t = (State *) table;
-                state = t[replyCode[0] - 1];
-            }
-#else
-            if (replyCodeInt == 202)
+            if (static_cast<signed char>(replyCode[0]) < 0 || replyCode[0] > 5 || replyCodeInt == 202)
                 state = Failure;
             else
                 state = table[replyCode[0] - 1];
-#endif
             break;
         default:
             // ignore unrequested message

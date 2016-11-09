@@ -258,8 +258,6 @@ namespace QT_NAMESPACE {}
 #elif defined(__bsdi__)
 #  define Q_OS_BSDI
 #  define Q_OS_BSD4
-#elif defined(__sgi)
-#  define Q_OS_IRIX
 #elif defined(__osf__)
 #  define Q_OS_OSF
 #elif defined(_AIX)
@@ -1843,7 +1841,7 @@ Q_CORE_EXPORT int qrand();
 #endif
 
 #if defined (__ELF__)
-#  if defined (Q_OS_LINUX) || defined (Q_OS_SOLARIS) || defined (Q_OS_FREEBSD) || defined (Q_OS_OPENBSD) || defined (Q_OS_IRIX)
+#  if defined (Q_OS_LINUX) || defined (Q_OS_SOLARIS) || defined (Q_OS_FREEBSD) || defined (Q_OS_OPENBSD)
 #    define Q_OF_ELF
 #  endif
 #endif

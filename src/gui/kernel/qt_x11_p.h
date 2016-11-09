@@ -90,10 +90,6 @@
 
 #ifndef QT_NO_TABLET
 #  include <X11/extensions/XInput.h>
-#if defined (Q_OS_IRIX)
-#  include <X11/extensions/SGIMisc.h>
-#  include <wacom.h>
-#endif
 #endif // QT_NO_TABLET
 
 #ifndef QT_NO_XINERAMA

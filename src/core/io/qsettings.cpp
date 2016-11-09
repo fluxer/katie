@@ -157,7 +157,7 @@ Q_AUTOTEST_EXPORT_HELPER bool qIsLikelyToBeNfs(int handle)
            || buf.f_type == AUTOFSNG_SUPER_MAGIC;
 }
 
-#elif defined(Q_OS_SOLARIS) || defined(Q_OS_IRIX) || defined(Q_OS_AIX) || defined(Q_OS_HPUX) \
+#elif defined(Q_OS_SOLARIS) || defined(Q_OS_AIX) || defined(Q_OS_HPUX) \
       || defined(Q_OS_OSF) || defined(Q_OS_SCO) \
       || defined(Q_OS_UNIXWARE) || defined(Q_OS_RELIANT) || defined(Q_OS_NETBSD)
 QT_BEGIN_INCLUDE_NAMESPACE

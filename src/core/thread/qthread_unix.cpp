@@ -359,9 +359,6 @@ int QThread::idealThreadCount()
         perror("sysctl");
         cores = -1;
     }
-#elif defined(Q_OS_IRIX)
-    // IRIX
-    cores = (int)sysconf(_SC_NPROC_ONLN);
 #else
     // the rest: Linux, Solaris, AIX, Tru64
     cores = (int)sysconf(_SC_NPROCESSORS_ONLN);
