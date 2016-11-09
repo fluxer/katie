@@ -467,7 +467,7 @@ void QDesignerWorkbench::switchToTopLevelMode()
     m_mode = TopLevelMode;
 
     // The widget box is special, it gets the menubar and gets to be the main widget.
-
+    m_core->setTopLevel(widgetBoxWrapper);
     widgetBoxWrapper->setMenuBar(m_globalMenuBar);
     widgetBoxWrapper->action()->setVisible(false);
     widgetBoxWrapper->setCloseEventPolicy(MainWindowBase::EmitCloseEventSignal);

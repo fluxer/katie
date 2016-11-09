@@ -1092,7 +1092,8 @@ static Bigint *pow5mult(Bigint *b, int k)
     int i;
     static const int p05[3] = { 5, 25, 125 };
 
-    b = multadd(b, p05[i-1], 0);
+    if ((i == k & 3) != 0)
+        b = multadd(b, p05[i-1], 0);
 
     if (!(k >>= 2))
         return b;
@@ -1684,7 +1685,9 @@ double qstrtod(const char *s00, const char **se, bool *ok)
     if (!nd0)
         nd0 = nd;
     k = nd < DBL_DIG + 1 ? nd : DBL_DIG + 1;
-    rv = tens[k - 9] * y + z;
+    rv = y;
+    if (k > 9)
+        rv = tens[k - 9] * rv + z;
 
     bd0 = 0;
     if (nd <= DBL_DIG
