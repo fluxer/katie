@@ -1456,8 +1456,7 @@ bool QPainter::begin(QPaintDevice *pd)
 
     if (!rpd)
         rpd = redirected(pd, &redirectionOffset);
-
-    if (rpd)
+    else
         pd = rpd;
 
 #ifdef QT_DEBUG_DRAW

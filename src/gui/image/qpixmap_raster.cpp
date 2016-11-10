@@ -309,7 +309,7 @@ QPaintEngine* QRasterPixmapData::paintEngine() const
 
 int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
 {
-    QImageData *d = image.d;
+    const QImageData *d = image.d;
     if (!d)
         return 0;
 
@@ -326,7 +326,7 @@ int QRasterPixmapData::metric(QPaintDevice::PaintDeviceMetric metric) const
     case QPaintDevice::PdmNumColors:
         return d->colortable.size();
     case QPaintDevice::PdmDepth:
-        return this->d;
+        return depth();
     case QPaintDevice::PdmDpiX: // fall-through
     case QPaintDevice::PdmPhysicalDpiX:
         return qt_defaultDpiX();
