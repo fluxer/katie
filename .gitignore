@@ -1,90 +1,19 @@
 # This file is used to tell Git which files to ignore from the tree
 # -----------------------------------------------------------------
 
-callgrind.out.*
-pcviewer.cfg
 *~
-*.a
-*.moc
-*.o
 *.obj
 *.orig
-*.swp
 *.rej
-*.so
-*.pbxuser
-*.mode1
-*.mode1v3
-*_pch.h.cpp
-*_resource.rc
-.#*
-*.*#
-tags
-.DS_Store
-*.debug
-Makefile*
-*.prl
-*.app
-*.pro.user*
-*.qmlproject.user*
-*.gcov
-mkspecs/default
-moc_*.cpp
-src/tools/uic/qclass_lib_map.h
-ui_*.h
-.com.apple.timemachine.supported
-tests/auto/qlibrary/libmylib.so*
-tests/auto/qresourceengine/runtime_resource.rcc
-tools/qtestlib/chart/chart*
-tools/qtestlib/updater/updater*
-translations/*.qm
-translations/*_untranslated.ts
-qrc_*.cpp
-/.device.vars
 
 # xemacs temporary files
 *.flc
 
 # Vim temporary files
-.*.swp
-
-# Visual Studio generated files
-*.ib_pdb_index
-*.idb
-*.ilk
-*.pdb
-*.sln
-*.suo
-*.vcproj
-*vcproj.*.*.user
-*.ncb
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
-
-# MinGW generated files
-*.Debug
-*.Release
+*.swp
 
 # Directories to ignore
 # ---------------------
 
 apidocs
 build
-mingw
-include/*
-privateinclude/*
-plugins/*/*
-.rcc
-.pch
-.metadata
-
-# INTEGRITY generated files
-*.gpj
-*.int
-*.ael
-*.dla
-*.dnm
-*.dep
-*.map
-work
