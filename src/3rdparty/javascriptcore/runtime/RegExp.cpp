@@ -27,34 +27,20 @@
 #include <string.h>
 #include <wtf/Assertions.h>
 
-
-#if ENABLE(YARR)
-
-#include "yarr/RegexCompiler.h"
-#if ENABLE(YARR_JIT)
-#include "yarr/RegexJIT.h"
-#else
-#include "yarr/RegexInterpreter.h"
-#endif
-
-#else
-
 #include <pcre/pcre.h>
-
-#endif
 
 namespace JSC {
 
-inline RegExp::RegExp(JSGlobalData* globalData, const UString& pattern)
+inline RegExp::RegExp(const UString& pattern)
     : m_pattern(pattern)
     , m_flagBits(0)
     , m_constructionError(0)
     , m_numSubpatterns(0)
 {
-    compile(globalData);
+    compile();
 }
 
-inline RegExp::RegExp(JSGlobalData* globalData, const UString& pattern, const UString& flags)
+inline RegExp::RegExp(const UString& pattern, const UString& flags)
     : m_pattern(pattern)
     , m_flagBits(0)
     , m_constructionError(0)
@@ -77,103 +63,32 @@ inline RegExp::RegExp(JSGlobalData* globalData, const UString& pattern, const US
             break;
         default:
             m_constructionError = flagError;
-#if !ENABLE(YARR)
             m_regExp = 0;
-#endif
             return;
         }
     }
 
-    compile(globalData);
+    compile();
 }
 
-#if !ENABLE(YARR)
 RegExp::~RegExp()
 {
     jsRegExpFree(m_regExp);
 }
-#endif
 
-PassRefPtr<RegExp> RegExp::create(JSGlobalData* globalData, const UString& pattern)
+PassRefPtr<RegExp> RegExp::create(const UString& pattern)
 {
-    return adoptRef(new RegExp(globalData, pattern));
+    return adoptRef(new RegExp(pattern));
 }
 
-PassRefPtr<RegExp> RegExp::create(JSGlobalData* globalData, const UString& pattern, const UString& flags)
+PassRefPtr<RegExp> RegExp::create(const UString& pattern, const UString& flags)
 {
-    return adoptRef(new RegExp(globalData, pattern, flags));
+    return adoptRef(new RegExp(pattern, flags));
 }
 
-#if ENABLE(YARR)
-
-void RegExp::compile(JSGlobalData* globalData)
-{
-#if ENABLE(YARR_JIT)
-    Yarr::jitCompileRegex(globalData, m_regExpJITCode, m_pattern, m_numSubpatterns, m_constructionError, ignoreCase(), multiline());
-#else
-    Q_UNUSED(globalData);
-    m_regExpBytecode.set(Yarr::byteCompileRegex(m_pattern, m_numSubpatterns, m_constructionError, ignoreCase(), multiline()));
-#endif
-}
-
-int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
-{
-    if (startOffset < 0)
-        startOffset = 0;
-    if (ovector)
-        ovector->clear();
-
-    if (startOffset > s.size() || s.isNull())
-        return -1;
-
-#if ENABLE(YARR_JIT)
-    if (!!m_regExpJITCode) {
-#else
-    if (m_regExpBytecode) {
-#endif
-        int offsetVectorSize = (m_numSubpatterns + 1) * 3; // FIXME: should be 2 - but adding temporary fallback to pcre.
-        int* offsetVector;
-        Vector<int, 32> nonReturnedOvector;
-        if (ovector) {
-            ovector->resize(offsetVectorSize);
-            offsetVector = ovector->data();
-        } else {
-            nonReturnedOvector.resize(offsetVectorSize);
-            offsetVector = nonReturnedOvector.data();
-        }
-
-        Q_ASSERT(offsetVector);
-        for (int j = 0; j < offsetVectorSize; ++j)
-            offsetVector[j] = -1;
-
-
-#if ENABLE(YARR_JIT)
-        int result = Yarr::executeRegex(m_regExpJITCode, s.data(), startOffset, s.size(), offsetVector, offsetVectorSize);
-#else
-        int result = Yarr::interpretRegex(m_regExpBytecode.get(), s.data(), startOffset, s.size(), offsetVector);
-#endif
-
-        if (result < 0) {
-#ifndef NDEBUG
-            // TODO: define up a symbol, rather than magic -1
-            if (result != -1)
-                fprintf(stderr, "jsRegExpExecute failed with result %d\n", result);
-#endif
-            if (ovector)
-                ovector->clear();
-        }
-        return result;
-    }
-
-    return -1;
-}
-
-#else
-
-void RegExp::compile(JSGlobalData* globalData)
+void RegExp::compile()
 {
     m_regExp = 0;
-    Q_UNUSED(globalData);
 
     JSRegExpIgnoreCaseOption ignoreCaseOption = ignoreCase() ? JSRegExpIgnoreCase : JSRegExpDoNotIgnoreCase;
     JSRegExpMultilineOption multilineOption = multiline() ? JSRegExpMultiline : JSRegExpSingleLine;
@@ -222,7 +137,5 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
 
     return -1;
 }
-
-#endif
 
 } // namespace JSC

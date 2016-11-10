@@ -23,25 +23,18 @@
 #define RegExp_h
 
 #include "UString.h"
-#include "ExecutableAllocator.h"
 #include <wtf/Forward.h>
 #include <wtf/RefCounted.h>
-#include "yarr/RegexJIT.h"
-#include "yarr/RegexInterpreter.h"
 
 struct JSRegExp;
 
 namespace JSC {
 
-    class JSGlobalData;
-
     class RegExp : public RefCounted<RegExp> {
     public:
-        static PassRefPtr<RegExp> create(JSGlobalData* globalData, const UString& pattern);
-        static PassRefPtr<RegExp> create(JSGlobalData* globalData, const UString& pattern, const UString& flags);
-#if !ENABLE(YARR)
+        static PassRefPtr<RegExp> create(const UString& pattern);
+        static PassRefPtr<RegExp> create(const UString& pattern, const UString& flags);
         ~RegExp();
-#endif
 
         bool global() const { return m_flagBits & Global; }
         bool ignoreCase() const { return m_flagBits & IgnoreCase; }
@@ -56,10 +49,10 @@ namespace JSC {
         unsigned numSubpatterns() const { return m_numSubpatterns; }
 
     private:
-        RegExp(JSGlobalData* globalData, const UString& pattern);
-        RegExp(JSGlobalData* globalData, const UString& pattern, const UString& flags);
+        RegExp(const UString& pattern);
+        RegExp(const UString& pattern, const UString& flags);
 
-        void compile(JSGlobalData*);
+        void compile();
 
         enum FlagBits { Global = 1, IgnoreCase = 2, Multiline = 4 };
 
@@ -68,13 +61,7 @@ namespace JSC {
         const char* m_constructionError;
         unsigned m_numSubpatterns;
 
-#if ENABLE(YARR_JIT)
-        Yarr::RegexCodeBlock m_regExpJITCode;
-#elif ENABLE(YARR)
-        OwnPtr<Yarr::BytecodePattern> m_regExpBytecode;
-#else
         JSRegExp* m_regExp;
-#endif
     };
 
 } // namespace JSC

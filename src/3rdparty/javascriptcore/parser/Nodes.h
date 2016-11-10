@@ -27,7 +27,6 @@
 #define Nodes_h
 
 #include "Error.h"
-#include "JITCode.h"
 #include "Opcode.h"
 #include "ParserArena.h"
 #include "ResultType.h"

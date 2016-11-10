@@ -56,22 +56,6 @@ JSFunction::JSFunction(NonNullPassRefPtr<Structure> structure)
 {
 }
 
-JSFunction::JSFunction(ExecState* exec, NonNullPassRefPtr<Structure> structure, int length, const Identifier& name, NativeFunction func)
-    : Base(&exec->globalData(), structure, name)
-#if ENABLE(JIT)
-    , m_executable(adoptRef(new NativeExecutable(exec)))
-#endif
-{
-#if ENABLE(JIT)
-    setNativeFunction(func);
-    putDirect(exec->propertyNames().length, jsNumber(exec, length), DontDelete | ReadOnly | DontEnum);
-#else
-    Q_UNUSED(length);
-    Q_UNUSED(func);
-    Q_UNREACHABLE();
-#endif
-}
-
 JSFunction::JSFunction(ExecState* exec, NonNullPassRefPtr<FunctionExecutable> executable, ScopeChainNode* scopeChainNode)
     : Base(&exec->globalData(), exec->lexicalGlobalObject()->functionStructure(), executable->name())
     , m_executable(executable)
@@ -87,12 +71,7 @@ JSFunction::~JSFunction()
     // are based on a check for the this pointer value for this JSFunction - which will no longer be valid once
     // this memory is freed and may be reused (potentially for another, different JSFunction).
     if (!isHostFunction()) {
-#if ENABLE(JIT_OPTIMIZE_CALL)
-        Q_ASSERT(m_executable);
-        if (jsExecutable()->isGenerated())
-            jsExecutable()->generatedBytecode().unlinkCallers();
-#endif
-        scopeChain().~ScopeChain(); // FIXME: Don't we need to do this in the interpreter too?
+        scopeChain().~ScopeChain();
     }
 }
 

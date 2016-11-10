@@ -29,8 +29,6 @@
 #ifndef CallData_h
 #define CallData_h
 
-#include "NativeFunctionWrapper.h"
-
 namespace JSC {
 
     class ArgList;

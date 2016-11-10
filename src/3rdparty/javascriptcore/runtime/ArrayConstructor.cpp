@@ -47,7 +47,7 @@ ArrayConstructor::ArrayConstructor(ExecState* exec, NonNullPassRefPtr<Structure>
     putDirectWithoutTransition(exec->propertyNames().length, jsNumber(exec, 1), ReadOnly | DontEnum | DontDelete);
 
     // ES5
-    putDirectFunctionWithoutTransition(exec, new (exec) NativeFunctionWrapper(exec, prototypeFunctionStructure, 1, exec->propertyNames().isArray, arrayConstructorIsArray), DontEnum);
+    putDirectFunctionWithoutTransition(exec, new (exec) PrototypeFunction(exec, prototypeFunctionStructure, 1, exec->propertyNames().isArray, arrayConstructorIsArray), DontEnum);
 }
 
 static inline JSObject* constructArrayWithSizeQuirk(ExecState* exec, const ArgList& args)

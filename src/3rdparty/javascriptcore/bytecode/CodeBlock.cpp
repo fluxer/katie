@@ -30,7 +30,6 @@
 #include "Platform.h"
 #include "CodeBlock.h"
 
-#include "JIT.h"
 #include "JSValue.h"
 #include "Interpreter.h"
 #include "JSFunction.h"
@@ -176,103 +175,6 @@ void CodeBlock::printPutByIdOp(ExecState* exec, int location, Vector<Instruction
     it += 4;
 }
 
-#if ENABLE(JIT)
-static bool isGlobalResolve(OpcodeID opcodeID)
-{
-    return opcodeID == op_resolve_global;
-}
-
-static bool isPropertyAccess(OpcodeID opcodeID)
-{
-    switch (opcodeID) {
-        case op_get_by_id_self:
-        case op_get_by_id_proto:
-        case op_get_by_id_chain:
-        case op_get_by_id_self_list:
-        case op_get_by_id_proto_list:
-        case op_put_by_id_transition:
-        case op_put_by_id_replace:
-        case op_get_by_id:
-        case op_put_by_id:
-        case op_get_by_id_generic:
-        case op_put_by_id_generic:
-        case op_get_array_length:
-        case op_get_string_length:
-            return true;
-        default:
-            return false;
-    }
-}
-
-static unsigned instructionOffsetForNth(ExecState* exec, const Vector<Instruction>& instructions, int nth, bool (*predicate)(OpcodeID))
-{
-    size_t i = 0;
-    while (i < instructions.size()) {
-        OpcodeID currentOpcode = instructions[i].u.opcode;
-        if (predicate(currentOpcode)) {
-            if (!--nth)
-                return i;
-        }
-        i += opcodeLengths[currentOpcode];
-    }
-
-    Q_UNREACHABLE();
-    return 0;
-}
-
-static void printGlobalResolveInfo(const GlobalResolveInfo& resolveInfo, unsigned instructionOffset)
-{
-    printf("  [%4d] %s: %s\n", instructionOffset, "resolve_global", pointerToSourceString(resolveInfo.structure).UTF8String());
-}
-
-static void printStructureStubInfo(const StructureStubInfo& stubInfo, unsigned instructionOffset)
-{
-    switch (stubInfo.accessType) {
-    case access_get_by_id_self:
-        printf("  [%4d] %s: %s\n", instructionOffset, "get_by_id_self", pointerToSourceString(stubInfo.u.getByIdSelf.baseObjectStructure).UTF8String());
-        return;
-    case access_get_by_id_proto:
-        printf("  [%4d] %s: %s, %s\n", instructionOffset, "get_by_id_proto", pointerToSourceString(stubInfo.u.getByIdProto.baseObjectStructure).UTF8String(), pointerToSourceString(stubInfo.u.getByIdProto.prototypeStructure).UTF8String());
-        return;
-    case access_get_by_id_chain:
-        printf("  [%4d] %s: %s, %s\n", instructionOffset, "get_by_id_chain", pointerToSourceString(stubInfo.u.getByIdChain.baseObjectStructure).UTF8String(), pointerToSourceString(stubInfo.u.getByIdChain.chain).UTF8String());
-        return;
-    case access_get_by_id_self_list:
-        printf("  [%4d] %s: %s (%d)\n", instructionOffset, "op_get_by_id_self_list", pointerToSourceString(stubInfo.u.getByIdSelfList.structureList).UTF8String(), stubInfo.u.getByIdSelfList.listSize);
-        return;
-    case access_get_by_id_proto_list:
-        printf("  [%4d] %s: %s (%d)\n", instructionOffset, "op_get_by_id_proto_list", pointerToSourceString(stubInfo.u.getByIdProtoList.structureList).UTF8String(), stubInfo.u.getByIdProtoList.listSize);
-        return;
-    case access_put_by_id_transition:
-        printf("  [%4d] %s: %s, %s, %s\n", instructionOffset, "put_by_id_transition", pointerToSourceString(stubInfo.u.putByIdTransition.previousStructure).UTF8String(), pointerToSourceString(stubInfo.u.putByIdTransition.structure).UTF8String(), pointerToSourceString(stubInfo.u.putByIdTransition.chain).UTF8String());
-        return;
-    case access_put_by_id_replace:
-        printf("  [%4d] %s: %s\n", instructionOffset, "put_by_id_replace", pointerToSourceString(stubInfo.u.putByIdReplace.baseObjectStructure).UTF8String());
-        return;
-    case access_get_by_id:
-        printf("  [%4d] %s\n", instructionOffset, "get_by_id");
-        return;
-    case access_put_by_id:
-        printf("  [%4d] %s\n", instructionOffset, "put_by_id");
-        return;
-    case access_get_by_id_generic:
-        printf("  [%4d] %s\n", instructionOffset, "op_get_by_id_generic");
-        return;
-    case access_put_by_id_generic:
-        printf("  [%4d] %s\n", instructionOffset, "op_put_by_id_generic");
-        return;
-    case access_get_array_length:
-        printf("  [%4d] %s\n", instructionOffset, "op_get_array_length");
-        return;
-    case access_get_string_length:
-        printf("  [%4d] %s\n", instructionOffset, "op_get_string_length");
-        return;
-    default:
-        Q_UNREACHABLE();
-    }
-}
-#endif
-
 void CodeBlock::printStructure(const char* name, const Instruction* vPC, int operand) const
 {
     unsigned instructionOffset = vPC - m_instructions.begin();
@@ -371,25 +273,6 @@ void CodeBlock::dump(ExecState* exec) const
         } while (i < m_rareData->m_regexps.size());
     }
 
-#if ENABLE(JIT)
-    if (!m_globalResolveInfos.isEmpty() || !m_structureStubInfos.isEmpty())
-        printf("\nStructures:\n");
-
-    if (!m_globalResolveInfos.isEmpty()) {
-        size_t i = 0;
-        do {
-             printGlobalResolveInfo(m_globalResolveInfos[i], instructionOffsetForNth(exec, m_instructions, i + 1, isGlobalResolve));
-             ++i;
-        } while (i < m_globalResolveInfos.size());
-    }
-    if (!m_structureStubInfos.isEmpty()) {
-        size_t i = 0;
-        do {
-            printStructureStubInfo(m_structureStubInfos[i], instructionOffsetForNth(exec, m_instructions, i + 1, isPropertyAccess));
-             ++i;
-        } while (i < m_structureStubInfos.size());
-    }
-#else
     if (!m_globalResolveInstructions.isEmpty() || !m_propertyAccessInstructions.isEmpty())
         printf("\nStructures:\n");
 
@@ -407,7 +290,6 @@ void CodeBlock::dump(ExecState* exec) const
              ++i;
         } while (i < m_propertyAccessInstructions.size());
     }
-#endif
 
     if (m_rareData && !m_rareData->m_exceptionHandlers.isEmpty()) {
         printf("\nException Handlers:\n");
@@ -461,7 +343,7 @@ void CodeBlock::dump(ExecState* exec) const
             printf("  %1d = {\n", i);
             StringJumpTable::StringOffsetTable::const_iterator end = m_rareData->m_stringSwitchJumpTables[i].offsetTable.end();
             for (StringJumpTable::StringOffsetTable::const_iterator iter = m_rareData->m_stringSwitchJumpTables[i].offsetTable.begin(); iter != end; ++iter)
-                printf("\t\t\"%s\" => %04d\n", UString(iter->first).ascii(), iter->second.branchOffset);
+                printf("\t\t\"%s\" => %04d\n", UString(iter->first).ascii(), iter->second);
             printf("      }\n");
             ++i;
         } while (i < m_rareData->m_stringSwitchJumpTables.size());
@@ -1286,59 +1168,16 @@ CodeBlock::CodeBlock(ScriptExecutable* ownerExecutable, CodeType codeType, PassR
 
 CodeBlock::~CodeBlock()
 {
-#if !ENABLE(JIT)
     for (size_t size = m_globalResolveInstructions.size(), i = 0; i < size; ++i)
         derefStructures(&m_instructions[m_globalResolveInstructions[i]]);
 
     for (size_t size = m_propertyAccessInstructions.size(), i = 0; i < size; ++i)
         derefStructures(&m_instructions[m_propertyAccessInstructions[i]]);
-#else
-    for (size_t size = m_globalResolveInfos.size(), i = 0; i < size; ++i) {
-        if (m_globalResolveInfos[i].structure)
-            m_globalResolveInfos[i].structure->deref();
-    }
-
-    for (size_t size = m_structureStubInfos.size(), i = 0; i < size; ++i)
-        m_structureStubInfos[i].deref();
-
-    for (size_t size = m_callLinkInfos.size(), i = 0; i < size; ++i) {
-        CallLinkInfo* callLinkInfo = &m_callLinkInfos[i];
-        if (callLinkInfo->isLinked())
-            callLinkInfo->callee->removeCaller(callLinkInfo);
-    }
-
-    for (size_t size = m_methodCallLinkInfos.size(), i = 0; i < size; ++i) {
-        if (Structure* structure = m_methodCallLinkInfos[i].cachedStructure) {
-            structure->deref();
-            // Both members must be filled at the same time
-            Q_ASSERT(!!m_methodCallLinkInfos[i].cachedPrototypeStructure);
-            m_methodCallLinkInfos[i].cachedPrototypeStructure->deref();
-        }
-    }
-
-#if ENABLE(JIT_OPTIMIZE_CALL)
-    unlinkCallers();
-#endif
-
-#endif // !ENABLE(JIT)
 
 #if DUMP_CODE_BLOCK_STATISTICS
     liveCodeBlockSet.remove(this);
 #endif
 }
-
-#if ENABLE(JIT_OPTIMIZE_CALL)
-void CodeBlock::unlinkCallers()
-{
-    size_t size = m_linkedCallerList.size();
-    for (size_t i = 0; i < size; ++i) {
-        CallLinkInfo* currentCaller = m_linkedCallerList[i];
-        JIT::unlinkCall(currentCaller);
-        currentCaller->setUnlinked();
-    }
-    m_linkedCallerList.clear();
-}
-#endif
 
 void CodeBlock::derefStructures(Instruction* vPC) const
 {
@@ -1554,33 +1393,6 @@ bool CodeBlock::getByIdExceptionInfoForBytecodeOffset(CallFrame* callFrame, unsi
     return true;
 }
 
-#if ENABLE(JIT)
-bool CodeBlock::functionRegisterForBytecodeOffset(unsigned bytecodeOffset, int& functionRegisterIndex)
-{
-    Q_ASSERT(bytecodeOffset < m_instructionCount);
-
-    if (!m_rareData || !m_rareData->m_functionRegisterInfos.size())
-        return false;
-
-    int low = 0;
-    int high = m_rareData->m_functionRegisterInfos.size();
-    while (low < high) {
-        int mid = low + (high - low) / 2;
-        if (m_rareData->m_functionRegisterInfos[mid].bytecodeOffset <= bytecodeOffset)
-            low = mid + 1;
-        else
-            high = mid;
-    }
-
-    if (!low || m_rareData->m_functionRegisterInfos[low - 1].bytecodeOffset != bytecodeOffset)
-        return false;
-
-    functionRegisterIndex = m_rareData->m_functionRegisterInfos[low - 1].functionRegisterIndex;
-    return true;
-}
-#endif
-
-#if !ENABLE(JIT)
 bool CodeBlock::hasGlobalResolveInstructionAtBytecodeOffset(unsigned bytecodeOffset)
 {
     if (m_globalResolveInstructions.isEmpty())
@@ -1600,41 +1412,13 @@ bool CodeBlock::hasGlobalResolveInstructionAtBytecodeOffset(unsigned bytecodeOff
         return false;
     return true;
 }
-#else
-bool CodeBlock::hasGlobalResolveInfoAtBytecodeOffset(unsigned bytecodeOffset)
-{
-    if (m_globalResolveInfos.isEmpty())
-        return false;
-
-    int low = 0;
-    int high = m_globalResolveInfos.size();
-    while (low < high) {
-        int mid = low + (high - low) / 2;
-        if (m_globalResolveInfos[mid].bytecodeOffset <= bytecodeOffset)
-            low = mid + 1;
-        else
-            high = mid;
-    }
-
-    if (!low || m_globalResolveInfos[low - 1].bytecodeOffset != bytecodeOffset)
-        return false;
-    return true;
-}
-#endif
 
 void CodeBlock::shrinkToFit()
 {
     m_instructions.shrinkToFit();
 
-#if !ENABLE(JIT)
     m_propertyAccessInstructions.shrinkToFit();
     m_globalResolveInstructions.shrinkToFit();
-#else
-    m_structureStubInfos.shrinkToFit();
-    m_globalResolveInfos.shrinkToFit();
-    m_callLinkInfos.shrinkToFit();
-    m_linkedCallerList.shrinkToFit();
-#endif
 
     m_identifiers.shrinkToFit();
     m_functionDecls.shrinkToFit();
@@ -1653,9 +1437,6 @@ void CodeBlock::shrinkToFit()
         m_rareData->m_immediateSwitchJumpTables.shrinkToFit();
         m_rareData->m_characterSwitchJumpTables.shrinkToFit();
         m_rareData->m_stringSwitchJumpTables.shrinkToFit();
-#if ENABLE(JIT)
-        m_rareData->m_functionRegisterInfos.shrinkToFit();
-#endif
     }
 }
 

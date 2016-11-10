@@ -32,7 +32,6 @@
 
 #include "EvalCodeCache.h"
 #include "Instruction.h"
-#include "JITCode.h"
 #include "JSGlobalObject.h"
 #include "JumpTable.h"
 #include "Nodes.h"
@@ -42,10 +41,6 @@
 #include <wtf/FastAllocBase.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
-
-#if ENABLE(JIT)
-#include "StructureStubInfo.h"
-#endif
 
 // Register numbers used in bytecode operations have different meaning accoring to their ranges:
 //      0x80000000-0xFFFFFFFF  Negative indicies from the CallFrame pointer are entries in the call frame, see RegisterFile.h.
@@ -70,9 +65,6 @@ namespace JSC {
         uint32_t end;
         uint32_t target;
         uint32_t scopeDepth;
-#if ENABLE(JIT)
-        CodeLocationLabel nativeCode;
-#endif
     };
 
     struct ExpressionRangeInfo {
@@ -99,163 +91,10 @@ namespace JSC {
         bool isOpConstruct : 1;
     };
 
-#if ENABLE(JIT)
-    struct CallLinkInfo {
-        CallLinkInfo()
-            : callee(0)
-        {
-        }
-    
-        unsigned bytecodeIndex;
-        CodeLocationNearCall callReturnLocation;
-        CodeLocationDataLabelPtr hotPathBegin;
-        CodeLocationNearCall hotPathOther;
-        PtrAndFlags<CodeBlock, HasSeenShouldRepatch> ownerCodeBlock;
-        CodeBlock* callee;
-        unsigned position;
-        
-        void setUnlinked() { callee = 0; }
-        bool isLinked() { return callee; }
-
-        bool seenOnce()
-        {
-            return ownerCodeBlock.isFlagSet(hasSeenShouldRepatch);
-        }
-
-        void setSeen()
-        {
-            ownerCodeBlock.setFlag(hasSeenShouldRepatch);
-        }
-    };
-
-    struct MethodCallLinkInfo {
-        MethodCallLinkInfo()
-            : cachedStructure(0)
-        {
-        }
-
-        bool seenOnce()
-        {
-            return cachedPrototypeStructure.isFlagSet(hasSeenShouldRepatch);
-        }
-
-        void setSeen()
-        {
-            cachedPrototypeStructure.setFlag(hasSeenShouldRepatch);
-        }
-
-        CodeLocationCall callReturnLocation;
-        CodeLocationDataLabelPtr structureLabel;
-        Structure* cachedStructure;
-        PtrAndFlags<Structure, HasSeenShouldRepatch> cachedPrototypeStructure;
-    };
-
-    struct FunctionRegisterInfo {
-        FunctionRegisterInfo(unsigned bytecodeOffset, int functionRegisterIndex)
-            : bytecodeOffset(bytecodeOffset)
-            , functionRegisterIndex(functionRegisterIndex)
-        {
-        }
-
-        unsigned bytecodeOffset;
-        int functionRegisterIndex;
-    };
-
-    struct GlobalResolveInfo {
-        GlobalResolveInfo(unsigned bytecodeOffset)
-            : structure(0)
-            , offset(0)
-            , bytecodeOffset(bytecodeOffset)
-        {
-        }
-
-        Structure* structure;
-        unsigned offset;
-        unsigned bytecodeOffset;
-    };
-
-    // This structure is used to map from a call return location
-    // (given as an offset in bytes into the JIT code) back to
-    // the bytecode index of the corresponding bytecode operation.
-    // This is then used to look up the corresponding handler.
-    struct CallReturnOffsetToBytecodeIndex {
-        CallReturnOffsetToBytecodeIndex(unsigned callReturnOffset, unsigned bytecodeIndex)
-            : callReturnOffset(callReturnOffset)
-            , bytecodeIndex(bytecodeIndex)
-        {
-        }
-
-        unsigned callReturnOffset;
-        unsigned bytecodeIndex;
-    };
-
-    // valueAtPosition helpers for the binaryChop algorithm below.
-
-    inline void* getStructureStubInfoReturnLocation(StructureStubInfo* structureStubInfo)
-    {
-        return structureStubInfo->callReturnLocation.executableAddress();
-    }
-
-    inline void* getCallLinkInfoReturnLocation(CallLinkInfo* callLinkInfo)
-    {
-        return callLinkInfo->callReturnLocation.executableAddress();
-    }
-
-    inline void* getMethodCallLinkInfoReturnLocation(MethodCallLinkInfo* methodCallLinkInfo)
-    {
-        return methodCallLinkInfo->callReturnLocation.executableAddress();
-    }
-
-    inline unsigned getCallReturnOffset(CallReturnOffsetToBytecodeIndex* pc)
-    {
-        return pc->callReturnOffset;
-    }
-
-    // Binary chop algorithm, calls valueAtPosition on pre-sorted elements in array,
-    // compares result with key (KeyTypes should be comparable with '--', '<', '>').
-    // Optimized for cases where the array contains the key, checked by assertions.
-    template<typename ArrayType, typename KeyType, KeyType(*valueAtPosition)(ArrayType*)>
-    inline ArrayType* binaryChop(ArrayType* array, size_t size, KeyType key)
-    {
-        // The array must contain at least one element (pre-condition, array does conatin key).
-        // If the array only contains one element, no need to do the comparison.
-        while (size > 1) {
-            // Pick an element to check, half way through the array, and read the value.
-            int pos = (size - 1) >> 1;
-            KeyType val = valueAtPosition(&array[pos]);
-            
-            // If the key matches, success!
-            if (val == key)
-                return &array[pos];
-            // The item we are looking for is smaller than the item being check; reduce the value of 'size',
-            // chopping off the right hand half of the array.
-            else if (key < val)
-                size = pos;
-            // Discard all values in the left hand half of the array, up to and including the item at pos.
-            else {
-                size -= (pos + 1);
-                array += (pos + 1);
-            }
-
-            // 'size' should never reach zero.
-            Q_ASSERT(size);
-        }
-        
-        // If we reach this point we've chopped down to one element, no need to check it matches
-        Q_ASSERT(size == 1);
-        Q_ASSERT(key == valueAtPosition(&array[0]));
-        return &array[0];
-    }
-#endif
-
     struct ExceptionInfo : FastAllocBase {
         Vector<ExpressionRangeInfo> m_expressionInfo;
         Vector<LineInfo> m_lineInfo;
         Vector<GetByIdExceptionInfo> m_getByIdExceptionInfo;
-
-#if ENABLE(JIT)
-        Vector<CallReturnOffsetToBytecodeIndex> m_callReturnIndexVector;
-#endif
     };
 
     class CodeBlock : public FastAllocBase {
@@ -268,9 +107,6 @@ namespace JSC {
         void markAggregate(MarkStack&);
         void refStructures(Instruction* vPC) const;
         void derefStructures(Instruction* vPC) const;
-#if ENABLE(JIT_OPTIMIZE_CALL)
-        void unlinkCallers();
-#endif
 
         static void dumpStatistics();
 
@@ -301,50 +137,6 @@ namespace JSC {
         int expressionRangeForBytecodeOffset(CallFrame*, unsigned bytecodeOffset, int& divot, int& startOffset, int& endOffset);
         bool getByIdExceptionInfoForBytecodeOffset(CallFrame*, unsigned bytecodeOffset, OpcodeID&);
 
-#if ENABLE(JIT)
-        void addCaller(CallLinkInfo* caller)
-        {
-            caller->callee = this;
-            caller->position = m_linkedCallerList.size();
-            m_linkedCallerList.append(caller);
-        }
-
-        void removeCaller(CallLinkInfo* caller)
-        {
-            unsigned pos = caller->position;
-            unsigned lastPos = m_linkedCallerList.size() - 1;
-
-            if (pos != lastPos) {
-                m_linkedCallerList[pos] = m_linkedCallerList[lastPos];
-                m_linkedCallerList[pos]->position = pos;
-            }
-            m_linkedCallerList.shrink(lastPos);
-        }
-
-        StructureStubInfo& getStubInfo(ReturnAddressPtr returnAddress)
-        {
-            return *(binaryChop<StructureStubInfo, void*, getStructureStubInfoReturnLocation>(m_structureStubInfos.begin(), m_structureStubInfos.size(), returnAddress.value()));
-        }
-
-        CallLinkInfo& getCallLinkInfo(ReturnAddressPtr returnAddress)
-        {
-            return *(binaryChop<CallLinkInfo, void*, getCallLinkInfoReturnLocation>(m_callLinkInfos.begin(), m_callLinkInfos.size(), returnAddress.value()));
-        }
-
-        MethodCallLinkInfo& getMethodCallLinkInfo(ReturnAddressPtr returnAddress)
-        {
-            return *(binaryChop<MethodCallLinkInfo, void*, getMethodCallLinkInfoReturnLocation>(m_methodCallLinkInfos.begin(), m_methodCallLinkInfos.size(), returnAddress.value()));
-        }
-
-        unsigned getBytecodeIndex(CallFrame* callFrame, ReturnAddressPtr returnAddress)
-        {
-            reparseForExceptionInfoIfNecessary(callFrame);
-            return binaryChop<CallReturnOffsetToBytecodeIndex, unsigned, getCallReturnOffset>(callReturnIndexVector().begin(), callReturnIndexVector().size(), ownerExecutable()->generatedJITCode().offsetOf(returnAddress.value()))->bytecodeIndex;
-        }
-        
-        bool functionRegisterForBytecodeOffset(unsigned bytecodeOffset, int& functionRegisterIndex);
-#endif
-
         void setIsNumericCompareFunction(bool isNumericCompareFunction) { m_isNumericCompareFunction = isNumericCompareFunction; }
         bool isNumericCompareFunction() { return m_isNumericCompareFunction; }
 
@@ -354,11 +146,6 @@ namespace JSC {
 #ifndef NDEBUG
         unsigned instructionCount() { return m_instructionCount; }
         void setInstructionCount(unsigned instructionCount) { m_instructionCount = instructionCount; }
-#endif
-
-#if ENABLE(JIT)
-        JITCode& getJITCode() { return ownerExecutable()->generatedJITCode(); }
-        ExecutablePool* executablePool() { return ownerExecutable()->getExecutablePool(); }
 #endif
 
         ScriptExecutable* ownerExecutable() const { return m_ownerExecutable; }
@@ -385,28 +172,9 @@ namespace JSC {
         unsigned jumpTarget(int index) const { return m_jumpTargets[index]; }
         unsigned lastJumpTarget() const { return m_jumpTargets.last(); }
 
-#if !ENABLE(JIT)
         void addPropertyAccessInstruction(unsigned propertyAccessInstruction) { m_propertyAccessInstructions.append(propertyAccessInstruction); }
         void addGlobalResolveInstruction(unsigned globalResolveInstruction) { m_globalResolveInstructions.append(globalResolveInstruction); }
         bool hasGlobalResolveInstructionAtBytecodeOffset(unsigned bytecodeOffset);
-#else
-        size_t numberOfStructureStubInfos() const { return m_structureStubInfos.size(); }
-        void addStructureStubInfo(const StructureStubInfo& stubInfo) { m_structureStubInfos.append(stubInfo); }
-        StructureStubInfo& structureStubInfo(int index) { return m_structureStubInfos[index]; }
-
-        void addGlobalResolveInfo(unsigned globalResolveInstruction) { m_globalResolveInfos.append(GlobalResolveInfo(globalResolveInstruction)); }
-        GlobalResolveInfo& globalResolveInfo(int index) { return m_globalResolveInfos[index]; }
-        bool hasGlobalResolveInfoAtBytecodeOffset(unsigned bytecodeOffset);
-
-        size_t numberOfCallLinkInfos() const { return m_callLinkInfos.size(); }
-        void addCallLinkInfo() { m_callLinkInfos.append(CallLinkInfo()); }
-        CallLinkInfo& callLinkInfo(int index) { return m_callLinkInfos[index]; }
-
-        void addMethodCallLinkInfos(unsigned n) { m_methodCallLinkInfos.grow(n); }
-        MethodCallLinkInfo& methodCallLinkInfo(int index) { return m_methodCallLinkInfos[index]; }
-
-        void addFunctionRegisterInfo(unsigned bytecodeOffset, int functionIndex) { createRareDataIfNecessary(); m_rareData->m_functionRegisterInfos.append(FunctionRegisterInfo(bytecodeOffset, functionIndex)); }
-#endif
 
         // Exception handling support
 
@@ -424,10 +192,6 @@ namespace JSC {
         size_t numberOfLineInfos() const { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo->m_lineInfo.size(); }
         void addLineInfo(const LineInfo& lineInfo) { Q_ASSERT(m_exceptionInfo); m_exceptionInfo->m_lineInfo.append(lineInfo); }
         LineInfo& lastLineInfo() { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo->m_lineInfo.last(); }
-
-#if ENABLE(JIT)
-        Vector<CallReturnOffsetToBytecodeIndex>& callReturnIndexVector() { Q_ASSERT(m_exceptionInfo); return m_exceptionInfo->m_callReturnIndexVector; }
-#endif
 
         // Constant Pool
 
@@ -519,16 +283,8 @@ namespace JSC {
         RefPtr<SourceProvider> m_source;
         unsigned m_sourceOffset;
 
-#if !ENABLE(JIT)
         Vector<unsigned> m_propertyAccessInstructions;
         Vector<unsigned> m_globalResolveInstructions;
-#else
-        Vector<StructureStubInfo> m_structureStubInfos;
-        Vector<GlobalResolveInfo> m_globalResolveInfos;
-        Vector<CallLinkInfo> m_callLinkInfos;
-        Vector<MethodCallLinkInfo> m_methodCallLinkInfos;
-        Vector<CallLinkInfo*> m_linkedCallerList;
-#endif
 
         Vector<unsigned> m_jumpTargets;
 
@@ -554,10 +310,6 @@ namespace JSC {
             Vector<StringJumpTable> m_stringSwitchJumpTables;
 
             EvalCodeCache m_evalCodeCache;
-
-#if ENABLE(JIT)
-            Vector<FunctionRegisterInfo> m_functionRegisterInfos;
-#endif
         };
         OwnPtr<RareData> m_rareData;
     };

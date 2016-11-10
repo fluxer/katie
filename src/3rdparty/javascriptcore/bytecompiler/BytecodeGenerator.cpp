@@ -1064,11 +1064,7 @@ RegisterID* BytecodeGenerator::emitResolve(RegisterID* dst, const Identifier& pr
     if (globalObject) {
         bool forceGlobalResolve = false;
         if (m_regeneratingForExceptionInfo) {
-#if ENABLE(JIT)
-            forceGlobalResolve = m_codeBlockBeingRegeneratedFrom->hasGlobalResolveInfoAtBytecodeOffset(instructions().size());
-#else
             forceGlobalResolve = m_codeBlockBeingRegeneratedFrom->hasGlobalResolveInstructionAtBytecodeOffset(instructions().size());
-#endif
         }
 
         if (index != missingSymbolMarker() && !forceGlobalResolve) {
@@ -1076,11 +1072,7 @@ RegisterID* BytecodeGenerator::emitResolve(RegisterID* dst, const Identifier& pr
             return emitGetScopedVar(dst, depth, index, globalObject);
         }
 
-#if ENABLE(JIT)
-        m_codeBlock->addGlobalResolveInfo(instructions().size());
-#else
         m_codeBlock->addGlobalResolveInstruction(instructions().size());
-#endif
         emitOpcode(op_resolve_global);
         instructions().append(dst->index());
         instructions().append(globalObject);
@@ -1171,11 +1163,7 @@ RegisterID* BytecodeGenerator::emitResolveWithBase(RegisterID* baseDst, Register
 
     bool forceGlobalResolve = false;
     if (m_regeneratingForExceptionInfo) {
-#if ENABLE(JIT)
-        forceGlobalResolve = m_codeBlockBeingRegeneratedFrom->hasGlobalResolveInfoAtBytecodeOffset(instructions().size());
-#else
         forceGlobalResolve = m_codeBlockBeingRegeneratedFrom->hasGlobalResolveInstructionAtBytecodeOffset(instructions().size());
-#endif
     }
 
     // Global object is the base
@@ -1187,11 +1175,7 @@ RegisterID* BytecodeGenerator::emitResolveWithBase(RegisterID* baseDst, Register
         return baseDst;
     }
 
-#if ENABLE(JIT)
-    m_codeBlock->addGlobalResolveInfo(instructions().size());
-#else
     m_codeBlock->addGlobalResolveInstruction(instructions().size());
-#endif
     emitOpcode(op_resolve_global);
     instructions().append(propDst->index());
     instructions().append(globalObject);
@@ -1208,11 +1192,7 @@ void BytecodeGenerator::emitMethodCheck()
 
 RegisterID* BytecodeGenerator::emitGetById(RegisterID* dst, RegisterID* base, const Identifier& property)
 {
-#if ENABLE(JIT)
-    m_codeBlock->addStructureStubInfo(StructureStubInfo(access_get_by_id));
-#else
     m_codeBlock->addPropertyAccessInstruction(instructions().size());
-#endif
 
     emitOpcode(op_get_by_id);
     instructions().append(dst->index());
@@ -1227,11 +1207,7 @@ RegisterID* BytecodeGenerator::emitGetById(RegisterID* dst, RegisterID* base, co
 
 RegisterID* BytecodeGenerator::emitPutById(RegisterID* base, const Identifier& property, RegisterID* value)
 {
-#if ENABLE(JIT)
-    m_codeBlock->addStructureStubInfo(StructureStubInfo(access_put_by_id));
-#else
     m_codeBlock->addPropertyAccessInstruction(instructions().size());
-#endif
 
     emitOpcode(op_put_by_id);
     instructions().append(base->index());
@@ -1417,10 +1393,6 @@ RegisterID* BytecodeGenerator::emitCall(OpcodeID opcodeID, RegisterID* dst, Regi
 
     emitExpressionInfo(divot, startOffset, endOffset);
 
-#if ENABLE(JIT)
-    m_codeBlock->addCallLinkInfo();
-#endif
-
     // Emit call.
     emitOpcode(opcodeID);
     instructions().append(dst->index()); // dst
@@ -1505,10 +1477,6 @@ RegisterID* BytecodeGenerator::emitConstruct(RegisterID* dst, RegisterID* func, 
         callFrame.append(newTemporary());
 
     emitExpressionInfo(divot, startOffset, endOffset);
-
-#if ENABLE(JIT)
-    m_codeBlock->addCallLinkInfo();
-#endif
 
     emitOpcode(op_construct);
     instructions().append(dst->index()); // dst
@@ -1769,9 +1737,6 @@ RegisterID* BytecodeGenerator::emitCatch(RegisterID* targetRegister, Label* star
         static_cast<uint32_t>(end->bind(0, 0)),
         static_cast<uint32_t>(instructions().size()),
         static_cast<uint32_t>(m_dynamicScopeDepth + m_baseScopeDepth)
-#if ENABLE(JIT)
-        , CodeLocationLabel()
-#endif
     };
 
     m_codeBlock->addExceptionHandler(info);
@@ -1904,8 +1869,7 @@ static void prepareJumpTableForStringSwitch(StringJumpTable& jumpTable, int32_t 
         
         Q_ASSERT(nodes[i]->isString());
         UString::Rep* clause = static_cast<StringNode*>(nodes[i])->value().ustring().rep();
-        OffsetLocation location;
-        location.branchOffset = labels[i]->bind(switchAddress, switchAddress + 3);
+        OffsetLocation location = labels[i]->bind(switchAddress, switchAddress + 3);
         jumpTable.offsetTable.add(clause, location);
     }
 }

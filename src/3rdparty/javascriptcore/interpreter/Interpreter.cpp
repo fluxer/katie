@@ -61,24 +61,15 @@
 #include <stdio.h>
 #include <wtf/Threading.h>
 
-#if ENABLE(JIT)
-#include "JIT.h"
-#endif
-
 #include "bridge/qscriptobject_p.h"
 
 using namespace std;
 
 namespace JSC {
 
-static ALWAYS_INLINE unsigned bytecodeOffsetForPC(CallFrame* callFrame, CodeBlock* codeBlock, void* pc)
+static ALWAYS_INLINE unsigned bytecodeOffsetForPC(CodeBlock* codeBlock, void* pc)
 {
-#if ENABLE(JIT)
-    return codeBlock->getBytecodeIndex(callFrame, ReturnAddressPtr(pc));
-#else
-    Q_UNUSED(callFrame);
     return static_cast<Instruction*>(pc) - codeBlock->instructions().begin();
-#endif
 }
 
 // Returns the depth of the scope chain within a given call frame.
@@ -456,7 +447,7 @@ NEVER_INLINE bool Interpreter::unwindCallFrame(CallFrame*& callFrame, JSValue ex
         return false;
 
     codeBlock = callFrame->codeBlock();
-    bytecodeOffset = bytecodeOffsetForPC(callFrame, codeBlock, returnPC);
+    bytecodeOffset = bytecodeOffsetForPC(codeBlock, returnPC);
     return true;
 }
 
@@ -527,7 +518,7 @@ NEVER_INLINE HandlerInfo* Interpreter::throwException(CallFrame*& callFrame, JSV
             break;
         } else {
             codeBlockTemp = callFrameTemp->codeBlock();
-            bytecodeOffsetTemp = bytecodeOffsetForPC(callFrameTemp, codeBlockTemp, returnPC);
+            bytecodeOffsetTemp = bytecodeOffsetForPC(codeBlockTemp, returnPC);
         }
     }
     if (debugger)
@@ -589,11 +580,7 @@ JSValue Interpreter::execute(ProgramExecutable* program, CallFrame* callFrame, S
         SamplingTool::CallRecord callRecord(m_sampler.get());
 
         m_reentryDepth++;
-#if ENABLE(JIT)
-        result = program->jitCode(newCallFrame, scopeChain).execute(&m_registerFile, newCallFrame, scopeChain->globalData, exception);
-#else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
-#endif
         m_reentryDepth--;
     }
 
@@ -648,11 +635,7 @@ JSValue Interpreter::execute(FunctionExecutable* functionExecutable, CallFrame* 
         SamplingTool::CallRecord callRecord(m_sampler.get());
 
         m_reentryDepth++;
-#if ENABLE(JIT)
-        result = functionExecutable->jitCode(newCallFrame, scopeChain).execute(&m_registerFile, newCallFrame, scopeChain->globalData, exception);
-#else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
-#endif
         m_reentryDepth--;
     }
 
@@ -693,9 +676,6 @@ CallFrameClosure Interpreter::prepareForRepeatCall(FunctionExecutable* FunctionE
     }
     // a 0 codeBlock indicates a built-in caller
     newCallFrame->init(codeBlock, 0, scopeChain, callFrame->addHostCallFrameFlag(), 0, argc, function);
-#if ENABLE(JIT)
-    FunctionExecutable->jitCode(newCallFrame, scopeChain);
-#endif
 
     CallFrameClosure result = { callFrame, newCallFrame, function, FunctionExecutable, scopeChain->globalData, oldEnd, scopeChain, codeBlock->m_numParameters, argc };
     return result;
@@ -708,16 +688,12 @@ JSValue Interpreter::execute(CallFrameClosure& closure, JSValue* exception)
     JSValue result;
     {
         SamplingTool::CallRecord callRecord(m_sampler.get());
-        
+
         m_reentryDepth++;
-#if ENABLE(JIT)
-        result = closure.functionExecutable->generatedJITCode().execute(&m_registerFile, closure.newCallFrame, closure.globalData, exception);
-#else
         result = privateExecute(Normal, &m_registerFile, closure.newCallFrame, exception);
-#endif
         m_reentryDepth--;
     }
-    
+
     return result;
 }
 
@@ -800,11 +776,7 @@ JSValue Interpreter::execute(EvalExecutable* eval, CallFrame* callFrame, JSObjec
         SamplingTool::CallRecord callRecord(m_sampler.get());
 
         m_reentryDepth++;
-#if ENABLE(JIT)
-        result = eval->jitCode(newCallFrame, scopeChain).execute(&m_registerFile, newCallFrame, scopeChain->globalData, exception);
-#else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
-#endif
         m_reentryDepth--;
     }
 
@@ -1045,11 +1017,6 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
     if (Q_UNLIKELY(flag == InitializeAndReturn)) {
         return JSValue();
     }
-
-#if ENABLE(JIT)
-    // Mixing Interpreter + JIT is not supported.
-    Q_UNREACHABLE();
-#endif
 
     JSGlobalData* globalData = &callFrame->globalData();
     JSValue exceptionValue;
@@ -3869,7 +3836,7 @@ void Interpreter::retrieveLastCaller(CallFrame* callFrame, int& lineNumber, intp
     if (!callerCodeBlock)
         return;
 
-    unsigned bytecodeOffset = bytecodeOffsetForPC(callerFrame, callerCodeBlock, callFrame->returnPC());
+    unsigned bytecodeOffset = bytecodeOffsetForPC(callerCodeBlock, callFrame->returnPC());
     lineNumber = callerCodeBlock->lineNumberForBytecodeOffset(callerFrame, bytecodeOffset - 1);
     sourceID = callerCodeBlock->ownerExecutable()->sourceID();
     sourceURL = callerCodeBlock->ownerExecutable()->sourceURL();

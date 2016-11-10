@@ -28,18 +28,11 @@
 
 #include "BytecodeGenerator.h"
 #include "CodeBlock.h"
-#include "JIT.h"
 #include "Parser.h"
 #include "StringBuilder.h"
 #include "Vector.h"
 
 namespace JSC {
-
-#if ENABLE(JIT)
-NativeExecutable::~NativeExecutable()
-{
-}
-#endif
 
 VPtrHackExecutable::~VPtrHackExecutable()
 {
@@ -135,43 +128,6 @@ void FunctionExecutable::compile(ExecState*, ScopeChainNode* scopeChainNode)
     body->destroyData();
 }
 
-#if ENABLE(JIT)
-
-void EvalExecutable::generateJITCode(ExecState* exec, ScopeChainNode* scopeChainNode)
-{
-    CodeBlock* codeBlock = &bytecode(exec, scopeChainNode);
-    m_jitCode = JIT::compile(scopeChainNode->globalData, codeBlock);
-
-#if !ENABLE(OPCODE_SAMPLING)
-    if (!BytecodeGenerator::dumpsGeneratedCode())
-        codeBlock->discardBytecode();
-#endif
-}
-
-void ProgramExecutable::generateJITCode(ExecState* exec, ScopeChainNode* scopeChainNode)
-{
-    CodeBlock* codeBlock = &bytecode(exec, scopeChainNode);
-    m_jitCode = JIT::compile(scopeChainNode->globalData, codeBlock);
-
-#if !ENABLE(OPCODE_SAMPLING)
-    if (!BytecodeGenerator::dumpsGeneratedCode())
-        codeBlock->discardBytecode();
-#endif
-}
-
-void FunctionExecutable::generateJITCode(ExecState* exec, ScopeChainNode* scopeChainNode)
-{
-    CodeBlock* codeBlock = &bytecode(exec, scopeChainNode);
-    m_jitCode = JIT::compile(scopeChainNode->globalData, codeBlock);
-
-#if !ENABLE(OPCODE_SAMPLING)
-    if (!BytecodeGenerator::dumpsGeneratedCode())
-        codeBlock->discardBytecode();
-#endif
-}
-
-#endif
-
 void FunctionExecutable::markAggregate(MarkStack& markStack)
 {
     if (m_codeBlock)
@@ -197,11 +153,6 @@ ExceptionInfo* FunctionExecutable::reparseExceptionInfo(JSGlobalData* globalData
 
     Q_ASSERT(newCodeBlock->instructionCount() == codeBlock->instructionCount());
 
-#if ENABLE(JIT)
-    JITCode newJITCode = JIT::compile(globalData, newCodeBlock.get());
-    Q_ASSERT(newJITCode.size() == generatedJITCode().size());
-#endif
-
     globalData->functionCodeBlockBeingReparsed = 0;
 
     return newCodeBlock->extractExceptionInfo();
@@ -222,11 +173,6 @@ ExceptionInfo* EvalExecutable::reparseExceptionInfo(JSGlobalData* globalData, Sc
 
     Q_ASSERT(newCodeBlock->instructionCount() == codeBlock->instructionCount());
 
-#if ENABLE(JIT)
-    JITCode newJITCode = JIT::compile(globalData, newCodeBlock.get());
-    Q_ASSERT(newJITCode.size() == generatedJITCode().size());
-#endif
-
     return newCodeBlock->extractExceptionInfo();
 }
 
@@ -235,9 +181,6 @@ void FunctionExecutable::recompile(ExecState*)
     delete m_codeBlock;
     m_codeBlock = 0;
     m_numParameters = NUM_PARAMETERS_NOT_COMPILED;
-#if ENABLE(JIT)
-    m_jitCode = JITCode();
-#endif
 }
 
 PassRefPtr<FunctionExecutable> FunctionExecutable::fromGlobalCode(const Identifier& functionName, ExecState* exec, Debugger* debugger, const SourceCode& source, int* errLine, UString* errMsg)

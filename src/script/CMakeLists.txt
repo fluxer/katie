@@ -54,13 +54,10 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSStringRef.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSValueRef.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/OpaqueJSString.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/assembler/ARMAssembler.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/assembler/MacroAssemblerARM.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode/CodeBlock.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode/JumpTable.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode/Opcode.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode/SamplingTool.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode/StructureStubInfo.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler/BytecodeGenerator.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler/NodesCodegen.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/debugger/DebuggerCallFrame.cpp
@@ -68,15 +65,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter/CallFrame.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter/Interpreter.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter/RegisterFile.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/ExecutableAllocatorPosix.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/ExecutableAllocatorWin.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/ExecutableAllocator.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/JITArithmetic.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/JITCall.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/JIT.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/JITOpcodes.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/JITPropertyAccess.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit/JITStubs.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser/Lexer.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser/Nodes.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser/ParserArena.cpp
@@ -172,9 +160,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/TypeTraits.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/CollatorDefault.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/UTF8.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/yarr/RegexCompiler.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/yarr/RegexInterpreter.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/yarr/RegexJIT.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_compile.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_exec.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_tables.cpp
@@ -208,14 +193,11 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/unicode
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/jit
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/assembler
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/tmp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/yarr
 )
 
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)

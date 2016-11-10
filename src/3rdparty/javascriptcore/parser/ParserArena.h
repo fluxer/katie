@@ -78,12 +78,10 @@ namespace JSC {
         {
             Q_ASSERT(size);
             Q_ASSERT(size <= freeablePoolSize);
-            size_t alignedSize = alignSize(size);
-            Q_ASSERT(alignedSize <= freeablePoolSize);
-            if (Q_UNLIKELY(static_cast<size_t>(m_freeablePoolEnd - m_freeableMemory) < alignedSize))
+            if (Q_UNLIKELY(static_cast<size_t>(m_freeablePoolEnd - m_freeableMemory) < size))
                 allocateFreeablePool();
             void* block = m_freeableMemory;
-            m_freeableMemory += alignedSize;
+            m_freeableMemory += size;
             return block;
         }
 
@@ -106,11 +104,6 @@ namespace JSC {
 
     private:
         static const size_t freeablePoolSize = 8000;
-
-        static size_t alignSize(size_t size)
-        {
-            return (size + sizeof(WTF::AllocAlignmentInteger) - 1) & ~(sizeof(WTF::AllocAlignmentInteger) - 1);
-        }
 
         void* freeablePool();
         void allocateFreeablePool();

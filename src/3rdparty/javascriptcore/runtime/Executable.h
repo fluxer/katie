@@ -60,37 +60,7 @@ namespace JSC {
 
     protected:
         int m_numParameters;
-
-#if ENABLE(JIT)
-    public:
-        JITCode& generatedJITCode()
-        {
-            Q_ASSERT(m_jitCode);
-            return m_jitCode;
-        }
-
-        ExecutablePool* getExecutablePool()
-        {
-            return m_jitCode.getExecutablePool();
-        }
-
-    protected:
-        JITCode m_jitCode;
-#endif
     };
-
-#if ENABLE(JIT)
-    class NativeExecutable : public ExecutableBase {
-    public:
-        NativeExecutable(ExecState* exec)
-            : ExecutableBase(NUM_PARAMETERS_IS_HOST)
-        {
-            m_jitCode = JITCode(JITCode::HostFunction(exec->globalData().jitStubs.ctiNativeCallThunk()));
-        }
-
-        ~NativeExecutable();
-    };
-#endif
 
     class VPtrHackExecutable : public ExecutableBase {
     public:
@@ -189,19 +159,6 @@ namespace JSC {
         {
         }
         EvalCodeBlock* m_evalCodeBlock;
-
-#if ENABLE(JIT)
-    public:
-        JITCode& jitCode(ExecState* exec, ScopeChainNode* scopeChainNode)
-        {
-            if (!m_jitCode)
-                generateJITCode(exec, scopeChainNode);
-            return m_jitCode;
-        }
-
-    private:
-        void generateJITCode(ExecState*, ScopeChainNode*);
-#endif
     };
 
     class ProgramExecutable : public ScriptExecutable {
@@ -236,19 +193,6 @@ namespace JSC {
         {
         }
         ProgramCodeBlock* m_programCodeBlock;
-
-#if ENABLE(JIT)
-    public:
-        JITCode& jitCode(ExecState* exec, ScopeChainNode* scopeChainNode)
-        {
-            if (!m_jitCode)
-                generateJITCode(exec, scopeChainNode);
-            return m_jitCode;
-        }
-
-    private:
-        void generateJITCode(ExecState*, ScopeChainNode*);
-#endif
     };
 
     class FunctionExecutable : public ScriptExecutable {
@@ -333,19 +277,6 @@ namespace JSC {
         CodeBlock* m_codeBlock;
         Identifier m_name;
         size_t m_numVariables;
-
-#if ENABLE(JIT)
-    public:
-        JITCode& jitCode(ExecState* exec, ScopeChainNode* scopeChainNode)
-        {
-            if (!m_jitCode)
-                generateJITCode(exec, scopeChainNode);
-            return m_jitCode;
-        }
-
-    private:
-        void generateJITCode(ExecState*, ScopeChainNode*);
-#endif
     };
 
     inline FunctionExecutable* JSFunction::jsExecutable() const

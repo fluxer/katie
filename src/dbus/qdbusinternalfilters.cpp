@@ -308,8 +308,8 @@ static QDBusMessage propertyWriteReply(const QDBusMessage &msg, const QString &i
     case PropertyWriteSuccess:
         return msg.createReply();
     }
-    Q_ASSERT_X(false, "", "Should not be reached");
-    return QDBusMessage();
+
+    Q_UNREACHABLE();
 }
 
 static int writeProperty(QObject *obj, const QByteArray &property_name, QVariant value,

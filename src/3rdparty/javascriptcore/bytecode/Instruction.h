@@ -29,7 +29,6 @@
 #ifndef Instruction_h
 #define Instruction_h
 
-#include "MacroAssembler.h"
 #include "Opcode.h"
 #include "Structure.h"
 #include "StructureChain.h"
@@ -39,15 +38,8 @@
 
 namespace JSC {
 
-    // *Sigh*, If the JIT is enabled we need to track the stubRountine (of type CodeLocationLabel),
-    // If the JIT is not in use we don't actually need the variable (that said, if the JIT is not in use we don't
-    // curently actually use PolymorphicAccessStructureLists, which we should).  Anyway, this seems like the best
-    // solution for now - will need to something smarter if/when we actually want mixed-mode operation.
-#if ENABLE(JIT)
-    typedef CodeLocationLabel PolymorphicAccessStructureListStubRoutineType;
-#else
+    // *Sigh*, will need to something smarter if/when we actually want mixed-mode operation.
     typedef void* PolymorphicAccessStructureListStubRoutineType;
-#endif
 
     class JSCell;
     class Structure;

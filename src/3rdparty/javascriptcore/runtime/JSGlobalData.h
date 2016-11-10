@@ -31,8 +31,6 @@
 
 #include "Collector.h"
 #include "DateInstanceCache.h"
-#include "ExecutableAllocator.h"
-#include "JITStubs.h"
 #include "JSValue.h"
 #include "MarkStack.h"
 #include "NumericStrings.h"
@@ -140,23 +138,13 @@ namespace JSC {
         NumericStrings numericStrings;
         DateInstanceCache dateInstanceCache;
 
-#if ENABLE(ASSEMBLER)
-        ExecutableAllocator executableAllocator;
-#endif
-
         Lexer* lexer;
         Parser* parser;
         Interpreter* interpreter;
-#if ENABLE(JIT)
-        JITThunks jitStubs;
-#endif
         TimeoutChecker* timeoutChecker;
         Heap heap;
 
         JSValue exception;
-#if ENABLE(JIT)
-        ReturnAddressPtr exceptionLocation;
-#endif
 
         const Vector<Instruction>& numericCompareFunction(ExecState*);
         Vector<Instruction> lazyNumericCompareFunction;

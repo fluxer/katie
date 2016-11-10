@@ -30,7 +30,6 @@
 #include "BytecodeGenerator.h"
 #include "CallFrame.h"
 #include "Debugger.h"
-#include "JIT.h"
 #include "JSFunction.h"
 #include "JSGlobalObject.h"
 #include "JSStaticScopeObject.h"
@@ -143,7 +142,7 @@ RegisterID* StringNode::emitBytecode(BytecodeGenerator& generator, RegisterID* d
 
 RegisterID* RegExpNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
-    RefPtr<RegExp> regExp = RegExp::create(generator.globalData(), m_pattern.ustring(), m_flags.ustring());
+    RefPtr<RegExp> regExp = RegExp::create(m_pattern.ustring(), m_flags.ustring());
     if (!regExp->isValid())
         return emitThrowError(generator, SyntaxError, "Invalid regular expression: %s", regExp->errorMessage());
     if (dst == generator.ignoredResult())

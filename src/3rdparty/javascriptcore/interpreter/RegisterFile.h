@@ -30,7 +30,6 @@
 #define RegisterFile_h
 
 #include "Collector.h"
-#include "ExecutableAllocator.h"
 #include "Register.h"
 #include <stdio.h>
 #include <wtf/Noncopyable.h>

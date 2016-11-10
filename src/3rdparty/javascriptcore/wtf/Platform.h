@@ -538,58 +538,6 @@ on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #endif
 #endif /* !defined(WTF_USE_JSVALUE64) && !defined(WTF_USE_JSVALUE32) && !defined(WTF_USE_JSVALUE32_64) */
 
-#if !defined(ENABLE_JIT)
-
-#if CPU(ARM_THUMB2) && PLATFORM(IPHONE)
-    #define ENABLE_JIT 1
-#elif CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100
-    #define ENABLE_JIT 1
-    #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
-#elif CPU(X86_64) && OS(LINUX) && GCC_VERSION >= 40100
-    #define ENABLE_JIT 1
-#elif CPU(ARM_TRADITIONAL) && OS(LINUX)
-    #define ENABLE_JIT 1
-#endif
-
-#endif /* !defined(ENABLE_JIT) */
-
-#if ENABLE(JIT)
-#ifndef ENABLE_JIT_OPTIMIZE_CALL
-#define ENABLE_JIT_OPTIMIZE_CALL 1
-#endif
-#ifndef ENABLE_JIT_OPTIMIZE_NATIVE_CALL
-#define ENABLE_JIT_OPTIMIZE_NATIVE_CALL 1
-#endif
-#ifndef ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS
-#define ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS 1
-#endif
-#ifndef ENABLE_JIT_OPTIMIZE_METHOD_CALLS
-#define ENABLE_JIT_OPTIMIZE_METHOD_CALLS 1
-#endif
-#endif
-
-/* Yet Another Regex Runtime. */
-#if !defined(ENABLE_YARR_JIT)
-
-/* YARR supports x86 & x86-64, and has been tested on Mac, Windows and Linux. */
-#if (CPU(X86) && OS(LINUX) && GCC_VERSION >= 40100) \
-    || (CPU(X86_64) && OS(LINUX) && GCC_VERSION >= 40100) \
-    || (CPU(ARM_TRADITIONAL) && OS(LINUX))
-#define ENABLE_YARR 1
-#define ENABLE_YARR_JIT 1
-#endif
-
-#endif /* !defined(ENABLE_YARR_JIT) */
-
-/* Sanity Check */
-#if ENABLE(YARR_JIT) && !ENABLE(YARR)
-#error "YARR_JIT requires YARR"
-#endif
-
-#if ENABLE(JIT) || ENABLE(YARR_JIT)
-#define ENABLE_ASSEMBLER 1
-#endif
-
 #if COMPILER(GCC)
 #define WARN_UNUSED_RETURN __attribute__ ((warn_unused_result))
 #else
