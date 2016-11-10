@@ -68,10 +68,6 @@ if(NOT KATIE_TYPE)
     katie_definition(-DQT_SHARED)
 endif()
 
-if(KATIE_PLATFORM MATCHES "(win32|wince)" AND NOT KATIE_TYPE STREQUAL SHARED)
-    katie_definition(-DQT_MAKEDLL)
-endif()
-
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     katie_definition(-DQT_NO_DEBUG -DNDEBUG)
 endif()

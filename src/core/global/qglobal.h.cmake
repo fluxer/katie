@@ -1013,18 +1013,6 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #  define Q_DECL_HIDDEN
 #endif
 
-
-/*
-   QT_DLL leftovers (Windows only)
-*/
-
-#if defined(Q_OS_LINUX) && defined(Q_CC_BOR)
-#  define Q_TEMPLATEDLL
-#  define Q_NO_DECLARED_NOT_DEFINED
-#endif
-#undef QT_MAKEDLL /* ignore these for other platforms */
-#undef QT_DLL
-
 #if !defined(Q_CORE_EXPORT)
 #  if defined(QT_SHARED)
 #    define Q_CORE_EXPORT Q_DECL_EXPORT
