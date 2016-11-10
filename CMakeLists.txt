@@ -9,6 +9,10 @@
 
 cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 
+if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
+    message(FATAL_ERROR "\nThe project should not be build in the source directory")
+endif()
+
 project(Katie C CXX)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
