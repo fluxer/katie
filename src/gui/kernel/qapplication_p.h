@@ -377,7 +377,6 @@ Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,
 
 #if defined(Q_WS_X11)
   extern void qt_x11_enforce_cursor(QWidget *, bool);
-  extern void qt_x11_enforce_cursor(QWidget *);
 #endif
 
 QT_END_NAMESPACE

@@ -2271,7 +2271,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
     QWidgetList leaveList;
     QWidgetList enterList;
 
-    bool sameWindow = leave && enter && leave->window() == enter->window();
+    const bool sameWindow = leave && enter && leave->window() == enter->window();
     if (leave && !sameWindow) {
         w = leave;
         do {
@@ -2380,7 +2380,7 @@ void QApplicationPrivate::dispatchEnterLeave(QWidget* enter, QWidget* leave) {
 #endif
         {
 #if defined(Q_WS_X11)
-            qt_x11_enforce_cursor(parentOfLeavingCursor,true);
+            qt_x11_enforce_cursor(parentOfLeavingCursor, true);
 #endif
         }
     }

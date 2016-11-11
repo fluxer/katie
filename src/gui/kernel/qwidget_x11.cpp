@@ -330,11 +330,6 @@ void qt_x11_enforce_cursor(QWidget * w, bool force)
     }
 }
 
-Q_GUI_EXPORT void qt_x11_enforce_cursor(QWidget * w)
-{
-    qt_x11_enforce_cursor(w, false);
-}
-
 void qt_x11_wait_for_window_manager(QWidget *w, bool sendPostedEvents)
 {
     if (!w || (!w->isWindow() && !w->internalWinId()))
@@ -861,7 +856,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         q->setAttribute(Qt::WA_WState_Visible);
     } else if (topLevel) {                        // set X cursor
         if (initializeWindow) {
-            qt_x11_enforce_cursor(q);
+            qt_x11_enforce_cursor(q, false);
 
             if (QTLWExtra *topData = maybeTopData())
                 if (!topData->caption.isEmpty())
@@ -876,9 +871,9 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
         }
     } else if (q->internalWinId()) {
-        qt_x11_enforce_cursor(q);
+        qt_x11_enforce_cursor(q, false);
         if (QWidget *p = q->parentWidget()) // reset the cursor on the native parent
-            qt_x11_enforce_cursor(p);
+            qt_x11_enforce_cursor(p, false);
     }
 
     if (extra && !extra->mask.isEmpty() && q->internalWinId())
@@ -1344,14 +1339,14 @@ void QWidgetPrivate::updateSystemBackground()
 void QWidgetPrivate::setCursor_sys(const QCursor &)
 {
     Q_Q(QWidget);
-    qt_x11_enforce_cursor(q);
+    qt_x11_enforce_cursor(q, false);
     XFlush(X11->display);
 }
 
 void QWidgetPrivate::unsetCursor_sys()
 {
     Q_Q(QWidget);
-    qt_x11_enforce_cursor(q);
+    qt_x11_enforce_cursor(q, false);
     XFlush(X11->display);
 }
 #endif
