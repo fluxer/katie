@@ -514,10 +514,6 @@ QAccessible::Role QAccessibleDisplay::role(int child) const
     if (l) {
         if (l->pixmap())
             return Graphic;
-#ifndef QT_NO_PICTURE
-        if (l->picture())
-            return Graphic;
-#endif
 #ifndef QT_NO_MOVIE
         if (l->movie())
             return Animation;

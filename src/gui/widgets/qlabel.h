@@ -74,9 +74,6 @@ public:
 
     QString text() const;
     const QPixmap *pixmap() const;
-#ifndef QT_NO_PICTURE
-    const QPicture *picture() const;
-#endif
 #ifndef QT_NO_MOVIE
     QMovie *movie() const;
 #endif
@@ -120,9 +117,6 @@ public:
 public Q_SLOTS:
     void setText(const QString &);
     void setPixmap(const QPixmap &);
-#ifndef QT_NO_PICTURE
-    void setPicture(const QPicture &);
-#endif
 #ifndef QT_NO_MOVIE
     void setMovie(QMovie *movie);
 #endif

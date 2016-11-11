@@ -147,20 +147,6 @@ QT_BEGIN_NAMESPACE
         {fowler}{GUI Design Handbook: Label}
 */
 
-#ifndef QT_NO_PICTURE
-/*!
-    Returns the label's picture or 0 if the label doesn't have a
-    picture.
-*/
-
-const QPicture *QLabel::picture() const
-{
-    Q_D(const QLabel);
-    return d->picture;
-}
-#endif
-
-
 /*!
     Constructs an empty label.
 
@@ -219,9 +205,6 @@ void QLabelPrivate::init()
     pixmap = 0;
     scaledpixmap = 0;
     cachedimage = 0;
-#ifndef QT_NO_PICTURE
-    picture = 0;
-#endif
     align = Qt::AlignLeft | Qt::AlignVCenter | Qt::TextExpandTabs;
     indent = -1;
     scaledcontents = false;
@@ -364,26 +347,6 @@ const QPixmap *QLabel::pixmap() const
     Q_D(const QLabel);
     return d->pixmap;
 }
-
-#ifndef QT_NO_PICTURE
-/*!
-    Sets the label contents to \a picture. Any previous content is
-    cleared.
-
-    The buddy shortcut, if any, is disabled.
-
-    \sa picture(), setBuddy()
-*/
-
-void QLabel::setPicture(const QPicture &picture)
-{
-    Q_D(QLabel);
-    d->clearContents();
-    d->picture = new QPicture(picture);
-
-    d->updateLabel();
-}
-#endif // QT_NO_PICTURE
 
 /*!
     Sets the label contents to plain text containing the textual
@@ -559,10 +522,6 @@ QSize QLabelPrivate::sizeForWidth(int w) const
 
     if (pixmap && !pixmap->isNull())
         br = pixmap->rect();
-#ifndef QT_NO_PICTURE
-    else if (picture && !picture->isNull())
-        br = picture->boundingRect();
-#endif
 #ifndef QT_NO_MOVIE
     else if (movie && !movie->currentPixmap().isNull())
         br = movie->currentPixmap().rect();
@@ -1058,34 +1017,7 @@ void QLabel::paintEvent(QPaintEvent *)
             }
             style->drawItemText(&painter, lr.toRect(), flags, opt.palette, isEnabled(), d->text, foregroundRole());
         }
-    } else
-#ifndef QT_NO_PICTURE
-    if (d->picture) {
-        QRect br = d->picture->boundingRect();
-        int rw = br.width();
-        int rh = br.height();
-        if (d->scaledcontents) {
-            painter.save();
-            painter.translate(cr.x(), cr.y());
-            painter.scale((double)cr.width()/rw, (double)cr.height()/rh);
-            painter.drawPicture(-br.x(), -br.y(), *d->picture);
-            painter.restore();
-        } else {
-            int xo = 0;
-            int yo = 0;
-            if (align & Qt::AlignVCenter)
-                yo = (cr.height()-rh)/2;
-            else if (align & Qt::AlignBottom)
-                yo = cr.height()-rh;
-            if (align & Qt::AlignRight)
-                xo = cr.width()-rw;
-            else if (align & Qt::AlignHCenter)
-                xo = (cr.width()-rw)/2;
-            painter.drawPicture(cr.x()+xo-br.x(), cr.y()+yo-br.y(), *d->picture);
-        }
-    } else
-#endif
-    if (d->pixmap && !d->pixmap->isNull()) {
+    } else if (d->pixmap && !d->pixmap->isNull()) {
         QPixmap pix;
         if (d->scaledcontents) {
             if (!d->scaledpixmap || d->scaledpixmap->size() != cr.size()) {
@@ -1276,10 +1208,6 @@ void QLabelPrivate::clearContents()
     isTextLabel = false;
     hasShortcut = false;
 
-#ifndef QT_NO_PICTURE
-    delete picture;
-    picture = 0;
-#endif
     delete scaledpixmap;
     scaledpixmap = 0;
     delete cachedimage;

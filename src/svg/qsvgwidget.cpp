@@ -76,7 +76,7 @@ QT_BEGIN_NAMESPACE
     displays. If no data has been loaded, the widget provides the default QWidget size hint.
     Subclass this class and reimplement sizeHint() if you need to customize this behavior.
 
-    \sa QSvgRenderer, {QtSvg Module}, QPicture
+    \sa QSvgRenderer, {QtSvg Module}
 */
 
 class QSvgWidgetPrivate : public QWidgetPrivate

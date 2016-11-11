@@ -44,10 +44,7 @@
 #ifndef QT_NO_PRINTER
 #include <qdebug.h>
 #include "qpaintengine_alpha_p.h"
-
-#include "qpicture_p.h"
 #include "qfont_p.h"
-#include "QtGui/qpicture.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -314,7 +311,7 @@ void QAlphaPaintEngine::flushAndInit(bool init)
 
         d->m_cliprgn = d->m_alphargn;
 
-        // now replay the QPicture
+        // now replay the QImage
         ++d->m_pass; // we are now doing pass #2
 
         // reset states
@@ -323,12 +320,12 @@ void QAlphaPaintEngine::flushAndInit(bool init)
         painter()->save();
         d->resetState(painter());
 
-        // make sure the output from QPicture is unscaled
+        // make sure the output from QImage is unscaled
         QTransform mtx;
         mtx.scale(1.0f / (qreal(d->m_pdev->logicalDpiX()) / qreal(qt_defaultDpiX())),
                   1.0f / (qreal(d->m_pdev->logicalDpiY()) / qreal(qt_defaultDpiY())));
         painter()->setTransform(mtx);
-        painter()->drawPicture(0, 0, *d->m_pic);
+        painter()->drawImage(0, 0, *d->m_pic);
 
         d->m_cliprgn = QRegion();
         d->resetState(painter());
@@ -349,8 +346,7 @@ void QAlphaPaintEngine::flushAndInit(bool init)
     if (init) {
         gccaps = PaintEngineFeatures(AllFeatures & ~QPaintEngine::ObjectBoundingModeGradients);
 
-        d->m_pic = new QPicture();
-        d->m_pic->d_ptr->in_memory_only = true;
+        d->m_pic = new QImage();
         d->m_picpainter = new QPainter(d->m_pic);
         d->m_picengine = d->m_picpainter->paintEngine();
 
@@ -476,7 +472,7 @@ void QAlphaPaintEnginePrivate::drawAlphaImage(const QRectF &rect)
             QPainter imgpainter(&img);
             imgpainter.setTransform(picscale);
             QPointF picpos(qreal(-xpos), qreal(-ypos));
-            imgpainter.drawPicture(picpos, *m_pic);
+            imgpainter.drawImage(picpos, *m_pic);
             imgpainter.end();
 
             q->painter()->setTransform(QTransform());

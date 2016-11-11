@@ -84,7 +84,6 @@ class QPixmap;
 class QBitmap;
 class QMovie;
 class QImage;
-class QPicture;
 class QPrinter;
 class QTimer;
 class QTime;

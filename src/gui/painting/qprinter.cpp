@@ -53,11 +53,6 @@
 
 #ifndef QT_NO_PRINTER
 
-#if defined (Q_WS_WIN)
-#include <qprintengine_win_p.h>
-#elif defined (Q_WS_MAC)
-#include <qprintengine_mac_p.h>
-#endif
 #include <qprintengine_ps_p.h>
 
 #if defined(Q_WS_X11)
@@ -68,7 +63,7 @@
 #include "qprintengine_pdf_p.h"
 #endif
 
-#include <qpicture.h>
+#include <qimage.h>
 #include <qpaintengine_preview_p.h>
 
 
@@ -182,11 +177,11 @@ void QPrinterPrivate::createDefaultEngines()
 }
 
 #ifndef QT_NO_PRINTPREVIEWWIDGET
-QList<const QPicture *> QPrinterPrivate::previewPages() const
+QList<const QImage *> QPrinterPrivate::previewPages() const
 {
     if (previewEngine)
         return previewEngine->pages();
-    return QList<const QPicture *>();
+    return QList<const QImage *>();
 }
 
 void QPrinterPrivate::setPreviewMode(bool enable)

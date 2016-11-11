@@ -46,7 +46,6 @@
 #include "qpainter.h"
 #include "qpen.h"
 #include "qdebug.h"
-#include "qpicture.h"
 
 QT_BEGIN_NAMESPACE
 

@@ -294,12 +294,10 @@ bool QImageData::checkForAlphaPixels() const
     can be used as a paint device.
 
     Qt provides four classes for handling image data: QImage, QPixmap,
-    QBitmap and QPicture.  QImage is designed and optimized for I/O,
-    and for direct pixel access and manipulation, while QPixmap is
-    designed and optimized for showing images on screen. QBitmap is
-    only a convenience class that inherits QPixmap, ensuring a
-    depth of 1. Finally, the QPicture class is a paint device that
-    records and replays QPainter commands.
+    and QBitmap.  QImage is designed and optimized for I/O, and for
+    direct pixel access and manipulation, while QPixmap is designed
+    and optimized for showing images on screen. QBitmap is only a
+    convenience class that inherits QPixmap, ensuring a depth of 1.
 
     Because QImage is a QPaintDevice subclass, QPainter can be used to
     draw directly onto images.  When using QPainter on a QImage, the

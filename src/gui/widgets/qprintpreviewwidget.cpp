@@ -58,7 +58,7 @@ namespace {
 class PageItem : public QGraphicsItem
 {
 public:
-    PageItem(int _pageNum, const QPicture* _pagePicture, QSize _paperSize, QRect _pageRect)
+    PageItem(int _pageNum, const QImage* _pagePicture, QSize _paperSize, QRect _pageRect)
         : pageNum(_pageNum), pagePicture(_pagePicture),
           paperSize(_paperSize), pageRect(_pageRect)
     {
@@ -78,7 +78,7 @@ public:
 
 private:
     int pageNum;
-    const QPicture* pagePicture;
+    const QImage* pagePicture;
     QSize paperSize;
     QRect pageRect;
     QRectF brect;
@@ -125,7 +125,7 @@ void PageItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     painter->fillRect(paperRect, Qt::white);
     if (!pagePicture)
         return;
-    painter->drawPicture(pageRect.topLeft(), *pagePicture);
+    painter->drawImage(pageRect.topLeft(), *pagePicture);
 
     // Effect: make anything drawn in the margins look washed out.
     QPainterPath path;
@@ -203,7 +203,7 @@ public:
     QGraphicsScene *scene;
 
     int curPage;
-    QList<const QPicture *> pictures;
+    QList<const QImage *> pictures;
     QList<QGraphicsItem *> pages;
 
     QPrintPreviewWidget::ViewMode viewMode;

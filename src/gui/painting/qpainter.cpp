@@ -52,7 +52,6 @@
 #include "qpainter.h"
 #include "qpainter_p.h"
 #include "qpainterpath.h"
-#include "qpicture.h"
 #include "qpixmapcache.h"
 #include "qpolygon.h"
 #include "qtextlayout.h"
@@ -115,7 +114,6 @@ static bool qt_painter_thread_test(int devType, const char *what, bool extraCond
     switch (devType) {
     case QInternal::Image:
     case QInternal::Printer:
-    case QInternal::Picture:
         // can be drawn onto these devices safely from any thread
         if (extraCondition)
             break;
@@ -846,11 +844,6 @@ void QPainterPrivate::updateState(QPainterState *newState)
     fine-grained positioning, boundingRect() tells you where a given
     drawText() command will draw.
 
-    There is a drawPicture() function that draws the contents of an
-    entire QPicture. The drawPicture() function is the only function
-    that disregards all the painter's settings as QPicture has its own
-    settings.
-
     \section1 Rendering Quality
 
     To get the optimal rendering result using QPainter, you should use
@@ -1456,7 +1449,7 @@ bool QPainter::begin(QPaintDevice *pd)
 
     if (!rpd)
         rpd = redirected(pd, &redirectionOffset);
-    else
+    if (rpd)
         pd = rpd;
 
 #ifdef QT_DEBUG_DRAW
@@ -2630,12 +2623,6 @@ void QPainter::setClipRegion(const QRegion &r, Qt::ClipOperation op)
     They operate on the painter's worldMatrix() and are implemented like this:
 
     \snippet doc/src/snippets/code/src_gui_painting_qpainter.cpp 4
-
-    Note that when using setWorldMatrix() function you should always have
-    \a combine be true when you are drawing into a QPicture. Otherwise
-    it may not be possible to replay the picture with additional
-    transformations; using the translate(), scale(), etc. convenience
-    functions is safe.
 
     For more information about the coordinate system, transformations
     and window-viewport conversion, see \l {Coordinate System}.
@@ -6232,62 +6219,6 @@ void QPainter::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, const QPo
     height. (\a{sx}, \a{sy}) specifies the top-left point in the \a
     pixmap that is to be drawn; this defaults to (0, 0).
 */
-
-#ifndef QT_NO_PICTURE
-
-/*!
-    \fn void QPainter::drawPicture(const QPointF &point, const QPicture &picture)
-
-    Replays the given \a picture at the given \a point.
-
-    The QPicture class is a paint device that records and replays
-    QPainter commands. A picture serializes the painter commands to an
-    IO device in a platform-independent format. Everything that can be
-    painted on a widget or pixmap can also be stored in a picture.
-
-    This function does exactly the same as QPicture::play() when
-    called with \a point = QPoint(0, 0).
-
-    \table 100%
-    \row
-    \o
-    \snippet doc/src/snippets/code/src_gui_painting_qpainter.cpp 18
-    \endtable
-
-    \sa QPicture::play()
-*/
-
-void QPainter::drawPicture(const QPointF &p, const QPicture &picture)
-{
-    Q_D(QPainter);
-
-    if (!d->engine)
-        return;
-
-    if (!d->extended)
-        d->updateState(d->state);
-
-    save();
-    translate(p);
-    const_cast<QPicture *>(&picture)->play(this);
-    restore();
-}
-
-/*!
-    \fn void QPainter::drawPicture(const QPoint &point, const QPicture &picture)
-    \overload
-
-    Replays the given \a picture at the given \a point.
-*/
-
-/*!
-    \fn void QPainter::drawPicture(int x, int y, const QPicture &picture)
-    \overload
-
-    Draws the given \a picture at point (\a x, \a y).
-*/
-
-#endif // QT_NO_PICTURE
 
 /*!
     \fn void QPainter::eraseRect(const QRectF &rectangle)

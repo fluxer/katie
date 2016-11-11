@@ -55,6 +55,7 @@
 
 #ifndef QT_NO_PRINTER
 #include "qpaintengine_p.h"
+#include "qimage.h"
 #include "qpen.h"
 
 QT_BEGIN_NAMESPACE
@@ -98,7 +99,7 @@ public:
     ~QAlphaPaintEnginePrivate();
 
     int m_pass;
-    QPicture *m_pic;
+    QImage *m_pic;
     QPaintEngine *m_picengine;
     QPainter *m_picpainter;
 

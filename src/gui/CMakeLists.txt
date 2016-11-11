@@ -169,7 +169,6 @@ set(GUI_PUBLIC_HEADERS
     QPalette
     QPanGesture
     QPen
-    QPicture
     QPixmap
     QPixmapCache
     QPlainTextDocumentLayout

@@ -42,11 +42,9 @@
 #include <qpaintengine_preview_p.h>
 #include <qpainter_p.h>
 #include <qpaintengine_p.h>
-#include <qpicture_p.h>
 
 #include <QtGui/qprintengine.h>
 #include <QtGui/qpainter.h>
-#include <QtGui/qpicture.h>
 
 #ifndef QT_NO_PRINTPREVIEWWIDGET
 QT_BEGIN_NAMESPACE
@@ -58,7 +56,7 @@ public:
     QPreviewPaintEnginePrivate() : state(QPrinter::Idle) {}
     ~QPreviewPaintEnginePrivate() {}
 
-    QList<const QPicture *> pages;
+    QList<const QImage *> pages;
     QPaintEngine *engine;
     QPainter *painter;
     QPrinter::PrinterState state;
@@ -90,8 +88,7 @@ bool QPreviewPaintEngine::begin(QPaintDevice *)
     qDeleteAll(d->pages);
     d->pages.clear();
 
-    QPicture *page = new QPicture;
-    page->d_func()->in_memory_only = true;
+    QImage *page = new QImage;
     d->painter = new QPainter(page);
     d->engine = d->painter->paintEngine();
     d->pages.append(page);
@@ -150,8 +147,7 @@ bool QPreviewPaintEngine::newPage()
 {
     Q_D(QPreviewPaintEngine);
 
-    QPicture *page = new QPicture;
-    page->d_func()->in_memory_only = true;
+    QImage *page = new QImage;
     QPainter *tmp_painter = new QPainter(page);
     QPaintEngine *tmp_engine = tmp_painter->paintEngine();
 
@@ -181,7 +177,7 @@ bool QPreviewPaintEngine::abort()
     return true;
 }
 
-QList<const QPicture *> QPreviewPaintEngine::pages()
+QList<const QImage *> QPreviewPaintEngine::pages()
 {
     Q_D(QPreviewPaintEngine);
     return d->pages;

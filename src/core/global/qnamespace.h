@@ -1464,17 +1464,16 @@ typedef bool (*qInternalCallback)(void **);
 class Q_CORE_EXPORT QInternal {
 public:
     enum PaintDeviceFlags {
-        UnknownDevice = 0x00,
-        Widget        = 0x01,
-        Pixmap        = 0x02,
-        Image         = 0x03,
-        Printer       = 0x04,
-        Picture       = 0x05,
-        Pbuffer       = 0x06,    // GL pbuffer
-        FramebufferObject = 0x07, // GL framebuffer object
-        CustomRaster  = 0x08,
-        PaintBuffer   = 0x09,
-        OpenGL        = 0x0a
+        UnknownDevice     = 0,
+        Widget            = 1,
+        Pixmap            = 2,
+        Image             = 3,
+        Printer           = 4,
+        Pbuffer           = 5,    // GL pbuffer
+        FramebufferObject = 6, // GL framebuffer object
+        CustomRaster      = 7,
+        PaintBuffer       = 8,
+        OpenGL            = 9
     };
     enum RelayoutType {
         RelayoutNormal,

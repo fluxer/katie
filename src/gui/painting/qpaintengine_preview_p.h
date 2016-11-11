@@ -82,7 +82,7 @@ public:
     void drawPixmap(const QRectF &r, const QPixmap &pm, const QRectF &sr);
     void drawTiledPixmap(const QRectF &r, const QPixmap &pm, const QPointF &p);
 
-    QList<const QPicture *> pages();
+    QList<const QImage *> pages();
 
     QPaintEngine::Type type() const { return Picture; }
 

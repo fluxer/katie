@@ -63,7 +63,6 @@
 #include "qmovie.h"
 #include "qimage.h"
 #include "qbitmap.h"
-#include "qpicture.h"
 #include "qmenu.h"
 
 QT_BEGIN_NAMESPACE
@@ -88,9 +87,6 @@ public:
     QPixmap  *pixmap;
     QPixmap *scaledpixmap;
     QImage *cachedimage;
-#ifndef QT_NO_PICTURE
-    QPicture *picture;
-#endif
 #ifndef QT_NO_MOVIE
     QPointer<QMovie> movie;
     void _q_movieUpdated(const QRect&);

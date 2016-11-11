@@ -173,7 +173,7 @@ QFontMetrics::QFontMetrics(const QFont &font)
     If the \a paintdevice is 0, the metrics will be screen-compatible,
     ie. the metrics you get if you use the font for drawing text on a
     \link QWidget widgets\endlink or \link QPixmap pixmaps\endlink,
-    not on a QPicture or QPrinter.
+    not on a QPrinter.
 
     The font metrics object holds the information for the font that is
     passed in the constructor at the time it is created, and is not
@@ -1054,7 +1054,7 @@ QFontMetricsF::QFontMetricsF(const QFont &font)
     If the \a paintdevice is 0, the metrics will be screen-compatible,
     ie. the metrics you get if you use the font for drawing text on a
     \link QWidget widgets\endlink or \link QPixmap pixmaps\endlink,
-    not on a QPicture or QPrinter.
+    not on a QPrinter.
 
     The font metrics object holds the information for the font that is
     passed in the constructor at the time it is created, and is not

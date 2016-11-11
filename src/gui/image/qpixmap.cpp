@@ -1366,13 +1366,12 @@ QPixmap QPixmap::transformed(const QMatrix &matrix, Qt::TransformationMode mode)
 
 
     Qt provides four classes for handling image data: QImage, QPixmap,
-    QBitmap and QPicture. QImage is designed and optimized for I/O,
-    and for direct pixel access and manipulation, while QPixmap is
-    designed and optimized for showing images on screen. QBitmap is
-    only a convenience class that inherits QPixmap, ensuring a depth
-    of 1. The isQBitmap() function returns true if a QPixmap object is
-    really a bitmap, otherwise returns false. Finally, the QPicture class
-    is a paint device that records and replays QPainter commands.
+    and QBitmap. QImage is designed and optimized for I/O, and for direct
+    pixel access and manipulation, while QPixmap is designed and
+    optimized for showing images on screen. QBitmap is only a convenience
+    class that inherits QPixmap, ensuring a depth of 1. The isQBitmap()
+    function returns true if a QPixmap object is really a bitmap,
+    otherwise returns false.
 
     A QPixmap can easily be displayed on the screen using QLabel or
     one of QAbstractButton's subclasses (such as QPushButton and

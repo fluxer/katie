@@ -98,7 +98,7 @@ QT_BEGIN_NAMESPACE
     Finally, the QSvgRenderer class provides the repaintNeeded() signal which is emitted
     whenever the rendering of the document needs to be updated.
 
-    \sa QSvgWidget, {QtSvg Module}, {SVG Viewer Example}, QPicture
+    \sa QSvgWidget, {QtSvg Module}, {SVG Viewer Example}
 */
 
 class QSvgRendererPrivate : public QObjectPrivate

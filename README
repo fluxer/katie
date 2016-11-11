@@ -27,7 +27,7 @@ There are several things you should be aware before considering Katie:
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine
   - native graphics system is no more, rasterizer is just as fast as native
-  - QPictureIO and plugins for it are no longer supported
+  - QPicture, QPictureIO and plugins for it are no longer supported
   - QML debugger and inspector have been removed, potentially dangerous
   - no SIMD, zero performance impact with decent compiler
   - state machine is no more

@@ -185,7 +185,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QImageReader", "QtGui/qimagereader.h"},
     { "QImageWriter", "QtGui/qimagewriter.h"},
     { "QMovie", "QtGui/qmovie.h"},
-    { "QPicture", "QtGui/qpicture.h"},
     { "QPixmap", "QtGui/qpixmap.h"},
     { "QPixmapCache", "QtGui/qpixmapcache.h"},
     { "Key", "QtGui/qpixmapcache.h"},
@@ -719,6 +718,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 713;
+static const int qclass_lib_count = 712;
 
 #endif

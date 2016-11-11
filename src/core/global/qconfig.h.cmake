@@ -49,6 +49,7 @@
 #define QT_NO_DIRECTPAINTER
 #define QT_NO_COP
 #define QT_NO_BLITTABLE
+#define QT_NO_PICTURE
 #define QT_NO_PICTUREIO
 #define QT_NO_SOFTKEYMANAGER
 #define QT_NO_SXE
@@ -225,7 +226,6 @@
 #cmakedefine QT_NO_NSL
 #cmakedefine QT_NO_PAINT_DEBUG
 #cmakedefine QT_NO_PDF
-#cmakedefine QT_NO_PICTURE
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG
 #cmakedefine QT_NO_PRINTER
@@ -530,7 +530,7 @@
 #endif
 
 // QPrinter
-#if !defined(QT_NO_PRINTER) && (defined(QT_NO_TEXTSTREAM) || defined(QT_NO_PICTURE) || defined(QT_NO_TEMPORARYFILE))
+#if !defined(QT_NO_PRINTER) && (defined(QT_NO_TEXTSTREAM) || defined(QT_NO_TEMPORARYFILE))
 #define QT_NO_PRINTER
 #endif
 

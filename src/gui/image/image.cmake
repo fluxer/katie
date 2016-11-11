@@ -12,9 +12,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagereader.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagewriter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpaintengine_pic_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpicture.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpicture_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
@@ -38,8 +35,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimageiohandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagereader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qimagewriter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpaintengine_pic.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpicture.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata.cpp

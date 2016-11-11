@@ -358,17 +358,10 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     \enum QPaintEngine::Type
 
     \value X11
-    \value Windows
-    \value MacPrinter
-    \value CoreGraphics Mac OS X's Quartz2D (CoreGraphics)
-    \value QuickDraw Mac OS X's QuickDraw
-    \value QWindowSystem Qt for Embedded Linux
     \value PostScript
     \value OpenGL
-    \value Picture QPicture format
     \value SVG Scalable Vector Graphics XML format
     \value Raster
-    \value Direct3D Windows only, Direct3D based engine
     \value Pdf Portable Document Format
     \value User First user type ID
     \value MaxUser Last user type ID

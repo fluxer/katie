@@ -2260,7 +2260,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     The font must be screen-compatible, i.e. a font you use when
     drawing text in \link QWidget widgets\endlink or \link QPixmap
-    pixmaps\endlink, not QPicture or QPrinter.
+    pixmaps\endlink, not QPrinter.
 
     The font info object holds the information for the font that is
     passed in the constructor at the time it is created, and is not

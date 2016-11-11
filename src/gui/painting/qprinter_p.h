@@ -69,7 +69,7 @@ QT_BEGIN_NAMESPACE
 
 class QPrintEngine;
 class QPreviewPaintEngine;
-class QPicture;
+class QImage;
 
 class QPrinterPrivate
 {
@@ -99,7 +99,7 @@ public:
 
     void createDefaultEngines();
 #ifndef QT_NO_PRINTPREVIEWWIDGET
-    QList<const QPicture *> previewPages() const;
+    QList<const QImage *> previewPages() const;
     void setPreviewMode(bool);
 #endif
 

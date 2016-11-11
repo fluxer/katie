@@ -5140,11 +5140,11 @@ QRegion QGraphicsItem::boundingRegion(const QTransform &itemToDeviceTransform) c
     // ### Ideally we would have a better way to generate this region,
     // preferably something in the lines of QPainterPath::toRegion(QTransform)
     // coupled with a way to generate a painter path from a set of painter
-    // operations (e.g., QPicture::toPainterPath() or so). The current
-    // approach generates a bitmap with the size of the item's bounding rect
-    // in device coordinates, scaled by b.r.granularity, then paints the item
-    // into the bitmap, converts the result to a QRegion and scales the region
-    // back to device space with inverse granularity.
+    // operations. The current approach generates a bitmap with the size of
+    // the item's bounding rect in device coordinates, scaled by
+    // b.r.granularity, then paints the item into the bitmap, converts the
+    // result to a QRegion and scales the region back to device space with
+    // inverse granularity.
     qreal granularity = boundingRegionGranularity();
     QRect deviceRect = itemToDeviceTransform.mapRect(boundingRect()).toRect();
     _q_adjustRect(&deviceRect);

@@ -355,11 +355,6 @@ public:
     void drawTiledPixmap(const QRectF &rect, const QPixmap &pm, const QPointF &offset = QPointF());
     inline void drawTiledPixmap(int x, int y, int w, int h, const QPixmap &, int sx=0, int sy=0);
     inline void drawTiledPixmap(const QRect &, const QPixmap &, const QPoint & = QPoint());
-#ifndef QT_NO_PICTURE
-    void drawPicture(const QPointF &p, const QPicture &picture);
-    inline void drawPicture(int x, int y, const QPicture &picture);
-    inline void drawPicture(const QPoint &p, const QPicture &picture);
-#endif
 
     void drawPixmap(const QRectF &targetRect, const QPixmap &pixmap, const QRectF &sourceRect);
     inline void drawPixmap(const QRect &targetRect, const QPixmap &pixmap, const QRect &sourceRect);
@@ -410,9 +405,9 @@ public:
 
     void drawText(const QPointF &p, const QString &str, int tf, int justificationPadding);
 
-    void drawText(const QRectF &r, int flags, const QString &text, QRectF *br=0);
-    void drawText(const QRect &r, int flags, const QString &text, QRect *br=0);
-    inline void drawText(int x, int y, int w, int h, int flags, const QString &text, QRect *br=0);
+    void drawText(const QRectF &r, int flags, const QString &text, QRectF *br = Q_NULLPTR);
+    void drawText(const QRect &r, int flags, const QString &text, QRect *br = Q_NULLPTR);
+    inline void drawText(int x, int y, int w, int h, int flags, const QString &text, QRect *br = Q_NULLPTR);
 
     void drawText(const QRectF &r, const QString &text, const QTextOption &o = QTextOption());
 
@@ -455,7 +450,7 @@ public:
 
     static void setRedirected(const QPaintDevice *device, QPaintDevice *replacement,
                               const QPoint& offset = QPoint());
-    static QPaintDevice *redirected(const QPaintDevice *device, QPoint *offset = 0);
+    static QPaintDevice *redirected(const QPaintDevice *device, QPoint *offset = Q_NULLPTR);
     static void restoreRedirected(const QPaintDevice *device);
 
     void beginNativePainting();
@@ -907,18 +902,6 @@ inline void QPainter::setWindow(int x, int y, int w, int h)
 {
     setWindow(QRect(x, y, w, h));
 }
-
-#ifndef QT_NO_PICTURE
-inline void QPainter::drawPicture(int x, int y, const QPicture &p)
-{
-    drawPicture(QPoint(x, y), p);
-}
-
-inline void QPainter::drawPicture(const QPoint &pt, const QPicture &p)
-{
-    drawPicture(QPointF(pt), p);
-}
-#endif
 
 QT_END_NAMESPACE
 

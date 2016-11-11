@@ -2060,10 +2060,7 @@ void QGraphicsView::render(QPainter *painter, const QRectF &target, const QRect 
     // Default target rect = device rect
     QRectF targetRect = target;
     if (target.isNull()) {
-        if (painter->device()->devType() == QInternal::Picture)
-            targetRect = sourceRect;
-        else
-            targetRect.setRect(0, 0, painter->device()->width(), painter->device()->height());
+        targetRect.setRect(0, 0, painter->device()->width(), painter->device()->height());
     }
 
     // Find the ideal x / y scaling ratio to fit \a source into \a target.
