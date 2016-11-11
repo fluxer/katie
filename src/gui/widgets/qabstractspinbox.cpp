@@ -693,18 +693,6 @@ void QAbstractSpinBox::interpretText()
     d->interpret(EmitIfChanged);
 }
 
-/*
-    Reimplemented in 4.6, so be careful.
- */
-/*!
-    \reimp
-*/
-QVariant QAbstractSpinBox::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QAbstractSpinBox);
-    return d->edit->inputMethodQuery(query);
-}
-
 /*!
     \reimp
 */
@@ -744,8 +732,6 @@ bool QAbstractSpinBox::event(QEvent *event)
         }
         break;
 #endif
-    case QEvent::InputMethod:
-        return d->edit->event(event);
     default:
         break;
     }
@@ -1545,7 +1531,6 @@ void QAbstractSpinBoxPrivate::init()
     spinClickThresholdTimerInterval = q->style()->styleHint(QStyle::SH_SpinBox_ClickAutoRepeatThreshold, &opt, q);
     q->setFocusPolicy(Qt::WheelFocus);
     q->setSizePolicy(QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed, QSizePolicy::SpinBox));
-    q->setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 /*!

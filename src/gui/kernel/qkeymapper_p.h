@@ -129,8 +129,7 @@ public:
                                    QEvent::Type &type,
                                    bool statefulTranslation = true);
     bool translateKeyEvent(QWidget *keywidget,
-                           const XEvent *,
-                           bool grab);
+                           const XEvent *);
 
     QXCoreDesc coreDesc;
 #endif

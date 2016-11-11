@@ -219,8 +219,6 @@ public:
 
     QAbstractItemDelegate *itemDelegate(const QModelIndex &index) const;
 
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
-
 #ifdef Q_NO_USING_KEYWORD
     inline void update() { QAbstractScrollArea::update(); }
 #else
@@ -341,7 +339,6 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void resizeEvent(QResizeEvent *event);
     void timerEvent(QTimerEvent *event);
-    void inputMethodEvent(QInputMethodEvent *event);
 
 #ifndef QT_NO_DRAGANDDROP
     enum DropIndicatorPosition { OnItem, AboveItem, BelowItem, OnViewport };

@@ -5779,12 +5779,6 @@ void QWidget::setFocus(Qt::FocusReason reason)
                         QApplication::sendEvent(that->style(), &event);
                 }
                 if (!isHidden()) {
-#ifndef QT_NO_GRAPHICSVIEW
-                    // Update proxy state
-                    if (QWExtra *topData = window()->d_func()->extra)
-                        if (topData->proxyWidget && topData->proxyWidget->hasFocus())
-                            topData->proxyWidget->d_func()->updateProxyInputMethodAcceptanceFromWidget();
-#endif
                     // Send event to self
                     QFocusEvent event(QEvent::FocusIn, reason);
                     QPointer<QWidget> that = f;
@@ -7582,7 +7576,7 @@ bool QWidget::event(QEvent *event)
         if (!k->isAccepted()
             && k->modifiers() & Qt::ShiftModifier && k->key() == Qt::Key_F1
             && d->whatsThis.size()) {
-            QWhatsThis::showText(mapToGlobal(inputMethodQuery(Qt::ImMicroFocus).toRect().center()), d->whatsThis, this);
+            QWhatsThis::showText(mapToGlobal(QCursor::pos()), d->whatsThis, this);
             k->accept();
         }
 #endif
@@ -7593,10 +7587,6 @@ bool QWidget::event(QEvent *event)
         keyReleaseEvent((QKeyEvent*)event);
         // fall through
     case QEvent::ShortcutOverride:
-        break;
-
-    case QEvent::InputMethod:
-        inputMethodEvent((QInputMethodEvent *) event);
         break;
 
     case QEvent::PolishRequest:
@@ -8441,86 +8431,6 @@ void QWidget::contextMenuEvent(QContextMenuEvent *event)
     event->ignore();
 }
 #endif // QT_NO_CONTEXTMENU
-
-
-/*!
-    This event handler, for event \a event, can be reimplemented in a
-    subclass to receive Input Method composition events. This handler
-    is called when the state of the input method changes.
-
-    Note that when creating custom text editing widgets, the
-    Qt::WA_InputMethodEnabled window attribute must be set explicitly
-    (using the setAttribute() function) in order to receive input
-    method events.
-
-    The default implementation calls event->ignore(), which rejects the
-    Input Method event. See the \l QInputMethodEvent documentation for more
-    details.
-
-    \sa event(), QInputMethodEvent
-*/
-void QWidget::inputMethodEvent(QInputMethodEvent *event)
-{
-    event->ignore();
-}
-
-/*!
-    This method is only relevant for input widgets. It is used by the
-    input method to query a set of properties of the widget to be
-    able to support complex input method operations as support for
-    surrounding text and reconversions.
-
-    \a query specifies which property is queried.
-
-    \sa inputMethodEvent(), QInputMethodEvent, QInputContext, inputMethodHints
-*/
-QVariant QWidget::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    switch(query) {
-    case Qt::ImMicroFocus:
-        return QRect(width()/2, 0, 1, height());
-    case Qt::ImFont:
-        return font();
-    case Qt::ImAnchorPosition:
-        // Fallback.
-        return inputMethodQuery(Qt::ImCursorPosition);
-    default:
-        return QVariant();
-    }
-}
-
-/*!
-    \property QWidget::inputMethodHints
-    \brief What input method specific hints the widget has.
-
-    This is only relevant for input widgets. It is used by
-    the input method to retrieve hints as to how the input method
-    should operate. For example, if the Qt::ImhFormattedNumbersOnly flag
-    is set, the input method may change its visual components to reflect
-    that only numbers can be entered.
-
-    \note The flags are only hints, so the particular input method
-          implementation is free to ignore them. If you want to be
-          sure that a certain type of characters are entered,
-          you should also set a QValidator on the widget.
-
-    The default value is Qt::ImhNone.
-
-    \since 4.6
-
-    \sa inputMethodQuery(), QInputContext
-*/
-Qt::InputMethodHints QWidget::inputMethodHints() const
-{
-#warning noop
-    return 0;
-}
-
-void QWidget::setInputMethodHints(Qt::InputMethodHints hints)
-{
-#warning noop
-}
-
 
 #ifndef QT_NO_DRAGANDDROP
 
@@ -9662,8 +9572,7 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     case Qt::WA_UpdatesDisabled:
         d->updateSystemBackground();
         break;
-    case Qt::WA_TransparentForMouseEvents:
-    case Qt::WA_InputMethodEnabled: {
+    case Qt::WA_TransparentForMouseEvents: {
         break;
     }
     case Qt::WA_WindowPropagation:
@@ -10593,18 +10502,6 @@ void QWidget::languageChange() { }  // compat
 /*!
     \fn bool QWidget::isLeftToRight() const
     \internal
-*/
-
-/*!
-    \fn void QWidget::setInputMethodEnabled(bool enabled)
-
-    Use setAttribute(Qt::WA_InputMethodEnabled, \a enabled) instead.
-*/
-
-/*!
-    \fn bool QWidget::isInputMethodEnabled() const
-
-    Use testAttribute(Qt::WA_InputMethodEnabled) instead.
 */
 
 /*!

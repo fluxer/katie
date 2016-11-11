@@ -2361,7 +2361,6 @@ void QDateTimeEditPrivate::init(const QVariant &var)
         q->setCalendarPopup(true);
 #endif
     updateTimeSpec();
-    q->setInputMethodHints(Qt::ImhPreferNumbers);
     setLayoutItemMargins(QStyle::SE_DateTimeEditLayoutItem);
 }
 

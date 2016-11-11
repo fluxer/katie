@@ -75,7 +75,6 @@ public:
 
     inline void init() {
         Q_Q(QSpinBox);
-        q->setInputMethodHints(Qt::ImhDigitsOnly);
         setLayoutItemMargins(QStyle::SE_SpinBoxLayoutItem);
     }
 };
@@ -94,11 +93,6 @@ public:
     double round(double input) const;
     // variables
     int decimals;
-
-    inline void init() {
-        Q_Q(QDoubleSpinBox);
-        q->setInputMethodHints(Qt::ImhFormattedNumbersOnly);
-    }
 
     // When fiddling with the decimals property, we may lose precision in these properties.
     double actualMin;

@@ -315,8 +315,6 @@ public:
     void ungrabGesture(QGraphicsItem *, Qt::GestureType gesture);
 #endif // QT_NO_GESTURES
 
-    void updateInputMethodSensitivityInViews();
-
     QList<QGraphicsItem *> modalPanels;
     void enterModal(QGraphicsItem *item,
                     QGraphicsItem::PanelModality panelModality = QGraphicsItem::NonModal);

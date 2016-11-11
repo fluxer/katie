@@ -290,9 +290,6 @@ protected:
     virtual bool canInsertFromMimeData(const QMimeData *source) const;
     virtual void insertFromMimeData(const QMimeData *source);
 
-    virtual void inputMethodEvent(QInputMethodEvent *);
-    QVariant inputMethodQuery(Qt::InputMethodQuery property) const;
-
     QTextEdit(QTextEditPrivate &dd, QWidget *parent);
 
     virtual void scrollContentsBy(int dx, int dy);

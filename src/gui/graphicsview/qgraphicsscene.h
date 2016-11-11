@@ -84,7 +84,6 @@ class QGraphicsView;
 class QGraphicsWidget;
 class QGraphicsSceneIndex;
 class QHelpEvent;
-class QInputMethodEvent;
 class QKeyEvent;
 class QLineF;
 class QPainterPath;
@@ -219,8 +218,6 @@ public:
     QBrush foregroundBrush() const;
     void setForegroundBrush(const QBrush &brush);
 
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
-
     QList <QGraphicsView *> views() const;
 
     inline void update(qreal x, qreal y, qreal w, qreal h)
@@ -270,7 +267,6 @@ protected:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
-    virtual void inputMethodEvent(QInputMethodEvent *event);
 
     virtual void drawBackground(QPainter *painter, const QRectF &rect);
     virtual void drawForeground(QPainter *painter, const QRectF &rect);

@@ -398,17 +398,6 @@ void QDeclarativeItemKeyFilter::keyReleased(QKeyEvent *event, bool post)
     if (m_next) m_next->keyReleased(event, post);
 }
 
-void QDeclarativeItemKeyFilter::inputMethodEvent(QInputMethodEvent *event, bool post)
-{
-    if (m_next) m_next->inputMethodEvent(event, post);
-}
-
-QVariant QDeclarativeItemKeyFilter::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    if (m_next) return m_next->inputMethodQuery(query);
-    return QVariant();
-}
-
 void QDeclarativeItemKeyFilter::componentComplete()
 {
     if (m_next) m_next->componentComplete();
@@ -1359,16 +1348,7 @@ void QDeclarativeKeysAttached::setPriority(Priority order)
 
 void QDeclarativeKeysAttached::componentComplete()
 {
-    Q_D(QDeclarativeKeysAttached);
-    if (d->item) {
-        for (int ii = 0; ii < d->targets.count(); ++ii) {
-            QGraphicsItem *targetItem = d->finalFocusProxy(d->targets.at(ii));
-            if (targetItem && (targetItem->flags() & QGraphicsItem::ItemAcceptsInputMethod)) {
-                d->item->setFlag(QGraphicsItem::ItemAcceptsInputMethod);
-                break;
-            }
-        }
-    }
+#warning noop, virtual
 }
 
 void QDeclarativeKeysAttached::keyPressed(QKeyEvent *event, bool post)
@@ -1443,52 +1423,6 @@ void QDeclarativeKeysAttached::keyReleased(QKeyEvent *event, bool post)
     event->setAccepted(ke.isAccepted());
 
     if (!event->isAccepted()) QDeclarativeItemKeyFilter::keyReleased(event, post);
-}
-
-void QDeclarativeKeysAttached::inputMethodEvent(QInputMethodEvent *event, bool post)
-{
-    Q_D(QDeclarativeKeysAttached);
-    if (post == m_processPost && d->item && !d->inIM && d->item->scene()) {
-        d->inIM = true;
-        for (int ii = 0; ii < d->targets.count(); ++ii) {
-            QGraphicsItem *i = d->finalFocusProxy(d->targets.at(ii));
-            if (i && i->isVisible() && (i->flags() & QGraphicsItem::ItemAcceptsInputMethod)) {
-                d->item->scene()->sendEvent(i, event);
-                if (event->isAccepted()) {
-                    d->imeItem = i;
-                    d->inIM = false;
-                    return;
-                }
-            }
-        }
-        d->inIM = false;
-    }
-    if (!event->isAccepted()) QDeclarativeItemKeyFilter::inputMethodEvent(event, post);
-}
-
-class QDeclarativeItemAccessor : public QGraphicsItem
-{
-public:
-    QVariant doInputMethodQuery(Qt::InputMethodQuery query) const {
-        return QGraphicsItem::inputMethodQuery(query);
-    }
-};
-
-QVariant QDeclarativeKeysAttached::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QDeclarativeKeysAttached);
-    if (d->item) {
-        for (int ii = 0; ii < d->targets.count(); ++ii) {
-                QGraphicsItem *i = d->finalFocusProxy(d->targets.at(ii));
-            if (i && i->isVisible() && (i->flags() & QGraphicsItem::ItemAcceptsInputMethod) && i == d->imeItem) { //### how robust is i == d->imeItem check?
-                QVariant v = static_cast<QDeclarativeItemAccessor *>(i)->doInputMethodQuery(query);
-                if (v.userType() == QVariant::RectF)
-                    v = d->item->mapRectFromItem(i, v.toRectF());  //### cost?
-                return v;
-            }
-        }
-    }
-    return QDeclarativeItemKeyFilter::inputMethodQuery(query);
 }
 
 QDeclarativeKeysAttached *QDeclarativeKeysAttached::qmlAttachedProperties(QObject *obj)
@@ -2191,33 +2125,6 @@ void QDeclarativeItem::keyReleaseEvent(QKeyEvent *event)
         event->ignore();
 }
 
-/*! \internal */
-void QDeclarativeItem::inputMethodEvent(QInputMethodEvent *event)
-{
-    Q_D(QDeclarativeItem);
-    inputMethodPreHandler(event);
-    if (event->isAccepted())
-        return;
-    if (d->keyHandler)
-        d->keyHandler->inputMethodEvent(event, true);
-    else
-        event->ignore();
-}
-
-/*! \internal */
-QVariant QDeclarativeItem::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QDeclarativeItem);
-    QVariant v;
-    if (d->keyHandler)
-        v = d->keyHandler->inputMethodQuery(query);
-
-    if (!v.isValid())
-        v = QGraphicsObject::inputMethodQuery(query);
-
-    return v;
-}
-
 /*!
   \internal
  */
@@ -2239,19 +2146,6 @@ void QDeclarativeItem::keyReleasePreHandler(QKeyEvent *event)
     Q_D(QDeclarativeItem);
     if (d->keyHandler && !d->doneEventPreHandler)
         d->keyHandler->keyReleased(event, false);
-    else
-        event->ignore();
-    d->doneEventPreHandler = true;
-}
-
-/*!
-  \internal
- */
-void QDeclarativeItem::inputMethodPreHandler(QInputMethodEvent *event)
-{
-    Q_D(QDeclarativeItem);
-    if (d->keyHandler && !d->doneEventPreHandler)
-        d->keyHandler->inputMethodEvent(event, false);
     else
         event->ignore();
     d->doneEventPreHandler = true;
@@ -3714,7 +3608,6 @@ bool QDeclarativeItem::event(QEvent *ev)
     switch (ev->type()) {
     case QEvent::KeyPress:
     case QEvent::KeyRelease:
-    case QEvent::InputMethod:
         d->doneEventPreHandler = false;
         break;
     default:

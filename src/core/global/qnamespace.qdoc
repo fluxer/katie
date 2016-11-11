@@ -794,12 +794,6 @@
     implementing custom styles; see the \l{widgets/styles}{Styles}
     example for details.
 
-    \value WA_InputMethodEnabled Enables input methods for Asian languages.
-    Must be set when creating custom text editing widgets.
-    On Windows CE and Symbian this flag can be used in addition to
-    QApplication::autoSipEnabled to automatically display the SIP when
-    entering a widget.
-
     \value WA_KeyboardFocusChange Set on a toplevel window when
     the users changes focus with the keyboard (tab, backtab, or shortcut).
 
@@ -2358,55 +2352,6 @@
     \value AnchorBottom             The bottom side of a layout item.
 
     \sa QGraphicsAnchorLayout
-*/
-
-/*!
-    \enum Qt::InputMethodHint
-
-    \value ImhNone                   No hints.
-
-    Flags that alter the behavior:
-
-    \value ImhHiddenText             Characters should be hidden, as is typically used when entering passwords.
-                                     This is automatically set when setting QLineEdit::echoMode to \c Password.
-    \value ImhNoAutoUppercase        The input method should not try to automatically switch to upper case
-                                     when a sentence ends.
-    \value ImhPreferNumbers          Numbers are preferred (but not required).
-    \value ImhPreferUppercase        Upper case letters are preferred (but not required).
-    \value ImhPreferLowercase        Lower case letters are preferred (but not required).
-    \value ImhNoPredictiveText       Do not use predictive text (i.e. dictionary lookup) while typing.
-
-    Flags that restrict input (exclusive flags):
-
-    \value ImhDigitsOnly             Only digits are allowed.
-    \value ImhFormattedNumbersOnly   Only number input is allowed. This includes decimal point and minus sign.
-    \value ImhUppercaseOnly          Only upper case letter input is allowed.
-    \value ImhLowercaseOnly          Only lower case letter input is allowed.
-    \value ImhDialableCharactersOnly Only characters suitable for phone dialling are allowed.
-    \value ImhEmailCharactersOnly    Only characters suitable for email addresses are allowed.
-    \value ImhUrlCharactersOnly      Only characters suitable for URLs are allowed.
-
-    Masks:
-
-    \value ImhExclusiveInputMask     This mask yields nonzero if any of the exclusive flags are used.
-
-    \note If several exclusive flags are ORed together, the resulting character set will
-          consist of the union of the specified sets. For instance specifying \c ImhNumbersOnly and
-          \c ImhUppercaseOnly would yield a set consisting of numbers and uppercase letters.
-
-    \sa QGraphicsItem::inputMethodHints()
-*/
-
-/*!
-    \enum Qt::InputMethodQuery
-
-    \value ImMicroFocus       The rectangle covering the area of the input cursor in widget coordinates.
-    \value ImFont             The currently used font for text input.
-    \value ImCursorPosition   The logical position of the cursor within the text surrounding the input area (see \c ImSurroundingText).
-    \value ImSurroundingText  The plain text around the input area, for example the current paragraph.
-    \value ImCurrentSelection The currently selected text.
-    \value ImMaximumTextLength The maximum number of characters that the widget can hold. If there is no limit, QVariant() is returned.
-    \value ImAnchorPosition   The position of the selection anchor. This may be less or greater than \c ImCursorPosition, depending on which side of selection the cursor is. If there is no selection, it returns the same as \c ImCursorPosition.
 */
 
 /*!

@@ -101,11 +101,6 @@ public:
 
     void updatePasswordEchoEditing(bool);
 
-    inline bool shouldEnableInputMethod() const
-    {
-        return !control->isReadOnly();
-    }
-
     QPoint tripleClick;
     QBasicTimer tripleClickTimer;
     uint frame : 1;

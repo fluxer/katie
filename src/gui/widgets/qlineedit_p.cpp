@@ -194,7 +194,6 @@ void QLineEditPrivate::init(const QString& txt)
     q->setCursor(Qt::IBeamCursor);
 #endif
     q->setFocusPolicy(Qt::StrongFocus);
-    q->setAttribute(Qt::WA_InputMethodEnabled);
     //   Specifies that this widget can use more, but is able to survive on
     //   less, horizontal space; and is fixed vertically.
     q->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed, QSizePolicy::LineEdit));
@@ -233,7 +232,6 @@ void QLineEditPrivate::updatePasswordEchoEditing(bool editing)
 {
     Q_Q(QLineEdit);
     control->updatePasswordEchoEditing(editing);
-    q->setAttribute(Qt::WA_InputMethodEnabled, shouldEnableInputMethod());
 }
 
 #ifndef QT_NO_DRAGANDDROP

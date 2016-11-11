@@ -1106,9 +1106,8 @@ QWidget *QApplication::widgetAt(const QPoint &p)
     \brief toggles automatic SIP (software input panel) visibility
 
     Set this property to \c true to automatically display the SIP when entering
-    widgets that accept keyboard input. This property only affects widgets with
-    the WA_InputMethodEnabled attribute set, and is typically used to launch
-    a virtual keyboard on devices which have very few or no keys.
+    widgets that accept keyboard input. This property is typically used to
+    launch a virtual keyboard on devices which have very few or no keys.
 
     \bold{ The property only has an effect on platforms which use software input
     panels, such as Windows CE and Symbian.}

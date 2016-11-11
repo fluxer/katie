@@ -475,24 +475,8 @@ void QLineEdit::setEchoMode(EchoMode mode)
     Q_D(QLineEdit);
     if (mode == (EchoMode)d->control->echoMode())
         return;
-    Qt::InputMethodHints imHints = inputMethodHints();
-    if (mode == Password || mode == NoEcho) {
-        imHints |= Qt::ImhHiddenText;
-    } else {
-        imHints &= ~Qt::ImhHiddenText;
-    }
-    if (mode != Normal) {
-        imHints |= (Qt::ImhNoAutoUppercase | Qt::ImhNoPredictiveText);
-    } else {
-        imHints &= ~(Qt::ImhNoAutoUppercase | Qt::ImhNoPredictiveText);
-    }
-    setInputMethodHints(imHints);
     d->control->setEchoMode(mode);
     update();
-#ifdef Q_WS_MAC
-    if (hasFocus())
-        qt_mac_secure_keyboard(mode == Password || mode == NoEcho);
-#endif
 }
 
 
@@ -1260,7 +1244,6 @@ void QLineEdit::setReadOnly(bool enable)
     Q_D(QLineEdit);
     if (d->control->isReadOnly() != enable) {
         d->control->setReadOnly(enable);
-        setAttribute(Qt::WA_InputMethodEnabled, d->shouldEnableInputMethod());
 #ifndef QT_NO_CURSOR
         setCursor(enable ? Qt::ArrowCursor : Qt::IBeamCursor);
 #endif
@@ -1564,72 +1547,6 @@ QRect QLineEdit::cursorRect() const
     return d->cursorRect();
 }
 
-/*! \reimp
- */
-void QLineEdit::inputMethodEvent(QInputMethodEvent *e)
-{
-    Q_D(QLineEdit);
-    if (d->control->isReadOnly()) {
-        e->ignore();
-        return;
-    }
-
-    if (echoMode() == PasswordEchoOnEdit && !d->control->passwordEchoEditing()) {
-        // Clear the edit and reset to normal echo mode while entering input
-        // method data; the echo mode switches back when the edit loses focus.
-        // ### changes a public property, resets current content.
-        d->updatePasswordEchoEditing(true);
-        clear();
-    }
-
-#ifdef QT_KEYPAD_NAVIGATION
-    // Focus in if currently in navigation focus on the widget
-    // Only focus in on preedits, to allow input methods to
-    // commit text as they focus out without interfering with focus
-    if (QApplication::keypadNavigationEnabled()
-        && hasFocus() && !hasEditFocus()
-        && !e->preeditString().isEmpty())
-        setEditFocus(true);
-#endif
-
-    d->control->processInputMethodEvent(e);
-
-#ifndef QT_NO_COMPLETER
-    if (!e->commitString().isEmpty())
-        d->control->complete(Qt::Key_unknown);
-#endif
-}
-
-/*!\reimp
-*/
-QVariant QLineEdit::inputMethodQuery(Qt::InputMethodQuery property) const
-{
-    Q_D(const QLineEdit);
-    switch(property) {
-    case Qt::ImMicroFocus:
-        return d->cursorRect();
-    case Qt::ImFont:
-        return font();
-    case Qt::ImCursorPosition:
-        return QVariant(d->control->cursor());
-    case Qt::ImSurroundingText:
-        return QVariant(text());
-    case Qt::ImCurrentSelection:
-        return QVariant(selectedText());
-    case Qt::ImMaximumTextLength:
-        return QVariant(maxLength());
-    case Qt::ImAnchorPosition:
-        if (d->control->selectionStart() == d->control->selectionEnd())
-            return QVariant(d->control->cursor());
-        else if (d->control->selectionStart() == d->control->cursor())
-            return QVariant(d->control->selectionEnd());
-        else
-            return QVariant(d->control->selectionStart());
-    default:
-        return QVariant();
-    }
-}
-
 /*!\reimp
 */
 
@@ -1656,10 +1573,6 @@ void QLineEdit::focusInEvent(QFocusEvent *e)
     if((!hasSelectedText() && d->control->preeditAreaText().isEmpty())
        || style()->styleHint(QStyle::SH_BlinkCursorWhenTextSelected, &opt, this))
         d->setCursorVisible(true);
-#ifdef Q_WS_MAC
-    if (d->control->echoMode() == Password || d->control->echoMode() == NoEcho)
-        qt_mac_secure_keyboard(true);
-#endif
 #ifdef QT_KEYPAD_NAVIGATION
         d->control->setCancelText(d->control->text());
     }

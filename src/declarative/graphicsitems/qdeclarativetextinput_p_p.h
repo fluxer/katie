@@ -73,7 +73,7 @@ public:
     QDeclarativeTextInputPrivate() : control(new QLineControl),
                  color((QRgb)0), style(QDeclarativeText::Normal),
                  styleColor((QRgb)0), hAlign(QDeclarativeTextInput::AlignLeft),
-                 mouseSelectionMode(QDeclarativeTextInput::SelectCharacters), inputMethodHints(Qt::ImhNone),
+                 mouseSelectionMode(QDeclarativeTextInput::SelectCharacters),
                  hscroll(0), oldScroll(0), oldValidity(false), focused(false), focusOnPress(true),
                  showInputPanelOnFocus(true), clickCausedFocus(false), cursorVisible(false),
                  autoScroll(true), selectByMouse(false), canPaste(false), hAlignImplicit(true),
@@ -102,7 +102,6 @@ public:
     bool setHAlign(QDeclarativeTextInput::HAlignment, bool forceAlign = false);
     void mirrorChange();
     int calculateTextWidth();
-    void updateInputMethodHints();
 
     QLineControl* control;
 
@@ -115,7 +114,6 @@ public:
     QColor  styleColor;
     QDeclarativeTextInput::HAlignment hAlign;
     QDeclarativeTextInput::SelectionMode mouseSelectionMode;
-    Qt::InputMethodHints inputMethodHints;
     QPointer<QDeclarativeComponent> cursorComponent;
     QPointer<QDeclarativeItem> cursorItem;
     QPointF pressPos;

@@ -71,11 +71,6 @@ QT_BEGIN_NAMESPACE
 
 
 #ifndef QT_NO_TEXTEDIT
-static inline bool shouldEnableInputMethod(QTextEdit *textedit)
-{
-    return !textedit->isReadOnly();
-}
-
 class QTextEditControl : public QTextControl
 {
 public:
@@ -176,7 +171,6 @@ void QTextEditPrivate::init(const QString &html)
     q->setAcceptDrops(true);
     q->setFocusPolicy(Qt::WheelFocus);
     q->setAttribute(Qt::WA_KeyCompression);
-    q->setAttribute(Qt::WA_InputMethodEnabled);
 
 #ifndef QT_NO_CURSOR
     viewport->setCursor(Qt::IBeamCursor);
@@ -1619,21 +1613,6 @@ void QTextEdit::dropEvent(QDropEvent *e)
 
 #endif // QT_NO_DRAGANDDROP
 
-/*! \reimp
- */
-void QTextEdit::inputMethodEvent(QInputMethodEvent *e)
-{
-    Q_D(QTextEdit);
-#ifdef QT_KEYPAD_NAVIGATION
-    if (d->control->textInteractionFlags() & Qt::TextEditable
-        && QApplication::keypadNavigationEnabled()
-        && !hasEditFocus())
-        setEditFocus(true);
-#endif
-    d->sendControlEvent(e);
-    ensureCursorVisible();
-}
-
 /*!\reimp
 */
 void QTextEdit::scrollContentsBy(int dx, int dy)
@@ -1642,24 +1621,6 @@ void QTextEdit::scrollContentsBy(int dx, int dy)
     if (isRightToLeft())
         dx = -dx;
     d->viewport->scroll(dx, dy);
-}
-
-/*!\reimp
-*/
-QVariant QTextEdit::inputMethodQuery(Qt::InputMethodQuery property) const
-{
-    Q_D(const QTextEdit);
-    QVariant v = d->control->inputMethodQuery(property);
-    const QPoint offset(-d->horizontalOffset(), -d->verticalOffset());
-    if (v.type() == QVariant::RectF)
-        v = v.toRectF().toRect().translated(offset);
-    else if (v.type() == QVariant::PointF)
-        v = v.toPointF().toPoint() + offset;
-    else if (v.type() == QVariant::Rect)
-        v = v.toRect().translated(offset);
-    else if (v.type() == QVariant::Point)
-        v = v.toPoint() + offset;
-    return v;
 }
 
 /*! \reimp
@@ -2035,7 +1996,6 @@ void QTextEdit::setReadOnly(bool ro)
         flags = Qt::TextEditorInteraction;
     }
     d->control->setTextInteractionFlags(flags);
-    setAttribute(Qt::WA_InputMethodEnabled, shouldEnableInputMethod(this));
 }
 
 /*!

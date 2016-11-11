@@ -965,9 +965,6 @@ void QTextControl::processEvent(QEvent *e, const QMatrix &matrix, QWidget *conte
             d->mouseDoubleClickEvent(ev, ev->button(), matrix.map(ev->pos()), ev->modifiers(),
                                      ev->buttons(), ev->globalPos());
             break; }
-        case QEvent::InputMethod:
-            d->inputMethodEvent(static_cast<QInputMethodEvent *>(e));
-            break;
 #ifndef QT_NO_CONTEXTMENU
     case QEvent::ContextMenu: {
             QContextMenuEvent *ev = static_cast<QContextMenuEvent *>(e);
@@ -1860,104 +1857,6 @@ bool QTextControlPrivate::dropEvent(const QMimeData *mimeData, const QPointF &po
     insertionCursor.endEditBlock();
     q->ensureCursorVisible();
     return true; // accept proposed action
-}
-
-void QTextControlPrivate::inputMethodEvent(QInputMethodEvent *e)
-{
-    Q_Q(QTextControl);
-    if (!(interactionFlags & Qt::TextEditable) || cursor.isNull()) {
-        e->ignore();
-        return;
-    }
-    bool isGettingInput = !e->commitString().isEmpty()
-            || e->preeditString() != cursor.block().layout()->preeditAreaText()
-            || e->replacementLength() > 0;
-
-    cursor.beginEditBlock();
-    if (isGettingInput) {
-        cursor.removeSelectedText();
-    }
-
-    // insert commit string
-    if (!e->commitString().isEmpty() || e->replacementLength()) {
-        QTextCursor c = cursor;
-        c.setPosition(c.position() + e->replacementStart());
-        c.setPosition(c.position() + e->replacementLength(), QTextCursor::KeepAnchor);
-        c.insertText(e->commitString());
-    }
-
-    for (int i = 0; i < e->attributes().size(); ++i) {
-        const QInputMethodEvent::Attribute &a = e->attributes().at(i);
-        if (a.type == QInputMethodEvent::Selection) {
-            QTextCursor oldCursor = cursor;
-            int blockStart = a.start + cursor.block().position();
-            cursor.setPosition(blockStart, QTextCursor::MoveAnchor);
-            cursor.setPosition(blockStart + a.length, QTextCursor::KeepAnchor);
-            q->ensureCursorVisible();
-            repaintOldAndNewSelection(oldCursor);
-        }
-    }
-
-    QTextBlock block = cursor.block();
-    QTextLayout *layout = block.layout();
-    if (isGettingInput)
-        layout->setPreeditArea(cursor.position() - block.position(), e->preeditString());
-    QList<QTextLayout::FormatRange> overrides;
-    const int oldPreeditCursor = preeditCursor;
-    preeditCursor = e->preeditString().length();
-    hideCursor = false;
-    for (int i = 0; i < e->attributes().size(); ++i) {
-        const QInputMethodEvent::Attribute &a = e->attributes().at(i);
-        if (a.type == QInputMethodEvent::Cursor) {
-            preeditCursor = a.start;
-            hideCursor = !a.length;
-        } else if (a.type == QInputMethodEvent::TextFormat) {
-            QTextCharFormat f = qvariant_cast<QTextFormat>(a.value).toCharFormat();
-            if (f.isValid()) {
-                if (f.background().color().alphaF() == 1 && f.background().style() == Qt::SolidPattern) {
-                    f.setForeground(f.background().color());
-                    f.setBackground(Qt::transparent);
-                    f.setUnderlineStyle(QTextCharFormat::SingleUnderline);
-                    f.setFontUnderline(true);
-                }
-                QTextLayout::FormatRange o;
-                o.start = a.start + cursor.position() - block.position();
-                o.length = a.length;
-                o.format = f;
-                overrides.append(o);
-            }
-        }
-    }
-    layout->setAdditionalFormats(overrides);
-    cursor.endEditBlock();
-    if (cursor.d)
-        cursor.d->setX();
-    if (oldPreeditCursor != preeditCursor)
-        emit q->microFocusChanged();
-}
-
-QVariant QTextControl::inputMethodQuery(Qt::InputMethodQuery property) const
-{
-    Q_D(const QTextControl);
-    QTextBlock block = d->cursor.block();
-    switch(property) {
-    case Qt::ImMicroFocus:
-        return cursorRect();
-    case Qt::ImFont:
-        return QVariant(d->cursor.charFormat().font());
-    case Qt::ImCursorPosition:
-        return QVariant(d->cursor.position() - block.position());
-    case Qt::ImSurroundingText:
-        return QVariant(block.text());
-    case Qt::ImCurrentSelection:
-        return QVariant(d->cursor.selectedText());
-    case Qt::ImMaximumTextLength:
-        return QVariant(); // No limit.
-    case Qt::ImAnchorPosition:
-        return QVariant(qBound(0, d->cursor.anchor() - block.position(), block.length()));
-    default:
-        return QVariant();
-    }
 }
 
 void QTextControl::setFocus(bool focus, Qt::FocusReason reason)

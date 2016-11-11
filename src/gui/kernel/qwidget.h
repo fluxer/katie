@@ -73,7 +73,6 @@ class QMoveEvent;
 class QResizeEvent;
 class QCloseEvent;
 class QContextMenuEvent;
-class QInputMethodEvent;
 class QTabletEvent;
 class QDragEnterEvent;
 class QDragMoveEvent;
@@ -187,7 +186,6 @@ class Q_GUI_EXPORT QWidget : public QObject, public QPaintDevice
 #endif
     Q_PROPERTY(QLocale locale READ locale WRITE setLocale RESET unsetLocale)
     Q_PROPERTY(QString windowFilePath READ windowFilePath WRITE setWindowFilePath DESIGNABLE isWindow)
-    Q_PROPERTY(Qt::InputMethodHints inputMethodHints READ inputMethodHints WRITE setInputMethodHints)
 
 public:
     enum RenderFlag {
@@ -621,13 +619,6 @@ protected:
     virtual void changeEvent(QEvent *);
 
     int metric(PaintDeviceMetric) const;
-
-    virtual void inputMethodEvent(QInputMethodEvent *);
-public:
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery) const;
-
-    Qt::InputMethodHints inputMethodHints() const;
-    void setInputMethodHints(Qt::InputMethodHints hints);
 
 protected Q_SLOTS:
     void updateMicroFocus();

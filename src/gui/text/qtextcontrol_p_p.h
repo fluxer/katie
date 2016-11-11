@@ -157,8 +157,6 @@ public:
     bool dragMoveEvent(QEvent *e, const QMimeData *mimeData, const QPointF &pos);
     bool dropEvent(const QMimeData *mimeData, const QPointF &pos, Qt::DropAction dropAction, QWidget *source);
 
-    void inputMethodEvent(QInputMethodEvent *);
-
     void activateLinkUnderCursor(QString href = QString());
 
 #ifndef QT_NO_TOOLTIP

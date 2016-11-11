@@ -820,7 +820,6 @@ void QGraphicsScenePrivate::setFocusItemHelper(QGraphicsItem *item,
 
     if (item)
         focusItem = item;
-    updateInputMethodSensitivityInViews();
 
 #ifndef QT_NO_ACCESSIBILITY
     if (focusItem) {
@@ -2652,8 +2651,6 @@ void QGraphicsScene::addItem(QGraphicsItem *item)
     // focus automatically if there isn't a focus item already.
     if (!d->focusItem && item != d->lastFocusItem && item->focusItem() == item)
         item->focusItem()->setFocus();
-
-    d->updateInputMethodSensitivityInViews();
 }
 
 /*!
@@ -2929,8 +2926,6 @@ void QGraphicsScene::removeItem(QGraphicsItem *item)
 
     // Deliver post-change notification
     item->itemChange(QGraphicsItem::ItemSceneHasChanged, newSceneVariant);
-
-    d->updateInputMethodSensitivityInViews();
 }
 
 /*!
@@ -3147,33 +3142,6 @@ void QGraphicsScene::setForegroundBrush(const QBrush &brush)
     foreach (QGraphicsView *view, views())
         view->viewport()->update();
     update();
-}
-
-/*!
-    This method is used by input methods to query a set of properties of
-    the scene to be able to support complex input method operations as support
-    for surrounding text and reconversions.
-
-    The \a query parameter specifies which property is queried.
-
-    \sa QWidget::inputMethodQuery()
-*/
-QVariant QGraphicsScene::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QGraphicsScene);
-    if (!d->focusItem || !(d->focusItem->flags() & QGraphicsItem::ItemAcceptsInputMethod))
-        return QVariant();
-    const QTransform matrix = d->focusItem->sceneTransform();
-    QVariant value = d->focusItem->inputMethodQuery(query);
-    if (value.type() == QVariant::RectF)
-        value = matrix.mapRect(value.toRectF());
-    else if (value.type() == QVariant::PointF)
-        value = matrix.map(value.toPointF());
-    else if (value.type() == QVariant::Rect)
-        value = matrix.mapRect(value.toRect());
-    else if (value.type() == QVariant::Point)
-        value = matrix.map(value.toPoint());
-    return value;
 }
 
 /*!
@@ -3429,9 +3397,6 @@ bool QGraphicsScene::event(QEvent *event)
         break;
     case QEvent::GraphicsSceneHelp:
         helpEvent(static_cast<QGraphicsSceneHelpEvent *>(event));
-        break;
-    case QEvent::InputMethod:
-        inputMethodEvent(static_cast<QInputMethodEvent *>(event));
         break;
     case QEvent::WindowActivate:
         if (!d->activationRefCount++) {
@@ -4169,23 +4134,6 @@ void QGraphicsScene::wheelEvent(QGraphicsSceneWheelEvent *wheelEvent)
         if (isPanel || wheelEvent->isAccepted())
             break;
     }
-}
-
-/*!
-    This event handler, for event \a event, can be reimplemented in a
-    subclass to receive input method events for the scene.
-
-    The default implementation forwards the event to the focusItem().
-    If no item currently has focus or the current focus item does not
-    accept input methods, this function does nothing.
-
-    \sa QGraphicsItem::inputMethodEvent()
-*/
-void QGraphicsScene::inputMethodEvent(QInputMethodEvent *event)
-{
-    Q_D(QGraphicsScene);
-    if (d->focusItem && (d->focusItem->flags() & QGraphicsItem::ItemAcceptsInputMethod))
-        d->sendEvent(d->focusItem, event);
 }
 
 /*!
@@ -5952,12 +5900,6 @@ void QGraphicsScenePrivate::enableTouchEventsOnViews()
 {
     foreach (QGraphicsView *view, views)
         view->viewport()->setAttribute(Qt::WA_AcceptTouchEvents, true);
-}
-
-void QGraphicsScenePrivate::updateInputMethodSensitivityInViews()
-{
-    for (int i = 0; i < views.size(); ++i)
-        views.at(i)->d_func()->updateInputMethodSensitivity();
 }
 
 void QGraphicsScenePrivate::enterModal(QGraphicsItem *panel, QGraphicsItem::PanelModality previousModality)

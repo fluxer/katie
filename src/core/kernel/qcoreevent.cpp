@@ -153,7 +153,6 @@ QT_BEGIN_NAMESPACE
     \value HoverMove                        The mouse cursor moves inside a hover widget (QHoverEvent).
     \value IconDrag                         The main icon of a window has been dragged away (QIconDragEvent).
     \value IconTextChange                   Widget's icon text has been changed.
-    \value InputMethod                      An input method is being used (QInputMethodEvent).
     \value KeyPress                         Key press (QKeyEvent).
     \value KeyRelease                       Key release (QKeyEvent).
     \value LanguageChange                   The application translation changed.

@@ -116,9 +116,6 @@ protected:
     void focusOutEvent(QFocusEvent *event);
     bool focusNextPrevChild(bool next);
 
-    QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
-    void inputMethodEvent(QInputMethodEvent *event);
-
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 

@@ -1344,7 +1344,6 @@ bool QCompleter::eventFilter(QObject *o, QEvent *e)
         }
         return false;
 
-    case QEvent::InputMethod:
     case QEvent::ShortcutOverride:
         QApplication::sendEvent(d->widget, e);
         break;

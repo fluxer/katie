@@ -181,11 +181,8 @@ protected:
     virtual void componentComplete();
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *event);
-    virtual void inputMethodEvent(QInputMethodEvent *);
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
     void keyPressPreHandler(QKeyEvent *);
     void keyReleasePreHandler(QKeyEvent *);
-    void inputMethodPreHandler(QInputMethodEvent *);
 
     virtual void geometryChanged(const QRectF &newGeometry,
                                  const QRectF &oldGeometry);

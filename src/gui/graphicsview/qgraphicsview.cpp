@@ -1074,40 +1074,6 @@ QList<QGraphicsItem *> QGraphicsViewPrivate::findItems(const QRegion &exposedReg
 }
 
 /*!
-    \internal
-
-    Enables input methods for the view if and only if the current focus item of
-    the scene accepts input methods. Call function whenever that condition has
-    potentially changed.
-*/
-void QGraphicsViewPrivate::updateInputMethodSensitivity()
-{
-    Q_Q(QGraphicsView);
-    QGraphicsItem *focusItem = 0;
-    bool enabled = scene && (focusItem = scene->focusItem())
-                   && (focusItem->d_ptr->flags & QGraphicsItem::ItemAcceptsInputMethod);
-    q->setAttribute(Qt::WA_InputMethodEnabled, enabled);
-    q->viewport()->setAttribute(Qt::WA_InputMethodEnabled, enabled);
-
-    if (!enabled) {
-        q->setInputMethodHints(0);
-        return;
-    }
-
-    QGraphicsProxyWidget *proxy = focusItem->d_ptr->isWidget && focusItem->d_ptr->isProxyWidget()
-                                    ? static_cast<QGraphicsProxyWidget *>(focusItem) : 0;
-    if (!proxy) {
-        q->setInputMethodHints(focusItem->inputMethodHints());
-    } else if (QWidget *widget = proxy->widget()) {
-        if (QWidget *fw = widget->focusWidget())
-            widget = fw;
-        q->setInputMethodHints(widget->inputMethodHints());
-    } else {
-        q->setInputMethodHints(0);
-    }
-}
-
-/*!
     Constructs a QGraphicsView. \a parent is passed to QWidget's constructor.
 */
 QGraphicsView::QGraphicsView(QWidget *parent)
@@ -1116,9 +1082,6 @@ QGraphicsView::QGraphicsView(QWidget *parent)
     setViewport(0);
     setAcceptDrops(true);
     setBackgroundRole(QPalette::Base);
-    // Investigate leaving these disabled by default.
-    setAttribute(Qt::WA_InputMethodEnabled);
-    viewport()->setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 /*!
@@ -1132,9 +1095,6 @@ QGraphicsView::QGraphicsView(QGraphicsScene *scene, QWidget *parent)
     setViewport(0);
     setAcceptDrops(true);
     setBackgroundRole(QPalette::Base);
-    // Investigate leaving these disabled by default.
-    setAttribute(Qt::WA_InputMethodEnabled);
-    viewport()->setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 /*!
@@ -1146,9 +1106,6 @@ QGraphicsView::QGraphicsView(QGraphicsViewPrivate &dd, QWidget *parent)
     setViewport(0);
     setAcceptDrops(true);
     setBackgroundRole(QPalette::Base);
-    // Investigate leaving these disabled by default.
-    setAttribute(Qt::WA_InputMethodEnabled);
-    viewport()->setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 /*!
@@ -1652,8 +1609,6 @@ void QGraphicsView::setScene(QGraphicsScene *scene)
     } else {
         d->recalculateContentSize();
     }
-
-    d->updateInputMethodSensitivity();
 
     if (d->scene && hasFocus())
         d->scene->setFocus();
@@ -2479,27 +2434,6 @@ QPainterPath QGraphicsView::mapFromScene(const QPainterPath &path) const
 }
 
 /*!
-    \reimp
-*/
-QVariant QGraphicsView::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QGraphicsView);
-    if (!d->scene)
-        return QVariant();
-
-    QVariant value = d->scene->inputMethodQuery(query);
-    if (value.type() == QVariant::RectF)
-        value = d->mapRectFromScene(value.toRectF());
-    else if (value.type() == QVariant::PointF)
-        value = mapFromScene(value.toPointF());
-    else if (value.type() == QVariant::Rect)
-        value = d->mapRectFromScene(value.toRect()).toRect();
-    else if (value.type() == QVariant::Point)
-        value = mapFromScene(value.toPoint());
-    return value;
-}
-
-/*!
     \property QGraphicsView::backgroundBrush
     \brief the background brush of the scene.
 
@@ -3028,7 +2962,6 @@ void QGraphicsView::dragMoveEvent(QDragMoveEvent *event)
 void QGraphicsView::focusInEvent(QFocusEvent *event)
 {
     Q_D(QGraphicsView);
-    d->updateInputMethodSensitivity();
     QAbstractScrollArea::focusInEvent(event);
     if (d->scene)
         QApplication::sendEvent(d->scene, event);
@@ -3639,16 +3572,6 @@ void QGraphicsView::showEvent(QShowEvent *event)
     d->recalculateContentSize();
     d->centerView(d->transformationAnchor);
     QAbstractScrollArea::showEvent(event);
-}
-
-/*!
-    \reimp
-*/
-void QGraphicsView::inputMethodEvent(QInputMethodEvent *event)
-{
-    Q_D(QGraphicsView);
-    if (d->scene)
-        QApplication::sendEvent(d->scene, event);
 }
 
 /*!

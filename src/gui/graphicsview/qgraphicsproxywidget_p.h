@@ -100,8 +100,6 @@ public:
     void updateWidgetGeometryFromProxy();
     void updateProxyGeometryFromWidget();
 
-    void updateProxyInputMethodAcceptanceFromWidget();
-
     QPointF mapToReceiver(const QPointF &pos, const QWidget *receiver) const;
 
     enum ChangeMode {

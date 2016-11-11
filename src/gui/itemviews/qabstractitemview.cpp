@@ -130,8 +130,6 @@ void QAbstractItemViewPrivate::init()
                      q, SLOT(horizontalScrollbarValueChanged(int)));
 
     viewport->setBackgroundRole(QPalette::Base);
-
-    q->setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 void QAbstractItemViewPrivate::setHoverIndex(const QPersistentModelIndex &index)
@@ -810,17 +808,6 @@ void QAbstractItemView::setItemDelegate(QAbstractItemDelegate *delegate)
 QAbstractItemDelegate *QAbstractItemView::itemDelegate() const
 {
     return d_func()->itemDelegate;
-}
-
-/*!
-    \reimp
-*/
-QVariant QAbstractItemView::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    const QModelIndex current = currentIndex();
-    if (!current.isValid() || query != Qt::ImMicroFocus)
-        return QAbstractScrollArea::inputMethodQuery(query);
-    return visualRect(current);
 }
 
 /*!
@@ -2114,16 +2101,6 @@ void QAbstractItemView::focusInEvent(QFocusEvent *event)
         d->autoScroll = autoScroll;
     }
 
-    if (model && currentIndexValid) {
-        if (currentIndex().flags() != Qt::ItemIsEditable)
-            setAttribute(Qt::WA_InputMethodEnabled, false);
-        else
-            setAttribute(Qt::WA_InputMethodEnabled);
-    }
-
-    if (!currentIndexValid)
-        setAttribute(Qt::WA_InputMethodEnabled, false);
-
     d->viewport->update();
 }
 
@@ -2405,22 +2382,6 @@ void QAbstractItemView::timerEvent(QTimerEvent *event)
         //we only get here if there was no double click
         if (d->pressedIndex.isValid() && d->pressedIndex == currentIndex())
             scrollTo(d->pressedIndex);
-    }
-}
-
-/*!
-    \reimp
-*/
-void QAbstractItemView::inputMethodEvent(QInputMethodEvent *event)
-{
-    if (event->commitString().isEmpty() && event->preeditString().isEmpty()) {
-        event->ignore();
-        return;
-    }
-    if (!edit(currentIndex(), AnyKeyPressed, event)) {
-        if (!event->commitString().isEmpty())
-            keyboardSearch(event->commitString());
-        event->ignore();
     }
 }
 

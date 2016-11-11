@@ -361,8 +361,6 @@ public:
 
     virtual void keyPressed(QKeyEvent *event, bool post);
     virtual void keyReleased(QKeyEvent *event, bool post);
-    virtual void inputMethodEvent(QInputMethodEvent *event, bool post);
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
     virtual void componentComplete();
 
     bool m_processPost;
@@ -578,8 +576,6 @@ Q_SIGNALS:
 private:
     virtual void keyPressed(QKeyEvent *event, bool post);
     virtual void keyReleased(QKeyEvent *event, bool post);
-    virtual void inputMethodEvent(QInputMethodEvent *, bool post);
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
 
     const QByteArray keyToSignal(int key) {
         QByteArray keySignal;

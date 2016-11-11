@@ -299,7 +299,6 @@ public:
 
     void setFont(const QFont &font) { m_textLayout.setFont(font); updateDisplayText(); }
 
-    void processInputMethodEvent(QInputMethodEvent *event);
     void processMouseEvent(QMouseEvent* ev);
     void processKeyEvent(QKeyEvent* ev);
 

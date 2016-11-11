@@ -362,7 +362,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QShowEvent", "QtGui/qevent.h"},
     { "QHideEvent", "QtGui/qevent.h"},
     { "QContextMenuEvent", "QtGui/qevent.h"},
-    { "QInputMethodEvent", "QtGui/qevent.h"},
     { "QDropEvent", "QtGui/qevent.h"},
     { "QDragMoveEvent", "QtGui/qevent.h"},
     { "QDragEnterEvent", "QtGui/qevent.h"},
@@ -718,6 +717,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 712;
+static const int qclass_lib_count = 711;
 
 #endif

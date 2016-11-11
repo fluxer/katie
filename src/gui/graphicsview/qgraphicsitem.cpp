@@ -389,10 +389,6 @@
     enable this flag to receive notifications for position and transform
     changes. This flag was introduced in Qt 4.6.
 
-    \value ItemAcceptsInputMethod The item supports input methods typically
-    used for Asian languages.
-    This flag was introduced in Qt 4.6.
-
     \value ItemNegativeZStacksBehindParent The item automatically
     stacks behind it's parent if it's z-value is negative. This flag
     enables setZValue() to toggle ItemStacksBehindParent. This flag
@@ -1870,13 +1866,6 @@ void QGraphicsItem::setFlags(GraphicsItemFlags flags)
         else if (d_ptr->scene)
             d_ptr->scene->d_func()->needSortTopLevelItems = 1;
     }
-
-    if ((flags & ItemAcceptsInputMethod) != (oldFlags & ItemAcceptsInputMethod)) {
-        // Update input method sensitivity in any views.
-        if (d_ptr->scene)
-            d_ptr->scene->d_func()->updateInputMethodSensitivityInViews();
-    }
-
 
     if ((d_ptr->panelModality != NonModal)
         && d_ptr->scene
@@ -6700,9 +6689,6 @@ bool QGraphicsItem::sceneEvent(QEvent *event)
     case QEvent::KeyRelease:
         keyReleaseEvent(static_cast<QKeyEvent *>(event));
         break;
-    case QEvent::InputMethod:
-        inputMethodEvent(static_cast<QInputMethodEvent *>(event));
-        break;
     case QEvent::WindowActivate:
     case QEvent::WindowDeactivate:
         // Propagate panel activation.
@@ -7236,69 +7222,6 @@ void QGraphicsItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 void QGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event)
 {
     event->ignore();
-}
-
-/*!
-    This event handler, for event \a event, can be reimplemented to receive
-    input method events for this item. The default implementation ignores the
-    event.
-
-    \sa inputMethodQuery(), sceneEvent()
-*/
-void QGraphicsItem::inputMethodEvent(QInputMethodEvent *event)
-{
-    event->ignore();
-}
-
-/*!
-    This method is only relevant for input items. It is used by the
-    input method to query a set of properties of the item to be able
-    to support complex input method operations, such as support for
-    surrounding text and reconversions. \a query specifies which
-    property is queried.
-
-    \sa inputMethodEvent(), QInputMethodEvent, QInputContext
-*/
-QVariant QGraphicsItem::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_UNUSED(query);
-    return QVariant();
-}
-
-/*!
-    Returns the current input method hints of this item.
-
-    Input method hints are only relevant for input items.
-    The hints are used by the input method to indicate how it should operate.
-    For example, if the Qt::ImhNumbersOnly flag is set, the input method may change
-    its visual components to reflect that only numbers can be entered.
-
-    The effect may vary between input method implementations.
-
-    \since 4.6
-
-    \sa setInputMethodHints(), inputMethodQuery(), QInputContext
-*/
-Qt::InputMethodHints QGraphicsItem::inputMethodHints() const
-{
-    Q_D(const QGraphicsItem);
-    return d->imHints;
-}
-
-/*!
-    Sets the current input method hints of this item to \a hints.
-
-    \since 4.6
-
-    \sa inputMethodHints(), inputMethodQuery(), QInputContext
-*/
-void QGraphicsItem::setInputMethodHints(Qt::InputMethodHints hints)
-{
-    Q_D(QGraphicsItem);
-    d->imHints = hints;
-    if (!hasFocus())
-        return;
-    d->scene->d_func()->updateInputMethodSensitivityInViews();
 }
 
 /*!
@@ -10064,14 +9987,6 @@ void QGraphicsTextItem::dropEvent(QGraphicsSceneDragDropEvent *event)
 /*!
     \reimp
 */
-void QGraphicsTextItem::inputMethodEvent(QInputMethodEvent *event)
-{
-    dd->sendControlEvent(event);
-}
-
-/*!
-    \reimp
-*/
 void QGraphicsTextItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     dd->sendControlEvent(event);
@@ -10091,25 +10006,6 @@ void QGraphicsTextItem::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 void QGraphicsTextItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     dd->sendControlEvent(event);
-}
-
-/*!
-    \reimp
-*/
-QVariant QGraphicsTextItem::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    QVariant v;
-    if (dd->control)
-        v = dd->control->inputMethodQuery(query);
-    if (v.type() == QVariant::RectF)
-        v = v.toRectF().translated(-dd->controlOffset());
-    else if (v.type() == QVariant::PointF)
-        v = v.toPointF() - dd->controlOffset();
-    else if (v.type() == QVariant::Rect)
-        v = v.toRect().translated(-dd->controlOffset().toPoint());
-    else if (v.type() == QVariant::Point)
-        v = v.toPoint() - dd->controlOffset().toPoint();
-    return v;
 }
 
 /*!
@@ -10263,9 +10159,9 @@ bool QGraphicsTextItemPrivate::_q_mouseOnEdge(QGraphicsSceneMouseEvent *event)
 void QGraphicsTextItem::setTextInteractionFlags(Qt::TextInteractionFlags flags)
 {
     if (flags == Qt::NoTextInteraction)
-        setFlags(this->flags() & ~(QGraphicsItem::ItemIsFocusable | QGraphicsItem::ItemAcceptsInputMethod));
+        setFlags(this->flags() & ~(QGraphicsItem::ItemIsFocusable));
     else
-        setFlags(this->flags() | QGraphicsItem::ItemIsFocusable | QGraphicsItem::ItemAcceptsInputMethod);
+        setFlags(this->flags() | QGraphicsItem::ItemIsFocusable);
 
     dd->textControl()->setTextInteractionFlags(flags);
 }
@@ -11185,9 +11081,6 @@ QDebug operator<<(QDebug debug, QGraphicsItem::GraphicsItemFlag flag)
         break;
     case QGraphicsItem::ItemSendsGeometryChanges:
         str = "ItemSendsGeometryChanges";
-        break;
-    case QGraphicsItem::ItemAcceptsInputMethod:
-        str = "ItemAcceptsInputMethod";
         break;
     case QGraphicsItem::ItemNegativeZStacksBehindParent:
         str = "ItemNegativeZStacksBehindParent";

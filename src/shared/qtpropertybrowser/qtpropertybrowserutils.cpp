@@ -316,7 +316,6 @@ QtKeySequenceEdit::QtKeySequenceEdit(QWidget *parent)
     m_lineEdit->setReadOnly(true);
     m_lineEdit->setFocusProxy(this);
     setFocusPolicy(m_lineEdit->focusPolicy());
-    setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 bool QtKeySequenceEdit::eventFilter(QObject *o, QEvent *e)

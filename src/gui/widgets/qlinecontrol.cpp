@@ -434,112 +434,6 @@ void QLineControl::moveCursor(int pos, bool mark)
 /*!
     \internal
 
-    Applies the given input method event \a event to the text of the line
-    control
-*/
-void QLineControl::processInputMethodEvent(QInputMethodEvent *event)
-{
-    int priorState = 0;
-    int originalSelectionStart = m_selstart;
-    int originalSelectionEnd = m_selend;
-    bool isGettingInput = !event->commitString().isEmpty()
-            || event->preeditString() != preeditAreaText()
-            || event->replacementLength() > 0;
-    bool cursorPositionChanged = false;
-    bool selectionChange = false;
-
-    if (isGettingInput) {
-        // If any text is being input, remove selected text.
-        priorState = m_undoState;
-        if (echoMode() == QLineEdit::PasswordEchoOnEdit && !passwordEchoEditing()) {
-            updatePasswordEchoEditing(true);
-            m_selstart = 0;
-            m_selend = m_text.length();
-        }
-        removeSelectedText();
-    }
-
-    int c = m_cursor; // cursor position after insertion of commit string
-    if (event->replacementStart() <= 0)
-        c += event->commitString().length() - qMin(-event->replacementStart(), event->replacementLength());
-
-    m_cursor += event->replacementStart();
-    if (m_cursor < 0)
-        m_cursor = 0;
-
-    // insert commit string
-    if (event->replacementLength()) {
-        m_selstart = m_cursor;
-        m_selend = m_selstart + event->replacementLength();
-        removeSelectedText();
-    }
-    if (!event->commitString().isEmpty()) {
-        internalInsert(event->commitString());
-        cursorPositionChanged = true;
-    }
-
-    m_cursor = qBound(0, c, m_text.length());
-
-    for (int i = 0; i < event->attributes().size(); ++i) {
-        const QInputMethodEvent::Attribute &a = event->attributes().at(i);
-        if (a.type == QInputMethodEvent::Selection) {
-            m_cursor = qBound(0, a.start + a.length, m_text.length());
-            if (a.length) {
-                m_selstart = qMax(0, qMin(a.start, m_text.length()));
-                m_selend = m_cursor;
-                if (m_selend < m_selstart) {
-                    qSwap(m_selstart, m_selend);
-                }
-                selectionChange = true;
-            } else {
-                m_selstart = m_selend = 0;
-            }
-            cursorPositionChanged = true;
-        }
-    }
-    const int oldPreeditCursor = m_preeditCursor;
-    m_preeditCursor = event->preeditString().length();
-    m_hideCursor = false;
-    QList<QTextLayout::FormatRange> formats;
-    for (int i = 0; i < event->attributes().size(); ++i) {
-        const QInputMethodEvent::Attribute &a = event->attributes().at(i);
-        if (a.type == QInputMethodEvent::Cursor) {
-            m_preeditCursor = a.start;
-            m_hideCursor = !a.length;
-        } else if (a.type == QInputMethodEvent::TextFormat) {
-            QTextCharFormat f = qvariant_cast<QTextFormat>(a.value).toCharFormat();
-            if (f.isValid()) {
-                if (f.background().color().alphaF() == 1 && f.background().style() == Qt::SolidPattern) {
-                    f.setForeground(f.background().color());
-                    f.setBackground(Qt::transparent);
-                    f.setUnderlineStyle(QTextCharFormat::SingleUnderline);
-                    f.setFontUnderline(true);
-                }
-                QTextLayout::FormatRange o;
-                o.start = a.start + m_cursor;
-                o.length = a.length;
-                o.format = f;
-                formats.append(o);
-            }
-        }
-    }
-    m_textLayout.setAdditionalFormats(formats);
-    updateDisplayText(/*force*/ true);
-    if (originalSelectionStart != m_selstart || originalSelectionEnd != m_selend)
-        emit selectionChanged();
-    if (cursorPositionChanged)
-        emitCursorPositionChanged();
-    else if (m_preeditCursor != oldPreeditCursor)
-        emit updateMicroFocus();
-    if (isGettingInput)
-        finishChange(priorState);
-    if (selectionChange)
-        emit selectionChanged();
-}
-
-/*!
-    \internal
-
     Draws the display text for the line control using the given
     \a painter, \a clip, and \a offset.  Which aspects of the display text
     are drawn is specified by the given \a flags.
@@ -1469,8 +1363,6 @@ bool QLineControl::processEvent(QEvent* ev)
         case QEvent::KeyPress:
         case QEvent::KeyRelease:
             processKeyEvent(static_cast<QKeyEvent*>(ev)); break;
-        case QEvent::InputMethod:
-            processInputMethodEvent(static_cast<QInputMethodEvent*>(ev)); break;
 #ifndef QT_NO_SHORTCUT
         case QEvent::ShortcutOverride:{
             if (isReadOnly())

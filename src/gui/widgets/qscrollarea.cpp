@@ -465,12 +465,7 @@ void QScrollArea::ensureWidgetVisible(QWidget *childWidget, int xmargin, int yma
     if (!d->widget->isAncestorOf(childWidget))
         return;
 
-    const QRect microFocus = childWidget->inputMethodQuery(Qt::ImMicroFocus).toRect();
-    const QRect defaultMicroFocus =
-        childWidget->QWidget::inputMethodQuery(Qt::ImMicroFocus).toRect();
-    QRect focusRect = (microFocus != defaultMicroFocus)
-        ? QRect(childWidget->mapTo(d->widget, microFocus.topLeft()), microFocus.size())
-        : QRect(childWidget->mapTo(d->widget, QPoint(0,0)), childWidget->size());
+    QRect focusRect = QRect(childWidget->mapTo(d->widget, QPoint(0,0)), childWidget->size());
     const QRect visibleRect(-d->widget->pos(), d->viewport->size());
 
     if (visibleRect.contains(focusRect))

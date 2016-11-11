@@ -897,10 +897,6 @@ void QComboBoxPrivate::init()
                                  QSizePolicy::ComboBox));
     setLayoutItemMargins(QStyle::SE_ComboBoxLayoutItem);
     q->setModel(new QStandardItemModel(0, 1, q));
-    if (!q->isEditable())
-        q->setAttribute(Qt::WA_InputMethodEnabled, false);
-    else
-        q->setAttribute(Qt::WA_InputMethodEnabled);
 }
 
 QComboBoxPrivateContainer* QComboBoxPrivate::viewContainer()
@@ -1631,7 +1627,6 @@ void QComboBox::setEditable(bool editable)
             d->viewContainer()->updateScrollers();
             view()->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         }
-        setAttribute(Qt::WA_InputMethodEnabled, false);
         d->lineEdit->hide();
         d->lineEdit->deleteLater();
         d->lineEdit = 0;
@@ -1689,7 +1684,6 @@ void QComboBox::setLineEdit(QLineEdit *edit)
 #endif
 #endif
 
-    setAttribute(Qt::WA_InputMethodEnabled);
     d->updateLayoutDirection();
     d->updateLineEditGeometry();
     if (isVisible())
@@ -2977,33 +2971,6 @@ void QComboBoxPrivate::modelChanged()
         adjustComboBoxSize();
         q->updateGeometry();
     }
-}
-
-/*!
-    \reimp
-*/
-void QComboBox::inputMethodEvent(QInputMethodEvent *e)
-{
-    Q_D(QComboBox);
-    if (d->lineEdit) {
-        d->lineEdit->event(e);
-    } else {
-        if (!e->commitString().isEmpty())
-            d->keyboardSearchString(e->commitString());
-        else
-            e->ignore();
-    }
-}
-
-/*!
-    \reimp
-*/
-QVariant QComboBox::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QComboBox);
-    if (d->lineEdit)
-        return d->lineEdit->inputMethodQuery(query);
-    return QWidget::inputMethodQuery(query);
 }
 
 /*!

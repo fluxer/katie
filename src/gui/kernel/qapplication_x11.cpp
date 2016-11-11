@@ -2833,12 +2833,9 @@ int QApplication::x11ProcessEvent(XEvent* event)
     }
 
     QETWidget *keywidget=0;
-    bool grabbed=false;
     if (event->type==XKeyPress || event->type==XKeyRelease) {
         keywidget = (QETWidget*)QWidget::keyboardGrabber();
-        if (keywidget) {
-            grabbed = true;
-        } else if (!keywidget) {
+        if (!keywidget) {
             if (d->inPopupMode()) // no focus widget, see if we have a popup
                 keywidget = (QETWidget*) (activePopupWidget()->focusWidget() ? activePopupWidget()->focusWidget() : activePopupWidget());
             else if (QApplicationPrivate::focus_widget)
@@ -3014,7 +3011,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
         {
             if (keywidget && keywidget->isEnabled()) { // should always exist
                 // qDebug("sending key event");
-                qt_keymapper_private()->translateKeyEvent(keywidget, event, grabbed);
+                qt_keymapper_private()->translateKeyEvent(keywidget, event);
             }
             break;
         }

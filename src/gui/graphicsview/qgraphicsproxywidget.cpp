@@ -427,22 +427,6 @@ void QGraphicsProxyWidgetPrivate::updateProxyGeometryFromWidget()
 
 /*!
     \internal
-*/
-void QGraphicsProxyWidgetPrivate::updateProxyInputMethodAcceptanceFromWidget()
-{
-    Q_Q(QGraphicsProxyWidget);
-    if (!widget)
-        return;
-
-    QWidget *focusWidget = widget->focusWidget();
-    if (!focusWidget)
-        focusWidget = widget;
-    q->setFlag(QGraphicsItem::ItemAcceptsInputMethod,
-               focusWidget->testAttribute(Qt::WA_InputMethodEnabled));
-}
-
-/*!
-    \internal
 
     Embeds \a subWin as a subwindow of this proxy widget. \a subWin must be a top-level
     widget and a descendant of the widget managed by this proxy. A separate subproxy
@@ -682,8 +666,6 @@ void QGraphicsProxyWidgetPrivate::setWidget_helper(QWidget *newWidget, bool auto
 
     updateProxyGeometryFromWidget();
 
-    updateProxyInputMethodAcceptanceFromWidget();
-
     // Hook up the event filter to keep the state up to date.
     newWidget->installEventFilter(q);
     QObject::connect(newWidget, SIGNAL(destroyed()), q, SLOT(_q_removeWidgetSlot()));
@@ -825,10 +807,6 @@ bool QGraphicsProxyWidget::event(QEvent *event)
         int mask = d->palette.resolve() | d->inheritedPaletteResolveMask;
         wd->inheritedPaletteResolveMask = mask;
         wd->resolvePalette();
-        break;
-    }
-    case QEvent::InputMethod: {
-        inputMethodEvent(static_cast<QInputMethodEvent *>(event));
         break;
     }
     case QEvent::ShortcutOverride: {
@@ -1374,52 +1352,6 @@ bool QGraphicsProxyWidget::focusNextPrevChild(bool next)
     }
 
     return QGraphicsWidget::focusNextPrevChild(next);
-}
-
-/*!
-    \reimp
-*/
-QVariant QGraphicsProxyWidget::inputMethodQuery(Qt::InputMethodQuery query) const
-{
-    Q_D(const QGraphicsProxyWidget);
-
-    if (!d->widget || !hasFocus())
-        return QVariant();
-
-    QWidget *focusWidget = widget()->focusWidget();
-    if (!focusWidget)
-        focusWidget = d->widget;
-    QVariant v = focusWidget->inputMethodQuery(query);
-    QPointF focusWidgetPos = subWidgetRect(focusWidget).topLeft();
-    switch (v.type()) {
-    case QVariant::RectF:
-        v = v.toRectF().translated(focusWidgetPos);
-        break;
-    case QVariant::PointF:
-        v = v.toPointF() + focusWidgetPos;
-        break;
-    case QVariant::Rect:
-        v = v.toRect().translated(focusWidgetPos.toPoint());
-        break;
-    case QVariant::Point:
-        v = v.toPoint() + focusWidgetPos.toPoint();
-        break;
-    default:
-        break;
-    }
-    return v;
-}
-
-/*!
-    \reimp
-*/
-void QGraphicsProxyWidget::inputMethodEvent(QInputMethodEvent *event)
-{
-    // Forward input method events if the focus widget enables input methods.
-    Q_D(const QGraphicsProxyWidget);
-    QWidget *focusWidget = d->widget->focusWidget();
-    if (focusWidget && focusWidget->testAttribute(Qt::WA_InputMethodEnabled))
-        QApplication::sendEvent(focusWidget, event);
 }
 
 /*!

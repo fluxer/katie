@@ -123,7 +123,6 @@ set(GUI_PUBLIC_HEADERS
     QImageTextKeyLang
     QImageWriter
     QInputDialog
-    QInputMethodEvent
     QItemDelegate
     QItemEditorCreator
     QItemEditorCreatorBase

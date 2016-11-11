@@ -448,7 +448,6 @@ void QDeclarativeTextInput::setReadOnly(bool ro)
     if (d->control->isReadOnly() == ro)
         return;
 
-    setFlag(QGraphicsItem::ItemAcceptsInputMethod, !ro);
     d->control->setReadOnly(ro);
 
     emit readOnlyChanged(ro);
@@ -854,20 +853,6 @@ bool QDeclarativeTextInput::hasAcceptableInput() const
     state.
 */
 
-void QDeclarativeTextInputPrivate::updateInputMethodHints()
-{
-    Q_Q(QDeclarativeTextInput);
-    Qt::InputMethodHints hints = inputMethodHints;
-    uint echo = control->echoMode();
-    if (echo == QDeclarativeTextInput::Password || echo == QDeclarativeTextInput::NoEcho)
-        hints |= Qt::ImhHiddenText;
-    else if (echo == QDeclarativeTextInput::PasswordEchoOnEdit)
-        hints &= ~Qt::ImhHiddenText;
-    if (echo != QDeclarativeTextInput::Normal)
-        hints |= (Qt::ImhNoAutoUppercase | Qt::ImhNoPredictiveText);
-    q->setInputMethodHints(hints);
-}
-
 /*!
     \qmlproperty enumeration TextInput::echoMode
 
@@ -892,24 +877,8 @@ void QDeclarativeTextInput::setEchoMode(QDeclarativeTextInput::EchoMode echo)
     if (echoMode() == echo)
         return;
     d->control->setEchoMode((uint)echo);
-    d->updateInputMethodHints();
     q_textChanged();
     emit echoModeChanged(echoMode());
-}
-
-Qt::InputMethodHints QDeclarativeTextInput::imHints() const
-{
-    Q_D(const QDeclarativeTextInput);
-    return d->inputMethodHints;
-}
-
-void QDeclarativeTextInput::setIMHints(Qt::InputMethodHints hints)
-{
-    Q_D(QDeclarativeTextInput);
-    if (d->inputMethodHints == hints)
-        return;
-    d->inputMethodHints = hints;
-    d->updateInputMethodHints();
 }
 
 /*!
@@ -1083,26 +1052,6 @@ void QDeclarativeTextInput::keyPressEvent(QKeyEvent* ev)
         QDeclarativePaintedItem::keyPressEvent(ev);
 }
 
-void QDeclarativeTextInput::inputMethodEvent(QInputMethodEvent *ev)
-{
-    Q_D(QDeclarativeTextInput);
-    ev->ignore();
-    const bool wasComposing = d->control->preeditAreaText().length() > 0;
-    inputMethodPreHandler(ev);
-    if (!ev->isAccepted()) {
-        if (d->control->isReadOnly()) {
-            ev->ignore();
-        } else {
-            d->control->processInputMethodEvent(ev);
-        }
-    }
-    if (!ev->isAccepted())
-        QDeclarativePaintedItem::inputMethodEvent(ev);
-
-    if (wasComposing != (d->control->preeditAreaText().length() > 0))
-        emit inputMethodComposingChanged();
-}
-
 /*!
 \overload
 Handles the given mouse \a event.
@@ -1205,7 +1154,6 @@ bool QDeclarativeTextInput::event(QEvent* ev)
     switch(ev->type()){
         case QEvent::KeyPress:
         case QEvent::KeyRelease://###Should the control be doing anything with release?
-        case QEvent::InputMethod:
         case QEvent::GraphicsSceneMousePress:
         case QEvent::GraphicsSceneMouseMove:
         case QEvent::GraphicsSceneMouseRelease:
@@ -1315,41 +1263,6 @@ void QDeclarativeTextInput::drawContents(QPainter *p, const QRect &r)
     }
     d->control->draw(p, offset, r, flags);
     p->restore();
-}
-
-/*!
-\overload
-Returns the value of the given \a property.
-*/
-QVariant QDeclarativeTextInput::inputMethodQuery(Qt::InputMethodQuery property) const
-{
-    Q_D(const QDeclarativeTextInput);
-    switch(property) {
-    case Qt::ImMicroFocus:
-        return cursorRectangle();
-    case Qt::ImFont:
-        return font();
-    case Qt::ImCursorPosition:
-        return QVariant(d->control->cursor());
-    case Qt::ImSurroundingText:
-        if (d->control->echoMode() == PasswordEchoOnEdit && !d->control->passwordEchoEditing())
-            return QVariant(displayText());
-        else
-            return QVariant(text());
-    case Qt::ImCurrentSelection:
-        return QVariant(selectedText());
-    case Qt::ImMaximumTextLength:
-        return QVariant(maxLength());
-    case Qt::ImAnchorPosition:
-        if (d->control->selectionStart() == d->control->selectionEnd())
-            return QVariant(d->control->cursor());
-        else if (d->control->selectionStart() == d->control->cursor())
-            return QVariant(d->control->selectionEnd());
-        else
-            return QVariant(d->control->selectionStart());
-    default:
-        return QVariant();
-    }
 }
 
 /*!
@@ -1808,7 +1721,6 @@ void QDeclarativeTextInputPrivate::init()
     q->setSmooth(smooth);
     q->setAcceptedMouseButtons(Qt::LeftButton);
     q->setFlag(QGraphicsItem::ItemHasNoContents, false);
-    q->setFlag(QGraphicsItem::ItemAcceptsInputMethod);
     q->connect(control, SIGNAL(cursorPositionChanged(int,int)),
                q, SLOT(cursorPosChanged()));
     q->connect(control, SIGNAL(selectionChanged()),

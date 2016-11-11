@@ -213,10 +213,8 @@ protected:
     void contextMenuEvent(QContextMenuEvent *);
 #endif
 
-    void inputMethodEvent(QInputMethodEvent *);
     void initStyleOption(QStyleOptionFrame *option) const;
 public:
-    QVariant inputMethodQuery(Qt::InputMethodQuery) const;
     bool event(QEvent *);
 protected:
     QRect cursorRect() const;

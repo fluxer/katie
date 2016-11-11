@@ -1369,16 +1369,8 @@ bool QKeyMapper::sendKeyEvent(QWidget *keyWidget,
 {
     // try the menukey first
     if (type == QEvent::KeyPress && code == Qt::Key_Menu) {
-        QVariant v = keyWidget->inputMethodQuery(Qt::ImMicroFocus);
-        QPoint globalPos;
-        QPoint pos;
-        if (v.isNull()) {
-            globalPos = QCursor::pos();
-            pos = keyWidget->mapFromGlobal(globalPos);
-        } else {
-            pos = v.toRect().center();
-            globalPos = keyWidget->mapToGlobal(pos);
-        }
+        QPoint globalPos=  QCursor::pos();
+        QPoint pos = keyWidget->mapFromGlobal(globalPos);
         QContextMenuEvent e(QContextMenuEvent::Keyboard, pos, globalPos);
         qt_sendSpontaneousEvent(keyWidget, &e);
         if(e.isAccepted())

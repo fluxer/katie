@@ -71,11 +71,6 @@
 
 QT_BEGIN_NAMESPACE
 
-static inline bool shouldEnableInputMethod(QPlainTextEdit *plaintextedit)
-{
-    return !plaintextedit->isReadOnly();
-}
-
 class QPlainTextDocumentLayoutPrivate : public QAbstractTextDocumentLayoutPrivate
 {
     Q_DECLARE_PUBLIC(QPlainTextDocumentLayout)
@@ -800,7 +795,6 @@ void QPlainTextEditPrivate::init(const QString &txt)
     q->setAcceptDrops(true);
     q->setFocusPolicy(Qt::WheelFocus);
     q->setAttribute(Qt::WA_KeyCompression);
-    q->setAttribute(Qt::WA_InputMethodEnabled);
 
 #ifndef QT_NO_CURSOR
     viewport->setCursor(Qt::IBeamCursor);
@@ -2098,47 +2092,12 @@ void QPlainTextEdit::dropEvent(QDropEvent *e)
 
 #endif // QT_NO_DRAGANDDROP
 
-/*! \reimp
- */
-void QPlainTextEdit::inputMethodEvent(QInputMethodEvent *e)
-{
-    Q_D(QPlainTextEdit);
-#ifdef QT_KEYPAD_NAVIGATION
-    if (d->control->textInteractionFlags() & Qt::TextEditable
-        && QApplication::keypadNavigationEnabled()
-        && !hasEditFocus()) {
-        setEditFocus(true);
-        selectAll();    // so text is replaced rather than appended to
-    }
-#endif
-    d->sendControlEvent(e);
-    ensureCursorVisible();
-}
-
 /*!\reimp
 */
 void QPlainTextEdit::scrollContentsBy(int dx, int /*dy*/)
 {
     Q_D(QPlainTextEdit);
     d->setTopLine(d->vbar->value(), dx);
-}
-
-/*!\reimp
-*/
-QVariant QPlainTextEdit::inputMethodQuery(Qt::InputMethodQuery property) const
-{
-    Q_D(const QPlainTextEdit);
-    QVariant v = d->control->inputMethodQuery(property);
-    const QPoint offset(-d->horizontalOffset(), -0);
-    if (v.type() == QVariant::RectF)
-        v = v.toRectF().toRect().translated(offset);
-    else if (v.type() == QVariant::PointF)
-        v = v.toPointF().toPoint() + offset;
-    else if (v.type() == QVariant::Rect)
-        v = v.toRect().translated(offset);
-    else if (v.type() == QVariant::Point)
-        v = v.toPoint() + offset;
-    return v;
 }
 
 /*! \reimp
@@ -2415,7 +2374,6 @@ void QPlainTextEdit::setReadOnly(bool ro)
     } else {
         flags = Qt::TextEditorInteraction;
     }
-    setAttribute(Qt::WA_InputMethodEnabled, shouldEnableInputMethod(this));
     d->control->setTextInteractionFlags(flags);
 }
 

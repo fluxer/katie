@@ -89,7 +89,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeTextEdit : public QDeclarativeImplicitSizePa
     Q_PROPERTY(bool activeFocusOnPress READ focusOnPress WRITE setFocusOnPress NOTIFY activeFocusOnPressChanged)
     Q_PROPERTY(bool persistentSelection READ persistentSelection WRITE setPersistentSelection NOTIFY persistentSelectionChanged)
     Q_PROPERTY(qreal textMargin READ textMargin WRITE setTextMargin NOTIFY textMarginChanged)
-    Q_PROPERTY(Qt::InputMethodHints inputMethodHints READ inputMethodHints WRITE setInputMethodHints)
     Q_PROPERTY(bool selectByMouse READ selectByMouse WRITE setSelectByMouse NOTIFY selectByMouseChanged)
     Q_PROPERTY(SelectionMode mouseSelectionMode READ mouseSelectionMode WRITE setMouseSelectionMode NOTIFY mouseSelectionModeChanged REVISION 1)
     Q_PROPERTY(bool canPaste READ canPaste NOTIFY canPasteChanged REVISION 1)
@@ -205,8 +204,6 @@ public:
 
     QRect cursorRectangle() const;
 
-    QVariant inputMethodQuery(Qt::InputMethodQuery property) const;
-
     qreal paintedWidth() const;
     qreal paintedHeight() const;
 
@@ -286,8 +283,6 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-
-    void inputMethodEvent(QInputMethodEvent *e);
 
     void drawContents(QPainter *, const QRect &);
 private:

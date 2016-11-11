@@ -85,8 +85,7 @@ Qt {
     Q_FLAGS(MatchFlags)
     Q_FLAGS(KeyboardModifiers MouseButtons)
     Q_ENUMS(WindowType WindowState WindowModality WidgetAttribute ApplicationAttribute)
-    Q_ENUMS(InputMethodHint)
-    Q_FLAGS(WindowFlags WindowStates InputMethodHints)
+    Q_FLAGS(WindowFlags WindowStates)
     Q_ENUMS(ConnectionType)
 #ifndef QT_NO_GESTURES
     Q_ENUMS(GestureState)
@@ -289,113 +288,111 @@ public:
         WA_UpdatesDisabled = 9,
         WA_Mapped = 10,
         WA_PaintOutsidePaintEvent = 11,
-        WA_InputMethodEnabled = 12,
-        WA_WState_Visible = 13,
-        WA_WState_Hidden = 14,
+        WA_WState_Visible = 12,
+        WA_WState_Hidden = 13,
 
-        WA_ForceDisabled = 15,
-        WA_KeyCompression = 16,
-        WA_PendingMoveEvent = 17,
-        WA_PendingResizeEvent = 18,
-        WA_SetPalette = 19,
-        WA_SetFont = 20,
-        WA_SetCursor = 21,
-        WA_NoChildEventsFromChildren = 22,
-        WA_WindowModified = 23,
-        WA_Resized = 24,
-        WA_Moved = 25,
-        WA_PendingUpdate = 26,
-        WA_InvalidSize = 27,
-        WA_CustomWhatsThis = 28,
-        WA_LayoutOnEntireRect = 29,
-        WA_OutsideWSRange = 30,
-        WA_GrabbedShortcut = 31,
-        WA_TransparentForMouseEvents = 32,
-        WA_PaintUnclipped = 33,
-        WA_SetWindowIcon = 34,
-        WA_NoMouseReplay = 35,
-        WA_DeleteOnClose = 36,
-        WA_RightToLeft = 37,
-        WA_SetLayoutDirection = 38,
-        WA_NoChildEventsForParent = 39,
-        WA_ForceUpdatesDisabled = 40,
+        WA_ForceDisabled = 14,
+        WA_KeyCompression = 15,
+        WA_PendingMoveEvent = 16,
+        WA_PendingResizeEvent = 17,
+        WA_SetPalette = 18,
+        WA_SetFont = 19,
+        WA_SetCursor = 20,
+        WA_NoChildEventsFromChildren = 21,
+        WA_WindowModified = 22,
+        WA_Resized = 23,
+        WA_Moved = 24,
+        WA_PendingUpdate = 25,
+        WA_InvalidSize = 26,
+        WA_CustomWhatsThis = 27,
+        WA_LayoutOnEntireRect = 28,
+        WA_OutsideWSRange = 29,
+        WA_GrabbedShortcut = 30,
+        WA_TransparentForMouseEvents = 31,
+        WA_PaintUnclipped = 32,
+        WA_SetWindowIcon = 33,
+        WA_NoMouseReplay = 34,
+        WA_DeleteOnClose = 35,
+        WA_RightToLeft = 36,
+        WA_SetLayoutDirection = 37,
+        WA_NoChildEventsForParent = 38,
+        WA_ForceUpdatesDisabled = 39,
 
-        WA_WState_Created = 41,
-        WA_WState_CompressKeys = 42,
-        WA_WState_InPaintEvent = 43,
-        WA_WState_Reparented = 44,
-        WA_WState_ConfigPending = 45,
-        WA_WState_Polished = 46,
-        WA_WState_DND = 47, // ## deprecated
-        WA_WState_OwnSizePolicy = 48,
-        WA_WState_ExplicitShowHide = 49,
+        WA_WState_Created = 40,
+        WA_WState_CompressKeys = 41,
+        WA_WState_InPaintEvent = 42,
+        WA_WState_Reparented = 43,
+        WA_WState_ConfigPending = 44,
+        WA_WState_Polished = 45,
+        WA_WState_DND = 46, // ## deprecated
+        WA_WState_OwnSizePolicy = 47,
+        WA_WState_ExplicitShowHide = 48,
 
-        WA_ShowModal = 50, // ## deprecated
-        WA_MouseNoMask = 51,
-        WA_GroupLeader = 52, // ## deprecated
-        WA_NoMousePropagation = 53, // ## for now, might go away.
-        WA_Hover = 54,
-        WA_InputMethodTransparent = 55, // Don't reset IM when user clicks on this (for virtual keyboards on embedded)
-        WA_QuitOnClose = 56,
+        WA_ShowModal = 49, // ## deprecated
+        WA_MouseNoMask = 50,
+        WA_GroupLeader = 51, // ## deprecated
+        WA_NoMousePropagation = 52, // ## for now, might go away.
+        WA_Hover = 53,
+        WA_QuitOnClose = 54,
 
-        WA_KeyboardFocusChange = 57,
+        WA_KeyboardFocusChange = 55,
 
-        WA_AcceptDrops = 58,
-        WA_DropSiteRegistered = 59, // internal
+        WA_AcceptDrops = 56,
+        WA_DropSiteRegistered = 57, // internal
 
-        WA_WindowPropagation = 60,
+        WA_WindowPropagation = 58,
 
-        WA_NoX11EventCompression = 61,
-        WA_TintedBackground = 62,
-        WA_X11OpenGLOverlay = 63,
-        WA_AlwaysShowToolTips = 64,
-        WA_SetStyle = 65,
+        WA_NoX11EventCompression = 59,
+        WA_TintedBackground = 60,
+        WA_X11OpenGLOverlay = 61,
+        WA_AlwaysShowToolTips = 62,
+        WA_SetStyle = 63,
 
-        WA_SetLocale = 66,
+        WA_SetLocale = 64,
 
-        WA_LayoutUsesWidgetRect = 67,
-        WA_StyledBackground = 68, // internal
-        WA_CanHostQMdiSubWindowTitleBar = 69, // Internal
+        WA_LayoutUsesWidgetRect = 65,
+        WA_StyledBackground = 66, // internal
+        WA_CanHostQMdiSubWindowTitleBar = 67, // Internal
 
-        WA_StyleSheet = 70, // internal
+        WA_StyleSheet = 68, // internal
 
-        WA_ShowWithoutActivating = 71,
+        WA_ShowWithoutActivating = 69,
 
-        WA_X11BypassTransientForHint = 72,
+        WA_X11BypassTransientForHint = 70,
 
-        WA_NativeWindow = 73,
-        WA_DontCreateNativeAncestors = 74,
+        WA_NativeWindow = 71,
+        WA_DontCreateNativeAncestors = 72,
 
-        WA_DontShowOnScreen = 75,
+        WA_DontShowOnScreen = 73,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 76,
-        WA_X11NetWmWindowTypeDock = 77,
-        WA_X11NetWmWindowTypeToolBar = 78,
-        WA_X11NetWmWindowTypeMenu = 79,
-        WA_X11NetWmWindowTypeUtility = 80,
-        WA_X11NetWmWindowTypeSplash = 81,
-        WA_X11NetWmWindowTypeDialog = 82,
-        WA_X11NetWmWindowTypeDropDownMenu = 83,
-        WA_X11NetWmWindowTypePopupMenu = 84,
-        WA_X11NetWmWindowTypeToolTip = 85,
-        WA_X11NetWmWindowTypeNotification = 86,
-        WA_X11NetWmWindowTypeCombo = 87,
-        WA_X11NetWmWindowTypeDND = 88,
+        WA_X11NetWmWindowTypeDesktop = 74,
+        WA_X11NetWmWindowTypeDock = 75,
+        WA_X11NetWmWindowTypeToolBar = 76,
+        WA_X11NetWmWindowTypeMenu = 77,
+        WA_X11NetWmWindowTypeUtility = 78,
+        WA_X11NetWmWindowTypeSplash = 79,
+        WA_X11NetWmWindowTypeDialog = 80,
+        WA_X11NetWmWindowTypeDropDownMenu = 81,
+        WA_X11NetWmWindowTypePopupMenu = 82,
+        WA_X11NetWmWindowTypeToolTip = 83,
+        WA_X11NetWmWindowTypeNotification = 84,
+        WA_X11NetWmWindowTypeCombo = 85,
+        WA_X11NetWmWindowTypeDND = 86,
 
-        WA_SetWindowModality = 89,
-        WA_WState_WindowOpacitySet = 90, // internal
-        WA_TranslucentBackground = 91,
+        WA_SetWindowModality = 87,
+        WA_WState_WindowOpacitySet = 88, // internal
+        WA_TranslucentBackground = 89,
 
-        WA_AcceptTouchEvents = 92,
-        WA_WState_AcceptedTouchBeginEvent = 93,
-        WA_TouchPadAcceptSingleTouchEvents = 94,
+        WA_AcceptTouchEvents = 90,
+        WA_WState_AcceptedTouchBeginEvent = 91,
+        WA_TouchPadAcceptSingleTouchEvents = 92,
 
-        WA_LockPortraitOrientation = 95,
-        WA_LockLandscapeOrientation = 96,
-        WA_AutoOrientation = 97,
+        WA_LockPortraitOrientation = 93,
+        WA_LockLandscapeOrientation = 94,
+        WA_AutoOrientation = 95,
 
-        WA_X11DoNotAcceptFocus = 98,
+        WA_X11DoNotAcceptFocus = 96,
 
         // Add new attributes before this line
         WA_AttributeCount
@@ -1191,37 +1188,6 @@ public:
         PreventContextMenu
     };
 
-    enum InputMethodQuery {
-        ImMicroFocus,
-        ImFont,
-        ImCursorPosition,
-        ImSurroundingText,
-        ImCurrentSelection,
-        ImMaximumTextLength,
-        ImAnchorPosition
-    };
-
-    enum InputMethodHint {
-        ImhNone = 0x0,
-        ImhHiddenText = 0x1,
-        ImhNoAutoUppercase = 0x2,
-        ImhPreferNumbers = 0x4,
-        ImhPreferUppercase = 0x8,
-        ImhPreferLowercase = 0x10,
-        ImhNoPredictiveText = 0x20,
-
-        ImhDigitsOnly = 0x10000,
-        ImhFormattedNumbersOnly = 0x20000,
-        ImhUppercaseOnly = 0x40000,
-        ImhLowercaseOnly = 0x80000,
-        ImhDialableCharactersOnly = 0x100000,
-        ImhEmailCharactersOnly = 0x200000,
-        ImhUrlCharactersOnly = 0x400000,
-
-        ImhExclusiveInputMask = 0xffff0000
-    };
-    Q_DECLARE_FLAGS(InputMethodHints, InputMethodHint)
-
     enum ToolButtonStyle {
         ToolButtonIconOnly,
         ToolButtonTextOnly,
@@ -1452,7 +1418,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::DropActions)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::ItemFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::MatchFlags)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::TextInteractionFlags)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::InputMethodHints)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::TouchPointStates)
 #ifndef QT_NO_GESTURES
 Q_DECLARE_OPERATORS_FOR_FLAGS(Qt::GestureFlags)

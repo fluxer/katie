@@ -1122,8 +1122,6 @@ void QDeclarativeTextEdit::setReadOnly(bool r)
     if (r == isReadOnly())
         return;
 
-    setFlag(QGraphicsItem::ItemAcceptsInputMethod, !r);
-
     Qt::TextInteractionFlags flags = Qt::LinksAccessibleByMouse;
     if (d->selectByMouse)
         flags = flags | Qt::TextSelectableByMouse;
@@ -1420,29 +1418,6 @@ void QDeclarativeTextEdit::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 }
 
 /*!
-\overload
-Handles the given input method \a event.
-*/
-void QDeclarativeTextEdit::inputMethodEvent(QInputMethodEvent *event)
-{
-    Q_D(QDeclarativeTextEdit);
-    const bool wasComposing = isInputMethodComposing();
-    d->control->processEvent(event, QPointF(0, -d->yoff));
-    if (wasComposing != isInputMethodComposing())
-        emit inputMethodComposingChanged();
-}
-
-/*!
-\overload
-Returns the value of the given \a property.
-*/
-QVariant QDeclarativeTextEdit::inputMethodQuery(Qt::InputMethodQuery property) const
-{
-    Q_D(const QDeclarativeTextEdit);
-    return d->control->inputMethodQuery(property);
-}
-
-/*!
 Draws the contents of the text edit using the given \a painter within
 the given \a bounds.
 */
@@ -1533,7 +1508,6 @@ void QDeclarativeTextEditPrivate::init()
     q->setSmooth(smooth);
     q->setAcceptedMouseButtons(Qt::LeftButton);
     q->setFlag(QGraphicsItem::ItemHasNoContents, false);
-    q->setFlag(QGraphicsItem::ItemAcceptsInputMethod);
 
     control = new QTextControl(q);
     control->setIgnoreUnusedNavigationEvents(true);

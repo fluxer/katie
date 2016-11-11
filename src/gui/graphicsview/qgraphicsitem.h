@@ -72,7 +72,6 @@ class QGraphicsSceneWheelEvent;
 class QGraphicsScene;
 class QGraphicsTransform;
 class QGraphicsWidget;
-class QInputMethodEvent;
 class QKeyEvent;
 class QMatrix;
 class QPainter;
@@ -98,7 +97,6 @@ public:
         ItemUsesExtendedStyleOption = 0x200,
         ItemHasNoContents = 0x400,
         ItemSendsGeometryChanges = 0x800,
-        ItemAcceptsInputMethod = 0x1000,
         ItemNegativeZStacksBehindParent = 0x2000,
         ItemIsPanel = 0x4000,
         ItemIsFocusScope = 0x8000, // internal
@@ -403,9 +401,6 @@ public:
     QVariant data(int key) const;
     void setData(int key, const QVariant &value);
 
-    Qt::InputMethodHints inputMethodHints() const;
-    void setInputMethodHints(Qt::InputMethodHints hints);
-
     enum {
         Type = 1,
         UserType = 65536
@@ -436,8 +431,6 @@ protected:
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
-    virtual void inputMethodEvent(QInputMethodEvent *event);
-    virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
 
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
@@ -965,12 +958,9 @@ protected:
     void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
     void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
     void dropEvent(QGraphicsSceneDragDropEvent *event);
-    void inputMethodEvent(QInputMethodEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
     void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
-
-    QVariant inputMethodQuery(Qt::InputMethodQuery query) const;
 
     bool supportsExtension(Extension extension) const;
     void setExtension(Extension extension, const QVariant &variant);
