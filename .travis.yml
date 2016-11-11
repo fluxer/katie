@@ -20,8 +20,9 @@ before_script:
     - sh -e /etc/init.d/xvfb start
     - sleep 3
 script:
-    - if [ "$CXX" == "clang++" ];then cmake -GNinja -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ;fi
-    - if [ "$CXX" == "g++" ];then cmake -GNinja -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ;fi
+    - mkdir build && cd build
+    - if [ "$CXX" == "clang++" ];then cmake ../ -GNinja -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ;fi
+    - if [ "$CXX" == "g++" ];then cmake ../ -GNinja -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON -Wno-dev -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" ;fi
     - ninja
 # the tests/benchmarks take more then 1-hour and Travis times out,
 # despite the documentaiton for the service claiming otherwise
