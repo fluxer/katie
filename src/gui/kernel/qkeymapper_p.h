@@ -58,7 +58,6 @@
 #include <qlist.h>
 #include <qlocale.h>
 #include <qevent.h>
-#include <qhash.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -72,7 +71,7 @@ public:
 
     static QKeyMapper *instance();
     static void changeKeyboard();
-    static bool sendKeyEvent(QWidget *widget, bool grab,
+    static bool sendKeyEvent(QWidget *widget,
                              QEvent::Type type, int code, Qt::KeyboardModifiers modifiers,
                              const QString &text, bool autorepeat, int count,
                              quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers);

@@ -1228,7 +1228,7 @@ static Bool qt_keyrelease_scanner(Display *, XEvent *event, XPointer arg)
 }
 #endif
 
-bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *event, bool grab)
+bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *event)
 {
     int           code = -1;
     int           count = 0;
@@ -1337,14 +1337,8 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         }
     }
 
-    // autorepeat compression makes sense for all widgets (Windows
-    // does it automatically ....)
-    if (event->type == XKeyPress && text.length() <= 1
-#ifndef QT_NO_IM
-        // input methods need discrete key events
-        && !qic
-#endif// QT_NO_IM
-	) {
+    // autorepeat compression makes sense for all widgets
+    if (event->type == XKeyPress && text.length() <= 1) {
         XEvent dummy;
 
         for (;;) {
@@ -1363,12 +1357,12 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         }
     }
 
-    return QKeyMapper::sendKeyEvent(keyWidget, grab, type, code, modifiers, text, autor,
+    return QKeyMapper::sendKeyEvent(keyWidget, type, code, modifiers, text, autor,
                                     qMax(qMax(count,1), int(text.length())),
                                     event->xkey.keycode, keysym, event->xkey.state);
 }
 
-bool QKeyMapper::sendKeyEvent(QWidget *keyWidget, bool grab,
+bool QKeyMapper::sendKeyEvent(QWidget *keyWidget,
                               QEvent::Type type, int code, Qt::KeyboardModifiers modifiers,
                               const QString &text, bool autorepeat, int count,
                               quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers)
@@ -1391,7 +1385,6 @@ bool QKeyMapper::sendKeyEvent(QWidget *keyWidget, bool grab,
             return true;
     }
 
-    Q_UNUSED(grab);
     QKeyEvent e(type, code, modifiers,
                   nativeScanCode, nativeVirtualKey, nativeModifiers,
                   text, autorepeat, qMax(qMax(count,1), int(text.length())));

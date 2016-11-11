@@ -245,9 +245,7 @@ void QInputDialogPrivate::ensureLineEdit()
     Q_Q(QInputDialog);
     if (!lineEdit) {
         lineEdit = new QLineEdit(q);
-#ifndef QT_NO_IM
-        qt_widget_private(lineEdit)->inheritsInputMethodHints = 1;
-#endif
+
         lineEdit->hide();
         QObject::connect(lineEdit, SIGNAL(textChanged(QString)),
                          q, SLOT(_q_textChanged(QString)));
@@ -259,9 +257,6 @@ void QInputDialogPrivate::ensureComboBox()
     Q_Q(QInputDialog);
     if (!comboBox) {
         comboBox = new QComboBox(q);
-#ifndef QT_NO_IM
-        qt_widget_private(comboBox)->inheritsInputMethodHints = 1;
-#endif
         comboBox->hide();
         QObject::connect(comboBox, SIGNAL(editTextChanged(QString)),
                          q, SLOT(_q_textChanged(QString)));

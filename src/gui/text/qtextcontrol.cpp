@@ -1662,13 +1662,6 @@ void QTextControlPrivate::mouseMoveEvent(QEvent *e, Qt::MouseButton button, cons
         if (cursor.position() != oldCursorPos)
             emit q->cursorPositionChanged();
         _q_updateCurrentCharFormatAndSelection();
-#ifndef QT_NO_IM
-        if (contextWidget) {
-            if (QInputContext *ic = inputContext()) {
-                ic->update();
-            }
-        }
-#endif //QT_NO_IM
     } else {
         //emit q->visibilityRequest(QRectF(mousePos, QSizeF(1, 1)));
         if (cursor.position() != oldCursorPos) {
@@ -2981,16 +2974,6 @@ void QTextControlPrivate::_q_copyLink()
     QApplication::clipboard()->setMimeData(md);
 #endif
 }
-
-#ifndef QT_NO_IM
-QInputContext *QTextControlPrivate::inputContext()
-{
-    QInputContext *ctx = contextWidget->inputContext();
-    if (!ctx && contextWidget->parentWidget())
-        ctx = contextWidget->parentWidget()->inputContext();
-    return ctx;
-}
-#endif
 
 int QTextControl::hitTest(const QPointF &point, Qt::HitTestAccuracy accuracy) const
 {

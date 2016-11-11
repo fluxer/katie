@@ -372,48 +372,6 @@ protected:
 };
 #endif // QT_NO_CONTEXTMENU
 
-#ifndef QT_NO_INPUTMETHOD
-class Q_GUI_EXPORT QInputMethodEvent : public QEvent
-{
-public:
-    enum AttributeType {
-       TextFormat,
-       Cursor,
-       Language,
-       Ruby,
-       Selection
-    };
-    class Attribute {
-    public:
-        Attribute(AttributeType t, int s, int l, QVariant val) : type(t), start(s), length(l), value(val) {}
-        AttributeType type;
-
-        int start;
-        int length;
-        QVariant value;
-    };
-    QInputMethodEvent();
-    QInputMethodEvent(const QString &preeditText, const QList<Attribute> &attributes);
-    void setCommitString(const QString &commitString, int replaceFrom = 0, int replaceLength = 0);
-
-    inline const QList<Attribute> &attributes() const { return attrs; }
-    inline const QString &preeditString() const { return preedit; }
-
-    inline const QString &commitString() const { return commit; }
-    inline int replacementStart() const { return replace_from; }
-    inline int replacementLength() const { return replace_length; }
-
-    QInputMethodEvent(const QInputMethodEvent &other);
-
-private:
-    QString preedit;
-    QList<Attribute> attrs;
-    QString commit;
-    int replace_from;
-    int replace_length;
-};
-#endif // QT_NO_INPUTMETHOD
-
 #ifndef QT_NO_DRAGANDDROP
 
 class QMimeData;

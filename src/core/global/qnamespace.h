@@ -1018,7 +1018,6 @@ public:
         LastCursor = DragLinkCursor,
         BitmapCursor = 24,
         CustomCursor = 25
-
     };
 
     enum TextFormat {

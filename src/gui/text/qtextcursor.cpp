@@ -2572,7 +2572,7 @@ int QTextCursor::columnNumber() const
     if (layout->lineCount() == 0)
         return relativePos;
 
-    QTextLine line = layout->lineForTextPosition(relativePos);
+    const QTextLine line = layout->lineForTextPosition(relativePos);
     if (!line.isValid())
         return 0;
     return relativePos - line.textStart();
@@ -2586,7 +2586,7 @@ QTextDocument *QTextCursor::document() const
 {
     if (d->priv)
         return d->priv->document();
-    return 0; // document went away
+    return Q_NULLPTR; // document went away
 }
 
 /*!

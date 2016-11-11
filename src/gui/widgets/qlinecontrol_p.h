@@ -267,12 +267,6 @@ public:
             moveCursor(nextMaskBlank(0));
     }
 
-    // input methods
-#ifndef QT_NO_IM
-    bool composeMode() const { return !m_textLayout.preeditAreaText().isEmpty(); }
-    void setPreeditArea(int cursor, const QString &text) { m_textLayout.setPreeditArea(cursor, text); }
-#endif
-
     QString preeditAreaText() const { return m_textLayout.preeditAreaText(); }
 
     void updatePasswordEchoEditing(bool editing);
