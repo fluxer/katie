@@ -1,6 +1,7 @@
 add_definitions(
     ${SHAREDGRADIENDEDITOR_DEFINITIONS}
     ${SHAREDPROPERTYBROWSER_DEFINITIONS}
+    -DQT_SCRIPT_LIB
 )
 set(EXTRA_DESIGNER_LIBS KtCore KtGui KtXml KtUiTools)
 
@@ -79,6 +80,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
+    ${CMAKE_BINARY_DIR}/include/QtScript
+    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     ${CMAKE_BINARY_DIR}/include/QtDesigner
