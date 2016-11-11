@@ -58,7 +58,7 @@ class QSqlRelationalDelegate: public QItemDelegate
 {
 public:
 
-explicit QSqlRelationalDelegate(QObject *aParent = 0)
+explicit QSqlRelationalDelegate(QObject *aParent = Q_NULLPTR)
     : QItemDelegate(aParent)
 {}
 

@@ -47,12 +47,8 @@ endforeach()
 # Include macros, tools variables must be set before that
 include("${KATIE_CMAKE_DIR}/KatieMacros.cmake")
 
-# Platform specifiec stuff and some tests
-if(EXISTS ${KATIE_MKSPECS})
-    include(${KATIE_MKSPECS})
-else()
-    message(SEND_ERROR "mkspecs file does not exists, it is set to: ${KATIE_MKSPECS}")
-endif()
+# Platform specific stuff and some tests
+include(${KATIE_MKSPECS})
 
 # The stored configuration paths that vendors usually change
 set(KATIE_PREFIX_PATH "@KATIE_PREFIX_FULL@")
@@ -75,7 +71,8 @@ if(NOT "${KATIE_FIND_QUIETLY}")
     message(STATUS "Found Katie version: ${KATIE_VERSION}")
 endif()
 
-# Qt4 compatibility by default, not a silver bullet
+# Qt4 compatibility by default, covers most cases except those who rely on QT_USE_FILE and do not
+# specify which components the targets must be linked to or respect QT_DEFINITIONS and QT_INCLUDES
 if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     message(STATUS "Setting up Qt4 compatibility via Katie")
 
