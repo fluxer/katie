@@ -845,7 +845,7 @@ Options:
     </message>
     <message>
         <location filename="../src/tools/qtconfig/mainwindow.ui"/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+821"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+767"/>
         <location line="+1"/>
         <location line="+7"/>
         <source>Qt Configuration</source>
@@ -1108,39 +1108,6 @@ Options:
     </message>
     <message>
         <location/>
-        <source>XIM Input Style:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <source>On The Spot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-347"/>
-        <source>Over The Spot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+2"/>
-        <source>Off The Spot</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+2"/>
-        <source>Root</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Default Input Method:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
         <source>Printer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1225,7 +1192,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-405"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-696"/>
         <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Appearance&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the appearance of your Qt applications.&lt;/p&gt;&lt;p&gt;You can select the default GUI Style from the drop down list and customize the colors.&lt;/p&gt;&lt;p&gt;Any GUI Style plugins in your plugin path will automatically be added to the list of built-in Qt styles. (See the Library Paths tab for information on adding new plugin paths.)&lt;/p&gt;&lt;p&gt;When you choose 3-D Effects and Window Background colors, the Qt Configuration program will automatically generate a palette for you. To customize colors further, press the Tune Palette button to open the advanced palette editor.&lt;p&gt;The Preview Window shows what the selected Style and colors look like.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1236,16 +1203,16 @@ Options:
     </message>
     <message>
         <location line="+19"/>
-        <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Interface&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the feel of your Qt applications.&lt;/p&gt;&lt;p&gt;If the Resolve Symlinks checkbox is checked Qt will follow symlinks when handling URLs. For example, in the file dialog, if this setting is turned on and /usr/tmp is a symlink to /var/tmp, entering the /usr/tmp directory will cause the file dialog to change to /var/tmp.  With this setting turned off, symlinks are not resolved or followed.&lt;/p&gt;&lt;p&gt;The Global Strut setting is useful for people who require a minimum size for all widgets (e.g. when using a touch panel or for users who are visually impaired).  Leaving the Global Strut width and height at 0 will disable the Global Strut feature&lt;/p&gt;&lt;p&gt;XIM (Extended Input Methods) are used for entering characters in languages that have large character sets, for example, Chinese and Japanese.</source>
+        <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Interface&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the feel of your Qt applications.&lt;/p&gt;&lt;p&gt;If the Resolve Symlinks checkbox is checked Qt will follow symlinks when handling URLs. For example, in the file dialog, if this setting is turned on and /usr/tmp is a symlink to /var/tmp, entering the /usr/tmp directory will cause the file dialog to change to /var/tmp.  With this setting turned off, symlinks are not resolved or followed.&lt;/p&gt;&lt;p&gt;The Global Strut setting is useful for people who require a minimum size for all widgets (e.g. when using a touch panel or for users who are visually impaired).  Leaving the Global Strut width and height at 0 will disable the Global Strut feature.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+15"/>
         <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Printer&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to configure the way Qt generates output for the printer.You can specify if Qt should try to embed fonts into its generated output.If you enable font embedding, the resulting postscript will be more portable and will more accurately reflect the visual output on the screen; however the resulting postscript file size will be bigger.&lt;p&gt;When using font embedding you can select additional directories where Qt should search for embeddable font files.  By default, the X server font path is used.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+84"/>
         <source>Desktop Settings (Default)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1260,7 +1227,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+186"/>
+        <location line="+154"/>
         <source>No changes to be saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1270,7 +1237,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+89"/>
         <source>Saved changes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2205,12 +2172,12 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+179"/>
+        <location line="+176"/>
         <source>Widget Box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+293"/>
+        <location line="+282"/>
         <source>Save Forms?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2409,7 +2376,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/designer/qttoolbardialog/qttoolbardialog.cpp" line="+1240"/>
+        <location filename="../src/tools/designer/qttoolbardialog/qttoolbardialog.cpp" line="+1242"/>
         <source>Custom Toolbar</source>
         <translation type="unfinished"></translation>
     </message>

@@ -73,7 +73,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+761"/>
+        <location line="+746"/>
         <source>Invalid QButtonGroup reference &apos;%1&apos; referenced by &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -132,7 +132,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1242"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1228"/>
         <source>&amp;Step up</source>
         <translation>&amp;Augmenter</translation>
     </message>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2074"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1110,7 +1110,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLayoutMirroringAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+814"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+803"/>
         <source>LayoutDirection attached property only works with Items</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1429,7 +1429,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTextInput</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+961"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+929"/>
         <location line="+8"/>
         <source>Could not load cursor delegate</source>
         <translation>Impossible de charger le délégué de curseur</translation>
@@ -1551,7 +1551,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+519"/>
         <source>What&apos;s This?</source>
         <translation>Qu&apos;est-ce que c&apos;est ?</translation>
     </message>
@@ -1816,12 +1816,12 @@ Script: %3</source>
     <message>
         <location line="+706"/>
         <location line="+55"/>
-        <location line="+1480"/>
+        <location line="+1454"/>
         <source>&amp;Open</source>
         <translation>&amp;Ouvrir</translation>
     </message>
     <message>
-        <location line="-1535"/>
+        <location line="-1509"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Enregistrer</translation>
@@ -1847,18 +1847,18 @@ Script: %3</source>
         <translation>Dossiers</translation>
     </message>
     <message>
-        <location line="+1810"/>
+        <location line="+1783"/>
         <source>Recent Places</source>
         <translation>Emplacements récents</translation>
     </message>
     <message>
-        <location line="-2502"/>
+        <location line="-2475"/>
         <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Tous les fichiers (*)</translation>
     </message>
     <message>
-        <location line="+954"/>
+        <location line="+928"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>Le fichier %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
@@ -1878,13 +1878,13 @@ Veuillez vérifier que le nom du fichier est correct.</translation>
         <translation>Poste de travail</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1467"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1441"/>
         <location line="+674"/>
         <source>Directory:</source>
         <translation>Dossier : </translation>
     </message>
     <message>
-        <location line="+739"/>
+        <location line="+713"/>
         <location line="+860"/>
         <source>%1
 Directory not found.
@@ -1911,7 +1911,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible de supprimer le dossier.</translation>
     </message>
     <message>
-        <location line="-2108"/>
+        <location line="-2082"/>
         <source>Save As</source>
         <translation>Enregistrer sous</translation>
     </message>
@@ -1954,12 +1954,12 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location line="+1935"/>
+        <location line="+1909"/>
         <source>New Folder</source>
         <translation>Nouveau dossier</translation>
     </message>
     <message>
-        <location line="-1928"/>
+        <location line="-1902"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Nouveau dossier</translation>
     </message>
@@ -1970,7 +1970,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>&amp;Choisir</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+425"/>
         <source>Remove</source>
         <translation>Supprimer</translation>
     </message>
@@ -2055,7 +2055,7 @@ Voulez-vous quand même le supprimer ?</translation>
     <name>QFileSystemModel</name>
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+662"/>
         <source>%1 TB</source>
         <translation>%1 To</translation>
     </message>
@@ -2405,7 +2405,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QFormBuilder</name>
     <message>
-        <location filename="../src/uitools/properties_p.h" line="+132"/>
+        <location filename="../src/uitools/properties_p.h" line="+129"/>
         <source>The enumeration-value &apos;%1&apos; is invalid. The default value &apos;%2&apos; will be used instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2451,7 +2451,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+44"/>
         <source>The layout type `%1&apos; is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2464,12 +2464,12 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Connecté à l&apos;hôte %1</translation>
     </message>
     <message>
-        <location line="+1358"/>
+        <location line="+1347"/>
         <source>Connection closed</source>
         <translation>Connexion fermée</translation>
     </message>
     <message>
-        <location line="-1470"/>
+        <location line="-1459"/>
         <source>Host %1 not found</source>
         <translation>Hôte %1 introuvable</translation>
     </message>
@@ -2484,7 +2484,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Connexion expirée vers l&apos;hôte %1</translation>
     </message>
     <message>
-        <location line="+501"/>
+        <location line="+490"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
@@ -2552,12 +2552,12 @@ Voulez-vous quand même le supprimer ?</translation>
 %1</translation>
     </message>
     <message>
-        <location line="-1521"/>
+        <location line="-1510"/>
         <source>Not connected</source>
         <translation>Non connecté</translation>
     </message>
     <message>
-        <location line="+410"/>
+        <location line="+399"/>
         <source>Connection refused for data connection</source>
         <translation>Connexion donnée refusée</translation>
     </message>
@@ -2565,7 +2565,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+634"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+630"/>
         <source>Toggle</source>
         <translation type="unfinished">Changer</translation>
     </message>
@@ -2587,23 +2587,23 @@ Voulez-vous quand même le supprimer ?</translation>
     <name>QHostInfoAgent</name>
     <message>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
-        <location line="+32"/>
+        <location line="+31"/>
         <source>Host not found</source>
         <translation>Hôte introuvable</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-44"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Adresse de type inconnu</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-102"/>
         <source>No host name given</source>
         <translation>Aucun nom d&apos;hôte n&apos;a été donné</translation>
     </message>
@@ -2775,7 +2775,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Autorisation refusée</translation>
@@ -2799,22 +2799,9 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Aucun espace disponible sur le périphérique</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1547"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
-    </message>
-</context>
-<context>
-    <name>QInputContext</name>
-    <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
-        <source>XIM</source>
-        <translation>XIM</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>XIM input method</source>
-        <translation>Méthode d&apos;entrée XIM</translation>
     </message>
 </context>
 <context>
@@ -2951,7 +2938,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+2022"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1914"/>
         <source>Select All</source>
         <translation>Tout sélectionner</translation>
     </message>
@@ -2989,8 +2976,8 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+229"/>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+224"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+221"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+222"/>
         <source>%1: Name error</source>
         <translation>%1 : Erreur de nom</translation>
     </message>
@@ -3013,7 +3000,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLocalSocket</name>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+139"/>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+135"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
         <source>%1: Connection refused</source>
         <translation>%1 : Connexion refusée</translation>
@@ -3293,7 +3280,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1619"/>
         <source>Corner Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3324,27 +3311,6 @@ Voulez-vous quand même le supprimer ?</translation>
         <location line="+1355"/>
         <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
         <translation>&lt;h3&gt;À propos de Qt&lt;/h3&gt;&lt;p&gt;Ce programme utilise Qt version %1.&lt;/p&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContext</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontext.cpp" line="+88"/>
-        <source>Select IM</source>
-        <translation>Sélectionner IM</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContextPlugin</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontextplugin.cpp" line="+95"/>
-        <source>Multiple input method switcher</source>
-        <translation>Sélectionneur de méthode de saisie</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Multiple input method switcher that uses the context menu of the text widgets</source>
-        <translation>Sélectionneur de méthode de saisie qui utilise le menu contextuel des widgets de texte</translation>
     </message>
 </context>
 <context>
@@ -3584,7 +3550,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1107"/>
         <source>Network access is disabled.</source>
         <translation>L&apos;accès au réseau est désactivé.</translation>
     </message>
@@ -3979,18 +3945,18 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+129"/>
         <source>locally connected</source>
         <translation>connecté en local</translation>
     </message>
     <message>
-        <location line="+473"/>
+        <location line="+465"/>
         <location line="+199"/>
         <source>unknown</source>
         <translation>inconnu</translation>
     </message>
     <message>
-        <location line="-649"/>
+        <location line="-641"/>
         <location line="+225"/>
         <source>Aliases: %1</source>
         <translation>Alias : %1</translation>
@@ -4550,7 +4516,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-642"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
@@ -4566,7 +4532,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+66"/>
         <source>no error occurred</source>
         <translation>aucune erreur ne s&apos;est produite</translation>
     </message>
@@ -5120,7 +5086,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+242"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1 : impossible d&apos;affecter la clé au verrou</translation>
     </message>
@@ -6791,7 +6757,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+2123"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1955"/>
         <source>&amp;Undo</source>
         <translation>&amp;Annuler</translation>
     </message>
@@ -6915,7 +6881,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+927"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+906"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM Left-to-right mark</translation>
     </message>
@@ -6997,7 +6963,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5476"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
         <source>*</source>
         <translation></translation>
     </message>
@@ -7254,7 +7220,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+588"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+589"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>Contenu superflu à la fin du document.</translation>

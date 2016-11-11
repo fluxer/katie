@@ -73,7 +73,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+761"/>
+        <location line="+746"/>
         <source>Invalid QButtonGroup reference &apos;%1&apos; referenced by &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -132,7 +132,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1242"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1228"/>
         <source>&amp;Step up</source>
         <translation>הע&amp;לה</translation>
     </message>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2074"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -1105,7 +1105,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLayoutMirroringAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+814"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+803"/>
         <source>LayoutDirection attached property only works with Items</source>
         <translation>מאפיין מקושר LayoutDirection עובד רק עם Items</translation>
     </message>
@@ -1423,7 +1423,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTextInput</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+961"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+929"/>
         <location line="+8"/>
         <source>Could not load cursor delegate</source>
         <translation>לא ניתן לטעון נציג של סמן</translation>
@@ -1544,7 +1544,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+519"/>
         <source>What&apos;s This?</source>
         <translation>מה זה?</translation>
     </message>
@@ -1827,12 +1827,12 @@ Script: %3</source>
     <message>
         <location line="+704"/>
         <location line="+55"/>
-        <location line="+1480"/>
+        <location line="+1454"/>
         <source>&amp;Open</source>
         <translation>&amp;פתח</translation>
     </message>
     <message>
-        <location line="-1535"/>
+        <location line="-1509"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;שמור</translation>
@@ -1853,12 +1853,12 @@ Script: %3</source>
         <translation>הצג קבצים &amp;מוסתרים</translation>
     </message>
     <message>
-        <location line="+1929"/>
+        <location line="+1903"/>
         <source>New Folder</source>
         <translation>תיקייה חדשה</translation>
     </message>
     <message>
-        <location line="-1964"/>
+        <location line="-1938"/>
         <source>Find Directory</source>
         <translation>חפש ספרייה</translation>
     </message>
@@ -1868,7 +1868,7 @@ Script: %3</source>
         <translation>ספריות</translation>
     </message>
     <message>
-        <location line="+777"/>
+        <location line="+751"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>‏%1 כבר קיים.
@@ -1889,13 +1889,13 @@ Please verify the correct file name was given.</source>
         <translation>המחשב שלי</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1467"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-1441"/>
         <location line="+674"/>
         <source>Directory:</source>
         <translation>ספרייה:</translation>
     </message>
     <message>
-        <location line="+739"/>
+        <location line="+713"/>
         <location line="+860"/>
         <source>%1
 Directory not found.
@@ -1922,7 +1922,7 @@ Do you want to delete it anyway?</source>
         <translation>אין אפשרות למחוק ספרייה.</translation>
     </message>
     <message>
-        <location line="+409"/>
+        <location line="+408"/>
         <source>Recent Places</source>
         <translation>מיקומים אחרונים</translation>
     </message>
@@ -1949,7 +1949,7 @@ Do you want to delete it anyway?</source>
         <translation>לא ידוע</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2492"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2465"/>
         <source>Show </source>
         <translation>הצג </translation>
     </message>
@@ -1965,7 +1965,7 @@ Do you want to delete it anyway?</source>
         <translation>בח&amp;ר</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+425"/>
         <source>Remove</source>
         <translation>הסר</translation>
     </message>
@@ -2050,7 +2050,7 @@ Do you want to delete it anyway?</source>
     <name>QFileSystemModel</name>
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+662"/>
         <source>%1 TB</source>
         <translation>%1 ט&quot;ב</translation>
     </message>
@@ -2398,7 +2398,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFormBuilder</name>
     <message>
-        <location filename="../src/uitools/properties_p.h" line="+132"/>
+        <location filename="../src/uitools/properties_p.h" line="+129"/>
         <source>The enumeration-value &apos;%1&apos; is invalid. The default value &apos;%2&apos; will be used instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2444,7 +2444,7 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+44"/>
         <source>The layout type `%1&apos; is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2457,12 +2457,12 @@ Do you want to delete it anyway?</source>
         <translation>מחובר אל מארח %1</translation>
     </message>
     <message>
-        <location line="+1358"/>
+        <location line="+1347"/>
         <source>Connection closed</source>
         <translation>חיבור נסגר</translation>
     </message>
     <message>
-        <location line="-1470"/>
+        <location line="-1459"/>
         <source>Host %1 not found</source>
         <translation>מארח %1 לא נמצא</translation>
     </message>
@@ -2477,7 +2477,7 @@ Do you want to delete it anyway?</source>
         <translation>זמן חיבור אל מארח %1 פקע</translation>
     </message>
     <message>
-        <location line="+501"/>
+        <location line="+490"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
@@ -2545,12 +2545,12 @@ Do you want to delete it anyway?</source>
 %1</translation>
     </message>
     <message>
-        <location line="-1521"/>
+        <location line="-1510"/>
         <source>Not connected</source>
         <translation>לא מחובר</translation>
     </message>
     <message>
-        <location line="+410"/>
+        <location line="+399"/>
         <source>Connection refused for data connection</source>
         <translation>חיבור נדחה עבור חיבור של נתונים</translation>
     </message>
@@ -2558,7 +2558,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+634"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+630"/>
         <source>Toggle</source>
         <translation>הפעל/כבה</translation>
     </message>
@@ -2580,23 +2580,23 @@ Do you want to delete it anyway?</source>
     <name>QHostInfoAgent</name>
     <message>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
-        <location line="+32"/>
+        <location line="+31"/>
         <source>Host not found</source>
         <translation>מארח לא נמצא</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-44"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>טיפוס כתובת לא מוכר</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-102"/>
         <source>No host name given</source>
         <translation>לא ניתן שם מארח</translation>
     </message>
@@ -2768,7 +2768,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
@@ -2792,22 +2792,9 @@ Do you want to delete it anyway?</source>
         <translation>לא נשאר מקום בהתקן</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1547"/>
         <source>Unknown error</source>
         <translation>שגיאה לא מוכרת</translation>
-    </message>
-</context>
-<context>
-    <name>QInputContext</name>
-    <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
-        <source>XIM</source>
-        <translation>XIM</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>XIM input method</source>
-        <translation>שיטת קלט XIM</translation>
     </message>
 </context>
 <context>
@@ -2944,7 +2931,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1982"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1874"/>
         <source>&amp;Undo</source>
         <translation>&amp;בטל</translation>
     </message>
@@ -2982,8 +2969,8 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+229"/>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+224"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+221"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+222"/>
         <source>%1: Name error</source>
         <translation>%1: שגיאת שם</translation>
     </message>
@@ -3006,7 +2993,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLocalSocket</name>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+139"/>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+135"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
         <source>%1: Connection refused</source>
         <translation>%1: חיבור נדחה</translation>
@@ -3287,7 +3274,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1619"/>
         <source>Corner Toolbar</source>
         <translation>סרגל כלים פינתי</translation>
     </message>
@@ -3318,27 +3305,6 @@ Do you want to delete it anyway?</source>
         <location line="+1360"/>
         <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContext</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontext.cpp" line="+88"/>
-        <source>Select IM</source>
-        <translation>בחר שיטת קלט</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContextPlugin</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontextplugin.cpp" line="+95"/>
-        <source>Multiple input method switcher</source>
-        <translation>מחליף שיטת קלט מרובה</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Multiple input method switcher that uses the context menu of the text widgets</source>
-        <translation>מחליף שיטת קלט מרובה אשר משתמש בתפריט הקשר של widgets של טקסט</translation>
     </message>
 </context>
 <context>
@@ -3578,7 +3544,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1107"/>
         <source>Network access is disabled.</source>
         <translation>גישת רשת הינה מנוטרלת.</translation>
     </message>
@@ -3973,7 +3939,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+129"/>
         <source>locally connected</source>
         <translation>מחוברת מקומית</translation>
     </message>
@@ -3984,7 +3950,7 @@ Do you want to delete it anyway?</source>
         <translation>שמות נוספים: %1</translation>
     </message>
     <message>
-        <location line="+225"/>
+        <location line="+217"/>
         <location line="+199"/>
         <source>unknown</source>
         <translation>לא ידוע</translation>
@@ -4544,7 +4510,7 @@ Please choose a different file name.</source>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-642"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
         <source>Open</source>
         <translation>פתח</translation>
     </message>
@@ -4560,7 +4526,7 @@ Please choose a different file name.</source>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+66"/>
         <source>no error occurred</source>
         <translation>לא אירעה כל שגיאה</translation>
     </message>
@@ -5114,7 +5080,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+242"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: לא ניתן לקבוע מפתח במנעול</translation>
     </message>
@@ -6786,7 +6752,7 @@ Please choose a different file name.</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+2123"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1955"/>
         <source>&amp;Undo</source>
         <translation>&amp;בטל</translation>
     </message>
@@ -6910,7 +6876,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+927"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+906"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM Left-to-right mark</translation>
     </message>
@@ -6992,7 +6958,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5476"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7241,7 +7207,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+588"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+589"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>תוכן נוסף בסוף מסמך.</translation>

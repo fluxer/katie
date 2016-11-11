@@ -73,7 +73,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+761"/>
+        <location line="+746"/>
         <source>Invalid QButtonGroup reference &apos;%1&apos; referenced by &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -132,7 +132,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1236"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1222"/>
         <source>&amp;Select All</source>
         <translation>&amp;Hautatu Denak</translation>
     </message>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2074"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>EZES</translation>
@@ -1105,7 +1105,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLayoutMirroringAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+814"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+803"/>
         <source>LayoutDirection attached property only works with Items</source>
         <translation>Antolakutza-Norantza ezugarri erantsiak Gaiekin bakarrik egiten du lan</translation>
     </message>
@@ -1423,7 +1423,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTextInput</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+961"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+929"/>
         <location line="+8"/>
         <source>Could not load cursor delegate</source>
         <translation>Ezin da kurtsore ordezkaria gertatu</translation>
@@ -1543,7 +1543,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+519"/>
         <source>What&apos;s This?</source>
         <translation>Zer da Hau?</translation>
     </message>
@@ -1866,12 +1866,12 @@ Script: %3</source>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1480"/>
+        <location line="+1454"/>
         <source>&amp;Open</source>
         <translation>&amp;Ireki</translation>
     </message>
     <message>
-        <location line="-1535"/>
+        <location line="-1509"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Gorde</translation>
@@ -1888,7 +1888,7 @@ Script: %3</source>
         <translation>&amp;Hautatu</translation>
     </message>
     <message>
-        <location line="+693"/>
+        <location line="+667"/>
         <location line="+860"/>
         <source>%1
 Directory not found.
@@ -1936,12 +1936,12 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Ezinezkoa zuzenbidea ezabatzea.</translation>
     </message>
     <message>
-        <location line="+409"/>
+        <location line="+408"/>
         <source>Recent Places</source>
         <translation>Azken Guneak</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+425"/>
         <source>Remove</source>
         <translation>Kendu</translation>
     </message>
@@ -2053,7 +2053,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location line="-7"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+662"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
@@ -2396,7 +2396,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QFormBuilder</name>
     <message>
-        <location filename="../src/uitools/properties_p.h" line="+132"/>
+        <location filename="../src/uitools/properties_p.h" line="+129"/>
         <source>The enumeration-value &apos;%1&apos; is invalid. The default value &apos;%2&apos; will be used instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2442,7 +2442,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+44"/>
         <source>The layout type `%1&apos; is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2475,7 +2475,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>%1 hostalarira elkarketaturik</translation>
     </message>
     <message>
-        <location line="+219"/>
+        <location line="+208"/>
         <source>Connection refused for data connection</source>
         <translation>Elkarketa ukatua datu elkarketatik</translation>
     </message>
@@ -2556,7 +2556,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+634"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+630"/>
         <source>Toggle</source>
         <translation type="unfinished">Aldatu</translation>
     </message>
@@ -2594,12 +2594,12 @@ Horrela ere ezabatzea nahi duzu?</translation>
     </message>
     <message>
         <location line="-26"/>
-        <location line="+32"/>
+        <location line="+31"/>
         <source>Host not found</source>
         <translation>Hostalaria ez da aurkitu</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Unknown error</source>
         <translation>Akats ezezaguna</translation>
     </message>
@@ -2766,7 +2766,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1631"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Baimena ukatuta</translation>
@@ -2790,22 +2790,9 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <translation>Ez da tokirik gelditzen gailuan</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1547"/>
         <source>Unknown error</source>
         <translation>Akats ezezaguna</translation>
-    </message>
-</context>
-<context>
-    <name>QInputContext</name>
-    <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
-        <source>XIM</source>
-        <translation>XIM</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>XIM input method</source>
-        <translation>XIM sarrera metodoa</translation>
     </message>
 </context>
 <context>
@@ -2942,7 +2929,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1982"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1874"/>
         <source>&amp;Undo</source>
         <translation>&amp;Desegin</translation>
     </message>
@@ -2980,8 +2967,8 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+229"/>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+224"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+221"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+222"/>
         <source>%1: Name error</source>
         <translation>%1: Izen akatsa</translation>
     </message>
@@ -3004,7 +2991,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QLocalSocket</name>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+139"/>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+135"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
         <source>%1: Connection refused</source>
         <translation>%1: Elkarketa baztertua</translation>
@@ -3284,7 +3271,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1619"/>
         <source>Corner Toolbar</source>
         <translation>Bazterreko Tresnabarra</translation>
     </message>
@@ -3315,27 +3302,6 @@ Horrela ere ezabatzea nahi duzu?</translation>
         <location line="+30"/>
         <source>About Qt</source>
         <translation>Qt-ri buruz</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContext</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontext.cpp" line="+88"/>
-        <source>Select IM</source>
-        <translation>Hautatu SM</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContextPlugin</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontextplugin.cpp" line="+95"/>
-        <source>Multiple input method switcher</source>
-        <translation>Sarrera anitz metodo aldagailua</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Multiple input method switcher that uses the context menu of the text widgets</source>
-        <translation>Idazki widgeten hitzingurua erabiltzen duen sarrera metodo anitz aldatzailea</translation>
     </message>
 </context>
 <context>
@@ -3575,7 +3541,7 @@ Horrela ere ezabatzea nahi duzu?</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1107"/>
         <source>Network access is disabled.</source>
         <translation>Sare sarbidea ezgaituta dago.</translation>
     </message>
@@ -4193,7 +4159,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Irarkitu</translation>
     </message>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+126"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+129"/>
         <source>locally connected</source>
         <translation>tokian elkarketaturik</translation>
     </message>
@@ -4204,7 +4170,7 @@ Gainidaztea nahi duzu?</translation>
         <translation>Izenordea: %1</translation>
     </message>
     <message>
-        <location line="+225"/>
+        <location line="+217"/>
         <location line="+199"/>
         <source>unknown</source>
         <translation>ezezaguna</translation>
@@ -4541,7 +4507,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-642"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
         <source>Open</source>
         <translation>Ireki</translation>
     </message>
@@ -4557,7 +4523,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+66"/>
         <source>no error occurred</source>
         <translation>ez da akatsik gertatu</translation>
     </message>
@@ -5111,7 +5077,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+243"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+242"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: ezinezkoa giltza ezartzea blokeatzean</translation>
     </message>
@@ -6781,7 +6747,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+2123"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1955"/>
         <source>&amp;Undo</source>
         <translation>&amp;Desegin</translation>
     </message>
@@ -6905,7 +6871,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+927"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+906"/>
         <source>LRM Left-to-right mark</source>
         <translation>EZES Eskerretik-eskuinerako marka</translation>
     </message>
@@ -6987,7 +6953,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5476"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7236,7 +7202,7 @@ Gainidaztea nahi duzu?</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+588"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+589"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>Eduki gehigarria agiriaren amaieran.</translation>

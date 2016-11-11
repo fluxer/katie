@@ -73,7 +73,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+761"/>
+        <location line="+746"/>
         <source>Invalid QButtonGroup reference &apos;%1&apos; referenced by &apos;%2&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -132,7 +132,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSpinBox</name>
     <message>
-        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1244"/>
+        <location filename="../src/gui/widgets/qabstractspinbox.cpp" line="+1230"/>
         <source>Step &amp;down</source>
         <translation>Krok w &amp;dół</translation>
     </message>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Niekompatybilność biblioteki Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+2074"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1105,7 +1105,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeLayoutMirroringAttached</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+814"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitem.cpp" line="+803"/>
         <source>LayoutDirection attached property only works with Items</source>
         <translation>Dołączona właściwość &quot;LayoutDirection&quot; działa tylko z &quot;Item&quot;</translation>
     </message>
@@ -1423,7 +1423,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeTextInput</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+961"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativetextinput.cpp" line="+929"/>
         <location line="+8"/>
         <source>Could not load cursor delegate</source>
         <translation>Nie można załadować delegata kursora</translation>
@@ -1543,7 +1543,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+520"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+519"/>
         <source>What&apos;s This?</source>
         <translation>Co to jest?</translation>
     </message>
@@ -1801,7 +1801,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+2015"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+1989"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 już istnieje.
@@ -1839,17 +1839,17 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Czy na pewno chcesz skasować &apos;%1&apos;?</translation>
     </message>
     <message>
-        <location line="+424"/>
+        <location line="+423"/>
         <source>Recent Places</source>
         <translation>Ostatnie miejsca</translation>
     </message>
     <message>
-        <location line="-409"/>
+        <location line="-408"/>
         <source>Could not delete directory.</source>
         <translation>Nie można skasować katalogu.</translation>
     </message>
     <message>
-        <location line="-2078"/>
+        <location line="-2052"/>
         <source>&amp;Delete</source>
         <translation>&amp;Skasuj</translation>
     </message>
@@ -1895,12 +1895,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-7"/>
         <location line="+55"/>
-        <location line="+1480"/>
+        <location line="+1454"/>
         <source>&amp;Open</source>
         <translation>&amp;Otwórz</translation>
     </message>
     <message>
-        <location line="-2210"/>
+        <location line="-2184"/>
         <source>&amp;Rename</source>
         <translation>&amp;Zmień nazwę</translation>
     </message>
@@ -1941,12 +1941,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Pokaż </translation>
     </message>
     <message>
-        <location line="+1935"/>
+        <location line="+1909"/>
         <source>New Folder</source>
         <translation>Nowy katalog</translation>
     </message>
     <message>
-        <location line="-1928"/>
+        <location line="-1902"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Nowy katalog</translation>
     </message>
@@ -1957,7 +1957,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>&amp;Wybierz</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+438"/>
+        <location filename="../src/gui/dialogs/qsidebar.cpp" line="+425"/>
         <source>Remove</source>
         <translation>Usuń</translation>
     </message>
@@ -2048,7 +2048,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QFileSystemModel</name>
     <message>
         <location filename="../src/gui/itemviews/qdirmodel.cpp" line="+412"/>
-        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+664"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel.cpp" line="+662"/>
         <source>%1 TB</source>
         <translation>%1 TB</translation>
     </message>
@@ -2398,7 +2398,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QFormBuilder</name>
     <message>
-        <location filename="../src/uitools/properties_p.h" line="+132"/>
+        <location filename="../src/uitools/properties_p.h" line="+129"/>
         <source>The enumeration-value &apos;%1&apos; is invalid. The default value &apos;%2&apos; will be used instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2444,7 +2444,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+44"/>
         <source>The layout type `%1&apos; is not supported.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2452,19 +2452,19 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QFtp</name>
     <message>
-        <location filename="../src/network/access/qftp.cpp" line="+2375"/>
+        <location filename="../src/network/access/qftp.cpp" line="+2364"/>
         <source>Changing directory failed:
 %1</source>
         <translation>Zmiana katalogu zakończona błędem:
 %1</translation>
     </message>
     <message>
-        <location line="-1310"/>
+        <location line="-1299"/>
         <source>Connected to host %1</source>
         <translation>Podłączony do hosta %1</translation>
     </message>
     <message>
-        <location line="+1298"/>
+        <location line="+1287"/>
         <source>Connecting to host failed:
 %1</source>
         <translation>Podłączanie do hosta zakończone błędem:
@@ -2481,12 +2481,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Połączenie do przesyłu danych odrzucone</translation>
     </message>
     <message>
-        <location line="-327"/>
+        <location line="-316"/>
         <source>Connection refused to host %1</source>
         <translation>Połączenie do hosta %1 odrzucone</translation>
     </message>
     <message>
-        <location line="+1434"/>
+        <location line="+1423"/>
         <source>Creating directory failed:
 %1</source>
         <translation>Tworzenie katalogu zakończone błędem:
@@ -2500,12 +2500,12 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 %1</translation>
     </message>
     <message>
-        <location line="-1426"/>
+        <location line="-1415"/>
         <source>Host %1 not found</source>
         <translation>Host %1 nie znaleziony</translation>
     </message>
     <message>
-        <location line="+1418"/>
+        <location line="+1407"/>
         <source>Listing directory failed:
 %1</source>
         <translation>Listowanie katalogu zakończone błędem:
@@ -2519,7 +2519,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 %1</translation>
     </message>
     <message>
-        <location line="-1493"/>
+        <location line="-1482"/>
         <source>Not connected</source>
         <translation>Nie podłączony</translation>
     </message>
@@ -2529,7 +2529,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Przekroczony czas połączenia do hosta %1</translation>
     </message>
     <message>
-        <location line="+1434"/>
+        <location line="+1423"/>
         <source>Removing directory failed:
 %1</source>
         <translation>Usuwanie katalogu zakończone błędem:
@@ -2558,7 +2558,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QGroupBox</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+638"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+634"/>
         <source>Toggle</source>
         <translation>Przełącz</translation>
     </message>
@@ -2580,23 +2580,23 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
     <name>QHostInfoAgent</name>
     <message>
         <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
-        <location line="+32"/>
+        <location line="+31"/>
         <source>Host not found</source>
         <translation>Host nie znaleziony</translation>
     </message>
     <message>
-        <location line="-45"/>
+        <location line="-44"/>
         <location line="+39"/>
         <source>Unknown address type</source>
         <translation>Nieznany typ adresu</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+8"/>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
     </message>
     <message>
-        <location line="-104"/>
+        <location line="-102"/>
         <source>No host name given</source>
         <translation>Nie podano nazwy hosta</translation>
     </message>
@@ -2768,7 +2768,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1640"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1629"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+67"/>
         <source>No space left on device</source>
         <translation>Brak wolnego miejsca na urządzeniu</translation>
@@ -2792,22 +2792,9 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>Zbyt wiele otwartych plików</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1544"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1547"/>
         <source>Unknown error</source>
         <translation>Nieznany błąd</translation>
-    </message>
-</context>
-<context>
-    <name>QInputContext</name>
-    <message>
-        <location filename="../src/gui/inputmethod/qinputcontextfactory.cpp" line="+212"/>
-        <source>XIM</source>
-        <translation>XIM</translation>
-    </message>
-    <message>
-        <location line="+23"/>
-        <source>XIM input method</source>
-        <translation>Metoda wprowadzania XIM</translation>
     </message>
 </context>
 <context>
@@ -2944,7 +2931,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+2001"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1893"/>
         <source>&amp;Copy</source>
         <translation>S&amp;kopiuj</translation>
     </message>
@@ -2982,8 +2969,8 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QLocalServer</name>
     <message>
-        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+229"/>
-        <location filename="../src/network/socket/qlocalserver.cpp" line="+224"/>
+        <location filename="../src/network/socket/qlocalserver_unix.cpp" line="+221"/>
+        <location filename="../src/network/socket/qlocalserver.cpp" line="+222"/>
         <source>%1: Name error</source>
         <translation>%1: Błąd nazwy</translation>
     </message>
@@ -3006,7 +2993,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QLocalSocket</name>
     <message>
-        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+139"/>
+        <location filename="../src/network/socket/qlocalsocket_unix.cpp" line="+135"/>
         <location filename="../src/network/socket/qlocalsocket_tcp.cpp" line="+132"/>
         <source>%1: Connection refused</source>
         <translation>%1: Odmowa połączenia</translation>
@@ -3286,7 +3273,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QMenuBar</name>
     <message>
-        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1713"/>
+        <location filename="../src/gui/widgets/qmenubar.cpp" line="+1619"/>
         <source>Corner Toolbar</source>
         <translation>Narożny pasek narzędzi</translation>
     </message>
@@ -3317,27 +3304,6 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <location line="-1360"/>
         <source>Show Details...</source>
         <translation>Pokaż szczegóły...</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContext</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontext.cpp" line="+88"/>
-        <source>Select IM</source>
-        <translation>Wybierz metodę wprowadzania</translation>
-    </message>
-</context>
-<context>
-    <name>QMultiInputContextPlugin</name>
-    <message>
-        <location filename="../src/plugins/inputmethods/imsw-multi/qmultiinputcontextplugin.cpp" line="+95"/>
-        <source>Multiple input method switcher</source>
-        <translation>Przełącznik metody wprowadzania</translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Multiple input method switcher that uses the context menu of the text widgets</source>
-        <translation>Przełącznik metody wprowadzania, który w widżetach tekstowych używa podręcznego menu</translation>
     </message>
 </context>
 <context>
@@ -3577,7 +3543,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QNetworkAccessManager</name>
     <message>
-        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1106"/>
+        <location filename="../src/network/access/qnetworkreplyimpl.cpp" line="+1107"/>
         <source>Network access is disabled.</source>
         <translation>Dostęp do sieci wyłączony.</translation>
     </message>
@@ -3972,7 +3938,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
 <context>
     <name>QPrintDialog</name>
     <message>
-        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+149"/>
+        <location filename="../src/gui/painting/qprinterinfo_unix.cpp" line="+152"/>
         <location line="+225"/>
         <source>Aliases: %1</source>
         <translation>Aliasy: %1</translation>
@@ -3983,7 +3949,7 @@ Proszę o sprawdzenie podanej nazwy pliku.</translation>
         <translation>podłączony lokalnie</translation>
     </message>
     <message>
-        <location line="+473"/>
+        <location line="+465"/>
         <location line="+199"/>
         <source>unknown</source>
         <translation>nieznany</translation>
@@ -4543,7 +4509,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QPushButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-642"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="-638"/>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
@@ -4559,7 +4525,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+67"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+68"/>
         <source>bad char class syntax</source>
         <translation>niepoprawna składnia klasy znakowej</translation>
     </message>
@@ -5113,7 +5079,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+327"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+326"/>
         <source>%1: create size is less then 0</source>
         <translation>%1: rozmiar przy tworzeniu mniejszy od 0</translation>
     </message>
@@ -6783,7 +6749,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+2134"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1966"/>
         <source>&amp;Copy</source>
         <translation>S&amp;kopiuj</translation>
     </message>
@@ -6907,7 +6873,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+976"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+955"/>
         <source>Insert Unicode control character</source>
         <translation>Wstaw znak kontroli Unicode</translation>
     </message>
@@ -6989,7 +6955,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5476"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7238,7 +7204,7 @@ Proszę wybrać inną nazwę pliku.</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+588"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+589"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>Dodatkowa treść na końcu dokumentu.</translation>
