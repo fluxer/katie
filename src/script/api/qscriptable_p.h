@@ -45,7 +45,7 @@ class QScriptablePrivate
     Q_DECLARE_PUBLIC(QScriptable)
 public:
     inline QScriptablePrivate()
-        : engine(0)
+        : engine(Q_NULLPTR)
         { }
 
     static inline QScriptablePrivate *get(QScriptable *q)

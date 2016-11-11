@@ -848,8 +848,7 @@ JSC::JSValue QT_FASTCALL functionQsTr(JSC::ExecState *exec, JSC::JSObject*, JSC:
     {
         JSC::ExecState *frame = exec->callerFrame()->removeHostCallFrameFlag();
         while (frame) {
-            if (frame->codeBlock() && QScriptEnginePrivate::hasValidCodeBlockRegister(frame)
-                && frame->codeBlock()->source()
+            if (frame->codeBlock() && frame->codeBlock()->source()
                 && !frame->codeBlock()->source()->url().isEmpty()) {
                 context = engine->translationContextFromUrl(frame->codeBlock()->source()->url());
                 break;
@@ -2794,9 +2793,6 @@ JSC::CallFrame *QScriptEnginePrivate::pushContext(JSC::CallFrame *exec, JSC::JSV
         newCallFrame->init(0, /*vPC=*/0, globalExec()->scopeChain(), exec, flags | ShouldRestoreCallFrame, argc, callee);
     } else {
         setContextFlags(newCallFrame, flags);
-#if ENABLE(JIT)
-        exec->registers()[JSC::RegisterFile::Callee] = JSC::JSValue(callee); //JIT let the callee set the 'callee'
-#endif
         if (calledAsConstructor) {
             //update the new created this
             JSC::Register* thisRegister = thisRegisterForFrame(newCallFrame);
@@ -4463,16 +4459,5 @@ QScriptSyntaxCheckResult &QScriptSyntaxCheckResult::operator=(const QScriptSynta
     d_ptr = other.d_ptr;
     return *this;
 }
-
-#ifdef QT_BUILD_INTERNAL
-Q_AUTOTEST_EXPORT bool qt_script_isJITEnabled()
-{
-#if ENABLE(JIT)
-    return true;
-#else
-    return false;
-#endif
-}
-#endif
 
 QT_END_NAMESPACE

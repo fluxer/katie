@@ -360,7 +360,7 @@ int qScriptRegisterMetaType(
     QScriptValue (*toScriptValue)(QScriptEngine *, const T &t),
     void (*fromScriptValue)(const QScriptValue &, T &t),
     const QScriptValue &prototype = QScriptValue(),
-    T * /* dummy */ = 0
+    T * /* dummy */ = Q_NULLPTR
 )
 {
     const int id = qRegisterMetaType<T>(); // make sure it's registered
@@ -400,7 +400,7 @@ template<typename T>
 int qScriptRegisterSequenceMetaType(
     QScriptEngine *engine,
     const QScriptValue &prototype = QScriptValue(),
-    T * /* dummy */ = 0
+    T * /* dummy */ = Q_NULLPTR
 )
 {
     return qScriptRegisterMetaType<T>(engine, qScriptValueFromSequence,

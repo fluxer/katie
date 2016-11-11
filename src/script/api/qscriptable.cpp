@@ -97,7 +97,7 @@ QScriptable::~QScriptable()
 
 /*!
   Returns a pointer to the QScriptEngine associated with the current
-  Qt function call, or 0 if the Qt function was not invoked from
+  Qt function call, or null if the Qt function was not invoked from
   script code.
 */
 QScriptEngine *QScriptable::engine() const
@@ -108,7 +108,7 @@ QScriptEngine *QScriptable::engine() const
 
 /*!
   Returns a pointer to the QScriptContext associated with the current
-  Qt function call, or 0 if the Qt function was not invoked from
+  Qt function call, or null if the Qt function was not invoked from
   script code.
 */
 QScriptContext *QScriptable::context() const
@@ -116,7 +116,7 @@ QScriptContext *QScriptable::context() const
     if (QScriptEngine *e = engine())
         return e->currentContext();
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*!

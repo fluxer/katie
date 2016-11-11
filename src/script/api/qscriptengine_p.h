@@ -230,8 +230,6 @@ public:
     static inline JSC::ExecState *frameForContext(QScriptContext *context);
     static inline const JSC::ExecState *frameForContext(const QScriptContext *context);
 
-    static inline bool hasValidCodeBlockRegister(JSC::ExecState *frame);
-
     JSC::JSGlobalObject *originalGlobalObject() const;
     JSC::JSObject *getOriginalGlobalObjectProxy();
     JSC::JSObject *customGlobalObject() const;
@@ -866,21 +864,6 @@ inline JSC::ExecState *QScriptEnginePrivate::frameForContext(QScriptContext *con
 inline const JSC::ExecState *QScriptEnginePrivate::frameForContext(const QScriptContext *context)
 {
     return reinterpret_cast<const JSC::ExecState*>(context);
-}
-
-inline bool QScriptEnginePrivate::hasValidCodeBlockRegister(JSC::ExecState *frame)
-{
-#if ENABLE(JIT)
-    // Frames created by the VM don't have their CodeBlock register
-    // initialized. We can detect such frames by checking if the
-    // callee is a host JSFunction.
-    JSC::JSObject *callee = frame->callee();
-    return !(callee && callee->inherits(&JSC::JSFunction::info)
-             && JSC::asFunction(callee)->isHostFunction());
-#else
-    Q_UNUSED(frame);
-    return true;
-#endif
 }
 
 inline JSC::ExecState *QScriptEnginePrivate::globalExec() const

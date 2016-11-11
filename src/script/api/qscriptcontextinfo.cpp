@@ -33,9 +33,6 @@
 #include <QtCore/qshareddata.h>
 #include "CodeBlock.h"
 #include "JSFunction.h"
-#if ENABLE(JIT)
-#include "MacroAssemblerCodeRef.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -156,29 +153,17 @@ QScriptContextInfoPrivate::QScriptContextInfoPrivate(const QScriptContext *conte
 
             JSC::Instruction *returnPC = rewindContext->returnPC();
             JSC::CodeBlock *codeBlock = frame->codeBlock();
-            if (returnPC && codeBlock && QScriptEnginePrivate::hasValidCodeBlockRegister(frame)) {
-#if ENABLE(JIT)
-                JSC::JITCode code = codeBlock->getJITCode();
-                uintptr_t jitOffset = reinterpret_cast<uintptr_t>(JSC::ReturnAddressPtr(returnPC).value()) - reinterpret_cast<uintptr_t>(code.addressForCall().executableAddress());
-                // We can only use the JIT code offset if it's smaller than the JIT size;
-                // otherwise calling getBytecodeIndex() is meaningless.
-                if (jitOffset < code.size()) {
-                    unsigned bytecodeOffset = codeBlock->getBytecodeIndex(frame, JSC::ReturnAddressPtr(returnPC));
-#else
+            if (returnPC && codeBlock) {
                 unsigned bytecodeOffset = returnPC - codeBlock->instructions().begin();
-#endif
                 bytecodeOffset--; //because returnPC is on the next instruction. We want the current one
                 lineNumber = codeBlock->lineNumberForBytecodeOffset(const_cast<JSC::ExecState *>(frame), bytecodeOffset);
-#if ENABLE(JIT)
-                }
-#endif
             }
         }
     }
 
     // Get the filename and the scriptId:
     JSC::CodeBlock *codeBlock = frame->codeBlock();
-    if (codeBlock && QScriptEnginePrivate::hasValidCodeBlockRegister(frame)) {
+    if (codeBlock) {
            JSC::SourceProvider *source = codeBlock->source();
            scriptId = source->asID();
            fileName = source->url();
