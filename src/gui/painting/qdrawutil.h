@@ -43,13 +43,12 @@
 #define QDRAWUTIL_H
 
 #include <QtCore/qnamespace.h>
-#include <QtCore/qstring.h> // char*->QString conversion
 #include <QtCore/qmargins.h>
 #include <QtGui/qpixmap.h>
+
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class QPainter;
 class QPalette;

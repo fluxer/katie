@@ -44,7 +44,7 @@
 #include "qapplication.h"
 #include "qdebug.h"
 #include "qdesktopwidget.h"
-#include "qvarlengtharray.h"
+#include "qvector.h"
 
 #include "qx11info_x11.h"
 #include <qt_x11_p.h>
@@ -58,7 +58,7 @@ public:
     QColormapPrivate()
         : ref(1), mode(QColormap::Direct), depth(0),
           colormap(0), defaultColormap(true),
-          visual(0), defaultVisual(true),
+          visual(Q_NULLPTR), defaultVisual(true),
           r_max(0), g_max(0), b_max(0),
           r_shift(0), g_shift(0), b_shift(0)
     {}
@@ -301,14 +301,12 @@ static void init_indexed(QColormapPrivate *d, int screen)
     query_colormap(d, screen);
 }
 
-static void init_direct(QColormapPrivate *d, bool ownColormap)
+static void init_direct(QColormapPrivate *d)
 {
-    if (d->visual->c_class != DirectColor || !ownColormap)
+    if (d->visual->c_class != DirectColor)
         return;
 
-    // preallocate 768 on the stack, so that we don't have to malloc
-    // for the common case (<= 24 bpp)
-    QVarLengthArray<XColor, 768> colorTable(d->r_max + d->g_max + d->b_max);
+    QVector<XColor> colorTable(d->r_max + d->g_max + d->b_max);
     int i = 0;
 
     for (int r = 0; r < d->r_max; ++r) {
@@ -335,7 +333,7 @@ static void init_direct(QColormapPrivate *d, bool ownColormap)
     XStoreColors(X11->display, d->colormap, colorTable.data(), colorTable.count());
 }
 
-static QColormap **cmaps = 0;
+static QColormap **cmaps = Q_NULLPTR;
 
 void QColormap::initialize()
 {
@@ -358,7 +356,7 @@ void QColormap::initialize()
         d->visual = DefaultVisual(display, i);
         d->defaultVisual = true;
 
-        Visual *argbVisual = 0;
+        Visual *argbVisual = Q_NULLPTR;
 
         if (X11->visual && i == DefaultScreen(display)) {
             // only use the outside colormap on the default screen
@@ -371,7 +369,7 @@ void QColormap::initialize()
             d->visual = find_visual(display, i, X11->visual_class, X11->visual_id,
                                     &d->depth, &d->defaultVisual);
         } else if (!X11->custom_cmap) {
-            XStandardColormap *stdcmap = 0;
+            XStandardColormap *stdcmap = Q_NULLPTR;
             int ncmaps = 0;
 
 #ifndef QT_NO_XRENDER
@@ -541,7 +539,8 @@ void QColormap::initialize()
             init_indexed(d, i);
             break;
         case Direct:
-            init_direct(d, ownColormap);
+            if (ownColormap)
+                init_direct(d);
             break;
         }
 
@@ -577,7 +576,7 @@ void QColormap::cleanup()
         delete cmaps[i];
 
     delete [] cmaps;
-    cmaps = 0;
+    cmaps = Q_NULLPTR;
 }
 
 

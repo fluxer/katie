@@ -70,7 +70,7 @@ class Q_DECLARATIVE_EXPORT QDeclarativeComponent : public QObject
 
 public:
     QDeclarativeComponent(QObject *parent = Q_NULLPTR);
-    QDeclarativeComponent(QDeclarativeEngine *, QObject *parent=0);
+    QDeclarativeComponent(QDeclarativeEngine *, QObject *parent = Q_NULLPTR);
     QDeclarativeComponent(QDeclarativeEngine *, const QString &fileName, QObject *parent = Q_NULLPTR);
     QDeclarativeComponent(QDeclarativeEngine *, const QUrl &url, QObject *parent = Q_NULLPTR);
     virtual ~QDeclarativeComponent();

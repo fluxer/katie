@@ -770,8 +770,7 @@ QObject *QDeclarativeComponent::beginCreate(QDeclarativeContext *context)
     return rv;
 }
 
-QObject *
-QDeclarativeComponentPrivate::beginCreate(QDeclarativeContextData *context)
+QObject * QDeclarativeComponentPrivate::beginCreate(QDeclarativeContextData *context)
 {
     Q_Q(QDeclarativeComponent);
     if (!context) {
