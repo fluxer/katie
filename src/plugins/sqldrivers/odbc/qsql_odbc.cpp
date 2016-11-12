@@ -42,9 +42,6 @@
 #include "qsql_odbc.h"
 #include <qsqlrecord.h>
 
-#if defined (Q_OS_WIN32)
-#include <qt_windows.h>
-#endif
 #include <qcoreapplication.h>
 #include <qvariant.h>
 #include <qdatetime.h>
@@ -1945,8 +1942,8 @@ void QODBCDriverPrivate::checkUnicode()
     if(r == SQL_SUCCESS) {
         r = SQLFetch(hStmt);
         if(r == SQL_SUCCESS) {
-            QVarLengthArray<SQLWCHAR> buffer(10);
-            r = SQLGetData(hStmt, 1, SQL_C_WCHAR, buffer.data(), buffer.size() * sizeof(SQLWCHAR), NULL);
+            QVarLengthArray<SQLTCHAR> buffer(10);
+            r = SQLGetData(hStmt, 1, SQL_C_TCHAR, buffer.data(), buffer.size() * sizeof(SQLTCHAR), NULL);
             if(r == SQL_SUCCESS && fromSQLTCHAR(buffer) == QLatin1String("test")) {
                 unicode = true;
             }
