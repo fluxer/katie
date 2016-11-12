@@ -21,7 +21,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/util/qundoview.cpp
 )
 
-if(UNIX AND WITH_X11 AND X11_FOUND)
+if(WITH_X11 AND X11_FOUND)
     set(GUI_SOURCES
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/util/qsystemtrayicon_x11.cpp

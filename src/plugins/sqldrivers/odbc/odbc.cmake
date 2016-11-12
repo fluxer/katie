@@ -18,9 +18,6 @@ katie_setup_target(qsqlodbcplugin ${ODBCDRIVER_SOURCES} ${ODBCDRIVER_HEADERS})
 add_library(qsqlodbcplugin MODULE ${qsqlodbcplugin_SOURCES})
 target_link_libraries(qsqlodbcplugin KtSql ${ODBC_LIBRARIES})
 set_target_properties(qsqlodbcplugin PROPERTIES OUTPUT_NAME qsqlodbc)
-if(UNIX)
-    target_compile_definitions(qsqlodbcplugin PRIVATE -DUNICODE)
-endif()
 
 install(
     TARGETS qsqlodbcplugin

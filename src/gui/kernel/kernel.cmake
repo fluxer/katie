@@ -81,7 +81,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.cpp
 )
 
-if(UNIX AND WITH_X11 AND X11_FOUND)
+if(WITH_X11 AND X11_FOUND)
     set(GUI_HEADERS
         ${GUI_HEADERS}
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.h
