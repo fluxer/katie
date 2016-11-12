@@ -4249,14 +4249,6 @@ QStringList QRegExp::capturedTexts() const
 }
 
 /*!
-    \internal
-*/
-QStringList QRegExp::capturedTexts()
-{
-    return const_cast<const QRegExp *>(this)->capturedTexts();
-}
-
-/*!
     Returns the text captured by the \a nth subexpression. The entire
     match has index 0 and the parenthesized subexpressions have
     indexes starting from 1 (excluding non-capturing parentheses).
@@ -4274,14 +4266,6 @@ QStringList QRegExp::capturedTexts()
 QString QRegExp::cap(int nth) const
 {
     return capturedTexts().value(nth);
-}
-
-/*!
-    \internal
-*/
-QString QRegExp::cap(int nth)
-{
-    return const_cast<const QRegExp *>(this)->cap(nth);
 }
 
 /*!
@@ -4307,14 +4291,6 @@ int QRegExp::pos(int nth) const
 }
 
 /*!
-    \internal
-*/
-int QRegExp::pos(int nth)
-{
-    return const_cast<const QRegExp *>(this)->pos(nth);
-}
-
-/*!
   Returns a text string that explains why a regexp pattern is
   invalid the case being; otherwise returns "no error occurred".
 
@@ -4327,14 +4303,6 @@ QString QRegExp::errorString() const
     } else {
         return priv->eng->errorString();
     }
-}
-
-/*!
-    \internal
-*/
-QString QRegExp::errorString()
-{
-    return const_cast<const QRegExp *>(this)->errorString();
 }
 #endif
 

@@ -101,17 +101,12 @@ public:
 #ifndef QT_NO_REGEXP_CAPTURE
     int captureCount() const;
     QStringList capturedTexts() const;
-    QStringList capturedTexts();
     QString cap(int nth = 0) const;
-    QString cap(int nth = 0);
     int pos(int nth = 0) const;
-    int pos(int nth = 0);
     QString errorString() const;
-    QString errorString();
 #endif
 
     static QString escape(const QString &str);
-
 
 private:
     QRegExpPrivate *priv;
