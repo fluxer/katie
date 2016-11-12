@@ -7846,13 +7846,6 @@ bool QWidget::event(QEvent *event)
         }
         break; }
 #endif
-    case QEvent::EmbeddingControl:
-        d->topData()->frameStrut.setCoords(0 ,0, 0, 0);
-        data->fstrut_dirty = false;
-#if defined(Q_WS_X11)
-        d->topData()->embedded = 1;
-#endif
-        break;
 #ifndef QT_NO_ACTION
     case QEvent::ActionAdded:
     case QEvent::ActionRemoved:
@@ -10008,8 +10001,6 @@ void QWidget::setShortcutAutoRepeat(int id, bool enable)
 #endif // QT_NO_SHORTCUT
 /*!
     Updates the widget's micro focus.
-
-    \sa QInputContext
 */
 void QWidget::updateMicroFocus()
 {

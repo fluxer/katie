@@ -67,7 +67,6 @@ QT_BEGIN_NAMESPACE
 
 class QMimeData;
 class QAbstractScrollArea;
-class QInputContext;
 
 class QTextControlPrivate : public QObjectPrivate
 {
@@ -164,8 +163,6 @@ public:
 #endif
 
     void append(const QString &text, Qt::TextFormat format = Qt::AutoText);
-
-    QInputContext *inputContext();
 
     QTextDocument *doc;
     bool cursorOn;

@@ -196,7 +196,6 @@ QT_BEGIN_NAMESPACE
     \value TabletMove                       Wacom tablet move (QTabletEvent).
     \value TabletPress                      Wacom tablet press (QTabletEvent).
     \value TabletRelease                    Wacom tablet release (QTabletEvent).
-    \value OkRequest                        Ok button in decoration pressed. Supported only for Windows CE.
     \value TabletEnterProximity             Wacom tablet enter proximity event (QTabletEvent), sent to QApplication.
     \value TabletLeaveProximity             Wacom tablet leave proximity event (QTabletEvent), sent to QApplication.
     \value Timer                            Regular timer events (QTimerEvent).
@@ -242,16 +241,12 @@ QT_BEGIN_NAMESPACE
     \omitvalue AccelAvailable
     \omitvalue AccelOverride
     \omitvalue AcceptDropsChange
-    \omitvalue ActivateControl
     \omitvalue CaptionChange
     \omitvalue ChildInsertedRequest
     \omitvalue ChildInserted
     \omitvalue Create
-    \omitvalue DeactivateControl
     \omitvalue Destroy
     \omitvalue DragResponse
-    \omitvalue EmbeddingControl
-    \omitvalue HelpRequest
     \omitvalue IconChange
     \omitvalue LayoutHint
     \omitvalue Quit

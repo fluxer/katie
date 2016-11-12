@@ -7228,8 +7228,6 @@ void QGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event)
     Updates the item's micro focus.
 
     \since 4.7
-
-    \sa QInputContext
 */
 void QGraphicsItem::updateMicroFocus()
 {
@@ -7516,8 +7514,6 @@ void QGraphicsObject::ungrabGesture(Qt::GestureType gesture)
     Updates the item's micro focus. This is slot for convenience.
 
     \since 4.7
-
-    \sa QInputContext
 */
 void QGraphicsObject::updateMicroFocus()
 {
