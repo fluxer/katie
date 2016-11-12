@@ -31,34 +31,9 @@ if(WITH_ICONV AND ICONV_FOUND)
         ${CORE_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/codecs/qiconvcodec.cpp
     )
-    add_definitions(-DGNU_LIBICONV)
     set(EXTRA_CORE_LIBS
         ${EXTRA_CORE_LIBS}
         ${ICONV_LIBRARIES}
     )
     include_directories(${ICONV_INCLUDES})
-else()
-    # no iconv, put all plugins in the library
-    set(CORE_HEADERS
-        ${CORE_HEADERS}
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/cn/qgb18030codec.h
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qeucjpcodec.h
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qjiscodec.h
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qsjiscodec.h
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/kr/qeuckrcodec.h
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/tw/qbig5codec.h
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qfontjpcodec.h
-    )
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/cn/qgb18030codec.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qjpunicode.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qeucjpcodec.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qjiscodec.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qsjiscodec.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/kr/qeuckrcodec.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/tw/qbig5codec.cpp
-        ${CMAKE_SOURCE_DIR}/src/plugins/codecs/jp/qfontjpcodec.cpp
-    )
-    add_definitions(-DQT_NO_ICONV)
 endif()

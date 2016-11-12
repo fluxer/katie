@@ -67,18 +67,8 @@
 #ifndef QT_NO_CODECS
 #  include "qtsciicodec_p.h"
 #  include "qisciicodec_p.h"
-#  if defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED) && !defined(QT_CODEC_PLUGINS)
-// no iconv(3) support, must build all codecs into the library
-#    include "../../plugins/codecs/cn/qgb18030codec.h"
-#    include "../../plugins/codecs/jp/qeucjpcodec.h"
-#    include "../../plugins/codecs/jp/qjiscodec.h"
-#    include "../../plugins/codecs/jp/qsjiscodec.h"
-#    include "../../plugins/codecs/kr/qeuckrcodec.h"
-#    include "../../plugins/codecs/tw/qbig5codec.h"
-#  endif // QT_NO_ICONV && !QT_BOOTSTRAPPED && !QT_CODEC_PLUGINS
 #  if defined(Q_WS_X11) && !defined(QT_BOOTSTRAPPED)
 #    include "qfontlaocodec_p.h"
-#    include "../../plugins/codecs/jp/qfontjpcodec.h"
 #  endif
 #endif // QT_NO_CODECS
 
@@ -475,33 +465,7 @@ static void setup()
 #  if defined(Q_WS_X11) && !defined(QT_BOOTSTRAPPED)
     // no font codecs when bootstrapping
     (void)new QFontLaoCodec;
-#    if defined(QT_NO_ICONV)
-    // no iconv(3) support, must build all codecs into the library
-    (void)new QFontGb2312Codec;
-    (void)new QFontGbkCodec;
-    (void)new QFontGb18030_0Codec;
-    (void)new QFontJis0208Codec;
-    (void)new QFontJis0201Codec;
-    (void)new QFontKsc5601Codec;
-    (void)new QFontBig5hkscsCodec;
-    (void)new QFontBig5Codec;
-#    endif // QT_NO_ICONV && !QT_BOOTSTRAPPED
 #  endif // Q_WS_X11
-
-
-#  if defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED) && !defined(QT_CODEC_PLUGINS)
-    // no asian codecs when bootstrapping, sorry
-    (void)new QGb18030Codec;
-    (void)new QGbkCodec;
-    (void)new QGb2312Codec;
-    (void)new QEucJpCodec;
-    (void)new QJisCodec;
-    (void)new QSjisCodec;
-    (void)new QEucKrCodec;
-    (void)new QCP949Codec;
-    (void)new QBig5Codec;
-    (void)new QBig5hkscsCodec;
-#  endif // QT_NO_ICONV && !QT_BOOTSTRAPPED && !QT_CODEC_PLUGINS
 #endif // QT_NO_CODECS
 
     (void)new QUtf16Codec;
@@ -569,28 +533,20 @@ QTextCodec::ConverterState::~ConverterState()
 
     The supported encodings are:
 
+
+
     \list
     \o Apple Roman
-    \o \l{Big5 Text Codec}{Big5}
-    \o \l{Big5-HKSCS Text Codec}{Big5-HKSCS}
-    \o CP949
-    \o \l{EUC-JP Text Codec}{EUC-JP}
-    \o \l{EUC-KR Text Codec}{EUC-KR}
-    \o \l{GBK Text Codec}{GB18030-0}
     \o IBM 850
     \o IBM 866
     \o IBM 874
-    \o \l{ISO 2022-JP (JIS) Text Codec}{ISO 2022-JP}
     \o ISO 8859-1 to 10
     \o ISO 8859-13 to 16
     \o Iscii-Bng, Dev, Gjr, Knd, Mlm, Ori, Pnj, Tlg, and Tml
-    \o JIS X 0201
-    \o JIS X 0208
     \o KOI8-R
     \o KOI8-U
     \o MuleLao-1
     \o ROMAN8
-    \o \l{Shift-JIS Text Codec}{Shift-JIS}
     \o TIS-620
     \o \l{TSCII Text Codec}{TSCII}
     \o UTF-8

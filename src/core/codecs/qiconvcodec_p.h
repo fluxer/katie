@@ -55,13 +55,9 @@
 
 #include "qtextcodec.h"
 
-#if defined(Q_OS_UNIX) && !defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED)
+#if !defined(QT_NO_ICONV) && !defined(QT_BOOTSTRAPPED)
 
-#ifdef Q_OS_MAC
-typedef void * iconv_t;
-#else
 #include <iconv.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

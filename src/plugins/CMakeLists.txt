@@ -66,14 +66,6 @@ else()
 endif()
 
 
-if(WITH_ICONV AND ICONV_FOUND)
-    include(codecs/cn/cn.cmake)
-    include(codecs/jp/jp.cmake)
-    include(codecs/kr/kr.cmake)
-    include(codecs/tw/tw.cmake)
-endif()
-
-
 if(WITH_OPENGL AND OPENGL_FOUND)
     include(graphicssystems/opengl/opengl.cmake)
 endif()

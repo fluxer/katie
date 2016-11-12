@@ -573,6 +573,11 @@ if(WITH_OPENGLES2)
     katie_definition(-DQT_OPENGL_ES_2)
 endif()
 
+# optional packages with interface definition only for convenience
+if(NOT WITH_ICONV OR NOT ICONV_FOUND)
+    katie_definition(-DQT_NO_ICONV)
+endif()
+
 # keep in sync with the gui component CMake file, only definitions setup is needed here
 if(WITH_X11 AND X11_FOUND)
     # TODO: xim

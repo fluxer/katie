@@ -77,15 +77,15 @@ QT_BEGIN_NAMESPACE
 extern bool qt_locale_initialized;
 
 QIconvCodec::QIconvCodec()
-    : utf16Codec(0)
+    : utf16Codec(Q_NULLPTR)
 {
     utf16Codec = QTextCodec::codecForMib(1015);
-    Q_ASSERT_X(utf16Codec != 0,
+    Q_ASSERT_X(utf16Codec != Q_NULLPTR,
                "QIconvCodec::convertToUnicode",
                "internal error, UTF-16 codec not found");
     if (!utf16Codec) {
         fprintf(stderr, "QIconvCodec::convertToUnicode: internal error, UTF-16 codec not found\n");
-        utf16Codec = reinterpret_cast<QTextCodec *>(~0);
+        utf16Codec = Q_NULLPTR;
     }
 }
 
@@ -126,7 +126,7 @@ thread_local QIconvCodec::IconvState* toUnicodeState;
 
 QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState *convState) const
 {
-    if (utf16Codec == reinterpret_cast<QTextCodec *>(~0))
+    if (!utf16Codec)
         return QString::fromLatin1(chars, len);
 
     int invalidCount = 0;
@@ -149,7 +149,7 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
         }
     } else {
         if (!qt_locale_initialized || !toUnicodeState) {
-            // we're running after the Q_GLOBAL_STATIC has been deleted
+            // we're running after the toUnicodeState has been deleted
             // or before the QCoreApplication initialization
             // bad programmer, no cookie for you
             pstate = &temporaryState;
@@ -407,15 +407,9 @@ iconv_t QIconvCodec::createIconv_t(const char *to, const char *from)
 {
     Q_ASSERT((to == 0 && from != 0) || (to != 0 && from == 0));
 
-    iconv_t cd = (iconv_t) -1;
-#if defined(__GLIBC__) || defined(GNU_LIBICONV)
     // both GLIBC and libgnuiconv will use the locale's encoding if from or to is an empty string
-    static const char empty_codeset[] = "";
-    const char *codeset = empty_codeset;
-    cd = iconv_open(to ? to : codeset, from ? from : codeset);
-#else
-    char *codeset = 0;
-#endif
+    const char *codeset = "";
+    iconv_t cd = iconv_open(to ? to : codeset, from ? from : codeset);
 
 #if defined(_XOPEN_UNIX) && !defined(Q_OS_OSF)
     if (cd == (iconv_t) -1) {
