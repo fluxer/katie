@@ -98,7 +98,7 @@ public:
 
     int capacity() const;
     inline void reserve(int size);
-    inline void squeeze() { if (d->size < d->alloc || d->ref != 1) reallocData(); d->capacity = 0;}
+    inline void squeeze() { if (d->size < d->alloc || d->ref != 1) reallocData(d->size); d->capacity = 0;}
 
     inline const QChar *unicode() const;
     inline QChar *data();
@@ -514,7 +514,6 @@ private:
 #endif
     static int grow(int);
     static void freeData(Data *);
-    void reallocData();
     void reallocData(int alloc);
     void expand(int i);
     void updateProperties() const;
@@ -604,7 +603,7 @@ inline QChar *QString::data()
 inline const QChar *QString::constData() const
 { return reinterpret_cast<const QChar*>(d->data); }
 inline void QString::detach()
-{ if (d->ref != 1 || d->data != d->array) reallocData(); }
+{ if (d->ref != 1 || d->data != d->array) reallocData(d->size); }
 inline bool QString::isDetached() const
 { return d->ref == 1; }
 inline QString &QString::operator=(const QLatin1String &s)

@@ -1236,11 +1236,6 @@ void QString::reallocData(int alloc)
     }
 }
 
-void QString::reallocData()
-{
-    reallocData(d->size);
-}
-
 void QString::expand(int i)
 {
     int sz = d->size;
@@ -2708,11 +2703,11 @@ QString& QString::replace(const QRegExp &rx, const QString &after)
     if (isEmpty() && rx2.indexIn(*this) == -1)
         return *this;
 
-    reallocData();
+    reallocData(d->size);
 
     int index = 0;
-    int numCaptures = rx2.captureCount();
-    int al = after.length();
+    const int numCaptures = rx2.captureCount();
+    const int al = after.length();
     QRegExp::CaretMode caretMode = QRegExp::CaretAtZero;
 
     if (numCaptures > 0) {
@@ -4573,7 +4568,7 @@ const ushort *QString::utf16() const
 {
     if (d->data != d->array) {
         QString *that = const_cast<QString*>(this);
-        that->reallocData();   // ensure '\\0'-termination for ::fromRawData strings
+        that->reallocData(d->size);   // ensure '\\0'-termination for ::fromRawData strings
         return that->d->data;
     }
     return d->array;
