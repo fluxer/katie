@@ -13,6 +13,7 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
 )
 
 set(NETWORK_SOURCES
@@ -27,17 +28,7 @@ set(NETWORK_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
 )
-
-    set(NETWORK_HEADERS
-        ${NETWORK_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnet_unix_p.h
-    )
-    set(NETWORK_SOURCES
-        ${NETWORK_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qnativesocketengine_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalsocket_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver_unix.cpp
-    )
-
-add_definitions(-DQT_USE_SYSTEM_PROXIES)
