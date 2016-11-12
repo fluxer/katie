@@ -41,8 +41,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound_p.h
 )
 
 set(GUI_SOURCES
@@ -78,7 +76,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound.cpp
 )
 
 if(WITH_X11 AND X11_FOUND)
@@ -97,7 +94,6 @@ if(WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsound_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidgetcreate_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
@@ -120,13 +116,6 @@ if(WITH_X11 AND X11_FOUND)
             ${GLIB2_LIBRARIES}
         )
         include_directories(${GLIB2_INCLUDES})
-    endif()
-    if(WITH_NAS AND NAS_FOUND)
-        set(EXTRA_GUI_LIBS
-            ${EXTRA_GUI_LIBS}
-            ${NAS_LIBRARIES}
-        )
-        include_directories(${NAS_INCLUDES})
     endif()
     include_directories(${CMAKE_SOURCE_DIR}/src/3rdparty/xorg)
 endif()

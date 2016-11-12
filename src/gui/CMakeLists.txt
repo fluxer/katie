@@ -221,7 +221,6 @@ set(GUI_PUBLIC_HEADERS
     QSizePolicy
     QSlider
     QSortFilterProxyModel
-    QSound
     QSpinBox
     QSplashScreen
     QSplitter

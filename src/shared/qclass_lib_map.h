@@ -397,7 +397,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QPalette", "QtGui/qpalette.h"},
     { "QShortcut", "QtGui/qshortcut.h"},
     { "QSizePolicy", "QtGui/qsizepolicy.h"},
-    { "QSound", "QtGui/qsound.h"},
     { "QStackedLayout", "QtGui/qstackedlayout.h"},
     { "QToolTip", "QtGui/qtooltip.h"},
     { "QWhatsThis", "QtGui/qwhatsthis.h"},
@@ -717,6 +716,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 711;
+static const int qclass_lib_count = 710;
 
 #endif

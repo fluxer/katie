@@ -108,9 +108,6 @@ add_feature_info(tiff WITH_TIFF "an open source something")
 option(WITH_MNG "Build mng support" ON)
 add_feature_info(mng WITH_MNG "an open source something")
 
-option(WITH_NAS "Build nas support" ON)
-add_feature_info(nas WITH_NAS "an open source something")
-
 option(WITH_ICONV "Build iconv support" ON)
 add_feature_info(iconv WITH_ICONV "an open source something")
 
@@ -303,14 +300,6 @@ set_package_properties(MNG PROPERTIES
     PURPOSE "MNG format handler"
     DESCRIPTION "THE reference library for reading, displaying, writing and examining Multiple-Image Network Graphics"
     URL "http://sourceforge.net/projects/libmng/"
-    TYPE RECOMMENDED
-)
-
-find_package(NAS)
-set_package_properties(NAS PROPERTIES
-    PURPOSE "Basic audio support over wire"
-    DESCRIPTION "Network transparent, client/server audio transport system"
-    URL "http://www.radscan.com/nas.html"
     TYPE RECOMMENDED
 )
 
@@ -541,10 +530,6 @@ if(NOT WITH_OPENGL OR NOT OPENGL_FOUND)
     katie_definition(-DQT_NO_OPENGL)
 else()
     set(KATIE_COMPONENTS "${KATIE_COMPONENTS} OpenGL")
-endif()
-
-if(NOT WITH_NAS OR NOT NAS_FOUND)
-    katie_definition(-DQT_NO_NAS)
 endif()
 
 if(NOT WITH_PNG OR NOT PNG_FOUND)

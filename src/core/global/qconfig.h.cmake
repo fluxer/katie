@@ -83,6 +83,7 @@
 #define QT_NO_STATEMACHINE
 #define QT_NO_XIM
 #define QT_NO_IM
+#define QT_NO_SOUND
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -268,7 +269,6 @@
 #cmakedefine QT_NO_SLIDER
 #cmakedefine QT_NO_SOCKS5
 #cmakedefine QT_NO_SORTFILTERPROXYMODEL
-#cmakedefine QT_NO_SOUND
 #cmakedefine QT_NO_SPINBOX
 #cmakedefine QT_NO_SPLASHSCREEN
 #cmakedefine QT_NO_SPLITTER

@@ -8,11 +8,9 @@ pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
 url='https://github.com/fluxer/katie'
 license=('LGPL' 'FDL' 'custom')
-# nas is avaiable trough AUR, add it to depends array if desired
-depends=('openssl' 'zlib' 'cups' 'alsa-lib' 'gtk2' 'libgl' 'libice' 'icu'
-        'libsm' 'libxcursor' 'libxext' 'libxfixes' 'libxi' 'libxinerama'
-        'libxrandr' 'libxrender' 'libx11' 'fontconfig' 'freetype2' 'glib2'
-        'libmng')
+depends=('openssl' 'zlib' 'cups' 'gtk2' 'libgl' 'libice' 'icu' 'libsm'
+        'libxcursor' 'libxext' 'libxfixes' 'libxi' 'libxinerama' 'libxrandr'
+        'libxrender' 'libx11' 'fontconfig' 'freetype2' 'glib2' 'libmng')
 makedepends=('cmake' 'git' 'python' 'postgresql' 'mariadb' 'unixodbc' 'mesa'
         'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
