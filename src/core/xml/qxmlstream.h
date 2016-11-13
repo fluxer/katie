@@ -52,27 +52,10 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class Q_CORE_EXPORT QXmlStreamStringRef {
-    QString m_string;
-    int m_position, m_size;
-public:
-    inline QXmlStreamStringRef():m_position(0), m_size(0){}
-    inline QXmlStreamStringRef(const QStringRef &aString)
-        :m_string(aString.string()?*aString.string():QString()), m_position(aString.position()), m_size(aString.size()){}
-    inline QXmlStreamStringRef(const QString &aString):m_string(aString), m_position(0), m_size(aString.size()){}
-    inline ~QXmlStreamStringRef(){}
-    inline void clear() { m_string.clear(); m_position = m_size = 0; }
-    inline operator QStringRef() const { return QStringRef(&m_string, m_position, m_size); }
-    inline const QString *string() const { return &m_string; }
-    inline int position() const { return m_position; }
-    inline int size() const { return m_size; }
-};
-
-
 class QXmlStreamReaderPrivate;
 class QXmlStreamAttributes;
 class Q_CORE_EXPORT QXmlStreamAttribute {
-    QXmlStreamStringRef m_name, m_namespaceUri, m_qualifiedName, m_value;
+    QStringRef m_name, m_namespaceUri, m_qualifiedName, m_value;
     bool m_isDefault : 1;
     friend class QXmlStreamReaderPrivate;
     friend class QXmlStreamAttributes;
@@ -140,7 +123,7 @@ public:
 };
 
 class Q_CORE_EXPORT QXmlStreamNamespaceDeclaration {
-    QXmlStreamStringRef m_prefix, m_namespaceUri;
+    QStringRef m_prefix, m_namespaceUri;
 
     friend class QXmlStreamReaderPrivate;
 public:
@@ -162,7 +145,7 @@ Q_DECLARE_TYPEINFO(QXmlStreamNamespaceDeclaration, Q_MOVABLE_TYPE);
 typedef QVector<QXmlStreamNamespaceDeclaration> QXmlStreamNamespaceDeclarations;
 
 class Q_CORE_EXPORT QXmlStreamNotationDeclaration {
-    QXmlStreamStringRef m_name, m_systemId, m_publicId;
+    QStringRef m_name, m_systemId, m_publicId;
 
     friend class QXmlStreamReaderPrivate;
 public:
@@ -185,7 +168,7 @@ Q_DECLARE_TYPEINFO(QXmlStreamNotationDeclaration, Q_MOVABLE_TYPE);
 typedef QVector<QXmlStreamNotationDeclaration> QXmlStreamNotationDeclarations;
 
 class Q_CORE_EXPORT QXmlStreamEntityDeclaration {
-    QXmlStreamStringRef m_name, m_notationName, m_systemId, m_publicId, m_value;
+    QStringRef m_name, m_notationName, m_systemId, m_publicId, m_value;
 
     friend class QXmlStreamReaderPrivate;
 public:

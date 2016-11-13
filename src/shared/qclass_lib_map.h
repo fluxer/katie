@@ -469,7 +469,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QTextDecoder", "QtCore/qtextcodec.h"},
     { "QTextCodecFactoryInterface", "QtCore/qtextcodecplugin.h"},
     { "QTextCodecPlugin", "QtCore/qtextcodecplugin.h"},
-    { "QXmlStreamStringRef", "QtCore/qxmlstream.h"},
     { "QXmlStreamAttribute", "QtCore/qxmlstream.h"},
     { "QXmlStreamAttributes", "QtCore/qxmlstream.h"},
     { "QXmlStreamNamespaceDeclaration", "QtCore/qxmlstream.h"},
@@ -716,6 +715,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 710;
+static const int qclass_lib_count = 709;
 
 #endif

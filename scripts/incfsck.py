@@ -78,7 +78,6 @@ incmap = {
         'QXmlStreamNotationDeclaration': 'qxmlstream.h',
         'QXmlStreamNotationDeclarations': 'qxmlstream.h',
         'QXmlStreamReader': 'qxmlstream.h',
-        'QXmlStreamStringRef': 'qxmlstream.h',
         'QXmlStreamWriter': 'qxmlstream.h',
         'QXmlStreamAttribute': 'qxmlstream.h',
         },

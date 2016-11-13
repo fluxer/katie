@@ -74,8 +74,8 @@ class QXmlStreamReader;
 
 struct QSvgCssAttribute
 {
-    QXmlStreamStringRef name;
-    QXmlStreamStringRef value;
+    QStringRef name;
+    QStringRef value;
 };
 
 class QSvgHandler

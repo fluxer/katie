@@ -1943,7 +1943,7 @@ void QSvgHandler::parseCSStoXMLAttrs(QString css, QVector<QSvgCssAttribute> *att
             break;
 
         QSvgCssAttribute attribute;
-        attribute.name = QXmlStreamStringRef(name);
+        attribute.name = name;
 
         const int firstSymbol = m_cssParser.index;
         int symbolCount = 0;
@@ -1966,14 +1966,14 @@ void QSvgHandler::parseCSStoXMLAttrs(QString css, QVector<QSvgCssAttribute> *att
             }
             if (canExtractValueByRef) {
                 const QCss::Symbol &sym = m_cssParser.symbols.at(firstSymbol);
-                attribute.value = QXmlStreamStringRef(QStringRef(&sym.text, sym.start, len));
+                attribute.value = QStringRef(&sym.text, sym.start, len);
             }
         }
         if (!canExtractValueByRef) {
             QString value;
             for (int i = firstSymbol; i < m_cssParser.index - 1; ++i)
                 value += m_cssParser.symbols.at(i).lexem();
-            attribute.value = QXmlStreamStringRef(QStringRef(&value, 0, value.length()));
+            attribute.value = QStringRef(&value, 0, value.length());
         }
 
         attributes->append(attribute);

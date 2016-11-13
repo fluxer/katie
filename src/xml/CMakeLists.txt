@@ -33,7 +33,6 @@ set(XML_PUBLIC_HEADERS
     # both in core and xml
     QXmlStreamAttribute
     QXmlStreamAttributes
-    QXmlStreamStringRef
     QXmlStreamNotationDeclaration
     QXmlStreamNotationDeclarations
     QXmlStreamEntityDeclaration
