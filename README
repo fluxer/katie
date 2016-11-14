@@ -48,6 +48,7 @@ There are several things you should be aware before considering Katie:
     to ease vendors and deployment in general
   - automatic async DBus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
+  - the script component relies on PCRE instead of internal copy
 
 Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,
