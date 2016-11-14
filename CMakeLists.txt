@@ -589,8 +589,7 @@ endif()
 # keep in sync with the gui component CMake file, only definitions setup is needed here
 if(WITH_X11 AND X11_FOUND)
     foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput)
-        # X11_${x11ext}_FOUND is set depending on the headers only
-        if(NOT X11_${x11ext}_FOUND OR NOT X11_${x11ext}_LIB)
+        if(NOT X11_${x11ext}_FOUND)
             message(WARNING "The X11 ${x11ext} extension was not found")
             string(TOUPPER "${x11ext}" upperext)
             katie_definition(-DQT_NO_${upperext})
