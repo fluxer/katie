@@ -1,5 +1,5 @@
 # add_definitions()
-set(EXTRA_QTSCRIPT_LIBS KtCore KtScript)
+set(EXTRA_QTSCRIPT_LIBS KtCore KtScript KtGui KtScriptTools)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
@@ -8,6 +8,10 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
+    ${CMAKE_BINARY_DIR}/include/QtGui
+    ${CMAKE_BINARY_DIR}/privateinclude/QtGui
+    ${CMAKE_BINARY_DIR}/include/QtScriptTools
+    ${CMAKE_BINARY_DIR}/privateinclude/QtScriptTools
 )
 
 set(QSCRIPT_SOURCES

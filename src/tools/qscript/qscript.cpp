@@ -43,7 +43,9 @@
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QtCore/QStringList>
-#include <QtCore/QCoreApplication>
+#include <QtGui/QApplication>
+#include <QtScriptTools/QScriptEngineDebugger>
+#include <QtGui/QMainWindow>
 
 #include <stdlib.h>
 
@@ -137,7 +139,7 @@ static QScriptValue loadScripts(QScriptContext *context, QScriptEngine *engine)
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication *app = new QCoreApplication(argc, argv);
+    QApplication *app = new QApplication(argc, argv);
     QScriptEngine *eng = new QScriptEngine();
 
     QScriptValue globalObject = eng->globalObject();
@@ -162,6 +164,12 @@ int main(int argc, char *argv[])
 
     while (const char *arg = *argv++) {
         QString fn = QString::fromLocal8Bit(arg);
+
+        if (fn == QLatin1String("-d")) {
+            QScriptEngineDebugger *debugger = new QScriptEngineDebugger;
+            debugger->attachTo(eng);
+            debugger->standardWindow()->show();
+        }
 
         if (fn == QLatin1String("-i")) {
             interactive(eng);
