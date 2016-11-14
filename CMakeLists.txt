@@ -256,6 +256,14 @@ set_package_properties(OpenSSL PROPERTIES
     TYPE REQUIRED
 )
 
+find_package(PCRE)
+set_package_properties(PCRE PROPERTIES
+    PURPOSE "Required for regexp support in script component"
+    DESCRIPTION "Perl Compatible Regular Expressions"
+    URL "http://www.pcre.org/"
+    TYPE REQUIRED
+)
+
 find_package(PythonInterp)
 set_package_properties(PythonInterp PROPERTIES
     PURPOSE "UI class maps generator script"

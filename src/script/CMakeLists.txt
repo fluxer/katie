@@ -9,7 +9,7 @@ add_definitions(
     -DQLALR_NO_QSCRIPTGRAMMAR_DEBUG_INFO
     -DBUILDING_QT__
 )
-set(EXTRA_SCRIPT_LIBS KtCore)
+set(EXTRA_SCRIPT_LIBS KtCore ${PCRE_LIBRARIES})
 
 # TODO: fix std::auto_ptr warnings
 if(KATIE_COMPILER MATCHES "(gcc|clang)")
@@ -160,11 +160,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/TypeTraits.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/CollatorDefault.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/UTF8.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_compile.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_exec.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_tables.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_ucp_searchfuncs.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre/pcre_xclass.cpp
 )
 
 include_directories(
@@ -196,8 +191,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/pcre
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/tmp
+    ${PCRE_INCLUDES}
 )
 
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)

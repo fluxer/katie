@@ -26,7 +26,7 @@
 #include <wtf/Forward.h>
 #include <wtf/RefCounted.h>
 
-struct JSRegExp;
+#include <pcre.h>
 
 namespace JSC {
 
@@ -61,7 +61,7 @@ namespace JSC {
         const char* m_constructionError;
         unsigned m_numSubpatterns;
 
-        JSRegExp* m_regExp;
+        pcre* m_regExp;
     };
 
 } // namespace JSC

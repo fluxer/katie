@@ -27,7 +27,7 @@
 #include <string.h>
 #include <wtf/Assertions.h>
 
-#include <pcre/pcre.h>
+#include <pcre.h>
 
 namespace JSC {
 
@@ -73,7 +73,7 @@ inline RegExp::RegExp(const UString& pattern, const UString& flags)
 
 RegExp::~RegExp()
 {
-    jsRegExpFree(m_regExp);
+    pcre_free(m_regExp);
 }
 
 PassRefPtr<RegExp> RegExp::create(const UString& pattern)
@@ -90,9 +90,15 @@ void RegExp::compile()
 {
     m_regExp = 0;
 
-    JSRegExpIgnoreCaseOption ignoreCaseOption = ignoreCase() ? JSRegExpIgnoreCase : JSRegExpDoNotIgnoreCase;
-    JSRegExpMultilineOption multilineOption = multiline() ? JSRegExpMultiline : JSRegExpSingleLine;
-    m_regExp = jsRegExpCompile(m_pattern.data(), m_pattern.size(), ignoreCaseOption, multilineOption, &m_numSubpatterns, &m_constructionError);
+    int regexOptions = PCRE_JAVASCRIPT_COMPAT;
+    if (ignoreCase())
+        regexOptions |= PCRE_CASELESS;
+    if (multiline())
+        regexOptions |= PCRE_MULTILINE;
+    int errorOffset;
+    m_regExp = pcre_compile(m_pattern.UTF8String(), regexOptions, &m_constructionError, &errorOffset, Q_NULLPTR);
+
+    pcre_fullinfo(m_regExp, Q_NULLPTR, PCRE_INFO_CAPTURECOUNT, &m_numSubpatterns);
 }
 
 int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
@@ -120,11 +126,11 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
             offsetVector = ovector->data();
         }
 
-        int numMatches = jsRegExpExecute(m_regExp, s.data(), s.size(), startOffset, offsetVector, offsetVectorSize);
-    
+        const int numMatches = pcre_exec(m_regExp, Q_NULLPTR, s.UTF8String(), s.size(), startOffset, 0, offsetVector, offsetVectorSize);
+
         if (numMatches < 0) {
 #ifndef NDEBUG
-            if (numMatches != JSRegExpErrorNoMatch)
+            if (numMatches != Q_NULLPTR)
                 fprintf(stderr, "jsRegExpExecute failed with result %d\n", numMatches);
 #endif
             if (ovector)
