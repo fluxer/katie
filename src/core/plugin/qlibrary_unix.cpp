@@ -106,7 +106,7 @@ bool QLibraryPrivate::load_sys()
         // But since we don't know if we are built on HPUX or HPUXi,
         // we support both .sl (and .<version>) and .so suffixes but
         // .so is preferred.
-# if defined(__ia64)
+# if defined(QT_ARCH_IA64)
         if (!fullVersion.isEmpty()) {
             suffixes << QString::fromLatin1(".so.%1").arg(fullVersion);
         } else {

@@ -348,7 +348,7 @@ Q_INLINE_TEMPLATE void QList<T>::node_construct(Node *n, const T &t)
 {
     if (QTypeInfo<T>::isLarge || QTypeInfo<T>::isStatic) n->v = new T(t);
     else if (QTypeInfo<T>::isComplex) new (n) T(t);
-#if (defined(__GNUC__) || defined(__INTEL_COMPILER) || defined(__IBMCPP__)) && !defined(__OPTIMIZE__)
+#if (defined(Q_CC_GNU) || defined(Q_CC_INTEL) || defined(__IBMCPP__)) && !defined(__OPTIMIZE__)
     // This violates pointer aliasing rules, but it is known to be safe (and silent)
     // in unoptimized GCC builds (-fno-strict-aliasing). The other compilers which
     // set the same define are assumed to be safe.
