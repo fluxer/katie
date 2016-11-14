@@ -43,6 +43,7 @@
 #define QDESIGNER_WORKBENCH_H
 
 #include "designer_enums.h"
+#include "qdesigner_integration_p.h"
 
 #include <QtCore/QObject>
 #include <QtCore/QHash>
@@ -157,6 +158,7 @@ private:
     void saveSettings() const;
 
     QDesignerFormEditorInterface *m_core;
+    qdesigner_internal::QDesignerIntegration *m_integration;
 
     QDesignerActions *m_actionManager;
     QActionGroup *m_windowActions;

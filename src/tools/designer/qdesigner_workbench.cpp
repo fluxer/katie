@@ -231,6 +231,9 @@ QDesignerWorkbench::QDesignerWorkbench()  :
             connect(toolWindow, SIGNAL(closeEventReceived(QCloseEvent*)), this, SLOT(handleCloseEvent(QCloseEvent*)));
     }
 
+    // Integration
+    m_integration = new qdesigner_internal::QDesignerIntegration(m_core, this);
+
     // remaining view options (config toolbars)
     viewMenu->addSeparator();
     m_toolbarMenu = viewMenu->addMenu(tr("Toolbars"));
