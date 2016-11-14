@@ -41,7 +41,6 @@
 #include <stdlib.h>
 #include <wtf/FastMalloc.h>
 #include <wtf/HashCountedSet.h>
-#include <wtf/VMTags.h>
 
 #if OS(DARWIN)
 
@@ -138,19 +137,7 @@ void Heap::destroy()
 
 NEVER_INLINE CollectorBlock* Heap::allocateBlock()
 {
-#if OS(DARWIN)
-    vm_address_t address = 0;
-    vm_map(current_task(), &address, BLOCK_SIZE, BLOCK_OFFSET_MASK, VM_FLAGS_ANYWHERE | VM_TAG_FOR_COLLECTOR_MEMORY, MEMORY_OBJECT_NULL, 0, FALSE, VM_PROT_DEFAULT, VM_PROT_DEFAULT, VM_INHERIT_DEFAULT);
-#elif OS(WINCE)
-    void* address = VirtualAlloc(NULL, BLOCK_SIZE, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-#elif OS(WINDOWS)
-#if COMPILER(MINGW) && !COMPILER(MINGW64)
-    void* address = __mingw_aligned_malloc(BLOCK_SIZE, BLOCK_SIZE);
-#else
-    void* address = _aligned_malloc(BLOCK_SIZE, BLOCK_SIZE);
-#endif
-    memset(address, 0, BLOCK_SIZE);
-#elif HAVE(POSIX_MEMALIGN)
+#if HAVE(POSIX_MEMALIGN)
     void* address;
     posix_memalign(&address, BLOCK_SIZE, BLOCK_SIZE);
 #else
@@ -225,17 +212,7 @@ NEVER_INLINE void Heap::freeBlock(size_t block)
 
 NEVER_INLINE void Heap::freeBlockPtr(CollectorBlock* block)
 {
-#if OS(DARWIN)    
-    vm_deallocate(current_task(), reinterpret_cast<vm_address_t>(block), BLOCK_SIZE);
-#elif OS(WINCE)
-    VirtualFree(block, 0, MEM_RELEASE);
-#elif OS(WINDOWS)
-#if COMPILER(MINGW) && !COMPILER(MINGW64)
-    __mingw_aligned_free(block);
-#else
-    _aligned_free(block);
-#endif
-#elif HAVE(POSIX_MEMALIGN)
+#if HAVE(POSIX_MEMALIGN)
     free(block);
 #else
     munmap(reinterpret_cast<char*>(block), BLOCK_SIZE);

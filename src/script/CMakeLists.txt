@@ -119,8 +119,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/JSWrapperObject.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/LiteralParser.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/Lookup.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/MarkStackPosix.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/MarkStackWin.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/MarkStack.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/MathObject.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/NativeErrorConstructor.cpp

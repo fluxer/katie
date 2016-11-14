@@ -26,6 +26,9 @@
 #include "Platform.h"
 #include "MarkStack.h"
 
+#include <unistd.h>
+#include <sys/mman.h>
+
 namespace JSC {
 
 size_t MarkStack::s_pageSize = 0;
@@ -35,6 +38,20 @@ void MarkStack::compact()
     Q_ASSERT(s_pageSize);
     m_values.shrinkAllocation(s_pageSize);
     m_markSets.shrinkAllocation(s_pageSize);
+}
+
+void MarkStack::initializePagesize()
+{
+    MarkStack::s_pageSize = getpagesize();
+}
+
+void* MarkStack::allocateStack(size_t size)
+{
+    return mmap(0, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+}
+void MarkStack::releaseStack(void* addr, size_t size)
+{
+    munmap(reinterpret_cast<char*>(addr), size);
 }
 
 }

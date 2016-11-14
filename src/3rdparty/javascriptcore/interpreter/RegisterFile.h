@@ -33,7 +33,6 @@
 #include "Register.h"
 #include <stdio.h>
 #include <wtf/Noncopyable.h>
-#include <wtf/VMTags.h>
 
 #if HAVE(MMAP)
 #include <errno.h>
@@ -148,7 +147,7 @@ namespace JSC {
         Register* m_buffer;
         Register* m_maxUsed;
 
-#if HAVE(VIRTUALALLOC) || OS(QNX)
+#if HAVE(VIRTUALALLOC)
         Register* m_commitEnd;
 #endif
 
@@ -173,50 +172,22 @@ namespace JSC {
         Q_ASSERT(isPageAligned(capacity));
 
         size_t bufferLength = (capacity + maxGlobals) * sizeof(Register);
-    #if OS(QNX)
-        // First, reserve uncommitted memory
-        m_buffer = reinterpret_cast<Register*>(mmap(0, bufferLength, PROT_NONE, MAP_LAZY|MAP_PRIVATE|MAP_ANON, VM_TAG_FOR_REGISTERFILE_MEMORY, 0));
+    #if HAVE(MMAP)
+        m_buffer = reinterpret_cast<Register*>(mmap(0, bufferLength, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, -1, 0));
         if (m_buffer == MAP_FAILED) {
-            fprintf(stderr, "Could not reserve register file memory: %d\n", errno);
-            CRASH();
-        }
-
-        // Now, commit as much as we need for the globals
-        size_t committedSize = roundUpAllocationSize(maxGlobals * sizeof(Register), commitSize);
-        if (mmap(m_buffer, committedSize, PROT_READ|PROT_WRITE, MAP_FIXED|MAP_PRIVATE|MAP_ANON, VM_TAG_FOR_REGISTERFILE_MEMORY, 0) == MAP_FAILED) {
-            fprintf(stderr, "Could not commit register file memory: %d\n", errno);
-            CRASH();
-        }
-        m_commitEnd = reinterpret_cast<Register*>(reinterpret_cast<char*>(m_buffer) + committedSize);
-
-    #elif HAVE(MMAP)
-        m_buffer = reinterpret_cast<Register*>(mmap(0, bufferLength, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANON, VM_TAG_FOR_REGISTERFILE_MEMORY, 0));
-        if (m_buffer == MAP_FAILED) {
-#if OS(WINCE)
-            fprintf(stderr, "Could not allocate register file: %d\n", GetLastError());
-#else
             fprintf(stderr, "Could not allocate register file: %d\n", errno);
-#endif
             CRASH();
         }
     #elif HAVE(VIRTUALALLOC)
         m_buffer = static_cast<Register*>(VirtualAlloc(0, roundUpAllocationSize(bufferLength, commitSize), MEM_RESERVE, PAGE_READWRITE));
         if (!m_buffer) {
-#if OS(WINCE)
-            fprintf(stderr, "Could not allocate register file: %d\n", GetLastError());
-#else
             fprintf(stderr, "Could not allocate register file: %d\n", errno);
-#endif
             CRASH();
         }
         size_t committedSize = roundUpAllocationSize(maxGlobals * sizeof(Register), commitSize);
         void* commitCheck = VirtualAlloc(m_buffer, committedSize, MEM_COMMIT, PAGE_READWRITE);
         if (commitCheck != m_buffer) {
-#if OS(WINCE)
-            fprintf(stderr, "Could not allocate register file: %d\n", GetLastError());
-#else
             fprintf(stderr, "Could not allocate register file: %d\n", errno);
-#endif
             CRASH();
         }
         m_commitEnd = reinterpret_cast<Register*>(reinterpret_cast<char*>(m_buffer) + committedSize);
@@ -255,24 +226,11 @@ namespace JSC {
         if (newEnd > m_max)
             return false;
 
-#if OS(QNX)
-        if (newEnd > m_commitEnd) {
-            size_t size = roundUpAllocationSize(reinterpret_cast<char*>(newEnd) - reinterpret_cast<char*>(m_commitEnd), commitSize);
-            if (mmap(m_commitEnd, size, PROT_READ|PROT_WRITE, MAP_FIXED|MAP_PRIVATE|MAP_ANON, VM_TAG_FOR_REGISTERFILE_MEMORY, 0) == MAP_FAILED) {
-                fprintf(stderr, "Could not grow committed register file memory: %d\n", errno);
-                CRASH();
-            }
-            m_commitEnd = reinterpret_cast<Register*>(reinterpret_cast<char*>(m_commitEnd) + size);
-        }
-#elif !HAVE(MMAP) && HAVE(VIRTUALALLOC)
+#if !HAVE(MMAP) && HAVE(VIRTUALALLOC)
         if (newEnd > m_commitEnd) {
             size_t size = roundUpAllocationSize(reinterpret_cast<char*>(newEnd) - reinterpret_cast<char*>(m_commitEnd), commitSize);
             if (!VirtualAlloc(m_commitEnd, size, MEM_COMMIT, PAGE_READWRITE)) {
-#if OS(WINCE)
-                fprintf(stderr, "Could not allocate register file: %d\n", GetLastError());
-#else
                 fprintf(stderr, "Could not allocate register file: %d\n", errno);
-#endif
                 CRASH();
             }
             m_commitEnd = reinterpret_cast<Register*>(reinterpret_cast<char*>(m_commitEnd) + size);
