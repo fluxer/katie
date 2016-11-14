@@ -459,7 +459,7 @@ set_package_properties(NSL PROPERTIES
 if(NOT KATIE_BOOTSTRAP)
     set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 
-    find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xkb Xinerama Xrandr Xrender X11 Xtst Xt)
+    find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
     set_package_properties(X11 PROPERTIES
         PURPOSE "Required for X11/X.Org integration support"
         DESCRIPTION "Open source implementation of the X Window System"
@@ -588,8 +588,7 @@ endif()
 
 # keep in sync with the gui component CMake file, only definitions setup is needed here
 if(WITH_X11 AND X11_FOUND)
-    # TODO: xim
-    foreach(x11ext Xinerama Xrandr Xrender Xfixes Xcursor Xinput)
+    foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput)
         # X11_${x11ext}_FOUND is set depending on the headers only
         if(NOT X11_${x11ext}_FOUND OR NOT X11_${x11ext}_LIB)
             message(WARNING "The X11 ${x11ext} extension was not found")
@@ -597,10 +596,6 @@ if(WITH_X11 AND X11_FOUND)
             katie_definition(-DQT_NO_${upperext})
         endif()
     endforeach()
-    if(NOT X11_Xkbfile_FOUND)
-        message(WARNING "The X11 Xkbfile extension was not found")
-        katie_definition(-DQT_NO_XKB)
-    endif()
     if(NOT X11_Xext_FOUND)
         message(WARNING "The X11 Xext extension was not found")
         katie_definition(-DQT_NO_XSYNC -DQT_NO_XSHAPE -DQTT_NO_XSHM)

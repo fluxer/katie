@@ -81,6 +81,7 @@
 #define QT_NO_STYLE_MAC
 #define QT_NO_STYLE_S60
 #define QT_NO_STATEMACHINE
+#define QT_NO_XKB
 #define QT_NO_XIM
 #define QT_NO_IM
 #define QT_NO_SOUND
