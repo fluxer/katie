@@ -128,7 +128,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
         QString regkey = QString::fromLatin1("Qt Factory Cache %1.%2/%3:/%4")
                          .arg((QT_VERSION & 0xff0000) >> 16)
                          .arg((QT_VERSION & 0xff00) >> 8)
-                         .arg(d->iid)
+                         .arg(QString::fromLatin1(d->iid.constData()))
                          .arg(fileName);
         QStringList reg, keys;
         reg = settings.value(regkey).toStringList();
