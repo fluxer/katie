@@ -497,6 +497,12 @@ if(ENABLE_TESTING)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
+if(WITH_OPENGLES1 OR WITH_OPENGLES2 AND NOT WITH_EGL)
+    message(FATAL_ERROR "\nOpenGLES requires EGL")
+elseif(NOT (WITH_OPENGLES1 OR WITH_OPENGLES2) AND WITH_EGL)
+    message(FATAL_ERROR "\nEGL requires OpenGLES")
+endif()
+
 # optional packages
 if(NOT WITH_THREADS OR NOT THREADS_FOUND)
     katie_definition(-DQT_NO_THREAD)
@@ -574,11 +580,11 @@ if(NOT WITH_ACCESSIBILITY)
 endif()
 
 if(WITH_OPENGLES1)
-    katie_definition(-DQT_OPENGL_ES_1)
+    katie_definition(-DQT_OPENGL_ES_1 -DQT_OPENGL_ES)
 endif()
 
 if(WITH_OPENGLES2)
-    katie_definition(-DQT_OPENGL_ES_2)
+    katie_definition(-DQT_OPENGL_ES_2 -DQT_OPENGL_ES)
 endif()
 
 # optional packages with interface definition only for convenience
