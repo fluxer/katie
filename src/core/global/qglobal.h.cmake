@@ -979,9 +979,9 @@ typedef double qreal;
 template <typename T>
 Q_DECL_CONSTEXPR inline T qAbs(const T &t) { return t >= 0 ? t : -t; }
 
-Q_DECL_CONSTEXPR inline int qRound(qreal d)
+inline int qRound(qreal d)
 { return int(std::round(d)); }
-Q_DECL_CONSTEXPR inline qint64 qRound64(qreal d)
+inline qint64 qRound64(qreal d)
 { return qint64(std::round(d)); }
 
 template <typename T>
