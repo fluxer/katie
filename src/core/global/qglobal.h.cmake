@@ -44,6 +44,7 @@
 
 #include <qconfig.h>
 #include <stddef.h>
+#include <cmath>
 
 #define QT_VERSION_STR   "${KATIE_VERSION}"
 /*
@@ -979,15 +980,9 @@ template <typename T>
 Q_DECL_CONSTEXPR inline T qAbs(const T &t) { return t >= 0 ? t : -t; }
 
 Q_DECL_CONSTEXPR inline int qRound(qreal d)
-{ return d >= qreal(0.0) ? int(d + qreal(0.5)) : int(d - int(d-1) + qreal(0.5)) + int(d-1); }
-
-#if defined(QT_NO_FPU) || defined(QT_ARCH_ARM)
-Q_DECL_CONSTEXPR inline qint64 qRound64(double d)
-{ return d >= 0.0 ? qint64(d + 0.5) : qint64(d - qreal(qint64(d-1)) + 0.5) + qint64(d-1); }
-#else
+{ return int(std::round(d)); }
 Q_DECL_CONSTEXPR inline qint64 qRound64(qreal d)
-{ return d >= qreal(0.0) ? qint64(d + qreal(0.5)) : qint64(d - qreal(qint64(d-1)) + qreal(0.5)) + qint64(d-1); }
-#endif
+{ return qint64(std::round(d)); }
 
 template <typename T>
 Q_DECL_CONSTEXPR inline const T &qMin(const T &a, const T &b) { return (a < b) ? a : b; }
