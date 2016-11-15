@@ -170,7 +170,7 @@ void Generator::generateCode()
     fprintf(out, "static const uint qt_meta_data_%s[] = {\n", qualifiedClassNameIdentifier.constData());
     fprintf(out, "\n // content:\n");
     fprintf(out, "    %4d,       // revision\n", 6);
-    fprintf(out, "    %4d,       // classname\n", strreg(cdef->qualified));
+    fprintf(out, "    %4d,       // classname\n", strreg(cdef->qualified.constData()));
     fprintf(out, "    %4d, %4d, // classinfo\n", cdef->classInfoList.count(), cdef->classInfoList.count() ? index : 0);
     index += cdef->classInfoList.count() * 2;
 
@@ -299,7 +299,7 @@ void Generator::generateCode()
     QList<QByteArray> extraList;
     for (int i = 0; i < cdef->propertyList.count(); ++i) {
         const PropertyDef &p = cdef->propertyList.at(i);
-        if (!isVariantType(p.type) && !metaTypes.contains(p.type) && !p.type.contains('*') &&
+        if (!isVariantType(p.type.constData()) && !metaTypes.contains(p.type) && !p.type.contains('*') &&
                 !p.type.contains('<') && !p.type.contains('>')) {
             int s = p.type.lastIndexOf("::");
             if (s > 0) {
@@ -373,12 +373,12 @@ void Generator::generateCode()
     fprintf(out, "\nvoid *%s::qt_metacast(const char *_clname)\n{\n", cdef->qualified.constData());
     fprintf(out, "    if (!_clname) return Q_NULLPTR;\n");
     fprintf(out, "    if (!strcmp(_clname, qt_meta_stringdata_%s))\n"
-                  "        return static_cast<void*>(const_cast< %s*>(this));\n",
-            qualifiedClassNameIdentifier.constData(), cdef->classname.constData());
+                  "        return static_cast<void*>(this);\n",
+            qualifiedClassNameIdentifier.constData());
     for (int i = 1; i < cdef->superclassList.size(); ++i) { // for all superclasses but the first one
         if (cdef->superclassList.at(i).second == FunctionDef::Private)
             continue;
-        const char *cname = cdef->superclassList.at(i).first;
+        const char *cname = cdef->superclassList.at(i).first.constData();
         fprintf(out, "    if (!strcmp(_clname, \"%s\"))\n        return static_cast< %s*>(const_cast< %s*>(this));\n",
                 cname, cname, cdef->classname.constData());
     }
@@ -427,7 +427,7 @@ void Generator::generateClassInfos()
 
     for (int i = 0; i < cdef->classInfoList.size(); ++i) {
         const ClassInfoDef &c = cdef->classInfoList.at(i);
-        fprintf(out, "    %4d, %4d,\n", strreg(c.name), strreg(c.value));
+        fprintf(out, "    %4d, %4d,\n", strreg(c.name.constData()), strreg(c.value.constData()));
     }
 }
 
@@ -467,8 +467,11 @@ void Generator::generateFunctions(QList<FunctionDef>& list, const char *functype
             flags |= MethodScriptable;
         if (f.revision > 0)
             flags |= MethodRevisioned;
-        fprintf(out, "    %4d, %4d, %4d, %4d, 0x%02x,\n", strreg(sig),
-                strreg(arguments), strreg(f.normalizedType), strreg(f.tag), flags);
+        fprintf(out, "    %4d, %4d, %4d, %4d, 0x%02x,\n",
+                strreg(sig.constData()),
+                strreg(arguments.constData()),
+                strreg(f.normalizedType.constData()),
+                strreg(f.tag.constData()), flags);
     }
 }
 
@@ -493,10 +496,10 @@ void Generator::generateProperties()
     for (int i = 0; i < cdef->propertyList.count(); ++i) {
         const PropertyDef &p = cdef->propertyList.at(i);
         uint flags = Invalid;
-        if (!isVariantType(p.type)) {
+        if (!isVariantType(p.type.constData())) {
             flags |= EnumOrFlag;
-        } else if (!isQRealType(p.type)) {
-            flags |= qvariant_nameToType(p.type) << 24;
+        } else if (!isQRealType(p.type.constData())) {
+            flags |= qvariant_nameToType(p.type.constData()) << 24;
         }
         if (!p.read.isEmpty())
             flags |= Readable;
@@ -548,9 +551,9 @@ void Generator::generateProperties()
             flags |= Final;
 
         fprintf(out, "    %4d, %4d, ",
-                strreg(p.name),
-                strreg(p.type));
-        if (!(flags >> 24) && isQRealType(p.type))
+                strreg(p.name.constData()),
+                strreg(p.type.constData()));
+        if (!(flags >> 24) && isQRealType(p.type.constData()))
             fprintf(out, "((uint)QMetaType::QReal << 24) | ");
         fprintf(out, "0x%.8x,\n", flags);
     }
@@ -587,7 +590,7 @@ void Generator::generateEnums(int index)
     for (i = 0; i < cdef->enumList.count(); ++i) {
         const EnumDef &e = cdef->enumList.at(i);
         fprintf(out, "    %4d, 0x%.1x, %4d, %4d,\n",
-                 strreg(e.name),
+                 strreg(e.name.constData()),
                  cdef->enumDeclarations.value(e.name) ? 1 : 0,
                  e.values.count(),
                  index);
@@ -600,7 +603,7 @@ void Generator::generateEnums(int index)
         for (int j = 0; j < e.values.count(); ++j) {
             const QByteArray &val = e.values.at(j);
             fprintf(out, "    %4d, uint(%s::%s),\n",
-                    strreg(val),
+                    strreg(val.constData()),
                     cdef->qualified.constData(),
                     val.constData());
         }

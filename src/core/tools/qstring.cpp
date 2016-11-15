@@ -3486,7 +3486,6 @@ QByteArray QString::toAscii() const
     return toLatin1();
 }
 
-#if !defined(Q_WS_MAC) && defined(Q_OS_UNIX)
 static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 {
 #ifndef QT_NO_TEXTCODEC
@@ -3495,7 +3494,6 @@ static QByteArray toLocal8Bit_helper(const QChar *data, int length)
 #endif // QT_NO_TEXTCODEC
     return toLatin1_helper(data, length);
 }
-#endif
 
 /*!
     Returns the local 8-bit representation of the string as a
@@ -4537,7 +4535,8 @@ int QString::localeAwareCompare_helper(const QChar *data1, int length1,
     } // else fall through
 #endif
     // declared in <string.h>
-    int delta = strcoll(toLocal8Bit_helper(data1, length1), toLocal8Bit_helper(data2, length2));
+    int delta = strcoll(toLocal8Bit_helper(data1, length1).constData(),
+                        toLocal8Bit_helper(data2, length2).constData());
     if (delta == 0)
         delta = ucstrcmp(data1, length1, data2, length2);
     return delta;

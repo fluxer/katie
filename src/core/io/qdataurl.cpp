@@ -90,7 +90,7 @@ Q_CORE_EXPORT QPair<QString, QByteArray> qDecodeDataUrl(const QUrl &uri)
             }
 
             if (!data.isEmpty())
-                mimeType = QLatin1String(data.trimmed());
+                mimeType = QString::fromLatin1(data.trimmed().constData());
 
         }
     }

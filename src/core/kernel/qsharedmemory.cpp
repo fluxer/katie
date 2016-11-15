@@ -70,7 +70,7 @@ QString QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
     result.append(part1);
 
     QByteArray hex = QCryptographicHash::hash(key.toUtf8(), QCryptographicHash::Sha1).toHex();
-    result.append(QLatin1String(hex));
+    result.append(QLatin1String(hex.constData()));
 #if defined(QT_POSIX_IPC)
     return QLatin1Char('/') + result;
 #else

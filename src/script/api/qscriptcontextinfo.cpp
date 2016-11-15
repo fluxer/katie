@@ -190,7 +190,7 @@ QScriptContextInfoPrivate::QScriptContextInfoPrivate(const QScriptContext *conte
             QMetaMethod method = meta->method(functionMetaIndex);
             QList<QByteArray> formals = method.parameterNames();
             for (int i = 0; i < formals.count(); ++i)
-                parameterNames.append(QLatin1String(formals.at(i)));
+                parameterNames.append(formals.at(i));
         }
     }
     else if (callee && callee->inherits(&QScript::QtPropertyFunction::info)) {

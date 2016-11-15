@@ -128,7 +128,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
         QString regkey = QString::fromLatin1("Qt Factory Cache %1.%2/%3:/%4")
                          .arg((QT_VERSION & 0xff0000) >> 16)
                          .arg((QT_VERSION & 0xff00) >> 8)
-                         .arg(QLatin1String(d->iid))
+                         .arg(d->iid)
                          .arg(fileName);
         QStringList reg, keys;
         reg = settings.value(regkey).toStringList();
@@ -151,7 +151,7 @@ void QFactoryLoader::updateDir(const QString &pluginDir, QSettings& settings)
                 continue;
             }
             QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instance);
-            if (instance && factory && instance->qt_metacast(d->iid))
+            if (instance && factory && instance->qt_metacast(d->iid.constData()))
                 keys = factory->keys();
             if (keys.isEmpty())
                 library->unload();
@@ -229,7 +229,7 @@ QStringList QFactoryLoader::keys() const
     QObjectList instances = QPluginLoader::staticInstances();
     for (int i = 0; i < instances.count(); ++i)
         if (QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instances.at(i)))
-            if (instances.at(i)->qt_metacast(d->iid))
+            if (instances.at(i)->qt_metacast(d->iid.constData()))
                 keys += factory->keys();
     return keys;
 }
@@ -241,7 +241,7 @@ QObject *QFactoryLoader::instance(const QString &key) const
     QObjectList instances = QPluginLoader::staticInstances();
     for (int i = 0; i < instances.count(); ++i)
         if (QFactoryInterface *factory = qobject_cast<QFactoryInterface*>(instances.at(i)))
-            if (instances.at(i)->qt_metacast(d->iid) && factory->keys().contains(key, Qt::CaseInsensitive))
+            if (instances.at(i)->qt_metacast(d->iid.constData()) && factory->keys().contains(key, Qt::CaseInsensitive))
                 return instances.at(i);
 
     QString lowered = d->cs ? key : key.toLower();

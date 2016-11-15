@@ -623,7 +623,7 @@ static void huntAndEmit(DBusConnection *connection, DBusMessage *msg,
             p = "/";
         qDBusDebug() << QThread::currentThread() << "emitting signal at" << p;
         DBusMessage *msg2 = dbus_message_copy(msg);
-        dbus_message_set_path(msg2, p);
+        dbus_message_set_path(msg2, p.constData());
         dbus_connection_send(connection, msg2, 0);
         dbus_message_unref(msg2);
     }
@@ -1202,7 +1202,7 @@ void QDBusConnectionPrivate::relaySignal(QObject *obj, const QMetaObject *mo, in
 
     QDBusReadLocker locker(RelaySignalAction, this);
     QDBusMessage message = QDBusMessage::createSignal(QLatin1String("/"), interface,
-                                                      QLatin1String(memberName));
+                                                      QLatin1String(memberName.constData()));
     QDBusMessagePrivate::setParametersValidated(message, true);
     message.setArguments(args);
     QDBusError error;
@@ -1240,7 +1240,7 @@ void QDBusConnectionPrivate::serviceOwnerChangedNoLock(const QString &name,
 int QDBusConnectionPrivate::findSlot(QObject* obj, const QByteArray &normalizedName,
                                      QList<int> &params)
 {
-    int midx = obj->metaObject()->indexOfMethod(normalizedName);
+    int midx = obj->metaObject()->indexOfMethod(normalizedName.constData());
     if (midx == -1)
         return -1;
 
@@ -1281,7 +1281,7 @@ bool QDBusConnectionPrivate::prepareHook(QDBusConnectionPrivate::SignalHook &hoo
     QString mname = name;
     if (buildSignature && mname.isNull()) {
         normalizedName.truncate(normalizedName.indexOf('('));
-        mname = QString::fromUtf8(normalizedName);
+        mname = QString::fromUtf8(normalizedName.constData());
     }
     key = mname;
     key.reserve(interface.length() + 1 + mname.length());
@@ -2108,8 +2108,9 @@ void QDBusConnectionPrivate::connectSignal(const QString &key, const SignalHook 
 
     if (connection) {
         if (mode != QDBusConnectionPrivate::PeerMode) {
-            qDBusDebug("Adding rule: %s", hook.matchRule.constData());
-            dbus_bus_add_match(connection, hook.matchRule, NULL);
+            const char* cMatchRule = hook.matchRule.constData();
+            qDBusDebug("Adding rule: %s", cMatchRule);
+            dbus_bus_add_match(connection, cMatchRule, NULL);
 
             // Successfully connected the signal
             // Do we need to watch for this name?
@@ -2188,8 +2189,9 @@ QDBusConnectionPrivate::disconnectSignal(SignalHookHash::Iterator &it)
     // we don't care about errors here
     if (connection && erase) {
         if (mode != QDBusConnectionPrivate::PeerMode) {
-            qDBusDebug("Removing rule: %s", hook.matchRule.constData());
-            dbus_bus_remove_match(connection, hook.matchRule, NULL);
+            const char* cMatchRule = hook.matchRule.constData();
+            qDBusDebug("Removing rule: %s", cMatchRule);
+            dbus_bus_remove_match(connection, cMatchRule, NULL);
 
             // Successfully disconnected the signal
             // Were we watching for this name?

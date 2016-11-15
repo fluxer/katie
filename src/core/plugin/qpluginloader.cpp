@@ -185,7 +185,7 @@ QPluginLoader::~QPluginLoader()
 QObject *QPluginLoader::instance()
 {
     if (!load())
-        return 0;
+        return Q_NULLPTR;
     if (!d->inst && d->instance)
         d->inst = d->instance();
     return d->inst.data();
@@ -276,7 +276,7 @@ void QPluginLoader::setFileName(const QString &fileName)
     if (d) {
         lh = d->loadHints;
         d->release();
-        d = 0;
+        d = Q_NULLPTR;
         did_load = false;
     }
 

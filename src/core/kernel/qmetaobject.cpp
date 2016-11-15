@@ -814,9 +814,9 @@ QMetaProperty QMetaObject::property(int index) const
                 if (scope_name == "Qt")
                     scope = &QObject::staticQtMetaObject;
                 else
-                    scope = QMetaObject_findMetaObject(this, scope_name);
+                    scope = QMetaObject_findMetaObject(this, scope_name.constData());
                 if (scope)
-                    result.menum = scope->enumerator(scope->indexOfEnumerator(enum_name));
+                    result.menum = scope->enumerator(scope->indexOfEnumerator(enum_name.constData()));
             }
         }
     }
@@ -1956,7 +1956,7 @@ QByteArray QMetaEnum::valueToKeys(int value) const
     return keys;
 }
 
-static QByteArray qualifiedName(const QMetaEnum &e)
+inline static QByteArray qualifiedName(const QMetaEnum &e)
 {
     return QByteArray(e.scope()) + "::" + e.name();
 }
@@ -2064,7 +2064,7 @@ QVariant::Type QMetaProperty::type() const
     if (type)
         return QVariant::Type(type);
     if (isEnumType()) {
-        int enumMetaTypeId = QMetaType::type(qualifiedName(menum));
+        int enumMetaTypeId = QMetaType::type(qualifiedName(menum).constData());
         if (enumMetaTypeId == 0)
             return QVariant::Int;
     }
@@ -2092,7 +2092,7 @@ int QMetaProperty::userType() const
     if (tp != QVariant::UserType)
         return tp;
     if (isEnumType()) {
-        int enumMetaTypeId = QMetaType::type(qualifiedName(menum));
+        int enumMetaTypeId = QMetaType::type(qualifiedName(menum).constData());
         return enumMetaTypeId;
     }
     return QMetaType::type(typeName());
@@ -2187,7 +2187,7 @@ QVariant QMetaProperty::read(const QObject *object) const
           type (only works if the enum has already been registered
           with QMetaType)
         */
-        int enumMetaTypeId = QMetaType::type(qualifiedName(menum));
+        int enumMetaTypeId = QMetaType::type(qualifiedName(menum).constData());
         if (enumMetaTypeId != 0)
             t = enumMetaTypeId;
     } else {
@@ -2247,14 +2247,14 @@ bool QMetaProperty::write(QObject *object, const QVariant &value) const
     QVariant v = value;
     uint t = QVariant::Invalid;
     if (isEnumType()) {
-        if (v.type() == QVariant::String
-            ) {
+        if (v.type() == QVariant::String) {
+            const char* cValue = value.toByteArray().constData();
             if (isFlagType())
-                v = QVariant(menum.keysToValue(value.toByteArray()));
+                v = QVariant(menum.keysToValue(cValue));
             else
-                v = QVariant(menum.keyToValue(value.toByteArray()));
+                v = QVariant(menum.keyToValue(cValue));
         } else if (v.type() != QVariant::Int && v.type() != QVariant::UInt) {
-            int enumMetaTypeId = QMetaType::type(qualifiedName(menum));
+            int enumMetaTypeId = QMetaType::type(qualifiedName(menum).constData());
             if ((enumMetaTypeId == 0) || (v.userType() != enumMetaTypeId) || !v.constData())
                 return false;
             v = QVariant(*reinterpret_cast<const int *>(v.constData()));

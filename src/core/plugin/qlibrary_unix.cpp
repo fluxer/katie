@@ -189,9 +189,9 @@ bool QLibraryPrivate::load_sys()
                 attempt = path + prefixes.at(prefix) + name + suffixes.at(suffix);
             }
 #if defined(QT_HPUX_LD)
-            pHnd = (void*)shl_load(QFile::encodeName(attempt), dlFlags, 0);
+            pHnd = (void*)shl_load(QFile::encodeName(attempt).constData(), dlFlags, 0);
 #else
-            pHnd = dlopen(QFile::encodeName(attempt), dlFlags);
+            pHnd = dlopen(QFile::encodeName(attempt).constData(), dlFlags);
 #endif
 
             if (!pHnd && fileName.startsWith(QLatin1Char('/')) && QFile::exists(attempt)) {

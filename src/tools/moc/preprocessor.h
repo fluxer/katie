@@ -71,9 +71,8 @@ public:
     struct IncludePath
     {
         inline explicit IncludePath(const QByteArray &_path)
-            : path(_path), isFrameworkPath(false) {}
+            : path(_path) {}
         QByteArray path;
-        bool isFrameworkPath;
     };
     QList<IncludePath> includes;
     QList<QByteArray> frameworks;

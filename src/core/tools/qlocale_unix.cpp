@@ -80,10 +80,10 @@ struct QSystemLocaleData
             lc_messages_var = lang;
         if (lc_measurement_var.isEmpty())
             lc_measurement_var = lang;
-        lc_numeric = QLocale(QString::fromLatin1(numeric));
-        lc_time = QLocale(QString::fromLatin1(time));
-        lc_monetary = QLocale(QString::fromLatin1(monetary));
-        lc_messages = QLocale(QString::fromLatin1(lc_messages_var));
+        lc_numeric = QLocale(QString::fromLatin1(numeric.constData()));
+        lc_time = QLocale(QString::fromLatin1(time.constData()));
+        lc_monetary = QLocale(QString::fromLatin1(monetary.constData()));
+        lc_messages = QLocale(QString::fromLatin1(lc_messages_var.constData()));
     }
 
     QLocale lc_numeric;
@@ -104,7 +104,7 @@ QLocale QSystemLocale::fallbackLocale() const
         lang = qgetenv("LC_MESSAGES");
     if (lang.isEmpty())
         lang = qgetenv("LANG");
-    return QLocale(QString::fromLatin1(lang));
+    return QLocale(QString::fromLatin1(lang.constData()));
 }
 
 QVariant QSystemLocale::query(QueryType type, QVariant in) const
@@ -196,7 +196,7 @@ QVariant QSystemLocale::query(QueryType type, QVariant in) const
         return QVariant((int)QLocale(meas_locale).measurementSystem());
     }
     case UILanguages: {
-        static QString languages = QString::fromLatin1(qgetenv("LANGUAGE"));
+        static QString languages = QString::fromLatin1(qgetenv("LANGUAGE").constData());
         if (!languages.isEmpty()) {
             QStringList lst = languages.split(QLatin1Char(':'));
             for (int i = 0; i < lst.size();) {

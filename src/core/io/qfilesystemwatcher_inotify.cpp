@@ -119,7 +119,7 @@ QStringList QInotifyFileSystemWatcherEngine::addPaths(const QStringList &paths,
         }
 
         int wd = inotify_add_watch(inotifyFd,
-                                   QFile::encodeName(path),
+                                   QFile::encodeName(path).constData(),
                                    (isDir
                                     ? (0
                                        | IN_ATTRIB

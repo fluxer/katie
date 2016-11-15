@@ -96,12 +96,12 @@ Q_GLOBAL_STATIC(QTextCodecCache, qTextCodecCache)
 
 static bool nameMatch(const QByteArray &name, const QByteArray &test)
 {
-    // if they're the same, return a perfect score
-    if (qstricmp(name, test) == 0)
-        return true;
-
     const char *n = name.constData();
     const char *h = test.constData();
+
+    // if they're the same, return a perfect score
+    if (qstricmp(n, h) == 0)
+        return true;
 
     // if the letters and numbers are the same, we have a match
     while (*n != '\0') {
@@ -298,7 +298,7 @@ static QTextCodec * ru_RU_hack(const char * i) {
         qWarning("QTextCodec: Using KOI8-R, probe failed (%02x %02x %s)",
                   koi8r, latin5, i);
     }
-    setlocale(LC_CTYPE, origlocale);
+    setlocale(LC_CTYPE, origlocale.constData());
 
     return ru_RU_codec;
 }
@@ -423,7 +423,7 @@ static void setupLocaleMapper()
             else if (try_locale_list(pt_154locales, lang))
                 localeMapper = QTextCodec::codecForName("PT 154");
             else if (try_locale_list(probably_koi8_rlocales, lang))
-                localeMapper = ru_RU_hack(lang);
+                localeMapper = ru_RU_hack(lang.constData());
         }
 
     }

@@ -53,7 +53,6 @@ set(CORE_PUBLIC_HEADERS
     QMetaTypeId2
     QContiguousCache
     QFileInfo
-    QNoImplicitBoolCast
     QFutureInterface
     QAbstractFileEngineHandler
     QMetaObjectExtraData

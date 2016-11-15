@@ -267,7 +267,7 @@ void *QThreadPrivate::start(void *arg)
     if (Q_LIKELY(objectName.isEmpty()))
         setCurrentThreadName(thr->d_func()->thread_id, thr->metaObject()->className());
     else
-        setCurrentThreadName(thr->d_func()->thread_id, objectName.toLocal8Bit());
+        setCurrentThreadName(thr->d_func()->thread_id, objectName.toLocal8Bit().constData());
 
 #endif
 

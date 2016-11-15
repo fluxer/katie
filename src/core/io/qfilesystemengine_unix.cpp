@@ -449,7 +449,7 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
                 slash = dirName.length();
             }
             if (slash) {
-                QByteArray chunk = QFile::encodeName(dirName.left(slash));
+                const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
                 QT_STATBUF st;
                 if (QT_STAT(chunk, &st) != -1) {
                     if ((st.st_mode & S_IFMT) != S_IFDIR)
@@ -461,11 +461,8 @@ bool QFileSystemEngine::createDirectory(const QFileSystemEntry &entry, bool crea
         }
         return true;
     }
-#if defined(Q_OS_DARWIN)  // Mac X doesn't support trailing /'s
-    if (dirName.endsWith(QLatin1Char('/')))
-        dirName.chop(1);
-#endif
-    return (QT_MKDIR(QFile::encodeName(dirName), 0777) == 0);
+    const char* cDirName = QFile::encodeName(dirName).constData();
+    return (QT_MKDIR(cDirName, 0777) == 0);
 }
 
 //static
@@ -474,7 +471,7 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
     if (removeEmptyParents) {
         QString dirName = QDir::cleanPath(entry.filePath());
         for (int oldslash = 0, slash=dirName.length(); slash > 0; oldslash = slash) {
-            QByteArray chunk = QFile::encodeName(dirName.left(slash));
+            const char* chunk = QFile::encodeName(dirName.left(slash)).constData();
             QT_STATBUF st;
             if (QT_STAT(chunk, &st) != -1) {
                 if ((st.st_mode & S_IFMT) != S_IFDIR)
@@ -488,7 +485,8 @@ bool QFileSystemEngine::removeDirectory(const QFileSystemEntry &entry, bool remo
         }
         return true;
     }
-    return rmdir(QFile::encodeName(entry.filePath())) == 0;
+    const char* cDirName = QFile::encodeName(entry.filePath()).constData();
+    return rmdir(cDirName) == 0;
 }
 
 //static
@@ -596,7 +594,8 @@ QString QFileSystemEngine::tempPath()
 bool QFileSystemEngine::setCurrentPath(const QFileSystemEntry &path)
 {
     int r;
-    r = QT_CHDIR(path.nativeFilePath());
+    const char* cPath = path.nativeFilePath().constData();
+    r = QT_CHDIR(cPath);
     return r >= 0;
 }
 

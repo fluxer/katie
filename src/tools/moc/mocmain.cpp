@@ -262,19 +262,6 @@ int runMoc(int _argc, char **_argv)
                 pp.includes += Preprocessor::IncludePath(opt.mid(1));
             }
             break;
-        case 'F': // minimalistic framework support for the mac
-            if (!more) {
-                if (!(n < argc-1))
-                    error("Missing path name for the -F option.");
-                Preprocessor::IncludePath p(argv[++n]);
-                p.isFrameworkPath = true;
-                pp.includes += p;
-            } else {
-                Preprocessor::IncludePath p(opt.mid(1));
-                p.isFrameworkPath = true;
-                pp.includes += p;
-            }
-            break;
         case 'D': // define macro
             {
                 QByteArray name;
@@ -358,12 +345,12 @@ int runMoc(int _argc, char **_argv)
         if (moc.includePath.isEmpty()) {
             if (filename.size()) {
                 if (output.size())
-                    moc.includeFiles.append(combinePath(filename, output));
+                    moc.includeFiles.append(combinePath(filename.constData(), output.data()));
                 else
                     moc.includeFiles.append(filename);
             }
         } else {
-            moc.includeFiles.append(combinePath(filename, filename));
+            moc.includeFiles.append(combinePath(filename.constData(), filename.data()));
         }
     }
 
@@ -371,13 +358,9 @@ int runMoc(int _argc, char **_argv)
         filename = "standard input";
         in = stdin;
     } else {
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-		if (fopen_s(&in, filename.data(), "rb")) {
-#else
         in = fopen(filename.data(), "rb");
-		if (!in) {
-#endif
-            fprintf(stderr, "moc: %s: No such file\n", (const char*)filename);
+        if (!in) {
+            fprintf(stderr, "moc: %s: No such file\n", filename.constData());
             return 1;
         }
         moc.filename = filename;
@@ -397,14 +380,10 @@ int runMoc(int _argc, char **_argv)
     // 3. and output meta object code
 
     if (output.size()) { // output file specified
-#if defined(_MSC_VER) && _MSC_VER >= 1400
-        if (fopen_s(&out, output.data(), "w"))
-#else
         out = fopen(output.data(), "w"); // create output file
         if (!out)
-#endif
         {
-            fprintf(stderr, "moc: Cannot create %s\n", (const char*)output);
+            fprintf(stderr, "moc: Cannot create %s\n", output.constData());
             return 1;
         }
     } else { // use stdout

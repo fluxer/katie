@@ -3482,7 +3482,7 @@ QString QUrlPrivate::canonicalHost() const
         if (!_IPLiteral(&ptr))
             that->host.clear();
         else if (needsBraces)
-            that->host = QString::fromLatin1(ba.toLower());
+            that->host = QString::fromLatin1(ba.toLower().constData());
         else
             that->host = host.toLower();
     } else {
@@ -5885,7 +5885,7 @@ QString QUrl::fromPunycode(const QByteArray &pc)
     // strip any ACE prefix
     int start = pc.startsWith("xn--") ? 4 : 0;
     if (!start)
-        return QString::fromLatin1(pc);
+        return QString::fromLatin1(pc.constData());
 
     // find the last delimiter character '-' in the input array. copy
     // all data before this delimiter directly to the output array.
@@ -5965,7 +5965,7 @@ QString QUrl::fromPunycode(const QByteArray &pc)
 */
 QString QUrl::fromAce(const QByteArray &domain)
 {
-    return qt_ACE_do(QString::fromLatin1(domain), NormalizeAce);
+    return qt_ACE_do(QString::fromLatin1(domain.constData()), NormalizeAce);
 }
 
 /*!

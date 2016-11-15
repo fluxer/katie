@@ -558,7 +558,7 @@ bool QTextStreamPrivate::fillReadBuffer(qint64 maxBytes)
     int oldReadBufferSize = readBuffer.size();
 #ifndef QT_NO_TEXTCODEC
     // convert to unicode
-    readBuffer += codec->toUnicode(buffer, bytesRead, &readConverterState);
+    readBuffer += codec->toUnicode(buffer.constData(), bytesRead, &readConverterState);
 #else
     readBuffer += QString::fromLatin1(buffer.constData());
 #endif

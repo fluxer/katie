@@ -401,7 +401,7 @@ bool QProcessPrivate::createChannel(Channel &channel)
         return true;
     } else if (channel.type == Channel::Redirect) {
         // we're redirecting the channel to/from a file
-        QByteArray fname = QFile::encodeName(channel.file);
+        const char* fname = QFile::encodeName(channel.file).constData();
 
         if (&channel == &stdinChannel) {
             // try to open in read-only mode

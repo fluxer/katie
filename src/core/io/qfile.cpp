@@ -59,22 +59,12 @@ static const int QFILE_WRITEBUFFER_SIZE = 16384;
 
 static QByteArray locale_encode(const QString &f)
 {
-#if defined(Q_OS_DARWIN)
-    // Mac always expects UTF-8... and decomposed...
-    return f.normalized(QString::NormalizationForm_D).toUtf8();
-#else
     return f.toLocal8Bit();
-#endif
 }
 
 static QString locale_decode(const QByteArray &f)
 {
-#if defined(Q_OS_DARWIN)
-    // Mac always gives us UTF-8 and decomposed, we want that composed...
-    return QString::fromUtf8(f).normalized(QString::NormalizationForm_C);
-#else
-    return QString::fromLocal8Bit(f);
-#endif
+    return QString::fromLocal8Bit(f.constData());
 }
 
 //************* QFilePrivate

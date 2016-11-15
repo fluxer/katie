@@ -108,8 +108,8 @@ void QPropertyAnimationPrivate::updateMetaProperty()
 
     //propertyType will be set to a valid type only if there is a Q_PROPERTY
     //otherwise it will be set to QVariant::Invalid at the end of this function
-    propertyType = targetValue->property(propertyName).userType();
-    propertyIndex = targetValue->metaObject()->indexOfProperty(propertyName);
+    propertyType = targetValue->property(propertyName.constData()).userType();
+    propertyIndex = targetValue->metaObject()->indexOfProperty(propertyName.constData());
 
     if (propertyType != QVariant::Invalid)
         convertValues(propertyType);

@@ -304,8 +304,10 @@ void Moc::parseFunctionArguments(FunctionDef *def)
             arg.rightType += ' ';
             arg.rightType += lexem();
         }
-        arg.normalizedType = normalizeType(QByteArray(arg.type.name + ' ' + arg.rightType));
-        arg.typeNameForCast = normalizeType(QByteArray(noRef(arg.type.name) + "(*)" + arg.rightType));
+        QByteArray argType = (arg.type.name + ' ' + arg.rightType);
+        QByteArray typeCast = (noRef(arg.type.name) + "(*)" + arg.rightType);
+        arg.normalizedType = normalizeType(argType.constData());
+        arg.typeNameForCast = normalizeType(typeCast.constData());
         if (test(EQ))
             arg.isDefault = true;
         def->arguments += arg;
@@ -408,7 +410,7 @@ bool Moc::parseFunction(FunctionDef *def, bool inMacro)
     if (def->type.referenceType == Type::Reference)
         def->type = Type("void");
 
-    def->normalizedType = normalizeType(def->type.name);
+    def->normalizedType = normalizeType(def->type.name.constData());
 
     if (!test(RPAREN)) {
         parseFunctionArguments(def);
@@ -503,7 +505,7 @@ bool Moc::parseMaybeFunction(const ClassDef *cdef, FunctionDef *def)
     if (def->type.referenceType == Type::Reference)
         def->type = Type("void");
 
-    def->normalizedType = normalizeType(def->type.name);
+    def->normalizedType = normalizeType(def->type.name.constData());
 
     if (!test(RPAREN)) {
         parseFunctionArguments(def);
@@ -781,7 +783,7 @@ void Moc::generate(FILE *out)
     if (i >= 0)
         fn = filename.mid(i);
     fprintf(out, "/****************************************************************************\n"
-            "** Meta object code from reading C++ file '%s'\n**\n" , (const char*)fn);
+            "** Meta object code from reading C++ file '%s'\n**\n" , fn.constData());
     fprintf(out, "** Created by: The Qt Meta Object Compiler version %d (Qt %s)\n**\n" , mocOutputRevision, QT_VERSION_STR);
     fprintf(out, "** WARNING! All changes made in this file will be lost!\n"
             "*****************************************************************************/\n\n");
@@ -807,7 +809,7 @@ void Moc::generate(FILE *out)
         fprintf(out, "#include <QtCore/qmetatype.h>\n");
 
     fprintf(out, "#if !defined(Q_MOC_OUTPUT_REVISION)\n"
-            "#error \"The header file '%s' doesn't include <QObject>.\"\n", (const char *)fn);
+            "#error \"The header file '%s' doesn't include <QObject>.\"\n", fn.constData());
     fprintf(out, "#elif Q_MOC_OUTPUT_REVISION != %d\n", mocOutputRevision);
     fprintf(out, "#error \"This file was generated using the moc from %s."
             " It\"\n#error \"cannot be used with the include files from"
@@ -951,7 +953,7 @@ void Moc::createPropertyDef(PropertyDef &propDef)
       QValueList<QVariant>, the other template class supported by
       QVariant.
     */
-    type = normalizeType(type);
+    type = normalizeType(type.constData());
     if (type == "QMap")
         type = "QMap<QString,QVariant>";
     else if (type == "QValueList")

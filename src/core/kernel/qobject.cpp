@@ -76,15 +76,16 @@ static int *queuedConnectionTypes(const QList<QByteArray> &typeNames)
     Q_CHECK_PTR(types);
     for (int i = 0; i < typeNames.count(); ++i) {
         const QByteArray typeName = typeNames.at(i);
+        const char* cTypeName = typeName.constData();
         if (typeName.endsWith('*'))
             types[i] = QMetaType::VoidStar;
         else
-            types[i] = QMetaType::type(typeName);
+            types[i] = QMetaType::type(cTypeName);
 
         if (!types[i]) {
             qWarning("QObject::connect: Cannot queue arguments of type '%s'\n"
                      "(Make sure '%s' is registered using qRegisterMetaType().)",
-                     typeName.constData(), typeName.constData());
+                     cTypeName, cTypeName);
             delete [] types;
             return 0;
         }
@@ -1938,7 +1939,7 @@ int QObject::receivers(const char *signal) const
     int receivers = 0;
     if (signal) {
         QByteArray signal_name = QMetaObject::normalizedSignature(signal);
-        signal = signal_name;
+        signal = signal_name.constData();
 #ifndef QT_NO_DEBUG
         if (!check_signal_macro(this, signal, "receivers", "bind"))
             return 0;

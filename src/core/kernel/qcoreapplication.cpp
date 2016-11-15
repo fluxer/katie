@@ -1914,7 +1914,7 @@ QStringList QCoreApplication::libraryPaths()
         const QByteArray libPathEnv = qgetenv("QT_PLUGIN_PATH");
         if (!libPathEnv.isEmpty()) {
             const QLatin1Char pathSep(':');
-            QStringList paths = QString::fromLatin1(libPathEnv).split(pathSep, QString::SkipEmptyParts);
+            QStringList paths = QString::fromLatin1(libPathEnv.constData()).split(pathSep, QString::SkipEmptyParts);
             for (QStringList::const_iterator it = paths.constBegin(); it != paths.constEnd(); ++it) {
                 QString canonicalPath = QDir(*it).canonicalPath();
                 if (!canonicalPath.isEmpty()

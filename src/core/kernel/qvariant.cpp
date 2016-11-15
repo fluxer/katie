@@ -2026,7 +2026,7 @@ void QVariant::load(QDataStream &s)
     if (u == QVariant::UserType) {
         QByteArray name;
         s >> name;
-        u = QMetaType::type(name);
+        u = QMetaType::type(name.constData());
         if (!u) {
             s.setStatus(QDataStream::ReadCorruptData);
             return;
