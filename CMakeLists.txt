@@ -249,7 +249,8 @@ set_package_properties(OpenSSL PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(PCRE)
+# v7.7+ required for JavaScript compatibility
+find_package(PCRE 7.7)
 set_package_properties(PCRE PROPERTIES
     PURPOSE "Required for regexp support in script component"
     DESCRIPTION "Perl Compatible Regular Expressions"

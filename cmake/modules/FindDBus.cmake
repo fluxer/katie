@@ -55,6 +55,9 @@ find_library(DBUS_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(DBus DEFAULT_MSG DBUS_INCLUDES DBUS_ARCH_INCLUDES DBUS_LIBRARIES)
+find_package_handle_standard_args(DBus
+    VERSION_VAR PC_DBUS_VERSION
+    REQUIRED_VARS DBUS_LIBRARIES DBUS_INCLUDES DBUS_ARCH_INCLUDES
+)
 
 mark_as_advanced(DBUS_INCLUDES DBUS_ARCH_INCLUDES DBUS_LIBRARIES)

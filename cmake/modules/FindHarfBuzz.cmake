@@ -37,6 +37,9 @@ find_library(HARFBUZZ_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(HarfBuzz DEFAULT_MSG HARFBUZZ_INCLUDES HARFBUZZ_LIBRARIES)
+find_package_handle_standard_args(HarfBuzz
+    VERSION_VAR PC_HARFBUZZ_VERSION
+    REQUIRED_VARS HARFBUZZ_LIBRARIES HARFBUZZ_INCLUDES
+)
 
 mark_as_advanced(HARFBUZZ_INCLUDES HARFBUZZ_LIBRARIES)

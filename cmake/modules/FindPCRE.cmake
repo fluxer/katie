@@ -36,6 +36,9 @@ find_library(PCRE_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(PCRE DEFAULT_MSG PCRE_INCLUDES PCRE_LIBRARIES)
+find_package_handle_standard_args(PCRE
+    VERSION_VAR PC_PCRE_VERSION
+    REQUIRED_VARS PCRE_LIBRARIES PCRE_INCLUDES
+)
 
 mark_as_advanced(PCRE_INCLUDES PCRE_LIBRARIES)

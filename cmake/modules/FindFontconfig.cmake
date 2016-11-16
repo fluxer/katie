@@ -36,6 +36,9 @@ find_library(FONTCONFIG_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Fontconfig DEFAULT_MSG FONTCONFIG_INCLUDES FONTCONFIG_LIBRARIES)
+find_package_handle_standard_args(Fontconfig
+    VERSION_VAR PC_FONTCONFIG_VERSION
+    REQUIRED_VARS FONTCONFIG_LIBRARIES FONTCONFIG_INCLUDES
+)
 
 mark_as_advanced(FONTCONFIG_INCLUDES FONTCONFIG_LIBRARIES)

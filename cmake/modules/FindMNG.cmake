@@ -37,6 +37,9 @@ find_library(MNG_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(MNG DEFAULT_MSG MNG_INCLUDES MNG_LIBRARIES)
+find_package_handle_standard_args(MNG
+    VERSION_VAR PC_MNG_VERSION
+    REQUIRED_VARS MNG_LIBRARIES MNG_INCLUDES
+)
 
 mark_as_advanced(MNG_INCLUDES MNG_LIBRARIES)

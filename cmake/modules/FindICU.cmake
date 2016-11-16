@@ -48,6 +48,9 @@ if(ICU_LIBRARIES AND ICUUC_LIBRARIES)
 endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(ICU DEFAULT_MSG ICU_INCLUDES ICU_LIBRARIES ICUUC_LIBRARIES)
+find_package_handle_standard_args(ICU
+    VERSION_VAR PC_ICU_VERSION
+    REQUIRED_VARS ICU_LIBRARIES ICUUC_LIBRARIES ICU_INCLUDES
+)
 
 mark_as_advanced(ICU_INCLUDES ICU_LIBRARIES ICUUC_LIBRARIES)

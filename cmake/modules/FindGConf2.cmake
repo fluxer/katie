@@ -37,6 +37,9 @@ find_library(GCONF2_LIBRARIES
 )
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(GConf2 DEFAULT_MSG GCONF2_INCLUDES GCONF2_LIBRARIES)
+find_package_handle_standard_args(GConf2
+    VERSION_VAR PC_GCONF2_VERSION
+    REQUIRED_VARS GCONF2_LIBRARIES GCONF2_INCLUDES
+)
 
 mark_as_advanced(GCONF2_INCLUDES GCONF2_LIBRARIES)
