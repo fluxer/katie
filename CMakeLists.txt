@@ -218,6 +218,11 @@ endif()
 # used in qconfig.h
 check_type_size(size_t QT_POINTER_SIZE)
 
+if(KATIE_COMPILER MATCHES "(gcc|clang)")
+    set(QT_VISIBILITY_AVAILABLE TRUE)
+endif()
+
+
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
     ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h

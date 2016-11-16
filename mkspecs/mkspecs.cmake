@@ -78,10 +78,6 @@ if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
 endif()
 
-if("${KATIE_COMPILER}" MATCHES "(gcc|clang)")
-    set(QT_VISIBILITY_AVAILABLE TRUE)
-endif()
-
 # Set compiler standard to C++ 11
 if(NOT CMAKE_VERSION VERSION_LESS "3.1.0")
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
