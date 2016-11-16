@@ -49,6 +49,7 @@
 #include <QtCore/qnamespace.h>
 #include <QtCore/qiodevice.h>
 #include <QtCore/qobjectdefs.h>
+#include <QtCore/qrect.h>
 
 QT_BEGIN_HEADER
 
