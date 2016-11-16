@@ -392,7 +392,6 @@ include(accessible/accessible.cmake)
 include(animation/animation.cmake)
 include(dialogs/dialogs.cmake)
 include(effects/effects.cmake)
-include(egl/egl.cmake)
 include(graphicsview/graphicsview.cmake)
 include(image/image.cmake)
 include(itemviews/itemviews.cmake)
@@ -415,7 +414,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/animation
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
     ${CMAKE_CURRENT_SOURCE_DIR}/effects
-    ${CMAKE_CURRENT_SOURCE_DIR}/egl
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview
     ${CMAKE_CURRENT_SOURCE_DIR}/image
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews
@@ -431,7 +429,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/animation
     ${CMAKE_CURRENT_BINARY_DIR}/dialogs
     ${CMAKE_CURRENT_BINARY_DIR}/effects
-    ${CMAKE_CURRENT_BINARY_DIR}/egl
     ${CMAKE_CURRENT_BINARY_DIR}/graphicsview
     ${CMAKE_CURRENT_BINARY_DIR}/image
     ${CMAKE_CURRENT_BINARY_DIR}/itemviews

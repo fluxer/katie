@@ -123,12 +123,6 @@ add_feature_info(gtk2 WITH_GTK2 "an open source something")
 option(WITH_GCONF2 "Build gconf2 support" ON)
 add_feature_info(gconf2 WITH_GCONF2 "an open source something")
 
-option(WITH_EGL "Build egl support" OFF)
-add_feature_info(egl WITH_EGL "an open source something")
-
-option(WITH_OPENGL "Build opengl support" ON)
-add_feature_info(opengl WITH_OPENGL "an open source something")
-
 option(WITH_FREETYPE "Build freetype2 support" ON)
 add_feature_info(freetype2 WITH_FREETYPE "an open source something")
 
@@ -172,12 +166,6 @@ add_feature_info(utils KATIE_UTILS "developers build option")
 
 option(KATIE_ALLINONE "Build targets from single source file" OFF)
 add_feature_info(allinone KATIE_ALLINONE "experimental build option")
-
-option(WITH_OPENGLES1 "Build opengles1 support" OFF)
-add_feature_info(opengles1 WITH_OPENGLES1 "an open source something")
-
-option(WITH_OPENGLES2 "Build opengles2 support" OFF)
-add_feature_info(opengles2 WITH_OPENGLES2 "an open source something")
 
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
 add_feature_info(accessibility WITH_ACCESSIBILITY "an open source something")
@@ -397,22 +385,6 @@ set_package_properties(GConf2 PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(EGL)
-set_package_properties(EGL PROPERTIES
-    PURPOSE "Required for EGL support"
-    DESCRIPTION "Platform dependent EGL implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
-find_package(OpenGL)
-set_package_properties(OpenGL PROPERTIES
-    PURPOSE "Required for GL/EGL support"
-    DESCRIPTION "Platform dependent OpenGL implementation"
-    URL ""
-    TYPE RECOMMENDED
-)
-
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
@@ -502,19 +474,9 @@ if(ENABLE_TESTING)
     add_definitions(-DQT_BUILD_INTERNAL)
 endif()
 
-if(WITH_OPENGLES1 OR WITH_OPENGLES2 AND NOT WITH_EGL)
-    message(FATAL_ERROR "\nOpenGLES requires EGL")
-elseif(NOT (WITH_OPENGLES1 OR WITH_OPENGLES2) AND WITH_EGL)
-    message(FATAL_ERROR "\nEGL requires OpenGLES")
-endif()
-
 # optional packages
 if(NOT WITH_THREADS OR NOT THREADS_FOUND)
     katie_definition(-DQT_NO_THREAD)
-endif()
-
-if(NOT WITH_EGL OR NOT EGL_FOUND)
-    katie_definition(-DQT_NO_EGL)
 endif()
 
 if(NOT WITH_FREETYPE OR NOT FREETYPE_FOUND)
@@ -543,12 +505,6 @@ endif()
 
 if(NOT WITH_NIS OR NOT NIS_FOUND)
     katie_definition(-DQT_NO_NIS)
-endif()
-
-if(NOT WITH_OPENGL OR NOT OPENGL_FOUND)
-    katie_definition(-DQT_NO_OPENGL)
-else()
-    set(KATIE_COMPONENTS "${KATIE_COMPONENTS} OpenGL")
 endif()
 
 if(NOT WITH_PNG OR NOT PNG_FOUND)
@@ -582,14 +538,6 @@ endif()
 # conditional features
 if(NOT WITH_ACCESSIBILITY)
     katie_definition(-DQT_NO_ACCESSIBILITY)
-endif()
-
-if(WITH_OPENGLES1)
-    katie_definition(-DQT_OPENGL_ES_1 -DQT_OPENGL_ES)
-endif()
-
-if(WITH_OPENGLES2)
-    katie_definition(-DQT_OPENGL_ES_2 -DQT_OPENGL_ES)
 endif()
 
 # optional packages with interface definition only for convenience
@@ -642,9 +590,6 @@ if(NOT KATIE_BOOTSTRAP)
     add_subdirectory(src/gui)
     add_subdirectory(src/imports)
     add_subdirectory(src/network)
-    if(WITH_OPENGL AND OPENGL_FOUND)
-        add_subdirectory(src/opengl)
-    endif()
     add_subdirectory(src/plugins)
     add_subdirectory(src/script)
     add_subdirectory(src/scripttools)
@@ -935,9 +880,6 @@ katie_generate_obsolete(qnetworkconfigurationmanager.h QtNetwork qnetworkconfigm
 katie_generate_obsolete(qnetworkproxyfactory.h QtNetwork qnetworkproxy.h)
 katie_generate_obsolete(qhttppart.h QtNetwork qhttpmultipart.h)
 katie_generate_obsolete(qhttpheader.h QtNetwork qhttp.h)
-katie_generate_obsolete(qglshader.h QtOpenGL qglshaderprogram.h)
-katie_generate_obsolete(qglcontext.h QtOpenGL qgl.h)
-katie_generate_obsolete(qglwidget.h QtOpenGL qgl.h)
 katie_generate_obsolete(qtestaccessibility.h QtTest qtestaccessible.h)
 katie_generate_obsolete(qeventsizeofchecker.h QtTest qtestspontaneevent.h)
 katie_generate_obsolete(qtestkeyclicksevent.h QtTest qtestevent.h)

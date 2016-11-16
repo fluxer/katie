@@ -69,7 +69,7 @@ public:
         // Must match QPixmap::Type
         PixmapType, BitmapType
     };
-    enum ClassId { RasterClass, X11Class, OpenGLClass };
+    enum ClassId { RasterClass, X11Class };
 
     QPixmapData(PixelType pixelType, int classId);
     virtual ~QPixmapData();
@@ -138,8 +138,6 @@ protected:
 private:
     friend class QPixmap;
     friend class QX11PixmapData;
-    friend class QImagePixmapCleanupHooks; // Needs to set is_cached
-    friend class QGLTextureCache; //Needs to check the reference count
     friend class QExplicitlySharedDataPointer<QPixmapData>;
 
     QAtomicInt ref;
@@ -148,7 +146,6 @@ private:
     PixelType type;
     int id;
     int ser_no;
-    uint is_cached;
 };
 
 #  define QT_XFORM_TYPE_MSBFIRST 0

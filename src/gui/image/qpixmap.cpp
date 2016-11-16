@@ -41,7 +41,6 @@
 
 #include "qpixmap.h"
 #include "qpixmapdata_p.h"
-#include "qimagepixmapcleanuphooks_p.h"
 #include "qbitmap.h"
 #include "qcolormap.h"
 #include "qimage.h"
@@ -1226,8 +1225,7 @@ bool QPixmap::convertFromImage(const QImage &image, Qt::ImageConversionFlags fla
 
     In some cases it can be more beneficial to draw the pixmap to a
     painter with a scale set rather than scaling the pixmap. This is
-    the case when the painter is for instance based on OpenGL or when
-    the scale factor changes rapidly.
+    the case when the scale factor changes rapidly.
 
     \sa isNull(), {QPixmap#Pixmap Transformations}{Pixmap
     Transformations}
@@ -1739,9 +1737,6 @@ void QPixmap::detach()
         QRasterPixmapData *rasterData = static_cast<QRasterPixmapData*>(pd);
         rasterData->image.detach();
     }
-
-    if (data->is_cached && data->ref == 1)
-        QImagePixmapCleanupHooks::executePixmapDataModificationHooks(data.data());
 
     if (data->ref != 1) {
         *this = copy();

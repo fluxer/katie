@@ -90,9 +90,8 @@ static const int QGRAPHICSVIEW_PREALLOC_STYLE_OPTIONS = 503; // largest prime < 
 
     By default, QGraphicsView provides a regular QWidget for the viewport
     widget. You can access this widget by calling viewport(), or you can
-    replace it by calling setViewport(). To render using OpenGL, simply call
-    setViewport(new QGLWidget). QGraphicsView takes ownership of the viewport
-    widget.
+    replace it by calling setViewport(). QGraphicsView takes ownership of
+    the viewport widget.
 
     QGraphicsView supports affine transformations, using QTransform. You can
     either pass a matrix to setTransform(), or you can call one of the

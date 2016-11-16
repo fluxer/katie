@@ -50,7 +50,6 @@
 #include "qstringlist.h"
 #include "qvariant.h"
 #include "qcolormap.h"
-#include "qimagepixmapcleanuphooks_p.h"
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -118,7 +117,7 @@ QImageData::QImageData()
       dpmx(qt_defaultDpiX() * 100 / qreal(2.54)),
       dpmy(qt_defaultDpiY() * 100 / qreal(2.54)),
       offset(0, 0), own_data(true), ro_data(false), has_alpha_clut(false),
-      is_cached(false), paintEngine(0)
+      paintEngine(0)
 {
 }
 
@@ -182,7 +181,6 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format, int nu
     d->depth = depth;
     d->format = format;
     d->has_alpha_clut = false;
-    d->is_cached = false;
 
     d->bytes_per_line = bytes_per_line;
 
@@ -200,8 +198,6 @@ QImageData * QImageData::create(const QSize &size, QImage::Format format, int nu
 
 QImageData::~QImageData()
 {
-    if (is_cached)
-        QImagePixmapCleanupHooks::executeImageHooks((((qint64) ser_no) << 32) | ((qint64) detach_no));
     delete paintEngine;
     if (data && own_data)
         free(data);
@@ -1123,9 +1119,6 @@ QImage::operator QVariant() const
 void QImage::detach()
 {
     if (d) {
-        if (d->is_cached && d->ref == 1)
-            QImagePixmapCleanupHooks::executeImageHooks(cacheKey());
-
         if (d->ref != 1 || d->ro_data)
             *this = copy();
 

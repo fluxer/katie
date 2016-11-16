@@ -227,8 +227,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , inDirtyList(0)
       , isScrolled(0)
       , isMoved(0)
-      , isGLWidget(0)
-      , usesDoubleBufferedGLContext(0)
       , inSetParent(0)
 #if defined(Q_WS_X11)
       , picture(0)
@@ -1915,12 +1913,6 @@ void QWidgetPrivate::updateIsOpaque()
 #endif //QT_NO_GRAPHICSEFFECT
 
     Q_Q(QWidget);
-#ifdef Q_WS_X11
-    if (q->testAttribute(Qt::WA_X11OpenGLOverlay)) {
-        setOpaque(false);
-        return;
-    }
-#endif
 
 
     if (q->testAttribute(Qt::WA_OpaquePaintEvent) || q->testAttribute(Qt::WA_PaintOnScreen)) {
@@ -4513,9 +4505,6 @@ void QWidget::unsetCursor()
     active painter (if any) before rendering. For example:
 
     \snippet doc/src/snippets/code/src_gui_kernel_qwidget.cpp 8
-
-    \note To obtain the contents of an OpenGL widget, use QGLWidget::grabFrameBuffer()
-    or QGLWidget::renderPixmap() instead.
 */
 void QWidget::render(QPaintDevice *target, const QPoint &targetOffset,
                      const QRegion &sourceRegion, RenderFlags renderFlags)
@@ -9574,14 +9563,6 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         d->resolveLocale();
         break;
 #ifdef Q_WS_X11
-    case Qt::WA_NoX11EventCompression:
-        if (!d->extra)
-            d->createExtra();
-        d->extra->compress_events = on;
-        break;
-    case Qt::WA_X11OpenGLOverlay:
-        d->updateIsOpaque();
-        break;
     case Qt::WA_X11DoNotAcceptFocus:
         if (testAttribute(Qt::WA_WState_Created))
             d->updateX11AcceptFocus();

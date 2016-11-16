@@ -669,17 +669,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QDBusServiceWatcher", "QtDBus/qdbusservicewatcher.h"},
     { "QDBusUnixFileDescriptor", "QtDBus/qdbusunixfiledescriptor.h"},
     { "QDBusVirtualObject", "QtDBus/qdbusvirtualobject.h"},
-    { "QGLFormat", "QtOpenGL/qgl.h"},
-    { "QGLContext", "QtOpenGL/qgl.h"},
-    { "QGLWidget", "QtOpenGL/qgl.h"},
-    { "QGLBuffer", "QtOpenGL/qglbuffer.h"},
-    { "QGLColormap", "QtOpenGL/qglcolormap.h"},
-    { "QGLFramebufferObject", "QtOpenGL/qglframebufferobject.h"},
-    { "QGLFramebufferObjectFormat", "QtOpenGL/qglframebufferobject.h"},
-    { "QGLFunctions", "QtOpenGL/qglfunctions.h"},
-    { "QGLPixelBuffer", "QtOpenGL/qglpixelbuffer.h"},
-    { "QGLShader", "QtOpenGL/qglshaderprogram.h"},
-    { "QGLShaderProgram", "QtOpenGL/qglshaderprogram.h"},
     { "QDeclarativeComponent", "QtDeclarative/qdeclarativecomponent.h"},
     { "QDeclarativeContext", "QtDeclarative/qdeclarativecontext.h"},
     { "QDeclarativeEngine", "QtDeclarative/qdeclarativeengine.h"},
@@ -715,6 +704,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QSqlRecord", "QtSql/qsqlrecord.h"},
     { "QSqlResult", "QtSql/qsqlresult.h"},
 };
-static const int qclass_lib_count = 709;
+static const int qclass_lib_count = 698;
 
 #endif

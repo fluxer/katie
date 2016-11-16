@@ -1109,9 +1109,7 @@
     \omitvalue WA_DontShowOnScreen
     \omitvalue WA_InvalidSize
     \omitvalue WA_ForceUpdatesDisabled
-    \omitvalue WA_NoX11EventCompression
     \omitvalue WA_TintedBackground
-    \omitvalue WA_X11OpenGLOverlay
     \omitvalue WA_CanHostQMdiSubWindowTitleBar
     \omitvalue WA_AttributeCount
     \omitvalue WA_StyleSheet

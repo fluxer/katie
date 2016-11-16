@@ -229,11 +229,6 @@ incmap = {
         'QDBusSignature': 'qdbusextratypes.h',
         'QDBusVariant': 'qdbusextratypes.h',
         },
-    'QtOpenGL': {
-        'QGLWidget': 'qgl.h',
-        'QGLContext': 'qgl.h',
-        'QGLShader': 'qglshaderprogram.h',
-        },
     'QtXml': {
         'QDomAttr': 'qdom.h',
         'QDomDocument': 'qdom.h',

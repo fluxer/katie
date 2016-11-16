@@ -184,12 +184,10 @@ public:
     enum Type {
         X11,
         PostScript,
-        OpenGL,
         Picture,
         SVG,
         Raster,
         Pdf,
-        OpenGL2,
         PaintBuffer,
 
         User = 50,    // first user type id

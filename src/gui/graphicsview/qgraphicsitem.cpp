@@ -1921,8 +1921,7 @@ QGraphicsItem::CacheMode QGraphicsItem::cacheMode() const
     spends redrawing from the cache. When enabled, the item's paint() function
     will be called only once for each call to update(); for any subsequent
     repaint requests, the Graphics View framework will redraw from the
-    cache. This approach works particularly well with QGLWidget, which stores
-    all the cache as OpenGL textures.
+    cache.
 
     Be aware that QPixmapCache's cache limit may need to be changed to obtain
     optimal performance.
@@ -5644,10 +5643,9 @@ void QGraphicsItem::update(const QRectF &rect)
     simply moving pixels from one location to another using memmove(). In most
     cases this is faster than rerendering the entire area.
 
-    After scrolling, the item will issue an update for the newly exposed
-    areas. If scrolling is not supported (e.g., you are rendering to an OpenGL
-    viewport, which does not benefit from scroll optimizations), this function
-    is equivalent to calling update(\a rect).
+    After scrolling, the item will issue an update for the newly exposed areas.
+    If scrolling is not supported, this function is equivalent to calling
+    update(\a rect).
 
     \bold{Note:} Scrolling is only supported when QGraphicsItem::ItemCoordinateCache
     is enabled; in all other cases calling this function is equivalent to calling

@@ -2789,7 +2789,6 @@ int QWidget::metric(PaintDeviceMetric m) const
 
 void QWidgetPrivate::createSysExtra()
 {
-    extra->compress_events = true;
     extra->xDndProxy = 0;
 }
 

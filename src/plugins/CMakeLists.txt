@@ -19,8 +19,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtSql
     ${CMAKE_BINARY_DIR}/privateinclude/QtSql
-    ${CMAKE_BINARY_DIR}/include/QtOpenGL
-    ${CMAKE_BINARY_DIR}/privateinclude/QtOpenGL
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
     ${CMAKE_CURRENT_SOURCE_DIR}/script
@@ -63,11 +61,6 @@ if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
     endif()
 else()
     include(bearer/generic/generic.cmake)
-endif()
-
-
-if(WITH_OPENGL AND OPENGL_FOUND)
-    include(graphicssystems/opengl/opengl.cmake)
 endif()
 
 

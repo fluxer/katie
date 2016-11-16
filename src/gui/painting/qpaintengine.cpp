@@ -153,11 +153,9 @@ QFont QTextItem::font() const
   Qt 4.0 provides several premade implementations of QPaintEngine for the
   different painter backends we support. We provide one paint engine for each
   window system and painting framework we support. This includes X11 on
-  Unix/Linux and CoreGraphics on Mac OS X. In addition we provide QPaintEngine
-  implementations for OpenGL (accessible through QGLWidget) and PostScript
-  (accessible through QPSPrinter on X11). Additionally there is a raster-based
-  paint engine that is a fallback for when an engine does not support a certain
-  capability.
+  Unix/Linux. In addition we provide PostScript (accessible through
+  QPSPrinter on X11). Additionally there is a raster-based paint engine that
+  is a fallback for when an engine does not support a certain capability.
 
   If one wants to use QPainter to draw to a different backend,
   one must subclass QPaintEngine and reimplement all its virtual
@@ -359,13 +357,11 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
 
     \value X11
     \value PostScript
-    \value OpenGL
     \value SVG Scalable Vector Graphics XML format
     \value Raster
     \value Pdf Portable Document Format
     \value User First user type ID
     \value MaxUser Last user type ID
-    \value OpenGL2
     \value PaintBuffer
 */
 

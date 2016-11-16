@@ -63,16 +63,10 @@ QT_BEGIN_NAMESPACE
 class QStaticTextUserData
 {
 public:
-    enum Type {
-        NoUserData,
-        OpenGLUserData
-    };
-
-    QStaticTextUserData(Type t) : type(t) { ref = 0; }
+    QStaticTextUserData() { ref = 0; }
     virtual ~QStaticTextUserData() {}
 
     QAtomicInt ref;
-    Type type;
 };
 
 class Q_GUI_EXPORT QStaticTextItem

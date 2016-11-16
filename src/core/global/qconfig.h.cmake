@@ -85,6 +85,8 @@
 #define QT_NO_XIM
 #define QT_NO_IM
 #define QT_NO_SOUND
+#define QT_NO_EGL
+#define QT_NO_OPENGL
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -147,7 +149,6 @@
 #cmakedefine QT_NO_DYNAMIC_CAST
 #cmakedefine QT_NO_DYNAMIC_LIBRARY
 #cmakedefine QT_NO_EFFECTS
-#cmakedefine QT_NO_EGL
 #cmakedefine QT_NO_EMIT
 #cmakedefine QT_NO_ERRORMESSAGE
 #cmakedefine QT_NO_EXCEPTIONS

@@ -69,41 +69,29 @@
 #include "qstylesheetstyle_p.h"
 #include "qstyle_p.h"
 #include "qmessagebox.h"
-#include <QtGui/qgraphicsproxywidget.h>
-
+#include "qgraphicsproxywidget.h"
 #include "qkeymapper_p.h"
-
-#ifdef Q_WS_X11
-#include <qt_x11_p.h>
-#endif
-
 #include "qguiplatformplugin_p.h"
-
-#include <qthread.h>
-#include <qthread_p.h>
-
-#include <qfont_p.h>
-
-#include <stdlib.h>
-
-#if defined(Q_WS_X11) && !defined(QT_NO_EGL)
-#include <link.h>
-#endif
-
+#include "qthread.h"
+#include "qthread_p.h"
+#include "qfont_p.h"
 #include "qapplication_p.h"
 #include "qevent_p.h"
 #include "qwidget_p.h"
-
 #include "qapplication.h"
-
 #include "qgesture.h"
 #include "qgesturemanager_p.h"
+#include "qdatetime.h"
 
 #ifndef QT_NO_LIBRARY
 #include "qlibrary.h"
 #endif
 
-#include "qdatetime.h"
+#ifdef Q_WS_X11
+#include <qt_x11_p.h>
+#endif
+
+#include <stdlib.h>
 
 //#define ALIEN_DEBUG
 
@@ -570,7 +558,7 @@ void QApplicationPrivate::process_cmdline()
         \o  -reverse, sets the application's layout direction to
             Qt::RightToLeft
         \o  -graphicssystem, sets the backend to be used for on-screen widgets
-            and QPixmaps. Available options are \c{raster} and \c{opengl}.
+            and QPixmaps. Available options are \c{raster}.
     \endlist
 
     The X11 version of Qt supports some traditional X11 command line options:
@@ -1352,8 +1340,7 @@ QStyle* QApplication::setStyle(const QString& style)
     \since 4.5
 
     Sets the default graphics backend to \a system, which will be used for
-    on-screen widgets and QPixmaps. The available systems are \c{"raster"}
-    and \c{"opengl"}.
+    on-screen widgets and QPixmaps. The available systems is \c{"raster"}.
 
     There are several ways to set the graphics backend, in order of decreasing
     precedence:
@@ -1368,8 +1355,6 @@ QStyle* QApplication::setStyle(const QString& style)
 
     \warning This function is only effective before the QApplication constructor
     is called.
-
-    \note The \c{"opengl"} option is currently experimental.
 */
 
 QString QApplication::graphicsSystem()

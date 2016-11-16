@@ -4657,41 +4657,6 @@ bool QETWidget::translateConfigEvent(const XEvent *event)
         if (isVisible())
             QApplication::syncX();
 
-        if (d->extra->compress_events) {
-            // ConfigureNotify compression for faster opaque resizing
-            XEvent otherEvent;
-            while (XCheckTypedWindowEvent(X11->display, internalWinId(), ConfigureNotify,
-                                          &otherEvent)) {
-                if (qt_x11EventFilter(&otherEvent))
-                    continue;
-
-                if (x11Event(&otherEvent))
-                    continue;
-
-                if (otherEvent.xconfigure.event != otherEvent.xconfigure.window)
-                    continue;
-
-                newSize.setWidth(otherEvent.xconfigure.width);
-                newSize.setHeight(otherEvent.xconfigure.height);
-
-                if (otherEvent.xconfigure.send_event || trust) {
-                    newCPos.rx() = otherEvent.xconfigure.x +
-                                   otherEvent.xconfigure.border_width;
-                    newCPos.ry() = otherEvent.xconfigure.y +
-                                   otherEvent.xconfigure.border_width;
-                    isCPos = true;
-                }
-            }
-#ifndef QT_NO_XSYNC
-            qt_sync_request_event_data sync_event;
-            sync_event.window = internalWinId();
-            for (XEvent ev;;) {
-                if (!XCheckIfEvent(X11->display, &ev, &qt_sync_request_scanner, (XPointer)&sync_event))
-                    break;
-            }
-#endif // QT_NO_XSYNC
-        }
-
         if (!isCPos) {
             // we didn't get an updated position of the toplevel.
             // either we haven't moved or there is a bug in the window manager.

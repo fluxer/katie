@@ -91,7 +91,6 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
     uint own_data : 1;
     uint ro_data : 1;
     uint has_alpha_clut : 1;
-    uint is_cached : 1;
 
     bool checkForAlphaPixels() const;
 

@@ -1293,6 +1293,7 @@ QFont::StyleHint QFont::styleHint() const
     \value System the font matcher prefers system fonts.
 */
 
+#warning opengl leftovers
 /*!
     \enum QFont::StyleStrategy
 

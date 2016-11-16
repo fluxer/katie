@@ -57,14 +57,10 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, graphicsloader,
 
 QGraphicsSystem *QGraphicsSystemFactory::create(const QString& key)
 {
-    QGraphicsSystem *ret = 0;
+    QGraphicsSystem *ret = Q_NULLPTR;
     QString system = key.toLower();
 
-#if defined (QT_GRAPHICSSYSTEM_OPENGL)
-    if (system.isEmpty()) {
-        system = QLatin1String("opengl");
-    }
-#elif defined (QT_GRAPHICSSYSTEM_RASTER) || defined(Q_WS_X11)
+#if defined (QT_GRAPHICSSYSTEM_RASTER) || defined(Q_WS_X11)
     if (system.isEmpty()) {
         system = QLatin1String("raster");
     }

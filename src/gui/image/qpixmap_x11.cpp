@@ -63,7 +63,6 @@
 #include "qx11info_x11.h"
 #include <qdrawhelper_p.h>
 #include <qimage_p.h>
-#include <qimagepixmapcleanuphooks_p.h>
 
 #include <stdlib.h>
 
@@ -1236,12 +1235,6 @@ void QX11PixmapData::fill(const QColor &fillColor)
 
 QX11PixmapData::~QX11PixmapData()
 {
-    // Cleanup hooks have to be called before the handles are freed
-    if (is_cached) {
-        QImagePixmapCleanupHooks::executePixmapDataDestructionHooks(this);
-        is_cached = false;
-    }
-
     release();
 }
 

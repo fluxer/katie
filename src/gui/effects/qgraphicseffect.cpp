@@ -860,12 +860,8 @@ void QGraphicsBlurEffect::draw(QPainter *painter)
         return;
     }
 
-    PixmapPadMode mode = PadToEffectiveBoundingRect;
-    if (painter->paintEngine()->type() == QPaintEngine::OpenGL2)
-        mode = NoPad;
-
     QPoint offset;
-    QPixmap pixmap = sourcePixmap(Qt::LogicalCoordinates, &offset, mode);
+    QPixmap pixmap = sourcePixmap(Qt::LogicalCoordinates, &offset, PadToEffectiveBoundingRect);
     if (pixmap.isNull())
         return;
 
@@ -1052,13 +1048,9 @@ void QGraphicsDropShadowEffect::draw(QPainter *painter)
         return;
     }
 
-    PixmapPadMode mode = PadToEffectiveBoundingRect;
-    if (painter->paintEngine()->type() == QPaintEngine::OpenGL2)
-        mode = NoPad;
-
     // Draw pixmap in device coordinates to avoid pixmap scaling.
     QPoint offset;
-    const QPixmap pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset, mode);
+    const QPixmap pixmap = sourcePixmap(Qt::DeviceCoordinates, &offset, PadToEffectiveBoundingRect);
     if (pixmap.isNull())
         return;
 

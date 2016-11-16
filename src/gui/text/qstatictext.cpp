@@ -127,10 +127,10 @@ QT_BEGIN_NAMESPACE
     If it's the first time the static text is drawn, or if the static text, or the painter's font
     has been altered since the last time it was drawn, the text's layout has to be
     recalculated. On some paint engines, changing the matrix of the painter will also cause the
-    layout to be recalculated. In particular, this will happen for any engine except for the
-    OpenGL2 paint engine. Recalculating the layout will impose an overhead on the
-    QPainter::drawStaticText() call where it occurs. To avoid this overhead in the paint event, you
-    can call prepare() ahead of time to ensure that the layout is calculated.
+    layout to be recalculated. In particular, this will happen for any paint engine. Recalculating
+    the layout will impose an overhead on the QPainter::drawStaticText() call where it occurs. To
+    avoid this overhead in the paint event, you can call prepare() ahead of time to ensure that
+    the layout is calculated.
 
     \sa QPainter::drawText(), QPainter::drawStaticText(), QTextLayout, QTextDocument
 */
@@ -140,9 +140,7 @@ QT_BEGIN_NAMESPACE
 
     This enum the different performance hints that can be set on the QStaticText. These hints
     can be used to indicate that the QStaticText should use additional caches, if possible,
-    to improve performance at the expense of memory. In particular, setting the performance hint
-    AggressiveCaching on the QStaticText will improve performance when using the OpenGL graphics
-    system or when drawing to a QGLWidget.
+    to improve performance at the expense of memory.
 
     \value ModerateCaching Do basic caching for high performance at a low memory cost.
     \value AggressiveCaching Use additional caching when available. This may improve performance
@@ -199,8 +197,8 @@ void QStaticText::detach()
   When drawStaticText() is called, the layout of the QStaticText will be recalculated if any part
   of the QStaticText object has changed since the last time it was drawn. It will also be
   recalculated if the painter's font is not the same as when the QStaticText was last drawn, or,
-  on any other paint engine than the OpenGL2 engine, if the painter's matrix has been altered
-  since the static text was last drawn.
+  on any other paint engine, if the painter's matrix has been altered since the static text was
+    last drawn.
 
   To avoid the overhead of creating the layout the first time you draw the QStaticText after
   making changes, you can use the prepare() function and pass in the \a matrix and \a font you
@@ -298,6 +296,7 @@ QString QStaticText::text() const
     return data->text;
 }
 
+#warning opengl specific PerformanceHint
 /*!
   Sets the performance hint of the QStaticText according to the \a
   performanceHint provided. The \a performanceHint is used to

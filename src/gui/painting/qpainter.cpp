@@ -882,9 +882,6 @@ void QPainterPrivate::updateState(QPainterState *newState)
     should antialias text if possible, and the \l
     {RenderHint}{QPainter::SmoothPixmapTransform} indicates that the
     engine should use a smooth pixmap transformation algorithm.
-    \l {RenderHint}{HighQualityAntialiasing} is an OpenGL-specific rendering hint
-    indicating that the engine should use fragment programs and offscreen
-    rendering for antialiasing.
 
     The renderHints() function returns a flag that specifies the
     rendering hints that are set for this painter.  Use the
@@ -1061,18 +1058,9 @@ void QPainterPrivate::updateState(QPainterState *newState)
     only use the format types QImage::Format_ARGB32_Premultiplied,
     QImage::Format_RGB32 or QImage::Format_RGB16. Any other format,
     including QImage::Format_ARGB32, has significantly worse
-    performance. This engine is also used by default on Windows and on
-    QWS. It can be used as default graphics system on any
-    OS/hardware/software combination by passing \c {-graphicssystem
-    raster} on the command line
-
-    \o OpenGL 2.0 (ES) - This backend is the primary backend for
-    hardware accelerated graphics. It can be run on desktop machines
-    and embedded devices supporting the OpenGL 2.0 or OpenGL/ES 2.0
-    specification. This includes most graphics chips produced in the
-    last couple of years. The engine can be enabled by using QPainter
-    onto a QGLWidget or by passing \c {-graphicssystem opengl} on the
-    command line when the underlying system supports it.
+    performance. This engine is also used by default. It can be used
+    as default graphics system on any OS/hardware/software combination
+    by passing \c {-graphicssystem raster} on the command line
 
     \endlist
 
@@ -1132,10 +1120,6 @@ void QPainterPrivate::updateState(QPainterState *newState)
     \value SmoothPixmapTransform Indicates that the engine should use
     a smooth pixmap transformation algorithm (such as bilinear) rather
     than nearest neighbor.
-
-    \value HighQualityAntialiasing An OpenGL-specific rendering hint
-    indicating that the engine should use fragment programs and offscreen
-    rendering for antialiasing.
 
     \value NonCosmeticDefaultPen The engine should interpret pens with a width
     of 0 (which otherwise enables QPen::isCosmetic()) as being a non-cosmetic
@@ -1680,24 +1664,7 @@ QPaintEngine *QPainter::paintEngine() const
 
     Note that only the states the underlying paint engine changes will be reset
     to their respective default states. The states we reset may change from
-    release to release. The following states are currently reset in the OpenGL
-    2 engine:
-
-    \list
-    \i blending is disabled
-    \i the depth, stencil and scissor tests are disabled
-    \i the active texture unit is reset to 0
-    \i the depth mask, depth function and the clear depth are reset to their
-    default values
-    \i the stencil mask, stencil operation and stencil function are reset to
-    their default values
-     \i the current color is reset to solid white
-    \endlist
-
-    If, for example, the OpenGL polygon mode is changed by the user inside a
-    beginNativePaint()/endNativePainting() block, it will not be reset to the
-    default state by endNativePainting(). Here is an example that shows
-    intermixing of painter commands and raw OpenGL commands:
+    release to release.
 
     \snippet doc/src/snippets/code/src_gui_painting_qpainter.cpp 21
 

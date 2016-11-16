@@ -342,57 +342,55 @@ public:
 
         WA_WindowPropagation = 58,
 
-        WA_NoX11EventCompression = 59,
-        WA_TintedBackground = 60,
-        WA_X11OpenGLOverlay = 61,
-        WA_AlwaysShowToolTips = 62,
-        WA_SetStyle = 63,
+        WA_TintedBackground = 59,
+        WA_AlwaysShowToolTips = 60,
+        WA_SetStyle = 61,
 
-        WA_SetLocale = 64,
+        WA_SetLocale = 62,
 
-        WA_LayoutUsesWidgetRect = 65,
-        WA_StyledBackground = 66, // internal
-        WA_CanHostQMdiSubWindowTitleBar = 67, // Internal
+        WA_LayoutUsesWidgetRect = 63,
+        WA_StyledBackground = 64, // internal
+        WA_CanHostQMdiSubWindowTitleBar = 65, // Internal
 
-        WA_StyleSheet = 68, // internal
+        WA_StyleSheet = 66, // internal
 
-        WA_ShowWithoutActivating = 69,
+        WA_ShowWithoutActivating = 67,
 
-        WA_X11BypassTransientForHint = 70,
+        WA_X11BypassTransientForHint = 68,
 
-        WA_NativeWindow = 71,
-        WA_DontCreateNativeAncestors = 72,
+        WA_NativeWindow = 69,
+        WA_DontCreateNativeAncestors = 70,
 
-        WA_DontShowOnScreen = 73,
+        WA_DontShowOnScreen = 71,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 74,
-        WA_X11NetWmWindowTypeDock = 75,
-        WA_X11NetWmWindowTypeToolBar = 76,
-        WA_X11NetWmWindowTypeMenu = 77,
-        WA_X11NetWmWindowTypeUtility = 78,
-        WA_X11NetWmWindowTypeSplash = 79,
-        WA_X11NetWmWindowTypeDialog = 80,
-        WA_X11NetWmWindowTypeDropDownMenu = 81,
-        WA_X11NetWmWindowTypePopupMenu = 82,
-        WA_X11NetWmWindowTypeToolTip = 83,
-        WA_X11NetWmWindowTypeNotification = 84,
-        WA_X11NetWmWindowTypeCombo = 85,
-        WA_X11NetWmWindowTypeDND = 86,
+        WA_X11NetWmWindowTypeDesktop = 72,
+        WA_X11NetWmWindowTypeDock = 73,
+        WA_X11NetWmWindowTypeToolBar = 74,
+        WA_X11NetWmWindowTypeMenu = 75,
+        WA_X11NetWmWindowTypeUtility = 76,
+        WA_X11NetWmWindowTypeSplash = 77,
+        WA_X11NetWmWindowTypeDialog = 78,
+        WA_X11NetWmWindowTypeDropDownMenu = 79,
+        WA_X11NetWmWindowTypePopupMenu = 80,
+        WA_X11NetWmWindowTypeToolTip = 81,
+        WA_X11NetWmWindowTypeNotification = 82,
+        WA_X11NetWmWindowTypeCombo = 83,
+        WA_X11NetWmWindowTypeDND = 84,
 
-        WA_SetWindowModality = 87,
-        WA_WState_WindowOpacitySet = 88, // internal
-        WA_TranslucentBackground = 89,
+        WA_SetWindowModality = 85,
+        WA_WState_WindowOpacitySet = 86, // internal
+        WA_TranslucentBackground = 87,
 
-        WA_AcceptTouchEvents = 90,
-        WA_WState_AcceptedTouchBeginEvent = 91,
-        WA_TouchPadAcceptSingleTouchEvents = 92,
+        WA_AcceptTouchEvents = 88,
+        WA_WState_AcceptedTouchBeginEvent = 89,
+        WA_TouchPadAcceptSingleTouchEvents = 90,
 
-        WA_LockPortraitOrientation = 93,
-        WA_LockLandscapeOrientation = 94,
-        WA_AutoOrientation = 95,
+        WA_LockPortraitOrientation = 91,
+        WA_LockLandscapeOrientation = 92,
+        WA_AutoOrientation = 93,
 
-        WA_X11DoNotAcceptFocus = 96,
+        WA_X11DoNotAcceptFocus = 94,
 
         // Add new attributes before this line
         WA_AttributeCount
@@ -1436,8 +1434,7 @@ public:
         Pbuffer           = 5,    // GL pbuffer
         FramebufferObject = 6, // GL framebuffer object
         CustomRaster      = 7,
-        PaintBuffer       = 8,
-        OpenGL            = 9
+        PaintBuffer       = 8
     };
     enum RelayoutType {
         RelayoutNormal,

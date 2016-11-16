@@ -217,7 +217,6 @@ struct QWExtra {
 
     // *************************** Platform specific values (bit fields first) **********
 #if defined(Q_WS_X11) // <--------------------------------------------------------- X11
-    uint compress_events : 1;
     WId xDndProxy; // XDND forwarding to embedded windows
 #endif
 };
@@ -634,8 +633,6 @@ public:
     uint inDirtyList : 1;
     uint isScrolled : 1;
     uint isMoved : 1;
-    uint isGLWidget : 1;
-    uint usesDoubleBufferedGLContext : 1;
     uint inSetParent : 1;
 
     // *************************** Platform specific ************************************

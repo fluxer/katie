@@ -91,8 +91,7 @@ public:
         Antialiasing = 0x01,
         TextAntialiasing = 0x02,
         SmoothPixmapTransform = 0x04,
-        HighQualityAntialiasing = 0x08,
-        NonCosmeticDefaultPen = 0x10
+        NonCosmeticDefaultPen = 0x08
     };
 
     Q_DECLARE_FLAGS(RenderHints, RenderHint)
@@ -468,7 +467,6 @@ private:
     friend class QFontEngineXLFD;
     friend class QPaintEngine;
     friend class QPaintEngineExPrivate;
-    friend class QOpenGLPaintEngine;
     friend class QX11PaintEngine;
     friend class QX11PaintEnginePrivate;
     friend class QRasterPaintEngine;
