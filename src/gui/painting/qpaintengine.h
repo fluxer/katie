@@ -184,11 +184,9 @@ public:
     enum Type {
         X11,
         PostScript,
-        Picture,
         SVG,
         Raster,
         Pdf,
-        PaintBuffer,
 
         User = 50,    // first user type id
         MaxUser = 100 // last user type id
@@ -233,7 +231,6 @@ private:
     friend class QWidget;
     friend class QWidgetPrivate;
     friend class QPreviewPaintEngine;
-    friend class QX11GLPixmapData;
 };
 
 

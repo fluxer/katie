@@ -110,12 +110,6 @@ private:
     friend class QX11PaintEngine;
     friend class QX11WindowSurface;
     friend class QRasterWindowSurface;
-    friend class QGLContextPrivate; // Needs to access xinfo, gl_surface & flags
-    friend class QEglContext; // Needs gl_surface
-    friend class QGLContext; // Needs gl_surface
-    friend class QX11GLPixmapData; // Needs gl_surface
-    friend class QMeeGoLivePixmapData; // Needs gl_surface and flags
-    friend bool  qt_createEGLSurfaceForPixmap(QPixmapData*, bool); // Needs gl_surface
 
     void release();
 

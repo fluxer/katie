@@ -63,9 +63,8 @@ QT_BEGIN_NAMESPACE
 
     Since QSvgWidget is a subclass of QWidget, SVG drawings are rendered using the properties
     of the display. More control can be exercised over the rendering process with the
-    QSvgRenderer class, as this can be used to paint onto other paint devices, such as QImage
-    and QGLWidget. The renderer used by the widget can be obtained with the renderer()
-    function.
+    QSvgRenderer class, as this can be used to paint onto other paint devices, such as QImage.
+    The renderer used by the widget can be obtained with the renderer() function.
 
     Each QSvgWidget can be constructed with the file name of a SVG file, or they can be
     constructed without a specific file to render and one can be supplied later. The load()

@@ -112,7 +112,6 @@ public:
     void draw(QPainter *painter, const QPointF &dest, const QPixmap &src, const QRectF &srcRect = QRectF()) const;
 
 private:
-    friend class QGLPixmapConvolutionFilter;
     const qreal *convolutionKernel() const;
     int rows() const;
     int columns() const;
@@ -137,9 +136,6 @@ public:
 
     QRectF boundingRectFor(const QRectF &rect) const;
     void draw(QPainter *painter, const QPointF &dest, const QPixmap &src, const QRectF &srcRect = QRectF()) const;
-
-private:
-    friend class QGLPixmapBlurFilter;
 };
 
 class QPixmapColorizeFilterPrivate;

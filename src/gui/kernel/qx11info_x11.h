@@ -106,7 +106,6 @@ protected:
     friend class QX11PixmapData;
     friend class QWidget;
     friend class QWidgetPrivate;
-    friend class QGLWidget;
     friend void qt_init(QApplicationPrivate *priv, int, Display *display, Qt::HANDLE visual,
                         Qt::HANDLE colormap);
     friend void qt_cleanup();

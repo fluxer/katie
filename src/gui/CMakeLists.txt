@@ -178,7 +178,6 @@ set(GUI_PUBLIC_HEADERS
     QPlatformCursorPrivate
     QPlatformEventLoopIntegration
     QPlatformFontDatabase
-    QPlatformGLContext
     QPlatformIntegration
     QPlatformIntegrationFactoryInterface
     QPlatformIntegrationPlugin

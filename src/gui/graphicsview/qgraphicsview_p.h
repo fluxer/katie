@@ -85,7 +85,6 @@ public:
     quint32 useLastMouseEvent : 1;
     quint32 identityMatrix : 1;
     quint32 dirtyScroll : 1;
-    quint32 accelerateScrolling : 1;
     quint32 keepLastCenterPoint : 1;
     quint32 transforming : 1;
     quint32 handScrolling : 1;

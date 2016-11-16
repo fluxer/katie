@@ -43,7 +43,6 @@
 #define QPAINTDEVICE_H
 
 #include <QtGui/qwindowdefs.h>
-#include <QtCore/qrect.h>
 
 QT_BEGIN_HEADER
 

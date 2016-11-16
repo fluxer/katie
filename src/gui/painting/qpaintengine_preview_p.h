@@ -84,7 +84,8 @@ public:
 
     QList<const QImage *> pages();
 
-    QPaintEngine::Type type() const { return Picture; }
+    // the painter is QImage which is basicly Raster
+    QPaintEngine::Type type() const { return QPaintEngine::Raster; }
 
     void setProxyEngines(QPrintEngine *printEngine, QPaintEngine *paintEngine);
 

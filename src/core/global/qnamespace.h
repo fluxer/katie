@@ -1431,10 +1431,7 @@ public:
         Pixmap            = 2,
         Image             = 3,
         Printer           = 4,
-        Pbuffer           = 5,    // GL pbuffer
-        FramebufferObject = 6, // GL framebuffer object
-        CustomRaster      = 7,
-        PaintBuffer       = 8
+        CustomRaster      = 5
     };
     enum RelayoutType {
         RelayoutNormal,

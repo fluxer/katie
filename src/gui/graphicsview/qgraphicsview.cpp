@@ -156,8 +156,8 @@ static const int QGRAPHICSVIEW_PREALLOC_STYLE_OPTIONS = 503; // largest prime < 
     fastest when QGraphicsView spends more time figuring out what to draw than
     it would spend drawing (e.g., when very many small items are repeatedly
     updated). This is the preferred update mode for viewports that do not
-    support partial updates, such as QGLWidget, and for viewports that need to
-    disable scroll optimization.
+    support partial updates and for viewports that need to disable scroll
+    optimization.
 
     \value MinimalViewportUpdate QGraphicsView will determine the minimal
     viewport region that requires a redraw, minimizing the time spent drawing
@@ -327,7 +327,6 @@ QGraphicsViewPrivate::QGraphicsViewPrivate()
       useLastMouseEvent(false),
       identityMatrix(true),
       dirtyScroll(true),
-      accelerateScrolling(true),
       keepLastCenterPoint(true),
       transforming(false),
       handScrolling(false),
@@ -2511,7 +2510,7 @@ void QGraphicsView::updateScene(const QList<QRectF> &rects)
     d->dirtyRegion = QRegion();
     d->dirtyBoundingRect = QRect();
 
-    bool fullUpdate = !d->accelerateScrolling || d->viewportUpdateMode == QGraphicsView::FullViewportUpdate;
+    bool fullUpdate = (d->viewportUpdateMode == QGraphicsView::FullViewportUpdate);
     bool boundingRectUpdate = (d->viewportUpdateMode == QGraphicsView::BoundingRectViewportUpdate)
                               || (d->viewportUpdateMode == QGraphicsView::SmartViewportUpdate
                                   && ((dirtyViewportRects.size() + rects.size()) >= QGRAPHICSVIEW_REGION_RECT_THRESHOLD));
@@ -2593,16 +2592,10 @@ void QGraphicsView::setupViewport(QWidget *widget)
         return;
     }
 
-    const bool isGLWidget = widget->inherits("QGLWidget");
-
-    d->accelerateScrolling = !(isGLWidget);
-
     widget->setFocusPolicy(Qt::StrongFocus);
 
-    if (!isGLWidget) {
-        // autoFillBackground enables scroll acceleration.
-        widget->setAutoFillBackground(true);
-    }
+    // autoFillBackground enables scroll acceleration.
+    widget->setAutoFillBackground(true);
 
     // We are only interested in mouse tracking if items
     // accept hover events or use non-default cursors or if
@@ -3519,22 +3512,18 @@ void QGraphicsView::scrollContentsBy(int dx, int dy)
 
     if (d->viewportUpdateMode != QGraphicsView::NoViewportUpdate) {
         if (d->viewportUpdateMode != QGraphicsView::FullViewportUpdate) {
-            if (d->accelerateScrolling) {
 #ifndef QT_NO_RUBBERBAND
-                // Update new and old rubberband regions
-                if (!d->rubberBandRect.isEmpty()) {
-                    QRegion rubberBandRegion(d->rubberBandRegion(viewport(), d->rubberBandRect));
-                    rubberBandRegion += rubberBandRegion.translated(-dx, -dy);
-                    viewport()->update(rubberBandRegion);
-                }
-#endif
-                d->dirtyScrollOffset.rx() += dx;
-                d->dirtyScrollOffset.ry() += dy;
-                d->dirtyRegion.translate(dx, dy);
-                viewport()->scroll(dx, dy);
-            } else {
-                d->updateAll();
+            // Update new and old rubberband regions
+            if (!d->rubberBandRect.isEmpty()) {
+                QRegion rubberBandRegion(d->rubberBandRegion(viewport(), d->rubberBandRect));
+                rubberBandRegion += rubberBandRegion.translated(-dx, -dy);
+                viewport()->update(rubberBandRegion);
             }
+#endif
+            d->dirtyScrollOffset.rx() += dx;
+            d->dirtyScrollOffset.ry() += dy;
+            d->dirtyRegion.translate(dx, dy);
+            viewport()->scroll(dx, dy);
         } else {
             d->updateAll();
         }

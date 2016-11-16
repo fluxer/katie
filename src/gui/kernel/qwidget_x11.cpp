@@ -501,6 +501,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 
     QX11Info *parentXinfo = parentWidget ? &parentWidget->d_func()->xinfo : 0;
 
+#warning is this still valid case?
     if (desktop &&
         qt_x11_create_desktop_on_screen >= 0 &&
         qt_x11_create_desktop_on_screen != xinfo.screen()) {
@@ -915,25 +916,12 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
 #endif
 }
 
-static void qt_x11_recreateWidget(QWidget *widget)
+static void qt_x11_recreateNativeWidgetsRecursive(QWidget *widget)
 {
-    if (widget->inherits("QGLWidget")) {
-        // We send QGLWidgets a ParentChange event which causes them to
-        // recreate their GL context, which in turn causes them to choose
-        // their visual again. Now that WA_TranslucentBackground is set,
-        // QGLContext::chooseVisual will select an ARGB visual.
-
-        // QGLWidget expects a ParentAboutToChange to be sent first
-        QEvent aboutToChangeEvent(QEvent::ParentAboutToChange);
-        QApplication::sendEvent(widget, &aboutToChangeEvent);
-
-        QEvent parentChangeEvent(QEvent::ParentChange);
-        QApplication::sendEvent(widget, &parentChangeEvent);
-    } else {
-        // For regular widgets, reparent them with their parent which
-        // also triggers a recreation of the native window
-        QPoint pos = widget->pos();
-        bool visible = widget->isVisible();
+    if (widget->internalWinId()) {
+        // Reparent widgets with their parent which also triggers a recreation of the native window
+        const QPoint pos = widget->pos();
+        const bool visible = widget->isVisible();
         if (visible)
             widget->hide();
 
@@ -942,12 +930,6 @@ static void qt_x11_recreateWidget(QWidget *widget)
         if (visible)
             widget->show();
     }
-}
-
-static void qt_x11_recreateNativeWidgetsRecursive(QWidget *widget)
-{
-    if (widget->internalWinId())
-        qt_x11_recreateWidget(widget);
 
     const QObjectList &children = widget->children();
     for (int i = 0; i < children.size(); ++i) {

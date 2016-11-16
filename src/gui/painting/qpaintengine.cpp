@@ -362,7 +362,6 @@ void QPaintEngine::drawPolygon(const QPoint *points, int pointCount, PolygonDraw
     \value Pdf Portable Document Format
     \value User First user type ID
     \value MaxUser Last user type ID
-    \value PaintBuffer
 */
 
 /*!

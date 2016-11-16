@@ -54,10 +54,6 @@ QT_END_NAMESPACE
 # include "qcoreapplication.h"
 #endif
 
-#ifdef Q_OS_MAC
-#  include "qcore_mac_p.h"
-#endif
-
 #include "qconfig.cpp"
 
 QT_BEGIN_NAMESPACE
@@ -204,16 +200,6 @@ QLibraryInfo::location(LibraryLocation loc)
             baseDir = QFileInfo(qmake_libraryInfoFile()).absolutePath();
 #else
             if (QCoreApplication::instance()) {
-#ifdef Q_OS_MAC
-                CFBundleRef bundleRef = CFBundleGetMainBundle();
-                if (bundleRef) {
-                    QCFType<CFURLRef> urlRef = CFBundleCopyBundleURL(bundleRef);
-                    if (urlRef) {
-                        QCFString path = CFURLCopyFileSystemPath(urlRef, kCFURLPOSIXPathStyle);
-                        return QDir::cleanPath(QString(path) + QLatin1String("/Contents/") + ret);
-                    }
-                }
-#endif
                 baseDir = QCoreApplication::applicationDirPath();
             } else {
                 baseDir = QDir::currentPath();
