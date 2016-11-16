@@ -183,13 +183,11 @@ public:
 
     enum Type {
         X11,
-        QWindowSystem,
         PostScript,
         OpenGL,
         Picture,
         SVG,
         Raster,
-        Direct3D,
         Pdf,
         OpenGL2,
         PaintBuffer,

@@ -336,7 +336,6 @@ set(GUI_PUBLIC_HEADERS
     QWidgetSet
     QWindowsStyle
     QWindowStateChangeEvent
-    QWindowSystemInterface
     QWizard
     QWizardPage
     QWorkspace
