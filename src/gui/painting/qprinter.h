@@ -43,6 +43,7 @@
 #define QPRINTER_H
 
 #include <QtCore/qstring.h>
+#include <QtCore/qrect.h>
 #include <QtCore/qscopedpointer.h>
 #include <QtGui/qpaintdevice.h>
 

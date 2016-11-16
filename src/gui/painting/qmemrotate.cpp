@@ -555,28 +555,6 @@ QT_IMPL_MEMROTATE(quint16, quint8)
 QT_IMPL_MEMROTATE(qrgb444, quint8)
 QT_IMPL_MEMROTATE(quint8, quint8)
 
-struct qrgb_gl_rgba
-{
-public:
-    inline qrgb_gl_rgba(quint32 v) {
-        if (QSysInfo::ByteOrder == QSysInfo::LittleEndian)
-            data = ((v << 16) & 0xff0000) | ((v >> 16) & 0xff) | (v & 0xff00ff00);
-        else
-            data = (v << 8) | ((v >> 24) & 0xff);
-    }
-
-    inline operator quint32() const { return data; }
-
-private:
-    quint32 data;
-};
-
-void Q_GUI_EXPORT qt_memrotate90_gl(const quint32 *src, int srcWidth, int srcHeight, int srcStride,
-                                    quint32 *dest, int dstStride)
-{
-    qt_memrotate90_template(src, srcWidth, srcHeight, srcStride, reinterpret_cast<qrgb_gl_rgba *>(dest), dstStride);
-}
-
 void qt_memrotate90_16(const uchar *srcPixels, int w, int h, int sbpl, uchar *destPixels, int dbpl)
 {
     qt_memrotate90((const ushort *)srcPixels, w, h, sbpl, (ushort *)destPixels, dbpl);

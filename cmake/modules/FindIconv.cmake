@@ -25,7 +25,7 @@ find_path(ICONV_INCLUDES
 
 find_library(ICONV_LIBRARIES
     NAMES
-    iconv libiconv libiconv-2 c
+    iconv c
     HINTS
     $ENV{ICONVDIR}/lib
     ${LIB_INSTALL_DIR}
