@@ -147,7 +147,6 @@ public:
 
 #ifndef QT_NO_CAST_FROM_BYTEARRAY
     operator const char *() const;
-    operator const void *() const;
 #endif
     char *data();
     const char *data() const;
@@ -320,7 +319,7 @@ public:
     bool isNull() const;
 
 private:
-    operator QNoImplicitBoolCast() const;
+    operator bool() const;
     static Data shared_null;
     static Data shared_empty;
     Data *d;
@@ -354,8 +353,6 @@ inline bool QByteArray::isEmpty() const
 { return d->size == 0; }
 #ifndef QT_NO_CAST_FROM_BYTEARRAY
 inline QByteArray::operator const char *() const
-{ return d->data; }
-inline QByteArray::operator const void *() const
 { return d->data; }
 #endif
 inline char *QByteArray::data()
