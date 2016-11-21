@@ -198,7 +198,6 @@ void QLineEditPrivate::init(const QString& txt)
     //   less, horizontal space; and is fixed vertically.
     q->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed, QSizePolicy::LineEdit));
     q->setBackgroundRole(QPalette::Base);
-    q->setAttribute(Qt::WA_KeyCompression);
     q->setMouseTracking(true);
     q->setAcceptDrops(true);
 }

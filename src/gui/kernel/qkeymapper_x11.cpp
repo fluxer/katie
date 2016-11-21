@@ -1278,65 +1278,6 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
         curr_autorep = autor ? event->xkey.keycode : 0;
     }
 
-    // compress keys
-    if (!text.isEmpty() && keyWidget->testAttribute(Qt::WA_KeyCompression) &&
-        // do not compress keys if the key event we just got above matches
-        // one of the key ranges used to compute stopCompression
-        !((code >= Qt::Key_Escape && code <= Qt::Key_SysReq)
-          || (code >= Qt::Key_Home && code <= Qt::Key_PageDown)
-          || (code >= Qt::Key_Super_L && code <= Qt::Key_Direction_R)
-          || (code == 0)
-          || (text.length() == 1 && text.unicode()->unicode() == '\n'))) {
-        // the widget wants key compression so it gets it
-
-        // sync the event queue, this makes key compress work better
-        XSync(dpy, false);
-
-        for (;;) {
-            XEvent        evRelease;
-            XEvent        evPress;
-            if (!XCheckTypedWindowEvent(dpy,event->xkey.window,
-                                        XKeyRelease,&evRelease))
-                break;
-            if (!XCheckTypedWindowEvent(dpy,event->xkey.window,
-                                        XKeyPress,&evPress)) {
-                XPutBackEvent(dpy, &evRelease);
-                break;
-            }
-            QString textIntern;
-            int codeIntern = -1;
-            int countIntern = 0;
-            Qt::KeyboardModifiers modifiersIntern;
-            QEvent::Type t;
-            KeySym keySymIntern;
-            translateKeyEventInternal(keyWidget, &evPress, keySymIntern, countIntern, textIntern,
-                                      modifiersIntern, codeIntern, t);
-            // use stopCompression to stop key compression for the following
-            // key event ranges:
-            bool stopCompression =
-                // 1) misc keys
-                (codeIntern >= Qt::Key_Escape && codeIntern <= Qt::Key_SysReq)
-                // 2) cursor movement
-                || (codeIntern >= Qt::Key_Home && codeIntern <= Qt::Key_PageDown)
-                // 3) extra keys
-                || (codeIntern >= Qt::Key_Super_L && codeIntern <= Qt::Key_Direction_R)
-                // 4) something that a) doesn't translate to text or b) translates
-                //    to newline text
-                || (codeIntern == 0)
-                || (textIntern.length() == 1 && textIntern.unicode()->unicode() == '\n')
-                || (codeIntern == Qt::Key_unknown);
-
-            if (modifiersIntern == modifiers && !textIntern.isEmpty() && !stopCompression) {
-                text += textIntern;
-                count += countIntern;
-            } else {
-                XPutBackEvent(dpy, &evPress);
-                XPutBackEvent(dpy, &evRelease);
-                break;
-            }
-        }
-    }
-
     // autorepeat compression makes sense for all widgets
     if (event->type == XKeyPress && text.length() <= 1) {
         XEvent dummy;

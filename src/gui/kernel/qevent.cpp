@@ -733,10 +733,7 @@ QKeyEvent::~QKeyEvent()
 
     A value of either 0 or Qt::Key_unknown means that the event is not
     the result of a known key; for example, it may be the result of
-    a compose sequence, a keyboard macro, or due to key event
-    compression.
-
-    \sa Qt::WA_KeyCompression
+    a compose sequence, or a keyboard macro.
 */
 
 /*!
@@ -747,8 +744,6 @@ QKeyEvent::~QKeyEvent()
     where modifier keys, such as Shift, Control, Alt, and Meta,
     are being pressed or released. In such cases key() will contain
     a valid value.
-
-    \sa Qt::WA_KeyCompression
 */
 
 /*!
@@ -861,8 +856,6 @@ bool QKeyEvent::matches(QKeySequence::StandardKey matchKey) const
 
     Returns the number of keys involved in this event. If text()
     is not empty, this is simply the length of the string.
-
-    \sa Qt::WA_KeyCompression
 */
 
 

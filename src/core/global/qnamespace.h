@@ -292,105 +292,104 @@ public:
         WA_WState_Hidden = 13,
 
         WA_ForceDisabled = 14,
-        WA_KeyCompression = 15,
-        WA_PendingMoveEvent = 16,
-        WA_PendingResizeEvent = 17,
-        WA_SetPalette = 18,
-        WA_SetFont = 19,
-        WA_SetCursor = 20,
-        WA_NoChildEventsFromChildren = 21,
-        WA_WindowModified = 22,
-        WA_Resized = 23,
-        WA_Moved = 24,
-        WA_PendingUpdate = 25,
-        WA_InvalidSize = 26,
-        WA_CustomWhatsThis = 27,
-        WA_LayoutOnEntireRect = 28,
-        WA_OutsideWSRange = 29,
-        WA_GrabbedShortcut = 30,
-        WA_TransparentForMouseEvents = 31,
-        WA_PaintUnclipped = 32,
-        WA_SetWindowIcon = 33,
-        WA_NoMouseReplay = 34,
-        WA_DeleteOnClose = 35,
-        WA_RightToLeft = 36,
-        WA_SetLayoutDirection = 37,
-        WA_NoChildEventsForParent = 38,
-        WA_ForceUpdatesDisabled = 39,
+        WA_PendingMoveEvent = 15,
+        WA_PendingResizeEvent = 16,
+        WA_SetPalette = 17,
+        WA_SetFont = 18,
+        WA_SetCursor = 19,
+        WA_NoChildEventsFromChildren = 20,
+        WA_WindowModified = 21,
+        WA_Resized = 22,
+        WA_Moved = 23,
+        WA_PendingUpdate = 24,
+        WA_InvalidSize = 25,
+        WA_CustomWhatsThis = 26,
+        WA_LayoutOnEntireRect = 27,
+        WA_OutsideWSRange = 28,
+        WA_GrabbedShortcut = 29,
+        WA_TransparentForMouseEvents = 30,
+        WA_PaintUnclipped = 31,
+        WA_SetWindowIcon = 32,
+        WA_NoMouseReplay = 33,
+        WA_DeleteOnClose = 34,
+        WA_RightToLeft = 35,
+        WA_SetLayoutDirection = 36,
+        WA_NoChildEventsForParent = 37,
+        WA_ForceUpdatesDisabled = 38,
 
-        WA_WState_Created = 40,
-        WA_WState_CompressKeys = 41,
-        WA_WState_InPaintEvent = 42,
-        WA_WState_Reparented = 43,
-        WA_WState_ConfigPending = 44,
-        WA_WState_Polished = 45,
-        WA_WState_DND = 46, // ## deprecated
-        WA_WState_OwnSizePolicy = 47,
-        WA_WState_ExplicitShowHide = 48,
+        WA_WState_Created = 39,
+        WA_WState_CompressKeys = 40,
+        WA_WState_InPaintEvent = 41,
+        WA_WState_Reparented = 42,
+        WA_WState_ConfigPending = 43,
+        WA_WState_Polished = 44,
+        WA_WState_DND = 45, // ## deprecated
+        WA_WState_OwnSizePolicy = 46,
+        WA_WState_ExplicitShowHide = 47,
 
-        WA_ShowModal = 49, // ## deprecated
-        WA_MouseNoMask = 50,
-        WA_GroupLeader = 51, // ## deprecated
-        WA_NoMousePropagation = 52, // ## for now, might go away.
-        WA_Hover = 53,
-        WA_QuitOnClose = 54,
+        WA_ShowModal = 48, // ## deprecated
+        WA_MouseNoMask = 49,
+        WA_GroupLeader = 50, // ## deprecated
+        WA_NoMousePropagation = 51, // ## for now, might go away.
+        WA_Hover = 52,
+        WA_QuitOnClose = 53,
 
-        WA_KeyboardFocusChange = 55,
+        WA_KeyboardFocusChange = 54,
 
-        WA_AcceptDrops = 56,
-        WA_DropSiteRegistered = 57, // internal
+        WA_AcceptDrops = 55,
+        WA_DropSiteRegistered = 56, // internal
 
-        WA_WindowPropagation = 58,
+        WA_WindowPropagation = 57,
 
-        WA_TintedBackground = 59,
-        WA_AlwaysShowToolTips = 60,
-        WA_SetStyle = 61,
+        WA_TintedBackground = 58,
+        WA_AlwaysShowToolTips = 59,
+        WA_SetStyle = 60,
 
-        WA_SetLocale = 62,
+        WA_SetLocale = 61,
 
-        WA_LayoutUsesWidgetRect = 63,
-        WA_StyledBackground = 64, // internal
-        WA_CanHostQMdiSubWindowTitleBar = 65, // Internal
+        WA_LayoutUsesWidgetRect = 62,
+        WA_StyledBackground = 63, // internal
+        WA_CanHostQMdiSubWindowTitleBar = 64, // Internal
 
-        WA_StyleSheet = 66, // internal
+        WA_StyleSheet = 65, // internal
 
-        WA_ShowWithoutActivating = 67,
+        WA_ShowWithoutActivating = 66,
 
-        WA_X11BypassTransientForHint = 68,
+        WA_X11BypassTransientForHint = 67,
 
-        WA_NativeWindow = 69,
-        WA_DontCreateNativeAncestors = 70,
+        WA_NativeWindow = 68,
+        WA_DontCreateNativeAncestors = 69,
 
-        WA_DontShowOnScreen = 71,
+        WA_DontShowOnScreen = 70,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 72,
-        WA_X11NetWmWindowTypeDock = 73,
-        WA_X11NetWmWindowTypeToolBar = 74,
-        WA_X11NetWmWindowTypeMenu = 75,
-        WA_X11NetWmWindowTypeUtility = 76,
-        WA_X11NetWmWindowTypeSplash = 77,
-        WA_X11NetWmWindowTypeDialog = 78,
-        WA_X11NetWmWindowTypeDropDownMenu = 79,
-        WA_X11NetWmWindowTypePopupMenu = 80,
-        WA_X11NetWmWindowTypeToolTip = 81,
-        WA_X11NetWmWindowTypeNotification = 82,
-        WA_X11NetWmWindowTypeCombo = 83,
-        WA_X11NetWmWindowTypeDND = 84,
+        WA_X11NetWmWindowTypeDesktop = 71,
+        WA_X11NetWmWindowTypeDock = 72,
+        WA_X11NetWmWindowTypeToolBar = 73,
+        WA_X11NetWmWindowTypeMenu = 74,
+        WA_X11NetWmWindowTypeUtility = 75,
+        WA_X11NetWmWindowTypeSplash = 76,
+        WA_X11NetWmWindowTypeDialog = 77,
+        WA_X11NetWmWindowTypeDropDownMenu = 78,
+        WA_X11NetWmWindowTypePopupMenu = 79,
+        WA_X11NetWmWindowTypeToolTip = 80,
+        WA_X11NetWmWindowTypeNotification = 81,
+        WA_X11NetWmWindowTypeCombo = 82,
+        WA_X11NetWmWindowTypeDND = 83,
 
-        WA_SetWindowModality = 85,
-        WA_WState_WindowOpacitySet = 86, // internal
-        WA_TranslucentBackground = 87,
+        WA_SetWindowModality = 84,
+        WA_WState_WindowOpacitySet = 85, // internal
+        WA_TranslucentBackground = 86,
 
-        WA_AcceptTouchEvents = 88,
-        WA_WState_AcceptedTouchBeginEvent = 89,
-        WA_TouchPadAcceptSingleTouchEvents = 90,
+        WA_AcceptTouchEvents = 87,
+        WA_WState_AcceptedTouchBeginEvent = 88,
+        WA_TouchPadAcceptSingleTouchEvents = 89,
 
-        WA_LockPortraitOrientation = 91,
-        WA_LockLandscapeOrientation = 92,
-        WA_AutoOrientation = 93,
+        WA_LockPortraitOrientation = 90,
+        WA_LockLandscapeOrientation = 91,
+        WA_AutoOrientation = 92,
 
-        WA_X11DoNotAcceptFocus = 94,
+        WA_X11DoNotAcceptFocus = 93,
 
         // Add new attributes before this line
         WA_AttributeCount

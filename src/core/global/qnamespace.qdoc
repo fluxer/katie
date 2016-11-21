@@ -797,27 +797,6 @@
     \value WA_KeyboardFocusChange Set on a toplevel window when
     the users changes focus with the keyboard (tab, backtab, or shortcut).
 
-    \value WA_KeyCompression Enables key event compression if set,
-    and disables it if not set. By default key compression is off, so
-    widgets receive one key press event for each key press (or more,
-    since autorepeat is usually on). If you turn it on and your
-    program doesn't keep up with key input, Qt may try to compress key
-    events so that more than one character can be processed in each
-    event.
-    For example, a word processor widget might receive 2, 3 or more
-    characters in each QKeyEvent::text(), if the layout recalculation
-    takes too long for the CPU.
-    If a widget supports multiple character unicode input, it is
-    always safe to turn the compression on.
-    Qt performs key event compression only for printable characters.
-    Qt::Modifier keys, cursor movement keys, function keys and
-    miscellaneous action keys (e.g. Escape, Enter, Backspace,
-    PrintScreen) will stop key event compression, even if there are
-    more compressible key events available.
-    Platforms other than X11 do not support this compression, in which
-    case turning it on will have no effect. This is set/cleared by the
-    widget's author.
-
     \value WA_LayoutOnEntireRect Indicates that the widget
     wants QLayout to operate on the entire QWidget::rect(), not only
     on QWidget::contentsRect(). This is set by the widget's author.

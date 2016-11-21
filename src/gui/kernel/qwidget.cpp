@@ -10320,12 +10320,6 @@ void QWidget::languageChange() { }  // compat
 */
 
 /*!
-    \fn void QWidget::setKeyCompression(bool b)
-
-    Use setAttribute(Qt::WA_KeyCompression, b) instead.
-*/
-
-/*!
     \fn void QWidget::setFont(const QFont &f, bool b)
 
     Use the single-argument overload instead.

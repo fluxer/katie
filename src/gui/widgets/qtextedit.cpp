@@ -170,7 +170,6 @@ void QTextEditPrivate::init(const QString &html)
     viewport->setBackgroundRole(QPalette::Base);
     q->setAcceptDrops(true);
     q->setFocusPolicy(Qt::WheelFocus);
-    q->setAttribute(Qt::WA_KeyCompression);
 
 #ifndef QT_NO_CURSOR
     viewport->setCursor(Qt::IBeamCursor);
