@@ -49,7 +49,6 @@ set(DECLARATIVE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativelayoutitem_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativeitemchangelistener_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativegraphicswidget_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativetextlayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativepincharea_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativepincharea_p_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativeimplicitsizeitem_p.h
@@ -88,7 +87,6 @@ set(DECLARATIVE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativelistview.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativelayoutitem.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativegraphicswidget.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativetextlayout.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativepincharea.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems/qdeclarativeimplicitsizeitem.cpp
 )

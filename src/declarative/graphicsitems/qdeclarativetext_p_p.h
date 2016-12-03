@@ -55,15 +55,12 @@
 
 #include "qdeclarativeitem.h"
 #include "qdeclarativeimplicitsizeitem_p_p.h"
-#include "qdeclarativetextlayout_p.h"
-
 #include <qdeclarative.h>
 
 #include <QtGui/qtextlayout.h>
 
 QT_BEGIN_NAMESPACE
 
-class QTextLayout;
 class QTextDocumentWithImageResources;
 
 class Q_AUTOTEST_EXPORT QDeclarativeTextPrivate : public QDeclarativeImplicitSizeItemPrivate
@@ -129,7 +126,7 @@ public:
     QRect setupTextLayout();
     QPixmap textLayoutImage(bool drawStyle);
     void drawTextLayout(QPainter *p, const QPointF &pos, bool drawStyle);
-    QDeclarativeTextLayout layout;
+    QTextLayout layout;
 
     static QPixmap drawOutline(const QPixmap &source, const QPixmap &styleSource);
     static QPixmap drawOutline(const QPixmap &source, const QPixmap &styleSource, int yOffset);
