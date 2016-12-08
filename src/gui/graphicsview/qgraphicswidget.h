@@ -209,7 +209,6 @@ protected:
     virtual void polishEvent();
     virtual void resizeEvent(QGraphicsSceneResizeEvent *event);
     virtual void showEvent(QShowEvent *event);
-    //virtual void tabletEvent(QTabletEvent *event);
     //virtual bool x11Event(XEvent *event);
     virtual void hoverMoveEvent(QGraphicsSceneHoverEvent *event);
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);

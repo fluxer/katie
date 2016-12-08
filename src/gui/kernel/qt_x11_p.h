@@ -88,10 +88,6 @@
 #  include <X11/extensions/shape.h>
 #endif // QT_NO_XSHAPE
 
-#ifndef QT_NO_TABLET
-#  include <X11/extensions/XInput.h>
-#endif // QT_NO_TABLET
-
 #ifndef QT_NO_XINERAMA
 #  include <X11/extensions/Xinerama.h>
 #endif // QT_NO_XINERAMA
@@ -475,14 +471,6 @@ struct QX11Data
         // XEMBED
         _XEMBED,
         _XEMBED_INFO,
-
-        XWacomStylus,
-        XWacomCursor,
-        XWacomEraser,
-
-        XTabletStylus,
-        XTabletEraser,
-        XTablet,
 
         NPredefinedAtoms,
 

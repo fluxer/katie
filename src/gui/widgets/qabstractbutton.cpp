@@ -1035,9 +1035,6 @@ bool QAbstractButton::event(QEvent *e)
     // events. This avoids surprising click-through scenarios
     if (!isEnabled()) {
         switch(e->type()) {
-        case QEvent::TabletPress:
-        case QEvent::TabletRelease:
-        case QEvent::TabletMove:
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonRelease:
         case QEvent::MouseButtonDblClick:

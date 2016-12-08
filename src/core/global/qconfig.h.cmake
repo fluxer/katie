@@ -87,6 +87,8 @@
 #define QT_NO_SOUND
 #define QT_NO_EGL
 #define QT_NO_OPENGL
+#define QT_NO_TABLET
+#define QT_NO_TABLETEVENT
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -300,8 +302,6 @@
 #cmakedefine QT_NO_SYSTEMSEMAPHORE
 #cmakedefine QT_NO_SYSTEMTRAYICON
 #cmakedefine QT_NO_TABBAR
-#cmakedefine QT_NO_TABLET
-#cmakedefine QT_NO_TABLETEVENT
 #cmakedefine QT_NO_TABLEVIEW
 #cmakedefine QT_NO_TABLEWIDGET
 #cmakedefine QT_NO_TABWIDGET

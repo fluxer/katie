@@ -3323,22 +3323,13 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
                     QApplicationPrivate::mouse_buttons |= me->button();
                 else
                     QApplicationPrivate::mouse_buttons &= ~me->button();
-            }
-#if !defined(QT_NO_WHEELEVENT) || !defined(QT_NO_TABLETEVENT)
-            else if (false
-#  ifndef QT_NO_WHEELEVENT
-                     || e->type() == QEvent::Wheel
-#  endif
-#  ifndef QT_NO_TABLETEVENT
-                     || e->type() == QEvent::TabletMove
-                     || e->type() == QEvent::TabletPress
-                     || e->type() == QEvent::TabletRelease
-#  endif
-                     ) {
+        }
+#ifndef QT_NO_WHEELEVENT
+        else if (e->type() == QEvent::Wheel) {
             QInputEvent *ie = static_cast<QInputEvent*>(e);
             QApplicationPrivate::modifier_buttons = ie->modifiers();
         }
-#endif // !QT_NO_WHEELEVENT || !QT_NO_TABLETEVENT
+#endif // !QT_NO_WHEELEVENT
     }
 
 #ifndef QT_NO_GESTURES
@@ -3632,38 +3623,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         }
         break;
 #endif // QT_NO_CONTEXTMENU
-#ifndef QT_NO_TABLETEVENT
-    case QEvent::TabletMove:
-    case QEvent::TabletPress:
-    case QEvent::TabletRelease:
-        {
-            QWidget *w = static_cast<QWidget *>(receiver);
-            QTabletEvent *tablet = static_cast<QTabletEvent*>(e);
-            QPoint relpos = tablet->pos();
-            bool eventAccepted = tablet->isAccepted();
-            while (w) {
-                QTabletEvent te(tablet->type(), relpos, tablet->globalPos(),
-                                tablet->hiResGlobalPos(), tablet->device(), tablet->pointerType(),
-                                tablet->pressure(), tablet->xTilt(), tablet->yTilt(),
-                                tablet->tangentialPressure(), tablet->rotation(), tablet->z(),
-                                tablet->modifiers(), tablet->uniqueId());
-                te.spont = e->spontaneous();
-                res = d->notify_helper(w, w == receiver ? tablet : &te);
-                eventAccepted = ((w == receiver) ? tablet : &te)->isAccepted();
-                e->spont = false;
-                if ((res && eventAccepted)
-                     || w->isWindow()
-                     || w->testAttribute(Qt::WA_NoMousePropagation))
-                    break;
-
-                relpos += w->pos();
-                w = w->parentWidget();
-            }
-            tablet->setAccepted(eventAccepted);
-            qt_tabletChokeMouse = tablet->isAccepted();
-        }
-        break;
-#endif // QT_NO_TABLETEVENT
 
 #if !defined(QT_NO_TOOLTIP) || !defined(QT_NO_WHATSTHIS)
     case QEvent::ToolTip:

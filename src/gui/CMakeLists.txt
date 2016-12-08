@@ -260,12 +260,9 @@ set(GUI_PUBLIC_HEADERS
     QStylePlugin
     QSupportedWritingSystems
     QSwipeGesture
-    QSymbianEvent
-    QSymbianGraphicsSystemHelper
     QSyntaxHighlighter
     QSystemTrayIcon
     QTabBar
-    QTabletEvent
     QTableView
     QTableWidget
     QTableWidgetItem

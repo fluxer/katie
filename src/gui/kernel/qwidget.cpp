@@ -7466,9 +7466,6 @@ bool QWidget::event(QEvent *event)
     // ignore mouse events when disabled
     if (!isEnabled()) {
         switch(event->type()) {
-        case QEvent::TabletPress:
-        case QEvent::TabletRelease:
-        case QEvent::TabletMove:
         case QEvent::MouseButtonPress:
         case QEvent::MouseButtonRelease:
         case QEvent::MouseButtonDblClick:
@@ -7515,13 +7512,6 @@ bool QWidget::event(QEvent *event)
 #ifndef QT_NO_WHEELEVENT
     case QEvent::Wheel:
         wheelEvent((QWheelEvent*)event);
-        break;
-#endif
-#ifndef QT_NO_TABLETEVENT
-    case QEvent::TabletMove:
-    case QEvent::TabletPress:
-    case QEvent::TabletRelease:
-        tabletEvent((QTabletEvent*)event);
         break;
 #endif
     case QEvent::KeyPress: {
@@ -8094,27 +8084,6 @@ void QWidget::wheelEvent(QWheelEvent *event)
     event->ignore();
 }
 #endif // QT_NO_WHEELEVENT
-
-#ifndef QT_NO_TABLETEVENT
-/*!
-    This event handler, for event \a event, can be reimplemented in a
-    subclass to receive tablet events for the widget.
-
-    If you reimplement this handler, it is very important that you
-    \link QTabletEvent ignore()\endlink the event if you do not handle
-    it, so that the widget's parent can interpret it.
-
-    The default implementation ignores the event.
-
-    \sa QTabletEvent::ignore(), QTabletEvent::accept(), event(),
-    QTabletEvent
-*/
-
-void QWidget::tabletEvent(QTabletEvent *event)
-{
-    event->ignore();
-}
-#endif // QT_NO_TABLETEVENT
 
 /*!
     This event handler, for event \a event, can be reimplemented in a
