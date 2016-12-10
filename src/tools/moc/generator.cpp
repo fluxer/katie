@@ -45,10 +45,6 @@
 #include <QtCore/qmetatype.h>
 #include <stdio.h>
 
-#ifndef QT_MOC
-#include <qobject.h>
-#include <qobject_p.h>
-#endif
 #include <qmetaobject_p.h> //for the flags.
 
 QT_BEGIN_NAMESPACE

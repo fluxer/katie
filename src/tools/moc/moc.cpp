@@ -45,10 +45,6 @@
 #include "utils.h"
 #include "outputrevision.h"
 
-#ifndef QT_MOC
-#include <qobject.h>
-#include <qobject_p.h>
-#endif
 // for normalizeTypeInternal
 #include <qmetaobject_p.h>
 
