@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>„Qt“ bibliotekos nesuderinamumo klaida</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1757,7 +1757,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Paskirties failas jau egzistuoja</translation>
@@ -2885,7 +2885,7 @@ Ar vis tiek norite jį pašalinti?</translation>
     </message>
     <message>
         <location line="+221"/>
-        <location line="+84"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Bendroji biblioteka nerasta.</translation>
@@ -3624,7 +3624,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>Nepavyko užmegzti ryšio</translation>
     </message>
@@ -3634,7 +3634,7 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Nepavyko užmegzti ryšio: tvarkyklėje nepalaikomas visas reikiamas funkcionalumas</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+273"/>
         <source>Unable to disable autocommit</source>
         <translation>Nepavyko išjungti automatinio transakcijų patvirtinimo</translation>
     </message>
@@ -3657,19 +3657,19 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-1278"/>
-        <location line="+346"/>
+        <location line="-1246"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: nepavyko nustatyti sakinio atributo „SQL_CURSOR_STATIC“. Patikrinkite ODBC tvarkyklės sąranką</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>Nepavyko įvykdyti sakinio</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-567"/>
         <source>Unable to fetch</source>
         <translation>Nepavyko gauti įrašo</translation>
     </message>
@@ -3689,7 +3689,7 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Nepavyko gauti ankstesnio įrašo</translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+223"/>
         <source>Unable to prepare statement</source>
         <translation>Nepavyko paruošti sakinio</translation>
     </message>
@@ -3699,8 +3699,8 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Nepavyko susieti kintamojo</translation>
     </message>
     <message>
-        <location line="-472"/>
-        <location line="+584"/>
+        <location line="-465"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>Nepavyko gauti paskutinio įrašo</translation>
     </message>
@@ -6927,22 +6927,6 @@ Ar norite jį perrašyti?</translation>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6953,7 +6937,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7242,12 +7226,12 @@ Ar norite jį perrašyti?</translation>
         <translation>Neleistinos vardų erdvės deklaracija.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+32"/>
         <source>Attribute redefined.</source>
         <translation>Atributas apibrėžiamas pakartotinai.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation type="unfinished"></translation>
     </message>

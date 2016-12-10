@@ -183,7 +183,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Inkompatibel Qt Library fejl</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation></translation>
@@ -1757,7 +1757,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Destinationsfil findes</translation>
@@ -2884,7 +2884,7 @@ Do you want to delete it anyway?</source>
         <translation>Plugin-verifikationsdata er sat forkert sammen i &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+322"/>
+        <location line="+307"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Plugin &apos;%1&apos; bruger inkompatibelt Qt-bibliotek. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2894,8 +2894,8 @@ Do you want to delete it anyway?</source>
         <translation>Ukendt fejl&apos;</translation>
     </message>
     <message>
-        <location line="-442"/>
-        <location line="+84"/>
+        <location line="-427"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>DSO blev ikke fundet.</translation>
@@ -3624,7 +3624,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>Kunne ikke forbinde</translation>
     </message>
@@ -3634,7 +3634,7 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+273"/>
         <source>Unable to disable autocommit</source>
         <translation>Kunne ikke slå auto-udfør fra</translation>
     </message>
@@ -3657,24 +3657,24 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-1278"/>
-        <location line="+346"/>
+        <location line="-1246"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: Kunne ikke indstille &apos;SQL_CURSOR_STATIC&apos; til udsagnsattribut. Kontrollér ODBC-driver-konfigurationen</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>Kunne ikke udføre udsagn</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-545"/>
         <source>Unable to fetch next</source>
         <translation>Kunne ikke hente den næste</translation>
     </message>
     <message>
-        <location line="+271"/>
+        <location line="+264"/>
         <source>Unable to prepare statement</source>
         <translation>Kunne ikke forberede udsagn</translation>
     </message>
@@ -3684,13 +3684,13 @@ Do you want to delete it anyway?</source>
         <translation>Kunne ikke tildele variabel</translation>
     </message>
     <message>
-        <location line="-472"/>
-        <location line="+584"/>
+        <location line="-465"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>Kunne ikke hente den sidste</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-671"/>
         <source>Unable to fetch</source>
         <translation>Kunne ikke hente</translation>
     </message>
@@ -6927,22 +6927,6 @@ Vælg et andet filnavn.</translation>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6953,7 +6937,7 @@ Vælg et andet filnavn.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation></translation>
     </message>
@@ -7228,12 +7212,12 @@ Vælg et andet filnavn.</translation>
         <translation>Navnerumspræfiks &apos;%1&apos; ikke deklareret</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Attribute redefined.</source>
         <translation>Attribut redefineret.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>Uventet tegn &apos;%1&apos; i public id værdi.</translation>
     </message>
@@ -7328,7 +7312,7 @@ Vælg et andet filnavn.</translation>
         <translation>Ugyldigt processing-instruction-navn.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-536"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-534"/>
         <location line="+12"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+164"/>
         <location line="+53"/>
@@ -7374,7 +7358,7 @@ Vælg et andet filnavn.</translation>
         <translation>Indhold med forkert enkodning læst.</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+272"/>
         <source>The standalone pseudo attribute must appear after the encoding.</source>
         <translation>Den frie pseudo-attribut skal optræde efter enkodningen.</translation>
     </message>

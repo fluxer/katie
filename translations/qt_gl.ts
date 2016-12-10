@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1758,7 +1758,7 @@ superior, inferior nin vcenter.</translation>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>O ficheiro de destino xa existe</translation>
@@ -2886,7 +2886,7 @@ Desexa aínda así borralo?</translation>
     </message>
     <message>
         <location line="+221"/>
-        <location line="+84"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Non se atopou a biblioteca compartida.</translation>
@@ -3625,7 +3625,7 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>Non foi posíbel conectar</translation>
     </message>
@@ -3635,7 +3635,7 @@ Desexa aínda así borralo?</translation>
         <translation>Non foi posíbel conectar xa que o controlador non permite utilizar todas as funcionalidades requiridas</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+273"/>
         <source>Unable to disable autocommit</source>
         <translation>Non foi posíbel desactivar a entrega automática</translation>
     </message>
@@ -3658,26 +3658,26 @@ Desexa aínda así borralo?</translation>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-1113"/>
-        <location line="+584"/>
+        <location line="-1088"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>Non foi posíbel acadar o último</translation>
     </message>
     <message>
-        <location line="-749"/>
-        <location line="+346"/>
+        <location line="-735"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: Non foi posíbel estabelecer «SQL_CURSOR_STATIC» como 
 atributo da sentenza. Comprobe a configuración do controlador ODBC</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>Non foi posíbel executar a sentenza</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-567"/>
         <source>Unable to fetch</source>
         <translation>Non foi posíbel acadar</translation>
     </message>
@@ -3697,7 +3697,7 @@ atributo da sentenza. Comprobe a configuración do controlador ODBC</translation
         <translation>Non foi posíbel acadar o anterior</translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+223"/>
         <source>Unable to prepare statement</source>
         <translation>Non foi posíbel preparar a sentenza</translation>
     </message>
@@ -6929,22 +6929,6 @@ Desexa sobrescribilo?</translation>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6955,7 +6939,7 @@ Desexa sobrescribilo?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7244,12 +7228,12 @@ Desexa sobrescribilo?</translation>
         <translation>Declaración ilegal de espazo de nomes.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+32"/>
         <source>Attribute redefined.</source>
         <translation>Atributo definido de novo.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>Carácter «%1» inesperado no texto público de identidade.</translation>
     </message>

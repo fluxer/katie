@@ -2151,7 +2151,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+23"/>
         <source>Toolbars</source>
         <translation type="unfinished"></translation>
     </message>

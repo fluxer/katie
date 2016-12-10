@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished">Qt 라이브러리 호환성 오류</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1757,7 +1757,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>대상 파일이 존재함</translation>
@@ -2885,7 +2885,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+221"/>
-        <location line="+84"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>공유 라이브러리를 찾을 수 없습니다.</translation>
@@ -3624,7 +3624,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>연결할 수 없음</translation>
     </message>
@@ -3634,7 +3634,7 @@ Do you want to delete it anyway?</source>
         <translation>연결할 수 없음 - 드라이버가 모든 필요한 기능을 제공하지 않습니다</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+273"/>
         <source>Unable to disable autocommit</source>
         <translation>자동 커밋을 해제할 수 없음</translation>
     </message>
@@ -3657,25 +3657,25 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-1113"/>
-        <location line="+584"/>
+        <location line="-1088"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>마지막 항목을 가져올 수 없음</translation>
     </message>
     <message>
-        <location line="-749"/>
-        <location line="+346"/>
+        <location line="-735"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: &apos;SQL_CURSOR_STATIC&apos;을 구문 속성으로 설정할 수 없음. ODBC 드라이버의 설정을 확인하십시오</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>구문을 실행할 수 없음</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-567"/>
         <source>Unable to fetch</source>
         <translation>항목을 가져올 수 없음</translation>
     </message>
@@ -3695,7 +3695,7 @@ Do you want to delete it anyway?</source>
         <translation>이전 항목을 가져올 수 없음</translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+223"/>
         <source>Unable to prepare statement</source>
         <translation>구문을 준비할 수 없음</translation>
     </message>
@@ -6927,22 +6927,6 @@ Do you want to overwrite it?</source>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6953,7 +6937,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7242,12 +7226,12 @@ Do you want to overwrite it?</source>
         <translation>네임스페이스 선언이 잘못되었습니다.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+32"/>
         <source>Attribute redefined.</source>
         <translation>속성이 재정의되었습니다.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>공개 ID 리터럴에 예상하지 못한 문자 &apos;%1&apos;이(가) 있습니다.</translation>
     </message>

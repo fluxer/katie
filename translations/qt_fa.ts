@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>خطای کتابخانه ناسازگار کیوت</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -1757,7 +1757,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>پرونده مقصد موجود است</translation>
@@ -2885,7 +2885,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <location line="+221"/>
-        <location line="+84"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>کتابخانه اشتراکی پیدا نشد.</translation>
@@ -3624,7 +3624,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>نمی‌توان اتصال برقرار کرد</translation>
     </message>
@@ -3634,7 +3634,7 @@ Do you want to delete it anyway?</source>
         <translation>نمی‌توان اتصال برقرار نمود. درایور تمام عملکردهای لازم را پشتیبانی نمی‌کند</translation>
     </message>
     <message>
-        <location line="+287"/>
+        <location line="+273"/>
         <source>Unable to disable autocommit</source>
         <translation>نمی‌توان ارسال خودکار را غیر‌فعال کرد</translation>
     </message>
@@ -3657,25 +3657,25 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-1113"/>
-        <location line="+584"/>
+        <location line="-1088"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>نمی‌توان آخرین رکورد را واکشی کرد</translation>
     </message>
     <message>
-        <location line="-749"/>
-        <location line="+346"/>
+        <location line="-735"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: نمی‌توان &apos;SQL_CURSOR_STATIC&apos; را به عنوان صفت عبارت نتظیم کرد. لطفاً پیکربندی گردانندهٔ ODBC خود را بررسی کنید</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>نمی‌توان عبارت را اجرا کرد</translation>
     </message>
     <message>
-        <location line="-574"/>
+        <location line="-567"/>
         <source>Unable to fetch</source>
         <translation>نمی‌توان رکورد را واکشی کرد</translation>
     </message>
@@ -3695,7 +3695,7 @@ Do you want to delete it anyway?</source>
         <translation>نمی‌توان رکورد قبلی را واکشی کرد</translation>
     </message>
     <message>
-        <location line="+230"/>
+        <location line="+223"/>
         <source>Unable to prepare statement</source>
         <translation>نمی‌توان عبارت را آماده کرد</translation>
     </message>
@@ -6927,22 +6927,6 @@ Do you want to overwrite it?</source>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6953,7 +6937,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7242,12 +7226,12 @@ Do you want to overwrite it?</source>
         <translation>بیان غیرمجاز فضای‌نامی.</translation>
     </message>
     <message>
-        <location line="+33"/>
+        <location line="+32"/>
         <source>Attribute redefined.</source>
         <translation>بازتعریف صفت.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>نویسهٔ غیرمنتظرهٔ «%1» در رشتهٔ id عمومی.</translation>
     </message>

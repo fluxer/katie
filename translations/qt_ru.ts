@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Активирует главное окно программы</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1758,7 +1758,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Файл существует</translation>
@@ -2885,7 +2885,7 @@ Please verify the correct directory name was given.</source>
         <translation>Проверочная информация для модуля «%1» не совпадает</translation>
     </message>
     <message>
-        <location line="+322"/>
+        <location line="+307"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Модуль «%1» использует несоместимую библиотеку Qt. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2895,8 +2895,8 @@ Please verify the correct directory name was given.</source>
         <translation>Неизвестная ошибка</translation>
     </message>
     <message>
-        <location line="-442"/>
-        <location line="+84"/>
+        <location line="-427"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Динамическая библиотека не найдена.</translation>
@@ -3625,12 +3625,12 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>Невозможно соединиться</translation>
     </message>
     <message>
-        <location line="+293"/>
+        <location line="+279"/>
         <source>Unable to disable autocommit</source>
         <translation>Невозможно отключить автозавершение транзакций</translation>
     </message>
@@ -3650,7 +3650,7 @@ Please verify the correct directory name was given.</source>
         <translation>Невозможно включить автозавершение транзакций</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-322"/>
         <source>Unable to connect - Driver doesn&apos;t support all functionality required</source>
         <translation>Невозможно соединиться - Драйвер не поддерживает требуемый функционал</translation>
     </message>
@@ -3658,24 +3658,24 @@ Please verify the correct directory name was given.</source>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-942"/>
-        <location line="+346"/>
+        <location line="-924"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: Невозможно установить «SQL_CURSOR_STATIC» атрибутом выражение. Проверьте настройки драйвера ODBC</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>Невозможно выполнить выражение</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-545"/>
         <source>Unable to fetch next</source>
         <translation>Невозможно получить следующую строку</translation>
     </message>
     <message>
-        <location line="+271"/>
+        <location line="+264"/>
         <source>Unable to prepare statement</source>
         <translation>Невозможно подготовить выражение</translation>
     </message>
@@ -3685,13 +3685,13 @@ Please verify the correct directory name was given.</source>
         <translation>Невозможно привязать значение</translation>
     </message>
     <message>
-        <location line="-472"/>
-        <location line="+584"/>
+        <location line="-465"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>Невозможно получить последнюю строку</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-671"/>
         <source>Unable to fetch</source>
         <translation>Невозможно получить данные</translation>
     </message>
@@ -6928,22 +6928,6 @@ Please choose a different file name.</source>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6954,7 +6938,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7229,12 +7213,12 @@ Please choose a different file name.</source>
         <translation>Префикс пространства имён «%1» не объявлен</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Attribute redefined.</source>
         <translation>Атрибут переопределён.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>Неожиданный символ «%1» в литерале открытого идентификатора.</translation>
     </message>
@@ -7329,7 +7313,7 @@ Please choose a different file name.</source>
         <translation>Некорректное название обрабатываемой инструкции.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-536"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-534"/>
         <location line="+12"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+164"/>
         <location line="+53"/>
@@ -7375,7 +7359,7 @@ Please choose a different file name.</source>
         <translation>Обнаружено некорректно закодированное содержимое.</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+272"/>
         <source>The standalone pseudo attribute must appear after the encoding.</source>
         <translation>Псевдоатрибут «standalone» должен находиться после указания кодировки.</translation>
     </message>

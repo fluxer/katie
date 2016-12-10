@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1765,7 +1765,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+695"/>
+        <location filename="../src/core/io/qfile.cpp" line="+685"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Le fichier destination existe</translation>
@@ -2893,7 +2893,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Données de vérification du plugin différente dans &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+322"/>
+        <location line="+307"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Le plugin &apos;%1&apos; utilise une bibliothèque Qt incompatible. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2903,8 +2903,8 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Erreur inconnue</translation>
     </message>
     <message>
-        <location line="-442"/>
-        <location line="+84"/>
+        <location line="-427"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>La bibliothèque partagée est introuvable.</translation>
@@ -3633,12 +3633,12 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1877"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+1835"/>
         <source>Unable to connect</source>
         <translation>Incapable d&apos;établir une connexion</translation>
     </message>
     <message>
-        <location line="+293"/>
+        <location line="+279"/>
         <source>Unable to disable autocommit</source>
         <translation>Impossible de désactiver l&apos;autocommit</translation>
     </message>
@@ -3658,7 +3658,7 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible d&apos;activer l&apos;autocommit</translation>
     </message>
     <message>
-        <location line="-336"/>
+        <location line="-322"/>
         <source>Unable to connect - Driver doesn&apos;t support all functionality required</source>
         <translation>Impossible de se connecter - Le pilote ne supporte pas toutes les fonctionnalités nécessaires</translation>
     </message>
@@ -3666,24 +3666,24 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-942"/>
-        <location line="+346"/>
+        <location line="-924"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset : Impossible d&apos;utiliser &apos;SQL_CURSOR_STATIC&apos; comme attribut de requête. Veuillez vérifier la configuration de votre pilote ODBC</translation>
     </message>
     <message>
         <location line="-329"/>
-        <location line="+628"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>Impossible d&apos;exéctuer la requête</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-545"/>
         <source>Unable to fetch next</source>
         <translation>Impossible de récupérer le suivant</translation>
     </message>
     <message>
-        <location line="+271"/>
+        <location line="+264"/>
         <source>Unable to prepare statement</source>
         <translation>Impossible de préparer la requête</translation>
     </message>
@@ -3693,13 +3693,13 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible d&apos;attacher la variable</translation>
     </message>
     <message>
-        <location line="-472"/>
-        <location line="+584"/>
+        <location line="-465"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>Impossible de récupérer le dernier</translation>
     </message>
     <message>
-        <location line="-678"/>
+        <location line="-671"/>
         <source>Unable to fetch</source>
         <translation>Impossible de récupérer</translation>
     </message>
@@ -6937,22 +6937,6 @@ Veuillez choisir un nom de fichier différent.</translation>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6963,7 +6947,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation></translation>
     </message>
@@ -7246,12 +7230,12 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Le préfixe d&apos;espace de noms %1 n&apos;a pas été déclaré</translation>
     </message>
     <message>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Attribute redefined.</source>
         <translation>Redéfinition d&apos;attribut.</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+114"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>Caractère &apos;%1&apos; inattendu pour une valeur d&apos;identifiant public.</translation>
     </message>
@@ -7346,7 +7330,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>nom d&apos;instruction invalide.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-536"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-534"/>
         <location line="+12"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+164"/>
         <location line="+53"/>
@@ -7392,7 +7376,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Du contenu avec un encodage incorrect a été rencontré.</translation>
     </message>
     <message>
-        <location line="+274"/>
+        <location line="+272"/>
         <source>The standalone pseudo attribute must appear after the encoding.</source>
         <translation>Le pseudo-attribut &quot;standalone&quot; doit apparaître après l&apos;encodage.</translation>
     </message>

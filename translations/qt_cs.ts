@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Qt není slučitelná</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1996"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1757,7 +1757,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+905"/>
+        <location filename="../src/core/io/qfile.cpp" line="+895"/>
         <source>Cannot create %1 for output</source>
         <translation>%1 se nepodařilo zřídit pro výstup</translation>
     </message>
@@ -2889,7 +2889,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Knihovnu %1 nelze nahrát: %2</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+693"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+678"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2899,12 +2899,12 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Symbol &quot;%1&quot; nelze v %2 vyřešit: %3</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="-322"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="-307"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Ověřovací data přídavného nesouhlasí v &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+331"/>
+        <location line="+316"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (Cannot mix debug and release libraries.)</source>
         <translation>Přídavný modul &apos;%1&apos; používá neslučitelnou Qt knihovnu. (Knihovny vytvořené v režimu ladění a vydání nemohou být používány společně.)</translation>
     </message>
@@ -2914,8 +2914,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Soubor &apos;%1&apos; není platným přídavným modulem Qt.</translation>
     </message>
     <message>
-        <location line="-86"/>
-        <location line="+84"/>
+        <location line="-71"/>
+        <location line="+69"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Nepodařilo se nalézt sdílenou knihovnu.</translation>
@@ -3624,7 +3624,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QODBCDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+2187"/>
+        <location filename="../src/plugins/sqldrivers/odbc/qsql_odbc.cpp" line="+2131"/>
         <source>Unable to commit transaction</source>
         <translation>Transakci se nepodařilo zapsat</translation>
     </message>
@@ -3639,7 +3639,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>&apos;autocommit&apos;, automatické zapsání, se nepodařilo zastavit</translation>
     </message>
     <message>
-        <location line="-293"/>
+        <location line="-279"/>
         <source>Unable to connect</source>
         <translation>Nepodařilo se navázat spojení</translation>
     </message>
@@ -3649,7 +3649,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Nepodařilo se navázat spojení, protože ovladač nutnou funkcionalitu plně nepodporuje</translation>
     </message>
     <message>
-        <location line="+321"/>
+        <location line="+307"/>
         <source>Unable to rollback transaction</source>
         <translation>Transakci se nepodařilo zvrátit</translation>
     </message>
@@ -3657,24 +3657,24 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
 <context>
     <name>QODBCResult</name>
     <message>
-        <location line="-626"/>
+        <location line="-608"/>
         <source>Unable to bind variable</source>
         <translation>Proměnnou se nepodařilo provést</translation>
     </message>
     <message>
-        <location line="-620"/>
-        <location line="+628"/>
+        <location line="-613"/>
+        <location line="+621"/>
         <source>Unable to execute statement</source>
         <translation>Příkaz se nepodařilo provést</translation>
     </message>
     <message>
-        <location line="-552"/>
+        <location line="-545"/>
         <source>Unable to fetch next</source>
         <translation>Další datový záznam se nepodařilo natáhnout</translation>
     </message>
     <message>
         <location line="+72"/>
-        <location line="+584"/>
+        <location line="+577"/>
         <source>Unable to fetch last</source>
         <translation>Poslední datový záznam se nepodařilo natáhnout</translation>
     </message>
@@ -3684,7 +3684,7 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Příkaz se nepodařilo spustit</translation>
     </message>
     <message>
-        <location line="-230"/>
+        <location line="-223"/>
         <source>Unable to fetch previous</source>
         <translation>Předchozí datový záznam se nepodařilo natáhnout</translation>
     </message>
@@ -3694,8 +3694,8 @@ Ověřte, prosím, že byl zadán správný název souboru.</translation>
         <translation>Nepodařilo se natáhnout žádná data</translation>
     </message>
     <message>
-        <location line="-71"/>
-        <location line="+346"/>
+        <location line="-64"/>
+        <location line="+339"/>
         <source>QODBCResult::reset: Unable to set &apos;SQL_CURSOR_STATIC&apos; as statement attribute. Please check your ODBC driver configuration</source>
         <translation>QODBCResult::reset: &apos;SQL_CURSOR_STATIC&apos; se nepodařilo nastavit jako příkaz vlastnosti . Ověřte, prosím, nastavení svého ODBC ovladače</translation>
     </message>
@@ -6927,22 +6927,6 @@ Zvolte, prosím, pro soubor jiný název.</translation>
     </message>
 </context>
 <context>
-    <name>QView3DPlugin</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_plugin.cpp" line="+63"/>
-        <source>3D View</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QView3DTool</name>
-    <message>
-        <location filename="../src/plugins/designer/view3d/view3d_tool.cpp" line="+48"/>
-        <source>3DView</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QWhatsThisAction</name>
     <message>
         <location filename="../src/gui/kernel/qwhatsthis.cpp" line="+488"/>
@@ -6953,7 +6937,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5368"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7207,12 +7191,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Odkaz na nevyhodnocenou entitu &apos;%1&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+1735"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+1733"/>
         <source>Unexpected character &apos;%1&apos; in public id literal.</source>
         <translation>&apos;%1&apos; není platným znakem v údaji veřejného id, který je tvořen písmeny.</translation>
     </message>
     <message>
-        <location line="-160"/>
+        <location line="-158"/>
         <location line="+12"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="-109"/>
         <location line="+53"/>
@@ -7225,7 +7209,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Neplatný znak XML.</translation>
     </message>
     <message>
-        <location line="+1137"/>
+        <location line="+1135"/>
         <source>Expected character data.</source>
         <translation>Byly očekávány údaje o znacích.</translation>
     </message>
@@ -7245,7 +7229,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Název pokynu pro zpracování je neplatný.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-221"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-219"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>Předpona jmenného prostoru &apos;%1&apos; nebyla prohlášena</translation>
     </message>
@@ -7262,17 +7246,17 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1 není platným názvem pokynu pro zpracování.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+244"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+242"/>
         <source>The standalone pseudo attribute must appear after the encoding.</source>
         <translation>Pseudovlastnost standalone musí následovat bezprostředně po kódování.</translation>
     </message>
     <message>
-        <location line="-553"/>
+        <location line="-551"/>
         <source>Sequence &apos;]]&gt;&apos; not allowed in content.</source>
         <translation>Sled znaků &apos;]]&gt;&apos; není v obsahu povolen.</translation>
     </message>
     <message>
-        <location line="+555"/>
+        <location line="+553"/>
         <source>%1 is an invalid encoding name.</source>
         <translation>%1 není platným názvem pro kódování.</translation>
     </message>
@@ -7312,18 +7296,18 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Počet otevírajících prvků neodpovídá počtu zavírajících prvků.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-319"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-317"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="-703"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>Byl nalezen obsah s neplatným kódováním.</translation>
     </message>
     <message>
-        <location line="+301"/>
+        <location line="+299"/>
         <source>Invalid attribute in XML declaration.</source>
         <translation>Deklarace XML obsahuje neplatnou vlastnost.</translation>
     </message>
     <message>
-        <location line="-193"/>
+        <location line="-192"/>
         <source>Attribute redefined.</source>
         <translation>Vlastnost byla nově vymezena.</translation>
     </message>
@@ -7333,7 +7317,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>%1 není platným údajem VEŘEJNÉHO identifikátoru (id).</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-1031"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="-1030"/>
         <location filename="../src/core/xml/qxmlstream_p.h" line="+129"/>
         <source>Extra content at end of document.</source>
         <translation>Přebytečný obsah za koncem dokumentu.</translation>
@@ -7344,7 +7328,7 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Neplatný název XML.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+1240"/>
+        <location filename="../src/core/xml/qxmlstream.cpp" line="+1238"/>
         <source>Premature end of document.</source>
         <translation>Předčasný konec dokumentu.</translation>
     </message>
@@ -7369,12 +7353,12 @@ Zvolte, prosím, pro soubor jiný název.</translation>
         <translation>Na tomto místě neplatný &apos; </translation>
     </message>
     <message>
-        <location line="-1021"/>
+        <location line="-1019"/>
         <source>Invalid entity value.</source>
         <translation>Neplatná hodnota entity.</translation>
     </message>
     <message>
-        <location line="+930"/>
+        <location line="+928"/>
         <source>Encoding %1 is unsupported</source>
         <translation>Kódování %1 není podporováno</translation>
     </message>
