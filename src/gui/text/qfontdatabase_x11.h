@@ -1954,10 +1954,13 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             initializeDb();
 
         const bool mainThread = (qApp->thread() == QThread::currentThread());
+#ifdef QT_BUILD_INTERNAL
         if (qt_enable_test_font && req.family == QLatin1String("__Qt__Box__Engine__")) {
             fe = new QTestFontEngine(req.pixelSize);
             fe->fontDef = req;
-        } else if (d->rawMode) {
+        } else
+#endif
+        if (d->rawMode) {
             if (mainThread)
                 fe = loadRaw(d, req);
 #ifndef QT_NO_FONTCONFIG

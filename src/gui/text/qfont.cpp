@@ -1293,7 +1293,6 @@ QFont::StyleHint QFont::styleHint() const
     \value System the font matcher prefers system fonts.
 */
 
-#warning opengl leftovers
 /*!
     \enum QFont::StyleStrategy
 
@@ -1312,8 +1311,6 @@ QFont::StyleHint QFont::styleHint() const
     \value ForceOutline forces the use of outline fonts.
     \value NoAntialias don't antialias the fonts.
     \value PreferAntialias antialias if possible.
-    \value OpenGLCompatible forces the use of OpenGL compatible
-           fonts.
     \value NoFontMerging If the font selected for a certain writing system
            does not contain a character requested to draw, then Qt automatically chooses a similar
            looking font that contains the character. The NoFontMerging flag disables this feature.

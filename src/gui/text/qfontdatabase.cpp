@@ -230,14 +230,10 @@ struct QtFontStyle
 #ifdef Q_WS_X11
         delete [] weightName;
         delete [] setwidthName;
-#endif
-#if defined(Q_WS_X11)
         while (count) {
             // bitfield count-- in while condition does not work correctly in mwccsym2
             count--;
-#ifdef Q_WS_X11
             free(pixelSizes[count].encodings);
-#endif
         }
 #endif
         free(pixelSizes);
@@ -589,7 +585,7 @@ void QFontDatabasePrivate::invalidate()
 {
     QFontCache::instance()->clear();
     free();
-    emit static_cast<QApplication *>(QApplication::instance())->fontDatabaseChanged();
+    emit qApp->fontDatabaseChanged();
 }
 
 QtFontFamily *QFontDatabasePrivate::family(const QString &f, bool create)
@@ -885,7 +881,7 @@ static QtFontStyle *bestStyle(QtFontFoundry *foundry, const QtFontStyle::Key &st
 static QtFontEncoding *findEncoding(int script, int styleStrategy,
                                     QtFontSize *size, int force_encoding_id)
 {
-    QtFontEncoding *encoding = 0;
+    QtFontEncoding *encoding = Q_NULLPTR;
 
     if (force_encoding_id >= 0) {
         encoding = size->encodingID(force_encoding_id);
@@ -894,13 +890,9 @@ static QtFontEncoding *findEncoding(int script, int styleStrategy,
         return encoding;
     }
 
-    if (styleStrategy & (QFont::OpenGLCompatible | QFont::PreferBitmap)) {
-        FM_DEBUG("            PreferBitmap and/or OpenGL set, skipping Freetype");
-    } else {
-        encoding = size->encodingID(-1); // -1 == prefer Freetype
-        if (encoding)
-            return encoding;
-    }
+    encoding = size->encodingID(-1); // -1 == prefer Freetype
+    if (encoding)
+        return encoding;
 
     // FT not available, find an XLFD font, trying the default encoding first
     encoding = size->encodingID(QFontPrivate::defaultEncodingID);

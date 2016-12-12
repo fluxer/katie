@@ -94,12 +94,6 @@ public:
     }
 };
 
-
-void QRawFontPrivate::platformCleanUp()
-{
-    // Font engine handles all resources
-}
-
 void QRawFontPrivate::platformLoadFromData(const QByteArray &fontData, qreal pixelSize,
                                            QFont::HintingPreference hintingPreference)
 {
