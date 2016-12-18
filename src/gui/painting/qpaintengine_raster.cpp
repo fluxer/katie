@@ -69,10 +69,6 @@ QT_BEGIN_NAMESPACE
 
 Q_GUI_EXPORT extern bool qt_scaleForTransform(const QTransform &transform, qreal *scale); // qtransform.cpp
 
-#define qreal_to_fixed_26_6(f) (int(f * 64))
-#define qt_swap_int(x, y) { int tmp = (x); (x) = (y); (y) = tmp; }
-#define qt_swap_qreal(x, y) { qreal tmp = (x); (x) = (y); (y) = tmp; }
-
 // #define QT_DEBUG_DRAW
 #ifdef QT_DEBUG_DRAW
 void dumpClip(int width, int height, const QClipData *clip);
