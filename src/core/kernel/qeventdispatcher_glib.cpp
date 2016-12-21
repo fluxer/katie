@@ -52,8 +52,6 @@
 #include <QtCore/qlist.h>
 #include <QtCore/qpair.h>
 
-#include <glib.h>
-
 QT_BEGIN_NAMESPACE
 
 struct GPollFDWithQSocketNotifier
@@ -319,9 +317,7 @@ QEventDispatcherGlibPrivate::QEventDispatcherGlibPrivate(GMainContext *context)
         }
     }
 
-#if GLIB_CHECK_VERSION (2, 22, 0)
     g_main_context_push_thread_default (mainContext);
-#endif
 
     // setup post event source
     postEventSource = reinterpret_cast<GPostEventSource *>(g_source_new(&postEventSourceFuncs,
@@ -401,9 +397,7 @@ QEventDispatcherGlib::~QEventDispatcherGlib()
     d->postEventSource = 0;
 
     Q_ASSERT(d->mainContext != 0);
-#if GLIB_CHECK_VERSION (2, 22, 0)
     g_main_context_pop_thread_default (d->mainContext);
-#endif
     g_main_context_unref(d->mainContext);
     d->mainContext = 0;
 }
@@ -588,15 +582,6 @@ void QEventDispatcherGlib::wakeUp()
 
 void QEventDispatcherGlib::flush()
 {
-}
-
-bool QEventDispatcherGlib::versionSupported()
-{
-#if !defined(GLIB_MAJOR_VERSION) || !defined(GLIB_MINOR_VERSION) || !defined(GLIB_MICRO_VERSION)
-    return false;
-#else
-    return ((GLIB_MAJOR_VERSION << 16) + (GLIB_MINOR_VERSION << 8) + GLIB_MICRO_VERSION) >= 0x020301;
-#endif
 }
 
 QEventDispatcherGlib::QEventDispatcherGlib(QEventDispatcherGlibPrivate &dd, QObject *parent)

@@ -500,7 +500,7 @@ void QApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QApplication);
 #if !defined(QT_NO_GLIB)
-    if (qgetenv("QT_NO_GLIB").isEmpty() && QEventDispatcherGlib::versionSupported())
+    if (qgetenv("QT_NO_GLIB").isEmpty())
         eventDispatcher = (q->type() != QApplication::Tty
                            ? new QGuiEventDispatcherGlib(q)
                            : new QEventDispatcherGlib(q));

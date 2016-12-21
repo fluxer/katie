@@ -56,11 +56,28 @@
 #include "qabstracteventdispatcher.h"
 #include "qabstracteventdispatcher_p.h"
 
-typedef struct _GMainContext GMainContext;
+#include <glib.h>
 
 QT_BEGIN_NAMESPACE
 
-class QEventDispatcherGlibPrivate;
+struct GPostEventSource;
+struct GSocketNotifierSource;
+struct GTimerSource;
+struct GIdleTimerSource;
+
+class Q_CORE_EXPORT QEventDispatcherGlibPrivate : public QAbstractEventDispatcherPrivate
+{
+
+public:
+    QEventDispatcherGlibPrivate(GMainContext *context = Q_NULLPTR);
+    GMainContext *mainContext;
+    GPostEventSource *postEventSource;
+    GSocketNotifierSource *socketNotifierSource;
+    GTimerSource *timerSource;
+    GIdleTimerSource *idleTimerSource;
+
+    void runTimersOnceWithNormalPriority();
+};
 
 class Q_CORE_EXPORT QEventDispatcherGlib : public QAbstractEventDispatcher
 {
@@ -87,29 +104,8 @@ public:
     void interrupt();
     void flush();
 
-    static bool versionSupported();
-
 protected:
     QEventDispatcherGlib(QEventDispatcherGlibPrivate &dd, QObject *parent);
-};
-
-struct GPostEventSource;
-struct GSocketNotifierSource;
-struct GTimerSource;
-struct GIdleTimerSource;
-
-class Q_CORE_EXPORT QEventDispatcherGlibPrivate : public QAbstractEventDispatcherPrivate
-{
-
-public:
-    QEventDispatcherGlibPrivate(GMainContext *context = 0);
-    GMainContext *mainContext;
-    GPostEventSource *postEventSource;
-    GSocketNotifierSource *socketNotifierSource;
-    GTimerSource *timerSource;
-    GIdleTimerSource *idleTimerSource;
-
-    void runTimersOnceWithNormalPriority();
 };
 
 QT_END_NAMESPACE

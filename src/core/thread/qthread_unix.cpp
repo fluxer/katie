@@ -211,9 +211,7 @@ void QThreadPrivate::createEventDispatcher(QThreadData *data)
     QMutexLocker l(&data->postEventList.mutex);
 
 #if !defined(QT_NO_GLIB)
-    if (qgetenv("QT_NO_GLIB").isEmpty()
-        && qgetenv("QT_NO_THREADED_GLIB").isEmpty()
-        && QEventDispatcherGlib::versionSupported())
+    if (qgetenv("QT_NO_GLIB").isEmpty() && qgetenv("QT_NO_THREADED_GLIB").isEmpty())
         data->eventDispatcher = new QEventDispatcherGlib;
     else
 #endif

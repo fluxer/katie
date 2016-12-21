@@ -295,14 +295,14 @@ void QCoreApplicationPrivate::createEventDispatcher()
 {
     Q_Q(QCoreApplication);
 #if !defined(QT_NO_GLIB)
-    if (qgetenv("QT_NO_GLIB").isEmpty() && QEventDispatcherGlib::versionSupported())
+    if (qgetenv("QT_NO_GLIB").isEmpty())
         eventDispatcher = new QEventDispatcherGlib(q);
     else
 #endif
         eventDispatcher = new QEventDispatcherUNIX(q);
 }
 
-QThread *QCoreApplicationPrivate::theMainThread = 0;
+QThread *QCoreApplicationPrivate::theMainThread = Q_NULLPTR;
 
 #if !defined (QT_NO_DEBUG)
 void QCoreApplicationPrivate::checkReceiverThread(QObject *receiver)

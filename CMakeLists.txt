@@ -354,7 +354,7 @@ set_package_properties(HarfBuzz PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(GLib2)
+find_package(GLib2 2.22.0)
 set_package_properties(GLib2 PROPERTIES
     PURPOSE "Required for glib mainloop support"
     DESCRIPTION "Core application building blocks for libraries and applications written in C"
