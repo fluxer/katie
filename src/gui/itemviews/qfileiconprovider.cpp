@@ -51,11 +51,6 @@
 #include <qfunctions_p.h>
 #include <qguiplatformplugin_p.h>
 
-#if defined(Q_WS_X11) && !defined(QT_NO_STYLE_GTK)
-#  include <qgtkstyle_p.h>
-#  include <qt_x11_p.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -199,14 +194,6 @@ QIcon QFileIconProvider::icon(const QFileInfo &info) const
     QIcon platformIcon = qt_guiPlatformPlugin()->fileSystemIcon(info);
     if (!platformIcon.isNull())
         return platformIcon;
-
-#if defined(Q_WS_X11) && !defined(QT_NO_STYLE_GTK)
-    if (X11->desktopEnvironment == DE_GNOME) {
-        QIcon gtkIcon = QGtkStylePrivate::getFilesystemIcon(info);
-        if (!gtkIcon.isNull())
-            return gtkIcon;
-    }
-#endif
 
     if (info.isRoot())
         return d->getIcon(QStyle::SP_DriveHDIcon);

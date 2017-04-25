@@ -80,7 +80,7 @@ using namespace QCss;
     bSelector.pseudos << pseudo
 
 // This is attributes. The third parameter is AttributeSelector::*
-// Ex. QComboBox[style="QWindowsXPStyle"]
+// Ex. QComboBox[style="QWindowsStyle"]
 //                 ^           ^
 
 #define ADD_ATTRIBUTE_SELECTOR(x, y, z) \
@@ -154,13 +154,6 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
     QCss::Value value;
     Pseudo pseudo;
     AttributeSelector attr;
-
-    // pixmap based style doesn't support any features
-    bool styleIsPixmapBased = baseStyle()->inherits("QMacStyle")
-                           || baseStyle()->inherits("QWindowsXPStyle")
-                           || baseStyle()->inherits("QGtkStyle")
-                           || baseStyle()->inherits("QS60Style");
-
 
     /*QLineEdit {
         -qt-background-role: base;
@@ -295,12 +288,9 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_VALUE(Value::KnownIdentifier, Value_Native);
         ADD_DECLARATION;
 
-        if (!styleIsPixmapBased) {
-            SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-            ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
-            ADD_DECLARATION;
-        }
-
+        SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
+        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_DECLARATION;
 
         ADD_STYLE_RULE;
     }
@@ -321,12 +311,10 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_VALUE(Value::KnownIdentifier, Value_Native);
         ADD_DECLARATION;
 
-        if (!styleIsPixmapBased) {
-            SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-            ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
-            ADD_VALUE(Value::Identifier, QString::fromLatin1("background-gradient"));
-            ADD_DECLARATION;
-        }
+        SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
+        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-gradient"));
+        ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("-qt-background-role"), QtBackgroundRole);
         ADD_VALUE(Value::KnownIdentifier, Value_Base);
@@ -396,18 +384,16 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
     /*QMenu::item {
         -qt-style-features: background-color;
     }*/
-    if (!styleIsPixmapBased) {
-        SET_ELEMENT_NAME(QLatin1String("QMenu"));
-        ADD_PSEUDO(QLatin1String("item"), PseudoClass_Unknown);
-        ADD_BASIC_SELECTOR;
-        ADD_SELECTOR;
+    SET_ELEMENT_NAME(QLatin1String("QMenu"));
+    ADD_PSEUDO(QLatin1String("item"), PseudoClass_Unknown);
+    ADD_BASIC_SELECTOR;
+    ADD_SELECTOR;
 
-        SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
-        ADD_DECLARATION;
+    SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
+    ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+    ADD_DECLARATION;
 
-        ADD_STYLE_RULE;
-    }
+    ADD_STYLE_RULE;
 
     /*QHeaderView {
         -qt-background-role: window;
@@ -444,11 +430,9 @@ StyleSheet QStyleSheetStyle::getDefaultStyleSheet() const
         ADD_VALUE(Value::KnownIdentifier, Value_Button);
         ADD_DECLARATION;
 
-        if (!styleIsPixmapBased) {
-            SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
-            ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
-            ADD_DECLARATION;
-        }
+        SET_PROPERTY(QLatin1String("-qt-style-features"), QtStyleFeatures);
+        ADD_VALUE(Value::Identifier, QString::fromLatin1("background-color"));
+        ADD_DECLARATION;
 
         SET_PROPERTY(QLatin1String("border"), Border);
         ADD_VALUE(Value::KnownIdentifier, Value_Native);

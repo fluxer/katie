@@ -57,10 +57,6 @@
 #include "qdebug.h"
 #include "qlayoutitem.h"
 #include "qdialogbuttonbox.h"
-#ifdef Q_WS_MAC
-#include "qmacstyle_mac.h"
-#include "qmacstyle_mac_p.h"
-#endif // Q_WS_MAC
 
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"

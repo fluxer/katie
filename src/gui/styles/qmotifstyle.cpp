@@ -101,7 +101,7 @@ static const int motifCheckMarkSpace    = 16;
   GUI style on Unix platforms.
 
   \img qmotifstyle.png
-  \sa QWindowsXPStyle, QMacStyle, QWindowsStyle, QPlastiqueStyle, QCDEStyle
+  \sa QWindowsStyle, QPlastiqueStyle, QCDEStyle
 */
 
 /*!

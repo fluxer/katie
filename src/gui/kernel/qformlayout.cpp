@@ -1049,7 +1049,6 @@ QStyle* QFormLayoutPrivate::getStyle() const
     \table
     \header
         \o QCommonStyle derived styles (except QPlastiqueStyle)
-        \o QMacStyle
         \o QPlastiqueStyle
         \o Qt Extended styles
     \row
@@ -1078,11 +1077,7 @@ QStyle* QFormLayoutPrivate::getStyle() const
 
     The form styles can be also be overridden individually by calling
     setLabelAlignment(), setFormAlignment(), setFieldGrowthPolicy(),
-    and setRowWrapPolicy().  For example, to simulate the form layout
-    appearance of QMacStyle on all platforms, but with left-aligned
-    labels, you could write:
-
-    \snippet doc/src/snippets/code/src_gui_kernel_qformlayout.cpp 2
+    and setRowWrapPolicy().
 
     \sa QGridLayout, QBoxLayout, QStackedLayout
 */
@@ -1096,8 +1091,7 @@ QStyle* QFormLayoutPrivate::getStyle() const
 
     \value FieldsStayAtSizeHint
            The fields never grow beyond their
-           \l{QWidgetItem::sizeHint()}{effective size hint}. This is
-           the default for QMacStyle.
+           \l{QWidgetItem::sizeHint()}{effective size hint}.
 
     \value ExpandingFieldsGrow
            Fields with an horizontal \l{QSizePolicy}{size policy} of
@@ -1123,15 +1117,14 @@ QStyle* QFormLayoutPrivate::getStyle() const
 
     \value DontWrapRows
            Fields are always laid out next to their label.  This is
-           the default policy for all styles except Qt Extended styles
-           and QS60Style.
+           the default policy for all styles except Qt Extended styles.
 
     \value WrapLongRows
            Labels are given enough horizontal space to fit the widest label,
            and the rest of the space is given to the fields. If the minimum
            size of a field pair is wider than the available space, the field
            is wrapped to the next line.  This is the default policy for
-           Qt Extended styles and and QS60Style.
+           Qt Extended styles.
 
     \value WrapAllRows
            Fields are always laid out below their label.
@@ -1691,10 +1684,9 @@ QWidget *QFormLayout::labelForField(QLayout *field) const
     \brief the way in which the form's fields grow
 
     The default value depends on the widget or application style. For
-    QMacStyle, the default is FieldsStayAtSizeHint; for QCommonStyle
-    derived styles (like Plastique and Windows), the default
-    is ExpandingFieldsGrow; for Qt Extended styles, the default is
-    AllNonFixedFieldsGrow.
+    QCommonStyle derived styles (like Plastique and Windows), the
+    default is ExpandingFieldsGrow; for Qt Extended styles, the
+    default is AllNonFixedFieldsGrow.
 
     If none of the fields can grow and the form is resized, extra
     space is distributed according to the current
@@ -1727,8 +1719,8 @@ QFormLayout::FieldGrowthPolicy QFormLayout::fieldGrowthPolicy() const
     \brief the way in which the form's rows wrap
 
     The default value depends on the widget or application style. For
-    Qt Extended styles and QS60Style, the default is WrapLongRows;
-    for the other styles, the default is DontWrapRows.
+    Qt Extended styles, the default is WrapLongRows; for the other
+    styles, the default is DontWrapRows.
 
     If you want to display each label above its associated field
     (instead of next to it), set this property to WrapAllRows.
@@ -1790,9 +1782,8 @@ Qt::Alignment QFormLayout::labelAlignment() const
     \property QFormLayout::formAlignment
     \brief the alignment of the form layout's contents within the layout's geometry
 
-    The default value depends on the widget or application style. For
-    QMacStyle, the default is Qt::AlignHCenter | Qt::AlignTop; for the
-    other styles, the default is Qt::AlignLeft | Qt::AlignTop.
+    The default value depends on the widget or application style. The
+    default is Qt::AlignLeft | Qt::AlignTop.
 
     \sa labelAlignment, rowWrapPolicy
 */

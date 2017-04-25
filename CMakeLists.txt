@@ -119,12 +119,6 @@ add_feature_info(glib2 WITH_GLIB2 "an open source something")
 option(WITH_DBUS "Build dbus support" ON)
 add_feature_info(dbus WITH_DBUS "an open source something")
 
-option(WITH_GTK2 "Build gtk2 support" ON)
-add_feature_info(gtk2 WITH_GTK2 "an open source something")
-
-option(WITH_GCONF2 "Build gconf2 support" ON)
-add_feature_info(gconf2 WITH_GCONF2 "an open source something")
-
 option(WITH_FREETYPE "Build freetype2 support" ON)
 add_feature_info(freetype2 WITH_FREETYPE "an open source something")
 
@@ -370,22 +364,6 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(GTK2)
-set_package_properties(GTK2 PROPERTIES
-    PURPOSE "Required for GTK style and application integration support"
-    DESCRIPTION "Multi-platform toolkit for creating graphical user interfaces"
-    URL "http://www.gtk.org"
-    TYPE RECOMMENDED
-)
-
-find_package(GConf2)
-set_package_properties(GConf2 PROPERTIES
-    PURPOSE "Required for GTK style and application integration support"
-    DESCRIPTION "System for storing application preferences"
-    URL "https://projects.gnome.org/gconf/"
-    TYPE RECOMMENDED
-)
-
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
@@ -519,10 +497,6 @@ endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
-endif()
-
-if(NOT WITH_GCONF2 OR NOT GCONF2_FOUND)
-    katie_definition(-DQT_NO_GCONF2)
 endif()
 
 if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)

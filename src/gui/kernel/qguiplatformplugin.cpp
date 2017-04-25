@@ -52,7 +52,6 @@
 
 #if defined(Q_WS_X11)
 #include <qkde_p.h>
-#include <qgtkstyle_p.h>
 #include <qt_x11_p.h>
 #endif
 
@@ -131,13 +130,6 @@ QString QGuiPlatformPlugin::styleName()
         stylename = QKde::kdeStyle();
         break;
     case DE_GNOME: {
-        QStringList availableStyles = QStyleFactory::keys();
-        // Set QGtkStyle for GNOME if available
-        QString gtkStyleKey = QString::fromLatin1("GTK+");
-        if (availableStyles.contains(gtkStyleKey)) {
-            stylename = gtkStyleKey;
-            break;
-        }
         if (X11->use_xrender)
             stylename = QLatin1String("cleanlooks");
         else
@@ -172,9 +164,6 @@ QString QGuiPlatformPlugin::systemIconThemeName()
     QString result;
 #ifdef Q_WS_X11
     if (X11->desktopEnvironment == DE_GNOME) {
-#ifndef QT_NO_STYLE_GTK
-        result = QGtkStylePrivate::getIconThemeName();
-#endif
         if (result.isEmpty()) {
             result = QString::fromLatin1("gnome");
         }

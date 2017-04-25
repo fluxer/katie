@@ -14,6 +14,8 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qplastiquestyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qmotifstyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle_p.h
 )
 
 set(GUI_SOURCES
@@ -31,44 +33,11 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qplastiquestyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qmotifstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qwindowsstyle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.qrc
 )
 
-if(WITH_GTK2 AND GTK2_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qgtkstyle.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qgtkpainter_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qgtkstyle_p.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qgtkstyle.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qgtkpainter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qgtkstyle_p.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcleanlooksstyle.cpp
-    )
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${GTK2_LIBRARIES}
-    )
-    add_definitions(-DQT_STYLE_CLEANLOOKS ${GTK2_DEFINITIONS})
-    include_directories(${GTK2_INCLUDE_DIRS})
-
-    if(WITH_GCONF2 AND GCONF2_FOUND)
-        set(EXTRA_GUI_LIBS
-            ${EXTRA_GUI_LIBS}
-            ${GCONF2_LIBRARIES}
-        )
-        include_directories(${GCONF2_INCLUDES})
-    endif()
-else()
-    add_definitions(-DQT_NO_STYLE_GTK -DQT_NO_STYLE_CLEANLOOKS)
-endif()
-
-add_definitions(-DQT_STYLE_MOTIF -DQT_STYLE_WINDOWS)
+add_definitions(-DQT_STYLE_MOTIF -DQT_STYLE_WINDOWS -DQT_STYLE_CLEANLOOKS)
 
 # TODO: get rid of these conditionals
 # add_definitions(-DQT_NO_STYLE_CDE -DQT_NO_STYLE_PLASTIQUE -DQT_NO_STYLE_MOTIF)

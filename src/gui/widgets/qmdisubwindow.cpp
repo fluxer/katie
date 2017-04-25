@@ -161,9 +161,6 @@
 #include <QScrollBar>
 #include <QDebug>
 #include <QScopedValueRollback>
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-#include <QtGui/qmacstyle_mac.h>
-#endif
 #include <QMdiArea>
 
 QT_BEGIN_NAMESPACE
@@ -296,12 +293,6 @@ static void showToolTip(QHelpEvent *helpEvent, QWidget *widget, const QStyleOpti
     Q_ASSERT(helpEvent);
     Q_ASSERT(helpEvent->type() == QEvent::ToolTip);
     Q_ASSERT(widget);
-
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    // Native Mac windows don't show tool tip.
-    if (qobject_cast<QMacStyle *>(widget->style()))
-        return;
-#endif
 
     // Convert CC_MdiControls to CC_TitleBar. Sub controls of different complex
     // controls cannot be in the same switch as they might have the same value.
@@ -1072,10 +1063,6 @@ void QMdiSubWindowPrivate::updateCursor()
 {
 #ifndef QT_NO_CURSOR
     Q_Q(QMdiSubWindow);
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    if (qobject_cast<QMacStyle *>(q->style()))
-        return;
-#endif
 
     if (currentOperation == None) {
         q->unsetCursor();
@@ -1489,15 +1476,6 @@ void QMdiSubWindowPrivate::processClickedSubControl()
         q->showNormal();
         break;
     case QStyle::SC_TitleBarMinButton:
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-        if (qobject_cast<QMacStyle *>(q->style())) {
-            if (q->isMinimized())
-                q->showNormal();
-            else
-                q->showMinimized();
-            break;
-        }
-#endif
         q->showMinimized();
         break;
     case QStyle::SC_TitleBarNormalButton:
@@ -1506,15 +1484,6 @@ void QMdiSubWindowPrivate::processClickedSubControl()
         q->showNormal();
         break;
     case QStyle::SC_TitleBarMaxButton:
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-        if (qobject_cast<QMacStyle *>(q->style())) {
-            if (q->isMaximized())
-                q->showNormal();
-            else
-                q->showMaximized();
-            break;
-        }
-#endif
         q->showMaximized();
         break;
     case QStyle::SC_TitleBarCloseButton:
@@ -1553,11 +1522,6 @@ QRegion QMdiSubWindowPrivate::getRegion(Operation operation) const
     }
 
     QRegion region;
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    if (qobject_cast<QMacStyle *>(q->style()))
-        return region;
-#endif
-
     switch (operation) {
     case TopResize:
         region = QRegion(titleBarHeight, 0, width - titleBarConst, frameWidth);
@@ -1707,11 +1671,6 @@ int QMdiSubWindowPrivate::titleBarHeight(const QStyleOptionTitleBar &options) co
     }
 
     int height = q->style()->pixelMetric(QStyle::PM_TitleBarHeight, &options, q);
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    // ### Fix mac style, the +4 pixels hack is not necessary anymore
-    if (qobject_cast<QMacStyle *>(q->style()))
-        height -= 4;
-#endif
     if (hasBorder(options))
         height += q->isMinimized() ? 8 : 4;
     return height;
@@ -2168,12 +2127,7 @@ void QMdiSubWindowPrivate::setSizeGrip(QSizeGrip *newSizeGrip)
     if (layout && layout->indexOf(newSizeGrip) != -1)
         return;
     newSizeGrip->setFixedSize(newSizeGrip->sizeHint());
-    bool putSizeGripInLayout = layout ? true : false;
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    if (qobject_cast<QMacStyle *>(q->style()))
-        putSizeGripInLayout = false;
-#endif
-    if (putSizeGripInLayout) {
+    if (layout) {
         layout->addWidget(newSizeGrip);
         layout->setAlignment(newSizeGrip, Qt::AlignBottom | Qt::AlignRight);
     } else {
@@ -2824,10 +2778,6 @@ bool QMdiSubWindow::event(QEvent *event)
         d->isMaximizeMode = false;
         d->isWidgetHiddenByUs = false;
         if (!parent()) {
-#if !defined(QT_NO_SIZEGRIP) && defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-            if (qobject_cast<QMacStyle *>(style()))
-                delete d->sizeGrip;
-#endif
             setOption(RubberBandResize, false);
             setOption(RubberBandMove, false);
         } else {
@@ -2918,19 +2868,6 @@ void QMdiSubWindow::showEvent(QShowEvent *showEvent)
         QWidget::showEvent(showEvent);
         return;
     }
-
-#if !defined(QT_NO_SIZEGRIP) && defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    if (qobject_cast<QMacStyle *>(style()) && !d->sizeGrip
-            && !(windowFlags() & Qt::FramelessWindowHint)) {
-        d->setSizeGrip(new QSizeGrip(0));
-        Q_ASSERT(d->sizeGrip);
-        if (isMinimized())
-            d->setSizeGripVisible(false);
-        else
-            d->setSizeGripVisible(true);
-        resize(size().expandedTo(d->internalMinimumSize));
-    }
-#endif
 
     d->updateDirtyRegions();
     // Show buttons in the menu bar if they're already not there.
@@ -3314,10 +3251,6 @@ void QMdiSubWindow::mouseMoveEvent(QMouseEvent *mouseEvent)
             hoverRegion += style()->subControlRect(QStyle::CC_TitleBar, &options,
                     d->hoveredSubControl, this);
         }
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-        if (qobject_cast<QMacStyle *>(style()) && !hoverRegion.isEmpty())
-            hoverRegion += QRegion(0, 0, width(), d->titleBarHeight(options));
-#endif
         if (!hoverRegion.isEmpty())
             update(hoverRegion);
     }
@@ -3524,10 +3457,6 @@ QSize QMdiSubWindow::minimumSizeHint() const
     int sizeGripHeight = 0;
     if (d->sizeGrip && d->sizeGrip->isVisibleTo(const_cast<QMdiSubWindow *>(this)))
         sizeGripHeight = d->sizeGrip->height();
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    else if (parent() && qobject_cast<QMacStyle *>(style()) && !d->sizeGrip)
-        sizeGripHeight = style()->pixelMetric(QStyle::PM_SizeGripSize, 0, this);
-#endif
     minHeight = qMax(minHeight, decorationHeight + sizeGripHeight);
 #endif
 

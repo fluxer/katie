@@ -80,6 +80,8 @@
 #define QT_NO_STYLE_WINDOWSVISTA
 #define QT_NO_STYLE_MAC
 #define QT_NO_STYLE_S60
+#define QT_NO_STYLE_GTK
+#define QT_NO_STYLE_QGTK
 #define QT_NO_STATEMACHINE
 #define QT_NO_XKB
 #define QT_NO_XIM
@@ -89,6 +91,7 @@
 #define QT_NO_OPENGL
 #define QT_NO_TABLET
 #define QT_NO_TABLETEVENT
+#define QT_NO_GCONF2
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -169,7 +172,6 @@
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_FTP
-#cmakedefine QT_NO_GCONF2
 #cmakedefine QT_NO_GEOM_VARIANT
 #cmakedefine QT_NO_GESTURES
 #cmakedefine QT_NO_GETADDRINFO
@@ -285,12 +287,9 @@
 #cmakedefine QT_NO_STRINGLISTMODEL
 #cmakedefine QT_NO_STYLE_CDE
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
-#cmakedefine QT_NO_STYLE_GTK
-#cmakedefine QT_NO_STYLE_MAC
 #cmakedefine QT_NO_STYLE_MOTIF
 #cmakedefine QT_NO_STYLE_PLASTIQUE
 #cmakedefine QT_NO_STYLE_PROXY
-#cmakedefine QT_NO_STYLE_QGTK
 #cmakedefine QT_NO_STYLE_STYLESHEET
 #cmakedefine QT_NO_STYLE_WINDOWS
 #cmakedefine QT_NO_SVG

@@ -41,12 +41,8 @@
 
 #include "qstyleoption.h"
 #include "qapplication.h"
-#ifdef Q_WS_MAC
-# include "qt_mac_p.h"
-# include "qmacstyle_mac.h"
-#endif
-#include <qdebug.h>
-#include <QtCore/qmath.h>
+#include "qdebug.h"
+#include "qmath.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -201,22 +197,6 @@ void QStyleOption::init(const QWidget *widget)
         state |= QStyle::State_Active;
     if (widget->isWindow())
         state |= QStyle::State_Window;
-#ifdef Q_WS_MAC
-    extern bool qt_mac_can_clickThrough(const QWidget *w); //qwidget_mac.cpp
-    if (!(state & QStyle::State_Active) && !qt_mac_can_clickThrough(widget))
-        state &= ~QStyle::State_Enabled;
-
-    switch (QMacStyle::widgetSizePolicy(widget)) {
-    case QMacStyle::SizeSmall:
-        state |= QStyle::State_Small;
-        break;
-    case QMacStyle::SizeMini:
-        state |= QStyle::State_Mini;
-        break;
-    default:
-        ;
-    }
-#endif
 #ifdef QT_KEYPAD_NAVIGATION
     if (widget->hasEditFocus())
         state |= QStyle::State_HasEditFocus;

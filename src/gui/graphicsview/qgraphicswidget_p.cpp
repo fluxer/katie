@@ -53,9 +53,6 @@
 #include <QtGui/qgraphicsscene.h>
 #include <QtGui/qstyleoption.h>
 #include <QtGui/qgraphicssceneevent.h>
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-# include <QMacStyle>
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -88,12 +85,7 @@ void QGraphicsWidgetPrivate::init(QGraphicsItem *parentItem, Qt::WindowFlags wFl
 qreal QGraphicsWidgetPrivate::titleBarHeight(const QStyleOptionTitleBar &options) const
 {
     Q_Q(const QGraphicsWidget);
-    int height = q->style()->pixelMetric(QStyle::PM_TitleBarHeight, &options);
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC)
-    if (qobject_cast<QMacStyle*>(q->style())) {
-        height -=4;
-    }
-#endif
+    const int height = q->style()->pixelMetric(QStyle::PM_TitleBarHeight, &options);
     return (qreal)height;
 }
 

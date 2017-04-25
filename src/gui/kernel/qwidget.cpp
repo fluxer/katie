@@ -1982,19 +1982,9 @@ static inline void fillRegion(QPainter *painter, const QRegion &rgn, const QBrus
     Q_ASSERT(painter);
 
     if (brush.style() == Qt::TexturePattern) {
-#ifdef Q_WS_MAC
-        // Optimize pattern filling on mac by using HITheme directly
-        // when filling with the standard widget background.
-        // Defined in qmacstyle_mac.cpp
-        extern void qt_mac_fill_background(QPainter *painter, const QRegion &rgn, const QBrush &brush);
-        qt_mac_fill_background(painter, rgn, brush);
-#else
-        {
-            const QRect rect(rgn.boundingRect());
-            painter->setClipRegion(rgn);
-            painter->drawTiledPixmap(rect, brush.texture(), rect.topLeft());
-        }
-#endif // Q_WS_MAC
+        const QRect rect(rgn.boundingRect());
+        painter->setClipRegion(rgn);
+        painter->drawTiledPixmap(rect, brush.texture(), rect.topLeft());
 
     } else if (brush.gradient()
                && brush.gradient()->coordinateMode() == QGradient::ObjectBoundingMode) {

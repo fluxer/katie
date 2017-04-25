@@ -54,9 +54,6 @@
 #ifndef QT_NO_STYLE_CLEANLOOKS
 #include "qcleanlooksstyle.h"
 #endif
-#ifndef QT_NO_STYLE_GTK
-#include "qgtkstyle.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -123,11 +120,6 @@ QStyle *QStyleFactory::create(const QString& key)
 #ifndef QT_NO_STYLE_CLEANLOOKS
     if (style == QLatin1String("cleanlooks"))
         ret = new QCleanlooksStyle;
-    else
-#endif
-#ifndef QT_NO_STYLE_GTK
-    if (style == QLatin1String("gtk") || style == QLatin1String("gtk+"))
-        ret = new QGtkStyle;
     else
 #endif
     { } // Keep these here - they make the #ifdefery above work

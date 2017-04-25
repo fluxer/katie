@@ -572,8 +572,8 @@ static void qt_cleanlooks_draw_mdibutton(QPainter *painter, const QStyleOptionTi
     that closely resembles the Clearlooks style, introduced by Richard
     Stellingwerff and Daniel Borgmann.
 
-    \sa {Cleanlooks Style Widget Gallery}, QWindowsXPStyle, QMacStyle, QWindowsStyle,
-        QCDEStyle, QMotifStyle, QPlastiqueStyle
+    \sa {Cleanlooks Style Widget Gallery}, QWindowsStyle, QCDEStyle, QMotifStyle,
+        QPlastiqueStyle
 */
 
 /*!

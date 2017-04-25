@@ -224,7 +224,7 @@ void QTabWidgetPrivate::init()
     stack = new QStackedWidget(q);
     stack->setObjectName(QLatin1String("qt_tabwidget_stackedwidget"));
     stack->setLineWidth(0);
-    // hack so that QMacStyle::layoutSpacing() can detect tab widget pages
+#warning hack so that QMacStyle::layoutSpacing() can detect tab widget pages
     stack->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred, QSizePolicy::TabWidget));
 
     QObject::connect(stack, SIGNAL(widgetRemoved(int)), q, SLOT(_q_removeTab(int)));

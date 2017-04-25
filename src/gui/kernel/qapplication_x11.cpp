@@ -69,7 +69,6 @@
 #include "qdebug.h"
 #include "qcursor_p.h"
 #include "qiconloader_p.h"
-#include "qgtkstyle.h"
 #include "qstyle.h"
 #include "qmetaobject.h"
 #include "qtimer.h"
@@ -782,32 +781,27 @@ bool QApplicationPrivate::x11_apply_settings()
     }
 
     // ### Fix properly for 4.6
-    bool usingGtkSettings = QApplicationPrivate::app_style && QApplicationPrivate::app_style->inherits("QGtkStyle");
-    if (!usingGtkSettings) {
-        if (groupCount == QPalette::NColorGroups)
+    if (groupCount == QPalette::NColorGroups)
             QApplicationPrivate::setSystemPalette(pal);
-    }
 
     if (!appFont) {
         // ### Fix properly for 4.6
-        if (!usingGtkSettings) {
-            QFont font(QApplication::font());
-            QString fontDescription;
-            // Override Qt font if KDE4 settings can be used
-            if (X11->desktopVersion == 4) {
-                QSettings kdeSettings(QKde::kdeHome() + QLatin1String("/share/config/kdeglobals"), QSettings::IniFormat);
-                fontDescription = kdeSettings.value(QLatin1String("font")).toString();
-                if (fontDescription.isEmpty()) {
-                    // KDE stores fonts without quotes
-                    fontDescription = kdeSettings.value(QLatin1String("font")).toStringList().join(QLatin1String(","));
-                }
+        QFont font(QApplication::font());
+        QString fontDescription;
+        // Override Qt font if KDE4 settings can be used
+        if (X11->desktopVersion == 4) {
+            QSettings kdeSettings(QKde::kdeHome() + QLatin1String("/share/config/kdeglobals"), QSettings::IniFormat);
+            fontDescription = kdeSettings.value(QLatin1String("font")).toString();
+            if (fontDescription.isEmpty()) {
+                // KDE stores fonts without quotes
+                fontDescription = kdeSettings.value(QLatin1String("font")).toStringList().join(QLatin1String(","));
             }
-            if (fontDescription.isEmpty())
-                fontDescription = settings.value(QLatin1String("font")).toString();
-            if (!fontDescription .isEmpty()) {
-                font.fromString(fontDescription );
-                QApplicationPrivate::setSystemFont(font);
-            }
+        }
+        if (fontDescription.isEmpty())
+            fontDescription = settings.value(QLatin1String("font")).toString();
+        if (!fontDescription .isEmpty()) {
+            font.fromString(fontDescription );
+            QApplicationPrivate::setSystemFont(font);
         }
     }
 
@@ -1117,10 +1111,9 @@ static void qt_set_x11_resources(const char* font = 0, const char* fg = 0,
 
         QApplicationPrivate::setSystemFont(fnt);
     }
-    // QGtkStyle sets it's own system palette
-    bool gtkStyle = QApplicationPrivate::app_style && QApplicationPrivate::app_style->inherits("QGtkStyle");
+    // KDE sets it's own system palette
     bool kdeColors = (QApplication::desktopSettingsAware() && X11->desktopEnvironment == DE_KDE);
-    if (!gtkStyle && (kdeColors || (button || !resBG.isEmpty() || !resFG.isEmpty()))) {// set app colors
+    if (kdeColors || (button || !resBG.isEmpty() || !resFG.isEmpty())) {// set app colors
         bool allowX11ColorNames = QColor::allowX11ColorNames();
         QColor::setAllowX11ColorNames(true);
 
@@ -2024,12 +2017,6 @@ void qt_init(QApplicationPrivate *priv, int,
         if (data)
             XFree((char *)data);
 
-#if !defined(QT_NO_STYLE_GTK)
-        if (X11->desktopEnvironment == DE_GNOME) {
-            static bool menusHaveIcons = QGtkStyle::getGConfBool(QLatin1String("/desktop/gnome/interface/menus_have_icons"), true);
-            QApplication::setAttribute(Qt::AA_DontShowIconsInMenus, !menusHaveIcons);
-        }
-#endif
         qt_set_input_encoding();
 
         qt_set_x11_resources(appFont, appFGCol, appBGCol, appBTNCol);

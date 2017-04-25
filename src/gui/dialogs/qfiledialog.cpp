@@ -287,9 +287,6 @@ QT_BEGIN_INCLUDE_NAMESPACE
 #include <qwindowsstyle.h>
 #endif
 #include <qshortcut.h>
-#ifdef Q_WS_MAC
-#include <qmacstyle_mac.h>
-#endif
 QT_END_INCLUDE_NAMESPACE
 
 /*!
@@ -2073,11 +2070,7 @@ void QFileDialogPrivate::createWidgets()
     Q_Q(QFileDialog);
     model = new QFileSystemModel(q);
     model->setObjectName(QLatin1String("qt_filesystem_model"));
-#ifdef Q_WS_MAC
-    model->setNameFilterDisables(true);
-#else
     model->setNameFilterDisables(false);
-#endif
     model->d_func()->disableRecursiveSort = true;
     QFileDialog::connect(model, SIGNAL(fileRenamed(QString,QString,QString)), q, SLOT(_q_fileRenamed(QString,QString,QString)));
     QFileDialog::connect(model, SIGNAL(rootPathChanged(QString)),

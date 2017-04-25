@@ -87,7 +87,7 @@ QT_BEGIN_NAMESPACE
     drawPrimitive() which are documented here.
 
     \img qcdestyle.png
-    \sa QWindowsXPStyle, QMacStyle, QWindowsStyle, QPlastiqueStyle, QMotifStyle
+    \sa QWindowsStyle, QPlastiqueStyle, QMotifStyle
 */
 
 /*!

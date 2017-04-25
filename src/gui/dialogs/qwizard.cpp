@@ -2288,9 +2288,9 @@ QVariant QWizard::field(const QString &name) const
 
     By default, QWizard uses the AeroStyle on a Windows Vista system with alpha compositing
     enabled, regardless of the current widget style. If this is not the case, the default
-    wizard style depends on the current widget style as follows: MacStyle is the default if
-    the current widget style is QMacStyle, ModernStyle is the default if the current widget
-    style is QWindowsStyle, and ClassicStyle is the default in all other cases.
+    wizard style depends on the current widget style as follows: ModernStyle is the default
+    if the current widget style is QWindowsStyle, and ClassicStyle is the default in all
+    other cases.
 
     \sa {Wizard Look and Feel}, options
 */

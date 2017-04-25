@@ -89,9 +89,8 @@ static int unpackControlTypes(QSizePolicy::ControlTypes controls, QSizePolicy::C
 
     Qt contains a set of QStyle subclasses that emulate the styles of
     the different platforms supported by Qt (QWindowsStyle,
-    QMacStyle, QMotifStyle, etc.). By default, these styles are built
-    into the QtGui library. Styles can also be made available as
-    plugins.
+    QMotifStyle, etc.). By default, these styles are built into the
+    QtGui library. Styles can also be made available as plugins.
 
     Qt's built-in widgets use QStyle to perform nearly all of their
     drawing, ensuring that they look exactly like the equivalent

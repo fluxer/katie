@@ -106,7 +106,6 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsWidget
     QGridLayout
     QGroupBox
-    QGtkStyle
     QHeaderView
     QIcon
     QIconDragEvent
