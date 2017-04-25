@@ -11,7 +11,7 @@ git:
     depth: 3
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libasound2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev libgtk2.0-dev libgconf2-dev libgl1-mesa-dev libwayland-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libsqlite3-dev xorg-dev
+    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev libgtk2.0-dev libgconf2-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libsqlite3-dev xorg-dev
     - wget https://github.com/ninja-build/ninja/releases/download/v1.7.2/ninja-linux.zip
     - bsdtar xf ninja-linux.zip
 before_script:
