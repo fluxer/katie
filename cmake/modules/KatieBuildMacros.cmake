@@ -1,30 +1,10 @@
 # Copyright (c) 2015, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
-if(CMAKE_CROSSCOMPILING)
-    # TODO: switch to release tarball
-    include(ExternalProject)
-    ExternalProject_Add(
-        external_katie
-        GIT_REPOSITORY https://github.com/fluxer/katie
-        SOURCE_DIR ${CMAKE_BINARY_DIR}/external_katie
-        BUILD_IN_SOURCE 1
-        INSTALL_COMMAND "" # disable installation
-        UPDATE_DISCONNECTED 1 # it always fails
-        CMAKE_ARGS -DKATIE_BOOTSTRAP=TRUE -Wno-dev
-    )
-    # TODO: native executable suffix
-    set(KATIE_UIC "${CMAKE_BINARY_DIR}/external_katie/bin/uic")
-    set(KATIE_RCC "${CMAKE_BINARY_DIR}/external_katie/bin/rcc")
-    set(KATIE_MOC "${CMAKE_BINARY_DIR}/external_katie/bin/moc")
-    set(KATIE_LRELEASE "${CMAKE_BINARY_DIR}/external_katie/bin/lrelease")
-    # TODO: ExternalProject_Add_StepDependencies
-else()
-    set(KATIE_UIC "uic")
-    set(KATIE_RCC "rcc")
-    set(KATIE_MOC "bootstrap_moc")
-    set(KATIE_LRELEASE "lrelease")
-endif()
+set(KATIE_UIC "uic")
+set(KATIE_RCC "rcc")
+set(KATIE_MOC "bootstrap_moc")
+set(KATIE_LRELEASE "lrelease")
 set(KATIE_QDBUSXML2CPP "qdbusxml2cpp")
 
 # a macro to print a dev warning but only when the build type is Debug

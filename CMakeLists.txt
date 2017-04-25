@@ -11,6 +11,8 @@ cmake_minimum_required(VERSION 3.0.2 FATAL_ERROR)
 
 if(CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
     message(FATAL_ERROR "\nThe project should not be build in the source directory")
+elseif(CMAKE_CROSSCOMPILING)
+    message(FATAL_ERROR "\nThe project does not support cross-compiling")
 endif()
 
 project(Katie C CXX)
@@ -158,9 +160,6 @@ option(WITH_X11 "Build X11/X.Org support" ON)
 add_feature_info(x11 WITH_X11 "an open source something")
 
 # optional features
-option(KATIE_BOOTSTRAP "Build only core tools" OFF)
-add_feature_info(bootstrap KATIE_BOOTSTRAP "internal build option")
-
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "developers build option")
 
@@ -225,6 +224,7 @@ configure_file(
 )
 
 # TODO: make it optional, Qt4 was prepping for it I believe (QT_NO_THREAD)
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 find_package(Threads)
 set_package_properties(Threads PROPERTIES
     PURPOSE "Required for threads support"
@@ -434,17 +434,14 @@ set_package_properties(NSL PROPERTIES
     TYPE RECOMMENDED
 )
 
-if(NOT KATIE_BOOTSTRAP)
-    set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
 
-    find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
-    set_package_properties(X11 PROPERTIES
-        PURPOSE "Required for X11/X.Org integration support"
-        DESCRIPTION "Open source implementation of the X Window System"
-        URL "http://www.x.org"
-        TYPE REQUIRED
-    )
-endif()
+find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
+set_package_properties(X11 PROPERTIES
+    PURPOSE "Required for X11/X.Org integration support"
+    DESCRIPTION "Open source implementation of the X Window System"
+    URL "http://www.x.org"
+    TYPE REQUIRED
+)
 
 if(PYTHONINTERP_FOUND)
     execute_process(
@@ -572,35 +569,31 @@ endif()
 # semi-shared
 include(src/shared/linguist/linguist.cmake)
 include(src/shared/bootstrap.cmake)
-if(NOT KATIE_BOOTSTRAP)
-    include(src/shared/deviceskin/deviceskin.cmake)
-    include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
-    include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
-    include(src/shared/findwidget/findwidget.cmake)
-endif()
+include(src/shared/deviceskin/deviceskin.cmake)
+include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
+include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
+include(src/shared/findwidget/findwidget.cmake)
 
 # major components
 add_subdirectory(src/core)
 add_subdirectory(src/xml)
-if(NOT KATIE_BOOTSTRAP)
-    if(WITH_DBUS AND DBUS_FOUND)
-        add_subdirectory(src/dbus)
-    endif()
-    add_subdirectory(src/declarative)
-    add_subdirectory(src/designer)
-    add_subdirectory(src/gui)
-    add_subdirectory(src/imports)
-    add_subdirectory(src/network)
-    add_subdirectory(src/plugins)
-    add_subdirectory(src/script)
-    add_subdirectory(src/scripttools)
-    add_subdirectory(src/sql)
-    add_subdirectory(src/svg)
-    add_subdirectory(src/test)
-    add_subdirectory(src/uitools)
-    if(ENABLE_TESTING)
-        add_subdirectory(tests)
-    endif()
+if(WITH_DBUS AND DBUS_FOUND)
+    add_subdirectory(src/dbus)
+endif()
+add_subdirectory(src/declarative)
+add_subdirectory(src/designer)
+add_subdirectory(src/gui)
+add_subdirectory(src/imports)
+add_subdirectory(src/network)
+add_subdirectory(src/plugins)
+add_subdirectory(src/script)
+add_subdirectory(src/scripttools)
+add_subdirectory(src/sql)
+add_subdirectory(src/svg)
+add_subdirectory(src/test)
+add_subdirectory(src/uitools)
+if(ENABLE_TESTING)
+    add_subdirectory(tests)
 endif()
 add_subdirectory(src/tools)
 
