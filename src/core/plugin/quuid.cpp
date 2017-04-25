@@ -812,10 +812,6 @@ QUuid QUuid::createUuid()
         randbits = r;
     }
 
-    // using qrand() to generate some randomness
-    static int uuidseed = qrand();
-    Q_UNUSED(uuidseed);
-
     int chunks = 16 / sizeof(uint);
     while (chunks--) {
         uint randNumber = 0;
