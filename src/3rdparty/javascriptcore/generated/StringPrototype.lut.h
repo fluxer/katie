@@ -43,6 +43,6 @@ static const struct HashTableValue stringTableValues[36] = {
    { 0, 0, 0, 0 }
 };
 
-extern JSC_CONST_HASHTABLE HashTable stringTable =
+extern const HashTable stringTable =
     { 133, 127, stringTableValues, 0 };
 } // namespace

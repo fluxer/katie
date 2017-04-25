@@ -52,12 +52,8 @@ public:
     bool operator!() const { return !get(); }
 
     // This conversion operator allows implicit conversion to bool but not to other integer types.
-#if COMPILER(WINSCW)
-    operator bool() const { return m_ptr; }
-#else
     typedef T* WeakGCPtr::*UnspecifiedBoolType;
     operator UnspecifiedBoolType() const { return get() ? &WeakGCPtr::m_ptr : 0; }
-#endif
 
     WeakGCPtr& operator=(T*);
 

@@ -28,15 +28,9 @@ namespace WTF {
     template<typename T> class RefPtr;
     template<typename T> class PassRefPtr;
     template <typename T> PassRefPtr<T> adoptRef(T*);
-    
-    // Remove inline for winscw compiler to prevent the compiler agressively resolving 
-    // T::deref(), which will fail compiling when PassRefPtr<T> is used as class member 
-    // or function arguments before T is defined.
-    template<typename T> 
-#if !COMPILER(WINSCW)
-    inline 
-#endif
-    void derefIfNotNull(T* ptr)
+
+    template<typename T>
+    inline void derefIfNotNull(T* ptr)
     {
         if (Q_UNLIKELY(ptr != 0))
             ptr->deref();

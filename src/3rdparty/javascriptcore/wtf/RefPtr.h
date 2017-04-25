@@ -24,9 +24,6 @@
 #include <algorithm>
 #include "AlwaysInline.h"
 #include "FastAllocBase.h"
-#if COMPILER(WINSCW)
-#include "PassRefPtr.h"
-#endif
 
 namespace WTF {
 
@@ -53,21 +50,14 @@ namespace WTF {
         RefPtr(HashTableDeletedValueType) : m_ptr(hashTableDeletedValue()) { }
         bool isHashTableDeletedValue() const { return m_ptr == hashTableDeletedValue(); }
 
-#if COMPILER(WINSCW)
-        ~RefPtr() { if (T* ptr = m_ptr) derefIfNotNull<T>(ptr); }
-#else
         ~RefPtr() { if (T* ptr = m_ptr) ptr->deref(); }
-#endif
         
         template <typename U> RefPtr(const RefPtr<U>& o) : m_ptr(o.get()) { if (T* ptr = m_ptr) ptr->ref(); }
         
         T* get() const { return m_ptr; }
         
-#if COMPILER(WINSCW)
-        void clear() { if (T* ptr = m_ptr) derefIfNotNull<T>(ptr); m_ptr = 0; }
-#else
         void clear() { if (T* ptr = m_ptr) ptr->deref(); m_ptr = 0; }
-#endif
+
         PassRefPtr<T> release() { PassRefPtr<T> tmp = adoptRef(m_ptr); m_ptr = 0; return tmp; }
 
         T& operator*() const { return *m_ptr; }

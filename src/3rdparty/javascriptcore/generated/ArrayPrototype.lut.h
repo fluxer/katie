@@ -29,6 +29,6 @@ static const struct HashTableValue arrayTableValues[22] = {
    { 0, 0, 0, 0 }
 };
 
-extern JSC_CONST_HASHTABLE HashTable arrayTable =
+extern const HashTable arrayTable =
     { 65, 63, arrayTableValues, 0 };
 } // namespace

@@ -10,6 +10,6 @@ static const struct HashTableValue jsonTableValues[3] = {
    { 0, 0, 0, 0 }
 };
 
-extern JSC_CONST_HASHTABLE HashTable jsonTable =
+extern const HashTable jsonTable =
     { 4, 3, jsonTableValues, 0 };
 } // namespace

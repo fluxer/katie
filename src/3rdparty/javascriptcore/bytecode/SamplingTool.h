@@ -113,7 +113,7 @@ namespace JSC {
         
         void sample(CodeBlock*, Instruction*);
 
-#if COMPILER(WINSCW) || COMPILER(ACC)
+#if COMPILER(ACC)
         ScriptExecutable* m_executable;
 #else
         RefPtr<ScriptExecutable> m_executable;

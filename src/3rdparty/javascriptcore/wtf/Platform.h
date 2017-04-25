@@ -109,11 +109,6 @@
 #define WTF_COMPILER_SUNCC 1
 #endif
 
-/* COMPILER(WINSCW) - CodeWarrior for Symbian emulator */
-#if defined(__WINSCW__)
-#define WTF_COMPILER_WINSCW 1
-#endif
-
 /* COMPILER(INTEL) - Intel C++ Compiler */
 #if defined(__INTEL_COMPILER)
 #define WTF_COMPILER_INTEL 1
