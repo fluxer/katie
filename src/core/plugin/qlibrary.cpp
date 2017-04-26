@@ -551,11 +551,7 @@ bool QLibrary::isLibrary(const QString &fileName)
     return valid;
 }
 
-#ifdef Q_CC_BOR
-typedef const char * __stdcall (*QtPluginQueryVerificationDataFunction)();
-#else
 typedef const char * (*QtPluginQueryVerificationDataFunction)();
-#endif
 
 bool qt_get_verificationdata(QtPluginQueryVerificationDataFunction pfn, uint *qt_version, bool *debug, bool *exceptionThrown)
 {
@@ -581,7 +577,7 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
     bool debug = !QLIBRARY_AS_DEBUG;
     bool success = false;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX)
     if (fileName.endsWith(QLatin1String(".debug"))) {
         // refuse to load a file that ends in .debug
         // these are the debug symbols from the libraries
@@ -622,28 +618,23 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
             // use unix shortcut to avoid loading the library
             success = qt_unix_query(fileName, &qt_version, &debug, this);
         } else {
-            bool retryLoadLibrary = false;    // Only used on Windows with MS compiler.(false in other cases)
-            do {
-                bool temporary_load = false;
-                if (!pHnd) {
-                    temporary_load =  load_sys();
+            bool temporary_load = false;
+            if (!pHnd) {
+                temporary_load =  load_sys();
+            }
+            const QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("qt_plugin_query_verification_data");
+            bool exceptionThrown = false;
+            bool ret = qt_get_verificationdata(qtPluginQueryVerificationDataFunction,
+                                                &qt_version, &debug, &exceptionThrown);
+            if (!exceptionThrown) {
+                if (!ret) {
+                    qt_version = 0;
+                    if (temporary_load)
+                        unload_sys();
+                } else {
+                    success = true;
                 }
-                const QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("qt_plugin_query_verification_data");
-                bool exceptionThrown = false;
-                bool ret = qt_get_verificationdata(qtPluginQueryVerificationDataFunction,
-                                                   &qt_version, &debug, &exceptionThrown);
-                if (!exceptionThrown) {
-                    if (!ret) {
-                        qt_version = 0;
-                        if (temporary_load)
-                            unload_sys();
-                    } else {
-                        success = true;
-                    }
-                    retryLoadLibrary = false;
-                }
-            } while(retryLoadLibrary);  // Will be 'false' in all cases other than when an
-                                        // exception is thrown(will happen only when using a MS compiler)
+            }
         }
 
 #ifndef QT_NO_SETTINGS

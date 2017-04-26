@@ -48,11 +48,6 @@
 #include "qstack.h"
 #include <qdebug.h>
 
-
-#ifdef Q_CC_BOR // borland 6 finds bogus warnings when building this file in uic3
-#    pragma warn -8080
-#endif
-
 //#define QT_QXML_DEBUG
 
 // Error strings for the XML reader

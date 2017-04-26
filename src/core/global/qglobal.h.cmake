@@ -317,12 +317,6 @@ namespace QT_NAMESPACE {}
 
 #elif defined(__BORLANDC__) || defined(__TURBOC__)
 #  define Q_CC_BOR
-#  define Q_INLINE_TEMPLATE
-#  if __BORLANDC__ < 0x502
-#    define Q_NO_BOOL_TYPE
-#    define Q_NO_EXPLICIT_KEYWORD
-#  endif
-#  define Q_NO_USING_KEYWORD
 
 #elif defined(__WATCOMC__)
 #  define Q_CC_WAT
@@ -1518,24 +1512,6 @@ Q_DECLARE_TYPEINFO(long double, Q_PRIMITIVE_TYPE);
    These functions make it possible to use standard C++ functions with
    a similar name from Qt header files (especially template classes).
 */
-
-/*
-   Avoid some particularly useless warnings from some stupid compilers.
-   To get ALL C++ compiler warnings, define QT_CC_WARNINGS or comment out
-   the line "#define QT_NO_WARNINGS".
-*/
-#if !defined(QT_CC_WARNINGS)
-#  define QT_NO_WARNINGS
-#endif
-#if defined(QT_NO_WARNINGS) && defined(Q_CC_BOR)
-#  pragma option -w-inl
-#  pragma option -w-aus
-#  pragma warn -inl
-#  pragma warn -pia
-#  pragma warn -ccc
-#  pragma warn -rch
-#  pragma warn -sig
-#endif
 
 class Q_CORE_EXPORT QFlag
 {

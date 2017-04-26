@@ -45,10 +45,6 @@
 #include <QtSql/qsqldriver.h>
 #include <QtSql/qsqlresult.h>
 
-#if defined (Q_OS_WIN32)
-#include <QtCore/qt_windows.h>
-#endif
-
 #ifdef QT_PLUGIN
 #define Q_EXPORT_SQLDRIVER_ODBC
 #else
@@ -59,15 +55,7 @@
 #define HAVE_LONG_LONG 1 // force UnixODBC NOT to fall back to a struct for BIGINTs
 #endif
 
-#if defined(Q_CC_BOR)
-// workaround for Borland to make sure that SQLBIGINT is defined
-#  define _MSC_VER 900
-#endif
 #include <sql.h>
-#if defined(Q_CC_BOR)
-#  undef _MSC_VER
-#endif
-
 #include <sqlext.h>
 
 QT_BEGIN_HEADER

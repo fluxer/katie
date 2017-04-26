@@ -62,11 +62,7 @@ class QSignalSpy: public QObject, public QList<QList<QVariant> >
 public:
     QSignalSpy(QObject *obj, const char *aSignal)
     {
-#ifdef Q_CC_BOR
-        const int memberOffset = QObject::staticMetaObject.methodCount();
-#else
         static const int memberOffset = QObject::staticMetaObject.methodCount();
-#endif
         Q_ASSERT(obj);
         Q_ASSERT(aSignal);
 

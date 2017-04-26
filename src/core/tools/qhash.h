@@ -469,11 +469,7 @@ Q_INLINE_TEMPLATE void QHash<Key, T>::deleteNode(Node *node)
 template <class Key, class T>
 Q_INLINE_TEMPLATE void QHash<Key, T>::deleteNode2(QHashData::Node *node)
 {
-#ifdef Q_CC_BOR
-    concrete(node)->~QHashNode<Key, T>();
-#else
     concrete(node)->~Node();
-#endif
 }
 
 template <class Key, class T>

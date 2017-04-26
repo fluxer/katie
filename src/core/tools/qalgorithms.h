@@ -139,10 +139,6 @@ inline void qSort(RandomAccessIterator start, RandomAccessIterator end, LessThan
 template<typename Container>
 inline void qSort(Container &c)
 {
-#ifdef Q_CC_BOR
-    // Work around Borland 5.5 optimizer bug
-    c.detach();
-#endif
     if (!c.empty())
         std::sort(c.begin(), c.end());
 }
@@ -164,10 +160,6 @@ inline void qStableSort(RandomAccessIterator start, RandomAccessIterator end, Le
 template<typename Container>
 inline void qStableSort(Container &c)
 {
-#ifdef Q_CC_BOR
-    // Work around Borland 5.5 optimizer bug
-    c.detach();
-#endif
     if (!c.empty())
         std::stable_sort(c.begin(), c.end());
 }
