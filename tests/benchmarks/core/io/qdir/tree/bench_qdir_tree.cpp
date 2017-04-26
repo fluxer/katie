@@ -48,6 +48,8 @@
 
 #include "../../../../../shared/filesystem.h"
 
+QT_USE_NAMESPACE
+
 class bench_QDir_tree
     : public QObject
 {

@@ -45,6 +45,8 @@
 Q_DECLARE_METATYPE(QList<QByteArray>)
 Q_DECLARE_METATYPE(QTextCodec *)
 
+QT_USE_NAMESPACE
+
 class tst_QTextCodec: public QObject
 {
     Q_OBJECT
@@ -170,9 +172,6 @@ void tst_QTextCodec::toUnicode() const
             codec->toUnicode(orig);
     }
 }
-
-
-
 
 QTEST_MAIN(tst_QTextCodec)
 

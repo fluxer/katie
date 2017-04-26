@@ -979,7 +979,6 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #    define Q_SVG_EXPORT Q_DECL_EXPORT
 #    define Q_TEST_EXPORT Q_DECL_EXPORT
 #    define Q_DECLARATIVE_EXPORT Q_DECL_EXPORT
-#    define Q_OPENGL_EXPORT Q_DECL_EXPORT
 #    define Q_XML_EXPORT Q_DECL_EXPORT
 #    define Q_SCRIPT_EXPORT Q_DECL_EXPORT
 #    define Q_SCRIPTTOOLS_EXPORT Q_DECL_EXPORT
@@ -993,7 +992,6 @@ Q_DECL_CONSTEXPR inline const T &qBound(const T &min, const T &val, const T &max
 #    define Q_SVG_EXPORT
 #    define Q_TEST_EXPORT
 #    define Q_DECLARATIVE_EXPORT
-#    define Q_OPENGL_EXPORT
 #    define Q_XML_EXPORT
 #    define Q_SCRIPT_EXPORT
 #    define Q_SCRIPTTOOLS_EXPORT

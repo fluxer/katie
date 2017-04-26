@@ -96,15 +96,10 @@
 #include <QtCore/qstack.h>
 #include <QtCore/qvariant.h>
 
-#ifdef Q_OS_WIN
-#   include <windows.h>
-#   include <atlbase.h>
-#else
-#   include <sys/stat.h>
-#   include <sys/types.h>
-#   include <dirent.h>
-#   include <errno.h>
-#endif
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -122,15 +117,8 @@ public:
     //bool matchesFilters(const QAbstractFileEngineIterator *it) const;
     inline bool atEnd() const { return m_dirPaths.isEmpty(); }
 
-#ifdef Q_OS_WIN
-    QStack<HANDLE>   m_dirStructs;
-    WIN32_FIND_DATA* m_entry;
-    WIN32_FIND_DATA  m_fileSearchResult;
-    bool             m_bFirstSearchResult;
-#else
     QStack<DIR *> m_dirStructs;
     dirent *m_entry;
-#endif
 
     QSet<QString> visitedLinks;
     QStack<QByteArray> m_dirPaths;
@@ -181,25 +169,10 @@ QFileSystemIteratorPrivate::QFileSystemIteratorPrivate(const QString &path,
 */
 QFileSystemIteratorPrivate::~QFileSystemIteratorPrivate()
 {
-#ifdef Q_OS_WIN
-    while (!m_dirStructs.isEmpty())
-        ::FindClose(m_dirStructs.pop());
-#else
     while (!m_dirStructs.isEmpty())
         ::closedir(m_dirStructs.pop());
-#endif
 }
 
-#ifdef Q_OS_WIN
-static bool isDotOrDotDot(const wchar_t* name)
-{
-    if (name[0] == L'.' && name[1] == 0)
-        return true;
-    if (name[0] == L'.' && name[1] == L'.' && name[2] == 0)
-        return true;
-    return false;
-}
-#else
 static bool isDotOrDotDot(const char *name)
 {
     if (name[0] == '.' && name[1] == 0)
@@ -208,7 +181,6 @@ static bool isDotOrDotDot(const char *name)
         return true;
     return false;
 }
-#endif
 
 /*!
     \internal
@@ -227,18 +199,10 @@ void QFileSystemIteratorPrivate::pushSubDirectory(const QByteArray &path)
     }
 */
 
-#ifdef Q_OS_WIN
-    wchar_t szSearchPath[MAX_PATH];
-    QString::fromAscii(path).toWCharArray(szSearchPath);
-    wcscat(szSearchPath, L"\\*");
-    HANDLE dir = FindFirstFile(szSearchPath, &m_fileSearchResult);
-    m_bFirstSearchResult = true;
-#else
     DIR *dir = ::opendir(path.constData());
     //m_entry = ::readdir(dir);
     //while (m_entry && isDotOrDotDot(m_entry->d_name))
     //    m_entry = ::readdir(m_dirStructs.top());
-#endif
     m_dirStructs.append(dir);
     m_dirPaths.append(path);
     m_entry = 0;
@@ -306,32 +270,6 @@ bool QFileSystemIteratorPrivate::advanceHelper()
         m_currentDirShown = DontShowDir;
     }
 
-#ifdef Q_OS_WIN
-    m_entry = &m_fileSearchResult;
-    if (m_bFirstSearchResult) {
-        m_bFirstSearchResult = false;
-    } else {
-        if (!FindNextFile(m_dirStructs.top(), m_entry))
-            m_entry = 0;
-    }
-
-    while (m_entry && isDotOrDotDot(m_entry->cFileName))
-        if (!FindNextFile(m_dirStructs.top(), m_entry))
-            m_entry = 0;
-
-    if (!m_entry) {
-        m_dirPaths.pop();
-        FindClose(m_dirStructs.pop());
-        return false;
-    }
-
-    if (m_entry->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-        QByteArray ba = m_dirPaths.top();
-        ba += '\\';
-        ba += QString::fromWCharArray(m_entry->cFileName);
-        pushSubDirectory(ba);
-    }
-#else
     m_entry = ::readdir(m_dirStructs.top());
     while (m_entry && isDotOrDotDot(m_entry->d_name))
         m_entry = ::readdir(m_dirStructs.top());
@@ -357,7 +295,6 @@ bool QFileSystemIteratorPrivate::advanceHelper()
         pushSubDirectory(ba);
         return false; // further iteration possibly needed
     }
-#endif
     return false; // further iteration possiblye needed
 }
 
@@ -622,11 +559,7 @@ QString QFileSystemIterator::fileName() const
         return QLatin1String("@");
     if (d->m_currentDirShown == QFileSystemIteratorPrivate::ShowDotDotDir)
         return QLatin1String("@@");
-#ifdef Q_OS_WIN
-    return QString::fromWCharArray(d->m_entry->cFileName);
-#else
     return QString::fromLocal8Bit(d->m_entry->d_name);
-#endif
 }
 
 /*!
@@ -647,11 +580,7 @@ QString QFileSystemIterator::filePath() const
         ba += "/..";
     else if (d->m_entry) {
         ba += '/';
-#ifdef Q_OS_WIN
-        ba += QString::fromWCharArray(d->m_entry->cFileName);
-#else
         ba += d->m_entry->d_name;
-#endif
     }
     return QString::fromLocal8Bit(ba);
 }

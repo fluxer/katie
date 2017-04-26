@@ -41,20 +41,17 @@
 #include <QDebug>
 #include <QDirIterator>
 #include <QString>
-
-#ifdef Q_OS_WIN
-#   include <windows.h>
-#else
-#   include <sys/stat.h>
-#   include <sys/types.h>
-#   include <dirent.h>
-#   include <errno.h>
-#   include <string.h>
-#endif
-
 #include <qtest.h>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <errno.h>
+#include <string.h>
+
 #include "qfilesystemiterator.h"
+
+QT_USE_NAMESPACE
 
 class tst_qdiriterator : public QObject
 {
@@ -72,20 +69,11 @@ private slots:
 
 void tst_qdiriterator::data()
 {
-#if defined(Q_OS_WINCE)
-    QByteArray qtdir = qPrintable(QCoreApplication::applicationDirPath());
-    qtdir += "/depot";
-#else
-#if defined(Q_OS_WIN)
-    const char *qtdir = "C:\\depot\\qt\\main";
-#else
     const char *qtdir = ::getenv("QTDIR");
-#endif
     if (!qtdir) {
         fprintf(stderr, "QTDIR not set\n");
         exit(1);
     }
-#endif
 
     QTest::addColumn<QByteArray>("dirpath");
     QByteArray ba = QByteArray(qtdir) + "/src/core";
@@ -93,48 +81,6 @@ void tst_qdiriterator::data()
     QTest::newRow(ba) << ba;
     //QTest::newRow(ba1) << ba1;
 }
-
-#ifdef Q_OS_WIN
-static int posix_helper(const wchar_t *dirpath)
-{
-    int count = 0;
-    HANDLE hSearch;
-    WIN32_FIND_DATA fd;
-
-    const size_t origDirPathLength = wcslen(dirpath);
-
-    wchar_t appendedPath[MAX_PATH];
-    wcscpy(appendedPath, dirpath);
-    wcscat(appendedPath, L"\\*");
-    hSearch = FindFirstFile(appendedPath, &fd);
-    appendedPath[origDirPathLength] = 0;
-
-    if (hSearch == INVALID_HANDLE_VALUE) {
-        qWarning("FindFirstFile failed");
-        return count;
-    }
-
-    do {
-        if (!(fd.cFileName[0] == L'.' && fd.cFileName[1] == 0) &&
-            !(fd.cFileName[0] == L'.' && fd.cFileName[1] == L'.' && fd.cFileName[2] == 0))
-        {
-            if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
-                wcscat(appendedPath, L"\\");
-                wcscat(appendedPath, fd.cFileName);
-                count += posix_helper(appendedPath);
-                appendedPath[origDirPathLength] = 0;
-            }
-            else {
-                ++count;
-            }
-        }
-    } while (FindNextFile(hSearch, &fd));
-    FindClose(hSearch);
-
-    return count;
-}
-
-#else
 
 static int posix_helper(const char *dirpath)
 {
@@ -164,7 +110,6 @@ static int posix_helper(const char *dirpath)
     ::closedir(dir);
     return count;
 }
-#endif
 
 
 void tst_qdiriterator::posix()
@@ -174,13 +119,7 @@ void tst_qdiriterator::posix()
     int count = 0;
     QString path = QString::fromLatin1(dirpath);
     QBENCHMARK {
-#ifdef Q_OS_WIN
-        wchar_t wPath[MAX_PATH];
-        path.toWCharArray(wPath);
-        count = posix_helper(wPath);
-#else
         count = posix_helper(dirpath.constData());
-#endif
     }
     qDebug() << count;
 }

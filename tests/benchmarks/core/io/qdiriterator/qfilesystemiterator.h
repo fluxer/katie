@@ -49,8 +49,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QFileSystemIteratorPrivate;
-class //Q_CORE_EXPORT
-QFileSystemIterator
+class QFileSystemIterator
 {
 public:
     enum IteratorFlag {

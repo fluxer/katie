@@ -42,14 +42,12 @@
 #include <QtTest/QtTest>
 #include <QtCore/QDirIterator>
 
-#ifdef Q_OS_WIN
-#   include <windows.h>
-#else
-#   include <sys/stat.h>
-#   include <sys/types.h>
-#   include <dirent.h>
-#   include <unistd.h>
-#endif
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
+#include <unistd.h>
+
+QT_USE_NAMESPACE
 
 class bench_QDir_10000 : public QObject{
   Q_OBJECT

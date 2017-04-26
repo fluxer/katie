@@ -44,14 +44,11 @@
 #include <QFSFileEngine>
 #include <QString>
 #include <QDirIterator>
-
 #include <qtest.h>
 
 #include <stdio.h>
 
-#ifdef Q_OS_WIN
-# include <windows.h>
-#endif
+QT_USE_NAMESPACE
 
 #define BUFSIZE 1024*512
 #define FACTOR 1024*512

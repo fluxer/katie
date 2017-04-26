@@ -568,10 +568,10 @@ add_subdirectory(src/sql)
 add_subdirectory(src/svg)
 add_subdirectory(src/test)
 add_subdirectory(src/uitools)
+add_subdirectory(src/tools)
 if(ENABLE_TESTING)
     add_subdirectory(tests)
 endif()
-add_subdirectory(src/tools)
 
 # utilities needed for Katie maintainance
 if(KATIE_UTILS)
