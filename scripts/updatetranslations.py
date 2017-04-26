@@ -2,8 +2,8 @@
 
 import os, glob, subprocess, shlex
 
-components = ('core', 'dbus', 'declarative', 'gui', 'network', 'opengl',
-    'plugins', 'script', 'scripttools', 'sql', 'svg', 'test', 'uitools', 'xml')
+components = ('core', 'dbus', 'declarative', 'gui', 'network', 'plugins',
+    'script', 'scripttools', 'sql', 'svg', 'test', 'uitools', 'xml')
 cfiles = []
 tfiles = []
 
