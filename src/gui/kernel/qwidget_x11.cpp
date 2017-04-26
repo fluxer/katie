@@ -499,9 +499,8 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
     if (!window)
         initializeWindow = true;
 
-    QX11Info *parentXinfo = parentWidget ? &parentWidget->d_func()->xinfo : 0;
+    QX11Info *parentXinfo = parentWidget ? &parentWidget->d_func()->xinfo : Q_NULLPTR;
 
-#warning is this still valid case?
     if (desktop &&
         qt_x11_create_desktop_on_screen >= 0 &&
         qt_x11_create_desktop_on_screen != xinfo.screen()) {
@@ -509,13 +508,8 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         QX11InfoData *xd = &X11->screens[qt_x11_create_desktop_on_screen];
         xinfo.setX11Data(xd);
     } else if (parentXinfo && (parentXinfo->screen() != xinfo.screen()
-                               || (parentXinfo->visual() != xinfo.visual()
-                                   && !q->inherits("QGLWidget"))))
+                               || parentXinfo->visual() != xinfo.visual()))
     {
-        // QGLWidgets have to be excluded here as they have a
-        // specially crafted QX11Info structure which can't be swapped
-        // out with the parent widgets QX11Info. The parent visual,
-        // for instance, might not even be GL capable.
         xinfo = *parentXinfo;
     }
 

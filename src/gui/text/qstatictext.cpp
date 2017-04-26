@@ -136,21 +136,9 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QStaticText::PerformanceHint
-
-    This enum the different performance hints that can be set on the QStaticText. These hints
-    can be used to indicate that the QStaticText should use additional caches, if possible,
-    to improve performance at the expense of memory.
-
-    \value ModerateCaching Do basic caching for high performance at a low memory cost.
-    \value AggressiveCaching Use additional caching when available. This may improve performance
-           at a higher memory cost.
-*/
-
-/*!
     Constructs an empty QStaticText
 */
-QStaticText::QStaticText()    
+QStaticText::QStaticText()
     : data(new QStaticTextPrivate)
 {
 }
@@ -160,7 +148,7 @@ QStaticText::QStaticText()
 */
 QStaticText::QStaticText(const QString &text)
     : data(new QStaticTextPrivate)
-{    
+{
     data->text = text;
     data->invalidate();
 }
@@ -296,40 +284,6 @@ QString QStaticText::text() const
     return data->text;
 }
 
-#warning opengl specific PerformanceHint
-/*!
-  Sets the performance hint of the QStaticText according to the \a
-  performanceHint provided. The \a performanceHint is used to
-  customize how much caching is done internally to improve
-  performance.
-
-  The default is QStaticText::ModerateCaching.
-
-  \note This function will cause the layout of the text to require recalculation.
-
-  \sa performanceHint()
-*/
-void QStaticText::setPerformanceHint(PerformanceHint performanceHint)
-{
-    if ((performanceHint == ModerateCaching && !data->useBackendOptimizations)
-        || (performanceHint == AggressiveCaching && data->useBackendOptimizations)) {
-        return;
-    }
-    detach();
-    data->useBackendOptimizations = (performanceHint == AggressiveCaching);
-    data->invalidate();
-}
-
-/*!
-  Returns which performance hint is set for the QStaticText.
-
-  \sa setPerformanceHint()
-*/
-QStaticText::PerformanceHint QStaticText::performanceHint() const
-{
-    return data->useBackendOptimizations ? AggressiveCaching : ModerateCaching;
-}
-
 /*!
    Sets the text option structure that controls the layout process to the given \a textOption.
 
@@ -394,7 +348,7 @@ QSizeF QStaticText::size() const
 
 QStaticTextPrivate::QStaticTextPrivate()
         : textWidth(-1.0), items(0), itemCount(0), glyphPool(0), positionPool(0), charPool(0),
-          needsRelayout(true), useBackendOptimizations(false), textFormat(Qt::AutoText),
+          needsRelayout(true), textFormat(Qt::AutoText),
           untransformedCoordinates(false)
 {
 }
@@ -402,8 +356,8 @@ QStaticTextPrivate::QStaticTextPrivate()
 QStaticTextPrivate::QStaticTextPrivate(const QStaticTextPrivate &other)
     : text(other.text), font(other.font), textWidth(other.textWidth), matrix(other.matrix),
       items(0), itemCount(0), glyphPool(0), positionPool(0), charPool(0), textOption(other.textOption),
-      needsRelayout(true), useBackendOptimizations(other.useBackendOptimizations),
-      textFormat(other.textFormat), untransformedCoordinates(other.untransformedCoordinates)
+      needsRelayout(true), textFormat(other.textFormat),
+      untransformedCoordinates(other.untransformedCoordinates)
 {
 }
 
@@ -425,9 +379,9 @@ namespace {
     class DrawTextItemRecorder: public QPaintEngine
     {
     public:
-        DrawTextItemRecorder(bool untransformedCoordinates, bool useBackendOptimizations)
-                : m_dirtyPen(false), m_useBackendOptimizations(useBackendOptimizations),
-                  m_untransformedCoordinates(untransformedCoordinates), m_currentColor(Qt::black)
+        DrawTextItemRecorder(bool untransformedCoordinates)
+                : m_dirtyPen(false), m_untransformedCoordinates(untransformedCoordinates),
+                  m_currentColor(Qt::black)
         {
         }
 
@@ -451,7 +405,6 @@ namespace {
             currentItem.numChars = ti.num_chars;
             currentItem.glyphOffset = m_glyphs.size(); // Store offset into glyph pool
             currentItem.positionOffset = m_glyphs.size(); // Offset into position pool
-            currentItem.useBackendOptimizations = m_useBackendOptimizations;
             if (m_dirtyPen)
                 currentItem.color = m_currentColor;
 
@@ -522,7 +475,6 @@ namespace {
         QVector<QChar> m_chars;
 
         bool m_dirtyPen;
-        bool m_useBackendOptimizations;
         bool m_untransformedCoordinates;
         QColor m_currentColor;
     };
@@ -530,10 +482,9 @@ namespace {
     class DrawTextItemDevice: public QPaintDevice
     {
     public:
-        DrawTextItemDevice(bool untransformedCoordinates, bool useBackendOptimizations)
+        DrawTextItemDevice(bool untransformedCoordinates)
         {
-            m_paintEngine = new DrawTextItemRecorder(untransformedCoordinates,
-                                                     useBackendOptimizations);
+            m_paintEngine = new DrawTextItemRecorder(untransformedCoordinates);
         }
 
         ~DrawTextItemDevice()
@@ -677,7 +628,7 @@ void QStaticTextPrivate::init()
 
     position = QPointF(0, 0);
 
-    DrawTextItemDevice device(untransformedCoordinates, useBackendOptimizations);
+    DrawTextItemDevice device(untransformedCoordinates);
     {
         QPainter painter(&device);
         painter.setFont(font);

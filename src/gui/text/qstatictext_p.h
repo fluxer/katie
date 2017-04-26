@@ -71,9 +71,9 @@ public:
 
 class Q_GUI_EXPORT QStaticTextItem
 {
-public:    
-    QStaticTextItem() : chars(0), numChars(0), useBackendOptimizations(false),
-                        userDataNeedsUpdate(false), m_fontEngine(0), m_userData(0) {}
+public:
+    QStaticTextItem() : chars(0), numChars(0), userDataNeedsUpdate(false),
+                        m_fontEngine(0), m_userData(0) {}
 
     QStaticTextItem(const QStaticTextItem &other)
     {
@@ -89,7 +89,6 @@ public:
         numChars = other.numChars;
         font = other.font;
         color = other.color;
-        useBackendOptimizations = other.useBackendOptimizations;
         userDataNeedsUpdate = other.userDataNeedsUpdate;
 
         m_fontEngine = 0;
@@ -137,7 +136,6 @@ public:
     int numChars;                                // 4 bytes per item
     QFont font;                                  // 8 bytes per item
     QColor color;                                // 10 bytes per item
-    char useBackendOptimizations : 1;            // 1 byte per item
     bool userDataNeedsUpdate : 1;                //
                                                  // ================
                                                  // 51 bytes per item
@@ -183,7 +181,6 @@ public:
     QTextOption textOption;              // 28 bytes per text
 
     unsigned char needsRelayout            : 1; // 1 byte per text
-    unsigned char useBackendOptimizations  : 1;
     unsigned char textFormat               : 2;
     unsigned char untransformedCoordinates : 1;
                                          // ================

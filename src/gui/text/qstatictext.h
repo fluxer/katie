@@ -57,13 +57,8 @@ QT_BEGIN_NAMESPACE
 
 class QStaticTextPrivate;
 class Q_GUI_EXPORT QStaticText
-{    
+{
 public:
-    enum PerformanceHint {
-        ModerateCaching,
-        AggressiveCaching
-    };
-
     QStaticText();
     QStaticText(const QString &text);
     QStaticText(const QStaticText &other);
@@ -84,9 +79,6 @@ public:
     QSizeF size() const;
 
     void prepare(const QTransform &matrix = QTransform(), const QFont &font = QFont());
-
-    void setPerformanceHint(PerformanceHint performanceHint);
-    PerformanceHint performanceHint() const;
 
     QStaticText &operator=(const QStaticText &);
     bool operator==(const QStaticText &) const;
