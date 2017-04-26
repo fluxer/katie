@@ -462,11 +462,6 @@ QT_USE_NAMESPACE
 #define HAVE_PTHREAD_NP_H 1
 #endif
 
-/* On Windows, use QueryPerformanceCounter by default */
-#if OS(WINDOWS)
-#define WTF_USE_QUERY_PERFORMANCE_COUNTER  1
-#endif
-
 #if OS(UNIX)
 #define HAVE_SIGNAL_H 1
 #endif
@@ -525,10 +520,6 @@ QT_USE_NAMESPACE
 #if (CPU(X86_64) && (OS(UNIX) || OS(SOLARIS) || OS(HPUX))) || (CPU(IA64) && !CPU(IA64_32)) || CPU(ALPHA) || CPU(AIX64) || CPU(SPARC64) || CPU(MIPS64) || CPU(AARCH64)
 #define WTF_USE_JSVALUE64 1
 #elif CPU(ARM) || CPU(PPC64)
-#define WTF_USE_JSVALUE32 1
-#elif OS(WINDOWS) && COMPILER(MINGW)
-/* Using JSVALUE32_64 causes padding/alignement issues for JITStubArg
-on MinGW. See https://bugs.webkit.org/show_bug.cgi?id=29268 */
 #define WTF_USE_JSVALUE32 1
 #else
 #define WTF_USE_JSVALUE32_64 1

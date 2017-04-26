@@ -61,22 +61,8 @@
 
 #include "Platform.h"
 
-#if OS(WINCE)
-#include <windows.h>
-#endif
-
 #include <wtf/Assertions.h>
 #include <wtf/Noncopyable.h>
-
-#if OS(WINDOWS) && !OS(WINCE)
-#include <windows.h>
-#elif OS(DARWIN)
-#include <libkern/OSAtomic.h>
-#elif OS(ANDROID)
-#include <cutils/atomic.h>
-#elif OS(QNX)
-#include <atomic.h>
-#endif
 
 #include <QThread>
 #include <QCoreApplication>

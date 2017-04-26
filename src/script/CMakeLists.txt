@@ -147,7 +147,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/UString.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime/UStringImpl.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/ByteArray.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/CurrentTime.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/DateMath.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/dtoa.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/FastMalloc.cpp

@@ -42,22 +42,7 @@
 #include <wtf/FastMalloc.h>
 #include <wtf/HashCountedSet.h>
 
-#if OS(DARWIN)
-
-#include <mach/mach_init.h>
-#include <mach/mach_port.h>
-#include <mach/task.h>
-#include <mach/thread_act.h>
-#include <mach/vm_map.h>
-// clang's libc++ headers does not pull in pthread.h (but libstdc++ does)
-#include <pthread.h>
-
-#elif OS(WINDOWS)
-
-#include <windows.h>
-#include <malloc.h>
-
-#elif OS(HAIKU)
+#if OS(HAIKU)
 
 #include <OS.h>
 
@@ -77,10 +62,6 @@
 
 #if HAVE(PTHREAD_NP_H)
 #include <pthread_np.h>
-#endif
-
-#if OS(QNX)
-#include <sys/storage.h>
 #endif
 
 #endif
@@ -362,63 +343,6 @@ void Heap::shrinkBlocks(size_t neededBlocks)
         m_heap.blocks[i]->marked.set(HeapConstants::cellsPerBlock - 1);
 }
 
-#if OS(WINCE)
-void* g_stackBase = 0;
-
-inline bool isPageWritable(void* page)
-{
-    MEMORY_BASIC_INFORMATION memoryInformation;
-    DWORD result = VirtualQuery(page, &memoryInformation, sizeof(memoryInformation));
-
-    // return false on error, including ptr outside memory
-    if (result != sizeof(memoryInformation))
-        return false;
-
-    DWORD protect = memoryInformation.Protect & ~(PAGE_GUARD | PAGE_NOCACHE);
-    return protect == PAGE_READWRITE
-        || protect == PAGE_WRITECOPY
-        || protect == PAGE_EXECUTE_READWRITE
-        || protect == PAGE_EXECUTE_WRITECOPY;
-}
-
-static void* getStackBase(void* previousFrame)
-{
-    // find the address of this stack frame by taking the address of a local variable
-    bool isGrowingDownward;
-    void* thisFrame = (void*)(&isGrowingDownward);
-
-    isGrowingDownward = previousFrame < &thisFrame;
-    static DWORD pageSize = 0;
-    if (!pageSize) {
-        SYSTEM_INFO systemInfo;
-        GetSystemInfo(&systemInfo);
-        pageSize = systemInfo.dwPageSize;
-    }
-
-    // scan all of memory starting from this frame, and return the last writeable page found
-    register char* currentPage = (char*)((DWORD)thisFrame & ~(pageSize - 1));
-    if (isGrowingDownward) {
-        while (currentPage > 0) {
-            // check for underflow
-            if (currentPage >= (char*)pageSize)
-                currentPage -= pageSize;
-            else
-                currentPage = 0;
-            if (!isPageWritable(currentPage))
-                return currentPage + pageSize;
-        }
-        return 0;
-    } else {
-        while (true) {
-            // guaranteed to complete because isPageWritable returns false at end of memory
-            currentPage += pageSize;
-            if (!isPageWritable(currentPage))
-                return currentPage;
-        }
-    }
-}
-#endif
-
 #if OS(HPUX)
 struct hpux_get_stack_base_data
 {
@@ -467,8 +391,6 @@ static inline void* currentThreadStackBase()
 {
 #if OS(HPUX)
     return hpux_get_stack_base();
-#elif OS(QNX)
-    return (void *) (((uintptr_t)__tls() + __PAGESIZE - 1) & ~(__PAGESIZE - 1));
 #elif OS(SOLARIS)
     stack_t s;
     thr_stksegment(&s);
@@ -613,14 +535,7 @@ void Heap::markCurrentThreadConservatively(MarkStack& markStack)
 {
     // setjmp forces volatile registers onto the stack
     jmp_buf registers REGISTER_BUFFER_ALIGNMENT;
-#if COMPILER(MSVC)
-#pragma warning(push)
-#pragma warning(disable: 4611)
-#endif
     setjmp(registers);
-#if COMPILER(MSVC)
-#pragma warning(pop)
-#endif
 
     markCurrentThreadConservativelyInternal(markStack);
 }

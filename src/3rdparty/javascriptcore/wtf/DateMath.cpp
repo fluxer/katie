@@ -89,11 +89,6 @@
 #include <errno.h>
 #endif
 
-#if OS(WINCE)
-extern "C" size_t strftime(char * const s, const size_t maxsize, const char * const format, const struct tm * const t);
-extern "C" struct tm * localtime(const time_t *timer);
-#endif
-
 #if HAVE(SYS_TIME_H)
 #include <sys/time.h>
 #endif
@@ -371,11 +366,7 @@ int equivalentYearForDST(int year)
 
 static int32_t calculateUTCOffset()
 {
-#if PLATFORM(BREWMP)
-    time_t localTime = static_cast<time_t>(currentTime());
-#else
     time_t localTime = time(0);
-#endif
     tm localt;
     getLocalTime(&localTime, &localt);
 
@@ -494,10 +485,7 @@ static inline double ymdhmsToSeconds(long year, int mon, int day, int hour, int 
 // We follow the recommendation of RFC 2822 to consider all
 // obsolete time zones not listed here equivalent to "-0000".
 static const struct KnownZone {
-#if !OS(WINDOWS)
-    const
-#endif
-        char tzName[4];
+    const char tzName[4];
     int tzOffset;
 } known_zones[] = {
     { "UT", 0 },

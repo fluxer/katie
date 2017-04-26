@@ -147,10 +147,6 @@ namespace JSC {
         Register* m_buffer;
         Register* m_maxUsed;
 
-#if HAVE(VIRTUALALLOC)
-        Register* m_commitEnd;
-#endif
-
         JSGlobalObject* m_globalObject; // The global object whose vars are currently stored in the register file.
     };
 
@@ -167,7 +163,7 @@ namespace JSC {
         , m_buffer(0)
         , m_globalObject(0)
     {
-        // Verify that our values will play nice with mmap and VirtualAlloc.
+        // Verify that our values will play nice with mmap.
         Q_ASSERT(isPageAligned(maxGlobals));
         Q_ASSERT(isPageAligned(capacity));
 
@@ -178,27 +174,14 @@ namespace JSC {
             fprintf(stderr, "Could not allocate register file: %d\n", errno);
             CRASH();
         }
-    #elif HAVE(VIRTUALALLOC)
-        m_buffer = static_cast<Register*>(VirtualAlloc(0, roundUpAllocationSize(bufferLength, commitSize), MEM_RESERVE, PAGE_READWRITE));
-        if (!m_buffer) {
-            fprintf(stderr, "Could not allocate register file: %d\n", errno);
-            CRASH();
-        }
-        size_t committedSize = roundUpAllocationSize(maxGlobals * sizeof(Register), commitSize);
-        void* commitCheck = VirtualAlloc(m_buffer, committedSize, MEM_COMMIT, PAGE_READWRITE);
-        if (commitCheck != m_buffer) {
-            fprintf(stderr, "Could not allocate register file: %d\n", errno);
-            CRASH();
-        }
-        m_commitEnd = reinterpret_cast<Register*>(reinterpret_cast<char*>(m_buffer) + committedSize);
     #else
         /* 
-         * If neither MMAP nor VIRTUALALLOC are available - use fastMalloc instead.
+         * If MMAP is not available - use fastMalloc instead.
          *
          * Please note that this is the fallback case, which is non-optimal.
          * If any possible, the platform should provide for a better memory
          * allocation mechanism that allows for "lazy commit" or dynamic
-         * pre-allocation, similar to mmap or VirtualAlloc, to avoid waste of memory.
+         * pre-allocation, similar to mmap, to avoid waste of memory.
          */
         m_buffer = static_cast<Register*>(fastMalloc(bufferLength));
     #endif
@@ -225,17 +208,6 @@ namespace JSC {
 
         if (newEnd > m_max)
             return false;
-
-#if !HAVE(MMAP) && HAVE(VIRTUALALLOC)
-        if (newEnd > m_commitEnd) {
-            size_t size = roundUpAllocationSize(reinterpret_cast<char*>(newEnd) - reinterpret_cast<char*>(m_commitEnd), commitSize);
-            if (!VirtualAlloc(m_commitEnd, size, MEM_COMMIT, PAGE_READWRITE)) {
-                fprintf(stderr, "Could not allocate register file: %d\n", errno);
-                CRASH();
-            }
-            m_commitEnd = reinterpret_cast<Register*>(reinterpret_cast<char*>(m_commitEnd) + size);
-        }
-#endif
 
         if (newEnd > m_maxUsed)
             m_maxUsed = newEnd;

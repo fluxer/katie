@@ -152,11 +152,7 @@ namespace JSC {
         JSGlobalData* m_globalData;
     };
 
-#if OS(WINCE)
-    const size_t BLOCK_SIZE = 64 * 1024; // 64k
-#else
     const size_t BLOCK_SIZE = 64 * 4096; // 256k
-#endif
 
     // derived constants
     const size_t BLOCK_OFFSET_MASK = BLOCK_SIZE - 1;

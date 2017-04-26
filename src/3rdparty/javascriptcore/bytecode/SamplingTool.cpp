@@ -33,9 +33,7 @@
 #include "Interpreter.h"
 #include "Opcode.h"
 
-#if !OS(WINDOWS)
 #include <unistd.h>
-#endif
 
 namespace JSC {
 
@@ -100,15 +98,7 @@ ThreadIdentifier SamplingThread::s_samplingThread;
 void* SamplingThread::threadStartFunc(void*)
 {
     while (s_running) {
-        unsigned us = 1000000 / s_hertz;
-#if OS(WINDOWS)
-        unsigned ms = us / 1000;
-        if (us && !ms)
-            ms = 1;
-        Sleep(ms);
-#else
-        usleep(us);
-#endif // OS(WINDOWS)
+        usleep(1000000 / s_hertz);
 
 #if ENABLE(SAMPLING_FLAGS)
         SamplingFlags::sample();

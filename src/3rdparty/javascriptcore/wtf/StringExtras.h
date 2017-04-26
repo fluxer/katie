@@ -33,7 +33,7 @@
 #include <strings.h> 
 #endif
 
-#if OS(WINDOWS) || OS(LINUX) || OS(SOLARIS)
+#if OS(LINUX) || OS(SOLARIS)
 // FIXME: should check HAVE_STRNSTR
 
 inline char* strnstr(const char* buffer, const char* target, size_t bufferLength)

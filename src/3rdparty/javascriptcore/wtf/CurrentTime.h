@@ -33,13 +33,21 @@
 #define CurrentTime_h
 
 #include <time.h>
+#include <sys/time.h>
 
 namespace WTF {
 
     // Returns the current UTC time in seconds, counted from January 1, 1970.
     // Precision varies depending on platform but is usually as good or better 
     // than a millisecond.
-    double currentTime();
+    inline double currentTime()
+    {
+        struct timeval now;
+        struct timezone zone;
+
+        gettimeofday(&now, &zone);
+        return static_cast<double>(now.tv_sec) + (double)(now.tv_usec / 1000000.0);
+    }
 
     // Same thing, in milliseconds.
     inline double currentTimeMS()
@@ -49,13 +57,7 @@ namespace WTF {
 
     inline void getLocalTime(const time_t* localTime, struct tm* localTM)
     {
-    #if COMPILER(MSVC7) || COMPILER(MINGW) || OS(WINCE)
-        *localTM = *localtime(localTime);
-    #elif COMPILER(MSVC)
-        localtime_s(localTM, localTime);
-    #else
         localtime_r(localTime, localTM);
-    #endif
     }
 
 } // namespace WTF

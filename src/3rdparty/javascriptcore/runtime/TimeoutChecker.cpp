@@ -32,14 +32,7 @@
 
 #include "CallFrame.h"
 #include "JSGlobalObject.h"
-
-#if OS(DARWIN)
-#include <mach/mach.h>
-#elif OS(WINDOWS)
-#include <windows.h>
-#else
 #include "CurrentTime.h"
-#endif
 
 using namespace std;
 
@@ -54,36 +47,8 @@ static const int defaultIntervalBetweenChecks = 1000;
 // Returns the time the current thread has spent executing, in milliseconds.
 static inline unsigned getCPUTime()
 {
-#if OS(DARWIN)
-    mach_msg_type_number_t infoCount = THREAD_BASIC_INFO_COUNT;
-    thread_basic_info_data_t info;
-
-    // Get thread information
-    mach_port_t threadPort = mach_thread_self();
-    thread_info(threadPort, THREAD_BASIC_INFO, reinterpret_cast<thread_info_t>(&info), &infoCount);
-    mach_port_deallocate(mach_task_self(), threadPort);
-    
-    unsigned time = info.user_time.seconds * 1000 + info.user_time.microseconds / 1000;
-    time += info.system_time.seconds * 1000 + info.system_time.microseconds / 1000;
-    
-    return time;
-#elif OS(WINDOWS)
-    union {
-        FILETIME fileTime;
-        unsigned long long fileTimeAsLong;
-    } userTime, kernelTime;
-    
-    // GetThreadTimes won't accept NULL arguments so we pass these even though
-    // they're not used.
-    FILETIME creationTime, exitTime;
-    
-    GetThreadTimes(GetCurrentThread(), &creationTime, &exitTime, &kernelTime.fileTime, &userTime.fileTime);
-    
-    return userTime.fileTimeAsLong / 10000 + kernelTime.fileTimeAsLong / 10000;
-#else
     // FIXME: We should return the time the current thread has spent executing.
     return currentTime() * 1000;
-#endif
 }
 
 TimeoutChecker::TimeoutChecker()
