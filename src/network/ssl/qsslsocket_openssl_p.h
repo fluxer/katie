@@ -56,6 +56,7 @@
 
 #include "qsslsocket_p.h"
 
+#include <openssl/ssl.h>
 #include <openssl/asn1.h>
 #include <openssl/bio.h>
 #include <openssl/bn.h>
@@ -65,7 +66,6 @@
 #include <openssl/pkcs12.h>
 #include <openssl/pkcs7.h>
 #include <openssl/rand.h>
-#include <openssl/ssl.h>
 #include <openssl/stack.h>
 #include <openssl/x509.h>
 #include <openssl/x509v3.h>
@@ -112,7 +112,7 @@ public:
     void disconnected();
     QSslCipher sessionCipher() const;
 
-    static QSslCipher QSslCipher_from_SSL_CIPHER(SSL_CIPHER *cipher);
+    static QSslCipher QSslCipher_from_SSL_CIPHER(const SSL_CIPHER *cipher);
     static QList<QSslCertificate> STACKOFX509_to_QSslCertificates(STACK_OF(X509) *x509);
     Q_AUTOTEST_EXPORT static bool isMatchingHostname(const QString &cn, const QString &hostname);
     static QString getErrorsFromOpenSsl();

@@ -65,6 +65,7 @@ bool QSslSocketPrivate::s_libraryLoaded = false;
 bool QSslSocketPrivate::s_loadedCiphersAndCerts = false;
 bool QSslSocketPrivate::s_loadRootCertsOnDemand = false;
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
 /* \internal
 
     From OpenSSL's thread(3) manual page:
@@ -146,6 +147,8 @@ static unsigned long id_function()
 }
 } // extern "C"
 
+#endif //OPENSSL_VERSION_NUMBER >= 0x10100000L
+
 QSslSocketBackendPrivate::QSslSocketBackendPrivate()
     : ssl(0),
       ctx(0),
@@ -163,7 +166,7 @@ QSslSocketBackendPrivate::~QSslSocketBackendPrivate()
     destroySslContext();
 }
 
-QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(SSL_CIPHER *cipher)
+QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(const SSL_CIPHER *cipher)
 {
     QSslCipher ciph;
 
@@ -194,9 +197,12 @@ QSslCipher QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(SSL_CIPHER *ciph
             ciph.d->encryptionMethod = descriptionList.at(4).mid(4);
         ciph.d->exportable = (descriptionList.size() > 6 && descriptionList.at(6) == QLatin1String("export"));
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
         ciph.d->bits = cipher->strength_bits;
         ciph.d->supportedBits = cipher->alg_bits;
-
+#else
+	ciph.d->bits = SSL_CIPHER_get_bits(cipher, &ciph.d->supportedBits);
+#endif
     }
     return ciph;
 }
@@ -232,7 +238,7 @@ bool QSslSocketBackendPrivate::initSslContext()
 init_context:
     switch (configuration.protocol) {
     case QSsl::SslV2:
-#ifndef OPENSSL_NO_SSL2
+#if defined(OPENSSL_NO_SSL2) && OPENSSL_VERSION_NUMBER < 0x10100000L
         ctx = SSL_CTX_new(client ? SSLv2_client_method() : SSLv2_server_method());
 #else
         ctx = 0; // SSL 2 not supported by the system, but chosen deliberately -> error
@@ -339,7 +345,7 @@ init_context:
         //
         // See also: QSslContext::fromConfiguration()
         if (caCertificate.expiryDate() >= QDateTime::currentDateTime()) {
-            X509_STORE_add_cert(ctx->cert_store, (X509 *)caCertificate.handle());
+            X509_STORE_add_cert(SSL_CTX_get_cert_store(ctx), (X509 *)caCertificate.handle());
         }
     }
 
@@ -476,8 +482,10 @@ void QSslSocketBackendPrivate::destroySslContext()
 */
 void QSslSocketPrivate::deinitialize()
 {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
     CRYPTO_set_id_callback(0);
     CRYPTO_set_locking_callback(0);
+#endif
 }
 
 /*!
@@ -495,13 +503,17 @@ bool QSslSocketPrivate::supportsSsl()
 bool QSslSocketPrivate::ensureLibraryLoaded()
 {
     // Check if the library itself needs to be initialized.
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
     QMutexLocker locker(openssl_locks()->initLock());
+#endif
     if (!s_libraryLoaded) {
         s_libraryLoaded = true;
 
         // Initialize OpenSSL.
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
         CRYPTO_set_id_callback(id_function);
         CRYPTO_set_locking_callback(locking_function);
+#endif
         if (SSL_library_init() != 1)
             return false;
         SSL_load_error_strings();
@@ -536,7 +548,9 @@ bool QSslSocketPrivate::ensureLibraryLoaded()
 
 void QSslSocketPrivate::ensureCiphersAndCertsLoaded()
 {
-    QMutexLocker locker(openssl_locks()->initLock());
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+  QMutexLocker locker(openssl_locks()->initLock());
+#endif
     if (s_loadedCiphersAndCerts)
         return;
     s_loadedCiphersAndCerts = true;
@@ -588,14 +602,20 @@ void QSslSocketPrivate::resetDefaultCiphers()
 
     STACK_OF(SSL_CIPHER) *supportedCiphers = SSL_get_ciphers(mySsl);
     for (int i = 0; i < sk_SSL_CIPHER_num(supportedCiphers); ++i) {
-        if (SSL_CIPHER *cipher = sk_SSL_CIPHER_value(supportedCiphers, i)) {
-            if (cipher->valid) {
+        const SSL_CIPHER *cipher = sk_SSL_CIPHER_value(supportedCiphers, i);
+        if (cipher) {
+
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+	  if (cipher->valid) {
+#endif
                 QSslCipher ciph = QSslSocketBackendPrivate::QSslCipher_from_SSL_CIPHER(cipher);
                 if (!ciph.isNull()) {
                     if (!ciph.name().toLower().startsWith(QLatin1String("adh")))
                         ciphers << ciph;
                 }
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
             }
+#endif
         }
     }
 
