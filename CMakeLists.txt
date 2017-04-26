@@ -448,6 +448,8 @@ if(ENABLE_TESTING)
     )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
+    # most tests are not namespaces aware
+    add_definitions(-DQT_NO_USING_NAMESPACE)
 endif()
 
 # optional packages
