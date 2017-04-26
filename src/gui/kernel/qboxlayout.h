@@ -120,7 +120,6 @@ public:
     explicit QHBoxLayout(QWidget *parent);
     ~QHBoxLayout();
 
-
 private:
     Q_DISABLE_COPY(QHBoxLayout)
 };
@@ -132,7 +131,6 @@ public:
     QVBoxLayout();
     explicit QVBoxLayout(QWidget *parent);
     ~QVBoxLayout();
-
 
 private:
     Q_DISABLE_COPY(QVBoxLayout)

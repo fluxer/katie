@@ -56,6 +56,7 @@
 
 #include <qdbuserror.h>
 #include <qdbusconnection.h>
+#include <qdbusmessage.h>
 
 #include <QtCore/qatomic.h>
 #include <QtCore/qhash.h>
@@ -65,8 +66,6 @@
 #include <QtCore/qreadwritelock.h>
 #include <QtCore/qstringlist.h>
 #include <QtCore/qvector.h>
-
-#include <qdbusmessage.h>
 
 #ifndef QT_NO_DBUS
 #include <dbus/dbus.h>

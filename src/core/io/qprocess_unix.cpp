@@ -101,6 +101,7 @@ QT_END_NAMESPACE
 #include <stdlib.h>
 #include <string.h>
 
+extern char **environ;
 
 QT_BEGIN_NAMESPACE
 
@@ -468,8 +469,6 @@ bool QProcessPrivate::createChannel(Channel &channel)
         }
     }
 }
-
-extern char **environ;
 
 QProcessEnvironment QProcessEnvironment::systemEnvironment()
 {

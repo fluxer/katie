@@ -56,6 +56,8 @@
 
 #include <iostream>
 
+QT_USE_NAMESPACE
+
 static QString m_defaultExtensions;
 
 static void printOut(const QString & out)

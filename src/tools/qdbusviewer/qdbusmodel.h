@@ -43,14 +43,14 @@
 #define QDBUSMODEL_H
 
 #include <QtCore/qabstractitemmodel.h>
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
 #include <QtDBus/QDBusArgument>
 #include <QtDBus/QDBusConnection>
 
+QT_BEGIN_NAMESPACE
+
 struct QDBusItem;
-
-QT_FORWARD_DECLARE_CLASS(QDomDocument)
-QT_FORWARD_DECLARE_CLASS(QDomElement)
-
 
 class QDBusModel: public QAbstractItemModel
 {
@@ -91,6 +91,8 @@ private:
     QDBusConnection c;
     QDBusItem *root;
 };
+
+QT_END_NAMESPACE
 
 #endif
 

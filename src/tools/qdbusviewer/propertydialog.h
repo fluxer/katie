@@ -47,6 +47,8 @@
 #include <QTableWidget>
 #include <QDialogButtonBox>
 
+QT_BEGIN_NAMESPACE
+
 class PropertyDialog: public QDialog
 {
     Q_OBJECT
@@ -65,6 +67,8 @@ private:
     QTableWidget *propertyTable;
     QDialogButtonBox *buttonBox;
 };
+
+QT_END_NAMESPACE
 
 #endif
 

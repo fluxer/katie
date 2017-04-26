@@ -84,17 +84,16 @@
 
 
 QT_BEGIN_NAMESPACE
-
-QT_END_NAMESPACE
-
 struct ObjectPathProperties
 {
     QDBusObjectPath path;
     QVariantMap properties;
 };
 typedef QList<ObjectPathProperties> PathPropertiesList;
+QT_END_NAMESPACE
+
 Q_DECLARE_METATYPE(ObjectPathProperties)
-Q_DECLARE_METATYPE (PathPropertiesList)
+Q_DECLARE_METATYPE(PathPropertiesList)
 
 QT_BEGIN_NAMESPACE
 

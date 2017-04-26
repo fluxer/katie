@@ -93,6 +93,8 @@ QT_END_NAMESPACE
 
 #ifndef QT_NO_PROCESS
 
+extern char **environ;
+
 QT_BEGIN_NAMESPACE
 
 /*!
@@ -2107,8 +2109,6 @@ bool QProcess::startDetached(const QString &program)
 
     return QProcessPrivate::startDetached(prog, args);
 }
-
-extern char **environ;
 
 /*!
     \since 4.1

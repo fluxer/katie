@@ -42,13 +42,13 @@
 #ifndef QDBUSVIEWER_H
 #define QDBUSVIEWER_H
 
+#include <QtXml/QDomDocument>
+#include <QtXml/QDomElement>
 #include <QtGui/QtGui>
 #include <QtDBus/QDBusConnection>
 #include <QtDBus/QDBusMessage>
 
-QT_FORWARD_DECLARE_CLASS(QTreeView)
-QT_FORWARD_DECLARE_CLASS(QDomDocument)
-QT_FORWARD_DECLARE_CLASS(QDomElement)
+QT_BEGIN_NAMESPACE
 
 struct BusSignature
 {
@@ -99,5 +99,7 @@ private:
     QTextBrowser *log;
     QRegExp objectPathRegExp;
 };
+
+QT_END_NAMESPACE
 
 #endif

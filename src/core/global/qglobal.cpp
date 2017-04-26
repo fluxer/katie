@@ -2499,9 +2499,7 @@ bool QInternal::callFunction(InternalFunction func, void **args)
     into namespace \c ns.
 
     \sa QT_BEGIN_NAMESPACE, QT_END_NAMESPACE,
-    QT_PREPEND_NAMESPACE, QT_USE_NAMESPACE,
-    QT_BEGIN_INCLUDE_NAMESPACE, QT_END_INCLUDE_NAMESPACE,
-    QT_BEGIN_MOC_NAMESPACE, QT_END_MOC_NAMESPACE,
+    QT_PREPEND_NAMESPACE, QT_BEGIN_INCLUDE_NAMESPACE, QT_END_INCLUDE_NAMESPACE
 */
 
 /*!
@@ -2596,26 +2594,6 @@ bool QInternal::callFunction(InternalFunction func, void **args)
     It only serves as syntactic sugar and is intended
     to be used after #include lines within a
     \c QT_BEGIN_NAMESPACE ... \c QT_END_NAMESPACE block.
-
-    \sa QT_NAMESPACE
-*/
-
-/*!
-    \macro QT_BEGIN_MOC_NAMESPACE
-    \internal
-
-    This macro is output by moc at the beginning of
-    moc files. It is equivalent to \c QT_USE_NAMESPACE.
-
-    \sa QT_NAMESPACE
-*/
-
-/*!
-    \macro QT_END_MOC_NAMESPACE
-    \internal
-
-    This macro is output by moc at the beginning of
-    moc files. It expands to nothing.
 
     \sa QT_NAMESPACE
 */

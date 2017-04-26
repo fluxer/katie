@@ -176,7 +176,7 @@ void FormWindowData::applyToFormWindow(FormWindowBase* fw) const
 
 FormWindowSettings::FormWindowSettings(QDesignerFormWindowInterface *parent) :
     QDialog(parent),
-    m_ui(new ::Ui_FormWindowSettings),
+    m_ui(new Ui_FormWindowSettings),
     m_formWindow(qobject_cast<FormWindowBase*>(parent)),
     m_oldData(new FormWindowData)
 {

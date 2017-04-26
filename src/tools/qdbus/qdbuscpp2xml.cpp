@@ -72,6 +72,8 @@ QT_END_NAMESPACE
 #define PROGRAMVERSION  "0.1"
 #define PROGRAMCOPYRIGHT "Copyright (C) 2015 The Qt Company Ltd."
 
+QT_USE_NAMESPACE
+
 static QString outputFile;
 static int flags;
 

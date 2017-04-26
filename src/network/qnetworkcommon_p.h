@@ -16,6 +16,8 @@ Q_DECLARE_METATYPE(QNetworkSession::State)
 Q_DECLARE_METATYPE(QNetworkSession::SessionError)
 #endif
 
+QT_BEGIN_NAMESPACE
+
 static void downloadBufferDeleter(char *ptr)
 {
     delete[] ptr;
@@ -33,5 +35,7 @@ static int qt_timeout_value(int msecs, int elapsed)
     int timeout = msecs - elapsed;
     return timeout < 0 ? 0 : timeout;
 }
+
+QT_END_NAMESPACE
 
 #endif // QNETWORKCOMMON_H

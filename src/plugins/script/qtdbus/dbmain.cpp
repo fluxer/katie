@@ -398,4 +398,5 @@ Q_EXPORT_STATIC_PLUGIN(QtDBusScriptPlugin)
 Q_EXPORT_PLUGIN2(qtscriptdbus, QtDBusScriptPlugin)
 
 #endif // QT_NO_DBUS
+
 #include "moc_dbmain.h"

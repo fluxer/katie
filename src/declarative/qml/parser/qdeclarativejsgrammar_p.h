@@ -204,7 +204,7 @@ public:
   }
 };
 
-
 QT_END_NAMESPACE
+
 #endif // QDECLARATIVEJSGRAMMAR_P_H
 

@@ -43,11 +43,10 @@
 #define VIEW_H
 
 #include <QFrame>
-
-QT_FORWARD_DECLARE_CLASS(QGraphicsView)
-QT_FORWARD_DECLARE_CLASS(QLabel)
-QT_FORWARD_DECLARE_CLASS(QSlider)
-QT_FORWARD_DECLARE_CLASS(QToolButton)
+#include <QGraphicsView>
+#include <QLabel>
+#include <QSlider>
+#include <QToolButton>
 
 class View : public QFrame
 {

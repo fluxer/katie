@@ -45,6 +45,8 @@
 
 #ifndef QT_NO_DBUS
 
+QT_BEGIN_NAMESPACE
+
 /*!
     \class QDBusPendingReply
     \inmodule QtDBus
@@ -277,5 +279,7 @@ void QDBusPendingReplyData::setMetaTypes(int count, const int *types)
     d->setMetaTypes(count, types);
     d->checkReceivedSignature();
 }
+
+QT_END_NAMESPACE
 
 #endif // QT_NO_DBUS

@@ -57,6 +57,8 @@ QT_BEGIN_NAMESPACE
 Q_DBUS_EXPORT extern bool qt_dbus_metaobject_skip_annotations;
 QT_END_NAMESPACE
 
+QT_USE_NAMESPACE
+
 static QDBusConnection connection(QLatin1String(""));
 static bool printArgumentsLiterally = false;
 

@@ -57,6 +57,8 @@
 #ifndef QT_NO_BEARERMANAGEMENT
 #ifndef QT_NO_DBUS
 
+QT_BEGIN_NAMESPACE
+
 QDBusArgument &operator<<(QDBusArgument &argument, const ObjectPathProperties &item)
 {
     argument.beginStructure();
@@ -73,7 +75,6 @@ const QDBusArgument &operator>>(const QDBusArgument &argument, ObjectPathPropert
     return argument;
 }
 
-QT_BEGIN_NAMESPACE
 static QDBusConnection ofonoConnection = QDBusConnection::systemBus();
 
 

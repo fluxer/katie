@@ -4,6 +4,11 @@
 #include "abstractformeditor.h"
 #include "qwidget.h"
 
+Q_DECLARE_METATYPE(QWidgetList)
+Q_DECLARE_METATYPE(QAction*)
+
+QT_BEGIN_NAMESPACE
+
 enum { FormLayoutColumns = 2 };
 
 static const char *Geometry = "Geometry";
@@ -35,7 +40,6 @@ static void recursiveUpdate(QWidget *w)
     }
 }
 
-Q_DECLARE_METATYPE(QWidgetList)
-Q_DECLARE_METATYPE(QAction*)
+QT_END_NAMESPACE
 
 #endif // QDESIGNERCOMMON_P_H

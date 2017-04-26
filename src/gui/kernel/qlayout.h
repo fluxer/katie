@@ -49,10 +49,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QLayout;
 class QSize;
-
 
 class QLayoutPrivate;
 
@@ -157,14 +154,13 @@ private:
 
     friend class QApplicationPrivate;
     friend class QWidget;
-
 };
+
+QT_END_NAMESPACE
 
 // legacy includes
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qgridlayout.h>
-
-QT_END_NAMESPACE
 
 QT_END_HEADER
 

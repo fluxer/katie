@@ -48,6 +48,8 @@
 #include <QtDBus/QDBusInterface>
 #include <QtDBus/QDBusReply>
 
+QT_BEGIN_NAMESPACE
+
 struct QDBusItem
 {
     inline QDBusItem(QDBusModel::Type aType, const QString &aName, QDBusItem *aParent = 0)
@@ -352,4 +354,6 @@ QModelIndex QDBusModel::findObject(const QDBusObjectPath &objectPath)
     return QModelIndex();
 }
 
-#include <moc_qdbusmodel.h>
+QT_END_NAMESPACE
+
+#include "moc_qdbusmodel.h"

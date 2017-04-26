@@ -6,6 +6,8 @@
 #include "qiconengineplugin.h"
 #include "qimageiohandler.h"
 
+QT_BEGIN_NAMESPACE
+
 static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
 {
     const int maxFactor = 100;
@@ -27,5 +29,7 @@ Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
     (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
 #endif
+
+QT_END_NAMESPACE
 
 #endif // QGUICOMMON_P_H

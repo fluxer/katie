@@ -48,6 +48,8 @@
 Q_DECLARE_METATYPE(QByteArray*)
 Q_DECLARE_METATYPE(ByteArrayClass*)
 
+QT_BEGIN_NAMESPACE
+
 class ByteArrayClassPropertyIterator : public QScriptClassPropertyIterator
 {
 public:
@@ -306,3 +308,5 @@ uint ByteArrayClassPropertyIterator::id() const
     return m_last;
 }
 //! [8]
+
+QT_END_NAMESPACE

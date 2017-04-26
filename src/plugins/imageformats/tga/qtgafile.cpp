@@ -45,6 +45,8 @@
 #include <QtCore/QDebug>
 #include <QtCore/QDateTime>
 
+QT_BEGIN_NAMESPACE
+
 struct TgaReader
 {
     virtual ~TgaReader() {}
@@ -266,3 +268,5 @@ QImage QTgaFile::readImage()
     // TODO: add processing of TGA extension information - ie TGA 2.0 files
     return im;
 }
+
+QT_END_NAMESPACE

@@ -34,9 +34,7 @@ Q_DECLARE_METATYPE(QScriptDebuggerConsoleCommandGroupData)
 Q_DECLARE_METATYPE(QScriptDebuggerConsoleCommandGroupMap)
 Q_DECLARE_METATYPE(QScriptDebuggerValueList)
 
-
-
-namespace {
+QT_BEGIN_NAMESPACE
 
 static inline bool isAlmostIdentChar(const QChar &ch)
 {
@@ -55,6 +53,6 @@ static inline bool isPrefixOf(const QString &prefix, const QString &what)
     return ((what.length() > prefix.length()) && what.startsWith(prefix));
 }
 
-} // namespace
+QT_END_NAMESPACE
 
 #endif // QSCRIPTTOOLSCOMMON_H

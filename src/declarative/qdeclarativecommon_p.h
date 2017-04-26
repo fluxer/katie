@@ -7,6 +7,11 @@
 #include "qlistmodelinterface_p.h"
 #include "qscriptvalue.h"
 
+Q_DECLARE_METATYPE(QScriptValue)
+QML_DECLARE_TYPE(QListModelInterface)
+
+QT_BEGIN_NAMESPACE
+
 struct StaticQtMetaObject : public QObject
 {
     static const QMetaObject *get()
@@ -35,7 +40,6 @@ static int inline qRoundDouble(double d)
 DEFINE_BOOL_CONFIG_OPTION(stateChangeDebug, STATECHANGE_DEBUG)
 DEFINE_BOOL_CONFIG_OPTION(bindingsDump, QML_BINDINGS_DUMP)
 
-Q_DECLARE_METATYPE(QScriptValue)
-QML_DECLARE_TYPE(QListModelInterface)
+QT_END_NAMESPACE
 
 #endif // QDECLARATIVECOMMON_P_H

@@ -45,6 +45,8 @@
 #include <QtScript/QScriptClass>
 #include <QtScript/QScriptString>
 
+QT_BEGIN_NAMESPACE
+
 class ByteArrayClass : public QObject, public QScriptClass
 {
 public:
@@ -87,5 +89,7 @@ private:
     QScriptValue proto;
     QScriptValue ctor;
 };
+
+QT_END_NAMESPACE
 
 #endif

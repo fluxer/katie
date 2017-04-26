@@ -71,6 +71,8 @@
 #include "qdeclarativeinfo.h"
 #include "qdeclarativetypenotavailable_p.h"
 
+QT_BEGIN_NAMESPACE
+
 void QDeclarativeUtilModule::defineModule()
 {
     if (QApplication::type() != QApplication::Tty) {
@@ -120,3 +122,5 @@ void QDeclarativeUtilModule::defineModule()
     qmlRegisterCustomType<QDeclarativePropertyChanges>("QtQuick",1,0,"PropertyChanges", new QDeclarativePropertyChangesParser);
     qmlRegisterCustomType<QDeclarativeListModel>("QtQuick",1,0,"ListModel", new QDeclarativeListModelParser);
 }
+
+QT_END_NAMESPACE

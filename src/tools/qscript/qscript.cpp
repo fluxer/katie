@@ -38,17 +38,18 @@
 **
 ****************************************************************************/
 
-#include <qscriptengine.h>
-
 #include <QtCore/QFile>
 #include <QtCore/QTextStream>
 #include <QtCore/QStringList>
 #include <QtGui/QApplication>
+#include <QtScript/QScriptEngine>
 #include <QtScriptTools/QScriptEngineDebugger>
+
+#include "bytearrayclass.h"
 
 #include <stdlib.h>
 
-#include "bytearrayclass.h"
+QT_USE_NAMESPACE
 
 static bool wantsToQuit;
 
@@ -222,4 +223,4 @@ int main(int argc, char *argv[])
     delete app;
 
     return EXIT_SUCCESS;
-} 
+}

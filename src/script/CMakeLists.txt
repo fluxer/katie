@@ -5,7 +5,6 @@ add_definitions(
     -Djscyylex=qtjscyylex
     -Djscyyerror=qtjscyyerror
     -DWTF=QTWTF
-    -DQT_NO_USING_NAMESPACE
     -DQLALR_NO_QSCRIPTGRAMMAR_DEBUG_INFO
     -DBUILDING_QT__
 )

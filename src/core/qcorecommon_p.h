@@ -3,6 +3,8 @@
 
 #include "qstring.h"
 
+QT_BEGIN_NAMESPACE
+
 #if !defined(QT_NO_THREAD) && defined(_POSIX_THREAD_SAFE_FUNCTIONS) && _POSIX_VERSION >= 200112L
 namespace {
     // There are two incompatible versions of strerror_r:
@@ -30,5 +32,7 @@ static void report_error(int code, const char *where, const char *what)
     if (code != 0)
         qWarning("%s: %s failure: %s", where, what, qPrintable(qt_error_string(code)));
 }
+
+QT_END_NAMESPACE
 
 #endif // QCORECOMMON_P_H

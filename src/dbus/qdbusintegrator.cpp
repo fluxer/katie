@@ -71,7 +71,7 @@
 QT_BEGIN_NAMESPACE
 
 static QAtomicInt isDebugging = QAtomicInt(-1);
-#define qDBusDebug              if (::isDebugging == 0); else qDebug
+#define qDBusDebug              if (isDebugging == 0); else qDebug
 
 static const QString orgFreedesktopDBusString = QLatin1String(DBUS_SERVICE_DBUS);
 
@@ -629,7 +629,7 @@ static void huntAndEmit(DBusConnection *connection, DBusMessage *msg,
     }
 }
 
-static int findSlot(const QMetaObject *mo, const QByteArray &name, int flags,
+static int findMetaSlot(const QMetaObject *mo, const QByteArray &name, int flags,
                     const QString &signature_, QList<int>& metaTypes)
 {
     QByteArray msgSignature = signature_.toLatin1();
@@ -826,11 +826,11 @@ bool QDBusConnectionPrivate::activateCall(QObject* object, int flags, const QDBu
         // find a slot that matches according to the rules above
         QDBusSlotCache::Data slotData;
         slotData.flags = flags;
-        slotData.slotIdx = ::findSlot(mo, memberName, flags, msg.signature(), slotData.metaTypes);
+        slotData.slotIdx = findMetaSlot(mo, memberName, flags, msg.signature(), slotData.metaTypes);
         if (slotData.slotIdx == -1) {
             // ### this is where we want to add the connection as an arg too
             // try with no parameters, but with a QDBusMessage
-            slotData.slotIdx = ::findSlot(mo, memberName, flags, QString(), slotData.metaTypes);
+            slotData.slotIdx = findMetaSlot(mo, memberName, flags, QString(), slotData.metaTypes);
             if (slotData.metaTypes.count() != 2 ||
                 slotData.metaTypes.at(1) != QDBusMetaTypeId::message) {
                 // not found
@@ -976,12 +976,12 @@ QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
       rootNode(QString(QLatin1Char('/')))
 {
     static const bool threads = dbus_threads_init_default();
-    if (::isDebugging == -1)
-        ::isDebugging = qgetenv("QDBUS_DEBUG").toInt();
+    if (isDebugging == -1)
+        isDebugging = qgetenv("QDBUS_DEBUG").toInt();
     Q_UNUSED(threads)
 
 #if QDBUS_THREAD_DEBUG
-    if (::isDebugging > 1)
+    if (isDebugging > 1)
         qdbusThreadDebug = qdbusDefaultThreadDebug;
 #endif
 

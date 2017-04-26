@@ -47,6 +47,8 @@
 #include <QtCore/QString>
 #include <QtCore/QDebug>
 
+QT_BEGIN_NAMESPACE
+
 /*!
   \class QDesignerSettingsSimple
 
@@ -92,3 +94,5 @@ void QDesignerQSettings::remove(const QString &key)
 {
     m_settings.remove(key);
 }
+
+QT_END_NAMESPACE

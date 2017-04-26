@@ -53,6 +53,8 @@
 
 #ifndef QT_NO_DBUS
 
+QT_USE_NAMESPACE
+
 class QDBusConnectionConstructor : public QObject,
                                    public QScriptable
 {

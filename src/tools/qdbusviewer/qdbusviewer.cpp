@@ -50,6 +50,8 @@
 #include <QtDBus/QDBusConnectionInterface>
 #include <QtDBus/QDBusMetaType>
 
+QT_BEGIN_NAMESPACE
+
 class QDBusViewModel: public QDBusModel
 {
 public:
@@ -533,4 +535,6 @@ void QDBusViewer::anchorClicked(const QUrl &url)
   are output in the message view on the lower side of the window.
 */
 
-#include <moc_qdbusviewer.h>
+QT_END_NAMESPACE
+
+#include "moc_qdbusviewer.h"

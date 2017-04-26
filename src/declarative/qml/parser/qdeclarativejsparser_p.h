@@ -240,6 +240,4 @@ protected:
 
 QT_END_NAMESPACE
 
-
-
 #endif // QDECLARATIVEJSPARSER_P_H

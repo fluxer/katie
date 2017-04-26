@@ -813,14 +813,12 @@ void Moc::generate(FILE *out)
             " much.)\"\n", QT_VERSION_STR);
     fprintf(out, "#endif\n\n");
 
-    fprintf(out, "QT_BEGIN_MOC_NAMESPACE\n");
+    fprintf(out, "QT_USE_NAMESPACE\n");
 
     for (i = 0; i < classList.size(); ++i) {
         Generator generator(&classList[i], metaTypes, out);
         generator.generateCode();
     }
-
-    fprintf(out, "QT_END_MOC_NAMESPACE\n");
 }
 
 

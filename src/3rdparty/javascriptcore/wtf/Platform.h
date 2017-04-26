@@ -29,6 +29,8 @@
 
 #include <qglobal.h>
 
+QT_USE_NAMESPACE
+
 /* ==== PLATFORM handles OS, operating environment, graphics API, and
    CPU. This macro will be phased out in favor of platform adaptation
    macros, policy decision macros, and top-level port definitions. ==== */

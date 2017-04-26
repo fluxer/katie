@@ -43,12 +43,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/qwidget.h>
-
-QT_FORWARD_DECLARE_CLASS(QGraphicsScene)
-QT_FORWARD_DECLARE_CLASS(QGraphicsView)
-QT_FORWARD_DECLARE_CLASS(QLabel)
-QT_FORWARD_DECLARE_CLASS(QSlider)
-QT_FORWARD_DECLARE_CLASS(QSplitter)
+#include <QtGui/qgraphicsscene.h>
 
 class MainWindow : public QWidget
 {

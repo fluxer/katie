@@ -45,6 +45,8 @@
 Q_DECLARE_METATYPE(QByteArray*)
 #endif
 
+QT_BEGIN_NAMESPACE
+
 ByteArrayPrototype::ByteArrayPrototype(QObject *parent)
     : QObject(parent)
 {
@@ -135,5 +137,7 @@ QScriptValue ByteArrayPrototype::valueOf() const
     return thisObject().data();
 }
 //! [2]
+
+QT_END_NAMESPACE
 
 #include "moc_bytearrayprototype.h"

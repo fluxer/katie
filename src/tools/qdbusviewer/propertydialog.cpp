@@ -45,6 +45,8 @@
 #include <QLayout>
 #include <QDebug>
 
+QT_BEGIN_NAMESPACE
+
 PropertyDialog::PropertyDialog(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
@@ -112,4 +114,6 @@ QList<QVariant> PropertyDialog::values() const
     return result;
 }
 
-#include <moc_propertydialog.h>
+QT_END_NAMESPACE
+
+#include "moc_propertydialog.h"

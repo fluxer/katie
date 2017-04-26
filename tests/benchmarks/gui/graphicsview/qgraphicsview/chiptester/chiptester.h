@@ -42,13 +42,8 @@
 #ifndef CHIPTESTER_H
 #define CHIPTESTER_H
 
-#include <QtGui>
-
-QT_FORWARD_DECLARE_CLASS(QGraphicsScene)
-QT_FORWARD_DECLARE_CLASS(QGraphicsView)
-QT_FORWARD_DECLARE_CLASS(QLabel)
-QT_FORWARD_DECLARE_CLASS(QSlider)
-QT_FORWARD_DECLARE_CLASS(QSplitter)
+#include <QGraphicsScene>
+#include <QGraphicsView>
 
 class ChipTester : public QGraphicsView
 {

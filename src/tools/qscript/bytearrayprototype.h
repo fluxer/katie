@@ -46,6 +46,8 @@
 #include <QtScript/QScriptable>
 #include <QtScript/QScriptValue>
 
+QT_BEGIN_NAMESPACE
+
 //! [0]
 class ByteArrayPrototype : public QObject, public QScriptable
 {
@@ -75,5 +77,6 @@ private:
 };
 //! [0]
 
+QT_END_NAMESPACE
 
 #endif

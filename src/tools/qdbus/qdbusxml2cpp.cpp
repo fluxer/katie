@@ -68,6 +68,8 @@
 
 #define ANNOTATION_NO_WAIT      "org.freedesktop.DBus.Method.NoReply"
 
+QT_USE_NAMESPACE
+
 static QString globalClassName;
 static QString parentClassName;
 static QString proxyFile;

@@ -76,6 +76,8 @@
 #include "qdeclarativeanchors_p.h"
 #include "qdeclarativepincharea_p.h"
 
+QT_BEGIN_NAMESPACE
+
 static QDeclarativePrivate::AutoParentResult qgraphicsobject_autoParent(QObject *obj, QObject *parent)
 {
     QGraphicsObject* gobj = qobject_cast<QGraphicsObject*>(obj);
@@ -199,3 +201,5 @@ void QDeclarativeItemModule::defineModule()
     qmlRegisterRevision<QDeclarativeImplicitSizePaintedItem,1>("QtQuick",1,1);
     qmlRegisterUncreatableType<QDeclarativeLayoutMirroringAttached>("QtQuick",1,1,"LayoutMirroring", QDeclarativeLayoutMirroringAttached::tr("LayoutMirroring is only available via attached properties"));
 }
+
+QT_END_NAMESPACE

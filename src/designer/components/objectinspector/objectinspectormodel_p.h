@@ -163,6 +163,6 @@ namespace qdesigner_internal {
     };
 }  // namespace qdesigner_internal
 
-#endif // OBJECTINSPECTORMODEL_H
-
 QT_END_NAMESPACE
+
+#endif // OBJECTINSPECTORMODEL_H

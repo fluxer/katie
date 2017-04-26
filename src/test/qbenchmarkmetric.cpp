@@ -41,6 +41,8 @@
 
 #include <QtTest/qbenchmarkmetric_p.h>
 
+QT_BEGIN_NAMESPACE
+
 /*!
   \enum QTest::QBenchmarkMetric
   \since 4.7
@@ -113,3 +115,4 @@ const char * QTest::benchmarkMetricUnit(QBenchmarkMetric metric)
     }
 }
 
+QT_END_NAMESPACE

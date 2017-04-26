@@ -59,12 +59,6 @@
 #include <QtCore/qurl.h>
 #include <QtCore/qvarlengtharray.h>
 
-#if OPENSSL_VERSION_NUMBER >= 0x0090806fL && !defined(OPENSSL_NO_TLSEXT)
-// Symbian does not seem to have the symbol for SNI defined
-#ifndef SSL_CTRL_SET_TLSEXT_HOSTNAME
-#define SSL_CTRL_SET_TLSEXT_HOSTNAME 55
-#endif
-#endif
 QT_BEGIN_NAMESPACE
 
 bool QSslSocketPrivate::s_libraryLoaded = false;

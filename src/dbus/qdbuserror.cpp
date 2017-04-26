@@ -137,13 +137,13 @@ static const int errorMessages_indices[] = {
 static const int errorMessages_count = sizeof errorMessages_indices /
                                        sizeof errorMessages_indices[0];
 
-static inline const char *get(QDBusError::ErrorType code)
+static inline const char *getError(QDBusError::ErrorType code)
 {
     int intcode = qBound(0, int(code) - int(QDBusError::Other), errorMessages_count);
     return errorMessages_string + errorMessages_indices[intcode];
 }
 
-static inline QDBusError::ErrorType get(const char *name)
+static inline QDBusError::ErrorType getError(const char *name)
 {
     if (!name || !*name)
         return QDBusError::NoError;
@@ -248,7 +248,7 @@ QDBusError::QDBusError(const DBusError *error)
     if (!error || !dbus_error_is_set(error))
         return;
 
-    code = ::get(error->name);
+    code = getError(error->name);
     msg = QString::fromUtf8(error->message);
     nm = QString::fromUtf8(error->name);
 }
@@ -263,7 +263,7 @@ QDBusError::QDBusError(const QDBusMessage &qdmsg)
     if (qdmsg.type() != QDBusMessage::ErrorMessage)
         return;
 
-    code = ::get(qdmsg.errorName().toUtf8().constData());
+    code = getError(qdmsg.errorName().toUtf8().constData());
     nm = qdmsg.errorName();
     msg = qdmsg.errorMessage();
 }
@@ -275,7 +275,7 @@ QDBusError::QDBusError(const QDBusMessage &qdmsg)
 QDBusError::QDBusError(ErrorType error, const QString &mess)
     : code(error)
 {
-    nm = QLatin1String(::get(error));
+    nm = QLatin1String(getError(error));
     msg = mess;
 }
 
@@ -351,7 +351,7 @@ bool QDBusError::isValid() const
 */
 QString QDBusError::errorString(ErrorType error)
 {
-    return QLatin1String(::get(error));
+    return QLatin1String(getError(error));
 }
 
 #ifndef QT_NO_DEBUG_STREAM
