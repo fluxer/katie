@@ -78,12 +78,14 @@ if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
 endif()
 
-# Set compiler standard to C++ 11
-if(KATIE_COMPILER MATCHES "(gcc|clang)")
-    # Prefer standard argument so that try_compile() is also affected, which KDE uses for
-    # visibility check for an example
+# Set compiler standard to C++ 11, appending to CMAKE_CXX_FLAGS is done so that try_compile() is
+# also affected, which KDE uses for visibility check for an example
+if(KATIE_COMPILER STREQUAL "gcc")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+elseif(KATIE_COMPILER STREQUAL "clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(NOT CMAKE_VERSION VERSION_LESS "3.1.0")
+endif()
+if(NOT CMAKE_VERSION VERSION_LESS "3.1.0")
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_STANDARD 11)
 endif()
