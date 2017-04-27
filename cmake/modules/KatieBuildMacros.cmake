@@ -96,6 +96,32 @@ function(KATIE_FIXUP_STRING INSTR OUTSTR)
     endif()
 endfunction()
 
+# a function to get the Git checkout hash and store it in a variable
+function(KATIE_GIT_CHECKOUT GITEXE OUTSTR)
+    if(NOT EXISTS "${CMAKE_SOURCE_DIR}/.git")
+       set(${OUTSTR} "unknown" PARENT_SCOPE)
+    elseif(NOT GITEXE)
+        message(WARNING "Git was not found, unable to obtain checkout.\n")
+        set(${OUTSTR} "unknown" PARENT_SCOPE)
+    else()
+        execute_process(
+            COMMAND ${GITEXE} rev-parse HEAD
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+            RESULT_VARIABLE git_result
+            ERROR_VARIABLE git_output
+            OUTPUT_VARIABLE git_output
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+
+        if(NOT git_result STREQUAL 0)
+            message(WARNING "Git command failed, unable to obtain checkout:\n${git_output}")
+            set(${OUTSTR} "unknown" PARENT_SCOPE)
+        else()
+            set(${OUTSTR} "${git_output}" PARENT_SCOPE)
+        endif()
+    endif()
+endfunction()
+
 # a function to create an array of source files for a target while taking into
 # account all-in-one target build setting up proper dependency for the
 # moc/uic/rcc generated resources

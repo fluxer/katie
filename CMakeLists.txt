@@ -60,6 +60,15 @@ include(FeatureSummary)
 include(KatieMacros)
 include(KatieBuildMacros)
 
+# mostly relevant to the build process, also stored in the version file for CMake
+set(KATIE_MAJOR "4")
+set(KATIE_MINOR "9")
+set(KATIE_MICRO "0")
+set(KATIE_HEX "0x040900")
+set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
+# this one is set via macro later, if possible
+set(KATIE_GIT "unknown")
+
 # components and tools that will be build, changed depending on the requirements availability
 set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
@@ -251,6 +260,14 @@ set_package_properties(PCRE PROPERTIES
     DESCRIPTION "Perl Compatible Regular Expressions"
     URL "http://www.pcre.org/"
     TYPE REQUIRED
+)
+
+find_package(Git)
+set_package_properties(Git PROPERTIES
+    PURPOSE "Git checkout stored for the sake of bug reports"
+    DESCRIPTION "Free and open source distributed version control system"
+    URL "https://git-scm.com/"
+    TYPE RECOMMENDED
 )
 
 find_package(PythonInterp)
@@ -915,6 +932,7 @@ katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
 katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
+katie_git_checkout("${GIT_EXECUTABLE}" KATIE_GIT)
 
 configure_file(
     ${CMAKE_SOURCE_DIR}/cmake/KatieConfig.cmake
