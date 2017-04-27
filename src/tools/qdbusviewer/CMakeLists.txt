@@ -64,5 +64,6 @@ install(
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}
+    RENAME qdbusviewer${KATIE_TOOLS_SUFFIX}.png
     COMPONENT Devel
 )

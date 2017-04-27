@@ -100,5 +100,6 @@ install(
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/designer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}
+    RENAME designer${KATIE_TOOLS_SUFFIX}.png
     COMPONENT Devel
 )
