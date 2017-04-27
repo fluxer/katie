@@ -51,6 +51,16 @@ mapdata += '};\n'
 mapdata += 'static const int qclass_lib_count = %d;\n\n' % classcount
 mapdata += '#endif\n'
 
+if '--printmap' in sys.argv:
+    qmappedclasses = []
+    for sclass in mappedclasses:
+        if not sclass.startswith('Q'):
+            # internal class
+            continue
+        print('    "%s",' % sclass)
+    sys.exit(0)
+
+
 with open(mapoutput, 'wb') as f:
     sys.stdout.write('-- Writing: %s\n' % mapoutput)
     if sys.version_info[0] == 3:
