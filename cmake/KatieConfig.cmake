@@ -40,7 +40,7 @@ include("${KATIE_CMAKE_DIR}/KatieBinaryTargets.cmake")
 
 # These are pre-set and dynamically set variables, some use IMPORTED targets
 set(KATIE_DEFINITIONS @KATIE_DEFINITIONS@)
-set(KATIE_INCLUDES "${KATIE_HEADERS_FULL}")
+set(KATIE_INCLUDES "${KATIE_HEADERS_PATH}")
 set(KATIE_LIBRARIES)
 set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
 set(KATIE_TOOLS @KATIE_TOOLS@)
@@ -49,8 +49,8 @@ set(KATIE_MKSPECS "${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 
 foreach(component ${KATIE_COMPONENTS})
     string(TOUPPER ${component} uppercomp)
-    set(KATIE_INCLUDES ${KATIE_INCLUDES} "${KATIE_HEADERS_FULL}/Qt${component}")
-    set(KATIE_${uppercomp}_INCLUDES "${KATIE_HEADERS_FULL}/Qt${component}")
+    set(KATIE_INCLUDES ${KATIE_INCLUDES} "${KATIE_HEADERS_PATH}/Qt${component}")
+    set(KATIE_${uppercomp}_INCLUDES "${KATIE_HEADERS_PATH}/Qt${component}")
     set(KATIE_LIBRARIES ${KATIE_LIBRARIES} Katie::${component})
 
     set(KATIE_${uppercomp}_LIBRARIES Katie::${component})
