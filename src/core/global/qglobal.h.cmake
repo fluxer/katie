@@ -154,6 +154,10 @@
 
 namespace QT_NAMESPACE {}
 
+# ifdef QT_NAMESPACE_COMPAT
+QT_USE_NAMESPACE
+# endif
+
 #else /* QT_NO_USING_NAMESPACE && __cplusplus */
 
 # define QT_NAMESPACE
