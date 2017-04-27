@@ -39,10 +39,13 @@ configure_file(
 
 katie_setup_target(qdbusviewer ${QDBUSVIEWER_SOURCES} ${QDBUSVIEWER_HEADERS})
 
-add_executable(qdbusviewer
-    ${qdbusviewer_SOURCES}
-)
+add_executable(qdbusviewer ${qdbusviewer_SOURCES})
 target_link_libraries(qdbusviewer ${EXTRA_QDBUSVIEWER_LIBS})
+
+set_target_properties(qdbusviewer PROPERTIES
+    EXPORT_NAME qdbusviewer
+    OUTPUT_NAME qdbusviewer${KATIE_TOOLS_SUFFIX}
+)
 
 install(
     TARGETS qdbusviewer
@@ -54,8 +57,10 @@ install(
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
     DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
+    RENAME qdbusviewer${KATIE_TOOLS_SUFFIX}.desktop
     COMPONENT Devel
 )
+
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}

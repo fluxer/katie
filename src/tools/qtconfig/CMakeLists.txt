@@ -39,10 +39,13 @@ configure_file(
 
 katie_setup_target(qtconfig ${QTCONFIG_SOURCES} ${QTCONFIG_HEADERS})
 
-add_executable(qtconfig
-    ${qtconfig_SOURCES}
-)
+add_executable(qtconfig ${qtconfig_SOURCES})
 target_link_libraries(qtconfig ${EXTRA_QTCONFIG_LIBS})
+
+set_target_properties(qtconfig PROPERTIES
+    EXPORT_NAME qtconfig
+    OUTPUT_NAME qtconfig${KATIE_TOOLS_SUFFIX}
+)
 
 install(
     TARGETS qtconfig
@@ -54,6 +57,7 @@ install(
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qtconfig.desktop
     DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
+    RENAME qtconfig${KATIE_TOOLS_SUFFIX}.desktop
     COMPONENT Devel
 )
 install(

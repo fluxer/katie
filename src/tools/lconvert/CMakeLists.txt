@@ -32,6 +32,11 @@ add_executable(lconvert ${lconvert_SOURCES}
 )
 target_link_libraries(lconvert ${EXTRA_LCONVERT_LIBS})
 
+set_target_properties(lconvert PROPERTIES
+    EXPORT_NAME lconvert
+    OUTPUT_NAME lconvert${KATIE_TOOLS_SUFFIX}
+)
+
 install(
     TARGETS lconvert
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
@@ -42,4 +47,5 @@ install(
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/lconvert.1
     DESTINATION ${KATIE_MAN_RELATIVE}/man1
+    RENAME lconvert${KATIE_TOOLS_SUFFIX}.1
 )

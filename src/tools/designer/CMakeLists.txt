@@ -80,6 +80,11 @@ katie_setup_target(designer ${DESIGNERBIN_SOURCES} ${DESIGNERBIN_HEADERS})
 add_executable(designer ${designer_SOURCES})
 target_link_libraries(designer ${EXTRA_DESIGNERBIN_LIBS})
 
+set_target_properties(designer PROPERTIES
+    EXPORT_NAME designer
+    OUTPUT_NAME designer${KATIE_TOOLS_SUFFIX}
+)
+
 install(
     TARGETS designer
     RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
@@ -89,6 +94,7 @@ install(
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
     DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
+    RENAME designer${KATIE_TOOLS_SUFFIX}.desktop
     COMPONENT Devel
 )
 install(

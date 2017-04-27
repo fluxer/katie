@@ -26,6 +26,11 @@ katie_setup_target(rcc ${RCC_SOURCES} ${RCC_HEADERS})
 add_executable(rcc ${rcc_SOURCES})
 target_link_libraries(rcc ${EXTRA_RCC_LIBS})
 
+set_target_properties(rcc PROPERTIES
+    EXPORT_NAME rcc
+    OUTPUT_NAME rcc${KATIE_TOOLS_SUFFIX}
+)
+
 install(
     TARGETS rcc
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
@@ -36,4 +41,5 @@ install(
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/rcc.1
     DESTINATION ${KATIE_MAN_RELATIVE}/man1
+    RENAME rcc${KATIE_TOOLS_SUFFIX}.1
 )

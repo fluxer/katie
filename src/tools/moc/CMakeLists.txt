@@ -25,6 +25,11 @@ target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 add_executable(moc ${MOC_SOURCES})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
 
+set_target_properties(moc PROPERTIES
+    EXPORT_NAME moc
+    OUTPUT_NAME moc${KATIE_TOOLS_SUFFIX}
+)
+
 install(
     TARGETS moc
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
@@ -35,4 +40,5 @@ install(
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/moc.1
     DESTINATION ${KATIE_MAN_RELATIVE}/man1
+    RENAME moc${KATIE_TOOLS_SUFFIX}.1
 )

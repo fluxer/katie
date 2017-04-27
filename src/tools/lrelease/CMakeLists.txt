@@ -32,6 +32,11 @@ add_executable(lrelease ${lrelease_SOURCES}
 )
 target_link_libraries(lrelease ${EXTRA_LRELEASE_LIBS})
 
+set_target_properties(lrelease PROPERTIES
+    EXPORT_NAME lrelease
+    OUTPUT_NAME lrelease${KATIE_TOOLS_SUFFIX}
+)
+
 install(
     TARGETS lrelease
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
@@ -42,4 +47,5 @@ install(
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/lrelease.1
     DESTINATION ${KATIE_MAN_RELATIVE}/man1
+    RENAME lrelease${KATIE_TOOLS_SUFFIX}.1
 )

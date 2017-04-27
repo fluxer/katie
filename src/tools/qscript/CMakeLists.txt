@@ -30,6 +30,11 @@ katie_setup_target(qscript ${QSCRIPT_SOURCES} ${QSCRIPT_HEADERS})
 add_executable(qscript ${qscript_SOURCES})
 target_link_libraries(qscript ${EXTRA_QTSCRIPT_LIBS})
 
+set_target_properties(qscript PROPERTIES
+    EXPORT_NAME qscript
+    OUTPUT_NAME qscript${KATIE_TOOLS_SUFFIX}
+)
+
 install(
     TARGETS qscript
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
@@ -41,4 +46,5 @@ install(
     FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/qscript.1
     DESTINATION ${KATIE_MAN_RELATIVE}/man1
+    RENAME qscript${KATIE_TOOLS_SUFFIX}.1
 )

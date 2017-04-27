@@ -41,7 +41,7 @@ endforeach()
 
 foreach(tool ${KATIE_TOOLS})
     string(TOUPPER ${tool} uppertool)
-    set(KATIE_${uppertool} Katie::${tool})
+    set(KATIE_${uppertool} Katie::${tool}@KATIE_TOOLS_SUFFIX@)
 endforeach()
 
 # Include macros, tools variables must be set before that
@@ -66,6 +66,7 @@ set(KATIE_MAN_PATH "@KATIE_MAN_FULL@")
 set(KATIE_CMAKE_PATH "@KATIE_CMAKE_FULL@")
 set(KATIE_APPLICATIONS_PATH "@KATIE_APPLICATIONS_FULL@")
 set(KATIE_PIXMAPS_PATH "@KATIE_PIXMAPS_FULL@")
+set(KATIE_TOOLS_SUFFIX "@KATIE_TOOLS_SUFFIX@")
 
 if(NOT "${KATIE_FIND_QUIETLY}")
     message(STATUS "Found Katie version: ${KATIE_VERSION}")
@@ -91,8 +92,8 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     set(QT_MKSPECS_DIR ${KATIE_MKSPECS_DIR})
 
     # those are exceptions because they have "q" prefix which the macros from Qt4Macros do not expect
-    set(QT_DBUSXML2CPP_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbusxml2cpp${CMAKE_EXECUTABLE_SUFFIX}")
-    set(QT_DBUSCPP2XML_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbuscpp2xml${CMAKE_EXECUTABLE_SUFFIX}")
+    set(QT_DBUSXML2CPP_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbusxml2cpp@KATIE_TOOLS_SUFFIX@${CMAKE_EXECUTABLE_SUFFIX}")
+    set(QT_DBUSCPP2XML_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbuscpp2xml@KATIE_TOOLS_SUFFIX@${CMAKE_EXECUTABLE_SUFFIX}")
 
     if(NOT KATIE_COMPAT_ISSET)
         set(KATIE_COMPAT_ISSET CACHE BOOL TRUE "")

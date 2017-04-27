@@ -86,6 +86,7 @@ set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages path 
 set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register path (UNIX)")
 set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon path (UNIX)")
 set(KATIE_PKGCONFIG_FULL "${KATIE_DATA_FULL}/pkgconfig" CACHE PATH "Desktop applications icon path (UNIX)")
+set(KATIE_TOOLS_SUFFIX "" CACHE PATH "Tools (moc, uic, rcc, etc.) suffix")
 katie_setup_paths()
 
 # optional package
