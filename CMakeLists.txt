@@ -545,7 +545,6 @@ endif()
 
 # semi-shared
 include(src/shared/linguist/linguist.cmake)
-include(src/shared/bootstrap.cmake)
 include(src/shared/deviceskin/deviceskin.cmake)
 include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
 include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
@@ -898,7 +897,6 @@ if(UNIX AND WITH_X11 AND X11_FOUND)
     katie_generate_obsolete(qx11embedcontainer.h QtGui qx11embed_x11.h)
     katie_generate_obsolete(qx11embedwidget.h QtGui qx11embed_x11.h)
 endif()
-katie_generate_obsolete(qttestgui.h QtTest qtest_gui.h)
 # those have shuffled from QtXml to QtCore
 katie_generate_obsolete(qxmlstream.h QtXml ../QtCore/qxmlstream.h)
 katie_generate_obsolete(qxmlstreamattribute.h QtXml ../QtCore/qxmlstream.h)
