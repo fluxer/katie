@@ -26,6 +26,7 @@ mapdata += 'static const ClassInfoEntry qclass_lib_map[] = {\n'
 
 def exportscan(sdir, pattern, component):
     dirmap = ''
+    regex = re.compile('(?:class|struct) (?:%s) (\w+)' % pattern)
     global classcount
     for sroot, sdir, lfiles in os.walk(sdir):
         for sfile in sorted(lfiles):
@@ -35,7 +36,7 @@ def exportscan(sdir, pattern, component):
             with open(sfull, 'rb') as f:
                 scontent = f.read()
             scontent = scontent.decode('utf-8')
-            for match in re.findall('(?:class|struct) (?:%s) (\w+)' % pattern, scontent):
+            for match in regex.findall(scontent):
                 if match in mappedclasses:
                     continue
                 mappedclasses.append(match)
@@ -50,16 +51,6 @@ for component in components:
 mapdata += '};\n'
 mapdata += 'static const int qclass_lib_count = %d;\n\n' % classcount
 mapdata += '#endif\n'
-
-if '--printmap' in sys.argv:
-    qmappedclasses = []
-    for sclass in mappedclasses:
-        if not sclass.startswith('Q'):
-            # internal class
-            continue
-        print('    "%s",' % sclass)
-    sys.exit(0)
-
 
 with open(mapoutput, 'wb') as f:
     sys.stdout.write('-- Writing: %s\n' % mapoutput)
