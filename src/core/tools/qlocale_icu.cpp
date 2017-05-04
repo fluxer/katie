@@ -43,6 +43,7 @@
 #include "qdebug.h"
 
 #include <unicode/ucol.h>
+#include <unicode/ustring.h>
 
 QT_BEGIN_NAMESPACE
 
