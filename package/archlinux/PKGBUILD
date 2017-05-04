@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.4ac6a9e5
+pkgver=4.9.0.4e4f988b
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
@@ -19,8 +19,6 @@ source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')
 # options=('debug')
-
-export CFLAGS="${CFLAGS} -flto" CXXFLAGS="${CXXFLAGS} -flto"
 
 pkgver() {
     cd katie
@@ -39,7 +37,8 @@ build() {
         -DCMAKE_INSTALL_PREFIX=/usr \
         -DKATIE_LDCONF_FULL=/etc/ld.so.conf.d \
         -DKATIE_PROFILE_FULL=/etc/profile.d \
-        -DKATIE_TOOLS_SUFFIX="-katie"
+        -DKATIE_TOOLS_SUFFIX="-katie" \
+        -DKATIE_ALLINONE=ON
     make
 }
 
