@@ -864,18 +864,8 @@ namespace WTF {
             if (!begin())
                 return;
         }
-            
-#if COMPILER(MSVC7)
-        // FIXME: MSVC7 generates compilation errors when trying to assign
-        // a pointer to a Vector of its base class (i.e. can't downcast). So far
-        // I've been unable to determine any logical reason for this, so I can
-        // only assume it is a bug with the compiler. Casting is a bad solution,
-        // however, because it subverts implicit conversions, so a better 
-        // one is needed. 
-        new (end()) T(static_cast<T>(*ptr));
-#else
+
         new (end()) T(*ptr);
-#endif
         ++m_size;
     }
 

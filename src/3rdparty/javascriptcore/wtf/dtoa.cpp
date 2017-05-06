@@ -153,12 +153,6 @@
 
 #include <stdio.h>
 
-#if COMPILER(MSVC)
-#pragma warning(disable: 4244)
-#pragma warning(disable: 4245)
-#pragma warning(disable: 4554)
-#endif
-
 #if CPU(BIG_ENDIAN)
 #define IEEE_MC68k
 #elif CPU(MIDDLE_ENDIAN)

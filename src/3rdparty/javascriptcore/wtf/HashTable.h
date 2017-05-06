@@ -256,22 +256,8 @@ namespace WTF {
         const_iterator m_iterator;
     };
 
-    using std::swap;
-
-    // Work around MSVC's standard library, whose swap for pairs does not swap by component.
-    template<typename T> inline void hashTableSwap(T& a, T& b)
-    {
-        swap(a, b);
-    }
-
-    template<typename T, typename U> inline void hashTableSwap(pair<T, U>& a, pair<T, U>& b)
-    {
-        swap(a.first, b.first);
-        swap(a.second, b.second);
-    }
-
     template<typename T, bool useSwap> struct Mover;
-    template<typename T> struct Mover<T, true> { static void move(T& from, T& to) { hashTableSwap(from, to); } };
+    template<typename T> struct Mover<T, true> { static void move(T& from, T& to) { std::swap(from, to); } };
     template<typename T> struct Mover<T, false> { static void move(T& from, T& to) { to = from; } };
 
     template<typename Key, typename Value, typename HashFunctions> class IdentityHashTranslator {

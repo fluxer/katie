@@ -89,14 +89,6 @@ static ExpressionNode* makeRightShiftNode(JSGlobalData*, ExpressionNode* left, E
 static StatementNode* makeVarStatementNode(JSGlobalData*, ExpressionNode*);
 static ExpressionNode* combineCommaNodes(JSGlobalData*, ExpressionNode* list, ExpressionNode* init);
 
-#if COMPILER(MSVC)
-
-#pragma warning(disable: 4065)
-#pragma warning(disable: 4244)
-#pragma warning(disable: 4702)
-
-#endif
-
 #define YYPARSE_PARAM globalPtr
 #define YYLEX_PARAM globalPtr
 

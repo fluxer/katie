@@ -26,41 +26,18 @@
 #ifndef WTF_Assertions_h
 #define WTF_Assertions_h
 
-/*
-   no namespaces because this file has to be includable from C and Objective-C
-
-   Note, this file uses many GCC extensions, but it should be compatible with
-   C, Objective C, C++, and Objective C++.
-
-   For non-debug builds, everything is disabled by default.
-   Defining any of the symbols explicitly prevents this from having any effect.
-   
-   MSVC7 note: variadic macro support was added in MSVC8, so for now we disable
-   those macros in MSVC7. For more info, see the MSDN document on variadic 
-   macros here:
-   
-   http://msdn2.microsoft.com/en-us/library/ms177415(VS.80).aspx
-*/
-
 #include "Platform.h"
 
-#if COMPILER(MSVC)
-#include <stddef.h>
-#else
 #include <inttypes.h>
-#endif
 
 /* CRASH -- gets us into the debugger or the crash reporter -- signals are ignored by the crash reporter so we must do better */
 
-#ifndef CRASH
 #define CRASH() do { \
     *(int *)(uintptr_t)0xbbadbeef = 0; \
     ((void(*)())Q_NULLPTR)(); /* More reliable, but doesn't say BBADBEEF */ \
 } while(false)
-#endif
 
 /* COMPILE_ASSERT */
-#ifndef COMPILE_ASSERT
 #if COMPILER_SUPPORTS(C_STATIC_ASSERT)
 /* Unlike static_assert below, this also works in plain C code. */
 #define COMPILE_ASSERT(exp, name) _Static_assert((exp), #name)
@@ -68,7 +45,6 @@
 #define COMPILE_ASSERT(exp, name) static_assert((exp), #name)
 #else
 #define COMPILE_ASSERT(exp, name) typedef int dummy##name [(exp) ? 1 : -1]
-#endif
 #endif
 
 #endif /* WTF_Assertions_h */

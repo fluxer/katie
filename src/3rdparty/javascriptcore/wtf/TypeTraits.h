@@ -24,11 +24,9 @@
 
 #include "Platform.h"
 
-#if (defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || (defined(_MSC_VER) && (_MSC_VER >= 1600))
-#include <type_traits>
 #if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
+#include <type_traits>
 #include <tr1/memory>
-#endif
 #endif
 
 namespace WTF {
@@ -61,7 +59,7 @@ namespace WTF {
     template<> struct IsInteger<unsigned long>      { static const bool value = true; };
     template<> struct IsInteger<long long>          { static const bool value = true; };
     template<> struct IsInteger<unsigned long long> { static const bool value = true; };
-#if !COMPILER(MSVC) || defined(_NATIVE_WCHAR_T_DEFINED)
+#if defined(_NATIVE_WCHAR_T_DEFINED)
     template<> struct IsInteger<wchar_t>            { static const bool value = true; };
 #endif
 
@@ -169,10 +167,9 @@ namespace WTF {
         typedef T Type;
     };
 
-#if (defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)) || (defined(_MSC_VER) && (_MSC_VER >= 1600 && _MSC_VER < 1900))
+#if defined(__GLIBCXX__) && (__GLIBCXX__ >= 20070724) && defined(__GXX_EXPERIMENTAL_CXX0X__)
 
     // GCC's libstdc++ 20070724 and later supports C++ TR1 type_traits in the std namespace.
-    // VC10 (VS2010) and later support C++ TR1 type_traits in the std::tr1 namespace.
     template<typename T> struct HasTrivialConstructor : public std::tr1::has_trivial_constructor<T> { };
     template<typename T> struct HasTrivialDestructor : public std::tr1::has_trivial_destructor<T> { };
 
@@ -192,15 +189,8 @@ namespace WTF {
     typedef IntegralConstant<bool, true>  true_type;
     typedef IntegralConstant<bool, false> false_type;
 
-#if defined(_MSC_VER) && (_MSC_VER >= 1400) && !defined(__INTEL_COMPILER)
-    // VC8 (VS2005) and later have built-in compiler support for HasTrivialConstructor / HasTrivialDestructor,
-    // but for some unexplained reason it doesn't work on built-in types.
-    template <typename T> struct HasTrivialConstructor : public IntegralConstant<bool, __has_trivial_constructor(T)>{ };
-    template <typename T> struct HasTrivialDestructor : public IntegralConstant<bool, __has_trivial_destructor(T)>{ };
-#else
     template <typename T> struct HasTrivialConstructor : public false_type{ };
     template <typename T> struct HasTrivialDestructor : public false_type{ };
-#endif
 
     template <typename T> struct HasTrivialConstructor<T*> : public true_type{ };
     template <typename T> struct HasTrivialDestructor<T*> : public true_type{ };
@@ -280,7 +270,7 @@ namespace WTF {
     template <> struct HasTrivialConstructor<volatile char> : public true_type{ };
     template <> struct HasTrivialConstructor<const volatile char> : public true_type{ };
 
-    #if !defined(_MSC_VER) || defined(_NATIVE_WCHAR_T_DEFINED)
+    #if defined(_NATIVE_WCHAR_T_DEFINED)
         template <> struct HasTrivialConstructor<wchar_t> : public true_type{ };
         template <> struct HasTrivialConstructor<const wchar_t> : public true_type{ };
         template <> struct HasTrivialConstructor<volatile wchar_t> : public true_type{ };
@@ -362,7 +352,7 @@ namespace WTF {
     template <> struct HasTrivialDestructor<volatile char> : public true_type{ };
     template <> struct HasTrivialDestructor<const volatile char> : public true_type{ };
 
-    #if !defined(_MSC_VER) || defined(_NATIVE_WCHAR_T_DEFINED)
+    #if defined(_NATIVE_WCHAR_T_DEFINED)
         template <> struct HasTrivialDestructor<wchar_t> : public true_type{ };
         template <> struct HasTrivialDestructor<const wchar_t> : public true_type{ };
         template <> struct HasTrivialDestructor<volatile wchar_t> : public true_type{ };
