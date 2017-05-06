@@ -471,8 +471,7 @@ public:
         DocumentMode,
         PixmapMode,
         StaticTextMode,
-        StaticTextWithMaximumSizeMode,
-        StaticTextBackendOptimizations
+        StaticTextWithMaximumSizeMode
     };
 
     DrawText(const QString &text, Mode mode)
@@ -482,7 +481,6 @@ public:
 
     virtual void begin(QPainter *p, int iterations) {
         m_staticTexts.clear();
-        m_currentStaticText = 0;
         m_pixmaps.clear();
         m_currentPixmap = 0;
         QRect m_bounds = QRect(0,0,p->device()->width(), p->device()->height());
@@ -534,19 +532,6 @@ public:
             m_staticTexts.append(staticText);
             break;
         }
-        case StaticTextBackendOptimizations: {
-            m_size = (p->boundingRect(m_bounds, 0, m_text)).size();
-            for (int i=0; i<iterations; ++i) {
-                QStaticText staticText;
-                staticText.setPerformanceHint(QStaticText::AggressiveCaching);
-                staticText.setTextWidth(m_size.width() + 10);
-                staticText.setText(m_text);
-                staticText.prepare(p->transform(), p->font());
-                m_staticTexts.append(staticText);
-            }
-
-            break;
-        }
         case StaticTextMode: {
             QStaticText staticText;
             staticText.setText(m_text);
@@ -593,10 +578,6 @@ public:
         case StaticTextMode:
             p->drawStaticText(rect.topLeft(), m_staticTexts.at(0));
             break;
-        case StaticTextBackendOptimizations:
-            p->drawStaticText(rect.topLeft(), m_staticTexts.at(m_currentStaticText));
-            m_currentStaticText = (m_currentStaticText + 1) % m_staticTexts.size();
-            break;
         }
     }
 
@@ -614,7 +595,6 @@ public:
         case PixmapMode: type = QLatin1String("pixmap cached text"); break;
         case StaticTextMode: type = QLatin1String("drawStaticText()"); break;
         case StaticTextWithMaximumSizeMode: type = QLatin1String("drawStaticText() w/ maxsize"); break;
-        case StaticTextBackendOptimizations: type = QLatin1String("drawStaticText() w/ backend optimizations"); break;
         }
 
         return QString::fromLatin1("%3, len=%1, lines=%2")
@@ -632,7 +612,6 @@ private:
     QList<QPixmap> m_pixmaps;
     int m_currentPixmap;
 
-    int m_currentStaticText;
     QList<QStaticText> m_staticTexts;
 };
 
