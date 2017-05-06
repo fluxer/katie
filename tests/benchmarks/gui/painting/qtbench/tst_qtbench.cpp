@@ -222,11 +222,6 @@ void tst_QtBench::qtBench_data()
     benchmarks << (new DrawText(middleString, DrawText::StaticTextWithMaximumSizeMode));
     benchmarks << (new DrawText(longString, DrawText::StaticTextWithMaximumSizeMode));
     benchmarks << (new DrawText(superLongString, DrawText::StaticTextWithMaximumSizeMode));
-
-    benchmarks << (new DrawText(shortString, DrawText::StaticTextBackendOptimizations));
-    benchmarks << (new DrawText(middleString, DrawText::StaticTextBackendOptimizations));
-    benchmarks << (new DrawText(longString, DrawText::StaticTextBackendOptimizations));
-    benchmarks << (new DrawText(superLongString, DrawText::StaticTextBackendOptimizations));
 #endif
 
     foreach (Benchmark *benchmark, benchmarks)
