@@ -44,18 +44,20 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QEventLoop>
+#include <QTime>
 
 class ChipTester : public QGraphicsView
 {
     Q_OBJECT
 public:
     enum Operation {
-	Rotate360,
-	ZoomInOut,
-	Translate
+        Rotate360,
+        ZoomInOut,
+        Translate
     };
-    ChipTester(QWidget *parent = 0);
-    
+    ChipTester(QWidget *parent = Q_NULLPTR);
+
     void setAntialias(bool enabled);
     void setOpenGL(bool enabled);
     void runBenchmark();
@@ -68,7 +70,7 @@ protected:
 private:
     void populateScene();
 
-    QGraphicsView *view;    
+    QGraphicsView *view;
     QGraphicsScene *scene;
     int npaints;
     int timerId;
