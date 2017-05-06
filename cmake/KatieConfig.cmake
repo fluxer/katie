@@ -37,6 +37,8 @@ get_filename_component(KATIE_PREFIX ${KATIE_CMAKE_DIR}/ ABSOLUTE)
 # Include definitions for IMPORTED targets
 include("${KATIE_CMAKE_DIR}/KatieLibraryTargets.cmake")
 include("${KATIE_CMAKE_DIR}/KatieBinaryTargets.cmake")
+# Include version info, required for the Qt4 compatibility setup
+include("${KATIE_CMAKE_DIR}/KatieConfigVersion.cmake")
 
 # These are pre-set and dynamically set variables, some use IMPORTED targets
 set(KATIE_DEFINITIONS @KATIE_DEFINITIONS@)
@@ -81,9 +83,9 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF AND NOT KATIE_COM
     set(Qt4_FOUND TRUE)
     set(QT_FOUND TRUE)
     set(QT4_FOUND TRUE)
-    set(QT_VERSION_MAJOR ${KATIE_MAJOR})
-    set(QT_VERSION_MINOR ${KATIE_MINOR})
-    set(QT_VERSION_PATCH ${KATIE_MICRO})
+    set(QT_VERSION_MAJOR ${KATIE_VERSION_MAJOR})
+    set(QT_VERSION_MINOR ${KATIE_VERSION_MINOR})
+    set(QT_VERSION_PATCH ${KATIE_VERSION_VERSION_MICRO})
     set(QT_VERSION ${KATIE_VERSION})
     set(QT_INCLUDES ${KATIE_INCLUDES})
     set(QT_INCLUDE_DIR ${KATIE_INCLUDES})
