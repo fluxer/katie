@@ -346,13 +346,11 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
         return false;
     }
 
-    QByteArray data;
-    const char *filedata = 0;
     ulong fdlen = file.size();
-    filedata = (char *) file.map(0, fdlen);
+    const char *filedata = (char *) file.map(0, fdlen);
     if (filedata == 0) {
         // try reading the data into memory instead
-        data = file.readAll();
+        const QByteArray data = file.readAll();
         filedata = data.constData();
         fdlen = data.size();
     }
@@ -387,7 +385,7 @@ Q_GLOBAL_STATIC(LibraryData, libraryData)
 static LibraryMap *libraryMap()
 {
     LibraryData *data = libraryData();
-    return data ? &data->libraryMap : 0;
+    return data ? &data->libraryMap : Q_NULLPTR;
 }
 
 QLibraryPrivate::QLibraryPrivate(const QString &canonicalFileName, const QString &version)
@@ -419,7 +417,7 @@ QLibraryPrivate::~QLibraryPrivate()
 void *QLibraryPrivate::resolve(const char *symbol)
 {
     if (!pHnd)
-        return 0;
+        return Q_NULLPTR;
     return resolve_sys(symbol);
 }
 
