@@ -104,17 +104,13 @@ void paint_QTextLayout_cache(QPainter &p)
     paint_QTextLayout(p, true);
 }
 
-void paint_QStaticText(QPainter &p, bool useOptimizations)
+void paint_QStaticText(QPainter &p)
 {
     static QStaticText *staticText[lines];
     static bool first = true;
     if (first) {
         for (int i = 0; i < lines; ++i) {
             staticText[i] = new QStaticText(strings[i]);
-            if (useOptimizations)
-                staticText[i]->setPerformanceHint(QStaticText::AggressiveCaching);
-            else
-                staticText[i]->setPerformanceHint(QStaticText::ModerateCaching);
         }
         first = false;
     }
@@ -123,16 +119,6 @@ void paint_QStaticText(QPainter &p, bool useOptimizations)
             p.drawStaticText(QPointF(0, 30 + j*spacing), *staticText[j]);
         }
     }
-}
-
-void paint_QStaticText_noOptimizations(QPainter &p)
-{
-    paint_QStaticText(p, false);
-}
-
-void paint_QStaticText_optimizations(QPainter &p)
-{
-    paint_QStaticText(p, true);
 }
 
 void paint_QPixmapCachedText(QPainter &p)
@@ -310,8 +296,7 @@ struct FuncStructure {
 static const FuncStructure funcs[] = {
     { "QTextLayoutNoCache", &paint_QTextLayout_noCache },
     { "QTextLayoutWithCache", &paint_QTextLayout_cache },
-    { "QStaticTextNoBackendOptimizations", &paint_QStaticText_noOptimizations },
-    { "QStaticTextWithBackendOptimizations", &paint_QStaticText_optimizations },
+    { "QStaticText", &paint_QStaticText },
     { "CachedText", &paint_QPixmapCachedText },
     { "RoundedRect", &paint_RoundedRect },
     { "CachedRoundedRect", &paint_QPixmapCachedRoundedRect },
