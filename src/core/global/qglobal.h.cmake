@@ -44,7 +44,6 @@
 
 #include <qconfig.h>
 #include <stddef.h>
-#include <cmath>
 
 #define QT_VERSION_STR   "${KATIE_VERSION}"
 /*
@@ -136,8 +135,12 @@
 #  error Unable to detect target endianness
 #endif
 
+// needed for std::round() and std::swap
 #ifdef __cplusplus
 #include <algorithm>
+#include <cmath>
+#else
+#include <math.h>
 #endif
 
 #if defined(__cplusplus) && !defined(QT_NO_USING_NAMESPACE)
