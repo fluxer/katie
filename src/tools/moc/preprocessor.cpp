@@ -801,7 +801,7 @@ void Preprocessor::preprocess(const QByteArray &filename, Symbols &preprocessed)
                 fi.setFile(QFileInfo(QString::fromLocal8Bit(filename.constData())).dir(), QString::fromLocal8Bit(include.constData()));
             for (int j = 0; j < Preprocessor::includes.size() && !fi.exists(); ++j) {
                 const IncludePath &p = Preprocessor::includes.at(j);
-                fi.setFile(QString::fromLocal8Bit(p.path.constData()), QString::fromLocal8Bit(include.constData()));
+                fi.setFile(QString::fromLocal8Bit(p.constData()), QString::fromLocal8Bit(include.constData()));
                 // try again, maybe there's a file later in the include paths with the same name
                 // (186067)
                 if (fi.isDir()) {

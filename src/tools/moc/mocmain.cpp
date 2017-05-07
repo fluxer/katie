@@ -257,9 +257,9 @@ int runMoc(int _argc, char **_argv)
             if (!more) {
                 if (!(n < argc-1))
                     error("Missing path name for the -I option.");
-                pp.includes += Preprocessor::IncludePath(argv[++n]);
+                pp.includes += IncludePath(argv[++n]);
             } else {
-                pp.includes += Preprocessor::IncludePath(opt.mid(1));
+                pp.includes += IncludePath(opt.mid(1));
             }
             break;
         case 'D': // define macro

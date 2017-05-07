@@ -78,7 +78,6 @@ inline uint qHash(const SubArray &key)
 
 struct Symbol
 {
-
 #ifdef USE_LEXEM_STORE
     typedef QHash<SubArray, QHashDummyValue> LexemStore;
     static LexemStore lexemStore;

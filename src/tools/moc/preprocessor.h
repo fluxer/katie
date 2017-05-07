@@ -62,20 +62,14 @@ typedef SubArray MacroName;
 typedef QHash<MacroName, Macro> Macros;
 typedef QVector<MacroName> MacroSafeSet;
 
+typedef QByteArray IncludePath;
 
 class Preprocessor : public Parser
 {
 public:
     Preprocessor(){}
     static bool preprocessOnly;
-    struct IncludePath
-    {
-        inline explicit IncludePath(const QByteArray &_path)
-            : path(_path) {}
-        QByteArray path;
-    };
     QList<IncludePath> includes;
-    QList<QByteArray> frameworks;
     QSet<QByteArray> preprocessedIncludes;
     Macros macros;
     Symbols preprocessed(const QByteArray &filename, FILE *file);
