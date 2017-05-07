@@ -466,8 +466,8 @@ if(ENABLE_TESTING)
     )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
-    # most tests are not namespaces aware
-    add_definitions(-DQT_NO_USING_NAMESPACE)
+    # FIXME: most tests are not namespaces aware
+    add_definitions(-DQT_NAMESPACE_COMPAT)
 endif()
 
 # optional packages
@@ -592,14 +592,7 @@ endif()
 
 # utilities needed for Katie maintainance
 if(KATIE_UTILS)
-    add_subdirectory(util/fixnonlatin1)
-    add_subdirectory(util/gencmap)
-    add_subdirectory(util/lexgen)
-    add_subdirectory(util/normalize)
-    add_subdirectory(util/plugintest)
-    add_subdirectory(util/qlalr)
-    add_subdirectory(util/qurl-generateTLDs)
-    add_subdirectory(util/unicode)
+    add_subdirectory(util)
 endif()
 
 # the macro calls bellow are generted via the incfsck script
