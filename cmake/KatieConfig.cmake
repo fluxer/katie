@@ -74,8 +74,7 @@ if(NOT "${KATIE_FIND_QUIETLY}")
     message(STATUS "Found Katie version: ${KATIE_VERSION}")
 endif()
 
-# Qt4 compatibility by default, covers most cases except those who rely on QT_USE_FILE and do not
-# specify which components the targets must be linked to or respect QT_DEFINITIONS and QT_INCLUDES
+# Qt4 compatibility by default, covers most cases
 if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF AND NOT KATIE_COMPAT_IS_SET)
     set(KATIE_COMPAT_IS_SET CACHE BOOL TRUE "")
     message(STATUS "Setting up Qt4 compatibility via Katie")
@@ -91,7 +90,7 @@ if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF AND NOT KATIE_COM
     set(QT_INCLUDE_DIR ${KATIE_INCLUDES})
     set(QT4_INCLUDE_DIR ${KATIE_INCLUDES})
     set(QT_LIBRARIES ${KATIE_LIBRARIES})
-    set(QT_USE_FILE ${KATIE_MKSPECS})
+    set(QT_USE_FILE "${KATIE_CMAKE_DIR}/Qt4UseFile.cmake")
     set(QT_MKSPECS_DIR ${KATIE_MKSPECS_DIR})
 
     # those are exceptions because they have "q" prefix which the macros from Qt4Macros do not expect

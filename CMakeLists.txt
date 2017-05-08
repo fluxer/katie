@@ -964,6 +964,7 @@ install(
     FILES
     ${CMAKE_BINARY_DIR}/KatieConfig.cmake
     ${CMAKE_BINARY_DIR}/KatieConfigVersion.cmake
+    ${CMAKE_SOURCE_DIR}/cmake/Qt4UseFile.cmake
     ${CMAKE_SOURCE_DIR}/cmake/modules/KatieMacros.cmake
     DESTINATION ${KATIE_CMAKE_RELATIVE}
     COMPONENT Devel
