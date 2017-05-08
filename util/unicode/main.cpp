@@ -725,7 +725,7 @@ static int maxTitleCaseDiff = 0;
 
 static void readUnicodeData()
 {
-    QFile f("data/UnicodeData.txt");
+    QFile f(QLatin1String("data/UnicodeData.txt"));
     if (!f.exists())
         qFatal("Couldn't find UnicodeData.txt");
 
@@ -857,7 +857,7 @@ static int maxMirroredDiff = 0;
 
 static void readBidiMirroring()
 {
-    QFile f("data/BidiMirroring.txt");
+    QFile f(QLatin1String("data/BidiMirroring.txt"));
     if (!f.exists())
         qFatal("Couldn't find BidiMirroring.txt");
 
@@ -896,7 +896,7 @@ static void readBidiMirroring()
 
 static void readArabicShaping()
 {
-    QFile f("data/ArabicShaping.txt");
+    QFile f(QLatin1String("data/ArabicShaping.txt"));
     if (!f.exists())
         qFatal("Couldn't find ArabicShaping.txt");
 
@@ -947,7 +947,7 @@ static void readArabicShaping()
 
 static void readDerivedAge()
 {
-    QFile f("data/DerivedAge.txt");
+    QFile f(QLatin1String("data/DerivedAge.txt"));
     if (!f.exists())
         qFatal("Couldn't find DerivedAge.txt");
 
@@ -999,7 +999,7 @@ static void readDerivedAge()
 
 static void readDerivedNormalizationProps()
 {
-    QFile f("data/DerivedNormalizationProps.txt");
+    QFile f(QLatin1String("data/DerivedNormalizationProps.txt"));
     if (!f.exists())
         qFatal("Couldn't find DerivedNormalizationProps.txt");
 
@@ -1077,7 +1077,7 @@ struct NormalizationCorrection {
 
 static QByteArray createNormalizationCorrections()
 {
-    QFile f("data/NormalizationCorrections.txt");
+    QFile f(QLatin1String("data/NormalizationCorrections.txt"));
     if (!f.exists())
         qFatal("Couldn't find NormalizationCorrections.txt");
 
@@ -1127,7 +1127,7 @@ static QByteArray createNormalizationCorrections()
             qFatal("unknown unicode version in NormalizationCorrection.txt");
 
         out += "    { 0x" + QByteArray::number(c.codepoint, 16) + ", 0x" + QByteArray::number(c.mapped, 16)
-             + ", " + QString::number(c.version) + " },\n";
+             + ", " + QByteArray::number(c.version) + " },\n";
         ++numCorrections;
     }
 
@@ -1160,7 +1160,7 @@ static void computeUniqueProperties()
 static void readLineBreak()
 {
     qDebug() << "Reading LineBreak.txt";
-    QFile f("data/LineBreak.txt");
+    QFile f(QLatin1String("data/LineBreak.txt"));
     if (!f.exists())
         qFatal("Couldn't find LineBreak.txt");
 
@@ -1212,7 +1212,7 @@ static void readLineBreak()
 static void readSpecialCasing()
 {
     qDebug() << "Reading SpecialCasing.txt";
-    QFile f("data/SpecialCasing.txt");
+    QFile f(QLatin1String("data/SpecialCasing.txt"));
     if (!f.exists())
         qFatal("Couldn't find SpecialCasing.txt");
 
@@ -1302,7 +1302,7 @@ static int maxCaseFoldDiff = 0;
 static void readCaseFolding()
 {
     qDebug() << "Reading CaseFolding.txt";
-    QFile f("data/CaseFolding.txt");
+    QFile f(QLatin1String("data/CaseFolding.txt"));
     if (!f.exists())
         qFatal("Couldn't find CaseFolding.txt");
 
@@ -1370,7 +1370,7 @@ static void readCaseFolding()
 static void readGraphemeBreak()
 {
     qDebug() << "Reading GraphemeBreakProperty.txt";
-    QFile f("data/GraphemeBreakProperty.txt");
+    QFile f(QLatin1String("data/GraphemeBreakProperty.txt"));
     if (!f.exists())
         qFatal("Couldn't find GraphemeBreakProperty.txt");
 
@@ -1421,7 +1421,7 @@ static void readGraphemeBreak()
 static void readWordBreak()
 {
     qDebug() << "Reading WordBreakProperty.txt";
-    QFile f("data/WordBreakProperty.txt");
+    QFile f(QLatin1String("data/WordBreakProperty.txt"));
     if (!f.exists())
         qFatal("Couldn't find WordBreakProperty.txt");
 
@@ -1472,7 +1472,7 @@ static void readWordBreak()
 static void readSentenceBreak()
 {
     qDebug() << "Reading SentenceBreakProperty.txt";
-    QFile f("data/SentenceBreakProperty.txt");
+    QFile f(QLatin1String("data/SentenceBreakProperty.txt"));
     if (!f.exists())
         qFatal("Couldn't find SentenceBreakProperty.txt");
 
@@ -1661,7 +1661,7 @@ static QList<BlockInfo> blockInfoList;
 
 static void readBlocks()
 {
-    QFile f("data/Blocks.txt");
+    QFile f(QLatin1String("data/Blocks.txt"));
     if (!f.exists())
         qFatal("Couldn't find Blocks.txt");
 
@@ -1733,7 +1733,7 @@ static void readScripts()
     enum { fileCount = sizeof(files) / sizeof(const char *) };
 
     for (int i = 0; i < fileCount; ++i) {
-        QFile f(files[i]);
+        QFile f(QString::fromLatin1(files[i]));
         if (!f.exists())
             qFatal("Couldn't find %s", files[i]);
 
@@ -2700,7 +2700,7 @@ int main(int, char **)
         "// We mean it.\n"
         "//\n\n";
 
-    QFile f("../../src/corelib/tools/qunicodetables.cpp");
+    QFile f(QLatin1String("../../src/core/tools/qunicodetables.cpp"));
     f.open(QFile::WriteOnly|QFile::Truncate);
     f.write(header);
     f.write(note);
@@ -2713,7 +2713,7 @@ int main(int, char **)
     f.write("QT_END_NAMESPACE\n");
     f.close();
 
-    f.setFileName("../../src/corelib/tools/qunicodetables_p.h");
+    f.setFileName(QLatin1String("../../src/core/tools/qunicodetables_p.h"));
     f.open(QFile::WriteOnly | QFile::Truncate);
     f.write(header);
     f.write(note);

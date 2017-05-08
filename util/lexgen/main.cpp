@@ -144,9 +144,9 @@ static QSet<InputType> determineMaxInputSet(const ConfigFile::Section &section)
         }
 
     if (inputTypeName.isEmpty())
-        inputTypeName = "quint8";
+        inputTypeName = QLatin1String("quint8");
 
-    if (inputTypeName == "quint8") {
+    if (inputTypeName == QLatin1String("quint8")) {
         for (int i = 1; i < 256; ++i)
             set.insert(i);
     } /* else if ### */ 
@@ -166,17 +166,17 @@ static bool loadConfig(const QString &ruleFile, Config *cfg)
         return false;
     }
 
-    QSet<InputType> maxInputSet = determineMaxInputSet(sections.value("Options"));
+    QSet<InputType> maxInputSet = determineMaxInputSet(sections.value(QLatin1String("Options")));
     if (maxInputSet.isEmpty())
         return false;
 
     Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-    if (sections.value("Options").contains("case-sensitive"))
+    if (sections.value(QLatin1String("Options")).contains(QLatin1String("case-sensitive")))
         cs = Qt::CaseSensitive;
 
     cfg->configSections = sections;
     cfg->caseSensitivity = cs;
-    cfg->className = sections.value("Options").value("classname", "Scanner");
+    cfg->className = sections.value(QLatin1String("Options")).value(QLatin1String("classname"), QLatin1String("Scanner"));
     cfg->maxInputSet = maxInputSet;
     cfg->ruleFile = ruleFile;
     return true;
@@ -186,7 +186,7 @@ static DFA generateMachine(const Config &cfg)
 {
     if (cfg.cache) {
         QFileInfo ruleInfo(cfg.ruleFile);
-        QFileInfo cacheInfo(ruleInfo.baseName() + ".dfa");
+        QFileInfo cacheInfo(ruleInfo.baseName() + QLatin1String(".dfa"));
         if (cacheInfo.exists()
             && cacheInfo.lastModified() > ruleInfo.lastModified()) {
             QFile f(cacheInfo.absoluteFilePath());
@@ -199,7 +199,7 @@ static DFA generateMachine(const Config &cfg)
     }
 
     QMap<QString, NFA> macros;
-    foreach (ConfigFile::Entry e, cfg.configSections.value("Macros")) {
+    foreach (ConfigFile::Entry e, cfg.configSections.value(QLatin1String("Macros"))) {
         int errCol = 0;
         if (cfg.debug)
             qDebug() << "parsing" << e.value;
@@ -211,14 +211,14 @@ static DFA generateMachine(const Config &cfg)
         macros.insert(e.key, nfa);
     }
 
-    if (!cfg.configSections.contains("Tokens")) {
+    if (!cfg.configSections.contains(QLatin1String("Tokens"))) {
         qWarning("Rule file does not contain a [Tokens] section!");
         return DFA();
     }
 
     QVector<NFA> tokens;
 
-    foreach (ConfigFile::Entry e, cfg.configSections.value("Tokens")) {
+    foreach (ConfigFile::Entry e, cfg.configSections.value(QLatin1String("Tokens"))) {
         int errCol = 0;
         if (cfg.debug)
             qDebug() << "parsing" << e.value;
@@ -241,7 +241,7 @@ static DFA generateMachine(const Config &cfg)
     DFA result = giganticStateMachine.toDFA().minimize();
     if (cfg.cache) {
         QFileInfo ruleInfo(cfg.ruleFile);
-        QFileInfo cacheInfo(ruleInfo.baseName() + ".dfa");
+        QFileInfo cacheInfo(ruleInfo.baseName() + QLatin1String(".dfa"));
         QFile f(cacheInfo.absoluteFilePath());
         f.open(QIODevice::WriteOnly | QIODevice::Truncate);
         QDataStream stream(&f);
@@ -258,9 +258,9 @@ int main(int argc, char **argv)
     Config cfg;
 
     const QStringList arguments = app.arguments().mid(1);
-    cfg.debug = arguments.contains("-debug");
-    const bool testRules = arguments.contains("-test");
-    cfg.cache = arguments.contains("-cache");
+    cfg.debug = arguments.contains(QLatin1String("-debug"));
+    const bool testRules = arguments.contains(QLatin1String("-test"));
+    cfg.cache = arguments.contains(QLatin1String("-cache"));
 
     foreach (const QString &arg, arguments)
         if (!arg.startsWith(QLatin1Char('-'))) {

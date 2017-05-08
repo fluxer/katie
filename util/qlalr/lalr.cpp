@@ -199,9 +199,9 @@ Grammar::Grammar ():
 
   table_name = QLatin1String ("parser_table");
 
-  tk_end = intern ("$end");
+  tk_end = intern (QLatin1String("$end"));
   terminals.insert (tk_end);
-  spells.insert (tk_end, "end of file");
+  spells.insert (tk_end, QLatin1String("end of file"));
 
   /*tk_error= terminals.insert (intern ("error"))*/;
 }
@@ -238,7 +238,7 @@ void Grammar::buildRuleMap ()
 
 void Grammar::buildExtendedGrammar ()
 {
-  accept_symbol = intern ("$accept");
+  accept_symbol = intern (QLatin1String("$accept"));
   goal = rules.insert (rules.end (), Rule ());
   goal->lhs = accept_symbol;
   goal->rhs.push_back (start);
