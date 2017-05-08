@@ -366,6 +366,7 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsSceneMouseEvent
     QGraphicsSceneContextMenuEvent
     QGraphicsSceneDragDropEvent
+    QGraphicsTextItem
     QGraphicsObject
     QStyleOptionGraphicsItem
     QStyleOptionFocusRect
