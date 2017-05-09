@@ -66,9 +66,10 @@ public:
     virtual void insertWidget(int index, QWidget *widget) = 0;
     virtual void remove(int index) = 0;
 };
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerContainerExtension, "com.trolltech.Qt.Designer.Container")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerContainerExtension, "com.trolltech.Qt.Designer.Container")
 
 QT_END_HEADER
 

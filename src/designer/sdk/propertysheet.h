@@ -80,10 +80,10 @@ public:
 
 };
 
+QT_END_NAMESPACE
+
 Q_DECLARE_EXTENSION_INTERFACE(QDesignerPropertySheetExtension,
     "com.trolltech.Qt.Designer.PropertySheet")
-
-QT_END_NAMESPACE
 
 QT_END_HEADER
 

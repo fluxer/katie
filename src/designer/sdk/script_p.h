@@ -74,9 +74,10 @@ public:
     virtual QString script() const = 0;
 
 };
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerScriptExtension, "com.trolltech.Qt.Designer.Script")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerScriptExtension, "com.trolltech.Qt.Designer.Script")
 
 QT_END_HEADER
 

@@ -80,9 +80,10 @@ public:
     virtual QList<QByteArray> parameterTypes(int index) const = 0;
     virtual QList<QByteArray> parameterNames(int index) const = 0;
 };
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerMemberSheetExtension, "com.trolltech.Qt.Designer.MemberSheet")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerMemberSheetExtension, "com.trolltech.Qt.Designer.MemberSheet")
 
 QT_END_HEADER
 

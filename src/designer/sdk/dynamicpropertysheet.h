@@ -72,9 +72,10 @@ public:
     virtual bool isDynamicProperty(int index) const = 0;
     virtual bool canAddDynamicProperty(const QString &propertyName) const = 0;
 };
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerDynamicPropertySheetExtension, "com.trolltech.Qt.Designer.DynamicPropertySheet")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerDynamicPropertySheetExtension, "com.trolltech.Qt.Designer.DynamicPropertySheet")
 
 QT_END_HEADER
 

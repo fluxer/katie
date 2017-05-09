@@ -90,9 +90,10 @@ public:
 
     virtual void adjustIndicator(const QPoint &pos, int index) = 0;
 };
-Q_DECLARE_EXTENSION_INTERFACE(QDesignerLayoutDecorationExtension, "com.trolltech.Qt.Designer.LayoutDecoration")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_EXTENSION_INTERFACE(QDesignerLayoutDecorationExtension, "com.trolltech.Qt.Designer.LayoutDecoration")
 
 QT_END_HEADER
 
