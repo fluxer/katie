@@ -155,6 +155,8 @@ incmap = {
         'QStyleOptionSlider': 'qstyleoption.h',
         'QStyleOptionToolButton': 'qstyleoption.h',
         'QStyleOptionRubberBand': 'qstyleoption.h',
+        'QStyleOptionTab': 'qstyleoption.h',
+        'QStyleOptionTabV2': 'qstyleoption.h',
         'QStyleOptionTabV3': 'qstyleoption.h',
         'QStyleOptionTabBarBase': 'qstyleoption.h',
         'QTextListFormat': 'qtextformat.h',
