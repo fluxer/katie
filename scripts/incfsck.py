@@ -149,6 +149,7 @@ incmap = {
         'QStyleOptionFrame': 'qstyleoption.h',
         'QStyleOptionFrameV2': 'qstyleoption.h',
         'QStyleOptionFrameV3': 'qstyleoption.h',
+        'QStyleOptionProgressBar': 'qstyleoption.h',
         'QStyleOptionProgressBarV2': 'qstyleoption.h',
         'QStyleOptionToolBar': 'qstyleoption.h',
         'QStyleOptionSlider': 'qstyleoption.h',

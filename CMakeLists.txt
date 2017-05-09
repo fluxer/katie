@@ -775,6 +775,7 @@ katie_generate_obsolete(qinputcontextfactoryinterface.h QtGui qinputcontextplugi
 katie_generate_obsolete(qtextlength.h QtGui qtextformat.h)
 katie_generate_obsolete(qtextblock.h QtGui qtextobject.h)
 katie_generate_obsolete(qdragmoveevent.h QtGui qevent.h)
+katie_generate_obsolete(qstyleoptionprogressbar.h QtGui qstyleoption.h)
 katie_generate_obsolete(qstyleoptionprogressbarv2.h QtGui qstyleoption.h)
 katie_generate_obsolete(qcloseevent.h QtGui qevent.h)
 katie_generate_obsolete(qwindowstatechangeevent.h QtGui qevent.h)

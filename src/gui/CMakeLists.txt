@@ -369,6 +369,10 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsTextItem
     QGraphicsObject
     QStyleOptionGraphicsItem
+    QStyleOptionViewItem
+    QStyleOptionViewItemV2
+    QStyleOptionViewItemV3
+    QStyleOptionViewItemV4
     QStyleOptionFocusRect
     QItemSelection
     QIntValidator
