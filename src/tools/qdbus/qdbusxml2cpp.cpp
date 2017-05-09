@@ -114,14 +114,6 @@ static const char includeList[] =
     "#include <QtCore/QStringList>\n"
     "#include <QtCore/QVariant>\n";
 
-static const char forwardDeclarations[] =
-    "class QByteArray;\n"
-    "template<class T> class QList;\n"
-    "template<class Key, class Value> class QMap;\n"
-    "class QString;\n"
-    "class QStringList;\n"
-    "class QVariant;\n";
-
 static void showHelp()
 {
     printf("%s", help);
@@ -887,15 +879,10 @@ static void writeAdaptor(const QString &filename, const QDBusIntrospection::Inte
         if (!headerName.isEmpty() && headerName != QLatin1String("-"))
             cs << "#include \"" << headerName << "\"" << endl;
 
-        cs << "#include <QtCore/QMetaObject>" << endl
-           << includeList
-           << endl;
-        hs << forwardDeclarations;
-    } else {
-        hs << includeList;
+        cs << "#include <QtCore/QMetaObject>" << endl;
     }
 
-    hs << endl;
+    hs << includeList << endl;
 
     QString parent = parentClassName;
     if (parentClassName.isEmpty())
