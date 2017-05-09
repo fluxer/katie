@@ -80,6 +80,7 @@ incmap = {
         'QXmlStreamReader': 'qxmlstream.h',
         'QXmlStreamWriter': 'qxmlstream.h',
         'QXmlStreamAttribute': 'qxmlstream.h',
+        'QTextDecoder': 'qtextcodec.h',
         },
     'QtGui': {
         'QHBoxLayout': 'qboxlayout.h',
