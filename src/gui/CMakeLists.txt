@@ -364,6 +364,7 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsSceneHelpEvent
     QGraphicsSceneMoveEvent
     QGraphicsSceneMouseEvent
+    QGraphicsSceneWheelEvent
     QGraphicsSceneContextMenuEvent
     QGraphicsSceneDragDropEvent
     QGraphicsTextItem

@@ -20,6 +20,7 @@ set(XML_PUBLIC_HEADERS
     QDomNotation
     QDomProcessingInstruction
     QDomText
+    QDomAttr
     QXmlDeclHandler
     QXmlDTDHandler
     QXmlEntityResolver
