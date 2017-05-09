@@ -48,7 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QDeclarativeEngine;
 
 struct Q_DECLARATIVE_EXPORT QDeclarativeExtensionInterface
@@ -58,9 +57,9 @@ struct Q_DECLARATIVE_EXPORT QDeclarativeExtensionInterface
     virtual void initializeEngine(QDeclarativeEngine *engine, const char *uri) = 0;
 };
 
-Q_DECLARE_INTERFACE(QDeclarativeExtensionInterface, "com.trolltech.Qt.QDeclarativeExtensionInterface/1.0")
-
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QDeclarativeExtensionInterface, "com.trolltech.Qt.QDeclarativeExtensionInterface/1.0")
 
 QT_END_HEADER
 

@@ -64,9 +64,10 @@ public:
 
     virtual QDesignerFormEditorInterface *core() const = 0;
 };
-Q_DECLARE_INTERFACE(QDesignerFormEditorPluginInterface, "com.trolltech.Qt.Designer.QDesignerFormEditorPluginInterface")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QDesignerFormEditorPluginInterface, "com.trolltech.Qt.Designer.QDesignerFormEditorPluginInterface")
 
 QT_END_HEADER
 

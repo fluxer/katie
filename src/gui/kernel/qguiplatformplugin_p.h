@@ -61,7 +61,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QStyle;
 class QPalette;
 class QIcon;
@@ -73,9 +72,12 @@ struct Q_GUI_EXPORT QGuiPlatformPluginInterface  : public QFactoryInterface
 {
 };
 
-#define QGuiPlatformPluginInterface_iid "com.nokia.qt.QGuiPlatformPluginInterface"
+QT_END_NAMESPACE
 
+#define QGuiPlatformPluginInterface_iid "com.nokia.qt.QGuiPlatformPluginInterface"
 Q_DECLARE_INTERFACE(QGuiPlatformPluginInterface, QGuiPlatformPluginInterface_iid)
+
+QT_BEGIN_NAMESPACE
 
 class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPluginInterface
 {

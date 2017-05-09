@@ -48,8 +48,8 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QDeclarativeProperty;
+
 class Q_DECLARATIVE_EXPORT QDeclarativePropertyValueInterceptor
 {
 public:
@@ -58,9 +58,10 @@ public:
     virtual void setTarget(const QDeclarativeProperty &property) = 0;
     virtual void write(const QVariant &value) = 0;
 };
-Q_DECLARE_INTERFACE(QDeclarativePropertyValueInterceptor, "com.trolltech.qml.QDeclarativePropertyValueInterceptor")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QDeclarativePropertyValueInterceptor, "com.trolltech.qml.QDeclarativePropertyValueInterceptor")
 
 QT_END_HEADER
 

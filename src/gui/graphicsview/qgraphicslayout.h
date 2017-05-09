@@ -46,9 +46,9 @@
 
 QT_BEGIN_HEADER
 
-QT_BEGIN_NAMESPACE
-
 #ifndef QT_NO_GRAPHICSVIEW
+
+QT_BEGIN_NAMESPACE
 
 class QGraphicsLayoutPrivate;
 class QGraphicsLayoutItem;
@@ -86,11 +86,11 @@ private:
     friend class QGraphicsWidget;
 };
 
+QT_END_NAMESPACE
+
 Q_DECLARE_INTERFACE(QGraphicsLayout, "com.trolltech.Qt.QGraphicsLayout")
 
 #endif
-
-QT_END_NAMESPACE
 
 QT_END_HEADER
 

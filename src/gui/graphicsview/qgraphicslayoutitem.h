@@ -48,9 +48,9 @@
 
 QT_BEGIN_HEADER
 
-QT_BEGIN_NAMESPACE
-
 #ifndef QT_NO_GRAPHICSVIEW
+
+QT_BEGIN_NAMESPACE
 
 class QGraphicsLayoutItemPrivate;
 class QGraphicsItem;
@@ -120,8 +120,6 @@ private:
     friend class QGraphicsLayout;
 };
 
-Q_DECLARE_INTERFACE(QGraphicsLayoutItem, "com.trolltech.Qt.QGraphicsLayoutItem")
-
 inline void QGraphicsLayoutItem::setMinimumSize(qreal aw, qreal ah)
 { setMinimumSize(QSizeF(aw, ah)); }
 inline void QGraphicsLayoutItem::setPreferredSize(qreal aw, qreal ah)
@@ -144,9 +142,11 @@ inline qreal QGraphicsLayoutItem::maximumWidth() const
 inline qreal QGraphicsLayoutItem::maximumHeight() const
 { return effectiveSizeHint(Qt::MaximumSize).height(); }
 
-#endif
-
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QGraphicsLayoutItem, "com.trolltech.Qt.QGraphicsLayoutItem")
+
+#endif
 
 QT_END_HEADER
 

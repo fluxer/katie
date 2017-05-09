@@ -53,10 +53,9 @@
 
 QT_BEGIN_HEADER
 
-QT_BEGIN_NAMESPACE
-
-
 #ifndef QT_NO_ACCESSIBILITY
+
+QT_BEGIN_NAMESPACE
 
 class QAccessibleInterface;
 
@@ -451,12 +450,12 @@ private:
 inline QAccessibleEvent::QAccessibleEvent(Type atype, int achild)
     : QEvent(atype), c(achild) {}
 
+QT_END_NAMESPACE
+
 #define QAccessibleInterface_iid "com.trolltech.Qt.QAccessibleInterface"
 Q_DECLARE_INTERFACE(QAccessibleInterface, QAccessibleInterface_iid)
 
 #endif // QT_NO_ACCESSIBILITY
-
-QT_END_NAMESPACE
 
 QT_END_HEADER
 

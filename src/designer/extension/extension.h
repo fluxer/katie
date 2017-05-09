@@ -58,7 +58,12 @@ public:
 
     virtual QObject *extension(QObject *object, const QString &iid) const = 0;
 };
+
+QT_END_NAMESPACE
+
 Q_DECLARE_INTERFACE(QAbstractExtensionFactory, "com.trolltech.Qt.QAbstractExtensionFactory")
+
+QT_BEGIN_NAMESPACE
 
 class QAbstractExtensionManager
 {
@@ -70,7 +75,12 @@ public:
 
     virtual QObject *extension(QObject *object, const QString &iid) const = 0;
 };
+
+QT_END_NAMESPACE
+
 Q_DECLARE_INTERFACE(QAbstractExtensionManager, "com.trolltech.Qt.QAbstractExtensionManager")
+
+QT_BEGIN_NAMESPACE
 
 template <class T>
 inline T qt_extension(QAbstractExtensionManager* manager, QObject *object)

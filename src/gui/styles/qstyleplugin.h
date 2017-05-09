@@ -49,7 +49,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QStyle;
 
 struct Q_GUI_EXPORT QStyleFactoryInterface : public QFactoryInterface
@@ -57,9 +56,12 @@ struct Q_GUI_EXPORT QStyleFactoryInterface : public QFactoryInterface
     virtual QStyle *create(const QString &key) = 0;
 };
 
-#define QStyleFactoryInterface_iid "com.trolltech.Qt.QStyleFactoryInterface"
+QT_END_NAMESPACE
 
+#define QStyleFactoryInterface_iid "com.trolltech.Qt.QStyleFactoryInterface"
 Q_DECLARE_INTERFACE(QStyleFactoryInterface, QStyleFactoryInterface_iid)
+
+QT_BEGIN_NAMESPACE
 
 class Q_GUI_EXPORT QStylePlugin : public QObject, public QStyleFactoryInterface
 {

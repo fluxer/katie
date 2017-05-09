@@ -60,7 +60,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QGraphicsSystem;
 
 struct QGraphicsSystemFactoryInterface : public QFactoryInterface
@@ -68,9 +67,12 @@ struct QGraphicsSystemFactoryInterface : public QFactoryInterface
     virtual QGraphicsSystem *create(const QString &key) = 0;
 };
 
-#define QGraphicsSystemFactoryInterface_iid "com.trolltech.Qt.QGraphicsSystemFactoryInterface"
+QT_END_NAMESPACE
 
+#define QGraphicsSystemFactoryInterface_iid "com.trolltech.Qt.QGraphicsSystemFactoryInterface"
 Q_DECLARE_INTERFACE(QGraphicsSystemFactoryInterface, QGraphicsSystemFactoryInterface_iid)
+
+QT_BEGIN_NAMESPACE
 
 class Q_GUI_EXPORT QGraphicsSystemPlugin : public QObject, public QGraphicsSystemFactoryInterface
 {

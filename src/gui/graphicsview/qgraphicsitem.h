@@ -479,7 +479,10 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QGraphicsItem::GraphicsItemFlags)
+
+QT_END_NAMESPACE
 Q_DECLARE_INTERFACE(QGraphicsItem, "com.trolltech.Qt.QGraphicsItem")
+QT_BEGIN_NAMESPACE
 
 inline void QGraphicsItem::setPos(qreal ax, qreal ay)
 { setPos(QPointF(ax, ay)); }

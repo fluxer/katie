@@ -48,8 +48,8 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QDeclarativeProperty;
+
 class Q_DECLARATIVE_EXPORT QDeclarativePropertyValueSource
 {
 public:
@@ -57,9 +57,10 @@ public:
     virtual ~QDeclarativePropertyValueSource();
     virtual void setTarget(const QDeclarativeProperty &) = 0;
 };
-Q_DECLARE_INTERFACE(QDeclarativePropertyValueSource, "com.trolltech.qml.QDeclarativePropertyValueSource")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QDeclarativePropertyValueSource, "com.trolltech.qml.QDeclarativePropertyValueSource")
 
 QT_END_HEADER
 

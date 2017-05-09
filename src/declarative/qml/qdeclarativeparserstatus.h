@@ -65,9 +65,10 @@ private:
     friend class QDeclarativeEnginePrivate;
     QDeclarativeParserStatus **d;
 };
-Q_DECLARE_INTERFACE(QDeclarativeParserStatus, "com.trolltech.qml.QDeclarativeParserStatus")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QDeclarativeParserStatus, "com.trolltech.qml.QDeclarativeParserStatus")
 
 QT_END_HEADER
 
