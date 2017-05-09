@@ -56,10 +56,9 @@ struct Q_CORE_EXPORT QFactoryInterface
     virtual QStringList keys() const = 0;
 };
 
+QT_END_NAMESPACE
 
 Q_DECLARE_INTERFACE(QFactoryInterface, "com.trolltech.Qt.QFactoryInterface")
-
-QT_END_NAMESPACE
 
 QT_END_HEADER
 

@@ -80,8 +80,12 @@ public:
 
     virtual QString codeTemplate() const { return QString(); }
 };
+
+QT_END_NAMESPACE
+
 Q_DECLARE_INTERFACE(QDesignerCustomWidgetInterface, "com.trolltech.Qt.Designer.CustomWidget")
 
+QT_BEGIN_NAMESPACE
 
 class QDesignerCustomWidgetCollectionInterface
 {
@@ -90,10 +94,11 @@ public:
 
     virtual QList<QDesignerCustomWidgetInterface*> customWidgets() const = 0;
 };
-Q_DECLARE_INTERFACE(QDesignerCustomWidgetCollectionInterface,
-    "com.trolltech.Qt.Designer.CustomWidgetCollection")
 
 QT_END_NAMESPACE
+
+Q_DECLARE_INTERFACE(QDesignerCustomWidgetCollectionInterface,
+    "com.trolltech.Qt.Designer.CustomWidgetCollection")
 
 QT_END_HEADER
 

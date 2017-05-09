@@ -49,7 +49,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QSqlDriver;
 
 struct Q_SQL_EXPORT QSqlDriverFactoryInterface : public QFactoryInterface
@@ -57,8 +56,12 @@ struct Q_SQL_EXPORT QSqlDriverFactoryInterface : public QFactoryInterface
     virtual QSqlDriver *create(const QString &name) = 0;
 };
 
+QT_END_NAMESPACE
+
 #define QSqlDriverFactoryInterface_iid "com.trolltech.Qt.QSqlDriverFactoryInterface"
 Q_DECLARE_INTERFACE(QSqlDriverFactoryInterface, QSqlDriverFactoryInterface_iid)
+
+QT_BEGIN_NAMESPACE
 
 class Q_SQL_EXPORT QSqlDriverPlugin : public QObject, public QSqlDriverFactoryInterface
 {

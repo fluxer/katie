@@ -245,9 +245,9 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionGroupBox
     QStyleOptionProgressBar
     QStyleOptionSizeGrip
-    QStyleOptionTab
     QStyleOptionTabBarBase
     QStyleOptionTabBarBaseV2
+    QStyleOptionTab
     QStyleOptionTabV2
     QStyleOptionTabV3
     QStyleOptionTabWidgetFrame

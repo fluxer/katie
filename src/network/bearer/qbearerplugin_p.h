@@ -64,14 +64,17 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 struct Q_NETWORK_EXPORT QBearerEngineFactoryInterface : public QFactoryInterface
 {
     virtual QBearerEngine *create(const QString &key) const = 0;
 };
 
+QT_END_NAMESPACE
+
 #define QBearerEngineFactoryInterface_iid "com.trolltech.Qt.QBearerEngineFactoryInterface"
 Q_DECLARE_INTERFACE(QBearerEngineFactoryInterface, QBearerEngineFactoryInterface_iid)
+
+QT_BEGIN_NAMESPACE
 
 class Q_NETWORK_EXPORT QBearerEnginePlugin : public QObject, public QBearerEngineFactoryInterface
 {

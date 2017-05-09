@@ -58,9 +58,13 @@ struct Q_GUI_EXPORT QIconEngineFactoryInterface : public QFactoryInterface
 };
 typedef QIconEngineFactoryInterface QIconEngineFactoryInterfaceV2;
 
+QT_END_NAMESPACE
+
 #define QIconEngineFactoryInterface_iid \
     "com.trolltech.Qt.QIconEngineFactoryInterface"
 Q_DECLARE_INTERFACE(QIconEngineFactoryInterface, QIconEngineFactoryInterface_iid)
+
+QT_BEGIN_NAMESPACE
 
 class Q_GUI_EXPORT QIconEnginePlugin : public QObject, public QIconEngineFactoryInterface
 {
