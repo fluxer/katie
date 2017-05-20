@@ -927,9 +927,7 @@ redefine to built-in booleans to make autotests work properly */
 #endif
 
 // This logic must match the one in qmetatype.h
-#if defined(QT_COORD_TYPE)
-typedef QT_COORD_TYPE qreal;
-#elif defined(QT_NO_FPU) || defined(QT_ARCH_ARM)
+#if defined(QT_NO_FPU)
 typedef float qreal;
 #else
 typedef double qreal;
