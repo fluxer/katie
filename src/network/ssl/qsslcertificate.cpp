@@ -493,11 +493,10 @@ QSslKey QSslCertificate::publicKey() const
     EVP_PKEY *pkey = X509_PUBKEY_get(xkey);
     Q_ASSERT(pkey);
 
-    int key_id;
 #if OPENSSL_VERSION_NUMBER < 0x10100000L
-    key_id = EVP_PKEY_type(pkey->type);
+    const int key_id = EVP_PKEY_type(pkey->type);
 #else
-    key_id = EVP_PKEY_base_id(pkey);
+    const int key_id = EVP_PKEY_base_id(pkey);
 #endif
     if (key_id == EVP_PKEY_RSA) {
         key.d->rsa = EVP_PKEY_get1_RSA(pkey);
@@ -692,11 +691,7 @@ static QMap<QString, QString> _q_mapFromX509Name(X509_NAME *name)
         unsigned char *data = 0;
         int size = ASN1_STRING_to_UTF8(&data, X509_NAME_ENTRY_get_data(e));
         info[QString::fromUtf8(obj)] = QString::fromUtf8((char*)data, size);
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
-        CRYPTO_free(data);
-#else
-        CRYPTO_free(data, __FILE__, __LINE__);
-#endif
+        OPENSSL_free(data);
     }
     return info;
 }
