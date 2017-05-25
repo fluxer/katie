@@ -2068,11 +2068,6 @@ QVariant::Type QMetaProperty::type() const
         if (enumMetaTypeId == 0)
             return QVariant::Int;
     }
-#ifdef QT_COORD_TYPE
-    // qreal metatype must be resolved at runtime.
-    if (strcmp(typeName(), "qreal") == 0)
-        return QVariant::Type(qMetaTypeId<qreal>());
-#endif
 
     return QVariant::UserType;
 }
@@ -2092,8 +2087,7 @@ int QMetaProperty::userType() const
     if (tp != QVariant::UserType)
         return tp;
     if (isEnumType()) {
-        int enumMetaTypeId = QMetaType::type(qualifiedName(menum).constData());
-        return enumMetaTypeId;
+        return QMetaType::type(qualifiedName(menum).constData());
     }
     return QMetaType::type(typeName());
 }
