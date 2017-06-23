@@ -679,9 +679,8 @@ void QEventDispatcherUNIX::registerSocketNotifier(QSocketNotifier *notifier)
     Q_D(QEventDispatcherUNIX);
     QSockNotType::List &list = d->sn_vec[type].list;
     fd_set *fds  = &d->sn_vec[type].enabled_fds;
-    QSockNot *sn;
-
-    sn = new QSockNot;
+ 
+    QSockNot *sn = new QSockNot;
     sn->obj = notifier;
     sn->fd = sockfd;
     sn->queue = &d->sn_vec[type].pending_fds;
