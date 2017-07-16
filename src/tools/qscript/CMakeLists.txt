@@ -47,4 +47,5 @@ install(
     ${CMAKE_CURRENT_SOURCE_DIR}/qscript.1
     DESTINATION ${KATIE_MAN_RELATIVE}/man1
     RENAME qscript${KATIE_TOOLS_SUFFIX}.1
+    COMPONENT Doc
 )

@@ -997,4 +997,10 @@ install(
     DESTINATION ${KATIE_PROFILE_RELATIVE}
 )
 
+# TODO: add custom targets for components?
+# add_custom_target(install-devel
+#     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
+#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+# )
+
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 
