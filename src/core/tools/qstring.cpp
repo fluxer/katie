@@ -1105,7 +1105,8 @@ QString::QString(const QChar ch)
 
 void QString::freeData(Data *d)
 {
-    free(d);
+    if(d != &shared_null && d != &shared_empty)
+        free(d);
 }
 
 /*!

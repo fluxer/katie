@@ -107,7 +107,7 @@ protected:
     QRectF sourceBoundingRect(Qt::CoordinateSystem system = Qt::LogicalCoordinates) const;
     void drawSource(QPainter *painter);
     QPixmap sourcePixmap(Qt::CoordinateSystem system = Qt::LogicalCoordinates,
-                         QPoint *offset = 0,
+                         QPoint *offset = Q_NULLPTR,
                          PixmapPadMode mode = PadToEffectiveBoundingRect) const;
 
 private:

@@ -1,14 +1,24 @@
 # - Config file for the Katie package
 #
-# It defines the following variables:
+# It defines relevant to other projects variables:
 #
+#  KATIE_FOUND                  - wheather the project is found
 #  KATIE_DEFINITIONS            - all preprocessor definitions
 #  KATIE_INCLUDES               - all headers directories
 #  KATIE_LIBRARIES              - all component libraries
+#  KATIE_<COMPONENT>_FOUND      - wheather component is found
 #  KATIE_<COMPONENT>_INCLUDES   - component headers directories for e.g. QtCore
 #  KATIE_<COMPONENT>_LIBRARIES  - component libraries to link against e.g. QtCore
 #  KATIE_<TOOL>                 - path to tool e.g. moc
+#  KATIE_<DATA>_PATH            - path to different data type files e.g. translations
+#  KATIE_MKSPECS_DIR
 #
+# As well as some that are unilkely to be needed outside the project:
+#
+#  KATIE_TOOLS_SUFFIX           - tools suffix used when the project was build
+#  KATIE_COMPONENTS             - components that were build
+#  KATIE_TOOLS                  - tools that were build
+#  KATIE_MKSPECS                - path to mkspecs which are relevant to the project only
 
 set(KATIE_FOUND TRUE)
 

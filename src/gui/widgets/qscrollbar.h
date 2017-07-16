@@ -42,7 +42,6 @@
 #ifndef QSCROLLBAR_H
 #define QSCROLLBAR_H
 
-#include <QtGui/qwidget.h>
 #include <QtGui/qabstractslider.h>
 
 QT_BEGIN_HEADER
@@ -59,8 +58,8 @@ class Q_GUI_EXPORT QScrollBar : public QAbstractSlider
 {
     Q_OBJECT
 public:
-    explicit QScrollBar(QWidget *parent=0);
-    explicit QScrollBar(Qt::Orientation, QWidget *parent=0);
+    explicit QScrollBar(QWidget *parent = Q_NULLPTR);
+    explicit QScrollBar(Qt::Orientation, QWidget *parent = Q_NULLPTR);
     ~QScrollBar();
 
     QSize sizeHint() const;

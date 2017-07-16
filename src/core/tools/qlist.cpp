@@ -147,7 +147,8 @@ QListData::Data *QListData::detach(int alloc)
  */
 void QListData::freeData(Data *data)
 {
-    free(data);
+    if(data != &shared_null)
+        free(data);
 }
 
 /*!

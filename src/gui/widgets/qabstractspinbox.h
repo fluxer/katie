@@ -53,7 +53,6 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_SPINBOX
 
 class QLineEdit;
-
 class QAbstractSpinBoxPrivate;
 class QStyleOptionSpinBox;
 
