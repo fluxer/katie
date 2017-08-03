@@ -83,10 +83,12 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
 )
 
-add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
+katie_setup_target(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
+add_executable(bootstrap_moc ${bootstrap_moc_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
-add_executable(moc ${MOC_SOURCES})
+katie_setup_target(moc ${MOC_SOURCES})
+add_executable(moc ${moc_SOURCES})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
 
 set_target_properties(moc PROPERTIES
