@@ -49,7 +49,6 @@
 #include <qbytearray.h>
 #include <qurl.h>
 #include <qfile.h>
-#include <qmutexpool_p.h>
 #include <qnet_unix_p.h>
 
 #include <sys/types.h>
@@ -60,26 +59,18 @@
 #include <resolv.h>
 #endif // QT_NO_RESOLV
 
+QT_BEGIN_NAMESPACE
+
 #if defined (QT_NO_GETADDRINFO)
 #include <qmutex.h>
-QT_BEGIN_NAMESPACE
 Q_GLOBAL_STATIC(QMutex, getHostByNameMutex)
-QT_END_NAMESPACE
 #endif
-
-QT_BEGIN_NAMESPACE
 
 // HP-UXi has a bug in getaddrinfo(3) that makes it thread-unsafe
 // with this flag. So disable it in that platform.
 #if defined(AI_ADDRCONFIG) && !defined(Q_OS_HPUX)
 #  define Q_ADDRCONFIG          AI_ADDRCONFIG
 #endif
-
-// a dirty way to support both thread-safe/unsafe
-#if !defined(QT_NO_RESOLV) && !defined(res_ninit)
-// if we can't get a thread-safe context, we have to use the global _res state
-static __res_state* local_res = _res;
-#endif // QT_NO_RESOLV
 
 QHostInfo QHostInfoAgent::fromName(const QString &hostName)
 {
@@ -281,6 +272,7 @@ QString QHostInfo::localHostName()
 
 QString QHostInfo::localDomainName()
 {
+// a dirty way to support both thread-safe/unsafe
 #if !defined(QT_NO_RESOLV) && defined(res_ninit)
     // using thread-safe version
     res_state state = static_cast<res_state>(malloc(sizeof(res_state)));
@@ -303,9 +295,9 @@ QString QHostInfo::localDomainName()
     QMutexLocker locker(::getHostByNameMutex());
 #endif
     res_init();
-    QString domainName = QUrl::fromAce(local_res->defdname);
+    QString domainName = QUrl::fromAce(_res.defdname);
     if (domainName.isEmpty())
-        domainName = QUrl::fromAce(local_res->dnsrch[0]);
+        domainName = QUrl::fromAce(_res.dnsrch[0]);
     return domainName;
 #else
 
