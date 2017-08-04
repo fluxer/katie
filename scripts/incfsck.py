@@ -89,6 +89,7 @@ incmap = {
         'QTextTableCell': 'qtexttable.h',
         'QPainterPathStroker': 'qpainterpath.h',
         'QGraphicsPolygonItem': 'qgraphicsitem.h',
+        'QGraphicsEllipseItem': 'qgraphicsitem.h',
         'QSplitterHandle': 'qsplitter.h',
         'QGraphicsDropShadowEffect': 'qgraphicseffect.h',
         'QGraphicsPixmapItem': 'qgraphicsitem.h',
