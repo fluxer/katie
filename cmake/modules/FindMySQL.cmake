@@ -14,22 +14,50 @@ if(MYSQL_INCLUDES AND MYSQL_LIBRARIES)
 endif()
 
 # Neither MySQL nor MariaDB provide pkg-config files
-
-find_path(MYSQL_INCLUDES
+# However, they provide mysql_config
+find_program(MYSQL_CONFIG
     NAMES
-    mysql.h
-    PATH_SUFFIXES mysql
+    mysql_config
     HINTS
-    $ENV{MYSQLDIR}/include
-    ${INCLUDE_INSTALL_DIR}
+    $ENV{MYSQLDIR}/bin
 )
 
-find_library(MYSQL_LIBRARIES
-    mysqld
-    HINTS
-    $ENV{MYSQLDIR}/lib
-    ${LIB_INSTALL_DIR}
-)
+if(MYSQL_CONFIG)
+    message(STATUS "Using ${MYSQL_CONFIG} to get package variables")
+    execute_process(
+        COMMAND ${MYSQL_CONFIG} --variable=pkgincludedir
+        RESULT_VARIABLE procerror1
+        OUTPUT_VARIABLE MYSQL_INCLUDES
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    execute_process(
+        COMMAND ${MYSQL_CONFIG} --libmysqld-libs
+        RESULT_VARIABLE proceerror2
+        OUTPUT_VARIABLE MYSQL_LIBRARIES
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    # just in case
+    if(NOT procerror1 STREQUAL "0" OR NOT proceerror2 STREQUAL "0")
+        set(MYSQL_INCLUDES)
+        set(MYSQL_LIBRARIES)
+    endif()
+else()
+    find_path(MYSQL_INCLUDES
+        NAMES
+        mysql.h
+        PATH_SUFFIXES mysql
+        HINTS
+        $ENV{MYSQLDIR}/include
+        ${INCLUDE_INSTALL_DIR}
+    )
+
+    find_library(MYSQL_LIBRARIES
+        mysqld
+        HINTS
+        $ENV{MYSQLDIR}/lib
+        ${LIB_INSTALL_DIR}
+    )
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MySQL DEFAULT_MSG MYSQL_INCLUDES MYSQL_LIBRARIES)
