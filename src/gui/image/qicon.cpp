@@ -912,7 +912,7 @@ QIcon QIcon::fromTheme(const QString &name, const QIcon &fallback)
 
     // Note the qapp check is to allow lazy loading of static icons
     // Supporting fallbacks will not work for this case.
-    if (qApp && icon.availableSizes().isEmpty())
+    if (qApp && icon.isNull())
         return fallback;
 
     return icon;
