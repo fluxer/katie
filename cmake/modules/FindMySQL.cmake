@@ -23,7 +23,6 @@ find_program(MYSQL_CONFIG
 )
 
 if(MYSQL_CONFIG)
-    message(STATUS "Using ${MYSQL_CONFIG} to get package variables")
     execute_process(
         COMMAND ${MYSQL_CONFIG} --variable=pkgincludedir
         RESULT_VARIABLE procerror1
@@ -41,7 +40,9 @@ if(MYSQL_CONFIG)
         set(MYSQL_INCLUDES)
         set(MYSQL_LIBRARIES)
     endif()
-else()
+endif()
+
+if(NOT MYSQL_INCLUDES OR NOT MYSQL_LIBRARIES)
     find_path(MYSQL_INCLUDES
         NAMES
         mysql.h
