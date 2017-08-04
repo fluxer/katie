@@ -792,6 +792,7 @@ classlist = {
     "QUndoGroup",
     "QUndoStack",
     "QUndoView",
+    "QUndoCommand"
     "QUnixPrintWidget",
     "QUpdateLaterEvent",
     "QUrl",

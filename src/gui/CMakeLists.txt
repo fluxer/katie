@@ -339,6 +339,7 @@ set(GUI_PUBLIC_HEADERS
     QX11EmbedContainer
     QX11EmbedWidget
     # mixed
+    QUndoCommand
     QPolygonF
     QTextBlock
     QTextBlockFormat
