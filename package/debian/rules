@@ -9,8 +9,7 @@ export LD_LIBRARY_PATH := $(shell pwd)/obj-$(shell dpkg-architecture -qDEB_BUILD
 
 override_dh_auto_configure:
 	# the mysqld library is not much of a static
-	dh_auto_configure -- -DMYSQL_LIBRARIES:STRING="-lmysqld -lcrypt -laio" \
-		-Wno-dev \
+	dh_auto_configure -- -Wno-dev \
 		-DKATIE_LDCONF_FULL=/etc/ld.so.conf.d \
 		-DKATIE_PROFILE_FULL=/etc/profile.d \
 		-DKATIE_TOOLS_SUFFIX="-katie" \

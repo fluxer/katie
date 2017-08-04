@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 9~), g++, python-dev (>= 2.7~), libssl-dev,
  zlib1g-dev, libc6-dev, libpng12-dev, libjpeg-dev, libtiff5-dev, libmng-dev,
  libcups2-dev, libfreetype6-dev, libfontconfig1-dev, libicu-dev, libpcre3-dev,
  libglib2.0-dev, libdbus-1-dev, unixodbc-dev, libpq-dev, libmysqld-dev,
- libsqlite3-dev, libaio-dev, xorg-dev, cmake, git
+ libaio-dev, libwrap0-dev, libsqlite3-dev, xorg-dev, cmake, git
 
 Package: katie-git
 Architecture: i386 amd64
