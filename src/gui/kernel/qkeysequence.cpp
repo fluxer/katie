@@ -1334,12 +1334,12 @@ QString QKeySequence::toString(SequenceFormat format) const
     QString finalString;
     // A standard string, with no translation or anything like that. In some ways it will
     // look like our latin case on Windows and X11
-    const int end = count();
+    int end = count();
     for (int i = 0; i < end; ++i) {
         finalString += d->encodeString(d->key[i], format);
-        if (i < end)
-            finalString += QLatin1String(", ");
+        finalString += QLatin1String(", ");
     }
+    finalString.truncate(finalString.length() - 2);
     return finalString;
 }
 
