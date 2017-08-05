@@ -68,13 +68,15 @@
 #include "qmotifstyle_p.h"
 #include "qdialogbuttonbox.h"
 #include "qformlayout.h"
-#include <limits.h>
-#include <QtGui/qgraphicsproxywidget.h>
-#include <QtGui/qgraphicsview.h>
+#include "qgraphicsproxywidget.h"
+#include "qgraphicsview.h"
+#include "qguicommon_p.h"
 
 #ifdef Q_WS_X11
 #include "qx11info_x11.h"
 #endif
+
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -2017,7 +2019,7 @@ QMotifStyle::subElementRect(SubElement sr, const QStyleOption *opt, const QWidge
 }
 
 #ifndef QT_NO_IMAGEFORMAT_XPM
-static const char * const qt_menu_xpm[] = {
+static const char * const qt_motif_menu_xpm[] = {
 "16 16 11 1",
 "  c #000000",
 ", c #336600",
@@ -2048,7 +2050,7 @@ static const char * const qt_menu_xpm[] = {
 "................"};
 
 
-static const char * const qt_close_xpm[] = {
+static const char * const qt_motif_close_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
     ".      c black",
@@ -2065,7 +2067,7 @@ static const char * const qt_close_xpm[] = {
     "            ",
     "            "};
 
-static const char * const qt_maximize_xpm[] = {
+static const char * const qt_motif_maximize_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
     ".      c black",
@@ -2082,7 +2084,7 @@ static const char * const qt_maximize_xpm[] = {
     "            ",
     "            "};
 
-static const char * const qt_minimize_xpm[] = {
+static const char * const qt_motif_minimize_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
     ".      c black",
@@ -2100,7 +2102,7 @@ static const char * const qt_minimize_xpm[] = {
     "            "};
 
 #if 0 // ### not used???
-static const char * const qt_normalize_xpm[] = {
+static const char * const qt_motif_normalize_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
     ".      c black",
@@ -2118,7 +2120,7 @@ static const char * const qt_normalize_xpm[] = {
     "            "};
 #endif
 
-static const char * const qt_normalizeup_xpm[] = {
+static const char * const qt_motif_normalizeup_xpm[] = {
     "12 12 2 1",
     "       s None  c None",
     ".      c black",
@@ -2135,7 +2137,7 @@ static const char * const qt_normalizeup_xpm[] = {
     "            ",
     "            "};
 
-static const char * const qt_shade_xpm[] = {
+static const char * const qt_motif_shade_xpm[] = {
     "12 12 2 1", "# c #000000",
     ". c None",
     "............",
@@ -2152,7 +2154,7 @@ static const char * const qt_shade_xpm[] = {
     "............"};
 
 
-static const char * const qt_unshade_xpm[] = {
+static const char * const qt_motif_unshade_xpm[] = {
     "12 12 2 1",
     "# c #000000",
     ". c None",
@@ -2170,7 +2172,7 @@ static const char * const qt_unshade_xpm[] = {
     "............"};
 
 
-static const char * dock_window_close_xpm[] = {
+static const char * qt_motif_dock_window_close_xpm[] = {
     "8 8 2 1",
     "# c #000000",
     ". c None",
@@ -2182,171 +2184,6 @@ static const char * dock_window_close_xpm[] = {
     ".##..##.",
     "##....##",
     "........"};
-
-// Message box icons, from page 210 of the Windows style guide.
-
-// Hand-drawn to resemble Microsoft's icons, but in the Mac/Netscape palette.
-// Thanks to TrueColor displays, it is slightly more efficient to have
-// them duplicated.
-/* XPM */
-static const char * const information_xpm[]={
-    "32 32 5 1",
-    ". c None",
-    "c c #000000",
-    "* c #999999",
-    "a c #ffffff",
-    "b c #0000ff",
-    "...........********.............",
-    "........***aaaaaaaa***..........",
-    "......**aaaaaaaaaaaaaa**........",
-    ".....*aaaaaaaaaaaaaaaaaa*.......",
-    "....*aaaaaaaabbbbaaaaaaaac......",
-    "...*aaaaaaaabbbbbbaaaaaaaac.....",
-    "..*aaaaaaaaabbbbbbaaaaaaaaac....",
-    ".*aaaaaaaaaaabbbbaaaaaaaaaaac...",
-    ".*aaaaaaaaaaaaaaaaaaaaaaaaaac*..",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaaac*.",
-    "*aaaaaaaaaabbbbbbbaaaaaaaaaaac*.",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-    ".*aaaaaaaaaaabbbbbaaaaaaaaaac***",
-    ".*aaaaaaaaaaabbbbbaaaaaaaaaac***",
-    "..*aaaaaaaaaabbbbbaaaaaaaaac***.",
-    "...caaaaaaabbbbbbbbbaaaaaac****.",
-    "....caaaaaaaaaaaaaaaaaaaac****..",
-    ".....caaaaaaaaaaaaaaaaaac****...",
-    "......ccaaaaaaaaaaaaaacc****....",
-    ".......*cccaaaaaaaaccc*****.....",
-    "........***cccaaaac*******......",
-    "..........****caaac*****........",
-    ".............*caaac**...........",
-    "...............caac**...........",
-    "................cac**...........",
-    ".................cc**...........",
-    "..................***...........",
-    "...................**..........."};
-/* XPM */
-static const char* const warning_xpm[]={
-    "32 32 4 1",
-    ". c None",
-    "a c #ffff00",
-    "* c #000000",
-    "b c #999999",
-    ".............***................",
-    "............*aaa*...............",
-    "...........*aaaaa*b.............",
-    "...........*aaaaa*bb............",
-    "..........*aaaaaaa*bb...........",
-    "..........*aaaaaaa*bb...........",
-    ".........*aaaaaaaaa*bb..........",
-    ".........*aaaaaaaaa*bb..........",
-    "........*aaaaaaaaaaa*bb.........",
-    "........*aaaa***aaaa*bb.........",
-    ".......*aaaa*****aaaa*bb........",
-    ".......*aaaa*****aaaa*bb........",
-    "......*aaaaa*****aaaaa*bb.......",
-    "......*aaaaa*****aaaaa*bb.......",
-    ".....*aaaaaa*****aaaaaa*bb......",
-    ".....*aaaaaa*****aaaaaa*bb......",
-    "....*aaaaaaaa***aaaaaaaa*bb.....",
-    "....*aaaaaaaa***aaaaaaaa*bb.....",
-    "...*aaaaaaaaa***aaaaaaaaa*bb....",
-    "...*aaaaaaaaaa*aaaaaaaaaa*bb....",
-    "..*aaaaaaaaaaa*aaaaaaaaaaa*bb...",
-    "..*aaaaaaaaaaaaaaaaaaaaaaa*bb...",
-    ".*aaaaaaaaaaaa**aaaaaaaaaaa*bb..",
-    ".*aaaaaaaaaaa****aaaaaaaaaa*bb..",
-    "*aaaaaaaaaaaa****aaaaaaaaaaa*bb.",
-    "*aaaaaaaaaaaaa**aaaaaaaaaaaa*bb.",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaa*bbb",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaa*bbb",
-    ".*aaaaaaaaaaaaaaaaaaaaaaaaa*bbbb",
-    "..*************************bbbbb",
-    "....bbbbbbbbbbbbbbbbbbbbbbbbbbb.",
-    ".....bbbbbbbbbbbbbbbbbbbbbbbbb.."};
-/* XPM */
-static const char* const critical_xpm[]={
-    "32 32 4 1",
-    ". c None",
-    "a c #999999",
-    "* c #ff0000",
-    "b c #ffffff",
-    "...........********.............",
-    ".........************...........",
-    ".......****************.........",
-    "......******************........",
-    ".....********************a......",
-    "....**********************a.....",
-    "...************************a....",
-    "..*******b**********b*******a...",
-    "..******bbb********bbb******a...",
-    ".******bbbbb******bbbbb******a..",
-    ".*******bbbbb****bbbbb*******a..",
-    "*********bbbbb**bbbbb*********a.",
-    "**********bbbbbbbbbb**********a.",
-    "***********bbbbbbbb***********aa",
-    "************bbbbbb************aa",
-    "************bbbbbb************aa",
-    "***********bbbbbbbb***********aa",
-    "**********bbbbbbbbbb**********aa",
-    "*********bbbbb**bbbbb*********aa",
-    ".*******bbbbb****bbbbb*******aa.",
-    ".******bbbbb******bbbbb******aa.",
-    "..******bbb********bbb******aaa.",
-    "..*******b**********b*******aa..",
-    "...************************aaa..",
-    "....**********************aaa...",
-    "....a********************aaa....",
-    ".....a******************aaa.....",
-    "......a****************aaa......",
-    ".......aa************aaaa.......",
-    ".........aa********aaaaa........",
-    "...........aaaaaaaaaaa..........",
-    ".............aaaaaaa............"};
-/* XPM */
-static const char *const question_xpm[] = {
-    "32 32 5 1",
-    ". c None",
-    "c c #000000",
-    "* c #999999",
-    "a c #ffffff",
-    "b c #0000ff",
-    "...........********.............",
-    "........***aaaaaaaa***..........",
-    "......**aaaaaaaaaaaaaa**........",
-    ".....*aaaaaaaaaaaaaaaaaa*.......",
-    "....*aaaaaaaaaaaaaaaaaaaac......",
-    "...*aaaaaaaabbbbbbaaaaaaaac.....",
-    "..*aaaaaaaabaaabbbbaaaaaaaac....",
-    ".*aaaaaaaabbaaaabbbbaaaaaaaac...",
-    ".*aaaaaaaabbbbaabbbbaaaaaaaac*..",
-    "*aaaaaaaaabbbbaabbbbaaaaaaaaac*.",
-    "*aaaaaaaaaabbaabbbbaaaaaaaaaac*.",
-    "*aaaaaaaaaaaaabbbbaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaabbbaaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaabbaaaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaabbaaaaaaaaaaaaac**",
-    "*aaaaaaaaaaaaaaaaaaaaaaaaaaaac**",
-    ".*aaaaaaaaaaaabbaaaaaaaaaaaac***",
-    ".*aaaaaaaaaaabbbbaaaaaaaaaaac***",
-    "..*aaaaaaaaaabbbbaaaaaaaaaac***.",
-    "...caaaaaaaaaabbaaaaaaaaaac****.",
-    "....caaaaaaaaaaaaaaaaaaaac****..",
-    ".....caaaaaaaaaaaaaaaaaac****...",
-    "......ccaaaaaaaaaaaaaacc****....",
-    ".......*cccaaaaaaaaccc*****.....",
-    "........***cccaaaac*******......",
-    "..........****caaac*****........",
-    ".............*caaac**...........",
-    "...............caac**...........",
-    "................cac**...........",
-    ".................cc**...........",
-    "..................***...........",
-    "...................**...........",
-};
 #endif
 
 /*!
@@ -2359,21 +2196,21 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
 #ifndef QT_NO_IMAGEFORMAT_XPM
     switch (standardPixmap) {
     case SP_TitleBarMenuButton:
-        return QPixmap(qt_menu_xpm);
+        return QPixmap(qt_motif_menu_xpm);
     case SP_TitleBarShadeButton:
-        return QPixmap(qt_shade_xpm);
+        return QPixmap(qt_motif_shade_xpm);
     case SP_TitleBarUnshadeButton:
-        return QPixmap(qt_unshade_xpm);
+        return QPixmap(qt_motif_unshade_xpm);
     case SP_TitleBarNormalButton:
-        return QPixmap(qt_normalizeup_xpm);
+        return QPixmap(qt_motif_normalizeup_xpm);
     case SP_TitleBarMinButton:
-        return QPixmap(qt_minimize_xpm);
+        return QPixmap(qt_motif_minimize_xpm);
     case SP_TitleBarMaxButton:
-        return QPixmap(qt_maximize_xpm);
+        return QPixmap(qt_motif_maximize_xpm);
     case SP_TitleBarCloseButton:
-        return QPixmap(qt_close_xpm);
+        return QPixmap(qt_motif_close_xpm);
     case SP_DockWidgetCloseButton:
-        return QPixmap(dock_window_close_xpm);
+        return QPixmap(qt_motif_dock_window_close_xpm);
 
     case SP_MessageBoxInformation:
     case SP_MessageBoxWarning:
@@ -2383,16 +2220,16 @@ QMotifStyle::standardPixmap(StandardPixmap standardPixmap, const QStyleOption *o
         const char * const * xpm_data;
         switch (standardPixmap) {
         case SP_MessageBoxInformation:
-            xpm_data = information_xpm;
+            xpm_data = qt_information_xpm;
             break;
         case SP_MessageBoxWarning:
-            xpm_data = warning_xpm;
+            xpm_data = qt_warning_xpm;
             break;
         case SP_MessageBoxCritical:
-            xpm_data = critical_xpm;
+            xpm_data = qt_critical_xpm;
             break;
         case SP_MessageBoxQuestion:
-            xpm_data = question_xpm;
+            xpm_data = qt_question_xpm;
             break;
         default:
             xpm_data = 0;

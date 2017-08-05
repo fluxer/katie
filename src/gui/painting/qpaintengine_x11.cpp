@@ -67,18 +67,17 @@
 #include "qpen.h"
 #include "qcolor.h"
 #include "qcolormap.h"
-
-#include <qpaintengine_p.h>
+#include "qstylehelper_p.h"
+#include "qpaintengine_p.h"
 #include "qpaintengine_x11_p.h"
-
-#include <qt_x11_p.h>
-#include <limits.h>
+#include "qt_x11_p.h"
+#include "qguicommon_p.h"
 
 #ifndef QT_NO_XRENDER
-#include <qtessellator_p.h>
+#include "qtessellator_p.h"
 #endif
 
-#include <qstylehelper_p.h>
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -86,41 +85,6 @@ extern Drawable qt_x11Handle(const QPaintDevice *pd);
 extern const QX11Info *qt_x11Info(const QPaintDevice *pd);
 extern QPixmap qt_pixmapForBrush(int brushStyle, bool invert); //in qbrush.cpp
 extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap);
-
-// use the same rounding as in qrasterizer.cpp (6 bit fixed point)
-static const qreal aliasedCoordinateDelta = 0.5 - 0.015625;
-
-#undef X11 // defined in qt_x11_p.h
-/*!
-    Returns the X11 specific pen GC for the painter \a p. Note that
-    QPainter::begin() must be called before this function returns a
-    valid GC.
-*/
-Q_GUI_EXPORT GC qt_x11_get_pen_gc(QPainter *p)
-{
-    if (p && p->paintEngine()
-        && p->paintEngine()->isActive()
-        && p->paintEngine()->type() == QPaintEngine::X11) {
-        return static_cast<QX11PaintEngine *>(p->paintEngine())->d_func()->gc;
-    }
-    return 0;
-}
-
-/*!
-    Returns the X11 specific brush GC for the painter \a p. Note that
-    QPainter::begin() must be called before this function returns a
-    valid GC.
-*/
-Q_GUI_EXPORT GC qt_x11_get_brush_gc(QPainter *p)
-{
-    if (p && p->paintEngine()
-        && p->paintEngine()->isActive()
-        && p->paintEngine()->type() == QPaintEngine::X11) {
-        return static_cast<QX11PaintEngine *>(p->paintEngine())->d_func()->gc_brush;
-    }
-    return 0;
-}
-#define X11 qt_x11Data
 
 #ifndef QT_NO_XRENDER
 static const int compositionModeToRenderOp[QPainter::CompositionMode_Xor + 1] = {

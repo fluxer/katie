@@ -65,50 +65,19 @@
 #include "qpixmapcache.h"
 #include "qwizard.h"
 #include "qlistview.h"
-#include <qmath_p.h>
-#include <qmath.h>
+#include "qmath_p.h"
+#include "qmath.h"
+#include "qguicommon_p.h"
 
 #ifdef Q_WS_X11
 #include "qfileinfo.h"
 #include "qdir.h"
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
 
-#include <qstylehelper_p.h>
+#include "qstylehelper_p.h"
 
 QT_BEGIN_NAMESPACE
-
-#if defined(Q_WS_WIN)
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "qt_windows.h"
-QT_END_INCLUDE_NAMESPACE
-#  ifndef COLOR_GRADIENTACTIVECAPTION
-#    define COLOR_GRADIENTACTIVECAPTION     27
-#  endif
-#  ifndef COLOR_GRADIENTINACTIVECAPTION
-#    define COLOR_GRADIENTINACTIVECAPTION   28
-#  endif
-
-
-typedef struct
-{
-    DWORD cbSize;
-    HICON hIcon;
-    int   iSysImageIndex;
-    int   iIcon;
-    WCHAR szPath[MAX_PATH];
-} QSHSTOCKICONINFO;
-
-#define _SHGFI_SMALLICON         0x000000001
-#define _SHGFI_LARGEICON         0x000000000
-#define _SHGFI_ICON              0x000000100
-#define _SIID_SHIELD             77
-
-typedef HRESULT (WINAPI *PtrSHGetStockIconInfo)(int siid, int uFlags, QSHSTOCKICONINFO *psii);
-static PtrSHGetStockIconInfo pSHGetStockIconInfo = 0;
-
-#endif //Q_WS_WIN
 
 QT_BEGIN_INCLUDE_NAMESPACE
 #include <limits.h>
@@ -284,13 +253,6 @@ QWindowsStyle::~QWindowsStyle()
 {
 }
 
-#ifdef Q_WS_WIN
-static inline QRgb colorref2qrgb(COLORREF col)
-{
-    return qRgb(GetRValue(col), GetGValue(col), GetBValue(col));
-}
-#endif
-
 /*! \reimp */
 void QWindowsStyle::polish(QApplication *app)
 {
@@ -305,21 +267,6 @@ void QWindowsStyle::polish(QApplication *app)
     d->inactiveCaptionColor = app->palette().dark().color();
     d->inactiveGradientCaptionColor = app->palette().dark().color();
     d->inactiveCaptionText = app->palette().background().color();
-
-#if defined(Q_WS_WIN) //fetch native title bar colors
-    if(app->desktopSettingsAware()){
-        DWORD activeCaption = GetSysColor(COLOR_ACTIVECAPTION);
-        DWORD gradientActiveCaption = GetSysColor(COLOR_GRADIENTACTIVECAPTION);
-        DWORD inactiveCaption = GetSysColor(COLOR_INACTIVECAPTION);
-        DWORD gradientInactiveCaption = GetSysColor(COLOR_GRADIENTINACTIVECAPTION);
-        DWORD inactiveCaptionText = GetSysColor(COLOR_INACTIVECAPTIONTEXT);
-        d->activeCaptionColor = colorref2qrgb(activeCaption);
-        d->activeGradientCaptionColor = colorref2qrgb(gradientActiveCaption);
-        d->inactiveCaptionColor = colorref2qrgb(inactiveCaption);
-        d->inactiveGradientCaptionColor = colorref2qrgb(gradientInactiveCaption);
-        d->inactiveCaptionText = colorref2qrgb(inactiveCaptionText);
-    }
-#endif
 }
 
 /*! \reimp */
@@ -384,16 +331,7 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
         break;
 #endif
     case PM_MaximumDragDistance:
-#if defined(Q_WS_WIN)
-        {
-            HDC hdcScreen = GetDC(0);
-            int dpi = GetDeviceCaps(hdcScreen, LOGPIXELSX);
-            ReleaseDC(0, hdcScreen);
-            ret = (int)(dpi * 1.375);
-        }
-#else
         ret = 60;
-#endif
         break;
 
 #ifndef QT_NO_SLIDER
@@ -492,7 +430,7 @@ int QWindowsStyle::pixelMetric(PixelMetric pm, const QStyleOption *opt, const QW
 #ifndef QT_NO_IMAGEFORMAT_XPM
 
 /* XPM */
-static const char * const qt_menu_xpm[] = {
+static const char * const qt_windows_menu_xpm[] = {
 "16 16 72 1",
 "  c None",
 ". c #65AF36",
@@ -583,7 +521,7 @@ static const char * const qt_menu_xpm[] = {
 "++++++FG+++++++.",
 "++++++++++++++. "};
 
-static const char * const qt_close_xpm[] = {
+static const char * const qt_windows_close_xpm[] = {
 "10 10 2 1",
 "# c #000000",
 ". c None",
@@ -598,7 +536,7 @@ static const char * const qt_close_xpm[] = {
 "..........",
 ".........."};
 
-static const char * const qt_maximize_xpm[]={
+static const char * const qt_windows_maximize_xpm[]={
 "10 10 2 1",
 "# c #000000",
 ". c None",
@@ -613,7 +551,7 @@ static const char * const qt_maximize_xpm[]={
 "#########.",
 ".........."};
 
-static const char * const qt_minimize_xpm[] = {
+static const char * const qt_windows_minimize_xpm[] = {
 "10 10 2 1",
 "# c #000000",
 ". c None",
@@ -628,7 +566,7 @@ static const char * const qt_minimize_xpm[] = {
 ".#######..",
 ".........."};
 
-static const char * const qt_normalizeup_xpm[] = {
+static const char * const qt_windows_normalizeup_xpm[] = {
 "10 10 2 1",
 "# c #000000",
 ". c None",
@@ -643,7 +581,7 @@ static const char * const qt_normalizeup_xpm[] = {
 ".######...",
 ".........."};
 
-static const char * const qt_help_xpm[] = {
+static const char * const qt_windows_help_xpm[] = {
 "10 10 2 1",
 ". c None",
 "# c #000000",
@@ -658,7 +596,7 @@ static const char * const qt_help_xpm[] = {
 "....##....",
 ".........."};
 
-static const char * const qt_shade_xpm[] = {
+static const char * const qt_windows_shade_xpm[] = {
 "10 10 2 1",
 "# c #000000",
 ". c None",
@@ -673,7 +611,7 @@ static const char * const qt_shade_xpm[] = {
 "..........",
 ".........."};
 
-static const char * const qt_unshade_xpm[] = {
+static const char * const qt_windows_unshade_xpm[] = {
 "10 10 2 1",
 "# c #000000",
 ". c None",
@@ -688,7 +626,7 @@ static const char * const qt_unshade_xpm[] = {
 "..........",
 ".........."};
 
-static const char * dock_widget_close_xpm[] = {
+static const char * qt_windows_dock_widget_close_xpm[] = {
 "8 8 2 1",
 "# c #000000",
 ". c None",
@@ -700,166 +638,6 @@ static const char * dock_widget_close_xpm[] = {
 ".##..##.",
 "........",
 "........"};
-
-/* XPM */
-static const char * const information_xpm[]={
-"32 32 5 1",
-". c None",
-"c c #000000",
-"* c #999999",
-"a c #ffffff",
-"b c #0000ff",
-"...........********.............",
-"........***aaaaaaaa***..........",
-"......**aaaaaaaaaaaaaa**........",
-".....*aaaaaaaaaaaaaaaaaa*.......",
-"....*aaaaaaaabbbbaaaaaaaac......",
-"...*aaaaaaaabbbbbbaaaaaaaac.....",
-"..*aaaaaaaaabbbbbbaaaaaaaaac....",
-".*aaaaaaaaaaabbbbaaaaaaaaaaac...",
-".*aaaaaaaaaaaaaaaaaaaaaaaaaac*..",
-"*aaaaaaaaaaaaaaaaaaaaaaaaaaaac*.",
-"*aaaaaaaaaabbbbbbbaaaaaaaaaaac*.",
-"*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-"*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-"*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-"*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-"*aaaaaaaaaaaabbbbbaaaaaaaaaaac**",
-".*aaaaaaaaaaabbbbbaaaaaaaaaac***",
-".*aaaaaaaaaaabbbbbaaaaaaaaaac***",
-"..*aaaaaaaaaabbbbbaaaaaaaaac***.",
-"...caaaaaaabbbbbbbbbaaaaaac****.",
-"....caaaaaaaaaaaaaaaaaaaac****..",
-".....caaaaaaaaaaaaaaaaaac****...",
-"......ccaaaaaaaaaaaaaacc****....",
-".......*cccaaaaaaaaccc*****.....",
-"........***cccaaaac*******......",
-"..........****caaac*****........",
-".............*caaac**...........",
-"...............caac**...........",
-"................cac**...........",
-".................cc**...........",
-"..................***...........",
-"...................**..........."};
-/* XPM */
-static const char* const warning_xpm[]={
-"32 32 4 1",
-". c None",
-"a c #ffff00",
-"* c #000000",
-"b c #999999",
-".............***................",
-"............*aaa*...............",
-"...........*aaaaa*b.............",
-"...........*aaaaa*bb............",
-"..........*aaaaaaa*bb...........",
-"..........*aaaaaaa*bb...........",
-".........*aaaaaaaaa*bb..........",
-".........*aaaaaaaaa*bb..........",
-"........*aaaaaaaaaaa*bb.........",
-"........*aaaa***aaaa*bb.........",
-".......*aaaa*****aaaa*bb........",
-".......*aaaa*****aaaa*bb........",
-"......*aaaaa*****aaaaa*bb.......",
-"......*aaaaa*****aaaaa*bb.......",
-".....*aaaaaa*****aaaaaa*bb......",
-".....*aaaaaa*****aaaaaa*bb......",
-"....*aaaaaaaa***aaaaaaaa*bb.....",
-"....*aaaaaaaa***aaaaaaaa*bb.....",
-"...*aaaaaaaaa***aaaaaaaaa*bb....",
-"...*aaaaaaaaaa*aaaaaaaaaa*bb....",
-"..*aaaaaaaaaaa*aaaaaaaaaaa*bb...",
-"..*aaaaaaaaaaaaaaaaaaaaaaa*bb...",
-".*aaaaaaaaaaaa**aaaaaaaaaaa*bb..",
-".*aaaaaaaaaaa****aaaaaaaaaa*bb..",
-"*aaaaaaaaaaaa****aaaaaaaaaaa*bb.",
-"*aaaaaaaaaaaaa**aaaaaaaaaaaa*bb.",
-"*aaaaaaaaaaaaaaaaaaaaaaaaaaa*bbb",
-"*aaaaaaaaaaaaaaaaaaaaaaaaaaa*bbb",
-".*aaaaaaaaaaaaaaaaaaaaaaaaa*bbbb",
-"..*************************bbbbb",
-"....bbbbbbbbbbbbbbbbbbbbbbbbbbb.",
-".....bbbbbbbbbbbbbbbbbbbbbbbbb.."};
-/* XPM */
-static const char* const critical_xpm[]={
-"32 32 4 1",
-". c None",
-"a c #999999",
-"* c #ff0000",
-"b c #ffffff",
-"...........********.............",
-".........************...........",
-".......****************.........",
-"......******************........",
-".....********************a......",
-"....**********************a.....",
-"...************************a....",
-"..*******b**********b*******a...",
-"..******bbb********bbb******a...",
-".******bbbbb******bbbbb******a..",
-".*******bbbbb****bbbbb*******a..",
-"*********bbbbb**bbbbb*********a.",
-"**********bbbbbbbbbb**********a.",
-"***********bbbbbbbb***********aa",
-"************bbbbbb************aa",
-"************bbbbbb************aa",
-"***********bbbbbbbb***********aa",
-"**********bbbbbbbbbb**********aa",
-"*********bbbbb**bbbbb*********aa",
-".*******bbbbb****bbbbb*******aa.",
-".******bbbbb******bbbbb******aa.",
-"..******bbb********bbb******aaa.",
-"..*******b**********b*******aa..",
-"...************************aaa..",
-"....**********************aaa...",
-"....a********************aaa....",
-".....a******************aaa.....",
-"......a****************aaa......",
-".......aa************aaaa.......",
-".........aa********aaaaa........",
-"...........aaaaaaaaaaa..........",
-".............aaaaaaa............"};
-/* XPM */
-static const char *const question_xpm[] = {
-"32 32 5 1",
-". c None",
-"c c #000000",
-"* c #999999",
-"a c #ffffff",
-"b c #0000ff",
-"...........********.............",
-"........***aaaaaaaa***..........",
-"......**aaaaaaaaaaaaaa**........",
-".....*aaaaaaaaaaaaaaaaaa*.......",
-"....*aaaaaaaaaaaaaaaaaaaac......",
-"...*aaaaaaaabbbbbbaaaaaaaac.....",
-"..*aaaaaaaabaaabbbbaaaaaaaac....",
-".*aaaaaaaabbaaaabbbbaaaaaaaac...",
-".*aaaaaaaabbbbaabbbbaaaaaaaac*..",
-"*aaaaaaaaabbbbaabbbbaaaaaaaaac*.",
-"*aaaaaaaaaabbaabbbbaaaaaaaaaac*.",
-"*aaaaaaaaaaaaabbbbaaaaaaaaaaac**",
-"*aaaaaaaaaaaaabbbaaaaaaaaaaaac**",
-"*aaaaaaaaaaaaabbaaaaaaaaaaaaac**",
-"*aaaaaaaaaaaaabbaaaaaaaaaaaaac**",
-"*aaaaaaaaaaaaaaaaaaaaaaaaaaaac**",
-".*aaaaaaaaaaaabbaaaaaaaaaaaac***",
-".*aaaaaaaaaaabbbbaaaaaaaaaaac***",
-"..*aaaaaaaaaabbbbaaaaaaaaaac***.",
-"...caaaaaaaaaabbaaaaaaaaaac****.",
-"....caaaaaaaaaaaaaaaaaaaac****..",
-".....caaaaaaaaaaaaaaaaaac****...",
-"......ccaaaaaaaaaaaaaacc****....",
-".......*cccaaaaaaaaccc*****.....",
-"........***cccaaaac*******......",
-"..........****caaac*****........",
-".............*caaac**...........",
-"...............caac**...........",
-"................cac**...........",
-".................cc**...........",
-"..................***...........",
-"...................**..........."};
-
 #endif //QT_NO_IMAGEFORMAT_XPM
 
 /*!
@@ -871,31 +649,31 @@ QPixmap QWindowsStyle::standardPixmap(StandardPixmap standardpixmap, const QStyl
 #ifndef QT_NO_IMAGEFORMAT_XPM
     switch (standardpixmap) {
     case SP_TitleBarMenuButton:
-        return QPixmap(qt_menu_xpm);
+        return QPixmap(qt_windows_menu_xpm);
     case SP_TitleBarShadeButton:
-        return QPixmap(qt_shade_xpm);
+        return QPixmap(qt_windows_shade_xpm);
     case SP_TitleBarUnshadeButton:
-        return QPixmap(qt_unshade_xpm);
+        return QPixmap(qt_windows_unshade_xpm);
     case SP_TitleBarNormalButton:
-        return QPixmap(qt_normalizeup_xpm);
+        return QPixmap(qt_windows_normalizeup_xpm);
     case SP_TitleBarMinButton:
-        return QPixmap(qt_minimize_xpm);
+        return QPixmap(qt_windows_minimize_xpm);
     case SP_TitleBarMaxButton:
-        return QPixmap(qt_maximize_xpm);
+        return QPixmap(qt_windows_maximize_xpm);
     case SP_TitleBarCloseButton:
-        return QPixmap(qt_close_xpm);
+        return QPixmap(qt_windows_close_xpm);
     case SP_TitleBarContextHelpButton:
-        return QPixmap(qt_help_xpm);
+        return QPixmap(qt_windows_help_xpm);
     case SP_DockWidgetCloseButton:
-        return QPixmap(dock_widget_close_xpm);
+        return QPixmap(qt_windows_dock_widget_close_xpm);
     case SP_MessageBoxInformation:
-        return QPixmap(information_xpm);
+        return QPixmap(qt_information_xpm);
     case SP_MessageBoxWarning:
-        return QPixmap(warning_xpm);
+        return QPixmap(qt_warning_xpm);
     case SP_MessageBoxCritical:
-        return QPixmap(critical_xpm);
+        return QPixmap(qt_critical_xpm);
     case SP_MessageBoxQuestion:
-        return QPixmap(question_xpm);
+        return QPixmap(qt_question_xpm);
     default:
         break;
     }
@@ -937,37 +715,6 @@ int QWindowsStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWid
         ret = 0;
         break;
 
-#if defined(Q_WS_WIN)
-    case SH_UnderlineShortcut:
-    {
-        ret = 1;
-        BOOL cues = false;
-        SystemParametersInfo(SPI_GETKEYBOARDCUES, 0, &cues, 0);
-        ret = int(cues);
-        // Do nothing if we always paint underlines
-        Q_D(const QWindowsStyle);
-        if (!ret && widget && d) {
-#ifndef QT_NO_MENUBAR
-            const QMenuBar *menuBar = qobject_cast<const QMenuBar *>(widget);
-            if (!menuBar && qobject_cast<const QMenu *>(widget)) {
-                QWidget *w = QApplication::activeWindow();
-                if (w && w != widget)
-                    menuBar = w->findChild<QMenuBar *>();
-            }
-            // If we paint a menu bar draw underlines if is in the keyboardState
-            if (menuBar) {
-                if (menuBar->d_func()->keyboardState || d->altDown())
-                    ret = 1;
-                // Otherwise draw underlines if the toplevel widget has seen an alt-press
-            } else
-#endif // QT_NO_MENUBAR
-            if (d->hasSeenAlt(widget)) {
-                ret = 1;
-            }
-        }
-        break;
-    }
-#endif
 #ifndef QT_NO_RUBBERBAND
     case SH_RubberBand_Mask:
         if (const QStyleOptionRubberBand *rbOpt = qstyleoption_cast<const QStyleOptionRubberBand *>(opt)) {
@@ -987,15 +734,6 @@ int QWindowsStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWid
 #endif // QT_NO_RUBBERBAND
     case SH_LineEdit_PasswordCharacter:
         {
-#ifdef Q_WS_WIN
-            if (widget && (QSysInfo::WindowsVersion >= QSysInfo::WV_XP && (QSysInfo::WindowsVersion & QSysInfo::WV_NT_based))) {
-                const QFontMetrics &fm = widget->fontMetrics();
-                if (fm.inFont(QChar(0x25CF)))
-                    ret = 0x25CF;
-                else if (fm.inFont(QChar(0x2022)))
-                    ret = 0x2022;
-            }
-#endif
             if (!ret)
                 ret = '*';
         }

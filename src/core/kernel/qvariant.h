@@ -155,7 +155,7 @@ class Q_CORE_EXPORT QVariant
         LastType = 0xffffffff // need this so that gcc >= 3.4 allocates 32 bits for Type
     };
 
-    inline QVariant();
+    inline QVariant() {}
     ~QVariant();
     QVariant(Type type);
     QVariant(int typeOrUserType, const void *copy);
@@ -228,13 +228,15 @@ class Q_CORE_EXPORT QVariant
     bool convert(Type t);
 
 
-    inline bool isValid() const;
+    inline bool isValid() const { return d.type != Invalid; }
     bool isNull() const;
 
     void clear();
 
     void detach();
-    inline bool isDetached() const;
+    inline bool isDetached() const { return !d.is_shared || d.data.shared->ref == 1; }
+
+
 
     int toInt(bool *ok = Q_NULLPTR) const;
     uint toUInt(bool *ok = Q_NULLPTR) const;
@@ -441,10 +443,6 @@ inline void qVariantSetValue<QVariant>(QVariant &v, const QVariant &t)
 }
 
 
-inline QVariant::QVariant() {}
-inline bool QVariant::isValid() const { return d.type != Invalid; }
-
-
 template<typename T>
 inline void QVariant::setValue(const T &avalue)
 { qVariantSetValue(*this, avalue); }
@@ -455,10 +453,6 @@ Q_CORE_EXPORT QDataStream& operator<< (QDataStream& s, const QVariant& p);
 Q_CORE_EXPORT QDataStream& operator>> (QDataStream& s, QVariant::Type& p);
 Q_CORE_EXPORT QDataStream& operator<< (QDataStream& s, const QVariant::Type p);
 #endif
-
-inline bool QVariant::isDetached() const
-{ return !d.is_shared || d.data.shared->ref == 1; }
-
 
 
 /* Helper class to add one more level of indirection to prevent

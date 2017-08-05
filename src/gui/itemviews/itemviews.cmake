@@ -62,7 +62,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qproxymodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractproxymodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qsortfilterproxymodel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qstandarditemmodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qstringlistmodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qtreewidgetitemiterator.cpp

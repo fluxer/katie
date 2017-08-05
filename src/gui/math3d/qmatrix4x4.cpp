@@ -40,10 +40,11 @@
 ****************************************************************************/
 
 #include "qmatrix4x4.h"
-#include <QtCore/qmath.h>
-#include <QtCore/qvariant.h>
-#include <QtGui/qmatrix.h>
-#include <QtGui/qtransform.h>
+#include "qmath.h"
+#include "qvariant.h"
+#include "qmatrix.h"
+#include "qtransform.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -57,8 +58,6 @@ QT_BEGIN_NAMESPACE
 
     \sa QVector3D, QGenericMatrix
 */
-
-static const qreal inv_dist_to_plane = 1. / 1024.;
 
 /*!
     \fn QMatrix4x4::QMatrix4x4()

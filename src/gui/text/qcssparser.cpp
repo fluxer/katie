@@ -56,7 +56,7 @@ QT_BEGIN_NAMESPACE
 
 #include "qcssscanner.cpp"
 
-using namespace QCss;
+namespace QCss {
 
 struct QCssKnownValue
 {
@@ -2052,19 +2052,6 @@ QString Scanner::preprocess(const QString &input, bool *hasEscapeSequences)
     return output;
 }
 
-int QCssScanner_Generated::handleCommentStart()
-{
-    while (pos < input.size() - 1) {
-        if (input.at(pos) == QLatin1Char('*')
-            && input.at(pos + 1) == QLatin1Char('/')) {
-            pos += 2;
-            break;
-        }
-        ++pos;
-    }
-    return S;
-}
-
 void Scanner::scan(const QString &preprocessedInput, QVector<Symbol> *symbols)
 {
     QCssScanner_Generated scanner(preprocessedInput);
@@ -2762,6 +2749,21 @@ bool Parser::testTokenAndEndsWith(QCss::TokenType t, const QLatin1String &str)
         return false;
     }
     return true;
+}
+
+} // namespace QCss
+
+int QCssScanner_Generated::handleCommentStart()
+{
+    while (pos < input.size() - 1) {
+        if (input.at(pos) == QLatin1Char('*')
+            && input.at(pos + 1) == QLatin1Char('/')) {
+            pos += 2;
+            break;
+        }
+        ++pos;
+    }
+    return QCss::TokenType::S;
 }
 
 QT_END_NAMESPACE

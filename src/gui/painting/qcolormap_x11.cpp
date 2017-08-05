@@ -45,9 +45,10 @@
 #include "qdebug.h"
 #include "qdesktopwidget.h"
 #include "qvector.h"
-
 #include "qx11info_x11.h"
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
+#include "qguicommon_p.h"
+
 #include <limits.h>
 
 QT_BEGIN_NAMESPACE
@@ -92,15 +93,6 @@ static uint right_align(uint v)
     while (!(v & 0x1))
         v >>= 1;
     return v;
-}
-
-static int lowest_bit(uint v)
-{
-    int i;
-    uint b = 1u;
-    for (i = 0; ((v & b) == 0u) && i < 32;  ++i)
-        b <<= 1u;
-    return i == 32 ? -1 : i;
 }
 
 static int cube_root(int v)

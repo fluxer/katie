@@ -45,7 +45,8 @@
 #include "qregion.h"
 #include "qpainterpath.h"
 #include "qvariant.h"
-#include <qmath.h>
+#include "qmath.h"
+#include "qguicommon_p.h"
 
 #include <limits.h>
 
@@ -881,8 +882,6 @@ QMatrix &QMatrix::shear(qreal sh, qreal sv)
     _m22 += tm22;
     return *this;
 }
-
-const qreal deg2rad = qreal(0.017453292519943295769);        // pi/180
 
 /*!
     \fn QMatrix &QMatrix::rotate(qreal degrees)

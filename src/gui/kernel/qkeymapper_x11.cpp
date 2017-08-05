@@ -229,7 +229,7 @@ QKeyMapperPrivate::~QKeyMapperPrivate()
         XFree(coreDesc.keysyms);
 }
 
-enum { MaxBits = sizeof(uint) * 8 };
+enum { MaxKeyBits = sizeof(uint) * 8 };
 static QString translateKeySym(KeySym keysym, uint xmodifiers,
                                int &code, Qt::KeyboardModifiers &modifiers,
                                QByteArray &chars, int &count);
@@ -265,10 +265,10 @@ QList<int> QKeyMapperPrivate::possibleKeys(QKeyEvent *event)
         baseCode = QChar(baseCode).toUpper().unicode();
     result += (baseCode | baseModifiers);
 
-    int pos1Bits[MaxBits];
+    int pos1Bits[MaxKeyBits];
     int num1Bits = 0;
 
-    for (int i = 0; i < MaxBits; ++i) {
+    for (int i = 0; i < MaxKeyBits; ++i) {
         if (consumedModifiers & (1 << i))
             pos1Bits[num1Bits++] = i;
     }

@@ -94,7 +94,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawhelper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qbackingstore.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_raster.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystemfactory.cpp
@@ -113,7 +112,6 @@ if(WITH_X11 AND X11_FOUND)
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintdevice_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/painting/qwindowsurface_x11.cpp
     )
 endif()

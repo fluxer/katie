@@ -46,10 +46,10 @@
 #include "qregion.h"
 #include "qpainterpath.h"
 #include "qvariant.h"
-#include <qmath.h>
-#include <qnumeric.h>
-
-#include <qbezier_p.h>
+#include "qmath.h"
+#include "qnumeric.h"
+#include "qbezier_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -584,9 +584,6 @@ QTransform & QTransform::shear(qreal sh, qreal sv)
         m_dirty = TxShear;
     return *this;
 }
-
-const qreal deg2rad = qreal(0.017453292519943295769);        // pi/180
-const qreal inv_dist_to_plane = 1. / 1024.;
 
 /*!
     \fn QTransform &QTransform::rotate(qreal angle, Qt::Axis axis)

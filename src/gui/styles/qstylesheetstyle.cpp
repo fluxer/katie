@@ -126,7 +126,7 @@ class QStyleSheetStyleRecursionGuard
     if (globalStyleSheetStyle != 0 && globalStyleSheetStyle != this) { RETURN; } \
     QStyleSheetStyleRecursionGuard recursion_guard(this);
 
-#define ceil(x) ((int)(x) + ((x) > 0 && (x) != (int)(x)))
+#define ceilInt(x) ((int)(x) + ((x) > 0 && (x) != (int)(x)))
 
 enum PseudoElement {
     PseudoElement_None,
@@ -3842,7 +3842,7 @@ void QStyleSheetStyle::drawControl(ControlElement ce, const QStyleOption *opt, Q
                 } else {
                     int x = reverse ? r.left() + r.width() - chunkWidth : r.x();
 
-                    for (int i = 0; i < ceil(qreal(fillWidth)/chunkWidth); ++i) {
+                    for (int i = 0; i < ceilInt(qreal(fillWidth)/chunkWidth); ++i) {
                         r.setRect(x, rect.y(), chunkWidth, rect.height());
                         r = m.mapRect(QRectF(r)).toRect();
                         subRule.drawRule(p, r);

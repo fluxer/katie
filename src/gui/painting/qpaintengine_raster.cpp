@@ -62,6 +62,7 @@
 #include "qmemrotate_p.h"
 #include "qpaintengine_raster_p.h"
 #include "qoutlinemapper_p.h"
+#include "qguicommon_p.h"
 
 #include <limits.h>
 
@@ -81,10 +82,6 @@ void dumpClip(int width, int height, const QClipData *clip);
 // If we have a rect that starting at 0.5 of width 3.5 it should span
 // 4 pixels.
 #define int_dim(pos, dim) (int(pos+dim) - int(pos))
-
-// use the same rounding as in qrasterizer.cpp (6 bit fixed point)
-static const qreal aliasedCoordinateDelta = 0.5 - 0.015625;
-
 
 /********************************************************************************
  * Span functions

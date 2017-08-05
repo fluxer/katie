@@ -190,9 +190,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             endif()
         endforeach()
         set(${FORTARGET}_SOURCES ${resourcesdep} ${filteredsources} PARENT_SCOPE)
-    elseif("${FORTARGET}" STREQUAL "KtGui")
-        katie_warning("All-in-one build not yet support for: ${FORTARGET}")
-        set(${FORTARGET}_SOURCES ${resourcesdep} ${ARGN} PARENT_SCOPE)
     else()
         # use temporary file, then configure_file() to avoid all-in-one target rebuilds when the
         # project is reconfigured

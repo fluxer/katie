@@ -60,7 +60,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static const int MaxBits = 8 * sizeof(QSizePolicy::ControlType);
+static const int MaxStyleBits = 8 * sizeof(QSizePolicy::ControlType);
 
 static int unpackControlTypes(QSizePolicy::ControlTypes controls, QSizePolicy::ControlType *array)
 {
@@ -74,7 +74,7 @@ static int unpackControlTypes(QSizePolicy::ControlTypes controls, QSizePolicy::C
     }
 
     int count = 0;
-    for (int i = 0; i < MaxBits; ++i) {
+    for (int i = 0; i < MaxStyleBits; ++i) {
         if (uint bit = (controls & (0x1 << i)))
             array[count++] = QSizePolicy::ControlType(bit);
     }
@@ -2243,8 +2243,8 @@ int QStyle::combinedLayoutSpacing(QSizePolicy::ControlTypes controls1,
                                   QSizePolicy::ControlTypes controls2, Qt::Orientation orientation,
                                   QStyleOption *option, QWidget *widget) const
 {
-    QSizePolicy::ControlType array1[MaxBits];
-    QSizePolicy::ControlType array2[MaxBits];
+    QSizePolicy::ControlType array1[MaxStyleBits];
+    QSizePolicy::ControlType array2[MaxStyleBits];
     int count1 = unpackControlTypes(controls1, array1);
     int count2 = unpackControlTypes(controls2, array2);
     int result = -1;

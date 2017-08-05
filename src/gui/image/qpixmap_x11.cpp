@@ -63,6 +63,7 @@
 #include "qx11info_x11.h"
 #include <qdrawhelper_p.h>
 #include <qimage_p.h>
+#include <qguicommon_p.h>
 
 #include <stdlib.h>
 
@@ -237,16 +238,6 @@ static int highest_bit(uint v)
     for (i=31; ((b & v) == 0) && i>=0;         i--)
         b >>= 1;
     return i;
-}
-
-// Returns position of lowest set bit in 'v' as an integer (0-31), or -1
-static int lowest_bit(uint v)
-{
-    int i;
-    ulong lb;
-    lb = 1;
-    for (i=0; ((v & lb) == 0) && i<32;  i++, lb<<=1) {}
-    return i==32 ? -1 : i;
 }
 
 // Counts the number of bits set in 'v'

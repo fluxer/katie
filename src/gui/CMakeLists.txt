@@ -515,6 +515,36 @@ else()
     )
 endif()
 
+
+set(KtGui_SOURCES
+    ${KtGui_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextedit.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
+)
+
+if(WITH_X11 AND X11_FOUND)
+    set(KtGui_SOURCES
+        ${KtGui_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
+    )
+endif()
+
+if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
+    set(KtGui_SOURCES
+        ${KtGui_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
+    )
+endif()
+
+# to avoid mixing C++ and C source files when building as all-in-one
+set(KtGui_SOURCES
+    ${KtGui_SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
+)
+
 if(WITH_NSL AND NSL_FOUND)
     include_directories(${NSL_INCLUDES})
     set(EXTRA_GUI_LIBS

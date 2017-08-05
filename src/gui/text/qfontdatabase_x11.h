@@ -414,23 +414,25 @@ static const char * xlfd_for_id(int id)
     return xlfd_encoding[id].name;
 }
 
-enum XLFDFieldNames {
-    Foundry,
-    Family,
-    Weight,
-    Slant,
-    Width,
-    AddStyle,
-    PixelSize,
-    PointSize,
-    ResolutionX,
-    ResolutionY,
-    Spacing,
-    AverageWidth,
-    CharsetRegistry,
-    CharsetEncoding,
-    NFontFields
-};
+namespace XLFDFieldNames {
+    enum Fields {
+        Foundry,
+        Family,
+        Weight,
+        Slant,
+        Width,
+        AddStyle,
+        PixelSize,
+        PointSize,
+        ResolutionX,
+        ResolutionY,
+        Spacing,
+        AverageWidth,
+        CharsetRegistry,
+        CharsetEncoding,
+        NFontFields
+    };
+}
 
 // Splits an X font name into fields separated by '-'
 static bool parseXFontName(char *fontName, char **tokens)
@@ -442,7 +444,7 @@ static bool parseXFontName(char *fontName, char **tokens)
 
     int          i;
     ++fontName;
-    for (i = 0; i < NFontFields && fontName && fontName[0]; ++i) {
+    for (i = 0; i < XLFDFieldNames::NFontFields && fontName && fontName[0]; ++i) {
         tokens[i] = fontName;
         for (;; ++fontName) {
             if (*fontName == '-')
@@ -456,8 +458,8 @@ static bool parseXFontName(char *fontName, char **tokens)
         if (fontName) *fontName++ = '\0';
     }
 
-    if (i < NFontFields) {
-        for (int j = i ; j < NFontFields; ++j)
+    if (i < XLFDFieldNames::NFontFields) {
+        for (int j = i ; j < XLFDFieldNames::NFontFields; ++j)
             tokens[j] = 0;
         return false;
     }
@@ -472,23 +474,23 @@ static inline bool isZero(char *x)
 
 static inline bool isScalable(char **tokens)
 {
-    return (isZero(tokens[PixelSize]) &&
-            isZero(tokens[PointSize]) &&
-            isZero(tokens[AverageWidth]));
+    return (isZero(tokens[XLFDFieldNames::PixelSize]) &&
+            isZero(tokens[XLFDFieldNames::PointSize]) &&
+            isZero(tokens[XLFDFieldNames::AverageWidth]));
 }
 
 static inline bool isSmoothlyScalable(char **tokens)
 {
-    return (isZero(tokens[ResolutionX]) &&
-            isZero(tokens[ResolutionY]));
+    return (isZero(tokens[XLFDFieldNames::ResolutionX]) &&
+            isZero(tokens[XLFDFieldNames::ResolutionY]));
 }
 
 static inline bool isFixedPitch(char **tokens)
 {
-    return (tokens[Spacing][0] == 'm' ||
-            tokens[Spacing][0] == 'c' ||
-            tokens[Spacing][0] == 'M' ||
-            tokens[Spacing][0] == 'C');
+    return (tokens[XLFDFieldNames::Spacing][0] == 'm' ||
+            tokens[XLFDFieldNames::Spacing][0] == 'c' ||
+            tokens[XLFDFieldNames::Spacing][0] == 'M' ||
+            tokens[XLFDFieldNames::Spacing][0] == 'C');
 }
 
 /*
@@ -499,37 +501,37 @@ static inline bool isFixedPitch(char **tokens)
 */
 bool qt_fillFontDef(const QByteArray &xlfd, QFontDef *fd, int dpi, QtFontDesc *desc)
 {
-    char *tokens[NFontFields];
+    char *tokens[XLFDFieldNames::NFontFields];
     QByteArray buffer = xlfd;
     if (! parseXFontName(buffer.data(), tokens))
         return false;
 
-    capitalize(tokens[Family]);
-    capitalize(tokens[Foundry]);
+    capitalize(tokens[XLFDFieldNames::Family]);
+    capitalize(tokens[XLFDFieldNames::Foundry]);
 
     fd->styleStrategy |= QFont::NoAntialias;
-    fd->family = QString::fromLatin1(tokens[Family]);
-    QString foundry = QString::fromLatin1(tokens[Foundry]);
+    fd->family = QString::fromLatin1(tokens[XLFDFieldNames::Family]);
+    QString foundry = QString::fromLatin1(tokens[XLFDFieldNames::Foundry]);
     if (! foundry.isEmpty() && foundry != QLatin1String("*") && (!desc || desc->family->count > 1))
         fd->family +=
             QLatin1String(" [") + foundry + QLatin1Char(']');
 
-    if (qstrlen(tokens[AddStyle]) > 0)
-        fd->addStyle = QString::fromLatin1(tokens[AddStyle]);
+    if (qstrlen(tokens[XLFDFieldNames::AddStyle]) > 0)
+        fd->addStyle = QString::fromLatin1(tokens[XLFDFieldNames::AddStyle]);
     else
         fd->addStyle.clear();
 
-    fd->pointSize = atoi(tokens[PointSize])/10.;
+    fd->pointSize = atoi(tokens[XLFDFieldNames::PointSize])/10.;
     fd->styleHint = QFont::AnyStyle;        // ### any until we match families
 
-    char slant = tolower((uchar) tokens[Slant][0]);
+    char slant = tolower((uchar) tokens[XLFDFieldNames::Slant][0]);
     fd->style = (slant == 'o' ? QFont::StyleOblique : (slant == 'i' ? QFont::StyleItalic : QFont::StyleNormal));
-    char fixed = tolower((uchar) tokens[Spacing][0]);
+    char fixed = tolower((uchar) tokens[XLFDFieldNames::Spacing][0]);
     fd->fixedPitch = (fixed == 'm' || fixed == 'c');
-    fd->weight = getFontWeight(QLatin1String(tokens[Weight]));
+    fd->weight = getFontWeight(QLatin1String(tokens[XLFDFieldNames::Weight]));
 
-    int r = atoi(tokens[ResolutionY]);
-    fd->pixelSize = atoi(tokens[PixelSize]);
+    int r = atoi(tokens[XLFDFieldNames::ResolutionY]);
+    fd->pixelSize = atoi(tokens[XLFDFieldNames::PixelSize]);
     // not "0" or "*", or required DPI
     if (r && fd->pixelSize && r != dpi) {
         // calculate actual pointsize for display DPI
@@ -567,11 +569,11 @@ static QtFontStyle::Key getStyle(char ** tokens)
 {
     QtFontStyle::Key key;
 
-    char slant0 = tolower((uchar) tokens[Slant][0]);
+    char slant0 = tolower((uchar) tokens[XLFDFieldNames::Slant][0]);
 
     if (slant0 == 'r') {
-        if (tokens[Slant][1]) {
-            char slant1 = tolower((uchar) tokens[Slant][1]);
+        if (tokens[XLFDFieldNames::Slant][1]) {
+            char slant1 = tolower((uchar) tokens[XLFDFieldNames::Slant][1]);
 
             if (slant1 == 'o')
                 key.style = QFont::StyleOblique;
@@ -583,16 +585,16 @@ static QtFontStyle::Key getStyle(char ** tokens)
     else if (slant0 == 'i')
         key.style = QFont::StyleItalic;
 
-    key.weight = getFontWeight(QLatin1String(tokens[Weight]));
+    key.weight = getFontWeight(QLatin1String(tokens[XLFDFieldNames::Weight]));
 
-    if (qstrcmp(tokens[Width], "normal") == 0) {
+    if (qstrcmp(tokens[XLFDFieldNames::Width], "normal") == 0) {
         key.stretch = 100;
-    } else if (qstrcmp(tokens[Width], "semi condensed") == 0 ||
-               qstrcmp(tokens[Width], "semicondensed") == 0) {
+    } else if (qstrcmp(tokens[XLFDFieldNames::Width], "semi condensed") == 0 ||
+               qstrcmp(tokens[XLFDFieldNames::Width], "semicondensed") == 0) {
         key.stretch = 90;
-    } else if (qstrcmp(tokens[Width], "condensed") == 0) {
+    } else if (qstrcmp(tokens[XLFDFieldNames::Width], "condensed") == 0) {
         key.stretch = 80;
-    } else if (qstrcmp(tokens[Width], "narrow") == 0) {
+    } else if (qstrcmp(tokens[XLFDFieldNames::Width], "narrow") == 0) {
         key.stretch = 60;
     }
 
@@ -628,7 +630,7 @@ static void loadXlfds(const char *reqFamily, int encoding_id)
     // qDebug("requesting xlfd='%s', got %d fonts", xlfd_pattern.data(), fontCount);
 
 
-    char *tokens[NFontFields];
+    char *tokens[XLFDFieldNames::NFontFields];
 
     for(int i = 0 ; i < fontCount ; i++) {
         if (! parseXFontName(fontList[i], tokens))
@@ -637,14 +639,14 @@ static void loadXlfds(const char *reqFamily, int encoding_id)
         // get the encoding_id for this xlfd.  we need to do this
         // here, since we can pass -1 to this function to do full
         // database population
-        *(tokens[CharsetEncoding] - 1) = '-';
-        int encoding_id = qt_xlfd_encoding_id(tokens[CharsetRegistry]);
+        *(tokens[XLFDFieldNames::CharsetEncoding] - 1) = '-';
+        int encoding_id = qt_xlfd_encoding_id(tokens[XLFDFieldNames::CharsetRegistry]);
         if (encoding_id == -1)
             continue;
 
-        char *familyName = tokens[Family];
+        char *familyName = tokens[XLFDFieldNames::Family];
         capitalize(familyName);
-        char *foundryName = tokens[Foundry];
+        char *foundryName = tokens[XLFDFieldNames::Foundry];
         capitalize(foundryName);
         QtFontStyle::Key styleKey = getStyle(tokens);
 
@@ -656,11 +658,11 @@ static void loadXlfds(const char *reqFamily, int encoding_id)
             else
                 bitmap_scalable = true;
         }
-        uint pixelSize = atoi(tokens[PixelSize]);
-        uint xpointSize = atoi(tokens[PointSize]);
-        uint xres = atoi(tokens[ResolutionX]);
-        uint yres = atoi(tokens[ResolutionY]);
-        uint avgwidth = atoi(tokens[AverageWidth]);
+        uint pixelSize = atoi(tokens[XLFDFieldNames::PixelSize]);
+        uint xpointSize = atoi(tokens[XLFDFieldNames::PointSize]);
+        uint xres = atoi(tokens[XLFDFieldNames::ResolutionX]);
+        uint yres = atoi(tokens[XLFDFieldNames::ResolutionY]);
+        uint avgwidth = atoi(tokens[XLFDFieldNames::AverageWidth]);
         bool fixedPitch = isFixedPitch(tokens);
 
         if (avgwidth == 0 && pixelSize != 0) {
@@ -682,9 +684,9 @@ static void loadXlfds(const char *reqFamily, int encoding_id)
         QtFontStyle *style = foundry->style(styleKey, QString(), true);
 
         delete [] style->weightName;
-        style->weightName = qstrdup(tokens[Weight]);
+        style->weightName = qstrdup(tokens[XLFDFieldNames::Weight]);
         delete [] style->setwidthName;
-        style->setwidthName = qstrdup(tokens[Width]);
+        style->setwidthName = qstrdup(tokens[XLFDFieldNames::Width]);
 
         if (smooth_scalable) {
             style->smoothScalable = true;
@@ -699,7 +701,7 @@ static void loadXlfds(const char *reqFamily, int encoding_id)
         QtFontSize *size = style->pixelSize(pixelSize, true);
         QtFontEncoding *enc =
             size->encodingID(encoding_id, xpointSize, xres, yres, avgwidth, true);
-        enc->pitch = *tokens[Spacing];
+        enc->pitch = *tokens[XLFDFieldNames::Spacing];
         if (!enc->pitch) enc->pitch = '*';
 
         for (int i = 0; i < QFontDatabase::WritingSystemsCount; ++i) {

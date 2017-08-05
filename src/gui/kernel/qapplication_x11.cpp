@@ -77,6 +77,15 @@
 #include "qguiplatformplugin_p.h"
 #include "qkde_p.h"
 #include "qthread_p.h"
+#include "qeventdispatcher_x11_p.h"
+#include <qpaintengine_x11_p.h>
+#include <qkeymapper_p.h>
+#include <qwidget_p.h>
+#include <qbackingstore_p.h>
+
+#if !defined(QT_NO_GLIB)
+#  include "qguieventdispatcher_glib_p.h"
+#endif
 
 #ifndef QT_GUI_DOUBLE_CLICK_RADIUS
 #define QT_GUI_DOUBLE_CLICK_RADIUS 5
@@ -85,35 +94,16 @@
 
 //#define ALIEN_DEBUG
 
-#if !defined(QT_NO_GLIB)
-#  include "qguieventdispatcher_glib_p.h"
-#endif
-#include "qeventdispatcher_x11_p.h"
-#include <qpaintengine_x11_p.h>
-
-#include <qkeymapper_p.h>
-
-#ifndef QT_NO_XFIXES
-#include <X11/extensions/Xfixes.h>
-#endif // QT_NO_XFIXES
-
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
 #define XK_MISCELLANY
 #include <X11/keysymdef.h>
-#if !defined(QT_NO_XINPUT)
-#include <X11/extensions/XI.h>
-#endif
 
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <locale.h>
-
-#include "qwidget_p.h"
-
-#include <qbackingstore_p.h>
 
 #ifdef QT_RX71_MULTITOUCH
 #  include <qsocketnotifier.h>
@@ -319,7 +309,7 @@ static Window        curWin = 0;                        // current window
 extern void qt_desktopwidget_update_workarea();
 
 // Function to change the window manager state (from qwidget_x11.cpp)
-extern void qt_change_net_wm_state(const QWidget *w, bool set, Atom one, Atom two = 0);
+extern void qt_change_net_wm_state(const QWidget *w, bool set, Atom one, Atom two);
 
 // modifier masks for alt, meta, super, hyper, and mode_switch - detected when the application starts
 // and/or keyboard layout changes
@@ -2375,7 +2365,7 @@ void QApplication::alert(QWidget *widget, int msec)
     for (int i = 0; i < windowsToMark.size(); ++i) {
         QWidget *window = windowsToMark.at(i);
         if (!window->isActiveWindow()) {
-            qt_change_net_wm_state(window, true, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION));
+            qt_change_net_wm_state(window, true, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION), 0);
             if (msec != 0) {
                 QTimer *timer = new QTimer(qApp);
                 timer->setSingleShot(true);
@@ -2398,7 +2388,7 @@ void QApplicationPrivate::_q_alertTimeOut()
         while (it != alertTimerHash.end()) {
             if (it.value() == timer) {
                 QWidget *window = it.key();
-                qt_change_net_wm_state(window, false, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION));
+                qt_change_net_wm_state(window, false, ATOM(_NET_WM_STATE_DEMANDS_ATTENTION), 0);
                 alertTimerHash.erase(it);
                 timer->deleteLater();
                 break;

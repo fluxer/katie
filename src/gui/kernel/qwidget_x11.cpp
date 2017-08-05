@@ -58,18 +58,16 @@
 #include "qmenu.h"
 #include "qmenu_p.h"
 #include "qbackingstore_p.h"
+#include "qwidget_p.h"
 #include "qwindowsurface_x11_p.h"
-
-#include <qpixmap_x11_p.h>
-#include <qpaintengine_x11_p.h>
+#include "qpixmap_x11_p.h"
+#include "qpaintengine_x11_p.h"
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
 #include <stdlib.h>
 
 //#define ALIEN_DEBUG
-
-#include "qwidget_p.h"
 
 #define XCOORD_MAX 16383
 #define WRECT_MAX 8191

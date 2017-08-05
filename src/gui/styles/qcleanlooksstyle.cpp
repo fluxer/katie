@@ -80,13 +80,13 @@ enum Direction {
 };
 
 // from windows style
-static const int windowsItemFrame        =  2; // menu item frame width
-static const int windowsItemHMargin      =  3; // menu item hor text margin
-static const int windowsItemVMargin      =  8; // menu item ver text margin
-static const int windowsRightBorder      = 15; // right border on windows
+static const int cleanlooksWindowsItemFrame        =  2; // menu item frame width
+static const int cleanlooksWindowsItemHMargin      =  3; // menu item hor text margin
+static const int cleanlooksWindowsItemVMargin      =  8; // menu item ver text margin
+static const int cleanlooksWindowsRightBorder      = 15; // right border on windows
 
 /* XPM */
-static const char * const dock_widget_close_xpm[] = {
+static const char * const qt_cleanlooks_dock_widget_close_xpm[] = {
     "11 13 7 1",
     " 	c None",
     ".	c #D5CFCB",
@@ -133,7 +133,7 @@ static const char * const qt_cleanlooks_arrow_up_xpm[] = {
     "  x     x  ",
     "           "};
 
-static const char * const dock_widget_restore_xpm[] = {
+static const char * const qt_cleanlooks_dock_widget_restore_xpm[] = {
     "11 13 7 1",
     " 	c None",
     ".	c #D5CFCB",
@@ -156,7 +156,7 @@ static const char * const dock_widget_restore_xpm[] = {
     " +@@@@@@@+ ",
     "           "};
 
-static const char * const workspace_minimize[] = {
+static const char * const qt_cleanlooks_workspace_minimize[] = {
     "11 13 7 1",
     " 	c None",
     ".	c #D5CFCB",
@@ -180,7 +180,7 @@ static const char * const workspace_minimize[] = {
     "           "};
 
 
-static const char * const qt_titlebar_context_help[] = {
+static const char * const qt_cleanlooks_titlebar_context_help[] = {
     "10 10 3 1",
     "  c None",
     "# c #000000",
@@ -257,7 +257,7 @@ static const char * const qt_cleanlooks_radiobutton_checked[] = {
     "             ",
     "             "};
 
-static const char * const qt_scrollbar_button_arrow_up[] = {
+static const char * const qt_cleanlooks_scrollbar_button_arrow_up[] = {
     "7 4 2 1",
     "   c None",
     "*  c #BFBFBF",
@@ -266,7 +266,7 @@ static const char * const qt_scrollbar_button_arrow_up[] = {
     " ***** ",
     "*******"};
 
-static const char * const qt_scrollbar_button_arrow_down[] = {
+static const char * const qt_cleanlooks_scrollbar_button_arrow_down[] = {
     "7 4 2 1",
     "   c None",
     "*  c #BFBFBF",
@@ -275,7 +275,7 @@ static const char * const qt_scrollbar_button_arrow_down[] = {
     "  ***  ",
     "   *   "};
 
-static const char * const qt_spinbox_button_arrow_down[] = {
+static const char * const qt_cleanlooks_spinbox_button_arrow_down[] = {
     "7 4 2 1",
     "   c None",
     "*  c #BFBFBF",
@@ -284,7 +284,7 @@ static const char * const qt_spinbox_button_arrow_down[] = {
     "  ***  ",
     "   *   "};
 
-static const char * const qt_spinbox_button_arrow_up[] = {
+static const char * const qt_cleanlooks_spinbox_button_arrow_up[] = {
     "7 4 2 1",
     "   c None",
     "*  c #BFBFBF",
@@ -293,7 +293,7 @@ static const char * const qt_spinbox_button_arrow_up[] = {
     " ***** ",
     "*******"};
 
-static const char * const qt_scrollbar_button_left[] = {
+static const char * const qt_cleanlooks_scrollbar_button_left[] = {
     "16 16 6 1",
     "   c None",
     ".  c #BFBFBF",
@@ -318,7 +318,7 @@ static const char * const qt_scrollbar_button_left[] = {
     ".+<<<<<<<<<<<<<+",
     " .++++++++++++++"};
 
-static const char * const qt_scrollbar_button_right[] = {
+static const char * const qt_cleanlooks_scrollbar_button_right[] = {
     "16 16 6 1",
     "   c None",
     ".  c #BFBFBF",
@@ -343,7 +343,7 @@ static const char * const qt_scrollbar_button_right[] = {
     "+<<<<<<<<<<<<<+.",
     "++++++++++++++. "};
 
-static const char * const qt_scrollbar_button_up[] = {
+static const char * const qt_cleanlooks_scrollbar_button_up[] = {
     "16 16 6 1",
     "   c None",
     ".  c #BFBFBF",
@@ -368,7 +368,7 @@ static const char * const qt_scrollbar_button_up[] = {
     "+<<<<<<<<<<<<<<+",
     "++++++++++++++++"};
 
-static const char * const qt_scrollbar_button_down[] = {
+static const char * const qt_cleanlooks_scrollbar_button_down[] = {
     "16 16 6 1",
     "   c None",
     ".  c #BFBFBF",
@@ -1988,10 +1988,10 @@ void QCleanlooksStyle::drawControl(ControlElement element, const QStyleOption *o
                 discol = menuitem->palette.text().color();
                 p->setPen(discol);
             }
-            int xm = windowsItemFrame + checkcol + windowsItemHMargin;
+            int xm = cleanlooksWindowsItemFrame + checkcol + cleanlooksWindowsItemHMargin;
             int xpos = menuitem->rect.x() + xm;
 
-            QRect textRect(xpos, y + windowsItemVMargin, w - xm - windowsRightBorder - tab + 1, h - 2 * windowsItemVMargin);
+            QRect textRect(xpos, y + cleanlooksWindowsItemVMargin, w - xm - cleanlooksWindowsRightBorder - tab + 1, h - 2 * cleanlooksWindowsItemVMargin);
             QRect vTextRect = visualRect(opt->direction, menuitem->rect, textRect);
             QString s = menuitem->text;
             if (!s.isEmpty()) {                     // draw text
@@ -2610,14 +2610,14 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     }
                 } else if (spinBox->buttonSymbols == QAbstractSpinBox::UpDownArrows){
                     // arrows
-                    QImage upArrow(qt_spinbox_button_arrow_up);
+                    QImage upArrow(qt_cleanlooks_spinbox_button_arrow_up);
                     upArrow.setColor(1, spinBox->palette.foreground().color().rgba());
 
                     cachePainter.drawImage(upRect.center().x() - upArrow.width() / 2,
                                             upRect.center().y() - upArrow.height() / 2,
                                             upArrow);
 
-                    QImage downArrow(qt_spinbox_button_arrow_down);
+                    QImage downArrow(qt_cleanlooks_spinbox_button_arrow_down);
                     downArrow.setColor(1, spinBox->palette.foreground().color().rgba());
 
                     cachePainter.drawImage(downRect.center().x() - downArrow.width() / 2,
@@ -2852,7 +2852,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, contextHelpButtonRect, hover, sunken);
 
                     QColor blend;
-                    QImage image(qt_titlebar_context_help);
+                    QImage image(qt_cleanlooks_titlebar_context_help);
                     QColor alpha = textColor;
                     alpha.setAlpha(128);
                     image.setColor(1, textColor.rgba());
@@ -2868,7 +2868,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool hover = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_MouseOver);
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarShadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, shadeButtonRect, hover, sunken);
-                    QImage image(qt_scrollbar_button_arrow_up);
+                    QImage image(qt_cleanlooks_scrollbar_button_arrow_up);
                     image.setColor(1, textColor.rgba());
                     painter->drawImage(shadeButtonRect.adjusted(5, 7, -5, -7), image);
                 }
@@ -2881,7 +2881,7 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     bool hover = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_MouseOver);
                     bool sunken = (titleBar->activeSubControls & SC_TitleBarUnshadeButton) && (titleBar->state & State_Sunken);
                     qt_cleanlooks_draw_mdibutton(painter, titleBar, unshadeButtonRect, hover, sunken);
-                    QImage image(qt_scrollbar_button_arrow_down);
+                    QImage image(qt_cleanlooks_scrollbar_button_arrow_down);
                     image.setColor(1, textColor.rgba());
                     painter->drawImage(unshadeButtonRect.adjusted(5, 7, -5, -7), image);
                 }
@@ -3077,9 +3077,9 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                 // Details
                 QImage subButton;
                 if (horizontal) {
-                    subButton = QImage(reverse ? qt_scrollbar_button_right : qt_scrollbar_button_left);
+                    subButton = QImage(reverse ? qt_cleanlooks_scrollbar_button_right : qt_cleanlooks_scrollbar_button_left);
                 } else {
-                    subButton = QImage(qt_scrollbar_button_up);
+                    subButton = QImage(qt_cleanlooks_scrollbar_button_up);
                 }
                 subButton.setColor(1, alphaCornerColor.rgba());
                 subButton.setColor(2, darkOutline.rgba());
@@ -3128,9 +3128,9 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                     // Details
                     QImage addButton;
                     if (horizontal) {
-                        addButton = QImage(reverse ? qt_scrollbar_button_left : qt_scrollbar_button_right);
+                        addButton = QImage(reverse ? qt_cleanlooks_scrollbar_button_left : qt_cleanlooks_scrollbar_button_right);
                     } else {
-                        addButton = QImage(qt_scrollbar_button_down);
+                        addButton = QImage(qt_cleanlooks_scrollbar_button_down);
                     }
                     addButton.setColor(1, alphaCornerColor.rgba());
                     addButton.setColor(2, darkOutline.rgba());
@@ -3284,9 +3284,9 @@ void QCleanlooksStyle::drawComplexControl(ComplexControl control, const QStyleOp
                                                downArrowRect.center().y() - downArrow.height() / 2 + 1, downArrow);
                     } else {
                         // Draw the up/down arrow
-                        QImage upArrow(qt_scrollbar_button_arrow_up);
+                        QImage upArrow(qt_cleanlooks_scrollbar_button_arrow_up);
                         upArrow.setColor(1, comboBox->palette.foreground().color().rgba());
-                        QImage downArrow(qt_scrollbar_button_arrow_down);
+                        QImage downArrow(qt_cleanlooks_scrollbar_button_arrow_down);
                         downArrow.setColor(1, comboBox->palette.foreground().color().rgba());
                         cachePainter.drawImage(downArrowRect.center().x() - downArrow.width() / 2,
                                                downArrowRect.center().y() - upArrow.height() - 1 , upArrow);
@@ -4363,12 +4363,12 @@ QPixmap QCleanlooksStyle::standardPixmap(StandardPixmap standardPixmap, const QS
 #ifndef QT_NO_IMAGEFORMAT_XPM
     switch (standardPixmap) {
     case SP_TitleBarNormalButton:
-        return QPixmap((const char **)dock_widget_restore_xpm);
+        return QPixmap((const char **)qt_cleanlooks_dock_widget_restore_xpm);
     case SP_TitleBarMinButton:
-        return QPixmap((const char **)workspace_minimize);
+        return QPixmap((const char **)qt_cleanlooks_workspace_minimize);
     case SP_TitleBarCloseButton:
     case SP_DockWidgetCloseButton:
-        return QPixmap((const char **)dock_widget_close_xpm);
+        return QPixmap((const char **)qt_cleanlooks_dock_widget_close_xpm);
 
     default:
         break;
