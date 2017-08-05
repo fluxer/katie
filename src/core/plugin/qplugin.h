@@ -62,11 +62,11 @@ typedef QObject *(*QtPluginInstanceFunction)();
 void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunction function);
 
 #define Q_IMPORT_PLUGIN(PLUGIN) \
-        extern QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance_##PLUGIN(); \
+        extern QT_PREPEND_NAMESPACE(QObject) *kt_plugin_instance_##PLUGIN(); \
         class Static##PLUGIN##PluginInstance{ \
         public: \
                 Static##PLUGIN##PluginInstance() { \
-                qRegisterStaticPluginInstanceFunction(qt_plugin_instance_##PLUGIN); \
+                qRegisterStaticPluginInstanceFunction(kt_plugin_instance_##PLUGIN); \
                 } \
         }; \
        static Static##PLUGIN##PluginInstance static##PLUGIN##Instance;
@@ -89,7 +89,7 @@ void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunctio
 
 #  define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS) \
             QT_PREPEND_NAMESPACE(QObject) \
-                *qt_plugin_instance_##PLUGIN() \
+                *kt_plugin_instance_##PLUGIN() \
             Q_PLUGIN_INSTANCE(PLUGINCLASS)
 
 #  define Q_EXPORT_STATIC_PLUGIN2(PLUGIN, PLUGINCLASS) \
