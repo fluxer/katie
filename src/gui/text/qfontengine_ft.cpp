@@ -109,7 +109,7 @@ QT_BEGIN_NAMESPACE
 #define TRUNC(x)    ((x) >> 6)
 #define ROUND(x)    (((x)+32) & -64)
 
-static HB_Error hb_getSFntTable(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
+static HB_Error hb_getSFntTableFt(void *font, HB_Tag tableTag, HB_Byte *buffer, HB_UInt *length)
 {
 #if (FREETYPE_MAJOR*10000 + FREETYPE_MINOR*100 + FREETYPE_PATCH) > 20103
     FT_Face face = (FT_Face)font;
@@ -239,7 +239,7 @@ QFreetypeFace *QFreetypeFace::getFace(const QFontEngine::FaceId &face_id,
         }
         newFreetype->face = face;
 
-        newFreetype->hbFace = qHBNewFace(face, hb_getSFntTable);
+        newFreetype->hbFace = qHBNewFace(face, hb_getSFntTableFt);
         Q_CHECK_PTR(newFreetype->hbFace);
         newFreetype->ref = 1;
         newFreetype->xsize = 0;

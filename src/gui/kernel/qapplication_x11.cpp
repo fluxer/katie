@@ -4631,7 +4631,6 @@ void QSmSocketReceiver::socketActivated(int)
 }
 
 
-#undef Bool
 QT_BEGIN_INCLUDE_NAMESPACE
 #include "moc_qapplication_x11.cpp"
 #include "moc_qsessionmanager.h"
