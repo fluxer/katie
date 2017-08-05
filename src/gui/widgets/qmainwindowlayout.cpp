@@ -64,6 +64,7 @@
 #include <qdebug.h>
 #include <qapplication_p.h>
 #include <qlayoutengine_p.h>
+#include <qguicommon_p.h>
 
 #ifdef QT_NO_DOCKWIDGET
 extern QMainWindowLayout *qt_mainwindow_layout(const QMainWindow *window);
@@ -943,20 +944,6 @@ static QInternal::DockPosition toDockPos(Qt::DockWidgetArea area)
     return QInternal::DockCount;
 }
 
-static Qt::DockWidgetArea toDockWidgetArea(QInternal::DockPosition pos)
-{
-    switch (pos) {
-        case QInternal::LeftDock : return Qt::LeftDockWidgetArea;
-        case QInternal::RightDock : return Qt::RightDockWidgetArea;
-        case QInternal::TopDock : return Qt::TopDockWidgetArea;
-        case QInternal::BottomDock : return Qt::BottomDockWidgetArea;
-        default:
-            break;
-    }
-
-    return Qt::NoDockWidgetArea;
-}
-
 inline static Qt::DockWidgetArea toDockWidgetArea(int pos)
 {
     return toDockWidgetArea(static_cast<QInternal::DockPosition>(pos));
@@ -1087,20 +1074,6 @@ void QMainWindowLayout::setTabPosition(Qt::DockWidgetAreas areas, QTabWidget::Ta
             tabPositions[dockPositions[i]] = tabPosition;
 
     updateTabBarShapes();
-}
-
-static inline QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWidget::TabPosition position)
-{
-    const bool rounded = (shape == QTabWidget::Rounded);
-    if (position == QTabWidget::North)
-        return rounded ? QTabBar::RoundedNorth : QTabBar::TriangularNorth;
-    if (position == QTabWidget::South)
-        return rounded ? QTabBar::RoundedSouth : QTabBar::TriangularSouth;
-    if (position == QTabWidget::East)
-        return rounded ? QTabBar::RoundedEast : QTabBar::TriangularEast;
-    if (position == QTabWidget::West)
-        return rounded ? QTabBar::RoundedWest : QTabBar::TriangularWest;
-    return QTabBar::RoundedNorth;
 }
 #endif // QT_NO_TABWIDGET
 

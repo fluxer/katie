@@ -52,6 +52,7 @@
 #include "qmainwindowlayout_p.h"
 #include "qdockwidget_p.h"
 #include <qlayoutengine_p.h>
+#include <qguicommon_p.h>
 
 #include <qpainter.h>
 #include <qstyleoption.h>
@@ -1847,18 +1848,6 @@ void QDockAreaLayoutInfo::saveState(QDataStream &stream) const
             item.subinfo->saveState(stream);
         }
     }
-}
-
-static Qt::DockWidgetArea toDockWidgetArea(QInternal::DockPosition pos)
-{
-    switch (pos) {
-        case QInternal::LeftDock:   return Qt::LeftDockWidgetArea;
-        case QInternal::RightDock:  return Qt::RightDockWidgetArea;
-        case QInternal::TopDock:    return Qt::TopDockWidgetArea;
-        case QInternal::BottomDock: return Qt::BottomDockWidgetArea;
-        default: break;
-    }
-    return Qt::NoDockWidgetArea;
 }
 
 static QRect constrainedRect(QRect rect, const QRect &desktop)

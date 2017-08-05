@@ -125,6 +125,7 @@
 #ifdef QT_DEBUG
 #include <QtCore/qdebug.h>
 #endif
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -170,8 +171,6 @@ int QGraphicsLinearLayoutPrivate::gridColumn(int index) const
         return 0;
     return int(qMin(uint(index), uint(engine.columnCount())));
 }
-
-Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
 
 QLayoutStyleInfo QGraphicsLinearLayoutPrivate::styleInfo() const
 {

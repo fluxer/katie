@@ -51,11 +51,9 @@
 #include "qimage_p.h"
 #include "qwidget_p.h"
 #include "qdrawhelper_p.h"
+#include "qguicommon_p.h"
 
 QT_BEGIN_NAMESPACE
-
-const uchar qt_pixmap_bit_mask[] = { 0x01, 0x02, 0x04, 0x08,
-                                     0x10, 0x20, 0x40, 0x80 };
 
 QRasterPixmapData::QRasterPixmapData(PixelType type)
     : QPixmapData(type, RasterClass)

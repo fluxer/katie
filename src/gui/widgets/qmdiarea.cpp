@@ -173,6 +173,7 @@
 #include <QDebug>
 #include <qmath.h>
 #include <qlayoutengine_p.h>
+#include <qguicommon_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -253,22 +254,6 @@ static inline QMdiArea *mdiAreaParent(QWidget *widget)
     }
     return 0;
 }
-
-#ifndef QT_NO_TABWIDGET
-static inline QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWidget::TabPosition position)
-{
-    const bool rounded = (shape == QTabWidget::Rounded);
-    if (position == QTabWidget::North)
-        return rounded ? QTabBar::RoundedNorth : QTabBar::TriangularNorth;
-    if (position == QTabWidget::South)
-        return rounded ? QTabBar::RoundedSouth : QTabBar::TriangularSouth;
-    if (position == QTabWidget::East)
-        return rounded ? QTabBar::RoundedEast : QTabBar::TriangularEast;
-    if (position == QTabWidget::West)
-        return rounded ? QTabBar::RoundedWest : QTabBar::TriangularWest;
-    return QTabBar::RoundedNorth;
-}
-#endif // QT_NO_TABWIDGET
 
 static inline QString tabTextFor(QMdiSubWindow *subWindow)
 {

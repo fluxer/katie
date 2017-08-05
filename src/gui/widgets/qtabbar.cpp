@@ -59,19 +59,11 @@
 
 #include "qdebug.h"
 #include "qtabbar_p.h"
+#include "qguicommon_p.h"
 
 #ifndef QT_NO_TABBAR
 
 QT_BEGIN_NAMESPACE
-
-
-inline static bool verticalTabs(QTabBar::Shape shape)
-{
-    return shape == QTabBar::RoundedWest
-           || shape == QTabBar::RoundedEast
-           || shape == QTabBar::TriangularWest
-           || shape == QTabBar::TriangularEast;
-}
 
 /*!
     Initialize \a option with the values from the tab at \a tabIndex. This method
