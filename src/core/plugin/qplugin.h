@@ -112,14 +112,14 @@ void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunctio
 #    define QPLUGIN_SECTION_DEBUG_STR ".debug"
 #  endif
 #  define Q_PLUGIN_VERIFICATION_DATA \
-    static const char qt_plugin_verification_data[] = \
-      "pattern=QT_PLUGIN_VERIFICATION_DATA\n" \
+    static const char kt_plugin_verification_data[] = \
+      "pattern=KT_PLUGIN_VERIFICATION_DATA\n" \
       "version=" QT_VERSION_STR "\n" \
       "debug=" QPLUGIN_DEBUG_STR;
 
 #  if defined (Q_OF_ELF) && defined (Q_CC_GNU)
 #  define Q_PLUGIN_VERIFICATION_SECTION \
-    __attribute__ ((section (".qtplugin"))) __attribute__((used))
+    __attribute__ ((section (".ktplugin"))) __attribute__((used))
 #  else
 #  define Q_PLUGIN_VERIFICATION_SECTION
 #  endif
@@ -127,9 +127,9 @@ void Q_CORE_EXPORT qRegisterStaticPluginInstanceFunction(QtPluginInstanceFunctio
 #  define Q_EXPORT_PLUGIN2(PLUGIN, PLUGINCLASS)      \
             Q_PLUGIN_VERIFICATION_SECTION Q_PLUGIN_VERIFICATION_DATA \
             Q_EXTERN_C Q_DECL_EXPORT \
-            const char * qt_plugin_query_verification_data() \
-            { return qt_plugin_verification_data; } \
-            Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * qt_plugin_instance() \
+            const char * kt_plugin_query_verification_data() \
+            { return kt_plugin_verification_data; } \
+            Q_EXTERN_C Q_DECL_EXPORT QT_PREPEND_NAMESPACE(QObject) * kt_plugin_instance() \
             Q_PLUGIN_INSTANCE(PLUGINCLASS)
 
 #  define Q_EXPORT_STATIC_PLUGIN2(PLUGIN, PLUGINCLASS)

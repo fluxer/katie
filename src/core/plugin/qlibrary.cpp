@@ -325,7 +325,7 @@ static long qt_find_pattern(const char *s, ulong s_len,
 
 /*
   This opens the specified library, mmaps it into memory, and searches
-  for the QT_PLUGIN_VERIFICATION_DATA.  The advantage of this approach is that
+  for the KT_PLUGIN_VERIFICATION_DATA.  The advantage of this approach is that
   we can get the verification data without have to actually load the library.
   This lets us detect mismatches more safely.
 
@@ -358,7 +358,7 @@ static bool qt_unix_query(const QString &library, uint *version, bool *debug, QL
     /*
        ELF binaries on GNU, have .qplugin sections.
     */
-    const char pattern[] = "pattern=QT_PLUGIN_VERIFICATION_DATA";
+    const char pattern[] = "pattern=KT_PLUGIN_VERIFICATION_DATA";
     const ulong plen = qstrlen(pattern);
     const long pos = qt_find_pattern(filedata, fdlen, pattern, plen);
     bool ret = false;
@@ -481,7 +481,7 @@ bool QLibraryPrivate::loadPlugin()
     if (pluginState == IsNotAPlugin)
         return false;
     if (load()) {
-        instance = (QtPluginInstanceFunction)resolve("qt_plugin_instance");
+        instance = (QtPluginInstanceFunction)resolve("kt_plugin_instance");
         return instance;
     }
     if (qt_debug_component())
@@ -620,7 +620,7 @@ bool QLibraryPrivate::isPlugin(QSettings *settings)
             if (!pHnd) {
                 temporary_load =  load_sys();
             }
-            const QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("qt_plugin_query_verification_data");
+            const QtPluginQueryVerificationDataFunction qtPluginQueryVerificationDataFunction = (QtPluginQueryVerificationDataFunction) resolve("kt_plugin_query_verification_data");
             bool exceptionThrown = false;
             bool ret = qt_get_verificationdata(qtPluginQueryVerificationDataFunction,
                                                 &qt_version, &debug, &exceptionThrown);

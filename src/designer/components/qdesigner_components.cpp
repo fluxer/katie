@@ -71,7 +71,7 @@
 
 // ### keep it in sync with Q_IMPORT_PLUGIN in qplugin.h
 #define DECLARE_PLUGIN_INSTANCE(PLUGIN) \
-    extern QT_PREPEND_NAMESPACE(QObject) *qt_plugin_instance_##PLUGIN(); \
+    extern QT_PREPEND_NAMESPACE(QObject) *kt_plugin_instance_##PLUGIN(); \
     class Static##PLUGIN##PluginInstance { public: \
         Static##PLUGIN##PluginInstance() {                      \
             QT_PREPEND_NAMESPACE(qRegisterStaticPluginInstanceFunction) \

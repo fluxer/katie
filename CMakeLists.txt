@@ -467,10 +467,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 if(ENABLE_TESTING)
     message(WARNING
         "\nUnless it is intentionall you should not enable testing, deploying tests builds"
-        " is a bad idea.\n\n"
-        "Prior to runing the test you will have to unset the QT_PLUGIN_PATH environmental "
-        "variable if you have Qt4 installed on the system because the plugins are not "
-        "compatible and using them will cause undefined behaviour."
+        " is a bad idea."
     )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)

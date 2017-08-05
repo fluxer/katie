@@ -70,7 +70,7 @@ endif()
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MySQL
     VERSION_VAR MYSQL_VERSION
-    REQUIRED_VARS MYSQL_INCLUDES MYSQL_LIBRARIES
+    REQUIRED_VARS MYSQL_LIBRARIES MYSQL_INCLUDES
 )
 
 mark_as_advanced(MYSQL_INCLUDES MYSQL_LIBRARIES)
