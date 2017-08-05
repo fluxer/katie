@@ -24,9 +24,7 @@ Q_GLOBAL_STATIC(QWidget, globalStyleInfoWidget)
 #if !defined(QT_NO_LIBRARY)
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, iconloader,
     (QIconEngineFactoryInterface_iid, QLatin1String("/iconengines"), Qt::CaseInsensitive))
-#endif
 
-#if !defined(QT_NO_LIBRARY)
 Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, imageloader,
     (QImageIOHandlerFactoryInterface_iid, QLatin1String("/imageformats")))
 #endif

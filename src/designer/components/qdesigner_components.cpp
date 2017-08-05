@@ -75,7 +75,7 @@
     class Static##PLUGIN##PluginInstance { public: \
         Static##PLUGIN##PluginInstance() {                      \
             QT_PREPEND_NAMESPACE(qRegisterStaticPluginInstanceFunction) \
-                (&qt_plugin_instance_##PLUGIN); \
+                (&kt_plugin_instance_##PLUGIN); \
         } \
     };
 
