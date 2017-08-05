@@ -56,6 +56,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextcontrol.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextengine.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextlayout.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextobject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextoption.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qfragmentmap.cpp
@@ -116,5 +117,31 @@ if(WITH_X11 AND X11_FOUND)
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/text/qfont_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_x11.cpp
+    )
+endif()
+
+if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${HARFBUZZ_LIBRARIES}
+    )
+    include_directories(${HARFBUZZ_INCLUDE_DIRS})
+else()
+    # TODO: move to main CMakeLists?
+    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT -DQT_NO_OPENTYPE)
+    set(GUI_SOURCES
+        ${GUI_SOURCES}
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
+        ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
+    )
+    include_directories(
+        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
     )
 endif()

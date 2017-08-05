@@ -57,6 +57,8 @@ if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}
+        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintsettingsoutput.ui
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintwidget.ui
         ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintpropertieswidget.ui

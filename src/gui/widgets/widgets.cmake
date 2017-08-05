@@ -127,6 +127,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qstatusbar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtabbar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtabwidget.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextedit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextbrowser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbar.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtoolbarlayout.cpp

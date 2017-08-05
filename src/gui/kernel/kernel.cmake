@@ -100,6 +100,7 @@ if(WITH_X11 AND X11_FOUND)
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkde.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
     )
     if(WITH_GLIB2 AND GLIB2_FOUND)
         set(GUI_HEADERS

@@ -482,68 +482,22 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qguicommon_p.h
 )
 
+katie_allinone_exclude(
+    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextedit.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
+    ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
+)
+
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_package(KtGui "KtCore")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
-
-# those are set after katie_setup_target() because they are known to cause
-# trouble for all-in-one build
-if(WITH_HARFBUZZ AND HARFBUZZ_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${HARFBUZZ_LIBRARIES}
-    )
-    include_directories(${HARFBUZZ_INCLUDE_DIRS})
-else()
-    # TODO: move to main CMakeLists?
-    add_definitions(-DHB_EXPORT=Q_CORE_EXPORT -DQT_NO_OPENTYPE)
-    set(KtGui_SOURCES
-        ${KtGui_SOURCES}
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-buffer.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gdef.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gsub.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-gpos.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-impl.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-open.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-stream.c
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src/harfbuzz-shaper-all.cpp
-        ${CMAKE_SOURCE_DIR}/src/gui/text/qharfbuzz.cpp
-    )
-    include_directories(
-        ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
-    )
-endif()
-
-
-set(KtGui_SOURCES
-    ${KtGui_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextedit.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextformat.cpp
-)
-
-if(WITH_X11 AND X11_FOUND)
-    set(KtGui_SOURCES
-        ${KtGui_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/painting/qpaintengine_x11.cpp
-    )
-endif()
-
-if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
-    set(KtGui_SOURCES
-        ${KtGui_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_unix.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_unix.cpp
-    )
-endif()
-
-# to avoid mixing C++ and C source files when building as all-in-one
-set(KtGui_SOURCES
-    ${KtGui_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgrayraster.c
-)
 
 if(WITH_NSL AND NSL_FOUND)
     include_directories(${NSL_INCLUDES})
