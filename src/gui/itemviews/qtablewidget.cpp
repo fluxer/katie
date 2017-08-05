@@ -507,8 +507,10 @@ void QTableModel::sort(int column, Qt::SortOrder order)
             unsortable.append(row);
     }
 
-    LessThan compare = (order == Qt::AscendingOrder ? &itemLessThan : &itemGreaterThan);
-    qStableSort(sortable.begin(), sortable.end(), compare);
+    if (order == Qt::AscendingOrder)
+        qStableSort(sortable.begin(), sortable.end(), &itemLessThan);
+    else
+        qStableSort(sortable.begin(), sortable.end(), &itemGreaterThan);
 
     QVector<QTableWidgetItem*> sorted_table(tableItems.count());
     QModelIndexList from;
@@ -555,8 +557,10 @@ void QTableModel::ensureSorted(int column, Qt::SortOrder order,
         sorting.append(QPair<QTableWidgetItem*,int>(itm, row));
     }
 
-    LessThan compare = (order == Qt::AscendingOrder ? &itemLessThan : &itemGreaterThan);
-    qStableSort(sorting.begin(), sorting.end(), compare);
+    if (order == Qt::AscendingOrder)
+        qStableSort(sorting.begin(), sorting.end(), &itemLessThan);
+    else
+        qStableSort(sorting.begin(), sorting.end(), &itemGreaterThan);
 
     QModelIndexList oldPersistentIndexes = persistentIndexList();
     QModelIndexList newPersistentIndexes = oldPersistentIndexes;

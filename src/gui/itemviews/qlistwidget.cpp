@@ -49,9 +49,6 @@
 
 QT_BEGIN_NAMESPACE
 
-// workaround for VC++ 6.0 linker bug (?)
-typedef bool(*LessThan)(const QPair<QListWidgetItem*,int>&,const QPair<QListWidgetItem*,int>&);
-
 class QListWidgetMimeData : public QMimeData
 {
     Q_OBJECT
@@ -302,8 +299,10 @@ void QListModel::sort(int column, Qt::SortOrder order)
         sorting[i].second = i;
     }
 
-    LessThan compare = (order == Qt::AscendingOrder ? &itemLessThan : &itemGreaterThan);
-    qSort(sorting.begin(), sorting.end(), compare);
+    if (order == Qt::AscendingOrder)
+        qSort(sorting.begin(), sorting.end(), &itemLessThan);
+    else
+        qSort(sorting.begin(), sorting.end(), &itemGreaterThan);
     QModelIndexList fromIndexes;
     QModelIndexList toIndexes;
     for (int r = 0; r < sorting.count(); ++r) {
@@ -336,8 +335,10 @@ void QListModel::ensureSorted(int column, Qt::SortOrder order, int start, int en
         sorting[i].second = start + i;
     }
 
-    LessThan compare = (order == Qt::AscendingOrder ? &itemLessThan : &itemGreaterThan);
-    qSort(sorting.begin(), sorting.end(), compare);
+    if (order == Qt::AscendingOrder)
+        qSort(sorting.begin(), sorting.end(), &itemLessThan);
+    else
+        qSort(sorting.begin(), sorting.end(), &itemGreaterThan);
 
     QModelIndexList oldPersistentIndexes = persistentIndexList();
     QModelIndexList newPersistentIndexes = oldPersistentIndexes;
