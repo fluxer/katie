@@ -49,8 +49,10 @@
 
 #  include <sys/types.h>
 #  include <rpc/rpc.h>
-#  include <rpcsvc/ypclnt.h>
-#  include <rpcsvc/yp_prot.h>
+#  ifndef QT_NO_NSL
+#    include <rpcsvc/ypclnt.h>
+#    include <rpcsvc/yp_prot.h>
+#  endif // QT_NO_NSL
 #endif // QT_NO_NIS
 
 #ifdef Success
