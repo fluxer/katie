@@ -35,10 +35,17 @@ if(MYSQL_CONFIG)
         OUTPUT_VARIABLE MYSQL_LIBRARIES
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    # just in case
+    execute_process(
+        COMMAND ${MYSQL_CONFIG} --version
+        RESULT_VARIABLE proceerror3
+        OUTPUT_VARIABLE MYSQL_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    # just in case, MYSQL_VERSION is not critical
     if(NOT procerror1 STREQUAL "0" OR NOT proceerror2 STREQUAL "0")
         set(MYSQL_INCLUDES)
         set(MYSQL_LIBRARIES)
+        set(MYSQL_VERSION)
     endif()
 endif()
 
@@ -61,6 +68,9 @@ if(NOT MYSQL_INCLUDES OR NOT MYSQL_LIBRARIES)
 endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(MySQL DEFAULT_MSG MYSQL_INCLUDES MYSQL_LIBRARIES)
+find_package_handle_standard_args(MySQL
+    VERSION_VAR MYSQL_VERSION
+    REQUIRED_VARS MYSQL_INCLUDES MYSQL_LIBRARIES
+)
 
 mark_as_advanced(MYSQL_INCLUDES MYSQL_LIBRARIES)

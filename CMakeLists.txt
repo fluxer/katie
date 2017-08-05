@@ -55,8 +55,7 @@ include(CPack)
 
 # 9 minutes timeout for the tests, Travis timeouts on 10min if there is no
 # output and I do not want some tests to be skipped because of one test. Like
-# the qpainter test - it does a lot of tests and can (and sometimes it does)
-# take more then 10min.
+# the qpainter test - it does a lot of tests and can take more then 10min.
 set(CTEST_TEST_TIMEOUT 540)
 
 if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
