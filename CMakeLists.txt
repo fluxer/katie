@@ -78,7 +78,10 @@ set(KATIE_VERSION "${KATIE_MAJOR}.${KATIE_MINOR}.${KATIE_MICRO}")
 set(KATIE_GIT "unknown")
 
 # components and tools that will be build, changed depending on the requirements availability
-set(KATIE_COMPONENTS "Core Gui Declarative Designer DesignerComponents Network Sql Svg Xml Script ScriptTools Test UiTools")
+# NOTE: excluding DesignerComponents as it was never used as public component, currently only
+# used by the the disigner tool. if it is ever needed for something it can just be added here
+# and that's it - the rest of the build system has everything in place.
+set(KATIE_COMPONENTS "Core Gui Declarative Designer Network Sql Svg Xml Script ScriptTools Test UiTools")
 set(KATIE_TOOLS "moc uic rcc lupdate lrelease lconvert designer qscript qtconfig")
 
 # for config.cpp.cmake
