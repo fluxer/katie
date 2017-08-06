@@ -1721,9 +1721,6 @@ bool QMdiSubWindowPrivate::drawTitleBarWhenMaximized() const
     if (isChildOfTabbedQMdiArea(q))
         return false;
 
-#if defined(Q_WS_MAC) && !defined(QT_NO_STYLE_MAC) || defined(Q_WS_WINCE_WM)
-    return true;
-#else
     if (q->style()->styleHint(QStyle::SH_Workspace_FillSpaceOnMaximize, 0, q))
         return true;
 #if defined(QT_NO_MENUBAR) || defined(QT_NO_MAINWINDOW)
@@ -1735,7 +1732,6 @@ bool QMdiSubWindowPrivate::drawTitleBarWhenMaximized() const
         return true;
 
     return isChildOfQMdiSubWindow(q);
-#endif
 #endif
 }
 
@@ -1875,56 +1871,16 @@ QPalette QMdiSubWindowPrivate::desktopPalette() const
     Q_Q(const QMdiSubWindow);
     QPalette newPalette = q->palette();
 
-    bool colorsInitialized = false;
-#ifdef Q_WS_WIN // ask system properties on windows
-#ifndef SPI_GETGRADIENTCAPTIONS
-#define SPI_GETGRADIENTCAPTIONS 0x1008
-#endif
-#ifndef COLOR_GRADIENTACTIVECAPTION
-#define COLOR_GRADIENTACTIVECAPTION 27
-#endif
-#ifndef COLOR_GRADIENTINACTIVECAPTION
-#define COLOR_GRADIENTINACTIVECAPTION 28
-#endif
-    if (QApplication::desktopSettingsAware()) {
-        newPalette.setColor(QPalette::Active, QPalette::Highlight,
-                            colorref2qrgb(GetSysColor(COLOR_ACTIVECAPTION)));
-        newPalette.setColor(QPalette::Inactive, QPalette::Highlight,
-                            colorref2qrgb(GetSysColor(COLOR_INACTIVECAPTION)));
-        newPalette.setColor(QPalette::Active, QPalette::HighlightedText,
-                            colorref2qrgb(GetSysColor(COLOR_CAPTIONTEXT)));
-        newPalette.setColor(QPalette::Inactive, QPalette::HighlightedText,
-                            colorref2qrgb(GetSysColor(COLOR_INACTIVECAPTIONTEXT)));
-
-        colorsInitialized = true;
-        BOOL hasGradient = false;
-        SystemParametersInfo(SPI_GETGRADIENTCAPTIONS, 0, &hasGradient, 0);
-
-        if (hasGradient) {
-            newPalette.setColor(QPalette::Active, QPalette::Base,
-                                colorref2qrgb(GetSysColor(COLOR_GRADIENTACTIVECAPTION)));
-            newPalette.setColor(QPalette::Inactive, QPalette::Base,
-                                colorref2qrgb(GetSysColor(COLOR_GRADIENTINACTIVECAPTION)));
-        } else {
-            newPalette.setColor(QPalette::Active, QPalette::Base,
-                                newPalette.color(QPalette::Active, QPalette::Highlight));
-            newPalette.setColor(QPalette::Inactive, QPalette::Base,
-                                newPalette.color(QPalette::Inactive, QPalette::Highlight));
-        }
-    }
-#endif // Q_WS_WIN
-    if (!colorsInitialized) {
-        newPalette.setColor(QPalette::Active, QPalette::Highlight,
-                            newPalette.color(QPalette::Active, QPalette::Highlight));
-        newPalette.setColor(QPalette::Active, QPalette::Base,
-                            newPalette.color(QPalette::Active, QPalette::Highlight));
-        newPalette.setColor(QPalette::Inactive, QPalette::Highlight,
-                            newPalette.color(QPalette::Inactive, QPalette::Dark));
-        newPalette.setColor(QPalette::Inactive, QPalette::Base,
-                            newPalette.color(QPalette::Inactive, QPalette::Dark));
-        newPalette.setColor(QPalette::Inactive, QPalette::HighlightedText,
-                            newPalette.color(QPalette::Inactive, QPalette::Window));
-    }
+    newPalette.setColor(QPalette::Active, QPalette::Highlight,
+                        newPalette.color(QPalette::Active, QPalette::Highlight));
+    newPalette.setColor(QPalette::Active, QPalette::Base,
+                        newPalette.color(QPalette::Active, QPalette::Highlight));
+    newPalette.setColor(QPalette::Inactive, QPalette::Highlight,
+                        newPalette.color(QPalette::Inactive, QPalette::Dark));
+    newPalette.setColor(QPalette::Inactive, QPalette::Base,
+                        newPalette.color(QPalette::Inactive, QPalette::Dark));
+    newPalette.setColor(QPalette::Inactive, QPalette::HighlightedText,
+                        newPalette.color(QPalette::Inactive, QPalette::Window));
 
     return newPalette;
 }
@@ -2099,7 +2055,7 @@ void QMdiSubWindowPrivate::addToSystemMenu(WindowStateAction action, const QStri
         return;
     actions[action] = systemMenu->addAction(text, q_func(), slot);
 }
-#endif
+#endif // QT_NO_MENU
 #endif // QT_NO_ACTION
 
 /*!
@@ -2205,13 +2161,11 @@ QMdiSubWindow::QMdiSubWindow(QWidget *parent, Qt::WindowFlags flags)
     setAttribute(Qt::WA_Resized, false);
     d->titleBarPalette = d->desktopPalette();
     d->font = QApplication::font("QWorkspaceTitleBar");
-    // We don't want the menu icon by default on mac.
-#ifndef Q_WS_MAC
-    if (windowIcon().isNull())
+    const QIcon wicon = windowIcon();
+    if (wicon.isNull())
         d->menuIcon = style()->standardIcon(QStyle::SP_TitleBarMenuButton, 0, this);
     else
-        d->menuIcon = windowIcon();
-#endif
+        d->menuIcon = wicon;
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(_q_processFocusChanged(QWidget*,QWidget*)));
 }
