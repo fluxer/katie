@@ -80,7 +80,6 @@ set(DESIGNERCOMPONENTS_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesignercomponentscommon_p.h
 )
 
-# headers go in one place!
 katie_generate_misc("${DESIGNERCOMPONENTS_HEADERS}" QtDesignerComponents)
 katie_generate_public("${DESIGNERCOMPONENTS_PUBLIC_HEADERS}" QtDesignerComponents)
 katie_generate_package(KtDesignerComponents "KtCore KtGui KtXml KtDesigner KtScript")
