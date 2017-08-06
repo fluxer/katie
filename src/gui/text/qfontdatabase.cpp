@@ -739,7 +739,6 @@ struct QtFontDesc
     int familyIndex;
 };
 
-#if !defined(Q_WS_MAC)
 static void match(int script, const QFontDef &request,
                   const QString &family_name, const QString &foundry_name, int force_encoding_id,
                   QtFontDesc *desc, const QList<int> &blacklistedFamilies = QList<int>(), bool forceXLFD=false);
@@ -771,9 +770,8 @@ static void initFontDef(const QtFontDesc &desc, const QFontDef &request, QFontDe
     fontDef->ignorePitch   = false;
 }
 #endif
-#endif
 
-#if defined(Q_WS_X11) || defined(Q_WS_WIN)
+#if defined(Q_WS_X11)
 static void getEngineData(const QFontPrivate *d, const QFontCache::Key &key)
 {
     // look for the requested font in the engine data cache
@@ -922,7 +920,6 @@ static QtFontEncoding *findEncoding(int script, int styleStrategy,
 }
 #endif // Q_WS_X11
 
-#if !defined(Q_WS_MAC)
 static
 unsigned int bestFoundry(int script, unsigned int score, int styleStrategy,
                          const QtFontFamily *family, const QString &foundry_name,
@@ -1098,9 +1095,7 @@ unsigned int bestFoundry(int script, unsigned int score, int styleStrategy,
 
     return score;
 }
-#endif
 
-#if !defined(Q_WS_MAC)
 /*!
     \internal
 
@@ -1203,7 +1198,6 @@ static void match(int script, const QFontDef &request,
             break;
     }
 }
-#endif
 
 static QString styleStringHelper(int weight, QFont::Style style)
 {

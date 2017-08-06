@@ -1593,10 +1593,6 @@ QMainWindowLayout::~QMainWindowLayout()
     layoutState.deleteAllLayoutItems();
     layoutState.deleteCentralWidgetItem();
 
-#ifdef Q_WS_MAC
-    cleanUpMacToolbarItems();
-#endif
-
     delete statusbar;
 }
 

@@ -778,11 +778,6 @@ void QFontDialog::setCurrentFont(const QFont &font)
     d->strikeout->setChecked(font.strikeOut());
     d->underline->setChecked(font.underline());
     d->updateFamilies();
-
-#ifdef Q_WS_MAC
-    if (d->delegate)
-        QFontDialogPrivate::setFont(d->delegate, font);
-#endif
 }
 
 /*!
@@ -879,11 +874,6 @@ QFontDialog::FontDialogOptions QFontDialog::options() const
     Q_D(const QFontDialog);
     return d->opts;
 }
-
-#ifdef Q_WS_MAC
-// can only have one Cocoa font panel active
-bool QFontDialogPrivate::sharedFontPanelAvailable = true;
-#endif
 
 /*!
     \since 4.5

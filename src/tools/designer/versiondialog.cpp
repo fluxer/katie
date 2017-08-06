@@ -157,11 +157,7 @@ void VersionLabel::paintEvent(QPaintEvent *pe)
 }
 
 VersionDialog::VersionDialog(QWidget *parent)
-    : QDialog(parent
-#ifdef Q_WS_MAC
-            , Qt::Tool
-#endif
-            )
+    : QDialog(parent)
 {
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     QGridLayout *layout = new QGridLayout(this);

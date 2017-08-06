@@ -2068,12 +2068,6 @@ void QApplication::syncX()        {}                // do nothing
 #endif
 
 /*!
-    \fn Qt::WindowsVersion QApplication::winVersion()
-
-    Use \l QSysInfo::WindowsVersion instead.
-*/
-
-/*!
     \fn void QApplication::setActiveWindow(QWidget* active)
 
     Sets the active window to the \a active widget in response to a system
@@ -4794,17 +4788,6 @@ bool QApplicationPrivate::shouldSetFocus(QWidget *w, Qt::FocusPolicy policy)
     \sa x11ProcessEvent()
 */
 
-/*! \fn void QApplication::winFocus(QWidget *widget, bool gotFocus)
-    \internal
-    \since 4.1
-
-    If \a gotFocus is true, \a widget will become the active window.
-    Otherwise the active window is reset to 0.
-*/
-
-/*! \fn void QApplication::winMouseButtonUp()
-  \internal
- */
 
 /*! \fn void QApplication::syncX()
   Synchronizes with the X server in the X11 implementation.

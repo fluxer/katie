@@ -698,13 +698,6 @@ void QGraphicsWidgetPrivate::windowFrameHoverMoveEvent(QGraphicsSceneHoverEvent 
         case Qt::TitleBarArea:
             windowData->buttonRect = q->style()->subControlRect(
                 QStyle::CC_TitleBar, &bar, QStyle::SC_TitleBarCloseButton, 0);
-#ifdef Q_WS_MAC
-            // On mac we should hover if we are in the 'area' of the buttons
-            windowData->buttonRect |= q->style()->subControlRect(
-                QStyle::CC_TitleBar, &bar, QStyle::SC_TitleBarMinButton, 0);
-            windowData->buttonRect |= q->style()->subControlRect(
-                QStyle::CC_TitleBar, &bar, QStyle::SC_TitleBarMaxButton, 0);
-#endif
             if (windowData->buttonRect.contains(pos.toPoint()))
                 windowData->buttonMouseOver = true;
             event->ignore();

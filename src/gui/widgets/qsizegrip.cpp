@@ -203,7 +203,7 @@ void QSizeGripPrivate::init()
     m_corner = q->isLeftToRight() ? Qt::BottomRightCorner : Qt::BottomLeftCorner;
     gotMousePress = false;
 
-#if !defined(QT_NO_CURSOR) && !defined(Q_WS_MAC)
+#if !defined(QT_NO_CURSOR)
     q->setCursor(m_corner == Qt::TopLeftCorner || m_corner == Qt::BottomRightCorner
                  ? Qt::SizeFDiagCursor : Qt::SizeBDiagCursor);
 #endif

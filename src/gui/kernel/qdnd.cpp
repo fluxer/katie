@@ -202,21 +202,9 @@ Qt::DropAction QDragManager::defaultAction(Qt::DropActions possibleActions,
     if (defaultAction == Qt::IgnoreAction) {
         //This means that the drag was initiated by QDrag::start and we need to
         //preserve the old behavior
-#ifdef Q_WS_MAC
-        defaultAction = Qt::MoveAction;
-#else
         defaultAction = Qt::CopyAction;
-#endif
     }
 
-#ifdef Q_WS_MAC
-    if (modifiers & Qt::ControlModifier && modifiers & Qt::AltModifier)
-        defaultAction = Qt::LinkAction;
-    else if (modifiers & Qt::AltModifier)
-        defaultAction = Qt::CopyAction;
-    else if (modifiers & Qt::ControlModifier)
-        defaultAction = Qt::MoveAction;
-#else
     if (modifiers & Qt::ControlModifier && modifiers & Qt::ShiftModifier)
         defaultAction = Qt::LinkAction;
     else if (modifiers & Qt::ControlModifier)
@@ -225,7 +213,6 @@ Qt::DropAction QDragManager::defaultAction(Qt::DropActions possibleActions,
         defaultAction = Qt::MoveAction;
     else if (modifiers & Qt::AltModifier)
         defaultAction = Qt::LinkAction;
-#endif
 
     // if the object is set take the list of possibles from it
     if (object)

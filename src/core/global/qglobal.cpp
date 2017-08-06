@@ -920,24 +920,6 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn int qWinVersion()
-    \relates <QtGlobal>
-
-    Use QSysInfo::WindowsVersion instead.
-
-    \sa QSysInfo
-*/
-
-/*!
-    \fn int qMacVersion()
-    \relates <QtGlobal>
-
-    Use QSysInfo::MacintoshVersion instead.
-
-    \sa QSysInfo
-*/
-
-/*!
     \macro QT_VERSION_CHECK
     \relates <QtGlobal>
 
@@ -1015,10 +997,6 @@ bool qSharedBuild()
        on which the application is compiled.
     \o \l ByteOrder specifies whether the platform is big-endian or
        little-endian.
-    \o \l WindowsVersion specifies the version of the Windows operating
-       system on which the application is run (Windows only)
-    \o \l MacintoshVersion specifies the version of the Macintosh
-       operating system on which the application is run (Mac only).
     \endlist
 
     Some constants are defined only on certain platforms. You can use

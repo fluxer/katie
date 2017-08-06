@@ -413,7 +413,7 @@ void QToolTip::showText(const QPoint &pos, const QString &text, QWidget *w, cons
         QTipLabel::instance->setObjectName(QLatin1String("qtooltip_label"));
 
 
-#if !defined(QT_NO_EFFECTS) && !defined(Q_WS_MAC)
+#if !defined(QT_NO_EFFECTS)
         if (QApplication::isEffectEnabled(Qt::UI_FadeTooltip))
             qFadeEffect(QTipLabel::instance);
         else if (QApplication::isEffectEnabled(Qt::UI_AnimateTooltip))

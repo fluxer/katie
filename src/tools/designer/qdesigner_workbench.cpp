@@ -326,22 +326,14 @@ void QDesignerWorkbench::addFormWindow(QDesignerFormWindow *formWindow)
     m_actionManager->editWidgets()->trigger();
 }
 
-Qt::WindowFlags QDesignerWorkbench::magicalWindowFlags(const QWidget *widgetForFlags) const
+Qt::WindowFlags QDesignerWorkbench::magicalWindowFlags() const
 {
     switch (m_mode) {
-        case TopLevelMode: {
-#ifdef Q_WS_MAC
-            if (qobject_cast<const QDesignerToolWindow *>(widgetForFlags))
-                return Qt::Tool;
-#else
-            Q_UNUSED(widgetForFlags);
-#endif
-            return Qt::Window;
-        }
-        case DockedMode:
-            return Qt::Window | Qt::WindowShadeButtonHint | Qt::WindowSystemMenuHint | Qt::WindowTitleHint;
+        case TopLevelMode:
         case NeutralMode:
             return Qt::Window;
+        case DockedMode:
+            return Qt::Window | Qt::WindowShadeButtonHint | Qt::WindowSystemMenuHint | Qt::WindowTitleHint;
         default:
             Q_ASSERT(0);
             return 0;
@@ -430,7 +422,7 @@ void QDesignerWorkbench::switchToDockedMode()
     qDesigner->setMainWindow(m_dockedMainWindow);
 
     foreach (QDesignerFormWindow *fw, m_formWindows) {
-        QMdiSubWindow *subwin = m_dockedMainWindow->createMdiSubWindow(fw, magicalWindowFlags(fw),
+        QMdiSubWindow *subwin = m_dockedMainWindow->createMdiSubWindow(fw, magicalWindowFlags(),
                                                                        m_actionManager->closeFormAction()->shortcut());
         subwin->hide();
         if (QWidget *mainContainer = fw->editor()->mainContainer())
@@ -493,7 +485,7 @@ void QDesignerWorkbench::switchToTopLevelMode()
 
     bool found_visible_window = false;
     foreach (QDesignerToolWindow *tw, m_toolWindows) {
-        tw->setParent(magicalParent(tw), magicalWindowFlags(tw));
+        tw->setParent(magicalParent(tw), magicalWindowFlags());
         settings.restoreGeometry(tw, tw->geometryHint());
         tw->action()->setChecked(tw->isVisible());
         found_visible_window |= tw->isVisible();
@@ -505,7 +497,7 @@ void QDesignerWorkbench::switchToTopLevelMode()
     m_actionManager->setBringAllToFrontVisible(true);
 
     foreach (QDesignerFormWindow *fw, m_formWindows) {
-        fw->setParent(magicalParent(fw), magicalWindowFlags(fw));
+        fw->setParent(magicalParent(fw), magicalWindowFlags());
         fw->setAttribute(Qt::WA_DeleteOnClose, true);
         const PositionMap::const_iterator pit = m_Positions.constFind(fw);
         if (pit != m_Positions.constEnd()) pit->applyTo(fw, desktopOffset);
@@ -933,14 +925,14 @@ QDesignerFormWindow * QDesignerWorkbench::loadForm(const QString &fileName,
         // below code must be after above call to setContents(), because setContents() may popup warning dialogs which would cause
         // mdi sub window activation (because of dialogs internal call to  processEvent or such)
         // That activation could have worse consequences, e.g. NULL resource set for active form) before the form is loaded
-        QMdiSubWindow *subWin = m_dockedMainWindow->createMdiSubWindow(formWindow, magicalWindowFlags(formWindow), m_actionManager->closeFormAction()->shortcut());
+        QMdiSubWindow *subWin = m_dockedMainWindow->createMdiSubWindow(formWindow, magicalWindowFlags(), m_actionManager->closeFormAction()->shortcut());
         m_dockedMainWindow->mdiArea()->setActiveSubWindow(subWin);
     }
         break;
     case TopLevelMode: {
         const QRect formWindowGeometryHint = formWindow->geometryHint();
         formWindow->setAttribute(Qt::WA_DeleteOnClose, true);
-        formWindow->setParent(magicalParent(formWindow), magicalWindowFlags(formWindow));
+        formWindow->setParent(magicalParent(formWindow), magicalWindowFlags());
         formWindow->resize(formWindowGeometryHint.size());
         formWindow->move(availableGeometry().center() - formWindowGeometryHint.center());
     }

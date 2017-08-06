@@ -232,97 +232,14 @@ private:
 
 void QGridLayoutPrivate::effectiveMargins(int *left, int *top, int *right, int *bottom) const
 {
-    int l = leftMargin;
-    int t = topMargin;
-    int r = rightMargin;
-    int b = bottomMargin;
-#ifdef Q_WS_MAC
-    int leftMost = INT_MAX;
-    int topMost = INT_MAX;
-    int rightMost = 0;
-    int bottomMost = 0;
-
-    QWidget *w = 0;
-    const int n = things.count();
-    for (int i = 0; i < n; ++i) {
-        QGridBox *box = things.at(i);
-        QLayoutItem *itm = box->item();
-        w = itm->widget();
-        if (w) {
-            bool visualHReversed = hReversed != (w->layoutDirection() == Qt::RightToLeft);
-            QRect lir = itm->geometry();
-            QRect wr = w->geometry();
-            if (box->col <= leftMost) {
-                if (box->col < leftMost) {
-                    // we found an item even closer to the margin, discard.
-                    leftMost = box->col;
-                    if (visualHReversed)
-                        r = rightMargin;
-                    else
-                        l = leftMargin;
-                }
-                if (visualHReversed) {
-                    r = qMax(r, wr.right() - lir.right());
-                } else {
-                    l = qMax(l, lir.left() - wr.left());
-                }
-            }
-            if (box->row <= topMost) {
-                if (box->row < topMost) {
-                    // we found an item even closer to the margin, discard.
-                    topMost = box->row;
-                    if (vReversed)
-                        b = bottomMargin;
-                    else
-                        t = topMargin;
-                }
-                if (vReversed)
-                    b = qMax(b, wr.bottom() - lir.bottom());
-                else
-                    t = qMax(t, lir.top() - wr.top());
-            }
-            if (box->toCol(cc) >= rightMost) {
-                if (box->toCol(cc) > rightMost) {
-                    // we found an item even closer to the margin, discard.
-                    rightMost = box->toCol(cc);
-                    if (visualHReversed)
-                        l = leftMargin;
-                    else
-                        r = rightMargin;
-                }
-                if (visualHReversed) {
-                    l = qMax(l, lir.left() - wr.left());
-                } else {
-                    r = qMax(r, wr.right() - lir.right());
-                }
-
-            }
-            if (box->toRow(rr) >= bottomMost) {
-                if (box->toRow(rr) > bottomMost) {
-                    // we found an item even closer to the margin, discard.
-                    bottomMost = box->toRow(rr);
-                    if (vReversed)
-                        t = topMargin;
-                    else
-                        b = bottomMargin;
-                }
-                if (vReversed)
-                    t = qMax(t, lir.top() - wr.top());
-                else
-                    b = qMax(b, wr.bottom() - lir.bottom());
-            }
-        }
-    }
-
-#endif
     if (left)
-        *left = l;
+        *left = leftMargin;
     if (top)
-        *top = t;
+        *top = topMargin;
     if (right)
-        *right = r;
+        *right = rightMargin;
     if (bottom)
-        *bottom = b;
+        *bottom = bottomMargin;
 }
 
 QGridLayoutPrivate::QGridLayoutPrivate()

@@ -782,19 +782,12 @@ void QPaintEngineEx::drawLines(const QLine *lines, int lineCount)
 {
     int elementCount = lineCount << 1;
     while (elementCount > 0) {
-        int count = qMin(elementCount, 32);
+        const int count = qMin(elementCount, 32);
 
         qreal pts[64];
-        int count2 = count<<1;
-#ifdef Q_WS_MAC
-        for (int i=0; i<count2; i+=2) {
-            pts[i] = ((int *) lines)[i+1];
-            pts[i+1] = ((int *) lines)[i];
-        }
-#else
+        const int count2 = count<<1;
         for (int i=0; i<count2; ++i)
             pts[i] = ((int *) lines)[i];
-#endif
 
         QVectorPath path(pts, count, qpaintengineex_line_types_16, QVectorPath::LinesHint);
         stroke(path, state()->pen);
@@ -922,18 +915,10 @@ void QPaintEngineEx::drawPolygon(const QPointF *points, int pointCount, PolygonD
 
 void QPaintEngineEx::drawPolygon(const QPoint *points, int pointCount, PolygonDrawMode mode)
 {
-    int count = pointCount<<1;
+    const int count = pointCount<<1;
     QVarLengthArray<qreal> pts(count);
-
-#ifdef Q_WS_MAC
-    for (int i=0; i<count; i+=2) {
-        pts[i] = ((int *) points)[i+1];
-        pts[i+1] = ((int *) points)[i];
-    }
-#else
     for (int i=0; i<count; ++i)
         pts[i] = ((int *) points)[i];
-#endif
 
     QVectorPath path(pts.data(), pointCount, 0, QVectorPath::polygonFlags(mode));
 

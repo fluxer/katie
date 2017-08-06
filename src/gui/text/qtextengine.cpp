@@ -833,8 +833,6 @@ QT_BEGIN_INCLUDE_NAMESPACE
 
 #if defined(Q_WS_X11)
 #   include "qfontengine_ft_p.h"
-#elif defined(Q_WS_MAC)
-# include "qtextengine_mac.cpp"
 #endif
 
 #include <qharfbuzz_p.h>

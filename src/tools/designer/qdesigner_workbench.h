@@ -144,7 +144,7 @@ private slots:
 
 private:
     QWidget *magicalParent(const QWidget *w) const;
-    Qt::WindowFlags magicalWindowFlags(const QWidget *widgetForFlags) const;
+    Qt::WindowFlags magicalWindowFlags() const;
     QDesignerFormWindowManagerInterface *formWindowManager() const;
     void closeAllToolWindows();
     QDesignerToolWindow *widgetBoxToolWindow() const;

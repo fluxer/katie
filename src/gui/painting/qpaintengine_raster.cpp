@@ -1702,17 +1702,10 @@ void QRasterPaintEngine::drawPolygon(const QPoint *points, int pointCount, Polyg
 
     // Do the outline...
     if (s->penData.blend) {
-        int count = pointCount * 2;
+        const int count = pointCount * 2;
         QVarLengthArray<qreal> fpoints(count);
-    #ifdef Q_WS_MAC
-        for (int i=0; i<count; i+=2) {
-            fpoints[i] = ((int *) points)[i+1];
-            fpoints[i+1] = ((int *) points)[i];
-        }
-    #else
         for (int i=0; i<count; ++i)
             fpoints[i] = ((int *) points)[i];
-    #endif
         QVectorPath vp((qreal *) fpoints.data(), pointCount, 0, QVectorPath::polygonFlags(mode));
 
         QPaintEngineEx::stroke(vp, s->lastPen);

@@ -1008,16 +1008,10 @@ void QWidgetPrivate::adjustFlags(Qt::WindowFlags &flags, QWidget *w)
 
     if (flags & Qt::CustomizeWindowHint) {
         // modify window flags to make them consistent.
-        // Only enable this on non-Mac platforms. Since the old way of doing this would
-        // interpret WindowSystemMenuHint as a close button and we can't change that behavior
-        // we can't just add this in.
-#ifndef Q_WS_MAC
+        // Since the old way of doing this would interpret WindowSystemMenuHint as a
+        // close button and we can't change that behavior we can't just add this in.
         if (flags & (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint | Qt::WindowContextHelpButtonHint)) {
             flags |= Qt::WindowSystemMenuHint;
-#else
-        if (flags & (Qt::WindowMinMaxButtonsHint | Qt::WindowCloseButtonHint
-                     | Qt::WindowSystemMenuHint)) {
-#endif
             flags |= Qt::WindowTitleHint;
             flags &= ~Qt::FramelessWindowHint;
         }
@@ -2048,11 +2042,7 @@ void QWidgetPrivate::paintBackground(QPainter *painter, const QRegion &rgn, int 
   visible widgets.
 */
 
-#ifdef Q_WS_MAC
-    extern QPointer<QWidget> qt_button_down;
-#else
-    extern QWidget *qt_button_down;
-#endif
+extern QWidget *qt_button_down;
 
 void QWidgetPrivate::deactivateWidgetCleanup()
 {
@@ -2325,11 +2315,7 @@ void QWidget::setStyle(QStyle *style)
         d->setStyle_helper(style, false);
 }
 
-void QWidgetPrivate::setStyle_helper(QStyle *newStyle, bool propagate, bool
-#ifdef Q_WS_MAC
-        metalHack
-#endif
-        )
+void QWidgetPrivate::setStyle_helper(QStyle *newStyle, bool propagate)
 {
     Q_Q(QWidget);
     QStyle *oldStyle  = q->style();
@@ -2337,35 +2323,18 @@ void QWidgetPrivate::setStyle_helper(QStyle *newStyle, bool propagate, bool
     QWeakPointer<QStyle> origStyle;
 #endif
 
-#ifdef Q_WS_MAC
-    // the metalhack boolean allows Qt/Mac to do a proper re-polish depending
-    // on how the Qt::WA_MacBrushedMetal attribute is set. It is only ever
-    // set when changing that attribute and passes the widget's CURRENT style.
-    // therefore no need to do a reassignment.
-    if (!metalHack)
-#endif
-    {
-        createExtra();
+    createExtra();
 
 #ifndef QT_NO_STYLE_STYLESHEET
-        origStyle = extra->style.data();
+    origStyle = extra->style.data();
 #endif
-        extra->style = newStyle;
-    }
+    extra->style = newStyle;
 
     // repolish
     if (q->windowType() != Qt::Desktop) {
         if (polished) {
             oldStyle->unpolish(q);
-#ifdef Q_WS_MAC
-            if (metalHack)
-                macUpdateMetalAttribute();
-#endif
             q->style()->polish(q);
-#ifdef Q_WS_MAC
-        } else if (metalHack) {
-            macUpdateMetalAttribute();
-#endif
         }
     }
 
@@ -4426,12 +4395,7 @@ QCursor QWidget::cursor() const
 void QWidget::setCursor(const QCursor &cursor)
 {
     Q_D(QWidget);
-// On Mac we must set the cursor even if it is the ArrowCursor.
-#if !defined(Q_WS_MAC)
-    if (cursor.shape() != Qt::ArrowCursor
-        || (d->extra && d->extra->curs))
-#endif
-    {
+    if (cursor.shape() != Qt::ArrowCursor || (d->extra && d->extra->curs)) {
         d->createExtra();
         QCursor *newCursor = new QCursor(cursor);
         delete d->extra->curs;
@@ -4543,9 +4507,6 @@ void QWidget::render(QPainter *painter, const QPoint &targetOffset,
         d->createExtra();
     d->extra->inRenderWithPainter = true;
 
-#ifdef Q_WS_MAC
-    d->render_helper(painter, targetOffset, toBePainted, renderFlags);
-#else
     QPaintEngine *engine = painter->paintEngine();
     Q_ASSERT(engine);
     QPaintEnginePrivate *enginePriv = engine->d_func();
@@ -4586,7 +4547,6 @@ void QWidget::render(QPainter *painter, const QPoint &targetOffset,
 
     // Restore shared painter.
     d->setSharedPainter(oldPainter);
-#endif
 
     d->extra->inRenderWithPainter = false;
 }
@@ -4736,11 +4696,8 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
     Q_ASSERT(!toBePainted.isEmpty());
 
     Q_Q(QWidget);
-#ifndef Q_WS_MAC
     const QTransform originalTransform = painter->worldTransform();
-    const bool useDeviceCoordinates = originalTransform.isScaling();
-    if (!useDeviceCoordinates) {
-#endif
+    if (!originalTransform.isScaling()) {
         // Render via a pixmap.
         const QRect rect = toBePainted.boundingRect();
         const QSize size = rect.size();
@@ -4754,7 +4711,6 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
 
         painter->drawPixmap(targetOffset, pixmap);
 
-#ifndef Q_WS_MAC
     } else {
         // Render via a pixmap in device coordinates (to avoid pixmap scaling).
         QTransform transform = originalTransform;
@@ -4785,7 +4741,6 @@ void QWidgetPrivate::render_helper(QPainter *painter, const QPoint &targetOffset
         painter->drawPixmap(deviceRect.topLeft(), pixmap);
         painter->setTransform(originalTransform);
     }
-#endif
 }
 
 void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QPoint &offset, int flags,
@@ -4857,15 +4812,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
             if (paintEngine) {
                 setRedirected(pdev, -offset);
 
-#ifdef Q_WS_MAC
-                // (Alien support) Special case for Mac when redirecting: If the paint device
-                // is of the Widget type we need to set WA_WState_InPaintEvent since painting
-                // outside the paint event is not supported on QWidgets. The attributeis
-                // restored further down.
-                if (pdev->devType() == QInternal::Widget)
-                    static_cast<QWidget *>(pdev)->setAttribute(Qt::WA_WState_InPaintEvent);
-
-#endif
                 if (sharedPainter)
                     paintEngine->d_func()->systemClip = toBePainted;
                 else
@@ -4903,10 +4849,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
 
             //restore
             if (paintEngine) {
-#ifdef Q_WS_MAC
-                if (pdev->devType() == QInternal::Widget)
-                    static_cast<QWidget *>(pdev)->setAttribute(Qt::WA_WState_InPaintEvent, false);
-#endif
                 restoreRedirected();
                 if (!sharedPainter)
                     paintEngine->d_func()->systemRect = QRect();
@@ -5266,13 +5208,12 @@ void QWidget::unsetLocale()
 
 static QString constructWindowTitleFromFilePath(const QString &filePath)
 {
-    QFileInfo fi(filePath);
+    const QFileInfo fi(filePath);
     QString windowTitle = fi.fileName() + QLatin1String("[*]");
-#ifndef Q_WS_MAC
-    QString appName = QApplication::applicationName();
+    const QString appName = QApplication::applicationName();
     if (!appName.isEmpty())
+        // 0x2014 is UTF-8 character 
         windowTitle += QLatin1Char(' ') + QChar(0x2014) + QLatin1Char(' ') + appName;
-#endif
     return windowTitle;
 }
 
@@ -5495,10 +5436,6 @@ QString QWidget::windowIconText() const
     If the window title is set at any point, then the window title takes precedence and
     will be shown instead of the file path string.
 
-    Additionally, on Mac OS X, this has an added benefit that it sets the
-    \l{http://developer.apple.com/documentation/UserExperience/Conceptual/OSXHIGuidelines/XHIGWindows/chapter_17_section_3.html}{proxy icon}
-    for the window, assuming that the file path exists.
-
     If no file path is set, this property contains an empty string.
 
     By default, this property contains an empty string.
@@ -5521,23 +5458,10 @@ void QWidget::setWindowFilePath(const QString &filePath)
 
     d->createTLExtra();
     d->extra->topextra->filePath = filePath;
-    d->setWindowFilePath_helper(filePath);
-}
 
-void QWidgetPrivate::setWindowFilePath_helper(const QString &filePath)
-{
-    if (extra->topextra && extra->topextra->caption.isEmpty()) {
-#ifdef Q_WS_MAC
-        setWindowTitle_helper(QFileInfo(filePath).fileName());
-#else
-        Q_Q(QWidget);
-        Q_UNUSED(filePath);
-        setWindowTitle_helper(q->windowTitle());
-#endif
+    if (d->extra->topextra->caption.isEmpty()) {
+        d->setWindowTitle_helper(windowTitle());
     }
-#ifdef Q_WS_MAC
-    setWindowFilePath_sys(filePath);
-#endif
 }
 
 /*!
@@ -5943,16 +5867,6 @@ bool QWidget::isActiveWindow() const
     }
 #endif
 
-#ifdef Q_WS_MAC
-    extern bool qt_mac_is_macdrawer(const QWidget *); //qwidget_mac.cpp
-    if(qt_mac_is_macdrawer(tlw) &&
-       tlw->parentWidget() && tlw->parentWidget()->isActiveWindow())
-        return true;
-
-    extern bool qt_mac_insideKeyWindow(const QWidget *); //qwidget_mac.cpp
-    if (QApplication::testAttribute(Qt::AA_MacPluginApplication) && qt_mac_insideKeyWindow(tlw))
-        return true;
-#endif
     if(style()->styleHint(QStyle::SH_Widget_ShareActivation, 0, this)) {
         if(tlw->windowType() == Qt::Tool &&
            !tlw->isModal() &&
@@ -6350,13 +6264,6 @@ bool QWidget::restoreGeometry(const QByteArray &geometry)
     // that would make the window "lost". This happens if:
     // - The restored geometry is completely oustside the available geometry
     // - The title bar is outside the available geometry.
-    // - (Mac only) The window is higher than the available geometry. It must
-    //   be possible to bring the size grip on screen by moving the window.
-#ifdef Q_WS_MAC
-    restoredFrameGeometry.setHeight(qMin(restoredFrameGeometry.height(), availableGeometry.height()));
-    restoredNormalGeometry.setHeight(qMin(restoredNormalGeometry.height(), availableGeometry.height() - frameHeight));
-#endif
-
     if (!restoredFrameGeometry.intersects(availableGeometry)) {
         restoredFrameGeometry.moveBottom(qMin(restoredFrameGeometry.bottom(), availableGeometry.bottom()));
         restoredFrameGeometry.moveLeft(qMax(restoredFrameGeometry.left(), availableGeometry.left()));
@@ -7940,16 +7847,6 @@ void QWidget::changeEvent(QEvent * event)
     case QEvent::PaletteChange:
         update();
         break;
-
-#ifdef Q_WS_MAC
-    case QEvent::MacSizeChange:
-        updateGeometry();
-        break;
-    case QEvent::ToolTipChange:
-    case QEvent::MouseTrackingChange:
-        qt_mac_update_mouseTracking(this);
-        break;
-#endif
 
     default:
         break;
@@ -9706,15 +9603,11 @@ void QWidget::setWindowModified(bool mod)
     Q_D(QWidget);
     setAttribute(Qt::WA_WindowModified, mod);
 
-#ifndef Q_WS_MAC
     if (!windowTitle().contains(QLatin1String("[*]")) && mod)
         qWarning("QWidget::setWindowModified: The window title does not contain a '[*]' placeholder");
-#endif
+
     d->setWindowTitle_helper(windowTitle());
     d->setWindowIconText_helper(windowIconText());
-#ifdef Q_WS_MAC
-    d->setWindowModified_sys(mod);
-#endif
 
     QEvent e(QEvent::ModifiedChange);
     QApplication::sendEvent(this, &e);

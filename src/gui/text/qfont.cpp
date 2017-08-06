@@ -2568,17 +2568,11 @@ void QFontCache::clear()
                                  end = engineDataCache.end();
         while (it != end) {
             QFontEngineData *data = it.value();
-#if !defined(Q_WS_MAC)
             for (int i = 0; i < QUnicodeTables::ScriptCount; ++i) {
                 if (data->engines[i] && !data->engines[i]->ref.deref())
                     delete data->engines[i];
                 data->engines[i] = 0;
             }
-#else
-            if (data->engine && !data->engine->ref.deref())
-                delete data->engine;
-            data->engine = 0;
-#endif
             ++it;
         }
     }

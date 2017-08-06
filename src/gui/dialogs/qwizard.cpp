@@ -1285,9 +1285,6 @@ bool QWizardPrivate::ensureButton(QWizard::WizardButton which) const
         if (style != QApplication::style()) // Propagate style
             pushButton->setStyle(style);
         pushButton->setObjectName(object_name_for_button(which));
-#ifdef Q_WS_MAC
-        pushButton->setAutoDefault(false);
-#endif
         pushButton->hide();
 #ifdef Q_CC_HPACC
         const_cast<QWizardPrivate *>(this)->btns[which] = pushButton;
@@ -1520,40 +1517,9 @@ void QWizardPrivate::setStyle(QStyle *style)
     for (int i = 0; i < QWizard::NButtons; i++)
         if (btns[i])
             btns[i]->setStyle(style);
-    const PageMap::const_iterator pcend = pageMap.constEnd();
-    for (PageMap::const_iterator it = pageMap.constBegin(); it != pcend; ++it)
+    for (PageMap::const_iterator it = pageMap.constBegin(); it != pageMap.constEnd(); ++it)
         it.value()->setStyle(style);
 }
-
-#ifdef Q_WS_MAC
-
-QPixmap QWizardPrivate::findDefaultBackgroundPixmap()
-{
-    QCFType<CFURLRef> url;
-    const int ExpectedImageWidth = 242;
-    const int ExpectedImageHeight = 414;
-    if (LSFindApplicationForInfo(kLSUnknownCreator, CFSTR("com.apple.KeyboardSetupAssistant"),
-                                 0, 0, &url) == noErr) {
-        QCFType<CFBundleRef> bundle = CFBundleCreate(kCFAllocatorDefault, url);
-        if (bundle) {
-            url = CFBundleCopyResourceURL(bundle, CFSTR("Background"), CFSTR("tif"), 0);
-            if (url) {
-                QCFType<CGImageSourceRef> imageSource = CGImageSourceCreateWithURL(url, 0);
-                QCFType<CGImageRef> image = CGImageSourceCreateImageAtIndex(imageSource, 0, 0);
-                if (image) {
-                    int width = CGImageGetWidth(image);
-                    int height = CGImageGetHeight(image);
-                    if (width == ExpectedImageWidth && height == ExpectedImageHeight)
-                        return QPixmap::fromMacCGImageRef(image);
-                }
-            }
-        }
-    }
-    return QPixmap();
-
-}
-
-#endif
 
 /*!
     \class QWizard
@@ -2613,10 +2579,6 @@ QPixmap QWizard::pixmap(WizardPixmap which) const
 {
     Q_D(const QWizard);
     Q_ASSERT(uint(which) < NPixmaps);
-#ifdef Q_WS_MAC
-    if (which == BackgroundPixmap && d->defaultPixmaps[BackgroundPixmap].isNull())
-        d->defaultPixmaps[BackgroundPixmap] = d->findDefaultBackgroundPixmap();
-#endif
     return d->defaultPixmaps[which];
 }
 
