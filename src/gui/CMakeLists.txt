@@ -240,8 +240,6 @@ set(GUI_PUBLIC_HEADERS
     QStyleHintReturnVariant
     QStyleOption
     QStyleOptionComboBox
-    QStyleOptionDockWidget
-    QStyleOptionDockWidgetV2
     QStyleOptionGroupBox
     QStyleOptionSizeGrip
     QStyleOptionTabBarBase
@@ -381,7 +379,10 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionViewItemV4
     QStyleOptionProgressBar
     QStyleOptionProgressBarV2
+    QStyleOptionDockWidget
+    QStyleOptionDockWidgetV2
     QStyleOptionFocusRect
+    QStyleOptionMenuItem
     QItemSelection
     QIntValidator
     QFontMetricsF
