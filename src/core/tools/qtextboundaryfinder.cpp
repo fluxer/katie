@@ -46,6 +46,7 @@ QT_BEGIN_NAMESPACE
 class QTextBoundaryFinderPrivate
 {
 public:
+    QTextBoundaryFinder::BoundaryType type;
     int pos;
     int length;
     QString string;
@@ -114,7 +115,6 @@ public:
 */
 QTextBoundaryFinder::QTextBoundaryFinder()
     : d(0)
-    , t(QTextBoundaryFinder::Grapheme)
 {
 }
 
@@ -123,7 +123,6 @@ QTextBoundaryFinder::QTextBoundaryFinder()
 */
 QTextBoundaryFinder::QTextBoundaryFinder(const QTextBoundaryFinder &other)
     : d(other.d)
-    , t(other.t)
 {
 }
 
@@ -135,10 +134,8 @@ QTextBoundaryFinder &QTextBoundaryFinder::operator=(const QTextBoundaryFinder &o
     // this object was constructed as invalid
     if (!d)
         d = new QTextBoundaryFinderPrivate();
-    if (this != &other) {
-        t = other.t;
+    if (this != &other)
         memcpy(d, other.d, sizeof(QTextBoundaryFinderPrivate));
-    }
     return *this;
 }
 
@@ -156,8 +153,8 @@ QTextBoundaryFinder::~QTextBoundaryFinder()
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &string)
     : d(new QTextBoundaryFinderPrivate)
-    , t(type)
 {
+    d->type = type;
     d->pos = 0;
     d->length = string.size();
     d->string = QString(string);
@@ -169,8 +166,8 @@ QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QString &strin
 */
 QTextBoundaryFinder::QTextBoundaryFinder(BoundaryType type, const QChar *chars, const int length)
     : d(new QTextBoundaryFinderPrivate)
-    , t(type)
 {
+    d->type = type;
     d->pos = 0;
     d->length = length;
     d->string = QString::fromRawData(chars, length);
@@ -227,6 +224,12 @@ void QTextBoundaryFinder::setPosition(const int position)
 
   Returns the type of the QTextBoundaryFinder.
 */
+QTextBoundaryFinder::BoundaryType QTextBoundaryFinder::type() const
+{
+    if (!d)
+        return QTextBoundaryFinder::Grapheme;
+    return d->type;
+}
 
 /*! \fn bool QTextBoundaryFinder::isValid() const
 
@@ -263,7 +266,7 @@ int QTextBoundaryFinder::toNextBoundary()
     if (d->pos == d->length)
         return d->pos;
 
-    switch(t) {
+    switch(d->type) {
     case QTextBoundaryFinder::Grapheme:
         while (d->pos < d->length && d->string[d->pos].isLetterOrNumber())
             ++d->pos;
@@ -304,7 +307,7 @@ int QTextBoundaryFinder::toPreviousBoundary()
     if (d->pos == 0)
         return d->pos;
 
-    switch(t) {
+    switch(d->type) {
     case QTextBoundaryFinder::Grapheme:
         while (d->pos > 0 && d->string[d->pos].isLetterOrNumber())
             --d->pos;
@@ -337,7 +340,7 @@ bool QTextBoundaryFinder::isAtBoundary() const
     if (d->pos == d->length)
         return true;
 
-    switch(t) {
+    switch(d->type) {
     case QTextBoundaryFinder::Grapheme:
         return !d->string[d->pos].isLetterOrNumber();
     case QTextBoundaryFinder::Word:

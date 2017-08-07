@@ -1854,46 +1854,6 @@ void QRasterPaintEngine::drawImage(const QPointF &p, const QImage &img)
 
 }
 
-QRectF qt_mapRect_non_normalizing(const QRectF &r, const QTransform &t)
-{
-    return QRectF(r.topLeft() * t, r.bottomRight() * t);
-}
-
-namespace {
-    enum RotationType {
-        Rotation90,
-        Rotation180,
-        Rotation270,
-        NoRotation
-    };
-
-    inline RotationType qRotationType(const QTransform &transform)
-    {
-        QTransform::TransformationType type = transform.type();
-
-        if (type > QTransform::TxRotate)
-            return NoRotation;
-
-        if (type == QTransform::TxRotate && qFuzzyIsNull(transform.m11()) && qFuzzyCompare(transform.m12(), qreal(-1))
-            && qFuzzyCompare(transform.m21(), qreal(1)) && qFuzzyIsNull(transform.m22()))
-            return Rotation90;
-
-        if (type == QTransform::TxScale && qFuzzyCompare(transform.m11(), qreal(-1)) && qFuzzyIsNull(transform.m12())
-            && qFuzzyIsNull(transform.m21()) && qFuzzyCompare(transform.m22(), qreal(-1)))
-            return Rotation180;
-
-        if (type == QTransform::TxRotate && qFuzzyIsNull(transform.m11()) && qFuzzyCompare(transform.m12(), qreal(1))
-            && qFuzzyCompare(transform.m21(), qreal(-1)) && qFuzzyIsNull(transform.m22()))
-            return Rotation270;
-
-        return NoRotation;
-    }
-
-    inline bool isPixelAligned(const QRectF &rect) {
-        return QRectF(rect.toRect()) == rect;
-    }
-}
-
 /*!
     \reimp
 */

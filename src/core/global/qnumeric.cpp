@@ -50,7 +50,9 @@ QT_BEGIN_NAMESPACE
 */
 static const union { unsigned char c[8]; double d; } qt_be_inf_bytes = { { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 } };
 static const union { unsigned char c[8]; double d; } qt_le_inf_bytes = { { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f } };
+#ifdef QT_ARMFPA
 static const union { unsigned char c[8]; double d; } qt_armfpa_inf_bytes = { { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 } };
+#endif
 Q_CORE_EXPORT double qInf()
 {
 #ifdef QT_ARMFPA
@@ -67,7 +69,9 @@ Q_CORE_EXPORT double qInf()
 */
 static const union { unsigned char c[8]; double d; } qt_be_snan_bytes = { { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 } };
 static const union { unsigned char c[8]; double d; } qt_le_snan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f } };
+#ifdef QT_ARMFPA
 static const union { unsigned char c[8]; double d; } qt_armfpa_snan_bytes = { { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 } };
+#endif
 Q_CORE_EXPORT double qSNaN()
 {
 #ifdef QT_ARMFPA
@@ -84,7 +88,9 @@ Q_CORE_EXPORT double qSNaN()
 */
 static const union { unsigned char c[8]; double d; } qt_be_qnan_bytes = { { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 } };
 static const union { unsigned char c[8]; double d; } qt_le_qnan_bytes = { { 0, 0, 0, 0, 0, 0, 0xf8, 0xff } };
+#ifdef QT_ARMFPA
 static const union { unsigned char c[8]; double d; } qt_armfpa_qnan_bytes = { { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 } };
+#endif
 Q_CORE_EXPORT double qQNaN()
 {
 #ifdef QT_ARMFPA
@@ -104,7 +110,9 @@ Q_CORE_EXPORT double qQNaN()
 */
 static const unsigned char qt_be_inf_bytes[] = { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 };
 static const unsigned char qt_le_inf_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f };
+#ifdef QT_ARMFPA
 static const unsigned char qt_armfpa_inf_bytes[] = { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 };
+#endif
 Q_CORE_EXPORT double qInf()
 {
     const unsigned char *bytes;
@@ -126,7 +134,9 @@ Q_CORE_EXPORT double qInf()
 */
 static const unsigned char qt_be_snan_bytes[] = { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 };
 static const unsigned char qt_le_snan_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f };
+#ifdef QT_ARMFPA
 static const unsigned char qt_armfpa_snan_bytes[] = { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 };
+#endif
 Q_CORE_EXPORT double qSNaN()
 {
     const unsigned char *bytes;
@@ -148,7 +158,9 @@ Q_CORE_EXPORT double qSNaN()
 */
 static const unsigned char qt_be_qnan_bytes[] = { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 };
 static const unsigned char qt_le_qnan_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf8, 0xff };
+#ifdef QT_ARMFPA
 static const unsigned char qt_armfpa_qnan_bytes[] = { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 };
+#endif
 Q_CORE_EXPORT double qQNaN()
 {
     const unsigned char *bytes;

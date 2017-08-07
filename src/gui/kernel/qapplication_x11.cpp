@@ -638,45 +638,6 @@ static int qt_xio_errhandler(Display *)
 }
 #endif
 
-#ifndef QT_NO_XSYNC
-struct qt_sync_request_event_data
-{
-    WId window;
-};
-
-#if defined(Q_C_CALLBACKS)
-extern "C" {
-#endif
-
-static Bool qt_sync_request_scanner(Display*, XEvent *event, XPointer arg)
-{
-    qt_sync_request_event_data *data =
-        reinterpret_cast<qt_sync_request_event_data*>(arg);
-    if (event->type == ClientMessage &&
-        event->xany.window == data->window &&
-        event->xclient.message_type == ATOM(WM_PROTOCOLS) &&
-        (Atom)event->xclient.data.l[0] == ATOM(_NET_WM_SYNC_REQUEST)) {
-        QWidget *w = QWidget::find(event->xany.window);
-        if (QTLWExtra *tlw = ((QETWidget*)w)->d_func()->maybeTopData()) {
-            const ulong timestamp = (const ulong) event->xclient.data.l[1];
-            if (timestamp > X11->time)
-                X11->time = timestamp;
-            if (timestamp == CurrentTime || timestamp > tlw->syncRequestTimestamp) {
-                tlw->syncRequestTimestamp = timestamp;
-                tlw->newCounterValueLo = event->xclient.data.l[2];
-                tlw->newCounterValueHi = event->xclient.data.l[3];
-            }
-        }
-        return true;
-    }
-    return false;
-}
-
-#if defined(Q_C_CALLBACKS)
-}
-#endif
-#endif // QT_NO_XSYNC
-
 static void qt_x11_create_intern_atoms()
 {
     const char *names[QX11Data::NAtoms];

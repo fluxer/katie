@@ -229,7 +229,6 @@ void QLineEditPrivate::setCursorVisible(bool visible)
 
 void QLineEditPrivate::updatePasswordEchoEditing(bool editing)
 {
-    Q_Q(QLineEdit);
     control->updatePasswordEchoEditing(editing);
 }
 

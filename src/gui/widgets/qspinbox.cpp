@@ -74,7 +74,6 @@ public:
                                   QValidator::State &state) const;
 
     inline void init() {
-        Q_Q(QSpinBox);
         setLayoutItemMargins(QStyle::SE_SpinBoxLayoutItem);
     }
 };

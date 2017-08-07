@@ -81,7 +81,7 @@ public:
     inline bool isValid() const
         { return !string().isEmpty(); }
 
-    inline BoundaryType type() const { return t; }
+    BoundaryType type() const;
     QString string() const;
 
     void toStart();
@@ -96,7 +96,6 @@ public:
     BoundaryReasons boundaryReasons() const;
 
 private:
-    BoundaryType t;
     QTextBoundaryFinderPrivate *d;
 };
 

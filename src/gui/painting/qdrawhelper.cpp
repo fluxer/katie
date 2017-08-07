@@ -549,26 +549,6 @@ static const uint * QT_FASTCALL fetchTransformed(uint *buffer, const Operator *,
     return buffer;
 }
 
-/** \internal
-  interpolate 4 argb pixels with the distx and disty factor.
-  distx and disty bust be between 0 and 16
- */
-static inline uint interpolate_4_pixels_16(uint tl, uint tr, uint bl, uint br, int distx, int disty)
-{
-    uint distxy = distx * disty;
-    //idistx * disty = (16-distx) * disty = 16*disty - distxy
-    //idistx * idisty = (16-distx) * (16-disty) = 16*16 - 16*distx -16*dity + distxy
-    uint tlrb = (tl & 0x00ff00ff)         * (16*16 - 16*distx - 16*disty + distxy);
-    uint tlag = ((tl & 0xff00ff00) >> 8)  * (16*16 - 16*distx - 16*disty + distxy);
-    uint trrb = ((tr & 0x00ff00ff)        * (distx*16 - distxy));
-    uint trag = (((tr & 0xff00ff00) >> 8) * (distx*16 - distxy));
-    uint blrb = ((bl & 0x00ff00ff)        * (disty*16 - distxy));
-    uint blag = (((bl & 0xff00ff00) >> 8) * (disty*16 - distxy));
-    uint brrb = ((br & 0x00ff00ff)        * (distxy));
-    uint brag = (((br & 0xff00ff00) >> 8) * (distxy));
-    return (((tlrb + trrb + blrb + brrb) >> 8) & 0x00ff00ff) | ((tlag + trag + blag + brag) & 0xff00ff00);
-}
-
 template<TextureBlendType blendType>
 static inline void fetchTransformedBilinear_pixelBounds(int max, int l1, int l2, int &v1, int &v2)
 {

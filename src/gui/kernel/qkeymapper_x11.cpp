@@ -1089,7 +1089,6 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
                                                   bool statefulTranslation)
 {
     XKeyEvent xkeyevent = event->xkey;
-    int keycode = event->xkey.keycode;
     // save the modifier state, we will use the keystate uint later by passing
     // it to translateButtonState
     uint keystate = event->xkey.state;

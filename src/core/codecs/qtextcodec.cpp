@@ -1296,13 +1296,12 @@ QString QTextDecoder::toUnicode(const QByteArray &ba)
 QTextCodec *QTextCodec::codecForHtml(const QByteArray &ba, QTextCodec *defaultCodec)
 {
     // determine charset
-    int pos;
-    QTextCodec *c = QTextCodec::codecForUtfText(ba, c);
+    QTextCodec *c = QTextCodec::codecForUtfText(ba, Q_NULLPTR);
     if (!c) {
         QByteArray header = ba.left(512).toLower();
-        int pos = pos = header.indexOf("http-equiv=");
+        int pos = header.indexOf("http-equiv=");
         if (pos != -1) {
-            pos = pos = header.lastIndexOf("meta ", pos);
+            pos = header.lastIndexOf("meta ", pos);
             if (pos != -1) {
                 pos = header.indexOf("charset=", pos) + int(strlen("charset="));
                 if (pos != -1) {

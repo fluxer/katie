@@ -62,7 +62,7 @@ QString qulltoa(qulonglong l, int base, const QChar _zero);
 QString qlltoa(qlonglong l, int base, const QChar zero);
 
 enum PrecisionMode {
-    PMDecimalDigits =             0x01,
+    PMDecimalDigits =       0x01,
     PMSignificantDigits =   0x02,
     PMChopTrailingZeros =   0x03
 };
