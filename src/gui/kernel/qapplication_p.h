@@ -55,20 +55,20 @@
 //
 
 #include "qplatformdefs.h"
-#include "QtGui/qapplication.h"
-#include "QtGui/qevent.h"
-#include "QtGui/qfont.h"
-#include "QtGui/qcursor.h"
-#include "QtGui/qregion.h"
 #include "QtCore/qmutex.h"
 #include "QtCore/qtranslator.h"
 #include "QtCore/qbasictimer.h"
 #include "QtCore/qhash.h"
 #include "QtCore/qpointer.h"
-#include "qcoreapplication_p.h"
-#include "QtGui/qshortcutmap_p.h"
 #include "QtCore/qpoint.h"
 #include "QtCore/qdatetime.h"
+#include "QtGui/qapplication.h"
+#include "QtGui/qevent.h"
+#include "QtGui/qfont.h"
+#include "QtGui/qcursor.h"
+#include "QtGui/qregion.h"
+#include "QtCore/qcoreapplication_p.h"
+#include "QtGui/qshortcutmap_p.h"
 
 QT_BEGIN_NAMESPACE
 
