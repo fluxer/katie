@@ -3,7 +3,7 @@
 # header paths and definitions that may otherwise not be wanted. It is also ment to be included
 # after KatieConfig.cmake which defines KATIE_DEFINITIONS and KATIE_INCLUDES. End of drama.
 
-if(KATIE_COMPAT)
+if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF)
     add_definitions(${KATIE_DEFINITIONS})
     include_directories(${KATIE_INCLUDES})
 endif()
