@@ -46,18 +46,14 @@
 
 QT_BEGIN_HEADER
 
-QT_BEGIN_NAMESPACE
-QT_END_NAMESPACE
-
 #ifndef QT_NO_SETTINGS
-
 
 #include <ctype.h>
 
 QT_BEGIN_NAMESPACE
 
-#ifdef Status // we seem to pick up a macro Status --> int somewhere
-#undef Status
+#ifdef Status
+#error qsettings.h must be included before any header file that defines Status
 #endif
 
 class QIODevice;
@@ -183,14 +179,12 @@ public:
     static Format registerFormat(const QString &extension, ReadFunc readFunc, WriteFunc writeFunc,
                                  Qt::CaseSensitivity caseSensitivity = Qt::CaseSensitive);
 
-
 protected:
 #ifndef QT_NO_QOBJECT
     bool event(QEvent *event);
 #endif
 
 private:
-
     Q_DISABLE_COPY(QSettings)
 };
 
