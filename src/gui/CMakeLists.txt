@@ -243,7 +243,6 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionDockWidget
     QStyleOptionDockWidgetV2
     QStyleOptionGroupBox
-    QStyleOptionProgressBar
     QStyleOptionSizeGrip
     QStyleOptionTabBarBase
     QStyleOptionTabBarBaseV2
@@ -373,10 +372,15 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsTextItem
     QGraphicsObject
     QStyleOptionGraphicsItem
+    QStyleOptionFrame
+    QStyleOptionFrameV2
+    QStyleOptionFrameV3
     QStyleOptionViewItem
     QStyleOptionViewItemV2
     QStyleOptionViewItemV3
     QStyleOptionViewItemV4
+    QStyleOptionProgressBar
+    QStyleOptionProgressBarV2
     QStyleOptionFocusRect
     QItemSelection
     QIntValidator
