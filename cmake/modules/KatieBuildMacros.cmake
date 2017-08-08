@@ -122,7 +122,7 @@ function(KATIE_GIT_CHECKOUT GITEXE OUTSTR)
     endif()
 endfunction()
 
-# a function to instruct katie_setup_target() which sources to exclude from the
+# a macro to instruct katie_setup_target() which sources to exclude from the
 # all-in-one source file
 macro(KATIE_ALLINONE_EXCLUDE ARG1)
     set_source_files_properties(${ARG1} ${ARGN} PROPERTIES ALLINONE_EXCLUDE TRUE)

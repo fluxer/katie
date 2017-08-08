@@ -36,6 +36,7 @@ set(BOOTSTRAP_DEFINITIONS
     -DQT_NO_USING_NAMESPACE
     -DQT_NO_DEPRECATED
     -DQT_NO_COMPRESS
+    -DQT_NO_EXCEPTIONS
 )
 
 set(BOOTSTRAP_SOURCES
@@ -83,8 +84,9 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
 )
 
-katie_setup_target(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
-add_executable(bootstrap_moc ${bootstrap_moc_SOURCES})
+# FIXME: all-in-one Debug build is broken
+# katie_setup_target(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
+add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
 katie_setup_target(moc ${MOC_SOURCES})

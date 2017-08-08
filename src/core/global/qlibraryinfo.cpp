@@ -45,20 +45,11 @@
 #include "qsettings.h"
 #include "qlibraryinfo.h"
 #include "qscopedpointer.h"
-
-#ifdef QT_BOOTSTRAPPED
-QT_BEGIN_NAMESPACE
-extern QString qmake_libraryInfoFile();
-QT_END_NAMESPACE
-#else
-# include "qcoreapplication.h"
-#endif
+#include "qcoreapplication.h"
 
 #include "qconfig.cpp"
 
 QT_BEGIN_NAMESPACE
-
-extern void qDumpCPUFeatures(); // in qsimd.cpp
 
 #ifndef QT_NO_SETTINGS
 
@@ -196,15 +187,11 @@ QLibraryInfo::location(LibraryLocation loc)
         QString baseDir;
         if (loc == PrefixPath) {
             // we make the prefix path absolute to the executable's directory
-#ifdef QT_BOOTSTRAPPED
-            baseDir = QFileInfo(qmake_libraryInfoFile()).absolutePath();
-#else
             if (QCoreApplication::instance()) {
                 baseDir = QCoreApplication::applicationDirPath();
             } else {
                 baseDir = QDir::currentPath();
             }
-#endif
         } else {
             // we make any other path absolute to the prefix directory
             baseDir = location(PrefixPath);
@@ -238,35 +225,5 @@ QLibraryInfo::location(LibraryLocation loc)
 #endif // QT_NO_SETTINGS
 
 QT_END_NAMESPACE
-
-#if defined(Q_CC_GNU) && defined(ELF_INTERPRETER)
-#  include <stdio.h>
-#  include <stdlib.h>
-
-extern const char qt_core_interpreter[] __attribute__((section(".interp")))
-    = ELF_INTERPRETER;
-
-extern "C" void qt_core_boilerplate();
-void qt_core_boilerplate()
-{
-    printf("This is the QtCore library version " QT_VERSION_STR "\n"
-           "Copyright (C) 2015 The Qt Company Ltd.\n"
-           "Contact: http://www.qt.io/licensing/\n"
-           "\n"
-           "Build key:           " QT_BUILD_KEY "\n"
-           "|\n"
-           "Build date:          %s\n"
-           "Installation prefix: %s\n"
-           "Library path:        %s\n"
-           "Include path:        %s\n",
-           qt_configure_installation,
-           qt_configure_prefix_path_str,
-           qt_configure_libraries_path_str,
-           qt_configure_headers_path_str);
-
-    QT_PREPEND_NAMESPACE(qDumpCPUFeatures)();
-
-    exit(0);
-}
 
 #endif

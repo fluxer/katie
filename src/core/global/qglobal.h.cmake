@@ -1023,9 +1023,6 @@ inline void qt_noop(void) {}
    Use the QT_NO_EXCEPTIONS macro to protect your code instead.
 */
 
-#ifdef QT_BOOTSTRAPPED
-#  define QT_NO_EXCEPTIONS
-#endif
 #if !defined(QT_NO_EXCEPTIONS) && defined(Q_CC_GNU) && !defined (__EXCEPTIONS) && !defined(Q_MOC_RUN)
 #  define QT_NO_EXCEPTIONS
 #endif
@@ -1094,6 +1091,10 @@ Q_CORE_EXPORT bool qSharedBuild();
 #  define QT_DEBUG
 #endif
 
+#if (defined(QT_NO_DEBUG_OUTPUT) || defined(QT_NO_TEXTSTREAM)) && !defined(QT_NO_DEBUG_STREAM)
+#define QT_NO_DEBUG_STREAM
+#endif
+
 class QString;
 #ifndef qPrintable
 #  define qPrintable(string) QString(string).toLocal8Bit().constData()
@@ -1125,10 +1126,6 @@ Q_CORE_EXPORT void qFatal(const char *, ...) /* print fatal message and exit */
 
 Q_CORE_EXPORT void qErrnoWarning(int code, const char *msg, ...);
 Q_CORE_EXPORT void qErrnoWarning(const char *msg, ...);
-
-#if (defined(QT_NO_DEBUG_OUTPUT) || defined(QT_NO_TEXTSTREAM)) && !defined(QT_NO_DEBUG_STREAM)
-#define QT_NO_DEBUG_STREAM
-#endif
 
 Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
 
@@ -1468,6 +1465,7 @@ template<> \
 Q_DECLARE_TYPEINFO_BODY(TYPE, FLAGS)
 
 
+
 template <typename T>
 inline void qSwap(T &value1, T &value2)
 {
@@ -1723,10 +1721,6 @@ template <typename Wrapper> static inline typename Wrapper::pointer qGetPtrHelpe
 #define QT_TRANSLATE_NOOP3(scope, x, comment) {x, comment}
 #define QT_TRANSLATE_NOOP3_UTF8(scope, x, comment) {x, comment}
 
-#ifndef QT_NO_TRANSLATION // ### This should enclose the NOOPs above
-
-#endif // QT_NO_TRANSLATION
-
 #define QDOC_PROPERTY(text)
 
 /*
@@ -1772,10 +1766,6 @@ Q_CORE_EXPORT int qrand();
 #  if defined (Q_OS_LINUX) || defined (Q_OS_SOLARIS) || defined (Q_OS_FREEBSD) || defined (Q_OS_OPENBSD)
 #    define Q_OF_ELF
 #  endif
-#endif
-
-#if !(defined(Q_WS_X11) && !defined(QT_NO_FREETYPE))
-#  define QT_NO_RAWFONT
 #endif
 
 namespace QtPrivate {

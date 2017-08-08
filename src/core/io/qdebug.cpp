@@ -39,13 +39,6 @@
 **
 ****************************************************************************/
 
-#ifdef QT_NO_DEBUG
-#undef QT_NO_DEBUG
-#endif
-#ifdef qDebug
-#undef qDebug
-#endif
-
 #include "qdebug.h"
 
 // This file is needed to force compilation of QDebug into the kernel library.
