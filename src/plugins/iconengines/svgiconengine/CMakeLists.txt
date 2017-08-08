@@ -1,10 +1,10 @@
 set(QSVGICONPLUGIN_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/iconengines/svgiconengine/qsvgiconengine.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgiconengine.h
 )
 
 set(QSVGICONPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/iconengines/svgiconengine/svgiconplugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/iconengines/svgiconengine/qsvgiconengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/svgiconplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgiconengine.cpp
 )
 
 katie_setup_target(qsvgiconplugin ${QSVGICONPLUGIN_SOURCES} ${QSVGICONPLUGIN_HEADERS})

@@ -1,5 +1,5 @@
 set(QTIFFPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/tiff/qtiffplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qtiffplugin.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/image/qtiffhandler.cpp
 )
 

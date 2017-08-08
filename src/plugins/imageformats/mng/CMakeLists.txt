@@ -1,5 +1,5 @@
 set(QMNGPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/mng/qmngplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qmngplugin.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/image/qmnghandler.cpp
 )
 

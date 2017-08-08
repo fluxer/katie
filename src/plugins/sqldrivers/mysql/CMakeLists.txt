@@ -1,14 +1,10 @@
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}/sqldrivers/mysql
-)
-
 set(MYSQLCDRIVER_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/mysql/qsql_mysql.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_mysql.h
 )
 
 set(MYSQLCDRIVER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/mysql/mysqlmain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/mysql/qsql_mysql.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/mysqlmain.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_mysql.cpp
 )
 
 include_directories(${MYSQL_INCLUDES})

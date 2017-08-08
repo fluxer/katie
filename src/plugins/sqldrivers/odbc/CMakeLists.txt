@@ -1,14 +1,10 @@
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}/sqldrivers/odbc
-)
-
 set(ODBCDRIVER_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/odbc/qsql_odbc.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_odbc.h
 )
 
 set(ODBCDRIVER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/odbc/odbcmain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/odbc/qsql_odbc.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/odbcmain.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_odbc.cpp
 )
 
 include_directories(${ODBC_INCLUDES})

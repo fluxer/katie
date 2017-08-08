@@ -34,11 +34,15 @@ if(NOT ${KATIE_TYPE} STREQUAL SHARED)
     add_definitions(-DQT_STATICPLUGIN)
 endif()
 
-
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/accessible")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/accessible")
 if(WITH_ACCESSIBILITY)
-    include(accessible/widgets/widgets.cmake)
+    add_subdirectory(accessible/widgets)
 endif()
 
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/bearer")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/bearer")
 
 set(SHAREDBEARER_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer/qnetworksession_impl.cpp
@@ -54,51 +58,61 @@ target_include_directories(sharedbearer PRIVATE
 )
 
 if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
-    include(bearer/generic/generic.cmake)
+    add_subdirectory(bearer/generic)
     if(WITH_DBUS AND DBUS_FOUND)
-        include(bearer/connman/connman.cmake)
-        include(bearer/networkmanager/networkmanager.cmake)
+        add_subdirectory(bearer/connman)
+        add_subdirectory(bearer/networkmanager)
     endif()
 else()
-    include(bearer/generic/generic.cmake)
+    add_subdirectory(bearer/generic)
 endif()
 
 
-include(iconengines/svgiconengine/svgiconengine.cmake)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/iconengines")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/iconengines")
+add_subdirectory(iconengines/svgiconengine)
 
 
-include(imageformats/gif/gif.cmake)
-include(imageformats/ico/ico.cmake)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/imageformats")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/imageformats")
+add_subdirectory(imageformats/gif)
+add_subdirectory(imageformats/ico)
 if(WITH_JPEG AND JPEG_FOUND)
-    include(imageformats/jpeg/jpeg.cmake)
+    add_subdirectory(imageformats/jpeg)
 endif()
 if(WITH_MNG AND MNG_FOUND)
-    include(imageformats/mng/mng.cmake)
+    add_subdirectory(imageformats/mng)
 endif()
-include(imageformats/svg/svg.cmake)
-include(imageformats/tga/tga.cmake)
+add_subdirectory(imageformats/svg)
+add_subdirectory(imageformats/tga)
 if(WITH_TIFF AND TIFF_FOUND)
-    include(imageformats/tiff/tiff.cmake)
+    add_subdirectory(imageformats/tiff)
 endif()
 
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/script")
 if(WITH_DBUS AND DBUS_FOUND)
-    include(script/qtdbus/qtdbus.cmake)
+    add_subdirectory(script/qtdbus)
 endif()
 
 
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/sqldrivers")
 if(WITH_MYSQL AND MYSQL_FOUND)
-    include(sqldrivers/mysql/mysql.cmake)
+    add_subdirectory(sqldrivers/mysql)
 endif()
 if(WITH_ODBC AND ODBC_FOUND)
-    include(sqldrivers/odbc/odbc.cmake)
+    add_subdirectory(sqldrivers/odbc)
 endif()
 if(WITH_PSQL AND PostgreSQL_FOUND)
-    include(sqldrivers/psql/psql.cmake)
+    add_subdirectory(sqldrivers/psql)
 endif()
 if(WITH_SQLITE AND SQLITE_FOUND)
-    include(sqldrivers/sqlite/sqlite.cmake)
+    add_subdirectory(sqldrivers/sqlite)
 endif()
 
 
-include(designer/qdeclarativeview/qdeclarativeview.cmake)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/designer")
+add_subdirectory(designer/qdeclarativeview)

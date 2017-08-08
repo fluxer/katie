@@ -1,15 +1,10 @@
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}/bearer/generic
-    ${CMAKE_CURRENT_BINARY_DIR}/bearer
-)
-
 set(QGENERICBEARERPLUGIN_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qgenericengine.h
 )
 
 set(QGENERICBEARERPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericmain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer/generic/qgenericengine.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qgenericmain.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qgenericengine.cpp
 )
 
 katie_setup_target(qgenericbearerplugin ${QGENERICBEARERPLUGIN_SOURCES} ${QGENERICBEARERPLUGIN_HEADERS})

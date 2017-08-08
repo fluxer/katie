@@ -51,11 +51,7 @@
 #include <qvector.h>
 #include <qdebug.h>
 
-#if defined Q_OS_WIN
-# include <qt_windows.h>
-#else
-# include <unistd.h>
-#endif
+#include <unistd.h>
 
 #include <sqlite3.h>
 

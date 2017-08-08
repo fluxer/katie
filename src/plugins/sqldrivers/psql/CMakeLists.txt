@@ -1,14 +1,10 @@
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}/sqldrivers/psql
-)
-
 set(PSQLDRIVER_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/psql/qsql_psql.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_psql.h
 )
 
 set(PSQLDRIVER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/psql/psqlmain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/psql/qsql_psql.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/psqlmain.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_psql.cpp
 )
 
 include_directories(${PostgreSQL_INCLUDE_DIRS})

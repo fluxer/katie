@@ -477,6 +477,22 @@ if(ENABLE_TESTING)
     add_definitions(-DQT_BUILD_INTERNAL)
     # FIXME: most tests are not namespaces aware
     add_definitions(-DQT_NAMESPACE_COMPAT)
+
+    configure_file(
+        ${CMAKE_SOURCE_DIR}/cmake/runtest.sh.cmake
+        ${CMAKE_BINARY_DIR}/runtest.sh
+        @ONLY
+    )
+    # FIXME: replace with something native (to CMake)
+    execute_process(
+        COMMAND chmod +x ${CMAKE_BINARY_DIR}/runtest.sh
+        RESULT_VARIABLE chmod_result
+        ERROR_VARIABLE chmod_output
+        OUTPUT_VARIABLE chmod_output
+    )
+    if(NOT chmod_result STREQUAL "0")
+        message(FATAL_ERROR "${chmod_output} (${chmod_result})")
+    endif()
 endif()
 
 # optional packages

@@ -1,10 +1,10 @@
 set(QICOPLUGIN_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/ico/qicohandler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qicohandler.h
 )
 
 set(QICOPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/ico/qicoplugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/ico/qicohandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qicoplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qicohandler.cpp
 )
 
 katie_setup_target(qicoplugin ${QICOPLUGIN_SOURCES} ${QICOPLUGIN_HEADERS})

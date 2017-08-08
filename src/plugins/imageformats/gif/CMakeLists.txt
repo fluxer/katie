@@ -1,5 +1,5 @@
 set(QGIFPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/gif/qgifplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qgifplugin.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/image/qgifhandler.cpp
 )
 

@@ -1,10 +1,10 @@
 set(QSVGPLUGIN_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/svg/qsvgiohandler.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgiohandler.h
 )
 
 set(QSVGPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/svg/qsvgplugin.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/svg/qsvgiohandler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsvgiohandler.cpp
 )
 
 katie_setup_target(qsvgplugin ${QSVGPLUGIN_SOURCES} ${QSVGPLUGIN_HEADERS})

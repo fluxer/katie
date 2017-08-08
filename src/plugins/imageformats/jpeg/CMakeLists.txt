@@ -1,5 +1,5 @@
 set(QJPEGPLUGIN_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats/jpeg/qjpegplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qjpegplugin.cpp
     ${CMAKE_SOURCE_DIR}/src/gui/image/qjpeghandler.cpp
 )
 

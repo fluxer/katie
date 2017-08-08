@@ -1,5 +1,6 @@
+# just to make catching binaries other than tests easier in case maintainer forgot to specify
+# output directory or something strange happens, no files should be placed there
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/tests")
-set(CTEST_ENVIRONMENT "QTDIR=${CMAKE_SOURCE_DIR}")
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include

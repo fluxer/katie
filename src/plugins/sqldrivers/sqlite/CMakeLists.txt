@@ -1,14 +1,10 @@
-include_directories(
-    ${CMAKE_CURRENT_BINARY_DIR}/sqldrivers/sqlite
-)
-
 set(SQLDRIVER_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/sqlite/qsql_sqlite.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_sqlite.h
 )
 
 set(SQLDRIVER_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/sqlite/sqlitemain.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/sqldrivers/sqlite/qsql_sqlite.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/sqlitemain.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qsql_sqlite.cpp
 )
 
 include_directories(${SQLITE_INCLUDES})
