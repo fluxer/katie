@@ -21,11 +21,9 @@
 #ifndef WTF_dtoa_h
 #define WTF_dtoa_h
 
-#include "Threading.h"
+#include <wtf/Platform.h>
 
 namespace WTF {
-
-    extern QMutex* s_dtoaP5Mutex;
 
     double strtod(const char* s00, char** se);
 
