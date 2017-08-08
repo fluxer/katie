@@ -225,5 +225,3 @@ QLibraryInfo::location(LibraryLocation loc)
 #endif // QT_NO_SETTINGS
 
 QT_END_NAMESPACE
-
-#endif
