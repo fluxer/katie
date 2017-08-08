@@ -42,11 +42,7 @@
 #include "qsqldatabase.h"
 #include "qsqlquery.h"
 
-#ifdef Q_OS_WIN32
-// Conflicting declarations of LPCBYTE in sqlfront.h and winscard.h
-#define _WINSCARD_H_
-#endif
-
+// NOTE: if the following are defined then drivers must be built-in
 #ifdef QT_SQL_PSQL
 #include "../drivers/psql/qsql_psql.h"
 #endif
@@ -56,34 +52,8 @@
 #ifdef QT_SQL_ODBC
 #include "../drivers/odbc/qsql_odbc.h"
 #endif
-#ifdef QT_SQL_OCI
-#include "../drivers/oci/qsql_oci.h"
-#endif
-#ifdef QT_SQL_TDS
-// conflicting RETCODE typedef between odbc and freetds
-#define RETCODE DBRETCODE
-#include "../drivers/tds/qsql_tds.h"
-#undef RETCODE
-#endif
-#ifdef QT_SQL_DB2
-#include "../drivers/db2/qsql_db2.h"
-#endif
 #ifdef QT_SQL_SQLITE
 #include "../drivers/sqlite/qsql_sqlite.h"
-#endif
-#ifdef QT_SQL_SQLITE2
-#include "../drivers/sqlite2/qsql_sqlite2.h"
-#endif
-#ifdef QT_SQL_IBASE
-#undef SQL_FLOAT  // avoid clash with ODBC
-#undef SQL_DOUBLE
-#undef SQL_TIMESTAMP
-#undef SQL_TYPE_TIME
-#undef SQL_TYPE_DATE
-#undef SQL_DATE
-#define SCHAR IBASE_SCHAR  // avoid clash with ODBC (older versions of ibase.h with Firebird)
-#include "../drivers/ibase/qsql_ibase.h"
-#undef SCHAR
 #endif
 
 #include "qdebug.h"
@@ -102,7 +72,7 @@
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_LIBRARY
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, sqlloader,
                           (QSqlDriverFactoryInterface_iid,
                            QLatin1String("/sqldrivers")))
 #endif
@@ -555,29 +525,12 @@ QStringList QSqlDatabase::drivers()
     list << QLatin1String("QODBC3");
     list << QLatin1String("QODBC");
 #endif
-#ifdef QT_SQL_OCI
-    list << QLatin1String("QOCI8");
-    list << QLatin1String("QOCI");
-#endif
-#ifdef QT_SQL_TDS
-    list << QLatin1String("QTDS7");
-    list << QLatin1String("QTDS");
-#endif
-#ifdef QT_SQL_DB2
-    list << QLatin1String("QDB2");
-#endif
 #ifdef QT_SQL_SQLITE
     list << QLatin1String("QSQLITE");
 #endif
-#ifdef QT_SQL_SQLITE2
-    list << QLatin1String("QSQLITE2");
-#endif
-#ifdef QT_SQL_IBASE
-    list << QLatin1String("QIBASE");
-#endif
 
 #ifndef QT_NO_LIBRARY
-    if (QFactoryLoader *fl = loader()) {
+    if (QFactoryLoader *fl = sqlloader()) {
         QStringList keys = fl->keys();
         for (QStringList::const_iterator i = keys.constBegin(); i != keys.constEnd(); ++i) {
             if (!list.contains(*i))
@@ -652,15 +605,10 @@ QStringList QSqlDatabase::connectionNames()
 
     \table
     \header \i Driver Type \i Description
-    \row \i QDB2     \i IBM DB2
-    \row \i QIBASE   \i Borland InterBase Driver
     \row \i QMYSQL   \i MySQL Driver
-    \row \i QOCI     \i Oracle Call Interface Driver
     \row \i QODBC    \i ODBC Driver (includes Microsoft SQL Server)
     \row \i QPSQL    \i PostgreSQL Driver
     \row \i QSQLITE  \i SQLite version 3 or above
-    \row \i QSQLITE2 \i SQLite version 2
-    \row \i QTDS     \i Sybase Adaptive Server
     \endtable
 
     Additional third party drivers, including your own custom
@@ -738,25 +686,9 @@ void QSqlDatabasePrivate::init(const QString &type)
         if (type == QLatin1String("QODBC") || type == QLatin1String("QODBC3"))
             driver = new QODBCDriver();
 #endif
-#ifdef QT_SQL_OCI
-        if (type == QLatin1String("QOCI") || type == QLatin1String("QOCI8"))
-            driver = new QOCIDriver();
-#endif
-#ifdef QT_SQL_TDS
-        if (type == QLatin1String("QTDS") || type == QLatin1String("QTDS7"))
-            driver = new QTDSDriver();
-#endif
-#ifdef QT_SQL_DB2
-        if (type == QLatin1String("QDB2"))
-            driver = new QDB2Driver();
-#endif
 #ifdef QT_SQL_SQLITE
         if (type == QLatin1String("QSQLITE"))
             driver = new QSQLiteDriver();
-#endif
-#ifdef QT_SQL_SQLITE2
-        if (type == QLatin1String("QSQLITE2"))
-            driver = new QSQLite2Driver();
 #endif
 #ifdef QT_SQL_IBASE
         if (type == QLatin1String("QIBASE"))
@@ -775,8 +707,8 @@ void QSqlDatabasePrivate::init(const QString &type)
     }
 
 #ifndef QT_NO_LIBRARY
-    if (!driver && loader()) {
-        if (QSqlDriverFactoryInterface *factory = qobject_cast<QSqlDriverFactoryInterface*>(loader()->instance(type)))
+    if (!driver && sqlloader()) {
+        if (QSqlDriverFactoryInterface *factory = qobject_cast<QSqlDriverFactoryInterface*>(sqlloader()->instance(type)))
             driver = factory->create(type);
     }
 #endif // QT_NO_LIBRARY

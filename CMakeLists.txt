@@ -209,7 +209,7 @@ if(KATIE_ALLINONE)
     add_definitions(-DQT_ALLINONE)
 endif()
 
-# for 3rd party source used in test components
+# for 3rd party source used in test component
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
 if(HAVE_SYS_TIME_H)
     add_definitions(-DTIME_WITH_SYS_TIME=1 -DHAVE_SYS_TIME_H)
@@ -273,6 +273,14 @@ set_package_properties(PCRE PROPERTIES
     TYPE REQUIRED
 )
 
+find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
+set_package_properties(X11 PROPERTIES
+    PURPOSE "Required for X11/X.Org integration support"
+    DESCRIPTION "Open source implementation of the X Window System"
+    URL "http://www.x.org"
+    TYPE REQUIRED
+)
+
 find_package(Git)
 set_package_properties(Git PROPERTIES
     PURPOSE "Git checkout stored for the sake of bug reports"
@@ -293,6 +301,23 @@ find_package(NIS)
 set_package_properties(NIS PROPERTIES
     PURPOSE "Required for Network Information Service support"
     DESCRIPTION "Standard C library specific NIS implementation"
+    URL ""
+    TYPE RECOMMENDED
+)
+
+find_package(Resolv)
+set_package_properties(Resolv PROPERTIES
+    PURPOSE "Required for domain resolving support"
+    DESCRIPTION "Standard C library specific resolv implementation"
+    URL ""
+    TYPE RECOMMENDED
+)
+
+find_package(NSL)
+set_package_properties(NSL PROPERTIES
+    PURPOSE "Required for printing information support"
+    DESCRIPTION "Standard C library specific NSL implementation"
+    URL ""
     TYPE RECOMMENDED
 )
 
@@ -377,6 +402,7 @@ set_package_properties(HarfBuzz PROPERTIES
     TYPE RECOMMENDED
 )
 
+# v2.22.0+ to avoid too many conditionals in sources
 find_package(GLib2 2.22.0)
 set_package_properties(GLib2 PROPERTIES
     PURPOSE "Required for glib mainloop support"
@@ -393,12 +419,20 @@ set_package_properties(DBus PROPERTIES
     TYPE RECOMMENDED
 )
 
+find_package(Sqlite)
+set_package_properties(Sqlite PROPERTIES
+    PURPOSE "Required for SQLite database support"
+    DESCRIPTION "Software library that implements SQL database engine"
+    URL "https://www.sqlite.org/"
+    TYPE RECOMMENDED
+)
+
 find_package(ODBC)
 set_package_properties(ODBC PROPERTIES
     PURPOSE "Required for ODBC database support"
     DESCRIPTION "The definitive standard for ODBC on non MS Windows platforms"
     URL "http://www.unixodbc.org"
-    TYPE RECOMMENDED
+    TYPE OPTIONAL
 )
 
 find_package(PostgreSQL)
@@ -415,39 +449,6 @@ set_package_properties(MySQL PROPERTIES
     DESCRIPTION "The world's most popular open source database"
     URL "http://www.mysql.com"
     TYPE OPTIONAL
-)
-
-find_package(Sqlite)
-set_package_properties(Sqlite PROPERTIES
-    PURPOSE "Required for SQLite database support"
-    DESCRIPTION "Software library that implements SQL database engine"
-    URL "https://www.sqlite.org/"
-    TYPE RECOMMENDED
-)
-
-find_package(Resolv)
-set_package_properties(Resolv PROPERTIES
-    PURPOSE "Required for domain resolving support"
-    DESCRIPTION ""
-    URL ""
-    TYPE RECOMMENDED
-)
-
-find_package(NSL)
-set_package_properties(NSL PROPERTIES
-    PURPOSE "Required for printing information support"
-    DESCRIPTION ""
-    URL ""
-    TYPE RECOMMENDED
-)
-
-
-find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
-set_package_properties(X11 PROPERTIES
-    PURPOSE "Required for X11/X.Org integration support"
-    DESCRIPTION "Open source implementation of the X Window System"
-    URL "http://www.x.org"
-    TYPE REQUIRED
 )
 
 if(PYTHONINTERP_FOUND)
@@ -507,6 +508,14 @@ if(NOT WITH_CUPS OR NOT CUPS_FOUND)
     katie_definition(-DQT_NO_CUPS -DQT_NO_LPR)
 endif()
 
+if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
+    katie_definition(-DQT_NO_RESOLV)
+endif()
+
+if(NOT WITH_NSL OR NOT NSL_FOUND)
+    katie_definition(-DQT_NO_NSL)
+endif()
+
 if(NOT WITH_NIS OR NOT NIS_FOUND)
     katie_definition(-DQT_NO_NIS)
 endif()
@@ -525,14 +534,6 @@ endif()
 
 if(NOT WITH_TIFF OR NOT TIFF_FOUND)
     katie_definition(-DQT_NO_IMAGEFORMAT_TIFF)
-endif()
-
-if(NOT WITH_RESOLV OR NOT RESOLV_FOUND)
-    katie_definition(-DQT_NO_RESOLV)
-endif()
-
-if(NOT WITH_NSL OR NOT NSL_FOUND)
-    katie_definition(-DQT_NO_NSL)
 endif()
 
 # conditional features

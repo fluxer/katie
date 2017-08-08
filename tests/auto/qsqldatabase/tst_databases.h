@@ -109,11 +109,10 @@ inline static QString qTableName( const QString& prefix, QSqlDriver* driver )
 
 inline static bool testWhiteSpaceNames( const QString &name )
 {
-/*    return name.startsWith( QLatin1String("QPSQL") )
+    return name.startsWith( QLatin1String("QPSQL") )
            || name.startsWith( QLatin1String("QODBC") )
            || name.startsWith( QLatin1String("QSQLITE") )
-           || name.startsWith( QLatin1String("QMYSQL") );*/
-    return name != QLatin1String("QSQLITE2");
+           || name.startsWith( QLatin1String("QMYSQL") );
 }
 
 inline static QString toHex( const QString& binary )
@@ -240,16 +239,9 @@ public:
 
     void addDbs()
     {
-//         addDb( "QOCI8", "//horsehead.nokia.troll.no:1521/pony.troll.no", "scott", "tiger" ); // Oracle 9i on horsehead
-//         addDb( "QOCI8", "//horsehead.nokia.troll.no:1521/ustest.troll.no", "scott", "tiger", "" ); // Oracle 9i on horsehead
-//         addDb( "QOCI8", "//iceblink.nokia.troll.no:1521/ice.troll.no", "scott", "tiger", "" ); // Oracle 8 on iceblink (not currently working)
-//         addDb( "QOCI", "//silence.nokia.troll.no:1521/testdb", "scott", "tiger" ); // Oracle 10g on silence
-//         addDb( "QOCI", "//bq-oracle10g.apac.nokia.com:1521/XE", "scott", "tiger" ); // Oracle 10gexpress
-
 //      This requires a local ODBC data source to be configured( pointing to a MySql database )
 //         addDb( "QODBC", "mysqlodbc", "troll", "trond" );
 //         addDb( "QODBC", "SqlServer", "troll", "trond" );
-//         addDb( "QTDS7", "testdb", "troll", "trondk", "horsehead" );
 //         addDb( "QODBC", "silencetestdb", "troll", "trond", "silence" );
 //         addDb( "QODBC", "horseheadtestdb", "troll", "trondk", "horsehead" );
 
@@ -275,24 +267,9 @@ public:
 //         addDb( "QPSQL7", "testdb", "testuser", "Ee4Gabf6_", "bq-pgsql84.apac.nokia.com" );         // Version 8.4.1-2.1.i586
 //         addDb( "QPSQL7", "testdb", "testuser", "Ee4Gabf6_", "bq-pgsql90.apac.nokia.com" );         // Version 9.0.0
 
-
-//         addDb( "QDB2", "testdb", "troll", "trond", "silence.nokia.troll.no" ); // DB2 v9.1 on silence
-//         addDb( "QDB2", "testdb", "testuser", "Ee4Gabf6_", "bq-db2-972.apac.nokia.com" ); // DB2
-
-//      yes - interbase really wants the physical path on the host machine.
-//         addDb( "QIBASE", "/opt/interbase/qttest.gdb", "SYSDBA", "masterkey", "horsehead.nokia.troll.no" );
-//         addDb( "QIBASE", "silence.troll.no:c:\\ibase\\testdb", "SYSDBA", "masterkey", "" ); // InterBase 7.5 on silence
-//         addDb( "QIBASE", "silence.troll.no:c:\\ibase\\testdb_ascii", "SYSDBA", "masterkey", "" ); // InterBase 7.5 on silence
-//         addDb( "QIBASE", "/opt/firebird/databases/testdb.fdb", "testuser", "Ee4Gabf6_", "firebird1-nokia.trolltech.com.au" ); // Firebird 1.5.5
-//         addDb( "QIBASE", "/opt/firebird/databases/testdb.fdb", "testuser", "Ee4Gabf6_", "firebird2-nokia.trolltech.com.au" ); // Firebird 2.1.1
-
-//         addDb( "QIBASE", "/opt/firebird/databases/testdb.fdb", "testuser", "Ee4Gabf6_", "bq-firebird1.apac.nokia.com" ); // Firebird 1.5.5
-//         addDb( "QIBASE", "/opt/firebird/databases/testdb.fdb", "testuser", "Ee4Gabf6_", "bq-firebird2.apac.nokia.com" ); // Firebird 2.1.1
-
 //      use in-memory database to prevent local files
 //         addDb("QSQLITE", ":memory:");
          addDb( QLatin1String("QSQLITE"), QDir::toNativeSeparators(sqLiteFileName()));
-//         addDb( "QSQLITE2", QDir::toNativeSeparators(QDir::tempPath()+"/foo2.db") );
 //         addDb( "QODBC3", "DRIVER={SQL SERVER};SERVER=iceblink.nokia.troll.no\\ICEBLINK", "troll", "trond", "" );
 //         addDb( "QODBC3", "DRIVER={SQL Native Client};SERVER=silence.nokia.troll.no\\SQLEXPRESS", "troll", "trond", "" );
 
@@ -302,8 +279,6 @@ public:
 //         addDb( "QODBC", "DRIVER={FreeTDS};SERVER=silence.nokia.troll.no;DATABASE=testdb;PORT=2392;UID=troll;PWD=trond", "troll", "trond", "" );
 //         addDb( "QODBC", "DRIVER={FreeTDS};SERVER=bq-winserv2003-x86-01.apac.nokia.com;DATABASE=testdb;PORT=1433;UID=testuser;PWD=Ee4Gabf6_;TDS_Version=8.0", "", "", "" );
 //         addDb( "QODBC", "DRIVER={FreeTDS};SERVER=bq-winserv2008-x86-01.apac.nokia.com;DATABASE=testdb;PORT=1433;UID=testuser;PWD=Ee4Gabf6_;TDS_Version=8.0", "", "", "" );
-//         addDb( "QTDS7", "testdb", "testuser", "Ee4Gabf6_", "bq-winserv2003" );
-//         addDb( "QTDS7", "testdb", "testuser", "Ee4Gabf6_", "bq-winserv2008" );
 //         addDb( "QODBC3", "DRIVER={SQL SERVER};SERVER=bq-winserv2003-x86-01.apac.nokia.com;DATABASE=testdb;PORT=1433", "testuser", "Ee4Gabf6_", "" );
 //         addDb( "QODBC3", "DRIVER={SQL SERVER};SERVER=bq-winserv2008-x86-01.apac.nokia.com;DATABASE=testdb;PORT=1433", "testuser", "Ee4Gabf6_", "" );
 //         addDb( "QODBC", "DRIVER={Microsoft Access Driver (*.mdb)};DBQ=c:\\dbs\\access\\testdb.mdb", "", "", "" );
@@ -353,7 +328,7 @@ public:
     {
         QString res = db.driverName() + QLatin1Char('@');
 
-        if ( db.driverName().startsWith( QLatin1String("QODBC") ) || db.driverName().startsWith( QLatin1String("QOCI") ) ) {
+        if ( db.driverName().startsWith( QLatin1String("QODBC") ) ) {
             res += db.databaseName();
         } else {
             res += db.hostName();
@@ -455,19 +430,7 @@ public:
         if ( db.driverName().startsWith( QLatin1String("QPSQL") ) )
             return QLatin1String( "bytea" );
 
-        if ( db.driverName().startsWith( QLatin1String("QTDS") )
-                || isSqlServer( db )
-                || isMSAccess( db ) )
-            return QLatin1String( "image" );
-
-        if ( db.driverName().startsWith( QLatin1String("QDB2") ) )
-            return QString( "blob(%1)" ).arg( blobSize );
-
-        if ( db.driverName().startsWith( QLatin1String("QIBASE") ) )
-            return QLatin1String( "blob sub_type 0 segment size 4096" );
-
-        if ( db.driverName().startsWith( QLatin1String("QOCI") )
-                || db.driverName().startsWith( QLatin1String("QSQLITE") ) )
+        if ( db.driverName().startsWith( QLatin1String("QSQLITE") ) )
             return QLatin1String( "blob" );
 
         qDebug() <<  "tst_Databases::blobTypeName: Don't know the blob type for" << dbToString( db );
@@ -479,12 +442,8 @@ public:
     {
         if ( db.driverName().startsWith( QLatin1String("QMYSQL") ) )
             return QLatin1String( "AUTO_INCREMENT" );
-        if ( db.driverName().startsWith( QLatin1String("QTDS") ) )
-            return QLatin1String( "IDENTITY" );
 /*        if ( db.driverName().startsWith( QLatin1String("QPSQL") ) )
             return QLatin1String( "SERIAL" );*/
-//        if ( db.driverName().startsWith( QLatin1String("QDB2") ) )
-//            return QLatin1String( "GENERATED BY DEFAULT AS IDENTITY" );
 
         return QString();
     }
@@ -535,10 +494,6 @@ public:
     static bool isMySQL( QSqlDatabase db )
     {
         return db.driverName().startsWith(QLatin1String("QMYSQL")) || (db.driverName().startsWith(QLatin1String("QODBC")) && db.databaseName().contains(QLatin1String("MySQL"), Qt::CaseInsensitive) );
-    }
-    static bool isDB2( QSqlDatabase db )
-    {
-        return db.driverName().startsWith(QLatin1String("QDB2")) || (db.driverName().startsWith(QLatin1String("QODBC")) && db.databaseName().contains(QLatin1String("db2"), Qt::CaseInsensitive) );
     }
 
     // -1 on fail, else Oracle version

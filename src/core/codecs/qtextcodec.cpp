@@ -85,7 +85,7 @@
 QT_BEGIN_NAMESPACE
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, loader,
+Q_GLOBAL_STATIC_WITH_ARGS(QFactoryLoader, codecsloader,
     (QTextCodecFactoryInterface_iid, QLatin1String("/codecs")))
 #endif
 
@@ -127,7 +127,7 @@ static bool nameMatch(const QByteArray &name, const QByteArray &test)
 static QTextCodec *createForName(const QByteArray &name)
 {
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = codecsloader();
     QStringList keys = l->keys();
     for (int i = 0; i < keys.size(); ++i) {
         if (nameMatch(name, keys.at(i).toLatin1())) {
@@ -149,7 +149,7 @@ static QTextCodec *createForMib(int mib)
 #ifndef QT_NO_TEXTCODECPLUGIN
     QString name = QLatin1String("MIB: ") + QString::number(mib);
     if (QTextCodecFactoryInterface *factory
-        = qobject_cast<QTextCodecFactoryInterface*>(loader()->instance(name)))
+        = qobject_cast<QTextCodecFactoryInterface*>(codecsloader()->instance(name)))
         return factory->create(name);
 #else
     Q_UNUSED(mib);
@@ -797,7 +797,7 @@ QList<QByteArray> QTextCodec::availableCodecs()
 #endif
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = codecsloader();
     QStringList keys = l->keys();
     for (int i = 0; i < keys.size(); ++i) {
         if (!keys.at(i).startsWith(QLatin1String("MIB: "))) {
@@ -833,7 +833,7 @@ QList<int> QTextCodec::availableMibs()
 #endif
 
 #if !defined(QT_NO_LIBRARY) && !defined(QT_NO_TEXTCODECPLUGIN)
-    QFactoryLoader *l = loader();
+    QFactoryLoader *l = codecsloader();
     QStringList keys = l->keys();
     for (int i = 0; i < keys.size(); ++i) {
         if (keys.at(i).startsWith(QLatin1String("MIB: "))) {
