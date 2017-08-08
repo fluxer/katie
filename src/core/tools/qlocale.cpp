@@ -2451,7 +2451,6 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
         int decpt, sign;
         QString digits;
 
-#ifdef QT_QLOCALE_USES_FCVT
         // NOT thread safe!
         if (form == DFDecimal) {
             digits = QLatin1String(fcvt(d, precision, &decpt, &sign));
@@ -2473,36 +2472,6 @@ QString QLocalePrivate::doubleToString(const QChar _zero, const QChar plus, cons
             }
 
         }
-
-#else
-        int mode;
-        if (form == DFDecimal)
-            mode = 3;
-        else
-            mode = 2;
-
-        /* This next bit is a bit quirky. In DFExponent form, the precision
-           is the number of digits after decpt. So that would suggest using
-           mode=3 for qdtoa. But qdtoa behaves strangely when mode=3 and
-           precision=0. So we get around this by using mode=2 and reasoning
-           that we want precision+1 significant digits, since the decimal
-           point in this mode is always after the first digit. */
-        int pr = precision;
-        if (form == DFExponent)
-            ++pr;
-
-        char *rve = 0;
-        char *buff = 0;
-        QT_TRY {
-            digits = QLatin1String(qdtoa(d, mode, pr, &decpt, &sign, &rve, &buff));
-        } QT_CATCH(...) {
-            if (buff != 0)
-                free(buff);
-            QT_RETHROW;
-        }
-        if (buff != 0)
-            free(buff);
-#endif // QT_QLOCALE_USES_FCVT
 
         if (_zero.unicode() != '0') {
             ushort z = _zero.unicode() - '0';

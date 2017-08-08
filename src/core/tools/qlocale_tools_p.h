@@ -118,8 +118,6 @@ static inline bool qIsAlnum(char c)
 // Removes thousand-group separators in "C" locale.
 bool removeGroupSeparators(QLocalePrivate::CharBuff *num);
 
-Q_CORE_EXPORT char *qdtoa(double d, int mode, int ndigits, int *decpt,
-                          int *sign, char **rve, char **digits_str);
 double qstrtod(const char *s00, char const **se, bool *ok);
 qlonglong qstrtoll(const char *nptr, const char **endptr, int base, bool *ok);
 qulonglong qstrtoull(const char *nptr, const char **endptr, int base, bool *ok);
