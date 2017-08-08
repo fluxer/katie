@@ -9161,8 +9161,6 @@ void QWidget::repaint(int x, int y, int w, int h)
 */
 void QWidget::repaint(const QRect &rect)
 {
-    Q_D(QWidget);
-
     if (testAttribute(Qt::WA_WState_ConfigPending)) {
         update(rect);
         return;
@@ -9186,8 +9184,6 @@ void QWidget::repaint(const QRect &rect)
 */
 void QWidget::repaint(const QRegion &rgn)
 {
-    Q_D(QWidget);
-
     if (testAttribute(Qt::WA_WState_ConfigPending)) {
         update(rgn);
         return;

@@ -36,8 +36,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
 )
 
-set(TRAVIS_TEST_ENVIRONMENT "$ENV{TRAVIS_TEST_ENVIRONMENT}")
-
 file(GLOB_RECURSE CMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
 foreach(cmakefile ${CMAKEFILES})
     get_filename_component(dirname ${cmakefile} PATH)

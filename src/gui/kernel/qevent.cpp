@@ -2279,23 +2279,6 @@ static inline void formatTouchPoint(QDebug d, const QTouchEvent::TouchPoint &tp)
     d << ')';
 }
 
-static inline void formatTouchEvent(QDebug d, const char *name, const QTouchEvent &t)
-{
-    d << "QTouchEvent(" << name << " states: " <<  t.touchPointStates();
-    d << ", " << t.touchPoints().size() << " points: " << t.touchPoints() << ')';
-}
-
-static void formatUnicodeString(QDebug d, const QString &s)
-{
-    d << '"' << hex;
-    for (int i = 0; i < s.size(); ++i) {
-        if (i)
-            d << ',';
-        d << "U+" << s.at(i).unicode();
-    }
-    d << dec << '"';
-}
-
 static const char *eventTypeName(QEvent::Type t)
 {
     static const int enumIdx = QEvent::staticMetaObject.indexOfEnumerator("Type");
@@ -2548,8 +2531,11 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
 #  endif // !QT_NO_DRAGANDDROP
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
-    case QEvent::TouchEnd:
-        formatTouchEvent(dbg, eventTypeName(type), *static_cast<const QTouchEvent*>(e));
+    case QEvent::TouchEnd: {
+        const QTouchEvent *te = static_cast<const QTouchEvent*>(e);
+        dbg << "QTouchEvent(" << eventTypeName(type) << " states: " <<  te->touchPointStates();
+        dbg << ", " << te->touchPoints().size() << " points: " << te->touchPoints() << ')';
+    }
         break;
     case QEvent::ChildAdded:
     case QEvent::ChildPolished:
