@@ -21,12 +21,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtSql
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
-    ${CMAKE_CURRENT_SOURCE_DIR}/script
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs
-    ${CMAKE_CURRENT_SOURCE_DIR}/imageformats
-    ${CMAKE_CURRENT_SOURCE_DIR}/iconengines
-    ${CMAKE_CURRENT_SOURCE_DIR}/accessible
-    ${CMAKE_CURRENT_SOURCE_DIR}/qmltooling
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
 )
 
@@ -34,6 +28,8 @@ if(NOT ${KATIE_TYPE} STREQUAL SHARED)
     add_definitions(-DQT_STATICPLUGIN)
 endif()
 
+# place the plugins in a sub-directory the leading of which can be used as plugin path,
+# this makes testing without installation possible and is relied upon in the test script
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/accessible")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/plugins/accessible")
 if(WITH_ACCESSIBILITY)
