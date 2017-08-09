@@ -51,7 +51,6 @@
 #include "qicon.h"
 
 #if defined(Q_WS_X11)
-#include <qkde_p.h>
 #include <qt_x11_p.h>
 #endif
 
@@ -127,7 +126,10 @@ QString QGuiPlatformPlugin::styleName()
     QString stylename;
     switch(qt_x11Data->desktopEnvironment) {
     case DE_KDE:
-        stylename = QKde::kdeStyle();
+        if (qt_x11Data->use_xrender)
+            stylename = QLatin1String("plastique");
+        else
+            stylename = QLatin1String("windows");
         break;
     case DE_GNOME: {
         if (qt_x11Data->use_xrender)
@@ -150,31 +152,18 @@ QString QGuiPlatformPlugin::styleName()
 /* return an additional default palette  (only work on X11) */
 QPalette QGuiPlatformPlugin::palette()
 {
-#ifdef Q_WS_X11
-    if (QApplication::desktopSettingsAware() && qt_x11Data->desktopEnvironment == DE_KDE)
-        return QKde::kdePalette();
-#endif
-
     return QPalette();
 }
 
 /* the default icon theme name for QIcon::fromTheme. */
 QString QGuiPlatformPlugin::systemIconThemeName()
 {
-    QString result;
 #ifdef Q_WS_X11
     if (qt_x11Data->desktopEnvironment == DE_GNOME) {
-        if (result.isEmpty()) {
-            result = QString::fromLatin1("gnome");
-        }
-    } else if (qt_x11Data->desktopEnvironment == DE_KDE) {
-        result =  qt_x11Data->desktopVersion >= 4 ? QString::fromLatin1("oxygen") : QString::fromLatin1("crystalsvg");
-        QSettings settings(QKde::kdeHome() + QLatin1String("/share/config/kdeglobals"), QSettings::IniFormat);
-        settings.beginGroup(QLatin1String("Icons"));
-        result = settings.value(QLatin1String("Theme"), result).toString();
+        return QString::fromLatin1("gnome");
     }
 #endif
-    return result;
+    return QString();
 }
 
 
@@ -192,15 +181,6 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
         QDir dir(xdgDirs[i]);
         if (dir.exists())
             paths.append(dir.path() + QLatin1String("/icons"));
-    }
-    if (qt_x11Data->desktopEnvironment == DE_KDE) {
-        paths << QLatin1Char(':') + QKde::kdeHome() + QLatin1String("/share/icons");
-        QStringList kdeDirs = QFile::decodeName(getenv("KDEDIRS")).split(QLatin1Char(':'));
-        for (int i = 0 ; i< kdeDirs.count() ; ++i) {
-            QDir dir(QLatin1Char(':') + kdeDirs.at(i) + QLatin1String("/share/icons"));
-            if (dir.exists())
-                paths.append(dir.path());
-        }
     }
 
     // Add home directory first in search path
@@ -226,20 +206,8 @@ int QGuiPlatformPlugin::platformHint(PlatformHint hint)
     {
         case PH_ToolButtonStyle:
             ret = Qt::ToolButtonIconOnly;
-#ifdef Q_WS_X11
-            if (qt_x11Data->desktopEnvironment == DE_KDE && qt_x11Data->desktopVersion >= 4
-                && QApplication::desktopSettingsAware()) {
-                ret = QKde::kdeToolButtonStyle();
-            }
-#endif
             break;
         case PH_ToolBarIconSize:
-#ifdef Q_WS_X11
-            if (qt_x11Data->desktopEnvironment == DE_KDE && qt_x11Data->desktopVersion >= 4
-                && QApplication::desktopSettingsAware()) {
-                ret = QKde::kdeToolBarIconSize();
-            }
-#endif
             //by default keep ret = 0 so QCommonStyle will use the style default
             break;
         default:

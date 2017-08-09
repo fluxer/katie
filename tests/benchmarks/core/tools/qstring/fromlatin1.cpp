@@ -709,7 +709,7 @@ static const char charData[] __attribute__((aligned(64))) = {
 
     // #142
     "\377\376\375\374\373\372\371\370\367\366"
-        "%1.%2/libraryPath"
+        "libraryPath"
     "\377\376\375\374\373" // 3824
 
     // #143

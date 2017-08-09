@@ -75,7 +75,6 @@
 #include "qlibrary.h"
 #include "qgraphicssystemfactory_p.h"
 #include "qguiplatformplugin_p.h"
-#include "qkde_p.h"
 #include "qthread_p.h"
 #include "qeventdispatcher_x11_p.h"
 #include <qpaintengine_x11_p.h>
@@ -732,34 +731,19 @@ bool QApplicationPrivate::x11_apply_settings()
 
     // ### Fix properly for 4.6
     if (groupCount == QPalette::NColorGroups)
-            QApplicationPrivate::setSystemPalette(pal);
+        QApplicationPrivate::setSystemPalette(pal);
 
     if (!appFont) {
-        // ### Fix properly for 4.6
-        QFont font(QApplication::font());
-        QString fontDescription;
-        // Override Qt font if KDE4 settings can be used
-        if (qt_x11Data->desktopVersion == 4) {
-            QSettings kdeSettings(QKde::kdeHome() + QLatin1String("/share/config/kdeglobals"), QSettings::IniFormat);
-            fontDescription = kdeSettings.value(QLatin1String("font")).toString();
-            if (fontDescription.isEmpty()) {
-                // KDE stores fonts without quotes
-                fontDescription = kdeSettings.value(QLatin1String("font")).toStringList().join(QLatin1String(","));
-            }
-        }
-        if (fontDescription.isEmpty())
-            fontDescription = settings.value(QLatin1String("font")).toString();
+        QString fontDescription = settings.value(QLatin1String("font")).toString();
         if (!fontDescription .isEmpty()) {
+            QFont font(QApplication::font());
             font.fromString(fontDescription );
             QApplicationPrivate::setSystemFont(font);
         }
     }
 
     // read library (ie. plugin) path list
-    QString libpathkey =
-        QString::fromLatin1("%1.%2/libraryPath")
-        .arg(QT_VERSION >> 16)
-        .arg((QT_VERSION & 0xff00) >> 8);
+    QString libpathkey = QString::fromLatin1("libraryPath");
     QStringList pathlist = settings.value(libpathkey).toString().split(QLatin1Char(':'));
     if (! pathlist.isEmpty()) {
         QStringList::ConstIterator it = pathlist.constBegin();
@@ -2003,12 +1987,9 @@ void qt_init(QApplicationPrivate *priv, int,
             settings.beginGroup(QLatin1String("Qt"));
 
             // read library (ie. plugin) path list
-            QString libpathkey = QString::fromLatin1("%1.%2/libraryPath")
-                                 .arg(QT_VERSION >> 16)
-                                 .arg((QT_VERSION & 0xff00) >> 8);
-            QStringList pathlist =
-                settings.value(libpathkey).toString().split(QLatin1Char(':'));
-            if (! pathlist.isEmpty()) {
+            QString libpathkey = QString::fromLatin1("libraryPath");
+            QStringList pathlist = settings.value(libpathkey).toString().split(QLatin1Char(':'));
+            if (!pathlist.isEmpty()) {
                 QStringList::ConstIterator it = pathlist.constBegin();
                 while (it != pathlist.constEnd())
                     QApplication::addLibraryPath(*it++);
