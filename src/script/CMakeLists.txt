@@ -10,11 +10,6 @@ add_definitions(
 )
 set(EXTRA_SCRIPT_LIBS KtCore ${PCRE_LIBRARIES})
 
-# TODO: fix std::auto_ptr warnings
-if(KATIE_COMPILER MATCHES "(gcc|clang)")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
-endif()
-
 include(api/api.cmake)
 include(bridge/bridge.cmake)
 include(parser/parser.cmake)
@@ -154,7 +149,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/qt/ThreadingQt.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/Threading.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/TypeTraits.cpp
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/CollatorDefault.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/UTF8.cpp
 )
 

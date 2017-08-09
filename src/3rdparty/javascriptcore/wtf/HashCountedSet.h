@@ -144,7 +144,7 @@ namespace WTF {
     template<typename Value, typename HashFunctions, typename Traits>
     inline std::pair<typename HashCountedSet<Value, HashFunctions, Traits>::iterator, bool> HashCountedSet<Value, HashFunctions, Traits>::add(const ValueType &value)
     {
-        pair<iterator, bool> result = m_impl.add(value, 0); 
+        std::pair<iterator, bool> result = m_impl.add(value, 0); 
         ++result.first->second;
         return result;
     }

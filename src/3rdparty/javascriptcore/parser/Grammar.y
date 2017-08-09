@@ -133,7 +133,7 @@ static inline void appendToVarDeclarationList(JSGlobalData* globalData, ParserAr
     if (!varDecls)
         varDecls = new (globalData) ParserArenaData<DeclarationStacks::VarStack>;
 
-    varDecls->data.append(make_pair(&ident, attrs));
+    varDecls->data.append(std::make_pair(&ident, attrs));
 }
 
 static inline void appendToVarDeclarationList(JSGlobalData* globalData, ParserArenaData<DeclarationStacks::VarStack>*& varDecls, ConstDeclNode* decl)

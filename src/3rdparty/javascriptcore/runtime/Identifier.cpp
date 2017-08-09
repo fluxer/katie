@@ -141,7 +141,7 @@ PassRefPtr<UString::Rep> Identifier::add(JSGlobalData* globalData, const char* c
     if (iter != literalIdentifierTable.end())
         return iter->second;
 
-    pair<HashSet<UString::Rep*>::iterator, bool> addResult = identifierTable.add<const char*, CStringTranslator>(c);
+    std::pair<HashSet<UString::Rep*>::iterator, bool> addResult = identifierTable.add<const char*, CStringTranslator>(c);
 
     // If the string is newly-translated, then we need to adopt it.
     // The boolean in the pair tells us if that is so.
@@ -196,7 +196,7 @@ PassRefPtr<UString::Rep> Identifier::add(JSGlobalData* globalData, const UChar* 
         return &UString::Rep::empty();
     }
     UCharBuffer buf = {s, static_cast<unsigned>(length)};
-    pair<HashSet<UString::Rep*>::iterator, bool> addResult = globalData->identifierTable->add<UCharBuffer, UCharBufferTranslator>(buf);
+    std::pair<HashSet<UString::Rep*>::iterator, bool> addResult = globalData->identifierTable->add<UCharBuffer, UCharBufferTranslator>(buf);
 
     // If the string is newly-translated, then we need to adopt it.
     // The boolean in the pair tells us if that is so.

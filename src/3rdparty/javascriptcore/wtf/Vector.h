@@ -31,10 +31,6 @@
 #include <QDataStream>
 
 namespace WTF {
-
-    using std::min;
-    using std::max;
-
     // WTF_ALIGN_OF / WTF_ALIGNED
     #if COMPILER(GCC)
         #define WTF_ALIGN_OF(type) __alignof__(type)
@@ -735,7 +731,7 @@ namespace WTF {
     template<typename T, size_t inlineCapacity>
     void Vector<T, inlineCapacity>::expandCapacity(size_t newMinCapacity)
     {
-        reserveCapacity(max(newMinCapacity, max(static_cast<size_t>(16), capacity() + capacity() / 4 + 1)));
+        reserveCapacity(std::max(newMinCapacity, std::max(static_cast<size_t>(16), capacity() + capacity() / 4 + 1)));
     }
     
     template<typename T, size_t inlineCapacity>

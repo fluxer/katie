@@ -114,7 +114,7 @@ static inline unsigned increasedVectorLength(unsigned newLength)
     unsigned increasedLength = newLength + (newLength >> 1) + (newLength & 1);
     Q_ASSERT(increasedLength >= newLength);
 
-    return min(increasedLength, MAX_STORAGE_VECTOR_LENGTH);
+    return std::min(increasedLength, MAX_STORAGE_VECTOR_LENGTH);
 }
 
 static inline bool isDenseEnoughForVector(unsigned length, unsigned numValues)
@@ -144,7 +144,7 @@ JSArray::JSArray(NonNullPassRefPtr<Structure> structure)
 JSArray::JSArray(NonNullPassRefPtr<Structure> structure, unsigned initialLength)
     : JSObject(structure)
 {
-    unsigned initialCapacity = min(initialLength, MIN_SPARSE_ARRAY_INDEX);
+    unsigned initialCapacity = std::min(initialLength, MIN_SPARSE_ARRAY_INDEX);
 
     m_storage = static_cast<ArrayStorage*>(fastMalloc(storageSize(initialCapacity)));
     m_storage->m_length = initialLength;
@@ -339,7 +339,7 @@ NEVER_INLINE void JSArray::putSlowCase(ExecState* exec, unsigned i, JSValue valu
                 storage->m_sparseValueMap = map;
             }
 
-            pair<SparseArrayValueMap::iterator, bool> result = map->add(i, value);
+            std::pair<SparseArrayValueMap::iterator, bool> result = map->add(i, value);
             if (!result.second) { // pre-existing entry
                 result.first->second = value;
                 return;
@@ -370,7 +370,7 @@ NEVER_INLINE void JSArray::putSlowCase(ExecState* exec, unsigned i, JSValue valu
     // Decide how many values it would be best to move from the map.
     unsigned newNumValuesInVector = storage->m_numValuesInVector + 1;
     unsigned newVectorLength = increasedVectorLength(i + 1);
-    for (unsigned j = max(m_vectorLength, MIN_SPARSE_ARRAY_INDEX); j < newVectorLength; ++j)
+    for (unsigned j = std::max(m_vectorLength, MIN_SPARSE_ARRAY_INDEX); j < newVectorLength; ++j)
         newNumValuesInVector += map->contains(j);
     if (i >= MIN_SPARSE_ARRAY_INDEX)
         newNumValuesInVector -= map->contains(i);
@@ -379,7 +379,7 @@ NEVER_INLINE void JSArray::putSlowCase(ExecState* exec, unsigned i, JSValue valu
         // If newVectorLength is already the maximum - MAX_STORAGE_VECTOR_LENGTH - then do not attempt to grow any further.
         while (newVectorLength < MAX_STORAGE_VECTOR_LENGTH) {
             unsigned proposedNewVectorLength = increasedVectorLength(newVectorLength + 1);
-            for (unsigned j = max(newVectorLength, MIN_SPARSE_ARRAY_INDEX); j < proposedNewVectorLength; ++j)
+            for (unsigned j = std::max(newVectorLength, MIN_SPARSE_ARRAY_INDEX); j < proposedNewVectorLength; ++j)
                 proposedNewNumValuesInVector += map->contains(j);
             if (!isDenseEnoughForVector(proposedNewVectorLength, proposedNewNumValuesInVector))
                 break;
@@ -402,9 +402,9 @@ NEVER_INLINE void JSArray::putSlowCase(ExecState* exec, unsigned i, JSValue valu
         if (i > MIN_SPARSE_ARRAY_INDEX)
             map->remove(i);
     } else {
-        for (unsigned j = vectorLength; j < max(vectorLength, MIN_SPARSE_ARRAY_INDEX); ++j)
+        for (unsigned j = vectorLength; j < std::max(vectorLength, MIN_SPARSE_ARRAY_INDEX); ++j)
             storage->m_vector[j] = JSValue();
-        for (unsigned j = max(vectorLength, MIN_SPARSE_ARRAY_INDEX); j < newVectorLength; ++j)
+        for (unsigned j = std::max(vectorLength, MIN_SPARSE_ARRAY_INDEX); j < newVectorLength; ++j)
             storage->m_vector[j] = map->take(j);
     }
 
@@ -478,7 +478,7 @@ void JSArray::getOwnPropertyNames(ExecState* exec, PropertyNameArray& propertyNa
 
     ArrayStorage* storage = m_storage;
 
-    unsigned usedVectorLength = min(storage->m_length, m_vectorLength);
+    unsigned usedVectorLength = std::min(storage->m_length, m_vectorLength);
     for (unsigned i = 0; i < usedVectorLength; ++i) {
         if (storage->m_vector[i])
             propertyNames.add(Identifier::from(exec, i));
@@ -533,7 +533,7 @@ void JSArray::setLength(unsigned newLength)
     unsigned length = m_storage->m_length;
 
     if (newLength < length) {
-        unsigned usedVectorLength = min(length, m_vectorLength);
+        unsigned usedVectorLength = std::min(length, m_vectorLength);
         for (unsigned i = newLength; i < usedVectorLength; ++i) {
             JSValue& valueSlot = storage->m_vector[i];
             bool hadValue = valueSlot;
@@ -838,7 +838,7 @@ void JSArray::sort(ExecState* exec, JSValue compareFunction, CallType callType, 
     if (!m_storage->m_length)
         return;
 
-    unsigned usedVectorLength = min(m_storage->m_length, m_vectorLength);
+    unsigned usedVectorLength = std::min(m_storage->m_length, m_vectorLength);
 
     AVLTree<AVLTreeAbstractorForArrayCompare, 44> tree; // Depth 44 is enough for 2^31 items
     tree.abstractor().m_exec = exec;
@@ -935,7 +935,7 @@ void JSArray::sort(ExecState* exec, JSValue compareFunction, CallType callType, 
 void JSArray::fillArgList(ExecState* exec, MarkedArgumentBuffer& args)
 {
     JSValue* vector = m_storage->m_vector;
-    unsigned vectorEnd = min(m_storage->m_length, m_vectorLength);
+    unsigned vectorEnd = std::min(m_storage->m_length, m_vectorLength);
     unsigned i = 0;
     for (; i < vectorEnd; ++i) {
         JSValue& v = vector[i];
@@ -953,7 +953,7 @@ void JSArray::copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxSiz
     Q_UNUSED(maxSize);
     Q_ASSERT(m_storage->m_length == maxSize);
     JSValue* vector = m_storage->m_vector;
-    unsigned vectorEnd = min(m_storage->m_length, m_vectorLength);
+    unsigned vectorEnd = std::min(m_storage->m_length, m_vectorLength);
     unsigned i = 0;
     for (; i < vectorEnd; ++i) {
         JSValue& v = vector[i];
@@ -972,7 +972,7 @@ unsigned JSArray::compactForSorting()
 
     ArrayStorage* storage = m_storage;
 
-    unsigned usedVectorLength = min(m_storage->m_length, m_vectorLength);
+    unsigned usedVectorLength = std::min(m_storage->m_length, m_vectorLength);
 
     unsigned numDefined = 0;
     unsigned numUndefined = 0;

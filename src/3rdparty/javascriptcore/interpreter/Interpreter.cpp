@@ -3025,7 +3025,7 @@ JSValue Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerFi
             }
             Q_ASSERT(!asFunction(callFrame->callee())->isHostFunction());
             int32_t expectedParams = static_cast<JSFunction*>(callFrame->callee())->jsExecutable()->parameterCount();
-            int32_t inplaceArgs = min(argCount, expectedParams);
+            int32_t inplaceArgs = std::min(argCount, expectedParams);
             int32_t i = 0;
             Register* argStore = callFrame->registers() + argsOffset;
 

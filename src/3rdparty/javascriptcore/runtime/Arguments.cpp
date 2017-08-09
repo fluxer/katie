@@ -64,14 +64,14 @@ void Arguments::markChildren(MarkStack& markStack)
 void Arguments::copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxSize)
 {
     if (Q_UNLIKELY(d->overrodeLength)) {
-        unsigned length = min(get(exec, exec->propertyNames().length).toUInt32(exec), maxSize);
+        unsigned length = std::min(get(exec, exec->propertyNames().length).toUInt32(exec), maxSize);
         for (unsigned i = 0; i < length; i++)
             buffer[i] = get(exec, i);
         return;
     }
 
     if (Q_LIKELY(!d->deletedArguments)) {
-        unsigned parametersLength = min(min(d->numParameters, d->numArguments), maxSize);
+        unsigned parametersLength = std::min(std::min(d->numParameters, d->numArguments), maxSize);
         unsigned i = 0;
         for (; i < parametersLength; ++i)
             buffer[i] = d->registers[d->firstParameterIndex + i].jsValue();
@@ -80,7 +80,7 @@ void Arguments::copyToRegisters(ExecState* exec, Register* buffer, uint32_t maxS
         return;
     }
     
-    unsigned parametersLength = min(min(d->numParameters, d->numArguments), maxSize);
+    unsigned parametersLength = std::min(std::min(d->numParameters, d->numArguments), maxSize);
     unsigned i = 0;
     for (; i < parametersLength; ++i) {
         if (!d->deletedArguments[i])

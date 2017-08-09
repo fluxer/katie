@@ -70,12 +70,12 @@ namespace WTF {
         // replaces value but not key if key is already present
         // return value is a pair of the iterator to the key location, 
         // and a boolean that's true if a new value was actually added
-        pair<iterator, bool> set(const KeyType&, const MappedType&); 
+        std::pair<iterator, bool> set(const KeyType&, const MappedType&); 
 
         // does nothing if key is already present
         // return value is a pair of the iterator to the key location, 
         // and a boolean that's true if a new value was actually added
-        pair<iterator, bool> add(const KeyType&, const MappedType&); 
+        std::pair<iterator, bool> add(const KeyType&, const MappedType&); 
 
         void remove(const KeyType&);
         void remove(iterator);
@@ -98,10 +98,10 @@ namespace WTF {
         //   static unsigned hash(const T&);
         //   static bool equal(const ValueType&, const T&);
         //   static translate(ValueType&, const T&, unsigned hashCode);
-        template<typename T, typename HashTranslator> pair<iterator, bool> add(const T&, const MappedType&);
+        template<typename T, typename HashTranslator> std::pair<iterator, bool> add(const T&, const MappedType&);
 
     private:
-        pair<iterator, bool> inlineAdd(const KeyType&, const MappedType&);
+        std::pair<iterator, bool> inlineAdd(const KeyType&, const MappedType&);
 
         HashTableType m_impl;
     };
@@ -231,21 +231,21 @@ namespace WTF {
     }
 
     template<typename T, typename U, typename V, typename W, typename X>
-    inline pair<typename HashMap<T, U, V, W, X>::iterator, bool>
+    inline std::pair<typename HashMap<T, U, V, W, X>::iterator, bool>
     HashMap<T, U, V, W, X>::inlineAdd(const KeyType& key, const MappedType& mapped) 
     {
         typedef HashMapTranslator<ValueType, ValueTraits, HashFunctions> TranslatorType;
-        pair<typename HashTableType::iterator, bool> p = m_impl.template add<KeyType, MappedType, TranslatorType>(key, mapped);
-	typename HashMap<T, U, V, W, X>::iterator temp = p.first;
+        std::pair<typename HashTableType::iterator, bool> p = m_impl.template add<KeyType, MappedType, TranslatorType>(key, mapped);
+        typename HashMap<T, U, V, W, X>::iterator temp = p.first;
         return std::pair<typename HashMap<T, U, V, W, X>::iterator, bool>(temp, p.second);
 //      return m_impl.template add<KeyType, MappedType, TranslatorType>(key, mapped);
     }
 
     template<typename T, typename U, typename V, typename W, typename X>
-    pair<typename HashMap<T, U, V, W, X>::iterator, bool>
+    std::pair<typename HashMap<T, U, V, W, X>::iterator, bool>
     HashMap<T, U, V, W, X>::set(const KeyType& key, const MappedType& mapped) 
     {
-        pair<iterator, bool> result = inlineAdd(key, mapped);
+        std::pair<iterator, bool> result = inlineAdd(key, mapped);
         if (!result.second) {
             // add call above didn't change anything, so set the mapped value
             result.first->second = mapped;
@@ -255,7 +255,7 @@ namespace WTF {
 
     template<typename T, typename U, typename V, typename W, typename X>
     template<typename TYPE, typename HashTranslator>
-    pair<typename HashMap<T, U, V, W, X>::iterator, bool>
+    std::pair<typename HashMap<T, U, V, W, X>::iterator, bool>
     HashMap<T, U, V, W, X>::add(const TYPE& key, const MappedType& value)
     {
         typedef HashMapTranslatorAdapter<ValueType, ValueTraits, TYPE, HashTranslator> Adapter;
@@ -263,7 +263,7 @@ namespace WTF {
     }
 
     template<typename T, typename U, typename V, typename W, typename X>
-    pair<typename HashMap<T, U, V, W, X>::iterator, bool>
+    std::pair<typename HashMap<T, U, V, W, X>::iterator, bool>
     HashMap<T, U, V, W, X>::add(const KeyType& key, const MappedType& mapped)
     {
         return inlineAdd(key, mapped);

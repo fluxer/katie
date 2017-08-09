@@ -1039,7 +1039,7 @@ void Structure::rehashPropertyMapHashTable(unsigned newTableSize)
     unsigned entryCount = oldTable->keyCount + oldTable->deletedSentinelCount;
     for (unsigned i = 1; i <= entryCount; ++i) {
         if (oldTable->entries()[i].key) {
-            lastIndexUsed = max(oldTable->entries()[i].index, lastIndexUsed);
+            lastIndexUsed = std::max(oldTable->entries()[i].index, lastIndexUsed);
             insertIntoPropertyMapHashTable(oldTable->entries()[i]);
         }
     }

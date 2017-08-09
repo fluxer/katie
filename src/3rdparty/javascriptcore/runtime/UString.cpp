@@ -263,7 +263,7 @@ UString UString::spliceSubstringsWithSeparators(const Range* substringRanges, in
         int length = substringRanges[0].length;
         if (position <= 0 && length >= thisSize)
             return *this;
-        return UString::Rep::create(m_rep, max(0, position), min(thisSize, length));
+        return UString::Rep::create(m_rep, std::max(0, position), std::min(thisSize, length));
     }
 
     int totalLength = 0;
@@ -280,7 +280,7 @@ UString UString::spliceSubstringsWithSeparators(const Range* substringRanges, in
     if (!rep)
         return null();
 
-    int maxCount = max(rangeCount, separatorCount);
+    int maxCount = std::max(rangeCount, separatorCount);
     int bufferPos = 0;
     for (int i = 0; i < maxCount; i++) {
         if (i < rangeCount) {

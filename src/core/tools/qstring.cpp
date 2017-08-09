@@ -4455,9 +4455,6 @@ int QString::compare_helper(const QChar *data1, int length1, QLatin1String s2,
     platform-dependent manner. Use this function to present sorted
     lists of strings to the user.
 
-    On Mac OS X since Qt 4.3, this function compares according the
-    "Order for sorted lists" setting in the International prefereces panel.
-
     \sa compare(), QTextCodec::locale()
 */
 

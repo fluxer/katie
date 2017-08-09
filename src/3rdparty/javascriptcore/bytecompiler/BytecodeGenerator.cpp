@@ -167,7 +167,7 @@ bool BytecodeGenerator::addVar(const Identifier& ident, bool isConstant, Registe
 {
     int index = m_calleeRegisters.size();
     SymbolTableEntry newEntry(index, isConstant ? ReadOnly : 0);
-    pair<SymbolTable::iterator, bool> result = symbolTable().add(ident.ustring().rep(), newEntry);
+    std::pair<SymbolTable::iterator, bool> result = symbolTable().add(ident.ustring().rep(), newEntry);
 
     if (!result.second) {
         r0 = &registerFor(result.first->second.getIndex());
@@ -183,7 +183,7 @@ bool BytecodeGenerator::addGlobalVar(const Identifier& ident, bool isConstant, R
 {
     int index = m_nextGlobalIndex;
     SymbolTableEntry newEntry(index, isConstant ? ReadOnly : 0);
-    pair<SymbolTable::iterator, bool> result = symbolTable().add(ident.ustring().rep(), newEntry);
+    std::pair<SymbolTable::iterator, bool> result = symbolTable().add(ident.ustring().rep(), newEntry);
 
     if (!result.second)
         index = result.first->second.getIndex();
@@ -498,7 +498,7 @@ bool BytecodeGenerator::isLocalConstant(const Identifier& ident)
 RegisterID* BytecodeGenerator::newRegister()
 {
     m_calleeRegisters.append(m_calleeRegisters.size());
-    m_codeBlock->m_numCalleeRegisters = max<int>(m_codeBlock->m_numCalleeRegisters, m_calleeRegisters.size());
+    m_codeBlock->m_numCalleeRegisters = std::max<int>(m_codeBlock->m_numCalleeRegisters, m_calleeRegisters.size());
     return &m_calleeRegisters.last();
 }
 
@@ -799,7 +799,7 @@ PassRefPtr<Label> BytecodeGenerator::emitJumpIfNotFunctionApply(RegisterID* cond
 unsigned BytecodeGenerator::addConstant(const Identifier& ident)
 {
     UString::Rep* rep = ident.ustring().rep();
-    pair<IdentifierMap::iterator, bool> result = m_identifierMap.add(rep, m_codeBlock->numberOfIdentifiers());
+    std::pair<IdentifierMap::iterator, bool> result = m_identifierMap.add(rep, m_codeBlock->numberOfIdentifiers());
     if (result.second) // new entry
         m_codeBlock->addIdentifier(Identifier(m_globalData, rep));
 
@@ -810,7 +810,7 @@ RegisterID* BytecodeGenerator::addConstantValue(JSValue v)
 {
     int index = m_nextConstantOffset;
 
-    pair<JSValueMap::iterator, bool> result = m_jsValueMap.add(JSValue::encode(v), m_nextConstantOffset);
+    std::pair<JSValueMap::iterator, bool> result = m_jsValueMap.add(JSValue::encode(v), m_nextConstantOffset);
     if (result.second) {
         m_constantPoolRegisters.append(FirstConstantRegisterIndex + m_nextConstantOffset);
         ++m_nextConstantOffset;

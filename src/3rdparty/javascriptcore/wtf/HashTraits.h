@@ -28,9 +28,6 @@
 
 namespace WTF {
 
-    using std::pair;
-    using std::make_pair;
-
     template<typename T> struct HashTraits;
 
     template<bool isInteger, typename T> struct GenericHashTraitsBase;
@@ -90,13 +87,13 @@ namespace WTF {
     // special traits for pairs, helpful for their use in HashMap implementation
 
     template<typename FirstTraitsArg, typename SecondTraitsArg>
-    struct PairHashTraits : GenericHashTraits<pair<typename FirstTraitsArg::TraitType, typename SecondTraitsArg::TraitType> > {
+    struct PairHashTraits : GenericHashTraits<std::pair<typename FirstTraitsArg::TraitType, typename SecondTraitsArg::TraitType> > {
         typedef FirstTraitsArg FirstTraits;
         typedef SecondTraitsArg SecondTraits;
-        typedef pair<typename FirstTraits::TraitType, typename SecondTraits::TraitType> TraitType;
+        typedef std::pair<typename FirstTraits::TraitType, typename SecondTraits::TraitType> TraitType;
 
         static const bool emptyValueIsZero = FirstTraits::emptyValueIsZero && SecondTraits::emptyValueIsZero;
-        static TraitType emptyValue() { return make_pair(FirstTraits::emptyValue(), SecondTraits::emptyValue()); }
+        static TraitType emptyValue() { return std::make_pair(FirstTraits::emptyValue(), SecondTraits::emptyValue()); }
 
         static const bool needsDestruction = FirstTraits::needsDestruction || SecondTraits::needsDestruction;
 
@@ -105,7 +102,7 @@ namespace WTF {
     };
 
     template<typename First, typename Second>
-    struct HashTraits<pair<First, Second> > : public PairHashTraits<HashTraits<First>, HashTraits<Second> > { };
+    struct HashTraits<std::pair<First, Second> > : public PairHashTraits<HashTraits<First>, HashTraits<Second> > { };
 
 } // namespace WTF
 

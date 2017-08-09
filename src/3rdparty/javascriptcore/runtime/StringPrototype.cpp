@@ -35,7 +35,6 @@
 #include "RegExpObject.h"
 #include <wtf/ASCIICType.h>
 #include <wtf/MathExtras.h>
-#include <wtf/unicode/Collator.h>
 
 using namespace WTF;
 
@@ -224,7 +223,7 @@ static inline UString substituteBackreferences(const UString& replacement, const
 
 static inline int localeCompare(const UString& a, const UString& b)
 {
-    return Collator::userDefault()->collate(a.data(), a.size(), b.data(), b.size());
+    return QString::localeAwareCompare(reinterpret_cast<const QChar*>(a.data()), reinterpret_cast<const QChar*>(b.data()));
 }
 
 JSValue QT_FASTCALL stringProtoFuncReplace(ExecState* exec, JSObject*, JSValue thisValue, const ArgList& args)
@@ -451,7 +450,7 @@ JSValue QT_FASTCALL stringProtoFuncIndexOf(ExecState* exec, JSObject*, JSValue t
     if (a1.isUndefined())
         pos = 0;
     else if (a1.isUInt32())
-        pos = min<uint32_t>(a1.asUInt32(), len);
+        pos = std::min<uint32_t>(a1.asUInt32(), len);
     else {
         double dpos = a1.toInteger(exec);
         if (dpos < 0)

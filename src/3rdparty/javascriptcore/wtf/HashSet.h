@@ -77,7 +77,7 @@ namespace WTF {
 
         // The return value is a pair of an interator to the new value's location, 
         // and a bool that is true if an new entry was added.
-        pair<iterator, bool> add(const ValueType&);
+        std::pair<iterator, bool> add(const ValueType&);
 
         // An alternate version of add() that finds the object by hashing and comparing
         // with some other type, to avoid the cost of type conversion if the object is already
@@ -85,7 +85,7 @@ namespace WTF {
         //   static unsigned hash(const T&);
         //   static bool equal(const ValueType&, const T&);
         //   static translate(ValueType&, const T&, unsigned hashCode);
-        template<typename T, typename HashTranslator> pair<iterator, bool> add(const T&);
+        template<typename T, typename HashTranslator> std::pair<iterator, bool> add(const T&);
 
         void remove(const ValueType&);
         void remove(iterator);
@@ -205,11 +205,11 @@ namespace WTF {
     }
 
     template<typename T, typename U, typename V>
-    pair<typename HashSet<T, U, V>::iterator, bool> HashSet<T, U, V>::add(const ValueType& value)
+    std::pair<typename HashSet<T, U, V>::iterator, bool> HashSet<T, U, V>::add(const ValueType& value)
     {
-        pair<typename HashTable<T, T, IdentityExtractor<T>, U, V, V>::iterator, bool> p = m_impl.add(value);
+        std::pair<typename HashTable<T, T, IdentityExtractor<T>, U, V, V>::iterator, bool> p = m_impl.add(value);
         typename HashSet<T, U, V>::iterator temp = p.first;
-        pair<typename HashSet<T, U, V>::iterator, bool> p2 = pair<typename HashSet<T, U, V>::iterator, bool>(temp, p.second);
+        std::pair<typename HashSet<T, U, V>::iterator, bool> p2 = std::pair<typename HashSet<T, U, V>::iterator, bool>(temp, p.second);
  //       p2.first = p.first;
  //       p2.second = p.second;
         return p2;
@@ -217,12 +217,12 @@ namespace WTF {
 
     template<typename Value, typename HashFunctions, typename Traits>
     template<typename T, typename HashTranslator>
-    pair<typename HashSet<Value, HashFunctions, Traits>::iterator, bool>
+    std::pair<typename HashSet<Value, HashFunctions, Traits>::iterator, bool>
     HashSet<Value, HashFunctions, Traits>::add(const T& value)
     {
         typedef HashSetTranslatorAdapter<ValueType, ValueTraits, T, HashTranslator> Adapter;
-        pair<typename HashTableType::iterator, bool> p = m_impl.template addPassingHashCode<T, T, Adapter>(value, value);
-	return pair<iterator, bool>(p.first, p.second);
+        std::pair<typename HashTableType::iterator, bool> p = m_impl.template addPassingHashCode<T, T, Adapter>(value, value);
+        return std::pair<iterator, bool>(p.first, p.second);
     }
 
     template<typename T, typename U, typename V>

@@ -68,8 +68,6 @@
 
 #define COLLECT_ON_EVERY_ALLOCATION 0
 
-using std::max;
-
 namespace JSC {
 
 // tunable parameters
@@ -162,7 +160,7 @@ NEVER_INLINE CollectorBlock* Heap::allocateBlock()
         static const size_t maxNumBlocks = ULONG_MAX / sizeof(CollectorBlock*) / GROWTH_FACTOR;
         if (numBlocks > maxNumBlocks)
             CRASH();
-        numBlocks = max(MIN_ARRAY_SIZE, numBlocks * GROWTH_FACTOR);
+        numBlocks = std::max(MIN_ARRAY_SIZE, numBlocks * GROWTH_FACTOR);
         m_heap.numBlocks = numBlocks;
         m_heap.blocks = static_cast<CollectorBlock**>(fastRealloc(m_heap.blocks, numBlocks * sizeof(CollectorBlock*)));
     }
@@ -304,7 +302,7 @@ void Heap::resizeBlocks()
     m_heap.didShrink = false;
 
     size_t usedCellCount = markedCells();
-    size_t minCellCount = usedCellCount + max(ALLOCATIONS_PER_COLLECTION, usedCellCount);
+    size_t minCellCount = usedCellCount + std::max(ALLOCATIONS_PER_COLLECTION, usedCellCount);
     size_t minBlockCount = (minCellCount + HeapConstants::cellsPerBlock - 1) / HeapConstants::cellsPerBlock;
 
     size_t maxCellCount = 1.25f * minCellCount;

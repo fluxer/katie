@@ -51,7 +51,7 @@ public:
     bool isEmpty() { return m_map.isEmpty(); }
 
     MappedType get(const KeyType& key) const;
-    pair<iterator, bool> set(const KeyType&, const MappedType&); 
+    std::pair<iterator, bool> set(const KeyType&, const MappedType&); 
     MappedType take(const KeyType& key);
 
     // These unchecked functions provide access to a value even if the value's
@@ -94,10 +94,10 @@ MappedType WeakGCMap<KeyType, MappedType>::take(const KeyType& key)
 }
 
 template<typename KeyType, typename MappedType>
-pair<typename HashMap<KeyType, MappedType>::iterator, bool> WeakGCMap<KeyType, MappedType>::set(const KeyType& key, const MappedType& value)
+std::pair<typename HashMap<KeyType, MappedType>::iterator, bool> WeakGCMap<KeyType, MappedType>::set(const KeyType& key, const MappedType& value)
 {
     Heap::markCell(value); // If value is newly allocated, it's not marked, so mark it now.
-    pair<iterator, bool> result = m_map.add(key, value);
+    std::pair<iterator, bool> result = m_map.add(key, value);
     if (!result.second) { // pre-existing entry
         result.second = !Heap::isCellMarked(result.first->second);
         result.first->second = value;

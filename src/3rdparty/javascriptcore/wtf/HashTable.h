@@ -300,13 +300,13 @@ namespace WTF {
         int capacity() const { return m_tableSize; }
         bool isEmpty() const { return !m_keyCount; }
 
-        pair<iterator, bool> add(const ValueType& value) { return add<KeyType, ValueType, IdentityTranslatorType>(Extractor::extract(value), value); }
+        std::pair<iterator, bool> add(const ValueType& value) { return add<KeyType, ValueType, IdentityTranslatorType>(Extractor::extract(value), value); }
 
         // A special version of add() that finds the object by hashing and comparing
         // with some other type, to avoid the cost of type conversion if the object is already
         // in the table.
-        template<typename T, typename Extra, typename HashTranslator> pair<iterator, bool> add(const T& key, const Extra&);
-        template<typename T, typename Extra, typename HashTranslator> pair<iterator, bool> addPassingHashCode(const T& key, const Extra&);
+        template<typename T, typename Extra, typename HashTranslator> std::pair<iterator, bool> add(const T& key, const Extra&);
+        template<typename T, typename Extra, typename HashTranslator> std::pair<iterator, bool> addPassingHashCode(const T& key, const Extra&);
 
         iterator find(const KeyType& key) { return find<KeyType, IdentityTranslatorType>(key); }
         const_iterator find(const KeyType& key) const { return find<KeyType, IdentityTranslatorType>(key); }
@@ -338,8 +338,8 @@ namespace WTF {
         static ValueType* allocateTable(int size);
         static void deallocateTable(ValueType* table, int size);
 
-        typedef pair<ValueType*, bool> LookupType;
-        typedef pair<LookupType, unsigned> FullLookupType;
+        typedef std::pair<ValueType*, bool> LookupType;
+        typedef std::pair<LookupType, unsigned> FullLookupType;
 
         LookupType lookupForWriting(const Key& key) { return lookupForWriting<Key, IdentityTranslatorType>(key); };
         template<typename T, typename HashTranslator> FullLookupType fullLookupForWriting(const T&);
@@ -603,7 +603,7 @@ namespace WTF {
 
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     template<typename T, typename Extra, typename HashTranslator>
-    inline pair<typename HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::iterator, bool> HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::add(const T& key, const Extra& extra)
+    inline std::pair<typename HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::iterator, bool> HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::add(const T& key, const Extra& extra)
     {
         checkKey<T, HashTranslator>(key);
 
@@ -676,7 +676,7 @@ namespace WTF {
             // follow a pivot entry and return the new position.
             KeyType enteredKey = Extractor::extract(*entry);
             expand();
-            pair<iterator, bool> p = std::make_pair(find(enteredKey), true);
+            std::pair<iterator, bool> p = std::make_pair(find(enteredKey), true);
             Q_ASSERT(p.first != end());
             return p;
         }
@@ -688,7 +688,7 @@ namespace WTF {
 
     template<typename Key, typename Value, typename Extractor, typename HashFunctions, typename Traits, typename KeyTraits>
     template<typename T, typename Extra, typename HashTranslator>
-    inline pair<typename HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::iterator, bool> HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::addPassingHashCode(const T& key, const Extra& extra)
+    inline std::pair<typename HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::iterator, bool> HashTable<Key, Value, Extractor, HashFunctions, Traits, KeyTraits>::addPassingHashCode(const T& key, const Extra& extra)
     {
         checkKey<T, HashTranslator>(key);
 
@@ -721,7 +721,7 @@ namespace WTF {
             // follow a pivot entry and return the new position.
             KeyType enteredKey = Extractor::extract(*entry);
             expand();
-            pair<iterator, bool> p = std::make_pair(find(enteredKey), true);
+            std::pair<iterator, bool> p = std::make_pair(find(enteredKey), true);
             Q_ASSERT(p.first != end());
             return p;
         }

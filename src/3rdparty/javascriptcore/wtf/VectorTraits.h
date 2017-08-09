@@ -27,8 +27,6 @@
 #include <utility>
 #include <memory>
 
-using std::pair;
-
 namespace WTF {
 
     template<bool isPod, typename T>
@@ -81,10 +79,10 @@ namespace WTF {
     struct VectorTraits<OwnPtr<P> > : SimpleClassVectorTraits { };
 
     template<typename P>
-    struct VectorTraits<std::auto_ptr<P> > : SimpleClassVectorTraits { };
+    struct VectorTraits<std::unique_ptr<P> > : SimpleClassVectorTraits { };
 
     template<typename First, typename Second>
-    struct VectorTraits<pair<First, Second> >
+    struct VectorTraits<std::pair<First, Second> >
     {
         typedef VectorTraits<First> FirstTraits;
         typedef VectorTraits<Second> SecondTraits;
