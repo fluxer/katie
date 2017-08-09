@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translation>Fül bezárása</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation>Nem lehet animálni a csak olvasható &quot;%1&quot; tulajdonsággal</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation>Az Animation absztrakt osztály</translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1287,7 +1287,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation type="unfinished"></translation>
@@ -1806,7 +1806,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+546"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+543"/>
         <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Minden fájl (*)</translation>
@@ -1819,12 +1819,12 @@ Script: %3</source>
     <message>
         <location line="-3"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>&amp;Megnyitás</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>Menté&amp;s</translation>
@@ -1878,7 +1878,7 @@ Ellenőrizze, hogy jól adta-e meg a fájl nevét.</translation>
     </message>
     <message>
         <location line="+713"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1909,12 +1909,12 @@ Biztosan törölni akarja?</translation>
         <translation>Legutóbbi helyek</translation>
     </message>
     <message>
-        <location line="-2490"/>
+        <location line="-2486"/>
         <source>Save As</source>
         <translation>Mentés másként</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
         <source>Drive</source>
         <translation>Meghajtó</translation>
     </message>
@@ -1952,12 +1952,12 @@ Biztosan törölni akarja?</translation>
         <translation>Megjelenítés </translation>
     </message>
     <message>
-        <location line="+1909"/>
+        <location line="+1905"/>
         <source>New Folder</source>
         <translation>Új könyvtár</translation>
     </message>
     <message>
-        <location line="-1902"/>
+        <location line="-1898"/>
         <source>&amp;New Folder</source>
         <translation>Ú&amp;j könyvtár</translation>
     </message>
@@ -2132,50 +2132,50 @@ Biztosan törölni akarja?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>Normál</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>Kövér</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation>Félkövér</translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation>Fekete</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation>Félkövér</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation>Világos</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>Dőlt</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>Ferde</translation>
     </message>
@@ -2582,7 +2582,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>A kiszolgáló nem található</translation>
@@ -2771,7 +2771,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Hozzáférés megtagadva</translation>
@@ -2884,12 +2884,12 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Plugin ellenőrző adat eltérés: &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+298"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>A(z) &apos;%1&apos; plugin inkompatíbilis Qt függvénykönyvtárat használ. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2899,8 +2899,8 @@ Biztosan törölni akarja?</translation>
         <translation>Ismeretlen hiba</translation>
     </message>
     <message>
-        <location line="-427"/>
-        <location line="+69"/>
+        <location line="-422"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Az osztott függvénykönyvtár nem található.</translation>
@@ -3152,7 +3152,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(Névtelen)</translation>
     </message>
@@ -3160,12 +3160,12 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+273"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+270"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+66"/>
         <source>Close</source>
         <translation>Bezárás</translation>
     </message>
@@ -3215,12 +3215,12 @@ Biztosan törölni akarja?</translation>
         <translation>&amp;Bezárás</translation>
     </message>
     <message>
-        <location line="-787"/>
+        <location line="-781"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+52"/>
         <source>Maximize</source>
         <translation>Teljes méret</translation>
     </message>
@@ -3714,7 +3714,7 @@ Biztosan törölni akarja?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4196,12 +4196,12 @@ Válasszon másik fájlnevet.</translation>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation>Nyomtatási kép</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>Következő oldal</translation>
     </message>
@@ -4274,16 +4274,6 @@ Válasszon másik fájlnevet.</translation>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>Oldalbeállítás</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>Exportálás PDF-be</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>Exportálás PostScript-be</translation>
     </message>
 </context>
 <context>
@@ -4458,7 +4448,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Hiba a folyamat kimenetéről olvasáskor</translation>
@@ -4479,7 +4469,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>A programnév nincs megadva</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation>Az átirányított bemenet megnyitása olvasásra sikertelen</translation>
     </message>
@@ -4489,7 +4479,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>Az átirányított kimenet megnyitása írásra sikertelen</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation>A forkolás sikertelen: %1</translation>
     </message>
@@ -4592,7 +4582,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation>Adatbázis megnyitási hiba</translation>
     </message>
@@ -6406,7 +6396,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+721"/>
         <source>Unable to write data: %1</source>
         <translation>Az adat nem írható: %1</translation>
     </message>
@@ -6432,7 +6422,7 @@ Válasszon másik fájlnevet.</translation>
         <translation>SSL kézfogás hiba: %1</translation>
     </message>
     <message>
-        <location line="-689"/>
+        <location line="-703"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Az SSL kontextus létrehozása sikertelen (%1)</translation>
     </message>
@@ -6955,7 +6945,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7086,7 +7076,7 @@ Válasszon másik fájlnevet.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>nem történt hiba</translation>
     </message>

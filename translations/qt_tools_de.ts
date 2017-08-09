@@ -617,7 +617,7 @@ Options:
         </translation>
     </message>
     <message>
-        <location filename="../src/tools/lupdate/lupdate.cpp" line="+86"/>
+        <location filename="../src/tools/lupdate/lupdate.cpp" line="+88"/>
         <source>Usage:
     lupdate [options] [source-file|path|@lst-file]... -ts ts-files|@lst-file
 
@@ -1657,7 +1657,7 @@ Options:
 <context>
     <name>QDBusViewer</name>
     <message>
-        <location filename="../src/tools/qdbusviewer/qdbusviewer.cpp" line="+81"/>
+        <location filename="../src/tools/qdbusviewer/qdbusviewer.cpp" line="+83"/>
         <source>Search...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2170,7 +2170,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+176"/>
+        <location line="+168"/>
         <source>Widget Box</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2232,7 +2232,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+62"/>
+        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+64"/>
         <source>Session Bus</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2503,7 +2503,7 @@ Do you want overwrite the template?</source>
 <context>
     <name>VersionDialog</name>
     <message>
-        <location filename="../src/tools/designer/versiondialog.cpp" line="+170"/>
+        <location filename="../src/tools/designer/versiondialog.cpp" line="+166"/>
         <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;br/&gt;&lt;br/&gt;Version %2</source>
         <translation type="unfinished"></translation>
     </message>

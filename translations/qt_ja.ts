@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translatorcomment>ToolTip</translatorcomment>
         <translation>タブを閉じる</translation>
@@ -423,7 +423,7 @@ Script: %3</source>
         <translation>読込専用のプロパティ &quot;%1&quot; はアニメーションできません</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation>Animation は抽象クラスです</translation>
     </message>
@@ -507,7 +507,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt は QMovie のサポートを外してビルドされています</translation>
     </message>
@@ -1284,7 +1284,7 @@ Script: %3</source>
         <translation>正規表現の文字クラスが閉じていません</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation>構文エラー</translation>
@@ -1803,7 +1803,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+546"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+543"/>
         <location line="+515"/>
         <source>All Files (*)</source>
         <translation>すべてのファイル(*)</translation>
@@ -1828,12 +1828,12 @@ Script: %3</source>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>開く(&amp;O)</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
@@ -1866,7 +1866,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-54"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1875,7 +1875,7 @@ Please verify the correct directory name was given.</source>
 正しいディレクトリ名が入力されたかどうか確認してください。</translation>
     </message>
     <message>
-        <location line="-2255"/>
+        <location line="-2251"/>
         <source>&amp;Rename</source>
         <translation>名前の変更(&amp;R)</translation>
     </message>
@@ -1890,7 +1890,7 @@ Please verify the correct directory name was given.</source>
         <translation>隠しファイルの表示(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
         <source>Drive</source>
         <translation>ドライブ</translation>
     </message>
@@ -1923,7 +1923,7 @@ Please verify the correct directory name was given.</source>
         <translation>名前を付けて保存</translation>
     </message>
     <message>
-        <location line="+2062"/>
+        <location line="+2058"/>
         <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translation>&apos;%1&apos; は書き込みが禁止されています。
@@ -1940,7 +1940,7 @@ Do you want to delete it anyway?</source>
         <translation>ディレクトリを削除できませんでした。</translation>
     </message>
     <message>
-        <location line="-2086"/>
+        <location line="-2082"/>
         <source>Find Directory</source>
         <translation>ディレクトリの検索</translation>
     </message>
@@ -1961,7 +1961,7 @@ Do you want to delete it anyway?</source>
         <translation>選択(&amp;C)</translation>
     </message>
     <message>
-        <location line="+1177"/>
+        <location line="+1173"/>
         <source>New Folder</source>
         <translation>新しいフォルダ</translation>
     </message>
@@ -2129,50 +2129,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>標準</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation>Demi Bold</translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation>太字</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation>Demi</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation>細字</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>斜体</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>斜体</translation>
     </message>
@@ -2579,7 +2579,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>ホストが見つかりません</translation>
@@ -2768,7 +2768,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>許可されていません</translation>
@@ -2881,12 +2881,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>&apos;%1&apos; でプラグイン検証データが一致しません</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+298"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>プラグイン &apos;%1&apos; は、互換性のない Qt ライブラリを使用しています。(%2.%3.%4) [%5]</translation>
     </message>
@@ -2896,8 +2896,8 @@ Do you want to delete it anyway?</source>
         <translation>未知のエラー</translation>
     </message>
     <message>
-        <location line="-427"/>
-        <location line="+69"/>
+        <location line="-422"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>共有ライブラリがみつかりません。</translation>
@@ -3149,7 +3149,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(タイトルなし)</translation>
     </message>
@@ -3157,12 +3157,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+273"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+270"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+66"/>
         <source>Close</source>
         <translation>閉じる</translation>
     </message>
@@ -3212,12 +3212,12 @@ Do you want to delete it anyway?</source>
         <translation>閉じる(&amp;C)</translation>
     </message>
     <message>
-        <location line="-787"/>
+        <location line="-781"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+52"/>
         <source>Maximize</source>
         <translation>最大化</translation>
     </message>
@@ -3711,7 +3711,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4193,12 +4193,12 @@ Please choose a different file name.</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation>印刷のプレビュー</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>次のページ</translation>
     </message>
@@ -4271,16 +4271,6 @@ Please choose a different file name.</source>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>ページ設定</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>PDFに出力</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>Postscriptに出力</translation>
     </message>
 </context>
 <context>
@@ -4455,7 +4445,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation>標準入力リダイレクトを読み込みのために開けませんでした</translation>
     </message>
@@ -4465,7 +4455,7 @@ Please choose a different file name.</source>
         <translation>標準出力リダイレクトを書き込みのために開けませんでした</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation>リソースエラー (fork に失敗しました): %1</translation>
     </message>
@@ -4478,7 +4468,7 @@ Please choose a different file name.</source>
         <translation>プロセス処理がタイムアウトしました</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>プロセスからの読み込みにおいてエラーが発生しました</translation>
@@ -4589,7 +4579,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation>データベースのオープン時にエラーが発生しました</translation>
     </message>
@@ -6436,7 +6426,7 @@ Please choose a different file name.</source>
         <translation>SSL セッションを作成できません: %1</translation>
     </message>
     <message>
-        <location line="+260"/>
+        <location line="+274"/>
         <source>Unable to write data: %1</source>
         <translation>書き込みできません: %1</translation>
     </message>
@@ -6943,7 +6933,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7074,7 +7064,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>エラーは発生しませんでした</translation>
     </message>

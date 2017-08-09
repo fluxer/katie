@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translation>Užverti kortelę</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation>Negalima animuoti tik skaitymui skirtos savybės „%1“</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation>„Animation“ yra abstrakčioji klasė</translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation>„Qt“ sukompiliuota be „QMovie“ palaikymo</translation>
     </message>
@@ -1282,7 +1282,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation type="unfinished"></translation>
@@ -1801,7 +1801,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+527"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+524"/>
         <source>Find Directory</source>
         <translation>Ieškoti aplanko</translation>
     </message>
@@ -1861,12 +1861,12 @@ Script: %3</source>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>At&amp;verti</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>Į&amp;rašyti</translation>
@@ -1884,7 +1884,7 @@ Script: %3</source>
     </message>
     <message>
         <location line="+667"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1893,7 +1893,7 @@ Aplankas nerastas.
 Įsitikinkite, jog nurodėte teisingą aplanko vardą.</translation>
     </message>
     <message>
-        <location line="-826"/>
+        <location line="-822"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 jau egzistuoja.
@@ -1909,7 +1909,7 @@ Failas nerastas.
 Įsitikinkite, jog nurodėte teisingą failo vardą.</translation>
     </message>
     <message>
-        <location line="+456"/>
+        <location line="+452"/>
         <source>New Folder</source>
         <translation>Naujas aplankas</translation>
     </message>
@@ -1946,7 +1946,7 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>Kompiuteris</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
         <source>Drive</source>
         <translation>Diskas</translation>
     </message>
@@ -2127,50 +2127,50 @@ Ar vis tiek norite jį pašalinti?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>Normalusis</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>Pastorintas</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation type="unfinished">Ryškus</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation type="unfinished">Lengvas</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>Kursyvas</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>Pasvirasis</translation>
     </message>
@@ -2577,7 +2577,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+148"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+139"/>
         <source>No host name given</source>
         <translation>Nepateiktas mazgo vardas</translation>
     </message>
@@ -2766,7 +2766,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Nepakanka teisių</translation>
@@ -2879,13 +2879,13 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+221"/>
-        <location line="+69"/>
+        <location line="+217"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>Bendroji biblioteka nerasta.</translation>
@@ -3147,7 +3147,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(Be pavadinimo)</translation>
     </message>
@@ -3155,7 +3155,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+272"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+269"/>
         <source>- [%1]</source>
         <translation>– [%1]</translation>
     </message>
@@ -3165,7 +3165,7 @@ Ar vis tiek norite jį pašalinti?</translation>
         <translation>%1 – [%2]</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+48"/>
         <source>Minimize</source>
         <translation>Sumažinti</translation>
     </message>
@@ -3708,7 +3708,7 @@ Ar vis tiek norite jį pašalinti?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4190,12 +4190,12 @@ Ar norite jį perrašyti?</translation>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation>Spaudinio peržiūra</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>Kitas puslapis</translation>
     </message>
@@ -4268,16 +4268,6 @@ Ar norite jį perrašyti?</translation>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>Puslapio parinktys</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>Eksportuoti PDF formatu</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>Eksportuoti „PostScript“ formatu</translation>
     </message>
 </context>
 <context>
@@ -4452,7 +4442,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Klaida skaitant iš proceso</translation>
@@ -4473,7 +4463,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Nenurodyta programa</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation>Nepavyko skaitymui atverti įvesties peradresavimo</translation>
     </message>
@@ -4483,7 +4473,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Nepavyko rašymui atverti išvesties peradresavimo</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Ištekliaus klaida kuriant vaikinį procesą: %1</translation>
     </message>
@@ -4586,7 +4576,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation>Klaida atveriant duomenų bazę</translation>
     </message>
@@ -6545,7 +6535,7 @@ Ar norite jį perrašyti?</translation>
         <translation>Klaida kuriant SSL sesiją: %1</translation>
     </message>
     <message>
-        <location line="+260"/>
+        <location line="+274"/>
         <source>Unable to write data: %1</source>
         <translation>Nepavyko rašyti duomenų: %1</translation>
     </message>
@@ -6937,7 +6927,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7068,7 +7058,7 @@ Ar norite jį perrašyti?</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>klaidų neaptikta</translation>
     </message>

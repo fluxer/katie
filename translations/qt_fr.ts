@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translation>Fermer l&apos;onglet</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation>Impossible d&apos;animer la propriété en lecture seule &quot;%1&quot;</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation>L&apos;animation est une classe abstraite</translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt a été compilé sans support de QMovie</translation>
     </message>
@@ -1287,7 +1287,7 @@ Script: %3</source>
         <translation>Classe non terminée pour l&apos;expression régulière</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation>Erreur de syntaxe</translation>
@@ -1809,19 +1809,19 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+529"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+526"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
     <message>
         <location line="+706"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>&amp;Ouvrir</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;Enregistrer</translation>
@@ -1847,12 +1847,12 @@ Script: %3</source>
         <translation>Dossiers</translation>
     </message>
     <message>
-        <location line="+1783"/>
+        <location line="+1779"/>
         <source>Recent Places</source>
         <translation>Emplacements récents</translation>
     </message>
     <message>
-        <location line="-2475"/>
+        <location line="-2471"/>
         <location line="+515"/>
         <source>All Files (*)</source>
         <translation>Tous les fichiers (*)</translation>
@@ -1885,7 +1885,7 @@ Veuillez vérifier que le nom du fichier est correct.</translation>
     </message>
     <message>
         <location line="+713"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1911,12 +1911,12 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Impossible de supprimer le dossier.</translation>
     </message>
     <message>
-        <location line="-2082"/>
+        <location line="-2078"/>
         <source>Save As</source>
         <translation>Enregistrer sous</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
         <source>Drive</source>
         <translation>Unité</translation>
     </message>
@@ -1954,12 +1954,12 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location line="+1909"/>
+        <location line="+1905"/>
         <source>New Folder</source>
         <translation>Nouveau dossier</translation>
     </message>
     <message>
-        <location line="-1902"/>
+        <location line="-1898"/>
         <source>&amp;New Folder</source>
         <translation>&amp;Nouveau dossier</translation>
     </message>
@@ -2134,50 +2134,50 @@ Voulez-vous quand même le supprimer ?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>Gras</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation>Demi-gras</translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation>Extra-gras</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation>Demi</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation>Maigre</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>Italique</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>Oblique</translation>
     </message>
@@ -2586,7 +2586,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation>Hôte introuvable</translation>
@@ -2775,7 +2775,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Autorisation refusée</translation>
@@ -2888,12 +2888,12 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Données de vérification du plugin différente dans &apos;%1&apos;</translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+298"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation>Le plugin &apos;%1&apos; utilise une bibliothèque Qt incompatible. (%2.%3.%4) [%5]</translation>
     </message>
@@ -2903,8 +2903,8 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Erreur inconnue</translation>
     </message>
     <message>
-        <location line="-427"/>
-        <location line="+69"/>
+        <location line="-422"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>La bibliothèque partagée est introuvable.</translation>
@@ -3156,7 +3156,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(Sans titre)</translation>
     </message>
@@ -3164,12 +3164,12 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+273"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+270"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+66"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -3219,12 +3219,12 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>&amp;Fermer</translation>
     </message>
     <message>
-        <location line="-787"/>
+        <location line="-781"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+52"/>
         <source>Maximize</source>
         <translation>Maximiser</translation>
     </message>
@@ -3717,7 +3717,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4193,12 +4193,12 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation>Aperçu avant impression</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>Page suivante</translation>
     </message>
@@ -4271,16 +4271,6 @@ Veuillez choisir un nom de fichier différent.</translation>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>Mise en page</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>Exporter vers PDF</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>Exporter vers PostScript</translation>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qabstractpagesetupdialog.cpp" line="+68"/>
@@ -4461,7 +4451,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation>Impossible d&apos;ouvrir la redirection d&apos;entrée en lecture</translation>
     </message>
@@ -4471,7 +4461,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Impossible d&apos;ouvrir la redirection de sortie pour écriture</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation>Erreur de ressouce (fork) : %1</translation>
     </message>
@@ -4484,7 +4474,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Operation de processus a expiré</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Erreur de lecture du processus</translation>
@@ -4595,7 +4585,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation>Erreur lors de l&apos;ouverture de la base de données</translation>
     </message>
@@ -6400,7 +6390,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+721"/>
         <source>Unable to write data: %1</source>
         <translation>Impossible d&apos;écrire les données : %1</translation>
     </message>
@@ -6421,7 +6411,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Erreur lors de la poignée de main SSL : %1</translation>
     </message>
     <message>
-        <location line="-689"/>
+        <location line="-703"/>
         <source>Error creating SSL context (%1)</source>
         <translation>Erreur lors de la création du contexte SSL (%1)</translation>
     </message>
@@ -6456,12 +6446,12 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Erreur lors du chargement de la clé privée, %1</translation>
     </message>
     <message>
-        <location line="+393"/>
+        <location line="+407"/>
         <source>Unable to decrypt data: %1</source>
         <translation>Impossible de décrypter les données : %1</translation>
     </message>
     <message>
-        <location line="-386"/>
+        <location line="-400"/>
         <source>Private key does not certify public key, %1</source>
         <translation>La clé privée ne certifie pas la clé publique, %1</translation>
     </message>
@@ -6947,7 +6937,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation></translation>
     </message>
@@ -7079,7 +7069,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>aucune erreur ne s&apos;est produite</translation>
     </message>

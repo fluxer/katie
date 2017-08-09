@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translation>اغلاق التبويب</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation type="unfinished"></translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1282,7 +1282,7 @@ Script: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation type="unfinished"></translation>
@@ -1801,13 +1801,13 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+546"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+543"/>
         <location line="+515"/>
         <source>All Files (*)</source>
         <translation>جميع الملفات (*)</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+243"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+230"/>
         <location line="+1"/>
         <source>File</source>
         <translation>ملف</translation>
@@ -1825,23 +1825,23 @@ Script: %3</source>
     <message>
         <location line="+704"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>&amp;فتح</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;حفظ</translation>
     </message>
     <message>
-        <location line="+1731"/>
+        <location line="+1727"/>
         <source>Recent Places</source>
         <translation>اخر مكان</translation>
     </message>
     <message>
-        <location line="-2461"/>
+        <location line="-2457"/>
         <source>&amp;Rename</source>
         <translation>ت&amp;غيير الإسم</translation>
     </message>
@@ -1856,12 +1856,12 @@ Script: %3</source>
         <translation>ع&amp;رض الملفات المخفية</translation>
     </message>
     <message>
-        <location line="+1903"/>
+        <location line="+1899"/>
         <source>New Folder</source>
         <translation>مجلد جديد</translation>
     </message>
     <message>
-        <location line="-1938"/>
+        <location line="-1934"/>
         <source>Find Directory</source>
         <translation>البحث عن مجلد</translation>
     </message>
@@ -1899,7 +1899,7 @@ Please verify the correct file name was given.</source>
     </message>
     <message>
         <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-54"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1947,7 +1947,7 @@ Do you want to delete it anyway?</source>
         <translation>مجهول</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2057"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="-2053"/>
         <source>Show </source>
         <translation>عرض</translation>
     </message>
@@ -2127,50 +2127,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>عادي</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>غليظ</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation>شبه غليظ</translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation>أسود</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation>شبه</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation>خفيف</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>مائل</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>مائل</translation>
     </message>
@@ -2568,7 +2568,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+216"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+207"/>
         <location line="+31"/>
         <source>Host not found</source>
         <translation type="unfinished"></translation>
@@ -2757,7 +2757,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation type="unfinished"></translation>
@@ -2870,12 +2870,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+307"/>
+        <location line="+298"/>
         <source>The plugin &apos;%1&apos; uses incompatible Qt library. (%2.%3.%4) [%5]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2885,8 +2885,8 @@ Do you want to delete it anyway?</source>
         <translation type="unfinished">خطأ مجهول</translation>
     </message>
     <message>
-        <location line="-427"/>
-        <location line="+69"/>
+        <location line="-422"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation type="unfinished"></translation>
@@ -3138,7 +3138,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(بدون عنوان)</translation>
     </message>
@@ -3146,12 +3146,12 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+273"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+270"/>
         <source>%1 - [%2]</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+66"/>
         <source>Close</source>
         <translation>إغلاق</translation>
     </message>
@@ -3201,12 +3201,12 @@ Do you want to delete it anyway?</source>
         <translation>إ&amp;غلاق</translation>
     </message>
     <message>
-        <location line="-787"/>
+        <location line="-781"/>
         <source>- [%1]</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+52"/>
         <source>Maximize</source>
         <translation>تكبير</translation>
     </message>
@@ -3699,7 +3699,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4181,12 +4181,12 @@ Please choose a different file name.</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation type="unfinished">استعراض قبل الطباعة</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>الصفحة التالية</translation>
     </message>
@@ -4259,16 +4259,6 @@ Please choose a different file name.</source>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>اعدادات الصفحة</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>تصدير إلى PDF</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>تصدير إلى PostScript</translation>
     </message>
 </context>
 <context>
@@ -4443,7 +4433,7 @@ Please choose a different file name.</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4453,7 +4443,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4466,7 +4456,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation type="unfinished"></translation>
@@ -4577,7 +4567,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6381,7 +6371,7 @@ Please choose a different file name.</source>
 <context>
     <name>QSslSocket</name>
     <message>
-        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+707"/>
+        <location filename="../src/network/ssl/qsslsocket_openssl.cpp" line="+721"/>
         <source>Unable to write data: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6407,7 +6397,7 @@ Please choose a different file name.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-689"/>
+        <location line="-703"/>
         <source>Error creating SSL context (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6928,7 +6918,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7059,7 +7049,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>لم يحدث  هناك أيّ خطأ</translation>
     </message>

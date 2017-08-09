@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translation>탭 닫기</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation>읽기 전용 속성 &quot;%1&quot;에 애니메이션을 설정할 수 없음</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation>애니메이션이 추상 클래스임</translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt 빌드에 QMovie 지원이 빠졌음</translation>
     </message>
@@ -1282,7 +1282,7 @@ Script: %3</source>
         <translation>종료되지 않은 정규 표현식 클래스</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation>구문 오류</translation>
@@ -1801,7 +1801,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+527"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+524"/>
         <source>Find Directory</source>
         <translation>디렉터리 찾기</translation>
     </message>
@@ -1861,12 +1861,12 @@ Script: %3</source>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>열기(&amp;O)</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>저장(&amp;S)</translation>
@@ -1884,7 +1884,7 @@ Script: %3</source>
     </message>
     <message>
         <location line="+667"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1893,7 +1893,7 @@ Please verify the correct directory name was given.</source>
 경로와 파일 이름을 확인하십시오.</translation>
     </message>
     <message>
-        <location line="-826"/>
+        <location line="-822"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1이(가) 이미 존재합니다.
@@ -1909,7 +1909,7 @@ Please verify the correct file name was given.</source>
 경로와 파일 이름을 확인하십시오.</translation>
     </message>
     <message>
-        <location line="+456"/>
+        <location line="+452"/>
         <source>New Folder</source>
         <translation>새 폴더</translation>
     </message>
@@ -1946,7 +1946,7 @@ Do you want to delete it anyway?</source>
         <translation>내 컴퓨터</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
         <source>Drive</source>
         <translation>드라이브</translation>
     </message>
@@ -2127,50 +2127,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>일반</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>굵게</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation>데미볼드</translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation>블랙</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation>데미</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation>라이트</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>이탤릭</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>기울임꼴</translation>
     </message>
@@ -2577,7 +2577,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+148"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+139"/>
         <source>No host name given</source>
         <translation>호스트 이름이 지정되지 않았음</translation>
     </message>
@@ -2766,7 +2766,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>권한이 거부됨</translation>
@@ -2879,13 +2879,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>&apos;%1&apos;의 플러그인 확인 데이터가 일치하지 않음</translation>
     </message>
     <message>
-        <location line="+221"/>
-        <location line="+69"/>
+        <location line="+217"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>공유 라이브러리를 찾을 수 없습니다.</translation>
@@ -3147,7 +3147,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(제목 없음)</translation>
     </message>
@@ -3155,7 +3155,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+272"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+269"/>
         <source>- [%1]</source>
         <translation>- [%1]</translation>
     </message>
@@ -3165,7 +3165,7 @@ Do you want to delete it anyway?</source>
         <translation>%1 - [%2]</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+48"/>
         <source>Minimize</source>
         <translation>최소화</translation>
     </message>
@@ -3708,7 +3708,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4190,12 +4190,12 @@ Do you want to overwrite it?</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation>인쇄 미리 보기</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>다음 쪽</translation>
     </message>
@@ -4268,16 +4268,6 @@ Do you want to overwrite it?</source>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>쪽 설정</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>PDF로 내보내기</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>포스트스크립트로 내보내기</translation>
     </message>
 </context>
 <context>
@@ -4452,7 +4442,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>프로세스에서 읽을 수 없음</translation>
@@ -4473,7 +4463,7 @@ Do you want to overwrite it?</source>
         <translation>프로그램이 지정되지 않음</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation>읽기 위해 입력 리다이렉션을 열 수 없음</translation>
     </message>
@@ -4483,7 +4473,7 @@ Do you want to overwrite it?</source>
         <translation>쓰기 위해 출력 리다이렉션을 열 수 없음</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation>자원 오류 (fork 실패): %1</translation>
     </message>
@@ -4586,7 +4576,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation>데이터베이스를 여는 중 오류 발생</translation>
     </message>
@@ -6550,7 +6540,7 @@ Do you want to overwrite it?</source>
         <translation>SSL 세션을 만드는 중 오류 발생: %1</translation>
     </message>
     <message>
-        <location line="+260"/>
+        <location line="+274"/>
         <source>Unable to write data: %1</source>
         <translation>데이터를 쓸 수 없음: %1</translation>
     </message>
@@ -6937,7 +6927,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7068,7 +7058,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>오류 없음</translation>
     </message>

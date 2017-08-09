@@ -4,7 +4,7 @@
 <context>
     <name>CloseButton</name>
     <message>
-        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2214"/>
+        <location filename="../src/gui/widgets/qtabbar.cpp" line="+2206"/>
         <source>Close Tab</source>
         <translation>بستن برگه</translation>
     </message>
@@ -421,7 +421,7 @@ Script: %3</source>
         <translation>نمی‌توان ویژگی فقط خواندنی %1 را متحرک کرد</translation>
     </message>
     <message>
-        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+105"/>
+        <location filename="../src/declarative/util/qdeclarativeutilmodule.cpp" line="+107"/>
         <source>Animation is an abstract class</source>
         <translation>Animation یک کلاس انتزاعی است</translation>
     </message>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+102"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
         <source>Qt was built without support for QMovie</source>
         <translation>Qt بدون پشتیبانی از QMovie ساخته شده است</translation>
     </message>
@@ -1282,7 +1282,7 @@ Script: %3</source>
         <translation>کلاس عبارت منظم پایان نیافته</translation>
     </message>
     <message>
-        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1828"/>
+        <location filename="../src/declarative/qml/parser/qdeclarativejsparser.cpp" line="+1825"/>
         <location line="+68"/>
         <source>Syntax error</source>
         <translation>خطای نحوی</translation>
@@ -1801,7 +1801,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+527"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+524"/>
         <source>Find Directory</source>
         <translation>یافتن پوشه</translation>
     </message>
@@ -1861,12 +1861,12 @@ Script: %3</source>
     <message>
         <location line="-13"/>
         <location line="+55"/>
-        <location line="+1454"/>
+        <location line="+1450"/>
         <source>&amp;Open</source>
         <translation>&amp;بازکردن</translation>
     </message>
     <message>
-        <location line="-1509"/>
+        <location line="-1505"/>
         <location line="+55"/>
         <source>&amp;Save</source>
         <translation>&amp;ذخیره</translation>
@@ -1884,7 +1884,7 @@ Script: %3</source>
     </message>
     <message>
         <location line="+667"/>
-        <location line="+860"/>
+        <location line="+856"/>
         <source>%1
 Directory not found.
 Please verify the correct directory name was given.</source>
@@ -1893,7 +1893,7 @@ Please verify the correct directory name was given.</source>
 لطفا بررسی کنید که نام مسیر به‌درستی داده شده باشد.</translation>
     </message>
     <message>
-        <location line="-826"/>
+        <location line="-822"/>
         <source>%1 already exists.
 Do you want to replace it?</source>
         <translation>%1 از قبل موجود است.
@@ -1909,7 +1909,7 @@ Please verify the correct file name was given.</source>
 لطفا درستی نام پرونده داده شده را بررسی کنید.</translation>
     </message>
     <message>
-        <location line="+456"/>
+        <location line="+452"/>
         <source>New Folder</source>
         <translation>پوشهٔ جدید</translation>
     </message>
@@ -1946,7 +1946,7 @@ Do you want to delete it anyway?</source>
         <translation>رایانه من</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+240"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
         <source>Drive</source>
         <translation>درایو</translation>
     </message>
@@ -2127,50 +2127,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1140"/>
+        <location line="+1126"/>
         <source>Normal</source>
         <translation>عادی</translation>
     </message>
     <message>
-        <location line="-1137"/>
+        <location line="-1123"/>
         <location line="+12"/>
-        <location line="+1113"/>
+        <location line="+1099"/>
         <source>Bold</source>
         <translation>توپر</translation>
     </message>
     <message>
-        <location line="-1122"/>
-        <location line="+1124"/>
+        <location line="-1108"/>
+        <location line="+1110"/>
         <source>Demi Bold</source>
         <translation>نیمه‌توپر</translation>
     </message>
     <message>
-        <location line="-1121"/>
+        <location line="-1107"/>
         <location line="+18"/>
-        <location line="+1099"/>
+        <location line="+1085"/>
         <source>Black</source>
         <translation>سیاه</translation>
     </message>
     <message>
-        <location line="-1109"/>
+        <location line="-1095"/>
         <source>Demi</source>
         <translation>نیمه</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1109"/>
+        <location line="+1095"/>
         <source>Light</source>
         <translation>سبک</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+962"/>
+        <location line="-949"/>
+        <location line="+952"/>
         <source>Italic</source>
         <translation>کج</translation>
     </message>
     <message>
-        <location line="-959"/>
-        <location line="+961"/>
+        <location line="-949"/>
+        <location line="+951"/>
         <source>Oblique</source>
         <translation>اریب</translation>
     </message>
@@ -2577,7 +2577,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfoAgent</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+148"/>
+        <location filename="../src/network/kernel/qhostinfo_unix.cpp" line="+139"/>
         <source>No host name given</source>
         <translation>نام میزبان داده نشده است</translation>
     </message>
@@ -2766,7 +2766,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1620"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>حق دسترسی رد شد</translation>
@@ -2879,13 +2879,13 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+371"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>داده اعتبارسنجی افزونه در «%1» تطابق ندارد</translation>
     </message>
     <message>
-        <location line="+221"/>
-        <location line="+69"/>
+        <location line="+217"/>
+        <location line="+64"/>
         <location filename="../src/core/plugin/qpluginloader.cpp" line="+288"/>
         <source>The shared library was not found.</source>
         <translation>کتابخانه اشتراکی پیدا نشد.</translation>
@@ -3147,7 +3147,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiArea</name>
     <message>
-        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+289"/>
+        <location filename="../src/gui/widgets/qmdiarea.cpp" line="+271"/>
         <source>(Untitled)</source>
         <translation>(بی‌نام)</translation>
     </message>
@@ -3155,7 +3155,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMdiSubWindow</name>
     <message>
-        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+272"/>
+        <location filename="../src/gui/widgets/qmdisubwindow.cpp" line="+269"/>
         <source>- [%1]</source>
         <translation>ـ [%1]</translation>
     </message>
@@ -3165,7 +3165,7 @@ Do you want to delete it anyway?</source>
         <translation>%1 ـ [%2]</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+48"/>
         <source>Minimize</source>
         <translation>کوچک کردن</translation>
     </message>
@@ -3708,7 +3708,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+136"/>
+        <location filename="../src/plugins/imageformats/tga/qtgafile.cpp" line="+138"/>
         <source>Could not read image data</source>
         <translation>نمی‌توان داده‌های تصویر را خواند</translation>
     </message>
@@ -4190,12 +4190,12 @@ Do you want to overwrite it?</source>
         <translation>%1%</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+69"/>
         <source>Print Preview</source>
         <translation>پیش‌نمایش چاپ</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+26"/>
         <source>Next page</source>
         <translation>صفحهٔ بعدی</translation>
     </message>
@@ -4268,16 +4268,6 @@ Do you want to overwrite it?</source>
         <location line="+1"/>
         <source>Page setup</source>
         <translation>پیکربندی صفحه</translation>
-    </message>
-    <message>
-        <location line="+150"/>
-        <source>Export to PDF</source>
-        <translation>خروجی گرفتن به PDF</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Export to PostScript</source>
-        <translation>خروجی گرفتن به PostScript</translation>
     </message>
 </context>
 <context>
@@ -4452,7 +4442,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+839"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>خطای خواندن از پردازش</translation>
@@ -4473,7 +4463,7 @@ Do you want to overwrite it?</source>
         <translation>هیچ برنامه‌ای تعریف نشده است</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess_unix.cpp" line="+412"/>
+        <location filename="../src/core/io/qprocess_unix.cpp" line="+413"/>
         <source>Could not open input redirection for reading</source>
         <translation>نمی‌توان تغییر مسیر ورودی را برای خواندن باز کرد</translation>
     </message>
@@ -4483,7 +4473,7 @@ Do you want to overwrite it?</source>
         <translation>نمی‌توان تغییر مسیر خروجی را برای نوشتن باز کرد</translation>
     </message>
     <message>
-        <location line="+220"/>
+        <location line="+218"/>
         <source>Resource error (fork failure): %1</source>
         <translation>خطای منبع (خرابی انشعاب): %1</translation>
     </message>
@@ -4586,7 +4576,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QSQLiteDriver</name>
     <message>
-        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+576"/>
+        <location filename="../src/plugins/sqldrivers/sqlite/qsql_sqlite.cpp" line="+572"/>
         <source>Error opening database</source>
         <translation>خطا در باز کردن پایگاه داده</translation>
     </message>
@@ -6545,7 +6535,7 @@ Do you want to overwrite it?</source>
         <translation>خطای ایجاد جلسهٔ SSL: %1</translation>
     </message>
     <message>
-        <location line="+260"/>
+        <location line="+274"/>
         <source>Unable to write data: %1</source>
         <translation>نمی‌توان روی داده نوشت: %1</translation>
     </message>
@@ -6937,7 +6927,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5357"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7068,7 +7058,7 @@ Do you want to overwrite it?</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+59"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
         <source>no error occurred</source>
         <translation>خطایی رخ نداد</translation>
     </message>

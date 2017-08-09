@@ -26,7 +26,7 @@ for t in glob.glob('translations/qt*.ts'):
         files = ' '.join(tfiles)
     else:
         files = ' '.join(cfiles)
-    command = 'build/bin/lupdate -locations relative -no-ui-lines -no-obsolete %s -ts %s' % (files, t)
+    command = 'fastdev/bin/lupdate -locations relative -no-ui-lines -no-obsolete %s -ts %s' % (files, t)
     command = shlex.split(command)
     pipe = subprocess.Popen(command, stderr=subprocess.PIPE)
     pipe.wait()
