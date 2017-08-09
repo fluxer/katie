@@ -12,14 +12,32 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
     ${CMAKE_BINARY_DIR}/include/QtScript
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
-    ${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel
-    ${CMAKE_CURRENT_SOURCE_DIR}/particles
-    ${CMAKE_CURRENT_SOURCE_DIR}/gestures
-    ${CMAKE_CURRENT_BINARY_DIR}/folderlistmodel
-    ${CMAKE_CURRENT_BINARY_DIR}/particles
-    ${CMAKE_CURRENT_BINARY_DIR}/gestures
 )
 
-include(folderlistmodel/folderlistmodel.cmake)
-include(particles/particles.cmake)
-include(gestures/gestures.cmake)
+# place the imports in a sub-directory the leading of which can be used as imports path,
+# this makes testing without installation possible and is relied upon in the test script
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/folderlistmodel")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/folderlistmodel")
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel/qmldir"
+    "${CMAKE_BINARY_DIR}/imports/Qt/labs/folderlistmodel/qmldir"
+)
+add_subdirectory(folderlistmodel)
+
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/particles")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/particles")
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/particles/qmldir"
+    "${CMAKE_BINARY_DIR}/imports/Qt/labs/particles/qmldir"
+)
+add_subdirectory(particles)
+
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/gestures")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/imports/Qt/labs/gestures")
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/gestures/qmldir"
+    "${CMAKE_BINARY_DIR}/imports/Qt/labs/gestures/qmldir"
+)
+add_subdirectory(gestures)

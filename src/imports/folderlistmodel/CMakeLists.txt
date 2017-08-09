@@ -2,12 +2,12 @@
 set(EXTRA_FOLDERLISTMODEL_LIBS KtDeclarative)
 
 set(FOLDERLISTMODEL_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel/qdeclarativefolderlistmodel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel/folderlistmodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativefolderlistmodel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel.cpp
 )
 
 set(FOLDERLISTMODEL_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel/qdeclarativefolderlistmodel.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativefolderlistmodel.h
 )
 
 katie_setup_target(qmlfolderlistmodelplugin ${FOLDERLISTMODEL_SOURCES} ${FOLDERLISTMODEL_HEADERS})
@@ -20,6 +20,6 @@ install(
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/folderlistmodel
 )
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/folderlistmodel/qmldir
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/folderlistmodel
 )

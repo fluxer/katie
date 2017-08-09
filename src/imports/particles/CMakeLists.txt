@@ -2,12 +2,12 @@
 set(EXTRA_PARTICLES_LIBS KtDeclarative)
 
 set(PARTICLES_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/particles/qdeclarativeparticles.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/particles/particles.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativeparticles.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/particles.cpp
 )
 
 set(PARTICLES_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/particles/qdeclarativeparticles_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativeparticles_p.h
 )
 
 katie_setup_target(qmlparticlesplugin ${PARTICLES_SOURCES} ${PARTICLES_HEADERS})
@@ -20,6 +20,6 @@ install(
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/particles
 )
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/particles/qmldir
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/particles
 )

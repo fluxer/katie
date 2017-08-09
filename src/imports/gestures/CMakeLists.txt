@@ -2,12 +2,12 @@
 set(EXTRA_GESTURES_LIBS KtDeclarative)
 
 set(GESTURES_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/gestures/qdeclarativegesturearea.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/gestures/gestures.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativegesturearea.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/gestures.cpp
 )
 
 set(GESTURES_HEADERS
-    ${CMAKE_CURRENT_SOURCE_DIR}/gestures/qdeclarativegesturearea_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/qdeclarativegesturearea_p.h
 )
 
 katie_setup_target(qmlgesturesplugin ${GESTURES_SOURCES} ${GESTURES_HEADERS})
@@ -20,6 +20,6 @@ install(
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/gestures
 )
 install(
-    FILES ${CMAKE_CURRENT_SOURCE_DIR}/gestures/qmldir
+    FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/gestures
 )
