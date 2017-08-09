@@ -182,7 +182,7 @@ struct Operator
     };
 };
 
-void qInitDrawhelperAsm();
+void qInitDrawhelper();
 
 struct QSolidData
 {

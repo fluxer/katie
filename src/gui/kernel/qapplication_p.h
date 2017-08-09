@@ -231,7 +231,6 @@ public:
     static QString styleOverride;
 
 #ifdef QT_KEYPAD_NAVIGATION
-    static QWidget *oldEditFocus;
     static Qt::NavigationMode navigationMode;
 #endif
 

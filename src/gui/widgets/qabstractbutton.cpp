@@ -383,12 +383,11 @@ void QAbstractButtonPrivate::moveFocus(int key)
     int bestScore = -1;
     QRect target = f->rect().translated(f->mapToGlobal(QPoint(0,0)));
     QPoint goal = target.center();
-    uint focus_flag = qt_tab_all_widgets ? Qt::TabFocus : Qt::StrongFocus;
 
     for (int i = 0; i < buttonList.count(); ++i) {
         QAbstractButton *button = buttonList.at(i);
         if (button != f && button->window() == f->window() && button->isEnabled() && !button->isHidden() &&
-            (autoExclusive || (button->focusPolicy() & focus_flag) == focus_flag)) {
+            (autoExclusive || (button->focusPolicy() & Qt::TabFocus) == Qt::TabFocus)) {
             QRect buttonRect = button->rect().translated(button->mapToGlobal(QPoint(0,0)));
             QPoint p = buttonRect.center();
 

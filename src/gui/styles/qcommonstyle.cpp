@@ -5450,8 +5450,8 @@ QIcon QCommonStyle::standardIcon(StandardPixmap standardicon, const QStyleOption
             break;
         }
     } // if (QApplication::desktopSettingsAware() && !QIcon::themeName().isEmpty())
-        if (!icon.isNull())
-            return icon;
+    if (!icon.isNull())
+        return icon;
 
     switch (standardicon) {
 #ifndef QT_NO_IMAGEFORMAT_PNG

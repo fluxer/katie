@@ -5524,7 +5524,7 @@ DrawHelper qDrawHelper[QImage::NImageFormats] =
     }
 };
 
-void qInitDrawhelperAsm()
+void qInitDrawhelper()
 {
 #ifdef Q_WS_X11
     for (int i=0; i<256; ++i) {
@@ -5541,7 +5541,3 @@ void qInitDrawhelperAsm()
 }
 
 QT_END_NAMESPACE
-
-
-
-

@@ -385,14 +385,9 @@ int QApplicationPrivate::keyboard_input_time = 400; // keyboard input interval
 int QApplicationPrivate::wheel_scroll_lines;   // number of lines to scroll
 #endif
 bool qt_is_gui_used;
-bool Q_GUI_EXPORT qt_tab_all_widgets = true;
 bool qt_in_tab_key_event = false;
-int qt_antialiasing_threshold = -1;
 static int drag_time = 500;
-#ifndef QT_GUI_DRAG_DISTANCE
-#define QT_GUI_DRAG_DISTANCE 4
-#endif
-static int drag_distance = QT_GUI_DRAG_DISTANCE;
+static int drag_distance = 4;
 static Qt::LayoutDirection layout_direction = Qt::LeftToRight;
 QSize QApplicationPrivate::app_strut = QSize(0,0); // no default application strut
 bool QApplicationPrivate::animate_ui = true;
@@ -406,10 +401,8 @@ bool QApplicationPrivate::widgetCount = false;
 bool QApplicationPrivate::load_testability = false;
 #ifdef QT_KEYPAD_NAVIGATION
 Qt::NavigationMode QApplicationPrivate::navigationMode = Qt::NavigationModeKeypadTabOrder;
-QWidget *QApplicationPrivate::oldEditFocus = 0;
 #endif
 
-bool qt_tabletChokeMouse = false;
 static bool force_reverse = false;
 
 // ######## move to QApplicationPrivate
@@ -2191,8 +2184,6 @@ void QApplication::setActiveWindow(QWidget* act)
 */
 QWidget *QApplicationPrivate::focusNextPrevChild_helper(QWidget *toplevel, bool next)
 {
-    uint focus_flag = qt_tab_all_widgets ? Qt::TabFocus : Qt::StrongFocus;
-
     QWidget *f = toplevel->focusWidget();
     if (!f)
         f = toplevel;
@@ -2200,7 +2191,7 @@ QWidget *QApplicationPrivate::focusNextPrevChild_helper(QWidget *toplevel, bool 
     QWidget *w = f;
     QWidget *test = f->d_func()->focus_next;
     while (test && test != f) {
-        if ((test->focusPolicy() & focus_flag) == focus_flag
+        if ((test->focusPolicy() & Qt::TabFocus) == Qt::TabFocus
             && !(test->d_func()->extra && test->d_func()->extra->focus_proxy)
             && test->isVisibleTo(toplevel) && test->isEnabled()
             && !(w->windowType() == Qt::SubWindow && !w->isAncestorOf(test))

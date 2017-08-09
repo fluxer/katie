@@ -581,12 +581,9 @@ QWidget *QX11EmbedWidgetPrivate::getFocusWidget(FocusWidgets fw)
 
     QWidget *last = tlw;
 
-    extern bool qt_tab_all_widgets;
-    uint focus_flag = qt_tab_all_widgets ? Qt::TabFocus : Qt::StrongFocus;
-
     while (w != tlw)
     {
-        if (((w->focusPolicy() & focus_flag) == focus_flag)
+        if (((w->focusPolicy() & Qt::TabFocus) == Qt::TabFocus)
             && w->isVisibleTo(q) && w->isEnabled())
         {
             last = w;

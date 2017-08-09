@@ -189,7 +189,6 @@ QT_BEGIN_NAMESPACE
 */
 
 extern bool qt_sendSpontaneousEvent(QObject *, QEvent *);
-Q_GUI_EXPORT extern bool qt_tab_all_widgets;
 
 /*!
     \internal
@@ -357,11 +356,10 @@ QWidget *QGraphicsProxyWidgetPrivate::findFocusChild(QWidget *child, bool next) 
     }
 
     QWidget *oldChild = child;
-    uint focus_flag = qt_tab_all_widgets ? Qt::TabFocus : Qt::StrongFocus;
     do {
         if (child->isEnabled()
-	    && child->isVisibleTo(widget)
-            && ((child->focusPolicy() & focus_flag) == focus_flag)
+            && child->isVisibleTo(widget)
+            && ((child->focusPolicy() & Qt::TabFocus) == Qt::TabFocus)
             && !(child->d_func()->extra && child->d_func()->extra->focus_proxy)) {
             return child;
         }
