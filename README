@@ -17,7 +17,7 @@ There are several things you should be aware before considering Katie:
   - QIconEnginePluginV{2} classes have been merged
   - QIconEngineFactoryInterfaceV{2} classes and interfaces have been merged
   - QKeyEventEx and QKeyEvent classes have been merged
-  - zlib and OpenSSL are required for building
+  - zlib, OpenSSL and PCRE are required for building
   - OpenSSL, D-Bus, CUPS, resolv and NSL cannot be runtime dependencies, they
     must be linked to during build
   - QtUiTools is build as shared library by default
@@ -38,9 +38,11 @@ There are several things you should be aware before considering Katie:
   - JSON classes and types
   - command line parser
   - standard directories handler
-  - building against IODBC instead of unixODBC is possible
-  - building without resolv is possible
+  - building with OpenSSL v1.1+ is possible
+  - building with ICU v59+ is possible
+  - building with IODBC instead of unixODBC is possible
   - building with LTO is possible and supported, if the toolchain can handle it
+  - building without resolv is possible
   - alternative libc implementations support
   - support for generating SHA-224, SHA-256, SHA-384, SHA-512 hash sums (SHA-2)
   - brief manual pages for all command-line tools
@@ -48,6 +50,7 @@ There are several things you should be aware before considering Katie:
     to ease vendors and deployment in general
   - automatic async DBus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
+  - improved namespaces support and introduced QT_NAMESPACE_COMPAT
   - the script component relies on PCRE instead of internal copy
 
 Bugs fixed in Katie, some of which in Qt5 too:
