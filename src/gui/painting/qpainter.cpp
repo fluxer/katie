@@ -61,7 +61,6 @@
 #include "qthread.h"
 #include "qvarlengtharray.h"
 #include "qstatictext.h"
-#include "qglyphrun.h"
 
 #include <qfontengine_p.h>
 #include <qpaintengine_p.h>
@@ -71,9 +70,7 @@
 #include <qpaintengine_raster_p.h>
 #include <qmath_p.h>
 #include <qstatictext_p.h>
-#include <qglyphrun_p.h>
 #include <qstylehelper_p.h>
-#include <qrawfont_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -5042,137 +5039,6 @@ void QPainter::drawImage(const QRectF &targetRect, const QImage &image, const QR
 
     d->engine->drawImage(QRectF(x, y, w, h), image, QRectF(sx, sy, sw, sh), flags);
 }
-
-#if !defined(QT_NO_RAWFONT)
-/*!
-    \fn void QPainter::drawGlyphRun(const QPointF &position, const QGlyphRun &glyphs)
-
-    Draws the specified \a glyphs at the given \a position.
-    The \a position gives the edge of the baseline for the string of glyphs.
-    The glyphs will be retrieved from the font selected by \a glyphs and at
-    offsets given by the positions in \a glyphs.
-
-    \since 4.8
-
-    \sa QGlyphRun::setRawFont(), QGlyphRun::setPositions(), QGlyphRun::setGlyphIndexes()
-*/
-void QPainter::drawGlyphRun(const QPointF &position, const QGlyphRun &glyphRun)
-{
-    Q_D(QPainter);
-
-    QRawFont font = glyphRun.rawFont();
-    if (!font.isValid())
-        return;
-
-    QGlyphRunPrivate *glyphRun_d = QGlyphRunPrivate::get(glyphRun);
-
-    const quint32 *glyphIndexes = glyphRun_d->glyphIndexData;
-    const QPointF *glyphPositions = glyphRun_d->glyphPositionData;
-
-    int count = qMin(glyphRun_d->glyphIndexDataSize, glyphRun_d->glyphPositionDataSize);
-    QVarLengthArray<QFixedPoint, 128> fixedPointPositions(count);
-
-    QRawFontPrivate *fontD = QRawFontPrivate::get(font);
-    bool supportsTransformations;
-    if (d->extended != 0) {
-        supportsTransformations = d->extended->supportsTransformations(fontD->fontEngine->fontDef.pixelSize,
-                                                                       d->state->matrix);
-    } else {
-        supportsTransformations = d->state->matrix.isAffine();
-    }
-
-    for (int i=0; i<count; ++i) {
-        QPointF processedPosition = position + glyphPositions[i];
-        if (!supportsTransformations)
-            processedPosition = d->state->transform().map(processedPosition);
-        fixedPointPositions[i] = QFixedPoint::fromPointF(processedPosition);
-    }
-
-    d->drawGlyphs(glyphIndexes, fixedPointPositions.data(), count, font, glyphRun.overline(),
-                  glyphRun.underline(), glyphRun.strikeOut());
-}
-
-void QPainterPrivate::drawGlyphs(const quint32 *glyphArray, QFixedPoint *positions,
-                                 int glyphCount,
-                                 const QRawFont &font, bool overline, bool underline,
-                                 bool strikeOut)
-{
-    Q_Q(QPainter);
-
-    updateState(state);
-
-    QRawFontPrivate *fontD = QRawFontPrivate::get(font);
-    QFontEngine *fontEngine = fontD->fontEngine;
-
-    QFixed leftMost;
-    QFixed rightMost;
-    QFixed baseLine;
-    for (int i=0; i<glyphCount; ++i) {
-        glyph_metrics_t gm = fontEngine->boundingBox(glyphArray[i]);
-        if (i == 0 || leftMost > positions[i].x)
-            leftMost = positions[i].x;
-
-        // We don't support glyphs that do not share a common baseline. If this turns out to
-        // be a relevant use case, then we need to find clusters of glyphs that share a baseline
-        // and do a drawTextItemDecorations call per cluster.
-        if (i == 0 || baseLine < positions[i].y)
-            baseLine = positions[i].y;
-
-        // We use the advance rather than the actual bounds to match the algorithm in drawText()
-        if (i == 0 || rightMost < positions[i].x + gm.xoff)
-            rightMost = positions[i].x + gm.xoff;
-    }
-
-    QFixed width = rightMost - leftMost;
-
-    if (extended != 0 && state->matrix.isAffine()) {
-        QStaticTextItem staticTextItem;
-        staticTextItem.color = state->pen.color();
-        staticTextItem.font = state->font;
-        staticTextItem.setFontEngine(fontEngine);
-        staticTextItem.numGlyphs = glyphCount;
-        staticTextItem.glyphs = reinterpret_cast<glyph_t *>(const_cast<glyph_t *>(glyphArray));
-        staticTextItem.glyphPositions = positions;
-
-        extended->drawStaticTextItem(&staticTextItem);
-    } else {
-        QTextItemInt textItem;
-        textItem.fontEngine = fontEngine;
-
-        QVarLengthArray<QFixed, 128> advances(glyphCount);
-        QVarLengthArray<QGlyphJustification, 128> glyphJustifications(glyphCount);
-        QVarLengthArray<HB_GlyphAttributes, 128> glyphAttributes(glyphCount);
-        memset(glyphAttributes.data(), 0, glyphAttributes.size() * sizeof(HB_GlyphAttributes));
-        memset(advances.data(), 0, advances.size() * sizeof(QFixed));
-        memset(glyphJustifications.data(), 0, glyphJustifications.size() * sizeof(QGlyphJustification));
-
-        textItem.glyphs.numGlyphs = glyphCount;
-        textItem.glyphs.glyphs = reinterpret_cast<HB_Glyph *>(const_cast<quint32 *>(glyphArray));
-        textItem.glyphs.offsets = positions;
-        textItem.glyphs.advances_x = advances.data();
-        textItem.glyphs.advances_y = advances.data();
-        textItem.glyphs.justifications = glyphJustifications.data();
-        textItem.glyphs.attributes = glyphAttributes.data();
-
-        engine->drawTextItem(QPointF(0, 0), textItem);
-    }
-
-    QTextItemInt::RenderFlags flags;
-    if (underline)
-        flags |= QTextItemInt::Underline;
-    if (overline)
-        flags |= QTextItemInt::Overline;
-    if (strikeOut)
-        flags |= QTextItemInt::StrikeOut;
-
-    drawTextItemDecoration(q, QPointF(leftMost.toReal(), baseLine.toReal()),
-                           fontEngine,
-                           (underline
-                              ? QTextCharFormat::SingleUnderline
-                              : QTextCharFormat::NoUnderline),
-                           flags, width.toReal(), QTextCharFormat());
-}
-#endif // QT_NO_RAWFONT
 
 /*!
 

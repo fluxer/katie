@@ -2222,9 +2222,6 @@ void QX11PaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
     case QFontEngine::Box:
         d_func()->drawBoxTextItem(p, ti);
         break;
-    case QFontEngine::XLFD:
-        drawXLFD(p, ti);
-        break;
 #ifndef QT_NO_FONTCONFIG
     case QFontEngine::Freetype:
         drawFreetype(p, ti);
@@ -2232,45 +2229,6 @@ void QX11PaintEngine::drawTextItem(const QPointF &p, const QTextItem &textItem)
 #endif
     default:
         Q_ASSERT(false);
-    }
-}
-
-void QX11PaintEngine::drawXLFD(const QPointF &p, const QTextItemInt &ti)
-{
-    Q_D(QX11PaintEngine);
-
-    if (d->txop > QTransform::TxTranslate) {
-        // XServer or font don't support server side transformations, need to do it by hand
-        QPaintEngine::drawTextItem(p, ti);
-        return;
-    }
-
-    if (!ti.glyphs.numGlyphs)
-        return;
-
-    QVarLengthArray<QFixedPoint> positions;
-    QVarLengthArray<glyph_t> glyphs;
-    QTransform matrix = d->matrix;
-    matrix.translate(p.x(), p.y());
-    ti.fontEngine->getGlyphPositions(ti.glyphs, matrix, ti.flags, glyphs, positions);
-    if (glyphs.size() == 0)
-        return;
-
-    QFontEngineXLFD *xlfd = static_cast<QFontEngineXLFD *>(ti.fontEngine);
-    Qt::HANDLE font_id = xlfd->fontStruct()->fid;
-
-    XSetFont(d->dpy, d->gc, font_id);
-
-    const QFixed offs = QFixed::fromReal(aliasedCoordinateDelta);
-    for (int i = 0; i < glyphs.size(); i++) {
-        int xp = qRound(positions[i].x + offs);
-        int yp = qRound(positions[i].y + offs);
-        if (xp < SHRT_MAX && xp > SHRT_MIN &&  yp > SHRT_MIN && yp < SHRT_MAX) {
-            XChar2b ch;
-            ch.byte1 = glyphs[i] >> 8;
-            ch.byte2 = glyphs[i] & 0xff;
-            XDrawString16(d->dpy, d->hd, d->gc, xp, yp, &ch, 1);
-        }
     }
 }
 

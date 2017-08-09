@@ -1015,32 +1015,22 @@ static void qt_set_x11_resources(const char* font = 0, const char* fg = 0,
     if (!resFont.isEmpty()
         && !qt_x11Data->has_fontconfig
         && !QApplicationPrivate::sys_font) {
-        // set application font
+        // reset the application font to the real font info.
         QFont fnt;
-        fnt.setRawName(resFont);
+        QFontInfo fontinfo(fnt);
+        fnt.setFamily(fontinfo.family());
+        fnt.setItalic(fontinfo.italic());
+        fnt.setWeight(fontinfo.weight());
+        fnt.setUnderline(fontinfo.underline());
+        fnt.setStrikeOut(fontinfo.strikeOut());
+        fnt.setStyleHint(fontinfo.styleHint());
 
-        // the font we get may actually be an alias for another font,
-        // so we reset the application font to the real font info.
-        if (! fnt.exactMatch()) {
-            QFontInfo fontinfo(fnt);
-            fnt.setFamily(fontinfo.family());
-            fnt.setRawMode(fontinfo.rawMode());
-
-            if (! fnt.rawMode()) {
-                fnt.setItalic(fontinfo.italic());
-                fnt.setWeight(fontinfo.weight());
-                fnt.setUnderline(fontinfo.underline());
-                fnt.setStrikeOut(fontinfo.strikeOut());
-                fnt.setStyleHint(fontinfo.styleHint());
-
-                if (fnt.pointSize() <= 0 && fnt.pixelSize() <= 0) {
-                    // size is all wrong... fix it
-                    qreal pointSize = fontinfo.pixelSize() * 72. / (float) QX11Info::appDpiY();
-                    if (pointSize <= 0)
-                        pointSize = 12;
-                    fnt.setPointSize(qRound(pointSize));
-                }
-            }
+        if (fnt.pointSize() <= 0 && fnt.pixelSize() <= 0) {
+            // size is all wrong... fix it
+            qreal pointSize = fontinfo.pixelSize() * 72. / (float) QX11Info::appDpiY();
+            if (pointSize <= 0)
+                pointSize = 12;
+            fnt.setPointSize(qRound(pointSize));
         }
 
         QApplicationPrivate::setSystemFont(fnt);

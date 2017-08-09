@@ -87,9 +87,6 @@ public:
         Box,
         Multi,
 
-        // X11 types
-        XLFD,
-
         // QWS types
         Freetype,
         Proxy,
@@ -362,7 +359,6 @@ public:
 protected:
     friend class QPSPrintEnginePrivate;
     friend class QPSPrintEngineFontMulti;
-    friend class QRawFont;
     virtual void loadEngine(int at) = 0;
     QVector<QFontEngine *> engines;
 };

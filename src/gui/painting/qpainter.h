@@ -78,7 +78,6 @@ class QTextItem;
 class QMatrix;
 class QTransform;
 class QStaticText;
-class QGlyphRun;
 
 class Q_GUI_EXPORT QPainter
 {
@@ -390,10 +389,6 @@ public:
     void setLayoutDirection(Qt::LayoutDirection direction);
     Qt::LayoutDirection layoutDirection() const;
 
-#if !defined(QT_NO_RAWFONT)
-    void drawGlyphRun(const QPointF &position, const QGlyphRun &glyphRun);
-#endif
-
     void drawStaticText(const QPointF &topLeftPosition, const QStaticText &staticText);
     inline void drawStaticText(const QPoint &topLeftPosition, const QStaticText &staticText);
     inline void drawStaticText(int left, int top, const QStaticText &staticText);
@@ -464,7 +459,6 @@ private:
     friend class QFontEngine;
     friend class QFontEngineBox;
     friend class QFontEngineFT;
-    friend class QFontEngineXLFD;
     friend class QPaintEngine;
     friend class QPaintEngineExPrivate;
     friend class QX11PaintEngine;

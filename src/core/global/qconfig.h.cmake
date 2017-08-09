@@ -92,6 +92,7 @@
 #define QT_NO_TABLET
 #define QT_NO_TABLETEVENT
 #define QT_NO_GCONF2
+#define QT_NO_RAWFONT
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -249,7 +250,6 @@
 #cmakedefine QT_NO_QOBJECT_CHECK
 #cmakedefine QT_NO_QUATERNION
 #cmakedefine QT_NO_QUUID_STRING
-#cmakedefine QT_NO_RAWFONT
 #cmakedefine QT_NO_REGEXP
 #cmakedefine QT_NO_REGEXP_ANCHOR_ALT
 #cmakedefine QT_NO_REGEXP_BACKREF

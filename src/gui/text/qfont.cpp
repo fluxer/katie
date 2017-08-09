@@ -167,7 +167,7 @@ Q_GUI_EXPORT int qt_defaultDpi()
 
 QFontPrivate::QFontPrivate()
     : engineData(0), dpi(qt_defaultDpi()), screen(0),
-      rawMode(false), underline(false), overline(false), strikeOut(false), kerning(true),
+      underline(false), overline(false), strikeOut(false), kerning(true),
       capital(0), letterSpacingIsAbsolute(false), scFont(0)
 {
 #ifdef Q_WS_X11
@@ -180,7 +180,7 @@ QFontPrivate::QFontPrivate()
 
 QFontPrivate::QFontPrivate(const QFontPrivate &other)
     : request(other.request), engineData(0), dpi(other.dpi), screen(other.screen),
-      rawMode(other.rawMode), underline(other.underline), overline(other.overline),
+      underline(other.underline), overline(other.overline),
       strikeOut(other.strikeOut), kerning(other.kerning),
       capital(other.capital), letterSpacingIsAbsolute(other.letterSpacingIsAbsolute),
       letterSpacing(other.letterSpacing), wordSpacing(other.wordSpacing),
@@ -407,9 +407,6 @@ QFontEngineData::~QFontEngineData()
     setPointSize() has a similar effect and provides device
     independence.
 
-    In X11 you can set a font using its system
-    specific name with setRawName().
-
     Loading fonts can be expensive, especially on X11. QFont contains
     extensive optimizations to make the copying of QFont objects fast,
     and to cache the results of the slow window system functions it
@@ -551,44 +548,6 @@ QFontEngineData::~QFontEngineData()
 */
 
 /*!
-    \fn QString QFont::rawName() const
-
-    Returns the name of the font within the underlying window system.
-
-    On X11, this function will return an empty string if Qt is built with
-    FontConfig support; otherwise the XLFD (X Logical Font Description) is
-    returned.
-
-    Using the return value of this function is usually \e not \e
-    portable.
-
-    \sa setRawName()
-*/
-
-/*!
-    \fn void QFont::setRawName(const QString &name)
-
-    Sets a font by its system specific name. The function is
-    particularly useful under X, where system font settings (for
-    example X resources) are usually available in XLFD (X Logical Font
-    Description) form only. You can pass an XLFD as \a name to this
-    function.
-
-    A font set with setRawName() is still a full-featured QFont. It can
-    be queried (for example with italic()) or modified (for example with
-    setItalic()) and is therefore also suitable for rendering rich text.
-
-    If Qt's internal font database cannot resolve the raw name, the
-    font becomes a raw font with \a name as its family.
-
-    Note that the present implementation does not handle wildcards in
-    XLFDs well, and that font aliases (file \c fonts.alias in the font
-    directory on X11) are not supported.
-
-    \sa rawName(), setRawMode(), setFamily()
-*/
-
-/*!
     \fn QString QFont::lastResortFamily() const
 
     Returns the "last resort" font family name.
@@ -628,7 +587,7 @@ QFontEngineData::~QFontEngineData()
     happens. Please \link bughowto.html report it as a bug\endlink if
     it does, preferably with a list of the fonts you have installed.
 
-    \sa lastResortFamily() rawName()
+    \sa lastResortFamily()
 */
 
 /*!
@@ -1418,10 +1377,6 @@ int QFont::stretch() const
     The stretch factor is only applied to outline fonts.  The stretch
     factor is ignored for bitmap fonts.
 
-    NOTE: QFont cannot stretch XLFD fonts.  When loading XLFD fonts on
-    X11, the stretch factor is matched against a predefined set of
-    values for the SETWIDTH_NAME field of the XLFD.
-
     \sa stretch() QFont::Stretch
 */
 void QFont::setStretch(int factor)
@@ -1583,33 +1538,6 @@ QFont::Capitalization QFont::capitalization() const
     return static_cast<QFont::Capitalization> (d->capital);
 }
 
-
-/*!
-    If \a enable is true, turns raw mode on; otherwise turns raw mode
-    off. This function only has an effect under X11.
-
-    If raw mode is enabled, Qt will search for an X font with a
-    complete font name matching the family name, ignoring all other
-    values set for the QFont. If the font name matches several fonts,
-    Qt will use the first font returned by X. QFontInfo \e cannot be
-    used to fetch information about a QFont using raw mode (it will
-    return the values set in the QFont for all parameters, including
-    the family name).
-
-    \warning Do not use raw mode unless you really, really need it! In
-    most (if not all) cases, setRawName() is a much better choice.
-
-    \sa rawMode(), setRawName()
-*/
-void QFont::setRawMode(bool enable)
-{
-    detach();
-
-    if ((bool) d->rawMode == enable) return;
-
-    d->rawMode = enable;
-}
-
 /*!
     Returns true if a window system font exactly matching the settings
     of this font is available.
@@ -1620,9 +1548,7 @@ bool QFont::exactMatch() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-    return (d->rawMode
-            ? engine->type() != QFontEngine::Box
-            : d->request.exactMatch(engine->fontDef));
+    return d->request.exactMatch(engine->fontDef);
 }
 
 /*!
@@ -1630,8 +1556,7 @@ bool QFont::exactMatch() const
     false.
 
     Two QFonts are considered equal if their font attributes are
-    equal. If rawMode() is enabled for both fonts, only the family
-    fields are compared.
+    equal.
 
     \sa operator!=() isCopyOf()
 */
@@ -1697,8 +1622,7 @@ bool QFont::operator<(const QFont &f) const
     returns false.
 
     Two QFonts are considered to be different if their font attributes
-    are different. If rawMode() is enabled for both fonts, only the
-    family fields are compared.
+    are different.
 
     \sa operator==()
 */
@@ -1725,17 +1649,6 @@ QFont::operator QVariant() const
 bool QFont::isCopyOf(const QFont & f) const
 {
     return d == f.d;
-}
-
-/*!
-    Returns true if raw mode is used for font name matching; otherwise
-    returns false.
-
-    \sa setRawMode() rawName()
-*/
-bool QFont::rawMode() const
-{
-    return d->rawMode;
 }
 
 /*!
@@ -1973,8 +1886,6 @@ static quint8 get_font_bits(int version, const QFontPrivate *f)
         bits |= 0x08;
     // if (f.hintSetByUser)
     // bits |= 0x10;
-    if (f->rawMode)
-        bits |= 0x20;
     if (f->kerning)
         bits |= 0x10;
     if (f->request.style == QFont::StyleOblique)
@@ -2008,7 +1919,6 @@ static void set_font_bits(int version, quint8 bits, QFontPrivate *f)
     f->strikeOut             = (bits & 0x04) != 0;
     f->request.fixedPitch    = (bits & 0x08) != 0;
     // f->hintSetByUser      = (bits & 0x10) != 0;
-    f->rawMode               = (bits & 0x20) != 0;
     f->kerning               = (bits & 0x10) != 0;
     if ((bits & 0x80) != 0)
         f->request.style         = QFont::StyleOblique;
@@ -2052,8 +1962,7 @@ QString QFont::toString() const
         QString::number((int)     style()) + comma +
         QString::number((int) underline()) + comma +
         QString::number((int) strikeOut()) + comma +
-        QString::number((int)fixedPitch()) + comma +
-        QString::number((int)   rawMode());
+        QString::number((int)fixedPitch()) + comma;
 }
 
 
@@ -2085,7 +1994,6 @@ bool QFont::fromString(const QString &descrip)
         setUnderline(l[5].toInt());
         setStrikeOut(l[6].toInt());
         setFixedPitch(l[7].toInt());
-        setRawMode(l[8].toInt());
     } else if (count == 10) {
         if (l[2].toInt() > 0)
             setPixelSize(l[2].toInt());
@@ -2095,7 +2003,6 @@ bool QFont::fromString(const QString &descrip)
         setUnderline(l[6].toInt());
         setStrikeOut(l[7].toInt());
         setFixedPitch(l[8].toInt());
-        setRawMode(l[9].toInt());
     }
     if (count >= 9 && !d->request.fixedPitch) // assume 'false' fixedPitch equals default
         d->request.ignorePitch = true;
@@ -2476,21 +2383,6 @@ QFont::StyleHint QFontInfo::styleHint() const
 }
 
 /*!
-    Returns true if the font is a raw mode font; otherwise returns
-    false.
-
-    If it is a raw mode font, all other functions in QFontInfo will
-    return the same values set in the QFont, regardless of the font
-    actually used.
-
-    \sa QFont::rawMode()
-*/
-bool QFontInfo::rawMode() const
-{
-    return d->rawMode;
-}
-
-/*!
     Returns true if the matched window system font is exactly the same
     as the one specified by the font; otherwise returns false.
 
@@ -2500,9 +2392,7 @@ bool QFontInfo::exactMatch() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-    return (d->rawMode
-            ? engine->type() != QFontEngine::Box
-            : d->request.exactMatch(engine->fontDef));
+    return d->request.exactMatch(engine->fontDef);
 }
 
 

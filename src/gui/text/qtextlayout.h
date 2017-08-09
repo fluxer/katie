@@ -43,7 +43,6 @@
 
 #include <QtCore/qobject.h>
 #include <QtGui/qevent.h>
-#include <QtGui/qglyphrun.h>
 #include <QtGui/qtextcursor.h>
 
 QT_BEGIN_HEADER
@@ -166,10 +165,6 @@ public:
     qreal minimumWidth() const;
     qreal maximumWidth() const;
 
-#if !defined(QT_NO_RAWFONT)
-    QList<QGlyphRun> glyphRuns() const;
-#endif
-
     QTextEngine *engine() const { return d; }
     void setFlags(int flags);
 private:
@@ -240,10 +235,6 @@ public:
 private:
     QTextLine(int line, QTextEngine *e) : i(line), eng(e) {}
     void layout_helper(int numGlyphs);
-
-#if !defined(QT_NO_RAWFONT)
-    QList<QGlyphRun> glyphs(int from, int length) const;
-#endif
 
     friend class QTextLayout;
     friend class QTextFragment;

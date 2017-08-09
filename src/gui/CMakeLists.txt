@@ -74,7 +74,6 @@ set(GUI_PUBLIC_HEADERS
     QGenericMatrix
     QGesture
     QGestureRecognizer
-    QGlyphRun
     QGradientStop
     QGradientStops
     QGraphicsAnchor
@@ -202,7 +201,6 @@ set(GUI_PUBLIC_HEADERS
     QQuaternion
     QRadialGradient
     QRadioButton
-    QRawFont
     QRegion
     QRgb
     QRubberBand

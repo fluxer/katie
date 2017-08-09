@@ -59,7 +59,6 @@
 
 #ifdef Q_WS_X11
 #include "qt_x11_p.h"
-#include "qkde_p.h"
 #endif
 
 #include "qstylehelper_p.h"

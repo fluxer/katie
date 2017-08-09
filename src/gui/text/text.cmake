@@ -39,10 +39,6 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextodfwriter_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qglyphrun.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qglyphrun_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qharfbuzz_p.h
 )
 
@@ -76,8 +72,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qzip.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextodfwriter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/text/qglyphrun.cpp
 )
 
 if(WITH_FREETYPE AND FREETYPE_FOUND)
@@ -96,7 +90,6 @@ if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     set(GUI_SOURCES
         ${GUI_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/text/qfontengine_ft.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/text/qrawfont_ft.cpp
     )
 
     set(EXTRA_GUI_LIBS

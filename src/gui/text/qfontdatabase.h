@@ -157,7 +157,6 @@ private:
     friend class QFontPrivate;
     friend class QFontDialog;
     friend class QFontDialogPrivate;
-    friend class QFontEngineMultiXLFD;
 
     QFontDatabasePrivate *d;
 };

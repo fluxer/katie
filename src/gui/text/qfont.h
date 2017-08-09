@@ -225,10 +225,6 @@ public:
     void setHintingPreference(HintingPreference hintingPreference);
     HintingPreference hintingPreference() const;
 
-    // is raw mode still needed?
-    bool rawMode() const;
-    void setRawMode(bool);
-
     // dupicated from QFontInfo
     bool exactMatch() const;
 
@@ -247,10 +243,6 @@ public:
 #if defined(Q_WS_X11)
     FT_Face freetypeFace() const;
 #endif
-
-    // needed for X11
-    void setRawName(const QString &);
-    QString rawName() const;
 
     QString key() const;
 

@@ -162,8 +162,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFontInfo", "QtGui/qfontinfo.h"},
     { "QFontMetrics", "QtGui/qfontmetrics.h"},
     { "QFontMetricsF", "QtGui/qfontmetrics.h"},
-    { "QGlyphRun", "QtGui/qglyphrun.h"},
-    { "QRawFont", "QtGui/qrawfont.h"},
     { "QStaticText", "QtGui/qstatictext.h"},
     { "QSyntaxHighlighter", "QtGui/qsyntaxhighlighter.h"},
     { "QTextCursor", "QtGui/qtextcursor.h"},
@@ -702,6 +700,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 696;
+static const int qclass_lib_count = 694;
 
 #endif

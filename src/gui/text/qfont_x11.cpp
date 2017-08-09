@@ -212,8 +212,6 @@ Qt::HANDLE QFont::handle() const
     Q_ASSERT(engine != 0);
     if (engine->type() == QFontEngine::Multi)
         engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
-    if (engine->type() == QFontEngine::XLFD)
-        return static_cast<QFontEngineXLFD *>(engine)->fontStruct()->fid;
     return 0;
 }
 
@@ -228,43 +226,10 @@ FT_Face QFont::freetypeFace() const
     if (engine->type() == QFontEngine::Freetype) {
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
         return ft->non_locked_face();
-    } else
-#endif
-    if (engine->type() == QFontEngine::XLFD) {
-        const QFontEngineXLFD *xlfd = static_cast<const QFontEngineXLFD *>(engine);
-        return xlfd->non_locked_face();
     }
+#endif
 #endif
     return 0;
-}
-
-QString QFont::rawName() const
-{
-    QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
-    Q_ASSERT(engine != 0);
-    if (engine->type() == QFontEngine::Multi)
-        engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
-    if (engine->type() == QFontEngine::XLFD)
-        return QString::fromLatin1(engine->name());
-    return QString();
-}
-struct QtFontDesc;
-
-void QFont::setRawName(const QString &name)
-{
-    detach();
-
-    // from qfontdatabase_x11.cpp
-    extern bool qt_fillFontDef(const QByteArray &xlfd, QFontDef *fd, int dpi, QtFontDesc *desc);
-
-    if (!qt_fillFontDef(qt_fixXLFD(name.toLatin1()), &d->request, d->dpi, 0)) {
-        qWarning("QFont::setRawName: Invalid XLFD: \"%s\"", name.toLatin1().constData());
-
-        setFamily(name);
-        setRawMode(true);
-    } else {
-        resolve_mask = QFont::AllPropertiesResolved;
-    }
 }
 
 QString QFont::lastResortFamily() const

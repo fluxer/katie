@@ -73,7 +73,6 @@ public:
     bool strikeOut() const;
     bool fixedPitch() const;
     QFont::StyleHint styleHint() const;
-    bool rawMode() const;
 
     bool exactMatch() const;
 

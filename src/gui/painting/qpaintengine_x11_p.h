@@ -124,7 +124,6 @@ public:
 protected:
     QX11PaintEngine(QX11PaintEnginePrivate &dptr);
 
-    void drawXLFD(const QPointF &p, const QTextItemInt &si);
 #ifndef QT_NO_FONTCONFIG
     void drawFreetype(const QPointF &p, const QTextItemInt &si);
 #endif
