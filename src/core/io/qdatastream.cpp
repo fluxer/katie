@@ -215,7 +215,7 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QDataStream::StreamStatus
+    \enum QDataStream::DataStatus
 
     This enum describes the current status of the data stream.
 
@@ -450,7 +450,7 @@ void QDataStream::setFloatingPointPrecision(QDataStream::FloatingPointPrecision 
     \sa Status setStatus() resetStatus()
 */
 
-QDataStream::StreamStatus QDataStream::status() const
+QDataStream::DataStatus QDataStream::status() const
 {
     return q_status;
 }
@@ -473,7 +473,7 @@ void QDataStream::resetStatus()
 
     \sa Status status() resetStatus()
 */
-void QDataStream::setStatus(StreamStatus status)
+void QDataStream::setStatus(DataStatus status)
 {
     if (q_status == Ok)
         q_status = status;

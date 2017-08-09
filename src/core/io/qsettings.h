@@ -48,13 +48,7 @@ QT_BEGIN_HEADER
 
 #ifndef QT_NO_SETTINGS
 
-#include <ctype.h>
-
 QT_BEGIN_NAMESPACE
-
-#ifdef Status
-#error qsettings.h must be included before any header file that defines Status
-#endif
 
 class QIODevice;
 class QSettingsPrivate;
@@ -73,7 +67,7 @@ class Q_CORE_EXPORT QSettings
     Q_DECLARE_PRIVATE(QSettings)
 
 public:
-    enum Status {
+    enum SettingsStatus {
         NoError = 0,
         AccessError,
         FormatError
@@ -113,7 +107,7 @@ public:
     QSettings(Scope scope, const QString &organization,
               const QString &application = QString(), QObject *parent = Q_NULLPTR);
     QSettings(Format format, Scope scope, const QString &organization,
-	      const QString &application = QString(), QObject *parent = Q_NULLPTR);
+              const QString &application = QString(), QObject *parent = Q_NULLPTR);
     QSettings(const QString &fileName, Format format, QObject *parent = Q_NULLPTR);
     explicit QSettings(QObject *parent = Q_NULLPTR);
 #else
@@ -129,7 +123,7 @@ public:
 
     void clear();
     void sync();
-    Status status() const;
+    SettingsStatus status() const;
 
     void beginGroup(const QString &prefix);
     void endGroup();

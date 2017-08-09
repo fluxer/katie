@@ -712,7 +712,7 @@ QByteArray QX11Data::motifdndFormat(int n)
     if (target == ATOM(TEXT))
         return "text/plain";
 
-    return ("x-motif-dnd/" + X11->xdndAtomToString(target));
+    return ("x-motif-dnd/" + qt_x11Data->xdndAtomToString(target));
 }
 
 
@@ -746,10 +746,10 @@ QVariant QX11Data::motifdndObtainData(const char *mimeType)
         conversion_type = ATOM(TEXT);
     } else if (f.startsWith("x-motif-dnd/")) {
         // strip off the "x-motif-dnd/" prefix
-        conversion_type = X11->xdndStringToAtom(f.remove(0, 12));
+        conversion_type = qt_x11Data->xdndStringToAtom(f.remove(0, 12));
     }
 
-    if (XGetSelectionOwner(X11->display, Dnd_selection) == XNone) {
+    if (XGetSelectionOwner(qt_x11Data->display, Dnd_selection) == XNone) {
         return result; // should never happen?
     }
 
@@ -759,26 +759,26 @@ QVariant QX11Data::motifdndObtainData(const char *mimeType)
     }
 
     // convert selection to the appropriate type
-    XConvertSelection (X11->display, Dnd_selection, conversion_type,
+    XConvertSelection (qt_x11Data->display, Dnd_selection, conversion_type,
                        Dnd_selection, tw->internalWinId(), Dnd_selection_time);
 
-    XFlush(X11->display);
+    XFlush(qt_x11Data->display);
 
     XEvent xevent;
-    bool got=X11->clipboardWaitForEvent(tw->internalWinId(), SelectionNotify, &xevent, 5000);
+    bool got=qt_x11Data->clipboardWaitForEvent(tw->internalWinId(), SelectionNotify, &xevent, 5000);
     if (got) {
         Atom type;
 
-        if (X11->clipboardReadProperty(tw->internalWinId(), Dnd_selection, true, &result, 0, &type, 0)) {
+        if (qt_x11Data->clipboardReadProperty(tw->internalWinId(), Dnd_selection, true, &result, 0, &type, 0)) {
         }
     }
 
     //   we have to convert selection in order to indicate success to the initiator
-    XConvertSelection (X11->display, Dnd_selection, ATOM(XmTRANSFER_SUCCESS),
+    XConvertSelection (qt_x11Data->display, Dnd_selection, ATOM(XmTRANSFER_SUCCESS),
                        Dnd_selection, tw->internalWinId(), Dnd_selection_time);
 
     // wait again for SelectionNotify event
-    X11->clipboardWaitForEvent(tw->internalWinId(), SelectionNotify, &xevent, 5000);
+    qt_x11Data->clipboardWaitForEvent(tw->internalWinId(), SelectionNotify, &xevent, 5000);
 
     if ((dropWidget->windowType() == Qt::Desktop)) {
         delete tw;
@@ -823,13 +823,13 @@ void QX11Data::motifdndHandle(QWidget *widget, const XEvent * xe, bool /* passiv
                     lastAcceptedAction = Qt::IgnoreAction;
 
                     dnd_data.reason = DND_DROP_SITE_LEAVE;
-                    dnd_data.time = X11->time;
+                    dnd_data.time = qt_x11Data->time;
                     DndFillClientMessage (event.xclient.display, sourceWindow, &cm, &dnd_data, receiver);
                     XSendEvent(event.xbutton.display, sourceWindow, False, 0, (XEvent *)&cm) ;
                 } else {
                     dnd_data.reason = DND_DRAG_MOTION;
                     dnd_data.status = DND_NO_DROP_SITE;
-                    dnd_data.time = X11->time;
+                    dnd_data.time = qt_x11Data->time;
                     dnd_data.operation = DND_NOOP;
                     dnd_data.operations = DND_NOOP;
                     DndFillClientMessage (event.xclient.display, sourceWindow, &cm, &dnd_data, receiver);
@@ -855,7 +855,7 @@ void QX11Data::motifdndHandle(QWidget *widget, const XEvent * xe, bool /* passiv
                     QApplication::sendEvent(dropWidget, &de);
 
                     dnd_data.reason = DND_DROP_SITE_ENTER;
-                    dnd_data.time = X11->time;
+                    dnd_data.time = qt_x11Data->time;
                     if (de.isAccepted()) {
                         lastAcceptedAction = de.dropAction();
 
@@ -880,7 +880,7 @@ void QX11Data::motifdndHandle(QWidget *widget, const XEvent * xe, bool /* passiv
                     QApplication::sendEvent(dropWidget, &me);
 
                     dnd_data.reason = DND_DRAG_MOTION;
-                    dnd_data.time = X11->time;
+                    dnd_data.time = qt_x11Data->time;
 
                     if (me.isAccepted()) {
                         lastAcceptedAction = me.dropAction();
@@ -920,9 +920,9 @@ void QX11Data::motifdndHandle(QWidget *widget, const XEvent * xe, bool /* passiv
     case DND_TOP_LEVEL_LEAVE:
         {
             XEvent nextEvent;
-            if (XCheckTypedWindowEvent(X11->display, widget->winId(), ClientMessage, &nextEvent)) {
+            if (XCheckTypedWindowEvent(qt_x11Data->display, widget->winId(), ClientMessage, &nextEvent)) {
                 // we just want to check, not eat (should use XPeekIfEvent)
-                XPutBackEvent(X11->display, &nextEvent);
+                XPutBackEvent(qt_x11Data->display, &nextEvent);
 
                 if (DndParseClientMessage (&nextEvent.xclient, &dnd_data, &receiver)
                     && dnd_data.reason == DND_DROP_START) {
@@ -965,7 +965,7 @@ void QX11Data::motifdndHandle(QWidget *widget, const XEvent * xe, bool /* passiv
                 XSendEvent(event.xbutton.display, sourceWindow, False, 0, (XEvent *)&cm);
 
                 // we have to convert selection in order to indicate failure to the initiator
-                XConvertSelection (X11->display, dnd_data.property, ATOM(XmTRANSFER_FAILURE),
+                XConvertSelection (qt_x11Data->display, dnd_data.property, ATOM(XmTRANSFER_FAILURE),
                                    dnd_data.property, dnd_data.src_window, dnd_data.time);
 
                 if (dropWidget) {

@@ -63,7 +63,7 @@ QString QKde::kdeHome()
         if (kdeHomePath.isEmpty()) {
             QDir homeDir(QDir::homePath());
             QString kdeConfDir(QLatin1String("/.kde"));
-            if (4 == X11->desktopVersion && homeDir.exists(QLatin1String(".kde4")))
+            if (4 == qt_x11Data->desktopVersion && homeDir.exists(QLatin1String(".kde4")))
             kdeConfDir = QLatin1String("/.kde4");
             kdeHomePath = QDir::homePath() + kdeConfDir;
         }
@@ -125,7 +125,7 @@ QPalette QKde::kdePalette()
 */
 QString QKde::kdeStyle()
 {
-    if (X11->desktopVersion >= 4) {
+    if (qt_x11Data->desktopVersion >= 4) {
         QSettings kdeSettings(QKde::kdeHome() + QLatin1String("/share/config/kdeglobals"), QSettings::IniFormat);
         QString style = kdeSettings.value(QLatin1String("widgetStyle"), QLatin1String("Oxygen")).toString();
 
@@ -134,7 +134,7 @@ QString QKde::kdeStyle()
             return style;
     }
 
-    if (X11->use_xrender)
+    if (qt_x11Data->use_xrender)
         return QLatin1String("plastique");
     else
         return QLatin1String("windows");

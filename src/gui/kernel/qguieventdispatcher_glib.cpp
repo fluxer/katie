@@ -74,7 +74,7 @@ static gboolean x11EventSourcePrepare(GSource *s, gint *timeout)
     if (timeout)
         *timeout = -1;
     GX11EventSource *source = reinterpret_cast<GX11EventSource *>(s);
-    return (XEventsQueued(X11->display, QueuedAfterFlush)
+    return (XEventsQueued(qt_x11Data->display, QueuedAfterFlush)
             || (!(source->flags & QEventLoop::ExcludeUserInputEvents)
                 && !source->d->queuedUserInputEvents.isEmpty()));
 }
@@ -82,7 +82,7 @@ static gboolean x11EventSourcePrepare(GSource *s, gint *timeout)
 static gboolean x11EventSourceCheck(GSource *s)
 {
     GX11EventSource *source = reinterpret_cast<GX11EventSource *>(s);
-    return (XEventsQueued(X11->display, QueuedAfterFlush)
+    return (XEventsQueued(qt_x11Data->display, QueuedAfterFlush)
             || (!(source->flags & QEventLoop::ExcludeUserInputEvents)
                 && !source->d->queuedUserInputEvents.isEmpty()));
 }
@@ -91,16 +91,16 @@ static gboolean x11EventSourceDispatch(GSource *s, GSourceFunc callback, gpointe
 {
     GX11EventSource *source = reinterpret_cast<GX11EventSource *>(s);
 
-    ulong marker = XNextRequest(X11->display);
+    ulong marker = XNextRequest(qt_x11Data->display);
     do {
         XEvent event;
         if (!(source->flags & QEventLoop::ExcludeUserInputEvents)
             && !source->d->queuedUserInputEvents.isEmpty()) {
             // process a pending user input event
             event = source->d->queuedUserInputEvents.takeFirst();
-        } else if (XEventsQueued(X11->display, QueuedAlready)) {
+        } else if (XEventsQueued(qt_x11Data->display, QueuedAlready)) {
             // process events from the X server
-            XNextEvent(X11->display, &event);
+            XNextEvent(qt_x11Data->display, &event);
 
             if (source->flags & QEventLoop::ExcludeUserInputEvents) {
                 // queue user input events
@@ -148,7 +148,7 @@ static gboolean x11EventSourceDispatch(GSource *s, GSourceFunc callback, gpointe
 
         if (event.xany.serial >= marker)
             goto out;
-    } while (XEventsQueued(X11->display, QueuedAfterFlush));
+    } while (XEventsQueued(qt_x11Data->display, QueuedAfterFlush));
 
  out:
 
@@ -209,7 +209,7 @@ bool QGuiEventDispatcherGlib::processEvents(QEventLoop::ProcessEventsFlags flags
 void QGuiEventDispatcherGlib::startingUp()
 {
     Q_D(QGuiEventDispatcherGlib);
-    d->x11EventSource->pollfd.fd = XConnectionNumber(X11->display);
+    d->x11EventSource->pollfd.fd = XConnectionNumber(qt_x11Data->display);
     d->x11EventSource->pollfd.events = G_IO_IN | G_IO_HUP | G_IO_ERR;
     d->x11EventSource->q = this;
     d->x11EventSource->d = d;
@@ -218,7 +218,7 @@ void QGuiEventDispatcherGlib::startingUp()
 
 void QGuiEventDispatcherGlib::flush()
 {
-    XFlush(X11->display);
+    XFlush(qt_x11Data->display);
 }
 
 QT_END_NAMESPACE

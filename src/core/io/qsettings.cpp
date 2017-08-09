@@ -382,7 +382,7 @@ void QSettingsPrivate::beginGroupOrArray(const QSettingsGroup &group)
     first error that occurred. We always allow clearing errors.
 */
 
-void QSettingsPrivate::setStatus(QSettings::Status status) const
+void QSettingsPrivate::setStatus(QSettings::SettingsStatus status) const
 {
     if (status == QSettings::NoError || this->status == QSettings::NoError)
         this->status = status;
@@ -2167,7 +2167,7 @@ void QConfFileSettingsPrivate::ensureSectionParsed(QConfFile *confFile,
     \sa QVariant, QSessionManager, {Settings Editor Example}, {Application Example}
 */
 
-/*! \enum QSettings::Status
+/*! \enum QSettings::SettingsStatus
 
     The following status values are possible:
 
@@ -2635,7 +2635,7 @@ QTextCodec *QSettings::iniCodec() const
 
     \sa sync()
 */
-QSettings::Status QSettings::status() const
+QSettings::SettingsStatus QSettings::status() const
 {
     Q_D(const QSettings);
     return d->status;

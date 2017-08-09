@@ -1750,7 +1750,7 @@ void QPixmap::detach()
 
         // reset the cache data
         if (d->hd2) {
-            XFreePixmap(X11->display, d->hd2);
+            XFreePixmap(qt_x11Data->display, d->hd2);
             d->hd2 = 0;
         }
     }

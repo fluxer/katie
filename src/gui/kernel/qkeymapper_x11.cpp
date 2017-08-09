@@ -332,10 +332,10 @@ void QKeyMapperPrivate::clearMappings()
 
     coreDesc.min_keycode = 8;
     coreDesc.max_keycode = 255;
-    XDisplayKeycodes(X11->display, &coreDesc.min_keycode, &coreDesc.max_keycode);
+    XDisplayKeycodes(qt_x11Data->display, &coreDesc.min_keycode, &coreDesc.max_keycode);
 
     coreDesc.keysyms_per_keycode = 0;
-    coreDesc.keysyms = XGetKeyboardMapping(X11->display,
+    coreDesc.keysyms = XGetKeyboardMapping(qt_x11Data->display,
                                             coreDesc.min_keycode,
                                             coreDesc.max_keycode - coreDesc.min_keycode + 1,
                                             &coreDesc.keysyms_per_keycode);
@@ -360,7 +360,7 @@ void QKeyMapperPrivate::clearMappings()
 
     coreDesc.lock_meaning = NoSymbol;
 
-    XModifierKeymap *map = XGetModifierMapping(X11->display);
+    XModifierKeymap *map = XGetModifierMapping(qt_x11Data->display);
 
     if (map) {
         int i, maskIndex = 0, mapIndex = 0;
@@ -370,7 +370,7 @@ void QKeyMapperPrivate::clearMappings()
                     KeySym sym;
                     int x = 0;
                     do {
-                        sym = XKeycodeToKeysym(X11->display, map->modifiermap[mapIndex], x++);
+                        sym = XKeycodeToKeysym(qt_x11Data->display, map->modifiermap[mapIndex], x++);
                     } while (sym == NoSymbol && x < coreDesc.keysyms_per_keycode);
                     const uchar mask = 1 << maskIndex;
                     SETMASK(sym, mask);
@@ -382,7 +382,7 @@ void QKeyMapperPrivate::clearMappings()
         // determine the meaning of the Lock modifier
         for (i = 0; i < map->max_keypermod; ++i) {
             for (int x = 0; x < coreDesc.keysyms_per_keycode; ++x) {
-                KeySym sym = XKeycodeToKeysym(X11->display, map->modifiermap[LockMapIndex], x);
+                KeySym sym = XKeycodeToKeysym(qt_x11Data->display, map->modifiermap[LockMapIndex], x);
                 if (sym == XK_Caps_Lock || sym == XK_ISO_Lock) {
                     coreDesc.lock_meaning = XK_Caps_Lock;
                     break;
@@ -1035,7 +1035,7 @@ static QString translateKeySym(KeySym keysym, uint xmodifiers,
         }
     }
 
-    modifiers = X11->translateModifiers(xmodifiers);
+    modifiers = qt_x11Data->translateModifiers(xmodifiers);
 
     // Commentary in X11/keysymdef says that X codes match ASCII, so it
     // is safe to use the locale functions to process X codes in ISO8859-1.
@@ -1236,7 +1236,7 @@ bool QKeyMapperPrivate::translateKeyEvent(QWidget *keyWidget, const XEvent *even
     if (qt_sm_blockUserInput) // block user interaction during session management
         return true;
 
-    Display *dpy = X11->display;
+    Display *dpy = qt_x11Data->display;
 
     if (!keyWidget->isEnabled())
         return true;

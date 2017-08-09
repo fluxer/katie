@@ -598,7 +598,7 @@ void QPrinter::init(PrinterMode mode)
 #if !defined(Q_WS_X11)
     if (!qApp) {
 #else
-    if (!qApp || !X11) {
+    if (!qApp || !qt_x11Data) {
 #endif
         qFatal("QPrinter: Must construct a QApplication before a QPaintDevice");
         return;
@@ -817,7 +817,7 @@ bool QPrinter::isValid() const
 {
     Q_D(const QPrinter);
 #if defined(Q_WS_X11)
-    if (!qApp || !X11) {
+    if (!qApp || !qt_x11Data) {
         return false;
     }
 #endif

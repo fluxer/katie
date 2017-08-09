@@ -674,7 +674,7 @@ void QDialog::adjustPosition(QWidget* w)
 {
 #ifdef Q_WS_X11
     // if the WM advertises that it will place the windows properly for us, let it do it :)
-    if (X11->isSupportedByWM(ATOM(_NET_WM_FULL_PLACEMENT)))
+    if (qt_x11Data->isSupportedByWM(ATOM(_NET_WM_FULL_PLACEMENT)))
         return;
 #endif
 

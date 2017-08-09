@@ -71,10 +71,10 @@ Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
 static QString fallbackTheme()
 {
 #ifdef Q_WS_X11
-    if (X11->desktopEnvironment == DE_GNOME) {
+    if (qt_x11Data->desktopEnvironment == DE_GNOME) {
         return QLatin1String("gnome");
-    } else if (X11->desktopEnvironment == DE_KDE) {
-        return X11->desktopVersion >= 4
+    } else if (qt_x11Data->desktopEnvironment == DE_KDE) {
+        return qt_x11Data->desktopVersion >= 4
             ? QString::fromLatin1("oxygen")
             : QString::fromLatin1("crystalsvg");
     } else {

@@ -212,7 +212,7 @@ void QComboBoxPrivate::_q_modelDestroyed()
 QRect QComboBoxPrivate::popupGeometry(int screen) const
 {
 #if defined Q_WS_X11
-    if (X11->desktopEnvironment == DE_KDE)
+    if (qt_x11Data->desktopEnvironment == DE_KDE)
         return QApplication::desktop()->screenGeometry(screen);
 #endif
     return QApplication::desktop()->availableGeometry(screen);

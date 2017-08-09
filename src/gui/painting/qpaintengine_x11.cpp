@@ -265,72 +265,72 @@ void QXRenderTessellator::addTrap(const Trapezoid &trap)
 #ifndef QT_NO_XRENDER
 static Picture getPatternFill(int screen, const QBrush &b)
 {
-    if (!X11->use_xrender)
+    if (!qt_x11Data->use_xrender)
         return XNone;
 
-    XRenderColor color = X11->preMultiply(b.color());
+    XRenderColor color = qt_x11Data->preMultiply(b.color());
     XRenderColor bg_color;
 
-    bg_color = X11->preMultiply(QColor(0, 0, 0, 0));
+    bg_color = qt_x11Data->preMultiply(QColor(0, 0, 0, 0));
 
-    for (int i = 0; i < X11->pattern_fill_count; ++i) {
-        if (X11->pattern_fills[i].screen == screen
-            && X11->pattern_fills[i].opaque == false
-            && X11->pattern_fills[i].style == b.style()
-            && X11->pattern_fills[i].color.alpha == color.alpha
-            && X11->pattern_fills[i].color.red == color.red
-            && X11->pattern_fills[i].color.green == color.green
-            && X11->pattern_fills[i].color.blue == color.blue
-            && X11->pattern_fills[i].bg_color.alpha == bg_color.alpha
-            && X11->pattern_fills[i].bg_color.red == bg_color.red
-            && X11->pattern_fills[i].bg_color.green == bg_color.green
-            && X11->pattern_fills[i].bg_color.blue == bg_color.blue)
-            return X11->pattern_fills[i].picture;
+    for (int i = 0; i < qt_x11Data->pattern_fill_count; ++i) {
+        if (qt_x11Data->pattern_fills[i].screen == screen
+            && qt_x11Data->pattern_fills[i].opaque == false
+            && qt_x11Data->pattern_fills[i].style == b.style()
+            && qt_x11Data->pattern_fills[i].color.alpha == color.alpha
+            && qt_x11Data->pattern_fills[i].color.red == color.red
+            && qt_x11Data->pattern_fills[i].color.green == color.green
+            && qt_x11Data->pattern_fills[i].color.blue == color.blue
+            && qt_x11Data->pattern_fills[i].bg_color.alpha == bg_color.alpha
+            && qt_x11Data->pattern_fills[i].bg_color.red == bg_color.red
+            && qt_x11Data->pattern_fills[i].bg_color.green == bg_color.green
+            && qt_x11Data->pattern_fills[i].bg_color.blue == bg_color.blue)
+            return qt_x11Data->pattern_fills[i].picture;
     }
     // none found, replace one
     int i = qrand() % 16;
 
-    if (X11->pattern_fills[i].screen != screen && X11->pattern_fills[i].picture) {
-	XRenderFreePicture (X11->display, X11->pattern_fills[i].picture);
-	X11->pattern_fills[i].picture = 0;
+    if (qt_x11Data->pattern_fills[i].screen != screen && qt_x11Data->pattern_fills[i].picture) {
+	XRenderFreePicture (qt_x11Data->display, qt_x11Data->pattern_fills[i].picture);
+	qt_x11Data->pattern_fills[i].picture = 0;
     }
 
-    if (!X11->pattern_fills[i].picture) {
-        Pixmap pixmap = XCreatePixmap (X11->display, RootWindow (X11->display, screen), 8, 8, 32);
+    if (!qt_x11Data->pattern_fills[i].picture) {
+        Pixmap pixmap = XCreatePixmap (qt_x11Data->display, RootWindow (qt_x11Data->display, screen), 8, 8, 32);
         XRenderPictureAttributes attrs;
         attrs.repeat = True;
-        X11->pattern_fills[i].picture = XRenderCreatePicture (X11->display, pixmap,
-                                                              XRenderFindStandardFormat(X11->display, PictStandardARGB32),
+        qt_x11Data->pattern_fills[i].picture = XRenderCreatePicture (qt_x11Data->display, pixmap,
+                                                              XRenderFindStandardFormat(qt_x11Data->display, PictStandardARGB32),
                                                               CPRepeat, &attrs);
-        XFreePixmap (X11->display, pixmap);
+        XFreePixmap (qt_x11Data->display, pixmap);
     }
 
-    X11->pattern_fills[i].screen = screen;
-    X11->pattern_fills[i].color = color;
-    X11->pattern_fills[i].bg_color = bg_color;
-    X11->pattern_fills[i].opaque = false;
-    X11->pattern_fills[i].style = b.style();
+    qt_x11Data->pattern_fills[i].screen = screen;
+    qt_x11Data->pattern_fills[i].color = color;
+    qt_x11Data->pattern_fills[i].bg_color = bg_color;
+    qt_x11Data->pattern_fills[i].opaque = false;
+    qt_x11Data->pattern_fills[i].style = b.style();
 
-    XRenderFillRectangle(X11->display, PictOpSrc, X11->pattern_fills[i].picture, &bg_color, 0, 0, 8, 8);
+    XRenderFillRectangle(qt_x11Data->display, PictOpSrc, qt_x11Data->pattern_fills[i].picture, &bg_color, 0, 0, 8, 8);
 
     QPixmap pattern(qt_pixmapForBrush(b.style(), true));
     XRenderPictureAttributes attrs;
     attrs.repeat = true;
-    XRenderChangePicture(X11->display, pattern.x11PictureHandle(), CPRepeat, &attrs);
+    XRenderChangePicture(qt_x11Data->display, pattern.x11PictureHandle(), CPRepeat, &attrs);
 
-    Picture fill_fg = X11->getSolidFill(screen, b.color());
-    XRenderComposite(X11->display, PictOpOver, fill_fg, pattern.x11PictureHandle(),
-                     X11->pattern_fills[i].picture,
+    Picture fill_fg = qt_x11Data->getSolidFill(screen, b.color());
+    XRenderComposite(qt_x11Data->display, PictOpOver, fill_fg, pattern.x11PictureHandle(),
+                     qt_x11Data->pattern_fills[i].picture,
                      0, 0, 0, 0, 0, 0, 8, 8);
 
-    return X11->pattern_fills[i].picture;
+    return qt_x11Data->pattern_fills[i].picture;
 }
 
 static void qt_render_bitmap(Display *dpy, int scrn, Picture src, Picture dst,
                       int sx, int sy, int x, int y, int sw, int sh,
                       const QPen &pen)
 {
-    Picture fill_fg = X11->getSolidFill(scrn, pen.color());
+    Picture fill_fg = qt_x11Data->getSolidFill(scrn, pen.color());
     XRenderComposite(dpy, PictOpOver,
                      fill_fg, src, dst, sx, sy, sx, sy, x, y, sw, sh);
 }
@@ -402,12 +402,12 @@ static QPaintEngine::PaintEngineFeatures qt_decide_features()
         | QPaintEngine::PainterPaths
         | QPaintEngine::RasterOpModes;
 
-    if (X11->use_xrender) {
+    if (qt_x11Data->use_xrender) {
         features |= QPaintEngine::Antialiasing;
         features |= QPaintEngine::PorterDuff;
         features |= QPaintEngine::MaskedBrush;
 #if 0
-        if (X11->xrender_version > 10) {
+        if (qt_x11Data->xrender_version > 10) {
             features |= QPaintEngine::LinearGradientFill;
             // ###
         }
@@ -456,7 +456,7 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
     } else if (pdev->devType() == QInternal::Pixmap) {
         const QPixmap *pm = static_cast<const QPixmap *>(pdev);
         QX11PixmapData *data = static_cast<QX11PixmapData*>(pm->data.data());
-        if (X11->use_xrender && data->depth() != 32 && data->x11_mask)
+        if (qt_x11Data->use_xrender && data->depth() != 32 && data->x11_mask)
             data->convertToARGB32();
         d->picture = (::Picture)static_cast<const QPixmap *>(pdev)->x11PictureHandle();
     }
@@ -809,12 +809,12 @@ void QX11PaintEngine::drawRects(const QRect *rects, int rectCount)
 #if !defined(QT_NO_XRENDER)
     ::Picture pict = d->picture;
 
-    if (X11->use_xrender && pict && d->has_brush && d->pdev_depth != 1
+    if (qt_x11Data->use_xrender && pict && d->has_brush && d->pdev_depth != 1
         && (d->has_texture || d->has_alpha_brush || complexPictOp(d->composition_mode)))
     {
         XRenderColor xc;
         if (!d->has_texture && !d->has_pattern)
-            xc = X11->preMultiply(d->cbrush.color());
+            xc = qt_x11Data->preMultiply(d->cbrush.color());
 
         for (int i = 0; i < rectCount; ++i) {
             QRect r(rects[i]);
@@ -909,7 +909,7 @@ static inline void setCapStyle(int cap_style, GC gc)
     ulong mask = GCCapStyle;
     XGCValues vals;
     vals.cap_style = cap_style;
-    XChangeGC(X11->display, gc, mask, &vals);
+    XChangeGC(qt_x11Data->display, gc, mask, &vals);
 }
 
 void QX11PaintEngine::drawPoints(const QPoint *points, int pointCount)
@@ -924,7 +924,7 @@ void QX11PaintEngine::drawPoints(const QPoint *points, int pointCount)
     // use the same test here as in drawPath to ensure that we don't use the path fallback
     // and end up in XDrawLines for pens with width <= 1
     if (d->cpen.widthF() > 1.0f
-        || (X11->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
+        || (qt_x11Data->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
         || (!d->cpen.isCosmetic() && d->txop > QTransform::TxTranslate))
     {
         Qt::PenCapStyle capStyle = d->cpen.capStyle();
@@ -982,7 +982,7 @@ void QX11PaintEngine::drawPoints(const QPointF *points, int pointCount)
     // use the same test here as in drawPath to ensure that we don't use the path fallback
     // and end up in XDrawLines for pens with width <= 1
     if (d->cpen.widthF() > 1.0f
-        || (X11->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
+        || (qt_x11Data->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
         || (!d->cpen.isCosmetic() && d->txop > QTransform::TxTranslate))
     {
         Qt::PenCapStyle capStyle = d->cpen.capStyle();
@@ -1032,7 +1032,7 @@ void QX11PaintEngine::drawPoints(const QPointF *points, int pointCount)
 QPainter::RenderHints QX11PaintEngine::supportedRenderHints() const
 {
 #if !defined(QT_NO_XRENDER)
-    if (X11->use_xrender)
+    if (qt_x11Data->use_xrender)
         return QPainter::Antialiasing;
 #endif
     return QFlag(0);
@@ -1123,8 +1123,8 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
             qpainterOpToXrender(state.compositionMode());
         }
 #endif
-        XSetFunction(X11->display, d->gc, function);
-        XSetFunction(X11->display, d->gc_brush, function);
+        XSetFunction(qt_x11Data->display, d->gc, function);
+        XSetFunction(qt_x11Data->display, d->gc_brush, function);
     }
     d->decidePathFallback();
     d->decideCoordAdjust();
@@ -1136,7 +1136,7 @@ void QX11PaintEngine::updateRenderHints(QPainter::RenderHints hints)
     d->render_hints = hints;
 
 #if !defined(QT_NO_XRENDER)
-    if (X11->use_xrender && d->picture) {
+    if (qt_x11Data->use_xrender && d->picture) {
         XRenderPictureAttributes attrs;
         attrs.poly_edge = (hints & QPainter::Antialiasing) ? PolyEdgeSmooth : PolyEdgeSharp;
         XRenderChangePicture(d->dpy, d->picture, CPPolyEdge, &attrs);
@@ -1253,7 +1253,7 @@ void QX11PaintEngine::updatePen(const QPen &pen)
         vals.foreground = qGray(pen.color().rgb()) > 127 ? 0 : 1;
         vals.background = qGray(QColor(Qt::transparent).rgb()) > 127 ? 0 : 1;
     } else if (d->pdev->devType() == QInternal::Pixmap && d->pdev_depth == 32
-        && X11->use_xrender) {
+        && qt_x11Data->use_xrender) {
         vals.foreground = pen.color().rgba();
         vals.background = QColor(Qt::transparent).rgba();
     } else {
@@ -1313,7 +1313,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
     if (d->pdev_depth == 1) {
         vals.foreground = qGray(d->cbrush.color().rgb()) > 127 ? 0 : 1;
         vals.background = qGray(QColor(Qt::transparent).rgb()) > 127 ? 0 : 1;
-    } else if (X11->use_xrender && d->pdev->devType() == QInternal::Pixmap
+    } else if (qt_x11Data->use_xrender && d->pdev->devType() == QInternal::Pixmap
                && d->pdev_depth == 32) {
         vals.foreground = d->cbrush.color().rgba();
         vals.background = QColor(Qt::transparent).rgba();
@@ -1322,7 +1322,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
         vals.foreground = cmap.pixel(d->cbrush.color());
         vals.background = cmap.pixel(QColor(Qt::transparent));
 
-        if (!X11->use_xrender && d->has_brush && !d->has_pattern && !brush.isOpaque()) {
+        if (!qt_x11Data->use_xrender && d->has_brush && !d->has_pattern && !brush.isOpaque()) {
             QPixmap pattern = qt_patternForAlpha(brush.color().alpha(), d->scrn);
             mask |= GCStipple;
             vals.stipple = pattern.handle();
@@ -1338,7 +1338,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
         if (bs == Qt::TexturePattern) {
             d->brush_pm = qt_toX11Pixmap(d->cbrush.texture());
 #if !defined(QT_NO_XRENDER)
-            if (X11->use_xrender) {
+            if (qt_x11Data->use_xrender) {
                 XRenderPictureAttributes attrs;
                 attrs.repeat = true;
                 XRenderChangePicture(d->dpy, d->brush_pm.x11PictureHandle(), CPRepeat, &attrs);
@@ -1356,13 +1356,13 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
             vals.stipple = d->brush_pm.handle();
             s = FillStippled;
 #if !defined(QT_NO_XRENDER)
-            if (X11->use_xrender) {
+            if (qt_x11Data->use_xrender) {
                 d->bitmap_texture = QPixmap(d->brush_pm.size());
                 d->bitmap_texture.fill(Qt::transparent);
                 d->bitmap_texture = qt_toX11Pixmap(d->bitmap_texture);
                 d->bitmap_texture.x11SetScreen(d->scrn);
 
-                ::Picture src  = X11->getSolidFill(d->scrn, d->cbrush.color());
+                ::Picture src  = qt_x11Data->getSolidFill(d->scrn, d->cbrush.color());
                 XRenderComposite(d->dpy, PictOpSrc, src, d->brush_pm.x11PictureHandle(),
                                  d->bitmap_texture.x11PictureHandle(),
                                  0, 0, d->brush_pm.width(), d->brush_pm.height(),
@@ -1399,7 +1399,7 @@ void QX11PaintEngine::updateBrush(const QBrush &brush, const QPointF &origin)
     }
 #if !defined(QT_NO_XRENDER)
     else if (d->has_alpha_brush) {
-        d->current_brush = X11->getSolidFill(d->scrn, d->cbrush.color());
+        d->current_brush = qt_x11Data->getSolidFill(d->scrn, d->cbrush.color());
     }
 #endif
 
@@ -1484,7 +1484,7 @@ void QX11PaintEnginePrivate::fillPolygon_translated(const QPointF *polygonPoints
     QPointF offset(matrix.dx(), matrix.dy());
 
     qreal offs = adjust_coords ? aliasedCoordinateDelta : 0.0;
-    if (!X11->use_xrender || !(render_hints & QPainter::Antialiasing))
+    if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing))
         offset += QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
 
     for (int i = 0; i < pointCount; ++i) {
@@ -1546,7 +1546,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
         if (current_brush)
             src = current_brush;
         else
-            src = X11->getSolidFill(scrn, fill.color());
+            src = qt_x11Data->getSolidFill(scrn, fill.color());
 #endif
     } else {
         fill = QBrush(cpen.brush());
@@ -1560,7 +1560,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
         else if (has_fill_pattern)
             src = getPatternFill(scrn, fill);
         else
-            src = X11->getSolidFill(scrn, fill.color());
+            src = qt_x11Data->getSolidFill(scrn, fill.color());
 #endif
     }
 
@@ -1576,7 +1576,7 @@ void QX11PaintEnginePrivate::fillPolygon_dev(const QPointF *polygonPoints, int p
 
     bool antialias = render_hints & QPainter::Antialiasing;
 
-    if (X11->use_xrender
+    if (qt_x11Data->use_xrender
         && picture
         && !has_fill_pattern
         && (clippedCount > 0)
@@ -1727,7 +1727,7 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
 
         for (int j = 0; j < polys.at(i).size(); ++j) {
             translated_points[j] = polys.at(i).at(j);
-            if (!X11->use_xrender || !(render_hints & QPainter::Antialiasing)) {
+            if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing)) {
                 translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + offs;
                 translated_points[j].ry() = qRound(translated_points[j].ry() + aliasedCoordinateDelta) + offs;
             }
@@ -1747,7 +1747,7 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
     if (d->has_brush)
         d->fillPath(path, QX11PaintEnginePrivate::BrushGC, true);
     if (d->has_pen
-        && ((X11->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
+        && ((qt_x11Data->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
             || (!d->cpen.isCosmetic() && d->txop > QTransform::TxTranslate
                 && !d->has_non_scaling_xform)
             || (d->cpen.style() == Qt::CustomDashLine))) {
@@ -1808,7 +1808,7 @@ Q_GUI_EXPORT void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const Q
     const int h = rect.height();
 
     QImage im;
-    int image_byte_order = ImageByteOrder(X11->display);
+    int image_byte_order = ImageByteOrder(qt_x11Data->display);
     if ((QSysInfo::ByteOrder == QSysInfo::BigEndian && ((image_byte_order == LSBFirst) || bgr_layout))
         || (image_byte_order == MSBFirst && QSysInfo::ByteOrder == QSysInfo::LittleEndian)
         || (image_byte_order == LSBFirst && bgr_layout))
@@ -1891,9 +1891,9 @@ void QX11PaintEngine::drawPixmap(const QRectF &r, const QPixmap &px, const QRect
         return;
 
     if ((d->xinfo && d->xinfo->screen() != pixmap.x11Info().screen())
-        || (pixmap.x11Info().screen() != DefaultScreen(X11->display))) {
+        || (pixmap.x11Info().screen() != DefaultScreen(qt_x11Data->display))) {
         QPixmap* p = const_cast<QPixmap *>(&pixmap);
-        p->x11SetScreen(d->xinfo ? d->xinfo->screen() : DefaultScreen(X11->display));
+        p->x11SetScreen(d->xinfo ? d->xinfo->screen() : DefaultScreen(qt_x11Data->display));
     }
 
     QPixmap::x11SetDefaultScreen(pixmap.x11Info().screen());
@@ -2092,15 +2092,15 @@ void QX11PaintEngine::drawTiledPixmap(const QRectF &r, const QPixmap &pixmap, co
     Q_D(QX11PaintEngine);
 
     if ((d->xinfo && d->xinfo->screen() != pixmap.x11Info().screen())
-        || (pixmap.x11Info().screen() != DefaultScreen(X11->display))) {
+        || (pixmap.x11Info().screen() != DefaultScreen(qt_x11Data->display))) {
         QPixmap* p = const_cast<QPixmap *>(&pixmap);
-        p->x11SetScreen(d->xinfo ? d->xinfo->screen() : DefaultScreen(X11->display));
+        p->x11SetScreen(d->xinfo ? d->xinfo->screen() : DefaultScreen(qt_x11Data->display));
     }
 
     QPixmap::x11SetDefaultScreen(pixmap.x11Info().screen());
 
 #ifndef QT_NO_XRENDER
-    if (X11->use_xrender && d->picture && pixmap.x11PictureHandle()) {
+    if (qt_x11Data->use_xrender && d->picture && pixmap.x11PictureHandle()) {
 #if 0
         // ### Qt 5: enable this
         XRenderPictureAttributes attrs;
@@ -2335,7 +2335,7 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
         return;
     }
 
-    const bool xrenderPath = (X11->use_xrender
+    const bool xrenderPath = (qt_x11Data->use_xrender
                               && !(d->pdev->devType() == QInternal::Pixmap
                                    && static_cast<const QPixmap *>(d->pdev)->data->pixelType() == QPixmapData::BitmapType));
 
@@ -2365,10 +2365,10 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
     if (xrenderPath) {
         GlyphSet glyphSet = set->id;
         const QColor &pen = d->cpen.color();
-        ::Picture src = X11->getSolidFill(d->scrn, pen);
+        ::Picture src = qt_x11Data->getSolidFill(d->scrn, pen);
         XRenderPictFormat *maskFormat = 0;
         if (ft->xglyph_format != PictStandardA1)
-            maskFormat = XRenderFindStandardFormat(X11->display, ft->xglyph_format);
+            maskFormat = XRenderFindStandardFormat(qt_x11Data->display, ft->xglyph_format);
 
         enum { t_min = SHRT_MIN, t_max = SHRT_MAX };
 
@@ -2411,7 +2411,7 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
                 xp = positions[i].x;
                 yp = positions[i].y;
 
-                XRenderCompositeText32(X11->display, PictOpOver, src, d->picture,
+                XRenderCompositeText32(qt_x11Data->display, PictOpOver, src, d->picture,
                                        maskFormat, 0, 0, 0, 0,
                                        &elt, 1);
                 elt.chars = &glyphs[i];
@@ -2420,7 +2420,7 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
                 elt.yOff = qRound(yp + offs);
             }
         }
-        XRenderCompositeText32(X11->display, PictOpOver, src, d->picture,
+        XRenderCompositeText32(qt_x11Data->display, PictOpOver, src, d->picture,
                                maskFormat, 0, 0, 0, 0,
                                &elt, 1);
 

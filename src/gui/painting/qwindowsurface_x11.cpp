@@ -68,7 +68,7 @@ QX11WindowSurface::QX11WindowSurface(QWidget *widget)
 {
     d_ptr->widget = widget;
 #ifndef QT_NO_XRENDER
-    d_ptr->translucentBackground = X11->use_xrender
+    d_ptr->translucentBackground = qt_x11Data->use_xrender
         && widget->x11Info().depth() == 32;
 #endif
 }
@@ -78,7 +78,7 @@ QX11WindowSurface::~QX11WindowSurface()
 {
     delete d_ptr;
     if (gc) {
-        XFreeGC(X11->display, gc);
+        XFreeGC(qt_x11Data->display, gc);
         gc = 0;
     }
 }
@@ -96,13 +96,13 @@ void QX11WindowSurface::beginPaint(const QRegion &rgn)
     if (d_ptr->translucentBackground) {
         if (d_ptr->device.depth() != 32)
             static_cast<QX11PixmapData *>(d_ptr->device.data_ptr().data())->convertToARGB32();
-        ::Picture src = X11->getSolidFill(d_ptr->device.x11Info().screen(), Qt::transparent);
+        ::Picture src = qt_x11Data->getSolidFill(d_ptr->device.x11Info().screen(), Qt::transparent);
         ::Picture dst = d_ptr->device.x11PictureHandle();
         const QVector<QRect> rects = rgn.rects();
         const int w = d_ptr->device.width();
         const int h = d_ptr->device.height();
         for (QVector<QRect>::const_iterator it = rects.begin(); it != rects.end(); ++it)
-            XRenderComposite(X11->display, PictOpSrc, src, 0, dst,
+            XRenderComposite(qt_x11Data->display, PictOpSrc, src, 0, dst,
                              0, 0, w, h, it->x(), it->y(),
                              it->width(), it->height());
     }
@@ -129,11 +129,11 @@ void QX11WindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoint 
 //         for  (int i = 0; i < num; ++i)
 //             qDebug() << ' ' << i << rects[i].x << rects[i].x << rects[i].y << rects[i].width << rects[i].height;
     if (num != 1)
-        XSetClipRectangles(X11->display, gc, 0, 0, rects, num, YXBanded);
-    XCopyArea(X11->display, d_ptr->device.handle(), widget->handle(), gc,
+        XSetClipRectangles(qt_x11Data->display, gc, 0, 0, rects, num, YXBanded);
+    XCopyArea(qt_x11Data->display, d_ptr->device.handle(), widget->handle(), gc,
               br.x() + offset.x(), br.y() + offset.y(), br.width(), br.height(), wbr.x(), wbr.y());
     if (num != 1)
-        XSetClipMask(X11->display, gc, XNone);
+        XSetClipMask(qt_x11Data->display, gc, XNone);
 }
 
 void QX11WindowSurface::setGeometry(const QRect &rect)
@@ -174,12 +174,12 @@ void QX11WindowSurface::setGeometry(const QRect &rect)
 
             int num;
             XRectangle *rects = (XRectangle *)qt_getClipRects(staticRegion, num);
-            GC tmpGc = XCreateGC(X11->display, oldData->hd, 0, 0);
-            XSetClipRectangles(X11->display, tmpGc, 0, 0, rects, num, YXBanded);
-            XCopyArea(X11->display, oldData->hd, newData->hd, tmpGc,
+            GC tmpGc = XCreateGC(qt_x11Data->display, oldData->hd, 0, 0);
+            XSetClipRectangles(qt_x11Data->display, tmpGc, 0, 0, rects, num, YXBanded);
+            XCopyArea(qt_x11Data->display, oldData->hd, newData->hd, tmpGc,
                       dx, dy, qMin(boundingRect.width(), size.width()),
                       qMin(boundingRect.height(), size.height()), dx, dy);
-            XFreeGC(X11->display, tmpGc);
+            XFreeGC(qt_x11Data->display, tmpGc);
             newData->flags &= ~QX11PixmapData::Uninitialized;
 
             d_ptr->device = QPixmap(newData);
@@ -189,12 +189,12 @@ void QX11WindowSurface::setGeometry(const QRect &rect)
     }
 
     if (gc) {
-        XFreeGC(X11->display, gc);
+        XFreeGC(qt_x11Data->display, gc);
         gc = 0;
     }
     if (!d_ptr->device.isNull()) {
-        gc = XCreateGC(X11->display, d_ptr->device.handle(), 0, 0);
-        XSetGraphicsExposures(X11->display, gc, False);
+        gc = XCreateGC(qt_x11Data->display, d_ptr->device.handle(), 0, 0);
+        XSetGraphicsExposures(qt_x11Data->display, gc, False);
     }
 }
 
@@ -205,11 +205,11 @@ bool QX11WindowSurface::scroll(const QRegion &area, int dx, int dy)
     if (d_ptr->device.isNull())
         return false;
 
-    GC gc = XCreateGC(X11->display, d_ptr->device.handle(), 0, 0);
-    XCopyArea(X11->display, d_ptr->device.handle(), d_ptr->device.handle(), gc,
+    GC gc = XCreateGC(qt_x11Data->display, d_ptr->device.handle(), 0, 0);
+    XCopyArea(qt_x11Data->display, d_ptr->device.handle(), d_ptr->device.handle(), gc,
               rect.x(), rect.y(), rect.width(), rect.height(),
               rect.x()+dx, rect.y()+dy);
-    XFreeGC(X11->display, gc);
+    XFreeGC(qt_x11Data->display, gc);
 
     return true;
 }
@@ -238,14 +238,14 @@ QPixmap QX11WindowSurface::grabWidget(const QWidget *widget,
     QPixmap::x11SetDefaultScreen(widget->x11Info().screen());
     QPixmap px(srcRect.width(), srcRect.height());
 
-    GC tmpGc = XCreateGC(X11->display, d_ptr->device.handle(), 0, 0);
+    GC tmpGc = XCreateGC(qt_x11Data->display, d_ptr->device.handle(), 0, 0);
 
     // Copy srcRect from the backing store to the new pixmap
-    XSetGraphicsExposures(X11->display, tmpGc, False);
-    XCopyArea(X11->display, d_ptr->device.handle(), px.handle(), tmpGc,
+    XSetGraphicsExposures(qt_x11Data->display, tmpGc, False);
+    XCopyArea(qt_x11Data->display, d_ptr->device.handle(), px.handle(), tmpGc,
               srcRect.x(), srcRect.y(), srcRect.width(), srcRect.height(), 0, 0);
 
-    XFreeGC(X11->display, tmpGc);
+    XFreeGC(qt_x11Data->display, tmpGc);
 
     return px;
 }

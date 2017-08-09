@@ -242,7 +242,7 @@ MainWindow::MainWindow()
     connect(ui->buttonWindowColor, SIGNAL(colorChanged(QColor)), SLOT(buildPalette()));
 
 #ifdef Q_WS_X11
-    if (X11->desktopEnvironment == DE_KDE)
+    if (qt_x11Data->desktopEnvironment == DE_KDE)
         ui->colorConfig->hide();
     else
         ui->kdeNoteLabel->hide();

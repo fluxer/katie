@@ -1801,7 +1801,7 @@ static void initFontSubst()
     if (!fontSubst->isEmpty())
         return;
 #if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
-    if (X11->has_fontconfig)
+    if (qt_x11Data->has_fontconfig)
         return;
 #endif
 

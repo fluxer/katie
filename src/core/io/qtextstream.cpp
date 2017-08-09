@@ -211,7 +211,7 @@ static const int QTEXTSTREAM_BUFFERSIZE = 16384;
     \sa setNumberFlags()
 */
 
-/*! \enum QTextStream::Status
+/*! \enum QTextStream::TextStatus
 
     This enum describes the current status of the text stream.
 
@@ -419,7 +419,7 @@ public:
     QTextStream::NumberFlags numberFlags;
 
     // status
-    QTextStream::Status status;
+    QTextStream::TextStatus status;
 
     QLocale locale;
 
@@ -1534,10 +1534,10 @@ int QTextStream::realNumberPrecision() const
 /*!
     Returns the status of the text stream.
 
-    \sa QTextStream::Status, setStatus(), resetStatus()
+    \sa QTextStream::TextStatus, setStatus(), resetStatus()
 */
 
-QTextStream::Status QTextStream::status() const
+QTextStream::TextStatus QTextStream::status() const
 {
     Q_D(const QTextStream);
     return d->status;
@@ -1548,7 +1548,7 @@ QTextStream::Status QTextStream::status() const
 
     Resets the status of the text stream.
 
-    \sa QTextStream::Status, status(), setStatus()
+    \sa QTextStream::TextStatus, status(), setStatus()
 */
 void QTextStream::resetStatus()
 {
@@ -1564,9 +1564,9 @@ void QTextStream::resetStatus()
     Subsequent calls to setStatus() are ignored until resetStatus()
     is called.
 
-    \sa Status status() resetStatus()
+    \sa TextStatus status() resetStatus()
 */
-void QTextStream::setStatus(Status status)
+void QTextStream::setStatus(TextStatus status)
 {
     Q_D(QTextStream);
     if (d->status == Ok)

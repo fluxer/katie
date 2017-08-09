@@ -78,9 +78,9 @@ QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurfa
     : QWindowSurface(window, setDefaultSurface), d_ptr(new QRasterWindowSurfacePrivate)
 {
 #ifdef Q_WS_X11
-    d_ptr->gc = XCreateGC(X11->display, window->handle(), 0, 0);
+    d_ptr->gc = XCreateGC(qt_x11Data->display, window->handle(), 0, 0);
 #ifndef QT_NO_XRENDER
-    d_ptr->translucentBackground = X11->use_xrender
+    d_ptr->translucentBackground = qt_x11Data->use_xrender
         && window->x11Info().depth() == 32;
 #endif
 #ifndef QT_NO_XSHM
@@ -95,7 +95,7 @@ QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurfa
 QRasterWindowSurface::~QRasterWindowSurface()
 {
 #ifdef Q_WS_X11
-    XFreeGC(X11->display, d_ptr->gc);
+    XFreeGC(qt_x11Data->display, d_ptr->gc);
 #endif
     if (d_ptr->image)
         delete d_ptr->image;
@@ -111,7 +111,7 @@ void QRasterWindowSurface::syncX()
 {
     // delay writing to the backbuffer until we know for sure X is done reading from it
     if (d_ptr->needsSync) {
-        XSync(X11->display, false);
+        XSync(qt_x11Data->display, false);
         d_ptr->needsSync = false;
     }
 }
@@ -151,8 +151,8 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     QPoint wOffset = qt_qwidget_data(widget)->wrect.topLeft();
 
     if (widget->window() != window()) {
-        XFreeGC(X11->display, d_ptr->gc);
-        d_ptr->gc = XCreateGC(X11->display, widget->handle(), 0, 0);
+        XFreeGC(qt_x11Data->display, d_ptr->gc);
+        d_ptr->gc = XCreateGC(qt_x11Data->display, widget->handle(), 0, 0);
     }
 
     QRegion wrgn(rgn);
@@ -162,7 +162,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
     if (wrgn.rectCount() != 1) {
         int num;
         XRectangle *rects = (XRectangle *)qt_getClipRects(wrgn, num);
-        XSetClipRectangles(X11->display, d_ptr->gc, 0, 0, rects, num, YXBanded);
+        XSetClipRectangles(qt_x11Data->display, d_ptr->gc, 0, 0, rects, num, YXBanded);
     }
 
     QPoint widgetOffset = offset + wOffset;
@@ -173,7 +173,7 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
 
     int depth = widget->x11Info().depth();
     const QImage *src = d->image;
-    if (src->format() != QImage::Format_RGB32 || (depth != 24 && depth != 32) || X11->bppForDepth.value(depth) != 32) {
+    if (src->format() != QImage::Format_RGB32 || (depth != 24 && depth != 32) || qt_x11Data->bppForDepth.value(depth) != 32) {
         Q_ASSERT(src->depth() >= 16);
         const QImage sub_src(src->scanLine(br.y()) + br.x() * (uint(src->depth()) / 8),
                                 br.width(), br.height(), src->bytesPerLine(), src->format());
@@ -181,15 +181,15 @@ void QRasterWindowSurface::flush(QWidget *widget, const QRegion &rgn, const QPoi
         data->xinfo = widget->x11Info();
         data->fromImage(sub_src, Qt::NoOpaqueDetection);
         QPixmap pm = QPixmap(data);
-        XCopyArea(X11->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
+        XCopyArea(qt_x11Data->display, pm.handle(), widget->handle(), d_ptr->gc, 0 , 0 , br.width(), br.height(), wpos.x(), wpos.y());
     } else {
         // qpaintengine_x11.cpp
         extern void qt_x11_drawImage(const QRect &rect, const QPoint &pos, const QImage *image, Drawable hd, GC gc, Display *dpy, Visual *visual, int depth);
-        qt_x11_drawImage(br, wpos, src, widget->handle(), d_ptr->gc, X11->display, (Visual *)widget->x11Info().visual(), depth);
+        qt_x11_drawImage(br, wpos, src, widget->handle(), d_ptr->gc, qt_x11Data->display, (Visual *)widget->x11Info().visual(), depth);
     }
 
     if (wrgn.rectCount() != 1)
-        XSetClipMask(X11->display, d_ptr->gc, XNone);
+        XSetClipMask(qt_x11Data->display, d_ptr->gc, XNone);
 #endif // Q_WS_X11
 }
 

@@ -125,7 +125,7 @@ QDesktopWidgetPrivate::~QDesktopWidgetPrivate()
 void QDesktopWidgetPrivate::init()
 {
     // get the screen count
-    int newScreenCount = ScreenCount(X11->display);
+    int newScreenCount = ScreenCount(qt_x11Data->display);
 #ifndef QT_NO_XINERAMA
 
     XineramaScreenInfo *xinerama_screeninfo = 0;
@@ -134,12 +134,12 @@ void QDesktopWidgetPrivate::init()
     // using traditional multi-screen (with multiple root windows)
     if (newScreenCount == 1) {
         int unused;
-        use_xinerama = (XineramaQueryExtension(X11->display, &unused, &unused)
-                        && XineramaIsActive(X11->display));
+        use_xinerama = (XineramaQueryExtension(qt_x11Data->display, &unused, &unused)
+                        && XineramaIsActive(qt_x11Data->display));
     }
 
     if (use_xinerama) {
-        xinerama_screeninfo = XineramaQueryScreens(X11->display, &newScreenCount);
+        xinerama_screeninfo = XineramaQueryScreens(qt_x11Data->display, &newScreenCount);
     }
 
     if (xinerama_screeninfo) {
@@ -147,8 +147,8 @@ void QDesktopWidgetPrivate::init()
      } else
 #endif // QT_NO_XINERAMA
     {
-        defaultScreen = DefaultScreen(X11->display);
-        newScreenCount = ScreenCount(X11->display);
+        defaultScreen = DefaultScreen(qt_x11Data->display);
+        newScreenCount = ScreenCount(qt_x11Data->display);
         use_xinerama = false;
     }
 
@@ -172,8 +172,8 @@ void QDesktopWidgetPrivate::init()
             {
                 x = 0;
                 y = 0;
-                w = WidthOfScreen(ScreenOfDisplay(X11->display, i));
-                h = HeightOfScreen(ScreenOfDisplay(X11->display, i));
+                w = WidthOfScreen(ScreenOfDisplay(qt_x11Data->display, i));
+                h = HeightOfScreen(ScreenOfDisplay(qt_x11Data->display, i));
             }
 
         rects[j].setRect(x, y, w, h);
@@ -280,15 +280,15 @@ const QRect QDesktopWidget::availableGeometry(int screen) const
     if (d->workareas[screen].isValid())
         return d->workareas[screen];
 
-    if (X11->isSupportedByWM(ATOM(_NET_WORKAREA))) {
-        int x11Screen = isVirtualDesktop() ? DefaultScreen(X11->display) : screen;
+    if (qt_x11Data->isSupportedByWM(ATOM(_NET_WORKAREA))) {
+        int x11Screen = isVirtualDesktop() ? DefaultScreen(qt_x11Data->display) : screen;
 
         Atom ret;
         int format, e;
         unsigned char *data = 0;
         unsigned long nitems, after;
 
-        e = XGetWindowProperty(X11->display,
+        e = XGetWindowProperty(qt_x11Data->display,
                                QX11Info::appRootWindow(x11Screen),
                                ATOM(_NET_WORKAREA), 0, 4, False, XA_CARDINAL,
                                &ret, &format, &nitems, &after, &data);

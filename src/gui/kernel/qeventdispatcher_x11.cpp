@@ -74,7 +74,7 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
     d->interrupt = false;
     QApplication::sendPostedEvents();
 
-    ulong marker = XNextRequest(X11->display);
+    ulong marker = XNextRequest(qt_x11Data->display);
     int nevents = 0;
     do {
         while (!d->interrupt) {
@@ -83,9 +83,9 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
                 && !d->queuedUserInputEvents.isEmpty()) {
                 // process a pending user input event
                 event = d->queuedUserInputEvents.takeFirst();
-            } else if (XEventsQueued(X11->display, QueuedAlready)) {
+            } else if (XEventsQueued(qt_x11Data->display, QueuedAlready)) {
                 // process events from the X server
-                XNextEvent(X11->display, &event);
+                XNextEvent(qt_x11Data->display, &event);
 
                 if (flags & QEventLoop::ExcludeUserInputEvents) {
                     // queue user input events
@@ -133,12 +133,12 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
                 return true;
 
             if (event.xany.serial >= marker) {
-                if (XEventsQueued(X11->display, QueuedAfterFlush))
+                if (XEventsQueued(qt_x11Data->display, QueuedAfterFlush))
                     flags &= ~QEventLoop::WaitForMoreEvents;
                 goto out;
             }
         }
-    } while (!d->interrupt && XEventsQueued(X11->display, QueuedAfterFlush));
+    } while (!d->interrupt && XEventsQueued(qt_x11Data->display, QueuedAfterFlush));
 
  out:
     if (!d->interrupt) {
@@ -157,18 +157,18 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
 bool QEventDispatcherX11::hasPendingEvents()
 {
     extern uint qGlobalPostedEventsCount(); // from qapplication.cpp
-    return (qGlobalPostedEventsCount() || XPending(X11->display));
+    return (qGlobalPostedEventsCount() || XPending(qt_x11Data->display));
 }
 
 void QEventDispatcherX11::flush()
 {
-    XFlush(X11->display);
+    XFlush(qt_x11Data->display);
 }
 
 void QEventDispatcherX11::startingUp()
 {
     Q_D(QEventDispatcherX11);
-    d->xfd = XConnectionNumber(X11->display);
+    d->xfd = XConnectionNumber(qt_x11Data->display);
 }
 
 void QEventDispatcherX11::closingDown()

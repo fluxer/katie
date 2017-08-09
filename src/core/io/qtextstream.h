@@ -46,10 +46,6 @@
 
 #include <stdio.h>
 
-#ifdef Status
-#error qtextstream.h must be included before any header file that defines Status
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
@@ -74,7 +70,7 @@ public:
         AlignCenter,
         AlignAccountingStyle
     };
-    enum Status {
+    enum TextStatus {
         Ok,
         ReadPastEnd,
         ReadCorruptData,
@@ -116,8 +112,8 @@ public:
     void setString(QString *string, QIODevice::OpenMode openMode = QIODevice::ReadWrite);
     QString *string() const;
 
-    Status status() const;
-    void setStatus(Status status);
+    TextStatus status() const;
+    void setStatus(TextStatus status);
     void resetStatus();
 
     bool atEnd() const;

@@ -53,6 +53,8 @@
 
 QT_BEGIN_NAMESPACE
 
+extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
+
 // Define QT_USE_APPROXIMATE_CURSORS when compiling if you REALLY want to
 // use the ugly X11 cursors.
 
@@ -68,7 +70,7 @@ QCursorData::QCursorData(Qt::CursorShape s)
 
 QCursorData::~QCursorData()
 {
-    Display *dpy = X11 ? X11->display : (Display*)0;
+    Display *dpy = qt_x11Data ? qt_x11Data->display : (Display*)0;
 
     // Add in checking for the display too as on HP-UX
     // we seem to get a core dump as the cursor data is
@@ -107,7 +109,6 @@ QCursorData *QCursorData::setBitmap(const QBitmap &bitmap, const QBitmap &mask, 
     QCursorData *d = new QCursorData;
     d->ref = 1;
 
-    extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
     d->bm  = new QBitmap(qt_toX11Pixmap(bitmap));
     d->bmm = new QBitmap(qt_toX11Pixmap(mask));
 
@@ -143,7 +144,7 @@ QPoint QCursor::pos()
     Window child;
     int root_x, root_y, win_x, win_y;
     uint buttons;
-    Display* dpy = X11->display;
+    Display* dpy = qt_x11Data->display;
     for (int i = 0; i < ScreenCount(dpy); ++i) {
         if (XQueryPointer(dpy, QX11Info::appRootWindow(i), &root, &child, &root_x, &root_y,
                           &win_x, &win_y, &buttons))
@@ -162,7 +163,7 @@ int QCursor::x11Screen()
     Window child;
     int root_x, root_y, win_x, win_y;
     uint buttons;
-    Display* dpy = X11->display;
+    Display* dpy = qt_x11Data->display;
     for (int i = 0; i < ScreenCount(dpy); ++i) {
         if (XQueryPointer(dpy, QX11Info::appRootWindow(i), &root, &child, &root_x, &root_y,
                           &win_x, &win_y, &buttons))
@@ -182,7 +183,7 @@ void QCursor::setPos(int x, int y)
     Window child;
     int root_x, root_y, win_x, win_y;
     uint buttons;
-    Display* dpy = X11->display;
+    Display* dpy = qt_x11Data->display;
     int screen;
     for (screen = 0; screen < ScreenCount(dpy); ++screen) {
         if (XQueryPointer(dpy, QX11Info::appRootWindow(screen), &root, &child, &root_x, &root_y,
@@ -202,7 +203,7 @@ void QCursor::setPos(int x, int y)
     if (current == target)
         return;
 
-    XWarpPointer(X11->display, XNone, QX11Info::appRootWindow(screen), 0, 0, 0, 0, x, y);
+    XWarpPointer(qt_x11Data->display, XNone, QX11Info::appRootWindow(screen), 0, 0, 0, 0, x, y);
 }
 
 
@@ -219,15 +220,14 @@ void QCursorData::update()
     if (hcurs)
         return;
 
-    Display *dpy = X11->display;
+    Display *dpy = qt_x11Data->display;
     Window rootwin = QX11Info::appRootWindow();
 
     if (cshape == Qt::BitmapCursor) {
-        extern QPixmap qt_toX11Pixmap(const QPixmap &pixmap); // qpixmap_x11.cpp
 #ifndef QT_NO_XRENDER
-        if (!pixmap.isNull() && X11->use_xrender) {
+        if (!pixmap.isNull() && qt_x11Data->use_xrender) {
             pixmap = qt_toX11Pixmap(pixmap);
-            hcurs = XRenderCreateCursor (X11->display, pixmap.x11PictureHandle(), hx, hy);
+            hcurs = XRenderCreateCursor (qt_x11Data->display, pixmap.x11PictureHandle(), hx, hy);
         } else
 #endif
         {
@@ -532,7 +532,7 @@ void QCursorData::update()
     if (hcurs)
     {
 #ifndef QT_NO_XFIXES
-        if (X11->use_xfixes)
+        if (qt_x11Data->use_xfixes)
             XFixesSetCursorName(dpy, hcurs, cursorNames[cshape]);
 #endif /* ! QT_NO_XFIXES */
         return;
@@ -617,7 +617,7 @@ void QCursorData::update()
     hcurs = XCreateFontCursor(dpy, sh);
 
 #ifndef QT_NO_XFIXES
-    if (X11->use_xfixes)
+    if (qt_x11Data->use_xfixes)
         XFixesSetCursorName(dpy, hcurs, cursorNames[cshape]);
 #endif /* ! QT_NO_XFIXES */
 }

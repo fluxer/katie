@@ -4309,7 +4309,7 @@ void QGraphicsScenePrivate::drawItemHelper(QGraphicsItem *item, QPainter *painte
     // Render directly, using no cache.
     if (cacheMode == QGraphicsItem::NoCache
 #ifdef Q_WS_X11
-        || !X11->use_xrender
+        || !qt_x11Data->use_xrender
 #endif
         ) {
         _q_paintItem(static_cast<QGraphicsWidget *>(item), painter, option, widget, true, painterStateProtection);

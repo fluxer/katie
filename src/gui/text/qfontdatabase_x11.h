@@ -755,7 +755,7 @@ QFontDef qt_FcPatternToQFontDef(FcPattern *pattern, const QFontDef &request)
 
     double dpi;
     if (FcPatternGetDouble(pattern, FC_DPI, 0, &dpi) != FcResultMatch) {
-        if (X11->display)
+        if (qt_x11Data->display)
             dpi = QX11Info::appDpiY();
         else
             dpi = qt_defaultDpiY();
@@ -1003,7 +1003,7 @@ static void loadFontConfig()
 {
     Q_ASSERT_X(X11, "QFontDatabase",
                "A QApplication object needs to be constructed before FontConfig is used.");
-    if (!X11->has_fontconfig)
+    if (!qt_x11Data->has_fontconfig)
         return;
 
     Q_ASSERT_X(int(QUnicodeTables::ScriptCount) == SpecialLanguageCount,
@@ -1228,7 +1228,7 @@ static void initializeDb();
 
 static void load(const QString &family = QString(), int script = -1, bool forceXLFD = false)
 {
-    if (X11->has_fontconfig && !forceXLFD) {
+    if (qt_x11Data->has_fontconfig && !forceXLFD) {
         initializeDb();
         return;
     }
@@ -1384,7 +1384,7 @@ static void initializeDb()
 
 #ifdef QFONTDATABASE_DEBUG
 #ifndef QT_NO_FONTCONFIG
-    if (!X11->has_fontconfig)
+    if (!qt_x11Data->has_fontconfig)
 #endif
         // load everything at startup in debug mode.
         loadXlfds(0, -1);
@@ -1468,7 +1468,7 @@ void qt_addPatternProps(FcPattern *pattern, int screen, int script, const QFontD
     FcPatternDel(pattern, FC_PIXEL_SIZE);
     FcPatternAddDouble(pattern, FC_PIXEL_SIZE, size_value);
 
-    if (X11->display && QX11Info::appDepth(screen) <= 8) {
+    if (qt_x11Data->display && QX11Info::appDepth(screen) <= 8) {
         FcPatternDel(pattern, FC_ANTIALIAS);
         // can't do antialiasing on 8bpp
         FcPatternAddBool(pattern, FC_ANTIALIAS, false);
@@ -1530,7 +1530,7 @@ static bool preferScalable(const QFontDef &request)
 
 static FcPattern *getFcPattern(const QFontPrivate *fp, int script, const QFontDef &request)
 {
-    if (!X11->has_fontconfig)
+    if (!qt_x11Data->has_fontconfig)
         return 0;
 
     FcPattern *pattern = FcPatternCreate();
@@ -1966,7 +1966,7 @@ void QFontDatabase::load(const QFontPrivate *d, int script)
             if (mainThread)
                 fe = loadRaw(d, req);
 #ifndef QT_NO_FONTCONFIG
-        } else if (X11->has_fontconfig) {
+        } else if (qt_x11Data->has_fontconfig) {
             fe = loadFc(d, script, req);
 #endif
         } else if (mainThread && qt_is_gui_used) {
@@ -2001,7 +2001,7 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
 #if defined(QT_NO_FONTCONFIG)
     return;
 #else
-    if (!X11->has_fontconfig)
+    if (!qt_x11Data->has_fontconfig)
         return;
 
     FcConfig *config = FcConfigGetCurrent();
@@ -2118,7 +2118,7 @@ bool QFontDatabase::supportsThreadedFontRendering()
 #if defined(QT_NO_FONTCONFIG)
     return false;
 #else
-    return X11->has_fontconfig;
+    return qt_x11Data->has_fontconfig;
 #endif
 }
 

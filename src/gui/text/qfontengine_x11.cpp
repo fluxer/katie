@@ -147,7 +147,7 @@ static QStringList fontPath()
 
     int npaths;
     char** font_path;
-    font_path = XGetFontPath(X11->display, &npaths);
+    font_path = XGetFontPath(qt_x11Data->display, &npaths);
     bool xfsconfig_read = false;
     for (int i=0; i<npaths; i++) {
         // If we're using xfs, append font paths from /etc/X11/fs/config
@@ -973,7 +973,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
 {
 //     FcPatternPrint(pattern);
 
-    bool antialias = X11->fc_antialias;
+    bool antialias = qt_x11Data->fc_antialias;
     QByteArray file_name;
     int face_index;
     qt_x11ft_convert_pattern(pattern, &file_name, &face_index, &antialias);
@@ -985,7 +985,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
 
     subpixelType = Subpixel_None;
     if (antialias) {
-        int subpixel = X11->display ? X11->screens[screen].subpixel : FC_RGBA_UNKNOWN;
+        int subpixel = qt_x11Data->display ? qt_x11Data->screens[screen].subpixel : FC_RGBA_UNKNOWN;
         if (subpixel == FC_RGBA_UNKNOWN)
             (void) FcPatternGetInteger(pattern, FC_RGBA, 0, &subpixel);
         if (!antialias || subpixel == FC_RGBA_UNKNOWN)
@@ -1020,11 +1020,11 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
         int hint_style = 0;
         // Try to use Xft.hintstyle from XDefaults first if running in GNOME, to match
         // the behavior of cairo
-        if (X11->fc_hint_style > -1 && X11->desktopEnvironment == DE_GNOME)
-            hint_style = X11->fc_hint_style;
+        if (qt_x11Data->fc_hint_style > -1 && qt_x11Data->desktopEnvironment == DE_GNOME)
+            hint_style = qt_x11Data->fc_hint_style;
         else if (FcPatternGetInteger (pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
-                 && X11->fc_hint_style > -1)
-            hint_style = X11->fc_hint_style;
+                 && qt_x11Data->fc_hint_style > -1)
+            hint_style = qt_x11Data->fc_hint_style;
 
         switch (hint_style) {
         case FC_HINT_NONE:
@@ -1092,7 +1092,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
     GlyphFormat defaultFormat = Format_None;
 
 #ifndef QT_NO_XRENDER
-    if (X11->use_xrender) {
+    if (qt_x11Data->use_xrender) {
         int format = PictStandardA8;
         if (!antialias)
             format = PictStandardA1;
@@ -1130,9 +1130,9 @@ QFontEngineX11FT::~QFontEngineX11FT()
 unsigned long QFontEngineX11FT::allocateServerGlyphSet()
 {
 #ifndef QT_NO_XRENDER
-    if (!canUploadGlyphsToServer || !X11->use_xrender)
+    if (!canUploadGlyphsToServer || !qt_x11Data->use_xrender)
         return 0;
-    return XRenderCreateGlyphSet(X11->display, XRenderFindStandardFormat(X11->display, xglyph_format));
+    return XRenderCreateGlyphSet(qt_x11Data->display, XRenderFindStandardFormat(qt_x11Data->display, xglyph_format));
 #else
     return 0;
 #endif
@@ -1143,7 +1143,7 @@ void QFontEngineX11FT::freeServerGlyphSet(unsigned long id)
 #ifndef QT_NO_XRENDER
     if (!id)
         return;
-    XRenderFreeGlyphSet(X11->display, id);
+    XRenderFreeGlyphSet(qt_x11Data->display, id);
 #endif
 }
 
@@ -1156,7 +1156,7 @@ bool QFontEngineX11FT::uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *
         /*
          * swap bit order around; FreeType is always MSBFirst
          */
-        if (BitmapBitOrder(X11->display) != MSBFirst) {
+        if (BitmapBitOrder(qt_x11Data->display) != MSBFirst) {
             unsigned char *line = g->data;
             int i = glyphDataSize;
             while (i--) {
@@ -1171,7 +1171,7 @@ bool QFontEngineX11FT::uploadGlyphToServer(QGlyphSet *set, uint glyphid, Glyph *
     }
 
     ::Glyph xglyph = glyphid;
-    XRenderAddGlyphs (X11->display, set->id, &xglyph, info, 1, (const char *)g->data, glyphDataSize);
+    XRenderAddGlyphs (qt_x11Data->display, set->id, &xglyph, info, 1, (const char *)g->data, glyphDataSize);
     delete [] g->data;
     g->data = 0;
     g->format = Format_None;

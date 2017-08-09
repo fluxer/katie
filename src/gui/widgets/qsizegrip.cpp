@@ -270,13 +270,13 @@ void QSizeGrip::mousePressEvent(QMouseEvent * e)
 
 #ifdef Q_WS_X11
     // Use a native X11 sizegrip for "real" top-level windows if supported.
-    if (tlw->isWindow() && X11->isSupportedByWM(ATOM(_NET_WM_MOVERESIZE))
+    if (tlw->isWindow() && qt_x11Data->isSupportedByWM(ATOM(_NET_WM_MOVERESIZE))
         && !(tlw->windowFlags() & Qt::X11BypassWindowManagerHint)
         && !tlw->testAttribute(Qt::WA_DontShowOnScreen) && !qt_widget_private(tlw)->hasHeightForWidth()) {
         XEvent xev;
         xev.xclient.type = ClientMessage;
         xev.xclient.message_type = ATOM(_NET_WM_MOVERESIZE);
-        xev.xclient.display = X11->display;
+        xev.xclient.display = qt_x11Data->display;
         xev.xclient.window = tlw->winId();
         xev.xclient.format = 32;
         xev.xclient.data.l[0] = e->globalPos().x();
@@ -287,8 +287,8 @@ void QSizeGrip::mousePressEvent(QMouseEvent * e)
             xev.xclient.data.l[2] = d->atLeft() ? 0 : 2; // topleft/topright
         xev.xclient.data.l[3] = Button1;
         xev.xclient.data.l[4] = 0;
-        XUngrabPointer(X11->display, X11->time);
-        XSendEvent(X11->display, QX11Info::appRootWindow(x11Info().screen()), False,
+        XUngrabPointer(qt_x11Data->display, qt_x11Data->time);
+        XSendEvent(qt_x11Data->display, QX11Info::appRootWindow(x11Info().screen()), False,
                    SubstructureRedirectMask | SubstructureNotifyMask, &xev);
         return;
     }
@@ -369,7 +369,7 @@ void QSizeGrip::mouseMoveEvent(QMouseEvent * e)
         return;
 
 #ifdef Q_WS_X11
-    if (tlw->isWindow() && X11->isSupportedByWM(ATOM(_NET_WM_MOVERESIZE))
+    if (tlw->isWindow() && qt_x11Data->isSupportedByWM(ATOM(_NET_WM_MOVERESIZE))
         && tlw->isTopLevel() && !(tlw->windowFlags() & Qt::X11BypassWindowManagerHint)
         && !tlw->testAttribute(Qt::WA_DontShowOnScreen) && !qt_widget_private(tlw)->hasHeightForWidth())
         return;

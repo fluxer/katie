@@ -165,7 +165,7 @@ int QMenuPrivate::scrollerHeight() const
 QRect QMenuPrivate::popupGeometry(const QWidget *widget) const
 {
 #if defined Q_WS_X11
-    if (X11->desktopEnvironment == DE_KDE)
+    if (qt_x11Data->desktopEnvironment == DE_KDE)
         return QApplication::desktop()->screenGeometry(widget);
 #endif
     return QApplication::desktop()->availableGeometry(widget);
@@ -175,7 +175,7 @@ QRect QMenuPrivate::popupGeometry(const QWidget *widget) const
 QRect QMenuPrivate::popupGeometry(int screen) const
 {
 #if defined Q_WS_X11
-    if (X11->desktopEnvironment == DE_KDE)
+    if (qt_x11Data->desktopEnvironment == DE_KDE)
         return QApplication::desktop()->screenGeometry(screen);
 #endif
     return QApplication::desktop()->availableGeometry(screen);

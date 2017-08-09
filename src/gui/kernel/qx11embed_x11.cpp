@@ -851,8 +851,8 @@ bool QX11EmbedWidget::x11Event(XEvent *event)
 
             // Update qt_x_time if necessary
             Time msgtime = (Time) event->xclient.data.l[0];
-            if (msgtime > X11->time)
-                X11->time = msgtime;
+            if (msgtime > qt_x11Data->time)
+                qt_x11Data->time = msgtime;
 
             switch (event->xclient.data.l[1]) {
             case XEMBED_WINDOW_ACTIVATE: {
@@ -1471,8 +1471,8 @@ bool QX11EmbedContainer::x11Event(XEvent *event)
 	    d->clientIsXEmbed = true;
 
 	    Time msgtime = (Time) event->xclient.data.l[0];
-	    if (msgtime > X11->time)
-		X11->time = msgtime;
+	    if (msgtime > qt_x11Data->time)
+		qt_x11Data->time = msgtime;
 
 	    switch (event->xclient.data.l[1]) {
 	    case XEMBED_REQUEST_FOCUS: {

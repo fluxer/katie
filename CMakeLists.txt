@@ -616,12 +616,16 @@ add_subdirectory(src/sql)
 add_subdirectory(src/svg)
 add_subdirectory(src/test)
 add_subdirectory(src/uitools)
+
+# generators
 add_subdirectory(src/tools)
+
+# tests and benchmarks
 if(ENABLE_TESTING)
     add_subdirectory(tests)
 endif()
 
-# utilities needed for Katie maintainance
+# utilities for maintainance
 if(KATIE_UTILS)
     add_subdirectory(util)
 endif()

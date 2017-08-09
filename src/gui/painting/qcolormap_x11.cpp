@@ -322,7 +322,7 @@ static void init_direct(QColormapPrivate *d)
         ++i;
     }
 
-    XStoreColors(X11->display, d->colormap, colorTable.data(), colorTable.count());
+    XStoreColors(qt_x11Data->display, d->colormap, colorTable.data(), colorTable.count());
 }
 
 static QColormap **cmaps = Q_NULLPTR;
@@ -339,7 +339,7 @@ void QColormap::initialize()
         QColormapPrivate * const d = cmaps[i]->d;
 
         bool use_stdcmap = false;
-        int color_count = X11->color_count;
+        int color_count = qt_x11Data->color_count;
 
         // defaults
         d->depth = DefaultDepth(display, i);
@@ -350,32 +350,32 @@ void QColormap::initialize()
 
         Visual *argbVisual = Q_NULLPTR;
 
-        if (X11->visual && i == DefaultScreen(display)) {
+        if (qt_x11Data->visual && i == DefaultScreen(display)) {
             // only use the outside colormap on the default screen
-            d->visual = find_visual(display, i, X11->visual->c_class,
-                                    XVisualIDFromVisual(X11->visual),
+            d->visual = find_visual(display, i, qt_x11Data->visual->c_class,
+                                    XVisualIDFromVisual(qt_x11Data->visual),
                                     &d->depth, &d->defaultVisual);
-        } else if ((X11->visual_class != -1 && X11->visual_class >= 0 && X11->visual_class < 6)
-                   || (X11->visual_id != -1)) {
+        } else if ((qt_x11Data->visual_class != -1 && qt_x11Data->visual_class >= 0 && qt_x11Data->visual_class < 6)
+                   || (qt_x11Data->visual_id != -1)) {
             // look for a specific visual or type of visual
-            d->visual = find_visual(display, i, X11->visual_class, X11->visual_id,
+            d->visual = find_visual(display, i, qt_x11Data->visual_class, qt_x11Data->visual_id,
                                     &d->depth, &d->defaultVisual);
-        } else if (!X11->custom_cmap) {
+        } else if (!qt_x11Data->custom_cmap) {
             XStandardColormap *stdcmap = Q_NULLPTR;
             int ncmaps = 0;
 
 #ifndef QT_NO_XRENDER
-            if (X11->use_xrender) {
+            if (qt_x11Data->use_xrender) {
                 int nvi;
                 XVisualInfo templ;
                 templ.screen  = i;
                 templ.depth   = 32;
                 templ.c_class = TrueColor;
-                XVisualInfo *xvi = XGetVisualInfo(X11->display, VisualScreenMask |
+                XVisualInfo *xvi = XGetVisualInfo(qt_x11Data->display, VisualScreenMask |
                                                   VisualDepthMask |
                                                   VisualClassMask, &templ, &nvi);
                 for (int idx = 0; idx < nvi; ++idx) {
-                    XRenderPictFormat *format = XRenderFindVisualFormat(X11->display,
+                    XRenderPictFormat *format = XRenderFindVisualFormat(qt_x11Data->display,
                                                                         xvi[idx].visual);
                     if (format->type == PictTypeDirect && format->direct.alphaMask) {
                         argbVisual = xvi[idx].visual;
@@ -507,12 +507,12 @@ void QColormap::initialize()
         }
 
         bool ownColormap = false;
-        if (X11->colormap && i == DefaultScreen(display)) {
+        if (qt_x11Data->colormap && i == DefaultScreen(display)) {
             // only use the outside colormap on the default screen
-            d->colormap = X11->colormap;
+            d->colormap = qt_x11Data->colormap;
             d->defaultColormap = (d->colormap == DefaultColormap(display, i));
         } else if ((!use_stdcmap
-                   && (((d->visual->c_class & 1) && X11->custom_cmap)
+                   && (((d->visual->c_class & 1) && qt_x11Data->custom_cmap)
                        || d->visual != DefaultVisual(display, i)))
                    || d->visual->c_class == DirectColor) {
             // allocate custom colormap (we always do this when using DirectColor visuals)
@@ -536,7 +536,7 @@ void QColormap::initialize()
             break;
         }
 
-        QX11InfoData *screen = X11->screens + i;
+        QX11InfoData *screen = qt_x11Data->screens + i;
         screen->depth = d->depth;
         screen->visual = d->visual;
         screen->defaultVisual = d->defaultVisual;
@@ -545,8 +545,8 @@ void QColormap::initialize()
         screen->cells = screen->visual->map_entries;
 
         if (argbVisual) {
-            X11->argbVisuals[i] = argbVisual;
-            X11->argbColormaps[i] = XCreateColormap(display, RootWindow(display, i), argbVisual, AllocNone);
+            qt_x11Data->argbVisuals[i] = argbVisual;
+            qt_x11Data->argbColormaps[i] = XCreateColormap(display, RootWindow(display, i), argbVisual, AllocNone);
         }
 
         // ###

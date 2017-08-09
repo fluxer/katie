@@ -4604,11 +4604,11 @@ uint QApplicationPrivate::currentPlatform(){
     uint platform = KB_None;
 #if defined Q_WS_X11
     platform = KB_X11;
-    if (X11->desktopEnvironment == DE_KDE)
+    if (qt_x11Data->desktopEnvironment == DE_KDE)
         platform |= KB_KDE;
-    if (X11->desktopEnvironment == DE_GNOME)
+    if (qt_x11Data->desktopEnvironment == DE_GNOME)
         platform |= KB_Gnome;
-    if (X11->desktopEnvironment == DE_CDE)
+    if (qt_x11Data->desktopEnvironment == DE_CDE)
         platform |= KB_CDE;
 #endif
     return platform;

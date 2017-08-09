@@ -94,8 +94,8 @@ QT_BEGIN_NAMESPACE
 static int findXdndDropTransactionByWindow(Window window)
 {
     int at = -1;
-    for (int i = 0; i < X11->dndDropTransactions.count(); ++i) {
-        const QXdndDropTransaction &t = X11->dndDropTransactions.at(i);
+    for (int i = 0; i < qt_x11Data->dndDropTransactions.count(); ++i) {
+        const QXdndDropTransaction &t = qt_x11Data->dndDropTransactions.at(i);
         if (t.target == window || t.proxy_target == window) {
             at = i;
             break;
@@ -107,8 +107,8 @@ static int findXdndDropTransactionByWindow(Window window)
 static int findXdndDropTransactionByTime(Time timestamp)
 {
     int at = -1;
-    for (int i = 0; i < X11->dndDropTransactions.count(); ++i) {
-        const QXdndDropTransaction &t = X11->dndDropTransactions.at(i);
+    for (int i = 0; i < qt_x11Data->dndDropTransactions.count(); ++i) {
+        const QXdndDropTransaction &t = qt_x11Data->dndDropTransactions.at(i);
         if (t.timestamp == timestamp) {
             at = i;
             break;
@@ -139,7 +139,7 @@ static Window findXdndAwareParent(Window window)
         int f;
         unsigned long n, a;
         unsigned char *data = 0;
-        if (XGetWindowProperty(X11->display, window, ATOM(XdndAware), 0, 0, False,
+        if (XGetWindowProperty(qt_x11Data->display, window, ATOM(XdndAware), 0, 0, False,
                                AnyPropertyType, &type, &f,&n,&a,&data) == Success) {
 	    if (data)
                 XFree(data);
@@ -154,7 +154,7 @@ static Window findXdndAwareParent(Window window)
         Window parent;
         Window *children;
         uint unused;
-        if (!XQueryTree(X11->display, window, &root, &parent, &children, &unused))
+        if (!XQueryTree(qt_x11Data->display, window, &root, &parent, &children, &unused))
             break;
         if (children)
             XFree(children);
@@ -338,7 +338,7 @@ static WId xdndProxy(WId w)
     int f;
     unsigned long n, a;
     unsigned char *retval = 0;
-    XGetWindowProperty(X11->display, w, ATOM(XdndProxy), 0, 1, False,
+    XGetWindowProperty(qt_x11Data->display, w, ATOM(XdndProxy), 0, 1, False,
                        XA_WINDOW, &type, &f,&n,&a,&retval);
     WId *proxy_id_ptr = (WId *)retval;
     WId proxy_id = 0;
@@ -347,11 +347,11 @@ static WId xdndProxy(WId w)
         XFree(proxy_id_ptr);
         proxy_id_ptr = 0;
         // Already exists. Real?
-        X11->ignoreBadwindow();
-        XGetWindowProperty(X11->display, proxy_id, ATOM(XdndProxy), 0, 1, False,
+        qt_x11Data->ignoreBadwindow();
+        XGetWindowProperty(qt_x11Data->display, proxy_id, ATOM(XdndProxy), 0, 1, False,
                            XA_WINDOW, &type, &f,&n,&a,&retval);
         proxy_id_ptr = (WId *)retval;
-        if (X11->badwindow() || type != XA_WINDOW || !proxy_id_ptr || *proxy_id_ptr != proxy_id)
+        if (qt_x11Data->badwindow() || type != XA_WINDOW || !proxy_id_ptr || *proxy_id_ptr != proxy_id)
             // Bogus - we will overwrite.
             proxy_id = 0;
     }
@@ -370,20 +370,20 @@ static bool xdndEnable(QWidget* w, bool on)
                 return false;
 
             // As per Xdnd4, use XdndProxy
-            XGrabServer(X11->display);
+            XGrabServer(qt_x11Data->display);
             Q_ASSERT(w->testAttribute(Qt::WA_WState_Created));
             WId proxy_id = xdndProxy(w->effectiveWinId());
 
             if (!proxy_id) {
                 xdnd_widget = xdnd_data.desktop_proxy = new QWidget;
                 proxy_id = xdnd_data.desktop_proxy->effectiveWinId();
-                XChangeProperty (X11->display, w->effectiveWinId(), ATOM(XdndProxy),
+                XChangeProperty (qt_x11Data->display, w->effectiveWinId(), ATOM(XdndProxy),
                                  XA_WINDOW, 32, PropModeReplace, (unsigned char *)&proxy_id, 1);
-                XChangeProperty (X11->display, proxy_id, ATOM(XdndProxy),
+                XChangeProperty (qt_x11Data->display, proxy_id, ATOM(XdndProxy),
                                  XA_WINDOW, 32, PropModeReplace, (unsigned char *)&proxy_id, 1);
             }
 
-            XUngrabServer(X11->display);
+            XUngrabServer(qt_x11Data->display);
         } else {
             xdnd_widget = w->window();
         }
@@ -391,7 +391,7 @@ static bool xdndEnable(QWidget* w, bool on)
             DNDDEBUG << "setting XdndAware for" << xdnd_widget << xdnd_widget->effectiveWinId();
             Atom atm = (Atom)xdnd_version;
             Q_ASSERT(xdnd_widget->testAttribute(Qt::WA_WState_Created));
-            XChangeProperty(X11->display, xdnd_widget->effectiveWinId(), ATOM(XdndAware),
+            XChangeProperty(qt_x11Data->display, xdnd_widget->effectiveWinId(), ATOM(XdndAware),
                              XA_ATOM, 32, PropModeReplace, (unsigned char *)&atm, 1);
             return true;
         } else {
@@ -399,7 +399,7 @@ static bool xdndEnable(QWidget* w, bool on)
         }
     } else {
         if ((w->windowType() == Qt::Desktop)) {
-            XDeleteProperty(X11->display, w->internalWinId(), ATOM(XdndProxy));
+            XDeleteProperty(qt_x11Data->display, w->internalWinId(), ATOM(XdndProxy));
             delete xdnd_data.desktop_proxy;
             xdnd_data.desktop_proxy = 0;
         } else {
@@ -507,7 +507,7 @@ bool QX11Data::xdndMimeDataForAtom(Atom a, QMimeData *mimeData, QByteArray *data
                                         ? XCompoundTextStyle : XStdICCTextStyle;
                 XTextProperty textprop;
                 if (list[0] != NULL
-                    && XmbTextListToTextProperty(X11->display, list, 1, style,
+                    && XmbTextListToTextProperty(qt_x11Data->display, list, 1, style,
                                                  &textprop) == Success) {
                     *atomFormat = textprop.encoding;
                     *dataFormat = textprop.format;
@@ -520,7 +520,7 @@ bool QX11Data::xdndMimeDataForAtom(Atom a, QMimeData *mimeData, QByteArray *data
                     "    %ld items\n"
                     "    %d bytes\n",
                     textprop.encoding,
-                    X11->xdndMimeAtomToString(textprop.encoding).toLatin1().data(),
+                    qt_x11Data->xdndMimeAtomToString(textprop.encoding).toLatin1().data(),
                     textprop.format, textprop.nitems, data->size());
 
                     XFree(textprop.value);
@@ -784,12 +784,12 @@ static bool checkEmbedded(QWidget* w, const XEvent* xe)
         if (current_embedding_widget != w) {
 
             last_enter_event.xany.window = extra->xDndProxy;
-            XSendEvent(X11->display, extra->xDndProxy, False, NoEventMask, &last_enter_event);
+            XSendEvent(qt_x11Data->display, extra->xDndProxy, False, NoEventMask, &last_enter_event);
             current_embedding_widget = w;
         }
 
         ((XEvent*)xe)->xany.window = extra->xDndProxy;
-        XSendEvent(X11->display, extra->xDndProxy, False, NoEventMask, (XEvent*)xe);
+        XSendEvent(qt_x11Data->display, extra->xDndProxy, False, NoEventMask, (XEvent*)xe);
         if (qt_xdnd_current_widget != w) {
             qt_xdnd_current_widget = w;
         }
@@ -820,7 +820,7 @@ void QX11Data::xdndHandleEnter(QWidget *, const XEvent * xe, bool /*passive*/)
         int f;
         unsigned long n, a;
         unsigned char *retval = 0;
-        XGetWindowProperty(X11->display, qt_xdnd_dragsource_xid, ATOM(XdndTypelist), 0,
+        XGetWindowProperty(qt_x11Data->display, qt_xdnd_dragsource_xid, ATOM(XdndTypelist), 0,
                            qt_xdnd_max_type, False, XA_ATOM, &type, &f,&n,&a,&retval);
         if (retval) {
             Atom *data = (Atom *)retval;
@@ -861,7 +861,7 @@ static void handle_xdnd_position(QWidget *w, const XEvent * xe, bool passive)
     if (l[3] != 0) {
         // Some X server/client combination swallow the first 32 bit and
         // interpret a set bit 31 as negative sign.
-        qt_xdnd_target_current_time = X11->userTime =
+        qt_xdnd_target_current_time = qt_x11Data->userTime =
             ((sizeof(Time) == 8 && xe->xclient.data.l[3] < 0)
              ? uint(l[3])
              : l[3]);
@@ -920,7 +920,7 @@ static void handle_xdnd_position(QWidget *w, const XEvent * xe, bool passive)
             }
         }
 
-        DEBUG() << "qt_handle_xdnd_position action=" << X11->xdndAtomToString(l[4]);
+        DEBUG() << "qt_handle_xdnd_position action=" << qt_x11Data->xdndAtomToString(l[4]);
         if (!target_widget) {
             answerRect = QRect(p, QSize(1, 1));
         } else {
@@ -973,7 +973,7 @@ static void handle_xdnd_position(QWidget *w, const XEvent * xe, bool passive)
     if (source)
         handle_xdnd_status(source, (const XEvent *)&response, passive);
     else
-        XSendEvent(X11->display, qt_xdnd_dragsource_xid, False, NoEventMask, (XEvent*)&response);
+        XSendEvent(qt_x11Data->display, qt_xdnd_dragsource_xid, False, NoEventMask, (XEvent*)&response);
 }
 
 static Bool xdnd_position_scanner(Display *, XEvent *event, XPointer)
@@ -991,7 +991,7 @@ static Bool xdnd_position_scanner(Display *, XEvent *event, XPointer)
 void QX11Data::xdndHandlePosition(QWidget * w, const XEvent * xe, bool passive)
 {
     DEBUG("xdndHandlePosition");
-    while (XCheckIfEvent(X11->display, (XEvent *)xe, xdnd_position_scanner, 0))
+    while (XCheckIfEvent(qt_x11Data->display, (XEvent *)xe, xdnd_position_scanner, 0))
         ;
 
     handle_xdnd_position(w, xe, passive);
@@ -1037,7 +1037,7 @@ static Bool xdnd_status_scanner(Display *, XEvent *event, XPointer)
 void QX11Data::xdndHandleStatus(QWidget * w, const XEvent * xe, bool passive)
 {
     DEBUG("xdndHandleStatus");
-    while (XCheckIfEvent(X11->display, (XEvent *)xe, xdnd_status_scanner, 0))
+    while (XCheckIfEvent(qt_x11Data->display, (XEvent *)xe, xdnd_status_scanner, 0))
         ;
 
     handle_xdnd_status(w, xe, passive);
@@ -1100,9 +1100,9 @@ void qt_xdnd_send_leave()
         w = 0;
 
     if (w)
-        X11->xdndHandleLeave(w, (const XEvent *)&leave, false);
+        qt_x11Data->xdndHandleLeave(w, (const XEvent *)&leave, false);
     else
-        XSendEvent(X11->display, qt_xdnd_current_proxy_target, False,
+        XSendEvent(qt_x11Data->display, qt_xdnd_current_proxy_target, False,
                     NoEventMask, (XEvent*)&leave);
 
     // reset the drag manager state
@@ -1145,7 +1145,7 @@ void QX11Data::xdndHandleDrop(QWidget *, const XEvent * xe, bool passive)
     if (l[2] != 0) {
         // Some X server/client combination swallow the first 32 bit and
         // interpret a set bit 31 as negative sign.
-        qt_xdnd_target_current_time = X11->userTime =
+        qt_xdnd_target_current_time = qt_x11Data->userTime =
             ((sizeof(Time) == 8 && xe->xclient.data.l[2] < 0)
              ? uint(l[2])
              :  l[2]);
@@ -1158,7 +1158,7 @@ void QX11Data::xdndHandleDrop(QWidget *, const XEvent * xe, bool passive)
         QMimeData *dropData = 0;
         const int at = findXdndDropTransactionByTime(qt_xdnd_target_current_time);
         if (at != -1) {
-            dropData = QDragManager::dragPrivate(X11->dndDropTransactions.at(at).object)->data;
+            dropData = QDragManager::dragPrivate(qt_x11Data->dndDropTransactions.at(at).object)->data;
             // Can't use the source QMimeData if we need the image conversion code from xdndObtainData
             if (dropData && dropData->hasImage())
                 dropData = 0;
@@ -1199,7 +1199,7 @@ void QX11Data::xdndHandleDrop(QWidget *, const XEvent * xe, bool passive)
         finished.data.l[0] = qt_xdnd_current_widget?qt_xdnd_current_widget->window()->internalWinId():0;
         finished.data.l[1] = de.isAccepted() ? 1 : 0; // flags
         finished.data.l[2] = qtaction_to_xdndaction(global_accepted_action);
-        XSendEvent(X11->display, qt_xdnd_dragsource_xid, False,
+        XSendEvent(qt_x11Data->display, qt_xdnd_dragsource_xid, False,
                     NoEventMask, (XEvent*)&finished);
     } else {
         QDragLeaveEvent e;
@@ -1228,7 +1228,7 @@ void QX11Data::xdndHandleFinished(QWidget *, const XEvent * xe, bool passive)
         if (at != -1) {
             restartXdndDropExpiryTimer();
 
-            QXdndDropTransaction t = X11->dndDropTransactions.takeAt(at);
+            QXdndDropTransaction t = qt_x11Data->dndDropTransactions.takeAt(at);
             QDragManager *manager = QDragManager::self();
 
             Window target = qt_xdnd_current_target;
@@ -1266,14 +1266,14 @@ void QDragManager::timerEvent(QTimerEvent* e)
     if (e->timerId() == heartbeat && qt_xdnd_source_sameanswer.isNull()) {
         move(QCursor::pos());
     } else if (e->timerId() == transaction_expiry_timer) {
-        for (int i = 0; i < X11->dndDropTransactions.count(); ++i) {
-            const QXdndDropTransaction &t = X11->dndDropTransactions.at(i);
+        for (int i = 0; i < qt_x11Data->dndDropTransactions.count(); ++i) {
+            const QXdndDropTransaction &t = qt_x11Data->dndDropTransactions.at(i);
             if (t.targetWidget) {
                 // dnd within the same process, don't delete these
                 continue;
             }
             t.object->deleteLater();
-            X11->dndDropTransactions.removeAt(i--);
+            qt_x11Data->dndDropTransactions.removeAt(i--);
         }
 
         killTimer(transaction_expiry_timer);
@@ -1441,10 +1441,10 @@ Window findRealWindow(const QPoint & pos, Window w, int md, bool ignoreNonXdndAw
         return 0;
 
     if (md) {
-        X11->ignoreBadwindow();
+        qt_x11Data->ignoreBadwindow();
         XWindowAttributes attr;
-        XGetWindowAttributes(X11->display, w, &attr);
-        if (X11->badwindow())
+        XGetWindowAttributes(qt_x11Data->display, w, &attr);
+        if (qt_x11Data->badwindow())
             return 0;
 
         if (attr.map_state == IsViewable
@@ -1456,7 +1456,7 @@ Window findRealWindow(const QPoint & pos, Window w, int md, bool ignoreNonXdndAw
                 unsigned long n, a;
                 unsigned char *data;
 
-                XGetWindowProperty(X11->display, w, ATOM(XdndAware), 0, 0, False,
+                XGetWindowProperty(qt_x11Data->display, w, ATOM(XdndAware), 0, 0, False,
                                    AnyPropertyType, &type, &f,&n,&a,&data);
                 if (data) XFree(data);
                 if (type) {
@@ -1482,7 +1482,7 @@ Window findRealWindow(const QPoint & pos, Window w, int md, bool ignoreNonXdndAw
             Window r, p;
             Window* c;
             uint nc;
-            if (XQueryTree(X11->display, w, &r, &p, &c, &nc)) {
+            if (XQueryTree(qt_x11Data->display, w, &r, &p, &c, &nc)) {
                 r=0;
                 for (uint i=nc; !r && i--;) {
                     r = findRealWindow(pos-QPoint(attr.x,attr.y),
@@ -1519,7 +1519,7 @@ void QDragManager::move(const QPoint & globalPos)
     }
 
     int screen = QCursor::x11Screen();
-    if ((qt_xdnd_current_screen == -1 && screen != X11->defaultScreen) || (screen != qt_xdnd_current_screen)) {
+    if ((qt_xdnd_current_screen == -1 && screen != qt_x11Data->defaultScreen) || (screen != qt_xdnd_current_screen)) {
         // recreate the pixmap on the new screen...
         delete xdnd_data.deco;
         QWidget* parent = object->source()->window()->x11Info().screen() == screen
@@ -1539,7 +1539,7 @@ void QDragManager::move(const QPoint & globalPos)
     Window rootwin = QX11Info::appRootWindow(qt_xdnd_current_screen);
     Window target = 0;
     int lx = 0, ly = 0;
-    if (!XTranslateCoordinates(X11->display, rootwin, rootwin, globalPos.x(), globalPos.y(), &lx, &ly, &target))
+    if (!XTranslateCoordinates(qt_x11Data->display, rootwin, rootwin, globalPos.x(), globalPos.y(), &lx, &ly, &target))
         // some weird error...
         return;
 
@@ -1553,7 +1553,7 @@ void QDragManager::move(const QPoint & globalPos)
             int lx2, ly2;
             Window t;
             // translate coordinates
-            if (!XTranslateCoordinates(X11->display, src, target, lx, ly, &lx2, &ly2, &t)) {
+            if (!XTranslateCoordinates(qt_x11Data->display, src, target, lx, ly, &lx2, &ly2, &t)) {
                 target = 0;
                 break;
             }
@@ -1566,7 +1566,7 @@ void QDragManager::move(const QPoint & globalPos)
 	    int f;
 	    unsigned long n, a;
 	    unsigned char *data = 0;
-	    XGetWindowProperty(X11->display, target, ATOM(XdndAware), 0, 0, False,
+	    XGetWindowProperty(qt_x11Data->display, target, ATOM(XdndAware), 0, 0, False,
                                AnyPropertyType, &type, &f,&n,&a,&data);
 	    if (data)
                 XFree(data);
@@ -1576,7 +1576,7 @@ void QDragManager::move(const QPoint & globalPos)
             }
 
             // find child at the coordinates
-            if (!XTranslateCoordinates(X11->display, src, src, lx, ly, &lx2, &ly2, &target)) {
+            if (!XTranslateCoordinates(qt_x11Data->display, src, src, lx, ly, &lx2, &ly2, &target)) {
                 target = 0;
                 break;
             }
@@ -1613,17 +1613,17 @@ void QDragManager::move(const QPoint & globalPos)
         int r, f;
         unsigned long n, a;
         unsigned char *retval;
-        X11->ignoreBadwindow();
-        r = XGetWindowProperty(X11->display, proxy_target, ATOM(XdndAware), 0,
+        qt_x11Data->ignoreBadwindow();
+        r = XGetWindowProperty(qt_x11Data->display, proxy_target, ATOM(XdndAware), 0,
                                1, False, AnyPropertyType, &type, &f,&n,&a,&retval);
         int *tv = (int *)retval;
-        if (r != Success || X11->badwindow()) {
+        if (r != Success || qt_x11Data->badwindow()) {
             target = 0;
         } else {
             target_version = qMin(xdnd_version,tv ? *tv : 1);
             if (tv)
                 XFree(tv);
-//             if (!(!X11->badwindow() && type))
+//             if (!(!qt_x11Data->badwindow() && type))
 //                 target = 0;
         }
     }
@@ -1639,14 +1639,14 @@ void QDragManager::move(const QPoint & globalPos)
             int flags = target_version << 24;
             QStringList fmts = QInternalMimeData::formatsHelper(dragPrivate()->data);
             for (int i = 0; i < fmts.size(); ++i) {
-                QList<Atom> atoms = X11->xdndMimeAtomsForFormat(fmts.at(i));
+                QList<Atom> atoms = qt_x11Data->xdndMimeAtomsForFormat(fmts.at(i));
                 for (int j = 0; j < atoms.size(); ++j) {
                     if (!types.contains(atoms.at(j)))
                         types.append(atoms.at(j));
                 }
             }
             if (types.size() > 3) {
-                XChangeProperty(X11->display,
+                XChangeProperty(qt_x11Data->display,
                                 dragPrivate()->source->effectiveWinId(), ATOM(XdndTypelist),
                                 XA_ATOM, 32, PropModeReplace,
                                 (unsigned char *)types.data(),
@@ -1669,9 +1669,9 @@ void QDragManager::move(const QPoint & globalPos)
 
             DEBUG("sending Xdnd enter");
             if (w)
-                X11->xdndHandleEnter(w, (const XEvent *)&enter, false);
+                qt_x11Data->xdndHandleEnter(w, (const XEvent *)&enter, false);
             else if (target)
-                XSendEvent(X11->display, proxy_target, False, NoEventMask, (XEvent*)&enter);
+                XSendEvent(qt_x11Data->display, proxy_target, False, NoEventMask, (XEvent*)&enter);
             waiting_for_status = false;
         }
     }
@@ -1690,16 +1690,16 @@ void QDragManager::move(const QPoint & globalPos)
         move.data.l[0] = dragPrivate()->source->effectiveWinId();
         move.data.l[1] = 0; // flags
         move.data.l[2] = (globalPos.x() << 16) + globalPos.y();
-        move.data.l[3] = X11->time;
+        move.data.l[3] = qt_x11Data->time;
         move.data.l[4] = qtaction_to_xdndaction(defaultAction(dragPrivate()->possible_actions, QApplication::keyboardModifiers()));
         DEBUG("sending Xdnd position");
 
-        qt_xdnd_source_current_time = X11->time;
+        qt_xdnd_source_current_time = qt_x11Data->time;
 
         if (w)
             handle_xdnd_position(w, (const XEvent *)&move, false);
         else
-            XSendEvent(X11->display, proxy_target, False, NoEventMask,
+            XSendEvent(qt_x11Data->display, proxy_target, False, NoEventMask,
                        (XEvent*)&move);
     } else {
         if (willDrop) {
@@ -1732,7 +1732,7 @@ void QDragManager::drop()
     drop.message_type = ATOM(XdndDrop);
     drop.data.l[0] = dragPrivate()->source->effectiveWinId();
     drop.data.l[1] = 0; // flags
-    drop.data.l[2] = X11->time;
+    drop.data.l[2] = qt_x11Data->time;
 
     drop.data.l[3] = 0;
     drop.data.l[4] = 0;
@@ -1743,20 +1743,20 @@ void QDragManager::drop()
         w = 0;
 
     QXdndDropTransaction t = {
-        X11->time,
+        qt_x11Data->time,
         qt_xdnd_current_target,
         qt_xdnd_current_proxy_target,
         w,
         current_embedding_widget,
         object
     };
-    X11->dndDropTransactions.append(t);
+    qt_x11Data->dndDropTransactions.append(t);
     restartXdndDropExpiryTimer();
 
     if (w)
-        X11->xdndHandleDrop(w, (const XEvent *)&drop, false);
+        qt_x11Data->xdndHandleDrop(w, (const XEvent *)&drop, false);
     else
-        XSendEvent(X11->display, qt_xdnd_current_proxy_target, False,
+        XSendEvent(qt_x11Data->display, qt_xdnd_current_proxy_target, False,
                    NoEventMask, (XEvent*)&drop);
 
     qt_xdnd_current_target = 0;
@@ -1848,7 +1848,7 @@ void QX11Data::xdndHandleSelectionRequest(const XSelectionRequestEvent * req)
         restartXdndDropExpiryTimer();
 
         // use the drag object from an XdndDrop tansaction
-        manager->object = X11->dndDropTransactions.at(at).object;
+        manager->object = qt_x11Data->dndDropTransactions.at(at).object;
     } else if (at != -2) {
         // no transaction found, we'll have to reject the request
         manager->object = 0;
@@ -1857,10 +1857,10 @@ void QX11Data::xdndHandleSelectionRequest(const XSelectionRequestEvent * req)
         Atom atomFormat = req->target;
         int dataFormat = 0;
         QByteArray data;
-        if (X11->xdndMimeDataForAtom(req->target, manager->dragPrivate()->data,
+        if (qt_x11Data->xdndMimeDataForAtom(req->target, manager->dragPrivate()->data,
                                      &data, &atomFormat, &dataFormat)) {
             int dataSize = data.size() / (dataFormat / 8);
-            XChangeProperty (X11->display, req->requestor, req->property,
+            XChangeProperty (qt_x11Data->display, req->requestor, req->property,
                              atomFormat, dataFormat, PropModeReplace,
                              (unsigned char *)data.data(), dataSize);
             evt.xselection.property = req->property;
@@ -1873,7 +1873,7 @@ void QX11Data::xdndHandleSelectionRequest(const XSelectionRequestEvent * req)
 
     // ### this can die if req->requestor crashes at the wrong
     // ### moment
-    XSendEvent(X11->display, req->requestor, False, 0, &evt);
+    XSendEvent(qt_x11Data->display, req->requestor, False, 0, &evt);
 }
 
 static QVariant xdndObtainData(const char *format, QVariant::Type requestedType)
@@ -1907,30 +1907,30 @@ static QVariant xdndObtainData(const char *format, QVariant::Type requestedType)
         ++i;
     }
     QByteArray encoding;
-    Atom a = X11->xdndMimeAtomForFormat(QLatin1String(format), requestedType, atoms, &encoding);
+    Atom a = qt_x11Data->xdndMimeAtomForFormat(QLatin1String(format), requestedType, atoms, &encoding);
     if (!a)
         return result;
 
-    if (XGetSelectionOwner(X11->display, ATOM(XdndSelection)) == XNone)
+    if (XGetSelectionOwner(qt_x11Data->display, ATOM(XdndSelection)) == XNone)
         return result; // should never happen?
 
     QWidget* tw = qt_xdnd_current_widget;
     if (!qt_xdnd_current_widget || (qt_xdnd_current_widget->windowType() == Qt::Desktop))
         tw = new QWidget;
 
-    XConvertSelection(X11->display, ATOM(XdndSelection), a, ATOM(XdndSelection), tw->effectiveWinId(),
+    XConvertSelection(qt_x11Data->display, ATOM(XdndSelection), a, ATOM(XdndSelection), tw->effectiveWinId(),
                       qt_xdnd_target_current_time);
-    XFlush(X11->display);
+    XFlush(qt_x11Data->display);
 
     XEvent xevent;
-    bool got=X11->clipboardWaitForEvent(tw->effectiveWinId(), SelectionNotify, &xevent, 5000);
+    bool got=qt_x11Data->clipboardWaitForEvent(tw->effectiveWinId(), SelectionNotify, &xevent, 5000);
     if (got) {
         Atom type;
 
-        if (X11->clipboardReadProperty(tw->effectiveWinId(), ATOM(XdndSelection), true, &result, 0, &type, 0)) {
+        if (qt_x11Data->clipboardReadProperty(tw->effectiveWinId(), ATOM(XdndSelection), true, &result, 0, &type, 0)) {
             if (type == ATOM(INCR)) {
                 int nbytes = result.size() >= 4 ? *((int*)result.data()) : 0;
-                result = X11->clipboardReadIncrementalProperty(tw->effectiveWinId(), ATOM(XdndSelection), nbytes, false);
+                result = qt_x11Data->clipboardReadIncrementalProperty(tw->effectiveWinId(), ATOM(XdndSelection), nbytes, false);
             } else if (type != a && type != XNone) {
                 DEBUG("Qt clipboard: unknown atom %ld", type);
             }
@@ -1939,7 +1939,7 @@ static QVariant xdndObtainData(const char *format, QVariant::Type requestedType)
     if (!qt_xdnd_current_widget || (qt_xdnd_current_widget->windowType() == Qt::Desktop))
         delete tw;
 
-    return X11->xdndMimeConvertToFormat(a, result, QLatin1String(format), requestedType, encoding);
+    return qt_x11Data->xdndMimeConvertToFormat(a, result, QLatin1String(format), requestedType, encoding);
 }
 
 
@@ -1982,7 +1982,7 @@ Qt::DropAction QDragManager::drag(QDrag * o)
             XEvent event;
             // Pass the event through the event dispatcher filter so that applications
             // which install an event filter on the dispatcher get to handle it first.
-            if (XCheckTypedEvent(X11->display, ClientMessage, &event) &&
+            if (XCheckTypedEvent(qt_x11Data->display, ClientMessage, &event) &&
                 !QAbstractEventDispatcher::instance()->filterEvent(&event))
                 qApp->x11ProcessEvent(&event);
 
@@ -2003,7 +2003,7 @@ Qt::DropAction QDragManager::drag(QDrag * o)
     updatePixmap();
 
     qApp->installEventFilter(this);
-    XSetSelectionOwner(X11->display, ATOM(XdndSelection), dragPrivate()->source->window()->internalWinId(), X11->time);
+    XSetSelectionOwner(qt_x11Data->display, ATOM(XdndSelection), dragPrivate()->source->window()->internalWinId(), qt_x11Data->time);
     global_accepted_action = Qt::CopyAction;
     qt_xdnd_source_sameanswer = QRect();
 #ifndef QT_NO_CURSOR
@@ -2079,8 +2079,8 @@ void QDragManager::updatePixmap()
 QVariant QDropData::retrieveData_sys(const QString &mimetype, QVariant::Type requestedType) const
 {
     QByteArray mime = mimetype.toLatin1();
-    QVariant data = X11->motifdnd_active
-                      ? X11->motifdndObtainData(mime)
+    QVariant data = qt_x11Data->motifdnd_active
+                      ? qt_x11Data->motifdndObtainData(mime)
                       : xdndObtainData(mime, requestedType);
     return data;
 }
@@ -2093,17 +2093,17 @@ bool QDropData::hasFormat_sys(const QString &format) const
 QStringList QDropData::formats_sys() const
 {
     QStringList formats;
-    if (X11->motifdnd_active) {
+    if (qt_x11Data->motifdnd_active) {
         int i = 0;
         QByteArray fmt;
-        while (!(fmt = X11->motifdndFormat(i)).isEmpty()) {
+        while (!(fmt = qt_x11Data->motifdndFormat(i)).isEmpty()) {
             formats.append(QLatin1String(fmt));
             ++i;
         }
     } else {
         int i = 0;
         while ((qt_xdnd_types[i])) {
-            QStringList formatsForAtom = X11->xdndMimeFormatsForAtom(qt_xdnd_types[i]);
+            QStringList formatsForAtom = qt_x11Data->xdndMimeFormatsForAtom(qt_xdnd_types[i]);
             for (int j = 0; j < formatsForAtom.size(); ++j) {
                 if (!formats.contains(formatsForAtom.at(j)))
                     formats.append(formatsForAtom.at(j));

@@ -86,7 +86,7 @@ public:
         LittleEndian = QSysInfo::LittleEndian
     };
 
-    enum StreamStatus {
+    enum DataStatus {
         Ok,
         ReadPastEnd,
         ReadCorruptData,
@@ -109,8 +109,8 @@ public:
 
     bool atEnd() const;
 
-    StreamStatus status() const;
-    void setStatus(StreamStatus status);
+    DataStatus status() const;
+    void setStatus(DataStatus status);
     void resetStatus();
 
     FloatingPointPrecision floatingPointPrecision() const;
@@ -168,7 +168,7 @@ private:
     bool noswap;
     ByteOrder byteorder;
     int ver;
-    StreamStatus q_status;
+    DataStatus q_status;
 };
 
 
@@ -321,7 +321,7 @@ QDataStream& operator<<(QDataStream &out, const QSet<T> &set)
 template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator>>(QDataStream &in, QHash<Key, T> &hash)
 {
-    QDataStream::StreamStatus oldStatus = in.status();
+    QDataStream::DataStatus oldStatus = in.status();
     in.resetStatus();
     hash.clear();
 
@@ -360,7 +360,7 @@ Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QHash<Key, 
 template <class aKey, class aT>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator>>(QDataStream &in, QMap<aKey, aT> &map)
 {
-    QDataStream::StreamStatus oldStatus = in.status();
+    QDataStream::DataStatus oldStatus = in.status();
     in.resetStatus();
     map.clear();
 

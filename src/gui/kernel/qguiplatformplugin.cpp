@@ -77,7 +77,7 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
         QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
 #ifdef Q_WS_X11
         if (key.isEmpty()) {
-            switch(X11->desktopEnvironment) {
+            switch(qt_x11Data->desktopEnvironment) {
             case DE_KDE:
                 key = QString::fromLatin1("kde");
                 break;
@@ -125,12 +125,12 @@ QString QGuiPlatformPlugin::styleName()
     return QLatin1String("CDE");                        // default style for X11 on Solaris
 #elif defined(Q_WS_X11)
     QString stylename;
-    switch(X11->desktopEnvironment) {
+    switch(qt_x11Data->desktopEnvironment) {
     case DE_KDE:
         stylename = QKde::kdeStyle();
         break;
     case DE_GNOME: {
-        if (X11->use_xrender)
+        if (qt_x11Data->use_xrender)
             stylename = QLatin1String("cleanlooks");
         else
             stylename = QLatin1String("windows");
@@ -151,7 +151,7 @@ QString QGuiPlatformPlugin::styleName()
 QPalette QGuiPlatformPlugin::palette()
 {
 #ifdef Q_WS_X11
-    if (QApplication::desktopSettingsAware() && X11->desktopEnvironment == DE_KDE)
+    if (QApplication::desktopSettingsAware() && qt_x11Data->desktopEnvironment == DE_KDE)
         return QKde::kdePalette();
 #endif
 
@@ -163,12 +163,12 @@ QString QGuiPlatformPlugin::systemIconThemeName()
 {
     QString result;
 #ifdef Q_WS_X11
-    if (X11->desktopEnvironment == DE_GNOME) {
+    if (qt_x11Data->desktopEnvironment == DE_GNOME) {
         if (result.isEmpty()) {
             result = QString::fromLatin1("gnome");
         }
-    } else if (X11->desktopEnvironment == DE_KDE) {
-        result =  X11->desktopVersion >= 4 ? QString::fromLatin1("oxygen") : QString::fromLatin1("crystalsvg");
+    } else if (qt_x11Data->desktopEnvironment == DE_KDE) {
+        result =  qt_x11Data->desktopVersion >= 4 ? QString::fromLatin1("oxygen") : QString::fromLatin1("crystalsvg");
         QSettings settings(QKde::kdeHome() + QLatin1String("/share/config/kdeglobals"), QSettings::IniFormat);
         settings.beginGroup(QLatin1String("Icons"));
         result = settings.value(QLatin1String("Theme"), result).toString();
@@ -193,7 +193,7 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
         if (dir.exists())
             paths.append(dir.path() + QLatin1String("/icons"));
     }
-    if (X11->desktopEnvironment == DE_KDE) {
+    if (qt_x11Data->desktopEnvironment == DE_KDE) {
         paths << QLatin1Char(':') + QKde::kdeHome() + QLatin1String("/share/icons");
         QStringList kdeDirs = QFile::decodeName(getenv("KDEDIRS")).split(QLatin1Char(':'));
         for (int i = 0 ; i< kdeDirs.count() ; ++i) {
@@ -227,7 +227,7 @@ int QGuiPlatformPlugin::platformHint(PlatformHint hint)
         case PH_ToolButtonStyle:
             ret = Qt::ToolButtonIconOnly;
 #ifdef Q_WS_X11
-            if (X11->desktopEnvironment == DE_KDE && X11->desktopVersion >= 4
+            if (qt_x11Data->desktopEnvironment == DE_KDE && qt_x11Data->desktopVersion >= 4
                 && QApplication::desktopSettingsAware()) {
                 ret = QKde::kdeToolButtonStyle();
             }
@@ -235,7 +235,7 @@ int QGuiPlatformPlugin::platformHint(PlatformHint hint)
             break;
         case PH_ToolBarIconSize:
 #ifdef Q_WS_X11
-            if (X11->desktopEnvironment == DE_KDE && X11->desktopVersion >= 4
+            if (qt_x11Data->desktopEnvironment == DE_KDE && qt_x11Data->desktopVersion >= 4
                 && QApplication::desktopSettingsAware()) {
                 ret = QKde::kdeToolBarIconSize();
             }

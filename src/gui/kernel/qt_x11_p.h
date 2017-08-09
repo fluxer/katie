@@ -487,7 +487,6 @@ struct QX11Data
 extern Q_GUI_EXPORT QX11Data *qt_x11Data;
 
 #define ATOM(x) qt_x11Data->atoms[QX11Data::x]
-#define X11 qt_x11Data
 
 // rename a couple of X defines to get rid of name clashes
 // resolve the conflict between X11's FocusIn and QEvent::FocusIn

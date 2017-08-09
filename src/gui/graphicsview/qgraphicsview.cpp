@@ -3338,7 +3338,7 @@ void QGraphicsView::paintEvent(QPaintEvent *event)
     // Draw background
     if ((d->cacheMode & CacheBackground)
 #ifdef Q_WS_X11
-        && X11->use_xrender
+        && qt_x11Data->use_xrender
 #endif
         ) {
         // Recreate the background pixmap, and flag the whole background as
@@ -3533,7 +3533,7 @@ void QGraphicsView::scrollContentsBy(int dx, int dy)
 
     if ((d->cacheMode & CacheBackground)
 #ifdef Q_WS_X11
-        && X11->use_xrender
+        && qt_x11Data->use_xrender
 #endif
         ) {
         // Scroll the background pixmap

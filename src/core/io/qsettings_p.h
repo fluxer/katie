@@ -200,7 +200,7 @@ public:
 
     QString actualKey(const QString &key) const;
     void beginGroupOrArray(const QSettingsGroup &group);
-    void setStatus(QSettings::Status status) const;
+    void setStatus(QSettings::SettingsStatus status) const;
     void requestUpdate();
     void update();
 
@@ -252,7 +252,7 @@ protected:
     int spec;
     bool fallbacks;
     bool pendingChanges;
-    mutable QSettings::Status status;
+    mutable QSettings::SettingsStatus status;
 };
 
 class QConfFileSettingsPrivate : public QSettingsPrivate

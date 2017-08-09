@@ -361,7 +361,7 @@ QDataStream &operator>>(QDataStream &in, QNetworkCacheMetaData &metaData)
 static inline QDataStream &operator>>(QDataStream &in, QNetworkCacheMetaData::AttributesMap &hash)
 {
     hash.clear();
-    QDataStream::StreamStatus oldStatus = in.status();
+    QDataStream::DataStatus oldStatus = in.status();
     in.resetStatus();
     hash.clear();
 
