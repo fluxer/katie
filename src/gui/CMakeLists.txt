@@ -343,6 +343,7 @@ set(GUI_PUBLIC_HEADERS
     QListWidgetItem
     QTreeWidgetItem
     QStandardItem
+    QShortcutEvent
     QCloseEvent
     QResizeEvent
     QMoveEvent
