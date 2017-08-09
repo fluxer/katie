@@ -14,6 +14,10 @@ add_library(qgenericbearerplugin MODULE ${qgenericbearerplugin_SOURCES}
 )
 target_link_libraries(qgenericbearerplugin KtCore KtNetwork)
 set_target_properties(qgenericbearerplugin PROPERTIES OUTPUT_NAME qgenericbearer)
+target_include_directories(qgenericbearerplugin PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/plugins/bearer
+    ${CMAKE_BINARY_DIR}/src/plugins/bearer
+)
 
 katie_setup_object(qgenericbearerplugin sharedbearer)
 

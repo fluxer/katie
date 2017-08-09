@@ -18,6 +18,10 @@ add_library(qconnmanbearerplugin MODULE ${qconnmanbearerplugin_SOURCES}
 )
 target_link_libraries(qconnmanbearerplugin KtCore KtNetwork KtDBus)
 set_target_properties(qconnmanbearerplugin PROPERTIES OUTPUT_NAME qconnmanbearer)
+target_include_directories(qconnmanbearerplugin PRIVATE
+    ${CMAKE_SOURCE_DIR}/src/plugins/bearer
+    ${CMAKE_BINARY_DIR}/src/plugins/bearer
+)
 
 katie_setup_object(qconnmanbearerplugin sharedbearer)
 
