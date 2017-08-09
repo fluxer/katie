@@ -55,6 +55,7 @@ katie_setup_target(sharedbearer ${SHAREDBEARER_SOURCES} ${SHAREDBEARER_HEADERS})
 add_library(sharedbearer OBJECT ${sharedbearer_SOURCES})
 target_include_directories(sharedbearer PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/bearer
+    ${CMAKE_CURRENT_BINARY_DIR}/bearer
 )
 
 if(KATIE_PLATFORM MATCHES "(linux|freebsd|openbsd)")
