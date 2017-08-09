@@ -4,6 +4,7 @@ set -e
 
 cwd="$(dirname $0)"
 
+rm -rf "$cwd/../minsize"
 mkdir -p "$cwd/../minsize"
 cd "$cwd/../minsize"
 
