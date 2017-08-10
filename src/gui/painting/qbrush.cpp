@@ -1017,13 +1017,10 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
         const QGradient *gradient = b.gradient();
         int type_as_int = int(gradient->type());
         s << type_as_int;
-        if (s.version() >= QDataStream::Qt_4_3) {
-            s << int(gradient->spread());
-            s << int(gradient->coordinateMode());
-        }
+        s << int(gradient->spread());
+        s << int(gradient->coordinateMode());
 
-        if (s.version() >= QDataStream::Qt_4_5)
-            s << int(gradient->interpolationMode());
+        s << int(gradient->interpolationMode());
 
         if (sizeof(qreal) == sizeof(double)) {
             s << gradient->stops();
@@ -1051,8 +1048,7 @@ QDataStream &operator<<(QDataStream &s, const QBrush &b)
             s << (double) static_cast<const QConicalGradient *>(gradient)->angle();
         }
     }
-    if (s.version() >= QDataStream::Qt_4_3)
-        s << b.transform();
+    s << b.transform();
     return s;
 }
 
@@ -1089,17 +1085,13 @@ QDataStream &operator>>(QDataStream &s, QBrush &b)
 
         s >> type_as_int;
         type = QGradient::Type(type_as_int);
-        if (s.version() >= QDataStream::Qt_4_3) {
-            s >> type_as_int;
-            spread = QGradient::Spread(type_as_int);
-            s >> type_as_int;
-            cmode = QGradient::CoordinateMode(type_as_int);
-        }
+        s >> type_as_int;
+        spread = QGradient::Spread(type_as_int);
+        s >> type_as_int;
+        cmode = QGradient::CoordinateMode(type_as_int);
 
-        if (s.version() >= QDataStream::Qt_4_5) {
-            s >> type_as_int;
-            imode = QGradient::InterpolationMode(type_as_int);
-        }
+        s >> type_as_int;
+        imode = QGradient::InterpolationMode(type_as_int);
 
         if (sizeof(qreal) == sizeof(double)) {
             s >> stops;
@@ -1152,11 +1144,9 @@ QDataStream &operator>>(QDataStream &s, QBrush &b)
     } else {
         b = QBrush(color, (Qt::BrushStyle)style);
     }
-    if (s.version() >= QDataStream::Qt_4_3) {
-        QTransform transform;
-        s >> transform;
-        b.setTransform(transform);
-    }
+    QTransform transform;
+    s >> transform;
+    b.setTransform(transform);
     return s;
 }
 #endif // QT_NO_DATASTREAM

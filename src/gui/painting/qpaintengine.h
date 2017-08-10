@@ -222,9 +222,7 @@ private:
 
     friend class QPainterReplayer;
     friend class QFontEngineBox;
-#ifndef QT_NO_FREETYPE
     friend class QFontEngineFT;
-#endif
     friend class QPSPrintEngine;
     friend class QPainter;
     friend class QPainterPrivate;

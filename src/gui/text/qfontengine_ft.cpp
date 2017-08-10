@@ -1973,7 +1973,4 @@ QFontEngine *QFontEngineFT::cloneWithSize(qreal pixelSize) const
 
 QT_END_NAMESPACE
 
-
-
-
 #endif // QT_NO_FREETYPE

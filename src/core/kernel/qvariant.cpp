@@ -2021,8 +2021,7 @@ void QVariant::load(QDataStream &s)
     quint32 u;
     s >> u;
     qint8 is_null = false;
-    if (s.version() >= QDataStream::Qt_4_2)
-        s >> is_null;
+    s >> is_null;
     if (u == QVariant::UserType) {
         QByteArray name;
         s >> name;
@@ -2060,8 +2059,7 @@ void QVariant::save(QDataStream &s) const
 {
     quint32 tp = type();
     s << tp;
-    if (s.version() >= QDataStream::Qt_4_2)
-        s << qint8(d.is_null);
+    s << qint8(d.is_null);
     if (tp == QVariant::UserType) {
         s << QMetaType::typeName(userType());
     }

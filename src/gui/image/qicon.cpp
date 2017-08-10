@@ -890,11 +890,6 @@ QString QIcon::themeName()
 
     \snippet doc/src/snippets/code/src_gui_image_qicon.cpp 4
 
-    \note By default, only X11 will support themed icons. In order to
-    use themed icons on Mac and Windows, you will have to bundle a
-    compliant theme in one of your themeSearchPaths() and set the
-    appropriate themeName().
-
     \sa themeName(), setThemeName(), themeSearchPaths()
 */
 QIcon QIcon::fromTheme(const QString &name, const QIcon &fallback)
@@ -950,31 +945,12 @@ bool QIcon::hasThemeIcon(const QString &name)
 
 QDataStream &operator<<(QDataStream &s, const QIcon &icon)
 {
-    if (s.version() >= QDataStream::Qt_4_3) {
-        if (icon.isNull()) {
-            s << QString();
-        } else {
-            QIconEngine *engine = icon.d->engine;
-            s << engine->key();
-            engine->write(s);
-        }
-    } else if (s.version() == QDataStream::Qt_4_2) {
-        if (icon.isNull()) {
-            s << 0;
-        } else {
-            QPixmapIconEngine *engine = static_cast<QPixmapIconEngine *>(icon.d->engine);
-            int num_entries = engine->pixmaps.size();
-            s << num_entries;
-            for (int i=0; i < num_entries; ++i) {
-                s << engine->pixmaps.at(i).pixmap;
-                s << engine->pixmaps.at(i).fileName;
-                s << engine->pixmaps.at(i).size;
-                s << (uint) engine->pixmaps.at(i).mode;
-                s << (uint) engine->pixmaps.at(i).state;
-            }
-        }
+    if (icon.isNull()) {
+        s << QString();
     } else {
-        s << QPixmap(icon.pixmap(22,22));
+        QIconEngine *engine = icon.d->engine;
+        s << engine->key();
+        engine->write(s);
     }
     return s;
 }
@@ -990,54 +966,27 @@ QDataStream &operator<<(QDataStream &s, const QIcon &icon)
 
 QDataStream &operator>>(QDataStream &s, QIcon &icon)
 {
-    if (s.version() >= QDataStream::Qt_4_3) {
-        icon = QIcon();
-        QString key;
-        s >> key;
-        if (key == QLatin1String("QPixmapIconEngine")) {
-            icon.d = new QIconPrivate;
-            QIconEngine *engine = new QPixmapIconEngine;
-            icon.d->engine = engine;
-            engine->read(s);
-        } else if (key == QLatin1String("QIconLoaderEngine")) {
-            icon.d = new QIconPrivate;
-            QIconEngine *engine = new QIconLoaderEngine();
-            icon.d->engine = engine;
-            engine->read(s);
+    icon = QIcon();
+    QString key;
+    s >> key;
+    if (key == QLatin1String("QPixmapIconEngine")) {
+        icon.d = new QIconPrivate;
+        QIconEngine *engine = new QPixmapIconEngine;
+        icon.d->engine = engine;
+        engine->read(s);
+    } else if (key == QLatin1String("QIconLoaderEngine")) {
+        icon.d = new QIconPrivate;
+        QIconEngine *engine = new QIconLoaderEngine();
+        icon.d->engine = engine;
+        engine->read(s);
 #if !defined (QT_NO_LIBRARY) && !defined(QT_NO_SETTINGS)
-        } else if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(iconloader()->instance(key))) {
-            if (QIconEngine *engine= factory->create()) {
-                icon.d = new QIconPrivate;
-                icon.d->engine = engine;
-                engine->read(s);
-            }
+    } else if (QIconEngineFactoryInterface *factory = qobject_cast<QIconEngineFactoryInterface*>(iconloader()->instance(key))) {
+        if (QIconEngine *engine= factory->create()) {
+            icon.d = new QIconPrivate;
+            icon.d->engine = engine;
+            engine->read(s);
+        }
 #endif
-        }
-    } else if (s.version() == QDataStream::Qt_4_2) {
-        icon = QIcon();
-        int num_entries;
-        QPixmap pm;
-        QString fileName;
-        QSize sz;
-        uint mode;
-        uint state;
-
-        s >> num_entries;
-        for (int i=0; i < num_entries; ++i) {
-            s >> pm;
-            s >> fileName;
-            s >> sz;
-            s >> mode;
-            s >> state;
-            if (pm.isNull())
-                icon.addFile(fileName, sz, QIcon::Mode(mode), QIcon::State(state));
-            else
-                icon.addPixmap(pm, QIcon::Mode(mode), QIcon::State(state));
-        }
-    } else {
-        QPixmap pm;
-        s >> pm;
-        icon.addPixmap(pm);
     }
     return s;
 }
@@ -1058,9 +1007,3 @@ QDataStream &operator>>(QDataStream &s, QIcon &icon)
 
 QT_END_NAMESPACE
 #endif //QT_NO_ICON
-
-
-
-
-
-

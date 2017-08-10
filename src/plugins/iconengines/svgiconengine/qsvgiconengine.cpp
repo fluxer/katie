@@ -249,53 +249,25 @@ bool QSvgIconEngine::read(QDataStream &in)
     d = new QSvgIconEnginePrivate;
     d->svgBuffers = new QHash<int, QByteArray>;
 
-    if (in.version() >= QDataStream::Qt_4_4) {
-        int isCompressed;
-        QHash<int, QString> fileNames;  // For memoryoptimization later
-        in >> fileNames >> isCompressed >> *d->svgBuffers;
+    int isCompressed;
+    QHash<int, QString> fileNames;  // For memoryoptimization later
+    in >> fileNames >> isCompressed >> *d->svgBuffers;
 #ifndef QT_NO_COMPRESS
-        if (!isCompressed) {
-            foreach(int key, d->svgBuffers->keys())
-                d->svgBuffers->insert(key, qCompress(d->svgBuffers->value(key)));
-        }
-#else
-        if (isCompressed) {
-            qWarning("QSvgIconEngine: Can not decompress SVG data");
-            d->svgBuffers->clear();
-        }
-#endif
-        int hasAddedPixmaps;
-        in >> hasAddedPixmaps;
-        if (hasAddedPixmaps) {
-            d->addedPixmaps = new QHash<int, QPixmap>;
-            in >> *d->addedPixmaps;
-        }
+    if (!isCompressed) {
+        foreach(int key, d->svgBuffers->keys())
+            d->svgBuffers->insert(key, qCompress(d->svgBuffers->value(key)));
     }
-    else {
-        QPixmap pixmap;
-        QByteArray data;
-        uint mode;
-        uint state;
-        int num_entries;
-
-        in >> data;
-        if (!data.isEmpty()) {
-#ifndef QT_NO_COMPRESS
-            data = qUncompress(data);
+#else
+    if (isCompressed) {
+        qWarning("QSvgIconEngine: Can not decompress SVG data");
+        d->svgBuffers->clear();
+    }
 #endif
-            if (!data.isEmpty())
-                d->svgBuffers->insert(d->hashKey(QIcon::Normal, QIcon::Off), data);
-        }
-        in >> num_entries;
-        for (int i=0; i<num_entries; ++i) {
-            if (in.atEnd())
-                return false;
-            in >> pixmap;
-            in >> mode;
-            in >> state;
-            // The pm list written by 4.3 is buggy and/or useless, so ignore.
-            //addPixmap(pixmap, QIcon::Mode(mode), QIcon::State(state));
-        }
+    int hasAddedPixmaps;
+    in >> hasAddedPixmaps;
+    if (hasAddedPixmaps) {
+        d->addedPixmaps = new QHash<int, QPixmap>;
+        in >> *d->addedPixmaps;
     }
 
     return true;
@@ -304,49 +276,28 @@ bool QSvgIconEngine::read(QDataStream &in)
 
 bool QSvgIconEngine::write(QDataStream &out) const
 {
-    if (out.version() >= QDataStream::Qt_4_4) {
-        QHash<int, QByteArray> svgBuffers;
-        if (d->svgBuffers)
-            svgBuffers = *d->svgBuffers;
-        foreach(int key, d->svgFiles.keys()) {
-            QByteArray buf;
-            QFile f(d->svgFiles.value(key));
-            if (f.open(QIODevice::ReadOnly))
-                buf = f.readAll();
-#ifndef QT_NO_COMPRESS
-            buf = qCompress(buf);
-#endif
-            svgBuffers.insert(key, buf);
-        }
-#ifndef QT_NO_COMPRESS
-        out << d->svgFiles << 1 << svgBuffers;
-#else
-        out << d->svgFiles << 0 << svgBuffers;
-#endif
-        if (d->addedPixmaps)
-            out << (int)1 << *d->addedPixmaps;
-        else
-            out << (int)0;
-    }
-    else {
+    QHash<int, QByteArray> svgBuffers;
+    if (d->svgBuffers)
+        svgBuffers = *d->svgBuffers;
+    foreach(int key, d->svgFiles.keys()) {
         QByteArray buf;
-        if (d->svgBuffers)
-            buf = d->svgBuffers->value(d->hashKey(QIcon::Normal, QIcon::Off));
-        if (buf.isEmpty()) {
-            QString svgFile = d->svgFiles.value(d->hashKey(QIcon::Normal, QIcon::Off));
-            if (!svgFile.isEmpty()) {
-                QFile f(svgFile);
-                if (f.open(QIODevice::ReadOnly))
-                    buf = f.readAll();
-            }
-        }
+        QFile f(d->svgFiles.value(key));
+        if (f.open(QIODevice::ReadOnly))
+            buf = f.readAll();
 #ifndef QT_NO_COMPRESS
         buf = qCompress(buf);
 #endif
-        out << buf;
-        // 4.3 has buggy handling of added pixmaps, so don't write any
-        out << (int)0;
+        svgBuffers.insert(key, buf);
     }
+#ifndef QT_NO_COMPRESS
+    out << d->svgFiles << 1 << svgBuffers;
+#else
+    out << d->svgFiles << 0 << svgBuffers;
+#endif
+    if (d->addedPixmaps)
+        out << (int)1 << *d->addedPixmaps;
+    else
+        out << (int)0;
     return true;
 }
 

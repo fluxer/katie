@@ -64,13 +64,13 @@ class Q_CORE_EXPORT QDataStream
 {
 public:
     enum Version {
-        Qt_4_0 = 1,
+        Qt_4_0 = 6,
         Qt_4_1 = Qt_4_0,
-        Qt_4_2 = 2,
-        Qt_4_3 = 3,
-        Qt_4_4 = 4,
-        Qt_4_5 = 5,
-        Qt_4_6 = 6,
+        Qt_4_2 = Qt_4_1,
+        Qt_4_3 = Qt_4_2,
+        Qt_4_4 = Qt_4_3,
+        Qt_4_5 = Qt_4_4,
+        Qt_4_6 = Qt_4_5,
         Qt_4_7 = Qt_4_6,
         Qt_4_8 = Qt_4_7,
         Qt_4_9 = Qt_4_8,

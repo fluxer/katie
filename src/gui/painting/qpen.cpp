@@ -886,12 +886,8 @@ bool QPen::isDetached()
 QDataStream &operator<<(QDataStream &s, const QPen &p)
 {
     QPenData *dd = static_cast<QPenData *>(p.d);
-    if (s.version() < QDataStream::Qt_4_3) {
-        s << (quint8)(p.style() | p.capStyle() | p.joinStyle());
-    } else {
-        s << (quint16)(p.style() | p.capStyle() | p.joinStyle());
-        s << (bool)(dd->cosmetic);
-    }
+    s << (quint16)(p.style() | p.capStyle() | p.joinStyle());
+    s << (bool)(dd->cosmetic);
 
     s << double(p.widthF());
     s << p.brush();
@@ -907,8 +903,7 @@ QDataStream &operator<<(QDataStream &s, const QPen &p)
         for (int i = 0; i < pattern.size(); ++i)
             s << double(pattern.at(i));
     }
-    if (s.version() >= QDataStream::Qt_4_3)
-        s << double(p.dashOffset());
+    s << double(p.dashOffset());
     return s;
 }
 
@@ -932,14 +927,8 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
     QVector<qreal> dashPattern;
     double dashOffset = 0;
     bool cosmetic = false;
-    if (s.version() < QDataStream::Qt_4_3) {
-        quint8 style8;
-        s >> style8;
-        style = style8;
-    } else {
-        s >> style;
-        s >> cosmetic;
-    }
+    s >> style;
+    s >> cosmetic;
     s >> width;
     s >> brush;
     s >> miterLimit;
@@ -954,8 +943,7 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
             dashPattern << dash;
         }
     }
-    if (s.version() >= QDataStream::Qt_4_3)
-        s >> dashOffset;
+    s >> dashOffset;
 
     p.detach();
     QPenData *dd = static_cast<QPenData *>(p.d);

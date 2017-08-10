@@ -89,24 +89,6 @@ double qt_pointSize(double pixelSize, int dpi)
     return pixelSize * 72. / ((double) dpi);
 }
 
-/*
-  Removes wildcards from an XLFD.
-
-  Returns \a xlfd with all wildcards removed if a match for \a xlfd is
-  found, otherwise it returns \a xlfd.
-*/
-static QByteArray qt_fixXLFD(const QByteArray &xlfd)
-{
-    QByteArray ret = xlfd;
-    int count = 0;
-    char **fontNames =
-        XListFonts(QX11Info::display(), xlfd, 32768, &count);
-    if (count > 0)
-        ret = fontNames[0];
-    XFreeFontNames(fontNames);
-    return ret ;
-}
-
 typedef QHash<int, QString> FallBackHash;
 Q_GLOBAL_STATIC(FallBackHash, fallBackHash)
 

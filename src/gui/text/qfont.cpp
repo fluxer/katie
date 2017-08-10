@@ -2038,14 +2038,10 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
     s << (quint8) 0
       << (quint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
-    if (s.version() >= QDataStream::Qt_4_3)
-        s << (quint16)font.d->request.stretch;
-    if (s.version() >= QDataStream::Qt_4_4)
-        s << get_extended_font_bits(font.d.data());
-    if (s.version() >= QDataStream::Qt_4_5) {
-        s << font.d->letterSpacing.value();
-        s << font.d->wordSpacing.value();
-    }
+    s << (quint16)font.d->request.stretch;
+    s << get_extended_font_bits(font.d.data());
+    s << font.d->letterSpacing.value();
+    s << font.d->wordSpacing.value();
     return s;
 }
 
@@ -2086,24 +2082,19 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
 
     set_font_bits(s.version(), bits, font.d.data());
 
-    if (s.version() >= QDataStream::Qt_4_3) {
-        quint16 stretch;
-        s >> stretch;
-        font.d->request.stretch = stretch;
-    }
+    quint16 stretch;
+    s >> stretch;
+    font.d->request.stretch = stretch;
 
-    if (s.version() >= QDataStream::Qt_4_4) {
-        quint8 extendedBits;
-        s >> extendedBits;
-        set_extended_font_bits(extendedBits, font.d.data());
-    }
-    if (s.version() >= QDataStream::Qt_4_5) {
-        int value;
-        s >> value;
-        font.d->letterSpacing.setValue(value);
-        s >> value;
-        font.d->wordSpacing.setValue(value);
-    }
+    quint8 extendedBits;
+    s >> extendedBits;
+    set_extended_font_bits(extendedBits, font.d.data());
+
+    int value;
+    s >> value;
+    font.d->letterSpacing.setValue(value);
+    s >> value;
+    font.d->wordSpacing.setValue(value);
 
     return s;
 }

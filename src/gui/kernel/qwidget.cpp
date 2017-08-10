@@ -6168,13 +6168,8 @@ QByteArray QWidget::saveGeometry() const
 {
     QByteArray array;
     QDataStream stream(&array, QIODevice::WriteOnly);
-    stream.setVersion(QDataStream::Qt_4_0);
-    const quint32 magicNumber = 0x1D9D0CB;
-    quint16 majorVersion = 1;
-    quint16 minorVersion = 0;
-    stream << magicNumber
-           << majorVersion
-           << minorVersion
+    quint16 majorVersion = 2;
+    stream << majorVersion
            << frameGeometry()
            << normalGeometry()
            << qint32(QApplication::desktop()->screenNumber(this))
@@ -6211,26 +6206,17 @@ bool QWidget::restoreGeometry(const QByteArray &geometry)
     if (geometry.size() < 4)
         return false;
     QDataStream stream(geometry);
-    stream.setVersion(QDataStream::Qt_4_0);
 
-    const quint32 magicNumber = 0x1D9D0CB;
-    quint32 storedMagicNumber;
-    stream >> storedMagicNumber;
-    if (storedMagicNumber != magicNumber)
-        return false;
-
-    const quint16 currentMajorVersion = 1;
+    const quint16 currentMajorVersion = 2;
     quint16 majorVersion = 0;
-    quint16 minorVersion = 0;
 
-    stream >> majorVersion >> minorVersion;
+    stream >> majorVersion;
 
     if (majorVersion != currentMajorVersion)
         return false;
-    // (Allow all minor versions.)
 
     QRect restoredFrameGeometry;
-     QRect restoredNormalGeometry;
+    QRect restoredNormalGeometry;
     qint32 restoredScreenNumber;
     quint8 maximized;
     quint8 fullScreen;

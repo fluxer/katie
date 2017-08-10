@@ -898,10 +898,8 @@ QPalette QPalette::resolve(const QPalette &other) const
 
 QDataStream &operator<<(QDataStream &s, const QPalette &p)
 {
+    const int max = QPalette::ToolTipText + 1;
     for (int grp = 0; grp < (int)QPalette::NColorGroups; grp++) {
-        int max = QPalette::ToolTipText + 1;
-        if (s.version() <= QDataStream::Qt_4_3)
-            max = QPalette::AlternateBase + 1;
         for (int r = 0; r < max; r++)
             s << p.d->br[grp][r];
     }
@@ -919,15 +917,9 @@ QDataStream &operator<<(QDataStream &s, const QPalette &p)
 
 QDataStream &operator>>(QDataStream &s, QPalette &p)
 {
-    int max = QPalette::NColorRoles;
-    if (s.version() <= QDataStream::Qt_4_3) {
-        p = QPalette();
-        max = QPalette::AlternateBase + 1;
-    }
-
     QBrush tmp;
-    for(int grp = 0; grp < (int)QPalette::NColorGroups; ++grp) {
-        for(int role = 0; role < max; ++role) {
+    for(int grp = 0; grp < QPalette::NColorGroups; ++grp) {
+        for(int role = 0; role < QPalette::NColorRoles; ++role) {
             s >> tmp;
             p.setBrush((QPalette::ColorGroup)grp, (QPalette::ColorRole)role, tmp);
         }
