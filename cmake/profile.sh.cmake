@@ -13,8 +13,10 @@ safe_path_append() {
     done
     IFS="$oldIFS"
 
-    if [ "$found" != "yes" ];then
+    if [ "$found" != "yes" ] && [ -n "$2" ];then
         export "$1"="$2:$3"
+    elif [ "$found" != "yes" ];then
+        export "$1"="$3"
     fi
 }
 
