@@ -2,6 +2,13 @@
 
 # NOTE: safe as in does not append if already in the variable
 safe_path_append() {
+    # if the environment variable is empty just export
+    if [ -z "$2" ];then
+        export "$1"="$3"
+        return
+    fi
+
+    # else append to it if neccessary
     oldIFS="$IFS"
     IFS=":"
     found=""
@@ -13,10 +20,8 @@ safe_path_append() {
     done
     IFS="$oldIFS"
 
-    if [ "$found" != "yes" ] && [ -n "$2" ];then
+    if [ "$found" != "yes" ];then
         export "$1"="$2:$3"
-    elif [ "$found" != "yes" ];then
-        export "$1"="$3"
     fi
 }
 
