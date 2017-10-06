@@ -60,8 +60,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
-
 class CustomProxyModel : public QSortFilterProxyModel
 {
 public:
@@ -78,8 +76,6 @@ public:
         return sourceModel()->hasChildren(sourceParent);
     }
 };
-
-} // namespace
 
 class QScriptDebuggerLocalsWidgetPrivate
     : public QScriptDebuggerLocalsWidgetInterfacePrivate

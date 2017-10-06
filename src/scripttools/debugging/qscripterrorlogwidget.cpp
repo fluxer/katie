@@ -50,8 +50,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
-
 class QScriptErrorLogWidgetOutputEdit : public QTextEdit
 {
 public:
@@ -69,8 +67,6 @@ public:
         bar->setValue(bar->maximum());
     }
 };
-
-} // namespace
 
 class QScriptErrorLogWidgetPrivate
     : public QScriptErrorLogWidgetInterfacePrivate
@@ -133,4 +129,5 @@ void QScriptErrorLogWidget::clear()
 }
 
 QT_END_NAMESPACE
-#include <moc_qscripterrorlogwidget_p.h>
+
+#include "moc_qscripterrorlogwidget_p.h"

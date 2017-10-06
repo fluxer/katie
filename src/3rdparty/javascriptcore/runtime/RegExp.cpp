@@ -88,7 +88,7 @@ PassRefPtr<RegExp> RegExp::create(const UString& pattern, const UString& flags)
 
 void RegExp::compile()
 {
-    m_regExp = 0;
+    m_regExp = Q_NULLPTR;
 
     int regexOptions = PCRE_JAVASCRIPT_COMPAT | PCRE_NO_UTF8_CHECK;
     if (ignoreCase())
@@ -108,7 +108,7 @@ int RegExp::match(const UString& s, int startOffset, Vector<int, 32>* ovector)
     if (ovector)
         ovector->clear();
 
-    if (static_cast<unsigned>(startOffset) > s.size() || s.isNull())
+    if (startOffset > s.size() || s.isNull())
         return -1;
 
     if (m_regExp) {

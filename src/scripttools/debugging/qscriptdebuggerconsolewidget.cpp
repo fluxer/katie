@@ -56,8 +56,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
-
 class PromptLabel : public QLabel
 {
 public:
@@ -189,8 +187,6 @@ public:
         return width() / fm.maxWidth();
     }
 };
-
-} // namespace
 
 class QScriptDebuggerConsoleWidgetPrivate
     : public QScriptDebuggerConsoleWidgetInterfacePrivate
