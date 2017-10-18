@@ -364,7 +364,6 @@ void QDeclarativeCompiledBindingsPrivate::run(Binding *binding, QDeclarativeProp
     binding->updating = false;
 }
 
-namespace {
 // This structure is exactly 8-bytes in size
 struct Instr {
     enum {
@@ -564,7 +563,6 @@ struct Program {
     const char *data() const { return ((const char *)this) + sizeof(Program); }
     const Instr *instructions() const { return (const Instr *)(data() + dataLength); }
 };
-}
 
 class QDeclarativeBindingCompilerPrivate
 {
