@@ -146,9 +146,6 @@ add_feature_info(glib2 WITH_GLIB2 "an open source something")
 option(WITH_DBUS "Build dbus support" ON)
 add_feature_info(dbus WITH_DBUS "an open source something")
 
-option(WITH_FREETYPE "Build freetype2 support" ON)
-add_feature_info(freetype2 WITH_FREETYPE "an open source something")
-
 option(WITH_FONTCONFIG "Build fontconfig support" ON)
 add_feature_info(fontconfig WITH_FONTCONFIG "an open source something")
 
@@ -287,6 +284,14 @@ set_package_properties(X11 PROPERTIES
     TYPE REQUIRED
 )
 
+find_package(Freetype)
+set_package_properties(Freetype PROPERTIES
+    PURPOSE "Required for fonts configuration support"
+    DESCRIPTION "Freely available software library to render fonts"
+    URL "http://www.freetype.org"
+    TYPE REQUIRED
+)
+
 find_package(Git)
 set_package_properties(Git PROPERTIES
     PURPOSE "Git checkout stored for the sake of bug reports"
@@ -372,14 +377,6 @@ set_package_properties(Cups PROPERTIES
     PURPOSE "Required for printing support"
     DESCRIPTION "CUPS is the standards-based, open source printing system"
     URL "http://www.cups.org"
-    TYPE RECOMMENDED
-)
-
-find_package(Freetype)
-set_package_properties(Freetype PROPERTIES
-    PURPOSE "Required for fonts configuration support"
-    DESCRIPTION "Freely available software library to render fonts"
-    URL "http://www.freetype.org"
     TYPE RECOMMENDED
 )
 
@@ -504,11 +501,6 @@ endif()
 # optional packages
 if(NOT WITH_THREADS OR NOT THREADS_FOUND)
     katie_definition(-DQT_NO_THREAD)
-endif()
-
-if(NOT WITH_FREETYPE OR NOT FREETYPE_FOUND)
-    set(WITH_FONTCONFIG OFF)
-    katie_definition(-DQT_NO_FREETYPE)
 endif()
 
 if(NOT WITH_FONTCONFIG OR NOT FONTCONFIG_FOUND)

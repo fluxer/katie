@@ -2302,7 +2302,6 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
     QRasterPaintEngineState *s = state();
     const QFixed offs = QFixed::fromReal(aliasedCoordinateDelta);
 
-#if !defined(QT_NO_FREETYPE)
     if (fontEngine->type() == QFontEngine::Freetype) {
         QFontEngineFT *fe = static_cast<QFontEngineFT *>(fontEngine);
         const QFixed xOffs = fe->supportsSubPixelPositions() ? 0 : offs;
@@ -2385,9 +2384,7 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
         }
         if (lockedFace)
             fe->unlockFace();
-    } else
-#endif
-    {
+    } else {
         QFontEngineGlyphCache::Type glyphType = fontEngine->glyphFormat >= 0
                 ? QFontEngineGlyphCache::Type(fontEngine->glyphFormat)
                 : d->glyphCacheType;
@@ -2580,7 +2577,7 @@ void QRasterPaintEngine::drawTextItem(const QPointF &p, const QTextItem &textIte
 
     QFontEngine *fontEngine = ti.fontEngine;
 
-#if defined(Q_WS_X11) && !defined(QT_NO_FREETYPE)
+#if defined(Q_WS_X11)
 
 
     if (fontEngine->type() != QFontEngine::Freetype) {

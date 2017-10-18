@@ -169,7 +169,6 @@
 #cmakedefine QT_NO_FORMLAYOUT
 #cmakedefine QT_NO_FPU
 #cmakedefine QT_NO_FRAME
-#cmakedefine QT_NO_FREETYPE
 #cmakedefine QT_NO_FSCOMPLETER
 #cmakedefine QT_NO_FSFILEENGINE
 #cmakedefine QT_NO_FTP

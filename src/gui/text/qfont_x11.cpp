@@ -200,7 +200,6 @@ Qt::HANDLE QFont::handle() const
 
 FT_Face QFont::freetypeFace() const
 {
-#ifndef QT_NO_FREETYPE
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     if (engine->type() == QFontEngine::Multi)
         engine = static_cast<QFontEngineMulti *>(engine)->engine(0);
@@ -209,7 +208,6 @@ FT_Face QFont::freetypeFace() const
         const QFontEngineFT *ft = static_cast<const QFontEngineFT *>(engine);
         return ft->non_locked_face();
     }
-#endif
 #endif
     return 0;
 }

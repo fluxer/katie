@@ -291,7 +291,7 @@ void QTextureGlyphCache::fillInPendingGlyphs()
 
 QImage QTextureGlyphCache::textureMapForGlyph(glyph_t g, QFixed subPixelPosition) const
 {
-#if defined(Q_WS_X11) && !defined(QT_NO_FREETYPE)
+#if defined(Q_WS_X11)
     if (m_type != Raster_RGBMask && m_transform.type() > QTransform::TxTranslate && m_current_fontengine->type() == QFontEngine::Freetype) {
         QFontEngineFT::GlyphFormat format = QFontEngineFT::Format_None;
         QImage::Format imageFormat = QImage::Format_Invalid;

@@ -55,12 +55,9 @@
 #include "qpainterpath.h"
 #include "qdebug.h"
 #include "qfontengine_p.h"
+#include "qfontengine_ft_p.h"
 
 #include <limits.h>
-
-#if !defined(QT_NO_FREETYPE)
-#  include "qfontengine_ft_p.h"
-#endif
 
 QT_BEGIN_NAMESPACE
 

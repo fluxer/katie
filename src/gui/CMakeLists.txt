@@ -1,5 +1,5 @@
 add_definitions(-DQT_BUILD_GUI_LIB)
-set(EXTRA_GUI_LIBS KtCore)
+set(EXTRA_GUI_LIBS KtCore ${FREETYPE_LIBRARIES})
 
 set(GUI_PUBLIC_HEADERS
     ${GUI_PUBLIC_HEADERS}
@@ -452,6 +452,7 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/util
     ${CMAKE_CURRENT_BINARY_DIR}/widgets
     ${CMAKE_SOURCE_DIR}/src/core/tools
+    ${FREETYPE_INCLUDE_DIRS}
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here

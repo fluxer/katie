@@ -378,7 +378,7 @@ struct  QtFontFamily
 #endif
 
     QString name;
-#if defined(Q_WS_X11) && !defined(QT_NO_FREETYPE)
+#if defined(Q_WS_X11)
     QByteArray fontFilename;
     int fontFileIndex;
 #endif

@@ -47,12 +47,7 @@
 
 #ifdef Q_WS_X11
 #include "qfontengine_x11_p.h"
-#endif
-
-#ifndef QT_NO_FREETYPE
-#if defined(Q_WS_X11)
-#    include "qfontengine_ft_p.h"
-#endif
+#include "qfontengine_ft_p.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #endif
@@ -284,7 +279,6 @@ QByteArray QFontSubset::glyphName(unsigned short unicode, bool symbol)
     return buffer;
 }
 
-#ifndef QT_NO_FREETYPE
 static FT_Face ft_face(const QFontEngine *engine)
 {
 #if defined(Q_WS_X11) && !defined(QT_NO_FONTCONFIG)
@@ -295,7 +289,6 @@ static FT_Face ft_face(const QFontEngine *engine)
 #endif
     return 0;
 }
-#endif
 
 QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> reverseMap) const
 {
@@ -306,7 +299,6 @@ QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> reverse
 
     QByteArray ba;
     QPdf::ByteStream s(&ba);
-#ifndef QT_NO_FREETYPE
     FT_Face face = ft_face(fontEngine);
 
     char name[32];
@@ -318,9 +310,7 @@ QByteArray QFontSubset::glyphName(unsigned int glyph, const QVector<int> reverse
     }
     if (name[0]) {
         s << '/' << name;
-    } else
-#endif
-    if (reverseMap[glyphIndex] && reverseMap[glyphIndex] < 0x10000) {
+    } else if (reverseMap[glyphIndex] && reverseMap[glyphIndex] < 0x10000) {
         s << '/' << glyphName(reverseMap[glyphIndex], false);
     } else {
         s << "/gl" << (int)glyphIndex;
@@ -1602,7 +1592,6 @@ static QByteArray charString(const QPainterPath &path, qreal advance, qreal lsb,
     return charstring;
 }
 
-#ifndef QT_NO_FREETYPE
 static const char *helvetica_styles[4] = {
     "Helvetica",
     "Helvetica-Bold",
@@ -1621,7 +1610,6 @@ static const char *courier_styles[4] = {
     "Courier-Oblique",
     "Courier-BoldOblique"
 };
-#endif
 
 QByteArray QFontSubset::toType1() const
 {
@@ -1637,7 +1625,6 @@ QByteArray QFontSubset::toType1() const
 
     standard_font = false;
 
-#ifndef QT_NO_FREETYPE
     FT_Face face = ft_face(fontEngine);
     if (face && !FT_IS_SCALABLE(face)) {
         int style = 0;
@@ -1656,7 +1643,6 @@ QByteArray QFontSubset::toType1() const
             standard_font = true;
         }
     }
-#endif
     s << "/F" << id << "-Base\n";
     if (standard_font) {
             s << '/' << psname << " findfont\n"

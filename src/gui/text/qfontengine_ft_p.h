@@ -53,13 +53,11 @@
 
 #include "qfontengine_p.h"
 
-#ifndef QT_NO_FREETYPE
-
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 #if defined(Q_WS_X11)
-#include <qt_x11_p.h>
+#include "qt_x11_p.h"
 #endif
 
 #include <unistd.h>
@@ -67,8 +65,6 @@
 #ifndef QT_NO_FONTCONFIG
 #include <fontconfig/fontconfig.h>
 #endif
-
-#include <qmutex.h>
 
 #include <harfbuzz-shaper.h>
 
@@ -377,7 +373,5 @@ inline QFontEngineFT::Glyph *QFontEngineFT::QGlyphSet::getGlyph(glyph_t index, Q
 
 
 QT_END_NAMESPACE
-
-#endif // QT_NO_FREETYPE
 
 #endif // QFONTENGINE_FT_P_H

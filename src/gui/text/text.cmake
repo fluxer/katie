@@ -74,14 +74,6 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qstatictext.cpp
 )
 
-if(WITH_FREETYPE AND FREETYPE_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${FREETYPE_LIBRARIES}
-    )
-    include_directories(${FREETYPE_INCLUDE_DIRS})
-endif()
-
 if(WITH_FONTCONFIG AND FONTCONFIG_FOUND)
     set(GUI_HEADERS
         ${GUI_HEADERS}
