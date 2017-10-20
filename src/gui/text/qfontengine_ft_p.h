@@ -51,6 +51,7 @@
 // We mean it.
 //
 
+#include "qmutex.h"
 #include "qfontengine_p.h"
 
 #include <ft2build.h>
@@ -69,8 +70,6 @@
 #include <harfbuzz-shaper.h>
 
 QT_BEGIN_NAMESPACE
-
-class QFontEngineFTRawFont;
 
 /*
  * This struct represents one font file on disk (like Arial.ttf) and is shared between all the font engines
@@ -335,8 +334,6 @@ protected:
     bool embeddedbitmap;
 
 private:
-    friend class QFontEngineFTRawFont;
-
     int loadFlags(QGlyphSet *set, GlyphFormat format, int flags, bool &hsubpixel, int &vfactor) const;
 
     GlyphFormat defaultFormat;
