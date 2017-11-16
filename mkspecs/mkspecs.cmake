@@ -64,7 +64,8 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     katie_definition(-DQT_NO_DEBUG -DNDEBUG)
 endif()
 
-include(${KATIE_MKSPECS_DIR}/tests/tests.cmake)
+# TODO: check if data relocations should be disabled before any target additions and define
+# Q_NO_DATA_RELOCATION
 
 if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
