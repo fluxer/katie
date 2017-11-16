@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 
 import sys, os, re
 
@@ -143,7 +143,7 @@ incmap = {
         'QTouchEvent': 'qevent.h',
         'QDropEvent': 'qevent.h',
         'QMoveEvent': 'qevent.h',
-        'QStyleHintReturnMask', 'qstyleoption.h',
+        'QStyleHintReturnMask': 'qstyleoption.h',
         'QStyleOptionGroupBox': 'qstyleoption.h',
         'QStyleOptionComboBox': 'qstyleoption.h',
         'QStyleOptionSpinBox': 'qstyleoption.h',
