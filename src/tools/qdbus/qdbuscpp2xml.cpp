@@ -398,7 +398,8 @@ int main(int argc, char **argv)
         else {
             // run moc on this file
             QProcess proc;
-            proc.start(QLibraryInfo::location(QLibraryInfo::BinariesPath) + QLatin1String("/moc"), QStringList() << QFile::decodeName(argv[i]), QIODevice::ReadOnly | QIODevice::Text);
+            proc.start(QLibraryInfo::location(QLibraryInfo::BinariesPath) + QLatin1String("/moc" KATIE_TOOLS_SUFFIX),
+                QStringList() << QFile::decodeName(argv[i]), QIODevice::ReadOnly | QIODevice::Text);
 
             if (!proc.waitForStarted()) {
                 fprintf(stderr, PROGRAMNAME ": could not execute moc! Aborting.\n");
