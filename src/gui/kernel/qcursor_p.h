@@ -78,7 +78,7 @@ public:
     QBitmap  *bm, *bmm;
     QPixmap pixmap;
     short     hx, hy;
-#if defined (Q_WS_X11)
+#if defined(Q_WS_X11)
     XColor fg, bg;
     Cursor hcurs;
     Pixmap pm, pmm;
