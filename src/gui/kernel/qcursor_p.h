@@ -81,7 +81,7 @@ public:
 #if defined(Q_WS_X11)
     XColor fg, bg;
     Cursor hcurs;
-    Pixmap pm, pmm;
+    Pixmap pm;
 #endif
     static bool initialized;
     void update();

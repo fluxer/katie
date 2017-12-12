@@ -322,8 +322,8 @@ void QCursorData::update()
         fg.green = 0;
         fg.blue  = 0;
         pm  = XCreateBitmapFromData(dpy, rootwin, cur_blank_bits, 16, 16);
-        // when mask is None all source bits are displayed
-        hcurs = XCreatePixmapCursor(dpy, pm, XNone, &fg, &bg, 8, 8);
+        // reusing the pixmap as mask to create invisible cursor
+        hcurs = XCreatePixmapCursor(dpy, pm, pm, &fg, &bg, 8, 8);
         return;
         break;
     case Qt::SizeVerCursor:
