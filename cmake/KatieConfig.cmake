@@ -11,14 +11,13 @@
 #  KATIE_<COMPONENT>_LIBRARIES  - component libraries to link against e.g. QtCore
 #  KATIE_<TOOL>                 - path to tool e.g. moc
 #  KATIE_<DATA>_PATH            - path to different data type files e.g. translations
-#  KATIE_MKSPECS_DIR
+#  KATIE_MKSPECS_DIR            - directory to mkspecs
 #
 # As well as some that are unilkely to be needed outside the project:
 #
 #  KATIE_TOOLS_SUFFIX           - tools suffix used when the project was build
 #  KATIE_COMPONENTS             - components that were build
 #  KATIE_TOOLS                  - tools that were build
-#  KATIE_MKSPECS                - path to mkspecs which are relevant to the project only
 
 # avoiding use of return()
 if(NOT KATIE_FOUND)
@@ -59,7 +58,6 @@ if(NOT KATIE_FOUND)
     set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
     set(KATIE_TOOLS @KATIE_TOOLS@)
     set(KATIE_MKSPECS_DIR "${KATIE_CMAKE_DIR}/mkspecs")
-    set(KATIE_MKSPECS "${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 
     foreach(component ${KATIE_COMPONENTS})
         string(TOUPPER ${component} uppercomp)
@@ -80,7 +78,7 @@ if(NOT KATIE_FOUND)
     include("${KATIE_CMAKE_DIR}/KatieMacros.cmake")
 
     # Platform specific stuff and some tests
-    include(${KATIE_MKSPECS})
+    include("${KATIE_MKSPECS_DIR}/mkspecs.cmake")
 
     if(NOT "${KATIE_FIND_QUIETLY}")
         message(STATUS "Found Katie version: ${KATIE_VERSION}")
@@ -88,7 +86,7 @@ if(NOT KATIE_FOUND)
 
     # Qt4 compatibility by default, covers most cases
     if(NOT KATIE_COMPAT EQUAL FALSE AND NOT KATIE_COMPAT EQUAL OFF AND NOT KATIE_COMPAT_IS_SET)
-        # precaution against an attempt to define imported targets more than once which will fail
+        # precaution against an attempt to redefine imported targets which will fail
         set(KATIE_COMPAT_IS_SET CACHE BOOL TRUE "")
         message(STATUS "Setting up Qt4 compatibility via Katie")
 
@@ -105,7 +103,7 @@ if(NOT KATIE_FOUND)
         set(QT4_INCLUDE_DIR ${KATIE_INCLUDES})
         set(QT_LIBRARIES ${KATIE_LIBRARIES})
         set(QT_USE_FILE "${KATIE_CMAKE_DIR}/Qt4UseFile.cmake")
-        set(QT_MKSPECS_DIR ${KATIE_MKSPECS_DIR})
+        set(QT_MKSPECS_DIR "${KATIE_MKSPECS_DIR}")
 
         # those are exceptions because they have "q" prefix which the macros from Qt4Macros do not expect
         set(QT_DBUSXML2CPP_EXECUTABLE "${KATIE_BINARIES_PATH}/qdbusxml2cpp${KATIE_TOOLS_SUFFIX}${CMAKE_EXECUTABLE_SUFFIX}")
