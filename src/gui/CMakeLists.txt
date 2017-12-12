@@ -353,6 +353,7 @@ set(GUI_PUBLIC_HEADERS
     QWheelEvent
     QTouchEvent
     QDragEnterEvent
+    QDragMoveEvent
     QPaintEvent
     QHelpEvent
     QDropEvent

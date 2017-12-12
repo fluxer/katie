@@ -201,6 +201,7 @@ classlist = {
     "QDoubleValidator",
     "QDrag",
     "QDragEnterEvent",
+    "QDragMoveEvent",
     "QDragResponseEvent",
     "QDropEvent",
     "QDynamicPropertyChangeEvent",
