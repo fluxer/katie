@@ -235,6 +235,7 @@ set(CORE_PUBLIC_HEADERS
     QScopedArrayPointer
     # obsolete
     QFlags
+    Qt
     # both in core and xml
     QXmlStreamAttribute
     QXmlStreamAttributes

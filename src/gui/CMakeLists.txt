@@ -336,6 +336,7 @@ set(GUI_PUBLIC_HEADERS
     # mixed
     QUndoCommand
     QPolygonF
+    QTextLine
     QTextBlock
     QTextBlockFormat
     QListWidgetItem
@@ -352,7 +353,9 @@ set(GUI_PUBLIC_HEADERS
     QKeyEvent
     QWheelEvent
     QTouchEvent
+    QHoverEvent
     QDragEnterEvent
+    QDragLeaveEvent
     QDragMoveEvent
     QPaintEvent
     QHelpEvent
@@ -370,6 +373,7 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsTextItem
     QGraphicsObject
     QStyleOptionGraphicsItem
+    QStyleOptionButton
     QStyleOptionFrame
     QStyleOptionFrameV2
     QStyleOptionFrameV3
