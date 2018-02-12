@@ -10,5 +10,5 @@ cd "$cwd/../minsize"
 
 export CFLAGS="$CFLAGS -flto" CXXFLAGS="$CXXFLAGS -flto"
 
-cmake ../ -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_INSTALL_PREFIX=/usr $@
-make -j$(nproc)
+cmake ../ -DCMAKE_BUILD_TYPE=MinSizeRel $@
+make -j$(nproc || echo 1)

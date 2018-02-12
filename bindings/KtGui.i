@@ -3,7 +3,7 @@
 %include <KtCore.i>
 
 %{
-#include "katie/QtGui/QtGui"
+#include "QtGui/QtGui"
 
 QT_USE_NAMESPACE
 %}

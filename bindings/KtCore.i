@@ -1,7 +1,7 @@
 %module KtCore
 
 %{
-#include "katie/QtCore/QtCore"
+#include "QtCore/QtCore"
 
 QT_USE_NAMESPACE
 %}
