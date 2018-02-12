@@ -53,100 +53,7 @@
 #include <stdio.h>
 #include <errno.h>
 
-#if defined(Q_OS_MAC)
-# include <qcore_mac_p.h>
-#endif
-
-#if defined(Q_OS_MAC)
-# include <CoreFoundation/CFBundle.h>
-#endif
-
 QT_BEGIN_NAMESPACE
-
-#if defined(Q_OS_MAC)
-static inline bool _q_isMacHidden(const char *nativePath)
-{
-    OSErr err;
-
-    FSRef fsRef;
-    err = FSPathMakeRefWithOptions(reinterpret_cast<const UInt8 *>(nativePath),
-            kFSPathMakeRefDoNotFollowLeafSymlink, &fsRef, 0);
-    if (err != noErr)
-        return false;
-
-    FSCatalogInfo catInfo;
-    err = FSGetCatalogInfo(&fsRef, kFSCatInfoFinderInfo, &catInfo, NULL, NULL, NULL);
-    if (err != noErr)
-        return false;
-
-    FileInfo * const fileInfo = reinterpret_cast<FileInfo*>(&catInfo.finderInfo);
-    return (fileInfo->finderFlags & kIsInvisible);
-}
-
-static bool isPackage(const QFileSystemMetaData &data, const QFileSystemEntry &entry)
-{
-    if (!data.isDirectory())
-        return false;
-
-    QFileInfo info(entry.filePath());
-    QString suffix = info.suffix();
-
-    if (suffix.length() > 0) {
-        // First step: is the extension known ?
-        CFStringRef extensionRef = QCFString::toCFStringRef(suffix);
-        CFStringRef uniformTypeIdentifier = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extensionRef, NULL);
-        if (UTTypeConformsTo(uniformTypeIdentifier, kUTTypeBundle))
-            return true;
-
-        // Second step: check if an application knows the package type
-        CFStringRef path = QCFString::toCFStringRef(entry.filePath());
-        QCFType<CFURLRef> url = CFURLCreateWithFileSystemPath(0, path, kCFURLPOSIXPathStyle, true);
-
-        UInt32 type, creator;
-        // Well created packages have the PkgInfo file
-        if (CFBundleGetPackageInfoInDirectory(url, &type, &creator))
-            return true;
-
-        // Find if an application other than Finder claims to know how to handle the package
-        QCFType<CFURLRef> application;
-        LSGetApplicationForURL(url,
-                               kLSRolesEditor|kLSRolesViewer|kLSRolesViewer,
-                               NULL,
-                               &application);
-
-        if (application) {
-            QCFType<CFBundleRef> bundle = CFBundleCreate(kCFAllocatorDefault, application);
-            CFStringRef identifier = CFBundleGetIdentifier(bundle);
-            QString applicationId = QCFString::toQString(identifier);
-            if (applicationId != QLatin1String("com.apple.finder"))
-                return true;
-        }
-    }
-
-    // Third step: check if the directory has the package bit set
-    FSRef packageRef;
-    FSPathMakeRef((UInt8 *)entry.nativeFilePath().constData(), &packageRef, NULL);
-
-    FSCatalogInfo catalogInfo;
-    FSGetCatalogInfo(&packageRef,
-                     kFSCatInfoFinderInfo,
-                     &catalogInfo,
-                     NULL,
-                     NULL,
-                     NULL);
-
-    FolderInfo *folderInfo = reinterpret_cast<FolderInfo *>(catalogInfo.finderInfo);
-    return folderInfo->finderFlags & kHasBundle;
-}
-
-#else
-static inline bool _q_isMacHidden(const char *nativePath)
-{
-    Q_UNUSED(nativePath);
-    // no-op
-    return false;
-}
-#endif
 
 bool QFileSystemEngine::isCaseSensitive()
 {
@@ -426,8 +333,7 @@ bool QFileSystemEngine::fillMetaData(const QFileSystemEntry &entry, QFileSystemM
     if (what & QFileSystemMetaData::HiddenAttribute
             && !data.isHidden()) {
         QString fileName = entry.fileName();
-        if ((fileName.size() > 0 && fileName.at(0) == QLatin1Char('.'))
-                || (entryExists && _q_isMacHidden(nativeFilePath)))
+        if (fileName.size() > 0 && fileName.at(0) == QLatin1Char('.'))
             data.entryFlags |= QFileSystemMetaData::HiddenAttribute;
         data.knownFlagsMask |= QFileSystemMetaData::HiddenAttribute;
     }

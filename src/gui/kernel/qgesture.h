@@ -128,7 +128,6 @@ public:
     void setAcceleration(qreal value);
 
     friend class QPanGestureRecognizer;
-    friend class QWinNativePanGestureRecognizer;
 };
 
 class QPinchGesturePrivate;

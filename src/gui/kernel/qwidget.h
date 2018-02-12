@@ -660,7 +660,6 @@ private:
     friend struct QWidgetExceptionCleaner;
 #ifndef QT_NO_GESTURES
     friend class QGestureManager;
-    friend class QWinNativePanGestureRecognizer;
 #endif // QT_NO_GESTURES
     friend class QWidgetEffectSourcePrivate;
 
