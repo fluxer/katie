@@ -68,6 +68,7 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
 
+include(UseSWIG)
 include(CheckIncludeFile)
 include(CheckTypeSize)
 include(FeatureSummary)
@@ -112,6 +113,7 @@ set(KATIE_MAN_FULL "${CMAKE_INSTALL_FULL_MANDIR}" CACHE PATH "Manual pages path 
 set(KATIE_APPLICATIONS_FULL "${KATIE_DATA_FULL}/applications" CACHE PATH "Desktop applications register path (UNIX)")
 set(KATIE_PIXMAPS_FULL "${KATIE_DATA_FULL}/pixmaps" CACHE PATH "Desktop applications icon path (UNIX)")
 set(KATIE_PKGCONFIG_FULL "${KATIE_DATA_FULL}/pkgconfig" CACHE PATH "Desktop applications icon path (UNIX)")
+set(KATIE_PYTHON_FULL "${KATIE_LIBRARIES_FULL}/python" CACHE PATH "Python packages path")
 set(KATIE_TOOLS_SUFFIX "" CACHE STRING "Tools (moc, uic, rcc, etc.) suffix")
 katie_setup_paths()
 
@@ -180,6 +182,9 @@ add_feature_info(x11 WITH_X11 "an open source something")
 # optional features
 option(KATIE_UTILS "Build maintainance utilities" OFF)
 add_feature_info(utils KATIE_UTILS "developers build option")
+
+option(KATIE_BINDINGS "Build experimental Pyhton bindings" OFF)
+add_feature_info(bindings KATIE_BINDINGS "experimental build option")
 
 option(KATIE_ALLINONE "Build targets from single source file" OFF)
 add_feature_info(allinone KATIE_ALLINONE "experimental build option")
@@ -454,6 +459,24 @@ set_package_properties(MySQL PROPERTIES
     TYPE OPTIONAL
 )
 
+if(KATIE_BINDINGS)
+    find_package(SWIG)
+    set_package_properties(SWIG PROPERTIES
+        PURPOSE "Python bindings"
+        DESCRIPTION "Simplified Wrapper and Interface Generator"
+        URL "http://www.swig.org/"
+        TYPE REQUIRED
+    )
+
+    find_package(PythonLibs)
+    set_package_properties(PythonLibs PROPERTIES
+        PURPOSE "Python bindings"
+        DESCRIPTION "Programming language that lets you work quickly"
+        URL "https://www.python.org/"
+        TYPE REQUIRED
+    )
+endif()
+
 if(PYTHONINTERP_FOUND)
     execute_process(
         COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_SOURCE_DIR}/scripts/genmap.py
@@ -620,6 +643,11 @@ endif()
 # utilities for maintainance
 if(KATIE_UTILS)
     add_subdirectory(util)
+endif()
+
+# Python bindings
+if(KATIE_BINDINGS)
+    add_subdirectory(bindings)
 endif()
 
 # the macro calls bellow are generted via the incfsck script

@@ -241,8 +241,8 @@ endmacro()
 function(KATIE_SETUP_PATHS)
     set(instpaths
         _PREFIX _HEADERS _LIBRARIES _BINARIES _PLUGINS _IMPORTS _DATA
-        _TRANSLATIONS _SETTINGS
-        _CMAKE _LDCONF _PROFILE _MAN _APPLICATIONS _PIXMAPS _PKGCONFIG
+        _TRANSLATIONS _SETTINGS _CMAKE _LDCONF _PROFILE _MAN
+        _APPLICATIONS _PIXMAPS _PKGCONFIG _PYTHON
     )
     foreach(instpath ${instpaths})
         string(REGEX REPLACE ".*${CMAKE_INSTALL_PREFIX}/" "" modpath "${KATIE${instpath}_FULL}")
