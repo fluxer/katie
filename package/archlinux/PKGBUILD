@@ -2,7 +2,7 @@
 # Maintainer: Ivailo Monev <xakepa10@gmail.com>
 
 pkgname=katie-git
-pkgver=4.9.0.58ebac68
+pkgver=4.9.0.9d837030
 pkgrel=1
 pkgdesc='C++ toolkit derived from the Qt 4.8 framework'
 arch=('i686' 'x86_64')
@@ -14,7 +14,8 @@ depends=('openssl' 'zlib' 'cups' 'libice' 'icu' 'libsm' 'pcre' 'libxcursor'
 makedepends=('cmake' 'git' 'python' 'postgresql' 'mariadb' 'unixodbc' 'unifdef')
 optdepends=('postgresql-libs: PostgreSQL driver'
         'libmariadbclient: MariaDB driver'
-        'unixodbc: ODBC driver')
+        'unixodbc: ODBC driver'
+        'python: Python bindings')
 source=("git+https://github.com/fluxer/katie")
 sha1sums=('SKIP')
 conflicts=('katie')
@@ -38,7 +39,8 @@ build() {
         -DKATIE_LDCONF_FULL=/etc/ld.so.conf.d \
         -DKATIE_PROFILE_FULL=/etc/profile.d \
         -DKATIE_TOOLS_SUFFIX="-katie" \
-        -DKATIE_ALLINONE=ON
+        -DKATIE_ALLINONE=ON \
+        -DKATIE_BINDINGS=ON
     make
 }
 
