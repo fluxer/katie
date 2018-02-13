@@ -9,11 +9,18 @@
 %include "gui/qwidget.i"
 
 %{
-#include "QtGui/QtGui"
+#include "QtGui/QApplication"
+#include "QtGui/QPaintDevice"
+#include "QtGui/QMainWindow"
+#include "QtGui/QMatrix"
+#include "QtGui/QTransform"
+#include "QtGui/QTextFormat"
+#include "QtGui/QTextLength"
 
 QT_USE_NAMESPACE
 %}
 
+// temporary implementations for testing purposes
 class QApplication : public QCoreApplication {
 public:
     QApplication(int argc, char *argv[]);
@@ -33,4 +40,29 @@ class QMainWindow : public QWidget {
 public:
     QMainWindow(QWidget *parent = Q_NULLPTR, Qt::WindowFlags flags = 0);
     ~QMainWindow();
+};
+
+// stub implementations for QVariant testing
+class QMatrix {
+public:
+    QMatrix();
+    ~QMatrix();
+};
+
+class QTransform {
+public:
+    QTransform();
+    ~QTransform();
+};
+
+class QTextFormat {
+public:
+    QTextFormat();
+    ~QTextFormat();
+};
+
+class QTextLength {
+public:
+    QTextLength();
+    ~QTextLength();
 };

@@ -49,8 +49,6 @@
 #include "QtCore/QLine"
 #include "QtCore/QLineF"
 #include "QtCore/QLocale"
-#include "QtGui/QMatrix"
-#include "QtGui/QTransform"
 #include "QtCore/QTime"
 #include "QtCore/QPoint"
 #include "QtCore/QPointF"
@@ -58,8 +56,6 @@
 #include "QtCore/QSizeF"
 #include "QtCore/QRect"
 #include "QtCore/QRectF"
-#include "QtGui/QTextFormat"
-#include "QtGui/QTextLength"
 #include "QtCore/QUrl"
 
 QT_USE_NAMESPACE
@@ -118,18 +114,6 @@ public:
     ~QLocale();
 };
 
-class QMatrix {
-public:
-    QMatrix();
-    ~QMatrix();
-};
-
-class QTransform {
-public:
-    QTransform();
-    ~QTransform();
-};
-
 class QTime {
 public:
     QTime();
@@ -170,18 +154,6 @@ class QRectF {
 public:
     QRectF();
     ~QRectF();
-};
-
-class QTextFormat {
-public:
-    QTextFormat();
-    ~QTextFormat();
-};
-
-class QTextLength {
-public:
-    QTextLength();
-    ~QTextLength();
 };
 
 class QUrl {
