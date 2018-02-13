@@ -706,7 +706,7 @@ public:
     inline bool isMark() const { return QChar(*this).isMark(); }
     inline bool isLetter() const { return QChar(*this).isLetter(); }
     inline bool isNumber() const { return QChar(*this).isNumber(); }
-    inline bool isLetterOrNumber() { return QChar(*this).isLetterOrNumber(); }
+    inline bool isLetterOrNumber() const { return QChar(*this).isLetterOrNumber(); }
     inline bool isDigit() const { return QChar(*this).isDigit(); }
     inline bool isLower() const { return QChar(*this).isLower(); }
     inline bool isUpper() const { return QChar(*this).isUpper(); }

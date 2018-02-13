@@ -1,11 +1,32 @@
 %module KtCore
 
+%include "core/qchar.i"
+%include "core/qlist.i"
+%include "core/qregexp.i"
+%include "core/qset.i"
+%include "core/qstring.i"
+%include "core/qstringlist.i"
+%include "core/qvector.i"
+
+%template(QListInt) QList<int>;
+%template(QListQChar) QList<QChar>;
+%template(QListQString) QList<QString>;
+
+%template(QSetInt) QSet<int>;
+%template(QSetQChar) QSet<QChar>;
+%template(QSetQString) QSet<QString>;
+
+%template(QVectorInt) QVector<int>;
+%template(QVectorQChar) QVector<QChar>;
+%template(QVectorQString) QVector<QString>;
+
 %{
-#include "QtCore/QtCore"
+#include "QtCore/QObject"
+#include "QtCore/QCoreApplication"
+#include "QtCore/QFile"
 
 QT_USE_NAMESPACE
 %}
-
 
 class QObject {
 public:
@@ -20,45 +41,6 @@ public:
     ~QCoreApplication();
 
     static int exec();
-};
-
-class QChar {
-public:
-    QChar(const char c);
-    QChar(const uchar c);
-    QChar(const uchar c, uchar r);
-    QChar(const ushort rc);
-    QChar(const short rc);
-    QChar(const uint rc);
-    QChar(const int rc);
-
-    char toAscii() const;
-    char toLatin1() const;
-    ushort unicode() const;
-
-    bool isNull() const;
-    bool isPrint() const;
-    bool isPunct() const;
-    bool isSpace() const;
-    bool isMark() const;
-    bool isLetter() const;
-    bool isNumber() const;
-    bool isLetterOrNumber() const;
-    bool isDigit() const;
-    bool isSymbol() const;
-    bool isLower() const;
-    bool isUpper() const;
-    bool isTitleCase() const;
-};
-
-class QString {
-public:
-    QString(const char *ch);
-    QString(const QChar *unicode, int size = -1);
-    QString(const QChar c);
-    QString(const int size, const QChar c);
-    QString(const QString &);
-    ~QString();
 };
 
 class QFile {
