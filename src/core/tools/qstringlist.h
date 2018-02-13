@@ -51,9 +51,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QRegExp;
-
 typedef QListIterator<QString> QStringListIterator;
 typedef QMutableListIterator<QString> QMutableStringListIterator;
 

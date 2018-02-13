@@ -1803,7 +1803,7 @@ void QMdiSubWindowPrivate::removeButtonsFromMenuBar()
     topLevelWindow->removeEventFilter(q);
     if (baseWidget && !drawTitleBarWhenMaximized())
         topLevelWindow->setWindowModified(false);
-    originalTitle = QString::null;
+    originalTitle = QString();
 }
 
 #endif // QT_NO_MENUBAR
@@ -2658,7 +2658,7 @@ bool QMdiSubWindow::eventFilter(QObject *object, QEvent *event)
 #ifndef QT_NO_MENUBAR
         } else if (maximizedButtonsWidget() && d->controlContainer->menuBar() && d->controlContainer->menuBar()
                    ->cornerWidget(Qt::TopRightCorner) == maximizedButtonsWidget()) {
-            d->originalTitle = QString::null;
+            d->originalTitle = QString();
             if (d->baseWidget && d->baseWidget->windowTitle() == windowTitle())
                 d->updateWindowTitle(true);
             else

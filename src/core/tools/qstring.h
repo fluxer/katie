@@ -90,6 +90,7 @@ public:
     inline int count() const { return d->size; }
     inline int length() const;
     inline bool isEmpty() const;
+    inline bool isNull() const;
     void resize(int size);
 
     QString &fill(QChar c, int size = -1);
@@ -475,14 +476,6 @@ public:
     inline QStdWString toStdWString() const;
 #endif // QT_NO_STL_WCHAR
 
-    // compatibility
-    struct Null { };
-    static const Null null;
-    inline QString(const Null &): d(&shared_null) { d->ref.ref(); }
-    inline QString &operator=(const Null &) { *this = QString(); return *this; }
-    inline bool isNull() const { return d == &shared_null; }
-
-
     bool isSimpleText() const;
     bool isRightToLeft() const;
 
@@ -594,6 +587,8 @@ inline const QChar QString::operator[](uint i) const
 { Q_ASSERT(i < uint(size())); return d->data[i]; }
 inline bool QString::isEmpty() const
 { return d->size == 0; }
+inline bool QString::isNull() const
+{ return d == &shared_null; }
 inline const QChar *QString::unicode() const
 { return reinterpret_cast<const QChar*>(d->data); }
 inline const QChar *QString::data() const
@@ -769,14 +764,6 @@ inline QString::const_iterator QString::end() const
 { return reinterpret_cast<const QChar*>(d->data + d->size); }
 inline QString::const_iterator QString::constEnd() const
 { return reinterpret_cast<const QChar*>(d->data + d->size); }
-
-
-inline bool operator==(QString::Null, QString::Null) { return true; }
-inline bool operator==(QString::Null, const QString &s) { return s.isNull(); }
-inline bool operator==(const QString &s, QString::Null) { return s.isNull(); }
-inline bool operator!=(QString::Null, QString::Null) { return false; }
-inline bool operator!=(QString::Null, const QString &s) { return !s.isNull(); }
-inline bool operator!=(const QString &s, QString::Null) { return !s.isNull(); }
 
 #ifndef QT_NO_CAST_FROM_ASCII
 inline bool qStringComparisonHelper(const QString &s1, const char *s2)

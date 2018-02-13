@@ -129,7 +129,7 @@ QDesignerMetaEnumInterface::~QDesignerMetaEnumInterface()
 /*!
     \fn QString QDesignerMetaEnumInterface::valueToKey(int value) const
 
-    Returns the string that is used as the name of the given enumeration \a value, or QString::null if value is not defined.
+    Returns the string that is used as the name of the given enumeration \a value, or null QString if value is not defined.
 */
 
 /*!

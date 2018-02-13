@@ -296,8 +296,6 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
         hashHaystack -= (a) << sl_minus_1; \
     hashHaystack <<= 1
 
-const QString::Null QString::null = { };
-
 /*!
   \macro QT_NO_CAST_FROM_ASCII
   \relates QString
