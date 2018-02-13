@@ -3,9 +3,6 @@
 QT_USE_NAMESPACE
 %}
 
-#undef Q_REQUIRED_RESULT
-#define Q_REQUIRED_RESULT
-
 class QString
 {
 public:

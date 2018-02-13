@@ -3,8 +3,6 @@
 QT_USE_NAMESPACE
 %}
 
-#define Q_NO_USING_KEYWORD
-
 typedef QListIterator<QString> QStringListIterator;
 typedef QMutableListIterator<QString> QMutableStringListIterator;
 

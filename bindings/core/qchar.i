@@ -3,9 +3,6 @@
 QT_USE_NAMESPACE
 %}
 
-#undef QT_FASTCALL
-#define QT_FASTCALL
-
 class QLatin1Char
 {
 public:
