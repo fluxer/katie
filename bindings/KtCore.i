@@ -4,6 +4,7 @@
 
 %include "core/qbytearray.i"
 %include "core/qchar.i"
+%include "core/qcoreapplication.i"
 %include "core/qeasingcurve.i"
 %include "core/qjsonarray.i"
 %include "core/qjsondocument.i"
@@ -40,21 +41,31 @@
 // %template(QVariantHash) QHash<QVariant>;
 
 %{
-#include "QtCore/QCoreApplication"
 #include "QtCore/QFile"
+#include "QtCore/QBitArray"
+#include "QtCore/QDataStream"
+#include "QtCore/QDate"
+#include "QtCore/QDateTime"
+#include "QtCore/QLine"
+#include "QtCore/QLineF"
+#include "QtCore/QLocale"
+#include "QtGui/QMatrix"
+#include "QtGui/QTransform"
+#include "QtCore/QTime"
+#include "QtCore/QPoint"
+#include "QtCore/QPointF"
+#include "QtCore/QSize"
+#include "QtCore/QSizeF"
+#include "QtCore/QRect"
+#include "QtCore/QRectF"
+#include "QtGui/QTextFormat"
+#include "QtGui/QTextLength"
+#include "QtCore/QUrl"
 
 QT_USE_NAMESPACE
 %}
 
 // temporary implementations for testing purposes
-class QCoreApplication : public QObject {
-public:
-    QCoreApplication(int argc, char *argv[]);
-    ~QCoreApplication();
-
-    static int exec();
-};
-
 class QFile {
 public:
     QFile(QString filename);
@@ -71,21 +82,110 @@ public:
     ~QBitArray();
 };
 
-class QDataStream;
-class QDate;
-class QDateTime;
-class QLine;
-class QLineF;
-class QLocale;
-class QMatrix;
-class QTransform;
-class QTime;
-class QPoint;
-class QPointF;
-class QSize;
-class QSizeF;
-class QRect;
-class QRectF;
-class QTextFormat;
-class QTextLength;
-class QUrl;
+class QDataStream {
+public:
+    QDataStream();
+    ~QDataStream();
+};
+
+class QDate {
+public:
+    QDate();
+    ~QDate();
+};
+
+class QDateTime {
+public:
+    QDateTime();
+    ~QDateTime();
+};
+
+class QLine {
+public:
+    QLine();
+    ~QLine();
+};
+
+class QLineF {
+public:
+    QLineF();
+    ~QLineF();
+};
+
+class QLocale {
+public:
+    QLocale();
+    ~QLocale();
+};
+
+class QMatrix {
+public:
+    QMatrix();
+    ~QMatrix();
+};
+
+class QTransform {
+public:
+    QTransform();
+    ~QTransform();
+};
+
+class QTime {
+public:
+    QTime();
+    ~QTime();
+};
+
+class QPoint {
+public:
+    QPoint();
+    ~QPoint();
+};
+
+class QPointF {
+public:
+    QPointF();
+    ~QPointF();
+};
+
+class QSize {
+public:
+    QSize();
+    ~QSize();
+};
+
+class QSizeF {
+public:
+    QSizeF();
+    ~QSizeF();
+};
+
+class QRect {
+public:
+    QRect();
+    ~QRect();
+};
+
+class QRectF {
+public:
+    QRectF();
+    ~QRectF();
+};
+
+class QTextFormat {
+public:
+    QTextFormat();
+    ~QTextFormat();
+};
+
+class QTextLength {
+public:
+    QTextLength();
+    ~QTextLength();
+};
+
+class QUrl {
+public:
+    QUrl();
+    ~QUrl();
+};

@@ -31,12 +31,6 @@ class QJsonDocument
 {
  public:
 
-#ifdef Q_LITTLE_ENDIAN
-   static const uint BinaryFormatTag = ('q') | ('b' << 8) | ('j' << 16) | ('s' << 24);
-#else
-   static const uint BinaryFormatTag = ('q' << 24) | ('b' << 16) | ('j' << 8) | ('s');
-#endif
-
    QJsonDocument();
    QJsonDocument(const QJsonObject &object);
    QJsonDocument(const QJsonArray &array);

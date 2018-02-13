@@ -2,3 +2,4 @@
  - QVariant is almost not working because it's template and function magic
  - QList, QSet and QVector template for types that are not implemented yet
  - properties, slots, signals, etc.
+ - QCoreApplication/QApplication with argc/argv crash?

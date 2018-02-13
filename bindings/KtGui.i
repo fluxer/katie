@@ -1,7 +1,7 @@
 %module KtGui
 
 %include "tricks.i"
-// temporary for QCoreApplication reference
+// for reference to Core base classes
 %include "KtCore.i"
 
 %include "gui/qfontinfo.i"
