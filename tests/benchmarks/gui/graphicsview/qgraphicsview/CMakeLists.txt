@@ -7,7 +7,3 @@ katie_test(tst_bench_qgraphicsview
     ${CMAKE_CURRENT_SOURCE_DIR}/chiptester/images.qrc
     ${CMAKE_CURRENT_SOURCE_DIR}/qgraphicsview.qrc
 )
-
-if(WITH_OPENGL AND OPENGL_FOUND)
-    target_link_libraries(tst_bench_qgraphicsview KtOpenGL)
-endif()

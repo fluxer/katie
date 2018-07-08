@@ -45,12 +45,8 @@
 #include <QFile>
 
 #include <qtest.h>
-#ifdef HAVE_BOOST
-#include <boost/regex.hpp>
-#endif
 
 #include <QtScript>
-#include "pcre/pcre.h"
 
 #define ZLIB_VERSION "1.2.3.4"
 
@@ -86,12 +82,6 @@ private slots:
     void rangeReplaceJSC();
     void matchReplaceJSC();
 
-#ifdef HAVE_BOOST
-    void simpleFindBoost();
-    void rangeReplaceBoost();
-    void matchReplaceBoost();
-#endif
-
 /* those apply an (incorrect) regexp on entire source
    (this main.cpp). JSC appears to handle this
    (ab)use case best. QRegExp performs extremly bad.
@@ -102,10 +92,6 @@ private slots:
     void horribleWrongReplace2();
     void horribleWrongReplaceJSC();
     void horribleReplaceJSC();
-#ifdef HAVE_BOOST
-    void horribleWrongReplaceBoost();
-    void horribleReplaceBoost();
-#endif
 private:
     QString str1;
     QString str2;
@@ -458,19 +444,15 @@ void tst_qregexp::horribleReplace2()
 
 void tst_qregexp::simpleFindJSC()
 {
-    int numr;
-    const char * errmsg="  ";
-    QString rxs("happy");
-    JSRegExp *rx = jsRegExpCompile(rxs.utf16(), rxs.length(), JSRegExpDoNotIgnoreCase, JSRegExpSingleLine, 0, &errmsg);
-    QVERIFY(rx != 0);
-    QString s(str1);
-    int offsetVector[3];
+    QScriptValue r;
+    QScriptEngine engine;
+    engine.globalObject().setProperty("happy", str1);
+    QScriptValue findFunc = engine.evaluate("(function() { return s.find('pp')  } )");
+    QVERIFY(findFunc.isFunction());
     QBENCHMARK{
-        numr = jsRegExpExecute(rx, s.utf16(), s.length(), 0,  offsetVector, 3);
+        r = findFunc.call(QScriptValue());
     }
-    jsRegExpFree(rx);
-    QCOMPARE(numr, 1);
-    QCOMPARE(offsetVector[0], 11);
+    QCOMPARE(r.toInt32(), 1);
 }
 
 void tst_qregexp::rangeReplaceJSC()
@@ -525,69 +507,6 @@ void tst_qregexp::horribleReplaceJSC()
     }
     QCOMPARE(r.toString(), QString("1.2.3"));
 }
-
-
-#ifdef HAVE_BOOST
-void tst_qregexp::simpleFindBoost(){
-    int roff;
-    boost::regex rx ("happy", boost::regex_constants::perl);
-    std::string s = str1.toStdString();
-    std::string::const_iterator start, end;
-    start = s.begin();
-    end = s.end();
-    boost::match_flag_type flags = boost::match_default;
-    QBENCHMARK{
-        boost::match_results<std::string::const_iterator> what;
-        regex_search(start, end, what, rx, flags);
-        roff = (what[0].first)-start;
-    }
-    QCOMPARE(roff, 11);
-}
-
-void tst_qregexp::rangeReplaceBoost()
-{
-    boost::regex pattern ("[a-f]", boost::regex_constants::perl);
-    std::string s = str1.toStdString();
-    std::string r;
-    QBENCHMARK{
-        r = boost::regex_replace (s, pattern, "-");
-    }
-    QCOMPARE(r, std::string("W- -r- -ll h-ppy monk-ys"));
-}
-
-void tst_qregexp::matchReplaceBoost()
-{
-    boost::regex pattern ("[^a-f]*([a-f]+)[^a-f]*",boost::regex_constants::perl);
-    std::string s = str1.toStdString();
-    std::string r;
-    QBENCHMARK{
-        r = boost::regex_replace (s, pattern, "$1");
-    }
-    QCOMPARE(r, std::string("eaeaae"));
-}
-
-void tst_qregexp::horribleWrongReplaceBoost()
-{
-    boost::regex pattern (".*#""define ZLIB_VERSION \"([0-9]+)\\.([0-9]+)\\.([0-9]+)\".*", boost::regex_constants::perl);
-    std::string s = str2.toStdString();
-    std::string r;
-    QBENCHMARK{
-        r = boost::regex_replace (s, pattern, "$1.$2.$3");
-    }
-    QCOMPARE(r, s);
-}
-
-void tst_qregexp::horribleReplaceBoost()
-{
-    boost::regex pattern (".*#""define ZLIB_VERSION \"([0-9]+)\\.([0-9]+)\\.([0-9]+).*", boost::regex_constants::perl);
-    std::string s = str2.toStdString();
-    std::string r;
-    QBENCHMARK{
-        r = boost::regex_replace (s, pattern, "$1.$2.$3");
-    }
-    QCOMPARE(r, std::string("1.2.3"));
-}
-#endif //HAVE_BOOST
 
 QTEST_MAIN(tst_qregexp)
 

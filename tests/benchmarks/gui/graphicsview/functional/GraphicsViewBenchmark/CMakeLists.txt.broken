@@ -63,8 +63,5 @@ katie_test(tst_GraphicsViewBenchmark
 )
 
 target_link_libraries(tst_GraphicsViewBenchmark KtSvg)
-if(WITH_OPENGL AND OPENGL_FOUND)
-    target_link_libraries(tst_GraphicsViewBenchmark KtOpenGL)
-endif()
 target_include_directories(tst_GraphicsViewBenchmark PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/widgets)
 
