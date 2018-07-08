@@ -42,9 +42,9 @@
 #define LOCALEWIDGET_H
 
 #include <QWidget>
+#include <QTableView>
 
 class LocaleModel;
-class QTableView;
 
 class LocaleWidget : public QWidget
 {
