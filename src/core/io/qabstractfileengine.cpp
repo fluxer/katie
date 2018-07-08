@@ -757,17 +757,14 @@ bool QAbstractFileEngine::atEnd() const
     MapExtensionOption. If the engine does not support this extension, 0 is
     returned.
 
-    \a flags is currently not used, but could be used in the future.
-
     \sa unmap(), supportsExtension()
  */
 
-uchar *QAbstractFileEngine::map(qint64 offset, qint64 size, QFile::MemoryMapFlags flags)
+uchar *QAbstractFileEngine::map(qint64 offset, qint64 size)
 {
     MapExtensionOption option;
     option.offset = offset;
     option.size = size;
-    option.flags = flags;
     MapExtensionReturn r;
     if (!extension(MapExtension, &option, &r))
         return 0;

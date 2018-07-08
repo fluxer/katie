@@ -1096,7 +1096,7 @@ class QResourceFileEnginePrivate : public QAbstractFileEnginePrivate
 protected:
     Q_DECLARE_PUBLIC(QResourceFileEngine)
 private:
-    uchar *map(qint64 offset, qint64 size, QFile::MemoryMapFlags flags);
+    uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
     qint64 offset;
     QResource resource;
@@ -1363,7 +1363,7 @@ bool QResourceFileEngine::extension(Extension extension, const ExtensionOption *
     if (extension == MapExtension) {
         const MapExtensionOption *options = (MapExtensionOption*)(option);
         MapExtensionReturn *returnValue = static_cast<MapExtensionReturn*>(output);
-        returnValue->address = d->map(options->offset, options->size, options->flags);
+        returnValue->address = d->map(options->offset, options->size);
         return (returnValue->address != 0);
     }
     if (extension == UnMapExtension) {
@@ -1378,10 +1378,9 @@ bool QResourceFileEngine::supportsExtension(Extension extension) const
     return (extension == UnMapExtension || extension == MapExtension);
 }
 
-uchar *QResourceFileEnginePrivate::map(qint64 offset, qint64 size, QFile::MemoryMapFlags flags)
+uchar *QResourceFileEnginePrivate::map(qint64 offset, qint64 size)
 {
     Q_Q(QResourceFileEngine);
-    Q_UNUSED(flags);
     if (offset < 0 || size <= 0 || !resource.isValid() || offset + size > resource.size()) {
         q->setError(QFile::UnspecifiedError, QString());
         return 0;

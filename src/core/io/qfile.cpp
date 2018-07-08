@@ -1144,16 +1144,6 @@ int QFile::handle() const
 }
 
 /*!
-    \enum QFile::MemoryMapFlags
-    \since 4.4
-
-    This enum describes special options that may be used by the map()
-    function.
-
-    \value NoOptions        No options.
-*/
-
-/*!
     \since 4.4
     Maps \a size bytes of the file into memory starting at \a offset.  A file
     should be open for a map to succeed but the file does not need to stay
@@ -1161,19 +1151,17 @@ int QFile::handle() const
     or a new file is opened with this object, any maps that have not been
     unmapped will automatically be unmapped.
 
-    Any mapping options can be passed through \a flags.
-
     Returns a pointer to the memory or 0 if there is an error.
 
     \sa unmap(), QAbstractFileEngine::supportsExtension()
  */
-uchar *QFile::map(qint64 offset, qint64 size, MemoryMapFlags flags)
+uchar *QFile::map(qint64 offset, qint64 size)
 {
     Q_D(QFile);
     if (fileEngine()
             && d->fileEngine->supportsExtension(QAbstractFileEngine::MapExtension)) {
         unsetError();
-        uchar *address = d->fileEngine->map(offset, size, flags);
+        uchar *address = d->fileEngine->map(offset, size);
         if (address == 0)
             d->setError(d->fileEngine->error(), d->fileEngine->errorString());
         return address;

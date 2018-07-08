@@ -96,7 +96,7 @@ public:
     bool nativeIsSequential() const;
     bool isSequentialFdFh() const;
 
-    uchar *map(qint64 offset, qint64 size, QFile::MemoryMapFlags flags);
+    uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
 
     mutable QFileSystemMetaData metaData;

@@ -137,7 +137,7 @@ public:
     virtual void setFileName(const QString &file);
     virtual int handle() const;
     bool atEnd() const;
-    uchar *map(qint64 offset, qint64 size, QFile::MemoryMapFlags flags);
+    uchar *map(qint64 offset, qint64 size);
     bool unmap(uchar *ptr);
 
     typedef QAbstractFileEngineIterator Iterator;
@@ -166,7 +166,6 @@ public:
     public:
         qint64 offset;
         qint64 size;
-        QFile::MemoryMapFlags flags;
     };
     class MapExtensionReturn : public ExtensionReturn {
     public:
