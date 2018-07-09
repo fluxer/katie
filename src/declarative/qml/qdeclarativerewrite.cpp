@@ -68,7 +68,7 @@ bool SharedBindingTester::isSharable(const QString &code)
 bool SharedBindingTester::isSharable(AST::Node *node)
 {
     _sharable = true;
-    AST::Node::acceptChild(node, this);
+    AST::Node::accept(node, this);
     return _sharable;
 }
 
@@ -144,7 +144,7 @@ QString RewriteBinding::operator()(QDeclarativeJS::AST::Node *node, const QStrin
 
 void RewriteBinding::accept(AST::Node *node)
 {
-    AST::Node::acceptChild(node, this);
+    AST::Node::accept(node, this);
 }
 
 QString RewriteBinding::rewrite(QString code, unsigned position,

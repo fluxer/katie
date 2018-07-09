@@ -189,7 +189,7 @@ void ProcessAST::operator()(const QString &code, AST::Node *node)
 
 void ProcessAST::accept(AST::Node *node)
 {
-    AST::Node::acceptChild(node, this);
+    AST::Node::accept(node, this);
 }
 
 const ProcessAST::State ProcessAST::state() const

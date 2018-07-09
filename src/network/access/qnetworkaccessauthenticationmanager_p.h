@@ -63,7 +63,6 @@ QT_BEGIN_NAMESPACE
 
 class QAuthenticator;
 class QAbstractNetworkCache;
-class QNetworkAuthenticationCredential;
 class QNetworkCookieJar;
 
 class QNetworkAuthenticationCredential

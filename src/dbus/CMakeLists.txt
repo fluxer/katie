@@ -26,6 +26,8 @@ set(DBUS_PUBLIC_HEADERS
     # mixed
     QDBusObjectPath
     QDBusPendingCallWatcher
+    # obsolete
+    QDBusVariant
 )
 
 set(DBUS_HEADERS
