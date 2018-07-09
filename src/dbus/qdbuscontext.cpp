@@ -46,7 +46,6 @@
 #include "qdbuscontext.h"
 #include "qdbuscontext_p.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -205,4 +204,3 @@ void QDBusContext::sendErrorReply(QDBusError::ErrorType type, const QString &msg
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

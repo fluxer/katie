@@ -49,7 +49,6 @@
 #include "qdbusmetatype.h"
 #include "qdbusutil_p.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -299,4 +298,3 @@ QString qDBusGenerateMetaObjectXml(QString interface, const QMetaObject *mo, con
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

@@ -47,7 +47,6 @@
 # include <qcore_unix_p.h>
 #endif
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -327,4 +326,3 @@ QDBusUnixFileDescriptorPrivate::~QDBusUnixFileDescriptorPrivate()
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

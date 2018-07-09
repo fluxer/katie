@@ -67,7 +67,6 @@
 #define QCLASSINFO_DBUS_INTERFACE       "D-Bus Interface"
 #define QCLASSINFO_DBUS_INTROSPECTION   "D-Bus Introspection"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -137,5 +136,4 @@ extern QDBusAdaptorConnector *qDBusCreateAdaptorConnector(QObject *object);
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS
 #endif // QDBUSABSTRACTADAPTORPRIVATE_H

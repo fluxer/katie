@@ -48,7 +48,6 @@
 #include "qdbusinterface_p.h"
 #include "qdbusconnection_p.h"
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
@@ -325,4 +324,3 @@ int QDBusInterfacePrivate::metacall(QMetaObject::Call c, int id, void **argv)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

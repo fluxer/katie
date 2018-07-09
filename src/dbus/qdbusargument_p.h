@@ -56,7 +56,6 @@
 #include <qdbusargument.h>
 #include "qdbusunixfiledescriptor.h"
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 #ifndef DBUS_TYPE_UNIX_FD
@@ -224,5 +223,4 @@ inline QDBusDemarshaller *QDBusArgumentPrivate::demarshaller()
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS
 #endif

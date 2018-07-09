@@ -44,7 +44,6 @@
 #include "qdbusmetatype_p.h"
 #include <QDebug>
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -245,4 +244,3 @@ void qDBusReplyFill(const QDBusMessage &reply, QDBusError &error, QVariant &data
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

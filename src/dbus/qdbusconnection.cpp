@@ -57,7 +57,6 @@
 
 #include "qdbusthreaddebug_p.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -1209,5 +1208,4 @@ QT_END_NAMESPACE
 #include "moc_qdbusconnection.h"
 #include "moc_qdbusconnection_p.h"
 
-#endif // QT_NO_DBUS
 

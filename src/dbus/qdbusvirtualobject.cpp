@@ -41,7 +41,6 @@
 
 #include "qdbusvirtualobject.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -97,4 +96,3 @@ QT_END_NAMESPACE
 
 #include "moc_qdbusvirtualobject.h"
 
-#endif // QT_NO_DBUS

@@ -46,7 +46,6 @@
 #include "qdbusargument.h"
 #include "qdbusunixfiledescriptor.h"
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
@@ -564,4 +563,3 @@ namespace QDBusUtil
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

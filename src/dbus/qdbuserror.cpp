@@ -46,7 +46,6 @@
 #include "qdbusmessage.h"
 #include "qdbusmessage_p.h"
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
@@ -364,4 +363,3 @@ QDebug operator<<(QDebug dbg, const QDBusError &msg)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

@@ -46,7 +46,6 @@
 
 #include <qobject_p.h>
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
@@ -374,7 +373,6 @@ void QDBusServiceWatcher::setConnection(const QDBusConnection &connection)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS
 
 
 #include "moc_qdbusservicewatcher.h"

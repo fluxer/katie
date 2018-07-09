@@ -50,7 +50,6 @@
 #include <QtCore/qvariant.h>
 #include <QtCore/qtextstream.h>
 
-#ifndef QT_NO_DBUS
 
 //#define QDBUS_PARSER_DEBUG
 #ifdef QDBUS_PARSER_DEBUG
@@ -373,4 +372,3 @@ QDBusXmlParser::objectTree() const
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

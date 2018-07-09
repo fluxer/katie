@@ -62,7 +62,6 @@
 
 #define ANNOTATION_NO_WAIT      "org.freedesktop.DBus.Method.NoReply"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -101,5 +100,4 @@ public:
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS
 #endif

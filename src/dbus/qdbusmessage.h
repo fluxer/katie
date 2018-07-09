@@ -46,7 +46,6 @@
 #include <QtCore/qlist.h>
 #include <QtCore/qvariant.h>
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_HEADER
 
@@ -125,6 +124,5 @@ QT_END_NAMESPACE
 
 QT_END_HEADER
 
-#endif // QT_NO_DBUS
 #endif
 

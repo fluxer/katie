@@ -42,7 +42,6 @@
 #include "qdbusintrospection_p.h"
 #include "qdbusxmlparser_p.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -426,4 +425,3 @@ QDBusIntrospection::parseObjectTree(const QString &xml, const QString &service, 
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

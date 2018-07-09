@@ -49,7 +49,6 @@
 #include <QtCore/QVariant>
 #include <QtCore/QDebug>
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h> // for the DBUS_* constants
 
 QT_BEGIN_NAMESPACE
@@ -416,6 +415,5 @@ void QDBusConnectionInterface::disconnectNotify(const char *signalName)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS
 
 #include "moc_qdbusconnectioninterface.h"

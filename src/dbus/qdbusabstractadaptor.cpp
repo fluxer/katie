@@ -53,7 +53,6 @@
 #include "qdbusabstractadaptor_p.h"
 #include "qdbusmetatype_p.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -421,4 +420,3 @@ QT_END_NAMESPACE
 
 #include "moc_qdbusabstractadaptor.h"
 
-#endif // QT_NO_DBUS

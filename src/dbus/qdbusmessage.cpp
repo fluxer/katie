@@ -51,7 +51,6 @@
 #include "qdbusconnection_p.h"
 #include "qdbusutil_p.h"
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 QT_BEGIN_NAMESPACE
@@ -796,4 +795,3 @@ QDebug operator<<(QDebug dbg, const QDBusMessage &msg)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

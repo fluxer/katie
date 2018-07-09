@@ -43,7 +43,6 @@
 #include "qdbuspendingcall_p.h"
 #include "qdbusmetatype.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -282,4 +281,3 @@ void QDBusPendingReplyData::setMetaTypes(int count, const int *types)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

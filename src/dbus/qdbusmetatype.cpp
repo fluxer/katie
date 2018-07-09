@@ -54,7 +54,6 @@
 #include "qdbusmetatype_p.h"
 #include "qdbusargument_p.h"
 
-#ifndef QT_NO_DBUS
 #include <dbus/dbus.h>
 
 #ifndef DBUS_TYPE_UNIX_FD
@@ -480,4 +479,3 @@ const char *QDBusMetaType::typeToSignature(int type)
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS

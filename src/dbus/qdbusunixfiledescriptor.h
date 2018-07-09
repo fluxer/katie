@@ -46,7 +46,6 @@
 #include <QtCore/qshareddata.h>
 #include <QtCore/qmetatype.h>
 
-#ifndef QT_NO_DBUS
 
 #ifdef Q_COMPILER_RVALUE_REFS
 # include <utility>
@@ -98,5 +97,4 @@ Q_DECLARE_METATYPE(QList<QDBusUnixFileDescriptor>)
 
 QT_END_HEADER
 
-#endif // QT_NO_DBUS
 #endif // QDBUSUNIXFILEDESCRIPTOR_H

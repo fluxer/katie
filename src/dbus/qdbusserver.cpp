@@ -43,7 +43,6 @@
 #include "qdbusconnection_p.h"
 #include "qdbusconnectionmanager_p.h"
 
-#ifndef QT_NO_DBUS
 
 QT_BEGIN_NAMESPACE
 
@@ -133,6 +132,5 @@ QString QDBusServer::address() const
 
 QT_END_NAMESPACE
 
-#endif // QT_NO_DBUS
 
 #include "moc_qdbusserver.h"
