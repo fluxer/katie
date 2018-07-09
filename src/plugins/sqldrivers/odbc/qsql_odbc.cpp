@@ -2472,7 +2472,7 @@ QString QODBCDriver::escapeIdentifier(const QString &identifier, IdentifierType)
     return res;
 }
 
-bool QODBCDriver::isIdentifierEscapedImplementation(const QString &identifier, IdentifierType) const
+bool QODBCDriver::isIdentifierEscaped(const QString &identifier, IdentifierType) const
 {
     QChar quote = d->quoteChar();
     return identifier.size() > 2

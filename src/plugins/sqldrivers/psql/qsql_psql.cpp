@@ -1326,15 +1326,15 @@ QPSQLDriver::Protocol QPSQLDriver::protocol() const
     return d->pro;
 }
 
-bool QPSQLDriver::subscribeToNotificationImplementation(const QString &name)
+bool QPSQLDriver::subscribeToNotification(const QString &name)
 {
     if (!isOpen()) {
-        qWarning("QPSQLDriver::subscribeToNotificationImplementation: database not open.");
+        qWarning("QPSQLDriver::subscribeToNotification: database not open.");
         return false;
     }
 
     if (d->seid.contains(name)) {
-        qWarning("QPSQLDriver::subscribeToNotificationImplementation: already subscribing to '%s'.",
+        qWarning("QPSQLDriver::subscribeToNotification: already subscribing to '%s'.",
             qPrintable(name));
         return false;
     }
@@ -1356,22 +1356,22 @@ bool QPSQLDriver::subscribeToNotificationImplementation(const QString &name)
             connect(d->sn, SIGNAL(activated(int)), this, SLOT(_q_handleNotification(int)));
         }
     } else {
-        qWarning("QPSQLDriver::subscribeToNotificationImplementation: PQsocket didn't return a valid socket to listen on");
+        qWarning("QPSQLDriver::subscribeToNotification: PQsocket didn't return a valid socket to listen on");
         return false;
     }
 
     return true;
 }
 
-bool QPSQLDriver::unsubscribeFromNotificationImplementation(const QString &name)
+bool QPSQLDriver::unsubscribeFromNotification(const QString &name)
 {
     if (!isOpen()) {
-        qWarning("QPSQLDriver::unsubscribeFromNotificationImplementation: database not open.");
+        qWarning("QPSQLDriver::unsubscribeFromNotification: database not open.");
         return false;
     }
 
     if (!d->seid.contains(name)) {
-        qWarning("QPSQLDriver::unsubscribeFromNotificationImplementation: not subscribed to '%s'.",
+        qWarning("QPSQLDriver::unsubscribeFromNotification: not subscribed to '%s'.",
             qPrintable(name));
         return false;
     }
@@ -1394,7 +1394,7 @@ bool QPSQLDriver::unsubscribeFromNotificationImplementation(const QString &name)
     return true;
 }
 
-QStringList QPSQLDriver::subscribedToNotificationsImplementation() const
+QStringList QPSQLDriver::subscribedToNotifications() const
 {
     return d->seid;
 }
