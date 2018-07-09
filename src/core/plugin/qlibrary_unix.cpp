@@ -241,11 +241,11 @@ void* QLibraryPrivate::resolve_sys(const char* symbol)
     void* address = dlsym(pHnd, undrscr_symbol);
     delete [] undrscr_symbol;
 #elif defined(QT_HPUX_LD)
-    void* address = 0;
+    void* address = Q_NULLPTR;
     if (shl_findsym((shl_t*)&pHnd, symbol, TYPE_UNDEFINED, &address) < 0)
-        address = 0;
+        address = Q_NULLPTR;
 #elif defined (QT_NO_DYNAMIC_LIBRARY)
-    void *address = 0;
+    void *address = Q_NULLPTR;
 #else
     void* address = dlsym(pHnd, symbol);
 #endif

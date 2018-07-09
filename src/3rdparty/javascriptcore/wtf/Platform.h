@@ -432,28 +432,9 @@ QT_USE_NAMESPACE
 /* Operating environments */
 
 /* FIXME: these are all mixes of OS, operating environment and policy choices. */
-/* PLATFORM(CHROMIUM) */
-/* PLATFORM(QT) */
-/* PLATFORM(WX) */
-/* PLATFORM(GTK) */
 /* PLATFORM(HAIKU) */
-/* PLATFORM(MAC) */
-/* PLATFORM(WIN) */
-#define WTF_PLATFORM_QT 1
-
-/* PLATFORM(IPHONE) */
-/* FIXME: this is sometimes used as an OS switch and sometimes for higher-level things */
-#if (defined(TARGET_OS_EMBEDDED) && TARGET_OS_EMBEDDED) || (defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE)
-#define WTF_PLATFORM_IPHONE 1
-#endif
-
-#if !defined(WTF_PLATFORM_IPHONE)
-#define WTF_PLATFORM_IPHONE 0
-#endif
-
 /* PLATFORM(ANDROID) */
-/* FIXME: this is sometimes used as an OS() switch, and other times to drive
-   policy choices */
+
 #if defined(ANDROID)
 #define WTF_PLATFORM_ANDROID 1
 #endif
