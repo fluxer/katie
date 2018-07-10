@@ -101,10 +101,8 @@ AbstractFindWidget::AbstractFindWidget(FindFlags flags, QWidget *parent)
     } else {
         topLayOut = layOut = new QHBoxLayout(this);
     }
-#ifndef Q_OS_MAC
     topLayOut->setSpacing(6);
     topLayOut->setMargin(0);
-#endif
 
     m_toolClose = new QToolButton(this);
     m_toolClose->setIcon(createIconSet(QLatin1String("closetab.png")));

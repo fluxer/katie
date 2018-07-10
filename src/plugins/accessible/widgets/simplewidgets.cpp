@@ -57,10 +57,6 @@
 #include <qstyle.h>
 #include <qstyleoption.h>
 
-#ifdef Q_OS_MAC
-#include <qfocusframe.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_ACCESSIBILITY

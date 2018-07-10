@@ -55,7 +55,7 @@
 #if defined(Q_OS_LINUX)
 #  include "qfilesystemwatcher_inotify_p.h"
 #  include "qfilesystemwatcher_dnotify_p.h"
-#elif defined(Q_OS_FREEBSD) || defined(Q_OS_MAC)
+#elif defined(Q_OS_FREEBSD)
 #  include "qfilesystemwatcher_kqueue_p.h"
 #endif
 

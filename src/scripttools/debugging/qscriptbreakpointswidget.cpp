@@ -66,17 +66,12 @@ class QScriptNewBreakpointWidget : public QWidget
 public:
     QScriptNewBreakpointWidget(QWidget *parent = Q_NULLPTR)
         : QWidget(parent) {
-	QString system = QLatin1String("win");
         QHBoxLayout *hboxLayout = new QHBoxLayout(this);
-#ifdef Q_OS_MAC
-        system = QLatin1String("mac");
-#else
         hboxLayout->setSpacing(6);
         hboxLayout->setMargin(0);
-#endif
 
         toolClose = new QToolButton(this);
-        toolClose->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/%1/closetab.png").arg(system)));
+        toolClose->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/win/closetab.png")));
         toolClose->setAutoRaise(true);
         toolClose->setText(tr("Close"));
         hboxLayout->addWidget(toolClose);
@@ -89,7 +84,7 @@ public:
         hboxLayout->addWidget(fileNameEdit);
 
         toolOk = new QToolButton(this);
-        toolOk->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/%1/plus.png").arg(system)));
+        toolOk->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/win/plus.png")));
         toolOk->setAutoRaise(true);
         toolOk->setEnabled(false);
         hboxLayout->addWidget(toolOk);

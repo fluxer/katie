@@ -805,13 +805,8 @@ QVariant QFileSystemModel::headerData(int section, Qt::Orientation orientation, 
             break;
     case 1: returnValue = tr("Size");
             break;
-    case 2: returnValue =
-#ifdef Q_OS_MAC
-                   tr("Kind", "Match OS X Finder");
-#else
-                   tr("Type", "All other platforms");
-#endif
-           break;
+    case 2: returnValue = tr("Type", "All other platforms");
+            break;
     // Windows   - Type
     // OS X      - Kind
     // Konqueror - File Type

@@ -126,17 +126,12 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
         *new QScriptDebuggerCodeFinderWidgetPrivate, parent, 0)
 {
     Q_D(QScriptDebuggerCodeFinderWidget);
-    QString system = QLatin1String("win");
     QHBoxLayout *hboxLayout = new QHBoxLayout(this);
-#ifdef Q_OS_MAC
-    system = QLatin1String("mac");
-#else
     hboxLayout->setSpacing(6);
     hboxLayout->setMargin(0);
-#endif
 
     d->toolClose = new QToolButton(this);
-    d->toolClose->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/%1/closetab.png").arg(system)));
+    d->toolClose->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/win/closetab.png")));
     d->toolClose->setAutoRaise(true);
     d->toolClose->setText(tr("Close"));
     hboxLayout->addWidget(d->toolClose);
@@ -153,14 +148,14 @@ QScriptDebuggerCodeFinderWidget::QScriptDebuggerCodeFinderWidget(QWidget *parent
     d->toolPrevious->setAutoRaise(true);
     d->toolPrevious->setText(tr("Previous"));
     d->toolPrevious->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    d->toolPrevious->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/%1/previous.png").arg(system)));
+    d->toolPrevious->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/win/previous.png")));
     hboxLayout->addWidget(d->toolPrevious);
 
     d->toolNext = new QToolButton(this);
     d->toolNext->setAutoRaise(true);
     d->toolNext->setText(tr("Next"));
     d->toolNext->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    d->toolNext->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/%1/next.png").arg(system)));
+    d->toolNext->setIcon(QIcon(QString::fromUtf8(":/qt/scripttools/debugging/images/win/next.png")));
     hboxLayout->addWidget(d->toolNext);
 
     d->checkCase = new QCheckBox(tr("Case Sensitive"), this);

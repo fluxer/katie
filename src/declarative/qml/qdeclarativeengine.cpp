@@ -2423,40 +2423,7 @@ const QMetaObject *QDeclarativeEnginePrivate::metaObjectForType(int t) const
 
 bool QDeclarative_isFileCaseCorrect(const QString &fileName)
 {
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN32)
-    QFileInfo info(fileName);
-
-    QString absolute = info.absoluteFilePath();
-
-#if defined(Q_OS_MAC)
-    QString canonical = info.canonicalFilePath();
-#elif defined(Q_OS_WIN32)
-    wchar_t buffer[1024];
-
-    DWORD rv = ::GetShortPathName((wchar_t*)absolute.utf16(), buffer, 1024);
-    if (rv == 0 || rv >= 1024) return true;
-    rv = ::GetLongPathName(buffer, buffer, 1024);
-    if (rv == 0 || rv >= 1024) return true;
-
-    QString canonical((QChar *)buffer);
-#endif
-
-    int absoluteLength = absolute.length();
-    int canonicalLength = canonical.length();
-
-    int length = qMin(absoluteLength, canonicalLength);
-    for (int ii = 0; ii < length; ++ii) {
-        const QChar &a = absolute.at(absoluteLength - 1 - ii);
-        const QChar &c = canonical.at(canonicalLength - 1 - ii);
-
-        if (a.toLower() != c.toLower())
-            return true;
-        if (a != c)
-            return false;
-    }
-#else
     Q_UNUSED(fileName)
-#endif
     return true;
 }
 

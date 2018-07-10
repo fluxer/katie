@@ -1570,20 +1570,6 @@ Q_CORE_EXPORT unsigned int qt_int_sqrt(unsigned int n)
 
 static QtMsgHandler handler = 0;                // pointer to debug handler
 
-#if defined(Q_CC_MWERKS) && defined(Q_OS_MACX)
-extern bool qt_is_gui_used;
-static void mac_default_handler(const char *msg)
-{
-    if (qt_is_gui_used) {
-        Str255 pmsg;
-        qt_mac_to_pascal_string(QString::fromAscii(msg), pmsg);
-        DebugStr(pmsg);
-    } else {
-        fprintf(stderr, msg);
-    }
-}
-#endif // Q_CC_MWERKS && Q_OS_MACX
-
 QString qt_error_string(int errorCode)
 {
     const char *s = 0;

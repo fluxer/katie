@@ -266,11 +266,8 @@ QDesignerActions::QDesignerActions(QDesignerWorkbench *workbench)
     connect(m_saveFormAsAction, SIGNAL(triggered()), this, SLOT(saveFormAs()));
     m_fileActions->addAction(m_saveFormAsAction);
 
-#ifdef Q_OS_MAC
-    m_saveAllFormsAction->setShortcut(tr("ALT+CTRL+S"));
-#else
+
     m_saveAllFormsAction->setShortcut(tr("CTRL+SHIFT+S")); // Commonly "Save As" on Mac
-#endif
     connect(m_saveAllFormsAction, SIGNAL(triggered()), this, SLOT(saveAllForms()));
     m_fileActions->addAction(m_saveAllFormsAction);
 

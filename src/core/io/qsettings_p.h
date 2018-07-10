@@ -286,10 +286,6 @@ private:
     void initAccess();
     void syncConfFile(int confFileNo);
     bool writeIniFile(QIODevice &device, const ParsedSettingsMap &map);
-#ifdef Q_OS_MAC
-    bool readPlistFile(const QString &fileName, ParsedSettingsMap *map) const;
-    bool writePlistFile(const QString &fileName, const ParsedSettingsMap &map) const;
-#endif
     void ensureAllSectionsParsed(QConfFile *confFile) const;
     void ensureSectionParsed(QConfFile *confFile, const QSettingsKey &key) const;
 

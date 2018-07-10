@@ -641,30 +641,6 @@ void QAbstractFormBuilder::layoutInfo(DomLayout *ui_layout, QObject *parent, int
     if (const DomProperty *p = properties.value(strings.spacingProperty, 0))
         spac = p->elementNumber();
 
-#ifdef Q_OS_MAC
-    // here we recognize UI file < 4.3 (no we don't store margin property)
-    if (mar != INT_MIN) {
-        const int defaultMargin = parent->inherits("QLayoutWidget") ? 0 : 9;
-        if (mar == defaultMargin)
-            mar = INT_MIN;
-        if (spac == 6)
-            spac = INT_MIN;
-
-        if (mar == INT_MIN || spac == INT_MIN) {
-            QList<DomProperty *> properties = ui_layout->elementProperty();
-            QMutableListIterator<DomProperty *> it(properties);
-            while (it.hasNext()) {
-                DomProperty *prop = it.next();
-                if ((mar == INT_MIN && prop->attributeName() == strings.marginProperty) ||
-                        (spac == INT_MIN && prop->attributeName() == strings.spacingProperty)) {
-                    it.remove();
-                    delete prop;
-                }
-            }
-            ui_layout->setElementProperty(properties);
-        }
-    }
-#endif
     if (margin)
         *margin = mar;
     if (spacing)
