@@ -401,6 +401,7 @@ set(GUI_PUBLIC_HEADERS
     QHBoxLayout
     QDoubleSpinBox
     QLinearGradient
+    QGradient
     # pure aliases, but required by UI generator
     QTimeEdit
     QDateEdit

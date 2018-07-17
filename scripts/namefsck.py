@@ -256,6 +256,7 @@ classlist = {
     "QGestureRecognizer",
     "QGlobalStatic",
     "QGlobalStaticDeleter",
+    "QGradient",
     "QGradientStop",
     "QGradientStops",
     "QGraphicsAnchor",
