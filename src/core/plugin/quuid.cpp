@@ -264,30 +264,6 @@ bool _q_uuidFromHex(const Char *&src, uint &d1, ushort &d2, ushort &d3, uchar (&
 */
 
 /*!
-    \fn QUuid::QUuid(const GUID &guid)
-
-    Casts a Windows \a guid to a Qt QUuid.
-
-    \warning This function is only for Windows platforms.
-*/
-
-/*!
-    \fn QUuid &QUuid::operator=(const GUID &guid)
-
-    Assigns a Windows \a guid to a Qt QUuid.
-
-    \warning This function is only for Windows platforms.
-*/
-
-/*!
-    \fn QUuid::operator GUID() const
-
-    Returns a Windows GUID from a QUuid.
-
-    \warning This function is only for Windows platforms.
-*/
-
-/*!
     \fn QUuid::QUuid()
 
     Creates the null UUID. toString() will output the null UUID
@@ -787,6 +763,7 @@ bool QUuid::operator>(const QUuid &other) const
     }
     return false;
 }
+#undef ISMORE
 
 /*!
     \fn QUuid QUuid::createUuid()

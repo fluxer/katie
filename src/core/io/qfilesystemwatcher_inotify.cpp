@@ -78,7 +78,7 @@ QInotifyFileSystemWatcherEngine *QInotifyFileSystemWatcherEngine::create()
 QInotifyFileSystemWatcherEngine::QInotifyFileSystemWatcherEngine(int fd)
     : inotifyFd(fd)
 {
-    fcntl(inotifyFd, F_SETFD, FD_CLOEXEC);
+    ::fcntl(inotifyFd, F_SETFD, FD_CLOEXEC);
 
     moveToThread(this);
 }
@@ -110,15 +110,13 @@ QStringList QInotifyFileSystemWatcherEngine::addPaths(const QStringList &paths,
         QString path = it.next();
         QFileInfo fi(path);
         bool isDir = fi.isDir();
-        if (isDir) {
-            if (directories->contains(path))
-                continue;
-        } else {
-            if (files->contains(path))
-                continue;
+        if (isDir && directories->contains(path)) {
+            continue;
+        } else if (files->contains(path)) {
+            continue;
         }
 
-        int wd = inotify_add_watch(inotifyFd,
+        int wd = ::inotify_add_watch(inotifyFd,
                                    QFile::encodeName(path).constData(),
                                    (isDir
                                     ? (0
@@ -175,7 +173,7 @@ QStringList QInotifyFileSystemWatcherEngine::removePaths(const QStringList &path
 
         int wd = id < 0 ? -id : id;
         // qDebug() << "removing watch for path" << path << "wd" << wd;
-        inotify_rm_watch(inotifyFd, wd);
+        ::inotify_rm_watch(inotifyFd, wd);
 
         it.remove();
         if (id < 0) {
@@ -240,7 +238,7 @@ void QInotifyFileSystemWatcherEngine::readFromInotify()
         if ((event.mask & (IN_DELETE_SELF | IN_MOVE_SELF | IN_UNMOUNT)) != 0) {
             pathToID.remove(path);
             idToPath.remove(id);
-            inotify_rm_watch(inotifyFd, event.wd);
+            ::inotify_rm_watch(inotifyFd, event.wd);
 
             if (id < 0)
                 emit directoryChanged(path, true);

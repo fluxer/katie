@@ -18,11 +18,11 @@ include_directories(
 
 set(testlocales_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/localemodel.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/localewidget.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/localewidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 )
 
 add_executable(testlocales ${testlocales_SOURCES})
 target_link_libraries(testlocales ${KATIE_GUI_LIBRARIES})
 
-feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 
+feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES)

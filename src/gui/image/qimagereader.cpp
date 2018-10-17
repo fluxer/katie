@@ -1490,7 +1490,7 @@ QByteArray QImageReader::imageFormat(QIODevice *device)
 */
 QList<QByteArray> QImageReader::supportedImageFormats()
 {
-    QSet<QByteArray> formats;
+    QList<QByteArray> formats;
     for (int i = 0; i < _qt_NumFormats; ++i)
         formats << _qt_BuiltInFormats[i].extension;
 
@@ -1505,12 +1505,8 @@ QList<QByteArray> QImageReader::supportedImageFormats()
     }
 #endif // QT_NO_LIBRARY
 
-    QList<QByteArray> sortedFormats;
-    for (QSet<QByteArray>::ConstIterator it = formats.constBegin(); it != formats.constEnd(); ++it)
-        sortedFormats << *it;
-
-    qSort(sortedFormats);
-    return sortedFormats;
+    qSort(formats);
+    return formats;
 }
 
 QT_END_NAMESPACE

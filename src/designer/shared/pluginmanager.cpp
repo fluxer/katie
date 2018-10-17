@@ -77,7 +77,6 @@ static const char *stringPropertySpecC = "stringpropertyspecification";
 static const char *stringPropertyNameAttrC = "name";
 static const char *stringPropertyTypeAttrC = "type";
 static const char *stringPropertyNoTrAttrC = "notr";
-static const char *jambiLanguageC = "jambi";
 
 enum { debugPluginManager = 0 };
 
@@ -135,8 +134,6 @@ QStringList QDesignerPluginManager::defaultPluginPaths()
 static inline QString getDesignerLanguage(QDesignerFormEditorInterface *core)
 {
     if (QDesignerLanguageExtension *lang = qt_extension<QDesignerLanguageExtension *>(core->extensionManager(), core)) {
-        if (lang->uiExtension() == QLatin1String("jui"))
-            return QLatin1String(jambiLanguageC);
         return QLatin1String("unknown");
     }
     return QLatin1String("c++");

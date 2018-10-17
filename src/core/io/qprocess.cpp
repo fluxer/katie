@@ -564,25 +564,6 @@ void QProcessPrivate::Channel::clear()
 
     \snippet doc/src/snippets/process/process.cpp 0
 
-    \section1 Notes for Windows Users
-
-    Some Windows commands (for example, \c dir) are not provided by
-    separate applications, but by the command interpreter itself.
-    If you attempt to use QProcess to execute these commands directly,
-    it won't work. One possible solution is to execute the command
-    interpreter itself (\c{cmd.exe} on some Windows systems), and ask
-    the interpreter to execute the desired command.
-
-    \section1 Symbian Platform Security Requirements
-
-    On Symbian, processes which use the functions kill() or terminate()
-    must have the \c PowerMgmt platform security capability. If the client
-    process lacks this capability, these functions will fail.
-
-    Platform security capabilities are added via the
-    \l{qmake-variable-reference.html#target-capability}{TARGET.CAPABILITY}
-    qmake variable.
-
     \sa QBuffer, QFile, QTcpSocket
 */
 
@@ -2002,8 +1983,6 @@ QProcess::ExitStatus QProcess::exitStatus() const
 
     The environment and working directory are inherited from the calling
     process.
-
-    On Windows, arguments that contain spaces are wrapped in quotes.
 
     If the process cannot be started, -2 is returned. If the process
     crashes, -1 is returned. Otherwise, the process' exit code is
