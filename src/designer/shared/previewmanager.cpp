@@ -75,6 +75,8 @@
 
 QT_BEGIN_NAMESPACE
 
+namespace qdesigner_internal {
+
 static inline int compare(const qdesigner_internal::PreviewConfiguration &pc1, const qdesigner_internal::PreviewConfiguration &pc2)
 {
     int rc = pc1.style().compare(pc2.style());
@@ -86,26 +88,22 @@ static inline int compare(const qdesigner_internal::PreviewConfiguration &pc1, c
     return pc1.deviceSkin().compare(pc2.deviceSkin());
 }
 
-namespace {
-    // ------ PreviewData (data associated with a preview window)
-    struct PreviewData {
-        PreviewData(const QPointer<QWidget> &widget, const  QDesignerFormWindowInterface *formWindow, const qdesigner_internal::PreviewConfiguration &pc);
-        QPointer<QWidget> m_widget;
-        const QDesignerFormWindowInterface *m_formWindow;
-        qdesigner_internal::PreviewConfiguration m_configuration;
-    };
+// ------ PreviewData (data associated with a preview window)
+struct PreviewData {
+    PreviewData(const QPointer<QWidget> &widget, const  QDesignerFormWindowInterface *formWindow, const qdesigner_internal::PreviewConfiguration &pc);
+    QPointer<QWidget> m_widget;
+    const QDesignerFormWindowInterface *m_formWindow;
+    qdesigner_internal::PreviewConfiguration m_configuration;
+};
 
-    PreviewData::PreviewData(const QPointer<QWidget>& widget,
-                             const QDesignerFormWindowInterface *formWindow,
-                             const qdesigner_internal::PreviewConfiguration &pc) :
-        m_widget(widget),
-        m_formWindow(formWindow),
-        m_configuration(pc)
-    {
-    }
+PreviewData::PreviewData(const QPointer<QWidget>& widget,
+                         const QDesignerFormWindowInterface *formWindow,
+                         const qdesigner_internal::PreviewConfiguration &pc) :
+    m_widget(widget),
+    m_formWindow(formWindow),
+    m_configuration(pc)
+{
 }
-
-namespace qdesigner_internal {
 
 /* In designer, we have the situation that laid-out maincontainers have
  * a geometry set (which might differ from their sizeHint()). The QGraphicsItem
