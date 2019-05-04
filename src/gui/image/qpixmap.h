@@ -172,8 +172,6 @@ public:
 
     QPaintEngine *paintEngine() const;
 
-    inline bool operator!() const { return isNull(); }
-
 protected:
     int metric(PaintDeviceMetric) const;
 

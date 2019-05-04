@@ -457,9 +457,9 @@ void DeviceSkin::loadImages()
 	skinCursor = QPixmap::fromImage(icurs, conv);
 
     setFixedSize( skinImageUp.size() );
-    if (!skinImageUp.mask())
+    if (skinImageUp.mask().isNull())
 	skinImageUp.setMask(skinImageUp.createHeuristicMask());
-    if (!skinImageClosed.mask())
+    if (skinImageClosed.mask().isNull())
 	skinImageClosed.setMask(skinImageClosed.createHeuristicMask());
 
     QWidget* parent = parentWidget();
@@ -788,7 +788,7 @@ CursorWindow::CursorWindow(const QImage &img, QPoint hot, QWidget* sk)
 #endif
     QPixmap p;
     p = QPixmap::fromImage(img);
-    if (!p.mask()) {
+    if (p.mask().isNull()) {
 	if ( img.hasAlphaChannel() ) {
 	    QBitmap bm;
 	    bm = QPixmap::fromImage(img.createAlphaMask());

@@ -293,7 +293,7 @@ QAtomicInt qt_pixmap_serial = QAtomicInt(0);
 int Q_GUI_EXPORT qt_x11_preferred_pixmap_depth = 0;
 
 QX11PixmapData::QX11PixmapData(PixelType type)
-    : QPixmapData(type, X11Class), gl_surface(0), hd(0),
+    : QPixmapData(type, X11Class), hd(0),
       flags(Uninitialized), x11_mask(0), picture(0), mask_picture(0), hd2(0),
       share_mode(QPixmap::ImplicitlyShared), pengine(0)
 {
@@ -1906,7 +1906,7 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
 
     sbpl = xi->bytes_per_line;
     sptr = (uchar *)xi->data;
-    bpp         = xi->bits_per_pixel;
+    bpp  = xi->bits_per_pixel;
 
     if (depth1)
         dbpl = (w+7)/8;
@@ -1954,7 +1954,7 @@ QPixmap QX11PixmapData::transformed(const QTransform &transform,
         type = QT_XFORM_TYPE_MSBFIRST;
     else
         type = QT_XFORM_TYPE_LSBFIRST;
-    int        xbpl, p_inc;
+    int xbpl, p_inc;
     if (depth1) {
         xbpl  = (w+7)/8;
         p_inc = dbpl - xbpl;

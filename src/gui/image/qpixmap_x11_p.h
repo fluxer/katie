@@ -96,7 +96,6 @@ public:
 
     static Qt::HANDLE createBitmapFromImage(const QImage &image);
 
-    void* gl_surface;
 #ifndef QT_NO_XRENDER
     void convertToARGB32(bool preserveContents = true);
 #endif
@@ -128,8 +127,7 @@ private:
          NoFlags = 0x0,
          Uninitialized = 0x1,
          Readonly = 0x2,
-         InvertedWhenBoundToTexture = 0x4,
-         GlSurfaceCreatedWithAlpha = 0x8
+         InvertedWhenBoundToTexture = 0x4
     };
     uint flags;
 
