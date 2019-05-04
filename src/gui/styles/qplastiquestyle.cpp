@@ -485,8 +485,8 @@ static void qBrushSetAlphaF(QBrush *brush, qreal alpha)
         QPixmap texture = brush->texture();
         QPixmap pixmap;
         QString name = QLatin1String("qbrushtexture-alpha")
-                       % HexString<qreal>(alpha)
-                       % HexString<qint64>(texture.cacheKey());
+                       + HexString<qreal>(alpha)
+                       + HexString<qint64>(texture.cacheKey());
         if (!QPixmapCache::find(name, pixmap)) {
             QImage image = texture.toImage();
             QRgb *rgb = reinterpret_cast<QRgb *>(image.bits());
@@ -548,8 +548,8 @@ static QBrush qBrushLight(QBrush brush, int light)
         QPixmap texture = brush.texture();
         QPixmap pixmap;
         QString name = QLatin1String("qbrushtexture-light")
-                       % HexString<int>(light)
-                       % HexString<qint64>(texture.cacheKey());
+                       + HexString<int>(light)
+                       + HexString<qint64>(texture.cacheKey());
 
         if (!QPixmapCache::find(name, pixmap)) {
             QImage image = texture.toImage();
@@ -610,8 +610,8 @@ static QBrush qBrushDark(QBrush brush, int dark)
         QPixmap texture = brush.texture();
         QPixmap pixmap;
         QString name = QLatin1String("qbrushtexture-dark")
-                       % HexString<int>(dark)
-                       % HexString<qint64>(texture.cacheKey());
+                       + HexString<int>(dark)
+                       + HexString<qint64>(texture.cacheKey());
 
         if (!QPixmapCache::find(name, pixmap)) {
             QImage image = texture.toImage();
@@ -727,10 +727,10 @@ static void qt_plastique_draw_gradient(QPainter *painter, const QRect &rect, con
                                        const QColor &gradientStop)
 {
     QString gradientName = QLatin1String("qplastique-g")
-                   % HexString<int>(rect.width())
-                   % HexString<int>(rect.height())
-                   % HexString<QRgb>(gradientStart.rgba())
-                   % HexString<QRgb>(gradientStop.rgba());
+                   + HexString<int>(rect.width())
+                   + HexString<int>(rect.height())
+                   + HexString<QRgb>(gradientStart.rgba())
+                   + HexString<QRgb>(gradientStop.rgba());
 
     QPixmap cache;
     QPainter *p = painter;

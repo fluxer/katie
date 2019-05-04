@@ -126,10 +126,4 @@
 <file>images/media-volume-16.png</file>
 <file>images/media-volume-muted-16.png</file>
 </qresource>
-<qresource prefix="/trolltech/styles/macstyle">
-<file>images/closedock-16.png</file>
-<file>images/closedock-down-16.png</file>
-<file>images/dockdock-16.png</file>
-<file>images/dockdock-down-16.png</file>
-</qresource>
 </RCC>

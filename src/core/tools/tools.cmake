@@ -39,7 +39,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsize.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstack.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstring.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringbuilder.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringlist.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringmatcher.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtextboundaryfinder.h
@@ -80,7 +79,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsharedpointer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qsize.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstring.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringbuilder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qstringlist.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtextboundaryfinder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qtimeline.cpp

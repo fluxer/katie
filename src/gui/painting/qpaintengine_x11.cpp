@@ -195,8 +195,8 @@ static QPixmap qt_patternForAlpha(uchar alpha, int screen)
 {
     QPixmap pm;
     QString key = QLatin1String("$qt-alpha-brush$")
-                  % HexString<uchar>(alpha)
-                  % HexString<int>(screen);
+                  + HexString<uchar>(alpha)
+                  + HexString<int>(screen);
 
     if (!QPixmapCache::find(key, pm)) {
         // #### why not use a mono image here????

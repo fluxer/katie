@@ -63,7 +63,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QLatin1String", "QtCore/qstring.h"},
     { "QCharRef", "QtCore/qstring.h"},
     { "QStringRef", "QtCore/qstring.h"},
-    { "QAbstractConcatenable", "QtCore/qstringbuilder.h"},
     { "QStringList", "QtCore/qstringlist.h"},
     { "QStringMatcher", "QtCore/qstringmatcher.h"},
     { "QTextBoundaryFinder", "QtCore/qtextboundaryfinder.h"},

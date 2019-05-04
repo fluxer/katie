@@ -523,10 +523,8 @@ private:
     static Data *fromAscii_helper(const char *str, int size = -1);
     void replace_helper(uint *indices, int nIndices, int blen, const QChar *after, int alen);
     friend class QCharRef;
-    friend class QCFString;
     friend class QTextCodec;
     friend class QStringRef;
-    friend struct QAbstractConcatenable;
     friend inline bool qStringComparisonHelper(const QString &s1, const char *s2);
     friend inline bool qStringComparisonHelper(const QStringRef &s1, const char *s2);
 public:
@@ -572,7 +570,6 @@ public:
 private:
     const char *chars;
 };
-
 
 
 inline QString::QString(const QLatin1String &aLatin1) : d(fromLatin1_helper(aLatin1.latin1()))
@@ -864,7 +861,6 @@ inline int QByteArray::lastIndexOf(const QString &s, int from) const
 { return lastIndexOf(s.toAscii(), from); }
 #endif // QT_NO_CAST_TO_ASCII
 
-#if !defined(QT_USE_FAST_OPERATOR_PLUS) && !defined(QT_USE_QSTRINGBUILDER)
 inline const QString operator+(const QString &s1, const QString &s2)
 { QString t(s1); t += s2; return t; }
 inline const QString operator+(const QString &s1, QChar s2)
@@ -885,7 +881,6 @@ inline QT_ASCII_CAST_WARN const QString operator+(const QByteArray &ba, const QS
 inline QT_ASCII_CAST_WARN const QString operator+(const QString &s, const QByteArray &ba)
 { QString t(s); t += QString::fromAscii(ba.constData(), qstrnlen(ba.constData(), ba.size())); return t; }
 #  endif // QT_NO_CAST_FROM_ASCII
-#endif // QT_USE_QSTRINGBUILDER
 
 inline std::string QString::toStdString() const
 { return toAscii().toStdString(); }
@@ -1101,14 +1096,8 @@ inline bool QStringRef::contains(QChar c, Qt::CaseSensitivity cs) const
 inline bool QStringRef::contains(const QStringRef &s, Qt::CaseSensitivity cs) const
 { return indexOf(s, 0, cs) != -1; }
 
-
-
 QT_END_NAMESPACE
 
 QT_END_HEADER
-
-#if defined(QT_USE_FAST_OPERATOR_PLUS) || defined(QT_USE_QSTRINGBUILDER)
-#include <QtCore/qstringbuilder.h>
-#endif
 
 #endif // QSTRING_H

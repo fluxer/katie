@@ -387,7 +387,7 @@ static const quint16 crc_tbl[16] = {
     0xc60c, 0xd68d, 0xe70e, 0xf78f
 };
 
-/*! 
+/*!
     \relates QByteArray
 
     Returns the CRC-16 checksum of the first \a len bytes of \a data.
@@ -412,7 +412,7 @@ quint16 qChecksum(const char *data, uint len)
     return ~crc & 0xffff;
 }
 
-/*!     
+/*!
     \fn QByteArray qCompress(const QByteArray& data, int compressionLevel)
 
     \relates QByteArray

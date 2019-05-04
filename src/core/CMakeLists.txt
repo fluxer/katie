@@ -94,7 +94,6 @@ set(CORE_PUBLIC_HEADERS
     QStdWString
     QtAlgorithms
     QAbstractItemModel
-    QStringBuilder
     QSignalTransition
     QTextBoundaryFinder
     QExplicitlySharedDataPointer
@@ -134,12 +133,10 @@ set(CORE_PUBLIC_HEADERS
     QDirIterator
     QtMsgHandler
     QSharedMemory
-    QAbstractConcatenable
     QReadWriteLock
     QFileSystemWatcher
     QObjectList
     QContiguousCacheTypedData
-    QForeachContainer
     QtCleanUpFunction
     QSharedPointer
     QInternal
@@ -174,7 +171,6 @@ set(CORE_PUBLIC_HEADERS
     QCharRef
     QReturnArgument
     QMetaObjectAccessor
-    QConcatenable
     QLocale
     QMetaType
     QVariant
@@ -191,7 +187,6 @@ set(CORE_PUBLIC_HEADERS
     QAtomicInt
     QtContainerFwd
     QTimeLine
-    QForeachContainerBase
     QMutableFutureIterator
     QtPluginInstanceFunction
     QTextCodec
