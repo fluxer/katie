@@ -778,7 +778,7 @@ namespace qdesigner_internal
     QDESIGNER_SHARED_EXPORT bool runUIC(const QString &fileName, QByteArray& ba, QString &errorMessage)
     {
         QStringList argv;
-        QString binary = QLibraryInfo::location(QLibraryInfo::BinariesPath) + QDir::separator() + QLatin1String("uic");
+        QString binary = QLibraryInfo::location(QLibraryInfo::BinariesPath) + QDir::separator() + QLatin1String("uic" KATIE_TOOLS_SUFFIX);
         argv += fileName;
         QProcess uic;
         uic.start(binary, argv);

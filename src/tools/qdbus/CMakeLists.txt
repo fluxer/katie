@@ -1,4 +1,3 @@
-add_definitions(-DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}")
 set(EXTRA_QDBUS_LIBS KtCore KtXml KtDBus)
 
 include_directories(

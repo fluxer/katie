@@ -195,6 +195,7 @@ add_feature_info(accessibility WITH_ACCESSIBILITY "an open source something")
 include(mkspecs/mkspecs.cmake)
 
 add_definitions(
+    -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
     -DQT_ASCII_CAST_WARNINGS
     -DQT_POSIX_IPC
     # -DQT_STRICT_ITERATORS
