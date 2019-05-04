@@ -894,7 +894,10 @@ QString QIcon::themeName()
 */
 QIcon QIcon::fromTheme(const QString &name, const QIcon &fallback)
 {
-    QIcon icon;
+    QIcon icon = qt_guiPlatformPlugin()->systemIcon(name);
+    if (!icon.isNull()) {
+        return icon;
+    }
 
     if (qtIconCache()->contains(name)) {
         icon = *qtIconCache()->object(name);

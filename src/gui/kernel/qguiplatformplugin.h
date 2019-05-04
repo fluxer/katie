@@ -60,6 +60,13 @@ struct Q_GUI_EXPORT QGuiPlatformPluginInterface  : public QFactoryInterface
 {
 };
 
+QT_END_NAMESPACE
+
+#define QGuiPlatformPluginInterface_iid "com.nokia.qt.QGuiPlatformPluginInterface"
+Q_DECLARE_INTERFACE(QGuiPlatformPluginInterface, QGuiPlatformPluginInterface_iid)
+
+QT_BEGIN_NAMESPACE
+
 class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPluginInterface
 {
     Q_OBJECT
@@ -74,6 +81,7 @@ class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPlugi
         virtual QPalette palette();
         virtual QString systemIconThemeName();
         virtual QStringList iconThemeSearchPaths();
+        virtual QIcon systemIcon(const QString &);
         virtual QIcon fileSystemIcon(const QFileInfo &);
 
         enum PlatformHint { PH_ToolButtonStyle, PH_ToolBarIconSize, PH_ItemView_ActivateItemOnSingleClick };
@@ -102,10 +110,6 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin();
 
 QT_END_NAMESPACE
 
-#define QGuiPlatformPluginInterface_iid "com.nokia.qt.QGuiPlatformPluginInterface"
-Q_DECLARE_INTERFACE(QGuiPlatformPluginInterface, QGuiPlatformPluginInterface_iid)
-
 QT_END_HEADER
-
 
 #endif // QGUIPLATFORMPLUGIN_H

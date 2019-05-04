@@ -162,6 +162,12 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
     return paths;
 }
 
+/* backend for QIcon::fromTheme,  null icon means default */
+QIcon QGuiPlatformPlugin::systemIcon(const QString &)
+{
+    return QIcon();
+}
+
 /* backend for QFileIconProvider,  null icon means default */
 QIcon QGuiPlatformPlugin::fileSystemIcon(const QFileInfo &)
 {
