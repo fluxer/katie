@@ -51,6 +51,8 @@ QT_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
+    Q_INIT_RESOURCE(qdbusviewer);
+
     QApplication app(argc, argv);
     QMainWindow mw;
     app.setWindowIcon(QIcon(QLatin1String(":/trolltech/qdbusviewer/images/qdbusviewer.png")));
@@ -82,3 +84,4 @@ int main(int argc, char *argv[])
     return app.exec();
 }
 
+#include "qrc_qdbusviewer.cpp"

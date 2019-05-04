@@ -57,4 +57,4 @@ int main(int argc, char *argv[])
     return app.exec();
 }
 
-#include <qrc_designer.cpp>
+#include "qrc_designer.cpp"
