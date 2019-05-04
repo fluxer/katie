@@ -2549,10 +2549,7 @@ static inline Operator getOperator(const QSpanData *data, const QSpan *spans, in
 
 
 // -------------------- blend methods ---------------------
-#if !defined(Q_CC_SUN)
-static
-#endif
-void blend_color_generic(int count, const QSpan *spans, void *userData)
+static void blend_color_generic(int count, const QSpan *spans, void *userData)
 {
     QSpanData *data = reinterpret_cast<QSpanData *>(userData);
     uint buffer[buffer_size];

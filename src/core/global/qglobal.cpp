@@ -1255,44 +1255,6 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_CC_SYM
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Digital Mars C/C++
-    (used to be Symantec C++).
-*/
-
-/*!
-    \macro Q_CC_MWERKS
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Metrowerks
-    CodeWarrior.
-*/
-
-/*!
-    \macro Q_CC_MSVC
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Microsoft Visual
-    C/C++, Intel C++ for Windows.
-*/
-
-/*!
-    \macro Q_CC_BOR
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Borland/Turbo C++.
-*/
-
-/*!
-    \macro Q_CC_WAT
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Watcom C++.
-*/
-
-/*!
     \macro Q_CC_GNU
     \relates <QtGlobal>
 
@@ -1300,105 +1262,11 @@ bool qSharedBuild()
 */
 
 /*!
-    \macro Q_CC_COMEAU
+    \macro Q_CC_CLANG
     \relates <QtGlobal>
 
-    Defined if the application is compiled using Comeau C++.
-*/
-
-/*!
-    \macro Q_CC_EDG
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Edison Design Group
-    C++.
-*/
-
-/*!
-    \macro Q_CC_OC
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using CenterLine C++.
-*/
-
-/*!
-    \macro Q_CC_SUN
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Forte Developer, or
-    Sun Studio C++.
-*/
-
-/*!
-    \macro Q_CC_MIPS
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using MIPSpro C++.
-*/
-
-/*!
-    \macro Q_CC_DEC
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using DEC C++.
-*/
-
-/*!
-    \macro Q_CC_HPACC
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using HP aC++.
-*/
-
-/*!
-    \macro Q_CC_USLC
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using SCO OUDK and UDK.
-*/
-
-/*!
-    \macro Q_CC_CDS
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Reliant C++.
-*/
-
-/*!
-    \macro Q_CC_KAI
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using KAI C++.
-*/
-
-/*!
-    \macro Q_CC_INTEL
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Intel C++ for Linux,
-    Intel C++ for Windows.
-*/
-
-/*!
-    \macro Q_CC_HIGHC
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using MetaWare High C/C++.
-*/
-
-/*!
-    \macro Q_CC_PGI
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Portland Group C++.
-*/
-
-/*!
-    \macro Q_CC_GHS
-    \relates <QtGlobal>
-
-    Defined if the application is compiled using Green Hills
-    Optimizing C++ Compilers.
+    Defined if the application is compiled using C++ front-end for the LLVM
+    compiler.
 */
 
 /*!

@@ -209,7 +209,6 @@ public:
     bool operator==(const QFuture &other) const { return (d == other.d); }
     bool operator!=(const QFuture &other) const { return (d != other.d); }
 
-#if !defined(Q_CC_XLC)
     template <typename T>
     QFuture(const QFuture<T> &other)
         : d(other.d)
@@ -221,7 +220,6 @@ public:
         d = other.d;
         return *this;
     }
-#endif
 
     void cancel() { d.cancel(); }
     bool isCanceled() const { return d.isCanceled(); }

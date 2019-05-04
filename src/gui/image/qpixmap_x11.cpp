@@ -67,10 +67,6 @@
 
 #include <stdlib.h>
 
-#if defined(Q_CC_MIPS)
-#  define for if(0){}else for
-#endif
-
 QT_BEGIN_NAMESPACE
 
 QPixmap qt_toX11Pixmap(const QImage &image)

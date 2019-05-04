@@ -48,11 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#if defined (Q_CC_SUN) || defined (Q_CC_XLC)
-# define QTEST_NO_SPECIALIZATIONS
-#endif
-
-
 #if (defined Q_CC_HPACC) && (defined __ia64)
 # ifdef Q_TEST_EXPORT
 #  undef Q_TEST_EXPORT

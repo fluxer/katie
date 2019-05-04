@@ -338,15 +338,8 @@ Q_INLINE_TEMPLATE void QList<T>::node_construct(Node *n, const T &t)
 {
     if (QTypeInfo<T>::isLarge || QTypeInfo<T>::isStatic) n->v = new T(t);
     else if (QTypeInfo<T>::isComplex) new (n) T(t);
-#if (defined(Q_CC_GNU) || defined(Q_CC_INTEL) || defined(__IBMCPP__)) && !defined(__OPTIMIZE__)
-    // This violates pointer aliasing rules, but it is known to be safe (and silent)
-    // in unoptimized GCC builds (-fno-strict-aliasing). The other compilers which
-    // set the same define are assumed to be safe.
-    else *reinterpret_cast<T*>(n) = t;
-#else
     // This is always safe, but penaltizes unoptimized builds a lot.
     else ::memcpy(n, &t, sizeof(T));
-#endif
 }
 
 template <typename T>
@@ -387,7 +380,7 @@ Q_INLINE_TEMPLATE void QList<T>::node_copy(Node *from, Node *to, Node *src)
         }
     } else {
         if (src != from && to - from > 0)
-            memcpy(from, src, (to - from) * sizeof(Node *));
+            ::memcpy(from, src, (to - from) * sizeof(Node *));
     }
 }
 

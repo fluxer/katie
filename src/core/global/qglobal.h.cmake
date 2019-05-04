@@ -268,90 +268,21 @@ QT_USE_NAMESPACE
 /*
    The compiler, must be one of: (Q_CC_x)
 
-     SYM      - Digital Mars C/C++ (used to be Symantec C++)
-     MWERKS   - Metrowerks CodeWarrior
-     BOR      - Borland/Turbo C++
-     WAT      - Watcom C++
      GNU      - GNU C++
-     COMEAU   - Comeau C++
-     EDG      - Edison Design Group C++
-     OC       - CenterLine C++
-     SUN      - Forte Developer, or Sun Studio C++
-     MIPS     - MIPSpro C++
-     DEC      - DEC C++
-     HPACC    - HP aC++
-     USLC     - SCO OUDK and UDK
-     CDS      - Reliant C++
-     KAI      - KAI C++
-     INTEL    - Intel C++ for Linux, Intel C++ for Windows
-     HIGHC    - MetaWare High C/C++
-     PGI      - Portland Group C++
-     GHS      - Green Hills Optimizing C++ Compilers
      CLANG    - C++ front-end for the LLVM compiler
-
 
    Should be sorted most to least authoritative.
 */
 
-#if defined(__ghs)
-# define Q_OUTOFLINE_TEMPLATE inline
-
-/* the following are necessary because the GHS C++ name mangling relies on __*/
-# define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
-   static const int AFUNC ## _init_variable_ = AFUNC();
-# define Q_CONSTRUCTOR_FUNCTION(AFUNC) Q_CONSTRUCTOR_FUNCTION0(AFUNC)
-# define Q_DESTRUCTOR_FUNCTION0(AFUNC) \
-    class AFUNC ## _dest_class_ { \
-    public: \
-       inline AFUNC ## _dest_class_() { } \
-       inline ~ AFUNC ## _dest_class_() { AFUNC(); } \
-    } AFUNC ## _dest_instance_;
-# define Q_DESTRUCTOR_FUNCTION(AFUNC) Q_DESTRUCTOR_FUNCTION0(AFUNC)
-
-#endif
-
-/* Symantec C++ is now Digital Mars */
-#if defined(__DMC__) || defined(__SC__)
-#  define Q_CC_SYM
-/* "explicit" semantics implemented in 8.1e but keyword recognized since 7.5 */
-#  if defined(__SC__) && __SC__ < 0x750
-#    define Q_NO_EXPLICIT_KEYWORD
-#  endif
-#  define Q_NO_USING_KEYWORD
-
-#elif defined(__MWERKS__)
-#  define Q_CC_MWERKS
-
-#elif defined(__BORLANDC__) || defined(__TURBOC__)
-#  define Q_CC_BOR
-
-#elif defined(__WATCOMC__)
-#  define Q_CC_WAT
-
-#elif defined(__GNUC__)
+#if defined(__GNUC__)
 #  define Q_CC_GNU
 #  define Q_C_CALLBACKS
-#  if defined(__MINGW32__)
-#    define Q_CC_MINGW
-#  endif
-#  if defined(__INTEL_COMPILER)
-/* Intel C++ also masquerades as GCC 3.2.0 */
-#    define Q_CC_INTEL
-#  endif
-#  if defined(__clang__)
-/* Clang also masquerades as GCC 4.2.1 */
-#    define Q_CC_CLANG
-#    if !defined(__has_extension)
-#      /* Compatibility with older Clang versions */
-#      define __has_extension __has_feature
-#    endif
-#  endif
 #  define Q_ALIGNOF(type)   __alignof__(type)
 #  define Q_TYPEOF(expr)    __typeof__(expr)
 #  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
 #  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
 #  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
-#  if (defined(Q_CC_GNU) || defined(Q_CC_INTEL)) && !defined(QT_MOC_CPP)
+#  if !defined(QT_MOC_CPP)
 #    define Q_PACKED __attribute__ ((__packed__))
 #    define Q_NO_PACKED_REFERENCE
 #    ifndef __ARM_EABI__
@@ -359,244 +290,15 @@ QT_USE_NAMESPACE
 #    endif
 #  endif
 
-/* IBM compiler versions are a bit messy. There are actually two products:
-   the C product, and the C++ product. The C++ compiler is always packaged
-   with the latest version of the C compiler. Version numbers do not always
-   match. This little table (I'm not sure it's accurate) should be helpful:
-
-   C++ product                C product
-
-   C Set 3.1                  C Compiler 3.0
-   ...                        ...
-   C++ Compiler 3.6.6         C Compiler 4.3
-   ...                        ...
-   Visual Age C++ 4.0         ...
-   ...                        ...
-   Visual Age C++ 5.0         C Compiler 5.0
-   ...                        ...
-   Visual Age C++ 6.0         C Compiler 6.0
-
-   Now:
-   __xlC__    is the version of the C compiler in hexadecimal notation
-              is only an approximation of the C++ compiler version
-   __IBMCPP__ is the version of the C++ compiler in decimal notation
-              but it is not defined on older compilers like C Set 3.1 */
-#elif defined(__xlC__)
-#  define Q_CC_XLC
-#  define Q_FULL_TEMPLATE_INSTANTIATION
-#  if __xlC__ < 0x400
-#    define Q_NO_BOOL_TYPE
-#    define Q_NO_EXPLICIT_KEYWORD
-#    define Q_NO_USING_KEYWORD
-#    define Q_TYPENAME
-#    define Q_OUTOFLINE_TEMPLATE inline
-#    define Q_BROKEN_TEMPLATE_SPECIALIZATION
-#    define Q_CANNOT_DELETE_CONSTANT
-#  elif __xlC__ >= 0x0600
-#    define Q_ALIGNOF(type)     __alignof__(type)
-#    define Q_TYPEOF(expr)      __typeof__(expr)
-#    define Q_DECL_ALIGN(n)     __attribute__((__aligned__(n)))
-#    define Q_PACKED            __attribute__((__packed__))
+#elif defined(__clang__)
+#  define Q_CC_CLANG
+#  if !defined(__has_extension)
+#    /* Compatibility with older Clang versions */
+#    define __has_extension __has_feature
 #  endif
-
-/* Older versions of DEC C++ do not define __EDG__ or __EDG - observed
-   on DEC C++ V5.5-004. New versions do define  __EDG__ - observed on
-   Compaq C++ V6.3-002.
-   This compiler is different enough from other EDG compilers to handle
-   it separately anyway. */
-#elif defined(__DECCXX) || defined(__DECC)
-#  define Q_CC_DEC
-/* Compaq C++ V6 compilers are EDG-based but I'm not sure about older
-   DEC C++ V5 compilers. */
-#  if defined(__EDG__)
-#    define Q_CC_EDG
-#  endif
-/* Compaq have disabled EDG's _BOOL macro and use _BOOL_EXISTS instead
-   - observed on Compaq C++ V6.3-002.
-   In any case versions prior to Compaq C++ V6.0-005 do not have bool. */
-#  if !defined(_BOOL_EXISTS)
-#    define Q_NO_BOOL_TYPE
-#  endif
-/* Spurious (?) error messages observed on Compaq C++ V6.5-014. */
-#  define Q_NO_USING_KEYWORD
-/* Apply to all versions prior to Compaq C++ V6.0-000 - observed on
-   DEC C++ V5.5-004. */
-#  if __DECCXX_VER < 60060000
-#    define Q_TYPENAME
-#    define Q_BROKEN_TEMPLATE_SPECIALIZATION
-#    define Q_CANNOT_DELETE_CONSTANT
-#  endif
-/* avoid undefined symbol problems with out-of-line template members */
-#  define Q_OUTOFLINE_TEMPLATE inline
-
-/* The Portland Group C++ compiler is based on EDG and does define __EDG__
-   but the C compiler does not */
-#elif defined(__PGI)
-#  define Q_CC_PGI
-#  if defined(__EDG__)
-#    define Q_CC_EDG
-#  endif
-
-/* Compilers with EDG front end are similar. To detect them we test:
-   __EDG documented by SGI, observed on MIPSpro 7.3.1.1 and KAI C++ 4.0b
-   __EDG__ documented in EDG online docs, observed on Compaq C++ V6.3-002
-   and PGI C++ 5.2-4 */
-#elif !defined(Q_OS_HPUX) && (defined(__EDG) || defined(__EDG__))
-#  define Q_CC_EDG
-/* From the EDG documentation (does not seem to apply to Compaq C++):
-   _BOOL
-        Defined in C++ mode when bool is a keyword. The name of this
-        predefined macro is specified by a configuration flag. _BOOL
-        is the default.
-   __BOOL_DEFINED
-        Defined in Microsoft C++ mode when bool is a keyword. */
-#  if !defined(_BOOL) && !defined(__BOOL_DEFINED)
-#    define Q_NO_BOOL_TYPE
-#  endif
-
-/* The Comeau compiler is based on EDG and does define __EDG__ */
-#  if defined(__COMO__)
-#    define Q_CC_COMEAU
-#    define Q_C_CALLBACKS
-
-/* The `using' keyword was introduced to avoid KAI C++ warnings
-   but it's now causing KAI C++ errors instead. The standard is
-   unclear about the use of this keyword, and in practice every
-   compiler is using its own set of rules. Forget it. */
-#  elif defined(__KCC)
-#    define Q_CC_KAI
-#    define Q_NO_USING_KEYWORD
-
-/* Using the `using' keyword avoids Intel C++ for Linux warnings */
-#  elif defined(__INTEL_COMPILER)
-#    define Q_CC_INTEL
-
-/* Uses CFront, make sure to read the manual how to tweak templates. */
-#  elif defined(__ghs)
-#    define Q_CC_GHS
-
-#  elif defined(__DCC__)
-#    define Q_CC_DIAB
-#    undef Q_NO_BOOL_TYPE
-#    if !defined(__bool)
-#      define Q_NO_BOOL_TYPE
-#    endif
-
-/* The UnixWare 7 UDK compiler is based on EDG and does define __EDG__ */
-#  elif defined(__USLC__) && defined(__SCO_VERSION__)
-#    define Q_CC_USLC
-/* The latest UDK 7.1.1b does not need this, but previous versions do */
-#    if !defined(__SCO_VERSION__) || (__SCO_VERSION__ < 302200010)
-#      define Q_OUTOFLINE_TEMPLATE inline
-#    endif
-#    define Q_NO_USING_KEYWORD /* ### check "using" status */
-
-/* Never tested! */
-#  elif defined(CENTERLINE_CLPP) || defined(OBJECTCENTER)
-#    define Q_CC_OC
-#    define Q_NO_USING_KEYWORD
-
-/* CDS++ defines __EDG__ although this is not documented in the Reliant
-   documentation. It also follows conventions like _BOOL and this documented */
-#  elif defined(sinix)
-#    define Q_CC_CDS
-#    define Q_NO_USING_KEYWORD
-
-/* The MIPSpro compiler defines __EDG */
-#  elif defined(__sgi)
-#    define Q_CC_MIPS
-#    define Q_NO_USING_KEYWORD /* ### check "using" status */
-#    define Q_NO_TEMPLATE_FRIENDS
-#    if defined(_COMPILER_VERSION) && (_COMPILER_VERSION >= 740)
-#      define Q_OUTOFLINE_TEMPLATE inline
-#      pragma set woff 3624,3625,3649 /* turn off some harmless warnings */
-#    endif
-#  endif
-
-/* VxWorks' DIAB toolchain has an additional EDG type C++ compiler
-   (see __DCC__ above). This one is for C mode files (__EDG is not defined) */
-#elif defined(_DIAB_TOOL)
-#  define Q_CC_DIAB
-
-/* Never tested! */
-#elif defined(__HIGHC__)
-#  define Q_CC_HIGHC
-
-#elif defined(__SUNPRO_CC) || defined(__SUNPRO_C)
-#  define Q_CC_SUN
-/* 5.0 compiler or better
-    'bool' is enabled by default but can be disabled using -features=nobool
-    in which case _BOOL is not defined
-        this is the default in 4.2 compatibility mode triggered by -compat=4 */
-#  if __SUNPRO_CC >= 0x500
-#    if __SUNPRO_CC < 0x590
-#      define QT_NO_TEMPLATE_TEMPLATE_PARAMETERS
-       /* see http://www.oracle.com/technetwork/systems/cccompare-137792.html */
-#    endif
-#    if __SUNPRO_CC >= 0x590
-#      define Q_ALIGNOF(type)   __alignof__(type)
-#      define Q_TYPEOF(expr)    __typeof__(expr)
-#      define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
-#    endif
-#    if __SUNPRO_CC >= 0x550
-#      define Q_DECL_EXPORT     __global
-#    endif
-#    if __SUNPRO_CC < 0x5a0
-#      define Q_NO_TEMPLATE_FRIENDS
-#    endif
-#    if !defined(_BOOL)
-#      define Q_NO_BOOL_TYPE
-#    endif
-#    if defined(__SUNPRO_CC_COMPAT) && (__SUNPRO_CC_COMPAT <= 4)
-#      define Q_NO_USING_KEYWORD
-#    endif
-#    define Q_C_CALLBACKS
-/* 4.2 compiler or older */
-#  else
-#    define Q_NO_BOOL_TYPE
-#    define Q_NO_EXPLICIT_KEYWORD
-#    define Q_NO_USING_KEYWORD
-#  endif
-
-/* CDS++ does not seem to define __EDG__ or __EDG according to Reliant
-   documentation but nevertheless uses EDG conventions like _BOOL */
-#elif defined(sinix)
-#  define Q_CC_EDG
-#  define Q_CC_CDS
-#  if !defined(_BOOL)
-#    define Q_NO_BOOL_TYPE
-#  endif
-#  define Q_BROKEN_TEMPLATE_SPECIALIZATION
-
-#elif defined(Q_OS_HPUX)
-/* __HP_aCC was not defined in first aCC releases */
-#  if defined(__HP_aCC) || __cplusplus >= 199707L
-#    define Q_NO_TEMPLATE_FRIENDS
-#    define Q_CC_HPACC
-#    if __HP_aCC-0 < 060000
-#      define QT_NO_TEMPLATE_TEMPLATE_PARAMETERS
-#      define Q_DECL_EXPORT     __declspec(dllexport)
-#      define Q_DECL_IMPORT     __declspec(dllimport)
-#    endif
-#    if __HP_aCC-0 >= 061200
-#      define Q_DECL_ALIGN(n) __attribute__((aligned(n)))
-#    endif
-#    if __HP_aCC-0 >= 062000
-#      define Q_DECL_EXPORT     __attribute__((visibility("default")))
-#      define Q_DECL_HIDDEN     __attribute__((visibility("hidden")))
-#      define Q_DECL_IMPORT     Q_DECL_EXPORT
-#    endif
-#  else
-#    define Q_CC_HP
-#    define Q_NO_BOOL_TYPE
-#    define Q_FULL_TEMPLATE_INSTANTIATION
-#    define Q_BROKEN_TEMPLATE_SPECIALIZATION
-#    define Q_NO_EXPLICIT_KEYWORD
-#  endif
-#  define Q_NO_USING_KEYWORD /* ### check "using" status */
 
 #else
-#  error "Qt has not been tested with this compiler - talk to qt-bugs@trolltech.com"
+#  error "Qt has not been tested with this compiler"
 #endif
 
 /*
@@ -622,29 +324,7 @@ QT_USE_NAMESPACE
  *  http://isocpp.org/std/standing-documents/sd-6-sg10-feature-test-recommendations
  */
 
-#ifdef Q_CC_INTEL
-#  if __INTEL_COMPILER < 1200
-#    define Q_NO_TEMPLATE_FRIENDS
-#  endif
-#  if __cplusplus >= 201103L
-#    if __INTEL_COMPILER >= 1100
-#      define Q_COMPILER_RVALUE_REFS
-#      define Q_COMPILER_EXTERN_TEMPLATES
-#      define Q_COMPILER_DECLTYPE
-#    elif __INTEL_COMPILER >= 1200
-#      define Q_COMPILER_VARIADIC_TEMPLATES
-#      define Q_COMPILER_AUTO_TYPE
-#      define Q_COMPILER_DEFAULT_DELETE_MEMBERS
-#      define Q_COMPILER_CLASS_ENUM
-#      define Q_COMPILER_LAMBDA
-#    endif
-#    if __INTEL_COMPILER >= 1210
-#      define Q_COMPILER_NULLPTR
-#    endif
-#  endif
-#endif
-
-#if defined(Q_CC_CLANG) && !defined(Q_CC_INTEL)
+#if defined(Q_CC_CLANG)
 #  if __cplusplus >= 201103L || defined(__GXX_EXPERIMENTAL_CXX0X__)
     /* Detect C++ features using __has_feature(), see http://clang.llvm.org/docs/LanguageExtensions.html#cxx11 */
 #    if __has_feature(cxx_auto_type)
@@ -688,7 +368,7 @@ QT_USE_NAMESPACE
 #  endif
 #endif
 
-#if defined(Q_CC_GNU) && !defined(Q_CC_INTEL) && !defined(Q_CC_CLANG)
+#if defined(Q_CC_GNU) && !defined(Q_CC_CLANG)
 #  if defined(__GXX_EXPERIMENTAL_CXX0X__) || __cplusplus >= 201103L
      /* C++0x features supported in GCC 4.3: */
 #    define Q_COMPILER_RVALUE_REFS
@@ -751,7 +431,7 @@ QT_USE_NAMESPACE
 #endif
 
 #ifndef Q_REQUIRED_RESULT
-#  if defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
+#  if defined(Q_CC_GNU)
 #    define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  else
 #    define Q_REQUIRED_RESULT
@@ -834,40 +514,11 @@ QT_END_INCLUDE_NAMESPACE
 #endif
 
 /*
-   Constant bool values
-*/
-
-#ifndef QT_LINUXBASE /* the LSB defines TRUE and FALSE for us */
-/* Symbian OS defines TRUE = 1 and FALSE = 0,
-redefine to built-in booleans to make autotests work properly */
-#  ifndef TRUE
-#   define TRUE true
-#   define FALSE false
-#  endif
-#endif
-
-/*
-   Proper for-scoping in MIPSpro CC
-*/
-#ifndef QT_NO_KEYWORDS
-#  if defined(Q_CC_MIPS) || (defined(Q_CC_HPACC) && defined(__ia64))
-#    define for if(0){}else for
-#  endif
-#endif
-
-/*
-   Leftovers from workaround for static const members on MSVC++
-*/
-
-#define QT_STATIC_CONST static const
-#define QT_STATIC_CONST_IMPL const
-
-/*
    Warnings and errors when using deprecated methods
 */
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
-#elif defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
+#elif defined(Q_CC_GNU)
 #  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #else
 #  define Q_DECL_DEPRECATED
@@ -916,7 +567,7 @@ redefine to built-in booleans to make autotests work properly */
 #  define QT_ASCII_CAST_WARN_CONSTRUCTOR
 #endif
 
-#if defined(QT_ARCH_I386) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(Q_CC_INTEL)
+#if defined(QT_ARCH_I386) && (defined(Q_CC_GNU) || defined(Q_CC_CLANG))
 #  define QT_FASTCALL __attribute__((regparm(3)))
 #else
 #  define QT_FASTCALL
@@ -1167,10 +818,10 @@ Q_CORE_EXPORT void qBadAlloc();
 template <typename T>
 inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 
-#if (defined(Q_CC_GNU) && !defined(Q_OS_SOLARIS)) || defined(Q_CC_HPACC) || defined(Q_CC_DIAB)
+#if defined(Q_CC_GNU) && !defined(Q_OS_SOLARIS)
 #  define Q_FUNC_INFO __PRETTY_FUNCTION__
 #else
-#   if defined(Q_OS_SOLARIS) || defined(Q_CC_XLC)
+#   if defined(Q_OS_SOLARIS)
 #      define Q_FUNC_INFO __FILE__ "(line number unavailable)"
 #   else
         /* These two macros makes it possible to turn the builtin line expander into a
@@ -1179,12 +830,8 @@ inline T *q_check_ptr(T *p) { Q_CHECK_PTR(p); return p; }
 #       define QT_STRINGIFY(x) QT_STRINGIFY2(x)
 #       define Q_FUNC_INFO __FILE__ ":" QT_STRINGIFY(__LINE__)
 #   endif
-    /* The MIPSpro postpones macro expansion, and therefore
-       macros must be in scope when being used. */
-#   if !defined(Q_CC_MIPS)
-#       undef QT_STRINGIFY2
-#       undef QT_STRINGIFY
-#   endif
+#   undef QT_STRINGIFY2
+#   undef QT_STRINGIFY
 #endif
 
 enum QtMsgType { QtDebugMsg, QtWarningMsg, QtCriticalMsg, QtFatalMsg, QtSystemMsg = QtCriticalMsg };
@@ -1597,81 +1244,7 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#if defined(Q_CC_GNU) && !defined(Q_CC_INTEL)
-/* make use of typeof-extension */
-template <typename T>
-class QForeachContainer {
-public:
-    inline QForeachContainer(const T& t) : c(t), brk(0), i(c.begin()), e(c.end()) { }
-    const T c;
-    int brk;
-    typename T::const_iterator i, e;
-};
-
-#define Q_FOREACH(variable, container)                                \
-for (QForeachContainer<__typeof__(container)> _container_(container); \
-     !_container_.brk && _container_.i != _container_.e;              \
-     __extension__  ({ ++_container_.brk; ++_container_.i; }))        \
-    for (variable = *_container_.i;; __extension__ ({--_container_.brk; break;}))
-
-#else
-
-struct QForeachContainerBase {};
-
-template <typename T>
-class QForeachContainer : public QForeachContainerBase {
-public:
-    inline QForeachContainer(const T& t): c(t), brk(0), i(c.begin()), e(c.end()){};
-    const T c;
-    mutable int brk;
-    mutable typename T::const_iterator i, e;
-    inline bool condition() const { return (!brk++ && i != e); }
-};
-
-template <typename T> inline T *qForeachPointer(const T &) { return 0; }
-
-template <typename T> inline QForeachContainer<T> qForeachContainerNew(const T& t)
-{ return QForeachContainer<T>(t); }
-
-template <typename T>
-inline const QForeachContainer<T> *qForeachContainer(const QForeachContainerBase *base, const T *)
-{ return static_cast<const QForeachContainer<T> *>(base); }
-
-#if defined(Q_CC_MIPS)
-/*
-   Proper for-scoping in MIPSpro CC
-*/
-#  define Q_FOREACH(variable,container)                                                             \
-    if(0){}else                                                                                     \
-    for (const QForeachContainerBase &_container_ = qForeachContainerNew(container);                \
-         qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->condition();       \
-         ++qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i)               \
-        for (variable = *qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i; \
-             qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk;           \
-             --qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk)
-
-#elif defined(Q_CC_DIAB)
-// VxWorks DIAB generates unresolvable symbols, if container is a function call
-#  define Q_FOREACH(variable,container)                                                             \
-    if(0){}else                                                                                     \
-    for (const QForeachContainerBase &_container_ = qForeachContainerNew(container);                \
-         qForeachContainer(&_container_, (__typeof__(container) *) 0)->condition();       \
-         ++qForeachContainer(&_container_, (__typeof__(container) *) 0)->i)               \
-        for (variable = *qForeachContainer(&_container_, (__typeof__(container) *) 0)->i; \
-             qForeachContainer(&_container_, (__typeof__(container) *) 0)->brk;           \
-             --qForeachContainer(&_container_, (__typeof__(container) *) 0)->brk)
-
-#else
-#  define Q_FOREACH(variable, container) \
-    for (const QForeachContainerBase &_container_ = qForeachContainerNew(container); \
-         qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->condition();       \
-         ++qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i)               \
-        for (variable = *qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i; \
-             qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk;           \
-             --qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk)
-#endif // DIAB || MIPSpro
-
-#endif
+#define Q_FOREACH(variable, container) for (variable: container)
 
 #define Q_FOREVER for(;;)
 #ifndef QT_NO_KEYWORDS
@@ -1767,12 +1340,6 @@ Q_CORE_EXPORT int qrand();
 #    define Q_OF_ELF
 #  endif
 #endif
-
-namespace QtPrivate {
-//like std::enable_if
-template <bool B, typename T = void> struct QEnableIf;
-template <typename T> struct QEnableIf<true, T> { typedef T Type; };
-}
 
 QT_END_NAMESPACE
 QT_END_HEADER

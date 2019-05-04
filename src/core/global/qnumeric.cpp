@@ -43,8 +43,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#if !defined(Q_CC_MIPS)
-
 /*!
     Returns the bit pattern for an infinite number as a double.
 */
@@ -101,82 +99,5 @@ Q_CORE_EXPORT double qQNaN()
             : qt_le_qnan_bytes.d);
 #endif
 }
-
-#else // Q_CC_MIPS
-
-
-/*!
-    Returns the bit pattern for an infinite number as a double.
-*/
-static const unsigned char qt_be_inf_bytes[] = { 0x7f, 0xf0, 0, 0, 0, 0, 0, 0 };
-static const unsigned char qt_le_inf_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf0, 0x7f };
-#ifdef QT_ARMFPA
-static const unsigned char qt_armfpa_inf_bytes[] = { 0, 0, 0xf0, 0x7f, 0, 0, 0, 0 };
-#endif
-Q_CORE_EXPORT double qInf()
-{
-    const unsigned char *bytes;
-#ifdef QT_ARMFPA
-    bytes = qt_armfpa_inf_bytes;
-#else
-    bytes = (QSysInfo::ByteOrder == QSysInfo::BigEndian
-             ? qt_be_inf_bytes
-             : qt_le_inf_bytes);
-#endif
-
-    union { unsigned char c[8]; double d; } returnValue;
-    memcpy(returnValue.c, bytes, sizeof(returnValue.c));
-    return returnValue.d;
-}
-
-/*!
-    Returns the bit pattern of a signalling NaN as a double.
-*/
-static const unsigned char qt_be_snan_bytes[] = { 0x7f, 0xf8, 0, 0, 0, 0, 0, 0 };
-static const unsigned char qt_le_snan_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf8, 0x7f };
-#ifdef QT_ARMFPA
-static const unsigned char qt_armfpa_snan_bytes[] = { 0, 0, 0xf8, 0x7f, 0, 0, 0, 0 };
-#endif
-Q_CORE_EXPORT double qSNaN()
-{
-    const unsigned char *bytes;
-#ifdef QT_ARMFPA
-    bytes = qt_armfpa_snan_bytes;
-#else
-    bytes = (QSysInfo::ByteOrder == QSysInfo::BigEndian
-             ? qt_be_snan_bytes
-             : qt_le_snan_bytes);
-#endif
-
-    union { unsigned char c[8]; double d; } returnValue;
-    memcpy(returnValue.c, bytes, sizeof(returnValue.c));
-    return returnValue.d;
-}
-
-/*!
-    Returns the bit pattern of a quiet NaN as a double.
-*/
-static const unsigned char qt_be_qnan_bytes[] = { 0xff, 0xf8, 0, 0, 0, 0, 0, 0 };
-static const unsigned char qt_le_qnan_bytes[] = { 0, 0, 0, 0, 0, 0, 0xf8, 0xff };
-#ifdef QT_ARMFPA
-static const unsigned char qt_armfpa_qnan_bytes[] = { 0, 0, 0xf8, 0xff, 0, 0, 0, 0 };
-#endif
-Q_CORE_EXPORT double qQNaN()
-{
-    const unsigned char *bytes;
-#ifdef QT_ARMFPA
-    bytes = qt_armfpa_qnan_bytes;
-#else
-    bytes = (QSysInfo::ByteOrder == QSysInfo::BigEndian
-             ? qt_be_qnan_bytes
-             : qt_le_qnan_bytes);
-#endif
-
-    union { unsigned char c[8]; double d; } returnValue;
-    memcpy(returnValue.c, bytes, sizeof(returnValue.c));
-    return returnValue.d;
-}
-
-#endif // Q_CC_MIPS
 
 QT_END_NAMESPACE

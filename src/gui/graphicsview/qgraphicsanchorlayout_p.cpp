@@ -610,10 +610,10 @@ QSimplexConstraint *GraphPath::constraint(const GraphPath &path) const
 QString GraphPath::toString() const
 {
     QString string(QLatin1String("Path: "));
-    foreach(AnchorData *edge, positives)
+    foreach(AnchorData *edge: positives)
         string += QString::fromAscii(" (+++) %1").arg(edge->toString());
 
-    foreach(AnchorData *edge, negatives)
+    foreach(AnchorData *edge: negatives)
         string += QString::fromAscii(" (---) %1").arg(edge->toString());
 
     return string;
@@ -1915,8 +1915,7 @@ void QGraphicsAnchorLayoutPrivate::removeVertex(QGraphicsLayoutItem *item, Qt::A
     if (AnchorVertex *v = internalVertex(item, edge)) {
         Graph<AnchorVertex, AnchorData> &g = graph[edgeOrientation(edge)];
         const QList<AnchorVertex *> allVertices = graph[edgeOrientation(edge)].adjacentVertices(v);
-        AnchorVertex *v2;
-        foreach (v2, allVertices) {
+        foreach (AnchorVertex *v2, allVertices) {
             g.removeEdge(v, v2);
             removeInternalVertex(item, edge);
             removeInternalVertex(v2->m_item, v2->m_edge);

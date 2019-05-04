@@ -50,6 +50,8 @@
 #include <QtCore/qtconcurrentrunbase.h>
 #include <QtCore/qtconcurrentstoredfunctioncall.h>
 
+#include <type_traits>
+
 QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
@@ -89,7 +91,7 @@ QFuture<T> run(T (*functionPointer)(Param1, Param2, Param3, Param4, Param5), con
 #if defined(Q_COMPILER_DECLTYPE) && defined(Q_COMPILER_AUTO_FUNCTION)
 
 template <typename Functor>
-auto run(Functor functor) -> typename QtPrivate::QEnableIf<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor())> >::Type
+auto run(Functor functor) -> typename std::enable_If<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor())> >::Type
 {
     typedef decltype(functor()) result_type;
     return (new StoredFunctorCall0<result_type, Functor>(functor))->start();
@@ -97,7 +99,7 @@ auto run(Functor functor) -> typename QtPrivate::QEnableIf<!QtPrivate::HasResult
 
 template <typename Functor, typename Arg1>
 auto run(Functor functor, const Arg1 &arg1)
-    -> typename QtPrivate::QEnableIf<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1))> >::Type
+    -> typename std::enable_If<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1))> >::Type
 {
     typedef decltype(functor(arg1)) result_type;
     return (new StoredFunctorCall1<result_type, Functor, Arg1>(functor, arg1))->start();
@@ -105,7 +107,7 @@ auto run(Functor functor, const Arg1 &arg1)
 
 template <typename Functor, typename Arg1, typename Arg2>
 auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2)
-    -> typename QtPrivate::QEnableIf<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2))> >::Type
+    -> typename std::enable_If<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2))> >::Type
 {
     typedef decltype(functor(arg1, arg2)) result_type;
     return (new StoredFunctorCall2<result_type, Functor, Arg1, Arg2>(functor, arg1, arg2))->start();
@@ -113,7 +115,7 @@ auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2)
 
 template <typename Functor, typename Arg1, typename Arg2, typename Arg3>
 auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2, const Arg3 &arg3)
-    -> typename QtPrivate::QEnableIf<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2, arg3))> >::Type
+    -> typename std::enable_If<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2, arg3))> >::Type
 {
     typedef decltype(functor(arg1, arg2, arg3)) result_type;
     return (new StoredFunctorCall3<result_type, Functor, Arg1, Arg2, Arg3>(functor, arg1, arg2, arg3))->start();
@@ -121,7 +123,7 @@ auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2, const Arg3 &arg3)
 
 template <typename Functor, typename Arg1, typename Arg2, typename Arg3, typename Arg4>
 auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2, const Arg3 &arg3, const Arg4 &arg4)
-    -> typename QtPrivate::QEnableIf<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2, arg3, arg4))> >::Type
+    -> typename std::enable_If<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2, arg3, arg4))> >::Type
 {
     typedef decltype(functor(arg1, arg2, arg3, arg4)) result_type;
     return (new StoredFunctorCall4<result_type, Functor, Arg1, Arg2, Arg3, Arg4>(functor, arg1, arg2, arg3, arg4))->start();
@@ -129,7 +131,7 @@ auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2, const Arg3 &arg3, 
 
 template <typename Functor, typename Arg1, typename Arg2, typename Arg3, typename Arg4, typename Arg5>
 auto run(Functor functor, const Arg1 &arg1, const Arg2 &arg2, const Arg3 &arg3, const Arg4 &arg4, const Arg5 &arg5)
-    -> typename QtPrivate::QEnableIf<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2, arg3, arg4, arg5))> >::Type
+    -> typename std::enable_If<!QtPrivate::HasResultType<Functor>::Value, QFuture<decltype(functor(arg1, arg2, arg3, arg4, arg5))> >::Type
 {
     typedef decltype(functor(arg1, arg2, arg3, arg4, arg5)) result_type;
     return (new StoredFunctorCall5<result_type, Functor, Arg1, Arg2, Arg3, Arg4, Arg5>(functor, arg1, arg2, arg3, arg4, arg5))->start();
