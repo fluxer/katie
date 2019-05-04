@@ -199,25 +199,6 @@ const uint stdDesktopEventMask =                        // X event mask
            PropertyChangeMask
       );
 
-
-/*
-  The qt_ functions below are implemented in qwidgetcreate_x11.cpp.
-*/
-
-Window qt_XCreateWindow(const QWidget *creator,
-                         Display *display, Window parent,
-                         int x, int y, uint w, uint h,
-                         int borderwidth, int depth,
-                         uint windowclass, Visual *visual,
-                         ulong valuemask, XSetWindowAttributes *attributes);
-Window qt_XCreateSimpleWindow(const QWidget *creator,
-                               Display *display, Window parent,
-                               int x, int y, uint w, uint h, int borderwidth,
-                               ulong border, ulong background);
-void qt_XDestroyWindow(const QWidget *destroyer,
-                        Display *display, Window window);
-
-
 static void qt_insert_sip(QWidget* scrolled_widget, int dx, int dy)
 {
     if (!scrolled_widget->isWindow() && !scrolled_widget->internalWinId())
@@ -614,23 +595,23 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         }
 #endif
         if (xinfo.defaultVisual() && xinfo.defaultColormap()) {
-            id = (WId)qt_XCreateSimpleWindow(q, dpy, parentw,
-                                             safeRect.left(), safeRect.top(),
-                                             safeRect.width(), safeRect.height(),
-                                             0,
-                                             BlackPixel(dpy, xinfo.screen()),
-                                             WhitePixel(dpy, xinfo.screen()));
+            id = (WId)XCreateSimpleWindow(dpy, parentw,
+                                            safeRect.left(), safeRect.top(),
+                                            safeRect.width(), safeRect.height(),
+                                            0,
+                                            BlackPixel(dpy, xinfo.screen()),
+                                            WhitePixel(dpy, xinfo.screen()));
         } else {
             wsa.background_pixel = WhitePixel(dpy, xinfo.screen());
             wsa.border_pixel = BlackPixel(dpy, xinfo.screen());
             wsa.colormap = xinfo.colormap();
-            id = (WId)qt_XCreateWindow(q, dpy, parentw,
-                                       safeRect.left(), safeRect.top(),
-                                       safeRect.width(), safeRect.height(),
-                                       0, xinfo.depth(), InputOutput,
-                                       (Visual *) xinfo.visual(),
-                                       CWBackPixel|CWBorderPixel|CWColormap,
-                                       &wsa);
+            id = (WId)XCreateWindow(dpy, parentw,
+                                    safeRect.left(), safeRect.top(),
+                                    safeRect.width(), safeRect.height(),
+                                    0, xinfo.depth(), InputOutput,
+                                    (Visual *) xinfo.visual(),
+                                    CWBackPixel|CWBorderPixel|CWColormap,
+                                    &wsa);
         }
 
         setWinId(id);                                // set widget id/handle + hd
@@ -865,7 +846,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
         XShapeCombineRegion(qt_x11Data->display, q->internalWinId(), ShapeBounding, 0, 0,
                             extra->mask.handle(), ShapeSet);
     if (destroyw) {
-        qt_XDestroyWindow(q, dpy, destroyw);
+        XDestroyWindow(dpy, destroyw);
         if (QTLWExtra *topData = maybeTopData()) {
 #ifndef QT_NO_XSYNC
             if (topData->syncUpdateCounter)
@@ -1025,7 +1006,7 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
             if (isWindow())
                 qt_x11Data->dndEnable(this, false);
             if (destroyWindow)
-                qt_XDestroyWindow(this, qt_x11Data->display, data->winid);
+                XDestroyWindow(qt_x11Data->display, data->winid);
         }
         QT_TRY {
             d->setWinId(0);
@@ -1208,7 +1189,7 @@ void QWidgetPrivate::setParent_sys(QWidget *parent, Qt::WindowFlags f)
                 delete [] cmw;
             }
 
-            qt_XDestroyWindow(q, qt_x11Data->display, old_winid);
+            XDestroyWindow(qt_x11Data->display, old_winid);
         }
     }
 
