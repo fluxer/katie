@@ -1005,7 +1005,7 @@ void QWidget::destroy(bool destroyWindow, bool destroySubWindows)
         } else {
             if (isWindow())
                 qt_x11Data->dndEnable(this, false);
-            if (destroyWindow)
+            if (destroyWindow && data && data->winid)
                 XDestroyWindow(qt_x11Data->display, data->winid);
         }
         QT_TRY {
