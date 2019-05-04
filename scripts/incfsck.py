@@ -82,6 +82,7 @@ incmap = {
         'QXmlStreamWriter': 'qxmlstream.h',
         'QXmlStreamAttribute': 'qxmlstream.h',
         'QTextDecoder': 'qtextcodec.h',
+        'QJsonParseError': 'qjsondocument.h',
         },
     'QtGui': {
         'QHBoxLayout': 'qboxlayout.h',

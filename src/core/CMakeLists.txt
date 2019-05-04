@@ -233,6 +233,7 @@ set(CORE_PUBLIC_HEADERS
     QMetaEnum
     QMutexLocker
     QScopedArrayPointer
+    QJsonParseError
     # obsolete
     QFlags
     Qt
