@@ -62,8 +62,7 @@ public:
         Wildcard,
         FixedString,
         RegExp2,
-        WildcardUnix,
-        W3CXmlSchema11 };
+        WildcardUnix };
     enum CaretMode { CaretAtZero, CaretAtOffset, CaretWontMatch };
 
     QRegExp();
