@@ -281,7 +281,7 @@ set_package_properties(PCRE PROPERTIES
     TYPE REQUIRED
 )
 
-find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm XShape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
+find_package(X11 COMPONENTS ICE SM Xcursor Xext Xfixes XSync XShm Xshape Xi Xinerama Xrandr Xrender X11 Xtst Xt)
 set_package_properties(X11 PROPERTIES
     PURPOSE "Required for X11/X.Org integration support"
     DESCRIPTION "Open source implementation of the X Window System"
