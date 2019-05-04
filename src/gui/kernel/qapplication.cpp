@@ -255,8 +255,7 @@ QApplicationPrivate::~QApplicationPrivate()
             hasPendingEvents(),
             notify(),
             x11EventFilter(),
-            x11ProcessEvent(),
-            winEventFilter().
+            x11ProcessEvent().
 
         \row
         \o  GUI Styles
@@ -314,8 +313,7 @@ QApplicationPrivate::~QApplicationPrivate()
     \enum QApplication::Type
 
     \value Tty a console application
-    \value GuiClient a GUI client application
-    \value GuiServer a GUI server application (for Qt for Embedded Linux)
+    \value Gui a GUI client application
 */
 
 /*!
@@ -594,10 +592,9 @@ void QApplicationPrivate::process_cmdline()
     \sa arguments()
 */
 
-QApplication::QApplication(int &argc, char **argv)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, GuiClient))
-{ Q_D(QApplication); d->construct(); }
-
+extern void qInitDrawhelper();
+extern int qRegisterGuiVariant();
+extern int qUnregisterGuiVariant();
 
 /*!
     Constructs an application object with \a argc command line arguments in
@@ -609,38 +606,18 @@ QApplication::QApplication(int &argc, char **argv)
     be greater than zero and \a argv must contain at least one valid character
     string.
 
-    Set \a GUIenabled to false for programs without a graphical user interface
-    that should be able to run without a window system.
+    Use \a Tty type for programs without a graphical user interface that should
+    be able to run without a window system.
 
-    On X11, the window system is initialized if \a GUIenabled is true. If
-    \a GUIenabled is false, the application does not connect to the X server.
-    On Windows and Mac OS, currently the window system is always initialized,
-    regardless of the value of GUIenabled. This may change in future versions
-    of Qt.
+    On X11, the window system is initialized if type is \a GUI, otherwise the
+    application does not connect to the X server.
 
     The following example shows how to create an application that uses a
     graphical interface when available.
 
     \snippet doc/src/snippets/code/src_gui_kernel_qapplication.cpp 0
 */
-
-QApplication::QApplication(int &argc, char **argv, bool GUIenabled)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, GUIenabled ? GuiClient : Tty))
-{ Q_D(QApplication); d->construct();}
-
-
-
-/*!
-    Constructs an application object with \a argc command line arguments in
-    \a argv.
-
-    \warning The data referred to by \a argc and \a argv must stay valid for
-    the entire lifetime of the QApplication object. In addition, \a argc must
-    be greater than zero and \a argv must contain at least one valid character
-    string.
-*/
-
-QApplication::QApplication(int &argc, char **argv, Type type)
+QApplication::QApplication(int &argc, char **argv, QApplication::Type type)
     : QCoreApplication(*new QApplicationPrivate(argc, argv, type))
 { Q_D(QApplication); d->construct(); }
 
@@ -661,106 +638,13 @@ void QApplicationPrivate::construct(
     if (graphics_system_name.isEmpty())
         graphics_system_name = QString::fromLocal8Bit(qgetenv("QT_GRAPHICSSYSTEM"));
 
-    // Must be called before initialize()
+    // Must be called before initializing
     qt_init(this, qt_appType
 #ifdef Q_WS_X11
             , dpy, visual, cmap
 #endif
             );
-    initialize();
-    eventDispatcher->startingUp();
 
-
-
-#ifndef QT_NO_LIBRARY
-    if(load_testability) {
-        QLibrary testLib(QLatin1String("qttestability"));
-        if (testLib.load()) {
-            typedef void (*TasInitialize)(void);
-            TasInitialize initFunction = (TasInitialize)testLib.resolve("qt_testability_init");
-            if (initFunction) {
-                initFunction();
-            } else {
-                qCritical("Library qttestability resolve failed!");
-            }
-        } else {
-            qCritical("Library qttestability load failed!");
-        }
-    }
-
-    //make sure the plugin is loaded
-    if (qt_is_gui_used)
-        qt_guiPlatformPlugin();
-#endif
-
-}
-
-#if defined(Q_WS_X11)
-// ### a string literal is a cont char*
-// ### using it as a char* is wrong and could lead to segfaults
-// ### if aargv is modified someday
-// ########## make it work with argc == argv == 0
-static int aargc = 1;
-static char *aargv[] = { (char*)"unknown", 0 };
-
-/*!
-    \fn QApplication::QApplication(Display* display, Qt::HANDLE visual, Qt::HANDLE colormap)
-
-    Creates an application, given an already open display \a display. If
-    \a visual and \a colormap are non-zero, the application will use those
-    values as the default Visual and Colormap contexts.
-
-    \warning Qt only supports TrueColor visuals at depths higher than 8
-    bits-per-pixel.
-
-    This function is only available on X11.
-*/
-QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap)
-    : QCoreApplication(*new QApplicationPrivate(aargc, aargv, GuiClient))
-{
-    if (! dpy)
-        qWarning("QApplication: Invalid Display* argument");
-    Q_D(QApplication);
-    d->construct(dpy, visual, colormap);
-}
-
-/*!
-    \fn QApplication::QApplication(Display *display, int &argc, char **argv,
-        Qt::HANDLE visual, Qt::HANDLE colormap)
-
-    Creates an application, given an already open \a display and using \a argc
-    command line arguments in \a argv. If \a visual and \a colormap are
-    non-zero, the application will use those values as the default Visual
-    and Colormap contexts.
-
-    \warning Qt only supports TrueColor visuals at depths higher than 8
-    bits-per-pixel.
-
-    This function is only available on X11.
-*/
-QApplication::QApplication(Display *dpy, int &argc, char **argv,
-                           Qt::HANDLE visual, Qt::HANDLE colormap)
-    : QCoreApplication(*new QApplicationPrivate(argc, argv, GuiClient))
-{
-    if (! dpy)
-        qWarning("QApplication: Invalid Display* argument");
-    Q_D(QApplication);
-    d->construct(dpy, visual, colormap);;
-}
-
-#endif // Q_WS_X11
-
-extern void qInitDrawhelper();
-extern int qRegisterGuiVariant();
-extern int qUnregisterGuiVariant();
-
-/*!
-  \fn void QApplicationPrivate::initialize()
-
-  Initializes the QApplication object, called from the constructors.
-*/
-void QApplicationPrivate::initialize()
-{
     QWidgetPrivate::mapper = new QWidgetMapper;
     QWidgetPrivate::allWidgets = new QWidgetSet;
 
@@ -793,15 +677,91 @@ void QApplicationPrivate::initialize()
     QApplicationPrivate::wheel_scroll_lines = 3;
 #endif
 
-
     if (qt_is_gui_used)
         initializeMultitouch();
+
+    eventDispatcher->startingUp();
+
+#ifndef QT_NO_LIBRARY
+    if(load_testability) {
+        QLibrary testLib(QLatin1String("qttestability"));
+        if (testLib.load()) {
+            typedef void (*TasInitialize)(void);
+            TasInitialize initFunction = (TasInitialize)testLib.resolve("qt_testability_init");
+            if (initFunction) {
+                initFunction();
+            } else {
+                qCritical("Library qttestability resolve failed!");
+            }
+        } else {
+            qCritical("Library qttestability load failed!");
+        }
+    }
+
+    //make sure the plugin is loaded
+    if (qt_is_gui_used)
+        qt_guiPlatformPlugin();
+#endif
+}
+
+#if defined(Q_WS_X11)
+// ### a string literal is a cont char*
+// ### using it as a char* is wrong and could lead to segfaults
+// ### if aargv is modified someday
+// ########## make it work with argc == argv == 0
+static int aargc = 1;
+static char *aargv[] = { (char*)"unknown", 0 };
+
+/*!
+    \fn QApplication::QApplication(Display* display, Qt::HANDLE visual, Qt::HANDLE colormap)
+
+    Creates an application, given an already open display \a display. If
+    \a visual and \a colormap are non-zero, the application will use those
+    values as the default Visual and Colormap contexts.
+
+    \warning Qt only supports TrueColor visuals at depths higher than 8
+    bits-per-pixel.
+
+    This function is only available on X11.
+*/
+QApplication::QApplication(Display* dpy, Qt::HANDLE visual, Qt::HANDLE colormap)
+    : QCoreApplication(*new QApplicationPrivate(aargc, aargv, QApplication::Gui))
+{
+    if (! dpy)
+        qWarning("QApplication: Invalid Display* argument");
+    Q_D(QApplication);
+    d->construct(dpy, visual, colormap);
 }
 
 /*!
-    Returns the type of application (\l Tty, GuiClient, or
-    GuiServer). The type is set when constructing the QApplication
-    object.
+    \fn QApplication::QApplication(Display *display, int &argc, char **argv,
+        Qt::HANDLE visual, Qt::HANDLE colormap)
+
+    Creates an application, given an already open \a display and using \a argc
+    command line arguments in \a argv. If \a visual and \a colormap are
+    non-zero, the application will use those values as the default Visual
+    and Colormap contexts.
+
+    \warning Qt only supports TrueColor visuals at depths higher than 8
+    bits-per-pixel.
+
+    This function is only available on X11.
+*/
+QApplication::QApplication(Display *dpy, int &argc, char **argv,
+                           Qt::HANDLE visual, Qt::HANDLE colormap)
+    : QCoreApplication(*new QApplicationPrivate(argc, argv, QApplication::Gui))
+{
+    if (! dpy)
+        qWarning("QApplication: Invalid Display* argument");
+    Q_D(QApplication);
+    d->construct(dpy, visual, colormap);;
+}
+
+#endif // Q_WS_X11
+
+/*!
+    Returns the type of application (\l Tty or Gui). The type is set when
+    constructing the QApplication object.
 */
 QApplication::Type QApplication::type()
 {

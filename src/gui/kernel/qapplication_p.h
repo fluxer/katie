@@ -131,7 +131,6 @@ public:
                    Display *dpy = 0, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0
 #endif
                    );
-    void initialize();
     void process_cmdline();
 
 #if defined(Q_WS_X11)

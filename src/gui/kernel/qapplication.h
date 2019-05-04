@@ -58,18 +58,10 @@ QT_BEGIN_NAMESPACE
 class QSessionManager;
 class QDesktopWidget;
 class QStyle;
-class QEventLoop;
 class QIcon;
-template <typename T> class QList;
 class QLocale;
 
-class QApplication;
 class QApplicationPrivate;
-#if defined(qApp)
-#undef qApp
-#endif
-#define qApp (static_cast<QApplication *>(QCoreApplication::instance()))
-
 
 class Q_GUI_EXPORT QApplication : public QCoreApplication
 {
@@ -92,12 +84,9 @@ class Q_GUI_EXPORT QApplication : public QCoreApplication
     Q_PROPERTY(bool autoSipEnabled READ autoSipEnabled WRITE setAutoSipEnabled)
 
 public:
-    enum Type { Tty, GuiClient, GuiServer };
+    enum Type { Tty, Gui };
 
-
-    QApplication(int &argc, char **argv);
-    QApplication(int &argc, char **argv, bool GUIenabled);
-    QApplication(int &argc, char **argv, Type);
+    QApplication(int &argc, char **argv, Type = Gui);
 #if defined(Q_WS_X11)
     QApplication(Display* dpy, Qt::HANDLE visual = 0, Qt::HANDLE cmap = 0);
     QApplication(Display *dpy, int &argc, char **argv, Qt::HANDLE visual = 0, Qt::HANDLE cmap= 0);
@@ -280,6 +269,11 @@ private:
     Q_PRIVATE_SLOT(d_func(), void _q_readRX71MultiTouchEvents())
 #endif
 };
+
+#if defined(qApp)
+#undef qApp
+#endif
+#define qApp (static_cast<QApplication *>(QCoreApplication::instance()))
 
 QT_END_NAMESPACE
 
