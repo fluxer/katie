@@ -50,7 +50,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class Q_CORE_EXPORT QTimer : public QObject
 {
     Q_OBJECT
@@ -78,7 +77,6 @@ public Q_SLOTS:
     void start();
     void stop();
 
-
 Q_SIGNALS:
     void timeout();
 
@@ -91,9 +89,9 @@ private:
     inline int startTimer(int){ return -1;}
     inline void killTimer(int){}
 
-    int id, inter, del;
-    uint single : 1;
-    uint nulltimer : 1;
+    int id;
+    int inter;
+    bool single;
 };
 
 inline void QTimer::setSingleShot(bool asingleShot) { single = asingleShot; }

@@ -142,7 +142,7 @@ static const int INV_TIMER = -1;                // invalid timer id
 */
 
 QTimer::QTimer(QObject *parent)
-    : QObject(parent), id(INV_TIMER), inter(0), del(0), single(0), nulltimer(0)
+    : QObject(parent), id(INV_TIMER), inter(0), single(false)
 {
 }
 
@@ -203,7 +203,6 @@ void QTimer::start()
 {
     if (id != INV_TIMER)                        // stop running timer
         stop();
-    nulltimer = (!inter && single);
     id = QObject::startTimer(inter);
 }
 
