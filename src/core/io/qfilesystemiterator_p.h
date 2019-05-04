@@ -82,10 +82,6 @@ private:
     // Platform-specific data
     QT_DIR *dir;
     QT_DIRENT *dirEntry;
-#if defined(_POSIX_THREAD_SAFE_FUNCTIONS)
-    // for readdir_r
-    QScopedPointer<QT_DIRENT, QScopedPointerPodDeleter> mt_file;
-#endif
     int lastError;
 
     Q_DISABLE_COPY(QFileSystemIterator)
