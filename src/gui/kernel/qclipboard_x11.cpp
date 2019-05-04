@@ -79,10 +79,6 @@
 #include "qdnd_p.h"
 #include <qwidget_p.h>
 
-#ifndef QT_NO_XFIXES
-#include <X11/extensions/Xfixes.h>
-#endif // QT_NO_XFIXES
-
 QT_BEGIN_NAMESPACE
 
 /*****************************************************************************
@@ -388,8 +384,8 @@ static Bool qt_init_timestamp_scanner(Display*, XEvent *event, XPointer arg)
         reinterpret_cast<qt_init_timestamp_data*>(arg);
     switch(event->type)
     {
-    case ButtonPress:
-    case ButtonRelease:
+    case XButtonPress:
+    case XButtonRelease:
         data->timestamp = event->xbutton.time;
         break;
     case MotionNotify:

@@ -49,7 +49,6 @@
 #include "qx11info_x11.h"
 #include <qpixmap_x11_p.h>
 #include <qt_x11_p.h>
-#include <X11/cursorfont.h>
 
 QT_BEGIN_NAMESPACE
 

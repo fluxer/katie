@@ -65,10 +65,21 @@
 #error "cannot include <X11/Xlib.h> before this file"
 #endif
 
+#include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 #include <X11/Xatom.h>
+
+#define XK_MISCELLANY
+#define XK_LATIN1
+#define XK_KOREAN
+#include <X11/keysymdef.h>
+
+#ifndef XK_ISO_Left_Tab
+#define XK_ISO_Left_Tab 0xFE20
+#endif
+
 
 #ifdef index
 #  undef index
@@ -99,6 +110,7 @@
 
 #ifndef QT_NO_XCURSOR
 #include <X11/Xcursor/Xcursor.h>
+#include <X11/cursorfont.h>
 #endif // QT_NO_XCURSOR
 
 #ifndef QT_NO_XSHM
@@ -115,6 +127,10 @@
 
 #ifndef QT_NO_FONTCONFIG
 #include <fontconfig/fontconfig.h>
+#endif
+
+#ifndef QT_NO_SESSIONMANAGER
+#include <X11/SM/SMlib.h>
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -472,7 +488,9 @@ enum {
     XGrayScale = GrayScale,
     XCursorShape = CursorShape,
     XUnsorted = Unsorted,
-    XFontChange = FontChange
+    XFontChange = FontChange,
+    XButtonPress = ButtonPress,
+    XButtonRelease = ButtonRelease
 };
 #undef FocusOut
 #undef FocusIn
@@ -483,6 +501,8 @@ enum {
 #undef CursorShape
 #undef Unsorted
 #undef FontChange
+#undef ButtonPress
+#undef ButtonRelease
 
 Q_DECLARE_TYPEINFO(XPoint, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(XRectangle, Q_PRIMITIVE_TYPE);

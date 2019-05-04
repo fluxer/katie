@@ -50,11 +50,6 @@
 #include "qplatformdefs.h"
 #include "qicon.h"
 
-#if defined(Q_WS_X11)
-#include <qt_x11_p.h>
-#endif
-
-
 QT_BEGIN_NAMESPACE
 
 
@@ -74,11 +69,9 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
 #ifndef QT_NO_LIBRARY
 
         QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
-#ifdef Q_WS_X11
         if (key.isEmpty()) {
             key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
         }
-#endif
 
         if (!key.isEmpty() && QApplication::desktopSettingsAware()) {
             QFactoryLoader loader(QGuiPlatformPluginInterface_iid, QLatin1String("/gui_platform"));
@@ -113,11 +106,7 @@ QGuiPlatformPlugin::~QGuiPlatformPlugin() {}
 /* return the string key to be used by default the application */
 QString QGuiPlatformPlugin::styleName()
 {
-#if defined(Q_WS_X11)
-    if (qt_x11Data->use_xrender)
-        return QLatin1String("cleanlooks");
-#endif
-    return QLatin1String("windows");
+    return QLatin1String("cleanlooks");
 }
 
 /* return an additional default palette  (only work on X11) */
@@ -129,18 +118,13 @@ QPalette QGuiPlatformPlugin::palette()
 /* the default icon theme name for QIcon::fromTheme. */
 QString QGuiPlatformPlugin::systemIconThemeName()
 {
-#ifdef Q_WS_X11
     return QString::fromLatin1("hicolor");
-#else
-    return QString();
-#endif
 }
 
 
 QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
 {
     QStringList paths;
-#if defined(Q_WS_X11)
     QString xdgDirString = QFile::decodeName(getenv("XDG_DATA_DIRS"));
     if (xdgDirString.isEmpty())
         xdgDirString = QLatin1String("/usr/local/share/:/usr/share/");
@@ -157,7 +141,6 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
     QDir homeDir(QDir::homePath() + QLatin1String("/.icons"));
     if (homeDir.exists())
         paths.prepend(homeDir.path());
-#endif
 
     return paths;
 }

@@ -49,11 +49,6 @@
 #include "qevent_p.h"
 #include "qt_x11_p.h"
 
-#define XK_MISCELLANY
-#define XK_LATIN1
-#define XK_KOREAN
-#include <X11/keysymdef.h>
-
 #include <ctype.h>
 
 #ifdef QT_LINUXBASE

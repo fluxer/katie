@@ -81,10 +81,6 @@
 #   include "qtextengine_p.h"
 #endif
 
-#ifdef Q_WS_X11
-#   include <qt_x11_p.h>
-#endif
-
 #include <qstylehelper_p.h>
 
 QT_BEGIN_NAMESPACE

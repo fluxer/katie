@@ -96,9 +96,6 @@
 #include "qt_x11_p.h"
 #include "qx11info_x11.h"
 
-#define XK_MISCELLANY
-#include <X11/keysymdef.h>
-
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -823,10 +820,11 @@ bool QApplicationPrivate::x11_apply_settings()
         settings.endGroup();
     }
 
-    qt_use_rtl_extensions =
-        settings.value(QLatin1String("useRtlExtensions"), false).toBool();
+    qt_use_rtl_extensions = settings.value(QLatin1String("useRtlExtensions"), false).toBool();
 
     settings.endGroup(); // Qt
+
+    QIconLoader::instance()->updateSystemTheme();
 
     return true;
 }
@@ -872,258 +870,6 @@ static void qt_set_input_encoding()
     if(data)
         XFree((char *)data);
 }
-
-// set font, foreground and background from x11 resources. The
-// arguments may override the resource settings.
-static void qt_set_x11_resources(const char* font = 0, const char* fg = 0,
-                                 const char* bg = 0, const char* button = 0)
-{
-
-    QString resFont, resFG, resBG, resButton, resEF, sysFont, selectBackground, selectForeground;
-
-    QApplication::setEffectEnabled(Qt::UI_General, false);
-    QApplication::setEffectEnabled(Qt::UI_AnimateMenu, false);
-    QApplication::setEffectEnabled(Qt::UI_FadeMenu, false);
-    QApplication::setEffectEnabled(Qt::UI_AnimateCombo, false);
-    QApplication::setEffectEnabled(Qt::UI_AnimateTooltip, false);
-    QApplication::setEffectEnabled(Qt::UI_FadeTooltip, false);
-    QApplication::setEffectEnabled(Qt::UI_AnimateToolBox, false);
-
-    bool paletteAlreadySet = false;
-    if (QApplication::desktopSettingsAware()) {
-        // first, read from settings
-        QApplicationPrivate::x11_apply_settings();
-        // the call to QApplication::style() below creates the system
-        // palette, which breaks the logic after the RESOURCE_MANAGER
-        // loop... so I have to save this value to be able to use it later
-        paletteAlreadySet = (QApplicationPrivate::sys_pal != 0);
-
-        // second, parse the RESOURCE_MANAGER property
-        int format;
-        ulong  nitems, after = 1;
-        QString res;
-        long offset = 0;
-        Atom type = XNone;
-
-        while (after > 0) {
-            uchar *data = 0;
-            if (XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(0),
-                                   ATOM(RESOURCE_MANAGER),
-                                   offset, 8192, False, AnyPropertyType,
-                                   &type, &format, &nitems, &after,
-                                   &data) != Success) {
-                res = QString();
-                break;
-            }
-            if (type == XA_STRING)
-                res += QString::fromLatin1((char*)data);
-            else
-                res += QString::fromLocal8Bit((char*)data);
-            offset += 2048; // offset is in 32bit quantities... 8192/4 == 2048
-            if (data)
-                XFree((char *)data);
-        }
-
-        QString key, value;
-        int l = 0, r;
-        QString apn = QString::fromLocal8Bit(appName);
-        QString apc = QString::fromLocal8Bit(appClass);
-        int apnl = apn.length();
-        int apcl = apc.length();
-        int resl = res.length();
-
-        while (l < resl) {
-            r = res.indexOf(QLatin1Char('\n'), l);
-            if (r < 0)
-                r = resl;
-            while (res.at(l).isSpace())
-                l++;
-            bool mine = false;
-            QChar sc = res.at(l + 1);
-            if (res.at(l) == QLatin1Char('*') &&
-                (sc == QLatin1Char('f') || sc == QLatin1Char('b') || sc == QLatin1Char('g') ||
-                 sc == QLatin1Char('F') || sc == QLatin1Char('B') || sc == QLatin1Char('G') ||
-                 sc == QLatin1Char('s') || sc == QLatin1Char('S')
-                 // capital T only, since we're looking for "Text.selectSomething"
-                 || sc == QLatin1Char('T'))) {
-                // OPTIMIZED, since we only want "*[fbgsT].."
-                QString item = res.mid(l, r - l).simplified();
-                int i = item.indexOf(QLatin1Char(':'));
-                key = item.left(i).trimmed().mid(1).toLower();
-                value = item.right(item.length() - i - 1).trimmed();
-                mine = true;
-            } else if ((apnl && res.at(l) == apn.at(0)) || (appClass && apcl && res.at(l) == apc.at(0))) {
-                if (res.mid(l,apnl) == apn && (res.at(l+apnl) == QLatin1Char('.')
-                                               || res.at(l+apnl) == QLatin1Char('*'))) {
-                    QString item = res.mid(l, r - l).simplified();
-                    int i = item.indexOf(QLatin1Char(':'));
-                    key = item.left(i).trimmed().mid(apnl+1).toLower();
-                    value = item.right(item.length() - i - 1).trimmed();
-                    mine = true;
-                } else if (res.mid(l,apcl) == apc && (res.at(l+apcl) == QLatin1Char('.')
-                                                      || res.at(l+apcl) == QLatin1Char('*'))) {
-                    QString item = res.mid(l, r - l).simplified();
-                    int i = item.indexOf(QLatin1Char(':'));
-                    key = item.left(i).trimmed().mid(apcl+1).toLower();
-                    value = item.right(item.length() - i - 1).trimmed();
-                    mine = true;
-                }
-            }
-
-            if (mine) {
-                if (!font && key == QLatin1String("systemfont"))
-                    sysFont = value.left(value.lastIndexOf(QLatin1Char(':')));
-                if (!font && key == QLatin1String("font"))
-                    resFont = value;
-                else if (!fg && !paletteAlreadySet) {
-                    if (key == QLatin1String("foreground"))
-                        resFG = value;
-                    else if (!bg && key == QLatin1String("background"))
-                        resBG = value;
-                    else if (!bg && !button && key == QLatin1String("button.background"))
-                        resButton = value;
-                    else if (key == QLatin1String("text.selectbackground")) {
-                        selectBackground = value;
-                    } else if (key == QLatin1String("text.selectforeground")) {
-                        selectForeground = value;
-                    }
-                } else if (key == QLatin1String("guieffects"))
-                    resEF = value;
-                // NOTE: if you add more, change the [fbg] stuff above
-            }
-
-            l = r + 1;
-        }
-    }
-    if (!sysFont.isEmpty())
-        resFont = sysFont;
-    if (resFont.isEmpty())
-        resFont = QString::fromLocal8Bit(font);
-    if (resFG.isEmpty())
-        resFG = QString::fromLocal8Bit(fg);
-    if (resBG.isEmpty())
-        resBG = QString::fromLocal8Bit(bg);
-    if (resButton.isEmpty())
-        resButton = QString::fromLocal8Bit(button);
-    if (!resFont.isEmpty()
-        && !qt_x11Data->has_fontconfig
-        && !QApplicationPrivate::sys_font) {
-        // reset the application font to the real font info.
-        QFont fnt;
-        QFontInfo fontinfo(fnt);
-        fnt.setFamily(fontinfo.family());
-        fnt.setItalic(fontinfo.italic());
-        fnt.setWeight(fontinfo.weight());
-        fnt.setUnderline(fontinfo.underline());
-        fnt.setStrikeOut(fontinfo.strikeOut());
-        fnt.setStyleHint(fontinfo.styleHint());
-
-        if (fnt.pointSize() <= 0 && fnt.pixelSize() <= 0) {
-            // size is all wrong... fix it
-            qreal pointSize = fontinfo.pixelSize() * 72. / (float) QX11Info::appDpiY();
-            if (pointSize <= 0)
-                pointSize = 12;
-            fnt.setPointSize(qRound(pointSize));
-        }
-
-        QApplicationPrivate::setSystemFont(fnt);
-    }
-    // set app colors
-    if (button || !resBG.isEmpty() || !resFG.isEmpty()) {
-        bool allowX11ColorNames = QColor::allowX11ColorNames();
-        QColor::setAllowX11ColorNames(true);
-
-        (void) QApplication::style();  // trigger creation of application style and system palettes
-        QColor btn;
-        QColor bg;
-        QColor fg;
-        QColor bfg;
-        QColor wfg;
-        if (!resBG.isEmpty())
-            bg = QColor(resBG);
-        if (!bg.isValid())
-            bg = QApplicationPrivate::sys_pal->color(QPalette::Active, QPalette::Window);
-
-        if (!resFG.isEmpty())
-            fg = QColor(resFG);
-        if (!fg.isValid())
-            fg = QApplicationPrivate::sys_pal->color(QPalette::Active, QPalette::WindowText);
-
-        if (!resButton.isEmpty())
-            btn = QColor(resButton);
-        else if (!resBG.isEmpty())
-            btn = bg;
-        if (!btn.isValid())
-            btn = QApplicationPrivate::sys_pal->color(QPalette::Active, QPalette::Button);
-
-        int h,s,v;
-        fg.getHsv(&h,&s,&v);
-        QColor base = Qt::white;
-        bool bright_mode = false;
-        if (v >= 255 - 50) {
-            base = btn.darker(150);
-            bright_mode = true;
-        }
-
-        QPalette pal(fg, btn, btn.lighter(125), btn.darker(130), btn.darker(120), wfg.isValid() ? wfg : fg, Qt::white, base, bg);
-        QColor disabled((fg.red()   + btn.red())  / 2,
-                        (fg.green() + btn.green())/ 2,
-                        (fg.blue()  + btn.blue()) / 2);
-        pal.setColorGroup(QPalette::Disabled, disabled, btn, btn.lighter(125),
-                          btn.darker(130), btn.darker(150), disabled, Qt::white, Qt::white, bg);
-
-        QColor highlight, highlightText;
-        if (!selectBackground.isEmpty() && !selectForeground.isEmpty()) {
-            highlight = QColor(selectBackground);
-            highlightText = QColor(selectForeground);
-        }
-
-        if (highlight.isValid() && highlightText.isValid()) {
-            pal.setColor(QPalette::Highlight, highlight);
-            pal.setColor(QPalette::HighlightedText, highlightText);
-
-            // calculate disabled colors by removing saturation
-            highlight.setHsv(highlight.hue(), 0, highlight.value(), highlight.alpha());
-            highlightText.setHsv(highlightText.hue(), 0, highlightText.value(), highlightText.alpha());
-            pal.setColor(QPalette::Disabled, QPalette::Highlight, highlight);
-            pal.setColor(QPalette::Disabled, QPalette::HighlightedText, highlightText);
-        } else if (bright_mode) {
-            pal.setColor(QPalette::HighlightedText, base);
-            pal.setColor(QPalette::Highlight, Qt::white);
-            pal.setColor(QPalette::Disabled, QPalette::HighlightedText, base);
-            pal.setColor(QPalette::Disabled, QPalette::Highlight, Qt::white);
-        } else {
-            pal.setColor(QPalette::HighlightedText, Qt::white);
-            pal.setColor(QPalette::Highlight, Qt::darkBlue);
-            pal.setColor(QPalette::Disabled, QPalette::HighlightedText, Qt::white);
-            pal.setColor(QPalette::Disabled, QPalette::Highlight, Qt::darkBlue);
-        }
-
-        pal = qt_guiPlatformPlugin()->palette().resolve(pal);
-        QApplicationPrivate::setSystemPalette(pal);
-        QColor::setAllowX11ColorNames(allowX11ColorNames);
-    }
-
-    if (!resEF.isEmpty()) {
-        QStringList effects = resEF.split(QLatin1Char(' '));
-        QApplication::setEffectEnabled(Qt::UI_General, effects.contains(QLatin1String("general")));
-        QApplication::setEffectEnabled(Qt::UI_AnimateMenu,
-                                       effects.contains(QLatin1String("animatemenu")));
-        QApplication::setEffectEnabled(Qt::UI_FadeMenu,
-                                       effects.contains(QLatin1String("fademenu")));
-        QApplication::setEffectEnabled(Qt::UI_AnimateCombo,
-                                       effects.contains(QLatin1String("animatecombo")));
-        QApplication::setEffectEnabled(Qt::UI_AnimateTooltip,
-                                       effects.contains(QLatin1String("animatetooltip")));
-        QApplication::setEffectEnabled(Qt::UI_FadeTooltip,
-                                       effects.contains(QLatin1String("fadetooltip")));
-        QApplication::setEffectEnabled(Qt::UI_AnimateToolBox,
-                                       effects.contains(QLatin1String("animatetoolbox")));
-    }
-
-    QIconLoader::instance()->updateSystemTheme();
-}
-
 
 // update the supported array
 static void qt_get_net_supported()
@@ -1860,12 +1606,8 @@ void qt_init(QApplicationPrivate *priv, int,
                 XRRSelectInput(qt_x11Data->display, QX11Info::appRootWindow(screen), True);
 #endif // QT_NO_XRANDR
         }
-    }
 
-    if (qt_is_gui_used) {
-        // Attempt to determine the current running X11 Desktop Enviornment
-        // Use dbus if/when we can, but fall back to using windowManagerName() for now
-
+        // Attempt to determine if compositor is active
 #ifndef QT_NO_XFIXES
         XFixesSelectSelectionInput(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(_NET_WM_CM_S0),
                                    XFixesSetSelectionOwnerNotifyMask
@@ -1877,7 +1619,7 @@ void qt_init(QApplicationPrivate *priv, int,
 
         qt_set_input_encoding();
 
-        qt_set_x11_resources(appFont, appFGCol, appBGCol, appBTNCol);
+        QApplicationPrivate::x11_apply_settings();
 
         // be smart about the size of the default font. most X servers have helvetica
         // 12 point available at 2 resolutions:
@@ -1890,7 +1632,7 @@ void qt_init(QApplicationPrivate *priv, int,
                               72. / (float) QX11Info::appDpiY()) + 0.5));
 
         if (!QApplicationPrivate::sys_font) {
-            // no font from settings or RESOURCE_MANAGER, provide a fallback
+            // no font from settings, provide a fallback
             QFont f(qt_x11Data->has_fontconfig ? QLatin1String("Sans Serif") : QLatin1String("Helvetica"),
                     ptsz);
             QApplicationPrivate::setSystemFont(f);
@@ -2406,11 +2148,11 @@ int QApplication::x11ProcessEvent(XEvent* event)
     //qDebug() << "QApplication::x11ProcessEvent:" << event->type;
 #endif
     switch (event->type) {
-    case ButtonPress:
+    case XButtonPress:
         pressed_window = event->xbutton.window;
         qt_x11Data->userTime = event->xbutton.time;
         // fallthrough intended
-    case ButtonRelease:
+    case XButtonRelease:
         qt_x11Data->time = event->xbutton.time;
         break;
     case MotionNotify:
@@ -2450,8 +2192,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
     if (wPRmapper) {                                // just did a widget reparent?
         if (widget == 0) {                        // not in std widget mapper
             switch (event->type) {                // only for mouse/key events
-            case ButtonPress:
-            case ButtonRelease:
+            case XButtonPress:
+            case XButtonRelease:
             case MotionNotify:
             case XKeyPress:
             case XKeyRelease:
@@ -2505,8 +2247,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
 
             // Danger - make sure we don't lock the server
             switch (event->type) {
-            case ButtonPress:
-            case ButtonRelease:
+            case XButtonPress:
+            case XButtonRelease:
             case XKeyPress:
             case XKeyRelease:
                 do {
@@ -2580,19 +2322,19 @@ int QApplication::x11ProcessEvent(XEvent* event)
 
     switch (event->type) {
 
-    case ButtonRelease:                        // mouse event
+    case XButtonRelease:                        // mouse event
         if (!d->inPopupMode() && !QWidget::mouseGrabber() && pressed_window != widget->internalWinId()
             && (widget = (QETWidget*) QWidget::find((WId)pressed_window)) == 0)
             break;
         // fall through intended
-    case ButtonPress:
+    case XButtonPress:
         if (event->xbutton.root != RootWindow(qt_x11Data->display, widget->x11Info().screen())
             && ! qt_xdnd_dragging) {
             while (activePopupWidget())
                 activePopupWidget()->close();
             return 1;
         }
-        if (event->type == ButtonPress)
+        if (event->type == XButtonPress)
             qt_net_update_user_time(widget->window(), qt_x11Data->userTime);
         // fall through intended
     case MotionNotify:
@@ -2969,11 +2711,8 @@ int QApplication::x11ProcessEvent(XEvent* event)
                     emit clipboard()->changed(QClipboard::Selection);
                     emit clipboard()->selectionChanged();
                 }
-            } else if (QApplicationPrivate::obey_desktop_settings) {
-                if (event->xproperty.atom == ATOM(RESOURCE_MANAGER))
-                    qt_set_x11_resources();
-                else if (event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP))
-                    qt_set_x11_resources();
+            } else if (QApplicationPrivate::obey_desktop_settings &&event->xproperty.atom == ATOM(_QT_SETTINGS_TIMESTAMP)) {
+                QApplicationPrivate::x11_apply_settings();
             }
         }
         if (event->xproperty.window == QX11Info::appRootWindow()) {
@@ -3080,8 +2819,8 @@ bool qt_try_modal(QWidget *widget, XEvent *event)
     if (qt_xdnd_dragging) {
         // allow mouse events while DnD is active
         switch (event->type) {
-        case ButtonPress:
-        case ButtonRelease:
+        case XButtonPress:
+        case XButtonRelease:
         case MotionNotify:
             return true;
         default:
@@ -3090,7 +2829,7 @@ bool qt_try_modal(QWidget *widget, XEvent *event)
     }
 
     // allow mouse release events to be sent to widgets that have been pressed
-    if (event->type == ButtonRelease) {
+    if (event->type == XButtonRelease) {
         QWidget *alienWidget = widget->childAt(widget->mapFromGlobal(QPoint(event->xbutton.x_root,
                                                                             event->xbutton.y_root)));
         if (widget == qt_button_down || (alienWidget && alienWidget == qt_button_down))
@@ -3102,8 +2841,8 @@ bool qt_try_modal(QWidget *widget, XEvent *event)
 
     // disallow mouse/key events
     switch (event->type) {
-    case ButtonPress:
-    case ButtonRelease:
+    case XButtonPress:
+    case XButtonRelease:
     case MotionNotify:
     case XKeyPress:
     case XKeyRelease:
@@ -3398,14 +3137,14 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
             // the fancy mouse wheel.
 
             // We are only interested in ButtonPress.
-            if (event->type == ButtonPress){
+            if (event->type == XButtonPress){
                 // compress wheel events (the X Server will simply
                 // send a button press for each single notch,
                 // regardless whether the application can catch up
                 // or not)
                 int delta = 1;
                 XEvent xevent;
-                while (XCheckTypedWindowEvent(qt_x11Data->display, effectiveWinId(), ButtonPress, &xevent)){
+                while (XCheckTypedWindowEvent(qt_x11Data->display, effectiveWinId(), XButtonPress, &xevent)){
                     if (xevent.xbutton.button != event->xbutton.button){
                         XPutBackEvent(qt_x11Data->display, &xevent);
                         break;
@@ -3429,7 +3168,7 @@ bool QETWidget::translateMouseEvent(const XEvent *event)
         case 8: button = Qt::XButton1; break;
         case 9: button = Qt::XButton2; break;
         }
-        if (event->type == ButtonPress) {        // mouse button pressed
+        if (event->type == XButtonPress) {        // mouse button pressed
             buttons |= button;
             if (!qt_button_down) {
                 qt_button_down = childAt(pos);        //magic for masked widgets
@@ -4186,11 +3925,6 @@ bool QApplication::isEffectEnabled(Qt::UIEffect effect)
  *****************************************************************************/
 
 #ifndef QT_NO_SESSIONMANAGER
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <X11/SM/SMlib.h>
-QT_END_INCLUDE_NAMESPACE
-
 class QSessionManagerPrivate : public QObjectPrivate
 {
 public:

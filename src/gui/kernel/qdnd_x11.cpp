@@ -72,10 +72,6 @@
 #include "qwidget_p.h"
 #include "qcursor_p.h"
 
-#ifndef QT_NO_XFIXES
-#include <X11/extensions/Xfixes.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // #define DND_DEBUG

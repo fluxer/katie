@@ -90,8 +90,8 @@ bool QEventDispatcherX11::processEvents(QEventLoop::ProcessEventsFlags flags)
                 if (flags & QEventLoop::ExcludeUserInputEvents) {
                     // queue user input events
                     switch (event.type) {
-                    case ButtonPress:
-                    case ButtonRelease:
+                    case XButtonPress:
+                    case XButtonRelease:
                     case MotionNotify:
                     case XKeyPress:
                     case XKeyRelease:

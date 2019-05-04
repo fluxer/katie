@@ -394,7 +394,6 @@ bool QApplicationPrivate::animate_tooltip = false;
 bool QApplicationPrivate::fade_tooltip = false;
 bool QApplicationPrivate::animate_toolbox = false;
 bool QApplicationPrivate::widgetCount = false;
-bool QApplicationPrivate::load_testability = false;
 #ifdef QT_KEYPAD_NAVIGATION
 Qt::NavigationMode QApplicationPrivate::navigationMode = Qt::NavigationModeKeypadTabOrder;
 #endif
@@ -473,8 +472,6 @@ void QApplicationPrivate::process_cmdline()
             QApplication::setLayoutDirection(Qt::RightToLeft);
         } else if (qstrcmp(arg, "-widgetcount") == 0) {
             widgetCount = true;
-        } else if (qstrcmp(arg, "-testability") == 0) {
-            load_testability = true;
         } else if (arg == "-graphicssystem" && i < argc-1) {
             graphics_system_name = QString::fromLocal8Bit(argv[++i]);
         } else {
@@ -683,21 +680,6 @@ void QApplicationPrivate::construct(
     eventDispatcher->startingUp();
 
 #ifndef QT_NO_LIBRARY
-    if(load_testability) {
-        QLibrary testLib(QLatin1String("qttestability"));
-        if (testLib.load()) {
-            typedef void (*TasInitialize)(void);
-            TasInitialize initFunction = (TasInitialize)testLib.resolve("qt_testability_init");
-            if (initFunction) {
-                initFunction();
-            } else {
-                qCritical("Library qttestability resolve failed!");
-            }
-        } else {
-            qCritical("Library qttestability load failed!");
-        }
-    }
-
     //make sure the plugin is loaded
     if (qt_is_gui_used)
         qt_guiPlatformPlugin();

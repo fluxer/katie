@@ -63,6 +63,11 @@
 #include "QtCore/qstring.h"
 #include "QtCore/qpointer.h"
 
+#if defined(Q_WS_X11)
+#include <QtCore/qcoreapplication.h>
+#include <qt_x11_p.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 class QSystemTrayIconSys;
@@ -120,13 +125,6 @@ private:
 };
 
 #if defined(Q_WS_X11)
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <QtCore/qcoreapplication.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
-QT_END_INCLUDE_NAMESPACE
-
 class QSystemTrayIconSys : public QWidget
 {
     friend class QSystemTrayIconPrivate;

@@ -54,18 +54,6 @@
 #include <qx11info_x11.h>
 #include <qt_x11_p.h>
 
-#define XK_MISCELLANY
-#define XK_LATIN1
-#include <X11/X.h>
-#include <X11/Xlib.h>
-#include <X11/Xatom.h>
-#include <X11/Xutil.h>
-#include <X11/keysymdef.h>
-
-#ifndef XK_ISO_Left_Tab
-#define XK_ISO_Left_Tab 0xFE20
-#endif
-
 //#define QX11EMBED_DEBUG
 #ifdef QX11EMBED_DEBUG
 #include <qdebug.h>
@@ -259,11 +247,6 @@ QT_BEGIN_NAMESPACE
 
     \omitvalue Internal
 */
-
-const int XButtonPress = ButtonPress;
-const int XButtonRelease = ButtonRelease;
-#undef ButtonPress
-#undef ButtonRelease
 
 // This is a hack to move topData() out from QWidgetPrivate to public.  We
 // need to to inspect window()'s embedded state.
