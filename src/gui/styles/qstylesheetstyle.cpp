@@ -601,7 +601,6 @@ static const char *knownStyleHints[] = {
     "alignment",
     "arrow-keys-navigate-into-children",
     "backward-icon",
-    "button-layout",
     "cd-icon",
     "combobox-list-mousetracking",
     "combobox-popup",
@@ -745,9 +744,7 @@ QHash<QStyle::SubControl, QRect> QStyleSheetStyle::titleBarLayout(const QWidget 
     const bool isMaximized = tb->titleBarState & Qt::WindowMaximized;
     QRenderRule subRule = renderRule(w, tb);
     QRect cr = subRule.contentsRect(tb->rect);
-    QList<QVariant> layout = subRule.styleHint(QLatin1String("button-layout")).toList();
-    if (layout.isEmpty())
-        layout = subControlLayout(QLatin1String("I(T)HSmMX"));
+    QList<QVariant> layout = subControlLayout(QLatin1String("I(T)HSmMX"));
 
     int offsets[3] = { 0, 0, 0 };
     enum Where { Left, Right, Center, NoWhere } where = Left;
@@ -980,9 +977,6 @@ QRenderRule::QRenderRule(const QVector<Declaration> &declarations, const QWidget
                        hintValue = decl.sizeValue();
                    } else if (hintName.endsWith(QLatin1String("icon"))) {
                        hintValue = decl.iconValue();
-                   } else if (hintName == QLatin1String("button-layout")
-                              && decl.d->values.count() != 0 && decl.d->values.at(0).type == Value::String) {
-                       hintValue = subControlLayout(decl.d->values.at(0).variant.toString());
                    } else {
                        int integer;
                        decl.intValue(&integer);
@@ -3177,9 +3171,7 @@ void QStyleSheetStyle::drawComplexControl(ComplexControl cc, const QStyleOptionC
         if (hasStyleRule(w, PseudoElement_MdiCloseButton)
             || hasStyleRule(w, PseudoElement_MdiNormalButton)
             || hasStyleRule(w, PseudoElement_MdiMinButton)) {
-            QList<QVariant> layout = rule.styleHint(QLatin1String("button-layout")).toList();
-            if (layout.isEmpty())
-                layout = subControlLayout(QLatin1String("mNX"));
+            QList<QVariant> layout = subControlLayout(QLatin1String("mNX"));
 
             QStyleOptionComplex optCopy(*opt);
             optCopy.subControls = 0;
@@ -4947,9 +4939,7 @@ QSize QStyleSheetStyle::sizeFromContents(ContentsType ct, const QStyleOption *op
                 && !hasStyleRule(w, PseudoElement_MdiMinButton))
                 break;
 
-            QList<QVariant> layout = rule.styleHint(QLatin1String("button-layout")).toList();
-            if (layout.isEmpty())
-                layout = subControlLayout(QLatin1String("mNX"));
+            QList<QVariant> layout = subControlLayout(QLatin1String("mNX"));
 
             int width = 0, height = 0;
             for (int i = 0; i < layout.count(); i++) {
@@ -5110,7 +5100,6 @@ int QStyleSheetStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWi
         case SH_ItemView_ActivateItemOnSingleClick: s = QLatin1String("activate-on-singleclick"); break;
         case SH_ItemView_ShowDecorationSelected: s = QLatin1String("show-decoration-selected"); break;
         case SH_Table_GridLineColor: s = QLatin1String("gridline-color"); break;
-        case SH_DialogButtonLayout: s = QLatin1String("button-layout"); break;
         case SH_ToolTipLabel_Opacity: s = QLatin1String("opacity"); break;
         case SH_ComboBox_Popup: s = QLatin1String("combobox-popup"); break;
         case SH_ComboBox_ListMouseTracking: s = QLatin1String("combobox-list-mousetracking"); break;
@@ -5505,9 +5494,7 @@ QRect QStyleSheetStyle::subControlRect(ComplexControl cc, const QStyleOptionComp
         if (hasStyleRule(w, PseudoElement_MdiCloseButton)
             || hasStyleRule(w, PseudoElement_MdiNormalButton)
             || hasStyleRule(w, PseudoElement_MdiMinButton)) {
-            QList<QVariant> layout = rule.styleHint(QLatin1String("button-layout")).toList();
-            if (layout.isEmpty())
-                layout = subControlLayout(QLatin1String("mNX"));
+            QList<QVariant> layout = subControlLayout(QLatin1String("mNX"));
 
             int x = 0, width = 0;
             QRenderRule subRule;

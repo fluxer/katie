@@ -263,11 +263,7 @@ QFontEngineX11FT::QFontEngineX11FT(FcPattern *pattern, const QFontDef &fd, int s
 #ifdef FC_HINT_STYLE
     else {
         int hint_style = 0;
-        // Try to use Xft.hintstyle from XDefaults first if running in GNOME, to match
-        // the behavior of cairo
-        if (qt_x11Data->fc_hint_style > -1 && qt_x11Data->desktopEnvironment == DE_GNOME)
-            hint_style = qt_x11Data->fc_hint_style;
-        else if (FcPatternGetInteger (pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
+        if (FcPatternGetInteger (pattern, FC_HINT_STYLE, 0, &hint_style) == FcResultNoMatch
                  && qt_x11Data->fc_hint_style > -1)
             hint_style = qt_x11Data->fc_hint_style;
 

@@ -1796,8 +1796,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
 
     \value SH_TabBar_ElideMode The default eliding style for a tab bar.
 
-    \value SH_DialogButtonLayout  Controls how buttons are laid out in a QDialogButtonBox, returns a QDialogButtonBox::ButtonLayout enum.
-
     \value SH_WizardStyle Controls the look and feel of a QWizard. Returns a QWizard::WizardStyle enum.
 
     \value SH_FormLayoutWrapPolicy Provides a default for how rows are wrapped in a QFormLayout. Returns a QFormLayout::RowWrapPolicy enum.

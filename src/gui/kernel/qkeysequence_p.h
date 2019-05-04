@@ -63,7 +63,6 @@ struct Q_AUTOTEST_EXPORT QKeyBinding
     QKeySequence::StandardKey standardKey;
     uchar priority;
     uint shortcut;
-    uint platform;
 };
 
 class Q_AUTOTEST_EXPORT QKeySequencePrivate

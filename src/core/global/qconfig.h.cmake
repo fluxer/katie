@@ -82,6 +82,7 @@
 #define QT_NO_STYLE_S60
 #define QT_NO_STYLE_GTK
 #define QT_NO_STYLE_QGTK
+#define QT_NO_STYLE_CDE
 #define QT_NO_STATEMACHINE
 #define QT_NO_XKB
 #define QT_NO_XIM

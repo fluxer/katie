@@ -781,7 +781,6 @@ Qt::KeyboardModifiers QKeyEvent::modifiers() const
 bool QKeyEvent::matches(QKeySequence::StandardKey matchKey) const
 {
     uint searchkey = (modifiers() | key()) & ~(Qt::KeypadModifier); //The keypad modifier should not make a difference
-    uint platform = QApplicationPrivate::currentPlatform();
 
     uint N = QKeySequencePrivate::numberOfKeyBindings;
     int first = 0;
@@ -798,17 +797,17 @@ bool QKeyEvent::matches(QKeySequence::StandardKey matchKey) const
             last = mid - 1; // Search in bottom half
         }
         else {
-            //found correct shortcut value, now we must check for platform match
-            if ((midVal.platform & platform) && (midVal.standardKey == matchKey)) {
+            //found correct shortcut value
+            if (midVal.standardKey == matchKey) {
                 return true;
-            } else { //We may have several equal values for different platforms, so we must search in both directions
+            } else { //We may have several equal values, so we must search in both directions
 
                 //search forward
                 for ( unsigned int i = mid + 1 ; i < N - 1 ; ++i) {
                     QKeyBinding current = QKeySequencePrivate::keyBindings[i];
                     if (current.shortcut != searchkey)
                         break;
-                    else if (current.platform & platform && current.standardKey == matchKey)
+                    else if (current.standardKey == matchKey)
                         return true;
                 }
 
@@ -817,7 +816,7 @@ bool QKeyEvent::matches(QKeySequence::StandardKey matchKey) const
                     QKeyBinding current = QKeySequencePrivate::keyBindings[i];
                     if (current.shortcut != searchkey)
                         break;
-                    else if (current.platform & platform && current.standardKey == matchKey)
+                    else if (current.standardKey == matchKey)
                         return true;
                 }
                 return false; //we could not find it among the matching keySequences

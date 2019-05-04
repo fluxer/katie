@@ -76,14 +76,7 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
         QString key = QString::fromLocal8Bit(qgetenv("QT_PLATFORM_PLUGIN"));
 #ifdef Q_WS_X11
         if (key.isEmpty()) {
-            switch(qt_x11Data->desktopEnvironment) {
-            case DE_KDE:
-                key = QString::fromLatin1("kde");
-                break;
-            default:
-                key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
-                break;
-            }
+            key = QString::fromLocal8Bit(qgetenv("DESKTOP_SESSION"));
         }
 #endif
 
@@ -120,33 +113,11 @@ QGuiPlatformPlugin::~QGuiPlatformPlugin() {}
 /* return the string key to be used by default the application */
 QString QGuiPlatformPlugin::styleName()
 {
-#if defined(Q_WS_X11) && defined(Q_OS_SOLARIS)
-    return QLatin1String("CDE");                        // default style for X11 on Solaris
-#elif defined(Q_WS_X11)
-    QString stylename;
-    switch(qt_x11Data->desktopEnvironment) {
-    case DE_KDE:
-        if (qt_x11Data->use_xrender)
-            stylename = QLatin1String("plastique");
-        else
-            stylename = QLatin1String("windows");
-        break;
-    case DE_GNOME: {
-        if (qt_x11Data->use_xrender)
-            stylename = QLatin1String("cleanlooks");
-        else
-            stylename = QLatin1String("windows");
-        break;
-    }
-    case DE_CDE:
-        stylename = QLatin1String("cde");
-        break;
-    default:
-        // Don't do anything
-        break;
-    }
-    return stylename;
+#if defined(Q_WS_X11)
+    if (qt_x11Data->use_xrender)
+        return QLatin1String("cleanlooks");
 #endif
+    return QLatin1String("windows");
 }
 
 /* return an additional default palette  (only work on X11) */
@@ -159,11 +130,10 @@ QPalette QGuiPlatformPlugin::palette()
 QString QGuiPlatformPlugin::systemIconThemeName()
 {
 #ifdef Q_WS_X11
-    if (qt_x11Data->desktopEnvironment == DE_GNOME) {
-        return QString::fromLatin1("gnome");
-    }
-#endif
+    return QString::fromLatin1("hicolor");
+#else
     return QString();
+#endif
 }
 
 

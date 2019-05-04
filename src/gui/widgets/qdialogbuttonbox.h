@@ -108,13 +108,6 @@ public:
 
     Q_DECLARE_FLAGS(StandardButtons, StandardButton)
 
-    enum ButtonLayout {
-        WinLayout,
-        MacLayout,
-        KdeLayout,
-        GnomeLayout
-    };
-
     QDialogButtonBox(QWidget *parent = Q_NULLPTR);
     QDialogButtonBox(Qt::Orientation orientation, QWidget *parent = Q_NULLPTR);
     QDialogButtonBox(StandardButtons buttons, Qt::Orientation orientation = Qt::Horizontal,

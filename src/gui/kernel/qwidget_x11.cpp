@@ -1429,8 +1429,7 @@ void QWidgetPrivate::setWindowIcon_sys(bool forceReset)
               in the ICCCM section 4.1.2.4; otherwise, create the icon pixmap
               in the default depth (even though this violates the ICCCM)
             */
-            if (qt_x11Data->desktopEnvironment == DE_UNKNOWN
-                || !QX11Info::appDefaultVisual(xinfo.screen())
+            if (!QX11Info::appDefaultVisual(xinfo.screen())
                 || !QX11Info::appDefaultColormap(xinfo.screen())) {
                 // unknown DE or non-default visual/colormap, use 1bpp bitmap
                 if (!forceReset || !topData->iconPixmap)
@@ -2133,11 +2132,6 @@ void QWidgetPrivate::setNetWmWindowTypes()
         break;
     }
 
-    if (q->windowFlags() & Qt::FramelessWindowHint) {
-        // override netwm type - quick and easy for KDE noborder
-        windowTypes.append(ATOM(_KDE_NET_WM_WINDOW_TYPE_OVERRIDE));
-    }
-
     // normal netwm type - default
     windowTypes.append(ATOM(_NET_WM_WINDOW_TYPE_NORMAL));
 
@@ -2478,9 +2472,7 @@ void QWidgetPrivate::setGeometry_sys(int x, int y, int w, int h, bool isMove)
             if (!q->isVisible())
                 do_size_hints(q, extra);
             if (isMove) {
-                if ((data.window_flags & Qt::X11BypassWindowManagerHint) == Qt::X11BypassWindowManagerHint
-                    // work around 4Dwm's incompliance with ICCCM 4.1.5
-                    || qt_x11Data->desktopEnvironment == DE_4DWM) {
+                if ((data.window_flags & Qt::X11BypassWindowManagerHint) == Qt::X11BypassWindowManagerHint) {
                     if (data.winid)
                         XMoveResizeWindow(dpy, data.winid, x, y, w, h);
                 } else if (q->isVisible()
@@ -2548,15 +2540,9 @@ void QWidgetPrivate::setGeometry_sys(int x, int y, int w, int h, bool isMove)
 
     if (q->isVisible()) {
         if (isMove && q->pos() != oldPos) {
-            if (qt_x11Data->desktopEnvironment != DE_4DWM) {
-                // pos() is right according to ICCCM 4.1.5
-                QMoveEvent e(q->pos(), oldPos);
-                QApplication::sendEvent(q, &e);
-            } else {
-                // work around 4Dwm's incompliance with ICCCM 4.1.5
-                QMoveEvent e(data.crect.topLeft(), oldGeom.topLeft());
-                QApplication::sendEvent(q, &e);
-            }
+            // pos() is right according to ICCCM 4.1.5
+            QMoveEvent e(q->pos(), oldPos);
+            QApplication::sendEvent(q, &e);
         }
         if (isResize) {
             static bool slowResize = qgetenv("QT_SLOW_TOPLEVEL_RESIZE").toInt();
@@ -2821,13 +2807,9 @@ void QWidgetPrivate::updateFrameStrut()
         return;
     }
 
-    Atom type_ret;
     Window l = q->effectiveWinId(), w = l, p, r; // target window, its parent, root
     Window *c;
-    int i_unused;
     unsigned int nc;
-    unsigned char *data_ret;
-    unsigned long l_unused;
 
     while (XQueryTree(qt_x11Data->display, w, &r, &p, &c, &nc)) {
         if (c && nc > 0)
@@ -2838,18 +2820,8 @@ void QWidgetPrivate::updateFrameStrut()
             return;
         }
 
-        // if the parent window is the root window, an Enlightenment virtual root or
-        // a NET WM virtual root window, stop here
-        data_ret = 0;
-        if (p == r ||
-            (XGetWindowProperty(qt_x11Data->display, p,
-                                ATOM(ENLIGHTENMENT_DESKTOP), 0, 1, False, XA_CARDINAL,
-                                &type_ret, &i_unused, &l_unused, &l_unused,
-                                &data_ret) == Success &&
-             type_ret == XA_CARDINAL)) {
-            if (data_ret)
-                XFree(data_ret);
-
+        // if the parent window is the root window or a NET WM virtual root window, stop here
+        if (p == r) {
             break;
         } else if (qt_x11Data->isSupportedByWM(ATOM(_NET_VIRTUAL_ROOTS)) && qt_x11Data->net_virtual_root_list) {
             int i = 0;

@@ -65,14 +65,7 @@
 #error "cannot include <X11/Xlib.h> before this file"
 #endif
 
-#define XRegisterIMInstantiateCallback qt_XRegisterIMInstantiateCallback
-#define XUnregisterIMInstantiateCallback qt_XUnregisterIMInstantiateCallback
-#define XSetIMValues qt_XSetIMValues
 #include <X11/Xlib.h>
-#undef XRegisterIMInstantiateCallback
-#undef XUnregisterIMInstantiateCallback
-#undef XSetIMValues
-
 #include <X11/Xutil.h>
 #include <X11/Xos.h>
 #include <X11/Xatom.h>
@@ -153,16 +146,6 @@ struct QXdndDropTransaction
     QDrag *object;
 };
 
-
-
-enum DesktopEnvironment {
-    DE_UNKNOWN,
-    DE_KDE,
-    DE_GNOME,
-    DE_CDE,
-    DE_4DWM
-};
-
 class QMimeData;
 struct QX11Data
 {
@@ -240,7 +223,7 @@ struct QX11Data
     bool use_mitshm_pixmaps;
     int mitshm_major;
 
-    // true if Qt is compiled w/ Tablet support and we have a tablet.
+    // true if Qt is compiled w/ INPUT support and INPUT is supported on the connected Display
     bool use_xinput;
     int xinput_major;
     int xinput_eventbase;
@@ -324,9 +307,6 @@ struct QX11Data
 
     char *startupId;
 
-    DesktopEnvironment desktopEnvironment : 8;
-    uint desktopVersion : 8;  /* Used only for KDE */
-
     /* Warning: if you modify this list, modify the names of atoms in qapplication_x11.cpp as well! */
     enum X11Atom {
         // window-manager <-> client protocols
@@ -368,10 +348,6 @@ struct QX11Data
         _QT_INPUT_ENCODING,
 
         _MOTIF_WM_HINTS,
-
-        DTWM_IS_RUNNING,
-        ENLIGHTENMENT_DESKTOP,
-        _DT_SAVE_MODE,
 
         // EWMH (aka NETWM)
         _NET_SUPPORTED,
@@ -418,9 +394,6 @@ struct QX11Data
         _NET_WM_WINDOW_TYPE_COMBO,
         _NET_WM_WINDOW_TYPE_DND,
         _NET_WM_WINDOW_TYPE_NORMAL,
-        _KDE_NET_WM_WINDOW_TYPE_OVERRIDE,
-
-        _KDE_NET_WM_FRAME_STRUT,
 
         _NET_STARTUP_INFO,
         _NET_STARTUP_INFO_BEGIN,
@@ -498,7 +471,8 @@ enum {
     XNone = None,
     XGrayScale = GrayScale,
     XCursorShape = CursorShape,
-    XUnsorted = Unsorted
+    XUnsorted = Unsorted,
+    XFontChange = FontChange
 };
 #undef FocusOut
 #undef FocusIn
@@ -508,10 +482,7 @@ enum {
 #undef GrayScale
 #undef CursorShape
 #undef Unsorted
-
-#ifdef FontChange
 #undef FontChange
-#endif
 
 Q_DECLARE_TYPEINFO(XPoint, Q_PRIMITIVE_TYPE);
 Q_DECLARE_TYPEINFO(XRectangle, Q_PRIMITIVE_TYPE);

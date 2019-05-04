@@ -4863,15 +4863,6 @@ int QCommonStyle::styleHint(StyleHint sh, const QStyleOption *opt, const QWidget
     case SH_TabBar_ElideMode:
         ret = Qt::ElideNone;
         break;
-    case SH_DialogButtonLayout:
-        ret = QDialogButtonBox::WinLayout;
-#ifdef Q_WS_X11
-        if (qt_x11Data->desktopEnvironment == DE_KDE)
-            ret = QDialogButtonBox::KdeLayout;
-        else if (qt_x11Data->desktopEnvironment == DE_GNOME)
-            ret = QDialogButtonBox::GnomeLayout;
-#endif
-        break;
     case SH_ComboBox_PopupFrameStyle:
         ret = QFrame::StyledPanel | QFrame::Plain;
         break;

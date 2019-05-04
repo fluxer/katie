@@ -161,23 +161,13 @@ int QMenuPrivate::scrollerHeight() const
     return qMax(QApplication::globalStrut().height(), q->style()->pixelMetric(QStyle::PM_MenuScrollerHeight, 0, q));
 }
 
-//Windows and KDE allows menus to cover the taskbar, while GNOME and Mac don't
 QRect QMenuPrivate::popupGeometry(const QWidget *widget) const
 {
-#if defined Q_WS_X11
-    if (qt_x11Data->desktopEnvironment == DE_KDE)
-        return QApplication::desktop()->screenGeometry(widget);
-#endif
     return QApplication::desktop()->availableGeometry(widget);
 }
 
-//Windows and KDE allows menus to cover the taskbar, while GNOME and Mac don't
 QRect QMenuPrivate::popupGeometry(int screen) const
 {
-#if defined Q_WS_X11
-    if (qt_x11Data->desktopEnvironment == DE_KDE)
-        return QApplication::desktop()->screenGeometry(screen);
-#endif
     return QApplication::desktop()->availableGeometry(screen);
 }
 

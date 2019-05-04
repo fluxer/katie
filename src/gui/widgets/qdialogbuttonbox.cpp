@@ -99,38 +99,8 @@ QT_BEGIN_NAMESPACE
 
     You can mix and match normal buttons and standard buttons.
 
-    Currently the buttons are laid out in the following way if the button box is horizontal:
-    \table
-    \row \o \inlineimage buttonbox-gnomelayout-horizontal.png GnomeLayout Horizontal
-         \o Button box laid out in horizontal GnomeLayout
-    \row \o \inlineimage buttonbox-kdelayout-horizontal.png KdeLayout Horizontal
-         \o Button box laid out in horizontal KdeLayout
-    \row \o \inlineimage buttonbox-maclayout-horizontal.png MacLayout Horizontal
-         \o Button box laid out in horizontal MacLayout
-    \row \o \inlineimage buttonbox-winlayout-horizontal.png  WinLayout Horizontal
-         \o Button box laid out in horizontal WinLayout
-    \endtable
-
-    The buttons are laid out the following way if the button box is vertical:
-
-    \table
-    \row \o GnomeLayout
-         \o KdeLayout
-         \o MacLayout
-         \o WinLayout
-    \row \o \inlineimage buttonbox-gnomelayout-vertical.png GnomeLayout Vertical
-         \o \inlineimage buttonbox-kdelayout-vertical.png KdeLayout Vertical
-         \o \inlineimage buttonbox-maclayout-vertical.png MacLayout Vertical
-         \o \inlineimage buttonbox-winlayout-vertical.png WinLayout Vertical
-    \endtable
-
     Additionally, button boxes that contain only buttons with ActionRole or
     HelpRole can be considered modeless and have an alternate look on Mac OS X:
-
-    \table
-    \row \o modeless horizontal MacLayout
-         \o \inlineimage buttonbox-mac-modeless-horizontal.png Screenshot of modeless horizontal MacLayout
-    \endtable
 
     When a button is clicked in the button box, the clicked() signal is emitted
     for the actual button is that is pressed. For convenience, if the button
@@ -208,50 +178,18 @@ static QDialogButtonBox::ButtonRole roleFor(QDialogButtonBox::StandardButton but
     return QDialogButtonBox::InvalidRole;
 }
 
-static const uint layouts[2][5][14] =
+static const uint layouts[2][14] =
 {
     // Qt::Horizontal
     {
-        // WinLayout
-        { ResetRole, Stretch, YesRole, AcceptRole, AlternateRole, DestructiveRole, NoRole, ActionRole, RejectRole, ApplyRole,
-           HelpRole, EOL, EOL, EOL },
-
-        // MacLayout
-        { HelpRole, ResetRole, ApplyRole, ActionRole, Stretch, DestructiveRole | Reverse,
-          AlternateRole | Reverse, RejectRole | Reverse, AcceptRole | Reverse, NoRole | Reverse, YesRole | Reverse, EOL, EOL },
-
-        // KdeLayout
-        { HelpRole, ResetRole, Stretch, YesRole, NoRole, ActionRole, AcceptRole, AlternateRole,
-          ApplyRole, DestructiveRole, RejectRole, EOL },
-
-        // GnomeLayout
-        { HelpRole, ResetRole, Stretch, ActionRole, ApplyRole | Reverse, DestructiveRole | Reverse,
-          AlternateRole | Reverse, RejectRole | Reverse, AcceptRole | Reverse, NoRole | Reverse, YesRole | Reverse, EOL },
-
-        // Mac modeless
-        { ResetRole, ApplyRole, ActionRole, Stretch, HelpRole, EOL, EOL, EOL, EOL, EOL, EOL, EOL, EOL, EOL }
+        ResetRole, Stretch, YesRole, AcceptRole, AlternateRole, DestructiveRole, NoRole, ActionRole, RejectRole, ApplyRole,
+           HelpRole, EOL, EOL, EOL
     },
 
     // Qt::Vertical
     {
-        // WinLayout
-        { ActionRole, YesRole, AcceptRole, AlternateRole, DestructiveRole, NoRole, RejectRole, ApplyRole, ResetRole,
-          HelpRole, Stretch, EOL, EOL, EOL },
-
-        // MacLayout
-        { YesRole, NoRole, AcceptRole, RejectRole, AlternateRole, DestructiveRole, Stretch, ActionRole, ApplyRole,
-          ResetRole, HelpRole, EOL, EOL },
-
-        // KdeLayout
-        { AcceptRole, AlternateRole, ApplyRole, ActionRole, YesRole, NoRole, Stretch, ResetRole,
-          DestructiveRole, RejectRole, HelpRole, EOL },
-
-        // GnomeLayout
-        { YesRole, NoRole, AcceptRole, RejectRole, AlternateRole, DestructiveRole, ApplyRole, ActionRole, Stretch,
-          ResetRole, HelpRole, EOL, EOL, EOL },
-
-        // Mac modeless
-        { ActionRole, ApplyRole, ResetRole, Stretch, HelpRole, EOL, EOL, EOL, EOL, EOL, EOL, EOL, EOL, EOL }
+        ActionRole, YesRole, AcceptRole, AlternateRole, DestructiveRole, NoRole, RejectRole, ApplyRole, ResetRole,
+          HelpRole, Stretch, EOL, EOL, EOL
     }
 };
 
@@ -266,7 +204,6 @@ public:
     QHash<QPushButton *, QDialogButtonBox::StandardButton> standardButtonHash;
 
     Qt::Orientation orientation;
-    QDialogButtonBox::ButtonLayout layoutPolicy;
     QBoxLayout *buttonLayout;
     bool internalRemove;
     bool center;
@@ -293,7 +230,6 @@ QDialogButtonBoxPrivate::QDialogButtonBoxPrivate(Qt::Orientation orient)
 void QDialogButtonBoxPrivate::initLayout()
 {
     Q_Q(QDialogButtonBox);
-    layoutPolicy = QDialogButtonBox::ButtonLayout(q->style()->styleHint(QStyle::SH_DialogButtonLayout, 0, q));
     bool createNewLayout = buttonLayout == 0
         || (orientation == Qt::Horizontal && qobject_cast<QVBoxLayout *>(buttonLayout) != 0)
         || (orientation == Qt::Vertical && qobject_cast<QHBoxLayout *>(buttonLayout) != 0);
@@ -346,8 +282,6 @@ void QDialogButtonBoxPrivate::addButtonsToLayout(const QList<QAbstractButton *> 
 void QDialogButtonBoxPrivate::layoutButtons()
 {
     Q_Q(QDialogButtonBox);
-    const int MacGap = 36 - 8;    // 8 is the default gap between a widget and a spacer item
-
     for (int i = buttonLayout->count() - 1; i >= 0; --i) {
         QLayoutItem *item = buttonLayout->takeAt(i);
         if (QWidget *widget = item->widget())
@@ -355,23 +289,7 @@ void QDialogButtonBoxPrivate::layoutButtons()
         delete item;
     }
 
-    int tmpPolicy = layoutPolicy;
-
-    static const int M = 5;
-    static const int ModalRoles[M] = { AcceptRole, RejectRole, DestructiveRole, YesRole, NoRole };
-    if (tmpPolicy == QDialogButtonBox::MacLayout) {
-        bool hasModalButton = false;
-        for (int i = 0; i < M; ++i) {
-            if (!buttonLists[ModalRoles[i]].isEmpty()) {
-                hasModalButton = true;
-                break;
-            }
-        }
-        if (!hasModalButton)
-            tmpPolicy = 4;  // Mac modeless
-    }
-
-    const uint *currentLayout = layouts[orientation == Qt::Vertical][tmpPolicy];
+    const uint *currentLayout = layouts[orientation == Qt::Vertical];
 
     if (center)
         buttonLayout->addStretch();
@@ -408,27 +326,7 @@ void QDialogButtonBoxPrivate::layoutButtons()
         case DestructiveRole:
             {
                 const QList<QAbstractButton *> &list = buttonLists[role];
-
-                /*
-                    Mac: Insert a gap on the left of the destructive
-                    buttons to ensure that they don't get too close to
-                    the help and action buttons (but only if there are
-                    some buttons to the left of the destructive buttons
-                    (and the stretch, whence buttonLayout->count() > 1
-                    and not 0)).
-                */
-                if (tmpPolicy == QDialogButtonBox::MacLayout
-                        && !list.isEmpty() && buttonLayout->count() > 1)
-                    buttonLayout->addSpacing(MacGap);
-
                 addButtonsToLayout(list, reverse);
-
-                /*
-                    Insert a gap between the destructive buttons and the
-                    accept and reject buttons.
-                */
-                if (tmpPolicy == QDialogButtonBox::MacLayout && !list.isEmpty())
-                    buttonLayout->addSpacing(MacGap);
             }
             break;
         case RejectRole:
@@ -564,22 +462,21 @@ void QDialogButtonBoxPrivate::createStandardButtons(QDialogButtonBox::StandardBu
 const char *QDialogButtonBoxPrivate::standardButtonText(QDialogButtonBox::StandardButton sbutton) const
 {
     const char *buttonText = 0;
-    bool gnomeLayout = (layoutPolicy == QDialogButtonBox::GnomeLayout);
     switch (sbutton) {
     case QDialogButtonBox::Ok:
-        buttonText = gnomeLayout ? QT_TRANSLATE_NOOP("QDialogButtonBox", "&OK") : QT_TRANSLATE_NOOP("QDialogButtonBox", "OK");
+        buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "OK");
         break;
     case QDialogButtonBox::Save:
-        buttonText = gnomeLayout ? QT_TRANSLATE_NOOP("QDialogButtonBox", "&Save") : QT_TRANSLATE_NOOP("QDialogButtonBox", "Save");
+        buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Save");
         break;
     case QDialogButtonBox::Open:
         buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Open");
         break;
     case QDialogButtonBox::Cancel:
-        buttonText = gnomeLayout ? QT_TRANSLATE_NOOP("QDialogButtonBox", "&Cancel") : QT_TRANSLATE_NOOP("QDialogButtonBox", "Cancel");
+        buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Cancel");
         break;
     case QDialogButtonBox::Close:
-        buttonText = gnomeLayout ? QT_TRANSLATE_NOOP("QDialogButtonBox", "&Close") : QT_TRANSLATE_NOOP("QDialogButtonBox", "Close");
+        buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Close");
         break;
     case QDialogButtonBox::Apply:
         buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Apply");
@@ -591,12 +488,7 @@ const char *QDialogButtonBoxPrivate::standardButtonText(QDialogButtonBox::Standa
         buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Help");
         break;
     case QDialogButtonBox::Discard:
-        if (layoutPolicy == QDialogButtonBox::MacLayout)
-            buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Don't Save");
-        else if (layoutPolicy == QDialogButtonBox::GnomeLayout)
-            buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Close without Saving");
-        else
-            buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Discard");
+        buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "Discard");
         break;
     case QDialogButtonBox::Yes:
         buttonText = QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
@@ -748,21 +640,6 @@ QDialogButtonBox::~QDialogButtonBox()
     \omitvalue LastButton
 
     \sa ButtonRole, standardButtons
-*/
-
-/*!
-    \enum QDialogButtonBox::ButtonLayout
-
-    This enum describes the layout policy to be used when arranging the buttons
-    contained in the button box.
-
-    \value WinLayout Use a policy appropriate for applications on Windows.
-    \value MacLayout Use a policy appropriate for applications on Mac OS X.
-    \value KdeLayout Use a policy appropriate for applications on KDE.
-    \value GnomeLayout Use a policy appropriate for applications on GNOME.
-
-    The button layout is specified by the \l{style()}{current style}. However,
-    on the X11 platform, it may be influenced by the desktop environment.
 */
 
 /*!

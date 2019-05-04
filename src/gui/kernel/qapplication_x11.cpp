@@ -177,10 +177,6 @@ static const char * x11_atomnames = {
 
     "_MOTIF_WM_HINTS\0"
 
-    "DTWM_IS_RUNNING\0"
-    "ENLIGHTENMENT_DESKTOP\0"
-    "_DT_SAVE_MODE\0"
-
     // EWMH (aka NETWM)
     "_NET_SUPPORTED\0"
     "_NET_VIRTUAL_ROOTS\0"
@@ -226,9 +222,6 @@ static const char * x11_atomnames = {
     "_NET_WM_WINDOW_TYPE_COMBO\0"
     "_NET_WM_WINDOW_TYPE_DND\0"
     "_NET_WM_WINDOW_TYPE_NORMAL\0"
-    "_KDE_NET_WM_WINDOW_TYPE_OVERRIDE\0"
-
-    "_KDE_NET_WM_FRAME_STRUT\0"
 
     "_NET_STARTUP_INFO\0"
     "_NET_STARTUP_INFO_BEGIN\0"
@@ -1035,9 +1028,8 @@ static void qt_set_x11_resources(const char* font = 0, const char* fg = 0,
 
         QApplicationPrivate::setSystemFont(fnt);
     }
-    // KDE sets it's own system palette
-    bool kdeColors = (QApplication::desktopSettingsAware() && qt_x11Data->desktopEnvironment == DE_KDE);
-    if (kdeColors || (button || !resBG.isEmpty() || !resFG.isEmpty())) {// set app colors
+    // set app colors
+    if (button || !resBG.isEmpty() || !resFG.isEmpty()) {
         bool allowX11ColorNames = QColor::allowX11ColorNames();
         QColor::setAllowX11ColorNames(true);
 
@@ -1882,61 +1874,6 @@ void qt_init(QApplicationPrivate *priv, int,
 #endif // QT_NO_XFIXES
         qt_x11Data->compositingManagerRunning = XGetSelectionOwner(qt_x11Data->display,
                                                             ATOM(_NET_WM_CM_S0));
-        qt_x11Data->desktopEnvironment = DE_UNKNOWN;
-        qt_x11Data->desktopVersion = 0;
-
-        Atom type;
-        int format;
-        unsigned long length, after;
-        uchar *data = 0;
-        int rc;
-
-        do {
-            if (!qgetenv("KDE_FULL_SESSION").isEmpty()) {
-                qt_x11Data->desktopEnvironment = DE_KDE;
-                qt_x11Data->desktopVersion = qgetenv("KDE_SESSION_VERSION").toInt();
-                break;
-            }
-
-            if (qgetenv("DESKTOP_SESSION") == "gnome") {
-                qt_x11Data->desktopEnvironment = DE_GNOME;
-                break;
-            }
-
-            // GNOME_DESKTOP_SESSION_ID is deprecated for some reason, but still check it
-            if (!qgetenv("GNOME_DESKTOP_SESSION_ID").isEmpty()) {
-                qt_x11Data->desktopEnvironment = DE_GNOME;
-                break;
-            }
-
-            rc = XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(_DT_SAVE_MODE),
-                                    0, 2, False, XA_STRING, &type, &format, &length,
-                                    &after, &data);
-            if (rc == Success && length) {
-                if (!strcmp(reinterpret_cast<char *>(data), "xfce4")) {
-                    // Pretend that xfce4 is gnome, as it uses the same libraries.
-                    // The detection above is stolen from xdg-open.
-                    qt_x11Data->desktopEnvironment = DE_GNOME;
-                    break;
-                }
-
-                // We got the property but it wasn't xfce4. Free data before it gets overwritten.
-                XFree(data);
-                data = 0;
-            }
-
-            rc = XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(), ATOM(DTWM_IS_RUNNING),
-                                    0, 1, False, AnyPropertyType, &type, &format, &length,
-                                    &after, &data);
-            if (rc == Success && length) {
-                // DTWM is running, meaning most likely CDE is running...
-                qt_x11Data->desktopEnvironment = DE_CDE;
-                break;
-            }
-        } while(0);
-
-        if (data)
-            XFree((char *)data);
 
         qt_set_input_encoding();
 
@@ -3712,22 +3649,7 @@ bool QETWidget::translatePropertyEvent(const XEvent *event)
     unsigned char *data = 0;
     unsigned long nitems, after;
 
-    if (event->xproperty.atom == ATOM(_KDE_NET_WM_FRAME_STRUT)) {
-        this->data->fstrut_dirty = 1;
-
-        if (event->xproperty.state == PropertyNewValue) {
-            e = XGetWindowProperty(qt_x11Data->display, event->xproperty.window, ATOM(_KDE_NET_WM_FRAME_STRUT),
-                                   0, 4, // struts are 4 longs
-                                   False, XA_CARDINAL, &ret, &format, &nitems, &after, &data);
-
-            if (e == Success && ret == XA_CARDINAL &&
-                format == 32 && nitems == 4) {
-                long *strut = (long *) data;
-                d->topData()->frameStrut.setCoords(strut[0], strut[2], strut[1], strut[3]);
-                this->data->fstrut_dirty = 0;
-            }
-        }
-    } else if (event->xproperty.atom == ATOM(_NET_WM_STATE)) {
+    if (event->xproperty.atom == ATOM(_NET_WM_STATE)) {
         bool max = false;
         bool full = false;
         Qt::WindowStates oldState = this->data->window_state;

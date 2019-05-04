@@ -208,13 +208,8 @@ void QComboBoxPrivate::_q_modelDestroyed()
 }
 
 
-//Windows and KDE allows menus to cover the taskbar, while GNOME and Mac don't
 QRect QComboBoxPrivate::popupGeometry(int screen) const
 {
-#if defined Q_WS_X11
-    if (qt_x11Data->desktopEnvironment == DE_KDE)
-        return QApplication::desktop()->screenGeometry(screen);
-#endif
     return QApplication::desktop()->availableGeometry(screen);
 }
 

@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "qmotifstyle.h"
-#include "qcdestyle.h"
 
 #if !defined(QT_NO_STYLE_MOTIF) || defined(QT_PLUGIN)
 
@@ -2353,9 +2352,6 @@ QMotifStyle::styleHint(StyleHint hint, const QStyleOption *opt, const QWidget *w
         ret = QPalette::Mid;
         break;
 
-    case SH_DialogButtonLayout:
-        ret = QDialogButtonBox::KdeLayout;
-        break;
     case SH_LineEdit_PasswordCharacter:
         ret = '*';
         break;

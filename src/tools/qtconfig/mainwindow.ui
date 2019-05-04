@@ -46,8 +46,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>815</width>
-    <height>546</height>
+    <width>861</width>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -285,13 +285,6 @@
                </widget>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="kdeNoteLabel">
-             <property name="text">
-              <string>Please use the KDE Control Center to set the palette.</string>
-             </property>
             </widget>
            </item>
           </layout>
@@ -1002,8 +995,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>815</width>
-     <height>20</height>
+     <width>861</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="fileMenu">
@@ -1011,8 +1004,8 @@
      <rect>
       <x>203</x>
       <y>114</y>
-      <width>106</width>
-      <height>85</height>
+      <width>126</width>
+      <height>89</height>
      </rect>
     </property>
     <property name="title">
@@ -1027,8 +1020,8 @@
      <rect>
       <x>543</x>
       <y>98</y>
-      <width>106</width>
-      <height>76</height>
+      <width>126</width>
+      <height>80</height>
      </rect>
     </property>
     <property name="title">
