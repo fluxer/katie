@@ -70,14 +70,6 @@
 static void initResources()
 {
     Q_INIT_RESOURCE(shared);
-    Q_INIT_RESOURCE(ClamshellPhone);
-    Q_INIT_RESOURCE(PortableMedia);
-    Q_INIT_RESOURCE(S60_nHD_Touchscreen);
-    Q_INIT_RESOURCE(S60_QVGA_Candybar);
-    Q_INIT_RESOURCE(SmartPhone);
-    Q_INIT_RESOURCE(SmartPhone2);
-    Q_INIT_RESOURCE(SmartPhoneWithButtons);
-    Q_INIT_RESOURCE(TouchscreenPhone);
 }
 
 QT_BEGIN_NAMESPACE
@@ -624,4 +616,5 @@ void QDesignerFormEditorInterface::setDialogGui(QDesignerDialogGuiInterface *dia
 }
 
 QT_END_NAMESPACE
+
 #include <moc_abstractformeditor.h>

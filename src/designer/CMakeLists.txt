@@ -62,7 +62,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components.h
     ${SHAREDGRADIENDEDITOR_HEADERS}
     ${SHAREDPROPERTYBROWSER_HEADERS}
-    ${SHAREDDEVICESKIN_HEADERS}
     ${SHAREDFINDWIDGET_HEADERS}
 )
 
@@ -97,7 +96,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/shared
     ${SHAREDGRADIENDEDITOR_INCLUDES}
     ${SHAREDPROPERTYBROWSER_INCLUDES}
-    ${SHAREDDEVICESKIN_INCLUDES}
     ${SHAREDFINDWIDGET_INCLUDES}
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
@@ -128,7 +126,6 @@ katie_setup_target(KtDesigner ${DESIGNER_SOURCES} ${DESIGNER_HEADERS})
 add_library(KtDesigner ${KATIE_TYPE} ${KtDesigner_SOURCES}
     $<TARGET_OBJECTS:sharedqtgradienteditor>
     $<TARGET_OBJECTS:sharedqtpropertybrowser>
-    $<TARGET_OBJECTS:shareddeviceskin>
     $<TARGET_OBJECTS:sharedfindwidget>
 )
 target_link_libraries(KtDesigner ${EXTRA_DESIGNER_LIBS})
@@ -138,7 +135,7 @@ set_target_properties(KtDesigner PROPERTIES
     EXPORT_NAME Designer
 )
 
-katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser shareddeviceskin sharedfindwidget)
+katie_setup_object(KtDesigner sharedqtgradienteditor sharedqtpropertybrowser sharedfindwidget)
 
 install(
     TARGETS KtDesigner

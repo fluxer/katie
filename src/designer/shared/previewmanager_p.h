@@ -80,8 +80,7 @@ class QDESIGNER_SHARED_EXPORT PreviewConfiguration {
 public:
     PreviewConfiguration();
     explicit PreviewConfiguration(const QString &style,
-                                  const QString &applicationStyleSheet = QString(),
-                                  const QString &deviceSkin = QString());
+                                  const QString &applicationStyleSheet = QString());
 
     PreviewConfiguration(const PreviewConfiguration&);
     PreviewConfiguration& operator=(const PreviewConfiguration&);
@@ -93,9 +92,6 @@ public:
     // Style sheet to prepend (to simulate the effect od QApplication::setSyleSheet()).
     QString applicationStyleSheet() const;
     void setApplicationStyleSheet(const QString &);
-
-    QString deviceSkin() const;
-    void setDeviceSkin(const QString &);
 
     void clear();
     void toSettings(const QString &prefix, QDesignerSettingsInterface *settings) const;
@@ -160,7 +156,6 @@ private slots:
 private:
 
     virtual Qt::WindowFlags previewWindowFlags(const QWidget *widget) const;
-    virtual QWidget *createDeviceSkinContainer(const QDesignerFormWindowInterface *) const;
 
     QWidget *raise(const QDesignerFormWindowInterface *, const PreviewConfiguration &pc);
     QWidget *createPreview(const QDesignerFormWindowInterface *,

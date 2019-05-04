@@ -78,8 +78,6 @@ public:
 
 private slots:
     void slotEditAppStyleSheet();
-    void slotDeleteSkinEntry();
-    void slotSkinChanged(int);
 
 private:
     class PreviewConfigurationWidgetPrivate;
