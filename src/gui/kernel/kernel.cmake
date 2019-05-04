@@ -39,7 +39,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qstandardgestures_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturerecognizer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
 )
 

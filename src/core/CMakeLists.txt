@@ -62,6 +62,7 @@ set(CORE_PUBLIC_HEADERS
     QThreadPool
     QSettings
     QStandardPaths
+    QPlugin
     QPluginLoader
     QAtomicPointer
     QSequentialAnimationGroup

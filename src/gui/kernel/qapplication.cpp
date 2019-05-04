@@ -71,7 +71,7 @@
 #include "qmessagebox.h"
 #include "qgraphicsproxywidget.h"
 #include "qkeymapper_p.h"
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 #include "qthread.h"
 #include "qthread_p.h"
 #include "qfont_p.h"

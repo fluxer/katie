@@ -74,7 +74,7 @@
 #include "qtimer.h"
 #include "qlibrary.h"
 #include "qgraphicssystemfactory_p.h"
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 #include "qthread_p.h"
 #include "qeventdispatcher_x11_p.h"
 #include <qpaintengine_x11_p.h>

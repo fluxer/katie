@@ -62,7 +62,7 @@
 #include "qmimedata.h"
 #include "qspinbox.h"
 #include "qdialogbuttonbox.h"
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 
 QT_BEGIN_NAMESPACE
 

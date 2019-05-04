@@ -76,7 +76,7 @@
 #include <qdebug.h>
 #include "qsidebar_p.h"
 #include "qfscompleter_p.h"
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 
 
 #if defined (Q_OS_UNIX)

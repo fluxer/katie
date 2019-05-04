@@ -329,6 +329,7 @@ set(GUI_PUBLIC_HEADERS
     QWizard
     QWizardPage
     QWorkspace
+    QGuiPlatformPlugin
     # those are aliases
     QX11Info
     QX11EmbedContainer

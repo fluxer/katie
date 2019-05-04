@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 #include <qdebug.h>
 #include <qfile.h>
 #include <qdir.h>
@@ -190,4 +190,4 @@ int QGuiPlatformPlugin::platformHint(PlatformHint hint)
 QT_END_NAMESPACE
 
 
-#include "moc_qguiplatformplugin_p.h"
+#include "moc_qguiplatformplugin.h"

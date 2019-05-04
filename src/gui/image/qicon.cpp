@@ -54,7 +54,7 @@
 #include "qvariant.h"
 #include "qcache.h"
 #include "qdebug.h"
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 #include "qguicommon_p.h"
 
 #ifdef Q_WS_X11

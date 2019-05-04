@@ -73,7 +73,7 @@
 #include <qdir.h>
 #include <qsettings.h>
 #include <qpixmapcache.h>
-#include <qguiplatformplugin_p.h>
+#include <qguiplatformplugin.h>
 
 #include <limits.h>
 

@@ -43,7 +43,7 @@
 #include "qiconloader_p.h"
 #include "qapplication_p.h"
 #include "qicon_p.h"
-#include "qguiplatformplugin_p.h"
+#include "qguiplatformplugin.h"
 #include "qfactoryloader_p.h"
 #include "qguicommon_p.h"
 

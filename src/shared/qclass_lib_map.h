@@ -444,6 +444,8 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QTapAndHoldGesture", "QtGui/qgesture.h"},
     { "QGestureRecognizer", "QtGui/qgesturerecognizer.h"},
     { "QGridLayout", "QtGui/qgridlayout.h"},
+    { "QGuiPlatformPluginInterface", "QtGui/qguiplatformplugin.h"},
+    { "QGuiPlatformPlugin", "QtGui/qguiplatformplugin.h"},
     { "QKeySequence", "QtGui/qkeysequence.h"},
     { "QLayout", "QtGui/qlayout.h"},
     { "QLayoutItem", "QtGui/qlayoutitem.h"},
@@ -461,7 +463,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QX11EmbedWidget", "QtGui/qx11embed_x11.h"},
     { "QX11EmbedContainer", "QtGui/qx11embed_x11.h"},
     { "QX11Info", "QtGui/qx11info_x11.h"},
-    { "QCDEStyle", "QtGui/qcdestyle.h"},
     { "QCleanlooksStyle", "QtGui/qcleanlooksstyle.h"},
     { "QCommonStyle", "QtGui/qcommonstyle.h"},
     { "QMotifStyle", "QtGui/qmotifstyle.h"},
@@ -700,6 +701,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 694;
+static const int qclass_lib_count = 695;
 
 #endif
