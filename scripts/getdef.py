@@ -3,7 +3,7 @@
 import os, re
 
 cwd = os.path.dirname(__file__)
-regex = re.compile('defined\((QT_NO_[^\)]+)|def (QT_NO_[^\n]+)')
+regex = re.compile('defined\((QT_NO_[^\)]+)|def (QT_NO_[\w]+)')
 lmatches = []
 
 for root, subdirs, files in os.walk('%s/../src' % cwd):

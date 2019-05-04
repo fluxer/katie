@@ -165,8 +165,6 @@ static const char * x11_atomnames = {
     "_QT_SELECTION_SENTINEL\0"
     "CLIPBOARD_MANAGER\0"
 
-    "RESOURCE_MANAGER\0"
-
     "_XSETROOT_ID\0"
 
     "_QT_SCROLL_DONE\0"
@@ -279,9 +277,6 @@ Q_GUI_EXPORT QX11Data *qt_x11Data = 0;
 static const char *appName = 0;                         // application name
 static const char *appClass = 0;                        // application class
 static const char *appFont = 0;                         // application font
-static const char *appBGCol = 0;                        // application bg color
-static const char *appFGCol = 0;                        // application fg color
-static const char *appBTNCol = 0;                       // application btn color
 static const char *mwGeometry = 0;                      // main widget geometry
 static const char *mwTitle = 0;                         // main widget title
 static bool        appSync = false;                     // X11 synchronization
@@ -670,6 +665,10 @@ Q_GUI_EXPORT void qt_x11_apply_settings_in_all_apps()
 */
 bool QApplicationPrivate::x11_apply_settings()
 {
+    if (!QApplication::desktopSettingsAware()) {
+        return true;
+    }
+
     QSettings settings(QSettings::UserScope, QLatin1String("Trolltech"));
 
     settings.beginGroup(QLatin1String("Qt"));
@@ -809,13 +808,9 @@ bool QApplicationPrivate::x11_apply_settings()
     if (!qt_x11Data->has_fontconfig) {
         settings.beginGroup(QLatin1String("Font Substitutions"));
         QStringList fontsubs = settings.childKeys();
-        if (!fontsubs.isEmpty()) {
-            QStringList::Iterator it = fontsubs.begin();
-            for (; it != fontsubs.end(); ++it) {
-                QString fam = *it;
-                QStringList subs = settings.value(fam).toStringList();
-                QFont::insertSubstitutions(fam, subs);
-            }
+        for (const QString fam: fontsubs) {
+            QStringList subs = settings.value(fam).toStringList();
+            QFont::insertSubstitutions(fam, subs);
         }
         settings.endGroup();
     }
@@ -1259,15 +1254,6 @@ void qt_init(QApplicationPrivate *priv, int,
         } else if (arg == "-fn" || arg == "-font") {
             if (++i < argc)
                 appFont = argv[i];
-        } else if (arg == "-bg" || arg == "-background") {
-            if (++i < argc)
-                appBGCol = argv[i];
-        } else if (arg == "-btn" || arg == "-button") {
-            if (++i < argc)
-                appBTNCol = argv[i];
-        } else if (arg == "-fg" || arg == "-foreground") {
-            if (++i < argc)
-                appFGCol = argv[i];
         } else if (arg == "-name") {
             if (++i < argc)
                 appName = argv[i];
@@ -2041,7 +2027,7 @@ void qPRCleanup(QWidget *widget)
     QETWidget *etw = static_cast<QETWidget *>(const_cast<QWidget *>(widget));
     if (!(wPRmapper && widget->testAttribute(Qt::WA_WState_Reparented)))
         return;                                        // not a reparented widget
-    QWidgetMapper::Iterator it = wPRmapper->begin();
+    QWidgetMapper::iterator it = wPRmapper->begin();
     while (it != wPRmapper->end()) {
         QWidget *w = *it;
         if (w == etw) {                       // found widget

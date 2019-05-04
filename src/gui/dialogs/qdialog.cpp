@@ -56,11 +56,7 @@
 #endif
 
 #if defined(Q_WS_X11)
-#  include "../kernel/qt_x11_p.h"
-#endif
-
-#ifndef SPI_GETSNAPTODEFBUTTON
-#   define SPI_GETSNAPTODEFBUTTON  95
+#  include "qt_x11_p.h"
 #endif
 
 QT_BEGIN_NAMESPACE

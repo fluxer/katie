@@ -62,12 +62,11 @@
 #include <qabstractitemmodel_p.h>
 #include <qabstractscrollarea_p.h>
 #include <qdebug.h>
-#ifdef Q_WS_X11
-#include <qt_x11_p.h>
-#endif
+
 #ifndef QT_NO_EFFECTS
 # include <qeffects_p.h>
 #endif
+
 #ifndef QT_NO_ACCESSIBILITY
 #include "qaccessible.h"
 #endif

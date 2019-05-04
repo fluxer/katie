@@ -80,7 +80,6 @@
 #define XK_ISO_Left_Tab 0xFE20
 #endif
 
-
 #ifdef index
 #  undef index
 #endif
@@ -355,8 +354,6 @@ struct QX11Data
         _QT_CLIPBOARD_SENTINEL,
         _QT_SELECTION_SENTINEL,
         CLIPBOARD_MANAGER,
-
-        RESOURCE_MANAGER,
 
         _XSETROOT_ID,
 

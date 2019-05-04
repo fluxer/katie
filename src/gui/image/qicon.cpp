@@ -56,11 +56,6 @@
 #include "qdebug.h"
 #include "qguiplatformplugin.h"
 #include "qguicommon_p.h"
-
-#ifdef Q_WS_X11
-#include "qt_x11_p.h"
-#endif
-
 #include "qstylehelper_p.h"
 
 #ifndef QT_NO_ICON

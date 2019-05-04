@@ -51,16 +51,6 @@
 #include "qpainter.h"
 #include "qapplication.h"
 #include "qdesktopwidget.h"
-#ifndef QT_NO_ACCESSIBILITY
-# include "qaccessible.h"
-#endif
-#ifndef QT_NO_EFFECTS
-# include <qeffects_p.h>
-#endif
-#ifndef QT_NO_WHATSTHIS
-# include <qwhatsthis.h>
-#endif
-
 #include "qmenu_p.h"
 #include "qmenubar_p.h"
 #include "qwidgetaction.h"
@@ -69,8 +59,16 @@
 #include <qpushbutton_p.h>
 #include <qaction_p.h>
 
-#ifdef Q_WS_X11
-#   include <qt_x11_p.h>
+#ifndef QT_NO_ACCESSIBILITY
+# include "qaccessible.h"
+#endif
+
+#ifndef QT_NO_EFFECTS
+# include <qeffects_p.h>
+#endif
+
+#ifndef QT_NO_WHATSTHIS
+# include <qwhatsthis.h>
 #endif
 
 

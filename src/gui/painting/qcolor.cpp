@@ -530,28 +530,7 @@ QString QColor::name() const
     \sa QColor(), name(), isValid(), allowX11ColorNames()
 */
 
-void QColor::setNamedColor(const QString &name)
-{
-    setColorFromString(name);
-}
-
-/*!
-   \since 4.7
-
-   Returns true if the \a name is a valid color name and can
-   be used to construct a valid QColor object, otherwise returns
-   false.
-
-   It uses the same algorithm used in setNamedColor().
-
-   \sa setNamedColor()
-*/
-bool QColor::isValidColor(const QString &name)
-{
-    return !name.isEmpty() && QColor().setColorFromString(name);
-}
-
-bool QColor::setColorFromString(const QString &name)
+bool QColor::setNamedColor(const QString &name)
 {
     if (name.isEmpty()) {
         invalidate();
@@ -592,6 +571,22 @@ bool QColor::setColorFromString(const QString &name)
             return false;
         }
     }
+}
+
+/*!
+   \since 4.7
+
+   Returns true if the \a name is a valid color name and can
+   be used to construct a valid QColor object, otherwise returns
+   false.
+
+   It uses the same algorithm used in setNamedColor().
+
+   \sa setNamedColor()
+*/
+bool QColor::isValidColor(const QString &name)
+{
+    return !name.isEmpty() && QColor().setNamedColor(name);
 }
 
 /*!

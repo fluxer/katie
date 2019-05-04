@@ -555,10 +555,6 @@ void QApplicationPrivate::process_cmdline()
         \o  -fn or \c -font \e font, defines the application font. The font
             should be specified using an X logical font description. Note that
             this option is ignored when Qt is built with fontconfig support enabled.
-        \o  -bg or \c -background \e color, sets the default background color
-            and an application palette (light and dark shades are calculated).
-        \o  -fg or \c -foreground \e color, sets the default foreground color.
-        \o  -btn or \c -button \e color, sets the default button color.
         \o  -name \e name, sets the application name.
         \o  -title \e title, sets the application title.
         \o  -visual \c TrueColor, forces the application to use a TrueColor

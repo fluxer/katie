@@ -71,7 +71,7 @@ public:
     bool isValid() const;
 
     QString name() const;
-    void setNamedColor(const QString& name);
+    bool setNamedColor(const QString& name);
 
     static QStringList colorNames();
 
@@ -198,7 +198,6 @@ public:
     static void setAllowX11ColorNames(bool enabled);
 #endif
 
-
     static bool isValidColor(const QString &name);
 
 private:
@@ -206,7 +205,6 @@ private:
     QColor(int, int, int, Spec);
 
     void invalidate();
-    bool setColorFromString(const QString &name);
 
     Spec cspec;
     union {

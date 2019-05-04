@@ -57,10 +57,6 @@
 #include <QtCore/QSettings>
 #include <QtGui/QPainter>
 
-#ifdef Q_WS_X11
-#include <qt_x11_p.h>
-#endif
-
 #include <qstylehelper_p.h>
 
 QT_BEGIN_NAMESPACE
@@ -68,14 +64,7 @@ QT_BEGIN_NAMESPACE
 Q_GLOBAL_STATIC(QIconLoader, iconLoaderInstance)
 
 /* Theme to use in last resort, if the theme does not have the icon, neither the parents  */
-static QString fallbackTheme()
-{
-#ifdef Q_WS_X11
-    return QLatin1String("hicolor");
-#else
-    return QString();
-#endif
-}
+static const QString fallbackTheme = QLatin1String("hicolor");
 
 QIconLoader::QIconLoader() :
         m_themeKey(1), m_supportsSvg(false)
@@ -84,7 +73,7 @@ QIconLoader::QIconLoader() :
 
     m_systemTheme = qt_guiPlatformPlugin()->systemIconThemeName();
     if (m_systemTheme.isEmpty())
-        m_systemTheme = fallbackTheme();
+        m_systemTheme = fallbackTheme;
 #ifndef QT_NO_LIBRARY
     if (iconloader()->keys().contains(QLatin1String("svg")))
         m_supportsSvg = true;
@@ -104,7 +93,7 @@ void QIconLoader::updateSystemTheme()
     if (m_userTheme.isEmpty()) {
         QString theme = qt_guiPlatformPlugin()->systemIconThemeName();
         if (theme.isEmpty())
-            theme = fallbackTheme();
+            theme = fallbackTheme;
         if (theme != m_systemTheme) {
             m_systemTheme = theme;
             invalidateKey();
@@ -199,7 +188,7 @@ QIconTheme::QIconTheme(const QString &themeName)
 
         // Ensure a default platform fallback for all themes
         if (m_parents.isEmpty())
-            m_parents.append(fallbackTheme());
+            m_parents.append(fallbackTheme);
 
         // Ensure that all themes fall back to hicolor
         if (!m_parents.contains(QLatin1String("hicolor")))
@@ -224,7 +213,7 @@ QThemeIconEntries QIconLoader::findIconHelper(const QString &themeName,
     if (!theme.isValid()) {
         theme = QIconTheme(themeName);
         if (!theme.isValid())
-            theme = QIconTheme(fallbackTheme());
+            theme = QIconTheme(fallbackTheme);
 
         themeList.insert(themeName, theme);
     }
