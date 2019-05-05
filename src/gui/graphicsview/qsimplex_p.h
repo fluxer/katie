@@ -155,7 +155,7 @@ public:
     qreal solveMin();
     qreal solveMax();
 
-    bool setConstraints(const QList<QSimplexConstraint *> constraints);
+    bool setConstraints(const QList<QSimplexConstraint *> &constraints);
     void setObjective(QSimplexConstraint *objective);
 
     void dumpMatrix();

@@ -76,8 +76,7 @@ QRect QLineEditPrivate::cursorRect() const
 }
 
 #ifndef QT_NO_COMPLETER
-
-void QLineEditPrivate::_q_completionHighlighted(QString newText)
+void QLineEditPrivate::_q_completionHighlighted(const QString &newText)
 {
     Q_Q(QLineEdit);
     if (control->completer()->completionMode() != QCompleter::InlineCompletion) {
@@ -90,7 +89,6 @@ void QLineEditPrivate::_q_completionHighlighted(QString newText)
         control->moveCursor(c, true);
     }
 }
-
 #endif // QT_NO_COMPLETER
 
 void QLineEditPrivate::_q_handleWindowActivate()

@@ -549,7 +549,7 @@ static QString qReplacePlaceholderMarkers(const QString &query)
     return result;
 }
 
-static QString qCreateParamString(const QVector<QVariant> boundValues, const QSqlDriver *driver)
+static QString qCreateParamString(const QVector<QVariant> &boundValues, const QSqlDriver *driver)
 {
     if (boundValues.isEmpty())
         return QString();

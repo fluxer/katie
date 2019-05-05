@@ -125,7 +125,7 @@ public:
     static QString workingDirectory(const QString &path);
     static QString initialSelection(const QString &path);
     QStringList typedFiles() const;
-    QStringList addDefaultSuffixToFiles(const QStringList filesToFix) const;
+    QStringList addDefaultSuffixToFiles(const QStringList &filesToFix) const;
     bool removeDirectory(const QString &path);
 
     inline QModelIndex mapToSource(const QModelIndex &index) const;
@@ -188,8 +188,8 @@ public:
     void _q_selectionChanged();
     void _q_goToUrl(const QUrl &url);
     void _q_autoCompleteFileName(const QString &);
-    void _q_rowsInserted(const QModelIndex & parent);
-    void _q_fileRenamed(const QString &path, const QString oldName, const QString newName);
+    void _q_rowsInserted(const QModelIndex &parent);
+    void _q_fileRenamed(const QString &path, const QString &oldName, const QString &newName);
 
     // layout
 #ifndef QT_NO_PROXYMODEL
