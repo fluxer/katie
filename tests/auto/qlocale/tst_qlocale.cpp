@@ -286,6 +286,7 @@ void tst_QLocale::ctor()
 
     QLocale::setDefault(QLocale(QLocale::C));
 
+    QChar c;
     TEST_CTOR("C", C, AnyCountry)
     TEST_CTOR("bla", C, AnyCountry)
     TEST_CTOR("zz", C, AnyCountry)
@@ -293,7 +294,7 @@ void tst_QLocale::ctor()
     TEST_CTOR("zz...", C, AnyCountry)
     TEST_CTOR("", C, AnyCountry)
     TEST_CTOR("en/", C, AnyCountry)
-    TEST_CTOR(QChar::Null, C, AnyCountry)
+    TEST_CTOR(c, C, AnyCountry)
     TEST_CTOR("en", English, UnitedStates)
     TEST_CTOR("en", English, UnitedStates)
     TEST_CTOR("en.", English, UnitedStates)
