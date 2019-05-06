@@ -60,6 +60,8 @@
 
 QT_BEGIN_NAMESPACE
 
+Q_CORE_EXPORT bool qt_disable_lowpriority_timers=false;
+
 /*****************************************************************************
  UNIX signal handling
  *****************************************************************************/
@@ -223,7 +225,7 @@ int QEventDispatcherUNIXPrivate::initThreadWakeUp()
 
 int QEventDispatcherUNIXPrivate::processThreadWakeUp(int nsel)
 {
-    if (nsel > 0 && FD_ISSET(thread_pipe[0], &sn_vec[0].select_fds) && wakeUps == 1) {
+    if (nsel > 0 && FD_ISSET(thread_pipe[0], &sn_vec[0].select_fds)) {
         // some other thread woke us up... consume the data on the thread pipe so that
         // select doesn't immediately return next time
         char c[16];
@@ -483,7 +485,7 @@ QList<QPair<int, int> > QTimerInfoList::registeredTimers(QObject *object) const
 */
 int QTimerInfoList::activateTimers()
 {
-    if (isEmpty())
+    if (qt_disable_lowpriority_timers || isEmpty())
         return 0; // nothing to do
 
     int n_act = 0, maxCount = 0;
@@ -727,7 +729,7 @@ void QEventDispatcherUNIX::unregisterSocketNotifier(QSocketNotifier *notifier)
         if(sn->obj == notifier && sn->fd == sockfd)
             break;
     }
-    if (i == list.size()) // not found
+    if (!sn) // not found
         return;
 
     FD_CLR(sockfd, fds);                        // clear fd bit
@@ -767,17 +769,27 @@ void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
     Q_D(QEventDispatcherUNIX);
     QSockNotType::List &list = d->sn_vec[type].list;
     QSockNot *sn = Q_NULLPTR;
-    int i;
-    for (i = 0; i < list.size(); ++i) {
+    for (int i = 0; i < list.size(); ++i) {
         sn = list[i];
         if(sn->obj == notifier && sn->fd == sockfd)
             break;
     }
-    if (i == list.size()) // not found
+    if (!sn) // not found
         return;
 
-    if (!FD_ISSET(sn->fd, sn->queue)) {
-        d->sn_pending_list.append(sn);
+    // We choose a random activation order to be more fair under high load.
+    // If a constant order is used and a peer early in the list can
+    // saturate the IO, it might grab our attention completely.
+    // Also, if we're using a straight list, the callback routines may
+    // delete other entries from the list before those other entries are
+    // processed.
+    if (! FD_ISSET(sn->fd, sn->queue)) {
+        if (d->sn_pending_list.isEmpty()) {
+            d->sn_pending_list.append(sn);
+        } else {
+            d->sn_pending_list.insert((qrand() & 0xff) %
+                                      (d->sn_pending_list.size()+1), sn);
+        }
         FD_SET(sn->fd, sn->queue);
     }
 }

@@ -176,10 +176,6 @@ QSocketNotifier::QSocketNotifier(int socket, Type type, QObject *parent)
     Q_D(QObject);
     if (socket < 0)
         qWarning("QSocketNotifier: Invalid socket specified");
-#if defined(Q_OS_UNIX)
-    if (socket >= FD_SETSIZE)
-        qWarning("QSocketNotifier: Socket descriptor too large for select()");
-#endif
     else if (!d->threadData->eventDispatcher)
         qWarning("QSocketNotifier: Can only be used with threads started with QThread");
     else

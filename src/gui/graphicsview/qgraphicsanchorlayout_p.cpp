@@ -610,10 +610,10 @@ QSimplexConstraint *GraphPath::constraint(const GraphPath &path) const
 QString GraphPath::toString() const
 {
     QString string(QLatin1String("Path: "));
-    foreach(AnchorData *edge: positives)
+    foreach(AnchorData *edge, positives)
         string += QString::fromAscii(" (+++) %1").arg(edge->toString());
 
-    foreach(AnchorData *edge: negatives)
+    foreach(AnchorData *edge, negatives)
         string += QString::fromAscii(" (---) %1").arg(edge->toString());
 
     return string;
