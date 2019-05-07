@@ -270,7 +270,7 @@ void QStaticText::setTextFormat(Qt::TextFormat textFormat)
 */
 Qt::TextFormat QStaticText::textFormat() const
 {
-    return Qt::TextFormat(data->textFormat);
+    return data->textFormat;
 }
 
 /*!

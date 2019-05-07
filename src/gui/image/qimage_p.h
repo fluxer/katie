@@ -84,9 +84,9 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
     qreal  dpmy;                // dots per meter Y (or 0)
     QPoint  offset;           // offset in pixels
 
-    uint own_data : 1;
-    uint ro_data : 1;
-    uint has_alpha_clut : 1;
+    bool own_data;
+    bool ro_data;
+    bool has_alpha_clut;
 
     bool checkForAlphaPixels() const;
 
@@ -94,8 +94,6 @@ struct Q_GUI_EXPORT QImageData {        // internal image data
 
     QPaintEngine *paintEngine;
 };
-
-Q_GUI_EXPORT void qGamma_correct_back_to_linear_cs(QImage *image);
 
 static inline int qt_depthForFormat(QImage::Format format)
 {

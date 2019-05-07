@@ -113,9 +113,9 @@ struct Q_AUTOTEST_EXPORT QScriptAnalysis
         TabOrObject = Tab,
         Object = 7
     };
-    unsigned short script    : 7;
-    unsigned short bidiLevel : 6;  // Unicode Bidi algorithm embedding level (0-61)
-    unsigned short flags     : 3;
+    unsigned short script;
+    unsigned short bidiLevel;  // Unicode Bidi algorithm embedding level (0-61)
+    Flags flags;
     inline bool operator == (const QScriptAnalysis &other) const {
         return script == other.script && bidiLevel == other.bidiLevel && flags == other.flags;
     }
@@ -125,7 +125,7 @@ Q_DECLARE_TYPEINFO(QScriptAnalysis, Q_PRIMITIVE_TYPE);
 struct QGlyphJustification
 {
     inline QGlyphJustification()
-        : type(0), nKashidas(0), space_18d6(0)
+        : type(JustifyNone), nKashidas(0), space_18d6(0)
     {}
 
     enum JustificationType {
@@ -134,9 +134,9 @@ struct QGlyphJustification
         JustifyKashida
     };
 
-    uint type :2;
-    uint nKashidas : 6; // more do not make sense...
-    uint space_18d6 : 24;
+    JustificationType type;
+    uint nKashidas; // more do not make sense...
+    uint space_18d6;
 };
 Q_DECLARE_TYPEINFO(QGlyphJustification, Q_PRIMITIVE_TYPE);
 

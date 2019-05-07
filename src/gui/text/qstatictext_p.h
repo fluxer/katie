@@ -150,9 +150,9 @@ public:
 
     QTextOption textOption;              // 28 bytes per text
 
-    unsigned char needsRelayout            : 1; // 1 byte per text
-    unsigned char textFormat               : 2;
-    unsigned char untransformedCoordinates : 1;
+    bool needsRelayout;                  // 1 byte per text
+    Qt::TextFormat textFormat;
+    bool untransformedCoordinates;
                                          // ================
                                          // 195 bytes per text
 

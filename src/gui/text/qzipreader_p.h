@@ -87,14 +87,13 @@ public:
         FileInfo &operator=(const FileInfo &other);
         bool isValid() const;
         QString filePath;
-        uint isDir : 1;
-        uint isFile : 1;
-        uint isSymLink : 1;
+        bool isDir;
+        bool isFile;
+        bool isSymLink;
         QFile::Permissions permissions;
         uint crc32;
         qint64 size;
         QDateTime lastModified;
-        void *d;
     };
 
     QList<FileInfo> fileInfoList() const;
