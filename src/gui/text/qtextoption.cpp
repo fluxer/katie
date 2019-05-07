@@ -57,15 +57,14 @@ struct QTextOptionPrivate
     using of design metrics flag is set to false.
 */
 QTextOption::QTextOption()
-    : align(Qt::AlignLeft),
-      wordWrap(QTextOption::WordWrap),
-      design(false),
-      unused(0),
-      f(0),
-      tab(-1),
-      d(0)
+    : wordwrap(QTextOption::WordWrap),
+    fflags(0),
+    align(Qt::AlignLeft),
+    direction(Qt::LayoutDirectionAuto),
+    design(false),
+    tab(-1),
+    d(0)
 {
-    direction = Qt::LayoutDirectionAuto;
 }
 
 /*!
@@ -74,15 +73,14 @@ QTextOption::QTextOption()
     of design metrics flag is set to false.
 */
 QTextOption::QTextOption(Qt::Alignment alignment)
-    : align(alignment),
-      wordWrap(QTextOption::WordWrap),
-      design(false),
-      unused(0),
-      f(0),
-      tab(-1),
-      d(0)
+    : wordwrap(QTextOption::WordWrap),
+    fflags(0),
+    align(alignment),
+    direction(QApplication::layoutDirection()),
+    design(false),
+    tab(-1),
+    d(0)
 {
-    direction = QApplication::layoutDirection();
 }
 
 /*!
@@ -99,14 +97,13 @@ QTextOption::~QTextOption()
     Construct a copy of the \a other text option.
 */
 QTextOption::QTextOption(const QTextOption &o)
-    : align(o.align),
-      wordWrap(o.wordWrap),
-      design(o.design),
-      direction(o.direction),
-      unused(o.unused),
-      f(o.f),
-      tab(o.tab),
-      d(0)
+    : wordwrap(o.wordwrap),
+    fflags(o.fflags),
+    align(o.align),
+    direction(o.direction),
+    design(o.design),
+    tab(o.tab),
+    d(0)
 {
     if (o.d)
         d = new QTextOptionPrivate(*o.d);
@@ -129,12 +126,11 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
     delete d;
     d = dNew;
 
+    wordwrap = o.wordwrap;
+    fflags = o.fflags;
     align = o.align;
-    wordWrap = o.wordWrap;
-    design = o.design;
     direction = o.direction;
-    unused = o.unused;
-    f = o.f;
+    design = o.design;
     tab = o.tab;
     return *this;
 }
@@ -145,7 +141,7 @@ QTextOption &QTextOption::operator=(const QTextOption &o)
 
     \sa tabArray(), setTabStop(), setTabs()
 */
-void QTextOption::setTabArray(QList<qreal> tabStops) // Qt5: const ref
+void QTextOption::setTabArray(const QList<qreal> &tabStops)
 {
     if (!d)
         d = new QTextOptionPrivate;
@@ -165,7 +161,7 @@ void QTextOption::setTabArray(QList<qreal> tabStops) // Qt5: const ref
 
     \sa tabStops()
 */
-void QTextOption::setTabs(QList<QTextOption::Tab> tabStops) // Qt5: const ref
+void QTextOption::setTabs(const QList<QTextOption::Tab> &tabStops)
 {
     if (!d)
         d = new QTextOptionPrivate;
@@ -183,10 +179,8 @@ QList<qreal> QTextOption::tabArray() const
         return QList<qreal>();
 
     QList<qreal> answer;
-    QList<QTextOption::Tab>::ConstIterator iter = d->tabStops.constBegin();
-    while(iter != d->tabStops.constEnd()) {
-        answer.append( (*iter).position);
-        ++iter;
+    foreach(const QTextOption::Tab tab, d->tabStops) {
+        answer.append(tab.position);
     }
     return answer;
 }

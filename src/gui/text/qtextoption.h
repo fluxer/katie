@@ -93,10 +93,10 @@ public:
     QTextOption &operator=(const QTextOption &o);
 
     inline void setAlignment(Qt::Alignment alignment);
-    inline Qt::Alignment alignment() const { return Qt::Alignment(align); }
+    inline Qt::Alignment alignment() const { return align; }
 
     inline void setTextDirection(Qt::LayoutDirection aDirection) { this->direction = aDirection; }
-    inline Qt::LayoutDirection textDirection() const { return Qt::LayoutDirection(direction); }
+    inline Qt::LayoutDirection textDirection() const { return direction; }
 
     enum WrapMode {
         NoWrap,
@@ -105,8 +105,8 @@ public:
         WrapAnywhere,
         WrapAtWordBoundaryOrAnywhere
     };
-    inline void setWrapMode(WrapMode wrap) { wordWrap = wrap; }
-    inline WrapMode wrapMode() const { return static_cast<WrapMode>(wordWrap); }
+    inline void setWrapMode(WrapMode wrap) { wordwrap = wrap; }
+    inline WrapMode wrapMode() const { return wordwrap; }
 
     enum Flag {
         ShowTabsAndSpaces = 0x1,
@@ -117,27 +117,26 @@ public:
     };
     Q_DECLARE_FLAGS(Flags, Flag)
     inline void setFlags(Flags flags);
-    inline Flags flags() const { return Flags(f); }
+    inline Flags flags() const { return fflags; }
 
     inline void setTabStop(qreal tabStop);
     inline qreal tabStop() const { return tab; }
 
-    void setTabArray(QList<qreal> tabStops);
+    void setTabArray(const QList<qreal> &tabStops);
     QList<qreal> tabArray() const;
 
-    void setTabs(QList<Tab> tabStops);
+    void setTabs(const QList<Tab> &tabStops);
     QList<Tab> tabs() const;
 
     void setUseDesignMetrics(bool b) { design = b; }
     bool useDesignMetrics() const { return design; }
 
 private:
-    uint align : 8;
-    uint wordWrap : 4;
-    uint design : 1;
-    uint direction : 2;
-    uint unused : 18;
-    uint f;
+    WrapMode wordwrap;
+    Flags fflags;
+    Qt::Alignment align;
+    Qt::LayoutDirection direction;
+    bool design;
     qreal tab;
     QTextOptionPrivate *d;
 };
@@ -148,7 +147,7 @@ inline void QTextOption::setAlignment(Qt::Alignment aalignment)
 { align = aalignment; }
 
 inline void QTextOption::setFlags(Flags aflags)
-{ f = aflags; }
+{ fflags = aflags; }
 
 inline void QTextOption::setTabStop(qreal atabStop)
 { tab = atabStop; }
