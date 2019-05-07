@@ -384,9 +384,7 @@ void QDesignerWorkbench::switchToNeutralMode()
         fw->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
     }
 
-#ifndef Q_WS_MAC
     m_globalMenuBar->setParent(0);
-#endif
 
     m_core->setTopLevel(0);
     qDesigner->setMainWindow(0);

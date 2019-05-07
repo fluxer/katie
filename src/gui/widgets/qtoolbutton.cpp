@@ -340,11 +340,6 @@ QSize QToolButton::sizeHint() const
         QSize icon = opt.iconSize;
         w = icon.width();
         h = icon.height();
-#ifdef Q_WS_MAC
-        extern CGFloat qt_mac_get_scalefactor();
-        w /= qt_mac_get_scalefactor();
-        h /= qt_mac_get_scalefactor();
-#endif
     }
 
     if (opt.toolButtonStyle != Qt::ToolButtonIconOnly) {

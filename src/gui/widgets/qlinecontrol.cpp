@@ -1680,27 +1680,6 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
     }
 #endif // QT_NO_SHORTCUT
     else {
-        bool handled = false;
-#ifdef Q_WS_MAC
-        if (event->key() == Qt::Key_Up || event->key() == Qt::Key_Down) {
-            Qt::KeyboardModifiers myModifiers = (event->modifiers() & ~Qt::KeypadModifier);
-            if (myModifiers & Qt::ShiftModifier) {
-                if (myModifiers == (Qt::ControlModifier|Qt::ShiftModifier)
-                        || myModifiers == (Qt::AltModifier|Qt::ShiftModifier)
-                        || myModifiers == Qt::ShiftModifier) {
-
-                    event->key() == Qt::Key_Up ? home(1) : end(1);
-                }
-            } else {
-                if ((myModifiers == Qt::ControlModifier
-                     || myModifiers == Qt::AltModifier
-                     || myModifiers == Qt::NoModifier)) {
-                    event->key() == Qt::Key_Up ? home(0) : end(0);
-                }
-            }
-            handled = true;
-        }
-#endif
         if (event->modifiers() & Qt::ControlModifier) {
             switch (event->key()) {
             case Qt::Key_Backspace:
@@ -1731,8 +1710,7 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
             break;
 #endif
             default:
-                if (!handled)
-                    unknown = true;
+                unknown = true;
             }
         } else { // ### check for *no* modifier
             switch (event->key()) {
@@ -1764,8 +1742,7 @@ void QLineControl::processKeyEvent(QKeyEvent* event)
                 break;
 #endif
             default:
-                if (!handled)
-                    unknown = true;
+                unknown = true;
             }
         }
     }

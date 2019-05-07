@@ -216,13 +216,7 @@ void QDesignerSettings::setUiMode(UIMode mode)
 
 UIMode QDesignerSettings::uiMode() const
 {
-#ifdef Q_WS_MAC
-    const UIMode defaultMode = TopLevelMode;
-#else
-    const UIMode defaultMode = DockedMode;
-#endif
-    UIMode uiMode = static_cast<UIMode>(value(QLatin1String("UI/currentMode"), defaultMode).toInt());
-    return uiMode;
+    return static_cast<UIMode>(value(QLatin1String("UI/currentMode"), DockedMode).toInt());
 }
 
 void QDesignerSettings::setToolWindowFont(const ToolWindowFontSettings &fontSettings)

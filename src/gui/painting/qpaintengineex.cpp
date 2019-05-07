@@ -1044,9 +1044,7 @@ Q_GUI_EXPORT QPainterPath qt_painterPathFromVectorPath(const QVectorPath &path)
 void QPaintEngineEx::drawStaticTextItem(QStaticTextItem *staticTextItem)
 {
     QPainterPath path;
-#ifndef Q_WS_MAC
     path.setFillRule(Qt::WindingFill);
-#endif
 
     if (staticTextItem->numGlyphs == 0)
         return;

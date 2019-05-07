@@ -83,10 +83,6 @@
 
 QT_BEGIN_NAMESPACE
 
-#ifdef Q_WS_MAC
-extern void qt_mac_secure_keyboard(bool); //qapplication_mac.cpp
-#endif
-
 /*!
     Initialize \a option with the values from this QLineEdit. This method
     is useful for subclasses when they need a QStyleOptionFrame or QStyleOptionFrameV2, but don't want
@@ -1617,10 +1613,6 @@ void QLineEdit::focusOutEvent(QFocusEvent *e)
             if (hasAcceptableInput() || d->control->fixup())
                 emit editingFinished();
     }
-#ifdef Q_WS_MAC
-    if (d->control->echoMode() == Password || d->control->echoMode() == NoEcho)
-        qt_mac_secure_keyboard(false);
-#endif
 #ifdef QT_KEYPAD_NAVIGATION
     d->control->setCancelText(QString());
 #endif

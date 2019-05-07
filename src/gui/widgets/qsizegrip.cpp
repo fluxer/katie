@@ -433,7 +433,7 @@ void QSizeGrip::moveEvent(QMoveEvent * /*moveEvent*/)
         return;
 
     d->m_corner = d->corner();
-#if !defined(QT_NO_CURSOR) && !defined(Q_WS_MAC)
+#if !defined(QT_NO_CURSOR)
     setCursor(d->m_corner == Qt::TopLeftCorner || d->m_corner == Qt::BottomRightCorner
               ? Qt::SizeFDiagCursor : Qt::SizeBDiagCursor);
 #endif
