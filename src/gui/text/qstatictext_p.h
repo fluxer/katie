@@ -60,20 +60,10 @@
 
 QT_BEGIN_NAMESPACE
 
-class QStaticTextUserData
-{
-public:
-    QStaticTextUserData() { ref = 0; }
-    virtual ~QStaticTextUserData() {}
-
-    QAtomicInt ref;
-};
-
 class Q_GUI_EXPORT QStaticTextItem
 {
 public:
-    QStaticTextItem() : chars(0), numChars(0), userDataNeedsUpdate(false),
-                        m_fontEngine(0), m_userData(0) {}
+    QStaticTextItem() : chars(0), numChars(0), m_fontEngine(0) {}
 
     QStaticTextItem(const QStaticTextItem &other)
     {
@@ -89,29 +79,12 @@ public:
         numChars = other.numChars;
         font = other.font;
         color = other.color;
-        userDataNeedsUpdate = other.userDataNeedsUpdate;
 
         m_fontEngine = 0;
-        m_userData = 0;
-        setUserData(other.userData());
         setFontEngine(other.fontEngine());
     }
 
     ~QStaticTextItem();
-
-    void setUserData(QStaticTextUserData *newUserData)
-    {
-        if (m_userData == newUserData)
-            return;
-
-        if (m_userData != 0 && !m_userData->ref.deref())
-            delete m_userData;
-
-        m_userData = newUserData;
-        if (m_userData != 0)
-            m_userData->ref.ref();
-    }
-    QStaticTextUserData *userData() const { return m_userData; }
 
     void setFontEngine(QFontEngine *fe);
     QFontEngine *fontEngine() const { return m_fontEngine; }
@@ -136,14 +109,11 @@ public:
     int numChars;                                // 4 bytes per item
     QFont font;                                  // 8 bytes per item
     QColor color;                                // 10 bytes per item
-    bool userDataNeedsUpdate : 1;                //
                                                  // ================
                                                  // 51 bytes per item
 
 private: // Needs special handling in setters, so private to avoid abuse
     QFontEngine *m_fontEngine;                     // 4 bytes per item
-    QStaticTextUserData *m_userData;               // 8 bytes per item
-
 };
 
 class QStaticText;

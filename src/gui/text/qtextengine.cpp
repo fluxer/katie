@@ -50,12 +50,15 @@
 #include "qfont.h"
 #include "qfont_p.h"
 #include "qfontengine_p.h"
-#include "qstring.h"
-#include <qunicodetables_p.h>
+#include "qunicodetables_p.h"
 #include "qtextdocument_p.h"
 #include <qapplication.h>
-#include <stdlib.h>
 
+#if defined(Q_WS_X11)
+#   include "qfontengine_ft_p.h"
+#endif
+
+#include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -828,16 +831,6 @@ void QTextEngine::bidiReorder(int numItems, const quint8 *levels, int *visualOrd
 //         qDebug() << visualOrder[i];
 #endif
 }
-
-QT_BEGIN_INCLUDE_NAMESPACE
-
-#if defined(Q_WS_X11)
-#   include "qfontengine_ft_p.h"
-#endif
-
-#include <qharfbuzz_p.h>
-
-QT_END_INCLUDE_NAMESPACE
 
 // ask the font engine to find out which glyphs (as an index in the specific font) to use for the text in one item.
 static bool stringToGlyphs(HB_ShaperItem *item, QGlyphLayout *glyphs, QFontEngine *fontEngine)
