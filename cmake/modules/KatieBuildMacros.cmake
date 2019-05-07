@@ -133,59 +133,57 @@ endmacro()
 # moc/uic/rcc generated resources
 function(KATIE_SETUP_TARGET FORTARGET)
     # this can be simpler if continue() was supported by old CMake versions
-    if(NOT "${FORTARGET}" MATCHES "bootstrap_moc|moc")
-        set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
-        if(NOT EXISTS "${resourcesdep}")
-            file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
-        endif()
-        set(targetresources)
-        foreach(tmpres ${ARGN})
-            get_filename_component(resource ${tmpres} ABSOLUTE)
-            get_filename_component(rscext ${resource} EXT)
-            get_filename_component(rscname ${resource} NAME_WE)
-            get_filename_component(rscpath ${resource} PATH)
-            string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
-            if("${rscext}" STREQUAL ".ui")
-                set(rscout "${rscpath}/ui_${rscname}.h")
-                set(targetresources ${targetresources} ${rscout})
-                make_directory(${rscpath})
-                add_custom_command(
-                    COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
-                    OUTPUT "${rscout}"
-                )
-            elseif("${rscext}" STREQUAL ".qrc")
-                set(rscout "${rscpath}/qrc_${rscname}.cpp")
-                set(targetresources ${targetresources} ${rscout})
-                make_directory(${rscpath})
-                add_custom_command(
-                    COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
-                    OUTPUT "${rscout}"
-                )
-            elseif("${rscext}" MATCHES "(.h|.cpp|.mm)")
-                file(READ "${resource}" rsccontent)
-                if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
-                    set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                    set(targetresources ${targetresources} ${rscout})
-                    get_directory_property(dirdefs COMPILE_DEFINITIONS)
-                    get_directory_property(dirincs INCLUDE_DIRECTORIES)
-                    set(mocargs)
-                    foreach(ddef ${dirdefs})
-                        # TODO: filter non -D, support -U too
-                        set(mocargs ${mocargs} -D${ddef})
-                    endforeach()
-                    foreach(incdir ${dirincs})
-                        set(mocargs ${mocargs} -I${incdir})
-                    endforeach()
-                    make_directory(${rscpath})
-                    add_custom_command(
-                        COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
-                        OUTPUT "${rscout}"
-                    )
-                endif()
-            endif()
-        endforeach()
-        set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
+    set(resourcesdep "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources.cpp")
+    if(NOT EXISTS "${resourcesdep}")
+        file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
     endif()
+    set(targetresources)
+    foreach(tmpres ${ARGN})
+        get_filename_component(resource ${tmpres} ABSOLUTE)
+        get_filename_component(rscext ${resource} EXT)
+        get_filename_component(rscname ${resource} NAME_WE)
+        get_filename_component(rscpath ${resource} PATH)
+        string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
+        if("${rscext}" STREQUAL ".ui")
+            set(rscout "${rscpath}/ui_${rscname}.h")
+            set(targetresources ${targetresources} ${rscout})
+            make_directory(${rscpath})
+            add_custom_command(
+                COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
+                OUTPUT "${rscout}"
+            )
+        elseif("${rscext}" STREQUAL ".qrc")
+            set(rscout "${rscpath}/qrc_${rscname}.cpp")
+            set(targetresources ${targetresources} ${rscout})
+            make_directory(${rscpath})
+            add_custom_command(
+                COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
+                OUTPUT "${rscout}"
+            )
+        elseif("${rscext}" MATCHES "(.h|.hpp|.cc|.cpp)")
+            file(READ "${resource}" rsccontent)
+            if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
+                set(rscout "${rscpath}/moc_${rscname}${rscext}")
+                set(targetresources ${targetresources} ${rscout})
+                get_directory_property(dirdefs COMPILE_DEFINITIONS)
+                get_directory_property(dirincs INCLUDE_DIRECTORIES)
+                set(mocargs)
+                foreach(ddef ${dirdefs})
+                    # TODO: filter non -D, support -U too
+                    set(mocargs ${mocargs} -D${ddef})
+                endforeach()
+                foreach(incdir ${dirincs})
+                    set(mocargs ${mocargs} -I${incdir})
+                endforeach()
+                make_directory(${rscpath})
+                add_custom_command(
+                    COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
+                    OUTPUT "${rscout}"
+                )
+            endif()
+        endif()
+    endforeach()
+    set_source_files_properties(${resourcesdep} PROPERTIES OBJECT_DEPENDS "${targetresources}")
 
     if(NOT KATIE_ALLINONE)
         set(filteredsources)

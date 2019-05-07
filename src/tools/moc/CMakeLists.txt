@@ -84,13 +84,10 @@ set(BOOTSTRAP_SOURCES
     ${CMAKE_SOURCE_DIR}/src/core/tools/qlocale_unix.cpp
 )
 
-# FIXME: all-in-one Debug build is broken
-# katie_setup_target(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
 add_executable(bootstrap_moc ${BOOTSTRAP_SOURCES} ${MOC_SOURCES})
 target_compile_definitions(bootstrap_moc PRIVATE ${BOOTSTRAP_DEFINITIONS})
 
-katie_setup_target(moc ${MOC_SOURCES})
-add_executable(moc ${moc_SOURCES})
+add_executable(moc ${MOC_SOURCES})
 target_link_libraries(moc ${EXTRA_MOC_LIBS})
 
 set_target_properties(moc PROPERTIES

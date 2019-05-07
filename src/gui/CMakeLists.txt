@@ -495,6 +495,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qguicommon_p.h
 )
 
+# anything that includes qt_x11_p.h is known to break all-in-one build
 katie_allinone_exclude(
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qitemeditorfactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qtextedit.cpp
