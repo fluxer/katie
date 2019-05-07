@@ -57,6 +57,7 @@ struct QTextOptionPrivate;
 
 class Q_GUI_EXPORT QTextOption
 {
+    Q_GADGET
 public:
     enum TabType {
         LeftTab,
@@ -105,6 +106,7 @@ public:
         WrapAnywhere,
         WrapAtWordBoundaryOrAnywhere
     };
+    Q_ENUMS(WrapMode)
     inline void setWrapMode(WrapMode wrap) { wordwrap = wrap; }
     inline WrapMode wrapMode() const { return wordwrap; }
 

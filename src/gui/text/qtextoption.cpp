@@ -427,6 +427,5 @@ QList<QTextOption::Tab> QTextOption::tabs() const
 
 QT_END_NAMESPACE
 
-
-
+#include "moc_qtextoption.h"
 
