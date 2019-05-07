@@ -481,18 +481,16 @@ QString QDesignerActions::uiExtension() const
 QAction *QDesignerActions::createRecentFilesMenu()
 {
     QMenu *menu = new QMenu;
-    QAction *act;
     // Need to insert this into the QAction.
     for (int i = 0; i < MaxRecentFiles; ++i) {
-        act = new QAction(this);
-        act->setVisible(false);
+        QAction *act = new QAction(this);
         connect(act, SIGNAL(triggered()), this, SLOT(openRecentForm()));
         m_recentFilesActions->addAction(act);
         menu->addAction(act);
     }
     updateRecentFileActions();
     menu->addSeparator();
-    act = new QAction(QIcon::fromTheme(QLatin1String("edit-clear")), tr("Clear &Menu"), this);
+    QAction *act = new QAction(QIcon::fromTheme(QLatin1String("edit-clear")), tr("Clear &Menu"), this);
     act->setObjectName(QLatin1String("__qt_action_clear_menu_"));
     connect(act, SIGNAL(triggered()), this, SLOT(clearRecentFiles()));
     m_recentFilesActions->addAction(act);

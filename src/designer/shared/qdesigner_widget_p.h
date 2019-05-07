@@ -74,8 +74,6 @@ public:
 
     QDesignerFormWindowInterface* formWindow() const;
 
-    void updatePixmap();
-
     virtual QSize minimumSizeHint() const
     { return QWidget::minimumSizeHint().expandedTo(QSize(16, 16)); }
 
