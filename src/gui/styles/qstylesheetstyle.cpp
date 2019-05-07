@@ -1399,16 +1399,6 @@ void QRenderRule::configurePalette(QPalette *p, QPalette::ColorGroup cg, const Q
 // Style rules
 #define WIDGET(x) (static_cast<QWidget *>(x.ptr))
 
-static inline QWidget *parentWidget(const QWidget *w)
-{
-    if(qobject_cast<const QLabel *>(w) && qstrcmp(w->metaObject()->className(), "QTipLabel") == 0) {
-        QWidget *p = qvariant_cast<QWidget *>(w->property("_q_stylesheet_parent"));
-        if (p)
-            return p;
-    }
-    return w->parentWidget();
-}
-
 class QStyleSheetStyleSelector : public StyleSelector
 {
 public:
@@ -1495,7 +1485,7 @@ public:
     bool isNullNode(NodePtr node) const
     { return node.ptr == 0; }
     NodePtr parentNode(NodePtr node) const
-    { NodePtr n; n.ptr = isNullNode(node) ? 0 : parentWidget(WIDGET(node)); return n; }
+    { NodePtr n; n.ptr = isNullNode(node) ? 0 : WIDGET(node)->parentWidget(); return n; }
     NodePtr previousSiblingNode(NodePtr) const
     { NodePtr n; n.ptr = 0; return n; }
     NodePtr duplicateNode(NodePtr node) const
@@ -1551,7 +1541,7 @@ QVector<QCss::StyleRule> QStyleSheetStyle::styleRules(const QWidget *w) const
     }
 
     QVector<QCss::StyleSheet> widgetSs;
-    for (const QWidget *wid = w; wid; wid = parentWidget(wid)) {
+    for (const QWidget *wid = w; wid; wid = wid->parentWidget()) {
         if (wid->styleSheet().isEmpty())
             continue;
         StyleSheet ss;

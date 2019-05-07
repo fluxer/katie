@@ -121,8 +121,6 @@ public:
 
     QBasicTimer hideTimer, expireTimer;
 
-    bool fadingOut;
-
     void reuseTip(const QString &text);
     void hideTip();
     void hideTipImmediately();
@@ -138,20 +136,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
     void resizeEvent(QResizeEvent *e);
 
-#ifndef QT_NO_STYLE_STYLESHEET
-public slots:
-    /** \internal
-      Cleanup the _q_stylesheet_parent propery.
-     */
-    void styleSheetParentDestroyed() {
-        setProperty("_q_stylesheet_parent", QVariant());
-        styleSheetParent = 0;
-    }
-
-private:
-    QWidget *styleSheetParent;
-#endif
-
 private:
     QWidget *widget;
     QRect rect;
@@ -160,11 +144,7 @@ private:
 QTipLabel *QTipLabel::instance = 0;
 
 QTipLabel::QTipLabel(const QString &text, QWidget *w)
-#ifndef QT_NO_STYLE_STYLESHEET
-    : QLabel(w, Qt::ToolTip | Qt::BypassGraphicsProxyWidget), styleSheetParent(0), widget(0)
-#else
     : QLabel(w, Qt::ToolTip | Qt::BypassGraphicsProxyWidget), widget(0)
-#endif
 {
     delete instance;
     instance = this;
@@ -179,27 +159,17 @@ QTipLabel::QTipLabel(const QString &text, QWidget *w)
     qApp->installEventFilter(this);
     setWindowOpacity(style()->styleHint(QStyle::SH_ToolTipLabel_Opacity, 0, this) / qreal(255.0));
     setMouseTracking(true);
-    fadingOut = false;
     reuseTip(text);
 }
 
 void QTipLabel::restartExpireTimer()
 {
-    int time = 10000 + 40 * qMax(0, text().length()-100);
-    expireTimer.start(time, this);
+    expireTimer.start(10000, this);
     hideTimer.stop();
 }
 
 void QTipLabel::reuseTip(const QString &text)
 {
-#ifndef QT_NO_STYLE_STYLESHEET
-    if (styleSheetParent){
-        disconnect(styleSheetParent, SIGNAL(destroyed()),
-                   QTipLabel::instance, SLOT(styleSheetParentDestroyed()));
-        styleSheetParent = 0;
-    }
-#endif
-
     setWordWrap(Qt::mightBeRichText(text));
     setText(text);
     QFontMetrics fm(font());
@@ -319,18 +289,8 @@ int QTipLabel::getTipScreen(const QPoint &pos, QWidget *w)
 void QTipLabel::placeTip(const QPoint &pos, QWidget *w)
 {
 #ifndef QT_NO_STYLE_STYLESHEET
-    if (testAttribute(Qt::WA_StyleSheet) || (w && qobject_cast<QStyleSheetStyle *>(w->style()))) {
-        //the stylesheet need to know the real parent
-        QTipLabel::instance->setProperty("_q_stylesheet_parent", QVariant::fromValue(w));
-        //we force the style to be the QStyleSheetStyle, and force to clear the cache as well.
-        QTipLabel::instance->setStyleSheet(QLatin1String("/* */"));
-
-        // Set up for cleaning up this later...
-        QTipLabel::instance->styleSheetParent = w;
-        if (w) {
-            connect(w, SIGNAL(destroyed()),
-                QTipLabel::instance, SLOT(styleSheetParentDestroyed()));
-        }
+    if (w) {
+        QTipLabel::instance->setStyleSheet(w->styleSheet());
     }
 #endif //QT_NO_STYLE_STYLESHEET
 
@@ -391,19 +351,17 @@ void QToolTip::showText(const QPoint &pos, const QString &text, QWidget *w, cons
             QTipLabel::instance->hideTip();
             return;
         }
-        else if (!QTipLabel::instance->fadingOut){
-            // If the tip has changed, reuse the one
-            // that is showing (removes flickering)
-            QPoint localPos = pos;
-            if (w)
-                localPos = w->mapFromGlobal(pos);
-            if (QTipLabel::instance->tipChanged(localPos, text, w)){
-                QTipLabel::instance->reuseTip(text);
-                QTipLabel::instance->setTipRect(w, rect);
-                QTipLabel::instance->placeTip(pos, w);
-            }
-            return;
+        // If the tip has changed, reuse the one
+        // that is showing (removes flickering)
+        QPoint localPos = pos;
+        if (w)
+            localPos = w->mapFromGlobal(pos);
+        if (QTipLabel::instance->tipChanged(localPos, text, w)){
+            QTipLabel::instance->reuseTip(text);
+            QTipLabel::instance->setTipRect(w, rect);
+            QTipLabel::instance->placeTip(pos, w);
         }
+        return;
     }
 
     if (!text.isEmpty()){ // no tip can be reused, create new tip:
