@@ -246,7 +246,7 @@ public:
     void setLineCount(int count);
     int lineCount() const;
 
-    class Q_GUI_EXPORT iterator {
+    class iterator {
         const QTextDocumentPrivate *p;
         int b;
         int e;

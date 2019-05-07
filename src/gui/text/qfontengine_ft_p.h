@@ -61,13 +61,13 @@
 #include "qt_x11_p.h"
 #endif
 
-#include <unistd.h>
-
 #ifndef QT_NO_FONTCONFIG
 #include <fontconfig/fontconfig.h>
 #endif
 
 #include <harfbuzz-shaper.h>
+
+#include <unistd.h>
 
 QT_BEGIN_NAMESPACE
 

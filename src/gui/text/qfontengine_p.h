@@ -53,7 +53,6 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
 #include "QtCore/qatomic.h"
 #include <QtCore/qvarlengtharray.h>
 #include <QtCore/QLinkedList>
@@ -87,9 +86,7 @@ public:
         Box,
         Multi,
 
-        // QWS types
         Freetype,
-        Proxy,
 
         TestFontEngine = 0x1000
     };

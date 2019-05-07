@@ -45,8 +45,7 @@
 #include <qfontengine_p.h>
 #include <qfontmetrics.h>
 #include <qabstracttextdocumentlayout.h>
-
-#include <QtGui/qapplication.h>
+#include <qapplication.h>
 
 QT_BEGIN_NAMESPACE
 

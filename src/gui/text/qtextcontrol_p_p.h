@@ -66,7 +66,6 @@
 QT_BEGIN_NAMESPACE
 
 class QMimeData;
-class QAbstractScrollArea;
 
 class QTextControlPrivate : public QObjectPrivate
 {
@@ -87,9 +86,9 @@ public:
     void createAutoBulletList();
 
     void init(Qt::TextFormat format = Qt::RichText, const QString &text = QString(),
-              QTextDocument *document = 0);
+              QTextDocument *document = Q_NULLPTR);
     void setContent(Qt::TextFormat format = Qt::RichText, const QString &text = QString(),
-                    QTextDocument *document = 0);
+                    QTextDocument *document = Q_NULLPTR);
     void startDrag();
 
     void paste(const QMimeData *source);
@@ -187,8 +186,6 @@ public:
     QPointer<QWidget> contextWidget;
 
     bool lastSelectionState;
-
-    bool ignoreAutomaticScrollbarAdjustement;
 
     QTextCursor selectedWordOnDoubleClick;
     QTextCursor selectedBlockOnTrippleClick;

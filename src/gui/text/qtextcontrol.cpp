@@ -120,7 +120,7 @@ QTextControlPrivate::QTextControlPrivate()
 #ifndef QT_NO_DRAGANDDROP
       mousePressed(false), mightStartDrag(false),
 #endif
-      lastSelectionState(false), ignoreAutomaticScrollbarAdjustement(false),
+      lastSelectionState(false),
       overwriteMode(false),
       acceptRichText(true),
       preeditCursor(0), hideCursor(false),

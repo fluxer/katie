@@ -140,9 +140,15 @@ enum QTextHTMLElements {
 
 struct QTextHtmlElement
 {
+    enum DisplayMode {
+        DisplayBlock,
+        DisplayInline,
+        DisplayTable,
+        DisplayNone
+    };
     const char *name;
     QTextHTMLElements id;
-    enum DisplayMode { DisplayBlock, DisplayInline, DisplayTable, DisplayNone } displayMode;
+    DisplayMode displayMode;
 };
 
 class QTextHtmlParser;

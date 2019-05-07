@@ -69,13 +69,9 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QStyleSheet;
 class QTextDocument;
-class QMenu;
 class QTextControlPrivate;
 class QMimeData;
-class QAbstractScrollArea;
 class QEvent;
 class QTimerEvent;
 

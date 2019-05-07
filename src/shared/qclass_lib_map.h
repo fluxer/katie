@@ -187,7 +187,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QTextFrame", "QtGui/qtextobject.h"},
     { "QTextBlockUserData", "QtGui/qtextobject.h"},
     { "QTextBlock", "QtGui/qtextobject.h"},
-    { "iterator", "QtGui/qtextobject.h"},
     { "QTextFragment", "QtGui/qtextobject.h"},
     { "QTextOption", "QtGui/qtextoption.h"},
     { "Tab", "QtGui/qtextoption.h"},
@@ -700,6 +699,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 694;
+static const int qclass_lib_count = 693;
 
 #endif
