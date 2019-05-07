@@ -128,12 +128,11 @@ QFileSystemEntry QFileSystemEngine::canonicalName(const QFileSystemEntry &entry,
     Q_UNUSED(data);
     return QFileSystemEntry(slowCanonicalized(absoluteName(entry).filePath()));
 #else
-    char *ret = 0;
 #if _POSIX_VERSION >= 200801L
-    ret = realpath(entry.nativeFilePath().constData(), (char*)0);
+    char *ret = realpath(entry.nativeFilePath().constData(), (char*)0);
 #else
-    ret = (char*)malloc(PATH_MAX + 1);
-    if (realpath(entry.nativeFilePath().constData(), (char*)ret) == 0) {
+    char *ret = static_cast<char*>(malloc(PATH_MAX + 1));
+    if (realpath(entry.nativeFilePath().constData(), ret) == 0) {
         const int savedErrno = errno; // errno is checked below, and free() might change it
         free(ret);
         errno = savedErrno;
