@@ -104,7 +104,6 @@ class QTextDocumentPrivate;
 class Q_GUI_EXPORT QTextDocument : public QObject
 {
     Q_OBJECT
-
     Q_PROPERTY(bool undoRedoEnabled READ isUndoRedoEnabled WRITE setUndoRedoEnabled)
     Q_PROPERTY(bool modified READ isModified WRITE setModified DESIGNABLE false)
     Q_PROPERTY(QSizeF pageSize READ pageSize WRITE setPageSize)
@@ -119,7 +118,7 @@ class Q_GUI_EXPORT QTextDocument : public QObject
 #endif
     Q_PROPERTY(int maximumBlockCount READ maximumBlockCount WRITE setMaximumBlockCount)
     Q_PROPERTY(qreal documentMargin READ documentMargin WRITE setDocumentMargin)
-    QDOC_PROPERTY(QTextOption defaultTextOption READ defaultTextOption WRITE setDefaultTextOption)
+    Q_PROPERTY(QTextOption defaultTextOption READ defaultTextOption WRITE setDefaultTextOption)
 
 public:
     explicit QTextDocument(QObject *parent = Q_NULLPTR);

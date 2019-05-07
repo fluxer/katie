@@ -57,8 +57,8 @@ class Q_GUI_EXPORT QGridLayout : public QLayout
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QGridLayout)
-    QDOC_PROPERTY(int horizontalSpacing READ horizontalSpacing WRITE setHorizontalSpacing)
-    QDOC_PROPERTY(int verticalSpacing READ verticalSpacing WRITE setVerticalSpacing)
+    Q_PROPERTY(int horizontalSpacing READ horizontalSpacing WRITE setHorizontalSpacing)
+    Q_PROPERTY(int verticalSpacing READ verticalSpacing WRITE setVerticalSpacing)
 
 public:
     explicit QGridLayout(QWidget *parent);

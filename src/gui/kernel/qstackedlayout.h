@@ -58,7 +58,7 @@ class Q_GUI_EXPORT QStackedLayout : public QLayout
     Q_ENUMS(StackingMode)
     Q_PROPERTY(int currentIndex READ currentIndex WRITE setCurrentIndex NOTIFY currentChanged)
     Q_PROPERTY(StackingMode stackingMode READ stackingMode WRITE setStackingMode)
-    QDOC_PROPERTY(int count READ count)
+    Q_PROPERTY(int count READ count)
 
 public:
     enum StackingMode {

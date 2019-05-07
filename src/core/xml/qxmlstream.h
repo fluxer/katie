@@ -206,7 +206,8 @@ public:
 
 #ifndef QT_NO_XMLSTREAMREADER
 class Q_CORE_EXPORT QXmlStreamReader {
-    QDOC_PROPERTY(bool namespaceProcessing READ namespaceProcessing WRITE setNamespaceProcessing)
+    Q_GADGET
+    Q_PROPERTY(bool namespaceProcessing READ namespaceProcessing WRITE setNamespaceProcessing)
 public:
     enum TokenType {
         NoToken = 0,
@@ -333,8 +334,9 @@ class QXmlStreamWriterPrivate;
 
 class Q_CORE_EXPORT QXmlStreamWriter
 {
-    QDOC_PROPERTY(bool autoFormatting READ autoFormatting WRITE setAutoFormatting)
-    QDOC_PROPERTY(int autoFormattingIndent READ autoFormattingIndent WRITE setAutoFormattingIndent)
+    Q_GADGET
+    Q_PROPERTY(bool autoFormatting READ autoFormatting WRITE setAutoFormatting)
+    Q_PROPERTY(int autoFormattingIndent READ autoFormattingIndent WRITE setAutoFormattingIndent)
 public:
     QXmlStreamWriter();
     QXmlStreamWriter(QIODevice *device);
