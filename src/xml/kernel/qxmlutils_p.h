@@ -39,49 +39,54 @@
 **
 ****************************************************************************/
 
-#ifndef QPROPERTYANIMATION_H
-#define QPROPERTYANIMATION_H
+#ifndef QXMLUTILS_P_H
+#define QXMLUTILS_P_H
 
-#include <QtCore/qvariantanimation.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists for the convenience
+// of qapplication_*.cpp, qwidget*.cpp and qfiledialog.cpp.  This header
+// file may change from version to version without notice, or even be removed.
+//
+// We mean it.
+//
 
-QT_BEGIN_HEADER
+#include <QtCore/qstring.h>
 
 QT_BEGIN_NAMESPACE
 
-#ifndef QT_NO_ANIMATION
+class QString;
+class QChar;
+class QXmlCharRange;
 
-class QPropertyAnimationPrivate;
-class Q_CORE_EXPORT QPropertyAnimation : public QVariantAnimation
+/*!
+  \internal
+  \short This class contains helper functions related to XML, for validating character classes,
+         productions in the XML specification, and so on.
+ */
+class Q_XML_EXPORT QXmlUtils
 {
-    Q_OBJECT
-    Q_PROPERTY(QByteArray propertyName READ propertyName WRITE setPropertyName)
-    Q_PROPERTY(QObject* targetObject READ targetObject WRITE setTargetObject)
-
 public:
-    QPropertyAnimation(QObject *parent = Q_NULLPTR);
-    QPropertyAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = Q_NULLPTR);
-    ~QPropertyAnimation();
-
-    QObject *targetObject() const;
-    void setTargetObject(QObject *target);
-
-    QByteArray propertyName() const;
-    void setPropertyName(const QByteArray &propertyName);
-
-protected:
-    bool event(QEvent *event);
-    void updateCurrentValue(const QVariant &value);
-    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
+    static bool isEncName(const QString &encName);
+    static bool isChar(const QChar c);
+    static bool isNameChar(const QChar c);
+    static bool isLetter(const QChar c);
+    static bool isNCName(const QStringRef &ncName);
+    static inline bool isNCName(const QString &ncName) { return isNCName(&ncName); }
+    static bool isPublicID(const QString &candidate);
 
 private:
-    Q_DISABLE_COPY(QPropertyAnimation)
-    Q_DECLARE_PRIVATE(QPropertyAnimation)
+    typedef const QXmlCharRange *RangeIter;
+    static bool rangeContains(RangeIter begin, RangeIter end, const QChar c);
+    static bool isBaseChar(const QChar c);
+    static bool isDigit(const QChar c);
+    static bool isExtender(const QChar c);
+    static bool isIdeographic(const QChar c);
+    static bool isCombiningChar(const QChar c);
 };
-
-#endif //QT_NO_ANIMATION
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
-
-#endif // QPROPERTYANIMATION_H
+#endif

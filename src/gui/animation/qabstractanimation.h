@@ -55,7 +55,7 @@ class QSequentialAnimationGroup;
 class QAnimationDriver;
 
 class QAbstractAnimationPrivate;
-class Q_CORE_EXPORT QAbstractAnimation : public QObject
+class Q_GUI_EXPORT QAbstractAnimation : public QObject
 {
     Q_OBJECT
     Q_ENUMS(State)
@@ -132,7 +132,7 @@ private:
 };
 
 class QAnimationDriverPrivate;
-class Q_CORE_EXPORT QAnimationDriver : public QObject
+class Q_GUI_EXPORT QAnimationDriver : public QObject
 {
     Q_OBJECT
     Q_DECLARE_PRIVATE(QAnimationDriver)

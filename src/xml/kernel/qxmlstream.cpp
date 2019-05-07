@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "QtCore/qxmlstream.h"
+#include "qxmlstream.h"
 
 #ifndef QT_NO_XMLSTREAM
 
@@ -51,6 +51,7 @@
 #include <qstack.h>
 #include <qbuffer.h>
 #include <qcoreapplication.h>
+#include "qxmlcommon_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -1335,63 +1336,12 @@ inline int QXmlStreamReaderPrivate::fastScanName(int *prefix)
     return 0;
 }
 
-enum NameChar { NameBeginning, NameNotBeginning, NotName };
-
-static const char Begi = static_cast<char>(NameBeginning);
-static const char NtBg = static_cast<char>(NameNotBeginning);
-static const char NotN = static_cast<char>(NotName);
-
-static const char nameCharTable[128] =
-{
-// 0x00
-    NotN, NotN, NotN, NotN, NotN, NotN, NotN, NotN,
-    NotN, NotN, NotN, NotN, NotN, NotN, NotN, NotN,
-// 0x10
-    NotN, NotN, NotN, NotN, NotN, NotN, NotN, NotN,
-    NotN, NotN, NotN, NotN, NotN, NotN, NotN, NotN,
-// 0x20 (0x2D is '-', 0x2E is '.')
-    NotN, NotN, NotN, NotN, NotN, NotN, NotN, NotN,
-    NotN, NotN, NotN, NotN, NotN, NtBg, NtBg, NotN,
-// 0x30 (0x30..0x39 are '0'..'9', 0x3A is ':')
-    NtBg, NtBg, NtBg, NtBg, NtBg, NtBg, NtBg, NtBg,
-    NtBg, NtBg, Begi, NotN, NotN, NotN, NotN, NotN,
-// 0x40 (0x41..0x5A are 'A'..'Z')
-    NotN, Begi, Begi, Begi, Begi, Begi, Begi, Begi,
-    Begi, Begi, Begi, Begi, Begi, Begi, Begi, Begi,
-// 0x50 (0x5F is '_')
-    Begi, Begi, Begi, Begi, Begi, Begi, Begi, Begi,
-    Begi, Begi, Begi, NotN, NotN, NotN, NotN, Begi,
-// 0x60 (0x61..0x7A are 'a'..'z')
-    NotN, Begi, Begi, Begi, Begi, Begi, Begi, Begi,
-    Begi, Begi, Begi, Begi, Begi, Begi, Begi, Begi,
-// 0x70
-    Begi, Begi, Begi, Begi, Begi, Begi, Begi, Begi,
-    Begi, Begi, Begi, NotN, NotN, NotN, NotN, NotN
-};
-
-static inline NameChar fastDetermineNameChar(QChar ch)
-{
-    ushort uc = ch.unicode();
-    if (!(uc & ~0x7f)) // uc < 128
-        return static_cast<NameChar>(nameCharTable[uc]);
-
-    QChar::Category cat = ch.category();
-    // ### some these categories might be slightly wrong
-    if ((cat >= QChar::Letter_Uppercase && cat <= QChar::Letter_Other)
-        || cat == QChar::Number_Letter)
-        return NameBeginning;
-    if ((cat >= QChar::Number_DecimalDigit && cat <= QChar::Number_Other)
-                || (cat >= QChar::Mark_NonSpacing && cat <= QChar::Mark_Enclosing))
-        return NameNotBeginning;
-    return NotName;
-}
-
 inline int QXmlStreamReaderPrivate::fastScanNMTOKEN()
 {
     int n = 0;
     uint c;
     while ((c = getChar())) {
-        if (fastDetermineNameChar(c) == NotName) {
+        if (determineNameChar(c) == NotName) {
             putChar(c);
             return n;
         } else {

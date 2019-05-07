@@ -47,11 +47,11 @@
 #include "cppwriteincludes.h"
 #include "cppwritedeclaration.h"
 
-#include <QtCore/qxmlstream.h>
 #include <QtCore/QFileInfo>
 #include <QtCore/QRegExp>
 #include <QtCore/QTextStream>
 #include <QtCore/QDateTime>
+#include <QtXml/qxmlstream.h>
 
 QT_BEGIN_NAMESPACE
 

@@ -86,7 +86,7 @@
 #include <QtCore/qdebug.h>
 #include <QtCore/QBuffer>
 #include <QtCore/QTimer>
-#include <QtCore/qxmlstream.h>
+#include <QtXml/QXmlStreamReader>
 #include <QtGui/QMenu>
 #include <QtGui/QAction>
 #include <QtGui/QActionGroup>
@@ -103,7 +103,7 @@
 #include <QtGui/QStackedWidget>
 #include <QtGui/QTabWidget>
 #include <QtGui/QButtonGroup>
-#include <QtGui/qpen.h>
+#include <QtGui/QPen>
 
 Q_DECLARE_METATYPE(QWidget*)
 

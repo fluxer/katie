@@ -59,10 +59,7 @@
 #include <QtCore/QMap>
 #include <QtCore/QSettings>
 #include <QtCore/QCoreApplication>
-
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qxmlstream.h>
+#include <QtXml/qxmlstream.h>
 
 static const char *uiElementC = "ui";
 static const char *languageAttributeC = "language";

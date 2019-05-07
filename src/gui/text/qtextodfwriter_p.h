@@ -54,7 +54,7 @@
 // We mean it.
 //
 
-#include <QtCore/qxmlstream.h>
+#include <QtXml/qxmlstream.h>
 #include <QtCore/qset.h>
 #include <QtCore/qstack.h>
 

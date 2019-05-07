@@ -52,10 +52,7 @@
 #include <QtCore/QList>
 #include <QtCore/QMap>
 #include <QtCore/QPointer>
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qxmlstream.h>
-
+#include <QtXml/qxmlstream.h>
 #include <QtGui/QAction>
 #include <QtGui/QColorDialog>
 #include <QtGui/QComboBox>

@@ -42,7 +42,7 @@
 #ifndef QSEQUENTIALANIMATIONGROUP_H
 #define QSEQUENTIALANIMATIONGROUP_H
 
-#include <QtCore/qanimationgroup.h>
+#include <QtGui/qanimationgroup.h>
 
 QT_BEGIN_HEADER
 
@@ -53,7 +53,7 @@ QT_BEGIN_NAMESPACE
 class QPauseAnimation;
 class QSequentialAnimationGroupPrivate;
 
-class Q_CORE_EXPORT QSequentialAnimationGroup : public QAnimationGroup
+class Q_GUI_EXPORT QSequentialAnimationGroup : public QAnimationGroup
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractAnimation* currentAnimation READ currentAnimation NOTIFY currentAnimationChanged)

@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include <QtCore/qpropertyanimation.h>
+#include <QtGui/qpropertyanimation.h>
 #include <QtGui/qwidget.h>
 #include <QtGui/qmainwindowlayout_p.h>
 

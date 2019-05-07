@@ -62,9 +62,9 @@
 #include <qdeclarativeitem.h>
 #include <qdeclarativecontext.h>
 
-#include <QtCore/QPauseAnimation>
-#include <QtCore/QVariantAnimation>
-#include <QtCore/QAnimationGroup>
+#include <QtGui/QPauseAnimation>
+#include <QtGui/QVariantAnimation>
+#include <QtGui/QAnimationGroup>
 #include <QtGui/QColor>
 #include <QDebug>
 

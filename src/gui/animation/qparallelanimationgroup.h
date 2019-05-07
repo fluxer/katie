@@ -42,17 +42,16 @@
 #ifndef QPARALLELANIMATIONGROUP_H
 #define QPARALLELANIMATIONGROUP_H
 
-#include <QtCore/qanimationgroup.h>
+#include <QtGui/qanimationgroup.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 #ifndef QT_NO_ANIMATION
 
 class QParallelAnimationGroupPrivate;
-class Q_CORE_EXPORT QParallelAnimationGroup : public QAnimationGroup
+class Q_GUI_EXPORT QParallelAnimationGroup : public QAnimationGroup
 {
     Q_OBJECT
 

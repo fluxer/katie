@@ -113,7 +113,7 @@
 #include <QtCore/QDir>
 #include <QtCore/qmetaobject.h>
 #include <QtCore/qdebug.h>
-#include <QtCore/qxmlstream.h>
+#include <QtXml/qxmlstream.h>
 
 QT_BEGIN_NAMESPACE
 

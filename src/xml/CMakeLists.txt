@@ -31,7 +31,6 @@ set(XML_PUBLIC_HEADERS
     QXmlReader
     QXmlDefaultHandler
     QXmlInputSource
-    # both in core and xml
     QXmlStreamAttribute
     QXmlStreamAttributes
     QXmlStreamNotationDeclaration
@@ -46,6 +45,7 @@ set(XML_PUBLIC_HEADERS
 )
 
 include(dom/dom.cmake)
+include(kernel/kernel.cmake)
 include(sax/sax.cmake)
 
 include_directories(
@@ -56,7 +56,13 @@ include_directories(
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_CURRENT_SOURCE_DIR}/dom
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel
     ${CMAKE_CURRENT_SOURCE_DIR}/sax
+)
+
+set(XML_HEADERS
+    ${XML_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/qxmlcommon_p.h
 )
 
 katie_generate_misc("${XML_HEADERS}" QtXml)

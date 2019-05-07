@@ -61,7 +61,7 @@
 #include "QtCore/qlist.h"
 #include "QtCore/qhash.h"
 #include "QtCore/qdatetime.h"
-#include "QtCore/qxmlstream.h"
+#include "QtXml/qxmlstream.h"
 #include "qsvgstyle_p.h"
 #include "qsvgfont_p.h"
 

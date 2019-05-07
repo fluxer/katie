@@ -58,13 +58,9 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qglobal.h>
+#include <QtXml/qxmlstream.h>
 
 QT_BEGIN_NAMESPACE
-
-
 
 #define QDESIGNER_UILIB_EXTERN Q_DECL_EXPORT
 #define QDESIGNER_UILIB_IMPORT Q_DECL_IMPORT

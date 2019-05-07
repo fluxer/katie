@@ -49,7 +49,7 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qsize.h>
 #include <QtCore/qrect.h>
-#include <QtCore/qxmlstream.h>
+#include <QtXml/qxmlstream.h>
 
 QT_BEGIN_HEADER
 

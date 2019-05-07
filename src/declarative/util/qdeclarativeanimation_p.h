@@ -52,7 +52,7 @@
 
 #include <QtCore/qvariant.h>
 #include <QtCore/qeasingcurve.h>
-#include <QtCore/QAbstractAnimation>
+#include <QtGui/QAbstractAnimation>
 #include <QtGui/qcolor.h>
 
 QT_BEGIN_HEADER

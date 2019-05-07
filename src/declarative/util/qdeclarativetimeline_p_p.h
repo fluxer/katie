@@ -54,7 +54,7 @@
 //
 
 #include <QtCore/QObject>
-#include <QtCore/QAbstractAnimation>
+#include <QtGui/QAbstractAnimation>
 
 QT_BEGIN_NAMESPACE
 

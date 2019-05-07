@@ -41,10 +41,8 @@ set(CORE_PUBLIC_HEADERS
     QTypeInfo
     QtConcurrentMap
     QBitArray
-    QAbstractAnimation
     QChar
     QTextCodecPlugin
-    QParallelAnimationGroup
     QMap
     QTextStream
     QDebug
@@ -65,7 +63,6 @@ set(CORE_PUBLIC_HEADERS
     QPlugin
     QPluginLoader
     QAtomicPointer
-    QSequentialAnimationGroup
     QFSFileEngine
     QLine
     QIODevice
@@ -107,11 +104,9 @@ set(CORE_PUBLIC_HEADERS
     QVector
     QLibraryInfo
     QTextStreamFunction
-    QVariantAnimation
     QLinkedList
     QEvent
     QVectorIterator
-    QAnimationGroup
     QGenericArgument
     QObjectData
     QTextEncoder
@@ -120,7 +115,6 @@ set(CORE_PUBLIC_HEADERS
     QNoDebug
     QListData
     QTextCodecFactoryInterface
-    QPropertyAnimation
     QStack
     QMutableListIterator
     QScopedPointerPodDeleter
@@ -147,7 +141,6 @@ set(CORE_PUBLIC_HEADERS
     QRegExp
     QVariantComparisonHelper
     QMetaObject
-    QPauseAnimation
     QMapData
     QByteRef
     QIntegerForSize
@@ -159,7 +152,6 @@ set(CORE_PUBLIC_HEADERS
     QMapNode
     QLinkedListData
     QLatin1Char
-    QAnimationDriver
     QBBSystemLocaleData
     QDir
     QObject
@@ -233,21 +225,8 @@ set(CORE_PUBLIC_HEADERS
     # obsolete
     QFlags
     Qt
-    # both in core and xml
-    QXmlStreamAttribute
-    QXmlStreamAttributes
-    QXmlStreamNotationDeclaration
-    QXmlStreamNotationDeclarations
-    QXmlStreamEntityDeclaration
-    QXmlStreamEntityDeclarations
-    QXmlStreamNamespaceDeclaration
-    QXmlStreamNamespaceDeclarations
-    QXmlStreamEntityResolver
-    QXmlStreamReader
-    QXmlStreamWriter
 )
 
-include(animation/animation.cmake)
 include(codecs/codecs.cmake)
 include(concurrent/concurrent.cmake)
 include(global/global.cmake)
@@ -257,14 +236,12 @@ include(kernel/kernel.cmake)
 include(plugin/plugin.cmake)
 include(thread/thread.cmake)
 include(tools/tools.cmake)
-include(xml/xml.cmake)
 
 include_directories(
     ${CMAKE_BINARY_DIR}/include
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_CURRENT_SOURCE_DIR}/animation
     ${CMAKE_CURRENT_SOURCE_DIR}/codecs
     ${CMAKE_CURRENT_SOURCE_DIR}/concurrent
     ${CMAKE_CURRENT_SOURCE_DIR}/global
@@ -274,8 +251,6 @@ include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}/plugin
     ${CMAKE_CURRENT_SOURCE_DIR}/thread
     ${CMAKE_CURRENT_SOURCE_DIR}/tools
-    ${CMAKE_CURRENT_SOURCE_DIR}/xml
-    ${CMAKE_CURRENT_BINARY_DIR}/animation
     ${CMAKE_CURRENT_BINARY_DIR}/codecs
     ${CMAKE_CURRENT_BINARY_DIR}/concurrent
     ${CMAKE_CURRENT_BINARY_DIR}/global
@@ -285,7 +260,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/plugin
     ${CMAKE_CURRENT_BINARY_DIR}/thread
     ${CMAKE_CURRENT_BINARY_DIR}/tools
-    ${CMAKE_CURRENT_BINARY_DIR}/xml
     ${ZLIB_INCLUDE_DIRS}
     ${OPENSSL_INCLUDE_DIR}
 )

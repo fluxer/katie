@@ -42,7 +42,7 @@
 #include "qdeclarativetimer_p.h"
 
 #include <QtCore/qcoreapplication.h>
-#include <QtCore/qpauseanimation.h>
+#include <QtGui/qpauseanimation.h>
 #include <qdebug.h>
 
 #include <qobject_p.h>

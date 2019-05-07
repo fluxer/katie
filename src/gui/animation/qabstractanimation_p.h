@@ -126,14 +126,14 @@ private:
     QBasicTimer m_timer;
 };
 
-class Q_CORE_EXPORT QAnimationDriverPrivate : public QObjectPrivate
+class Q_GUI_EXPORT QAnimationDriverPrivate : public QObjectPrivate
 {
 public:
     QAnimationDriverPrivate() : running(false) {}
     bool running;
 };
 
-class Q_CORE_EXPORT QUnifiedTimer : public QObject
+class Q_GUI_EXPORT QUnifiedTimer : public QObject
 {
 private:
     QUnifiedTimer();

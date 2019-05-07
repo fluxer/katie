@@ -45,7 +45,7 @@
 #include <qdeclarativeitem_p.h>
 
 #include <qdeclarativepixmapcache_p.h>
-#include <QtCore/QAbstractAnimation>
+#include <QAbstractAnimation>
 
 #include <QPainter>
 #include <QVarLengthArray>

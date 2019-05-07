@@ -39,14 +39,10 @@
 **
 ****************************************************************************/
 
-#ifndef QANIMATION_H
-#define QANIMATION_H
+#ifndef QPROPERTYANIMATION_H
+#define QPROPERTYANIMATION_H
 
-#include <QtCore/qeasingcurve.h>
-#include <QtCore/qabstractanimation.h>
-#include <QtCore/qvector.h>
-#include <QtCore/qvariant.h>
-#include <QtCore/qpair.h>
+#include <QtGui/qvariantanimation.h>
 
 QT_BEGIN_HEADER
 
@@ -54,70 +50,33 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_ANIMATION
 
-class QVariantAnimationPrivate;
-class Q_CORE_EXPORT QVariantAnimation : public QAbstractAnimation
+class QPropertyAnimationPrivate;
+class Q_GUI_EXPORT QPropertyAnimation : public QVariantAnimation
 {
     Q_OBJECT
-    Q_PROPERTY(QVariant startValue READ startValue WRITE setStartValue)
-    Q_PROPERTY(QVariant endValue READ endValue WRITE setEndValue)
-    Q_PROPERTY(QVariant currentValue READ currentValue NOTIFY valueChanged)
-    Q_PROPERTY(int duration READ duration WRITE setDuration)
-    Q_PROPERTY(QEasingCurve easingCurve READ easingCurve WRITE setEasingCurve)
+    Q_PROPERTY(QByteArray propertyName READ propertyName WRITE setPropertyName)
+    Q_PROPERTY(QObject* targetObject READ targetObject WRITE setTargetObject)
 
 public:
-    typedef QPair<qreal, QVariant> KeyValue;
-    typedef QVector<KeyValue> KeyValues;
+    QPropertyAnimation(QObject *parent = Q_NULLPTR);
+    QPropertyAnimation(QObject *target, const QByteArray &propertyName, QObject *parent = Q_NULLPTR);
+    ~QPropertyAnimation();
 
-    QVariantAnimation(QObject *parent = Q_NULLPTR);
-    ~QVariantAnimation();
+    QObject *targetObject() const;
+    void setTargetObject(QObject *target);
 
-    QVariant startValue() const;
-    void setStartValue(const QVariant &value);
-
-    QVariant endValue() const;
-    void setEndValue(const QVariant &value);
-
-    QVariant keyValueAt(qreal step) const;
-    void setKeyValueAt(qreal step, const QVariant &value);
-
-    KeyValues keyValues() const;
-    void setKeyValues(const KeyValues &values);
-
-    QVariant currentValue() const;
-
-    int duration() const;
-    void setDuration(int msecs);
-
-    QEasingCurve easingCurve() const;
-    void setEasingCurve(const QEasingCurve &easing);
-
-    typedef QVariant (*Interpolator)(const void *from, const void *to, qreal progress);
-
-Q_SIGNALS:
-    void valueChanged(const QVariant &value);
+    QByteArray propertyName() const;
+    void setPropertyName(const QByteArray &propertyName);
 
 protected:
-    QVariantAnimation(QVariantAnimationPrivate &dd, QObject *parent = Q_NULLPTR);
     bool event(QEvent *event);
-
-    void updateCurrentTime(int);
+    void updateCurrentValue(const QVariant &value);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
 
-    virtual void updateCurrentValue(const QVariant &value) = 0;
-    virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
-
 private:
-    template <typename T> friend void qRegisterAnimationInterpolator(QVariant (*func)(const T &, const T &, qreal));
-    static void registerInterpolator(Interpolator func, int interpolationType);
-
-    Q_DISABLE_COPY(QVariantAnimation)
-    Q_DECLARE_PRIVATE(QVariantAnimation)
+    Q_DISABLE_COPY(QPropertyAnimation)
+    Q_DECLARE_PRIVATE(QPropertyAnimation)
 };
-
-template <typename T>
-void qRegisterAnimationInterpolator(QVariant (*func)(const T &from, const T &to, qreal progress)) {
-    QVariantAnimation::registerInterpolator(reinterpret_cast<QVariantAnimation::Interpolator>(func), qMetaTypeId<T>());
-}
 
 #endif //QT_NO_ANIMATION
 
@@ -125,4 +84,4 @@ QT_END_NAMESPACE
 
 QT_END_HEADER
 
-#endif //QANIMATION_H
+#endif // QPROPERTYANIMATION_H

@@ -45,18 +45,15 @@
 #include <widgetfactory_p.h>
 #include <qdesigner_utils_p.h>
 
+#include <QtCore/QSharedData>
+#include <QtCore/QTextStream>
+#include <QtXml/qxmlstream.h>
 #include <QtGui/QApplication>
 #include <QtGui/QFont>
 #include <QtGui/QDesktopWidget>
 #include <QtGui/QStyle>
 #include <QtGui/QStyleFactory>
 #include <QtGui/QApplication>
-
-#include <QtCore/QSharedData>
-#include <QtCore/QTextStream>
-
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qxmlstream.h>
 
 
 static const char *dpiXPropertyC = "_q_customDpiX";

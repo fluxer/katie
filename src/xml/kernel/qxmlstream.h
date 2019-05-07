@@ -54,7 +54,7 @@ QT_BEGIN_NAMESPACE
 
 class QXmlStreamReaderPrivate;
 class QXmlStreamAttributes;
-class Q_CORE_EXPORT QXmlStreamAttribute {
+class Q_XML_EXPORT QXmlStreamAttribute {
     QStringRef m_name, m_namespaceUri, m_qualifiedName, m_value;
     bool m_isDefault : 1;
     friend class QXmlStreamReaderPrivate;
@@ -87,7 +87,7 @@ public:
 
 Q_DECLARE_TYPEINFO(QXmlStreamAttribute, Q_MOVABLE_TYPE);
 
-class Q_CORE_EXPORT QXmlStreamAttributes : public QVector<QXmlStreamAttribute>
+class Q_XML_EXPORT QXmlStreamAttributes : public QVector<QXmlStreamAttribute>
 {
 public:
     inline QXmlStreamAttributes() {}
@@ -122,7 +122,7 @@ public:
 #endif
 };
 
-class Q_CORE_EXPORT QXmlStreamNamespaceDeclaration {
+class Q_XML_EXPORT QXmlStreamNamespaceDeclaration {
     QStringRef m_prefix, m_namespaceUri;
 
     friend class QXmlStreamReaderPrivate;
@@ -144,7 +144,7 @@ public:
 Q_DECLARE_TYPEINFO(QXmlStreamNamespaceDeclaration, Q_MOVABLE_TYPE);
 typedef QVector<QXmlStreamNamespaceDeclaration> QXmlStreamNamespaceDeclarations;
 
-class Q_CORE_EXPORT QXmlStreamNotationDeclaration {
+class Q_XML_EXPORT QXmlStreamNotationDeclaration {
     QStringRef m_name, m_systemId, m_publicId;
 
     friend class QXmlStreamReaderPrivate;
@@ -167,7 +167,7 @@ public:
 Q_DECLARE_TYPEINFO(QXmlStreamNotationDeclaration, Q_MOVABLE_TYPE);
 typedef QVector<QXmlStreamNotationDeclaration> QXmlStreamNotationDeclarations;
 
-class Q_CORE_EXPORT QXmlStreamEntityDeclaration {
+class Q_XML_EXPORT QXmlStreamEntityDeclaration {
     QStringRef m_name, m_notationName, m_systemId, m_publicId, m_value;
 
     friend class QXmlStreamReaderPrivate;
@@ -196,7 +196,7 @@ Q_DECLARE_TYPEINFO(QXmlStreamEntityDeclaration, Q_MOVABLE_TYPE);
 typedef QVector<QXmlStreamEntityDeclaration> QXmlStreamEntityDeclarations;
 
 
-class Q_CORE_EXPORT QXmlStreamEntityResolver
+class Q_XML_EXPORT QXmlStreamEntityResolver
 {
 public:
     virtual ~QXmlStreamEntityResolver();
@@ -205,7 +205,7 @@ public:
 };
 
 #ifndef QT_NO_XMLSTREAMREADER
-class Q_CORE_EXPORT QXmlStreamReader {
+class Q_XML_EXPORT QXmlStreamReader {
     Q_GADGET
     Q_PROPERTY(bool namespaceProcessing READ namespaceProcessing WRITE setNamespaceProcessing)
 public:
@@ -332,7 +332,7 @@ private:
 
 class QXmlStreamWriterPrivate;
 
-class Q_CORE_EXPORT QXmlStreamWriter
+class Q_XML_EXPORT QXmlStreamWriter
 {
     Q_GADGET
     Q_PROPERTY(bool autoFormatting READ autoFormatting WRITE setAutoFormatting)

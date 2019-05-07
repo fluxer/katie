@@ -38,7 +38,7 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#include <QtCore/qvariantanimation.h>
+#include <qvariantanimation.h>
 #include <qvariantanimation_p.h>
 
 #ifndef QT_NO_ANIMATION

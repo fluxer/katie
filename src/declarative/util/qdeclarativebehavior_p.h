@@ -47,7 +47,7 @@
 #include <qdeclarativepropertyvaluesource.h>
 #include <qdeclarativepropertyvalueinterceptor.h>
 #include <qdeclarative.h>
-#include <QtCore/QAbstractAnimation>
+#include <QtGui/QAbstractAnimation>
 
 QT_BEGIN_HEADER
 

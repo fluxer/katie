@@ -44,12 +44,11 @@
 
 #include <qdesigner_widgetbox_p.h>
 
-#include <QtGui/QTreeWidget>
-#include <QtGui/QIcon>
 #include <QtCore/QList>
 #include <QtCore/QHash>
-#include <QtCore/qxmlstream.h> // Cannot forward declare them on Mac
-#include <QtCore/qxmlstream.h>
+#include <QtXml/qxmlstream.h>
+#include <QtGui/QTreeWidget>
+#include <QtGui/QIcon>
 
 QT_BEGIN_NAMESPACE
 

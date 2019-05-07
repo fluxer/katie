@@ -54,8 +54,8 @@
 //
 
 #include "qabstractitemview_p.h"
-#include <QtCore/qvariantanimation.h>
 #include <QtCore/qabstractitemmodel.h>
+#include <QtGui/qvariantanimation.h>
 
 #ifndef QT_NO_TREEVIEW
 

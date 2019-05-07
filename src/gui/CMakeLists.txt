@@ -1,8 +1,16 @@
 add_definitions(-DQT_BUILD_GUI_LIB)
-set(EXTRA_GUI_LIBS KtCore ${FREETYPE_LIBRARIES})
+set(EXTRA_GUI_LIBS KtCore KtXml ${FREETYPE_LIBRARIES})
 
 set(GUI_PUBLIC_HEADERS
     ${GUI_PUBLIC_HEADERS}
+    QPropertyAnimation
+    QPauseAnimation
+    QAnimationDriver
+    QAnimationGroup
+    QVariantAnimation
+    QSequentialAnimationGroup
+    QParallelAnimationGroup
+    QAbstractAnimation
     QAbstractButton
     QAbstractItemDelegate
     QAbstractItemView
@@ -429,6 +437,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_CURRENT_SOURCE_DIR}/accessible
@@ -541,7 +551,7 @@ katie_allinone_exclude(
 
 katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
-katie_generate_package(KtGui "KtCore")
+katie_generate_package(KtGui "KtCore KtXml")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
 
 if(WITH_NSL AND NSL_FOUND)

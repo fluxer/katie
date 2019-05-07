@@ -39,87 +39,48 @@
 **
 ****************************************************************************/
 
-#ifndef QANIMATION_P_H
-#define QANIMATION_P_H
+#ifndef QANIMATIONGROUP_H
+#define QANIMATIONGROUP_H
 
-//
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the Qt API.  It exists for the convenience
-// of QIODevice. This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-//
+#include <QtGui/qabstractanimation.h>
 
-#include "qvariantanimation.h"
-#include "qabstractanimation_p.h"
-#include <QtCore/qeasingcurve.h>
-#include <QtCore/qmetaobject.h>
-#include <QtCore/qvector.h>
-
-#ifndef QT_NO_ANIMATION
+QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QVariantAnimationPrivate : public QAbstractAnimationPrivate
+#ifndef QT_NO_ANIMATION
+
+class QAnimationGroupPrivate;
+class Q_GUI_EXPORT QAnimationGroup : public QAbstractAnimation
 {
-    Q_DECLARE_PUBLIC(QVariantAnimation)
+    Q_OBJECT
+
 public:
+    QAnimationGroup(QObject *parent = Q_NULLPTR);
+    ~QAnimationGroup();
 
-    QVariantAnimationPrivate();
+    QAbstractAnimation *animationAt(int index) const;
+    int animationCount() const;
+    int indexOfAnimation(QAbstractAnimation *animation) const;
+    void addAnimation(QAbstractAnimation *animation);
+    void insertAnimation(int index, QAbstractAnimation *animation);
+    void removeAnimation(QAbstractAnimation *animation);
+    QAbstractAnimation *takeAnimation(int index);
+    void clear();
 
-    static QVariantAnimationPrivate *get(QVariantAnimation *q)
-    {
-        return q->d_func();
-    }
+protected:
+    QAnimationGroup(QAnimationGroupPrivate &dd, QObject *parent);
+    bool event(QEvent *event);
 
-    void setDefaultStartEndValue(const QVariant &value);
-
-
-    QVariant currentValue;
-    QVariant defaultStartEndValue;
-
-    //this is used to keep track of the KeyValue interval in which we currently are
-    struct
-    {
-        QVariantAnimation::KeyValue start, end;
-    } currentInterval;
-
-    QEasingCurve easing;
-    int duration;
-    QVariantAnimation::KeyValues keyValues;
-    QVariantAnimation::Interpolator interpolator;
-
-    void setCurrentValueForProgress(const qreal progress);
-    void recalculateCurrentInterval(bool force=false);
-    void setValueAt(qreal, const QVariant &);
-    QVariant valueAt(qreal step) const;
-    void convertValues(int t);
-
-    void updateInterpolator();
-
-    //XXX this is needed by dui
-    static Q_CORE_EXPORT QVariantAnimation::Interpolator getInterpolator(int interpolationType);
+private:
+    Q_DISABLE_COPY(QAnimationGroup)
+    Q_DECLARE_PRIVATE(QAnimationGroup)
 };
-
-//this should make the interpolation faster
-template<typename T>
-inline T _q_interpolate(const T &f, const T &t, qreal progress)
-{
-    return T(f + (t - f) * progress);
-}
-
-template<typename T >
-inline QVariant _q_interpolateVariant(const T &from, const T &to, qreal progress)
-{
-    return _q_interpolate(from, to, progress);
-}
-
-
-QT_END_NAMESPACE
 
 #endif //QT_NO_ANIMATION
 
-#endif //QANIMATION_P_H
+QT_END_NAMESPACE
+
+QT_END_HEADER
+
+#endif //QANIMATIONGROUP_H

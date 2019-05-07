@@ -39,42 +39,39 @@
 **
 ****************************************************************************/
 
-#ifndef QANIMATIONGROUP_H
-#define QANIMATIONGROUP_H
+#ifndef QPAUSEANIMATION_P_H
+#define QPAUSEANIMATION_P_H
 
-#include <QtCore/qabstractanimation.h>
+#include <QtGui/qanimationgroup.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+
 #ifndef QT_NO_ANIMATION
 
-class QAnimationGroupPrivate;
-class Q_CORE_EXPORT QAnimationGroup : public QAbstractAnimation
+class QPauseAnimationPrivate;
+
+class Q_GUI_EXPORT QPauseAnimation : public QAbstractAnimation
 {
     Q_OBJECT
-
+    Q_PROPERTY(int duration READ duration WRITE setDuration)
 public:
-    QAnimationGroup(QObject *parent = Q_NULLPTR);
-    ~QAnimationGroup();
+    QPauseAnimation(QObject *parent = Q_NULLPTR);
+    QPauseAnimation(int msecs, QObject *parent = Q_NULLPTR);
+    ~QPauseAnimation();
 
-    QAbstractAnimation *animationAt(int index) const;
-    int animationCount() const;
-    int indexOfAnimation(QAbstractAnimation *animation) const;
-    void addAnimation(QAbstractAnimation *animation);
-    void insertAnimation(int index, QAbstractAnimation *animation);
-    void removeAnimation(QAbstractAnimation *animation);
-    QAbstractAnimation *takeAnimation(int index);
-    void clear();
+    int duration() const;
+    void setDuration(int msecs);
 
 protected:
-    QAnimationGroup(QAnimationGroupPrivate &dd, QObject *parent);
-    bool event(QEvent *event);
+    bool event(QEvent *e);
+    void updateCurrentTime(int);
 
 private:
-    Q_DISABLE_COPY(QAnimationGroup)
-    Q_DECLARE_PRIVATE(QAnimationGroup)
+    Q_DISABLE_COPY(QPauseAnimation)
+    Q_DECLARE_PRIVATE(QPauseAnimation)
 };
 
 #endif //QT_NO_ANIMATION
@@ -83,4 +80,4 @@ QT_END_NAMESPACE
 
 QT_END_HEADER
 
-#endif //QANIMATIONGROUP_H
+#endif // QPAUSEANIMATION_P_H

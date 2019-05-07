@@ -1,5 +1,5 @@
 add_definitions(-DQT_BUILD_SVG_LIB)
-set(EXTRA_SVG_LIBS KtCore KtGui)
+set(EXTRA_SVG_LIBS KtCore KtXml KtGui)
 
 set(SVG_PUBLIC_HEADERS
     ${SVG_PUBLIC_HEADERS}
@@ -44,6 +44,8 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtSvg
@@ -57,7 +59,7 @@ include_directories(
 
 katie_generate_misc("${SVG_HEADERS}" QtSvg)
 katie_generate_public("${SVG_PUBLIC_HEADERS}" QtSvg)
-katie_generate_package(KtSvg "KtCore KtGui")
+katie_generate_package(KtSvg "KtCore KtXml KtGui")
 katie_setup_target(KtSvg ${SVG_SOURCES} ${SVG_HEADERS})
 
 add_library(KtSvg ${KATIE_TYPE} ${KtSvg_SOURCES})

@@ -42,6 +42,7 @@
 #include "filterwidget_p.h"
 #include "iconloader_p.h"
 
+#include <QtCore/QDebug>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QLineEdit>
@@ -52,9 +53,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QStyle>
 #include <QtGui/QStyleOption>
-
-#include <QtCore/QDebug>
-#include <QtCore/QPropertyAnimation>
+#include <QtGui/QPropertyAnimation>
 
 enum { debugFilter = 0 };
 

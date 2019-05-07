@@ -39,45 +39,87 @@
 **
 ****************************************************************************/
 
-#ifndef QPAUSEANIMATION_P_H
-#define QPAUSEANIMATION_P_H
+#ifndef QANIMATION_P_H
+#define QANIMATION_P_H
 
-#include <QtCore/qanimationgroup.h>
+//
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the Qt API.  It exists for the convenience
+// of QIODevice. This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+//
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
-
+#include "qvariantanimation.h"
+#include "qabstractanimation_p.h"
+#include <QtCore/qeasingcurve.h>
+#include <QtCore/qmetaobject.h>
+#include <QtCore/qvector.h>
 
 #ifndef QT_NO_ANIMATION
 
-class QPauseAnimationPrivate;
+QT_BEGIN_NAMESPACE
 
-class Q_CORE_EXPORT QPauseAnimation : public QAbstractAnimation
+class QVariantAnimationPrivate : public QAbstractAnimationPrivate
 {
-    Q_OBJECT
-    Q_PROPERTY(int duration READ duration WRITE setDuration)
+    Q_DECLARE_PUBLIC(QVariantAnimation)
 public:
-    QPauseAnimation(QObject *parent = Q_NULLPTR);
-    QPauseAnimation(int msecs, QObject *parent = Q_NULLPTR);
-    ~QPauseAnimation();
 
-    int duration() const;
-    void setDuration(int msecs);
+    QVariantAnimationPrivate();
 
-protected:
-    bool event(QEvent *e);
-    void updateCurrentTime(int);
+    static QVariantAnimationPrivate *get(QVariantAnimation *q)
+    {
+        return q->d_func();
+    }
 
-private:
-    Q_DISABLE_COPY(QPauseAnimation)
-    Q_DECLARE_PRIVATE(QPauseAnimation)
+    void setDefaultStartEndValue(const QVariant &value);
+
+
+    QVariant currentValue;
+    QVariant defaultStartEndValue;
+
+    //this is used to keep track of the KeyValue interval in which we currently are
+    struct
+    {
+        QVariantAnimation::KeyValue start, end;
+    } currentInterval;
+
+    QEasingCurve easing;
+    int duration;
+    QVariantAnimation::KeyValues keyValues;
+    QVariantAnimation::Interpolator interpolator;
+
+    void setCurrentValueForProgress(const qreal progress);
+    void recalculateCurrentInterval(bool force=false);
+    void setValueAt(qreal, const QVariant &);
+    QVariant valueAt(qreal step) const;
+    void convertValues(int t);
+
+    void updateInterpolator();
+
+    //XXX this is needed by dui
+    static Q_GUI_EXPORT QVariantAnimation::Interpolator getInterpolator(int interpolationType);
 };
 
-#endif //QT_NO_ANIMATION
+//this should make the interpolation faster
+template<typename T>
+inline T _q_interpolate(const T &f, const T &t, qreal progress)
+{
+    return T(f + (t - f) * progress);
+}
+
+template<typename T >
+inline QVariant _q_interpolateVariant(const T &from, const T &to, qreal progress)
+{
+    return _q_interpolate(from, to, progress);
+}
+
 
 QT_END_NAMESPACE
 
-QT_END_HEADER
+#endif //QT_NO_ANIMATION
 
-#endif // QPAUSEANIMATION_P_H
+#endif //QANIMATION_P_H

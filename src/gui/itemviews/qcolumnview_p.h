@@ -60,7 +60,7 @@
 #include <qabstractitemview_p.h>
 
 #include <QtCore/qabstractitemmodel.h>
-#include <QtCore/qpropertyanimation.h>
+#include <QtGui/qpropertyanimation.h>
 #include <QtGui/qabstractitemdelegate.h>
 #include <QtGui/qabstractitemview.h>
 #include <QtGui/qitemdelegate.h>

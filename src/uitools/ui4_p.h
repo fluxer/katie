@@ -58,8 +58,7 @@
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/qxmlstream.h>
-#include <QtCore/qxmlstream.h>
+#include <QtXml/qxmlstream.h>
 
 QT_BEGIN_NAMESPACE
 

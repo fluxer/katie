@@ -42,8 +42,8 @@
 #include "qscriptxmlparser_p.h"
 
 #include <QtCore/qstringlist.h>
-#include <QtCore/qxmlstream.h>
 #include <QtCore/qdebug.h>
+#include <QtXml/qxmlstream.h>
 
 QT_BEGIN_NAMESPACE
 
