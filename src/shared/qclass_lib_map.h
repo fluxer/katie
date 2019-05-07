@@ -440,7 +440,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QLayoutItem", "QtGui/qlayoutitem.h"},
     { "QSpacerItem", "QtGui/qlayoutitem.h"},
     { "QWidgetItem", "QtGui/qlayoutitem.h"},
-    { "QWidgetItemV2", "QtGui/qlayoutitem.h"},
     { "QPalette", "QtGui/qpalette.h"},
     { "QShortcut", "QtGui/qshortcut.h"},
     { "QSizePolicy", "QtGui/qsizepolicy.h"},
@@ -698,6 +697,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 692;
+static const int qclass_lib_count = 691;
 
 #endif

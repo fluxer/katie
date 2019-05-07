@@ -204,7 +204,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , layout(0)
       , needsFlush(0)
       , redirectDev(0)
-      , widgetItem(0)
       , extraPaintEngine(0)
       , polished(0)
       , graphicsEffect(0)
@@ -251,9 +250,6 @@ QWidgetPrivate::QWidgetPrivate(int version)
 
 QWidgetPrivate::~QWidgetPrivate()
 {
-
-    if (widgetItem)
-        widgetItem->wid = 0;
 
     if (extra)
         deleteExtra();
@@ -8731,8 +8727,6 @@ QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChil
 void QWidgetPrivate::updateGeometry_helper(bool forceUpdate)
 {
     Q_Q(QWidget);
-    if (widgetItem)
-        widgetItem->invalidateSizeCache();
     QWidget *parent;
     if (forceUpdate || !extra || extra->minw != extra->maxw || extra->minh != extra->maxh) {
         if (!q->isWindow() && !q->isHidden() && (parent = q->parentWidget())) {

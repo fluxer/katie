@@ -299,7 +299,7 @@ void QToolBarAreaLayoutInfo::fitLayout()
 QLayoutItem *QToolBarAreaLayoutInfo::insertToolBar(QToolBar *before, QToolBar *toolBar)
 {
     toolBar->setOrientation(o);
-    QLayoutItem *item = new QWidgetItemV2(toolBar);
+    QLayoutItem *item = new QWidgetItem(toolBar);
     insertItem(before, item);
     return item;
 }
@@ -1362,7 +1362,7 @@ bool QToolBarAreaLayout::restoreState(QDataStream &stream, const QList<QToolBar*
             }
 
             if (applyingLayout) {
-                item.widgetItem = new QWidgetItemV2(toolBar);
+                item.widgetItem = new QWidgetItem(toolBar);
                 toolBar->setOrientation(floating ? ((shown & 2) ? Qt::Vertical : Qt::Horizontal) : dock.o);
                 toolBar->setVisible(shown & 1);
                 toolBar->d_func()->setWindowState(floating, true, rect);

@@ -833,7 +833,6 @@ classlist = {
     "QWidget",
     "QWidgetAction",
     "QWidgetData",
-    "QWidgetItemV2",
     "QWidgetMapper",
     "QWidgetSet",
     "QWindowsStyle",

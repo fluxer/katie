@@ -189,7 +189,7 @@ QWidgetItem *QLayoutPrivate::createWidgetItem(const QLayout *layout, QWidget *wi
     if (widgetItemFactoryMethod)
         if (QWidgetItem *wi = (*widgetItemFactoryMethod)(layout, widget))
             return wi;
-    return new QWidgetItemV2(widget);
+    return new QWidgetItem(widget);
 }
 
 QSpacerItem *QLayoutPrivate::createSpacerItem(const QLayout *layout, int w, int h, QSizePolicy::Policy hPolicy, QSizePolicy::Policy vPolicy)
@@ -519,6 +519,19 @@ bool QLayout::isEmpty() const
         item = itemAt(i);
     }
     return true;
+}
+
+/*!
+    \reimp
+*/
+QSizePolicy::ControlTypes QLayout::controlTypes() const
+{
+    if (count() == 0)
+        return QSizePolicy::DefaultType;
+    QSizePolicy::ControlTypes types;
+    for (int i = count() - 1; i >= 0; --i)
+        types |= itemAt(i)->controlTypes();
+    return types;
 }
 
 /*!
