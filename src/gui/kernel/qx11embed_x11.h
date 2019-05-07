@@ -61,9 +61,9 @@ public:
     WId containerWinId() const;
 
     enum Error {
-	Unknown,
-	Internal,
-	InvalidWindowID
+        Unknown,
+        Internal,
+        InvalidWindowID
     };
     Error error() const;
 
@@ -99,9 +99,9 @@ public:
     QSize minimumSizeHint() const;
 
     enum Error {
-	Unknown,
-	Internal,
-	InvalidWindowID
+        Unknown,
+        Internal,
+        InvalidWindowID
     };
     Error error() const;
 

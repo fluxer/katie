@@ -162,6 +162,8 @@ incmap = {
         'QStyleOptionTabV2': 'qstyleoption.h',
         'QStyleOptionTabV3': 'qstyleoption.h',
         'QStyleOptionTabBarBase': 'qstyleoption.h',
+        'QStyleOptionTabWidgetFrame': 'qstyleoption.h',
+        'QStyleOptionTabWidgetFrameV2': 'qstyleoption.h',
         'QTextListFormat': 'qtextformat.h',
         'QGradient': 'qbrush.h',
         'QFontMetricsF': 'qfontmetrics.h',

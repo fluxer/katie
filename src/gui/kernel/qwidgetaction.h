@@ -67,7 +67,7 @@ public:
 
     QWidget *requestWidget(QWidget *parent);
     void releaseWidget(QWidget *widget);
-    
+
 protected:
     virtual bool event(QEvent *);
     virtual bool eventFilter(QObject *, QEvent *);

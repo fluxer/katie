@@ -343,6 +343,7 @@ set(GUI_PUBLIC_HEADERS
     QListWidgetItem
     QTreeWidgetItem
     QStandardItem
+    QActionEvent
     QShortcutEvent
     QCloseEvent
     QResizeEvent
@@ -373,6 +374,7 @@ set(GUI_PUBLIC_HEADERS
     QGraphicsSceneDragDropEvent
     QGraphicsTextItem
     QGraphicsObject
+    QStyleOptionTitleBar
     QStyleOptionGraphicsItem
     QStyleOptionButton
     QStyleOptionFrame
