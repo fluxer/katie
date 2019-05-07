@@ -285,7 +285,6 @@
 #cmakedefine QT_NO_STATUSTIP
 #cmakedefine QT_NO_STL_WCHAR
 #cmakedefine QT_NO_STRINGLISTMODEL
-#cmakedefine QT_NO_STYLE_CDE
 #cmakedefine QT_NO_STYLE_CLEANLOOKS
 #cmakedefine QT_NO_STYLE_MOTIF
 #cmakedefine QT_NO_STYLE_PLASTIQUE
@@ -428,11 +427,6 @@
 // QSplitter
 #if !defined(QT_NO_SPLITTER) && (defined(QT_NO_RUBBERBAND))
 #define QT_NO_SPLITTER
-#endif
-
-// QCDEStyle
-#if !defined(QT_NO_STYLE_CDE) && (defined(QT_NO_STYLE_MOTIF))
-#define QT_NO_STYLE_CDE
 #endif
 
 // QToolButton
