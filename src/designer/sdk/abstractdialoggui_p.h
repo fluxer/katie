@@ -61,8 +61,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QWidget;
-
 class QDESIGNER_SDK_EXPORT QDesignerDialogGuiInterface
 {
     Q_DISABLE_COPY(QDesignerDialogGuiInterface)
