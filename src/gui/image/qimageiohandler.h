@@ -80,7 +80,6 @@ public:
     enum ImageOption {
         Size,
         ClipRect,
-        Description,
         ScaledClipRect,
         ScaledSize,
         CompressionRatio,

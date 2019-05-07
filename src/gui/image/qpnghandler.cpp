@@ -105,8 +105,6 @@ public:
 
     float gamma;
     int quality;
-    QString description;
-    QStringList readTexts;
 
     png_struct *png_ptr;
     png_info *info_ptr;
@@ -115,7 +113,6 @@ public:
 
     bool readPngHeader();
     bool readPngImage(QImage *image);
-    void readPngTexts(png_info *info);
 
     QImage::Format readImageFormat();
 
@@ -141,11 +138,11 @@ public:
     void setGamma(float);
 
     bool writeImage(const QImage& img, int x, int y);
-    bool writeImage(const QImage& img, int quality, const QString &description, int x, int y);
+    bool writeImage(const QImage& img, int quality, int x, int y);
     bool writeImage(const QImage& img)
         { return writeImage(img, 0, 0); }
-    bool writeImage(const QImage& img, int quality, const QString &description)
-        { return writeImage(img, quality, description, 0, 0); }
+    bool writeImage(const QImage& img, int quality)
+        { return writeImage(img, quality, 0, 0); }
 
     QIODevice* device() { return dev; }
 
@@ -364,39 +361,6 @@ static void qt_png_warning(png_structp /*png_ptr*/, png_const_charp message)
 }
 #endif
 
-
-/*!
-    \internal
-*/
-void QPngHandlerPrivate::readPngTexts(png_info *info)
-{
-#ifndef QT_NO_IMAGE_TEXT
-    png_textp text_ptr;
-    int num_text=0;
-    png_get_text(png_ptr, info, &text_ptr, &num_text);
-
-    while (num_text--) {
-        QString key, value;
-        key = QString::fromLatin1(text_ptr->key);
-#if defined(PNG_iTXt_SUPPORTED)
-        if (text_ptr->itxt_length) {
-            value = QString::fromUtf8(text_ptr->text, int(text_ptr->itxt_length));
-        } else
-#endif
-        {
-            value = QString::fromLatin1(text_ptr->text, int(text_ptr->text_length));
-        }
-        if (!description.isEmpty())
-            description += QLatin1String("\n\n");
-        description += key + QLatin1String(": ") + value.simplified();
-        readTexts.append(key);
-        readTexts.append(value);
-        text_ptr++;
-    }
-#endif
-}
-
-
 /*!
     \internal
 */
@@ -431,8 +395,6 @@ bool QPngHandlerPrivate::readPngHeader()
 
     png_set_read_fn(png_ptr, this, iod_read_fn);
     png_read_info(png_ptr, info_ptr);
-
-    readPngTexts(info_ptr);
 
     state = ReadHeader;
     return true;
@@ -516,12 +478,6 @@ bool QPngHandlerPrivate::readPngImage(QImage *outImage)
 
     state = ReadingEnd;
     png_read_end(png_ptr, end_info);
-
-#ifndef QT_NO_IMAGE_TEXT
-    readPngTexts(end_info);
-    for (int i = 0; i < readTexts.size()-1; i+=2)
-        outImage->setText(readTexts.at(i), readTexts.at(i+1));
-#endif
 
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
     delete [] row_pointers;
@@ -624,95 +580,14 @@ void QPNGImageWriter::setGamma(float g)
     gamma = g;
 }
 
-
-#ifndef QT_NO_IMAGE_TEXT
-static void set_text(const QImage &image, png_structp png_ptr, png_infop info_ptr,
-                     const QString &description)
-{
-    QMap<QString, QString> text;
-    foreach (const QString &key, image.textKeys()) {
-        if (!key.isEmpty())
-            text.insert(key, image.text(key));
-    }
-    foreach (const QString &pair, description.split(QLatin1String("\n\n"))) {
-        int index = pair.indexOf(QLatin1Char(':'));
-        if (index >= 0 && pair.indexOf(QLatin1Char(' ')) < index) {
-            QString s = pair.simplified();
-            if (!s.isEmpty())
-                text.insert(QLatin1String("Description"), s);
-        } else {
-            QString key = pair.left(index);
-            if (!key.simplified().isEmpty())
-                text.insert(key, pair.mid(index + 2).simplified());
-        }
-    }
-
-    if (text.isEmpty())
-        return;
-
-    png_textp text_ptr = new png_text[text.size()];
-    memset(text_ptr, 0, text.size() * sizeof(png_text));
-
-    QMap<QString, QString>::ConstIterator it = text.constBegin();
-    int i = 0;
-    while (it != text.constEnd()) {
-        text_ptr[i].key = qstrdup(it.key().left(79).toLatin1().constData());
-        bool noCompress = (it.value().length() < 40);
-
-#ifdef PNG_iTXt_SUPPORTED
-        bool needsItxt = false;
-        foreach(const QChar c, it.value()) {
-            uchar ch = c.cell();
-            if (c.row() || (ch < 0x20 && ch != '\n') || (ch > 0x7e && ch < 0xa0)) {
-                needsItxt = true;
-                break;
-            }
-        }
-
-        if (needsItxt) {
-            text_ptr[i].compression = noCompress ? PNG_ITXT_COMPRESSION_NONE : PNG_ITXT_COMPRESSION_zTXt;
-            QByteArray value = it.value().toUtf8();
-            text_ptr[i].text = qstrdup(value.constData());
-            text_ptr[i].itxt_length = value.size();
-            text_ptr[i].lang = const_cast<char*>("UTF-8");
-            text_ptr[i].lang_key = qstrdup(it.key().toUtf8().constData());
-        }
-        else
-#endif
-        {
-            text_ptr[i].compression = noCompress ? PNG_TEXT_COMPRESSION_NONE : PNG_TEXT_COMPRESSION_zTXt;
-            QByteArray value = it.value().toLatin1();
-            text_ptr[i].text = qstrdup(value.constData());
-            text_ptr[i].text_length = value.size();
-        }
-        ++i;
-        ++it;
-    }
-
-    png_set_text(png_ptr, info_ptr, text_ptr, i);
-    for (i = 0; i < text.size(); ++i) {
-        delete [] text_ptr[i].key;
-        delete [] text_ptr[i].text;
-#ifdef PNG_iTXt_SUPPORTED
-        delete [] text_ptr[i].lang_key;
-#endif
-    }
-    delete [] text_ptr;
-}
-#endif
-
 bool QPNGImageWriter::writeImage(const QImage& image, int off_x, int off_y)
 {
-    return writeImage(image, -1, QString(), off_x, off_y);
+    return writeImage(image, -1, off_x, off_y);
 }
 
-bool QPNGImageWriter::writeImage(const QImage& image, int quality_in, const QString &description,
+bool QPNGImageWriter::writeImage(const QImage& image, int quality_in,
                                  int off_x_in, int off_y_in)
 {
-#ifdef QT_NO_IMAGE_TEXT
-    Q_UNUSED(description);
-#endif
-
     QPoint offset = image.offset();
     int off_x = off_x_in + offset.x();
     int off_y = off_y_in + offset.y();
@@ -824,9 +699,6 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in, const QStr
                 PNG_RESOLUTION_METER);
     }
 
-#ifndef QT_NO_IMAGE_TEXT
-    set_text(image, png_ptr, info_ptr, description);
-#endif
     png_write_info(png_ptr, info_ptr);
 
     if (image.depth() != 1)
@@ -893,7 +765,7 @@ bool QPNGImageWriter::writeImage(const QImage& image, int quality_in, const QStr
 }
 
 static bool write_png_image(const QImage &image, QIODevice *device,
-                            int quality, float gamma, const QString &description)
+                            int quality, float gamma)
 {
     QPNGImageWriter writer(device);
     if (quality >= 0) {
@@ -901,7 +773,7 @@ static bool write_png_image(const QImage &image, QIODevice *device,
         quality = (100-quality) * 9 / 91; // map [0,100] -> [9,0]
     }
     writer.setGamma(gamma);
-    return writer.writeImage(image, quality, description);
+    return writer.writeImage(image, quality);
 }
 
 QPngHandler::QPngHandler()
@@ -948,13 +820,12 @@ bool QPngHandler::read(QImage *image)
 
 bool QPngHandler::write(const QImage &image)
 {
-    return write_png_image(image, device(), d->quality, d->gamma, d->description);
+    return write_png_image(image, device(), d->quality, d->gamma);
 }
 
 bool QPngHandler::supportsOption(ImageOption option) const
 {
     return option == Gamma
-        || option == Description
         || option == ImageFormat
         || option == Quality
         || option == Size;
@@ -971,8 +842,6 @@ QVariant QPngHandler::option(ImageOption option) const
         return d->gamma;
     else if (option == Quality)
         return d->quality;
-    else if (option == Description)
-        return d->description;
     else if (option == Size)
         return QSize(png_get_image_width(d->png_ptr, d->info_ptr),
                      png_get_image_height(d->png_ptr, d->info_ptr));
@@ -987,8 +856,6 @@ void QPngHandler::setOption(ImageOption option, const QVariant &value)
         d->gamma = value.toFloat();
     else if (option == Quality)
         d->quality = value.toInt();
-    else if (option == Description)
-        d->description = value.toString();
 }
 
 QByteArray QPngHandler::name() const

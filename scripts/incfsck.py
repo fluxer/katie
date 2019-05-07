@@ -109,7 +109,6 @@ incmap = {
         'QIconEngineFactoryInterfaceV2': 'qiconengineplugin.h',
         'QIconEnginePluginV2': 'qiconengineplugin.h',
         'QImageIOHandlerFactoryInterface': 'qimageiohandler.h',
-        'QImageTextKeyLang': 'qimage.h',
         'QInputContextFactoryInterface': 'qinputcontextplugin.h',
         'QInputMethodEvent': 'qevent.h',
         'QItemEditorCreator': 'qitemeditorfactory.h',

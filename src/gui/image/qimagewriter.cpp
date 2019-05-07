@@ -253,8 +253,6 @@ public:
     int quality;
     int compression;
     float gamma;
-    QString description;
-    QString text;
 
     // error
     QImageWriter::ImageWriterError imageWriterError;
@@ -492,66 +490,6 @@ float QImageWriter::gamma() const
 }
 
 /*!
-    \obsolete
-
-    Use setText() instead.
-
-    This is an image format specific function that sets the
-    description of the image to \a description. For image formats that
-    do not support setting the description, this value is ignored.
-
-    The contents of \a description depends on the image format.
-
-    \sa description()
-*/
-void QImageWriter::setDescription(const QString &description)
-{
-    d->description = description;
-}
-
-/*!
-    \obsolete
-
-    Use QImageReader::text() instead.
-
-    Returns the description of the image.
-
-    \sa setDescription()
-*/
-QString QImageWriter::description() const
-{
-    return d->description;
-}
-
-/*!
-    \since 4.1
-
-    Sets the image text associated with the key \a key to
-    \a text. This is useful for storing copyright information
-    or other information about the image. Example:
-
-    \snippet doc/src/snippets/code/src_gui_image_qimagewriter.cpp 1
-
-    If you want to store a single block of data
-    (e.g., a comment), you can pass an empty key, or use
-    a generic key like "Description".
-
-    The key and text will be embedded into the
-    image data after calling write().
-
-    Support for this option is implemented through
-    QImageIOHandler::Description.
-
-    \sa QImage::setText(), QImageReader::text()
-*/
-void QImageWriter::setText(const QString &key, const QString &text)
-{
-    if (!d->description.isEmpty())
-        d->description += QLatin1String("\n\n");
-    d->description += key.simplified() + QLatin1String(": ") + text.simplified();
-}
-
-/*!
     Returns true if QImageWriter can write the image; i.e., the image
     format is supported and the assigned device is open for reading.
 
@@ -596,8 +534,6 @@ bool QImageWriter::write(const QImage &image)
         d->handler->setOption(QImageIOHandler::CompressionRatio, d->compression);
     if (d->handler->supportsOption(QImageIOHandler::Gamma))
         d->handler->setOption(QImageIOHandler::Gamma, d->gamma);
-    if (!d->description.isEmpty() && d->handler->supportsOption(QImageIOHandler::Description))
-        d->handler->setOption(QImageIOHandler::Description, d->description);
 
     if (!d->handler->write(image))
         return false;

@@ -87,12 +87,6 @@ public:
     void setGamma(float gamma);
     float gamma() const;
 
-    // Obsolete as of 4.1
-    void setDescription(const QString &description);
-    QString description() const;
-
-    void setText(const QString &key, const QString &text);
-
     bool canWrite() const;
     bool write(const QImage &image);
 

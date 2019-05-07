@@ -93,9 +93,6 @@ public:
 
     QImage::Format imageFormat() const;
 
-    QStringList textKeys() const;
-    QString text(const QString &key) const;
-
     void setClipRect(const QRect &rect);
     QRect clipRect() const;
 

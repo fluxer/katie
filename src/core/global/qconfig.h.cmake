@@ -94,6 +94,7 @@
 #define QT_NO_TABLETEVENT
 #define QT_NO_GCONF2
 #define QT_NO_RAWFONT
+#define QT_NO_IMAGE_TEXT
 
 /* Qt build specs */
 #ifndef QT_EDITION
@@ -200,7 +201,6 @@
 #cmakedefine QT_NO_IMAGEFORMAT_XBM
 #cmakedefine QT_NO_IMAGEFORMAT_XPM
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
-#cmakedefine QT_NO_IMAGE_TEXT
 #cmakedefine QT_NO_INOTIFY
 #cmakedefine QT_NO_INPUTDIALOG
 #cmakedefine QT_NO_INPUTMETHOD

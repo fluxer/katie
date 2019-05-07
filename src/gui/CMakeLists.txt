@@ -118,7 +118,6 @@ set(GUI_PUBLIC_HEADERS
     QImageIOHandler
     QImageIOHandlerFactoryInterface
     QImageReader
-    QImageTextKeyLang
     QImageWriter
     QInputDialog
     QItemDelegate

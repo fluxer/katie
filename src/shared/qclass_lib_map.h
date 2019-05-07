@@ -232,7 +232,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QIconEngine", "QtGui/qiconengine.h"},
     { "QIconEngineFactoryInterface", "QtGui/qiconengineplugin.h"},
     { "QIconEnginePlugin", "QtGui/qiconengineplugin.h"},
-    { "QImageTextKeyLang", "QtGui/qimage.h"},
     { "QImage", "QtGui/qimage.h"},
     { "QImageIOHandler", "QtGui/qimageiohandler.h"},
     { "QImageIOHandlerFactoryInterface", "QtGui/qimageiohandler.h"},
@@ -699,6 +698,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 693;
+static const int qclass_lib_count = 692;
 
 #endif

@@ -534,8 +534,6 @@ public:
     QSize scaledSize;
     QRect scaledClipRect;
     int quality;
-    QMap<QString, QString> text;
-    void getText();
 
     // error
     QImageReader::ImageReaderError imageReaderError;
@@ -617,25 +615,6 @@ bool QImageReaderPrivate::initHandler()
         return false;
     }
     return true;
-}
-
-/*!
-    \internal
-*/
-void QImageReaderPrivate::getText()
-{
-    if (!text.isEmpty() || (!handler && !initHandler()) || !handler->supportsOption(QImageIOHandler::Description))
-        return;
-    foreach (QString pair, handler->option(QImageIOHandler::Description).toString().split(
-                QLatin1String("\n\n"))) {
-        int index = pair.indexOf(QLatin1Char(':'));
-        if (index >= 0 && pair.indexOf(QLatin1Char(' ')) < index) {
-            text.insert(QLatin1String("Description"), pair.simplified());
-        } else {
-            QString key = pair.left(index);
-            text.insert(key, pair.mid(index + 2).simplified());
-        }
-    }
 }
 
 /*!
@@ -833,7 +812,6 @@ void QImageReader::setDevice(QIODevice *device)
     d->deleteDevice = false;
     delete d->handler;
     d->handler = 0;
-    d->text.clear();
 }
 
 /*!
@@ -950,40 +928,6 @@ QImage::Format QImageReader::imageFormat() const
         return (QImage::Format)d->handler->option(QImageIOHandler::ImageFormat).toInt();
 
     return QImage::Format_Invalid;
-}
-
-/*!
-    \since 4.1
-
-    Returns the text keys for this image. You can use
-    these keys with text() to list the image text for
-    a certain key.
-
-    Support for this option is implemented through
-    QImageIOHandler::Description.
-
-    \sa text(), QImageWriter::setText(), QImage::textKeys()
-*/
-QStringList QImageReader::textKeys() const
-{
-    d->getText();
-    return d->text.keys();
-}
-
-/*!
-    \since 4.1
-
-    Returns the image text associated with \a key.
-
-    Support for this option is implemented through
-    QImageIOHandler::Description.
-
-    \sa textKeys(), QImageWriter::setText()
-*/
-QString QImageReader::text(const QString &key) const
-{
-    d->getText();
-    return d->text.value(key);
 }
 
 /*!

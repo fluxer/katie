@@ -775,15 +775,13 @@ QImage::QImage(const QSize &size, Format format)
 
 QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QImage::Format format, bool readOnly)
 {
-    QImageData *d = 0;
-
     if (format == QImage::Format_Invalid)
-        return d;
+        return Q_NULLPTR;
 
     if (!checkPixelSize(format)) {
         qWarning("QImageData::create(): Invalid pixel size for format %i",
                  format);
-        return 0;
+        return Q_NULLPTR;
     }
 
     const int depth = qt_depthForFormat(format);
@@ -799,9 +797,9 @@ QImageData *QImageData::create(uchar *data, int width, int height,  int bpl, QIm
         || bpl <= 0
         || bpl < min_bytes_per_line
         || INT_MAX/uint(bpl) < uint(height))
-        return d;                                        // invalid parameter(s)
+        return Q_NULLPTR;                                        // invalid parameter(s)
 
-    d = new QImageData;
+    QImageData *d = new QImageData;
     d->ref.ref();
 
     d->own_data = false;
@@ -1177,9 +1175,6 @@ QImage QImage::copy(const QRect& r) const
         image.d->dpmy = d->dpmy;
         image.d->offset = d->offset;
         image.d->has_alpha_clut = d->has_alpha_clut;
-#ifndef QT_NO_IMAGE_TEXT
-        image.d->text = d->text;
-#endif
         return image;
     }
 
@@ -1269,9 +1264,6 @@ QImage QImage::copy(const QRect& r) const
     image.d->dpmy = dotsPerMeterY();
     image.d->offset = offset();
     image.d->has_alpha_clut = d->has_alpha_clut;
-#ifndef QT_NO_IMAGE_TEXT
-    image.d->text = d->text;
-#endif
     return image;
 }
 
@@ -3113,10 +3105,6 @@ QImage QImage::convertToFormat(Format format, Qt::ImageConversionFlags flags) co
         image.setDotsPerMeterY(dotsPerMeterY());
         image.setDotsPerMeterX(dotsPerMeterX());
 
-#if !defined(QT_NO_IMAGE_TEXT)
-        image.d->text = d->text;
-#endif // !QT_NO_IMAGE_TEXT
-
         converter(image.d, d, flags);
         return image;
     }
@@ -3162,15 +3150,6 @@ static QImage convertWithPalette(const QImage &src, QImage::Format format,
     QImage dest(src.size(), format);
     QIMAGE_SANITYCHECK_MEMORY(dest);
     dest.setColorTable(clut);
-
-#if !defined(QT_NO_IMAGE_TEXT)
-    QString textsKeys = src.text();
-    QStringList textKeyList = textsKeys.split(QLatin1Char('\n'), QString::SkipEmptyParts);
-    foreach (const QString &textKey, textKeyList) {
-        QStringList textKeySplitted = textKey.split(QLatin1String(": "));
-        dest.setText(textKeySplitted[0], textKeySplitted[1]);
-    }
-#endif // !QT_NO_IMAGE_TEXT
 
     int h = src.height();
     int w = src.width();
@@ -3237,10 +3216,6 @@ QImage QImage::convertToFormat(Format format, const QVector<QRgb> &colorTable, Q
 
     QImage image(d->width, d->height, format);
     QIMAGE_SANITYCHECK_MEMORY(image);
-
-#if !defined(QT_NO_IMAGE_TEXT)
-        image.d->text = d->text;
-#endif // !QT_NO_IMAGE_TEXT
 
     converter(image.d, d, flags);
     return image;
@@ -4660,80 +4635,6 @@ void QImage::setOffset(const QPoint& p)
     if (d)
         d->offset = p;
 }
-#ifndef QT_NO_IMAGE_TEXT
-
-/*!
-    Returns the text keys for this image.
-
-    You can use these keys with text() to list the image text for a
-    certain key.
-
-    \sa text()
-*/
-QStringList QImage::textKeys() const
-{
-    return d ? QStringList(d->text.keys()) : QStringList();
-}
-
-/*!
-    Returns the image text associated with the given \a key. If the
-    specified \a key is an empty string, the whole image text is
-    returned, with each key-text pair separated by a newline.
-
-    \sa setText(), textKeys()
-*/
-QString QImage::text(const QString &key) const
-{
-    if (!d)
-        return QString();
-
-    if (!key.isEmpty())
-        return d->text.value(key);
-
-    QString tmp;
-    foreach (const QString &key, d->text.keys()) {
-        if (!tmp.isEmpty())
-            tmp += QLatin1String("\n\n");
-        tmp += key + QLatin1String(": ") + d->text.value(key).simplified();
-    }
-    return tmp;
-}
-
-/*!
-    \fn void QImage::setText(const QString &key, const QString &text)
-
-    Sets the image text to the given \a text and associate it with the
-    given \a key.
-
-    If you just want to store a single text block (i.e., a "comment"
-    or just a description), you can either pass an empty key, or use a
-    generic key like "Description".
-
-    The image text is embedded into the image data when you
-    call save() or QImageWriter::write().
-
-    Not all image formats support embedded text. You can find out
-    if a specific image or format supports embedding text
-    by using QImageWriter::supportsOption(). We give an example:
-
-    \snippet doc/src/snippets/image/supportedformat.cpp 0
-
-    You can use QImageWriter::supportedImageFormats() to find out
-    which image formats are available to you.
-
-    \sa text(), textKeys()
-*/
-void QImage::setText(const QString &key, const QString &value)
-{
-    if (!d)
-        return;
-    detach();
-
-    if (d)
-        d->text.insert(key, value);
-}
-
-#endif // QT_NO_IMAGE_TEXT
 
 /*
     Sets the image bits to the \a pixmap contents and returns a

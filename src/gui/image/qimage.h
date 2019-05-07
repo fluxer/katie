@@ -53,34 +53,12 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QIODevice;
-class QStringList;
 class QMatrix;
 class QTransform;
 class QVariant;
-template <class T> class QList;
 template <class T> class QVector;
-
 struct QImageData;
-#ifndef QT_NO_IMAGE_TEXT
-class Q_GUI_EXPORT QImageTextKeyLang {
-public:
-    QImageTextKeyLang(const char* k, const char* l) : key(k), lang(l) { }
-    QImageTextKeyLang() { }
-
-    QByteArray key;
-    QByteArray lang;
-
-    bool operator< (const QImageTextKeyLang& other) const
-        { return key < other.key || (key==other.key && lang < other.lang); }
-    bool operator== (const QImageTextKeyLang& other) const
-        { return key==other.key && lang==other.lang; }
-    inline bool operator!= (const QImageTextKeyLang &other) const
-        { return !operator==(other); }
-};
-#endif //QT_NO_IMAGE_TEXT
-
 
 class Q_GUI_EXPORT QImage : public QPaintDevice
 {
@@ -261,11 +239,6 @@ public:
     void setDotsPerMeterY(int);
     QPoint offset() const;
     void setOffset(const QPoint&);
-#ifndef QT_NO_IMAGE_TEXT
-    QStringList textKeys() const;
-    QString text(const QString &key = QString()) const;
-    void setText(const QString &key, const QString &value);
-#endif
 
 protected:
     virtual int metric(PaintDeviceMetric metric) const;
