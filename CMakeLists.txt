@@ -21,12 +21,6 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
 
-# custom build type - speed up builds and show some additional warnings
-if(CMAKE_BUILD_TYPE STREQUAL "FastDev")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -Wall")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -Wall")
-endif()
-
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 set(CMAKE_AUTOMOC FALSE)
 set(CMAKE_AUTOUIC FALSE)

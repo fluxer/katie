@@ -8,6 +8,9 @@ rm -rf "$cwd/../fastdev"
 mkdir -p "$cwd/../fastdev"
 cd "$cwd/../fastdev"
 
+export CFLAGS="$CFLAGS -O0 -Wall"
+export CXXFLAGS="$CXXFLAGS -O0 -Wall"
+
 cmake ../ -DCMAKE_BUILD_TYPE=FastDev \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DKATIE_SETTINGS_FULL=/etc/xdg \
