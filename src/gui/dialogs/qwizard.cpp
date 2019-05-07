@@ -590,7 +590,7 @@ public:
     int maximumHeight;
 };
 
-static QString buttonDefaultText(int wstyle, int which, const QWizardPrivate *wizard)
+static QString buttonDefaultText(QWizard::WizardStyle wstyle, int which, const QWizardPrivate *wizard)
 {
     const bool macStyle = (wstyle == QWizard::MacStyle);
     switch (which) {

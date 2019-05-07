@@ -143,8 +143,6 @@ private :
     QFileInfo mFileInfo;
 };
 
-class QFileIconProvider;
-
 #ifndef QT_NO_FILESYSTEMMODEL
 
 class Q_AUTOTEST_EXPORT QFileInfoGatherer : public QThread

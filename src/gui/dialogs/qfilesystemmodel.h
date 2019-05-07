@@ -55,7 +55,6 @@ QT_BEGIN_NAMESPACE
 
 #ifndef QT_NO_FILESYSTEMMODEL
 
-class ExtendedInformation;
 class QFileSystemModelPrivate;
 class QFileIconProvider;
 
