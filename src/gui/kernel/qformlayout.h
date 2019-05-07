@@ -65,12 +65,14 @@ class Q_GUI_EXPORT QFormLayout : public QLayout
 
 public:
     enum FieldGrowthPolicy {
+        StyleHintGrowth,
         FieldsStayAtSizeHint,
         ExpandingFieldsGrow,
         AllNonFixedFieldsGrow
     };
 
     enum RowWrapPolicy {
+        StyleHintWrap,
         DontWrapRows,
         WrapLongRows,
         WrapAllRows

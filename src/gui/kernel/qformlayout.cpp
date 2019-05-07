@@ -51,7 +51,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
 // Fixed column matrix, stores items as [i11, i12, i21, i22...],
 // with FORTRAN-style index operator(r, c).
 template <class T, int NumColumns>
@@ -120,12 +119,6 @@ void FixedColumnMatrix<T, NumColumns>::storageIndexToPosition(int idx, int *rowP
     *rowPtr = idx / NumColumns;
     *colPtr = idx % NumColumns;
 }
-} // namespace
-
-// special values for unset fields; must not clash with values of FieldGrowthPolicy or
-// RowWrapPolicy
-const uint DefaultFieldGrowthPolicy = 255;
-const uint DefaultRowWrapPolicy = 255;
 
 enum { FormColumnCount = 2 };
 
@@ -208,13 +201,13 @@ public:
     void recalcHFW(int w);
     void setupHfwLayoutData();
 
-    uint fieldGrowthPolicy : 8;
-    uint rowWrapPolicy : 8;
-    uint has_hfw : 2;
-    uint dirty : 2; // have we laid out yet?
-    uint sizesDirty : 2; // have we (not) gathered layout item sizes?
-    uint expandVertical : 1; // Do we expand vertically?
-    uint expandHorizontal : 1; // Do we expand horizonally?
+    QFormLayout::FieldGrowthPolicy fieldGrowthPolicy;
+    QFormLayout::RowWrapPolicy rowWrapPolicy;
+    bool has_hfw;
+    bool dirty; // have we laid out yet?
+    bool sizesDirty; // have we (not) gathered layout item sizes?
+    bool expandVertical; // Do we expand vertically?
+    bool expandHorizontal; // Do we expand horizonally?
     Qt::Alignment labelAlignment;
     Qt::Alignment formAlignment;
 
@@ -249,9 +242,9 @@ public:
 };
 
 QFormLayoutPrivate::QFormLayoutPrivate()
-    : fieldGrowthPolicy(DefaultFieldGrowthPolicy),
-      rowWrapPolicy(DefaultRowWrapPolicy), has_hfw(false), dirty(true), sizesDirty(true),
-      expandVertical(0), expandHorizontal(0), labelAlignment(0), formAlignment(0),
+    : fieldGrowthPolicy(QFormLayout::StyleHintGrowth),
+      rowWrapPolicy(QFormLayout::StyleHintWrap), has_hfw(false), dirty(true), sizesDirty(true),
+      expandVertical(false), expandHorizontal(false), labelAlignment(0), formAlignment(0),
       layoutWidth(-1), hfw_width(-1), hfw_sh_height(-1), min_width(-1),
       sh_width(-1), thresh_width(QLAYOUTSIZE_MAX), hSpacing(-1), vSpacing(-1)
 {
@@ -1698,7 +1691,7 @@ QWidget *QFormLayout::labelForField(QLayout *field) const
 void QFormLayout::setFieldGrowthPolicy(FieldGrowthPolicy policy)
 {
     Q_D(QFormLayout);
-    if (FieldGrowthPolicy(d->fieldGrowthPolicy) != policy) {
+    if (d->fieldGrowthPolicy != policy) {
         d->fieldGrowthPolicy = policy;
         invalidate();
     }
@@ -1707,10 +1700,10 @@ void QFormLayout::setFieldGrowthPolicy(FieldGrowthPolicy policy)
 QFormLayout::FieldGrowthPolicy QFormLayout::fieldGrowthPolicy() const
 {
     Q_D(const QFormLayout);
-    if (d->fieldGrowthPolicy == DefaultFieldGrowthPolicy) {
+    if (d->fieldGrowthPolicy == QFormLayout::StyleHintGrowth) {
         return QFormLayout::FieldGrowthPolicy(d->getStyle()->styleHint(QStyle::SH_FormLayoutFieldGrowthPolicy));
     } else {
-        return QFormLayout::FieldGrowthPolicy(d->fieldGrowthPolicy);
+        return d->fieldGrowthPolicy;
     }
 }
 
@@ -1731,7 +1724,7 @@ QFormLayout::FieldGrowthPolicy QFormLayout::fieldGrowthPolicy() const
 void QFormLayout::setRowWrapPolicy(RowWrapPolicy policy)
 {
     Q_D(QFormLayout);
-    if (RowWrapPolicy(d->rowWrapPolicy) != policy) {
+    if (d->rowWrapPolicy != policy) {
         d->rowWrapPolicy = policy;
         invalidate();
     }
@@ -1740,10 +1733,10 @@ void QFormLayout::setRowWrapPolicy(RowWrapPolicy policy)
 QFormLayout::RowWrapPolicy QFormLayout::rowWrapPolicy() const
 {
     Q_D(const QFormLayout);
-    if (d->rowWrapPolicy == DefaultRowWrapPolicy) {
+    if (d->rowWrapPolicy == QFormLayout::StyleHintWrap) {
         return QFormLayout::RowWrapPolicy(d->getStyle()->styleHint(QStyle::SH_FormLayoutWrapPolicy));
     } else {
-        return QFormLayout::RowWrapPolicy(d->rowWrapPolicy);
+        return d->rowWrapPolicy;
     }
 }
 
@@ -2026,7 +2019,7 @@ void QFormLayout::setItem(int row, ItemRole role, QLayoutItem *item)
 void QFormLayout::resetFieldGrowthPolicy()
 {
     Q_D(QFormLayout);
-    d->fieldGrowthPolicy = DefaultFieldGrowthPolicy;
+    d->fieldGrowthPolicy = QFormLayout::StyleHintGrowth;
 }
 
 /*!
@@ -2036,7 +2029,7 @@ void QFormLayout::resetFieldGrowthPolicy()
 void QFormLayout::resetRowWrapPolicy()
 {
     Q_D(QFormLayout);
-    d->rowWrapPolicy = DefaultRowWrapPolicy;
+    d->rowWrapPolicy = QFormLayout::StyleHintWrap;
 }
 
 /*!
