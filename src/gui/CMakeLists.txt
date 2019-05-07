@@ -245,8 +245,6 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionTab
     QStyleOptionTabV2
     QStyleOptionTabV3
-    QStyleOptionTabWidgetFrame
-    QStyleOptionTabWidgetFrameV2
     QStyleOptionToolBar
     QStyleOptionToolBox
     QStyleOptionToolBoxV2
@@ -390,6 +388,8 @@ set(GUI_PUBLIC_HEADERS
     QStyleOptionDockWidgetV2
     QStyleOptionFocusRect
     QStyleOptionMenuItem
+    QStyleOptionTabWidgetFrame
+    QStyleOptionTabWidgetFrameV2
     QItemSelection
     QIntValidator
     QFontMetricsF
