@@ -108,4 +108,5 @@ QFileInfo QFSFileEngineIterator::currentFileInfo() const
 QT_END_NAMESPACE
 
 #endif // QT_NO_FILESYSTEMITERATOR
+
 #endif // QT_NO_FSFILEENGINE

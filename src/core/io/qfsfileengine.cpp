@@ -842,9 +842,7 @@ bool QFSFileEngine::supportsExtension(Extension extension) const
 /*! \fn uint QFSFileEngine::ownerId(FileOwner own) const
   In Unix, if stat() is successful, the \c uid is returned if
   \a own is the owner. Otherwise the \c gid is returned. If stat()
-  is unsuccessful, -2 is reuturned.
-
-  For Windows, -2 is always returned.
+  is unsuccessful, -2 is returned.
 */
 
 /*! \fn QString QFSFileEngine::owner(FileOwner own) const

@@ -63,7 +63,6 @@
 QT_BEGIN_NAMESPACE
 
 class QFSFileEngineIteratorPrivate;
-class QFSFileEngineIteratorPlatformSpecificData;
 
 class QFSFileEngineIterator : public QAbstractFileEngineIterator
 {
