@@ -144,8 +144,7 @@ public:
         NoButton         = 0x00000000,
         LeftButton       = 0x00000001,
         RightButton      = 0x00000002,
-        MidButton        = 0x00000004, // ### Qt 5: remove me
-        MiddleButton     = MidButton,
+        MiddleButton     = 0x00000004,
         XButton1         = 0x00000008,
         XButton2         = 0x00000010,
         MouseButtonMask  = 0x000000ff
@@ -157,7 +156,6 @@ public:
         Horizontal = 0x1,
         Vertical = 0x2
     };
-
     Q_DECLARE_FLAGS(Orientations, Orientation)
 
     enum FocusPolicy {
@@ -182,7 +180,6 @@ public:
     // Text formatting flags for QPainter::drawText and QLabel.
     // The following two enums can be combined to one integer which
     // is passed as 'flags' to drawText and qt_format_text.
-
     enum AlignmentFlag {
         AlignLeft = 0x0001,
         AlignLeading = AlignLeft,
@@ -200,7 +197,6 @@ public:
 
         AlignCenter = AlignVCenter | AlignHCenter
     };
-
     Q_DECLARE_FLAGS(Alignment, AlignmentFlag)
 
     enum TextFlag {
@@ -218,7 +214,6 @@ public:
         TextForceRightToLeft = 0x40000,
         TextLongestVariant = 0x80000,
         TextBypassShaping = 0x100000
-
     };
 
     enum TextElideMode {
@@ -267,7 +262,6 @@ public:
         WindowFullScreen = 0x00000004,
         WindowActive     = 0x00000008
     };
-
     Q_DECLARE_FLAGS(WindowStates, WindowState)
 
     enum WidgetAttribute {
@@ -404,10 +398,8 @@ public:
         AA_AttributeCount
     };
 
-
     // Image conversion flags.  The unusual ordering is caused by
     // compatibility and default requirements.
-
     enum ImageConversionFlag {
         ColorMode_Mask          = 0x00000003,
         AutoColor               = 0x00000000,
@@ -441,7 +433,6 @@ public:
         TransparentMode,
         OpaqueMode
     };
-
 
     enum Key {
         Key_Escape = 0x01000000,                // misc keys
@@ -916,7 +907,7 @@ public:
         RightArrow
     };
 
-    enum PenStyle { // pen style
+    enum PenStyle {
         NoPen,
         SolidLine,
         DashLine,
@@ -929,14 +920,16 @@ public:
 #endif
     };
 
-    enum PenCapStyle { // line endcap style
+    // line endcap style
+    enum PenCapStyle {
         FlatCap = 0x00,
         SquareCap = 0x10,
         RoundCap = 0x20,
         MPenCapStyle = 0x30
     };
 
-    enum PenJoinStyle { // line join style
+    // line join style
+    enum PenJoinStyle {
         MiterJoin = 0x00,
         BevelJoin = 0x40,
         RoundJoin = 0x80,
@@ -944,7 +937,7 @@ public:
         MPenJoinStyle = 0x1c0
     };
 
-    enum BrushStyle { // brush style
+    enum BrushStyle {
         NoBrush,
         SolidPattern,
         Dense1Pattern,
@@ -970,7 +963,6 @@ public:
         AbsoluteSize,
         RelativeSize
     };
-
 
     enum UIEffect {
         UI_General,
@@ -1042,7 +1034,6 @@ public:
     enum DockWidgetAreaSizes {
         NDockWidgetAreas = 4
     };
-
     Q_DECLARE_FLAGS(DockWidgetAreas, DockWidgetArea)
 
     enum ToolBarArea {
@@ -1059,9 +1050,7 @@ public:
     enum ToolBarAreaSizes {
         NToolBarAreas = 4
     };
-
     Q_DECLARE_FLAGS(ToolBarAreas, ToolBarArea)
-
 
     enum DateFormat {
         TextDate,      // default Qt
@@ -1096,7 +1085,6 @@ public:
         ScrollBarAlwaysOff,
         ScrollBarAlwaysOn
     };
-
 
     enum CaseSensitivity {
         CaseInsensitive,
@@ -1203,8 +1191,6 @@ public:
         AnchorVerticalCenter,
         AnchorBottom
     };
-
-
 
     enum DropAction {
         CopyAction = 0x1,
@@ -1428,12 +1414,12 @@ public:
         Printer           = 4,
         CustomRaster      = 5
     };
+
     enum RelayoutType {
         RelayoutNormal,
         RelayoutDragging,
         RelayoutDropped
     };
-
 
     enum Callback {
         ConnectCallback,
@@ -1468,7 +1454,6 @@ public:
     static bool activateCallbacks(Callback, void **);
     static bool callFunction(InternalFunction func, void **);
 };
-
 
 QT_END_NAMESPACE
 
