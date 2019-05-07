@@ -66,10 +66,6 @@
 
 #include <stdlib.h>
 
-#ifdef Q_WS_X11
-#include <QtGui/qt_x11_p.h>
-#endif
-
 QT_BEGIN_NAMESPACE
 
 // from qapplication.cpp and qapplication_x11.cpp - These are NOT for

@@ -70,7 +70,7 @@ public:
     mutable QVector<qreal> dashPattern;
     qreal dashOffset;
     qreal miterLimit;
-    uint cosmetic : 1;
+    bool cosmetic;
 };
 
 QT_END_NAMESPACE
