@@ -126,8 +126,8 @@ bool QPixmapData::fromFile(const QString &fileName, const char *format,
 
 bool QPixmapData::fromData(const uchar *buf, uint len, const char *format, Qt::ImageConversionFlags flags)
 {
-    QByteArray a = QByteArray::fromRawData(reinterpret_cast<const char *>(buf), len);
-    QBuffer b(&a);
+    QBuffer b;
+    b.setData(reinterpret_cast<const char *>(buf), len);
     b.open(QIODevice::ReadOnly);
     QImage image = QImageReader(&b, format).read();
     fromImage(makeBitmapCompliantIfNeeded(this, image, flags), flags);

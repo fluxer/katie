@@ -95,8 +95,8 @@ void QRasterPixmapData::resize(int width, int height)
 bool QRasterPixmapData::fromData(const uchar *buffer, uint len, const char *format,
                       Qt::ImageConversionFlags flags)
 {
-    QByteArray a = QByteArray::fromRawData(reinterpret_cast<const char *>(buffer), len);
-    QBuffer b(&a);
+    QBuffer b;
+    b.setData(reinterpret_cast<const char *>(buffer), len);
     b.open(QIODevice::ReadOnly);
     QImage image = QImageReader(&b, format).read();
     if (image.isNull())
