@@ -60,8 +60,6 @@
 
 QT_BEGIN_NAMESPACE
 
-Q_CORE_EXPORT bool qt_disable_lowpriority_timers=false;
-
 /*****************************************************************************
  UNIX signal handling
  *****************************************************************************/
@@ -485,7 +483,7 @@ QList<QPair<int, int> > QTimerInfoList::registeredTimers(QObject *object) const
 */
 int QTimerInfoList::activateTimers()
 {
-    if (qt_disable_lowpriority_timers || isEmpty())
+    if (isEmpty())
         return 0; // nothing to do
 
     int n_act = 0, maxCount = 0;
@@ -777,19 +775,8 @@ void QEventDispatcherUNIX::setSocketNotifierPending(QSocketNotifier *notifier)
     if (!sn) // not found
         return;
 
-    // We choose a random activation order to be more fair under high load.
-    // If a constant order is used and a peer early in the list can
-    // saturate the IO, it might grab our attention completely.
-    // Also, if we're using a straight list, the callback routines may
-    // delete other entries from the list before those other entries are
-    // processed.
     if (! FD_ISSET(sn->fd, sn->queue)) {
-        if (d->sn_pending_list.isEmpty()) {
-            d->sn_pending_list.append(sn);
-        } else {
-            d->sn_pending_list.insert((qrand() & 0xff) %
-                                      (d->sn_pending_list.size()+1), sn);
-        }
+        d->sn_pending_list.append(sn);
         FD_SET(sn->fd, sn->queue);
     }
 }
