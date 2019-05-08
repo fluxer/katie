@@ -75,6 +75,7 @@
 #define XK_LATIN1
 #define XK_KOREAN
 #include <X11/keysymdef.h>
+#include <X11/XF86keysym.h>
 
 #ifndef XK_ISO_Left_Tab
 #define XK_ISO_Left_Tab 0xFE20
