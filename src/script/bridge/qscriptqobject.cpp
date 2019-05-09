@@ -2070,7 +2070,7 @@ QMetaObjectPrototype::QMetaObjectPrototype(
 }
 
 // Begin moc-generated code -- modify with care! Check "HAND EDIT" parts
-static const uint qt_meta_data_QObjectConnectionManager[] = {
+static const uint qt_meta_data_QScript__QObjectConnectionManager[] = {
 
  // content:
        6,       // revision
@@ -2089,12 +2089,12 @@ static const uint qt_meta_data_QObjectConnectionManager[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_QObjectConnectionManager[] = {
+static const char qt_meta_stringdata_QScript__QObjectConnectionManager[] = {
     "QScript::QObjectConnectionManager\0\0"
     "execute()\0"
 };
 
-void QObjectConnectionManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void QScript::QObjectConnectionManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
@@ -2104,9 +2104,9 @@ void QObjectConnectionManager::qt_static_metacall(QObject *_o, QMetaObject::Call
     }
 }
 
-const QMetaObject QObjectConnectionManager::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_QObjectConnectionManager,
-      qt_meta_data_QObjectConnectionManager, qt_static_metacall, 0, 0 }
+const QMetaObject QScript::QObjectConnectionManager::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_QScript__QObjectConnectionManager,
+      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, 0, 0 }
 };
 
 
@@ -2119,15 +2119,15 @@ const QMetaObject *QScript::QObjectConnectionManager::metaObject() const
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *QObjectConnectionManager::qt_metacast(const char *_clname)
+void *QScript::QObjectConnectionManager::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_QObjectConnectionManager))
-        return static_cast<void*>(const_cast<QObjectConnectionManager*>(this));
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_QScript__QObjectConnectionManager))
+        return static_cast<void*>(this);
     return QObject::qt_metacast(_clname);
 }
 
-int QObjectConnectionManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int QScript::QObjectConnectionManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
