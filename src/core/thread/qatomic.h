@@ -146,7 +146,7 @@ class Q_CORE_EXPORT QAtomicInt
         { return load(); }
 
       static bool isLockFree() {
-         return ATOMIC_POINTER_LOCK_FREE == 2;
+         return ATOMIC_INT_LOCK_FREE == 2;
       }
 
    private:
