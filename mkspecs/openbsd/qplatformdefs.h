@@ -44,7 +44,7 @@
 
 // Get Qt defines/settings
 
-#include "qglobal.h"
+#include "qconfig.h"
 
 // Set any POSIX/XOPEN defines at the top of this file to turn on specific APIs
 
