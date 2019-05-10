@@ -68,7 +68,7 @@ class QPaintEnginePrivate
     Q_DECLARE_PUBLIC(QPaintEngine)
 public:
     QPaintEnginePrivate() : pdev(Q_NULLPTR), q_ptr(Q_NULLPTR), currentClipWidget(Q_NULLPTR),
-                            hasSystemTransform(0), hasSystemViewport(0) {}
+                            hasSystemTransform(false), hasSystemViewport(false) {}
     virtual ~QPaintEnginePrivate() { }
     QPaintDevice *pdev;
     QPaintEngine *q_ptr;
@@ -77,8 +77,8 @@ public:
     QRegion systemViewport;
     QTransform systemTransform;
     QWidget *currentClipWidget;
-    uint hasSystemTransform : 1;
-    uint hasSystemViewport : 1;
+    bool hasSystemTransform;
+    bool hasSystemViewport;
 
     inline void transformSystemClip()
     {

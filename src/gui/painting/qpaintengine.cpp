@@ -664,7 +664,7 @@ void QPaintEngine::drawImage(const QRectF &r, const QImage &image, const QRectF 
 QPaintEngine::QPaintEngine(PaintEngineFeatures caps)
     : state(0),
       gccaps(caps),
-      active(0),
+      active(false),
       extended(false),
       d_ptr(new QPaintEnginePrivate)
 {
@@ -678,7 +678,7 @@ QPaintEngine::QPaintEngine(PaintEngineFeatures caps)
 QPaintEngine::QPaintEngine(QPaintEnginePrivate &dptr, PaintEngineFeatures caps)
     : state(0),
       gccaps(caps),
-      active(0),
+      active(false),
       extended(false),
       d_ptr(&dptr)
 {

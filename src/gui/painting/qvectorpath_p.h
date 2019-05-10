@@ -173,6 +173,16 @@ private:
     mutable CacheEntry *m_cache;
 };
 
+inline uint QVectorPath::polygonFlags(QPaintEngine::PolygonDrawMode mode) {
+    switch (mode) {
+    case QPaintEngine::ConvexMode: return ConvexPolygonHint | ImplicitClose;
+    case QPaintEngine::OddEvenMode: return PolygonHint | OddEvenFill | ImplicitClose;
+    case QPaintEngine::WindingMode: return PolygonHint | WindingFill | ImplicitClose;
+    case QPaintEngine::PolylineMode: return PolygonHint;
+    default: return 0;
+    }
+}
+
 Q_GUI_EXPORT const QVectorPath &qtVectorPathForPath(const QPainterPath &path);
 
 QT_END_NAMESPACE

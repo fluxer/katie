@@ -212,8 +212,8 @@ protected:
     QPaintEngineState *state;
     PaintEngineFeatures gccaps;
 
-    uint active : 1;
-    uint extended : 1;
+    bool active;
+    bool extended;
 
     QScopedPointer<QPaintEnginePrivate> d_ptr;
 

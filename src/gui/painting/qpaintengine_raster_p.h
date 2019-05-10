@@ -318,8 +318,8 @@ public:
 
     int deviceDepth;
 
-    uint mono_surface : 1;
-    uint outlinemapper_xform_dirty : 1;
+    bool mono_surface;
+    bool outlinemapper_xform_dirty;
 
     QScopedPointer<QRasterizer> rasterizer;
 };
