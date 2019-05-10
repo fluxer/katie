@@ -47,7 +47,6 @@
 #include <QtDesigner/connectionedit_p.h>
 
 #include <QtXml/qdom.h>
-#include <QtXml/qdom.h>
 
 QT_BEGIN_NAMESPACE
 

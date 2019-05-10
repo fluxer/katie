@@ -47,10 +47,6 @@
 #include <QtCore/QDebug>
 #include <QtCore/QFile>
 #include <QtCore/QString>
-
-#include <QtXml/qxml.h>
-#include <QtXml/qxml.h>
-#include <QtXml/qxml.h>
 #include <QtXml/qxml.h>
 
 

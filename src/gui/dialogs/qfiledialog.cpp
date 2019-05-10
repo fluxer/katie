@@ -53,13 +53,14 @@
 #include <qmenu.h>
 #include <qmessagebox.h>
 #include <qinputdialog.h>
-#include <stdlib.h>
 #include <qsettings.h>
 #include <qdebug.h>
 #include <qapplication.h>
 #include <qstylepainter.h>
 #include <qfileiconprovider_p.h>
 #include "ui_qfiledialog.h"
+
+#include <stdlib.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -281,13 +282,6 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
 
   This signal is emitted when the user selects a \a filter.
 */
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#ifdef Q_WS_WIN
-#include <qwindowsstyle.h>
-#endif
-#include <qshortcut.h>
-QT_END_INCLUDE_NAMESPACE
 
 /*!
     \fn QFileDialog::QFileDialog(QWidget *parent, Qt::WindowFlags flags)

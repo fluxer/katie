@@ -68,7 +68,6 @@
 #include <qdebug.h>
 #include <qtextformat.h>
 #include <qwizard.h>
-#include <qtabbar.h>
 #include <qfileinfo.h>
 #include <qdir.h>
 #include <qsettings.h>
