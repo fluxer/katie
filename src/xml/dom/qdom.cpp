@@ -201,8 +201,8 @@ public:
     QString value;
     QString prefix; // set this only for ElementNode and AttributeNode
     QString namespaceURI; // set this only for ElementNode and AttributeNode
-    bool createdWithDom1Interface : 1;
-    bool hasParent                : 1;
+    bool createdWithDom1Interface;
+    bool hasParent;
 
     int lineNumber;
     int columnNumber;
@@ -532,7 +532,7 @@ public:
     QDomAttrPrivate* createAttributeNS(const QString& nsURI, const QString& qName);
     QDomEntityReferencePrivate* createEntityReference(const QString& name);
 
-    QDomNodePrivate* importNode(const QDomNodePrivate* importedNode, bool deep);
+    QDomNodePrivate* importNode(QDomNodePrivate* importedNode, bool deep);
 
     // Reimplemented from QDomNodePrivate
     QDomNodePrivate* cloneNode(bool deep = true);
@@ -6381,7 +6381,7 @@ QDomEntityReferencePrivate* QDomDocumentPrivate::createEntityReference(const QSt
     return e;
 }
 
-QDomNodePrivate* QDomDocumentPrivate::importNode(const QDomNodePrivate *importedNode, bool deep)
+QDomNodePrivate* QDomDocumentPrivate::importNode(QDomNodePrivate *importedNode, bool deep)
 {
     QDomNodePrivate *node = 0;
     switch (importedNode->nodeType()) {
