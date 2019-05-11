@@ -84,7 +84,7 @@ void QDBusConnectionManager::removeConnection(const QString &name)
     QDBusConnectionPrivate *d = 0;
     d = connectionHash.take(name);
     if (d && !d->ref.deref())
-        d->deleteYourself();
+        d->deleteLater();
 
     // Static objects may be keeping the connection open.
     // However, it is harmless to have outstanding references to a connection that is
@@ -99,7 +99,7 @@ QDBusConnectionManager::~QDBusConnectionManager()
          it != connectionHash.constEnd(); ++it) {
         QDBusConnectionPrivate *d = it.value();
         if (!d->ref.deref())
-            d->deleteYourself();
+            d->deleteLater();
         else
             d->closeConnection();
     }
@@ -296,7 +296,7 @@ QDBusConnection::QDBusConnection(QDBusConnectionPrivate *dd)
 QDBusConnection::~QDBusConnection()
 {
     if (d && !d->ref.deref())
-        d->deleteYourself();
+        d->deleteLater();
 }
 
 /*!
@@ -311,7 +311,7 @@ QDBusConnection &QDBusConnection::operator=(const QDBusConnection &other)
     if (other.d)
         other.d->ref.ref();
     if (d && !d->ref.deref())
-        d->deleteYourself();
+        d->deleteLater();
     d = other.d;
     return *this;
 }
