@@ -69,6 +69,9 @@
 
 QT_BEGIN_NAMESPACE
 
+// used with dbus_server_allocate_data_slot
+static dbus_int32_t server_slot = -1;
+
 static QAtomicInt isDebugging = QAtomicInt(-1);
 #define qDBusDebug              if (isDebugging == 0); else qDebug
 
@@ -557,7 +560,7 @@ qDBusSignalFilter(DBusConnection *connection, DBusMessage *message, void *data)
 bool QDBusConnectionPrivate::handleMessage(const QDBusMessage &amsg)
 {
     const QDBusSpyHookList *list = qDBusSpyHookList();
-    for (int i = 0; i < list->size(); ++i) {
+    for (int i = 0; list && i < list->size(); ++i) {
         qDBusDebug() << "calling the message spy hook";
         (*(*list)[i])(amsg);
     }
@@ -1004,6 +1007,15 @@ QDBusConnectionPrivate::~QDBusConnectionPrivate()
                  "Timer and socket errors will follow and the program will probably crash",
                  qPrintable(name));
 
+    if (mode == ClientMode) {
+        // the bus service object holds a reference back to us;
+        // we need to destroy it before we finish destroying ourself
+        Q_ASSERT(ref.load() == 0);
+        QObject *obj = (QObject*)busService;
+        disconnect(obj, Q_NULLPTR, this, Q_NULLPTR);
+        delete obj;
+    }
+
     closeConnection();
     rootNode.children.clear();  // free resources
     qDeleteAll(cachedMetaObjects);
@@ -1024,8 +1036,10 @@ void QDBusConnectionPrivate::closeConnection()
     mode = InvalidMode; // prevent reentrancy
     baseService.clear();
 
-    if (server)
+    if (server) {
         dbus_server_disconnect(server);
+        dbus_server_free_data_slot(&server_slot);
+    }
 
     if (oldMode == ClientMode || oldMode == PeerMode) {
         if (connection) {
@@ -1120,6 +1134,7 @@ void QDBusConnectionPrivate::socketRead(int fd)
         if (it->watch && it->read && it->read->isEnabled()) {
             if (!dbus_watch_handle(it.value().watch, DBUS_WATCH_READABLE))
                 qDebug("OUT OF MEM");
+            break;
         }
         ++it;
     }
@@ -1135,6 +1150,7 @@ void QDBusConnectionPrivate::socketWrite(int fd)
         if (it->watch && it->write && it->write->isEnabled()) {
             if (!dbus_watch_handle(it.value().watch, DBUS_WATCH_WRITABLE))
                 qDebug("OUT OF MEM");
+            break;
         }
         ++it;
     }
@@ -1585,8 +1601,6 @@ void QDBusConnectionPrivate::handleSignal(const QDBusMessage& msg)
     key += msg.interface();
     handleSignal(key, msg);                  // third try
 }
-
-static dbus_int32_t server_slot = -1;
 
 void QDBusConnectionPrivate::setServer(DBusServer *s, const QDBusErrorInternal &error)
 {

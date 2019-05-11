@@ -85,6 +85,8 @@ QDBusServer::~QDBusServer()
             QDBusConnectionManager::instance()->removeConnection(name);
         }
         d->serverConnectionNames.clear();
+        d->ref = 0;
+        d->deleteLater();
     }
 }
 
