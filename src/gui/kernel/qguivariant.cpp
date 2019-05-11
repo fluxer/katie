@@ -264,7 +264,6 @@ static void clear(QVariant::Private *d)
     d->is_shared = false;
 }
 
-
 static bool isNull(const QVariant::Private *d)
 {
     switch(d->type) {
@@ -396,8 +395,6 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
     }
     return qcoreVariantHandler()->compare(a, b);
 }
-
-
 
 static bool convert(const QVariant::Private *d, QVariant::Type t,
                  void *result, bool *ok)
@@ -713,7 +710,6 @@ Q_DECL_METATYPE_HELPER(QQuaternion)
 #endif
 
 static const QMetaTypeGuiHelper qVariantGuiHelper[] = {
-    {0, 0, 0, 0},
     Q_IMPL_METATYPE_HELPER(QFont),
     Q_IMPL_METATYPE_HELPER(QPixmap),
     Q_IMPL_METATYPE_HELPER(QBrush),
