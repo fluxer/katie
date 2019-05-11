@@ -414,7 +414,8 @@ set_package_properties(GLib2 PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(DBus)
+# v1.2+ required for dbus_watch_get_unix_fd
+find_package(DBus 1.2)
 set_package_properties(DBus PROPERTIES
     PURPOSE "Required for D-Bus support"
     DESCRIPTION "Message bus system, a simple way for applications to talk to one another"
