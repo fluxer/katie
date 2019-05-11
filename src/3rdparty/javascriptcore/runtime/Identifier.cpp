@@ -213,7 +213,7 @@ PassRefPtr<UString::Rep> Identifier::addSlowCase(JSGlobalData* globalData, UStri
     Q_ASSERT(!r->isIdentifier());
     if (r->size() == 1) {
         UChar c = r->data()[0];
-        if (c <= 0xFF)
+        if (c <= 0xFF) {
             r = globalData->smallStrings.singleCharacterStringRep(c);
             if (r->isIdentifier()) {
 #ifndef NDEBUG
@@ -221,6 +221,7 @@ PassRefPtr<UString::Rep> Identifier::addSlowCase(JSGlobalData* globalData, UStri
 #endif
                 return r;
             }
+	}
     }
     if (!r->size()) {
         UString::Rep::empty().hash();

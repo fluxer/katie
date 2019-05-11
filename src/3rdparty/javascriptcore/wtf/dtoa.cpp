@@ -885,13 +885,13 @@ static ALWAYS_INLINE void d2b(BigInt& b, U* d, int* e, int* bits)
         if ((k = lo0bits(&y))) {
             x[0] = y | (z << (32 - k));
             z >>= k;
-        } else
+        } else {
             x[0] = y;
             if (z) {
                 b.resize(2);
                 x[1] = z;
             }
-
+        }
 #ifndef Sudden_Underflow
         i = b.size();
 #endif
