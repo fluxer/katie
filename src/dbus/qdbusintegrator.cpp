@@ -970,8 +970,6 @@ void QDBusConnectionPrivate::deliverCall(QObject *object, int /*flags*/, const Q
     return;
 }
 
-extern bool qDBusInitThreads();
-
 QDBusConnectionPrivate::QDBusConnectionPrivate(QObject *p)
     : QObject(p), ref(1), capabilities(0), mode(InvalidMode), busService(0),
       dispatchLock(QMutex::Recursive), connection(0), server(0),
