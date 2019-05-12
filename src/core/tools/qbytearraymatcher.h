@@ -48,6 +48,8 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+class QByteArrayMatcherPrivate;
+
 class Q_CORE_EXPORT QByteArrayMatcher
 {
 public:
@@ -66,18 +68,22 @@ public:
     inline QByteArray pattern() const
     {
         if (q_pattern.isNull())
-            return QByteArray(d.p, d.l);
+            return QByteArray(reinterpret_cast<const char*>(p.p), p.l);
         return q_pattern;
     }
 
 private:
+    QByteArrayMatcherPrivate *d;
     QByteArray q_pattern;
     struct Data {
-        char q_skiptable[256];
-        const char *p;
+        uchar q_skiptable[256];
+        const uchar *p;
         int l;
     };
-    Data d;
+    union {
+        uint dummy[256];
+        Data p;
+    };
 };
 
 QT_END_NAMESPACE

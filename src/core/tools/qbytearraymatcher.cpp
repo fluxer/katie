@@ -45,26 +45,26 @@
 
 QT_BEGIN_NAMESPACE
 
-static inline void bm_init_skiptable(const char *cc, int len, char *skiptable)
+static inline void bm_init_skiptable(const uchar *cc, int len, uchar *skiptable)
 {
     int l = qMin(len, 255);
-    memset(skiptable, l, 256*sizeof(char));
+    memset(skiptable, l, 256*sizeof(uchar));
     cc += len - l;
     while (l--)
         skiptable[*cc++] = l;
 }
 
-static inline int bm_find(const char *cc, int l, int index, const char *puc, int pl,
-                          const char *skiptable)
+static inline int bm_find(const uchar *cc, int l, int index, const uchar *puc, uint pl,
+                          const uchar *skiptable)
 {
     if (pl == 0)
         return index > l ? -1 : index;
-    const int pl_minus_one = pl - 1;
+    const uint pl_minus_one = pl - 1;
 
-    const char *current = cc + index + pl_minus_one;
-    const char *end = cc + l;
+    const uchar *current = cc + index + pl_minus_one;
+    const uchar *end = cc + l;
     while (current < end) {
-        int skip = skiptable[*current];
+        uint skip = skiptable[*current];
         if (!skip) {
             // possible match
             while (skip < pl) {
@@ -117,10 +117,11 @@ static inline int bm_find(const char *cc, int l, int index, const char *puc, int
     Call setPattern() to give it a pattern to match.
 */
 QByteArrayMatcher::QByteArrayMatcher()
+    : d(0)
 {
-    d.p = 0;
-    d.l = 0;
-    memset(d.q_skiptable, 0, sizeof(d.q_skiptable));
+    p.p = 0;
+    p.l = 0;
+    memset(p.q_skiptable, 0, sizeof(p.q_skiptable));
 }
 
 /*!
@@ -129,10 +130,11 @@ QByteArrayMatcher::QByteArrayMatcher()
   the destructor does not delete \a pattern.
  */
 QByteArrayMatcher::QByteArrayMatcher(const char *pattern, int length)
+    : d(0)
 {
-    d.p = pattern;
-    d.l = length;
-    bm_init_skiptable(d.p, d.l, d.q_skiptable);
+    p.p = reinterpret_cast<const uchar *>(pattern);
+    p.l = length;
+    bm_init_skiptable(p.p, p.l, p.q_skiptable);
 }
 
 /*!
@@ -140,17 +142,18 @@ QByteArrayMatcher::QByteArrayMatcher(const char *pattern, int length)
     Call indexIn() to perform a search.
 */
 QByteArrayMatcher::QByteArrayMatcher(const QByteArray &pattern)
-    : q_pattern(pattern)
+    : d(0), q_pattern(pattern)
 {
-    d.p = pattern.constData();
-    d.l = pattern.size();
-    bm_init_skiptable(d.p, d.l, d.q_skiptable);
+    p.p = reinterpret_cast<const uchar *>(pattern.constData());
+    p.l = pattern.size();
+    bm_init_skiptable(p.p, p.l, p.q_skiptable);
 }
 
 /*!
     Copies the \a other byte array matcher to this byte array matcher.
 */
 QByteArrayMatcher::QByteArrayMatcher(const QByteArrayMatcher &other)
+    : d(0)
 {
     operator=(other);
 }
@@ -168,7 +171,7 @@ QByteArrayMatcher::~QByteArrayMatcher()
 QByteArrayMatcher &QByteArrayMatcher::operator=(const QByteArrayMatcher &other)
 {
     q_pattern = other.q_pattern;
-    memcpy(&d, &other.d, sizeof(d));
+    memcpy(&p, &other.p, sizeof(p));
     return *this;
 }
 
@@ -181,9 +184,9 @@ QByteArrayMatcher &QByteArrayMatcher::operator=(const QByteArrayMatcher &other)
 void QByteArrayMatcher::setPattern(const QByteArray &pattern)
 {
     q_pattern = pattern;
-    d.p = pattern.constData();
-    d.l = pattern.size();
-    bm_init_skiptable(d.p, d.l, d.q_skiptable);
+    p.p = reinterpret_cast<const uchar *>(pattern.constData());
+    p.l = pattern.size();
+    bm_init_skiptable(p.p, p.l, p.q_skiptable);
 }
 
 /*!
@@ -197,7 +200,8 @@ int QByteArrayMatcher::indexIn(const QByteArray &ba, int from) const
 {
     if (from < 0)
         from = 0;
-    return bm_find(ba.constData(), ba.size(), from, d.p, d.l, d.q_skiptable);
+    return bm_find(reinterpret_cast<const uchar *>(ba.constData()), ba.size(), from,
+                   p.p, p.l, p.q_skiptable);
 }
 
 /*!
@@ -211,7 +215,8 @@ int QByteArrayMatcher::indexIn(const char *str, int len, int from) const
 {
     if (from < 0)
         from = 0;
-    return bm_find(str, len, from, d.p, d.l, d.q_skiptable);
+    return bm_find(reinterpret_cast<const uchar *>(str), len, from,
+                   p.p, p.l, p.q_skiptable);
 }
 
 /*!
@@ -226,14 +231,16 @@ int QByteArrayMatcher::indexIn(const char *str, int len, int from) const
 
 static int findChar(const char *str, int len, char ch, int from)
 {
+    const uchar *s = (const uchar *)str;
+    uchar c = (uchar)ch;
     if (from < 0)
         from = qMax(from + len, 0);
     if (from < len) {
-        const char *n = str + from - 1;
-        const char *e = str + len;
+        const uchar *n = s + from - 1;
+        const uchar *e = s + len;
         while (++n != e)
-            if (*n == ch)
-                return  n - str;
+            if (*n == c)
+                return  n - s;
     }
     return -1;
 }
@@ -244,16 +251,16 @@ static int qFindByteArrayBoyerMoore(
     const char *haystack, int haystackLen, int haystackOffset,
     const char *needle, int needleLen)
 {
-    char skiptable[256];
-    bm_init_skiptable(needle, needleLen, skiptable);
+    uchar skiptable[256];
+    bm_init_skiptable((const uchar *)needle, needleLen, skiptable);
     if (haystackOffset < 0)
         haystackOffset = 0;
-    return bm_find(haystack, haystackLen, haystackOffset,
-                   needle, needleLen, skiptable);
+    return bm_find((const uchar *)haystack, haystackLen, haystackOffset,
+                   (const uchar *)needle, needleLen, skiptable);
 }
 
 #define REHASH(a) \
-    if (sl_minus_1 < sizeof(int) * CHAR_BIT) \
+    if (sl_minus_1 < sizeof(uint) * CHAR_BIT) \
         hashHaystack -= (a) << sl_minus_1; \
     hashHaystack <<= 1
 
@@ -267,7 +274,7 @@ int qFindByteArray(
     const int sl = needleLen;
     if (from < 0)
         from += l;
-    if ((sl + from) > l)
+    if (uint(sl + from) > (uint)l)
         return -1;
     if (!sl)
         return from;
@@ -293,8 +300,8 @@ int qFindByteArray(
     */
     const char *haystack = haystack0 + from;
     const char *end = haystack0 + (l - sl);
-    const int sl_minus_1 = sl - 1;
-    int hashNeedle = 0, hashHaystack = 0;
+    const uint sl_minus_1 = sl - 1;
+    uint hashNeedle = 0, hashHaystack = 0;
     int idx;
     for (idx = 0; idx < sl; ++idx) {
         hashNeedle = ((hashNeedle<<1) + needle[idx]);
