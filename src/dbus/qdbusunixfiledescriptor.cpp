@@ -216,9 +216,6 @@ int QDBusUnixFileDescriptor::fileDescriptor() const
     return d ? d->fd.operator int() : -1;
 }
 
-// actual implementation
-#ifdef Q_OS_UNIX
-
 // qdoc documentation is generated on Unix
 
 /*!
@@ -298,31 +295,6 @@ QDBusUnixFileDescriptorPrivate::~QDBusUnixFileDescriptorPrivate()
     if (fd != -1)
         qt_safe_close(fd);
 }
-
-#else
-bool QDBusUnixFileDescriptor::isSupported()
-{
-    return false;
-}
-
-void QDBusUnixFileDescriptor::setFileDescriptor(int)
-{
-}
-
-void QDBusUnixFileDescriptor::giveFileDescriptor(int)
-{
-}
-
-int QDBusUnixFileDescriptor::takeFileDescriptor()
-{
-    return -1;
-}
-
-QDBusUnixFileDescriptorPrivate::~QDBusUnixFileDescriptorPrivate()
-{
-}
-
-#endif
 
 QT_END_NAMESPACE
 
