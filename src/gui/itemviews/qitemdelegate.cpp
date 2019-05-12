@@ -352,7 +352,7 @@ QString QItemDelegatePrivate::valueToText(const QVariant &value, const QStyleOpt
 {
     QString text;
     switch (value.userType()) {
-        case QMetaType::Float:
+        case QVariant::Float:
             text = option.locale.toString(value.toFloat(), 'g');
             break;
         case QVariant::Double:

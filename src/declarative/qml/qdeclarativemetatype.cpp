@@ -1308,7 +1308,6 @@ bool QDeclarativeMetaType::copy(int type, void *data, const void *copy)
             return true;
 
 
-
         case QMetaType::QFont:
             *static_cast<NS(QFont) *>(data) = *static_cast<const NS(QFont)*>(copy);
             return true;

@@ -510,7 +510,7 @@ static uint typeOfVariant(const QVariant &value)
         case QMetaType::Long:
             return 0;
         case QVariant::Double:
-        case QMetaType::Float:
+        case QVariant::Float:
             return 1;
         default:
             return 2;

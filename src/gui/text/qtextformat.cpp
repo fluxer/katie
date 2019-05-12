@@ -310,7 +310,7 @@ static inline uint variantHash(const QVariant &variant)
     case QVariant::Color: return hash(qvariant_cast<QColor>(variant));
       case QVariant::TextLength:
         return 0x377 + hash(qvariant_cast<QTextLength>(variant).rawValue());
-    case QMetaType::Float: return hash(variant.toFloat());
+    case QVariant::Float: return hash(variant.toFloat());
     case QVariant::Invalid: return 0;
     default: break;
     }
@@ -933,7 +933,7 @@ int QTextFormat::intProperty(int propertyId) const
 
 /*!
     Returns the value of the property specified by \a propertyId. If the
-    property isn't of QVariant::Double or QMetaType::Float type, 0 is
+    property isn't of QVariant::Double or QVariant::Float type, 0 is
     returned instead.
 
     \sa setProperty() boolProperty() intProperty() stringProperty() colorProperty() lengthProperty() lengthVectorProperty() Property
@@ -943,7 +943,7 @@ qreal QTextFormat::doubleProperty(int propertyId) const
     if (!d)
         return 0.;
     const QVariant prop = d->property(propertyId);
-    if (prop.userType() != QVariant::Double && prop.userType() != QMetaType::Float)
+    if (prop.userType() != QVariant::Double && prop.userType() != QVariant::Float)
         return 0.;
     return qvariant_cast<qreal>(prop);
 }

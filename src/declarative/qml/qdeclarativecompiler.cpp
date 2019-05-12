@@ -226,7 +226,7 @@ bool QDeclarativeCompiler::testLiteralAssignment(const QMetaProperty &prop,
             if (!ok) COMPILE_EXCEPTION(v, tr("Invalid property assignment: int expected"));
             }
             break;
-        case QMetaType::Float:
+        case QVariant::Float:
             if (!v->value.isNumber()) COMPILE_EXCEPTION(v, tr("Invalid property assignment: number expected"));
             break;
         case QVariant::Double:
@@ -397,7 +397,7 @@ void QDeclarativeCompiler::genLiteralAssignment(const QMetaProperty &prop,
             instr.storeInteger.value = int(v->value.asNumber());
             }
             break;
-        case QMetaType::Float:
+        case QVariant::Float:
             {
             instr.type = QDeclarativeInstruction::StoreFloat;
             instr.storeFloat.propertyIndex = prop.propertyIndex();
