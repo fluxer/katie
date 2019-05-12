@@ -63,7 +63,6 @@
 #include "QtCore/qbasictimer.h"
 #include "QtGui/qcompleter.h"
 #include "QtCore/qpointer.h"
-#include "QtGui/qlineedit.h"
 
 #include "qlinecontrol_p.h"
 

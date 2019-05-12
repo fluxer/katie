@@ -48,7 +48,6 @@
 #include "qimage.h"
 #include "qbuffer.h"
 #include "qimagereader.h"
-#include "qimage_p.h"
 #include "qwidget_p.h"
 #include "qdrawhelper_p.h"
 #include "qguicommon_p.h"

@@ -64,7 +64,6 @@
 #include "QtGui/qevent.h"
 #include "QtGui/qpainter.h"
 #include "QtGui/qregion.h"
-#include "QtGui/qpainter.h"
 
 #ifndef QT_NO_ITEMVIEWS
 

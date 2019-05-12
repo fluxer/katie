@@ -57,8 +57,7 @@
 #include <QMutex>
 #include <QWaitCondition>
 #include <QBuffer>
-#include <QWaitCondition>
-#include <QtCore/qdebug.h>
+#include <QDebug>
 #include <qobject_p.h>
 #include <QSslError>
 

@@ -55,9 +55,6 @@
 #include <qt_x11_p.h>
 
 //#define QX11EMBED_DEBUG
-#ifdef QX11EMBED_DEBUG
-#include <qdebug.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

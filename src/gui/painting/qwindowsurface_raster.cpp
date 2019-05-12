@@ -50,7 +50,6 @@
 #ifdef Q_WS_X11
 #include "qpixmap_x11_p.h"
 #include "qt_x11_p.h"
-#include "qwidget_p.h"
 #include "qx11info_x11.h"
 #endif
 #include "qdrawhelper_p.h"

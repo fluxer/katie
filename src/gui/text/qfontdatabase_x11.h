@@ -43,7 +43,6 @@
 #include <qdebug.h>
 #include <qpaintdevice.h>
 #include <qelapsedtimer.h>
-#include <qdebug.h>
 #include <qfile.h>
 #include <qtemporaryfile.h>
 #include <qabstractfileengine.h>

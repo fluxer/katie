@@ -42,8 +42,6 @@
 #include "qtgradientutils.h"
 #include "qtgradientmanager.h"
 #include <QtGui/qbrush.h>
-#include <QtGui/qbrush.h>
-#include <QtGui/qbrush.h>
 #include <QtXml/qdom.h>
 #include <QtCore/QDebug>
 

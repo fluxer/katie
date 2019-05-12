@@ -46,7 +46,6 @@
 #include <QtCore/QMap>
 #include <QtCore/QSize>
 #include <QtXml/qdom.h>
-#include <QtXml/qdom.h>
 #include <QtGui/qbrush.h>
 
 QT_BEGIN_NAMESPACE

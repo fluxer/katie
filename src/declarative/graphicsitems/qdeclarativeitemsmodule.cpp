@@ -62,7 +62,6 @@
 #include "qdeclarativelayoutitem_p.h"
 #include "qdeclarativelistview_p.h"
 #include "qdeclarativeloader_p.h"
-#include "qdeclarativemousearea_p.h"
 #include "qdeclarativepath_p.h"
 #include "qdeclarativepathview_p.h"
 #include "qdeclarativerectangle_p.h"
