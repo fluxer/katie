@@ -187,7 +187,6 @@
 #cmakedefine QT_NO_ICON
 #cmakedefine QT_NO_ICONV
 #cmakedefine QT_NO_IDENTITYPROXYMODEL
-#cmakedefine QT_NO_IM
 #cmakedefine QT_NO_IMAGEFORMATPLUGIN
 #cmakedefine QT_NO_IMAGEFORMAT_BMP
 #cmakedefine QT_NO_IMAGEFORMAT_GIF
