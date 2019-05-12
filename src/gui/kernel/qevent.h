@@ -157,10 +157,10 @@ class Q_GUI_EXPORT QKeyEvent : public QInputEvent
 {
 public:
     QKeyEvent(Type type, int key, Qt::KeyboardModifiers modifiers, const QString& text = QString(),
-              bool autorep = false, ushort count = 1);
+              bool autorep = false, int count = 1);
     QKeyEvent(Type type, int key, Qt::KeyboardModifiers modifiers,
               quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers,
-              const QString &text = QString(), bool autorep = false, ushort count = 1);
+              const QString &text = QString(), bool autorep = false, int count = 1);
     ~QKeyEvent();
 
     int key() const { return k; }
@@ -170,7 +170,7 @@ public:
     Qt::KeyboardModifiers modifiers() const;
     inline QString text() const { return txt; }
     inline bool isAutoRepeat() const { return autor; }
-    inline int count() const { return int(c); }
+    inline int count() const { return c; }
 
     inline quint32 nativeScanCode() const { return nScanCode; }
     inline quint32 nativeVirtualKey() const { return nVirtualKey; }
@@ -180,12 +180,11 @@ public:
 protected:
     QString txt;
     int k;
+    int c;
     quint32 nScanCode;
     quint32 nVirtualKey;
     quint32 nModifiers;
-    ushort c;
-    uint autor:1;
-    // ushort reserved:15;
+    bool autor;
 };
 
 
@@ -303,10 +302,10 @@ class Q_GUI_EXPORT QContextMenuEvent : public QInputEvent
 public:
     enum Reason { Mouse, Keyboard, Other };
 
-    QContextMenuEvent(Reason reason, const QPoint &pos, const QPoint &globalPos,
-                      Qt::KeyboardModifiers modifiers);
-    QContextMenuEvent(Reason reason, const QPoint &pos, const QPoint &globalPos);
-    QContextMenuEvent(Reason reason, const QPoint &pos);
+    QContextMenuEvent(QContextMenuEvent::Reason reason, const QPoint &pos,
+                      const QPoint &globalPos, Qt::KeyboardModifiers modifiers);
+    QContextMenuEvent(QContextMenuEvent::Reason reason, const QPoint &pos, const QPoint &globalPos);
+    QContextMenuEvent(QContextMenuEvent::Reason reason, const QPoint &pos);
     ~QContextMenuEvent();
 
     inline int x() const { return p.x(); }
@@ -317,12 +316,12 @@ public:
     inline const QPoint& pos() const { return p; }
     inline const QPoint& globalPos() const { return gp; }
 
-    inline Reason reason() const { return Reason(reas); }
+    inline QContextMenuEvent::Reason reason() const { return reas; }
 
 protected:
     QPoint p;
     QPoint gp;
-    uint reas : 8;
+    QContextMenuEvent::Reason reas;
 };
 #endif // QT_NO_CONTEXTMENU
 
@@ -497,7 +496,7 @@ public:
 
     inline bool toggle() const { return tog; }
 private:
-    uint tog : 1;
+    bool tog;
 };
 #endif
 
