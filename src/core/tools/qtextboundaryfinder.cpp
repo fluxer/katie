@@ -267,21 +267,26 @@ int QTextBoundaryFinder::toNextBoundary()
         return d->pos;
 
     switch(d->type) {
-    case QTextBoundaryFinder::Grapheme:
-        while (d->pos < d->length && d->string[d->pos].isLetterOrNumber())
-            ++d->pos;
-    case QTextBoundaryFinder::Word:
-        while (d->pos < d->length && !d->string[d->pos].isSpace())
-            ++d->pos;
-        break;
-    case QTextBoundaryFinder::Sentence:
-        while (d->pos < d->length && !d->string[d->pos].isPunct())
-            ++d->pos;
-        break;
-    case QTextBoundaryFinder::Line:
-        while (d->pos < d->length && d->string[d->pos].category() != QChar::Separator_Line)
-            ++d->pos;
-        break;
+        case QTextBoundaryFinder::Grapheme: {
+            while (d->pos < d->length && d->string[d->pos].isLetterOrNumber())
+                ++d->pos;
+            break;
+        }
+        case QTextBoundaryFinder::Word: {
+            while (d->pos < d->length && !d->string[d->pos].isSpace())
+                ++d->pos;
+            break;
+        }
+        case QTextBoundaryFinder::Sentence: {
+            while (d->pos < d->length && !d->string[d->pos].isPunct())
+                ++d->pos;
+            break;
+        }
+        case QTextBoundaryFinder::Line: {
+            while (d->pos < d->length && d->string[d->pos].category() != QChar::Separator_Line)
+                ++d->pos;
+            break;
+        }
     }
 
     return d->pos;
@@ -308,22 +313,26 @@ int QTextBoundaryFinder::toPreviousBoundary()
         return d->pos;
 
     switch(d->type) {
-    case QTextBoundaryFinder::Grapheme:
-        while (d->pos > 0 && d->string[d->pos].isLetterOrNumber())
-            --d->pos;
-        break;
-    case QTextBoundaryFinder::Word:
-        while (d->pos > 0 && !d->string[d->pos].isSpace())
-            --d->pos;
-        break;
-    case QTextBoundaryFinder::Sentence:
-        while (d->pos > 0 && !d->string[d->pos].isPunct())
-            --d->pos;
-        break;
-    case QTextBoundaryFinder::Line:
-        while (d->pos > 0 && d->string[d->pos].category() != QChar::Separator_Line)
-            --d->pos;
-        break;
+        case QTextBoundaryFinder::Grapheme: {
+            while (d->pos > 0 && d->string[d->pos].isLetterOrNumber())
+                --d->pos;
+            break;
+        }
+        case QTextBoundaryFinder::Word: {
+            while (d->pos > 0 && !d->string[d->pos].isSpace())
+                --d->pos;
+            break;
+        }
+        case QTextBoundaryFinder::Sentence: {
+            while (d->pos > 0 && !d->string[d->pos].isPunct())
+                --d->pos;
+            break;
+        }
+        case QTextBoundaryFinder::Line: {
+            while (d->pos > 0 && d->string[d->pos].category() != QChar::Separator_Line)
+                --d->pos;
+            break;
+        }
     }
 
     return d->pos;
