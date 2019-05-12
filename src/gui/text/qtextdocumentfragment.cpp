@@ -52,13 +52,13 @@
 
 QT_BEGIN_NAMESPACE
 
-QTextCopyHelper::QTextCopyHelper(const QTextCursor &_source, const QTextCursor &_destination, bool forceCharFormat, const QTextCharFormat &fmt)
+QTextCopyHelper::QTextCopyHelper(const QTextCursor &_source, const QTextCursor &_destination, bool _forceCharFormat, const QTextCharFormat &fmt)
     : formatCollection(*_destination.d->priv->formatCollection()), originalText(_source.d->priv->buffer())
 {
     src = _source.d->priv;
     dst = _destination.d->priv;
     insertPos = _destination.position();
-    this->forceCharFormat = forceCharFormat;
+    forceCharFormat = _forceCharFormat;
     primaryCharFormatIndex = convertFormatIndex(fmt);
     cursor = _source;
 }

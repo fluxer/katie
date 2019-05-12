@@ -107,7 +107,7 @@ public:
     QAtomicInt ref;
     QTextDocument *doc;
 
-    uint importedFromPlainText : 1;
+    bool importedFromPlainText;
 private:
     Q_DISABLE_COPY(QTextDocumentFragmentPrivate)
 };

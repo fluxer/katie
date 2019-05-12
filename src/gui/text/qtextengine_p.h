@@ -420,10 +420,10 @@ public:
         unsigned short *logClustersPtr;
         QGlyphLayout glyphLayout;
         mutable int used;
-        uint hasBidi : 1;
-        uint layoutState : 2;
-        uint memory_on_stack : 1;
-        uint haveCharAttributes : 1;
+        bool hasBidi;
+        LayoutState layoutState;
+        bool memory_on_stack;
+        bool haveCharAttributes;
         QString string;
         bool reallocate(int totalGlyphs);
     };

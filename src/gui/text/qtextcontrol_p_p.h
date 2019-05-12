@@ -193,7 +193,6 @@ public:
     bool overwriteMode;
     bool acceptRichText;
 
-    int preeditCursor;
     bool hideCursor; // used to hide the cursor in the preedit area
 
     QVector<QAbstractTextDocumentLayout::Selection> extraSelections;

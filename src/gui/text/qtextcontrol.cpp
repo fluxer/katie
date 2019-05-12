@@ -123,7 +123,7 @@ QTextControlPrivate::QTextControlPrivate()
       lastSelectionState(false),
       overwriteMode(false),
       acceptRichText(true),
-      preeditCursor(0), hideCursor(false),
+      hideCursor(false),
       hasFocus(false),
 #ifdef QT_KEYPAD_NAVIGATION
       hasEditFocus(false),
@@ -1350,13 +1350,6 @@ QRectF QTextControlPrivate::rectForPosition(int position) const
     const QTextLayout *layout = block.layout();
     const QPointF layoutPos = q->blockBoundingRect(block).topLeft();
     int relativePos = position - block.position();
-    if (preeditCursor != 0) {
-        int preeditPos = layout->preeditAreaPosition();
-        if (relativePos == preeditPos)
-            relativePos += preeditCursor;
-        else if (relativePos > preeditPos)
-            relativePos += layout->preeditAreaText().length();
-    }
     QTextLine line = layout->lineForTextPosition(relativePos);
 
     int cursorWidth;
@@ -2810,8 +2803,6 @@ QAbstractTextDocumentLayout::PaintContext QTextControl::getPaintContext(QWidget 
     if (d->cursorOn && d->isEnabled) {
         if (d->hideCursor)
             ctx.cursorPosition = -1;
-        else if (d->preeditCursor != 0)
-            ctx.cursorPosition = - (d->preeditCursor + 2);
         else
             ctx.cursorPosition = d->cursor.position();
     }
