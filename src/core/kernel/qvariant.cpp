@@ -495,7 +495,7 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
     const void *b_ptr = b->is_shared ? b->data.shared->ptr : &(b->data.ptr);
 
     /* The reason we cannot place this test in a case branch above for the types
-     * QMetaType::VoidStar, QMetaType::QObjectStar and so forth, is that it wouldn't include
+     * QMetaType::VoidStar, QMetaType::QObjectStar and so forth, as that wouldn't include
      * user defined pointer types. */
     const char *const typeName = QMetaType::typeName(a->type);
     uint typeNameLen = qstrlen(typeName);
@@ -1157,7 +1157,7 @@ static void streamDebug(QDebug dbg, const QVariant &v)
     case QVariant::ULongLong:
         dbg.nospace() << v.toULongLong();
         break;
-    case QMetaType::Float:
+    case QVariant::Float:
         dbg.nospace() << v.toFloat();
         break;
     case QMetaType::QObjectStar:
@@ -1791,6 +1791,8 @@ QVariant::QVariant(bool val)
 { d.is_null = false; d.type = Bool; d.data.b = val; }
 QVariant::QVariant(double val)
 { d.is_null = false; d.type = Double; d.data.d = val; }
+QVariant::QVariant(float val)
+{ d.is_null = false; d.type = Float; d.data.f = val; }
 
 QVariant::QVariant(const QByteArray &val)
 { d.is_null = false; d.type = ByteArray; v_construct<QByteArray>(&d, val); }
@@ -2612,7 +2614,7 @@ bool QVariant::toBool() const
 
 /*!
     Returns the variant as a double if the variant has type() \l
-    Double, \l QMetaType::Float, \l Bool, \l ByteArray, \l Int, \l LongLong, \l String, \l
+    Double, \l Float, \l Bool, \l ByteArray, \l Int, \l LongLong, \l String, \l
     UInt, or \l ULongLong; otherwise returns 0.0.
 
     If \a ok is non-null: \c{*}\a{ok} is set to true if the value could be
@@ -2627,7 +2629,7 @@ double QVariant::toDouble(bool *ok) const
 
 /*!
     Returns the variant as a float if the variant has type() \l
-    Double, \l QMetaType::Float, \l Bool, \l ByteArray, \l Int, \l LongLong, \l String, \l
+    Double, \l Float, \l Bool, \l ByteArray, \l Int, \l LongLong, \l String, \l
     UInt, or \l ULongLong; otherwise returns 0.0.
 
     \since 4.6
@@ -2644,7 +2646,7 @@ float QVariant::toFloat(bool *ok) const
 
 /*!
     Returns the variant as a qreal if the variant has type() \l
-    Double, \l QMetaType::Float, \l Bool, \l ByteArray, \l Int, \l LongLong, \l String, \l
+    Double, \l Float, \l Bool, \l ByteArray, \l Int, \l LongLong, \l String, \l
     UInt, or \l ULongLong; otherwise returns 0.0.
 
     \since 4.6
@@ -2704,6 +2706,9 @@ static const quint32 qCanConvertMatrix[QVariant::LastCoreType + 1] =
                 | 1 << QVariant::Char       | 1 << QVariant::ByteArray,
 
 /*double*/        1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::ULongLong
+                | 1 << QVariant::Bool       | 1 << QVariant::UInt       | 1 << QVariant::LongLong
+                | 1 << QVariant::ByteArray,
+/*float*/         1 << QVariant::Int        | 1 << QVariant::String     | 1 << QVariant::ULongLong
                 | 1 << QVariant::Bool       | 1 << QVariant::UInt       | 1 << QVariant::LongLong
                 | 1 << QVariant::ByteArray,
 
@@ -2796,13 +2801,7 @@ static const quint32 qCanConvertMatrix[QVariant::LastCoreType + 1] =
 */
 bool QVariant::canConvert(Type t) const
 {
-    //we can treat floats as double
-    //the reason for not doing it the "proper" way is that QMetaType::Float's value is 135,
-    //which can't be handled by qCanConvertMatrix
-    //In addition QVariant::Type doesn't have a Float value, so we're using QMetaType::Float
-    const uint currentType = ((d.type == QMetaType::Float) ? QVariant::Double : d.type);
-    if (uint(t) == uint(QMetaType::Float)) t = QVariant::Double;
-
+    const uint currentType = d.type;
     if (currentType == uint(t))
         return true;
 
@@ -2961,12 +2960,12 @@ bool QVariant::convert(Type t)
 static bool qIsNumericType(uint tp)
 {
     return (tp >= QVariant::Bool && tp <= QVariant::Double)
-           || (tp >= QMetaType::Long && tp <= QMetaType::Float);
+           || (tp >= QMetaType::Long && tp <= QVariant::Float);
 }
 
 static bool qIsFloatingPoint(uint tp)
 {
-    return tp == QVariant::Double || tp == QMetaType::Float;
+    return tp == QVariant::Double || tp == QVariant::Float;
 }
 
 /*! \internal

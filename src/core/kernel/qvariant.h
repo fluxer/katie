@@ -97,6 +97,7 @@ class Q_CORE_EXPORT QVariant
         LongLong = QMetaType::LongLong,
         ULongLong = QMetaType::ULongLong,
         Double = QMetaType::Double,
+        Float = QMetaType::Float,
         Char = QMetaType::QChar,
         Map = QMetaType::QVariantMap,
         List = QMetaType::QVariantList,
@@ -172,7 +173,7 @@ class Q_CORE_EXPORT QVariant
     QVariant(qulonglong ull);
     QVariant(bool b);
     QVariant(double d);
-    QVariant(float f) { d.is_null = false; d.type = QMetaType::Float; d.data.f = f; }
+    QVariant(float f);
 #ifndef QT_NO_CAST_FROM_ASCII
     QT_ASCII_CAST_WARN_CONSTRUCTOR QVariant(const char *str);
 #endif
@@ -236,8 +237,6 @@ class Q_CORE_EXPORT QVariant
     void detach();
     inline bool isDetached() const { return !d.is_shared || d.data.shared->ref == 1; }
 
-
-
     int toInt(bool *ok = Q_NULLPTR) const;
     uint toUInt(bool *ok = Q_NULLPTR) const;
     qlonglong toLongLong(bool *ok = Q_NULLPTR) const;
@@ -288,7 +287,6 @@ class Q_CORE_EXPORT QVariant
 #endif
     static const char *typeToName(Type type);
     static Type nameToType(const char *name);
-
 
     void *data();
     const void *constData() const;
