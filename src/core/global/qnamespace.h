@@ -1178,9 +1178,9 @@ public:
     };
 
     enum LayoutDirection {
-        LeftToRight,
-        RightToLeft,
-        LayoutDirectionAuto
+        LayoutDirectionAuto = 0,
+        LeftToRight = 1,
+        RightToLeft = 2
     };
 
     enum AnchorPoint {

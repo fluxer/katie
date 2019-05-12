@@ -920,14 +920,11 @@ bool QTextFormat::boolProperty(int propertyId) const
 */
 int QTextFormat::intProperty(int propertyId) const
 {
-    // required, since the default layout direction has to be LayoutDirectionAuto, which is not integer 0
-    int def = (propertyId == QTextFormat::LayoutDirection) ? int(Qt::LayoutDirectionAuto) : 0;
-
     if (!d)
-        return def;
+        return 0;
     const QVariant prop = d->property(propertyId);
     if (prop.userType() != QVariant::Int)
-        return def;
+        return 0;
     return prop.toInt();
 }
 
