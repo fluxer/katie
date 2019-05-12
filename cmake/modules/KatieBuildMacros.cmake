@@ -291,3 +291,41 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
         COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}
     )
 endmacro()
+
+# a macro to generate Python bindings sources
+macro(KATANA_GENERATE_BINDINGS FORTARGET OUTPUTFILES)
+    set(outputfiles ${OUTPUTFILES} ${ARGN})
+    set(includedirs)
+    get_directory_property(dirincs INCLUDE_DIRECTORIES)
+    foreach(incdir ${SHIBOKEN_INCLUDES} ${dirincs})
+        if(NOT includedirs)
+            set(includedirs "${incdir}")
+        else()
+            set(includedirs "${includedirs}:${incdir}")
+        endif()
+    endforeach()
+    get_target_property(targetsources ${FORTARGET} SOURCES)
+
+    add_custom_command(
+        COMMENT "Generating Python bindings for: ${FORTARGET}"
+        COMMAND ${SHIBOKEN_BINARY}
+            --use-isnull-as-nb_nonzero
+            --enable-return-value-heuristic
+            --enable-parent-ctor-heuristic
+            --avoid-protected-hack
+            --include-paths="${includedirs}"
+            --output-directory="${CMAKE_SOURCE_DIR}/bindings"
+            --license-file="${CMAKE_SOURCE_DIR}/header.BSD"
+            "${CMAKE_SOURCE_DIR}/bindings/${FORTARGET}_global.hpp"
+            "${CMAKE_SOURCE_DIR}/bindings/typesystem_${FORTARGET}.xml"
+        DEPENDS
+            ${FORTARGET}
+            ${targetsources}
+            "${CMAKE_SOURCE_DIR}/bindings/${FORTARGET}_global.hpp"
+            "${CMAKE_SOURCE_DIR}/bindings/typesystem_${FORTARGET}.xml"
+            "${CMAKE_SOURCE_DIR}/header.BSD"
+        OUTPUT ${outputfiles}
+    )
+    set_source_files_properties(${outputfiles} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${outputfiles} PROPERTIES SKIP_AUTOGEN ON)
+endmacro()

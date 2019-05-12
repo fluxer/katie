@@ -1,9 +1,6 @@
 #!/usr/bin/python
 
-import sys, KtCore, KtGui
+import sys, KtCore
 
-a = KtGui.QApplication(0, None)
-w = KtGui.QMainWindow()
-w.setWindowTitle(KtCore.QString('Test'))
-w.show()
+a = KtCore.QCoreApplication(0, None)
 sys.exit(a._exec())

@@ -12,9 +12,11 @@
 # Vim temporary files
 *.swp
 
+# Shiboken log files
+bindings/*.log
+
 # Directories to ignore
 # ---------------------
-
 apidocs
 build
 minsize

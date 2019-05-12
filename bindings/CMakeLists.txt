@@ -1,4 +1,3 @@
-
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bindings")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bindings")
 
@@ -33,26 +32,45 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtTest
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
+    ${SHIBOKEN_INCLUDES}
     ${PYTHON_INCLUDE_DIRS}
 )
 
-set_property(SOURCE KtCore.i PROPERTY CPLUSPLUS ON)
-swig_add_module(KtCore python KtCore.i)
-swig_link_libraries(KtCore KtCore)
-
-set_property(SOURCE KtGui.i PROPERTY CPLUSPLUS ON)
-swig_add_module(KtGui python KtGui.i)
-swig_link_libraries(KtGui KtGui)
-
-
-install(
-    FILES
-    ${CMAKE_BINARY_DIR}/bindings/KtCore.py
-    ${CMAKE_BINARY_DIR}/bindings/KtGui.py
-    DESTINATION ${KATIE_PYTHON_RELATIVE}
+remove_definitions(
+    -DQT_ASCII_CAST_WARNINGS
 )
 
+set(PyKtCore_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qbytearray_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qbytearray_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qchar_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qchar_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qcoreapplication_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qcoreapplication_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1char_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1char_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1string_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1string_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/ktcore_module_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/ktcore_python.h
+)
+
+katana_generate_bindings(KtCore ${PyKtCore_SOURCES})
+
+add_library(PyKtCore MODULE ${PyKtCore_SOURCES})
+target_link_libraries(PyKtCore
+    KtCore
+    ${SHIBOKEN_LIBRARIES}
+    ${PYTHON_LIBRARY}
+)
+set_target_properties(PyKtCore PROPERTIES PREFIX "")
+set_target_properties(PyKtCore PROPERTIES OUTPUT_NAME KtCore)
+
 install(
-    TARGETS _KtCore _KtGui
+    TARGETS PyKtCore
     DESTINATION ${KATIE_PYTHON_RELATIVE}
 )

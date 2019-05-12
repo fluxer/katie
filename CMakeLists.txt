@@ -456,11 +456,11 @@ set_package_properties(MySQL PROPERTIES
 )
 
 if(KATIE_BINDINGS)
-    find_package(SWIG)
-    set_package_properties(SWIG PROPERTIES
+    find_package(Shiboken)
+    set_package_properties(Shiboken PROPERTIES
         PURPOSE "Python bindings"
-        DESCRIPTION "Simplified Wrapper and Interface Generator"
-        URL "http://www.swig.org/"
+        DESCRIPTION "Generates bindings for C++ libraries using CPython source code"
+        URL "https://wiki.qt.io/PySide"
         TYPE REQUIRED
     )
 
