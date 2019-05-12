@@ -90,8 +90,7 @@ public:
 
     // Unicode information
 
-    enum Category
-    {
+    enum Category {
         NoCategory,    // ### Qt 5: replace with Other_NotAssigned
 
         Mark_NonSpacing,          //   Mn
@@ -132,14 +131,29 @@ public:
         Symbol_Other             //   So
     };
 
-    enum Direction
-    {
-        DirL, DirR, DirEN, DirES, DirET, DirAN, DirCS, DirB, DirS, DirWS, DirON,
-        DirLRE, DirLRO, DirAL, DirRLE, DirRLO, DirPDF, DirNSM, DirBN
+    enum Direction {
+        DirL,
+        DirR,
+        DirEN,
+        DirES,
+        DirET,
+        DirAN,
+        DirCS,
+        DirB,
+        DirS,
+        DirWS,
+        DirON,
+        DirLRE,
+        DirLRO,
+        DirAL,
+        DirRLE,
+        DirRLO,
+        DirPDF,
+        DirNSM,
+        DirBN
     };
 
-    enum Decomposition
-    {
+    enum Decomposition {
         NoDecomposition,
         Canonical,
         Font,
@@ -158,16 +172,16 @@ public:
         Square,
         Compat,
         Fraction
-
     };
 
-    enum Joining
-    {
-        OtherJoining, Dual, Right, Center
+    enum Joining {
+        OtherJoining,
+        Dual,
+        Right,
+        Center
     };
 
-    enum CombiningClass
-    {
+    enum CombiningClass {
         Combining_BelowLeftAttached       = 200,
         Combining_BelowAttached           = 202,
         Combining_BelowRightAttached      = 204,
