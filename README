@@ -21,7 +21,7 @@ There are several things you should be aware before considering Katie:
   - OpenSSL, D-Bus, CUPS, resolv and NSL cannot be runtime dependencies, they
     must be linked to during build
   - QtUiTools is build as shared library by default
-  - moc, uic, rcc, lrelease and idc are linked to components
+  - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
   - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
   - OpenVG is no longer supported graphics output
@@ -51,7 +51,7 @@ There are several things you should be aware before considering Katie:
   - automatic async DBus calls based on return type, no Q_NOREPLY needed
   - more reliable qrand(), seeded per thread
   - improved namespaces support and introduced QT_NAMESPACE_COMPAT
-  - the script component relies on PCRE instead of internal copy
+  - script component relies on PCRE instead of internal copy
 
 Bugs fixed in Katie, some of which in Qt5 too:
 QTBUG-23502, QTBUG-37115, QTBUG-15052, QTBUG-23522, QTBUG-6139, QTBUG-26889,
