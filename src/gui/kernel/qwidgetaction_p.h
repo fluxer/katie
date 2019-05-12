@@ -64,8 +64,8 @@ public:
     inline QWidgetActionPrivate() : defaultWidgetInUse(false), autoCreated(false) {}
     QPointer<QWidget> defaultWidget;
     QList<QWidget *> createdWidgets;
-    uint defaultWidgetInUse : 1;
-    uint autoCreated : 1; // created by QToolBar::addWidget and the like
+    bool defaultWidgetInUse;
+    bool autoCreated; // created by QToolBar::addWidget and the like
     
     inline void _q_widgetDestroyed(QObject *o) {
         createdWidgets.removeAll(static_cast<QWidget *>(o));
