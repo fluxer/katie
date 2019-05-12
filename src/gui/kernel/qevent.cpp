@@ -681,7 +681,7 @@ QWheelEvent::QWheelEvent(const QPoint &pos, const QPoint& globalPos, int delta,
     in the event.
 */
 QKeyEvent::QKeyEvent(Type type, int key, Qt::KeyboardModifiers modifiers, const QString& text,
-                     bool autorep, ushort count)
+                     bool autorep, int count)
     : QInputEvent(type, modifiers), txt(text), k(key), c(count), autor(autorep)
 {
 }
