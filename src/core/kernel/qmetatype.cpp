@@ -1388,7 +1388,6 @@ void QMetaType::destroy(int type, void *data)
     case QMetaType::Void:
         break;
     default: {
-        const QVector<QCustomTypeInfo> * const ct = customTypes();
         Destructor destr = 0;
         if (type >= FirstGuiType && type <= LastGuiType) {
             Q_ASSERT(qMetaTypeGuiHelper);
@@ -1397,6 +1396,7 @@ void QMetaType::destroy(int type, void *data)
                 return;
             destr = qMetaTypeGuiHelper[type - FirstGuiType].destr;
         } else {
+            const QVector<QCustomTypeInfo> * const ct = customTypes();
             QReadLocker locker(customTypesLock());
             if (type < User || !ct || ct->count() <= type - User)
                 break;
