@@ -17,8 +17,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
-    ${CMAKE_BINARY_DIR}/include/QtOpenGL
-    ${CMAKE_BINARY_DIR}/privateinclude/QtOpenGL
     ${CMAKE_BINARY_DIR}/include/QtSql
     ${CMAKE_BINARY_DIR}/privateinclude/QtSql
     ${CMAKE_BINARY_DIR}/include/QtSvg
