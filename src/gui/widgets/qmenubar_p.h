@@ -66,8 +66,8 @@ class QMenuBarPrivate : public QWidgetPrivate
 {
     Q_DECLARE_PUBLIC(QMenuBar)
 public:
-    QMenuBarPrivate() : itemsDirty(0), currentAction(0), mouseDown(0),
-                         closePopupMode(0), defaultPopDown(1), popupState(0), keyboardState(0), altPressed(0)
+    QMenuBarPrivate() : itemsDirty(false), currentAction(Q_NULLPTR), mouseDown(false),
+                         closePopupMode(false), defaultPopDown(true), popupState(false), keyboardState(false), altPressed(false)
                          , doChildEffects(false)
 
         { }
@@ -78,7 +78,7 @@ public:
     QAction *getNextAction(const int start, const int increment) const;
 
     //item calculations
-    uint itemsDirty : 1;
+    bool itemsDirty;
 
     QVector<int> shortcutIndexMap;
     mutable QVector<QRect> actionRects;
@@ -87,20 +87,23 @@ public:
     void updateGeometries();
 
     //selection
-    QPointer<QAction>currentAction;
-    uint mouseDown : 1, closePopupMode : 1, defaultPopDown;
+    QPointer<QAction> currentAction;
+    bool mouseDown;
+    bool closePopupMode;
+    bool defaultPopDown;
     QAction *actionAt(QPoint p) const;
     void setCurrentAction(QAction *, bool =false, bool =false);
     void popupAction(QAction *, bool);
 
     //active popup state
-    uint popupState : 1;
+    bool popupState;
     QPointer<QMenu> activeMenu;
 
     //keyboard mode for keyboard navigation
     void focusFirstAction();
     void setKeyboardMode(bool);
-    uint keyboardState : 1, altPressed : 1;
+    bool keyboardState;
+    bool altPressed;
     QPointer<QWidget> keyboardFocusWidget;
 
     //firing of events
