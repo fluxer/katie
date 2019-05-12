@@ -52,7 +52,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+62"/>
         <source>Attempt to add a layout to a widget &apos;%1&apos; (%2) which already has a layout of non-box type %3.
 This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
@@ -150,7 +150,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAccessibleButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+269"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+265"/>
         <source>Uncheck</source>
         <translation>בטל סימון</translation>
     </message>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1906"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>RTL</translation>
@@ -1544,7 +1544,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+519"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+515"/>
         <source>What&apos;s This?</source>
         <translation>מה זה?</translation>
     </message>
@@ -1552,7 +1552,7 @@ Script: %3</source>
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+570"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+460"/>
         <source>OK</source>
         <translation>אישור</translation>
     </message>
@@ -1560,11 +1560,6 @@ Script: %3</source>
         <location line="+3"/>
         <source>Save</source>
         <translation>שמור</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>&amp;Save</source>
-        <translation>&amp;שמור</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1577,19 +1572,9 @@ Script: %3</source>
         <translation>ביטול</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>&amp;Cancel</source>
-        <translation>&amp;ביטול</translation>
-    </message>
-    <message>
         <location line="+3"/>
         <source>Close</source>
         <translation>סגירה</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>&amp;Close</source>
-        <translation>&amp;סגור</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1607,12 +1592,7 @@ Script: %3</source>
         <translation>עזרה</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Don&apos;t Save</source>
-        <translation>אל תשמור</translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Discard</source>
         <translatorcomment>השלך זרוק סלק</translatorcomment>
         <translation>שכח</translation>
@@ -1661,16 +1641,6 @@ Script: %3</source>
         <location line="+3"/>
         <source>Restore Defaults</source>
         <translation>שחזר ברירות מחדל</translation>
-    </message>
-    <message>
-        <location line="-29"/>
-        <source>Close without Saving</source>
-        <translation>סגור ללא שמירה</translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <source>&amp;OK</source>
-        <translation>&amp;אישור</translation>
     </message>
 </context>
 <context>
@@ -1795,7 +1765,7 @@ Script: %3</source>
         <translation>אין אפשרות לפתוח את %1 לכתיבה</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+296"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>אין מנוע קבצים זמין או שהמנוע אינו תומך UnMapExtension</translation>
     </message>
@@ -1803,7 +1773,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+543"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+537"/>
         <location line="+515"/>
         <source>All Files (*)</source>
         <translation>כל הקבצים (*)</translation>
@@ -2098,24 +2068,18 @@ Do you want to delete it anyway?</source>
         <translation>גודל</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>סוג</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>טיפוס</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Date Modified</source>
         <translation>תאריך שינוי</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+252"/>
         <source>Computer</source>
         <translation type="unfinished">מחשב</translation>
     </message>
@@ -2129,50 +2093,50 @@ Do you want to delete it anyway?</source>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1126"/>
+        <location line="+1060"/>
         <source>Normal</source>
         <translation>רגיל</translation>
     </message>
     <message>
-        <location line="-1123"/>
+        <location line="-1057"/>
         <location line="+12"/>
-        <location line="+1099"/>
+        <location line="+1033"/>
         <source>Bold</source>
         <translation>מודגש</translation>
     </message>
     <message>
-        <location line="-1108"/>
-        <location line="+1110"/>
+        <location line="-1042"/>
+        <location line="+1044"/>
         <source>Demi Bold</source>
         <translation>מודגש למחצה</translation>
     </message>
     <message>
-        <location line="-1107"/>
+        <location line="-1041"/>
         <location line="+18"/>
-        <location line="+1085"/>
+        <location line="+1019"/>
         <source>Black</source>
         <translation>שחור</translation>
     </message>
     <message>
-        <location line="-1095"/>
+        <location line="-1029"/>
         <source>Demi</source>
         <translation>למחצה</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1095"/>
+        <location line="+1029"/>
         <source>Light</source>
         <translation>רזה</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+952"/>
+        <location line="-883"/>
+        <location line="+886"/>
         <source>Italic</source>
         <translation>נטוי</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+951"/>
+        <location line="-883"/>
+        <location line="+885"/>
         <source>Oblique</source>
         <translation>אלכסוני</translation>
     </message>
@@ -2566,7 +2530,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfo</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+110"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+109"/>
         <source>Unknown error</source>
         <translation type="unfinished">שגיאה לא מוכרת</translation>
     </message>
@@ -2768,7 +2732,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1452"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>הרשאה נדחתה</translation>
@@ -2881,7 +2845,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+366"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>חוסר התאמה במידע אימות תוסף בתוך &apos;%1&apos;</translation>
     </message>
@@ -2931,7 +2895,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1874"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1866"/>
         <source>&amp;Undo</source>
         <translation>&amp;בטל</translation>
     </message>
@@ -4468,7 +4432,7 @@ Please choose a different file name.</source>
         <translation>תם זמן פעולת תהליך</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+822"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>שגיאה בקריאה מתהליך</translation>
@@ -4680,7 +4644,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptBreakpointsWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+298"/>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+293"/>
         <source>New</source>
         <translation>חדש</translation>
     </message>
@@ -4837,7 +4801,7 @@ Please choose a different file name.</source>
 <context>
     <name>QScriptDebuggerCodeFinderWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+141"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+136"/>
         <source>Close</source>
         <translation>סגור</translation>
     </message>
@@ -6228,7 +6192,7 @@ Please choose a different file name.</source>
         <translation>האנגול מיוחד</translation>
     </message>
     <message>
-        <location line="+477"/>
+        <location line="+466"/>
         <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -6263,7 +6227,7 @@ Please choose a different file name.</source>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-772"/>
+        <location line="-761"/>
         <source>Home Page</source>
         <translation>דף בית</translation>
     </message>
@@ -6742,7 +6706,7 @@ Please choose a different file name.</source>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1955"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1948"/>
         <source>&amp;Undo</source>
         <translation>&amp;בטל</translation>
     </message>
@@ -6866,7 +6830,7 @@ Please choose a different file name.</source>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+906"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+904"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM Left-to-right mark</translation>
     </message>
@@ -6932,7 +6896,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation>*</translation>
     </message>
@@ -7063,7 +7027,7 @@ Please choose a different file name.</source>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+55"/>
         <source>no error occurred</source>
         <translation>לא אירעה כל שגיאה</translation>
     </message>
@@ -7181,8 +7145,8 @@ Please choose a different file name.</source>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+589"/>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>תוכן נוסף בסוף מסמך.</translation>
     </message>
@@ -7202,7 +7166,7 @@ Please choose a different file name.</source>
         <translation>רצף &apos;]]&gt;&apos; אסור בתוכן.</translation>
     </message>
     <message>
-        <location line="+309"/>
+        <location line="+258"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>קידומת namespace‏ &apos;%1&apos; לא הוצהרה</translation>
     </message>
@@ -7277,7 +7241,7 @@ Please choose a different file name.</source>
         <translation>צפוי מידע תו.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="-995"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-995"/>
         <source>Recursive entity detected.</source>
         <translation type="unfinished">נמצאה ישות רקורסיבית.</translation>
     </message>
@@ -7307,15 +7271,15 @@ Please choose a different file name.</source>
         <translation type="unfinished">שם לא תקין להוראת עיבוד.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-534"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-534"/>
         <location line="+12"/>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+164"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+164"/>
         <location line="+53"/>
         <source>Illegal namespace declaration.</source>
         <translation>הצהרת namespace לא חוקית.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+15"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+15"/>
         <source>Invalid XML name.</source>
         <translation type="unfinished">שם XML לא תקין.</translation>
     </message>
@@ -7347,8 +7311,8 @@ Please choose a different file name.</source>
         <translation type="unfinished">התייחסות לתו לא תקינה.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-75"/>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="-823"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-75"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-823"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>נמצא תוכן בקידוד לא נכון.</translation>
     </message>
@@ -7358,7 +7322,7 @@ Please choose a different file name.</source>
         <translation>מאפיין הדמה standalone חייב להופיע אחרי הקידוד.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+562"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+562"/>
         <source>%1 is an invalid PUBLIC identifier.</source>
         <translation type="unfinished">%1 הוא מזהה PUBLIC לא חוקי.</translation>
     </message>

@@ -52,7 +52,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+62"/>
         <source>Attempt to add a layout to a widget &apos;%1&apos; (%2) which already has a layout of non-box type %3.
 This indicates an inconsistency in the ui-file.</source>
         <translation type="unfinished"></translation>
@@ -150,7 +150,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAccessibleButton</name>
     <message>
-        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+269"/>
+        <location filename="../src/plugins/accessible/widgets/simplewidgets.cpp" line="+265"/>
         <source>Uncheck</source>
         <translation>Décocher</translation>
     </message>
@@ -168,7 +168,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QApplication</name>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1981"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1906"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -1551,7 +1551,7 @@ Script: %3</source>
 <context>
     <name>QDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qdialog.cpp" line="+519"/>
+        <location filename="../src/gui/dialogs/qdialog.cpp" line="+515"/>
         <source>What&apos;s This?</source>
         <translation>Qu&apos;est-ce que c&apos;est ?</translation>
     </message>
@@ -1559,7 +1559,7 @@ Script: %3</source>
 <context>
     <name>QDialogButtonBox</name>
     <message>
-        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+570"/>
+        <location filename="../src/gui/widgets/qdialogbuttonbox.cpp" line="+460"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -1567,11 +1567,6 @@ Script: %3</source>
         <location line="+3"/>
         <source>Save</source>
         <translation>Enregistrer</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>&amp;Save</source>
-        <translation>Enregi&amp;strer</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1584,19 +1579,9 @@ Script: %3</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location line="+0"/>
-        <source>&amp;Cancel</source>
-        <translation>&amp;Annuler</translation>
-    </message>
-    <message>
         <location line="+3"/>
         <source>Close</source>
         <translation>Fermer</translation>
-    </message>
-    <message>
-        <location line="+0"/>
-        <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -1614,12 +1599,7 @@ Script: %3</source>
         <translation>Aide</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Don&apos;t Save</source>
-        <translation>Ne pas enregistrer</translation>
-    </message>
-    <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Discard</source>
         <translation>Ne pas enregistrer</translation>
     </message>
@@ -1667,16 +1647,6 @@ Script: %3</source>
         <location line="+3"/>
         <source>Restore Defaults</source>
         <translation>Restaurer les valeurs par défaut</translation>
-    </message>
-    <message>
-        <location line="-29"/>
-        <source>Close without Saving</source>
-        <translation>Fermer sans enregistrer</translation>
-    </message>
-    <message>
-        <location line="-27"/>
-        <source>&amp;OK</source>
-        <translation>&amp;OK</translation>
     </message>
 </context>
 <context>
@@ -1796,12 +1766,12 @@ Script: %3</source>
         <translation>Impossible de créer %1 pour écriture</translation>
     </message>
     <message>
-        <location line="+308"/>
+        <location line="+296"/>
         <source>No file engine available or engine does not support UnMapExtension</source>
         <translation>Aucun moteur de fichier disponible ou celui-ci ne supporte pas UnMapExtension</translation>
     </message>
     <message>
-        <location line="-503"/>
+        <location line="-491"/>
         <source>Will not rename sequential file using block copy</source>
         <translation>Ne renommera pas le fichier séquentiel avec la copie par blocs</translation>
     </message>
@@ -1809,7 +1779,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+526"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+520"/>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
@@ -2103,24 +2073,18 @@ Voulez-vous quand même le supprimer ?</translation>
         <translation>Taille</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Kind</source>
-        <comment>Match OS X Finder</comment>
-        <translation>Type</translation>
-    </message>
-    <message>
         <location line="+2"/>
         <source>Type</source>
         <comment>All other platforms</comment>
         <translation>Type</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Date Modified</source>
         <translation>Dernière modification</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+253"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+252"/>
         <source>Computer</source>
         <translation>Ordinateur</translation>
     </message>
@@ -2134,50 +2098,50 @@ Voulez-vous quand même le supprimer ?</translation>
     <name>QFontDatabase</name>
     <message>
         <location filename="../src/gui/text/qfontdatabase.cpp" line="+94"/>
-        <location line="+1126"/>
+        <location line="+1060"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location line="-1123"/>
+        <location line="-1057"/>
         <location line="+12"/>
-        <location line="+1099"/>
+        <location line="+1033"/>
         <source>Bold</source>
         <translation>Gras</translation>
     </message>
     <message>
-        <location line="-1108"/>
-        <location line="+1110"/>
+        <location line="-1042"/>
+        <location line="+1044"/>
         <source>Demi Bold</source>
         <translation>Demi-gras</translation>
     </message>
     <message>
-        <location line="-1107"/>
+        <location line="-1041"/>
         <location line="+18"/>
-        <location line="+1085"/>
+        <location line="+1019"/>
         <source>Black</source>
         <translation>Extra-gras</translation>
     </message>
     <message>
-        <location line="-1095"/>
+        <location line="-1029"/>
         <source>Demi</source>
         <translation>Demi</translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+1095"/>
+        <location line="+1029"/>
         <source>Light</source>
         <translation>Maigre</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+952"/>
+        <location line="-883"/>
+        <location line="+886"/>
         <source>Italic</source>
         <translation>Italique</translation>
     </message>
     <message>
-        <location line="-949"/>
-        <location line="+951"/>
+        <location line="-883"/>
+        <location line="+885"/>
         <source>Oblique</source>
         <translation>Oblique</translation>
     </message>
@@ -2573,7 +2537,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QHostInfo</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+110"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+109"/>
         <source>Unknown error</source>
         <translation>Erreur inconnue</translation>
     </message>
@@ -2775,7 +2739,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1598"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1452"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Autorisation refusée</translation>
@@ -2888,7 +2852,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLibrary</name>
     <message>
-        <location filename="../src/core/plugin/qlibrary.cpp" line="+369"/>
+        <location filename="../src/core/plugin/qlibrary.cpp" line="+366"/>
         <source>Plugin verification data mismatch in &apos;%1&apos;</source>
         <translation>Données de vérification du plugin différente dans &apos;%1&apos;</translation>
     </message>
@@ -2938,7 +2902,7 @@ Voulez-vous quand même le supprimer ?</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1914"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1906"/>
         <source>Select All</source>
         <translation>Tout sélectionner</translation>
     </message>
@@ -4474,7 +4438,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Operation de processus a expiré</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+841"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+822"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Erreur de lecture du processus</translation>
@@ -4686,7 +4650,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QScriptBreakpointsWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+298"/>
+        <location filename="../src/scripttools/debugging/qscriptbreakpointswidget.cpp" line="+293"/>
         <source>New</source>
         <translation>Créer</translation>
     </message>
@@ -4843,7 +4807,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QScriptDebuggerCodeFinderWidget</name>
     <message>
-        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+141"/>
+        <location filename="../src/scripttools/debugging/qscriptdebuggercodefinderwidget.cpp" line="+136"/>
         <source>Close</source>
         <translation>Fermer</translation>
     </message>
@@ -5777,7 +5741,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+477"/>
+        <location line="+466"/>
         <location line="+87"/>
         <source>Ctrl</source>
         <translation>Ctrl</translation>
@@ -5811,7 +5775,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>F%1</translation>
     </message>
     <message>
-        <location line="-772"/>
+        <location line="-761"/>
         <source>Home Page</source>
         <translation>Page d&apos;accueil</translation>
     </message>
@@ -6747,7 +6711,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1955"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1948"/>
         <source>&amp;Undo</source>
         <translation>&amp;Annuler</translation>
     </message>
@@ -6871,7 +6835,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+906"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+904"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM Left-to-right mark</translation>
     </message>
@@ -6937,7 +6901,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5288"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
         <source>*</source>
         <translation></translation>
     </message>
@@ -7069,7 +7033,7 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QXml</name>
     <message>
-        <location filename="../src/xml/sax/qxml.cpp" line="+54"/>
+        <location filename="../src/xml/sax/qxml.cpp" line="+55"/>
         <source>no error occurred</source>
         <translation>aucune erreur ne s&apos;est produite</translation>
     </message>
@@ -7194,8 +7158,8 @@ Veuillez choisir un nom de fichier différent.</translation>
 <context>
     <name>QXmlStream</name>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="+589"/>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+1770"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="+590"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+1770"/>
         <source>Extra content at end of document.</source>
         <translation>Contenu superflu à la fin du document.</translation>
     </message>
@@ -7215,7 +7179,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>séquence &apos;]]&gt;&apos; non autorisée dans le contenu.</translation>
     </message>
     <message>
-        <location line="+309"/>
+        <location line="+258"/>
         <source>Namespace prefix &apos;%1&apos; not declared</source>
         <translation>Le préfixe d&apos;espace de noms %1 n&apos;a pas été déclaré</translation>
     </message>
@@ -7290,7 +7254,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>données texte attendues.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="-995"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-995"/>
         <source>Recursive entity detected.</source>
         <translation>Entité récursive détectée.</translation>
     </message>
@@ -7320,15 +7284,15 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>nom d&apos;instruction invalide.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-534"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-534"/>
         <location line="+12"/>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+164"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+164"/>
         <location line="+53"/>
         <source>Illegal namespace declaration.</source>
         <translation>Déclaration d&apos;espace de noms non autorisée.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+15"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+15"/>
         <source>Invalid XML name.</source>
         <translation>Nom XML invalide.</translation>
     </message>
@@ -7360,8 +7324,8 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Référence à un caractère invalide.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream.cpp" line="-75"/>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="-823"/>
+        <location filename="../src/xml/kernel/qxmlstream.cpp" line="-75"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="-823"/>
         <source>Encountered incorrectly encoded content.</source>
         <translation>Du contenu avec un encodage incorrect a été rencontré.</translation>
     </message>
@@ -7371,7 +7335,7 @@ Veuillez choisir un nom de fichier différent.</translation>
         <translation>Le pseudo-attribut &quot;standalone&quot; doit apparaître après l&apos;encodage.</translation>
     </message>
     <message>
-        <location filename="../src/core/xml/qxmlstream_p.h" line="+562"/>
+        <location filename="../src/xml/kernel/qxmlstream_p.h" line="+562"/>
         <source>%1 is an invalid PUBLIC identifier.</source>
         <translation>%1 n&apos;est pas un identifiant &quot;PUBLIC&quot; valide.</translation>
     </message>

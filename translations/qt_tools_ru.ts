@@ -548,7 +548,7 @@ Options:
     </message>
     <message>
         <location line="+62"/>
-        <location filename="../src/tools/lupdate/ui.cpp" line="+184"/>
+        <location filename="../src/tools/lupdate/ui.cpp" line="+180"/>
         <source>Cannot open %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -844,7 +844,7 @@ Options:
     </message>
     <message>
         <location filename="../src/tools/qtconfig/mainwindow.ui"/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+767"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+757"/>
         <location line="+1"/>
         <location line="+7"/>
         <source>Qt Configuration</source>
@@ -908,11 +908,6 @@ Options:
     <message>
         <location/>
         <source>&amp;Tune Palette...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <source>Please use the KDE Control Center to set the palette.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1191,7 +1186,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-696"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-690"/>
         <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Appearance&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the appearance of your Qt applications.&lt;/p&gt;&lt;p&gt;You can select the default GUI Style from the drop down list and customize the colors.&lt;/p&gt;&lt;p&gt;Any GUI Style plugins in your plugin path will automatically be added to the list of built-in Qt styles. (See the Library Paths tab for information on adding new plugin paths.)&lt;/p&gt;&lt;p&gt;When you choose 3-D Effects and Window Background colors, the Qt Configuration program will automatically generate a palette for you. To customize colors further, press the Tune Palette button to open the advanced palette editor.&lt;p&gt;The Preview Window shows what the selected Style and colors look like.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1226,7 +1221,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+148"/>
         <source>No changes to be saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1801,12 +1796,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="+1"/>
-        <location line="+859"/>
+        <location line="+854"/>
         <source>&amp;Close</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-858"/>
+        <location line="-853"/>
         <source>Save &amp;Image...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1847,16 +1842,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="+72"/>
-        <source>ALT+CTRL+S</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
         <source>CTRL+SHIFT+S</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+127"/>
+        <location line="+126"/>
         <source>CTRL+R</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1872,17 +1862,17 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+573"/>
+        <location line="+571"/>
         <source>About Qt Designer</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-567"/>
+        <location line="-565"/>
         <source>About Qt</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+36"/>
         <source>Clear &amp;Menu</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2170,7 +2160,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+168"/>
+        <location line="+166"/>
         <source>Widget Box</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2233,7 +2223,7 @@ Would you like to retry?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+64"/>
+        <location filename="../src/tools/qdbusviewer/qdbusviewermain.cpp" line="+66"/>
         <source>Session Bus</source>
         <translation type="unfinished"></translation>
     </message>
