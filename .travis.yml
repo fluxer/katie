@@ -14,9 +14,9 @@ services:
 before_install:
     - sudo apt-get update -qq
 # trusty
-#    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
+#    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libpqtypes-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
 # xenial
-    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
+    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libpqtypes-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
 # both trusty and xenial offer old ninja build which cannot resolve conflicts in generated files
     - wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
     - bsdtar xf ninja-linux.zip
@@ -33,4 +33,4 @@ script:
     - if [ "$CXX" == "g++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON -Wno-dev ;fi
     - ninja
 # the tests/benchmarks take more then 1-hour and Travis times out,
-# despite the documentaiton for the service claiming otherwise
+# despite the documentaiton for the service claiming the timeout is longer
