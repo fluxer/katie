@@ -139,11 +139,10 @@ public:
         KeepCursor = 0,
         MoveCursor = 1
     };
-    quint16 command;
-    uint block_part : 1; // all commands that are part of an undo block (including the first and the last one) have this set to 1
-    uint block_end : 1; // the last command in an undo block has this set to 1.
-    uint block_padding : 6; // padding since block used to be a quint8
-    quint8 operation;
+    Command command;
+    bool block_part; // all commands that are part of an undo block (including the first and the last one) have this set to 1
+    bool block_end; // the last command in an undo block has this set to 1.
+    Operation operation;
     int format;
     quint32 strPos;
     quint32 pos;

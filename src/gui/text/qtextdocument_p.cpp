@@ -61,7 +61,7 @@ QT_BEGIN_NAMESPACE
 #define PMDEBUG if(0) qDebug
 
 #define QT_INIT_TEXTUNDOCOMMAND(c, a1, a2, a3, a4, a5, a6, a7, a8) \
-          QTextUndoCommand c = { a1, a2, 0, 0, quint8(a3), a4, quint32(a5), quint32(a6), { int(a7) }, quint32(a8) }
+          QTextUndoCommand c = { a1, a2, 0, a3, a4, quint32(a5), quint32(a6), { int(a7) }, quint32(a8) }
 
 /*
   Structure of a document:
@@ -1038,7 +1038,7 @@ void QTextDocumentPrivate::appendUndoItem(QAbstractUndoItem *item)
     QTextUndoCommand c;
     c.command = QTextUndoCommand::Custom;
     c.block_part = editBlock != 0;
-    c.block_end = 0;
+    c.block_end = false;
     c.operation = QTextUndoCommand::MoveCursor;
     c.format = 0;
     c.strPos = 0;
