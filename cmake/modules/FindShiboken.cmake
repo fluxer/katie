@@ -6,6 +6,10 @@
 #  SHIBOKEN_LIBRARIES - the libraries needed to use Shiboken
 #  SHIBOKEN_BINARY - the binary needed to use Shiboken
 #  SHIBOKEN_VERSION - the Shiboken version
+#
+# Copyright (c) 2019, Ivailo Monev, <xakepa10@gmail.com>
+#
+# Redistribution and use is allowed according to the terms of the BSD license.
 
 if(SHIBOKEN_INCLUDES AND SHIBOKEN_LIBRARIES AND SHIBOKEN_BINARY)
     set(SHIBOKEN_FIND_QUIETLY TRUE)

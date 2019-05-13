@@ -5,7 +5,7 @@
 #  ICU_INCLUDES - the ICU include directory
 #  ICU_LIBRARIES - The libraries needed to use ICU
 #
-# Copyright (c) 2015, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

@@ -1,3 +1,6 @@
+# Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
+# Redistribution and use is allowed according to the terms of the BSD license.
+
 # UNIFDEF_EXECUTABLE, HEADERS_DIRECTORY and HEADERS_DEFINITIONS origin from the macro call
 
 file(GLOB headers "$ENV{DESTDIR}/${HEADERS_DIRECTORY}/*.h")

@@ -5,7 +5,7 @@
 #  ICONV_INCLUDES - the Iconv include directory
 #  ICONV_LIBRARIES - The libraries needed to use Iconv
 #
-# Copyright (c) 2016, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2016-2019, Ivailo Monev, <xakepa10@gmail.com>
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
 

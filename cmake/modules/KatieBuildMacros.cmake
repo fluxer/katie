@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Ivailo Monev, <xakepa10@gmail.com>
+# Copyright (c) 2015-2019, Ivailo Monev, <xakepa10@gmail.com>
 # Redistribution and use is allowed according to the terms of the BSD license.
 
 set(KATIE_UIC "uic")
@@ -164,7 +164,7 @@ function(KATIE_SETUP_TARGET FORTARGET)
             file(READ "${resource}" rsccontent)
             if("${rsccontent}" MATCHES "(Q_OBJECT|Q_OBJECT_FAKE|Q_GADGET)")
                 set(rscout "${rscpath}/moc_${rscname}${rscext}")
-                set(targetresources ${targetresources} ${rscout})
+                set(targetresources "${targetresources} ${rscout}")
                 get_directory_property(dirdefs COMPILE_DEFINITIONS)
                 get_directory_property(dirincs INCLUDE_DIRECTORIES)
                 set(mocargs)
