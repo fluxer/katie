@@ -467,7 +467,6 @@ static void copyConverterStateHelper(QTextCodec::ConverterState *dest,
 {
     // ### QTextCodec::ConverterState's copy constructors and assignments are
     // private. This function copies the structure manually.
-    Q_ASSERT(!src->d);
     dest->flags = src->flags;
     dest->invalidChars = src->invalidChars;
     dest->state_data[0] = src->state_data[0];
