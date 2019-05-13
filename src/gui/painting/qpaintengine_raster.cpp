@@ -1433,10 +1433,10 @@ void QRasterPaintEngine::stroke(const QVectorPath &path, const QPen &pen)
 
 static inline QRect toNormalizedFillRect(const QRectF &rect)
 {
-    int x1 = qRound(rect.x() + aliasedCoordinateDelta);
-    int y1 = qRound(rect.y() + aliasedCoordinateDelta);
-    int x2 = qRound(rect.right() + aliasedCoordinateDelta);
-    int y2 = qRound(rect.bottom() + aliasedCoordinateDelta);
+    int x1 = qRound(rect.x());
+    int y1 = qRound(rect.y());
+    int x2 = qRound(rect.right());
+    int y2 = qRound(rect.bottom());
 
     if (x2 < x1)
         qSwap(x1, x2);
@@ -1875,7 +1875,6 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
         // as fillRect will apply the aliased coordinate delta we need to
         // subtract it here as we don't use it for image drawing
         QTransform old = s->matrix;
-        s->matrix = s->matrix * QTransform::fromTranslate(-aliasedCoordinateDelta, -aliasedCoordinateDelta);
 
         // Do whatever fillRect() does, but without premultiplying the color if it's already premultiplied.
         QRgb color = img.pixel(sr_l, sr_t);
@@ -1949,11 +1948,9 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
             d->initializeRasterizer(&d->image_filler_xform);
             d->rasterizer->setAntialiased(s->flags.antialiased);
 
-            const QPointF offs = s->flags.antialiased ? QPointF() : QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
-
             const QRectF &rect = r.normalized();
-            const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f) - offs;
-            const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f) - offs;
+            const QPointF a = s->matrix.map((rect.topLeft() + rect.bottomLeft()) * 0.5f);
+            const QPointF b = s->matrix.map((rect.topRight() + rect.bottomRight()) * 0.5f);
 
             if (s->flags.tx_noshear)
                 d->rasterizer->rasterizeLine(a, b, rect.height() / rect.width());
@@ -1962,13 +1959,12 @@ void QRasterPaintEngine::drawImage(const QRectF &r, const QImage &img, const QRe
             return;
         }
 #endif
-        const qreal offs = s->flags.antialiased ? qreal(0) : aliasedCoordinateDelta;
         QPainterPath path;
         path.addRect(r);
         QTransform m = s->matrix;
         s->matrix = QTransform(m.m11(), m.m12(), m.m13(),
                                m.m21(), m.m22(), m.m23(),
-                               m.m31() - offs, m.m32() - offs, m.m33());
+                               m.m31(), m.m32(), m.m33());
         fillPath(path, &d->image_filler_xform);
         s->matrix = m;
     } else {
@@ -2297,11 +2293,9 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
 {
     Q_D(QRasterPaintEngine);
     QRasterPaintEngineState *s = state();
-    const QFixed offs = QFixed::fromReal(aliasedCoordinateDelta);
 
     if (fontEngine->type() == QFontEngine::Freetype) {
         QFontEngineFT *fe = static_cast<QFontEngineFT *>(fontEngine);
-        const QFixed xOffs = fe->supportsSubPixelPositions() ? 0 : offs;
         QFontEngineFT::GlyphFormat neededFormat =
             painter()->device()->devType() == QInternal::Widget
             ? fe->defaultGlyphFormat()
@@ -2375,8 +2369,8 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
             };
 
             alphaPenBlt(glyph->data, pitch, depth,
-                        qFloor(positions[i].x + xOffs) + glyph->x,
-                        qFloor(positions[i].y + offs) - glyph->y,
+                        qFloor(positions[i].x) + glyph->x,
+                        qFloor(positions[i].y) - glyph->y,
                         glyph->width, glyph->height);
         }
         if (lockedFace)
@@ -2418,7 +2412,7 @@ bool QRasterPaintEngine::drawCachedGlyphs(int numGlyphs, const glyph_t *glyphs,
                 continue;
 
             int x = qFloor(positions[i].x) + c.baseLineX - margin;
-            int y = qFloor(positions[i].y + offs) - c.baseLineY - margin;
+            int y = qFloor(positions[i].y) - c.baseLineY - margin;
 
             // printf("drawing [%d %d %d %d] baseline [%d %d], glyph: %d, to: %d %d, pos: %d %d\n",
             //        c.x, c.y,
