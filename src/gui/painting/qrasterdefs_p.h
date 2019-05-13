@@ -72,6 +72,8 @@
 // We mean it.
 */
 
+QT_FT_BEGIN_HEADER
+
   /*************************************************************************/
   /*                                                                       */
   /* <Section>                                                             */
@@ -113,6 +115,32 @@
     QT_FT_Pos  y;
 
   } QT_FT_Vector;
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Struct>                                                              */
+  /*    QT_FT_BBox                                                            */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    A structure used to hold an outline's bounding box, i.e., the      */
+  /*    coordinates of its extrema in the horizontal and vertical          */
+  /*    directions.                                                        */
+  /*                                                                       */
+  /* <Fields>                                                              */
+  /*    xMin :: The horizontal minimum (left-most).                        */
+  /*                                                                       */
+  /*    yMin :: The vertical minimum (bottom-most).                        */
+  /*                                                                       */
+  /*    xMax :: The horizontal maximum (right-most).                       */
+  /*                                                                       */
+  /*    yMax :: The vertical maximum (top-most).                           */
+  /*                                                                       */
+  typedef struct  QT_FT_BBox_
+  {
+    QT_FT_Pos  xMin, yMin;
+    QT_FT_Pos  xMax, yMax;
+
+  } QT_FT_BBox;
 
   /*************************************************************************/
   /*                                                                       */
@@ -248,6 +276,18 @@
 
   /*************************************************************************/
   /*                                                                       */
+  /* <Type>                                                                */
+  /*    QT_FT_Raster                                                       */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    A handle (pointer) to a raster object.  Each object can be used    */
+  /*    independently to convert an outline into a bitmap or pixmap.       */
+  /*                                                                       */
+  typedef struct TRaster_ *QT_FT_Raster;
+
+
+  /*************************************************************************/
+  /*                                                                       */
   /* <Struct>                                                              */
   /*    QT_FT_Span                                                         */
   /*                                                                       */
@@ -276,7 +316,7 @@
   {
     short           x;
     unsigned short  len;
-    short           y;
+    short y;
     unsigned char   coverage;
   } QT_FT_Span;
 
@@ -322,6 +362,136 @@
                     const QT_FT_Span*  spans,
                     void*     worker);
 
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Struct>                                                              */
+  /*    QT_FT_Raster_Params                                                */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    A structure to hold the arguments used by a raster's render        */
+  /*    function.                                                          */
+  /*                                                                       */
+  /* <Fields>                                                              */
+  /*    target      :: The target bitmap.                                  */
+  /*                                                                       */
+  /*    source      :: A pointer to the source glyph image (e.g. an        */
+  /*                   QT_FT_Outline).                                     */
+  /*                                                                       */
+  /*    flags       :: The rendering flags.                                */
+  /*                                                                       */
+  /*    gray_spans  :: The gray span drawing callback.                     */
+  /*                                                                       */
+  /*    black_spans :: The black span drawing callback.                    */
+  /*                                                                       */
+  /*    user        :: User-supplied data that is passed to each drawing   */
+  /*                   callback.                                           */
+  /*                                                                       */
+  /*    clip_box    :: An optional clipping box.  It is only used in       */
+  /*                   direct rendering mode.  Note that coordinates here  */
+  /*                   should be expressed in _integer_ pixels (and not in */
+  /*                   26.6 fixed-point units).                            */
+  /*                                                                       */
+  /* <Note>                                                                */
+  /*    An anti-aliased glyph bitmap is drawn if the QT_FT_RASTER_FLAG_AA bit */
+  /*    flag is set in the `flags' field, otherwise a monochrome bitmap    */
+  /*    will be generated.                                                 */
+  /*                                                                       */
+  /*    If the QT_FT_RASTER_FLAG_DIRECT bit flag is set in `flags', the    */
+  /*    raster will call the `gray_spans' callback to draw gray pixel      */
+  /*    spans, in the case of an aa glyph bitmap, it will call             */
+  /*    `black_spans' in the case of a monochrome bitmap.  This allows     */
+  /*    direct composition over a pre-existing bitmap through              */
+  /*    user-provided callbacks to perform the span drawing/composition.   */
+  /*                                                                       */
+  /*    Note that the `bit_test' and `bit_set' callbacks are required when */
+  /*    rendering a monochrome bitmap, as they are crucial to implement    */
+  /*    correct drop-out control as defined in the TrueType specification. */
+  /*                                                                       */
+  typedef struct  QT_FT_Raster_Params_
+  {
+    void*                   source;
+    QT_FT_SpanFunc             gray_spans;
+    QT_FT_SpanFunc             black_spans;
+    void*                   user;
+    QT_FT_BBox                 clip_box;
+    int                     skip_spans;
+
+  } QT_FT_Raster_Params;
+
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Func>                                                                */
+  /*    gray_raster_reset                                                  */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*    FreeType provides an area of memory called the `render pool',      */
+  /*    available to all registered rasters.  This pool can be freely used */
+  /*    during a given scan-conversion but is shared by all rasters.  Its  */
+  /*    content is thus transient.                                         */
+  /*                                                                       */
+  /*    This function is called each time the render pool changes, or just */
+  /*    after a new raster object is created.                              */
+  /*                                                                       */
+  /* <Note>                                                                */
+  /*    Rasters can ignore the render pool and rely on dynamic memory      */
+  /*    allocation if they want to (a handle to the memory allocator is    */
+  /*    passed to the raster constructor).  However, this is not           */
+  /*    recommended for efficiency purposes.                               */
+  /*                                                                       */
+#ifdef __cplusplus
+  extern "C"
+#endif
+  void gray_raster_reset( );
+
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* <Func>                                                                */
+  /*    gray_raster_render                                                 */
+  /*                                                                       */
+  /* <Description>                                                         */
+  /*   Invokes a given raster to scan-convert a given glyph image into a   */
+  /*   target bitmap.                                                      */
+  /*                                                                       */
+  /* <Input>                                                               */
+  /*    raster :: A handle to the raster object.                           */
+  /*                                                                       */
+  /*    params :: A pointer to a QT_FT_Raster_Params structure used to store  */
+  /*              the rendering parameters.                                */
+  /*                                                                       */
+  /* <Return>                                                              */
+  /*    Error code.  0 means success.                                      */
+  /*                                                                       */
+  /* <Note>                                                                */
+  /*    The exact format of the source image depends on the raster's glyph */
+  /*    format defined in its QT_FT_Raster_Funcs structure.  It can be an     */
+  /*    QT_FT_Outline or anything else in order to support a large array of   */
+  /*    glyph formats.                                                     */
+  /*                                                                       */
+  /*    Note also that the render function can fail and return a           */
+  /*    QT_FT_Err_Unimplemented_Feature error code if the raster used does    */
+  /*    not support direct composition.                                    */
+  /*                                                                       */
+  /*    XXX: For now, the standard raster doesn't support direct           */
+  /*         composition but this should change for the final release (see */
+  /*         the files demos/src/ftgrays.c and demos/src/ftgrays2.c for    */
+  /*         examples of distinct implementations which support direct     */
+  /*         composition).                                                 */
+  /*                                                                       */
+#ifdef __cplusplus
+  extern "C"
+#endif
+  int gray_raster_render( const QT_FT_Raster_Params*  params );
+
+  /*************************************************************************/
+  /*                                                                       */
+  /* Minimum buffer size for raster object, that accounts for TWorker and  */
+  /* TCell sizes.                                                          */
+  /*                                                                       */
+  #define RASTER_POOL_SIZE 8192
+
   /*************************************************************************/
   /*                                                                       */
   /* Any higher and rasterization of shapes will produce incorrect         */
@@ -330,6 +500,9 @@
   #define RASTER_COORD_LIMIT 32767
 
   /* */
+
+
+QT_FT_END_HEADER
 
 #endif /* __FTIMAGE_H__ */
 

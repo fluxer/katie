@@ -57,6 +57,10 @@
 #include "QtGui/qcolor.h"
 #include "QtGui/qpainter.h"
 #include "QtGui/qimage.h"
+#ifndef QT_FT_BEGIN_HEADER
+#define QT_FT_BEGIN_HEADER
+#define QT_FT_END_HEADER
+#endif
 #include "qrasterdefs_p.h"
 #include "qmath.h"
 #include "qmath_p.h"

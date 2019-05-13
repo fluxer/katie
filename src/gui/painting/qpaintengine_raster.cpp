@@ -42,6 +42,9 @@
 #include <QtCore/qglobal.h>
 #include <QtCore/qmutex.h>
 
+#define QT_FT_BEGIN_HEADER
+#define QT_FT_END_HEADER
+
 #include <qrasterdefs_p.h>
 #include <qpainterpath.h>
 #include <qdebug.h>
@@ -2962,13 +2965,21 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     if (!callback || !outline)
         return;
 
-    initializeRasterizer(spanData);
+    Q_Q(QRasterPaintEngine);
+    QRasterPaintEngineState *s = q->state();
 
-    const Qt::FillRule fillRule = outline->flags == QT_FT_OUTLINE_NONE
-                                    ? Qt::WindingFill
-                                    : Qt::OddEvenFill;
+    if (!s->flags.antialiased) {
+        initializeRasterizer(spanData);
 
-    rasterizer->rasterize(outline, fillRule);
+        const Qt::FillRule fillRule = outline->flags == QT_FT_OUTLINE_NONE
+                                      ? Qt::WindingFill
+                                      : Qt::OddEvenFill;
+
+        rasterizer->rasterize(outline, fillRule);
+        return;
+    }
+
+    rasterize(outline, callback, (void *)spanData);
 }
 
 void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
@@ -2981,15 +2992,34 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     Q_Q(QRasterPaintEngine);
     QRasterPaintEngineState *s = q->state();
 
-    rasterizer->setAntialiased(s->flags.antialiased);
-    rasterizer->setClipRect(deviceRect);
-    rasterizer->initialize(callback, userData);
+    if (!s->flags.antialiased) {
+        rasterizer->setAntialiased(s->flags.antialiased);
+        rasterizer->setClipRect(deviceRect);
+        rasterizer->initialize(callback, userData);
 
-    const Qt::FillRule fillRule = outline->flags == QT_FT_OUTLINE_NONE
-                                    ? Qt::WindingFill
-                                    : Qt::OddEvenFill;
+        const Qt::FillRule fillRule = outline->flags == QT_FT_OUTLINE_NONE
+                                      ? Qt::WindingFill
+                                      : Qt::OddEvenFill;
 
-    rasterizer->rasterize(outline, fillRule);
+        rasterizer->rasterize(outline, fillRule);
+        return;
+    }
+
+    gray_raster_reset();
+
+    QT_FT_BBox clip_box = { deviceRect.x(),
+                            deviceRect.y(),
+                            deviceRect.x() + deviceRect.width(),
+                            deviceRect.y() + deviceRect.height() };
+
+    QT_FT_Raster_Params rasterParams;
+    rasterParams.source = outline;
+    rasterParams.black_spans = 0;
+    rasterParams.user = userData;
+    rasterParams.clip_box = clip_box;
+    rasterParams.gray_spans = callback;
+    rasterParams.skip_spans = 0;
+    gray_raster_render(&rasterParams);
 }
 
 QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)
