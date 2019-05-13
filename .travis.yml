@@ -13,16 +13,17 @@ services:
     - xvfb
 before_install:
     - sudo apt-get update -qq
+# both trusty and xenial offer old ninja build which cannot resolve conflicts in generated files
+    - wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
+    - bsdtar xf ninja-linux.zip
 # trusty
 #    - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng12-dev libjpeg-dev libtiff5-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
-#    - wget https://github.com/ninja-build/ninja/releases/download/v1.8.2/ninja-linux.zip
-#    - bsdtar xf ninja-linux.zip
 # xenial
     - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
 before_script:
-# used downloaded ninja for trusty
-#    - export PATH="$(pwd):${PATH}"
-# for GUI access, e.g. QApplication requires it
+# use downloaded ninja
+    - export PATH="$(pwd):${PATH}"
+# for GUI access, e.g. QApplication requires it (trusty)
 #    - export DISPLAY=:99.0
 #    - sh -e /etc/init.d/xvfb start
 #    - sleep 3
