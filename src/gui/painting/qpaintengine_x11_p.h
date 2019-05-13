@@ -177,12 +177,6 @@ public:
                             || has_complex_xform
                             || (render_hints & QPainter::Antialiasing);
     }
-    void decideCoordAdjust() {
-        adjust_coords = !(render_hints & QPainter::Antialiasing)
-                        && (has_alpha_pen
-                            || (has_alpha_brush && has_pen && !has_alpha_pen)
-                            || (cpen.style() > Qt::SolidLine));
-    }
     void clipPolygon_dev(const QPolygonF &poly, QPolygonF *clipped_poly);
     void systemStateChanged();
 
@@ -213,7 +207,6 @@ public:
     uint has_non_scaling_xform : 1;
     uint has_custom_pen : 1;
     uint use_path_fallback : 1;
-    uint adjust_coords : 1;
     uint has_clipping : 1;
     uint adapted_brush_origin : 1;
     uint adapted_pen_origin : 1;
