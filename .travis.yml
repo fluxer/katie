@@ -9,6 +9,8 @@ os:
 cache: ccache
 git:
     depth: 3
+services:
+    - xvfb
 before_install:
     - sudo apt-get update -qq
 # trusty
@@ -18,10 +20,12 @@ before_install:
 # xenial
     - sudo apt-get install -qq bsdtar python-dev libpcre3-dev libssl-dev zlib1g-dev libc6-dev libpng-dev libjpeg-dev libtiff-dev libmng-dev libcups2-dev libfreetype6-dev libfontconfig1-dev libicu-dev libglib2.0-dev libdbus-1-dev unixodbc-dev libpq-dev libmysqld-dev libaio-dev libwrap0-dev libsqlite3-dev xorg-dev
 before_script:
-    - export PATH="$(pwd):${PATH}"
-    - export DISPLAY=:99.0
-    - sh -e /etc/init.d/xvfb start
-    - sleep 3
+# used downloaded ninja for trusty
+#    - export PATH="$(pwd):${PATH}"
+# for GUI access, e.g. QApplication requires it
+#    - export DISPLAY=:99.0
+#    - sh -e /etc/init.d/xvfb start
+#    - sleep 3
 script:
     - mkdir build && cd build
     - if [ "$CXX" == "clang++" ];then cmake ../ -GNinja -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -Wno-dev ;fi
