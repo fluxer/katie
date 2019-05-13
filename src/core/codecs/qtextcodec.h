@@ -48,12 +48,9 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 #ifndef QT_NO_TEXTCODEC
 
-class QTextCodec;
 class QIODevice;
-
 class QTextDecoder;
 class QTextEncoder;
 
@@ -104,13 +101,12 @@ public:
 
     struct Q_CORE_EXPORT ConverterState {
         ConverterState(ConversionFlags f = DefaultConversion)
-            : flags(f), remainingChars(0), invalidChars(0), d(Q_NULLPTR) { state_data[0] = state_data[1] = state_data[2] = 0; }
+            : flags(f), remainingChars(0), invalidChars(0) { state_data[0] = state_data[1] = state_data[2] = 0; }
         ~ConverterState();
         ConversionFlags flags;
         int remainingChars;
         int invalidChars;
         uint state_data[3];
-        void *d;
     private:
         Q_DISABLE_COPY(ConverterState)
     };

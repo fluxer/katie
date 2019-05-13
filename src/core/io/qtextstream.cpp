@@ -841,12 +841,6 @@ inline void QTextStreamPrivate::consume(int size)
 inline void QTextStreamPrivate::saveConverterState(qint64 newPos)
 {
 #ifndef QT_NO_TEXTCODEC
-    if (readConverterState.d) {
-        // converter cannot be copied, so don't save anything
-        // don't update readBufferStartDevicePos either
-        return;
-    }
-
     if (!readConverterSavedState)
         readConverterSavedState = new QTextCodec::ConverterState;
     copyConverterStateHelper(readConverterSavedState, &readConverterState);
