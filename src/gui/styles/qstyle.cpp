@@ -48,9 +48,7 @@
 #include "qstyleoption.h"
 #include "qstyle_p.h"
 #include "qpen.h"
-#ifndef QT_NO_DEBUG
 #include "qdebug.h"
-#endif
 
 #ifdef Q_WS_X11
 #include <qx11info_x11.h>
@@ -2255,10 +2253,6 @@ int QStyle::combinedLayoutSpacing(QSizePolicy::ControlTypes controls1,
     }
     return result;
 }
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <QDebug>
-QT_END_INCLUDE_NAMESPACE
 
 #if !defined(QT_NO_DEBUG_STREAM)
 QDebug operator<<(QDebug debug, QStyle::State state)

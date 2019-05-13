@@ -59,6 +59,10 @@
 #endif
 
 #include <stdlib.h>
+#define BIDI_DEBUG 0
+#if (BIDI_DEBUG >= 1)
+#    include <iostream>
+#endif
 
 QT_BEGIN_NAMESPACE
 
@@ -225,14 +229,7 @@ private:
 // The BiDi algorithm
 //
 // ----------------------------------------------------------------------------
-
-#define BIDI_DEBUG 0
 #if (BIDI_DEBUG >= 1)
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <iostream>
-QT_END_INCLUDE_NAMESPACE
-using namespace std;
-
 static const char *directions[] = {
     "DirL", "DirR", "DirEN", "DirES", "DirET", "DirAN", "DirCS", "DirB", "DirS", "DirWS", "DirON",
     "DirLRE", "DirLRO", "DirAL", "DirRLE", "DirRLO", "DirPDF", "DirNSM", "DirBN"

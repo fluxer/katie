@@ -222,9 +222,6 @@ void QTimer::start(int msec)
     start();
 }
 
-
-
-
 /*!
     Stops the timer.
 
@@ -238,7 +235,6 @@ void QTimer::stop()
         id = INV_TIMER;
     }
 }
-
 
 /*!
   \reimp
@@ -292,11 +288,6 @@ void QSingleShotTimer::timerEvent(QTimerEvent *)
     // and explicitly delete...
     delete this;
 }
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qtimer.cpp"
-#include "moc_qtimer.h"
-QT_END_INCLUDE_NAMESPACE
 
 /*!
     \reentrant
@@ -371,5 +362,8 @@ void QTimer::setInterval(const int msec)
 
    Use setInterval(msec) or start(msec) instead.
 */
+
+#include "moc_qtimer.cpp"
+#include "moc_qtimer.h"
 
 QT_END_NAMESPACE

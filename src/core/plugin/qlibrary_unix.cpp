@@ -57,13 +57,11 @@
 #define QT_NO_DYNAMIC_LIBRARY
 #endif
 
-QT_BEGIN_NAMESPACE
-
 #if !defined(QT_HPUX_LD) && !defined(QT_NO_DYNAMIC_LIBRARY)
-QT_BEGIN_INCLUDE_NAMESPACE
 #include <dlfcn.h>
-QT_END_INCLUDE_NAMESPACE
 #endif
+
+QT_BEGIN_NAMESPACE
 
 static QString qdlerror()
 {

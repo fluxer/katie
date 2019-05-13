@@ -64,6 +64,7 @@
 #include "QtGui/qevent.h"
 #include "QtGui/qpainter.h"
 #include "QtGui/qregion.h"
+#include <qvector.h>
 
 #ifndef QT_NO_ITEMVIEWS
 
@@ -417,10 +418,6 @@ private:
     mutable QBasicTimer delayedLayout;
     mutable QBasicTimer fetchMoreTimer;
 };
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <qvector.h>
-QT_END_INCLUDE_NAMESPACE
 
 template <typename T>
 inline int qBinarySearch(const QVector<T> &vec, const T &item, int start, int end)

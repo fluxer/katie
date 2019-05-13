@@ -137,7 +137,6 @@ void QColumnViewGrip::paintEvent(QPaintEvent *event)
 */
 void QColumnViewGrip::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    Q_UNUSED(event);
     QWidget *parentWidget = (QWidget*)parent();
     int offset = parentWidget->sizeHint().width() - parentWidget->width();
     if (isRightToLeft())

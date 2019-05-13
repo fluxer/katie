@@ -57,7 +57,7 @@
 #include "qevent.h"
 #include "qdialog_p.h"
 
-QT_USE_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 static const char *signalForMember(const char *member)
 {
@@ -79,8 +79,6 @@ static const char *signalForMember(const char *member)
     }
     return candidateSignals[i];
 }
-
-QT_BEGIN_NAMESPACE
 
 /*
     These internal classes add extra validation to QSpinBox and QDoubleSpinBox by emitting
@@ -157,10 +155,6 @@ private:
         notifyTextChanged();
     }
 };
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qinputdialog.cpp"
-QT_END_INCLUDE_NAMESPACE
 
 class QInputDialogPrivate : public QDialogPrivate
 {
@@ -1433,5 +1427,6 @@ QString QInputDialog::getItem(QWidget *parent, const QString &title, const QStri
 QT_END_NAMESPACE
 
 #include "moc_qinputdialog.h"
+#include "moc_qinputdialog.cpp"
 
 #endif // QT_NO_INPUTDIALOG

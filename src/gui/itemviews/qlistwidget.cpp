@@ -56,12 +56,6 @@ public:
     QList<QListWidgetItem*> items;
 };
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qlistwidget.h"
-#include "moc_qlistwidget_p.h"
-#include "moc_qlistwidget.cpp"
-QT_END_INCLUDE_NAMESPACE
-
 QListModel::QListModel(QListWidget *parent)
     : QAbstractListModel(parent)
 {
@@ -1911,5 +1905,9 @@ bool QListWidget::event(QEvent *e)
 }
 
 QT_END_NAMESPACE
+
+#include "moc_qlistwidget.h"
+#include "moc_qlistwidget_p.h"
+#include "moc_qlistwidget.cpp"
 
 #endif // QT_NO_LISTWIDGET

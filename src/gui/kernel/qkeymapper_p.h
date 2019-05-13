@@ -59,6 +59,10 @@
 #include <qlocale.h>
 #include <qevent.h>
 
+#if defined(Q_WS_X11)
+#    include "qt_x11_p.h"
+#endif
+
 QT_BEGIN_NAMESPACE
 
 class QKeyMapperPrivate;
@@ -83,15 +87,7 @@ private:
     Q_DISABLE_COPY(QKeyMapper)
 };
 
-
-
 #if defined(Q_WS_X11)
-
-QT_BEGIN_INCLUDE_NAMESPACE
-typedef ulong XID;
-typedef XID KeySym;
-QT_END_INCLUDE_NAMESPACE
-
 struct QXCoreDesc {
     int min_keycode;
     int max_keycode;
@@ -101,7 +97,6 @@ struct QXCoreDesc {
     uchar num_lock;
     KeySym lock_meaning;
 };
-
 #endif
 
 class QKeyEvent;

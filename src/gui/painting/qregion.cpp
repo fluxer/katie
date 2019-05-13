@@ -46,7 +46,6 @@
 #include "qdatastream.h"
 #include "qvariant.h"
 #include "qvarlengtharray.h"
-
 #include <qdebug.h>
 
 #if defined(Q_OS_UNIX)
@@ -3838,7 +3837,6 @@ QRegion::QRegion(const QRegion &r)
     d->ref.ref();
 }
 
-
 QRegion::QRegion(const QBitmap &bm)
 {
     if (bm.isNull()) {
@@ -3883,7 +3881,6 @@ QRegion &QRegion::operator=(const QRegion &r)
     return *this;
 }
 
-
 /*!
     \internal
 */
@@ -3911,7 +3908,6 @@ bool QRegion::isEmpty() const
     return d == &shared_empty || d->qt_rgn->numRects == 0;
 }
 
-
 bool QRegion::contains(const QPoint &p) const
 {
     return PointInRegion(d->qt_rgn, p.x(), p.y());
@@ -3921,8 +3917,6 @@ bool QRegion::contains(const QRect &r) const
 {
     return RectInRegion(d->qt_rgn, r.left(), r.top(), r.width(), r.height()) != RectangleOut;
 }
-
-
 
 void QRegion::translate(int dx, int dy)
 {
@@ -4294,9 +4288,8 @@ bool QRegion::intersects(const QRect &rect) const
             return true;
     return false;
 }
-
-
 #endif
+
 QT_END_NAMESPACE
 
 

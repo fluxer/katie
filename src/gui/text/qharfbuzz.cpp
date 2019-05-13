@@ -45,7 +45,7 @@
 
 #include "qharfbuzz_p.h"
 
-QT_USE_NAMESPACE
+QT_BEGIN_NAMESPACE
 
 extern "C" {
 
@@ -112,8 +112,6 @@ void *HB_Library_Resolve(const char *library, int version, const char *symbol)
 }
 
 } // extern "C"
-
-QT_BEGIN_NAMESPACE
 
 HB_Bool qShapeItem(HB_ShaperItem *item)
 {

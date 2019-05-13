@@ -4190,12 +4190,6 @@ void QSmSocketReceiver::socketActivated(int)
     IceProcessMessages(SmcGetIceConnection(smcConnection), 0, 0);
 }
 
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qapplication_x11.cpp"
-#include "moc_qsessionmanager.h"
-QT_END_INCLUDE_NAMESPACE
-
 QSessionManager::QSessionManager(QApplication * app, QString &id, QString& key)
     : QObject(*new QSessionManagerPrivate(this, id, key), app)
 {
@@ -4625,3 +4619,5 @@ void QApplicationPrivate::cleanupMultitouch_sys()
 
 QT_END_NAMESPACE
 
+#include "moc_qapplication_x11.cpp"
+#include "moc_qsessionmanager.h"

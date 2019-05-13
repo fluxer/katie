@@ -42,16 +42,15 @@
 #ifndef QACTION_H
 #define QACTION_H
 
-#include <QtGui/qkeysequence.h>
 #include <QtCore/qstring.h>
-#include <QtGui/qwidget.h>
 #include <QtCore/qvariant.h>
+#include <QtGui/qkeysequence.h>
+#include <QtGui/qwidget.h>
 #include <QtGui/qicon.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 #ifndef QT_NO_ACTION
 
@@ -208,14 +207,12 @@ private:
     friend class QToolButton;
 };
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <QtGui/qactiongroup.h>
-QT_END_INCLUDE_NAMESPACE
-
 #endif // QT_NO_ACTION
 
 QT_END_NAMESPACE
 
 QT_END_HEADER
+
+#include <QtGui/qactiongroup.h>
 
 #endif // QACTION_H

@@ -201,10 +201,6 @@ private:
     bool t;
 };
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "moc_qpixmapcache.cpp"
-QT_END_INCLUDE_NAMESPACE
-
 uint qHash(const QPixmapCache::Key &k)
 {
     return qHash(QPMCache::get(k)->key);
@@ -664,3 +660,4 @@ QList< QPair<QString,QPixmap> > QPixmapCache::allPixmaps()
 
 QT_END_NAMESPACE
 
+#include "moc_qpixmapcache.cpp"

@@ -45,10 +45,11 @@
 #include "qstring.h"
 
 #include "string.h"
+#ifdef QT_VSNPRINTF
+#include <stdio.h>
+#endif
 
 QT_BEGIN_NAMESPACE
-
-#ifndef QT_VSNPRINTF
 
 /*!
     \relates QByteArray
@@ -74,6 +75,7 @@ QT_BEGIN_NAMESPACE
 
 int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
 {
+#ifndef QT_VSNPRINTF
     if (!str || !fmt)
         return -1;
 
@@ -89,20 +91,10 @@ int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
     }
 
     return ba.length();
-}
-
 #else
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <stdio.h>
-QT_END_INCLUDE_NAMESPACE
-
-int qvsnprintf(char *str, size_t n, const char *fmt, va_list ap)
-{
     return QT_VSNPRINTF(str, n, fmt, ap);
-}
-
 #endif
+}
 
 /*!
     \relates QByteArray

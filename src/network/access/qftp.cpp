@@ -57,6 +57,7 @@
 #include "qhash.h"
 #include "qtcpserver.h"
 #include "qlocale.h"
+#include <qobject_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -1283,11 +1284,6 @@ void QFtpPI::dtpConnectState(int s)
  * QFtpPrivate
  *
  *********************************************************************/
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <qobject_p.h>
-QT_END_INCLUDE_NAMESPACE
-
 class QFtpPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QFtp)

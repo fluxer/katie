@@ -67,15 +67,12 @@
 #include "qlistview.h"
 #include "qmath_p.h"
 #include "qmath.h"
+#include "qstylehelper_p.h"
 #include "qguicommon_p.h"
 
-#include "qstylehelper_p.h"
+#include <limits.h>
 
 QT_BEGIN_NAMESPACE
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <limits.h>
-QT_END_INCLUDE_NAMESPACE
 
 enum QSliderDirection { SlUp, SlDown, SlLeft, SlRight };
 
@@ -2611,7 +2608,6 @@ QSize QWindowsStyle::sizeFromContents(ContentsType ct, const QStyleOption *opt,
 }
 
 QT_END_NAMESPACE
-
 
 #include "moc_qwindowsstyle.h"
 

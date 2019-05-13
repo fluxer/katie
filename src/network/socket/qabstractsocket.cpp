@@ -368,10 +368,8 @@
 
 #include "qabstractsocket.h"
 #include "qabstractsocket_p.h"
-
 #include "qhostinfo_p.h"
 #include "qnetworksession_p.h"
-
 #include <qabstracteventdispatcher.h>
 #include <qhostaddress.h>
 #include <qhostinfo.h>
@@ -381,9 +379,8 @@
 #include <qelapsedtimer.h>
 #include <qscopedvaluerollback.h>
 #include <qsslsocket.h>
-#include "qnetworkcommon_p.h"
-
 #include <qthread_p.h>
+#include "qnetworkcommon_p.h"
 
 #ifdef QABSTRACTSOCKET_DEBUG
 #include <qdebug.h>

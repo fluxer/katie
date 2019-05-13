@@ -59,6 +59,7 @@
 #include <QtGui/qtreewidget.h>
 #include <qtreeview_p.h>
 #include <QtGui/qheaderview.h>
+#include "qabstractitemmodel_p.h"
 
 #ifndef QT_NO_TREEWIDGET
 
@@ -175,10 +176,6 @@ public:
     friend struct SkipSorting;
 };
 
-QT_BEGIN_INCLUDE_NAMESPACE
-#include "qabstractitemmodel_p.h"
-QT_END_INCLUDE_NAMESPACE
-
 class QTreeModelPrivate : public QAbstractItemModelPrivate
 {
     Q_DECLARE_PUBLIC(QTreeModel)
@@ -193,8 +190,8 @@ public:
     void sortChildren(int column, Qt::SortOrder order, bool climb);
     QTreeWidgetItem *q;
     QVariantList display;
-    uint disabled : 1;
-    uint selected : 1;
+    bool disabled;
+    bool selected;
     int rowGuess;
     QTreeWidgetItem::ChildIndicatorPolicy policy;
 };
