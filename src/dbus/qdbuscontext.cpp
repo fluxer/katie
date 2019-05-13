@@ -65,7 +65,7 @@ QDBusContextPrivate *QDBusContextPrivate::set(QObject *obj, QDBusContextPrivate 
         return old;
     }
 
-    return 0;
+    return Q_NULLPTR;
 }
 
 /*!
@@ -105,7 +105,7 @@ QDBusContextPrivate *QDBusContextPrivate::set(QObject *obj, QDBusContextPrivate 
   Constructs an empty QDBusContext.
  */
 QDBusContext::QDBusContext()
-    : d_ptr(0)
+    : d_ptr(Q_NULLPTR)
 {
 }
 
@@ -126,7 +126,7 @@ QDBusContext::~QDBusContext()
 */
 bool QDBusContext::calledFromDBus() const
 {
-    return d_ptr;
+    return (d_ptr != Q_NULLPTR);
 }
 
 /*!
@@ -134,6 +134,7 @@ bool QDBusContext::calledFromDBus() const
 */
 QDBusConnection QDBusContext::connection() const
 {
+    Q_ASSERT(d_ptr);
     return d_ptr->connection;
 }
 
@@ -142,6 +143,7 @@ QDBusConnection QDBusContext::connection() const
 */
 const QDBusMessage &QDBusContext::message() const
 {
+    Q_ASSERT(d_ptr);
     return d_ptr->message;
 }
 
