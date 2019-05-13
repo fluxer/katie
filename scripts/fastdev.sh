@@ -11,7 +11,7 @@ cd "$cwd/../fastdev"
 export CFLAGS="$CFLAGS -O0 -Wall"
 export CXXFLAGS="$CXXFLAGS -O0 -Wall"
 
-cmake ../ -DCMAKE_BUILD_TYPE=FastDev \
+cmake ../ -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DKATIE_SETTINGS_FULL=/etc/xdg \
     -DKATIE_LDCONF_FULL=/etc/ld.so.conf.d \
