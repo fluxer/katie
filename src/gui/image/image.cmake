@@ -14,6 +14,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapcache_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmapdata_p.h
@@ -42,6 +43,7 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qiconengineplugin.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qmovie.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_raster.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11.cpp
     # Built-in image format support
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qbmphandler.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/image/qppmhandler.cpp
@@ -112,15 +114,4 @@ if(WITH_TIFF AND TIFF_FOUND)
         ${TIFF_LIBRARIES}
     )
     include_directories(${TIFF_INCLUDE_DIR})
-endif()
-
-if(WITH_X11 AND X11_FOUND)
-    set(GUI_HEADERS
-        ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11_p.h
-    )
-    set(GUI_SOURCES
-        ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/image/qpixmap_x11.cpp
-    )
 endif()

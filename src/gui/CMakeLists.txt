@@ -1,5 +1,5 @@
 add_definitions(-DQT_BUILD_GUI_LIB)
-set(EXTRA_GUI_LIBS KtCore KtXml ${FREETYPE_LIBRARIES})
+set(EXTRA_GUI_LIBS KtCore KtXml ${FREETYPE_LIBRARIES} ${X11_LIBRARIES} ${X11_X11_LIB} ${X11_Xt_LIB} ${X11_Xi_LIB})
 
 set(GUI_PUBLIC_HEADERS
     ${GUI_PUBLIC_HEADERS}
@@ -470,27 +470,18 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/widgets
     ${CMAKE_SOURCE_DIR}/src/core/tools
     ${FREETYPE_INCLUDE_DIRS}
+    ${X11_INCLUDE_DIR}
 )
 
 # keep in sync with the top-level CMake file, only libraries setup is needed here
-if(WITH_X11 AND X11_FOUND)
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${X11_LIBRARIES}
-        ${X11_X11_LIB}
-        ${X11_Xt_LIB}
-        ${X11_Xi_LIB}
-    )
-    include_directories(${X11_INCLUDE_DIR})
-    foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput Xext)
-        if(X11_${x11ext}_FOUND AND X11_${x11ext}_LIB)
-            set(EXTRA_GUI_LIBS
-                ${EXTRA_GUI_LIBS}
-                ${X11_${x11ext}_LIB}
-            )
-        endif()
-    endforeach()
-endif()
+foreach(x11ext Xshape Xinerama Xrandr Xrender Xfixes Xcursor Xinput Xext)
+    if(X11_${x11ext}_FOUND AND X11_${x11ext}_LIB)
+        set(EXTRA_GUI_LIBS
+            ${EXTRA_GUI_LIBS}
+            ${X11_${x11ext}_LIB}
+        )
+    endif()
+endforeach()
 
 if(WITH_NIS AND NIS_FOUND)
     set(EXTRA_GUI_LIBS
@@ -498,6 +489,14 @@ if(WITH_NIS AND NIS_FOUND)
         ${NIS_LIBRARIES}
     )
     include_directories(${NIS_INCLUDES})
+endif()
+
+if(WITH_NSL AND NSL_FOUND)
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${NSL_LIBRARIES}
+    )
+    include_directories(${NSL_INCLUDES})
 endif()
 
 set(GUI_HEADERS
@@ -552,14 +551,6 @@ katie_generate_misc("${GUI_HEADERS}" QtGui)
 katie_generate_public("${GUI_PUBLIC_HEADERS}" QtGui)
 katie_generate_package(KtGui "KtCore KtXml")
 katie_setup_target(KtGui ${GUI_SOURCES} ${GUI_HEADERS})
-
-if(WITH_NSL AND NSL_FOUND)
-    include_directories(${NSL_INCLUDES})
-    set(EXTRA_GUI_LIBS
-        ${EXTRA_GUI_LIBS}
-        ${NSL_LIBRARIES}
-    )
-endif()
 
 add_library(KtGui ${KATIE_TYPE} ${KtGui_SOURCES})
 target_link_libraries(KtGui ${EXTRA_GUI_LIBS})

@@ -41,6 +41,9 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qt_x11_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11_p.h
 )
 
 set(GUI_SOURCES
@@ -76,42 +79,31 @@ set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qgesturemanager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguiplatformplugin.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qclipboard_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
 )
 
-if(WITH_X11 AND X11_FOUND)
+if(WITH_GLIB2 AND GLIB2_FOUND)
     set(GUI_HEADERS
         ${GUI_HEADERS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11_p.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguieventdispatcher_glib_p.h
     )
     set(GUI_SOURCES
         ${GUI_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qapplication_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qclipboard_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmotifdnd_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qwidget_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11embed_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qx11info_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qkeymapper_x11.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qeventdispatcher_x11.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguieventdispatcher_glib.cpp
     )
-    if(WITH_GLIB2 AND GLIB2_FOUND)
-        set(GUI_HEADERS
-            ${GUI_HEADERS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguieventdispatcher_glib_p.h
-        )
-        set(GUI_SOURCES
-            ${GUI_SOURCES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qguieventdispatcher_glib.cpp
-        )
-        set(EXTRA_GUI_LIBS
-            ${EXTRA_GUI_LIBS}
-            ${GLIB2_LIBRARIES}
-        )
-        include_directories(${GLIB2_INCLUDES})
-    endif()
+    set(EXTRA_GUI_LIBS
+        ${EXTRA_GUI_LIBS}
+        ${GLIB2_LIBRARIES}
+    )
+    include_directories(${GLIB2_INCLUDES})
 endif()
