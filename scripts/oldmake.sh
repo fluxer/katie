@@ -16,6 +16,9 @@ mkdir -p "$cwd/../oldmake"
 cd "$cwd/../oldmake"
 
 tar -xaf "$cwd/cmake-2.8.12.2-Linux-i386.tar.gz"
+cmake-2.8.12.2-Linux-i386/bin/cmake ../ -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON $@
+rm -rf *
 
-cmake-2.8.12.2-Linux-i386/bin/cmake ../ -DCMAKE_BUILD_TYPE=FastDev -DKATIE_BINDINGS=ON $@
-make -j$(nproc || echo 1)
+tar -xaf "$cwd/cmake-2.8.12.2-Linux-i386.tar.gz"
+cmake-2.8.12.2-Linux-i386/bin/cmake ../ -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTING=TRUE -DKATIE_UTILS=ON -DKATIE_ALLINONE=ON $@
+# not making on purpose
