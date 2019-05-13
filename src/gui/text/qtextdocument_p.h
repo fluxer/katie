@@ -53,7 +53,6 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
 #include "QtCore/qstring.h"
 #include "QtCore/qvector.h"
 #include "QtCore/qlist.h"
@@ -103,18 +102,18 @@ class QTextBlockData : public QFragment<3>
 {
 public:
     inline void initialize()
-        { layout = 0; userData = 0; userState = -1; revision = 0; hidden = 0; }
+        { layout = Q_NULLPTR; userData = Q_NULLPTR; userState = -1; revision = 0; hidden = false; }
     void invalidate() const;
     inline void free()
-    { delete layout; layout = 0; delete userData; userData = 0; }
+    { delete layout; layout = Q_NULLPTR; delete userData; userData = Q_NULLPTR; }
 
     mutable int format;
     // ##### probably store a QTextEngine * here!
     mutable QTextLayout *layout;
     mutable QTextBlockUserData *userData;
     mutable int userState;
-    mutable int revision : 31;
-    mutable uint hidden : 1;
+    mutable int revision;
+    mutable bool hidden;
 };
 
 
@@ -347,9 +346,9 @@ public:
     QCss::StyleSheet parsedDefaultStyleSheet;
 #endif
     int maximumBlockCount;
-    uint needsEnsureMaximumBlockCount : 1;
-    uint inContentsChange : 1;
-    uint blockCursorAdjustment : 1;
+    bool needsEnsureMaximumBlockCount;
+    bool inContentsChange;
+    bool blockCursorAdjustment;
     QSizeF pageSize;
     QString title;
     QString url;
