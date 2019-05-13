@@ -57,6 +57,8 @@ QDBusContextPrivate *QDBusContextPrivate::set(QObject *obj, QDBusContextPrivate 
 
     Q_ASSERT(obj);
 
+#warning noop
+#if 0
     void *ptr = obj->qt_metacast("QDBusContext");
     QDBusContext *q_ptr = reinterpret_cast<QDBusContext *>(ptr);
     if (q_ptr) {
@@ -64,6 +66,7 @@ QDBusContextPrivate *QDBusContextPrivate::set(QObject *obj, QDBusContextPrivate 
         q_ptr->d_ptr = newContext;
         return old;
     }
+#endif
 
     return Q_NULLPTR;
 }
