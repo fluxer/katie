@@ -438,7 +438,7 @@ static int lo0bits (uint32_t* y)
     if (!(x & 1)) {
         k++;
         x >>= 1;
-        if (!x & 1)
+        if (!(x & 1))
             return 32;
     }
     *y = x;
