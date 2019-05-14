@@ -664,10 +664,10 @@ void QX11PaintEngine::drawLines(const QLine *lines, int lineCount)
                 linef = d->matrix.map(QLineF(lines[i]));
             }
             if (clipLine(&linef, d->polygonClipper.boundingRect())) {
-                int x1 = qRound(linef.x1());
-                int y1 = qRound(linef.y1());
-                int x2 = qRound(linef.x2());
-                int y2 = qRound(linef.y2());
+                int x1 = qRound(linef.x1() + aliasedCoordinateDelta);
+                int y1 = qRound(linef.y1() + aliasedCoordinateDelta);
+                int x2 = qRound(linef.x2() + aliasedCoordinateDelta);
+                int y2 = qRound(linef.y2() + aliasedCoordinateDelta);
 
                 XDrawLine(d->dpy, d->hd, d->gc, x1, y1, x2, y2);
             }
@@ -698,10 +698,10 @@ void QX11PaintEngine::drawLines(const QLineF *lines, int lineCount)
         for (int i = 0; i < lineCount; ++i) {
             QLineF linef = d->matrix.map(lines[i]);
             if (clipLine(&linef, d->polygonClipper.boundingRect())) {
-                int x1 = qRound(linef.x1());
-                int y1 = qRound(linef.y1());
-                int x2 = qRound(linef.x2());
-                int y2 = qRound(linef.y2());
+                int x1 = qRound(linef.x1() + aliasedCoordinateDelta);
+                int y1 = qRound(linef.y1() + aliasedCoordinateDelta);
+                int x2 = qRound(linef.x2() + aliasedCoordinateDelta);
+                int y2 = qRound(linef.y2() + aliasedCoordinateDelta);
 
                 XDrawLine(d->dpy, d->hd, d->gc, x1, y1, x2, y2);
             }
@@ -1127,6 +1127,7 @@ void QX11PaintEngine::updateState(const QPaintEngineState &state)
         XSetFunction(qt_x11Data->display, d->gc_brush, function);
     }
     d->decidePathFallback();
+    d->decideCoordAdjust();
 }
 
 void QX11PaintEngine::updateRenderHints(QPainter::RenderHints hints)
@@ -1482,11 +1483,15 @@ void QX11PaintEnginePrivate::fillPolygon_translated(const QPointF *polygonPoints
     QVarLengthArray<QPointF> translated_points(pointCount);
     QPointF offset(matrix.dx(), matrix.dy());
 
+    qreal offs = adjust_coords ? aliasedCoordinateDelta : 0.0;
+    if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing))
+        offset += QPointF(aliasedCoordinateDelta, aliasedCoordinateDelta);
+
     for (int i = 0; i < pointCount; ++i) {
         translated_points[i] = polygonPoints[i] + offset;
 
-        translated_points[i].rx() = qRound(translated_points[i].x());
-        translated_points[i].ry() = qRound(translated_points[i].y());
+        translated_points[i].rx() = qRound(translated_points[i].x()) + offs;
+        translated_points[i].ry() = qRound(translated_points[i].y()) + offs;
     }
 
     fillPolygon_dev(translated_points.data(), pointCount, gcMode, mode);
@@ -1657,8 +1662,8 @@ void QX11PaintEnginePrivate::strokePolygon_dev(const QPointF *polygonPoints, int
     if (clippedCount > 0) {
         QVarLengthArray<XPoint> xpoints(clippedCount);
         for (int i = 0; i < clippedCount; ++i) {
-            xpoints[i].x = qRound(clippedPoints[i].x);
-            xpoints[i].y = qRound(clippedPoints[i].y);
+            xpoints[i].x = qRound(clippedPoints[i].x + aliasedCoordinateDelta);
+            xpoints[i].y = qRound(clippedPoints[i].y + aliasedCoordinateDelta);
         }
         uint numberPoints = qMin(clippedCount, xlibMaxLinePoints);
         XPoint *pts = xpoints.data();
@@ -1705,6 +1710,8 @@ void QX11PaintEngine::drawPolygon(const QPointF *polygonPoints, int pointCount, 
 
 void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEnginePrivate::GCMode gc_mode, bool transform)
 {
+    qreal offs = adjust_coords ? aliasedCoordinateDelta : 0.0;
+
     QPainterPath clippedPath;
     QPainterPath clipPath;
     clipPath.addRect(polygonClipper.boundingRect());
@@ -1721,8 +1728,8 @@ void QX11PaintEnginePrivate::fillPath(const QPainterPath &path, QX11PaintEngineP
         for (int j = 0; j < polys.at(i).size(); ++j) {
             translated_points[j] = polys.at(i).at(j);
             if (!qt_x11Data->use_xrender || !(render_hints & QPainter::Antialiasing)) {
-                translated_points[j].rx() = qRound(translated_points[j].rx());
-                translated_points[j].ry() = qRound(translated_points[j].ry());
+                translated_points[j].rx() = qRound(translated_points[j].rx() + aliasedCoordinateDelta) + offs;
+                translated_points[j].ry() = qRound(translated_points[j].ry() + aliasedCoordinateDelta) + offs;
             }
         }
 
@@ -2336,13 +2343,14 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
 
         QFixed xp = positions[i - 1].x;
         QFixed yp = positions[i - 1].y;
+        QFixed offs = QFixed::fromReal(aliasedCoordinateDelta);
 
         XGlyphElt32 elt;
         elt.glyphset = glyphSet;
         elt.chars = &glyphs[i - 1];
         elt.nchars = 1;
-        elt.xOff = qRound(xp);
-        elt.yOff = qRound(yp);
+        elt.xOff = qRound(xp + offs);
+        elt.yOff = qRound(yp + offs);
         for (; i < glyphs.size(); ++i) {
             if (positions[i].x < t_min || positions[i].x > t_max
                 || positions[i].y < t_min || positions[i].y > t_max) {
@@ -2366,8 +2374,8 @@ void QX11PaintEngine::drawFreetype(const QPointF &p, const QTextItemInt &ti)
                                        &elt, 1);
                 elt.chars = &glyphs[i];
                 elt.nchars = 1;
-                elt.xOff = qRound(xp);
-                elt.yOff = qRound(yp);
+                elt.xOff = qRound(xp + offs);
+                elt.yOff = qRound(yp + offs);
             }
         }
         XRenderCompositeText32(qt_x11Data->display, PictOpOver, src, d->picture,

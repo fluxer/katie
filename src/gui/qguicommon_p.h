@@ -251,6 +251,9 @@ static const char *const qt_question_xpm[] = {
 };
 #endif
 
+// use the same rounding as in qrasterizer.cpp (6 bit fixed point)
+static const qreal aliasedCoordinateDelta = 0.5 - 0.015625;
+
 QT_END_NAMESPACE
 
 #endif // QGUICOMMON_P_H
