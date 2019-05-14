@@ -56,7 +56,6 @@
 #include <qtextcodec.h>
 #include <qthread.h>
 #include <qthreadpool.h>
-#include <qthreadstorage.h>
 #include <qthread_p.h>
 #include <qelapsedtimer.h>
 #include <qlibraryinfo.h>
@@ -270,11 +269,6 @@ QCoreApplicationPrivate::QCoreApplicationPrivate(int &aargc, char **aargv)
 QCoreApplicationPrivate::~QCoreApplicationPrivate()
 {
     if (threadData) {
-#ifndef QT_NO_THREAD
-        void *data = &threadData->tls;
-        QThreadStorageData::finish((void **)data);
-#endif
-
         // need to clear the state of the mainData, just in case a new QCoreApplication comes along.
         QMutexLocker locker(&threadData->postEventList.mutex);
         for (int i = 0; i < threadData->postEventList.size(); ++i) {

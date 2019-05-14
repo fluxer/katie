@@ -43,7 +43,6 @@
 
 #include "qplatformdefs.h"
 #include <qcoreapplication_p.h>
-#include "qthreadstorage.h"
 #include "qthread_p.h"
 #include "qdebug.h"
 
@@ -289,13 +288,11 @@ void QThreadPrivate::finish(void *arg)
     d->isInFinish = true;
     d->priority = QThread::InheritPriority;
     bool terminated = d->terminated;
-    void *data = &d->data->tls;
     locker.unlock();
     if (terminated)
         emit thr->terminated();
     emit thr->finished();
     QCoreApplication::sendPostedEvents(Q_NULLPTR, QEvent::DeferredDelete);
-    QThreadStorageData::finish((void **)data);
     locker.relock();
     d->terminated = false;
 

@@ -69,7 +69,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QWriteLocker", "QtCore/qreadwritelock.h"},
     { "QSemaphore", "QtCore/qsemaphore.h"},
     { "QThread", "QtCore/qthread.h"},
-    { "QThreadStorageData", "QtCore/qthreadstorage.h"},
     { "QWaitCondition", "QtCore/qwaitcondition.h"},
     { "QFactoryInterface", "QtCore/qfactoryinterface.h"},
     { "QLibrary", "QtCore/qlibrary.h"},
@@ -697,6 +696,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 691;
+static const int qclass_lib_count = 690;
 
 #endif

@@ -762,8 +762,6 @@ classlist = {
     "QtGui",
     "QThread",
     "QThreadPool",
-    "QThreadStorage",
-    "QThreadStorageData",
     "QTileRules",
     "QTime",
     "QTimeEdit",

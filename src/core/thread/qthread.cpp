@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "qthread.h"
-#include "qthreadstorage.h"
 #include "qmutex.h"
 #include "qmutexpool_p.h"
 #include "qreadwritelock.h"
@@ -255,8 +254,8 @@ QThreadPrivate::~QThreadPrivate()
     wait(), consider listening for the finished() signal. Instead of
     the sleep() functions, consider using QTimer.
 
-    \sa {Thread Support in Qt}, QThreadStorage, {Synchronizing Threads}
-        {Mandelbrot Example}, {Semaphores Example}, {Wait Conditions Example}
+    \sa {Thread Support in Qt}, {Synchronizing Threads}, {Mandelbrot Example},
+        {Semaphores Example}, {Wait Conditions Example}
 */
 
 /*!

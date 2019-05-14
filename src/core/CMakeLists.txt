@@ -4,7 +4,6 @@ set(EXTRA_CORE_LIBS ${ZLIB_LIBRARIES} ${OPENSSL_LIBRARIES})
 set(CORE_PUBLIC_HEADERS
     ${CORE_PUBLIC_HEADERS}
     QVarLengthArray
-    QThreadStorageData
     QList
     QMutableStringListIterator
     QSystemSemaphore
@@ -20,7 +19,6 @@ set(CORE_PUBLIC_HEADERS
     QLinkedListIterator
     QDynamicPropertyChangeEvent
     QHash
-    QThreadStorage
     QTextStreamManipulator
     QMutableMapIterator
     QLinkedListNode

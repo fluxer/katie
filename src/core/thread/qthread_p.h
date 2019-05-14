@@ -242,7 +242,6 @@ public:
 
     Qt::HANDLE threadId;
     QStack<QEventLoop *> eventLoops;
-    QVector<void *> tls;
     QThread *thread;
     QAbstractEventDispatcher *eventDispatcher;
     QPostEventList postEventList;
