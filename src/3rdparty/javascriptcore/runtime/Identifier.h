@@ -22,7 +22,6 @@
 #define Identifier_h
 
 #include "JSGlobalData.h"
-#include "ThreadSpecific.h"
 #include "UString.h"
 
 namespace JSC {
@@ -155,55 +154,11 @@ namespace JSC {
         IdentifierTable* currentIdentifierTable;
     };
 
-    extern WTF::ThreadSpecific<ThreadIdentifierTableData>* g_identifierTableSpecific;
-    void createIdentifierTableSpecific();
-
-    inline IdentifierTable* defaultIdentifierTable()
-    {
-        if (!g_identifierTableSpecific)
-            createIdentifierTableSpecific();
-        ThreadIdentifierTableData& data = **g_identifierTableSpecific;
-
-        return data.defaultIdentifierTable;
-    }
-
-    inline void setDefaultIdentifierTable(IdentifierTable* identifierTable)
-    {
-        if (!g_identifierTableSpecific)
-            createIdentifierTableSpecific();
-        ThreadIdentifierTableData& data = **g_identifierTableSpecific;
-
-        data.defaultIdentifierTable = identifierTable;
-    }
-
-    inline IdentifierTable* currentIdentifierTable()
-    {
-        if (!g_identifierTableSpecific)
-            createIdentifierTableSpecific();
-        ThreadIdentifierTableData& data = **g_identifierTableSpecific;
-
-        return data.currentIdentifierTable;
-    }
-
-    inline IdentifierTable* setCurrentIdentifierTable(IdentifierTable* identifierTable)
-    {
-        if (!g_identifierTableSpecific)
-            createIdentifierTableSpecific();
-        ThreadIdentifierTableData& data = **g_identifierTableSpecific;
-
-        IdentifierTable* oldIdentifierTable = data.currentIdentifierTable;
-        data.currentIdentifierTable = identifierTable;
-        return oldIdentifierTable;
-    }
-
-    inline void resetCurrentIdentifierTable()
-    {
-        if (!g_identifierTableSpecific)
-            createIdentifierTableSpecific();
-        ThreadIdentifierTableData& data = **g_identifierTableSpecific;
-
-        data.currentIdentifierTable = data.defaultIdentifierTable;
-    }
+    IdentifierTable* defaultIdentifierTable();
+    void setDefaultIdentifierTable(IdentifierTable* identifierTable);
+    IdentifierTable* currentIdentifierTable();
+    IdentifierTable* setCurrentIdentifierTable(IdentifierTable* identifierTable);
+    void resetCurrentIdentifierTable();
 
 } // namespace JSC
 

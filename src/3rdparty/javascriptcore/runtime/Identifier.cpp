@@ -28,8 +28,6 @@
 #include <wtf/FastMalloc.h>
 #include <wtf/HashSet.h>
 
-using WTF::ThreadSpecific;
-
 namespace JSC {
 
 typedef HashMap<const char*, RefPtr<UString::Rep>, PtrHash<const char*> > LiteralIdentifierTable;
@@ -254,12 +252,51 @@ void Identifier::checkSameIdentifierTable(JSGlobalData* globalData)
 }
 #endif
 
-ThreadSpecific<ThreadIdentifierTableData>* g_identifierTableSpecific = 0;
 
-void createIdentifierTableSpecific()
+thread_local ThreadIdentifierTableData* g_identifierTableSpecific = Q_NULLPTR;
+
+IdentifierTable* defaultIdentifierTable()
 {
-    Q_ASSERT(!g_identifierTableSpecific);
-    g_identifierTableSpecific = new ThreadSpecific<ThreadIdentifierTableData>();
+    if (!g_identifierTableSpecific)
+        g_identifierTableSpecific = new ThreadIdentifierTableData();
+
+    return g_identifierTableSpecific->defaultIdentifierTable;
+}
+
+void setDefaultIdentifierTable(IdentifierTable* identifierTable)
+{
+    if (!g_identifierTableSpecific)
+        g_identifierTableSpecific = new ThreadIdentifierTableData();
+
+    g_identifierTableSpecific->defaultIdentifierTable = identifierTable;
+}
+
+IdentifierTable* currentIdentifierTable()
+{
+    if (!g_identifierTableSpecific)
+        g_identifierTableSpecific = new ThreadIdentifierTableData();
+
+    return g_identifierTableSpecific->currentIdentifierTable;
+}
+
+IdentifierTable* setCurrentIdentifierTable(IdentifierTable* identifierTable)
+{
+    if (!g_identifierTableSpecific)
+        g_identifierTableSpecific = new ThreadIdentifierTableData();
+    ThreadIdentifierTableData* data = g_identifierTableSpecific;
+
+    IdentifierTable* oldIdentifierTable = data->currentIdentifierTable;
+    data->currentIdentifierTable = identifierTable;
+    return oldIdentifierTable;
+}
+
+void resetCurrentIdentifierTable()
+{
+    if (!g_identifierTableSpecific)
+        g_identifierTableSpecific = new ThreadIdentifierTableData();
+    ThreadIdentifierTableData* data = g_identifierTableSpecific;
+
+    data->currentIdentifierTable = data->defaultIdentifierTable;
 }
 
 } // namespace JSC

@@ -37,8 +37,6 @@
 #include <wtf/DateMath.h>
 #include <wtf/Threading.h>
 
-using namespace WTF;
-
 namespace JSC {
 
 static void initializeThreadingOnce()
