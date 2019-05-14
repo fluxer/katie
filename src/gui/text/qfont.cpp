@@ -52,7 +52,6 @@
 #include "qstringlist.h"
 
 #include "qthread.h"
-#include "qthreadstorage.h"
 #include <qunicodetables_p.h>
 #include "qfont_p.h"
 #include <qfontengine_p.h>
@@ -2404,7 +2403,7 @@ static const int slow_timeout = 300000; //  5m
 
 const uint QFontCache::min_cost = 4*1024; // 4mb
 
-thread_local QFontCache* theFontCache;
+thread_local QFontCache* theFontCache = Q_NULLPTR;
 
 QFontCache *QFontCache::instance()
 {

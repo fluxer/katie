@@ -41,13 +41,12 @@
 
 #include "qsharednetworksession_p.h"
 #include "qbearerengine_p.h"
-#include <QThreadStorage>
 
 #ifndef QT_NO_BEARERMANAGEMENT
 
 QT_BEGIN_NAMESPACE
 
-thread_local QSharedNetworkSessionManager* tls;
+thread_local QSharedNetworkSessionManager* tls = Q_NULLPTR;
 
 inline QSharedNetworkSessionManager* sharedNetworkSessionManager()
 {

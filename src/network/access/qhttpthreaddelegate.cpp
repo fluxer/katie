@@ -172,9 +172,7 @@ public:
     }
 };
 
-
-thread_local QNetworkAccessCache* QHttpThreadDelegate::connections;
-
+thread_local QNetworkAccessCache* QHttpThreadDelegate::connections = Q_NULLPTR;
 
 QHttpThreadDelegate::~QHttpThreadDelegate()
 {
@@ -229,7 +227,7 @@ void QHttpThreadDelegate::startRequestSynchronously()
     synchronousRequestLoop.exec();
 
     connections->releaseEntry(cacheKey);
-    connections = 0;
+    connections = Q_NULLPTR;
 
 #ifdef QHTTPTHREADDELEGATE_DEBUG
     qDebug() << "QHttpThreadDelegate::startRequestSynchronously() thread=" << QThread::currentThreadId() << "finished";
@@ -243,7 +241,7 @@ void QHttpThreadDelegate::startRequest()
 #ifdef QHTTPTHREADDELEGATE_DEBUG
     qDebug() << "QHttpThreadDelegate::startRequest() thread=" << QThread::currentThreadId();
 #endif
-    // Check QThreadStorage for the QNetworkAccessCache
+    // Check for the QNetworkAccessCache
     // If not there, create this connection cache
     if (!connections) {
         connections = new QNetworkAccessCache();

@@ -148,7 +148,6 @@
 
 #include <QtCore/qdebug.h>
 #include <QtCore/qmath.h>
-#include <QtCore/qthreadstorage.h>
 #include <QtCore/qcoreevent.h>
 #include <QtCore/qpointer.h>
 
@@ -159,7 +158,7 @@
 
 QT_BEGIN_NAMESPACE
 
-thread_local QUnifiedTimer* unifiedTimer;
+thread_local QUnifiedTimer* unifiedTimer = Q_NULLPTR;
 
 QUnifiedTimer::QUnifiedTimer() :
     QObject(), defaultDriver(), lastTick(0),

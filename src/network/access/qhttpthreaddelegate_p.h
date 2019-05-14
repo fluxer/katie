@@ -55,7 +55,6 @@
 //
 
 #include <QObject>
-#include <QThreadStorage>
 #include <QNetworkProxy>
 #include <QSslConfiguration>
 #include <QSslError>
