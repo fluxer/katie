@@ -1849,6 +1849,7 @@ int qrand()
         std::srand(*pseed = QDateTime::currentDateTime().toTime_t()
                 + quintptr(&pseed)
                 + serial.fetchAndAddRelaxed(1));
+        delete pseed;
         almostrandom = true;
     }
     return std::rand();
