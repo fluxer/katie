@@ -186,24 +186,23 @@ namespace {
     private:
         qdesigner_internal::ClassesMemberFunctions *m_result;
         QString m_lastClassName;
-        QStringList *m_memberList;
+        QStringList m_memberList;
     };
 
     ReverseClassesMemberIterator::ReverseClassesMemberIterator(qdesigner_internal::ClassesMemberFunctions *result) :
-       m_result(result),
-       m_memberList(0)
+       m_result(result)
     {
     }
 
     void ReverseClassesMemberIterator::operator=(const ClassNameSignaturePair &classNameSignature)
     {
         // prepend a new entry if class changes
-        if (!m_memberList || classNameSignature.first != m_lastClassName) {
+        if (m_memberList.isEmpty() || classNameSignature.first != m_lastClassName) {
             m_lastClassName = classNameSignature.first;
             m_result->push_front(qdesigner_internal::ClassMemberFunctions(m_lastClassName));
-            m_memberList = &(m_result->front().m_memberList);
+            m_memberList = m_result->front().m_memberList;
         }
-        m_memberList->push_back(classNameSignature.second);
+        m_memberList.push_back(classNameSignature.second);
     }
 
     // Output iterator for a pair of pair of <classname,  signature>
