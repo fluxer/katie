@@ -2415,8 +2415,10 @@ QFontCache *QFontCache::instance()
 
 void QFontCache::cleanup()
 {
-    if (theFontCache)
+    if (theFontCache) {
+        delete theFontCache;
         theFontCache = 0;
+    }
 }
 
 QFontCache::QFontCache()
