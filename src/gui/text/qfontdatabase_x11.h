@@ -63,9 +63,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#if FC_VERSION >= 20402
 #include <fontconfig/fcfreetype.h>
-#endif
 #endif
 
 QT_BEGIN_NAMESPACE
@@ -495,9 +493,7 @@ static void loadFontConfig()
             FC_SPACING, FC_FILE, FC_INDEX,
             FC_LANG, FC_CHARSET, FC_FOUNDRY, FC_SCALABLE, FC_PIXEL_SIZE, FC_WEIGHT,
             FC_WIDTH,
-#if FC_VERSION >= 20297
             FC_CAPABILITY,
-#endif
             (const char *)0
         };
         const char **p = properties;
@@ -579,7 +575,6 @@ static void loadFontConfig()
             }
         }
 
-#if FC_VERSION >= 20297
         for (int j = 1; j < LanguageCount; ++j) {
             if (family->writingSystems[j] == QtFontFamily::Supported && requiresOpenType(j) && openType[j]) {
                 FcChar8 *cap;
@@ -588,7 +583,6 @@ static void loadFontConfig()
                     family->writingSystems[j] = QtFontFamily::UnsupportedFT;
             }
         }
-#endif
 
         QByteArray file((const char *)file_value);
         family->fontFilename = file;
@@ -1154,10 +1148,6 @@ static QFontEngine *loadFc(const QFontPrivate *fp, int script, const QFontDef &r
 
 static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id, FcBlanks *blanks, int *count)
 {
-#if FC_VERSION < 20402
-    Q_UNUSED(data)
-    return FcFreeTypeQuery(file, id, blanks, count);
-#else
     if (data.isEmpty())
         return FcFreeTypeQuery(file, id, blanks, count);
 
@@ -1176,7 +1166,6 @@ static FcPattern *queryFont(const FcChar8 *file, const QByteArray &data, int id,
     }
 
     return pattern;
-#endif
 }
 #endif // QT_NO_FONTCONFIG
 
@@ -1277,18 +1266,6 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
     }
 
     QString fileNameForQuery = fnt->fileName;
-#if FC_VERSION < 20402
-    QTemporaryFile tmp;
-
-    if (!fnt->data.isEmpty()) {
-        if (!tmp.open())
-            return;
-        tmp.write(fnt->data);
-        tmp.flush();
-        fileNameForQuery = tmp.fileName();
-    }
-#endif
-
     int id = 0;
     FcBlanks *blanks = FcConfigGetBlanks(0);
     int count = 0;
@@ -1296,7 +1273,7 @@ static void registerFont(QFontDatabasePrivate::ApplicationFont *fnt)
     QStringList families;
     QFontDatabasePrivate *db = privateDb();
 
-    FcPattern *pattern = 0;
+    FcPattern *pattern = Q_NULLPTR;
     do {
         pattern = queryFont((const FcChar8 *)QFile::encodeName(fileNameForQuery).constData(),
                             fnt->data, id, blanks, &count);

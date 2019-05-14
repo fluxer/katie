@@ -224,7 +224,6 @@ if(KATIE_COMPILER MATCHES "(gcc|clang)")
     set(QT_VISIBILITY_AVAILABLE TRUE)
 endif()
 
-
 configure_file(
     ${CMAKE_SOURCE_DIR}/src/core/global/qconfig.h.cmake
     ${CMAKE_BINARY_DIR}/include/QtCore/qconfig.h
@@ -377,7 +376,7 @@ set_package_properties(Cups PROPERTIES
     TYPE RECOMMENDED
 )
 
-find_package(Fontconfig)
+find_package(Fontconfig 2.4.2)
 set_package_properties(Fontconfig PROPERTIES
     PURPOSE "Required for fonts configuration support"
     DESCRIPTION "Library for configuring and customizing font access"
