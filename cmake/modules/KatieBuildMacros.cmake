@@ -293,7 +293,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 endmacro()
 
 # a macro to generate Python bindings sources
-macro(KATANA_GENERATE_BINDINGS FORTARGET OUTPUTFILES)
+macro(KATIE_GENERATE_BINDINGS FORTARGET OUTPUTFILES)
     set(outputfiles ${OUTPUTFILES} ${ARGN})
     set(includedirs)
     get_directory_property(dirincs INCLUDE_DIRECTORIES)

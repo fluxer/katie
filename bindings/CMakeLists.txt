@@ -59,7 +59,7 @@ set(PyKtCore_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/ktcore_python.h
 )
 
-katana_generate_bindings(KtCore ${PyKtCore_SOURCES})
+katie_generate_bindings(KtCore ${PyKtCore_SOURCES})
 
 add_library(PyKtCore MODULE ${PyKtCore_SOURCES})
 target_link_libraries(PyKtCore
