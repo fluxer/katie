@@ -498,7 +498,6 @@ public:
 
     QRect contentsRect() const;
 
-public:
     QLayout *layout() const;
     void setLayout(QLayout *);
     void updateGeometry();
@@ -616,10 +615,6 @@ protected:
 
     int metric(PaintDeviceMetric) const;
 
-protected Q_SLOTS:
-    void updateMicroFocus();
-protected:
-
     void create(WId = 0, bool initializeWindow = true,
                          bool destroyOldWindow = true);
     void destroy(bool destroyWindow = true,
@@ -629,10 +624,9 @@ protected:
     inline bool focusNextChild() { return focusNextPrevChild(true); }
     inline bool focusPreviousChild() { return focusNextPrevChild(false); }
 
-protected:
     QWidget(QWidgetPrivate &d, QWidget* parent, Qt::WindowFlags f);
-private:
 
+private:
     bool testAttribute_helper(Qt::WidgetAttribute) const;
 
     QLayout *takeLayout();
@@ -671,12 +665,10 @@ private:
     friend Q_GUI_EXPORT QWidgetData *qt_qwidget_data(QWidget *widget);
     friend Q_GUI_EXPORT QWidgetPrivate *qt_widget_private(QWidget *widget);
 
-private:
     Q_DISABLE_COPY(QWidget)
     Q_PRIVATE_SLOT(d_func(), void _q_showIfNotHidden())
 
     QWidgetData *data;
-
 
 protected:
     virtual void styleChange(QStyle&); // compat

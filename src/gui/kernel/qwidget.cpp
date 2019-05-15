@@ -9803,18 +9803,6 @@ void QWidget::setShortcutAutoRepeat(int id, bool enable)
         qApp->d_func()->shortcutMap.setShortcutAutoRepeat(enable, id, this, 0);
 }
 #endif // QT_NO_SHORTCUT
-/*!
-    Updates the widget's micro focus.
-*/
-void QWidget::updateMicroFocus()
-{
-#ifndef QT_NO_ACCESSIBILITY
-    if (isVisible()) {
-        // ##### is this correct
-        QAccessible::updateAccessibility(this, 0, QAccessible::StateChanged);
-    }
-#endif
-}
 
 /*!
     Returns the window system handle of the widget, for low-level

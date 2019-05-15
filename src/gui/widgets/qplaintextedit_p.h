@@ -91,7 +91,6 @@ public:
     inline QRectF cursorRect() { return cursorRect(textCursor()); }
     void ensureCursorVisible() {
         textEdit->ensureCursorVisible();
-        emit microFocusChanged();
     }
 
 

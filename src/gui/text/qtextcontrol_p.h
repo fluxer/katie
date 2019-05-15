@@ -221,7 +221,6 @@ Q_SIGNALS:
     void documentSizeChanged(const QSizeF &);
     void blockCountChanged(int newBlockCount);
     void visibilityRequest(const QRectF &rect);
-    void microFocusChanged();
     void linkActivated(const QString &link);
     void linkHovered(const QString &);
     void modificationChanged(bool m);

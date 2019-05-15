@@ -285,7 +285,6 @@ bool QTextControlPrivate::cursorMoveKeyEvent(QKeyEvent *e)
     if (moved) {
         if (cursor.position() != oldCursorPos)
             emit q->cursorPositionChanged();
-        emit q->microFocusChanged();
     } else if (ignoreNavigationEvents && isNavigationEvent && oldSelection.anchor() == cursor.anchor()) {
         return false;
     }
@@ -307,7 +306,6 @@ void QTextControlPrivate::updateCurrentCharFormat()
     lastCharFormat = fmt;
 
     emit q->currentCharFormatChanged(fmt);
-    emit q->microFocusChanged();
 }
 
 void QTextControlPrivate::indent()
@@ -594,7 +592,6 @@ void QTextControlPrivate::selectionChanged(bool forceEmitSelectionChanged /*=fal
             QAccessible::updateAccessibility(q->parent(), 0, QAccessible::TextSelectionChanged);
 #endif
     }
-    emit q->microFocusChanged();
 }
 
 void QTextControlPrivate::_q_updateCurrentCharFormatAndSelection()
@@ -620,7 +617,6 @@ void QTextControlPrivate::_q_emitCursorPosChanged(const QTextCursor &someCursor)
     Q_Q(QTextControl);
     if (someCursor.isCopyOf(cursor)) {
         emit q->cursorPositionChanged();
-        emit q->microFocusChanged();
     }
 }
 
@@ -767,7 +763,6 @@ void QTextControl::undo()
     d->doc->undo(&d->cursor);
     if (d->cursor.position() != oldCursorPos)
         emit cursorPositionChanged();
-    emit microFocusChanged();
     ensureCursorVisible();
 }
 
@@ -779,7 +774,6 @@ void QTextControl::redo()
     d->doc->redo(&d->cursor);
         if (d->cursor.position() != oldCursorPos)
         emit cursorPositionChanged();
-    emit microFocusChanged();
     ensureCursorVisible();
 }
 
@@ -1585,7 +1579,6 @@ void QTextControlPrivate::mousePressEvent(QEvent *e, Qt::MouseButton button, con
     } else {
         if (cursor.position() != oldCursorPos) {
             emit q->cursorPositionChanged();
-            emit q->microFocusChanged();
         }
         selectionChanged();
     }
@@ -1656,7 +1649,6 @@ void QTextControlPrivate::mouseMoveEvent(QEvent *e, Qt::MouseButton button, cons
         //emit q->visibilityRequest(QRectF(mousePos, QSizeF(1, 1)));
         if (cursor.position() != oldCursorPos) {
             emit q->cursorPositionChanged();
-            emit q->microFocusChanged();
         }
     }
     selectionChanged(true);
@@ -1698,7 +1690,6 @@ void QTextControlPrivate::mouseReleaseEvent(QEvent *e, Qt::MouseButton button, c
 
     if (cursor.position() != oldCursorPos) {
         emit q->cursorPositionChanged();
-        emit q->microFocusChanged();
     }
 
     if (interactionFlags & Qt::LinksAccessibleByMouse) {
@@ -1913,7 +1904,6 @@ void QTextControlPrivate::editFocusEvent(QEvent *e)
             if (moved) {
                 if (cursor.position() != oldCursorPos)
                     emit q->cursorPositionChanged();
-                emit q->microFocusChanged();
             }
             selectionChanged();
             repaintOldAndNewSelection(oldSelection);
@@ -2777,7 +2767,6 @@ void QTextControl::ensureCursorVisible()
     Q_D(QTextControl);
     QRectF crect = d->rectForPosition(d->cursor.position()).adjusted(-5, 0, 5, 0);
     emit visibilityRequest(crect);
-    emit microFocusChanged();
 }
 
 QPalette QTextControl::palette() const

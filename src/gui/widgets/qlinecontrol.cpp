@@ -560,8 +560,6 @@ bool QLineControl::finishChange(int validateFromState, bool update, bool edited)
         m_selDirty = false;
         emit selectionChanged();
     }
-    if (m_cursor == m_lastCursorPos)
-        updateMicroFocus();
     emitCursorPositionChanged();
     return true;
 }

@@ -1530,7 +1530,6 @@ void QDeclarativeTextEditPrivate::init()
     QObject::connect(control, SIGNAL(selectionChanged()), q, SLOT(updateSelectionMarkers()));
     QObject::connect(control, SIGNAL(cursorPositionChanged()), q, SLOT(updateSelectionMarkers()));
     QObject::connect(control, SIGNAL(cursorPositionChanged()), q, SIGNAL(cursorPositionChanged()));
-    QObject::connect(control, SIGNAL(microFocusChanged()), q, SLOT(moveCursorDelegate()));
     QObject::connect(control, SIGNAL(linkActivated(QString)), q, SIGNAL(linkActivated(QString)));
 #ifndef QT_NO_CLIPBOARD
     QObject::connect(q, SIGNAL(readOnlyChanged(bool)), q, SLOT(q_canPasteChanged()));
@@ -1562,7 +1561,6 @@ void QDeclarativeTextEdit::moveCursorDelegate()
 {
     Q_D(QDeclarativeTextEdit);
     d->determineHorizontalAlignment();
-    updateMicroFocus();
     emit cursorRectangleChanged();
     if(!d->cursor)
         return;

@@ -444,8 +444,6 @@ Q_SIGNALS:
     void textChanged(const QString &);
     void textEdited(const QString &);
 
-    void updateMicroFocus();
-
     void accepted();
     void editingFinished();
     void updateNeeded(const QRect &);

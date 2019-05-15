@@ -135,7 +135,6 @@ void QTextEditPrivate::init(const QString &html)
     control = new QTextEditControl(q);
     control->setPalette(q->palette());
 
-    QObject::connect(control, SIGNAL(microFocusChanged()), q, SLOT(updateMicroFocus()));
     QObject::connect(control, SIGNAL(documentSizeChanged(QSizeF)), q, SLOT(_q_adjustScrollbars()));
     QObject::connect(control, SIGNAL(updateRequest(QRectF)), q, SLOT(_q_repaintContents(QRectF)));
     QObject::connect(control, SIGNAL(visibilityRequest(QRectF)), q, SLOT(_q_ensureVisible(QRectF)));
@@ -148,8 +147,6 @@ void QTextEditPrivate::init(const QString &html)
     QObject::connect(control, SIGNAL(copyAvailable(bool)), q, SIGNAL(copyAvailable(bool)));
     QObject::connect(control, SIGNAL(selectionChanged()), q, SIGNAL(selectionChanged()));
     QObject::connect(control, SIGNAL(cursorPositionChanged()), q, SIGNAL(cursorPositionChanged()));
-
-    QObject::connect(control, SIGNAL(textChanged()), q, SLOT(updateMicroFocus()));
 
     QTextDocument *doc = control->document();
     // set a null page size initially to avoid any relayouting until the textedit
@@ -1698,7 +1695,6 @@ void QTextEdit::wheelEvent(QWheelEvent *e)
         }
     }
     QAbstractScrollArea::wheelEvent(e);
-    updateMicroFocus();
 }
 #endif
 

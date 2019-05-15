@@ -1738,8 +1738,6 @@ void QDeclarativeTextInputPrivate::init()
             q, SLOT(q_canPasteChanged()));
     canPaste = !control->isReadOnly() && QApplication::clipboard()->text().length() != 0;
 #endif // QT_NO_CLIPBOARD
-    q->connect(control, SIGNAL(updateMicroFocus()),
-               q, SLOT(updateCursorRectangle()));
     q->connect(control, SIGNAL(displayTextChanged(QString)),
                q, SLOT(updateRect()));
     q->updateSize();
@@ -1777,7 +1775,6 @@ void QDeclarativeTextInput::updateCursorRectangle()
     d->determineHorizontalAlignment();
     d->updateHorizontalScroll();
     updateRect();//TODO: Only update rect between pos's
-    updateMicroFocus();
     emit cursorRectangleChanged();
     if (d->cursorItem)
         d->cursorItem->setX(d->control->cursorToX() - d->hscroll);
@@ -1811,7 +1808,6 @@ void QDeclarativeTextInput::q_textChanged()
     updateSize();
     d->determineHorizontalAlignment();
     d->updateHorizontalScroll();
-    updateMicroFocus();
     if(hasAcceptableInput() != d->oldValidity){
         d->oldValidity = hasAcceptableInput();
         emit acceptableInputChanged();

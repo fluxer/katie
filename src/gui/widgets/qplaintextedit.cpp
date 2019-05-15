@@ -761,7 +761,6 @@ void QPlainTextEditPrivate::init(const QString &txt)
 
     QObject::connect(vbar, SIGNAL(actionTriggered(int)), q, SLOT(_q_verticalScrollbarActionTriggered(int)));
 
-    QObject::connect(control, SIGNAL(microFocusChanged()), q, SLOT(updateMicroFocus()));
     QObject::connect(control, SIGNAL(documentSizeChanged(QSizeF)), q, SLOT(_q_adjustScrollbars()));
     QObject::connect(control, SIGNAL(blockCountChanged(int)), q, SIGNAL(blockCountChanged(int)));
     QObject::connect(control, SIGNAL(updateRequest(QRectF)), q, SLOT(_q_repaintContents(QRectF)));
@@ -774,8 +773,6 @@ void QPlainTextEditPrivate::init(const QString &txt)
     QObject::connect(control, SIGNAL(selectionChanged()), q, SIGNAL(selectionChanged()));
     QObject::connect(control, SIGNAL(cursorPositionChanged()), q, SLOT(_q_cursorPositionChanged()));
     QObject::connect(control, SIGNAL(cursorPositionChanged()), q, SIGNAL(cursorPositionChanged()));
-
-    QObject::connect(control, SIGNAL(textChanged()), q, SLOT(updateMicroFocus()));
 
     // set a null page size initially to avoid any relayouting until the textedit
     // is shown. relayoutDocument() will take care of setting the page size to the
@@ -2159,7 +2156,6 @@ void QPlainTextEdit::changeEvent(QEvent *e)
 void QPlainTextEdit::wheelEvent(QWheelEvent *e)
 {
     QAbstractScrollArea::wheelEvent(e);
-    updateMicroFocus();
 }
 #endif
 

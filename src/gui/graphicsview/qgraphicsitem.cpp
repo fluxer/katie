@@ -7223,16 +7223,6 @@ void QGraphicsItem::wheelEvent(QGraphicsSceneWheelEvent *event)
 }
 
 /*!
-    Updates the item's micro focus.
-
-    \since 4.7
-*/
-void QGraphicsItem::updateMicroFocus()
-{
-#warning noop
-}
-
-/*!
     This virtual function is called by QGraphicsItem to notify custom items
     that some part of the item's state changes. By reimplementing this
     function, your can react to a change, and in some cases, (depending on \a
@@ -7507,16 +7497,6 @@ void QGraphicsObject::ungrabGesture(Qt::GestureType gesture)
         QGraphicsItem::d_ptr->scene->d_func()->ungrabGesture(this, gesture);
 }
 #endif // QT_NO_GESTURES
-
-/*!
-    Updates the item's micro focus. This is slot for convenience.
-
-    \since 4.7
-*/
-void QGraphicsObject::updateMicroFocus()
-{
-    QGraphicsItem::updateMicroFocus();
-}
 
 void QGraphicsItemPrivate::children_append(QDeclarativeListProperty<QGraphicsObject> *list, QGraphicsObject *item)
 {
@@ -10153,7 +10133,7 @@ bool QGraphicsTextItemPrivate::_q_mouseOnEdge(QGraphicsSceneMouseEvent *event)
 void QGraphicsTextItem::setTextInteractionFlags(Qt::TextInteractionFlags flags)
 {
     if (flags == Qt::NoTextInteraction)
-        setFlags(this->flags() & ~(QGraphicsItem::ItemIsFocusable));
+        setFlags(this->flags() & ~QGraphicsItem::ItemIsFocusable);
     else
         setFlags(this->flags() | QGraphicsItem::ItemIsFocusable);
 
