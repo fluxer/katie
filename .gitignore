@@ -15,10 +15,9 @@
 # Shiboken log files
 bindings/*.log
 
-# Directories to ignore
+# build directories to ignore
 # ---------------------
 apidocs
 build
 minsize
-fastdev
 debug
