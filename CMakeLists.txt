@@ -113,75 +113,75 @@ katie_setup_paths()
 
 # optional package
 option(WITH_THREADS "Build threads support" ON)
-add_feature_info(threads WITH_THREADS "an open source something")
+add_feature_info(threads WITH_THREADS "build threads support")
 
-option(WITH_NIS "Build nis support" ON)
-add_feature_info(nis WITH_NIS "an open source something")
+option(WITH_NIS "Build NIS support" ON)
+add_feature_info(nis WITH_NIS "build NIS support")
 
-option(WITH_CUPS "Build cups support" ON)
-add_feature_info(cups WITH_CUPS "an open source something")
+option(WITH_CUPS "Build CUPS support" ON)
+add_feature_info(cups WITH_CUPS "build CUPS support")
 
-option(WITH_PNG "Build png support" ON)
-add_feature_info(png WITH_PNG "an open source something")
+option(WITH_PNG "Build PNG support" ON)
+add_feature_info(png WITH_PNG "build PNG support")
 
-option(WITH_JPEG "Build jpeg support" ON)
-add_feature_info(jpeg WITH_JPEG "an open source something")
+option(WITH_JPEG "Build JPEG support" ON)
+add_feature_info(jpeg WITH_JPEG "build JPEG support")
 
-option(WITH_TIFF "Build tiff support" ON)
-add_feature_info(tiff WITH_TIFF "an open source something")
+option(WITH_TIFF "Build TIFF support" ON)
+add_feature_info(tiff WITH_TIFF "build TIFF support")
 
-option(WITH_MNG "Build mng support" ON)
-add_feature_info(mng WITH_MNG "an open source something")
+option(WITH_MNG "Build MNG support" ON)
+add_feature_info(mng WITH_MNG "build MNG support")
 
-option(WITH_ICONV "Build iconv support" ON)
-add_feature_info(iconv WITH_ICONV "an open source something")
+option(WITH_ICONV "Build Iconv support" ON)
+add_feature_info(iconv WITH_ICONV "build Iconv support")
 
-option(WITH_GLIB2 "Build glib2 support" OFF)
-add_feature_info(glib2 WITH_GLIB2 "an open source something")
+option(WITH_GLIB2 "Build GLib2 support" OFF)
+add_feature_info(glib2 WITH_GLIB2 "build GLib2 support")
 
-option(WITH_DBUS "Build dbus support" ON)
-add_feature_info(dbus WITH_DBUS "an open source something")
+option(WITH_DBUS "Build DBus support" ON)
+add_feature_info(dbus WITH_DBUS "build DBus support")
 
-option(WITH_FONTCONFIG "Build fontconfig support" ON)
-add_feature_info(fontconfig WITH_FONTCONFIG "an open source something")
+option(WITH_FONTCONFIG "Build Fontconfig support" ON)
+add_feature_info(fontconfig WITH_FONTCONFIG "build Fontconfig support")
 
-option(WITH_ICU "Build icu support" ON)
-add_feature_info(icu WITH_ICU "an open source something")
+option(WITH_ICU "Build ICU support" ON)
+add_feature_info(icu WITH_ICU "build ICU support")
 
 # TODO: enable when building against external harfbuzz works
-option(WITH_HARFBUZZ "Build harfbuzz support" OFF)
-add_feature_info(harfbuzz WITH_HARFBUZZ "an open source something")
+option(WITH_HARFBUZZ "Build Harfbuzz support" OFF)
+add_feature_info(harfbuzz WITH_HARFBUZZ "build Harfbuzz support")
 
 option(WITH_ODBC "Build ODBC database plugin" ON)
-add_feature_info(odbc WITH_ODBC "an open source something")
+add_feature_info(odbc WITH_ODBC "build ODBC support")
 
 option(WITH_PSQL "Build PostgreSQL database plugin" ON)
-add_feature_info(postgresql WITH_PSQL "the world's most advanced open source database")
+add_feature_info(postgresql WITH_PSQL "build PostgreSQL support")
 
 option(WITH_MYSQL "Build MySQL database plugin" ON)
-add_feature_info(mysql WITH_MYSQL "the world's most popular open source database")
+add_feature_info(mysql WITH_MYSQL "build MySQL support")
 
 option(WITH_SQLITE "Build SQLite database plugin" ON)
-add_feature_info(sqlite WITH_SQLITE "the world's most popular open source database")
+add_feature_info(sqlite WITH_SQLITE "build SQLite support")
 
 option(WITH_RESOLV "Build resolv support" ON)
-add_feature_info(resolv WITH_RESOLV "an open source something")
+add_feature_info(resolv WITH_RESOLV "build reslove support")
 
-option(WITH_NSL "Build nsl support" ON)
-add_feature_info(nsl WITH_NSL "an open source something")
+option(WITH_NSL "Build NSL support" ON)
+add_feature_info(nsl WITH_NSL "build NSL support")
 
 # optional features
 option(KATIE_UTILS "Build maintainance utilities" OFF)
-add_feature_info(utils KATIE_UTILS "developers build option")
+add_feature_info(utils KATIE_UTILS "build maintainance utilities")
 
-option(KATIE_BINDINGS "Build experimental Pyhton bindings" OFF)
-add_feature_info(bindings KATIE_BINDINGS "experimental build option")
+option(KATIE_BINDINGS "Build experimental Python bindings" OFF)
+add_feature_info(bindings KATIE_BINDINGS "build experimental Python bindings")
 
 option(KATIE_ALLINONE "Build targets from single source file" OFF)
-add_feature_info(allinone KATIE_ALLINONE "experimental build option")
+add_feature_info(allinone KATIE_ALLINONE "build targets from single source file")
 
 option(WITH_ACCESSIBILITY "Build accessibility support" ON)
-add_feature_info(accessibility WITH_ACCESSIBILITY "an open source something")
+add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 
 include(mkspecs/mkspecs.cmake)
 
