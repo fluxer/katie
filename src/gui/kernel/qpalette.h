@@ -82,19 +82,43 @@ public:
     operator QVariant() const;
 
     // Do not change the order, the serialization format depends on it
-    enum ColorGroup { Active, Disabled, Inactive, NColorGroups, Current, All, Normal = Active };
-    enum ColorRole { WindowText, Button, Light, Midlight, Dark, Mid,
-                     Text, BrightText, ButtonText, Base, Window, Shadow,
-                     Highlight, HighlightedText,
-                     Link, LinkVisited, // ### Qt 5: remove
-                     AlternateBase,
-                     NoRole, // ### Qt 5: value should be 0 or -1
-                     ToolTipBase, ToolTipText,
-                     NColorRoles = ToolTipText + 1,
-                     Foreground = WindowText, Background = Window // ### Qt 5: remove
-                   };
+    enum ColorGroup {
+        Active,
+        Disabled,
+        Inactive,
+        NColorGroups,
+        Current,
+        All,
+        Normal = Active
+    };
+    enum ColorRole {
+        WindowText,
+        Button,
+        Light,
+        Midlight,
+        Dark,
+        Mid,
+        Text,
+        BrightText,
+        ButtonText,
+        Base,
+        Window,
+        Shadow,
+        Highlight,
+        HighlightedText,
+        Link,
+        LinkVisited, // ### Qt 5: remove
+        AlternateBase,
+        NoRole, // ### Qt 5: value should be 0 or -1
+        ToolTipBase,
+        ToolTipText,
+        NColorRoles = ToolTipText + 1,
+        // ### Qt 5: remove
+        Foreground = WindowText,
+        Background = Window
+    };
 
-    inline ColorGroup currentColorGroup() const { return static_cast<ColorGroup>(current_group); }
+    inline ColorGroup currentColorGroup() const { current_group; }
     inline void setCurrentColorGroup(ColorGroup cg) { current_group = cg; }
 
     inline const QColor &color(ColorGroup cg, ColorRole cr) const
@@ -168,8 +192,8 @@ private:
     void detach();
 
     QPalettePrivate *d;
-    uint current_group : 4;
-    uint resolve_mask : 28;
+    ColorGroup current_group;
+    uint resolve_mask;
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &s, const QPalette &p);
 };
 

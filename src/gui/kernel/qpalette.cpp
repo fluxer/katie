@@ -687,7 +687,7 @@ const QBrush &QPalette::brush(ColorGroup gr, ColorRole cr) const
     Q_ASSERT(cr < NColorRoles);
     if(gr >= (int)NColorGroups) {
         if(gr == Current) {
-            gr = (ColorGroup)current_group;
+            gr = current_group;
         } else {
             qWarning("QPalette::brush: Unknown ColorGroup: %d", (int)gr);
             gr = Active;
@@ -725,7 +725,7 @@ void QPalette::setBrush(ColorGroup cg, ColorRole cr, const QBrush &b)
             resolve_mask |= (1<<cr);
             return;
         } else if(cg == Current) {
-            cg = (ColorGroup)current_group;
+            cg = current_group;
         } else {
             qWarning("QPalette::setBrush: Unknown ColorGroup: %d", (int)cg);
             cg = Active;
@@ -812,7 +812,7 @@ bool QPalette::isEqual(QPalette::ColorGroup group1, QPalette::ColorGroup group2)
 {
     if(group1 >= (int)NColorGroups) {
         if(group1 == Current) {
-            group1 = (ColorGroup)current_group;
+            group1 = current_group;
         } else {
             qWarning("QPalette::brush: Unknown ColorGroup(1): %d", (int)group1);
             group1 = Active;
@@ -820,7 +820,7 @@ bool QPalette::isEqual(QPalette::ColorGroup group1, QPalette::ColorGroup group2)
     }
     if(group2 >= (int)NColorGroups) {
         if(group2 == Current) {
-            group2 = (ColorGroup)current_group;
+            group2 = current_group;
         } else {
             qWarning("QPalette::brush: Unknown ColorGroup(2): %d", (int)group2);
             group2 = Active;
