@@ -87,10 +87,10 @@ public:
     int userTopMargin;
     int userRightMargin;
     int userBottomMargin;
-    uint topLevel : 1;
-    uint enabled : 1;
-    uint activated : 1;
-    uint autoNewChild : 1;
+    bool topLevel;
+    bool enabled;
+    bool activated;
+    bool autoNewChild;
     QLayout::SizeConstraint constraint;
     QRect rect;
     QWidget *menubar;

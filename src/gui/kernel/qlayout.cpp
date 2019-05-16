@@ -158,7 +158,7 @@ QLayout::QLayout(QLayoutPrivate &dd, QLayout *lay, QWidget *w)
 QLayoutPrivate::QLayoutPrivate()
     : QObjectPrivate(), insideSpacing(-1), userLeftMargin(-1), userTopMargin(-1), userRightMargin(-1),
       userBottomMargin(-1), topLevel(false), enabled(true), activated(true), autoNewChild(false),
-      constraint(QLayout::SetDefaultConstraint), menubar(0)
+      constraint(QLayout::SetDefaultConstraint), menubar(Q_NULLPTR)
 {
 }
 
@@ -627,7 +627,7 @@ void QLayout::widgetEvent(QEvent *e)
                 QWidget *w = (QWidget *)c->child();
 #ifndef QT_NO_MENUBAR
                 if (w == d->menubar)
-                    d->menubar = 0;
+                    d->menubar = Q_NULLPTR;
 #endif
                 removeWidgetRecursively(this, w);
             }
