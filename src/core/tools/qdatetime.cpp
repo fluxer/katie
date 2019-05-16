@@ -2067,7 +2067,6 @@ QDateTime::QDateTime(const QDateTime &other)
 */
 QDateTime::~QDateTime()
 {
-    delete d;
 }
 
 /*!
@@ -2155,6 +2154,7 @@ Qt::TimeSpec QDateTime::timeSpec() const
 
 void QDateTime::setDate(const QDate &date)
 {
+    detach();
     d->date = date;
     if (d->spec == QDateTimePrivate::LocalStandard
         || d->spec == QDateTimePrivate::LocalDST)
@@ -2171,6 +2171,7 @@ void QDateTime::setDate(const QDate &date)
 
 void QDateTime::setTime(const QTime &time)
 {
+    detach();
     if (d->spec == QDateTimePrivate::LocalStandard
         || d->spec == QDateTimePrivate::LocalDST)
         d->spec = QDateTimePrivate::LocalUnknown;
@@ -2185,6 +2186,8 @@ void QDateTime::setTime(const QTime &time)
 
 void QDateTime::setTimeSpec(Qt::TimeSpec spec)
 {
+    detach();
+
     switch(spec)
     {
         case Qt::UTC:
@@ -2276,6 +2279,8 @@ uint QDateTime::toTime_t() const
 */
 void QDateTime::setMSecsSinceEpoch(qint64 msecs)
 {
+    detach();
+
     QDateTimePrivate::Spec oldSpec = d->spec;
 
     int ddays = msecs / MSECS_PER_DAY;
@@ -2307,6 +2312,8 @@ void QDateTime::setMSecsSinceEpoch(qint64 msecs)
 
 void QDateTime::setTime_t(uint secsSince1Jan1970UTC)
 {
+    detach();
+
     QDateTimePrivate::Spec oldSpec = d->spec;
 
     d->date = QDate(1970, 1, 1).addDays(secsSince1Jan1970UTC / SECS_PER_DAY);
@@ -2958,6 +2965,8 @@ QDateTime QDateTime::fromMSecsSinceEpoch(qint64 msecs)
  */
 void QDateTime::setUtcOffset(int seconds)
 {
+    detach();
+
     /* The motivation to also setting d->spec is to ensure that the QDateTime
      * instance stay in well-defined states all the time, instead of that
      * we instruct the user to ensure it. */
@@ -3313,6 +3322,13 @@ QDateTime QDateTime::fromString(const QString &string, const QString &format)
     \sa toTimeSpec()
 */
 
+/*! \internal
+ */
+void QDateTime::detach()
+{
+    d.detach();
+}
+
 /*****************************************************************************
   Date/time stream functions
  *****************************************************************************/
@@ -3400,6 +3416,8 @@ QDataStream &operator<<(QDataStream &out, const QDateTime &dateTime)
 
 QDataStream &operator>>(QDataStream &in, QDateTime &dateTime)
 {
+    dateTime.detach();
+
     qint8 ts = (qint8)QDateTimePrivate::LocalUnknown;
     in >> dateTime.d->date >> dateTime.d->time;
     in >> ts;
