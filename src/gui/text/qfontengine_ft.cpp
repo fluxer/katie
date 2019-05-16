@@ -135,7 +135,7 @@ public:
     QHash<QFontEngine::FaceId, QFreetypeFace *> faces;
 };
 
-thread_local QtFreetypeData* theFreetypeData;
+thread_local QtFreetypeData* theFreetypeData = Q_NULLPTR;
 
 QtFreetypeData *qt_getFreetypeData()
 {

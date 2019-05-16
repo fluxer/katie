@@ -117,7 +117,7 @@ void QIconvCodec::IconvState::saveChars(const char *c, int count)
     memcpy(buffer, c, count);
 }
 
-thread_local QIconvCodec::IconvState* toUnicodeState;
+thread_local QIconvCodec::IconvState* toUnicodeState = Q_NULLPTR;
 
 QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState *convState) const
 {
@@ -240,7 +240,7 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
     return s;
 }
 
-thread_local QIconvCodec::IconvState* fromUnicodeState;
+thread_local QIconvCodec::IconvState* fromUnicodeState = Q_NULLPTR;
 
 static bool setByteOrder(iconv_t cd)
 {
