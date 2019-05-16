@@ -90,13 +90,13 @@ public:
     int shortcutId;
     QList<int> alternateShortcutIds;
     Qt::ShortcutContext shortcutContext;
-    uint autorepeat : 1;
+    bool autorepeat;
 #endif
-    uint enabled : 1;
-    uint visible : 1;
-    uint checkable : 1;
-    uint checked : 1;
-    uint separator : 1;
+    bool enabled;
+    bool visible;
+    bool checkable;
+    bool checked;
+    bool separator;
 
     QFont font;
     QPointer<QMenu> menu;

@@ -79,8 +79,8 @@ static QString qt_strippedText(QString s)
 }
 
 
-QActionPrivate::QActionPrivate() : group(0), enabled(1),
-                                   visible(1), checkable(0), checked(0), separator(0),
+QActionPrivate::QActionPrivate() : group(Q_NULLPTR), enabled(true),
+                                   visible(true), checkable(false), checked(false), separator(false),
                                    menuRole(QAction::TextHeuristicRole),
                                    priority(QAction::NormalPriority)
 {
