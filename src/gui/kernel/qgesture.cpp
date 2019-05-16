@@ -205,13 +205,13 @@ void QGesture::unsetHotSpot()
 void QGesture::setGestureCancelPolicy(GestureCancelPolicy policy)
 {
     Q_D(QGesture);
-    d->gestureCancelPolicy = static_cast<uint>(policy);
+    d->gestureCancelPolicy = policy;
 }
 
 QGesture::GestureCancelPolicy QGesture::gestureCancelPolicy() const
 {
     Q_D(const QGesture);
-    return static_cast<GestureCancelPolicy>(d->gestureCancelPolicy);
+    return d->gestureCancelPolicy;
 }
 
 /*!

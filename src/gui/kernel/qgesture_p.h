@@ -70,7 +70,7 @@ class QGesturePrivate : public QObjectPrivate
 public:
     QGesturePrivate()
         : gestureType(Qt::CustomGesture), state(Qt::NoGesture),
-          isHotSpotSet(false), gestureCancelPolicy(0)
+          isHotSpotSet(false), gestureCancelPolicy(QGesture::GestureCancelPolicy::CancelNone)
     {
     }
 
@@ -78,8 +78,8 @@ public:
     Qt::GestureState state;
     QPointF hotSpot;
     QPointF sceneHotSpot;
-    uint isHotSpotSet : 1;
-    uint gestureCancelPolicy : 2;
+    bool isHotSpotSet;
+    QGesture::GestureCancelPolicy gestureCancelPolicy;
 };
 
 class QPanGesturePrivate : public QGesturePrivate
