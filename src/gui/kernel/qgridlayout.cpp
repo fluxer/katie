@@ -223,11 +223,11 @@ private:
     int rightMargin;
     int bottomMargin;
 
-    uint hReversed : 1;
-    uint vReversed : 1;
-    uint needRecalc : 1;
-    uint has_hfw : 1;
-    uint addVertical : 1;
+    bool hReversed;
+    bool vReversed;
+    bool needRecalc;
+    bool has_hfw;
+    bool addVertical;
 };
 
 void QGridLayoutPrivate::effectiveMargins(int *left, int *top, int *right, int *bottom) const
@@ -680,13 +680,12 @@ void QGridLayoutPrivate::setupLayoutData(int hSpacing, int vSpacing)
         return;
 #endif
     has_hfw = false;
-    int i;
 
-    for (i = 0; i < rr; i++) {
+    for (int i = 0; i < rr; i++) {
         rowData[i].init(rStretch.at(i), rMinHeights.at(i));
         rowData[i].maximumSize = rStretch.at(i) ? QLAYOUTSIZE_MAX : rMinHeights.at(i);
     }
-    for (i = 0; i < cc; i++) {
+    for (int i = 0; i < cc; i++) {
         colData[i].init(cStretch.at(i), cMinWidths.at(i));
         colData[i].maximumSize = cStretch.at(i) ? QLAYOUTSIZE_MAX : cMinWidths.at(i);
     }
@@ -707,7 +706,7 @@ void QGridLayoutPrivate::setupLayoutData(int hSpacing, int vSpacing)
         Initialize 'sizes' and 'grid' data structures, and insert
         non-spanning items to our row and column data structures.
     */
-    for (i = 0; i < n; ++i) {
+    for (int i = 0; i < n; ++i) {
         QGridBox * const box = things.at(i);
         sizes[i].minS = box->minimumSize();
         sizes[i].hint = box->sizeHint();
@@ -746,7 +745,7 @@ void QGridLayoutPrivate::setupLayoutData(int hSpacing, int vSpacing)
         better distribution in distributeMultiBox().
     */
     if (has_multi) {
-        for (i = 0; i < n; ++i) {
+        for (int i = 0; i < n; ++i) {
             QGridBox * const box = things.at(i);
 
             if (box->row != box->toRow(rr))
@@ -758,9 +757,9 @@ void QGridLayoutPrivate::setupLayoutData(int hSpacing, int vSpacing)
         }
     }
 
-    for (i = 0; i < rr; i++)
+    for (int i = 0; i < rr; i++)
         rowData[i].expansive = rowData.at(i).expansive || rowData.at(i).stretch > 0;
-    for (i = 0; i < cc; i++)
+    for (int i = 0; i < cc; i++)
         colData[i].expansive = colData.at(i).expansive || colData.at(i).stretch > 0;
 
     q->getContentsMargins(&leftMargin, &topMargin, &rightMargin, &bottomMargin);
