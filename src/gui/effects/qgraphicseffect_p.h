@@ -149,7 +149,7 @@ class Q_GUI_EXPORT QGraphicsEffectPrivate : public QObjectPrivate
 {
     Q_DECLARE_PUBLIC(QGraphicsEffect)
 public:
-    QGraphicsEffectPrivate() : source(0), isEnabled(true) {}
+    QGraphicsEffectPrivate() : source(Q_NULLPTR), isEnabled(true) {}
 
     inline void setGraphicsEffectSource(QGraphicsEffectSource *newSource)
     {
@@ -168,7 +168,7 @@ public:
 
     QGraphicsEffectSource *source;
     QRectF boundingRect;
-    bool isEnabled : 1;
+    bool isEnabled;
 };
 
 

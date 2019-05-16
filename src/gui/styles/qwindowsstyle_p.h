@@ -82,7 +82,7 @@ public:
     int animationFps;
     int animateTimer;
     QElapsedTimer startTime;
-    int animateStep;    
+    int animateStep;
     QColor inactiveCaptionText;
     QColor activeCaptionColor;
     QColor activeGradientCaptionColor;

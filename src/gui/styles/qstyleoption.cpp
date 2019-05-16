@@ -135,8 +135,8 @@ QT_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs a QStyleOption with the specified \a version and \a
-    type.
+    Constructs a QStyleOption with the specified \a version and
+    \a type.
 
     The version has no special meaning for QStyleOption; it can be
     used by subclasses to distinguish between different version of

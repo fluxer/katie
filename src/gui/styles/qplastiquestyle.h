@@ -97,7 +97,6 @@ protected:
 
 private:
     Q_DISABLE_COPY(QPlastiqueStyle)
-    void *reserved;
 };
 
 #endif // QT_NO_STYLE_PLASTIQUE
