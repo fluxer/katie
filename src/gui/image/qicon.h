@@ -51,9 +51,9 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QIconPrivate;
+class QPainter;
 class QIconEngine;
+class QIconPrivate;
 
 class Q_GUI_EXPORT QIcon
 {

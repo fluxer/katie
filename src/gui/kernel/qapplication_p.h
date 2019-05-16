@@ -72,6 +72,7 @@
 
 QT_BEGIN_NAMESPACE
 
+class QTimer;
 class QClipboard;
 class QGraphicsScene;
 class QGraphicsSystem;

@@ -46,13 +46,11 @@
 #include "qdatastream.h"
 #include "qvariant.h"
 #include "qvarlengtharray.h"
-#include <qdebug.h>
-
-#if defined(Q_OS_UNIX)
+#include "qdebug.h"
 #include "qimage.h"
 #include "qbitmap.h"
+
 #include <stdlib.h>
-#endif
 
 QT_BEGIN_NAMESPACE
 

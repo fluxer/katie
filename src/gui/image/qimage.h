@@ -53,6 +53,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+class QColor;
 class QIODevice;
 class QMatrix;
 class QTransform;

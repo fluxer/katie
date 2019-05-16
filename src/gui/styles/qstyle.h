@@ -55,6 +55,7 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QDebug;
+class QApplication;
 class QFontMetrics;
 class QStyleHintReturn;
 class QStyleOption;

@@ -50,7 +50,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
+class QPrinter;
 class QGraphicsView;
 class QPrintPreviewDialogPrivate;
 

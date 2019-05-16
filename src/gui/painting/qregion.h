@@ -54,15 +54,14 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 template <class T> class QVector;
 class QVariant;
+class QPolygon;
+class QBitmap;
 
 #if defined(Q_WS_X11)
 struct QRegionPrivate;
 #endif
-
-class QBitmap;
 
 class Q_GUI_EXPORT QRegion
 {

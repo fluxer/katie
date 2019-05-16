@@ -48,7 +48,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
+class QMovie;
 class QLabelPrivate;
 
 class Q_GUI_EXPORT QLabel : public QFrame

@@ -59,6 +59,8 @@ QT_BEGIN_NAMESPACE
 #ifndef QT_NO_GRAPHICSVIEW
 
 template<typename T> class QList;
+class QPainter;
+class QPalette;
 class QFocusEvent;
 class QFont;
 class QFontMetrics;

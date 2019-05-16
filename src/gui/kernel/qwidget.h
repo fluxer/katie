@@ -56,12 +56,11 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
+class QPainter;
 class QLayout;
 class QStyle;
 class QAction;
 class QVariant;
-
 class QActionEvent;
 class QMouseEvent;
 class QWheelEvent;

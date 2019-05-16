@@ -46,51 +46,20 @@
 #include <QtCore/qnamespace.h>
 
 // Window system dependent definitions
-
 #if defined(Q_WS_X11)
-
 typedef struct _XDisplay Display;
 typedef union  _XEvent XEvent;
 typedef struct _XGC *GC;
 typedef struct _XRegion *Region;
 typedef unsigned long  WId;
-
 #endif // Q_WS_X11
 
 QT_BEGIN_HEADER
+
 QT_BEGIN_NAMESPACE
 
 // Class forward definitions
-
-class QPaintDevice;
 class QWidget;
-class QDialog;
-class QColor;
-class QPalette;
-class QCursor;
-class QPoint;
-class QSize;
-class QRect;
-class QPolygon;
-class QPainter;
-class QRegion;
-class QFont;
-class QFontMetrics;
-class QFontInfo;
-class QPen;
-class QBrush;
-class QMatrix;
-class QPixmap;
-class QBitmap;
-class QMovie;
-class QImage;
-class QPrinter;
-class QTimer;
-class QTime;
-class QClipboard;
-class QString;
-class QByteArray;
-class QApplication;
 
 template<typename T> class QList;
 typedef QList<QWidget *> QWidgetList;
@@ -102,6 +71,7 @@ template<class V> class QSet;
 typedef QSet<QWidget *> QWidgetSet;
 
 QT_END_NAMESPACE
+
 QT_END_HEADER
 
 #endif // QWINDOWDEFS_H

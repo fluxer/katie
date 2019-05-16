@@ -55,6 +55,10 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
+class QFont;
+class QPalette;
+class QFontMetrics;
+class QClipboard;
 class QSessionManager;
 class QDesktopWidget;
 class QStyle;
