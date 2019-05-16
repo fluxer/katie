@@ -118,7 +118,7 @@ public:
         Background = Window
     };
 
-    inline ColorGroup currentColorGroup() const { current_group; }
+    inline ColorGroup currentColorGroup() const { return current_group; }
     inline void setCurrentColorGroup(ColorGroup cg) { current_group = cg; }
 
     inline const QColor &color(ColorGroup cg, ColorRole cr) const
