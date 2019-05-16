@@ -152,7 +152,6 @@
 #include "QtGui/qlistview.h"
 #include "QtGui/qapplication.h"
 #include "QtGui/qevent.h"
-#include "QtGui/qheaderview.h"
 #include "QtGui/qdesktopwidget.h"
 #include "QtGui/qlineedit.h"
 

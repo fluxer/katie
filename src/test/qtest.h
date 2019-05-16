@@ -45,7 +45,6 @@
 #include <QtTest/qtest_global.h>
 #include <QtTest/qtestcase.h>
 #include <QtTest/qtestdata.h>
-#include <QtTest/qtestdata.h>
 #include <QtTest/qbenchmark.h>
 
 #include <QtCore/qbytearray.h>
@@ -55,7 +54,6 @@
 #include <QtCore/qobject.h>
 #include <QtCore/qvariant.h>
 #include <QtCore/qurl.h>
-
 #include <QtCore/qpoint.h>
 #include <QtCore/qsize.h>
 #include <QtCore/qrect.h>

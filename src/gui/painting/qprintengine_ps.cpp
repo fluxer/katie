@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "qplatformdefs.h"
-
 #include <qprintengine_ps_p.h>
 #include <qpainter_p.h>
 #include <qfontengine_p.h>
@@ -69,9 +68,7 @@
 #include <qdrawhelper_p.h>
 #include <qmutexpool_p.h>
 
-#ifndef Q_OS_WIN
 #include <unistd.h>
-#endif
 #include <stdlib.h>
 #include <limits.h>
 
@@ -192,10 +189,6 @@ QPSPrintEnginePrivate::QPSPrintEnginePrivate(QPrinter::PrinterMode m)
 QPSPrintEnginePrivate::~QPSPrintEnginePrivate()
 {
 }
-
-QT_BEGIN_INCLUDE_NAMESPACE
-#include <qdebug.h>
-QT_END_INCLUDE_NAMESPACE
 
 static void ps_r7(QPdf::ByteStream& stream, const char * s, int l)
 {

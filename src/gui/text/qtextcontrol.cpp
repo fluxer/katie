@@ -61,12 +61,10 @@
 #include "qtextdocument.h"
 #include "qtextdocument_p.h"
 #include "qtextlist.h"
-#include "qtextcontrol_p.h"
 #include "qgraphicssceneevent.h"
 #include "qprinter.h"
 #include "qtextdocumentwriter.h"
 #include "qtextcursor_p.h"
-
 #include <qtextformat.h>
 #include <qdatetime.h>
 #include <qbuffer.h>

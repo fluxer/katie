@@ -53,7 +53,6 @@
 #include "qpainter.h"
 #include "qstyle.h"
 #include "qgridlayout.h"
-#include "qapplication.h"
 #include "qdesktopwidget.h"
 #include "qbitmap.h"
 #include "qlabel_p.h"

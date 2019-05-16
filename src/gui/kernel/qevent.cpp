@@ -43,7 +43,6 @@
 #include "qcursor.h"
 #include "qapplication.h"
 #include "qapplication_p.h"
-#include "qevent_p.h"
 #include "qkeysequence_p.h"
 #include "qwidget.h"
 #include "qgraphicsview.h"

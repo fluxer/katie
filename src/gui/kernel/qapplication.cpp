@@ -78,7 +78,6 @@
 #include "qapplication_p.h"
 #include "qevent_p.h"
 #include "qwidget_p.h"
-#include "qapplication.h"
 #include "qgesture.h"
 #include "qgesturemanager_p.h"
 #include "qdatetime.h"
