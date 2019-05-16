@@ -52,7 +52,7 @@ QT_BEGIN_NAMESPACE
 struct Q_CORE_EXPORT QUuid
 {
     enum Variant {
-        VarUnknown        =-1,
+        VarUnknown        = -1,
         NCS                = 0, // 0 - -
         DCE                = 2, // 1 0 -
         Microsoft        = 6, // 1 1 0
@@ -60,7 +60,7 @@ struct Q_CORE_EXPORT QUuid
     };
 
     enum Version {
-        VerUnknown        =-1,
+        VerUnknown        = -1,
         Time                = 1, // 0 0 0 1
         EmbeddedPOSIX        = 2, // 0 0 1 0
         Name                = 3, // 0 0 1 1
@@ -102,12 +102,11 @@ struct Q_CORE_EXPORT QUuid
 
     bool operator==(const QUuid &orig) const
     {
-        uint i;
         if (data1 != orig.data1 || data2 != orig.data2 ||
              data3 != orig.data3)
             return false;
 
-        for(i = 0; i < 8; i++)
+        for(int i = 0; i < 8; i++)
             if (data4[i] != orig.data4[i])
                 return false;
 
