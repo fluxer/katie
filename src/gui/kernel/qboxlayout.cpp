@@ -95,7 +95,7 @@ class QBoxLayoutPrivate : public QLayoutPrivate
 {
     Q_DECLARE_PUBLIC(QBoxLayout)
 public:
-    QBoxLayoutPrivate() : hfwWidth(-1), dirty(true), spacing(-1) { }
+    QBoxLayoutPrivate() : hfwWidth(-1), hasHfw(false), dirty(true), spacing(-1) { }
     ~QBoxLayoutPrivate();
 
     void setDirty() {
@@ -115,8 +115,8 @@ public:
     QSize maxSize;
     int leftMargin, topMargin, rightMargin, bottomMargin;
     Qt::Orientations expanding;
-    uint hasHfw : 1;
-    uint dirty : 1;
+    bool hasHfw;
+    bool dirty;
     QBoxLayout::Direction dir;
     int spacing;
 
@@ -268,7 +268,7 @@ void QBoxLayoutPrivate::setupGeom()
 
         a[i].empty = empty;
         a[i].spacing = 0;   // might be be initialized with a non-zero value in a later iteration
-        hasHfw = hasHfw || box->item->hasHeightForWidth();
+        hasHfw = box->item->hasHeightForWidth();
     }
 
     geomArray = a;
