@@ -36,7 +36,7 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ toolkit derived from the Qt 4.8 frame
 set(CPACK_PACKAGE_VENDOR "Katie")
 set(CPACK_PACKAGE_CONTACT "xakepa10@gmail.com")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README")
-# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/Copyright.txt")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LGPL_EXCEPTION.txt")
 set(CPACK_PACKAGE_VERSION_MAJOR "4")
 set(CPACK_PACKAGE_VERSION_MINOR "9")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
@@ -493,8 +493,6 @@ if(ENABLE_TESTING)
     )
     enable_testing()
     add_definitions(-DQT_BUILD_INTERNAL)
-    # FIXME: most tests are not namespaces aware
-    add_definitions(-DQT_NAMESPACE_COMPAT)
 
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/runtest.sh.cmake

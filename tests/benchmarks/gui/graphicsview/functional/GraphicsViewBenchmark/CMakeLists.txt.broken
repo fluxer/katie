@@ -1,4 +1,4 @@
-katie_test(tst_GraphicsViewBenchmark
+katie_gui_test(tst_GraphicsViewBenchmark
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/gvbwidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/abstractscrollarea.cpp

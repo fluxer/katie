@@ -41,6 +41,7 @@
 
 #include <qtest.h>
 #include <QtScript>
+#include <QVector>
 
 Q_DECLARE_METATYPE(QScriptContext*)
 Q_DECLARE_METATYPE(QScriptValue)

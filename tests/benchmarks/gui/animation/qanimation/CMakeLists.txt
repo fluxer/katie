@@ -1,4 +1,4 @@
-katie_test(tst_bench_qanimation
+katie_gui_test(tst_bench_qanimation
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dummyobject.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/dummyanimation.cpp

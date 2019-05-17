@@ -42,6 +42,8 @@
 #include <QCoreApplication>
 #include <QTextStream>
 
+QT_USE_NAMESPACE
+
 int main(int argc, char** argv)
 {
     QCoreApplication app(argc, argv);

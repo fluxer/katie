@@ -273,8 +273,28 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
 
-    # TODO: make GUI access optional, it is required by many tests so it should
-    # still be default
+    target_link_libraries(${TESTNAME} KtCore KtTest)
+    target_compile_definitions(
+        ${TESTNAME} PRIVATE
+        -DSRCDIR="${CMAKE_CURRENT_SOURCE_DIR}/"
+    )
+    set_target_properties(
+        ${TESTNAME} PROPERTIES
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    )
+
+    add_test(
+        NAME ${TESTNAME}
+        COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}
+    )
+endmacro()
+
+# a macro to add tests easily by setting them up with the assumptions they make
+macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
+    katie_resources(${TESTSOURCES} ${ARGN})
+
+    add_executable(${TESTNAME} ${TESTSOURCES} ${ARGN})
+
     target_link_libraries(${TESTNAME} KtCore KtGui KtTest)
     target_compile_definitions(
         ${TESTNAME} PRIVATE
