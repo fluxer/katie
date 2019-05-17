@@ -270,7 +270,6 @@ void MocParser::parse(const char *fname, QIODevice *io, int lineNum)
             mo.d.superdata = &QObject::staticMetaObject;
             mo.d.stringdata = stringdata;
             mo.d.data = data;
-            mo.d.extradata = 0;
             objects.append(mo);
         }
     }
