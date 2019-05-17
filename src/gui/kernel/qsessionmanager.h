@@ -53,7 +53,7 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
+class QApplication;
 class QSessionManagerPrivate;
 
 class Q_GUI_EXPORT  QSessionManager : public QObject
