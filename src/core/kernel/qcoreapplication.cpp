@@ -76,21 +76,6 @@
 
 QT_BEGIN_NAMESPACE
 
-class QMutexUnlocker
-{
-public:
-    inline explicit QMutexUnlocker(QMutex *m)
-        : mtx(m)
-    { }
-    inline ~QMutexUnlocker() { unlock(); }
-    inline void unlock() { if (mtx) mtx->unlock(); mtx = 0; }
-
-private:
-    Q_DISABLE_COPY(QMutexUnlocker)
-
-    QMutex *mtx;
-};
-
 QString QCoreApplicationPrivate::appName() const
 {
     QMutexLocker locker(QMutexPool::globalInstanceGet(&applicationName));
@@ -997,7 +982,7 @@ void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
     }
 
     // lock the post event mutex
-    data->postEventList.mutex.lock();
+    QMutexLocker locker(&data->postEventList.mutex);
 
     // if object has moved to another thread, follow it
     while (data != *pdata) {
@@ -1012,8 +997,6 @@ void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
 
         data->postEventList.mutex.lock();
     }
-
-    QMutexUnlocker locker(&data->postEventList.mutex);
 
     // if this is one of the compressible events, do compression
     if (receiver->d_func()->postedEvents

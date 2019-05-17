@@ -231,7 +231,6 @@ class QMetaEnum;
 class QMetaProperty;
 class QMetaClassInfo;
 
-
 class Q_CORE_EXPORT QGenericArgument
 {
 public:
@@ -269,7 +268,6 @@ public:
         : QGenericArgument(aName, static_cast<const void *>(&aData))
         {}
 };
-
 
 template <typename T>
 class QReturnArgument: public QGenericReturnArgument
