@@ -47,7 +47,6 @@
 #include <errno.h>
 #include <locale.h>
 #include <stdio.h>
-#include <dlfcn.h>
 
 // unistd.h is needed for the _XOPEN_UNIX macro
 #include <unistd.h>
@@ -253,9 +252,8 @@ static bool setByteOrder(iconv_t cd)
     char *inBytes = reinterpret_cast<char *>(bom);
     size_t outBytesLeft = sizeof buf;
     size_t inBytesLeft = sizeof bom;
-    char **inBytesPtr = &inBytes;
 
-    if (iconv(cd, inBytesPtr, &inBytesLeft, &outBytes, &outBytesLeft) == (size_t) -1) {
+    if (iconv(cd, &inBytes, &inBytesLeft, &outBytes, &outBytesLeft) == (size_t) -1) {
         return false;
     }
 #endif // NO_BOM
@@ -268,8 +266,6 @@ QByteArray QIconvCodec::convertFromUnicode(const QChar *uc, int len, ConverterSt
     char *inBytes;
     char *outBytes;
     size_t inBytesLeft;
-
-    char **inBytesPtr = &inBytes;
 
     IconvState *temporaryState = 0;
     IconvState *&state = (qt_locale_initialized && fromUnicodeState) ? fromUnicodeState : temporaryState;
@@ -321,7 +317,7 @@ QByteArray QIconvCodec::convertFromUnicode(const QChar *uc, int len, ConverterSt
 
     int invalidCount = 0;
     while (inBytesLeft != 0) {
-        if (iconv(state->cd, inBytesPtr, &inBytesLeft, &outBytes, &outBytesLeft) == (size_t) -1) {
+        if (iconv(state->cd, &inBytes, &inBytesLeft, &outBytes, &outBytesLeft) == (size_t) -1) {
             if (errno == EINVAL && convState) {
                 // buffer ends in a surrogate
                 Q_ASSERT(inBytesLeft == 2);
