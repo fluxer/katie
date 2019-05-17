@@ -62,7 +62,7 @@
 #include "QtTest/qtestresult_p.h"
 #include "QtTest/qsignaldumper_p.h"
 #include "QtTest/qbenchmark_p.h"
-#include "3rdparty/cycle_p.h"
+#include "3rdparty/fftw/cycle.h"
 
 #include <stdarg.h>
 #include <stdio.h>

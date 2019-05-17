@@ -54,8 +54,8 @@
 //
 
 #include <QtCore/qelapsedtimer.h>
-#include "3rdparty/cycle_p.h"
 #include "qbenchmark.h"
+#include "3rdparty/fftw/cycle.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -104,7 +104,7 @@ public:
     bool needsWarmupIteration();
     QTest::QBenchmarkMetric metricType();
 private:
-    CycleCounterTicks startTicks;
+    ticks startTicks;
 };
 
 #endif

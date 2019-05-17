@@ -24,6 +24,7 @@ There are several things you should be aware before considering Katie:
   - QtUiTools is build as shared library by default
   - moc, uic, rcc, lrelease, lupdate, etc. are linked to components
   - updated bundled Harfbuzz from upstream (not Harfbuzz-NG)
+  - updated bundled FFTW and Valgrind from upstream
   - Symbian, QWS, QPA, Mac and Windows are no longer supported platforms
   - OpenVG is no longer supported graphics output
   - Blitter is no longer supported painting engine

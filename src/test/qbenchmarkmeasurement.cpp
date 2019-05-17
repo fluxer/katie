@@ -98,13 +98,13 @@ void QBenchmarkTickMeasurer::start()
 
 qint64 QBenchmarkTickMeasurer::checkpoint()
 {
-    CycleCounterTicks now = getticks();
+    ticks now = getticks();
     return qRound64(elapsed(now, startTicks));
 }
 
 qint64 QBenchmarkTickMeasurer::stop()
 {
-    CycleCounterTicks now = getticks();
+    ticks now = getticks();
     return qRound64(elapsed(now, startTicks));
 }
 

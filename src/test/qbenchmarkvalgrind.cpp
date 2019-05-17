@@ -49,7 +49,8 @@
 #include <QtCore/qprocess.h>
 #include <QtCore/qdir.h>
 #include <QtCore/qset.h>
-#include "3rdparty/callgrind_p.h"
+#include "3rdparty/valgrind/valgrind.h"
+#include "3rdparty/valgrind/callgrind.h"
 
 QT_BEGIN_NAMESPACE
 
