@@ -50,7 +50,12 @@
 #include <math.h>
 #include <float.h>
 
-#ifdef Q_OS_LINUX
+// TODO: should check if feenableexcept is available
+#if defined(Q_OS_LINUX) && defined(__GLIBC__)
+#  define TEST_FP_EXCEPTION
+#endif
+
+#ifdef TEST_FP_EXCEPTION
 #    include <fenv.h>
 #endif
 
@@ -724,14 +729,7 @@ void tst_QLocale::testInfAndNan()
 
 void tst_QLocale::fpExceptions()
 {
-#ifndef _MCW_EM
-#define _MCW_EM 0x0008001F
-#endif
-#ifndef _EM_INEXACT
-#define _EM_INEXACT 0x00000001
-#endif
-
-#ifdef Q_OS_LINUX
+#ifdef TEST_FP_EXCEPTION
     fenv_t envp;
     fegetenv(&envp);
     feclearexcept(FE_ALL_EXCEPT);
@@ -744,7 +742,7 @@ void tst_QLocale::fpExceptions()
 
     QVERIFY(true);
 
-#ifdef Q_OS_LINUX
+#ifdef TEST_FP_EXCEPTION
     fesetenv(&envp);
 #endif
 }
