@@ -5,6 +5,9 @@ set(XML_PUBLIC_HEADERS
     ${XML_PUBLIC_HEADERS}
     # mixed
     QXmlAttributes
+    QXmlSimpleReader
+    QXmlParseException
+    QXmlContentHandler
     QDomDocument
     QDomElement
     QDomNode
