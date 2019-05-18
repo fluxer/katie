@@ -127,7 +127,7 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
     int remainingCount = 0;
     char *remainingBuffer = 0;
     IconvState *temporaryState = 0;
-    IconvState **pstate;
+    IconvState **pstate = 0;
 
     if (!convState) {
         if (!qt_locale_initialized || !toUnicodeState) {
