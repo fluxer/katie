@@ -64,8 +64,15 @@ if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
     katie_definition(-DQT_NO_DEBUG -DNDEBUG)
 endif()
 
-# TODO: check if data relocations should be disabled before any target additions and define
-# Q_NO_DATA_RELOCATION
+try_compile(bsymbolic_functions_test
+    ${CMAKE_BINARY_DIR}
+    ${KATIE_MKSPECS_DIR}/bsymbolic_functions.cpp
+    CMAKE_FLAGS -shared -Wl,-Bsymbolic-functions -fPIC
+    OUTPUT_VARIABLE bsymbolic_functions_test_output
+)
+if(NOT bsymbolic_functions_test)
+    katie_definition(-DQ_NO_DATA_RELOCATION)
+endif()
 
 if(NOT KATIE_KEY)
     set(KATIE_KEY "${KATIE_ARCHITECTURE} ${KATIE_PLATFORM} ${KATIE_COMPILER} full-config")
