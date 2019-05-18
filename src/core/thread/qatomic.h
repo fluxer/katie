@@ -85,17 +85,15 @@ class Q_CORE_EXPORT QAtomicInt
       }
 
       bool ref()  {
-         int newValue = ++m_data;
-         return newValue != 0;
+         return fetchAndAddOrdered(1) != -1;
       }
 
       bool deref()  {
-         int newValue = --m_data;
-         return newValue != 0;
+         return fetchAndAddOrdered(-1) != 1;
       }
 
       bool testAndSetRelaxed(int expectedValue, int newValue)  {
-         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_relaxed);         
+         return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_relaxed);
       }
 
       bool testAndSetAcquire(int expectedValue, int newValue) {
