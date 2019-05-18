@@ -104,6 +104,7 @@ struct Q_CORE_EXPORT QHashData
         uint h;
     };
 
+    Node *fakeNext;
     Node **buckets;
     QAtomicInt ref;
     int size;
@@ -111,7 +112,7 @@ struct Q_CORE_EXPORT QHashData
     short userNumBits;
     short numBits;
     int numBuckets;
-    bool sharable;
+    uint sharable : 1;
 
     QHashData *detach_helper(void (*node_duplicate)(Node *, void *), void (*node_delete)(Node *),
                               int nodeSize);
