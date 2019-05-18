@@ -55,8 +55,8 @@ struct Q_CORE_EXPORT QVectorData
     QAtomicInt ref;
     int alloc;
     int size;
-    uint sharable : 1;
-    uint capacity : 1;
+    bool sharable;
+    bool capacity;
 
     static QVectorData shared_null;
     static QVectorData *allocate(int size);
@@ -117,7 +117,7 @@ public:
 
     inline int capacity() const { return d->alloc; }
     void reserve(int size);
-    inline void squeeze() { realloc(d->size, d->size); d->capacity = 0; }
+    inline void squeeze() { realloc(d->size, d->size); d->capacity = false; }
 
     inline void detach() { if (d->ref != 1) detach_helper(); }
     inline bool isDetached() const { return d->ref == 1; }
@@ -302,7 +302,7 @@ void QVector<T>::detach_helper()
 { realloc(d->size, d->alloc); }
 template <typename T>
 void QVector<T>::reserve(int asize)
-{ if (asize > d->alloc) realloc(d->size, asize); if (d->ref == 1) d->capacity = 1; }
+{ if (asize > d->alloc) realloc(d->size, asize); if (d->ref == 1) d->capacity = true; }
 template <typename T>
 void QVector<T>::resize(int asize)
 { realloc(asize, (asize > d->alloc || (!d->capacity && asize < d->size && asize < (d->alloc >> 1))) ?
