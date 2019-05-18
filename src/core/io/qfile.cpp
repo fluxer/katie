@@ -57,20 +57,7 @@ QT_BEGIN_NAMESPACE
 
 static const int QFILE_WRITEBUFFER_SIZE = 16384;
 
-static QByteArray locale_encode(const QString &f)
-{
-    return f.toLocal8Bit();
-}
-
-static QString locale_decode(const QByteArray &f)
-{
-    return QString::fromLocal8Bit(f.constData());
-}
-
 //************* QFilePrivate
-QFile::EncoderFn QFilePrivate::encoder = locale_encode;
-QFile::DecoderFn QFilePrivate::decoder = locale_decode;
-
 QFilePrivate::QFilePrivate()
     : fileEngine(0), lastWasWrite(false),
       writeBuffer(QFILE_WRITEBUFFER_SIZE), error(QFile::NoError),
@@ -460,30 +447,19 @@ QFile::setFileName(const QString &name)
 */
 
 /*!
-    By default, this function converts \a fileName to the local 8-bit
-    encoding determined by the user's locale. This is sufficient for
-    file names that the user chooses. File names hard-coded into the
+    This function converts \a fileName to the local 8-bit encoding
+    determined by the user's locale. This is sufficient forfile names
+    that the user chooses. File names hard-coded into the
     application should only use 7-bit ASCII filename characters.
 
-    \sa decodeName() setEncodingFunction()
+    \sa decodeName()
 */
 
 QByteArray
 QFile::encodeName(const QString &fileName)
 {
-    return (*QFilePrivate::encoder)(fileName);
+    return fileName.toLocal8Bit();;
 }
-
-/*!
-    \typedef QFile::EncoderFn
-
-    This is a typedef for a pointer to a function with the following
-    signature:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qfile.cpp 1
-
-    \sa setEncodingFunction(), encodeName()
-*/
 
 /*!
     This does the reverse of QFile::encodeName() using \a localFileName.
@@ -494,56 +470,7 @@ QFile::encodeName(const QString &fileName)
 QString
 QFile::decodeName(const QByteArray &localFileName)
 {
-    return (*QFilePrivate::decoder)(localFileName);
-}
-
-/*!
-    \fn void QFile::setEncodingFunction(EncoderFn function)
-
-    \nonreentrant
-
-    Sets the \a function for encoding Unicode file names. The
-    default encodes in the locale-specific 8-bit encoding.
-
-    \sa encodeName(), setDecodingFunction()
-*/
-
-void
-QFile::setEncodingFunction(EncoderFn f)
-{
-    if (!f)
-        f = locale_encode;
-    QFilePrivate::encoder = f;
-}
-
-/*!
-    \typedef QFile::DecoderFn
-
-    This is a typedef for a pointer to a function with the following
-    signature:
-
-    \snippet doc/src/snippets/code/src_corelib_io_qfile.cpp 2
-
-    \sa setDecodingFunction()
-*/
-
-/*!
-    \fn void QFile::setDecodingFunction(DecoderFn function)
-
-    \nonreentrant
-
-    Sets the \a function for decoding 8-bit file names. The
-    default uses the locale-specific 8-bit encoding.
-
-    \sa setEncodingFunction(), decodeName()
-*/
-
-void
-QFile::setDecodingFunction(DecoderFn f)
-{
-    if (!f)
-        f = locale_decode;
-    QFilePrivate::decoder = f;
+    return QString::fromLocal8Bit(localFileName.constData());
 }
 
 /*!

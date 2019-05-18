@@ -112,14 +112,10 @@ public:
     QString fileName() const;
     void setFileName(const QString &name);
 
-    typedef QByteArray (*EncoderFn)(const QString &fileName);
-    typedef QString (*DecoderFn)(const QByteArray &localfileName);
     static QByteArray encodeName(const QString &fileName);
     static QString decodeName(const QByteArray &localFileName);
     inline static QString decodeName(const char *localFileName)
         { return decodeName(QByteArray(localFileName)); }
-    static void setEncodingFunction(EncoderFn);
-    static void setDecodingFunction(DecoderFn);
 
     bool exists() const;
     static bool exists(const QString &fileName);

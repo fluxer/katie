@@ -78,17 +78,13 @@ protected:
     inline bool ensureFlushed() const;
 
     bool putCharHelper(char c);
-    
+
     QFile::FileError error;
     void setError(QFile::FileError err);
     void setError(QFile::FileError err, const QString &errorString);
     void setError(QFile::FileError err, int errNum);
 
     mutable qint64 cachedSize;
-
-private:
-    static QFile::EncoderFn encoder;
-    static QFile::DecoderFn decoder;
 };
 
 QT_END_NAMESPACE
