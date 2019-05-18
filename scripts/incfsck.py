@@ -261,7 +261,6 @@ incmap = {
         'QXmlParseException': 'qxml.h',
         'QXmlContentHandler': 'qxml.h',
         'QXmlInputSource': 'qxml.h',
-        'QXmlDefaultHandler': 'qxml.h',
         'QXmlStreamAttributes': 'qxmlstream.h',
         'QXmlStreamEntityDeclaration': 'qxmlstream.h',
         'QXmlStreamEntityDeclarations': 'qxmlstream.h',

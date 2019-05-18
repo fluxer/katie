@@ -4,6 +4,7 @@ set(EXTRA_XML_LIBS KtCore)
 set(XML_PUBLIC_HEADERS
     ${XML_PUBLIC_HEADERS}
     # mixed
+    QXmlAttributes
     QDomDocument
     QDomElement
     QDomNode
