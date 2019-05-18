@@ -70,7 +70,7 @@ class QDBusAbstractInterfacePrivate : public QObjectPrivate
 public:
     Q_DECLARE_PUBLIC(QDBusAbstractInterface)
 
-    mutable QDBusConnection connection; // mutable because we want to make calls from const functions
+    QDBusConnection connection;
     QString service;
     QString currentOwner;
     QString path;

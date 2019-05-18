@@ -86,14 +86,14 @@ class QDBusPendingCallPrivate;
 
 class QDBusErrorInternal
 {
-    mutable DBusError error;
+    DBusError error;
     Q_DISABLE_COPY(QDBusErrorInternal)
 public:
     inline QDBusErrorInternal() { dbus_error_init(&error); }
     inline ~QDBusErrorInternal() { dbus_error_free(&error); }
     inline bool operator !() const { return !dbus_error_is_set(&error); }
     inline operator DBusError *() { dbus_error_free(&error); return &error; }
-    inline operator QDBusError() const { QDBusError err(&error); dbus_error_free(&error); return err; }
+    inline operator QDBusError() const { QDBusError err(&error); return err; }
 };
 
 // QDBusConnectionPrivate holds the DBusConnection and
