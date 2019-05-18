@@ -166,7 +166,7 @@ static int countBits(int hint)
 const int MinNumBits = 4;
 
 QHashData QHashData::shared_null = {
-    0, 0, QAtomicInt(1), 0, 0, MinNumBits, 0, 0, true
+    0, QAtomicInt(1), 0, 0, MinNumBits, 0, 0, true
 };
 
 QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
@@ -178,7 +178,6 @@ QHashData *QHashData::detach_helper(void (*node_duplicate)(Node *, void *),
         Node *e;
     };
     d = new QHashData;
-    d->fakeNext = 0;
     d->buckets = 0;
     d->ref = 1;
     d->size = size;
@@ -373,7 +372,6 @@ void QHashData::dump()
     qDebug("Hash data (ref = %d, size = %d, nodeSize = %d, userNumBits = %d, numBits = %d, numBuckets = %d)",
             int(ref), size, nodeSize, userNumBits, numBits,
             numBuckets);
-    qDebug("    %p (fakeNode = %p)", this, fakeNext);
     for (int i = 0; i < numBuckets; ++i) {
         QString line;
         Node *n = buckets[i];
@@ -394,9 +392,6 @@ void QHashData::dump()
 
 void QHashData::checkSanity()
 {
-    if (fakeNext)
-        qFatal("Fake next isn't 0");
-
     for (int i = 0; i < numBuckets; ++i) {
         Node *n = buckets[i];
         Node *p = n;
