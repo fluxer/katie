@@ -93,20 +93,20 @@ public:
 
 private:
     // creates the QString version out of the bytearray version
-    void resolveFilePath() const;
+    void resolveFilePath();
     // creates the bytearray version out of the QString version
-    void resolveNativeFilePath() const;
+    void resolveNativeFilePath();
     // resolves the separator
-    void findLastSeparator() const;
+    void findLastSeparator();
     // resolves the dots and the separator
-    void findFileNameSeparators() const;
+    void findFileNameSeparators();
 
-    mutable QString m_filePath; // always has slashes as separator
-    mutable NativePath m_nativeFilePath; // native encoding and separators
+    QString m_filePath; // always has slashes as separator
+    NativePath m_nativeFilePath; // native encoding and separators
 
-    mutable qint16 m_lastSeparator; // index in m_filePath of last separator
-    mutable qint16 m_firstDotInFileName; // index after m_filePath for first dot (.)
-    mutable qint16 m_lastDotInFileName; // index after m_firstDotInFileName for last dot (.)
+    qint16 m_lastSeparator; // index in m_filePath of last separator
+    qint16 m_firstDotInFileName; // index after m_filePath for first dot (.)
+    qint16 m_lastDotInFileName; // index after m_firstDotInFileName for last dot (.)
 };
 
 QT_END_NAMESPACE

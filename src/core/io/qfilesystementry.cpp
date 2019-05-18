@@ -52,6 +52,10 @@ QFileSystemEntry::QFileSystemEntry()
     m_firstDotInFileName(0),
     m_lastDotInFileName(0)
 {
+    resolveFilePath();
+    resolveNativeFilePath();
+    findLastSeparator();
+    findFileNameSeparators();
 }
 
 /*!
@@ -65,6 +69,10 @@ QFileSystemEntry::QFileSystemEntry(const QString &filePath)
     m_firstDotInFileName(-2),
     m_lastDotInFileName(0)
 {
+    resolveFilePath();
+    resolveNativeFilePath();
+    findLastSeparator();
+    findFileNameSeparators();
 }
 
 /*!
@@ -78,6 +86,10 @@ QFileSystemEntry::QFileSystemEntry(const QString &filePath, FromInternalPath /* 
     m_firstDotInFileName(-2),
     m_lastDotInFileName(0)
 {
+    resolveFilePath();
+    resolveNativeFilePath();
+    findLastSeparator();
+    findFileNameSeparators();
 }
 
 /*!
@@ -90,6 +102,10 @@ QFileSystemEntry::QFileSystemEntry(const NativePath &nativeFilePath, FromNativeP
     m_firstDotInFileName(-2),
     m_lastDotInFileName(0)
 {
+    resolveFilePath();
+    resolveNativeFilePath();
+    findLastSeparator();
+    findFileNameSeparators();
 }
 
 QFileSystemEntry::QFileSystemEntry(const QString &filePath, const NativePath &nativeFilePath)
@@ -99,28 +115,30 @@ QFileSystemEntry::QFileSystemEntry(const QString &filePath, const NativePath &na
     m_firstDotInFileName(-2),
     m_lastDotInFileName(0)
 {
+    resolveFilePath();
+    resolveNativeFilePath();
+    findLastSeparator();
+    findFileNameSeparators();
 }
 
 QString QFileSystemEntry::filePath() const
 {
-    resolveFilePath();
     return m_filePath;
 }
 
 QFileSystemEntry::NativePath QFileSystemEntry::nativeFilePath() const
 {
-    resolveNativeFilePath();
     return m_nativeFilePath;
 }
 
-void QFileSystemEntry::resolveFilePath() const
+void QFileSystemEntry::resolveFilePath()
 {
     if (m_filePath.isEmpty() && !m_nativeFilePath.isEmpty()) {
         m_filePath = QFile::decodeName(m_nativeFilePath);
     }
 }
 
-void QFileSystemEntry::resolveNativeFilePath() const
+void QFileSystemEntry::resolveNativeFilePath()
 {
     if (!m_filePath.isEmpty() && m_nativeFilePath.isEmpty()) {
         m_nativeFilePath = QFile::encodeName(m_filePath);
@@ -129,13 +147,11 @@ void QFileSystemEntry::resolveNativeFilePath() const
 
 QString QFileSystemEntry::fileName() const
 {
-    findLastSeparator();
     return m_filePath.mid(m_lastSeparator + 1);
 }
 
 QString QFileSystemEntry::path() const
 {
-    findLastSeparator();
     if (m_lastSeparator == -1) {
         return QString(QLatin1Char('.'));
     }
@@ -146,7 +162,6 @@ QString QFileSystemEntry::path() const
 
 QString QFileSystemEntry::baseName() const
 {
-    findFileNameSeparators();
     int length = -1;
     if (m_firstDotInFileName >= 0) {
         length = m_firstDotInFileName;
@@ -158,7 +173,6 @@ QString QFileSystemEntry::baseName() const
 
 QString QFileSystemEntry::completeBaseName() const
 {
-    findFileNameSeparators();
     int length = -1;
     if (m_firstDotInFileName >= 0) {
         length = m_firstDotInFileName + m_lastDotInFileName;
@@ -170,8 +184,6 @@ QString QFileSystemEntry::completeBaseName() const
 
 QString QFileSystemEntry::suffix() const
 {
-    findFileNameSeparators();
-
     if (m_lastDotInFileName == -1)
         return QString();
 
@@ -180,7 +192,6 @@ QString QFileSystemEntry::suffix() const
 
 QString QFileSystemEntry::completeSuffix() const
 {
-    findFileNameSeparators();
     if (m_firstDotInFileName == -1)
         return QString();
 
@@ -194,25 +205,22 @@ bool QFileSystemEntry::isRelative() const
 
 bool QFileSystemEntry::isAbsolute() const
 {
-    resolveFilePath();
     return (!m_filePath.isEmpty() && (m_filePath[0].unicode() == '/'));
 }
 
 bool QFileSystemEntry::isRoot() const
 {
-    resolveFilePath();
     return m_filePath == QLatin1String("/");
 }
 
 bool QFileSystemEntry::isEmpty() const
 {
-    resolveNativeFilePath();
     return m_nativeFilePath.isEmpty();
 }
 
 // private methods
 
-void QFileSystemEntry::findLastSeparator() const
+void QFileSystemEntry::findLastSeparator()
 {
     if (m_lastSeparator == -2) {
         resolveFilePath();
@@ -226,7 +234,7 @@ void QFileSystemEntry::findLastSeparator() const
     }
 }
 
-void QFileSystemEntry::findFileNameSeparators() const
+void QFileSystemEntry::findFileNameSeparators()
 {
     if (m_firstDotInFileName == -2) {
         resolveFilePath();
@@ -276,7 +284,6 @@ void QFileSystemEntry::findFileNameSeparators() const
 
 bool QFileSystemEntry::isClean() const
 {
-    resolveFilePath();
     int dots = 0;
     bool dotok = true; // checking for ".." or "." starts to relative paths
     bool slashok = true;
