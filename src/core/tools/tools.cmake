@@ -87,20 +87,8 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qlocale_unix.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
 )
-
-# TODO:
-if(UNIX)
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_unix.cpp
-    )
-else()
-    set(CORE_SOURCES
-        ${CORE_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/tools/qelapsedtimer_generic.cpp
-    )
-endif()
 
 if(WITH_ICU AND ICU_FOUND)
     set(CORE_SOURCES
