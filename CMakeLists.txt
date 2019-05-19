@@ -622,6 +622,9 @@ add_subdirectory(src/uitools)
 # generators
 add_subdirectory(src/tools)
 
+# translations
+add_subdirectory(translations)
+
 # tests and benchmarks
 if(ENABLE_TESTING)
     add_subdirectory(tests)
@@ -988,9 +991,6 @@ configure_file(
     ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
     @ONLY
 )
-
-file(GLOB TRANSLATIONS "translations/*.ts")
-katie_translations(${TRANSLATIONS})
 
 install(
     DIRECTORY mkspecs
