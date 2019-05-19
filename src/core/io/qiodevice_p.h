@@ -214,7 +214,6 @@ public:
     qint64 pos;
     qint64 devicePos;
     bool baseReadLineDataCalled;
-    bool firstRead;
 
     virtual bool putCharHelper(char c);
 

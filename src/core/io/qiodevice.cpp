@@ -126,7 +126,6 @@ QIODevicePrivate::QIODevicePrivate()
     : openMode(QIODevice::NotOpen), buffer(QIODEVICE_BUFFERSIZE),
       pos(0), devicePos(0)
        , baseReadLineDataCalled(false)
-       , firstRead(true)
        , accessMode(Unset)
 #ifdef QT_NO_QOBJECT
        , q_ptr(0)
@@ -467,7 +466,6 @@ void QIODevice::setOpenMode(OpenMode openMode)
 #endif
     d->openMode = openMode;
     d->accessMode = QIODevicePrivate::Unset;
-    d->firstRead = true;
     if (!isReadable())
         d->buffer.clear();
 }
@@ -559,7 +557,6 @@ bool QIODevice::open(OpenMode mode)
     d->pos = (mode & Append) ? size() : qint64(0);
     d->buffer.clear();
     d->accessMode = QIODevicePrivate::Unset;
-    d->firstRead = true;
 #if defined QIODEVICE_DEBUG
     printf("%p QIODevice::open(0x%x)\n", this, quint32(mode));
 #endif
@@ -589,7 +586,6 @@ void QIODevice::close()
     d->errorString.clear();
     d->pos = 0;
     d->buffer.clear();
-    d->firstRead = true;
 }
 
 /*!
@@ -821,12 +817,7 @@ qint64 QIODevice::read(char *data, qint64 maxSize)
                    bufferReadChunkSize, readSoFar - bufferReadChunkSize);
 #endif
         } else {
-            if (d->firstRead) {
-                // this is the first time the file has been read, check it's valid and set up pos pointers
-                // for fast pos updates.
-                CHECK_READABLE(read, qint64(-1));
-                d->firstRead = false;
-            }
+            CHECK_READABLE(read, qint64(-1));
         }
 
         if (maxSize > 0 && !deviceAtEof) {
