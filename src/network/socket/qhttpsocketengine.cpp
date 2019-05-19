@@ -46,6 +46,7 @@
 #include "qhttp.h"
 #include "qelapsedtimer.h"
 #include "qnetworkinterface.h"
+#include "qcore_unix_p.h"
 #include "qnetworkcommon_p.h"
 
 #if !defined(QT_NO_NETWORKPROXY) && !defined(QT_NO_HTTP)

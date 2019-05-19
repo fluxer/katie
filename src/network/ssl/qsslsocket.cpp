@@ -296,6 +296,7 @@
 #include "qsslsocket.h"
 #include "qsslsocket_openssl_p.h"
 #include "qsslconfiguration_p.h"
+#include "qcore_unix_p.h"
 #include "qnetworkcommon_p.h"
 
 #include <QtCore/qdebug.h>

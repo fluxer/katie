@@ -23,19 +23,6 @@ static void downloadBufferDeleter(char *ptr)
     delete[] ptr;
 }
 
-/*
-   Returns the difference between msecs and elapsed. If msecs is -1,
-   however, -1 is returned.
-*/
-static int qt_timeout_value(int msecs, int elapsed)
-{
-    if (msecs == -1)
-        return -1;
-
-    int timeout = msecs - elapsed;
-    return timeout < 0 ? 0 : timeout;
-}
-
 QT_END_NAMESPACE
 
 #endif // QNETWORKCOMMON_H

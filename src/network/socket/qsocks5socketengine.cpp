@@ -57,6 +57,7 @@
 #include "qauthenticator.h"
 #include "qendian.h"
 #include "qnetworkinterface.h"
+#include "qcore_unix_p.h"
 #include "qnetworkcommon_p.h"
 
 QT_BEGIN_NAMESPACE
