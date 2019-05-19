@@ -68,8 +68,8 @@ struct Q_CORE_EXPORT QMapData
     int topLevel;
     int size;
     uint randomBits;
-    uint insertInOrder : 1;
-    uint sharable : 1;
+    bool insertInOrder;
+    bool sharable;
 
     static QMapData *createData();
     void continueFreeData(int offset);
