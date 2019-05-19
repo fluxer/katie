@@ -1133,6 +1133,7 @@ static int buildMetaObject(QMetaObjectBuilderPrivate *d, char *buf,
     if (buf) {
         if (!relocatable) meta->d.superdata = d->superClass;
         meta->d.relatedMetaObjects = 0;
+        meta->d.extradata = 0;
         meta->d.static_metacall = d->staticMetacallFunction;
     }
 
@@ -1436,6 +1437,7 @@ void QMetaObjectBuilder::fromRelocatableData(QMetaObject *output,
     output->d.superdata = superclass;
     output->d.stringdata = buf + stringdataOffset;
     output->d.data = reinterpret_cast<const uint *>(buf + dataOffset);
+    output->d.extradata = 0;
     output->d.relatedMetaObjects = 0;
     output->d.static_metacall = 0;
 }

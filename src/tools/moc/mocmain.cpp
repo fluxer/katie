@@ -41,6 +41,7 @@
 
 #include "preprocessor.h"
 #include "moc.h"
+#include "outputrevision.h"
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>
@@ -301,7 +302,7 @@ int runMoc(int _argc, char **_argv)
             if (more && opt != "version")
                 error();
             fprintf(stderr, "Qt Meta Object Compiler version %d (Qt %s)\n",
-                    Q_MOC_OUTPUT_REVISION, QT_VERSION_STR);
+                    mocOutputRevision, QT_VERSION_STR);
             return 1;
         case 'n': // don't display warnings
             if (ignoreConflictingOptions)

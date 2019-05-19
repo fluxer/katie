@@ -2106,7 +2106,7 @@ void QScript::QObjectConnectionManager::qt_static_metacall(QObject *_o, QMetaObj
 
 const QMetaObject QScript::QObjectConnectionManager::staticMetaObject = {
     { &QObject::staticMetaObject, qt_meta_stringdata_QScript__QObjectConnectionManager,
-      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, Q_NULLPTR }
+      qt_meta_data_QScript__QObjectConnectionManager, qt_static_metacall, 0, 0 }
 };
 
 

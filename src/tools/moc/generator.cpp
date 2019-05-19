@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include "generator.h"
+#include "outputrevision.h"
 #include "utils.h"
 #include <QtCore/qmetatype.h>
 #include <stdio.h>
@@ -289,6 +290,37 @@ void Generator::generateCode()
         generateStaticMetacall();
 
 //
+// Build extra array
+//
+    QList<QByteArray> extraList;
+    for (int i = 0; i < cdef->propertyList.count(); ++i) {
+        const PropertyDef &p = cdef->propertyList.at(i);
+        if (!isVariantType(p.type.constData()) && !metaTypes.contains(p.type) && !p.type.contains('*') &&
+                !p.type.contains('<') && !p.type.contains('>')) {
+            int s = p.type.lastIndexOf("::");
+            if (s > 0) {
+                QByteArray scope = p.type.left(s);
+                if (scope != "Qt" && scope != cdef->classname && !extraList.contains(scope))
+                    extraList += scope;
+            }
+        }
+    }
+    if (!extraList.isEmpty()) {
+        fprintf(out, "#ifdef Q_NO_DATA_RELOCATION\n");
+        fprintf(out, "static const QMetaObjectAccessor qt_meta_extradata_%s[] = {\n    ", qualifiedClassNameIdentifier.constData());
+        for (int i = 0; i < extraList.count(); ++i) {
+            fprintf(out, "    %s::getStaticMetaObject,\n", extraList.at(i).constData());
+        }
+        fprintf(out, "#else\n");
+        fprintf(out, "static const QMetaObject *qt_meta_extradata_%s[] = {\n    ", qualifiedClassNameIdentifier.constData());
+        for (int i = 0; i < extraList.count(); ++i) {
+            fprintf(out, "    &%s::staticMetaObject,\n", extraList.at(i).constData());
+        }
+        fprintf(out, "#endif //Q_NO_DATA_RELOCATION\n");
+        fprintf(out, "    Q_NULLPTR\n};\n\n");
+    }
+
+//
 // Finally create and initialize the static meta object
 //
     if (isQt)
@@ -309,6 +341,10 @@ void Generator::generateCode()
     else
         fprintf(out, " Q_NULLPTR, ");
 
+    if (extraList.isEmpty())
+        fprintf(out, "Q_NULLPTR, ");
+    else
+        fprintf(out, "qt_meta_extradata_%s, ", qualifiedClassNameIdentifier.constData());
     fprintf(out, "Q_NULLPTR}\n};\n\n");
 
     if(isQt)
