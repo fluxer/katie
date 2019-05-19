@@ -40,7 +40,6 @@
 ****************************************************************************/
 
 #include "generator.h"
-#include "outputrevision.h"
 #include "utils.h"
 #include <QtCore/qmetatype.h>
 #include <stdio.h>

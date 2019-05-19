@@ -43,7 +43,6 @@
 #include "generator.h"
 #include "qdatetime.h"
 #include "utils.h"
-#include "outputrevision.h"
 
 // for normalizeTypeInternal
 #include <qmetaobject_p.h>
@@ -780,7 +779,7 @@ void Moc::generate(FILE *out)
         fn = filename.mid(i);
     fprintf(out, "/****************************************************************************\n"
             "** Meta object code from reading C++ file '%s'\n**\n" , fn.constData());
-    fprintf(out, "** Created by: The Qt Meta Object Compiler version %d (Qt %s)\n**\n" , mocOutputRevision, QT_VERSION_STR);
+    fprintf(out, "** Created by: The Qt Meta Object Compiler version %d (Qt %s)\n**\n" , Q_MOC_OUTPUT_REVISION, QT_VERSION_STR);
     fprintf(out, "** WARNING! All changes made in this file will be lost!\n"
             "*****************************************************************************/\n\n");
 
@@ -806,7 +805,7 @@ void Moc::generate(FILE *out)
 
     fprintf(out, "#if !defined(Q_MOC_OUTPUT_REVISION)\n"
             "#error \"The header file '%s' doesn't include <QObject>.\"\n", fn.constData());
-    fprintf(out, "#elif Q_MOC_OUTPUT_REVISION != %d\n", mocOutputRevision);
+    fprintf(out, "#elif Q_MOC_OUTPUT_REVISION != %d\n", Q_MOC_OUTPUT_REVISION);
     fprintf(out, "#error \"This file was generated using the moc from %s."
             " It\"\n#error \"cannot be used with the include files from"
             " this version of Qt.\"\n#error \"(The moc has changed too"
