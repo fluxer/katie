@@ -80,13 +80,13 @@ public:
         first = buf;
         len = 0;
     }
-    int size() const {
+    qint64 size() const {
         return len;
     }
     bool isEmpty() const {
         return len == 0;
     }
-    void skip(const int n) {
+    void skip(const qint64 n) {
         if (n >= len) {
             clear();
         } else {
@@ -102,25 +102,25 @@ public:
         first++;
         return ch;
     }
-    int read(char* target, const int size) {
-        const int r = qMin(size, len);
+    qint64 read(char* target, const qint64 size) {
+        const qint64 r = qMin(size, len);
         memcpy(target, first, r);
         len -= r;
         first += r;
         return r;
     }
-    int peek(char* target, const int size) {
-        const int r = qMin(size, len);
+    qint64 peek(char* target, const qint64 size) {
+        const qint64 r = qMin(size, len);
         memcpy(target, first, r);
         return r;
     }
-    char* reserve(const int size) {
+    char* reserve(const qint64 size) {
         makeSpace(size + len, freeSpaceAtEnd);
         char* writePtr = first + len;
         len += size;
         return writePtr;
     }
-    void chop(const int size) {
+    void chop(const qint64 size) {
         if (size >= len) {
             clear();
         } else {
@@ -133,15 +133,15 @@ public:
         clear();
         return QByteArray(f, l);
     }
-    int readLine(char* target, int size) {
-        int r = qMin(size, len);
+    qint64 readLine(char* target, qint64 size) {
+        qint64 r = qMin(size, len);
         char* eol = static_cast<char*>(memchr(first, '\n', r));
         if (eol)
             r = 1+(eol-first);
         memcpy(target, first, r);
         len -= r;
         first += r;
-        return int(r);
+        return r;
         }
     bool canReadLine() const {
         return memchr(first, '\n', len);
@@ -155,7 +155,7 @@ public:
         len++;
         *first = c;
     }
-    void ungetBlock(const char* block, int size) {
+    void ungetBlock(const char* block, qint64 size) {
         if ((first - buf) < size) {
             // underflow, the existing valid data needs to move to the end of the (potentially bigger) buffer
             makeSpace(len + size, freeSpaceAtStart);
@@ -187,7 +187,7 @@ private:
     }
 
     // length of the unread data
-    int len;
+    qint64 len;
     // start of the unread data
     char* first;
     // the allocated buffer
@@ -213,10 +213,6 @@ public:
     QIODevicePrivateLinearBuffer buffer;
     qint64 pos;
     qint64 devicePos;
-    // these three are for fast position updates during read, avoiding isSequential test
-    qint64 seqDumpPos;
-    qint64 *pPos;
-    qint64 *pDevicePos;
     bool baseReadLineDataCalled;
     bool firstRead;
 

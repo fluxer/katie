@@ -45,12 +45,12 @@
 #include "qdatetime.h"
 #include "qdiriterator.h"
 #include "qset.h"
-#include <QtCore/qdebug.h>
+#include "qdebug.h"
+#include "qcore_unix_p.h"
 
 #ifndef QT_NO_FSFILEENGINE
 
 #include <errno.h>
-#include "qcore_unix_p.h"
 #include <stdio.h>
 #include <stdlib.h>
 

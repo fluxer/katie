@@ -862,19 +862,6 @@ static int select_msecs(int nfds, fd_set *fdread, fd_set *fdwrite, int timeout)
     return qt_safe_select(nfds, fdread, fdwrite, 0, &tv);
 }
 
-/*
-   Returns the difference between msecs and elapsed. If msecs is -1,
-   however, -1 is returned.
-*/
-static int qt_timeout_value(int msecs, int elapsed)
-{
-    if (msecs == -1)
-        return -1;
-
-    int timeout = msecs - elapsed;
-    return timeout < 0 ? 0 : timeout;
-}
-
 bool QProcessPrivate::waitForStarted(int msecs)
 {
     Q_Q(QProcess);

@@ -39,11 +39,22 @@
 **
 ****************************************************************************/
 
+
+#include "qprocess.h"
+#include "qprocess_p.h"
+#include <qdebug.h>
+#include <qstring.h>
+#include <qbytearray.h>
+#include <qelapsedtimer.h>
+#include <qcoreapplication.h>
+#include <qsocketnotifier.h>
+#include <qtimer.h>
+#include <qcore_unix_p.h>
+
 //#define QPROCESS_DEBUG
 
 #if defined QPROCESS_DEBUG
-#include <qdebug.h>
-#include <qstring.h>
+
 #include <ctype.h>
 #include <errno.h>
 
@@ -82,17 +93,7 @@ QT_END_NAMESPACE
 
 #endif
 
-#include "qprocess.h"
-#include "qprocess_p.h"
-
-#include <qbytearray.h>
-#include <qelapsedtimer.h>
-#include <qcoreapplication.h>
-#include <qsocketnotifier.h>
-#include <qtimer.h>
-
 #ifndef QT_NO_PROCESS
-
 extern char **environ;
 
 QT_BEGIN_NAMESPACE
@@ -1566,8 +1567,7 @@ bool QProcess::waitForBytesWritten(int msecs)
         bool started = waitForStarted(msecs);
         if (!started)
             return false;
-        if (msecs != -1)
-            msecs -= stopWatch.elapsed();
+        msecs = qt_timeout_value(msecs, stopWatch.elapsed());
     }
 
     return d->waitForBytesWritten(msecs);
@@ -1603,8 +1603,7 @@ bool QProcess::waitForFinished(int msecs)
         bool started = waitForStarted(msecs);
         if (!started)
             return false;
-        if (msecs != -1)
-            msecs -= stopWatch.elapsed();
+        msecs = qt_timeout_value(msecs, stopWatch.elapsed());
     }
 
     return d->waitForFinished(msecs);
@@ -1646,6 +1645,8 @@ void QProcess::setupChildProcess()
 qint64 QProcess::readData(char *data, qint64 maxlen)
 {
     Q_D(QProcess);
+    if (!maxlen)
+        return 0;
     QRingBuffer *readBuffer = (d->processChannel == QProcess::StandardError)
                               ? &d->errorReadBuffer
                               : &d->outputReadBuffer;
