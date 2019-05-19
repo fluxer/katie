@@ -9,9 +9,10 @@ mkdir -p "$cwd/../debug"
 cd "$cwd/../debug"
 
 export CC=clang CXX=clang++
-export CFLAGS="$CFLAGS"
-export CXXFLAGS="$CXXFLAGS -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls"
-export LDFLAGS="$LDFLAGS -fsanitize=address"
+# undefined,float-cast-overflow,thread,memory,address
+sanitizers="address"
+export CXXFLAGS="$CXXFLAGS -fsanitize=$sanitizers -fno-omit-frame-pointer -fno-optimize-sibling-calls"
+export LDFLAGS="$LDFLAGS -fsanitize=$sanitizers"
 
 cmake ../ -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_INSTALL_PREFIX=/usr \
