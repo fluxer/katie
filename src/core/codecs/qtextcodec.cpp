@@ -1051,8 +1051,7 @@ bool QTextCodec::canEncode(const QString& s) const
 */
 QString QTextCodec::toUnicode(const char *chars) const
 {
-    const int len = qstrlen(chars);
-    return convertToUnicode(chars, len, 0);
+    return convertToUnicode(chars, qstrlen(chars), 0);
 }
 
 
@@ -1301,7 +1300,7 @@ QTextCodec *QTextCodec::codecForHtml(const QByteArray &ba, QTextCodec *defaultCo
         if (pos != -1) {
             pos = header.lastIndexOf("meta ", pos);
             if (pos != -1) {
-                pos = header.indexOf("charset=", pos) + int(strlen("charset="));
+                pos = header.indexOf("charset=", pos) + qstrlen("charset=");
                 if (pos != -1) {
                     int pos2 = header.indexOf('\"', pos+1);
                     QByteArray cs = header.mid(pos, pos2-pos);
