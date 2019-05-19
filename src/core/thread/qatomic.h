@@ -68,82 +68,82 @@ class Q_CORE_EXPORT QAtomicInt
          return *this;
       }
 
-      int load() const {
+      inline int load() const {
          return m_data.load();
       }
 
-      int loadAcquire() {
+      inline int loadAcquire() {
          return m_data.load(std::memory_order_acquire);
       }
 
-      void store(int newValue) {
+      inline void store(int newValue) {
          m_data.store(newValue);
       }
 
-      void storeRelease(int newValue) {
+      inline void storeRelease(int newValue) {
          m_data.store(newValue, std::memory_order_release);
       }
 
-      bool ref()  {
+      inline bool ref()  {
          return fetchAndAddOrdered(1) != -1;
       }
 
-      bool deref()  {
+      inline bool deref()  {
          return fetchAndAddOrdered(-1) != 1;
       }
 
-      bool testAndSetRelaxed(int expectedValue, int newValue)  {
+      inline bool testAndSetRelaxed(int expectedValue, int newValue)  {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_relaxed);
       }
 
-      bool testAndSetAcquire(int expectedValue, int newValue) {
+      inline bool testAndSetAcquire(int expectedValue, int newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_acquire); 
       }
 
-      bool testAndSetRelease(int expectedValue, int newValue) {
+      inline bool testAndSetRelease(int expectedValue, int newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_release); 
       }
 
-      bool testAndSetOrdered(int expectedValue, int newValue) {
+      inline bool testAndSetOrdered(int expectedValue, int newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_seq_cst); 
       }
 
-      int fetchAndStoreRelaxed(int newValue) {
+      inline int fetchAndStoreRelaxed(int newValue) {
          return m_data.exchange(newValue, std::memory_order_relaxed);
       }
 
-      int fetchAndStoreAcquire(int newValue) {
+      inline int fetchAndStoreAcquire(int newValue) {
          return m_data.exchange(newValue, std::memory_order_acquire);
       }
 
-      int fetchAndStoreRelease(int newValue) {
+      inline int fetchAndStoreRelease(int newValue) {
          return m_data.exchange(newValue, std::memory_order_release);
       }
 
-      int fetchAndStoreOrdered(int newValue) {
+      inline int fetchAndStoreOrdered(int newValue) {
          return m_data.exchange(newValue, std::memory_order_seq_cst);
       }
 
-      int fetchAndAddRelaxed(int valueToAdd) {
+      inline int fetchAndAddRelaxed(int valueToAdd) {
          return m_data.fetch_add(valueToAdd, std::memory_order_relaxed);
       }
 
-      int fetchAndAddAcquire(int valueToAdd) {
+      inline int fetchAndAddAcquire(int valueToAdd) {
          return m_data.fetch_add(valueToAdd, std::memory_order_acquire);
       }
 
-      int fetchAndAddRelease(int valueToAdd) {
+      inline int fetchAndAddRelease(int valueToAdd) {
          return m_data.fetch_add(valueToAdd, std::memory_order_release);
       }
 
-      int fetchAndAddOrdered(int valueToAdd) {
+      inline int fetchAndAddOrdered(int valueToAdd) {
          return m_data.fetch_add(valueToAdd, std::memory_order_seq_cst);
       }
 
       inline operator int() const
         { return load(); }
 
-      static bool isLockFree() {
+      inline static bool isLockFree() {
          return ATOMIC_INT_LOCK_FREE == 2;
       }
 
@@ -155,87 +155,87 @@ template <typename T>
 class Q_CORE_EXPORT QAtomicPointer
 {
    public:
-      QAtomicPointer(T *value = 0) : m_data(value) {
+      inline QAtomicPointer(T *value = Q_NULLPTR) : m_data(value) {
       }
 
-      QAtomicPointer(const QAtomicPointer<T> &other) {
+      inline QAtomicPointer(const QAtomicPointer<T> &other) {
          T *data = other.load();
          store(data);
       }
 
-      QAtomicPointer<T> &operator=(const QAtomicPointer<T> &other) {
+      inline QAtomicPointer<T> &operator=(const QAtomicPointer<T> &other) {
          T *data = other.load();
          store(data);
 
          return *this;
       }
 
-      QAtomicPointer<T> &operator=(T *data) {
+      inline QAtomicPointer<T> &operator=(T *data) {
          store(data);
          return *this;
       }
 
-      T *load() const {
+      inline T *load() const {
          return m_data.load();
       }
 
-      T *loadAcquire() {
+      inline T *loadAcquire() {
          return m_data.load(std::memory_order_acquire);
       }
 
-      void store(T *newValue) {
+      inline void store(T *newValue) {
          m_data.store(newValue);
       }
 
-      void storeRelease(T *newValue) {
+      inline void storeRelease(T *newValue) {
          m_data.store(newValue, std::memory_order_release);
       }
 
-      bool testAndSetRelaxed(T *expectedValue, T *newValue) {
+      inline bool testAndSetRelaxed(T *expectedValue, T *newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_relaxed);
       }
 
-      bool testAndSetAcquire(T *expectedValue, T *newValue) {
+      inline bool testAndSetAcquire(T *expectedValue, T *newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_acquire);
       }
 
-      bool testAndSetRelease(T *expectedValue, T *newValue) {
+      inline bool testAndSetRelease(T *expectedValue, T *newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_release);
       }
 
-      bool testAndSetOrdered(T *expectedValue, T *newValue) {
+      inline bool testAndSetOrdered(T *expectedValue, T *newValue) {
          return m_data.compare_exchange_strong(expectedValue, newValue, std::memory_order_seq_cst);
       }
 
-      T *fetchAndStoreRelaxed(T *newValue)  {
+      inline T *fetchAndStoreRelaxed(T *newValue)  {
          return m_data.exchange(newValue, std::memory_order_relaxed);
       }
 
-      T *fetchAndStoreAcquire(T *newValue) {
+      inline T *fetchAndStoreAcquire(T *newValue) {
          return m_data.exchange(newValue, std::memory_order_acquire);
       }
 
-      T *fetchAndStoreRelease(T *newValue) {
+      inline T *fetchAndStoreRelease(T *newValue) {
          return m_data.exchange(newValue, std::memory_order_release);
       }
 
-      T *fetchAndStoreOrdered(T *newValue) {
+      inline T *fetchAndStoreOrdered(T *newValue) {
          return m_data.exchange(newValue, std::memory_order_seq_cst);
       }
 
-      T *fetchAndAddRelaxed(std::ptrdiff_t valueToAdd) {
+      inline T *fetchAndAddRelaxed(std::ptrdiff_t valueToAdd) {
          return m_data.fetch_add(valueToAdd, std::memory_order_relaxed);
       }
 
-      T *fetchAndAddAcquire(std::ptrdiff_t valueToAdd) {
+      inline T *fetchAndAddAcquire(std::ptrdiff_t valueToAdd) {
          return m_data.fetch_add(valueToAdd, std::memory_order_acquire);
       }
 
-      T *fetchAndAddRelease(std::ptrdiff_t valueToAdd){
+      inline T *fetchAndAddRelease(std::ptrdiff_t valueToAdd){
          return m_data.fetch_add(valueToAdd, std::memory_order_release);
       }
 
-      T *fetchAndAddOrdered(std::ptrdiff_t valueToAdd){
+      inline T *fetchAndAddOrdered(std::ptrdiff_t valueToAdd){
          return m_data.fetch_add(valueToAdd, std::memory_order_seq_cst);
       }
 
@@ -244,7 +244,7 @@ class Q_CORE_EXPORT QAtomicPointer
       inline T *operator->() const
         { return load(); }
 
-      static bool isLockFree() {
+      inline static bool isLockFree() {
          return ATOMIC_POINTER_LOCK_FREE == 2;
       }
 
