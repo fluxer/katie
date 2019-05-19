@@ -296,6 +296,16 @@ QT_USE_NAMESPACE
 #    /* Compatibility with older Clang versions */
 #    define __has_extension __has_feature
 #  endif
+#  define Q_C_CALLBACKS
+#  define Q_ALIGNOF(type)   __alignof__(type)
+#  define Q_TYPEOF(expr)    __typeof__(expr)
+#  define Q_DECL_ALIGN(n)   __attribute__((__aligned__(n)))
+#  define Q_LIKELY(expr)    __builtin_expect(!!(expr), true)
+#  define Q_UNLIKELY(expr)  __builtin_expect(!!(expr), false)
+#  if !defined(QT_MOC_CPP)
+#    define Q_PACKED __attribute__ ((__packed__))
+#    define Q_NO_PACKED_REFERENCE
+#  endif
 
 #else
 #  error "Qt has not been tested with this compiler"
@@ -407,13 +417,6 @@ QT_USE_NAMESPACE
 #  undef Q_NO_PACKED_REFERENCE
 #endif
 
-#ifndef Q_LIKELY
-#  define Q_LIKELY(x) (x)
-#endif
-#ifndef Q_UNLIKELY
-#  define Q_UNLIKELY(x) (x)
-#endif
-
 #ifndef Q_CONSTRUCTOR_FUNCTION
 # define Q_CONSTRUCTOR_FUNCTION0(AFUNC) \
    static const int AFUNC ## __init_variable__ = AFUNC();
@@ -431,7 +434,7 @@ QT_USE_NAMESPACE
 #endif
 
 #ifndef Q_REQUIRED_RESULT
-#  if defined(Q_CC_GNU)
+#  if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
 #    define Q_REQUIRED_RESULT __attribute__ ((warn_unused_result))
 #  else
 #    define Q_REQUIRED_RESULT
@@ -509,16 +512,12 @@ typedef unsigned int uint;
 typedef unsigned long ulong;
 QT_END_INCLUDE_NAMESPACE
 
-#if defined(Q_NO_BOOL_TYPE)
-#error "Compiler doesn't support the bool type"
-#endif
-
 /*
    Warnings and errors when using deprecated methods
 */
 #if defined(Q_MOC_RUN)
 #  define Q_DECL_DEPRECATED Q_DECL_DEPRECATED
-#elif defined(Q_CC_GNU)
+#elif defined(Q_CC_GNU) || defined(Q_CC_CLANG)
 #  define Q_DECL_DEPRECATED __attribute__ ((__deprecated__))
 #else
 #  define Q_DECL_DEPRECATED
@@ -752,25 +751,25 @@ class QString;
 #endif
 
 Q_CORE_EXPORT void qDebug(const char *, ...) /* print debug message */
-#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT void qWarning(const char *, ...) /* print warning message */
-#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 
 Q_CORE_EXPORT QString qt_error_string(int errorCode = -1);
 Q_CORE_EXPORT void qCritical(const char *, ...) /* print critical message */
-#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
 Q_CORE_EXPORT void qFatal(const char *, ...) /* print fatal message and exit */
-#if defined(Q_CC_GNU) && !defined(__INSURE__)
+#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && !defined(__INSURE__)
     __attribute__ ((format (printf, 1, 2)))
 #endif
 ;
@@ -1244,7 +1243,7 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#if defined(Q_CC_GNU)
+#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
 /* make use of typeof-extension */
 template <typename T>
 class QForeachContainer {
@@ -1263,34 +1262,7 @@ for (QForeachContainer<__typeof__(container)> _container_(container); \
 
 #else
 
-struct QForeachContainerBase {};
-
-template <typename T>
-class QForeachContainer : public QForeachContainerBase {
-public:
-    inline QForeachContainer(const T& t): c(t), brk(0), i(c.begin()), e(c.end()){};
-    const T c;
-    mutable int brk;
-    mutable typename T::const_iterator i, e;
-    inline bool condition() const { return (!brk++ && i != e); }
-};
-
-template <typename T> inline T *qForeachPointer(const T &) { return 0; }
-
-template <typename T> inline QForeachContainer<T> qForeachContainerNew(const T& t)
-{ return QForeachContainer<T>(t); }
-
-template <typename T>
-inline const QForeachContainer<T> *qForeachContainer(const QForeachContainerBase *base, const T *)
-{ return static_cast<const QForeachContainer<T> *>(base); }
-
-#define Q_FOREACH(variable, container) \
-    for (const QForeachContainerBase &_container_ = qForeachContainerNew(container); \
-         qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->condition();       \
-         ++qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i)               \
-        for (variable = *qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->i; \
-             qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk;           \
-             --qForeachContainer(&_container_, true ? 0 : qForeachPointer(container))->brk)
+#define Q_FOREACH(variable, container) for (variable: container)
 
 #endif
 
