@@ -49,18 +49,18 @@ static QString utf8encode(const QByteArray &array) // turns e.g. tranøy.no to t
         char c = array.at(i);
         // if char is non-ascii, escape it
         if (c < 0x20 || uchar(c) >= 0x7f) {
-            result += "\\x" + QString::number(uchar(c), 16);
+            result += QLatin1String("\\x") + QString::number(uchar(c), 16);
         } else {
             // if previous char was escaped, we need to make sure the next char is not
             // interpreted as part of the hex value, e.g. "äc.com" -> "\xabc.com"; this
             // should be "\xab""c.com"
-            QRegExp hexEscape("\\\\x[a-fA-F0-9][a-fA-F0-9]$");
+            QRegExp hexEscape(QLatin1String("\\\\x[a-fA-F0-9][a-fA-F0-9]$"));
             bool isHexChar = ((c >= '0' && c <= '9') ||
                              (c >= 'a' && c <= 'f') ||
                              (c >= 'A' && c <= 'F'));
             if (result.contains(hexEscape) && isHexChar)
-                result += "\"\"";
-            result += c;
+                result += QLatin1String("\"\"");
+            result += QChar::fromLatin1(c);
         }
     }
     return result;
@@ -80,8 +80,8 @@ int main(int argc, char **argv) {
         printf("Now copy the data from effective_tld_names.dat.qt to the file src/core/io/qurltlds_p.h in your Qt repo\n\n");
         exit(1);
     }
-    QFile file(argv[1]);
-    QFile outFile(argv[2]);
+    QFile file(QString::fromLatin1(argv[1]));
+    QFile outFile(QString::fromLatin1(argv[2]));
     file.open(QIODevice::ReadOnly);
     outFile.open(QIODevice::WriteOnly);
 
@@ -112,10 +112,10 @@ int main(int argc, char **argv) {
         // so we need to separate those strings with quotes
         QRegExp regexpOctalEscape(QLatin1String("^[0-9]"));
         if (!strings.at(num).isEmpty() && st.contains(regexpOctalEscape))
-            strings[num].append("\"\"");
+            strings[num].append(QLatin1String("\"\""));
 
         strings[num].append(utf8String);
-        strings[num].append("\\0");
+        strings[num].append(QLatin1String("\\0"));
     }
 
     outIndicesBuffer.write("static const quint32 tldCount = ");
@@ -130,12 +130,12 @@ int main(int argc, char **argv) {
     for (int a = 0; a < lineCount; a++) {
         bool lineIsEmpty = strings.at(a).isEmpty();
         if (!lineIsEmpty) {
-            strings[a].prepend("\"");
-            strings[a].append("\"");
+            strings[a].prepend(QLatin1Char('"'));
+            strings[a].append(QLatin1Char('"'));
         }
         int zeroCount = strings.at(a).count(QLatin1String("\\0"));
         int utf8CharsCount = strings.at(a).count(QLatin1String("\\x"));
-        int quoteCount = strings.at(a).count('"');
+        int quoteCount = strings.at(a).count(QLatin1Char('"'));
         outDataBuffer.write(strings.at(a).toUtf8());
         if (!lineIsEmpty)
             outDataBuffer.write("\n");

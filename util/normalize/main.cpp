@@ -80,7 +80,7 @@ bool checkSignature(const QString &fileName, QString &line, const char *sig)
 
     int idx = -1;
     bool found = false;
-    while ((idx = line.indexOf(sig, ++idx)) != -1) {
+    while ((idx = line.indexOf(QString::fromLatin1(sig), ++idx)) != -1) {
         const QByteArray sl(signature(line, idx).toLocal8Bit());
         QByteArray nsl(QMetaObject::normalizedSignature(sl.constData()));
         if (sl != nsl) {
@@ -144,7 +144,7 @@ void traverse(const QString &path)
 
     while (dirIterator.hasNext()) {
         QString filePath = dirIterator.next();
-        if (filePath.endsWith(".cpp"))
+        if (filePath.endsWith(QLatin1String(".cpp")))
             check(filePath);
         else if (QFileInfo(filePath).isDir())
             traverse(filePath); // recurse
@@ -167,12 +167,12 @@ int main(int argc, char *argv[])
     if (qstrcmp(argv[1], "--modify") == 0) {
         printFilename = false;
         modify = true;
-        path = argv[2];
+        path = QString::fromLatin1(argv[2]);
     } else {
-        path = argv[1];
+        path = QString::fromLatin1(argv[1]);
     }
 
-    if (path.startsWith("-")) {
+    if (path.startsWith(QLatin1Char('-'))) {
         qWarning("unknown parameter: %s", path.toLocal8Bit().constData());
         return 1;
     }
@@ -181,8 +181,8 @@ int main(int argc, char *argv[])
     if (fi.isFile()) {
         check(path);
     } else if (fi.isDir()) {
-        if (!path.endsWith("/"))
-            path.append("/");
+        if (!path.endsWith(QLatin1Char('/')))
+            path.append(QLatin1Char('/'));
         traverse(path);
     } else {
         qWarning("Don't know what to do with '%s'", path.toLocal8Bit().constData());

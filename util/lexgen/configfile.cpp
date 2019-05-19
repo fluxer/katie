@@ -65,7 +65,7 @@ ConfigFile::SectionMap ConfigFile::parse(QIODevice *dev)
             continue;
 
         if (line.startsWith(QLatin1Char('['))) {
-            if (!line.endsWith(']')) {
+            if (!line.endsWith(QLatin1Char('['))) {
                 qWarning("Syntax error at line %d: Missing ']' at start of new section.", currentLineNumber);
                 return SectionMap();
             }

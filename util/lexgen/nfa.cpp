@@ -238,7 +238,7 @@ void NFA::debug()
         for (TransitionMap::ConstIterator it = s.transitions.constBegin(),
              end = s.transitions.constEnd(); it != end; ++it)
             qDebug() << "transition from state" << i << "to" << it.value() << "through"
-                     << (it.key() == Epsilon ? QString("Epsilon") : QString(char(it.key())));
+                     << (it.key() == Epsilon ? QLatin1String("Epsilon") : QString(char(it.key())));
         if (!s.symbol.isEmpty())
             qDebug() << "State" << i << "leads to symbol" << s.symbol;
     }
@@ -437,7 +437,7 @@ void DFA::debug() const
             for (TransitionMap::ConstIterator it = s.transitions.constBegin(),
                  end = s.transitions.constEnd(); it != end; ++it)
                 qDebug() << "transition from state" << i << "to" << it.value() << "through"
-                         << (it.key() == Epsilon ? QString("Epsilon") : QString(char(it.key())));
+                         << (it.key() == Epsilon ? QLatin1String("Epsilon") : QString(char(it.key())));
         }
         if (!s.symbol.isEmpty())
             qDebug() << "State" << i << "leads to symbol" << s.symbol;

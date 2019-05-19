@@ -69,7 +69,7 @@ QString Function::signature(const QString &funcNamePrefix) const
    sig += funcNamePrefix;
    sig += fname;
    if (cnst)
-       sig += " const";
+       sig += QLatin1String(" const");
    return sig;
 }
 
@@ -87,7 +87,7 @@ QString Function::definition() const
     if (tmp.endsWith(QLatin1Char('\n')))
         tmp.chop(1);
     if (!tmp.startsWith(QLatin1Char('\n')))
-        tmp.prepend("    ");
+        tmp.prepend(QLatin1String("    "));
 
     tmp.replace(QLatin1Char('\n'), QLatin1String("\n    "));
 
@@ -122,8 +122,8 @@ void Class::addConstructor(Access access, const QString &body, const QString &_a
     QString args = _args;
     if (!args.startsWith(QLatin1Char('('))
         && !args.endsWith(QLatin1Char(')'))) {
-        args.prepend('(');
-        args.append(')');
+        args.prepend(QLatin1Char('('));
+        args.append(QLatin1Char(')'));
     }
     ctor.setName(args);
     ctor.addBody(body);
@@ -135,14 +135,14 @@ QString Class::Section::definition(const Class *klass) const
     QString result;
     
     foreach (Function ctor, constructors) {
-        ctor.setName(klass->name() + "::" + klass->name() + ctor.name());
+        ctor.setName(klass->name() + QLatin1String("::") + klass->name() + ctor.name());
         result += ctor.definition();
         result += QLatin1Char('\n');
     }
     
     foreach (Function func, functions) {
         if (!func.hasBody()) continue;
-        func.setName(klass->name() + "::" + func.name());
+        func.setName(klass->name() + QLatin1String("::") + func.name());
         result += func.definition();
         result += QLatin1Char('\n');
     }
@@ -199,7 +199,7 @@ Generator::Generator(const DFA &_dfa, const Config &config)
     minInput = lst.first();
     maxInput = lst.last();
 
-    ConfigFile::Section section = config.configSections.value("Code Generator Options");
+    ConfigFile::Section section = config.configSections.value(QLatin1String("Code Generator Options"));
 
     foreach (ConfigFile::Entry entry, section) {
         if (!entry.key.startsWith(QLatin1String("MapToCode["))
@@ -220,7 +220,7 @@ Generator::Generator(const DFA &_dfa, const Config &config)
         charFunctionRanges.append(seq);
     }
 
-    QString tokenPrefix = section.value("TokenPrefix");
+    QString tokenPrefix = section.value(QLatin1String("TokenPrefix"));
     if (!tokenPrefix.isEmpty()) {
         for (int i = 0; i < dfa.count(); ++i)
             if (!dfa.at(i).symbol.isEmpty()
@@ -228,7 +228,7 @@ Generator::Generator(const DFA &_dfa, const Config &config)
                 dfa[i].symbol.prepend(tokenPrefix);
     }
 
-    headerFileName = section.value("FileHeader");
+    headerFileName = section.value(QLatin1String("FileHeader"));
 }
 
 static inline bool adjacentKeys(int left, int right) { return left + 1 == right; }
@@ -268,7 +268,7 @@ static QVector<Generator::TransitionSequence> convertToSequences(const Transitio
 QDebug &operator<<(QDebug &debug, const Generator::TransitionSequence &seq)
 {
     return debug << "[first:" << seq.first << "; last:" << seq.last << "; transition:" << seq.transition
-                 << (seq.testFunction.isEmpty() ? QString() : QString(QString("; testfunction:" + seq.testFunction)))
+                 << (seq.testFunction.isEmpty() ? QString() : QString(QLatin1String("; testfunction:") + seq.testFunction))
                  << "]";
 }
 
@@ -344,7 +344,7 @@ void Generator::generateTransitions(CodeBlock &body, const TransitionMap &transi
 
             QString brace;
             if (embedFinalState)
-                brace = " {";
+                brace = QLatin1String(" {");
 
             if (!seq.testFunction.isEmpty()) {
                 body << "if (" << seq.testFunction << ")" << brace;
@@ -381,9 +381,9 @@ void Generator::generateTransitions(CodeBlock &body, const TransitionMap &transi
 
             QString keyStr;
             if (key == '\\')
-                keyStr = QString("\'\\\\\'");
+                keyStr = QLatin1String("\'\\\\\'");
             else if (key >= 48 && key < 127)
-                keyStr = QString('\'') + QChar::fromLatin1(char(key)) + QChar('\'');
+                keyStr = QLatin1Char('\'') + QChar::fromLatin1(char(key)) + QLatin1Char('\'');
             else
                 keyStr = QString::number(key);
 
@@ -407,10 +407,10 @@ QString Generator::generate()
 {
     Class klass(cfg.className);
     
-    klass.addMember(Class::PublicMember, "QString input");
-    klass.addMember(Class::PublicMember, "int pos");
-    klass.addMember(Class::PublicMember, "int lexemStart");
-    klass.addMember(Class::PublicMember, "int lexemLength");
+    klass.addMember(Class::PublicMember, QLatin1String("QString input"));
+    klass.addMember(Class::PublicMember, QLatin1String("int pos"));
+    klass.addMember(Class::PublicMember, QLatin1String("int lexemStart"));
+    klass.addMember(Class::PublicMember, QLatin1String("int lexemLength"));
     
     {
         CodeBlock body;
@@ -418,16 +418,16 @@ QString Generator::generate()
         body << "pos = 0;";
         body << "lexemStart = 0;";
         body << "lexemLength = 0;";
-        klass.addConstructor(Class::PublicMember, body, "const QString &inp");
+        klass.addConstructor(Class::PublicMember, body, QLatin1String("const QString &inp"));
     }
     
     {
-        Function next("QChar", "next()");
+        Function next(QLatin1String("QChar"), QLatin1String("next()"));
         next.setInline(true);
         if (cfg.caseSensitivity == Qt::CaseSensitive)
-            next.addBody("return (pos < input.length()) ? input.at(pos++) : QChar();");
+            next.addBody(QLatin1String("return (pos < input.length()) ? input.at(pos++) : QChar();"));
         else
-            next.addBody("return (pos < input.length()) ? input.at(pos++).toLower() : QChar();");
+            next.addBody(QLatin1String("return (pos < input.length()) ? input.at(pos++).toLower() : QChar();"));
         klass.addMember(Class::PublicMember, next);
     }
     
@@ -443,13 +443,13 @@ QString Generator::generate()
 
     for (int i = 0; i < dfa.count(); ++i)
         if (dfa.at(i).symbol.endsWith(QLatin1String("()"))) {
-            Function handlerFunc("int", dfa.at(i).symbol);
+            Function handlerFunc(QLatin1String("int"), dfa.at(i).symbol);
             klass.addMember(Class::PublicMember, handlerFunc);
         }
 
     Function lexFunc;
-    lexFunc.setReturnType("int");
-    lexFunc.setName("lex()");
+    lexFunc.setReturnType(QLatin1String("int"));
+    lexFunc.setName(QLatin1String("lex()"));
     
     CodeBlock body;
     body << "lexemStart = pos;";

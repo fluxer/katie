@@ -375,18 +375,18 @@ void RE2NFA::tokenize(const QString &input)
 
         if (sym.token == TOK_STRING || sym.token == TOK_SEQUENCE) {
             for (int i = 0; i < sym.lexem.length(); ++i) {
-                if (sym.lexem.at(i) == '\\') {
+                if (sym.lexem.at(i) == QLatin1Char('\\')) {
                     if (i >= sym.lexem.length() - 1)
                         break;
                     QChar ch = sym.lexem.at(i + 1);
                     if (ch == QLatin1Char('n')) {
-                        ch = '\n';
+                        ch = QLatin1Char('\n');
                     } else if (ch == QLatin1Char('r')) {
-                        ch = '\r';
+                        ch = QLatin1Char('\r');
                     } else if (ch == QLatin1Char('t')) {
-                        ch = '\t';
+                        ch = QLatin1Char('\t');
                     } else if (ch == QLatin1Char('f')) {
-                        ch = '\f';
+                        ch = QLatin1Char('\f');
                     }
                     sym.lexem.replace(i, 2, ch);
                 }
