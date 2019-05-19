@@ -63,10 +63,10 @@ QT_BEGIN_NAMESPACE
 class QWindowSurface;
 
 struct BeginPaintInfo {
-    inline BeginPaintInfo() : wasFlushed(0), nothingToPaint(0), windowSurfaceRecreated(0) {}
-    uint wasFlushed : 1;
-    uint nothingToPaint : 1;
-    uint windowSurfaceRecreated : 1;
+    inline BeginPaintInfo() : wasFlushed(false), nothingToPaint(false), windowSurfaceRecreated(false) {}
+    bool wasFlushed;
+    bool nothingToPaint;
+    bool windowSurfaceRecreated;
 };
 
 class Q_AUTOTEST_EXPORT QWidgetBackingStore
@@ -87,8 +87,7 @@ public:
 
     inline bool isDirty() const
     {
-        return !(dirtyWidgets.isEmpty() && dirty.isEmpty() && !hasDirtyFromPreviousSync
-                 && !fullUpdatePending);
+        return !(dirtyWidgets.isEmpty() && dirty.isEmpty() && !fullUpdatePending);
     }
 
     // ### Qt 4.6: Merge into a template function (after MSVC isn't supported anymore).
@@ -101,16 +100,14 @@ private:
     QWidget *tlw;
     QRegion dirtyOnScreen; // needsFlush
     QRegion dirty; // needsRepaint
-    QRegion dirtyFromPreviousSync;
     QVector<QWidget *> dirtyWidgets;
-    QVector<QWidget *> *dirtyOnScreenWidgets;
+    QVector<QWidget *> dirtyOnScreenWidgets;
     QList<QWidget *> staticWidgets;
     QWindowSurface *windowSurface;
 #ifdef Q_BACKINGSTORE_SUBSURFACES
     QList<QWindowSurface*> subSurfaces;
 #endif
-    uint hasDirtyFromPreviousSync : 1;
-    uint fullUpdatePending : 1;
+    bool fullUpdatePending;
 
     QPoint tlwOffset;
 
@@ -199,25 +196,20 @@ private:
         if (!widget)
             return;
 
-        if (!dirtyOnScreenWidgets) {
-            dirtyOnScreenWidgets = new QVector<QWidget *>;
-            dirtyOnScreenWidgets->append(widget);
-        } else if (!dirtyOnScreenWidgets->contains(widget)) {
-            dirtyOnScreenWidgets->append(widget);
+        if (!dirtyOnScreenWidgets.contains(widget)) {
+            dirtyOnScreenWidgets.append(widget);
         }
     }
 
     inline void dirtyOnScreenWidgetsRemoveAll(QWidget *widget)
     {
-        if (!widget || !dirtyOnScreenWidgets)
+        if (!widget)
             return;
 
-        int i = 0;
-        while (i < dirtyOnScreenWidgets->size()) {
-            if (dirtyOnScreenWidgets->at(i) == widget)
-                dirtyOnScreenWidgets->remove(i);
-            else
-                ++i;
+        for (int i = 0; i < dirtyOnScreenWidgets.size(); ++i) {
+            if (dirtyOnScreenWidgets.at(i) == widget) {
+                dirtyOnScreenWidgets.remove(i);
+            }
         }
     }
 

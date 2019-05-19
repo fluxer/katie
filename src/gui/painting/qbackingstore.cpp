@@ -311,8 +311,7 @@ QRegion QWidgetBackingStore::dirtyRegion(QWidget *widget) const
 
     // Calculate the region that needs repaint.
     QRegion r(dirty);
-    for (int i = 0; i < dirtyWidgets.size(); ++i) {
-        QWidget *w = dirtyWidgets.at(i);
+    foreach (QWidget *w, dirtyWidgets) {
         if (widgetDirty && w != widget && !widget->isAncestorOf(w))
             continue;
         r += w->d_func()->dirty.translated(w->mapTo(tlw, QPoint()));
@@ -321,15 +320,13 @@ QRegion QWidgetBackingStore::dirtyRegion(QWidget *widget) const
     // Append the region that needs flush.
     r += dirtyOnScreen;
 
-    if (dirtyOnScreenWidgets) { // Only in use with native child widgets.
-        for (int i = 0; i < dirtyOnScreenWidgets->size(); ++i) {
-            QWidget *w = dirtyOnScreenWidgets->at(i);
-            if (widgetDirty && w != widget && !widget->isAncestorOf(w))
-                continue;
-            QWidgetPrivate *wd = w->d_func();
-            Q_ASSERT(wd->needsFlush);
-            r += wd->needsFlush->translated(w->mapTo(tlw, QPoint()));
-        }
+    // Only in use with native child widgets.
+    foreach (QWidget *w, dirtyOnScreenWidgets) {
+        if (widgetDirty && w != widget && !widget->isAncestorOf(w))
+            continue;
+        QWidgetPrivate *wd = w->d_func();
+        Q_ASSERT(wd->needsFlush);
+        r += wd->needsFlush->translated(w->mapTo(tlw, QPoint()));
     }
 
     if (widgetDirty) {
@@ -679,8 +676,8 @@ void QWidgetBackingStore::updateLists(QWidget *cur)
 }
 
 QWidgetBackingStore::QWidgetBackingStore(QWidget *topLevel)
-    : tlw(topLevel), dirtyOnScreenWidgets(0), hasDirtyFromPreviousSync(false)
-    , fullUpdatePending(0)
+    : tlw(topLevel)
+    , fullUpdatePending(false)
 {
     windowSurface = tlw->windowSurface();
     if (!windowSurface)
@@ -705,8 +702,6 @@ QWidgetBackingStore::~QWidgetBackingStore()
 
     delete windowSurface;
     windowSurface = 0;
-    delete dirtyOnScreenWidgets;
-    dirtyOnScreenWidgets = 0;
 }
 
 //parent's coordinates; move whole rect; update parent and widget
@@ -980,9 +975,6 @@ void QWidgetBackingStore::sync()
     if (updatesDisabled)
         return;
 
-    if (hasDirtyFromPreviousSync)
-        dirty += dirtyFromPreviousSync;
-
     // Contains everything that needs repaint.
     QRegion toClean(dirty);
 
@@ -1188,17 +1180,16 @@ void QWidgetBackingStore::flush(QWidget *widget, QWindowSurface *surface)
         dirtyOnScreen = QRegion();
     }
 
-    if (!dirtyOnScreenWidgets || dirtyOnScreenWidgets->isEmpty())
+    if (dirtyOnScreenWidgets.isEmpty())
         return;
 
-    for (int i = 0; i < dirtyOnScreenWidgets->size(); ++i) {
-        QWidget *w = dirtyOnScreenWidgets->at(i);
+    foreach (QWidget *w, dirtyOnScreenWidgets) {
         QWidgetPrivate *wd = w->d_func();
         Q_ASSERT(wd->needsFlush);
         qt_flush(w, *wd->needsFlush, windowSurface, tlw, tlwOffset);
         *wd->needsFlush = QRegion();
     }
-    dirtyOnScreenWidgets->clear();
+    dirtyOnScreenWidgets.clear();
 }
 
 static inline bool discardInvalidateBufferRequest(QWidget *widget, QTLWExtra *tlwExtra)
