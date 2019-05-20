@@ -51,6 +51,8 @@ set(PyKtCore_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qtextboundaryfinder_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qtextboundaryfinder_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1char_wrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1char_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1string_wrapper.cpp

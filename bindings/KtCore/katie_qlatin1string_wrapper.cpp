@@ -112,25 +112,53 @@ Sbk_Katie_QLatin1String_Init(PyObject* self, PyObject* args, PyObject* kwds)
 
 
     // Overloaded function decisor
-    // 0: QLatin1String::QLatin1String(const char*)
+    // 0: QLatin1String::QLatin1String(Katie::QLatin1String)
+    // 1: QLatin1String::QLatin1String(const char*)
     if (numArgs == 1
         && Shiboken::String::check(pyArgs[0]) && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArgs[0])))) {
-        overloadId = 0; // QLatin1String(const char*)
+        overloadId = 1; // QLatin1String(const char*)
+    } else if (numArgs == 1
+        && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), (pyArgs[0])))) {
+        overloadId = 0; // QLatin1String(Katie::QLatin1String)
     }
 
     // Function signature not found.
     if (overloadId == -1) goto Sbk_Katie_QLatin1String_Init_TypeError;
 
     // Call function/method
-    {
-        const char* cppArg0;
-        pythonToCpp[0](pyArgs[0], &cppArg0);
+    switch (overloadId) {
+        case 0: // QLatin1String(const Katie::QLatin1String & QLatin1String)
+        {
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return -1;
+            ::Katie::QLatin1String cppArg0_local = ::Katie::QLatin1String(static_cast<char*>(nullptr));
+            ::Katie::QLatin1String* cppArg0 = &cppArg0_local;
+            if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), pythonToCpp[0]))
+                pythonToCpp[0](pyArgs[0], &cppArg0_local);
+            else
+                pythonToCpp[0](pyArgs[0], &cppArg0);
 
-        if (!PyErr_Occurred()) {
-            // QLatin1String(const char*)
-            PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
-            cptr = new ::Katie::QLatin1String(cppArg0);
-            PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+
+            if (!PyErr_Occurred()) {
+                // QLatin1String(Katie::QLatin1String)
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                cptr = new ::Katie::QLatin1String(*cppArg0);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+            }
+            break;
+        }
+        case 1: // QLatin1String(const char * s)
+        {
+            const char* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            if (!PyErr_Occurred()) {
+                // QLatin1String(const char*)
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                cptr = new ::Katie::QLatin1String(cppArg0);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+            }
+            break;
         }
     }
 
@@ -180,9 +208,23 @@ static PyObject* Sbk_Katie_QLatin1StringFunc_latin1(PyObject* self)
     return pyResult;
 }
 
+static PyObject* Sbk_Katie_QLatin1String___copy__(PyObject* self)
+{
+    if (!Shiboken::Object::isValid(self))
+        return {};
+    ::Katie::QLatin1String& cppSelf = *reinterpret_cast< ::Katie::QLatin1String *>(Shiboken::Conversions::cppPointer(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX], reinterpret_cast<SbkObject *>(self)));
+    PyObject* pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), &cppSelf);
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+}
+
 static PyMethodDef Sbk_Katie_QLatin1String_methods[] = {
     {"latin1", reinterpret_cast<PyCFunction>(Sbk_Katie_QLatin1StringFunc_latin1), METH_NOARGS},
 
+    {"__copy__", reinterpret_cast<PyCFunction>(Sbk_Katie_QLatin1String___copy__), METH_NOARGS},
     {nullptr, nullptr} // Sentinel
 };
 
@@ -209,8 +251,13 @@ static PyObject* Sbk_Katie_QLatin1String_richcompare(PyObject* self, PyObject* p
                 // operator!=(const Katie::QString & s) const
                 if (!Shiboken::Object::isValid(pyArg))
                     return {};
-                ::Katie::QString* cppArg0;
-                pythonToCpp(pyArg, &cppArg0);
+                ::Katie::QString cppArg0_local;
+                ::Katie::QString* cppArg0 = &cppArg0_local;
+                if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+                    pythonToCpp(pyArg, &cppArg0_local);
+                else
+                    pythonToCpp(pyArg, &cppArg0);
+
                 bool cppResult = cppSelf !=(*cppArg0);
                 pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
             } else {
@@ -230,8 +277,13 @@ static PyObject* Sbk_Katie_QLatin1String_richcompare(PyObject* self, PyObject* p
                 // operator<(const Katie::QString & s) const
                 if (!Shiboken::Object::isValid(pyArg))
                     return {};
-                ::Katie::QString* cppArg0;
-                pythonToCpp(pyArg, &cppArg0);
+                ::Katie::QString cppArg0_local;
+                ::Katie::QString* cppArg0 = &cppArg0_local;
+                if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+                    pythonToCpp(pyArg, &cppArg0_local);
+                else
+                    pythonToCpp(pyArg, &cppArg0);
+
                 bool cppResult = cppSelf <(*cppArg0);
                 pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
             } else {
@@ -250,8 +302,13 @@ static PyObject* Sbk_Katie_QLatin1String_richcompare(PyObject* self, PyObject* p
                 // operator<=(const Katie::QString & s) const
                 if (!Shiboken::Object::isValid(pyArg))
                     return {};
-                ::Katie::QString* cppArg0;
-                pythonToCpp(pyArg, &cppArg0);
+                ::Katie::QString cppArg0_local;
+                ::Katie::QString* cppArg0 = &cppArg0_local;
+                if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+                    pythonToCpp(pyArg, &cppArg0_local);
+                else
+                    pythonToCpp(pyArg, &cppArg0);
+
                 bool cppResult = cppSelf <=(*cppArg0);
                 pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
             } else {
@@ -270,8 +327,13 @@ static PyObject* Sbk_Katie_QLatin1String_richcompare(PyObject* self, PyObject* p
                 // operator==(const Katie::QString & s) const
                 if (!Shiboken::Object::isValid(pyArg))
                     return {};
-                ::Katie::QString* cppArg0;
-                pythonToCpp(pyArg, &cppArg0);
+                ::Katie::QString cppArg0_local;
+                ::Katie::QString* cppArg0 = &cppArg0_local;
+                if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+                    pythonToCpp(pyArg, &cppArg0_local);
+                else
+                    pythonToCpp(pyArg, &cppArg0);
+
                 bool cppResult = cppSelf ==(*cppArg0);
                 pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
             } else {
@@ -291,8 +353,13 @@ static PyObject* Sbk_Katie_QLatin1String_richcompare(PyObject* self, PyObject* p
                 // operator>(const Katie::QString & s) const
                 if (!Shiboken::Object::isValid(pyArg))
                     return {};
-                ::Katie::QString* cppArg0;
-                pythonToCpp(pyArg, &cppArg0);
+                ::Katie::QString cppArg0_local;
+                ::Katie::QString* cppArg0 = &cppArg0_local;
+                if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+                    pythonToCpp(pyArg, &cppArg0_local);
+                else
+                    pythonToCpp(pyArg, &cppArg0);
+
                 bool cppResult = cppSelf >(*cppArg0);
                 pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
             } else {
@@ -311,8 +378,13 @@ static PyObject* Sbk_Katie_QLatin1String_richcompare(PyObject* self, PyObject* p
                 // operator>=(const Katie::QString & s) const
                 if (!Shiboken::Object::isValid(pyArg))
                     return {};
-                ::Katie::QString* cppArg0;
-                pythonToCpp(pyArg, &cppArg0);
+                ::Katie::QString cppArg0_local;
+                ::Katie::QString* cppArg0 = &cppArg0_local;
+                if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+                    pythonToCpp(pyArg, &cppArg0_local);
+                else
+                    pythonToCpp(pyArg, &cppArg0);
+
                 bool cppResult = cppSelf >=(*cppArg0);
                 pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
             } else {
@@ -416,11 +488,28 @@ static PyObject* QLatin1String_PTR_CppToPython_QLatin1String(const void* cppIn) 
     return result;
 }
 
+// C++ to Python copy conversion.
+static PyObject* QLatin1String_COPY_CppToPython_QLatin1String(const void* cppIn) {
+    return Shiboken::Object::newObject(Sbk_Katie_QLatin1String_TypeF(), new ::Katie::QLatin1String(*reinterpret_cast<const ::Katie::QLatin1String*>(cppIn)), true, true);
+}
+
+// Python to C++ copy conversion.
+static void QLatin1String_PythonToCpp_QLatin1String_COPY(PyObject* pyIn, void* cppOut) {
+    *reinterpret_cast<::Katie::QLatin1String*>(cppOut) = *reinterpret_cast< ::Katie::QLatin1String *>(Shiboken::Conversions::cppPointer(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX], reinterpret_cast<SbkObject *>(pyIn)));
+}
+static PythonToCppFunc is_QLatin1String_PythonToCpp_QLatin1String_COPY_Convertible(PyObject* pyIn) {
+    if (PyObject_TypeCheck(pyIn, reinterpret_cast<PyTypeObject*>(Sbk_Katie_QLatin1String_TypeF())))
+        return QLatin1String_PythonToCpp_QLatin1String_COPY;
+    return {};
+}
+
 // The signatures string for the functions.
 // Multiple signatures have their index "n:" in front.
 static const char *Katie_QLatin1String_SignatureStrings[] = {
-    "KtCore.Katie.QLatin1String(s:str)",
+    "1:KtCore.Katie.QLatin1String(QLatin1String:KtCore.Katie.QLatin1String)",
+    "0:KtCore.Katie.QLatin1String(s:str)",
     "KtCore.Katie.QLatin1String.latin1()->str",
+    "KtCore.Katie.QLatin1String.__copy__()",
     nullptr}; // Sentinel
 
 void init_Katie_QLatin1String(PyObject* module)
@@ -428,7 +517,7 @@ void init_Katie_QLatin1String(PyObject* module)
     _Sbk_Katie_QLatin1String_Type = Shiboken::ObjectType::introduceWrapperType(
         module,
         "QLatin1String",
-        "Katie::QLatin1String*",
+        "Katie::QLatin1String",
         &Sbk_Katie_QLatin1String_spec,
         Katie_QLatin1String_SignatureStrings,
         &Shiboken::callCppDestructor< ::Katie::QLatin1String >,
@@ -443,7 +532,8 @@ void init_Katie_QLatin1String(PyObject* module)
     SbkConverter* converter = Shiboken::Conversions::createConverter(Sbk_Katie_QLatin1String_TypeF(),
         QLatin1String_PythonToCpp_QLatin1String_PTR,
         is_QLatin1String_PythonToCpp_QLatin1String_PTR_Convertible,
-        QLatin1String_PTR_CppToPython_QLatin1String);
+        QLatin1String_PTR_CppToPython_QLatin1String,
+        QLatin1String_COPY_CppToPython_QLatin1String);
 
     Shiboken::Conversions::registerConverterName(converter, "Katie::QLatin1String");
     Shiboken::Conversions::registerConverterName(converter, "Katie::QLatin1String*");
@@ -453,6 +543,10 @@ void init_Katie_QLatin1String(PyObject* module)
     Shiboken::Conversions::registerConverterName(converter, "QLatin1String&");
     Shiboken::Conversions::registerConverterName(converter, typeid(::Katie::QLatin1String).name());
 
+    // Add Python to C++ copy (value, not pointer neither reference) conversion to type converter.
+    Shiboken::Conversions::addPythonToCppValueConversion(converter,
+        QLatin1String_PythonToCpp_QLatin1String_COPY,
+        is_QLatin1String_PythonToCpp_QLatin1String_COPY_Convertible);
 
 
 }

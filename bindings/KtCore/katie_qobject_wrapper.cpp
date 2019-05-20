@@ -1008,8 +1008,8 @@ static PyObject* Sbk_Katie_QObjectFunc_objectName(PyObject* self)
 
         if (!PyErr_Occurred()) {
             // objectName()const
-            Katie::QString* cppResult = new Katie::QString(const_cast<const ::QObjectWrapper*>(cppSelf)->objectName());
-            pyResult = Shiboken::Object::newObject(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), cppResult, true, true);
+            Katie::QString cppResult = const_cast<const ::QObjectWrapper*>(cppSelf)->objectName();
+            pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
         }
     }
 
@@ -1215,8 +1215,13 @@ static PyObject* Sbk_Katie_QObjectFunc_setObjectName(PyObject* self, PyObject* p
     {
         if (!Shiboken::Object::isValid(pyArg))
             return {};
-        ::Katie::QString* cppArg0;
-        pythonToCpp(pyArg, &cppArg0);
+        ::Katie::QString cppArg0_local;
+        ::Katie::QString* cppArg0 = &cppArg0_local;
+        if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp))
+            pythonToCpp(pyArg, &cppArg0_local);
+        else
+            pythonToCpp(pyArg, &cppArg0);
+
 
         if (!PyErr_Occurred()) {
             // setObjectName(Katie::QString)
@@ -1394,9 +1399,9 @@ static PyObject* Sbk_Katie_QObjectFunc_tr(PyObject* self, PyObject* args)
         if (!PyErr_Occurred()) {
             // tr(const char*,const char*,int)
             PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
-            Katie::QString* cppResult = new Katie::QString(::Katie::QObject::tr(cppArg0, cppArg1, cppArg2));
+            Katie::QString cppResult = ::Katie::QObject::tr(cppArg0, cppArg1, cppArg2);
             PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
-            pyResult = Shiboken::Object::newObject(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), cppResult, true, true);
+            pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
         }
     }
 
@@ -1452,9 +1457,9 @@ static PyObject* Sbk_Katie_QObjectFunc_trUtf8(PyObject* self, PyObject* args)
         if (!PyErr_Occurred()) {
             // trUtf8(const char*,const char*,int)
             PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
-            Katie::QString* cppResult = new Katie::QString(::Katie::QObject::trUtf8(cppArg0, cppArg1, cppArg2));
+            Katie::QString cppResult = ::Katie::QObject::trUtf8(cppArg0, cppArg1, cppArg2);
             PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
-            pyResult = Shiboken::Object::newObject(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), cppResult, true, true);
+            pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
         }
     }
 
