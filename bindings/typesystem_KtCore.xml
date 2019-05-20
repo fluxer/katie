@@ -274,6 +274,7 @@
         <object-type name="QTextBoundaryFinder">
             <enum-type name="BoundaryType"/>
             <enum-type name="BoundaryReason"/>
+            <primitive-type name="BoundaryReasons"/>
         </object-type>
 
         <object-type name="QLatin1Char">

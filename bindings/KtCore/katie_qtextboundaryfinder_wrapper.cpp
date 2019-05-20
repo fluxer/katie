@@ -228,6 +228,32 @@ Sbk_Katie_QTextBoundaryFinder_Init(PyObject* self, PyObject* args, PyObject* kwd
         return -1;
 }
 
+static PyObject* Sbk_Katie_QTextBoundaryFinderFunc_boundaryReasons(PyObject* self)
+{
+    ::Katie::QTextBoundaryFinder* cppSelf = nullptr;
+    SBK_UNUSED(cppSelf)
+    if (!Shiboken::Object::isValid(self))
+        return {};
+    cppSelf = reinterpret_cast< ::Katie::QTextBoundaryFinder *>(Shiboken::Conversions::cppPointer(SbkKtCoreTypes[SBK_KATIE_QTEXTBOUNDARYFINDER_IDX], reinterpret_cast<SbkObject *>(self)));
+    PyObject* pyResult{};
+
+    // Call function/method
+    {
+
+        if (!PyErr_Occurred()) {
+            // boundaryReasons()const
+            Katie::QTextBoundaryFinder::BoundaryReasons cppResult = const_cast<const ::Katie::QTextBoundaryFinder*>(cppSelf)->boundaryReasons();
+            pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<Katie::QTextBoundaryFinder::BoundaryReasons>(), &cppResult);
+        }
+    }
+
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+}
+
 static PyObject* Sbk_Katie_QTextBoundaryFinderFunc_isAtBoundary(PyObject* self)
 {
     ::Katie::QTextBoundaryFinder* cppSelf = nullptr;
@@ -508,6 +534,7 @@ static PyObject* Sbk_Katie_QTextBoundaryFinderFunc_type(PyObject* self)
 }
 
 static PyMethodDef Sbk_Katie_QTextBoundaryFinder_methods[] = {
+    {"boundaryReasons", reinterpret_cast<PyCFunction>(Sbk_Katie_QTextBoundaryFinderFunc_boundaryReasons), METH_NOARGS},
     {"isAtBoundary", reinterpret_cast<PyCFunction>(Sbk_Katie_QTextBoundaryFinderFunc_isAtBoundary), METH_NOARGS},
     {"isValid", reinterpret_cast<PyCFunction>(Sbk_Katie_QTextBoundaryFinderFunc_isValid), METH_NOARGS},
     {"position", reinterpret_cast<PyCFunction>(Sbk_Katie_QTextBoundaryFinderFunc_position), METH_NOARGS},
@@ -646,6 +673,7 @@ static const char *Katie_QTextBoundaryFinder_SignatureStrings[] = {
     "2:KtCore.Katie.QTextBoundaryFinder(type:KtCore.Katie.QTextBoundaryFinder.BoundaryType,chars:KtCore.Katie.QChar,length:int)",
     "1:KtCore.Katie.QTextBoundaryFinder(type:KtCore.Katie.QTextBoundaryFinder.BoundaryType,string:KtCore.Katie.QString)",
     "0:KtCore.Katie.QTextBoundaryFinder(other:KtCore.Katie.QTextBoundaryFinder)",
+    "KtCore.Katie.QTextBoundaryFinder.boundaryReasons()->Katie.QTextBoundaryFinder.BoundaryReasons",
     "KtCore.Katie.QTextBoundaryFinder.isAtBoundary()->bool",
     "KtCore.Katie.QTextBoundaryFinder.isValid()->bool",
     "KtCore.Katie.QTextBoundaryFinder.position()->int",
