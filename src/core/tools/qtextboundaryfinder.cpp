@@ -304,7 +304,7 @@ int QTextBoundaryFinder::toPreviousBoundary()
         return d->pos;
     }
 
-    if (d->pos <= 0 || d->pos > d->length) {
+    if (d->pos <= 0 || d->pos >= d->length) {
         d->pos = -1;
         return d->pos;
     }
@@ -350,14 +350,14 @@ bool QTextBoundaryFinder::isAtBoundary() const
         return true;
 
     switch(d->type) {
-    case QTextBoundaryFinder::Grapheme:
-        return !d->string[d->pos].isLetterOrNumber();
-    case QTextBoundaryFinder::Word:
-        return d->string[d->pos].isSpace();
-    case QTextBoundaryFinder::Line:
-        return (d->pos > 0) ? d->string[d->pos].category() == QChar::Separator_Line : true;
-    case QTextBoundaryFinder::Sentence:
-        return d->string[d->pos].isPunct();
+        case QTextBoundaryFinder::Grapheme:
+            return !d->string[d->pos].isLetterOrNumber();
+        case QTextBoundaryFinder::Word:
+            return d->string[d->pos].isSpace();
+        case QTextBoundaryFinder::Line:
+            return (d->pos > 0) ? d->string[d->pos].category() == QChar::Separator_Line : true;
+        case QTextBoundaryFinder::Sentence:
+            return d->string[d->pos].isPunct();
     }
     return false;
 }
