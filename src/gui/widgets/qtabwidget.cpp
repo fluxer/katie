@@ -203,15 +203,14 @@ public:
     bool dirty;
     QTabWidget::TabPosition pos;
     QTabWidget::TabShape shape;
-    int alignment;
     QWidget *leftCornerWidget;
     QWidget *rightCornerWidget;
 };
 
 QTabWidgetPrivate::QTabWidgetPrivate()
-    : tabs(0), stack(0), dirty(true),
+    : tabs(Q_NULLPTR), stack(Q_NULLPTR), dirty(true),
       pos(QTabWidget::North), shape(QTabWidget::Rounded),
-      leftCornerWidget(0), rightCornerWidget(0)
+      leftCornerWidget(Q_NULLPTR), rightCornerWidget(Q_NULLPTR)
 {}
 
 QTabWidgetPrivate::~QTabWidgetPrivate()
@@ -224,7 +223,6 @@ void QTabWidgetPrivate::init()
     stack = new QStackedWidget(q);
     stack->setObjectName(QLatin1String("qt_tabwidget_stackedwidget"));
     stack->setLineWidth(0);
-#warning hack so that QMacStyle::layoutSpacing() can detect tab widget pages
     stack->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred, QSizePolicy::TabWidget));
 
     QObject::connect(stack, SIGNAL(widgetRemoved(int)), q, SLOT(_q_removeTab(int)));
