@@ -98,9 +98,9 @@ private slots:
     void scriptfile_property();
 };
 
-inline QUrl TEST_FILE(const QString &filename)
+inline QUrl TEST_FILE(const char* filename)
 {
-    return QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + filename);
+    return QUrl::fromLocalFile(QLatin1String(SRCDIR) + QLatin1String("/data/") + QString::fromLatin1(filename));
 }
 
 class TestObject : public QObject
