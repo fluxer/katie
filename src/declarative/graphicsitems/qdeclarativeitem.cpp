@@ -1346,11 +1346,6 @@ void QDeclarativeKeysAttached::setPriority(Priority order)
     }
 }
 
-void QDeclarativeKeysAttached::componentComplete()
-{
-#warning noop, virtual
-}
-
 void QDeclarativeKeysAttached::keyPressed(QKeyEvent *event, bool post)
 {
     Q_D(QDeclarativeKeysAttached);

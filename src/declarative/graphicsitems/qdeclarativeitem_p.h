@@ -276,21 +276,21 @@ public:
     QDeclarativeStateGroup *_states();
     QDeclarativeStateGroup *_stateGroup;
 
-    QDeclarativeItem::TransformOrigin origin:5;
-    bool widthValid:1;
-    bool heightValid:1;
-    bool componentComplete:1;
-    bool keepMouse:1;
-    bool smooth:1;
-    bool transformOriginDirty : 1;
-    bool doneEventPreHandler : 1;
-    bool inheritedLayoutMirror:1;
-    bool effectiveLayoutMirror:1;
-    bool isMirrorImplicit:1;
-    bool inheritMirrorFromParent:1;
-    bool inheritMirrorFromItem:1;
-    bool hadFocus:1;
-    bool hadActiveFocus:1;
+    QDeclarativeItem::TransformOrigin origin;
+    bool widthValid;
+    bool heightValid;
+    bool componentComplete;
+    bool keepMouse;
+    bool smooth;
+    bool transformOriginDirty;
+    bool doneEventPreHandler
+    bool inheritedLayoutMirror;
+    bool effectiveLayoutMirror;
+    bool isMirrorImplicit;
+    bool inheritMirrorFromParent;
+    bool inheritMirrorFromItem;
+    bool hadFocus;
+    bool hadActiveFocus;
 
     QDeclarativeItemKeyFilter *keyHandler;
 
@@ -465,7 +465,7 @@ class QDeclarativeKeysAttachedPrivate : public QObjectPrivate
 public:
     QDeclarativeKeysAttachedPrivate()
         : QObjectPrivate(), inPress(false), inRelease(false)
-        , inIM(false), enabled(true), imeItem(0), item(0)
+        , enabled(true), imeItem(Q_NULLPTR), item(Q_NULLPTR)
     {}
 
     bool isConnected(const char *signalName);
@@ -479,11 +479,10 @@ public:
     }
 
     //loop detection
-    bool inPress:1;
-    bool inRelease:1;
-    bool inIM:1;
+    bool inPress;
+    bool inRelease;
 
-    bool enabled : 1;
+    bool enabled;
 
     QGraphicsItem *imeItem;
     QList<QDeclarativeItem *> targets;
@@ -522,8 +521,6 @@ public:
         Q_D(QDeclarativeKeysAttached);
         return QDeclarativeListProperty<QDeclarativeItem>(this, d->targets);
     }
-
-    virtual void componentComplete();
 
     static QDeclarativeKeysAttached *qmlAttachedProperties(QObject *);
 
