@@ -283,7 +283,7 @@ public:
     bool keepMouse;
     bool smooth;
     bool transformOriginDirty;
-    bool doneEventPreHandler
+    bool doneEventPreHandler;
     bool inheritedLayoutMirror;
     bool effectiveLayoutMirror;
     bool isMirrorImplicit;
