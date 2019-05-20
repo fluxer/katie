@@ -147,12 +147,9 @@ private:
 
     inline void dirtyWidgetsRemoveAll(QWidget *widget)
     {
-        int i = 0;
-        while (i < dirtyWidgets.size()) {
+        for (int i = 0; i < dirtyWidgets.size(); ++i) {
             if (dirtyWidgets.at(i) == widget)
                 dirtyWidgets.remove(i);
-            else
-                ++i;
         }
     }
 

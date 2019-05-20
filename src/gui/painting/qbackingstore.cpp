@@ -1180,9 +1180,6 @@ void QWidgetBackingStore::flush(QWidget *widget, QWindowSurface *surface)
         dirtyOnScreen = QRegion();
     }
 
-    if (dirtyOnScreenWidgets.isEmpty())
-        return;
-
     foreach (QWidget *w, dirtyOnScreenWidgets) {
         QWidgetPrivate *wd = w->d_func();
         Q_ASSERT(wd->needsFlush);
