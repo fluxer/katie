@@ -650,16 +650,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
 */
 
 /*!
-    \typedef QStyle::SFlags
-    \internal
-*/
-
-/*!
-    \typedef QStyle::SCFlags
-    \internal
-*/
-
-/*!
     \enum QStyle::StateFlag
 
     This enum describes flags that are used when drawing primitive
