@@ -42,7 +42,7 @@
 #ifndef QMATH_H
 #define QMATH_H
 
-#include <math.h>
+#include <cmath>
 
 #include <QtCore/qglobal.h>
 
@@ -55,6 +55,16 @@ QT_BEGIN_NAMESPACE
 #define QT_SINE_TABLE_SIZE 256
 
 extern Q_CORE_EXPORT const qreal qt_sine_table[QT_SINE_TABLE_SIZE];
+
+inline int qRound(qreal d)
+{
+    return int(std::round(d));
+}
+
+inline qint64 qRound64(qreal d)
+{
+    return qint64(std::round(d));
+}
 
 inline int qCeil(qreal v)
 {

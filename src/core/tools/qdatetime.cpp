@@ -41,13 +41,13 @@
 
 #include "qplatformdefs.h"
 #include "qdatetime_p.h"
-
 #include "qdatastream.h"
 #include "qset.h"
 #include "qlocale.h"
 #include "qdatetime.h"
 #include "qregexp.h"
 #include "qdebug.h"
+#include "qmath.h"
 
 #include <time.h>
 

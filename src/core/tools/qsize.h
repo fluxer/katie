@@ -43,6 +43,7 @@
 #define QSIZE_H
 
 #include <QtCore/qnamespace.h>
+#include <QtCore/qmath.h>
 
 QT_BEGIN_HEADER
 

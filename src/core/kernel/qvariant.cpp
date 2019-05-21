@@ -46,6 +46,7 @@
 #include "qdebug.h"
 #include "qmap.h"
 #include "qdatetime.h"
+#include "qmath.h"
 #ifndef QT_BOOTSTRAPPED
 #include "qeasingcurve.h"
 #endif

@@ -43,7 +43,8 @@
 #include "QtTest/qbenchmark_p.h"
 #include "QtTest/qbenchmarkmetric_p.h"
 #include "qbenchmark.h"
-#include <qdebug.h>
+#include "qmath.h"
+#include "qdebug.h"
 
 QT_BEGIN_NAMESPACE
 
