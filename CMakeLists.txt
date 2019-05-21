@@ -165,7 +165,7 @@ option(WITH_SQLITE "Build SQLite database plugin" ON)
 add_feature_info(sqlite WITH_SQLITE "build SQLite support")
 
 option(WITH_RESOLV "Build resolv support" ON)
-add_feature_info(resolv WITH_RESOLV "build reslove support")
+add_feature_info(resolv WITH_RESOLV "build resolv support")
 
 option(WITH_NSL "Build NSL support" ON)
 add_feature_info(nsl WITH_NSL "build NSL support")
