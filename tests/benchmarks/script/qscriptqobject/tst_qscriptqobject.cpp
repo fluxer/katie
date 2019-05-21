@@ -523,7 +523,7 @@ void tst_QScriptQObject::callMethodHelper(
 void tst_QScriptQObject::signalHandlerHelper(
     QScriptEngine &engine, QObject *object, const char *signal)
 {
-    QScriptValue handler = engine.evaluate("(function(a) { return a; })");
+    QScriptValue handler = engine.evaluate(QLatin1String("(function(a) { return a; })"));
     QVERIFY(handler.isFunction());
     QVERIFY(qScriptConnect(object, signal, QScriptValue(), handler));
 }

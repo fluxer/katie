@@ -351,26 +351,26 @@ void tst_QPainter::drawLine_data()
 
     int i = 0;
     foreach (QPen pen, pens) {
-        const QString s = QString(QLatin1String("%1:%2")).arg(penNames[i]);
-        QTest::newRow(qPrintable(s.arg("horizontal")))
+        const QString s = QString::fromLatin1("%1:%2").arg(penNames[i]);
+        QTest::newRow(qPrintable(s.arg(QLatin1String("horizontal"))))
             << QLine(0, 20, 100, 20) << pen;
-        QTest::newRow(qPrintable(s.arg("vertical:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("vertical:"))))
             << QLine(20, 0, 20, 100) << pen;
-        QTest::newRow(qPrintable(s.arg("0-45:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("0-45:"))))
             << QLine(0, 20, 100, 0) << pen;
-        QTest::newRow(qPrintable(s.arg("45-90:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("45-90:"))))
             << QLine(0, 100, 20, 0) << pen;
-        QTest::newRow(qPrintable(s.arg("90-135:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("90-135:"))))
             << QLine(20, 100, 0, 0) << pen;
-        QTest::newRow(qPrintable(s.arg("135-180:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("135-180:"))))
             << QLine(100, 20, 0, 0) << pen;
-        QTest::newRow(qPrintable(s.arg("180-225:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("180-225:"))))
             << QLine(100, 0, 0, 20) << pen;
-        QTest::newRow(qPrintable(s.arg("225-270:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("225-270:"))))
             << QLine(20, 0, 0, 100) << pen;
-        QTest::newRow(qPrintable(s.arg("270-315:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("270-315:"))))
             << QLine(0, 0, 20, 100) << pen;
-        QTest::newRow(qPrintable(s.arg("315-360:")))
+        QTest::newRow(qPrintable(s.arg(QLatin1String("315-360:"))))
             << QLine(0, 0, 100, 20) << pen;
         ++i;
     }

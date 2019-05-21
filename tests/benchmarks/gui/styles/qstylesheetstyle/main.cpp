@@ -165,8 +165,8 @@ void tst_qstylesheetstyle::grid()
         for(int y=0; y<N ;y++) {
         QLabel *label = new QLabel(QString::number(y * N + x));
         layout->addWidget(label ,x,y);
-        label->setObjectName(QString("label%1").arg(y * N + x));
-        stylesheet += QString("#label%1 { background-color: rgb(0,%2,%3); color: rgb(%2,%3,255);  } ").arg(y*N+x).arg(y*255/N).arg(x*255/N);
+        label->setObjectName(QString::fromLatin1("label%1").arg(y * N + x));
+        stylesheet += QString::fromLatin1("#label%1 { background-color: rgb(0,%2,%3); color: rgb(%2,%3,255);  } ").arg(y*N+x).arg(y*255/N).arg(x*255/N);
     }
 
     w->setStyleSheet(QLatin1String("/* */"));
