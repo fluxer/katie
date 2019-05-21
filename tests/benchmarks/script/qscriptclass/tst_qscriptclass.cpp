@@ -252,7 +252,7 @@ public:
         : QScriptClass(engine)
     {
         for (int i = 0; i < iteratorValuesNumber; ++i)
-            names.append(engine->toStringHandle(QString::fromtLatin1("property%1").arg(i)));
+            names.append(engine->toStringHandle(QString::fromLatin1("property%1").arg(i)));
     }
 
     QScriptClassPropertyIterator *newIterator(const QScriptValue &object)
