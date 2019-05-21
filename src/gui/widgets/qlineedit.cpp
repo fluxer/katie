@@ -85,10 +85,8 @@ QT_BEGIN_NAMESPACE
 
 /*!
     Initialize \a option with the values from this QLineEdit. This method
-    is useful for subclasses when they need a QStyleOptionFrame or QStyleOptionFrameV2, but don't want
-    to fill in all the information themselves. This function will check the version
-    of the QStyleOptionFrame and fill in the additional values for a
-    QStyleOptionFrameV2.
+    is useful for subclasses when they need a QStyleOptionFrame, but don't want
+    to fill in all the information themselves.
 
     \sa QStyleOption::initFrom()
 */
@@ -110,8 +108,7 @@ void QLineEdit::initStyleOption(QStyleOptionFrame *option) const
     if (hasEditFocus())
         option->state |= QStyle::State_HasEditFocus;
 #endif
-    if (QStyleOptionFrameV2 *optionV2 = qstyleoption_cast<QStyleOptionFrameV2 *>(option))
-        optionV2->features = QStyleOptionFrameV2::None;
+    option->features = QStyleOptionFrame::None;
 }
 
 /*!
