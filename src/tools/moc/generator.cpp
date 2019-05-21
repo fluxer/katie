@@ -374,8 +374,8 @@ void Generator::generateCode()
         if (cdef->superclassList.at(i).second == FunctionDef::Private)
             continue;
         const char *cname = cdef->superclassList.at(i).first.constData();
-        fprintf(out, "    if (!strcmp(_clname, \"%s\"))\n        return static_cast< %s*>(this);\n",
-                cname, cdef->classname.constData());
+        fprintf(out, "    if (!strcmp(_clname, \"%s\"))\n        return static_cast< %s*>(const_cast< %s*>(this));\n",
+                cname, cname, cdef->classname.constData());
     }
     for (int i = 0; i < cdef->interfaceList.size(); ++i) {
         const QList<ClassDef::Interface> &iface = cdef->interfaceList.at(i);
@@ -383,7 +383,8 @@ void Generator::generateCode()
             fprintf(out, "    if (!strcmp(_clname, %s))\n        return ", iface.at(j).interfaceId.constData());
             for (int k = j; k >= 0; --k)
                 fprintf(out, "static_cast< %s*>(", iface.at(k).className.constData());
-            fprintf(out, "this%s;\n", QByteArray(j+1, ')').constData());
+            fprintf(out, "const_cast< %s*>(this)%s;\n",
+                    cdef->classname.constData(), QByteArray(j+1, ')').constData());
         }
     }
     if (!purestSuperClass.isEmpty() && !isQObject) {
