@@ -1243,7 +1243,7 @@ typedef uint Flags;
 
 #endif /* Q_NO_TYPESAFE_FLAGS */
 
-#if defined(Q_CC_GNU) || defined(Q_CC_CLANG)
+#if (defined(Q_CC_GNU) || defined(Q_CC_CLANG)) && defined(QT_FOREACH_COMPAT)
 /* make use of typeof-extension */
 template <typename T>
 class QForeachContainer {

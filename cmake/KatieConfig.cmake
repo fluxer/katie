@@ -155,7 +155,7 @@ if(NOT KATIE_FOUND)
             # TODO: component definitions
         endforeach()
 
-        set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_INCLUDE_COMPAT -DQT_NAMESPACE_COMPAT)
+        set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_INCLUDE_COMPAT -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
         set(QT_DEFINITIONS ${KATIE_DEFINITIONS})
 
         # not much to be done about those since they are complex and many projects rely on them
