@@ -75,19 +75,17 @@ Q_CORE_EXPORT QObject *qt_qFindChild_helper(const QObject *parent, const QString
 
 class QObjectData {
 public:
-    virtual ~QObjectData() = 0;
     QObject *q_ptr;
     QObject *parent;
     QObjectList children;
 
-    uint isWidget : 1;
-    uint pendTimer : 1;
-    uint blockSig : 1;
-    uint wasDeleted : 1;
-    uint ownObjectName : 1;
-    uint sendChildEvents : 1;
-    uint receiveChildEvents : 1;
-    uint inThreadChangeEvent : 1;
+    bool isWidget;
+    bool pendTimer;
+    bool blockSig;
+    bool wasDeleted;
+    bool sendChildEvents;
+    bool receiveChildEvents;
+    bool inThreadChangeEvent;
     int postedEvents;
     QMetaObject *metaObject; // assert dynamic
 };

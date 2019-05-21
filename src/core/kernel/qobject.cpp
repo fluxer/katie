@@ -116,8 +116,6 @@ void (*QAbstractDeclarativeData::destroyed)(QAbstractDeclarativeData *, QObject 
 void (*QAbstractDeclarativeData::parentChanged)(QAbstractDeclarativeData *, QObject *, QObject *) = 0;
 void (*QAbstractDeclarativeData::objectNameChanged)(QAbstractDeclarativeData *, QObject *) = 0;
 
-QObjectData::~QObjectData() {}
-
 QObjectPrivate::QObjectPrivate(int version)
     : threadData(0), connectionLists(0), senders(0), currentSender(0), currentChildBeingDeleted(Q_NULLPTR)
 {
@@ -636,7 +634,7 @@ QObject::~QObject()
 {
     Q_D(QObject);
     d->wasDeleted = true;
-    d->blockSig = 0; // unblock signals so we always emit destroyed()
+    d->blockSig = false; // unblock signals so we always emit destroyed()
 
     if (d->sharedRefcount) {
         if (d->sharedRefcount->strongref > 0) {
