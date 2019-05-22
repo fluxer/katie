@@ -189,8 +189,7 @@ static inline bool is_S(QChar ch)
 */
 static bool stripTextDecl(QString& str)
 {
-    QString textDeclStart(QLatin1String("<?xml"));
-    if (str.startsWith(textDeclStart)) {
+    if (str.startsWith(QLatin1String("<?xml"))) {
         QRegExp textDecl(QString::fromLatin1(
             "^<\\?xml\\s+"
             "(version\\s*=\\s*((['\"])[-a-zA-Z0-9_.:]+\\3))?"
@@ -258,10 +257,6 @@ public:
     QString pub;
     QString sys;
 
-};
-
-class QXmlLocatorPrivate
-{
 };
 
 class QXmlSimpleReaderPrivate

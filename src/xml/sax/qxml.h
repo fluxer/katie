@@ -74,7 +74,6 @@ class QXmlSimpleReaderPrivate;
 class QXmlNamespaceSupportPrivate;
 class QXmlInputSourcePrivate;
 class QXmlParseExceptionPrivate;
-class QXmlLocatorPrivate;
 class QXmlDefaultHandlerPrivate;
 
 
