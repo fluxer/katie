@@ -456,10 +456,7 @@ QT_BEGIN_NAMESPACE
 
     \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 4
 
-    The remaining functions are qRound() and qRound64(), which both
-    accept a \l qreal value as their argument returning the value
-    rounded up to the nearest integer and 64-bit integer respectively,
-    the qInstallMsgHandler() function which installs the given
+    qInstallMsgHandler() function which installs the given
     QtMsgHandler, and the qVersion() function which returns the
     version number of Qt at run-time as a string.
 
@@ -748,26 +745,6 @@ QT_BEGIN_NAMESPACE
     Example:
 
     \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 10
-*/
-
-/*! \fn int qRound(qreal value)
-    \relates <QtGlobal>
-
-    Rounds \a value to the nearest integer.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 11
-*/
-
-/*! \fn qint64 qRound64(qreal value)
-    \relates <QtGlobal>
-
-    Rounds \a value to the nearest 64-bit integer.
-
-    Example:
-
-    \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 12
 */
 
 /*! \fn const T &qMin(const T &value1, const T &value2)

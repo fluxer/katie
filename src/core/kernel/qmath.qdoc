@@ -33,6 +33,26 @@
     \pagekeywords math trigonometry qmath floor ceiling absolute sine cosine tangent inverse tan exponent power natural logarithm
 */
 
+/*! \fn int qRound(qreal value)
+    \relates <QtGlobal>
+
+    Rounds \a value to the nearest integer.
+
+    Example:
+
+    \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 11
+*/
+
+/*! \fn qint64 qRound64(qreal value)
+    \relates <QtGlobal>
+
+    Rounds \a value to the nearest 64-bit integer.
+
+    Example:
+
+    \snippet doc/src/snippets/code/src_corelib_global_qglobal.cpp 12
+*/
+
 /*!
     \fn int qCeil(qreal v)
     Return the ceiling of the value \a v. 
