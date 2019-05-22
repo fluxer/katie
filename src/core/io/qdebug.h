@@ -101,9 +101,9 @@ public:
     inline QDebug &operator<<(float t) { stream->ts << t; return maybeSpace(); }
     inline QDebug &operator<<(double t) { stream->ts << t; return maybeSpace(); }
     inline QDebug &operator<<(const char* t) { stream->ts << QString::fromAscii(t); return maybeSpace(); }
-    inline QDebug &operator<<(const QString & t) { stream->ts << '\"' << t  << '\"'; return maybeSpace(); }
-    inline QDebug &operator<<(const QStringRef & t) { return operator<<(t.toString()); }
-    inline QDebug &operator<<(const QLatin1String &t) { stream->ts << '\"'  << t.latin1() << '\"'; return maybeSpace(); }
+    inline QDebug &operator<<(const QString & t) { stream->ts << '\"' << t << '\"'; return maybeSpace(); }
+    inline QDebug &operator<<(const QStringRef & t) { stream->ts << '\"' << t.toString() << '\"'; return maybeSpace(); }
+    inline QDebug &operator<<(const QLatin1String &t) { stream->ts << '\"' << t.latin1() << '\"'; return maybeSpace(); }
     inline QDebug &operator<<(const QByteArray & t) { stream->ts  << '\"' << t << '\"'; return maybeSpace(); }
     inline QDebug &operator<<(const void * t) { stream->ts << t; return maybeSpace(); }
     inline QDebug &operator<<(QTextStreamFunction f) {
