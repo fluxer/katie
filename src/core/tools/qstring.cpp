@@ -658,9 +658,9 @@ static int findChar(const QChar *str, int len, QChar ch, int from,
 */
 
 QString::Data QString::shared_null = { QAtomicInt(1),
-                                       0, 0, shared_null.array, 0, {0} };
+                                       0, 0, 0, shared_null.array, {0} };
 QString::Data QString::shared_empty = { QAtomicInt(1),
-                                        0, 0, shared_empty.array, 0, {0} };
+                                        0, 0, 0, shared_empty.array, {0} };
 
 int QString::grow(int size)
 {

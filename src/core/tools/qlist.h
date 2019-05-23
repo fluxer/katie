@@ -68,7 +68,7 @@ struct Q_CORE_EXPORT QListData {
     struct Data {
         QAtomicInt ref;
         int alloc, begin, end;
-        uint sharable : 1;
+        bool sharable;
         void *array[1];
     };
     enum { DataHeaderSize = sizeof(Data) - sizeof(void *) };

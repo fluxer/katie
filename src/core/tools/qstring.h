@@ -493,9 +493,8 @@ private:
 
     struct Data {
         QAtomicInt ref;
-        int alloc, size;
+        int alloc, size, capacity;
         ushort *data;
-        ushort capacity : 1;
         ushort array[1];
     };
     static Data shared_null;

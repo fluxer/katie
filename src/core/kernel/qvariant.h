@@ -76,7 +76,6 @@ class QTextFormat;
 class QTextLength;
 class QUrl;
 class QVariant;
-class QVariantComparisonHelper;
 class QDebug;
 
 template <typename T>
@@ -375,7 +374,6 @@ protected:
     friend inline bool qvariant_cast_helper(const QVariant &, QVariant::Type, void *);
     friend int qRegisterGuiVariant();
     friend int qUnregisterGuiVariant();
-    friend inline bool operator==(const QVariant &, const QVariantComparisonHelper &);
 #ifndef QT_NO_DEBUG_STREAM
     friend Q_CORE_EXPORT QDebug operator<<(QDebug, const QVariant &);
 #endif
@@ -451,30 +449,6 @@ Q_CORE_EXPORT QDataStream& operator<< (QDataStream& s, const QVariant& p);
 Q_CORE_EXPORT QDataStream& operator>> (QDataStream& s, QVariant::Type& p);
 Q_CORE_EXPORT QDataStream& operator<< (QDataStream& s, const QVariant::Type p);
 #endif
-
-
-/* Helper class to add one more level of indirection to prevent
-   implicit casts.
-*/
-class QVariantComparisonHelper
-{
-public:
-    inline QVariantComparisonHelper(const QVariant &var)
-        : v(&var) {}
-private:
-    friend inline bool operator==(const QVariant &, const QVariantComparisonHelper &);
-    const QVariant *v;
-};
-
-inline bool operator==(const QVariant &v1, const QVariantComparisonHelper &v2)
-{
-    return v1.cmp(*v2.v);
-}
-
-inline bool operator!=(const QVariant &v1, const QVariantComparisonHelper &v2)
-{
-    return !operator==(v1, v2);
-}
 
 #ifndef QT_MOC
 template<typename T> inline T qvariant_cast(const QVariant &v)

@@ -80,10 +80,7 @@ private:
         const uchar *p;
         int l;
     };
-    union {
-        uint dummy[256];
-        Data p;
-    };
+    Data p;
 };
 
 QT_END_NAMESPACE
