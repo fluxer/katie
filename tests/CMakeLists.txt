@@ -35,8 +35,9 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
 )
 
-# FIXME: most tests are not namespaces aware
-add_definitions(-DQT_NAMESPACE_COMPAT)
+# FIXME: most tests are not namespaces aware, also do not wrap ASCII chars with
+# QLatin1String and QLatin1Char
+add_definitions(-DQT_NAMESPACE_COMPAT -UQT_ASCII_CAST_WARNINGS)
 
 file(GLOB_RECURSE CMAKEFILES "${CMAKE_CURRENT_SOURCE_DIR}/*/CMakeLists.txt")
 foreach(cmakefile ${CMAKEFILES})
