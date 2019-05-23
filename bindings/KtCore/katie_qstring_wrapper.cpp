@@ -54,7 +54,9 @@
 // Extra includes
 #include <qbytearray.h>
 #include <qchar.h>
+#include <qregexp.h>
 #include <qstring.h>
+#include <qstringlist.h>
 
 
 #include <cctype>
@@ -2473,8 +2475,12 @@ static PyObject* Sbk_Katie_QStringFunc_contains(PyObject* self, PyObject* args, 
 
     // Overloaded function decisor
     // 0: QString::contains(Katie::QChar,Katie::Qt::CaseSensitivity)const
-    // 1: QString::contains(Katie::QString,Katie::Qt::CaseSensitivity)const
-    if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
+    // 1: QString::contains(Katie::QRegExp&)const
+    // 2: QString::contains(Katie::QRegExp)const
+    // 3: QString::contains(Katie::QString,Katie::Qt::CaseSensitivity)const
+    if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))) {
+        overloadId = 1; // contains(Katie::QRegExp&)const
+    } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
             overloadId = 0; // contains(Katie::QChar,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[1])))) {
@@ -2482,9 +2488,9 @@ static PyObject* Sbk_Katie_QStringFunc_contains(PyObject* self, PyObject* args, 
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 1; // contains(Katie::QString,Katie::Qt::CaseSensitivity)const
+            overloadId = 3; // contains(Katie::QString,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[1])))) {
-            overloadId = 1; // contains(Katie::QString,Katie::Qt::CaseSensitivity)const
+            overloadId = 3; // contains(Katie::QString,Katie::Qt::CaseSensitivity)const
         }
     }
 
@@ -2522,7 +2528,39 @@ static PyObject* Sbk_Katie_QStringFunc_contains(PyObject* self, PyObject* args, 
             }
             break;
         }
-        case 1: // contains(const Katie::QString & s, Katie::Qt::CaseSensitivity cs) const
+        case 1: // contains(Katie::QRegExp & rx) const
+        {
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            if (!PyErr_Occurred()) {
+                // contains(Katie::QRegExp&)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                bool cppResult = const_cast<const ::Katie::QString*>(cppSelf)->contains(*cppArg0);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
+            }
+            break;
+        }
+        case 2: // contains(const Katie::QRegExp & rx) const
+        {
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            if (!PyErr_Occurred()) {
+                // contains(Katie::QRegExp)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                bool cppResult = const_cast<const ::Katie::QString*>(cppSelf)->contains(*cppArg0);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
+            }
+            break;
+        }
+        case 3: // contains(const Katie::QString & s, Katie::Qt::CaseSensitivity cs) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "cs");
@@ -2598,9 +2636,13 @@ static PyObject* Sbk_Katie_QStringFunc_count(PyObject* self, PyObject* args, PyO
     // Overloaded function decisor
     // 0: QString::count()const
     // 1: QString::count(Katie::QChar,Katie::Qt::CaseSensitivity)const
-    // 2: QString::count(Katie::QString,Katie::Qt::CaseSensitivity)const
+    // 2: QString::count(Katie::QRegExp)const
+    // 3: QString::count(Katie::QString,Katie::Qt::CaseSensitivity)const
     if (numArgs == 0) {
         overloadId = 0; // count()const
+    } else if (numArgs == 1
+        && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))) {
+        overloadId = 2; // count(Katie::QRegExp)const
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
             overloadId = 1; // count(Katie::QChar,Katie::Qt::CaseSensitivity)const
@@ -2609,9 +2651,9 @@ static PyObject* Sbk_Katie_QStringFunc_count(PyObject* self, PyObject* args, PyO
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 2; // count(Katie::QString,Katie::Qt::CaseSensitivity)const
+            overloadId = 3; // count(Katie::QString,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[1])))) {
-            overloadId = 2; // count(Katie::QString,Katie::Qt::CaseSensitivity)const
+            overloadId = 3; // count(Katie::QString,Katie::Qt::CaseSensitivity)const
         }
     }
 
@@ -2659,7 +2701,23 @@ static PyObject* Sbk_Katie_QStringFunc_count(PyObject* self, PyObject* args, PyO
             }
             break;
         }
-        case 2: // count(const Katie::QString & s, Katie::Qt::CaseSensitivity cs) const
+        case 2: // count(const Katie::QRegExp & arg__1) const
+        {
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            if (!PyErr_Occurred()) {
+                // count(Katie::QRegExp)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                int cppResult = const_cast<const ::Katie::QString*>(cppSelf)->count(*cppArg0);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<int>(), &cppResult);
+            }
+            break;
+        }
+        case 3: // count(const Katie::QString & s, Katie::Qt::CaseSensitivity cs) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "cs");
@@ -3623,17 +3681,25 @@ static PyObject* Sbk_Katie_QStringFunc_indexOf(PyObject* self, PyObject* args, P
 
     // Overloaded function decisor
     // 0: QString::indexOf(Katie::QChar,int,Katie::Qt::CaseSensitivity)const
-    // 1: QString::indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
-    // 2: QString::indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+    // 1: QString::indexOf(Katie::QRegExp&,int)const
+    // 2: QString::indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+    // 3: QString::indexOf(Katie::QRegExp,int)const
+    // 4: QString::indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
     if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 1; // indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+            overloadId = 2; // indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
             if (numArgs == 2) {
-                overloadId = 1; // indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 2; // indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
             } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
-                overloadId = 1; // indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 2; // indexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
             }
+        }
+    } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))) {
+        if (numArgs == 1) {
+            overloadId = 1; // indexOf(Katie::QRegExp&,int)const
+        } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
+            overloadId = 1; // indexOf(Katie::QRegExp&,int)const
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
@@ -3647,12 +3713,12 @@ static PyObject* Sbk_Katie_QStringFunc_indexOf(PyObject* self, PyObject* args, P
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 2; // indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+            overloadId = 4; // indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
             if (numArgs == 2) {
-                overloadId = 2; // indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 4; // indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
             } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
-                overloadId = 2; // indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 4; // indexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
             }
         }
     }
@@ -3702,7 +3768,36 @@ static PyObject* Sbk_Katie_QStringFunc_indexOf(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 1: // indexOf(const Katie::QLatin1String & s, int from, Katie::Qt::CaseSensitivity cs) const
+        case 1: // indexOf(Katie::QRegExp & arg__1, int from) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "from");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.indexOf(): got multiple values for keyword argument 'from'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_indexOf_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            int cppArg1 = 0;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+
+            if (!PyErr_Occurred()) {
+                // indexOf(Katie::QRegExp&,int)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                int cppResult = const_cast<const ::Katie::QString*>(cppSelf)->indexOf(*cppArg0, cppArg1);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<int>(), &cppResult);
+            }
+            break;
+        }
+        case 2: // indexOf(const Katie::QLatin1String & s, int from, Katie::Qt::CaseSensitivity cs) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "from");
@@ -3747,7 +3842,36 @@ static PyObject* Sbk_Katie_QStringFunc_indexOf(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 2: // indexOf(const Katie::QString & s, int from, Katie::Qt::CaseSensitivity cs) const
+        case 3: // indexOf(const Katie::QRegExp & arg__1, int from) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "from");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.indexOf(): got multiple values for keyword argument 'from'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_indexOf_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            int cppArg1 = 0;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+
+            if (!PyErr_Occurred()) {
+                // indexOf(Katie::QRegExp,int)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                int cppResult = const_cast<const ::Katie::QString*>(cppSelf)->indexOf(*cppArg0, cppArg1);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<int>(), &cppResult);
+            }
+            break;
+        }
+        case 4: // indexOf(const Katie::QString & s, int from, Katie::Qt::CaseSensitivity cs) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "from");
@@ -4165,17 +4289,25 @@ static PyObject* Sbk_Katie_QStringFunc_lastIndexOf(PyObject* self, PyObject* arg
 
     // Overloaded function decisor
     // 0: QString::lastIndexOf(Katie::QChar,int,Katie::Qt::CaseSensitivity)const
-    // 1: QString::lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
-    // 2: QString::lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+    // 1: QString::lastIndexOf(Katie::QRegExp&,int)const
+    // 2: QString::lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+    // 3: QString::lastIndexOf(Katie::QRegExp,int)const
+    // 4: QString::lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
     if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 1; // lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+            overloadId = 2; // lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
             if (numArgs == 2) {
-                overloadId = 1; // lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 2; // lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
             } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
-                overloadId = 1; // lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 2; // lastIndexOf(Katie::QLatin1String,int,Katie::Qt::CaseSensitivity)const
             }
+        }
+    } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))) {
+        if (numArgs == 1) {
+            overloadId = 1; // lastIndexOf(Katie::QRegExp&,int)const
+        } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
+            overloadId = 1; // lastIndexOf(Katie::QRegExp&,int)const
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
@@ -4189,12 +4321,12 @@ static PyObject* Sbk_Katie_QStringFunc_lastIndexOf(PyObject* self, PyObject* arg
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 2; // lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+            overloadId = 4; // lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
             if (numArgs == 2) {
-                overloadId = 2; // lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 4; // lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
             } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
-                overloadId = 2; // lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
+                overloadId = 4; // lastIndexOf(Katie::QString,int,Katie::Qt::CaseSensitivity)const
             }
         }
     }
@@ -4244,7 +4376,36 @@ static PyObject* Sbk_Katie_QStringFunc_lastIndexOf(PyObject* self, PyObject* arg
             }
             break;
         }
-        case 1: // lastIndexOf(const Katie::QLatin1String & s, int from, Katie::Qt::CaseSensitivity cs) const
+        case 1: // lastIndexOf(Katie::QRegExp & arg__1, int from) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "from");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.lastIndexOf(): got multiple values for keyword argument 'from'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_lastIndexOf_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            int cppArg1 = -1;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+
+            if (!PyErr_Occurred()) {
+                // lastIndexOf(Katie::QRegExp&,int)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                int cppResult = const_cast<const ::Katie::QString*>(cppSelf)->lastIndexOf(*cppArg0, cppArg1);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<int>(), &cppResult);
+            }
+            break;
+        }
+        case 2: // lastIndexOf(const Katie::QLatin1String & s, int from, Katie::Qt::CaseSensitivity cs) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "from");
@@ -4289,7 +4450,36 @@ static PyObject* Sbk_Katie_QStringFunc_lastIndexOf(PyObject* self, PyObject* arg
             }
             break;
         }
-        case 2: // lastIndexOf(const Katie::QString & s, int from, Katie::Qt::CaseSensitivity cs) const
+        case 3: // lastIndexOf(const Katie::QRegExp & arg__1, int from) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "from");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.lastIndexOf(): got multiple values for keyword argument 'from'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_lastIndexOf_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            int cppArg1 = -1;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+
+            if (!PyErr_Occurred()) {
+                // lastIndexOf(Katie::QRegExp,int)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                int cppResult = const_cast<const ::Katie::QString*>(cppSelf)->lastIndexOf(*cppArg0, cppArg1);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<int>(), &cppResult);
+            }
+            break;
+        }
+        case 4: // lastIndexOf(const Katie::QString & s, int from, Katie::Qt::CaseSensitivity cs) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "from");
@@ -5397,12 +5587,16 @@ static PyObject* Sbk_Katie_QStringFunc_remove(PyObject* self, PyObject* args, Py
 
     // Overloaded function decisor
     // 0: QString::remove(Katie::QChar,Katie::Qt::CaseSensitivity)
-    // 1: QString::remove(Katie::QString,Katie::Qt::CaseSensitivity)
-    // 2: QString::remove(int,int)
+    // 1: QString::remove(Katie::QRegExp)
+    // 2: QString::remove(Katie::QString,Katie::Qt::CaseSensitivity)
+    // 3: QString::remove(int,int)
     if (numArgs == 2
         && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[0])))
         && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
-        overloadId = 2; // remove(int,int)
+        overloadId = 3; // remove(int,int)
+    } else if (numArgs == 1
+        && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))) {
+        overloadId = 1; // remove(Katie::QRegExp)
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
             overloadId = 0; // remove(Katie::QChar,Katie::Qt::CaseSensitivity)
@@ -5411,9 +5605,9 @@ static PyObject* Sbk_Katie_QStringFunc_remove(PyObject* self, PyObject* args, Py
         }
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
         if (numArgs == 1) {
-            overloadId = 1; // remove(Katie::QString,Katie::Qt::CaseSensitivity)
+            overloadId = 2; // remove(Katie::QString,Katie::Qt::CaseSensitivity)
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[1])))) {
-            overloadId = 1; // remove(Katie::QString,Katie::Qt::CaseSensitivity)
+            overloadId = 2; // remove(Katie::QString,Katie::Qt::CaseSensitivity)
         }
     }
 
@@ -5451,7 +5645,23 @@ static PyObject* Sbk_Katie_QStringFunc_remove(PyObject* self, PyObject* args, Py
             }
             break;
         }
-        case 1: // remove(const Katie::QString & s, Katie::Qt::CaseSensitivity cs)
+        case 1: // remove(const Katie::QRegExp & rx)
+        {
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            if (!PyErr_Occurred()) {
+                // remove(Katie::QRegExp)
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                Katie::QString & cppResult = cppSelf->remove(*cppArg0);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::referenceToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
+            }
+            break;
+        }
+        case 2: // remove(const Katie::QString & s, Katie::Qt::CaseSensitivity cs)
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "cs");
@@ -5485,7 +5695,7 @@ static PyObject* Sbk_Katie_QStringFunc_remove(PyObject* self, PyObject* args, Py
             }
             break;
         }
-        case 2: // remove(int i, int len)
+        case 3: // remove(int i, int len)
         {
             int cppArg0;
             pythonToCpp[0](pyArgs[0], &cppArg0);
@@ -5596,25 +5806,30 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
     // 3: QString::replace(const Katie::QChar*,int,const Katie::QChar*,int,Katie::Qt::CaseSensitivity)
     // 4: QString::replace(Katie::QLatin1String,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
     // 5: QString::replace(Katie::QLatin1String,Katie::QString,Katie::Qt::CaseSensitivity)
-    // 6: QString::replace(Katie::QString,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
-    // 7: QString::replace(Katie::QString,Katie::QString,Katie::Qt::CaseSensitivity)
-    // 8: QString::replace(int,int,Katie::QChar)
-    // 9: QString::replace(int,int,const Katie::QChar*,int)
-    // 10: QString::replace(int,int,Katie::QString)
+    // 6: QString::replace(Katie::QRegExp,Katie::QString)
+    // 7: QString::replace(Katie::QString,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
+    // 8: QString::replace(Katie::QString,Katie::QString,Katie::Qt::CaseSensitivity)
+    // 9: QString::replace(int,int,Katie::QChar)
+    // 10: QString::replace(int,int,const Katie::QChar*,int)
+    // 11: QString::replace(int,int,Katie::QString)
     if (numArgs >= 2
         && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[0])))
         && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
         if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[2])))) {
             if (numArgs == 3) {
-                overloadId = 8; // replace(int,int,Katie::QChar)
+                overloadId = 9; // replace(int,int,Katie::QChar)
             } else if (numArgs == 4
                 && (pythonToCpp[3] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[3])))) {
-                overloadId = 9; // replace(int,int,const Katie::QChar*,int)
+                overloadId = 10; // replace(int,int,const Katie::QChar*,int)
             }
         } else if (numArgs == 3
             && (pythonToCpp[2] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[2])))) {
-            overloadId = 10; // replace(int,int,Katie::QString)
+            overloadId = 11; // replace(int,int,Katie::QString)
         }
+    } else if (numArgs == 2
+        && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))
+        && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[1])))) {
+        overloadId = 6; // replace(Katie::QRegExp,Katie::QString)
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), (pyArgs[0])))) {
         if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), (pyArgs[1])))) {
             if (numArgs == 2) {
@@ -5661,15 +5876,15 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
     } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
         if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]), (pyArgs[1])))) {
             if (numArgs == 2) {
-                overloadId = 6; // replace(Katie::QString,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
+                overloadId = 7; // replace(Katie::QString,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
             } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
-                overloadId = 6; // replace(Katie::QString,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
+                overloadId = 7; // replace(Katie::QString,Katie::QLatin1String,Katie::Qt::CaseSensitivity)
             }
         } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[1])))) {
             if (numArgs == 2) {
-                overloadId = 7; // replace(Katie::QString,Katie::QString,Katie::Qt::CaseSensitivity)
+                overloadId = 8; // replace(Katie::QString,Katie::QString,Katie::Qt::CaseSensitivity)
             } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
-                overloadId = 7; // replace(Katie::QString,Katie::QString,Katie::Qt::CaseSensitivity)
+                overloadId = 8; // replace(Katie::QString,Katie::QString,Katie::Qt::CaseSensitivity)
             }
         }
     }
@@ -5911,7 +6126,32 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 6: // replace(const Katie::QString & before, const Katie::QLatin1String & after, Katie::Qt::CaseSensitivity cs)
+        case 6: // replace(const Katie::QRegExp & rx, const Katie::QString & after)
+        {
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            if (!Shiboken::Object::isValid(pyArgs[1]))
+                return {};
+            ::Katie::QString cppArg1_local;
+            ::Katie::QString* cppArg1 = &cppArg1_local;
+            if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp[1]))
+                pythonToCpp[1](pyArgs[1], &cppArg1_local);
+            else
+                pythonToCpp[1](pyArgs[1], &cppArg1);
+
+
+            if (!PyErr_Occurred()) {
+                // replace(Katie::QRegExp,Katie::QString)
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                Katie::QString & cppResult = cppSelf->replace(*cppArg0, *cppArg1);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::referenceToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
+            }
+            break;
+        }
+        case 7: // replace(const Katie::QString & before, const Katie::QLatin1String & after, Katie::Qt::CaseSensitivity cs)
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "cs");
@@ -5954,7 +6194,7 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 7: // replace(const Katie::QString & before, const Katie::QString & after, Katie::Qt::CaseSensitivity cs)
+        case 8: // replace(const Katie::QString & before, const Katie::QString & after, Katie::Qt::CaseSensitivity cs)
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "cs");
@@ -5997,7 +6237,7 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 8: // replace(int i, int len, Katie::QChar after)
+        case 9: // replace(int i, int len, Katie::QChar after)
         {
             int cppArg0;
             pythonToCpp[0](pyArgs[0], &cppArg0);
@@ -6017,7 +6257,7 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 9: // replace(int i, int len, const Katie::QChar * s, int slen)
+        case 10: // replace(int i, int len, const Katie::QChar * s, int slen)
         {
             int cppArg0;
             pythonToCpp[0](pyArgs[0], &cppArg0);
@@ -6039,7 +6279,7 @@ static PyObject* Sbk_Katie_QStringFunc_replace(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 10: // replace(int i, int len, const Katie::QString & after)
+        case 11: // replace(int i, int len, const Katie::QString & after)
         {
             int cppArg0;
             pythonToCpp[0](pyArgs[0], &cppArg0);
@@ -6337,8 +6577,17 @@ static PyObject* Sbk_Katie_QStringFunc_section(PyObject* self, PyObject* args, P
 
     // Overloaded function decisor
     // 0: QString::section(Katie::QChar,int,int)const
-    // 1: QString::section(Katie::QString,int,int)const
+    // 1: QString::section(Katie::QRegExp,int,int)const
+    // 2: QString::section(Katie::QString,int,int)const
     if (numArgs >= 2
+        && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))
+        && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
+        if (numArgs == 2) {
+            overloadId = 1; // section(Katie::QRegExp,int,int)const
+        } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[2])))) {
+            overloadId = 1; // section(Katie::QRegExp,int,int)const
+        }
+    } else if (numArgs >= 2
         && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppValueConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))
         && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
         if (numArgs == 2) {
@@ -6350,9 +6599,9 @@ static PyObject* Sbk_Katie_QStringFunc_section(PyObject* self, PyObject* args, P
         && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))
         && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[1])))) {
         if (numArgs == 2) {
-            overloadId = 1; // section(Katie::QString,int,int)const
+            overloadId = 2; // section(Katie::QString,int,int)const
         } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[2])))) {
-            overloadId = 1; // section(Katie::QString,int,int)const
+            overloadId = 2; // section(Katie::QString,int,int)const
         }
     }
 
@@ -6392,7 +6641,38 @@ static PyObject* Sbk_Katie_QStringFunc_section(PyObject* self, PyObject* args, P
             }
             break;
         }
-        case 1: // section(const Katie::QString & in_sep, int start, int end) const
+        case 1: // section(const Katie::QRegExp & reg, int start, int end) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "end");
+                if (value && pyArgs[2]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.section(): got multiple values for keyword argument 'end'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[2] = value;
+                    if (!(pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[2]))))
+                        goto Sbk_Katie_QStringFunc_section_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            int cppArg1;
+            pythonToCpp[1](pyArgs[1], &cppArg1);
+            int cppArg2 = -1;
+            if (pythonToCpp[2]) pythonToCpp[2](pyArgs[2], &cppArg2);
+
+            if (!PyErr_Occurred()) {
+                // section(Katie::QRegExp,int,int)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                Katie::QString cppResult = const_cast<const ::Katie::QString*>(cppSelf)->section(*cppArg0, cppArg1, cppArg2);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
+            }
+            break;
+        }
+        case 2: // section(const Katie::QString & in_sep, int start, int end) const
         {
             if (kwds) {
                 PyObject* value = PyDict_GetItemString(kwds, "end");
@@ -7095,6 +7375,204 @@ static PyObject* Sbk_Katie_QStringFunc_size(PyObject* self)
         return {};
     }
     return pyResult;
+}
+
+static PyObject* Sbk_Katie_QStringFunc_split(PyObject* self, PyObject* args, PyObject* kwds)
+{
+    ::Katie::QString* cppSelf = nullptr;
+    SBK_UNUSED(cppSelf)
+    if (!Shiboken::Object::isValid(self))
+        return {};
+    cppSelf = reinterpret_cast< ::Katie::QString *>(Shiboken::Conversions::cppPointer(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX], reinterpret_cast<SbkObject *>(self)));
+    PyObject* pyResult{};
+    int overloadId = -1;
+    PythonToCppFunc pythonToCpp[] = { nullptr, nullptr, nullptr };
+    SBK_UNUSED(pythonToCpp)
+    int numNamedArgs = (kwds ? PyDict_Size(kwds) : 0);
+    int numArgs = PyTuple_GET_SIZE(args);
+    SBK_UNUSED(numArgs)
+    PyObject* pyArgs[] = {0, 0, 0};
+
+    // invalid argument lengths
+    if (numArgs + numNamedArgs > 3) {
+        PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): too many arguments");
+        return {};
+    } else if (numArgs < 1) {
+        PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): not enough arguments");
+        return {};
+    }
+
+    if (!PyArg_ParseTuple(args, "|OOO:split", &(pyArgs[0]), &(pyArgs[1]), &(pyArgs[2])))
+        return {};
+
+
+    // Overloaded function decisor
+    // 0: QString::split(Katie::QChar,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+    // 1: QString::split(Katie::QRegExp,Katie::QString::SplitBehavior)const
+    // 2: QString::split(Katie::QString,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+    if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]), (pyArgs[0])))) {
+        if (numArgs == 1) {
+            overloadId = 1; // split(Katie::QRegExp,Katie::QString::SplitBehavior)const
+        } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX])->converter, (pyArgs[1])))) {
+            overloadId = 1; // split(Katie::QRegExp,Katie::QString::SplitBehavior)const
+        }
+    } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), (pyArgs[0])))) {
+        if (numArgs == 1) {
+            overloadId = 0; // split(Katie::QChar,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+        } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX])->converter, (pyArgs[1])))) {
+            if (numArgs == 2) {
+                overloadId = 0; // split(Katie::QChar,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+            } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
+                overloadId = 0; // split(Katie::QChar,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+            }
+        }
+    } else if ((pythonToCpp[0] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), (pyArgs[0])))) {
+        if (numArgs == 1) {
+            overloadId = 2; // split(Katie::QString,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+        } else if ((pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX])->converter, (pyArgs[1])))) {
+            if (numArgs == 2) {
+                overloadId = 2; // split(Katie::QString,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+            } else if ((pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2])))) {
+                overloadId = 2; // split(Katie::QString,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+            }
+        }
+    }
+
+    // Function signature not found.
+    if (overloadId == -1) goto Sbk_Katie_QStringFunc_split_TypeError;
+
+    // Call function/method
+    switch (overloadId) {
+        case 0: // split(const Katie::QChar & sep, Katie::QString::SplitBehavior behavior, Katie::Qt::CaseSensitivity cs) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "behavior");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): got multiple values for keyword argument 'behavior'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX])->converter, (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_split_TypeError;
+                }
+                value = PyDict_GetItemString(kwds, "cs");
+                if (value && pyArgs[2]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): got multiple values for keyword argument 'cs'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[2] = value;
+                    if (!(pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2]))))
+                        goto Sbk_Katie_QStringFunc_split_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QChar cppArg0_local;
+            ::Katie::QChar* cppArg0 = &cppArg0_local;
+            if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]), pythonToCpp[0]))
+                pythonToCpp[0](pyArgs[0], &cppArg0_local);
+            else
+                pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            ::Katie::QString::SplitBehavior cppArg1 = Katie::QString::SplitBehavior::KeepEmptyParts;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+            ::Katie::Qt::CaseSensitivity cppArg2 = Katie::Qt::CaseSensitive;
+            if (pythonToCpp[2]) pythonToCpp[2](pyArgs[2], &cppArg2);
+
+            if (!PyErr_Occurred()) {
+                // split(Katie::QChar,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                Katie::QStringList cppResult = const_cast<const ::Katie::QString*>(cppSelf)->split(*cppArg0, cppArg1, cppArg2);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), &cppResult);
+            }
+            break;
+        }
+        case 1: // split(const Katie::QRegExp & sep, Katie::QString::SplitBehavior behavior) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "behavior");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): got multiple values for keyword argument 'behavior'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX])->converter, (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_split_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QRegExp* cppArg0;
+            pythonToCpp[0](pyArgs[0], &cppArg0);
+            ::Katie::QString::SplitBehavior cppArg1 = Katie::QString::SplitBehavior::KeepEmptyParts;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+
+            if (!PyErr_Occurred()) {
+                // split(Katie::QRegExp,Katie::QString::SplitBehavior)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                Katie::QStringList cppResult = const_cast<const ::Katie::QString*>(cppSelf)->split(*cppArg0, cppArg1);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), &cppResult);
+            }
+            break;
+        }
+        case 2: // split(const Katie::QString & sep, Katie::QString::SplitBehavior behavior, Katie::Qt::CaseSensitivity cs) const
+        {
+            if (kwds) {
+                PyObject* value = PyDict_GetItemString(kwds, "behavior");
+                if (value && pyArgs[1]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): got multiple values for keyword argument 'behavior'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[1] = value;
+                    if (!(pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX])->converter, (pyArgs[1]))))
+                        goto Sbk_Katie_QStringFunc_split_TypeError;
+                }
+                value = PyDict_GetItemString(kwds, "cs");
+                if (value && pyArgs[2]) {
+                    PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QString.split(): got multiple values for keyword argument 'cs'.");
+                    return {};
+                } else if (value) {
+                    pyArgs[2] = value;
+                    if (!(pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QT_CASESENSITIVITY_IDX])->converter, (pyArgs[2]))))
+                        goto Sbk_Katie_QStringFunc_split_TypeError;
+                }
+            }
+            if (!Shiboken::Object::isValid(pyArgs[0]))
+                return {};
+            ::Katie::QString cppArg0_local;
+            ::Katie::QString* cppArg0 = &cppArg0_local;
+            if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), pythonToCpp[0]))
+                pythonToCpp[0](pyArgs[0], &cppArg0_local);
+            else
+                pythonToCpp[0](pyArgs[0], &cppArg0);
+
+            ::Katie::QString::SplitBehavior cppArg1 = Katie::QString::SplitBehavior::KeepEmptyParts;
+            if (pythonToCpp[1]) pythonToCpp[1](pyArgs[1], &cppArg1);
+            ::Katie::Qt::CaseSensitivity cppArg2 = Katie::Qt::CaseSensitive;
+            if (pythonToCpp[2]) pythonToCpp[2](pyArgs[2], &cppArg2);
+
+            if (!PyErr_Occurred()) {
+                // split(Katie::QString,Katie::QString::SplitBehavior,Katie::Qt::CaseSensitivity)const
+                PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+                Katie::QStringList cppResult = const_cast<const ::Katie::QString*>(cppSelf)->split(*cppArg0, cppArg1, cppArg2);
+                PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+                pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), &cppResult);
+            }
+            break;
+        }
+    }
+
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+
+    Sbk_Katie_QStringFunc_split_TypeError:
+        Shiboken::setErrorAboutWrongArguments(args, "KtCore.Katie.QString.split");
+        return {};
 }
 
 static PyObject* Sbk_Katie_QStringFunc_sprintf(PyObject* self, PyObject* pyArg)
@@ -8652,6 +9130,7 @@ static PyMethodDef Sbk_Katie_QString_methods[] = {
     {"setUtf16", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_setUtf16), METH_VARARGS},
     {"simplified", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_simplified), METH_NOARGS},
     {"size", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_size), METH_NOARGS},
+    {"split", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_split), METH_VARARGS|METH_KEYWORDS},
     {"sprintf", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_sprintf), METH_O},
     {"squeeze", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_squeeze), METH_NOARGS},
     {"startsWith", reinterpret_cast<PyCFunction>(Sbk_Katie_QStringFunc_startsWith), METH_VARARGS|METH_KEYWORDS},
@@ -9500,10 +9979,13 @@ static const char *Katie_QString_SignatureStrings[] = {
     "KtCore.Katie.QString.constBegin()->KtCore.Katie.QChar",
     "KtCore.Katie.QString.constData()->KtCore.Katie.QChar",
     "KtCore.Katie.QString.constEnd()->KtCore.Katie.QChar",
-    "1:KtCore.Katie.QString.contains(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->bool",
+    "3:KtCore.Katie.QString.contains(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->bool",
+    "2:KtCore.Katie.QString.contains(rx:KtCore.Katie.QRegExp)->bool",
+    "1:KtCore.Katie.QString.contains(rx:KtCore.Katie.QRegExp)->bool",
     "0:KtCore.Katie.QString.contains(s:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->bool",
-    "2:KtCore.Katie.QString.count()->int",
-    "1:KtCore.Katie.QString.count(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "3:KtCore.Katie.QString.count()->int",
+    "2:KtCore.Katie.QString.count(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "1:KtCore.Katie.QString.count(arg__1:KtCore.Katie.QRegExp)->int",
     "0:KtCore.Katie.QString.count(s:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
     "1:KtCore.Katie.QString.data()->KtCore.Katie.QChar",
     "0:KtCore.Katie.QString.data()->KtCore.Katie.QChar",
@@ -9522,8 +10004,10 @@ static const char *Katie_QString_SignatureStrings[] = {
     "KtCore.Katie.QString.fromUcs4(arg__1:KtCore.uint,size:int=-1)->KtCore.Katie.QString",
     "KtCore.Katie.QString.fromUtf16(arg__1:KtCore.ushort,size:int=-1)->KtCore.Katie.QString",
     "KtCore.Katie.QString.fromUtf8(arg__1:str,size:int=-1)->KtCore.Katie.QString",
-    "2:KtCore.Katie.QString.indexOf(c:KtCore.Katie.QChar,from:int=0,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
-    "1:KtCore.Katie.QString.indexOf(s:KtCore.Katie.QLatin1String,from:int=0,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "4:KtCore.Katie.QString.indexOf(c:KtCore.Katie.QChar,from:int=0,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "3:KtCore.Katie.QString.indexOf(arg__1:KtCore.Katie.QRegExp,from:int=0)->int",
+    "2:KtCore.Katie.QString.indexOf(s:KtCore.Katie.QLatin1String,from:int=0,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "1:KtCore.Katie.QString.indexOf(arg__1:KtCore.Katie.QRegExp,from:int=0)->int",
     "0:KtCore.Katie.QString.indexOf(s:KtCore.Katie.QString,from:int=0,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
     "3:KtCore.Katie.QString.insert(i:int,c:KtCore.Katie.QChar)->KtCore.Katie.QString",
     "2:KtCore.Katie.QString.insert(i:int,uc:KtCore.Katie.QChar,len:int)->KtCore.Katie.QString",
@@ -9535,8 +10019,10 @@ static const char *Katie_QString_SignatureStrings[] = {
     "KtCore.Katie.QString.isRightToLeft()->bool",
     "KtCore.Katie.QString.isSharedWith(other:KtCore.Katie.QString)->bool",
     "KtCore.Katie.QString.isSimpleText()->bool",
-    "2:KtCore.Katie.QString.lastIndexOf(c:KtCore.Katie.QChar,from:int=-1,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
-    "1:KtCore.Katie.QString.lastIndexOf(s:KtCore.Katie.QLatin1String,from:int=-1,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "4:KtCore.Katie.QString.lastIndexOf(c:KtCore.Katie.QChar,from:int=-1,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "3:KtCore.Katie.QString.lastIndexOf(arg__1:KtCore.Katie.QRegExp,from:int=-1)->int",
+    "2:KtCore.Katie.QString.lastIndexOf(s:KtCore.Katie.QLatin1String,from:int=-1,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
+    "1:KtCore.Katie.QString.lastIndexOf(arg__1:KtCore.Katie.QRegExp,from:int=-1)->int",
     "0:KtCore.Katie.QString.lastIndexOf(s:KtCore.Katie.QString,from:int=-1,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->int",
     "KtCore.Katie.QString.left(n:int)->KtCore.Katie.QString",
     "KtCore.Katie.QString.leftJustified(width:int,fill:KtCore.Katie.QChar=QLatin1Char(' '),trunc:bool=false)->KtCore.Katie.QString",
@@ -9562,16 +10048,18 @@ static const char *Katie_QString_SignatureStrings[] = {
     "0:KtCore.Katie.QString.push_back(s:KtCore.Katie.QString)",
     "1:KtCore.Katie.QString.push_front(c:KtCore.Katie.QChar)",
     "0:KtCore.Katie.QString.push_front(s:KtCore.Katie.QString)",
-    "2:KtCore.Katie.QString.remove(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "3:KtCore.Katie.QString.remove(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "2:KtCore.Katie.QString.remove(rx:KtCore.Katie.QRegExp)->KtCore.Katie.QString",
     "1:KtCore.Katie.QString.remove(s:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
     "0:KtCore.Katie.QString.remove(i:int,len:int)->KtCore.Katie.QString",
     "KtCore.Katie.QString.repeated(times:int)->KtCore.Katie.QString",
-    "10:KtCore.Katie.QString.replace(before:KtCore.Katie.QChar,after:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
-    "9:KtCore.Katie.QString.replace(c:KtCore.Katie.QChar,after:KtCore.Katie.QLatin1String,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
-    "8:KtCore.Katie.QString.replace(c:KtCore.Katie.QChar,after:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
-    "7:KtCore.Katie.QString.replace(before:KtCore.Katie.QChar,blen:int,after:KtCore.Katie.QChar,alen:int,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
-    "6:KtCore.Katie.QString.replace(before:KtCore.Katie.QLatin1String,after:KtCore.Katie.QLatin1String,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
-    "5:KtCore.Katie.QString.replace(before:KtCore.Katie.QLatin1String,after:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "11:KtCore.Katie.QString.replace(before:KtCore.Katie.QChar,after:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "10:KtCore.Katie.QString.replace(c:KtCore.Katie.QChar,after:KtCore.Katie.QLatin1String,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "9:KtCore.Katie.QString.replace(c:KtCore.Katie.QChar,after:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "8:KtCore.Katie.QString.replace(before:KtCore.Katie.QChar,blen:int,after:KtCore.Katie.QChar,alen:int,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "7:KtCore.Katie.QString.replace(before:KtCore.Katie.QLatin1String,after:KtCore.Katie.QLatin1String,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "6:KtCore.Katie.QString.replace(before:KtCore.Katie.QLatin1String,after:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
+    "5:KtCore.Katie.QString.replace(rx:KtCore.Katie.QRegExp,after:KtCore.Katie.QString)->KtCore.Katie.QString",
     "4:KtCore.Katie.QString.replace(before:KtCore.Katie.QString,after:KtCore.Katie.QLatin1String,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
     "3:KtCore.Katie.QString.replace(before:KtCore.Katie.QString,after:KtCore.Katie.QString,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QString",
     "2:KtCore.Katie.QString.replace(i:int,len:int,after:KtCore.Katie.QChar)->KtCore.Katie.QString",
@@ -9581,7 +10069,8 @@ static const char *Katie_QString_SignatureStrings[] = {
     "KtCore.Katie.QString.resize(size:int)",
     "KtCore.Katie.QString.right(n:int)->KtCore.Katie.QString",
     "KtCore.Katie.QString.rightJustified(width:int,fill:KtCore.Katie.QChar=QLatin1Char(' '),trunc:bool=false)->KtCore.Katie.QString",
-    "1:KtCore.Katie.QString.section(sep:KtCore.Katie.QChar,start:int,end:int=-1)->KtCore.Katie.QString",
+    "2:KtCore.Katie.QString.section(sep:KtCore.Katie.QChar,start:int,end:int=-1)->KtCore.Katie.QString",
+    "1:KtCore.Katie.QString.section(reg:KtCore.Katie.QRegExp,start:int,end:int=-1)->KtCore.Katie.QString",
     "0:KtCore.Katie.QString.section(in_sep:KtCore.Katie.QString,start:int,end:int=-1)->KtCore.Katie.QString",
     "9:KtCore.Katie.QString.setNum(arg__1:double,f:char='g',prec:int=6)->KtCore.Katie.QString",
     "8:KtCore.Katie.QString.setNum(arg__1:float,f:char='g',prec:int=6)->KtCore.Katie.QString",
@@ -9598,6 +10087,9 @@ static const char *Katie_QString_SignatureStrings[] = {
     "KtCore.Katie.QString.setUtf16(utf16:KtCore.ushort,size:int)->KtCore.Katie.QString",
     "KtCore.Katie.QString.simplified()->KtCore.Katie.QString",
     "KtCore.Katie.QString.size()->int",
+    "2:KtCore.Katie.QString.split(sep:KtCore.Katie.QChar,behavior:KtCore.Katie.QString.SplitBehavior=KeepEmptyParts,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QStringList",
+    "1:KtCore.Katie.QString.split(sep:KtCore.Katie.QRegExp,behavior:KtCore.Katie.QString.SplitBehavior=KeepEmptyParts)->KtCore.Katie.QStringList",
+    "0:KtCore.Katie.QString.split(sep:KtCore.Katie.QString,behavior:KtCore.Katie.QString.SplitBehavior=KeepEmptyParts,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->KtCore.Katie.QStringList",
     "KtCore.Katie.QString.sprintf(format:str)->KtCore.Katie.QString",
     "KtCore.Katie.QString.squeeze()",
     "2:KtCore.Katie.QString.startsWith(c:KtCore.Katie.QChar,cs:KtCore.Katie.Qt.CaseSensitivity=Qt.CaseSensitive)->bool",

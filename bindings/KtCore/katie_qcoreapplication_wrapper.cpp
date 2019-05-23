@@ -55,6 +55,8 @@
 #include <qcoreapplication.h>
 #include <qobject.h>
 #include <qstring.h>
+#include <qstringlist.h>
+#include <qvariant.h>
 
 
 #include <cctype>
@@ -410,6 +412,29 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_applicationVersion(PyObject* sel
     return pyResult;
 }
 
+static PyObject* Sbk_Katie_QCoreApplicationFunc_arguments(PyObject* self)
+{
+    PyObject* pyResult{};
+
+    // Call function/method
+    {
+
+        if (!PyErr_Occurred()) {
+            // arguments()
+            PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+            Katie::QStringList cppResult = ::Katie::QCoreApplication::arguments();
+            PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+            pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), &cppResult);
+        }
+    }
+
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+}
+
 static PyObject* Sbk_Katie_QCoreApplicationFunc_closingDown(PyObject* self)
 {
     PyObject* pyResult{};
@@ -637,6 +662,29 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_instance(PyObject* self)
             Katie::QCoreApplication * cppResult = ::Katie::QCoreApplication::instance();
             PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
             pyResult = Shiboken::Conversions::pointerToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_IDX]), cppResult);
+        }
+    }
+
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+}
+
+static PyObject* Sbk_Katie_QCoreApplicationFunc_libraryPaths(PyObject* self)
+{
+    PyObject* pyResult{};
+
+    // Call function/method
+    {
+
+        if (!PyErr_Occurred()) {
+            // libraryPaths()
+            PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+            Katie::QStringList cppResult = ::Katie::QCoreApplication::libraryPaths();
+            PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+            pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), &cppResult);
         }
     }
 
@@ -1090,6 +1138,51 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_setAttribute(PyObject* self, PyO
         return {};
 }
 
+static PyObject* Sbk_Katie_QCoreApplicationFunc_setLibraryPaths(PyObject* self, PyObject* pyArg)
+{
+    int overloadId = -1;
+    PythonToCppFunc pythonToCpp{};
+    SBK_UNUSED(pythonToCpp)
+
+    // Overloaded function decisor
+    // 0: static QCoreApplication::setLibraryPaths(Katie::QStringList)
+    if ((pythonToCpp = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), (pyArg)))) {
+        overloadId = 0; // setLibraryPaths(Katie::QStringList)
+    }
+
+    // Function signature not found.
+    if (overloadId == -1) goto Sbk_Katie_QCoreApplicationFunc_setLibraryPaths_TypeError;
+
+    // Call function/method
+    {
+        if (!Shiboken::Object::isValid(pyArg))
+            return {};
+        ::Katie::QStringList cppArg0_local;
+        ::Katie::QStringList* cppArg0 = &cppArg0_local;
+        if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]), pythonToCpp))
+            pythonToCpp(pyArg, &cppArg0_local);
+        else
+            pythonToCpp(pyArg, &cppArg0);
+
+
+        if (!PyErr_Occurred()) {
+            // setLibraryPaths(Katie::QStringList)
+            PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+            ::Katie::QCoreApplication::setLibraryPaths(*cppArg0);
+            PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+        }
+    }
+
+    if (PyErr_Occurred()) {
+        return {};
+    }
+    Py_RETURN_NONE;
+
+    Sbk_Katie_QCoreApplicationFunc_setLibraryPaths_TypeError:
+        Shiboken::setErrorAboutWrongArguments(pyArg, "KtCore.Katie.QCoreApplication.setLibraryPaths");
+        return {};
+}
+
 static PyObject* Sbk_Katie_QCoreApplicationFunc_setOrganizationDomain(PyObject* self, PyObject* pyArg)
 {
     int overloadId = -1;
@@ -1364,15 +1457,15 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_translate(PyObject* self, PyObje
 {
     PyObject* pyResult{};
     int overloadId = -1;
-    PythonToCppFunc pythonToCpp[] = { nullptr, nullptr, nullptr };
+    PythonToCppFunc pythonToCpp[] = { nullptr, nullptr, nullptr, nullptr, nullptr };
     SBK_UNUSED(pythonToCpp)
     int numNamedArgs = (kwds ? PyDict_Size(kwds) : 0);
     int numArgs = PyTuple_GET_SIZE(args);
     SBK_UNUSED(numArgs)
-    PyObject* pyArgs[] = {0, 0, 0};
+    PyObject* pyArgs[] = {0, 0, 0, 0, 0};
 
     // invalid argument lengths
-    if (numArgs + numNamedArgs > 3) {
+    if (numArgs + numNamedArgs > 5) {
         PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QCoreApplication.translate(): too many arguments");
         return {};
     } else if (numArgs < 2) {
@@ -1380,19 +1473,27 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_translate(PyObject* self, PyObje
         return {};
     }
 
-    if (!PyArg_ParseTuple(args, "|OOO:translate", &(pyArgs[0]), &(pyArgs[1]), &(pyArgs[2])))
+    if (!PyArg_ParseTuple(args, "|OOOOO:translate", &(pyArgs[0]), &(pyArgs[1]), &(pyArgs[2]), &(pyArgs[3]), &(pyArgs[4])))
         return {};
 
 
     // Overloaded function decisor
-    // 0: static QCoreApplication::translate(const char*,const char*,const char*)
+    // 0: static QCoreApplication::translate(const char*,const char*,const char*,Katie::QCoreApplication::Encoding,int)
     if (numArgs >= 2
         && Shiboken::String::check(pyArgs[0]) && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArgs[0])))
         && Shiboken::String::check(pyArgs[1]) && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArgs[1])))) {
         if (numArgs == 2) {
-            overloadId = 0; // translate(const char*,const char*,const char*)
+            overloadId = 0; // translate(const char*,const char*,const char*,Katie::QCoreApplication::Encoding,int)
         } else if (Shiboken::String::check(pyArgs[2]) && (pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArgs[2])))) {
-            overloadId = 0; // translate(const char*,const char*,const char*)
+            if (numArgs == 3) {
+                overloadId = 0; // translate(const char*,const char*,const char*,Katie::QCoreApplication::Encoding,int)
+            } else if ((pythonToCpp[3] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX])->converter, (pyArgs[3])))) {
+                if (numArgs == 4) {
+                    overloadId = 0; // translate(const char*,const char*,const char*,Katie::QCoreApplication::Encoding,int)
+                } else if ((pythonToCpp[4] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[4])))) {
+                    overloadId = 0; // translate(const char*,const char*,const char*,Katie::QCoreApplication::Encoding,int)
+                }
+            }
         }
     }
 
@@ -1411,6 +1512,24 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_translate(PyObject* self, PyObje
                 if (!Shiboken::String::check(pyArgs[2]) && (pythonToCpp[2] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArgs[2]))))
                     goto Sbk_Katie_QCoreApplicationFunc_translate_TypeError;
             }
+            value = PyDict_GetItemString(kwds, "encoding");
+            if (value && pyArgs[3]) {
+                PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QCoreApplication.translate(): got multiple values for keyword argument 'encoding'.");
+                return {};
+            } else if (value) {
+                pyArgs[3] = value;
+                if (!(pythonToCpp[3] = Shiboken::Conversions::isPythonToCppConvertible(*PepType_SGTP(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX])->converter, (pyArgs[3]))))
+                    goto Sbk_Katie_QCoreApplicationFunc_translate_TypeError;
+            }
+            value = PyDict_GetItemString(kwds, "n");
+            if (value && pyArgs[4]) {
+                PyErr_SetString(PyExc_TypeError, "KtCore.Katie.QCoreApplication.translate(): got multiple values for keyword argument 'n'.");
+                return {};
+            } else if (value) {
+                pyArgs[4] = value;
+                if (!(pythonToCpp[4] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<int>(), (pyArgs[4]))))
+                    goto Sbk_Katie_QCoreApplicationFunc_translate_TypeError;
+            }
         }
         const char* cppArg0;
         pythonToCpp[0](pyArgs[0], &cppArg0);
@@ -1418,11 +1537,15 @@ static PyObject* Sbk_Katie_QCoreApplicationFunc_translate(PyObject* self, PyObje
         pythonToCpp[1](pyArgs[1], &cppArg1);
         const char* cppArg2 = Q_NULLPTR;
         if (pythonToCpp[2]) pythonToCpp[2](pyArgs[2], &cppArg2);
+        ::Katie::QCoreApplication::Encoding cppArg3 = Katie::QCoreApplication::Encoding::CodecForTr;
+        if (pythonToCpp[3]) pythonToCpp[3](pyArgs[3], &cppArg3);
+        int cppArg4 = -1;
+        if (pythonToCpp[4]) pythonToCpp[4](pyArgs[4], &cppArg4);
 
         if (!PyErr_Occurred()) {
-            // translate(const char*,const char*,const char*)
+            // translate(const char*,const char*,const char*,Katie::QCoreApplication::Encoding,int)
             PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
-            Katie::QString cppResult = ::Katie::QCoreApplication::translate(cppArg0, cppArg1, cppArg2);
+            Katie::QString cppResult = ::Katie::QCoreApplication::translate(cppArg0, cppArg1, cppArg2, cppArg3, cppArg4);
             PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
             pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]), &cppResult);
         }
@@ -1542,6 +1665,7 @@ static PyMethodDef Sbk_Katie_QCoreApplication_methods[] = {
     {"applicationName", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_applicationName), METH_NOARGS|METH_STATIC},
     {"applicationPid", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_applicationPid), METH_NOARGS|METH_STATIC},
     {"applicationVersion", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_applicationVersion), METH_NOARGS|METH_STATIC},
+    {"arguments", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_arguments), METH_NOARGS|METH_STATIC},
     {"closingDown", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_closingDown), METH_NOARGS|METH_STATIC},
     {"exec", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_exec), METH_NOARGS|METH_STATIC},
     {"exit", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_exit), METH_VARARGS|METH_KEYWORDS|METH_STATIC},
@@ -1549,6 +1673,7 @@ static PyMethodDef Sbk_Katie_QCoreApplication_methods[] = {
     {"flush", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_flush), METH_NOARGS|METH_STATIC},
     {"hasPendingEvents", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_hasPendingEvents), METH_NOARGS|METH_STATIC},
     {"instance", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_instance), METH_NOARGS|METH_STATIC},
+    {"libraryPaths", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_libraryPaths), METH_NOARGS|METH_STATIC},
     {"organizationDomain", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_organizationDomain), METH_NOARGS|METH_STATIC},
     {"organizationName", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_organizationName), METH_NOARGS|METH_STATIC},
     {"processEvents", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_processEvents), METH_NOARGS|METH_STATIC},
@@ -1559,6 +1684,7 @@ static PyMethodDef Sbk_Katie_QCoreApplication_methods[] = {
     {"setApplicationName", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_setApplicationName), METH_O|METH_STATIC},
     {"setApplicationVersion", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_setApplicationVersion), METH_O|METH_STATIC},
     {"setAttribute", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_setAttribute), METH_VARARGS|METH_KEYWORDS|METH_STATIC},
+    {"setLibraryPaths", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_setLibraryPaths), METH_O|METH_STATIC},
     {"setOrganizationDomain", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_setOrganizationDomain), METH_O|METH_STATIC},
     {"setOrganizationName", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_setOrganizationName), METH_O|METH_STATIC},
     {"startingUp", reinterpret_cast<PyCFunction>(Sbk_Katie_QCoreApplicationFunc_startingUp), METH_NOARGS|METH_STATIC},
@@ -1630,6 +1756,23 @@ static void* Sbk_Katie_QCoreApplication_typeDiscovery(void* cptr, SbkObjectType*
 
 // Type conversion functions.
 
+// Python to C++ enum conversion.
+static void Katie_QCoreApplication_Encoding_PythonToCpp_Katie_QCoreApplication_Encoding(PyObject* pyIn, void* cppOut) {
+    *reinterpret_cast<::Katie::QCoreApplication::Encoding*>(cppOut) =
+        static_cast<::Katie::QCoreApplication::Encoding>(Shiboken::Enum::getValue(pyIn));
+
+}
+static PythonToCppFunc is_Katie_QCoreApplication_Encoding_PythonToCpp_Katie_QCoreApplication_Encoding_Convertible(PyObject* pyIn) {
+    if (PyObject_TypeCheck(pyIn, SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX]))
+        return Katie_QCoreApplication_Encoding_PythonToCpp_Katie_QCoreApplication_Encoding;
+    return {};
+}
+static PyObject* Katie_QCoreApplication_Encoding_CppToPython_Katie_QCoreApplication_Encoding(const void* cppIn) {
+    const int castCppIn = int(*reinterpret_cast<const ::Katie::QCoreApplication::Encoding *>(cppIn));
+    return Shiboken::Enum::newItem(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX], castCppIn);
+
+}
+
 // Python to C++ pointer conversion - returns the C++ object of the Python wrapper (keeps object identity).
 static void QCoreApplication_PythonToCpp_QCoreApplication_PTR(PyObject* pyIn, void* cppOut) {
     Shiboken::Conversions::pythonToCppPointer(Sbk_Katie_QCoreApplication_TypeF(), pyIn, cppOut);
@@ -1674,6 +1817,7 @@ static const char *Katie_QCoreApplication_SignatureStrings[] = {
     "KtCore.Katie.QCoreApplication.applicationName()->KtCore.Katie.QString",
     "KtCore.Katie.QCoreApplication.applicationPid()->long long",
     "KtCore.Katie.QCoreApplication.applicationVersion()->KtCore.Katie.QString",
+    "KtCore.Katie.QCoreApplication.arguments()->KtCore.Katie.QStringList",
     "KtCore.Katie.QCoreApplication.closingDown()->bool",
     "KtCore.Katie.QCoreApplication.exec()->int",
     "KtCore.Katie.QCoreApplication.exit(retcode:int=0)",
@@ -1681,6 +1825,7 @@ static const char *Katie_QCoreApplication_SignatureStrings[] = {
     "KtCore.Katie.QCoreApplication.flush()",
     "KtCore.Katie.QCoreApplication.hasPendingEvents()->bool",
     "KtCore.Katie.QCoreApplication.instance()->KtCore.Katie.QCoreApplication",
+    "KtCore.Katie.QCoreApplication.libraryPaths()->KtCore.Katie.QStringList",
     "KtCore.Katie.QCoreApplication.organizationDomain()->KtCore.Katie.QString",
     "KtCore.Katie.QCoreApplication.organizationName()->KtCore.Katie.QString",
     "KtCore.Katie.QCoreApplication.processEvents()",
@@ -1693,13 +1838,14 @@ static const char *Katie_QCoreApplication_SignatureStrings[] = {
     "KtCore.Katie.QCoreApplication.setApplicationName(application:KtCore.Katie.QString)",
     "KtCore.Katie.QCoreApplication.setApplicationVersion(version:KtCore.Katie.QString)",
     "KtCore.Katie.QCoreApplication.setAttribute(attribute:KtCore.Katie.Qt.ApplicationAttribute,on:bool=true)",
+    "KtCore.Katie.QCoreApplication.setLibraryPaths(arg__1:KtCore.Katie.QStringList)",
     "KtCore.Katie.QCoreApplication.setOrganizationDomain(orgDomain:KtCore.Katie.QString)",
     "KtCore.Katie.QCoreApplication.setOrganizationName(orgName:KtCore.Katie.QString)",
     "KtCore.Katie.QCoreApplication.startingUp()->bool",
     "KtCore.Katie.QCoreApplication.testAttribute(attribute:KtCore.Katie.Qt.ApplicationAttribute)->bool",
     "KtCore.Katie.QCoreApplication.tr(s:str,c:str,n:int)->KtCore.Katie.QString",
     "KtCore.Katie.QCoreApplication.trUtf8(s:str,c:str,n:int)->KtCore.Katie.QString",
-    "KtCore.Katie.QCoreApplication.translate(context:str,sourceText:str,disambiguation:str=Q_NULLPTR)->KtCore.Katie.QString",
+    "KtCore.Katie.QCoreApplication.translate(context:str,sourceText:str,disambiguation:str=Q_NULLPTR,encoding:KtCore.Katie.QCoreApplication.Encoding=CodecForTr,n:int=-1)->KtCore.Katie.QString",
     "KtCore.Katie.QCoreApplication.unixSignal(arg__1:int)",
     "KtCore.Katie.QCoreApplication.watchUnixSignal(signal:int,watch:bool)",
     nullptr}; // Sentinel
@@ -1737,6 +1883,39 @@ void init_Katie_QCoreApplication(PyObject* module)
 
 
     Shiboken::ObjectType::setTypeDiscoveryFunctionV2(Sbk_Katie_QCoreApplication_TypeF(), &Sbk_Katie_QCoreApplication_typeDiscovery);
+
+    // Initialization of enums.
+
+    // Initialization of enum 'Encoding'.
+    SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX] = Shiboken::Enum::createScopedEnum(Sbk_Katie_QCoreApplication_TypeF(),
+        "Encoding",
+        "KtCore.Katie.QCoreApplication.Encoding",
+        "Katie::QCoreApplication::Encoding");
+    if (!SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX])
+        return;
+
+    if (!Shiboken::Enum::createScopedEnumItem(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX],
+        Sbk_Katie_QCoreApplication_TypeF(), "CodecForTr", (long) Katie::QCoreApplication::Encoding::CodecForTr))
+        return;
+    if (!Shiboken::Enum::createScopedEnumItem(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX],
+        Sbk_Katie_QCoreApplication_TypeF(), "UnicodeUTF8", (long) Katie::QCoreApplication::Encoding::UnicodeUTF8))
+        return;
+    if (!Shiboken::Enum::createScopedEnumItem(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX],
+        Sbk_Katie_QCoreApplication_TypeF(), "DefaultCodec", (long) Katie::QCoreApplication::Encoding::DefaultCodec))
+        return;
+    // Register converter for enum 'Katie::QCoreApplication::Encoding'.
+    {
+        SbkConverter* converter = Shiboken::Conversions::createConverter(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX],
+            Katie_QCoreApplication_Encoding_CppToPython_Katie_QCoreApplication_Encoding);
+        Shiboken::Conversions::addPythonToCppValueConversion(converter,
+            Katie_QCoreApplication_Encoding_PythonToCpp_Katie_QCoreApplication_Encoding,
+            is_Katie_QCoreApplication_Encoding_PythonToCpp_Katie_QCoreApplication_Encoding_Convertible);
+        Shiboken::Enum::setTypeConverter(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX], converter);
+        Shiboken::Conversions::registerConverterName(converter, "Katie::QCoreApplication::Encoding");
+        Shiboken::Conversions::registerConverterName(converter, "QCoreApplication::Encoding");
+        Shiboken::Conversions::registerConverterName(converter, "Encoding");
+    }
+    // End of 'Encoding' enum.
 
 
 }

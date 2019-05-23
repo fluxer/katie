@@ -243,6 +243,8 @@
         </value-type>
 
         <object-type name="QCoreApplication">
+           <enum-type name="Encoding"/>
+
             <modify-function signature="QCoreApplication(int &amp;, char**)">
                 <modify-argument index="1">
                     <remove-argument/>
@@ -261,7 +263,18 @@
             </modify-function>
         </object-type>
 
+        <object-type name="QLatin1Char">
+        </object-type>
+
+        <value-type name="QLatin1String">
+        </value-type>
+
         <object-type name="QObject">
+        </object-type>
+
+        <object-type name="QRegExp">
+            <enum-type name="PatternSyntax"/>
+            <enum-type name="CaretMode"/>
         </object-type>
 
         <value-type name="QString">
@@ -271,16 +284,17 @@
             <enum-type name="NormalizationForm"/>
         </value-type>
 
+        <value-type name="QStringList">
+        </value-type>
+
         <object-type name="QTextBoundaryFinder">
             <enum-type name="BoundaryType"/>
             <enum-type name="BoundaryReason"/>
             <primitive-type name="BoundaryReasons"/>
         </object-type>
 
-        <object-type name="QLatin1Char">
-        </object-type>
-
-        <value-type name="QLatin1String">
+        <value-type name="QVariant">
+            <enum-type name="Type"/>
         </value-type>
 
     </namespace-type>

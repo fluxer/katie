@@ -54,6 +54,7 @@
 // Extra includes
 #include <qobject.h>
 #include <qstring.h>
+#include <qvariant.h>
 
 
 #include <cctype>
@@ -1047,6 +1048,52 @@ static PyObject* Sbk_Katie_QObjectFunc_parent(PyObject* self)
     return pyResult;
 }
 
+static PyObject* Sbk_Katie_QObjectFunc_property(PyObject* self, PyObject* pyArg)
+{
+    QObjectWrapper* cppSelf = nullptr;
+    SBK_UNUSED(cppSelf)
+    if (!Shiboken::Object::isValid(self))
+        return {};
+    cppSelf = static_cast<QObjectWrapper *>(reinterpret_cast< ::Katie::QObject *>(Shiboken::Conversions::cppPointer(SbkKtCoreTypes[SBK_KATIE_QOBJECT_IDX], reinterpret_cast<SbkObject *>(self))));
+    PyObject* pyResult{};
+    int overloadId = -1;
+    PythonToCppFunc pythonToCpp{};
+    SBK_UNUSED(pythonToCpp)
+
+    // Overloaded function decisor
+    // 0: QObject::property(const char*)const
+    if (Shiboken::String::check(pyArg) && (pythonToCpp = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArg)))) {
+        overloadId = 0; // property(const char*)const
+    }
+
+    // Function signature not found.
+    if (overloadId == -1) goto Sbk_Katie_QObjectFunc_property_TypeError;
+
+    // Call function/method
+    {
+        const char* cppArg0;
+        pythonToCpp(pyArg, &cppArg0);
+
+        if (!PyErr_Occurred()) {
+            // property(const char*)const
+            PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+            Katie::QVariant cppResult = const_cast<const ::QObjectWrapper*>(cppSelf)->property(cppArg0);
+            PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+            pyResult = Shiboken::Conversions::copyToPython(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QVARIANT_IDX]), &cppResult);
+        }
+    }
+
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+
+    Sbk_Katie_QObjectFunc_property_TypeError:
+        Shiboken::setErrorAboutWrongArguments(pyArg, "KtCore.Katie.QObject.property");
+        return {};
+}
+
 static PyObject* Sbk_Katie_QObjectFunc_receivers(PyObject* self, PyObject* pyArg)
 {
     QObjectWrapper* cppSelf = nullptr;
@@ -1286,6 +1333,73 @@ static PyObject* Sbk_Katie_QObjectFunc_setParent(PyObject* self, PyObject* pyArg
         return {};
 }
 
+static PyObject* Sbk_Katie_QObjectFunc_setProperty(PyObject* self, PyObject* args)
+{
+    QObjectWrapper* cppSelf = nullptr;
+    SBK_UNUSED(cppSelf)
+    if (!Shiboken::Object::isValid(self))
+        return {};
+    cppSelf = static_cast<QObjectWrapper *>(reinterpret_cast< ::Katie::QObject *>(Shiboken::Conversions::cppPointer(SbkKtCoreTypes[SBK_KATIE_QOBJECT_IDX], reinterpret_cast<SbkObject *>(self))));
+    PyObject* pyResult{};
+    int overloadId = -1;
+    PythonToCppFunc pythonToCpp[] = { nullptr, nullptr };
+    SBK_UNUSED(pythonToCpp)
+    int numArgs = PyTuple_GET_SIZE(args);
+    SBK_UNUSED(numArgs)
+    PyObject* pyArgs[] = {0, 0};
+
+    // invalid argument lengths
+
+
+    if (!PyArg_UnpackTuple(args, "setProperty", 2, 2, &(pyArgs[0]), &(pyArgs[1])))
+        return {};
+
+
+    // Overloaded function decisor
+    // 0: QObject::setProperty(const char*,Katie::QVariant)
+    if (numArgs == 2
+        && Shiboken::String::check(pyArgs[0]) && (pythonToCpp[0] = Shiboken::Conversions::isPythonToCppConvertible(Shiboken::Conversions::PrimitiveTypeConverter<const char*>(), (pyArgs[0])))
+        && (pythonToCpp[1] = Shiboken::Conversions::isPythonToCppReferenceConvertible(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QVARIANT_IDX]), (pyArgs[1])))) {
+        overloadId = 0; // setProperty(const char*,Katie::QVariant)
+    }
+
+    // Function signature not found.
+    if (overloadId == -1) goto Sbk_Katie_QObjectFunc_setProperty_TypeError;
+
+    // Call function/method
+    {
+        const char* cppArg0;
+        pythonToCpp[0](pyArgs[0], &cppArg0);
+        if (!Shiboken::Object::isValid(pyArgs[1]))
+            return {};
+        ::Katie::QVariant cppArg1_local;
+        ::Katie::QVariant* cppArg1 = &cppArg1_local;
+        if (Shiboken::Conversions::isImplicitConversion(reinterpret_cast<SbkObjectType *>(SbkKtCoreTypes[SBK_KATIE_QVARIANT_IDX]), pythonToCpp[1]))
+            pythonToCpp[1](pyArgs[1], &cppArg1_local);
+        else
+            pythonToCpp[1](pyArgs[1], &cppArg1);
+
+
+        if (!PyErr_Occurred()) {
+            // setProperty(const char*,Katie::QVariant)
+            PyThreadState* _save = PyEval_SaveThread(); // Py_BEGIN_ALLOW_THREADS
+            bool cppResult = cppSelf->setProperty(cppArg0, *cppArg1);
+            PyEval_RestoreThread(_save); // Py_END_ALLOW_THREADS
+            pyResult = Shiboken::Conversions::copyToPython(Shiboken::Conversions::PrimitiveTypeConverter<bool>(), &cppResult);
+        }
+    }
+
+    if (PyErr_Occurred() || !pyResult) {
+        Py_XDECREF(pyResult);
+        return {};
+    }
+    return pyResult;
+
+    Sbk_Katie_QObjectFunc_setProperty_TypeError:
+        Shiboken::setErrorAboutWrongArguments(args, "KtCore.Katie.QObject.setProperty");
+        return {};
+}
+
 static PyObject* Sbk_Katie_QObjectFunc_signalsBlocked(PyObject* self)
 {
     QObjectWrapper* cppSelf = nullptr;
@@ -1498,12 +1612,14 @@ static PyMethodDef Sbk_Katie_QObject_methods[] = {
     {"killTimer", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_killTimer), METH_O},
     {"objectName", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_objectName), METH_NOARGS},
     {"parent", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_parent), METH_NOARGS},
+    {"property", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_property), METH_O},
     {"receivers", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_receivers), METH_O},
     {"removeEventFilter", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_removeEventFilter), METH_O},
     {"sender", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_sender), METH_NOARGS},
     {"senderSignalIndex", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_senderSignalIndex), METH_NOARGS},
     {"setObjectName", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_setObjectName), METH_O},
     {"setParent", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_setParent), METH_O},
+    {"setProperty", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_setProperty), METH_VARARGS},
     {"signalsBlocked", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_signalsBlocked), METH_NOARGS},
     {"startTimer", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_startTimer), METH_O},
     {"tr", reinterpret_cast<PyCFunction>(Sbk_Katie_QObjectFunc_tr), METH_VARARGS|METH_STATIC},
@@ -1656,12 +1772,14 @@ static const char *Katie_QObject_SignatureStrings[] = {
     "KtCore.Katie.QObject.killTimer(id:int)",
     "KtCore.Katie.QObject.objectName()->KtCore.Katie.QString",
     "KtCore.Katie.QObject.parent()->KtCore.Katie.QObject",
+    "KtCore.Katie.QObject.property(name:str)->KtCore.Katie.QVariant",
     "KtCore.Katie.QObject.receivers(signal:str)->int",
     "KtCore.Katie.QObject.removeEventFilter(arg__1:KtCore.Katie.QObject)",
     "KtCore.Katie.QObject.sender()->KtCore.Katie.QObject",
     "KtCore.Katie.QObject.senderSignalIndex()->int",
     "KtCore.Katie.QObject.setObjectName(name:KtCore.Katie.QString)",
     "KtCore.Katie.QObject.setParent(arg__1:KtCore.Katie.QObject)",
+    "KtCore.Katie.QObject.setProperty(name:str,value:KtCore.Katie.QVariant)->bool",
     "KtCore.Katie.QObject.signalsBlocked()->bool",
     "KtCore.Katie.QObject.startTimer(interval:int)->int",
     "KtCore.Katie.QObject.tr(s:str,c:str,n:int)->KtCore.Katie.QString",

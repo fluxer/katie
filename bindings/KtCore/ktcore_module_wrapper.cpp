@@ -62,7 +62,10 @@ static PyMethodDef KtCore_methods[] = {
 };
 
 // Classes initialization functions ------------------------------------------------------------
+void init_Katie_QVariant(PyObject* module);
 void init_Katie_QTextBoundaryFinder(PyObject* module);
+void init_Katie_QStringList(PyObject* module);
+void init_Katie_QRegExp(PyObject* module);
 void init_Katie_QObject(PyObject* module);
 void init_Katie_QLatin1String(PyObject* module);
 void init_Katie_QLatin1Char(PyObject* module);
@@ -1328,7 +1331,10 @@ SBK_MODULE_INIT_FUNCTION_BEGIN(KtCore)
     SbkKtCoreModuleObject = module;
 
     // Initialize classes in the type system
+    init_Katie_QVariant(module);
     init_Katie_QTextBoundaryFinder(module);
+    init_Katie_QStringList(module);
+    init_Katie_QRegExp(module);
     init_Katie_QObject(module);
     init_Katie_QLatin1String(module);
     init_Katie_QLatin1Char(module);

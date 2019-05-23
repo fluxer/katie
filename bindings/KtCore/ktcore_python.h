@@ -47,13 +47,16 @@
 #include <sbkconverter.h>
 // Binded library includes
 #include <qchar.h>
+#include <qstringlist.h>
 #include <qcoreapplication.h>
 #include <qstring.h>
+#include <qregexp.h>
 #include <qbytearray.h>
 #include <qobject.h>
 #include <qglobal.h>
 #include <qnamespace.h>
 #include <qtextboundaryfinder.h>
+#include <qvariant.h>
 // Conversion Includes - Primitive Types
 
 // Conversion Includes - Container Types
@@ -74,88 +77,95 @@ enum : int {
     SBK_KATIE_QCHAR_COMBININGCLASS_IDX                       = 3,
     SBK_KATIE_QCHAR_UNICODEVERSION_IDX                       = 8,
     SBK_KATIE_QCOREAPPLICATION_IDX                           = 9,
-    SBK_KATIE_QLATIN1CHAR_IDX                                = 10,
-    SBK_KATIE_QLATIN1STRING_IDX                              = 11,
-    SBK_KATIE_QOBJECT_IDX                                    = 12,
-    SBK_KATIE_QSTRING_IDX                                    = 13,
-    SBK_KATIE_QSTRING_SECTIONFLAG_IDX                        = 15,
-    SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX                      = 16,
-    SBK_KATIE_QSTRING_NORMALIZATIONFORM_IDX                  = 14,
-    SBK_KATIE_QTEXTBOUNDARYFINDER_IDX                        = 17,
-    SBK_KATIE_QTEXTBOUNDARYFINDER_BOUNDARYTYPE_IDX           = 19,
-    SBK_KATIE_QTEXTBOUNDARYFINDER_BOUNDARYREASON_IDX         = 18,
-    SBK_KATIE_QTMSGTYPE_IDX                                  = 90,
-    SBK_KATIE_QT_GLOBALCOLOR_IDX                             = 50,
-    SBK_KATIE_QT_KEYBOARDMODIFIER_IDX                        = 57,
-    SBK_KATIE_QT_MODIFIER_IDX                                = 61,
-    SBK_KATIE_QT_MOUSEBUTTON_IDX                             = 62,
-    SBK_KATIE_QT_ORIENTATION_IDX                             = 64,
-    SBK_KATIE_QT_FOCUSPOLICY_IDX                             = 45,
-    SBK_KATIE_QT_SORTORDER_IDX                               = 72,
-    SBK_KATIE_QT_TILERULE_IDX                                = 77,
-    SBK_KATIE_QT_ALIGNMENTFLAG_IDX                           = 20,
-    SBK_KATIE_QT_TEXTFLAG_IDX                                = 74,
-    SBK_KATIE_QT_TEXTELIDEMODE_IDX                           = 73,
-    SBK_KATIE_QT_WINDOWTYPE_IDX                              = 89,
-    SBK_KATIE_QT_WINDOWSTATE_IDX                             = 88,
-    SBK_KATIE_QT_WIDGETATTRIBUTE_IDX                         = 85,
-    SBK_KATIE_QT_APPLICATIONATTRIBUTE_IDX                    = 23,
-    SBK_KATIE_QT_IMAGECONVERSIONFLAG_IDX                     = 51,
-    SBK_KATIE_QT_BGMODE_IDX                                  = 27,
-    SBK_KATIE_QT_KEY_IDX                                     = 56,
-    SBK_KATIE_QT_ARROWTYPE_IDX                               = 24,
-    SBK_KATIE_QT_PENSTYLE_IDX                                = 67,
-    SBK_KATIE_QT_PENCAPSTYLE_IDX                             = 65,
-    SBK_KATIE_QT_PENJOINSTYLE_IDX                            = 66,
-    SBK_KATIE_QT_BRUSHSTYLE_IDX                              = 28,
-    SBK_KATIE_QT_SIZEMODE_IDX                                = 71,
-    SBK_KATIE_QT_UIEFFECT_IDX                                = 84,
-    SBK_KATIE_QT_CURSORSHAPE_IDX                             = 37,
-    SBK_KATIE_QT_TEXTFORMAT_IDX                              = 75,
-    SBK_KATIE_QT_ASPECTRATIOMODE_IDX                         = 25,
-    SBK_KATIE_QT_ANCHORATTRIBUTE_IDX                         = 21,
-    SBK_KATIE_QT_DOCKWIDGETAREA_IDX                          = 40,
-    SBK_KATIE_QT_DOCKWIDGETAREASIZES_IDX                     = 41,
-    SBK_KATIE_QT_TOOLBARAREA_IDX                             = 79,
-    SBK_KATIE_QT_TOOLBARAREASIZES_IDX                        = 80,
-    SBK_KATIE_QT_DATEFORMAT_IDX                              = 38,
-    SBK_KATIE_QT_TIMESPEC_IDX                                = 78,
-    SBK_KATIE_QT_DAYOFWEEK_IDX                               = 39,
-    SBK_KATIE_QT_SCROLLBARPOLICY_IDX                         = 68,
-    SBK_KATIE_QT_CASESENSITIVITY_IDX                         = 29,
-    SBK_KATIE_QT_CORNER_IDX                                  = 35,
-    SBK_KATIE_QT_CONNECTIONTYPE_IDX                          = 32,
-    SBK_KATIE_QT_SHORTCUTCONTEXT_IDX                         = 69,
-    SBK_KATIE_QT_FILLRULE_IDX                                = 44,
-    SBK_KATIE_QT_MASKMODE_IDX                                = 59,
-    SBK_KATIE_QT_CLIPOPERATION_IDX                           = 31,
-    SBK_KATIE_QT_ITEMSELECTIONMODE_IDX                       = 55,
-    SBK_KATIE_QT_TRANSFORMATIONMODE_IDX                      = 83,
-    SBK_KATIE_QT_AXIS_IDX                                    = 26,
-    SBK_KATIE_QT_FOCUSREASON_IDX                             = 46,
-    SBK_KATIE_QT_CONTEXTMENUPOLICY_IDX                       = 33,
-    SBK_KATIE_QT_TOOLBUTTONSTYLE_IDX                         = 81,
-    SBK_KATIE_QT_LAYOUTDIRECTION_IDX                         = 58,
-    SBK_KATIE_QT_ANCHORPOINT_IDX                             = 22,
-    SBK_KATIE_QT_DROPACTION_IDX                              = 42,
-    SBK_KATIE_QT_CHECKSTATE_IDX                              = 30,
-    SBK_KATIE_QT_ITEMDATAROLE_IDX                            = 53,
-    SBK_KATIE_QT_ITEMFLAG_IDX                                = 54,
-    SBK_KATIE_QT_MATCHFLAG_IDX                               = 60,
-    SBK_KATIE_QT_WINDOWMODALITY_IDX                          = 87,
-    SBK_KATIE_QT_TEXTINTERACTIONFLAG_IDX                     = 76,
-    SBK_KATIE_QT_EVENTPRIORITY_IDX                           = 43,
-    SBK_KATIE_QT_SIZEHINT_IDX                                = 70,
-    SBK_KATIE_QT_WINDOWFRAMESECTION_IDX                      = 86,
-    SBK_KATIE_QT_INITIALIZATION_IDX                          = 52,
-    SBK_KATIE_QT_COORDINATESYSTEM_IDX                        = 34,
-    SBK_KATIE_QT_TOUCHPOINTSTATE_IDX                         = 82,
-    SBK_KATIE_QT_GESTURESTATE_IDX                            = 48,
-    SBK_KATIE_QT_GESTURETYPE_IDX                             = 49,
-    SBK_KATIE_QT_GESTUREFLAG_IDX                             = 47,
-    SBK_KATIE_QT_NAVIGATIONMODE_IDX                          = 63,
-    SBK_KATIE_QT_CURSORMOVESTYLE_IDX                         = 36,
-    SBK_KtCore_IDX_COUNT                                     = 91
+    SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX                  = 10,
+    SBK_KATIE_QLATIN1CHAR_IDX                                = 11,
+    SBK_KATIE_QLATIN1STRING_IDX                              = 12,
+    SBK_KATIE_QOBJECT_IDX                                    = 13,
+    SBK_KATIE_QREGEXP_IDX                                    = 14,
+    SBK_KATIE_QREGEXP_PATTERNSYNTAX_IDX                      = 16,
+    SBK_KATIE_QREGEXP_CARETMODE_IDX                          = 15,
+    SBK_KATIE_QSTRING_IDX                                    = 17,
+    SBK_KATIE_QSTRING_SECTIONFLAG_IDX                        = 19,
+    SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX                      = 20,
+    SBK_KATIE_QSTRING_NORMALIZATIONFORM_IDX                  = 18,
+    SBK_KATIE_QSTRINGLIST_IDX                                = 21,
+    SBK_KATIE_QTEXTBOUNDARYFINDER_IDX                        = 22,
+    SBK_KATIE_QTEXTBOUNDARYFINDER_BOUNDARYTYPE_IDX           = 24,
+    SBK_KATIE_QTEXTBOUNDARYFINDER_BOUNDARYREASON_IDX         = 23,
+    SBK_KATIE_QVARIANT_IDX                                   = 25,
+    SBK_KATIE_QVARIANT_TYPE_IDX                              = 26,
+    SBK_KATIE_QTMSGTYPE_IDX                                  = 97,
+    SBK_KATIE_QT_GLOBALCOLOR_IDX                             = 57,
+    SBK_KATIE_QT_KEYBOARDMODIFIER_IDX                        = 64,
+    SBK_KATIE_QT_MODIFIER_IDX                                = 68,
+    SBK_KATIE_QT_MOUSEBUTTON_IDX                             = 69,
+    SBK_KATIE_QT_ORIENTATION_IDX                             = 71,
+    SBK_KATIE_QT_FOCUSPOLICY_IDX                             = 52,
+    SBK_KATIE_QT_SORTORDER_IDX                               = 79,
+    SBK_KATIE_QT_TILERULE_IDX                                = 84,
+    SBK_KATIE_QT_ALIGNMENTFLAG_IDX                           = 27,
+    SBK_KATIE_QT_TEXTFLAG_IDX                                = 81,
+    SBK_KATIE_QT_TEXTELIDEMODE_IDX                           = 80,
+    SBK_KATIE_QT_WINDOWTYPE_IDX                              = 96,
+    SBK_KATIE_QT_WINDOWSTATE_IDX                             = 95,
+    SBK_KATIE_QT_WIDGETATTRIBUTE_IDX                         = 92,
+    SBK_KATIE_QT_APPLICATIONATTRIBUTE_IDX                    = 30,
+    SBK_KATIE_QT_IMAGECONVERSIONFLAG_IDX                     = 58,
+    SBK_KATIE_QT_BGMODE_IDX                                  = 34,
+    SBK_KATIE_QT_KEY_IDX                                     = 63,
+    SBK_KATIE_QT_ARROWTYPE_IDX                               = 31,
+    SBK_KATIE_QT_PENSTYLE_IDX                                = 74,
+    SBK_KATIE_QT_PENCAPSTYLE_IDX                             = 72,
+    SBK_KATIE_QT_PENJOINSTYLE_IDX                            = 73,
+    SBK_KATIE_QT_BRUSHSTYLE_IDX                              = 35,
+    SBK_KATIE_QT_SIZEMODE_IDX                                = 78,
+    SBK_KATIE_QT_UIEFFECT_IDX                                = 91,
+    SBK_KATIE_QT_CURSORSHAPE_IDX                             = 44,
+    SBK_KATIE_QT_TEXTFORMAT_IDX                              = 82,
+    SBK_KATIE_QT_ASPECTRATIOMODE_IDX                         = 32,
+    SBK_KATIE_QT_ANCHORATTRIBUTE_IDX                         = 28,
+    SBK_KATIE_QT_DOCKWIDGETAREA_IDX                          = 47,
+    SBK_KATIE_QT_DOCKWIDGETAREASIZES_IDX                     = 48,
+    SBK_KATIE_QT_TOOLBARAREA_IDX                             = 86,
+    SBK_KATIE_QT_TOOLBARAREASIZES_IDX                        = 87,
+    SBK_KATIE_QT_DATEFORMAT_IDX                              = 45,
+    SBK_KATIE_QT_TIMESPEC_IDX                                = 85,
+    SBK_KATIE_QT_DAYOFWEEK_IDX                               = 46,
+    SBK_KATIE_QT_SCROLLBARPOLICY_IDX                         = 75,
+    SBK_KATIE_QT_CASESENSITIVITY_IDX                         = 36,
+    SBK_KATIE_QT_CORNER_IDX                                  = 42,
+    SBK_KATIE_QT_CONNECTIONTYPE_IDX                          = 39,
+    SBK_KATIE_QT_SHORTCUTCONTEXT_IDX                         = 76,
+    SBK_KATIE_QT_FILLRULE_IDX                                = 51,
+    SBK_KATIE_QT_MASKMODE_IDX                                = 66,
+    SBK_KATIE_QT_CLIPOPERATION_IDX                           = 38,
+    SBK_KATIE_QT_ITEMSELECTIONMODE_IDX                       = 62,
+    SBK_KATIE_QT_TRANSFORMATIONMODE_IDX                      = 90,
+    SBK_KATIE_QT_AXIS_IDX                                    = 33,
+    SBK_KATIE_QT_FOCUSREASON_IDX                             = 53,
+    SBK_KATIE_QT_CONTEXTMENUPOLICY_IDX                       = 40,
+    SBK_KATIE_QT_TOOLBUTTONSTYLE_IDX                         = 88,
+    SBK_KATIE_QT_LAYOUTDIRECTION_IDX                         = 65,
+    SBK_KATIE_QT_ANCHORPOINT_IDX                             = 29,
+    SBK_KATIE_QT_DROPACTION_IDX                              = 49,
+    SBK_KATIE_QT_CHECKSTATE_IDX                              = 37,
+    SBK_KATIE_QT_ITEMDATAROLE_IDX                            = 60,
+    SBK_KATIE_QT_ITEMFLAG_IDX                                = 61,
+    SBK_KATIE_QT_MATCHFLAG_IDX                               = 67,
+    SBK_KATIE_QT_WINDOWMODALITY_IDX                          = 94,
+    SBK_KATIE_QT_TEXTINTERACTIONFLAG_IDX                     = 83,
+    SBK_KATIE_QT_EVENTPRIORITY_IDX                           = 50,
+    SBK_KATIE_QT_SIZEHINT_IDX                                = 77,
+    SBK_KATIE_QT_WINDOWFRAMESECTION_IDX                      = 93,
+    SBK_KATIE_QT_INITIALIZATION_IDX                          = 59,
+    SBK_KATIE_QT_COORDINATESYSTEM_IDX                        = 41,
+    SBK_KATIE_QT_TOUCHPOINTSTATE_IDX                         = 89,
+    SBK_KATIE_QT_GESTURESTATE_IDX                            = 55,
+    SBK_KATIE_QT_GESTURETYPE_IDX                             = 56,
+    SBK_KATIE_QT_GESTUREFLAG_IDX                             = 54,
+    SBK_KATIE_QT_NAVIGATIONMODE_IDX                          = 70,
+    SBK_KATIE_QT_CURSORMOVESTYLE_IDX                         = 43,
+    SBK_KtCore_IDX_COUNT                                     = 98
 };
 // This variable stores all Python types exported by this module.
 extern PyTypeObject** SbkKtCoreTypes;
@@ -256,17 +266,24 @@ template<> inline PyTypeObject* SbkType< ::Katie::QChar::Joining >() { return Sb
 template<> inline PyTypeObject* SbkType< ::Katie::QChar::CombiningClass >() { return SbkKtCoreTypes[SBK_KATIE_QCHAR_COMBININGCLASS_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QChar::UnicodeVersion >() { return SbkKtCoreTypes[SBK_KATIE_QCHAR_UNICODEVERSION_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QChar >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QCHAR_IDX]); }
+template<> inline PyTypeObject* SbkType< ::Katie::QCoreApplication::Encoding >() { return SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_ENCODING_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QCoreApplication >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QCOREAPPLICATION_IDX]); }
 template<> inline PyTypeObject* SbkType< ::Katie::QLatin1Char >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QLATIN1CHAR_IDX]); }
 template<> inline PyTypeObject* SbkType< ::Katie::QLatin1String >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QLATIN1STRING_IDX]); }
 template<> inline PyTypeObject* SbkType< ::Katie::QObject >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QOBJECT_IDX]); }
+template<> inline PyTypeObject* SbkType< ::Katie::QRegExp::PatternSyntax >() { return SbkKtCoreTypes[SBK_KATIE_QREGEXP_PATTERNSYNTAX_IDX]; }
+template<> inline PyTypeObject* SbkType< ::Katie::QRegExp::CaretMode >() { return SbkKtCoreTypes[SBK_KATIE_QREGEXP_CARETMODE_IDX]; }
+template<> inline PyTypeObject* SbkType< ::Katie::QRegExp >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QREGEXP_IDX]); }
 template<> inline PyTypeObject* SbkType< ::Katie::QString::SectionFlag >() { return SbkKtCoreTypes[SBK_KATIE_QSTRING_SECTIONFLAG_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QString::SplitBehavior >() { return SbkKtCoreTypes[SBK_KATIE_QSTRING_SPLITBEHAVIOR_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QString::NormalizationForm >() { return SbkKtCoreTypes[SBK_KATIE_QSTRING_NORMALIZATIONFORM_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QString >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QSTRING_IDX]); }
+template<> inline PyTypeObject* SbkType< ::Katie::QStringList >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QSTRINGLIST_IDX]); }
 template<> inline PyTypeObject* SbkType< ::Katie::QTextBoundaryFinder::BoundaryType >() { return SbkKtCoreTypes[SBK_KATIE_QTEXTBOUNDARYFINDER_BOUNDARYTYPE_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QTextBoundaryFinder::BoundaryReason >() { return SbkKtCoreTypes[SBK_KATIE_QTEXTBOUNDARYFINDER_BOUNDARYREASON_IDX]; }
 template<> inline PyTypeObject* SbkType< ::Katie::QTextBoundaryFinder >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QTEXTBOUNDARYFINDER_IDX]); }
+template<> inline PyTypeObject* SbkType< ::Katie::QVariant::Type >() { return SbkKtCoreTypes[SBK_KATIE_QVARIANT_TYPE_IDX]; }
+template<> inline PyTypeObject* SbkType< ::Katie::QVariant >() { return reinterpret_cast<PyTypeObject*>(SbkKtCoreTypes[SBK_KATIE_QVARIANT_IDX]); }
 
 } // namespace Shiboken
 

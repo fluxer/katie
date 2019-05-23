@@ -47,16 +47,22 @@ set(PyKtCore_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qchar_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qcoreapplication_wrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qcoreapplication_wrapper.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qtextboundaryfinder_wrapper.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qtextboundaryfinder_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1char_wrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1char_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1string_wrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qlatin1string_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qobject_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qregexp_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qregexp_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstring_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstringlist_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qstringlist_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qtextboundaryfinder_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qtextboundaryfinder_wrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qvariant_wrapper.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/katie_qvariant_wrapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/ktcore_module_wrapper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/KtCore/ktcore_python.h
 )
