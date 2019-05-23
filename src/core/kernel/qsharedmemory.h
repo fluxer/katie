@@ -59,14 +59,12 @@ class Q_CORE_EXPORT QSharedMemory : public QObject
     Q_DECLARE_PRIVATE(QSharedMemory)
 
 public:
-    enum AccessMode
-    {
+    enum AccessMode {
         ReadOnly,
         ReadWrite
     };
 
-    enum SharedMemoryError
-    {
+    enum SharedMemoryError {
         NoError,
         PermissionDenied,
         InvalidSize,

@@ -96,7 +96,7 @@ QMutexPool::QMutexPool(QMutex::RecursionMode recursionMode, int size)
     : mutexes(size), recursionMode(recursionMode)
 {
     for (int index = 0; index < mutexes.count(); ++index) {
-        mutexes[index] = 0;
+        mutexes[index] = Q_NULLPTR;
     }
 }
 
@@ -108,7 +108,7 @@ QMutexPool::~QMutexPool()
 {
     for (int index = 0; index < mutexes.count(); ++index) {
         delete mutexes[index];
-        mutexes[index] = 0;
+        mutexes[index] = Q_NULLPTR;
     }
 }
 

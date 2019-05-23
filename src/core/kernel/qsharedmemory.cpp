@@ -63,14 +63,11 @@ QString QSharedMemoryPrivate::makePlatformSafeKey(const QString &key,
     if (key.isEmpty())
         return QString();
 
-    QString result = prefix;
-
     QString part1 = key;
     part1.replace(QRegExp(QLatin1String("[^A-Za-z]")), QString());
-    result.append(part1);
 
     QByteArray hex = QCryptographicHash::hash(key.toUtf8(), QCryptographicHash::Sha1).toHex();
-    result.append(QLatin1String(hex.constData()));
+    QString result = (part1 + QString::fromLatin1(hex.constData()));
 #if defined(QT_POSIX_IPC)
     return QLatin1Char('/') + result;
 #else
@@ -238,8 +235,7 @@ bool QSharedMemoryPrivate::initKey()
     systemSemaphore.setKey(QString(), 1);
     systemSemaphore.setKey(key, 1);
     if (systemSemaphore.error() != QSystemSemaphore::NoError) {
-        QString function = QLatin1String("QSharedMemoryPrivate::initKey");
-        errorString = QSharedMemory::tr("%1: unable to set key on lock").arg(function);
+        errorString = QSharedMemory::tr("%1: unable to set key on lock").arg(QLatin1String("QSharedMemoryPrivate::initKey"));
         switch(systemSemaphore.error()) {
         case QSystemSemaphore::PermissionDenied:
             error = QSharedMemory::PermissionDenied;
@@ -496,8 +492,7 @@ bool QSharedMemory::lock()
         d->lockedByMe = true;
         return true;
     }
-    const QString function = QLatin1String("QSharedMemory::lock");
-    d->errorString = QSharedMemory::tr("%1: unable to lock").arg(function);
+    d->errorString = QSharedMemory::tr("%1: unable to lock").arg(QLatin1String("QSharedMemory::lock"));
     d->error = QSharedMemory::LockError;
     return false;
 }
@@ -518,8 +513,7 @@ bool QSharedMemory::unlock()
     d->lockedByMe = false;
     if (d->systemSemaphore.release())
         return true;
-    const QString function = QLatin1String("QSharedMemory::unlock");
-    d->errorString = QSharedMemory::tr("%1: unable to unlock").arg(function);
+    d->errorString = QSharedMemory::tr("%1: unable to unlock").arg(QLatin1String("QSharedMemory::unlock"));
     d->error = QSharedMemory::LockError;
     return false;
 }

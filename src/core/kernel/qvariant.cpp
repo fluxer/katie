@@ -175,7 +175,7 @@ static void construct(QVariant::Private *x, const void *copy)
     case QVariant::Double:
         x->data.d = copy ? *static_cast<const double*>(copy) : 0.0;
         break;
-    case QMetaType::Float:
+    case QVariant::Float:
         x->data.f = copy ? *static_cast<const float*>(copy) : 0.0f;
         break;
     case QMetaType::QObjectStar:
@@ -286,7 +286,7 @@ static void clear(QVariant::Private *d)
     case QVariant::LongLong:
     case QVariant::ULongLong:
     case QVariant::Double:
-    case QMetaType::Float:
+    case QVariant::Float:
     case QMetaType::QObjectStar:
         break;
     case QVariant::Invalid:
@@ -454,7 +454,7 @@ static bool compare(const QVariant::Private *a, const QVariant::Private *b)
         return a->data.b == b->data.b;
     case QVariant::Double:
         return a->data.d == b->data.d;
-    case QMetaType::Float:
+    case QVariant::Float:
         return a->data.f == b->data.f;
     case QMetaType::QObjectStar:
         return a->data.o == b->data.o;
@@ -525,7 +525,7 @@ static qlonglong qMetaTypeNumber(const QVariant::Private *d)
         return qlonglong(*static_cast<short *>(d->data.shared->ptr));
     case QMetaType::Long:
         return qlonglong(*static_cast<long *>(d->data.shared->ptr));
-    case QMetaType::Float:
+    case QVariant::Float:
         return qRound64(d->data.f);
     case QVariant::Double:
         return qRound64(d->data.d);
@@ -619,7 +619,7 @@ static qulonglong qConvertToUnsignedNumber(const QVariant::Private *d, bool *ok)
     case QMetaType::Char:
     case QMetaType::Short:
     case QMetaType::Long:
-    case QMetaType::Float:
+    case QVariant::Float:
     case QMetaType::LongLong:
         return qulonglong(qMetaTypeNumber(d));
     case QVariant::ULongLong:
@@ -689,7 +689,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::ULong:
             *str = QString::number(qMetaTypeUNumber(d));
             break;
-        case QMetaType::Float:
+        case QVariant::Float:
             *str = QString::number(d->data.f, 'g', FLT_DIG);
             break;
         case QVariant::Double:
@@ -871,7 +871,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QVariant::Double:
             *ba = QByteArray::number(d->data.d, 'g', DBL_DIG);
             break;
-        case QMetaType::Float:
+        case QVariant::Float:
             *ba = QByteArray::number(d->data.f, 'g', FLT_DIG);
             break;
         case QMetaType::Char:
@@ -945,7 +945,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         case QMetaType::Char:
         case QMetaType::Short:
         case QMetaType::Long:
-        case QMetaType::Float:
+        case QVariant::Float:
             *b = qMetaTypeNumber(d) != Q_INT64_C(0);
             break;
         case QVariant::UInt:
@@ -1010,7 +1010,7 @@ static bool convert(const QVariant::Private *d, QVariant::Type t, void *result, 
         }
         break;
     }
-    case QMetaType::Float: {
+    case QVariant::Float: {
         float *f = static_cast<float *>(result);
         switch (d->type) {
         case QVariant::String:
