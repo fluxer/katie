@@ -809,7 +809,6 @@ classlist = {
     "QValidator",
     "QVariant",
     "QVariantAnimation",
-    "QVariantComparisonHelper",
     "QVariantHash",
     "QVariantList",
     "QVariantMap",

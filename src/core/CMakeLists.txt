@@ -137,7 +137,6 @@ set(CORE_PUBLIC_HEADERS
     QFileInfoList
     QCoreApplication
     QRegExp
-    QVariantComparisonHelper
     QMetaObject
     QMapData
     QByteRef

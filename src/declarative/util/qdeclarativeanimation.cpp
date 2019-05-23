@@ -1015,8 +1015,8 @@ QVariant QDeclarativePropertyAction::value() const
 void QDeclarativePropertyAction::setValue(const QVariant &v)
 {
     Q_D(QDeclarativePropertyAction);
-    if (d->value.isNull || d->value != v) {
-        d->value = v;
+    if (d->value.isNull || d->value.value != v) {
+        d->value.value = v;
         emit valueChanged(v);
     }
 }

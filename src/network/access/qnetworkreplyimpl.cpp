@@ -756,7 +756,7 @@ void QNetworkReplyImplPrivate::finished()
             state == Working && errorCode != QNetworkReply::OperationCanceledError) {
             // only content with a known size will fail with a temporary network failure error
             if (!totalSize.isNull()) {
-                if (bytesDownloaded != totalSize) {
+                if (QVariant(bytesDownloaded) != totalSize) {
                     if (migrateBackend()) {
                         // either we are migrating or the request is finished/aborted
                         if (state == Reconnecting || state == WaitingForSession) {
@@ -789,7 +789,7 @@ void QNetworkReplyImplPrivate::finished()
     resumeNotificationHandling();
 
     // if we don't know the total size of or we received everything save the cache
-    if (totalSize.isNull() || totalSize == -1 || bytesDownloaded == totalSize)
+    if (totalSize.isNull() || totalSize == -1 || QVariant(bytesDownloaded) == totalSize)
         completeCacheSave();
 
     // note: might not be a good idea, since users could decide to delete us
