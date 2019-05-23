@@ -216,7 +216,7 @@ bool QSemaphore::tryAcquire(int n, int timeout)
 {
     Q_ASSERT_X(n >= 0, "QSemaphore::tryAcquire", "parameter 'n' must be non-negative");
     QMutexLocker locker(&d->mutex);
-    if (timeout <= 0) {
+    if (timeout < 0) {
         while (n > d->avail)
             d->cond.wait(locker.mutex());
     } else {

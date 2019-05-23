@@ -73,7 +73,7 @@ public:
     volatile qint64 averageWaitTime;
     Qt::HANDLE owner;
     uint count;
-    const uint recursive : 1;
+    const bool recursive;
     QAtomicInt contenders;
 
     volatile bool wakeup;
