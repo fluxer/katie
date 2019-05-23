@@ -92,12 +92,10 @@ Q_GLOBAL_STATIC_WITH_ARGS(QMutexPool, globalMutexPool, (QMutex::Recursive))
     The QMutexes are created when needed, and deleted when the
     QMutexPool is destructed.
 */
-QMutexPool::QMutexPool(QMutex::RecursionMode recursionMode, int size)
-    : mutexes(size), recursionMode(recursionMode)
+QMutexPool::QMutexPool(QMutex::RecursionMode recursionMode)
+    : recursionMode(recursionMode)
 {
-    for (int index = 0; index < mutexes.count(); ++index) {
-        mutexes[index] = Q_NULLPTR;
-    }
+    mutexes.fill(Q_NULLPTR);
 }
 
 /*!
@@ -106,7 +104,7 @@ QMutexPool::QMutexPool(QMutex::RecursionMode recursionMode, int size)
 */
 QMutexPool::~QMutexPool()
 {
-    for (int index = 0; index < mutexes.count(); ++index) {
+    for (int index = 0; index < mutexes.size(); ++index) {
         delete mutexes[index];
         mutexes[index] = Q_NULLPTR;
     }

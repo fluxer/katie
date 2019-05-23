@@ -55,20 +55,23 @@
 
 #include "QtCore/qatomic.h"
 #include "QtCore/qmutex.h"
-#include "QtCore/qvarlengtharray.h"
+
+#include <array>
 
 #ifndef QT_NO_THREAD
+
+#define QMUTEXPOOL_SIZE 131
 
 QT_BEGIN_NAMESPACE
 
 class Q_CORE_EXPORT QMutexPool
 {
 public:
-    explicit QMutexPool(QMutex::RecursionMode recursionMode = QMutex::NonRecursive, int size = 131);
+    explicit QMutexPool(QMutex::RecursionMode recursionMode = QMutex::NonRecursive);
     ~QMutexPool();
 
     inline QMutex *get(const void *address) {
-        int index = uint(quintptr(address)) % mutexes.count();
+        int index = uint(quintptr(address)) % mutexes.size();
         QMutex *m = mutexes[index];
         if (m)
             return m;
@@ -80,7 +83,7 @@ public:
 
 private:
     QMutex *createMutex(int index);
-    QVarLengthArray<QAtomicPointer<QMutex>, 131> mutexes;
+    std::array<QAtomicPointer<QMutex>, QMUTEXPOOL_SIZE> mutexes;
     QMutex::RecursionMode recursionMode;
 };
 
