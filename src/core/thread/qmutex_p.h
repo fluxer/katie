@@ -56,29 +56,17 @@
 #include <QtCore/qnamespace.h>
 #include <QtCore/qmutex.h>
 
+#include <mutex>
 
 QT_BEGIN_NAMESPACE
 
 class QMutexPrivate {
 public:
     QMutexPrivate(QMutex::RecursionMode mode);
-    ~QMutexPrivate();
 
-    bool wait(int timeout = -1);
-    void wakeUp();
-
-    // 1ms = 1000000ns
-    enum { MaximumSpinTimeThreshold = 1000000 };
-    volatile qint64 maximumSpinTime;
-    volatile qint64 averageWaitTime;
-    Qt::HANDLE owner;
-    uint count;
     const bool recursive;
-    QAtomicInt contenders;
-
-    volatile bool wakeup;
-    pthread_mutex_t mutex;
-    pthread_cond_t cond;
+    std::timed_mutex mutex1;
+    std::recursive_timed_mutex mutex2;
 };
 
 QT_END_NAMESPACE

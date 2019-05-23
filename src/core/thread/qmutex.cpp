@@ -44,12 +44,14 @@
 #include <qdebug.h>
 
 #ifndef QT_NO_THREAD
-#include "qatomic.h"
-#include "qelapsedtimer.h"
-#include "qthread.h"
 #include "qmutex_p.h"
 
 QT_BEGIN_NAMESPACE
+
+QMutexPrivate::QMutexPrivate(QMutex::RecursionMode mode)
+    : recursive(mode == QMutex::Recursive)
+{
+}
 
 /*!
     \class QMutex
@@ -148,32 +150,10 @@ QMutex::~QMutex()
 void QMutex::lock()
 {
     QMutexPrivate *d = this->d;
-
     if (d->recursive) {
-        Qt::HANDLE self = QThread::currentThreadId();
-        if (d->owner == self) {
-            ++d->count;
-            Q_ASSERT_X(d->count != 0, "QMutex::lock", "Overflow in recursion counter");
-            return;
-        }
-
-        bool isLocked = d->contenders.testAndSetAcquire(0, 1);
-        if (!isLocked) {
-            // didn't get the lock, wait for it
-            isLocked = d->wait();
-            Q_ASSERT_X(isLocked, "QMutex::lock",
-                       "Internal error, infinite wait has timed out.");
-        }
-
-        d->owner = self;
-        ++d->count;
-        Q_ASSERT_X(d->count != 0, "QMutex::lock", "Overflow in recursion counter");
-        return;
-    }
-
-    bool isLocked = d->contenders.testAndSetAcquire(0, 1);
-    if (!isLocked) {
-        lockInternal();
+        d->mutex2.lock();
+    } else {
+        d->mutex1.lock();
     }
 }
 
@@ -197,29 +177,11 @@ void QMutex::lock()
 bool QMutex::tryLock()
 {
     QMutexPrivate *d = this->d;
-
     if (d->recursive) {
-        Qt::HANDLE self = QThread::currentThreadId();
-        if (d->owner == self) {
-            ++d->count;
-            Q_ASSERT_X(d->count != 0, "QMutex::tryLock", "Overflow in recursion counter");
-            return true;
-        }
-
-        bool isLocked = d->contenders.testAndSetAcquire(0, 1);
-        if (!isLocked) {
-            // some other thread has the mutex locked, or we tried to
-            // recursively lock an non-recursive mutex
-            return isLocked;
-        }
-
-        d->owner = self;
-        ++d->count;
-        Q_ASSERT_X(d->count != 0, "QMutex::tryLock", "Overflow in recursion counter");
-        return isLocked;
+        return d->mutex2.try_lock();
+    } else {
+        return d->mutex1.try_lock();
     }
-
-    return d->contenders.testAndSetAcquire(0, 1);
 }
 
 /*! \overload
@@ -248,32 +210,11 @@ bool QMutex::tryLock()
 bool QMutex::tryLock(int timeout)
 {
     QMutexPrivate *d = this->d;
-
     if (d->recursive) {
-        Qt::HANDLE self = QThread::currentThreadId();
-        if (d->owner == self) {
-            ++d->count;
-            Q_ASSERT_X(d->count != 0, "QMutex::tryLock", "Overflow in recursion counter");
-            return true;
-        }
-
-        bool isLocked = d->contenders.testAndSetAcquire(0, 1);
-        if (!isLocked) {
-            // didn't get the lock, wait for it
-            isLocked = d->wait(timeout);
-            if (!isLocked)
-                return false;
-        }
-
-        d->owner = self;
-        ++d->count;
-        Q_ASSERT_X(d->count != 0, "QMutex::tryLock", "Overflow in recursion counter");
-        return true;
+        return d->mutex2.try_lock_for(std::chrono::milliseconds(timeout));
+    } else {
+        return d->mutex1.try_lock_for(std::chrono::milliseconds(timeout));
     }
-
-    return (d->contenders.testAndSetAcquire(0, 1)
-            // didn't get the lock, wait for it
-            || d->wait(timeout));
 }
 
 
@@ -288,14 +229,9 @@ void QMutex::unlock()
 {
     QMutexPrivate *d = this->d;
     if (d->recursive) {
-        if (!--d->count) {
-            d->owner = 0;
-            if (!d->contenders.testAndSetRelease(1, 0))
-                d->wakeUp();
-        }
+        d->mutex2.unlock();
     } else {
-        if (!d->contenders.testAndSetRelease(1, 0))
-            d->wakeUp();
+        d->mutex1.unlock();
     }
 }
 
@@ -420,85 +356,6 @@ void QMutex::unlock()
 
     Use the constructor that takes a RecursionMode parameter instead.
 */
-
-/*!
-    \internal helper for lockInline()
- */
-void QMutex::lockInternal()
-{
-    QMutexPrivate *d = this->d;
-
-    if (QThread::idealThreadCount() == 1) {
-        // don't spin on single cpu machines
-        bool isLocked = d->wait();
-        Q_ASSERT_X(isLocked, "QMutex::lock",
-                   "Internal error, infinite wait has timed out.");
-        Q_UNUSED(isLocked);
-        return;
-    }
-
-    QElapsedTimer elapsedTimer;
-    elapsedTimer.start();
-    do {
-        qint64 spinTime = elapsedTimer.nsecsElapsed();
-        if (spinTime > d->maximumSpinTime) {
-            // didn't get the lock, wait for it, since we're not going to gain anything by spinning more
-            elapsedTimer.start();
-            bool isLocked = d->wait();
-            Q_ASSERT_X(isLocked, "QMutex::lock",
-                       "Internal error, infinite wait has timed out.");
-            Q_UNUSED(isLocked);
-
-            qint64 maximumSpinTime = d->maximumSpinTime;
-            qint64 averageWaitTime = d->averageWaitTime;
-            qint64 actualWaitTime = elapsedTimer.nsecsElapsed();
-            if (actualWaitTime < (QMutexPrivate::MaximumSpinTimeThreshold * 3 / 2)) {
-                // measure the wait times
-                averageWaitTime = d->averageWaitTime = qMin((averageWaitTime + actualWaitTime) / 2, qint64(QMutexPrivate::MaximumSpinTimeThreshold));
-            }
-
-            // adjust the spin count when spinning does not benefit contention performance
-            if ((spinTime + actualWaitTime) - qint64(QMutexPrivate::MaximumSpinTimeThreshold) >= qint64(QMutexPrivate::MaximumSpinTimeThreshold)) {
-                // long waits, stop spinning
-                d->maximumSpinTime = 0;
-            } else {
-                // allow spinning if wait times decrease, but never spin more than the average wait time (otherwise we may perform worse)
-                d->maximumSpinTime = qBound(qint64(averageWaitTime * 3 / 2), maximumSpinTime / 2, qint64(QMutexPrivate::MaximumSpinTimeThreshold));
-            }
-            return;
-        }
-        // be a good citizen... yielding lets something else run if there is something to run, but may also relieve memory pressure if not
-        QThread::yieldCurrentThread();
-    } while (d->contenders != 0 || !d->contenders.testAndSetAcquire(0, 1));
-
-    // spinning is working, do not change the spin time (unless we are using much less time than allowed to spin)
-    qint64 maximumSpinTime = d->maximumSpinTime;
-    qint64 spinTime = elapsedTimer.nsecsElapsed();
-    if (spinTime < maximumSpinTime / 2) {
-        // we are using much less time than we need, adjust the limit
-        d->maximumSpinTime = qBound(qint64(d->averageWaitTime * 3 / 2), maximumSpinTime / 2, qint64(QMutexPrivate::MaximumSpinTimeThreshold));
-    }
-}
-
-
-/*!
-   \fn QMutex::lockInline()
-   \internal
-   inline version of QMutex::lock()
-*/
-
-/*!
-   \fn QMutex::unlockInline()
-   \internal
-   inline version of QMutex::unlock()
-*/
-
-/*!
-   \fn QMutex::tryLockInline()
-   \internal
-   inline version of QMutex::tryLock()
-*/
-
 
 QT_END_NAMESPACE
 

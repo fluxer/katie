@@ -59,22 +59,20 @@ class Q_CORE_EXPORT QMutex
     friend class QWaitConditionPrivate;
 
 public:
-    enum RecursionMode { NonRecursive, Recursive };
+    enum RecursionMode {
+        NonRecursive,
+        Recursive
+    };
 
     explicit QMutex(RecursionMode mode = NonRecursive);
     ~QMutex();
 
     void lock();
-    inline void unlockInline() { unlock(); }
     bool tryLock();
     bool tryLock(int timeout);
-    inline bool tryLockInline() { return tryLock(); }
     void unlock();
-    inline void lockInline() { lock(); }
-
 
 private:
-    void lockInternal();
     Q_DISABLE_COPY(QMutex)
 
     QMutexPrivate *d;
@@ -138,12 +136,8 @@ public:
     inline ~QMutex() {}
 
     static inline void lock() {}
-    static inline void lockInline() {}
     static inline bool tryLock(int timeout = 0) { Q_UNUSED(timeout); return true; }
-    static inline bool tryLockInline() { return true; }
     static inline void unlock() {}
-    static inline void unlockInline() {}
-
 
 private:
     Q_DISABLE_COPY(QMutex)
