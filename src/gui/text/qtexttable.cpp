@@ -42,10 +42,9 @@
 #include "qtexttable.h"
 #include "qtextcursor.h"
 #include "qtextformat.h"
-#include <qdebug.h>
+#include "qdebug.h"
 #include "qtexttable_p.h"
 #include "qvarlengtharray.h"
-#include "qfunctions_p.h"
 
 #include <stdlib.h>
 

@@ -47,8 +47,6 @@
 #include <qapplication.h>
 #include <qdir.h>
 #include <qpixmapcache.h>
-
-#include <qfunctions_p.h>
 #include <qguiplatformplugin.h>
 
 QT_BEGIN_NAMESPACE

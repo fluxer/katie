@@ -149,7 +149,6 @@ QMutex::~QMutex()
 */
 void QMutex::lock()
 {
-    QMutexPrivate *d = this->d;
     if (d->recursive) {
         d->mutex2.lock();
     } else {
@@ -176,12 +175,10 @@ void QMutex::lock()
 */
 bool QMutex::tryLock()
 {
-    QMutexPrivate *d = this->d;
     if (d->recursive) {
         return d->mutex2.try_lock();
-    } else {
-        return d->mutex1.try_lock();
     }
+    return d->mutex1.try_lock();
 }
 
 /*! \overload
@@ -209,12 +206,10 @@ bool QMutex::tryLock()
 */
 bool QMutex::tryLock(int timeout)
 {
-    QMutexPrivate *d = this->d;
     if (d->recursive) {
         return d->mutex2.try_lock_for(std::chrono::milliseconds(timeout));
-    } else {
-        return d->mutex1.try_lock_for(std::chrono::milliseconds(timeout));
     }
+    return d->mutex1.try_lock_for(std::chrono::milliseconds(timeout));
 }
 
 
@@ -227,7 +222,6 @@ bool QMutex::tryLock(int timeout)
 */
 void QMutex::unlock()
 {
-    QMutexPrivate *d = this->d;
     if (d->recursive) {
         d->mutex2.unlock();
     } else {

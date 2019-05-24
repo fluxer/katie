@@ -30,7 +30,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsharedmemory_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemsemaphore_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qfunctions_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qmath.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qsystemerror_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcore_unix_p.h

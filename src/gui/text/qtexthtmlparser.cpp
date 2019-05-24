@@ -47,13 +47,11 @@
 #include <qstack.h>
 #include <qdebug.h>
 #include <qthread.h>
-
 #include "qtextdocument.h"
 #include "qtextformat_p.h"
 #include "qtextdocument_p.h"
 #include "qtextcursor.h"
 #include "qfont_p.h"
-#include "qfunctions_p.h"
 
 #ifndef QT_NO_TEXTHTMLPARSER
 

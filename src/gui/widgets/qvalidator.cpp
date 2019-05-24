@@ -557,10 +557,6 @@ QDoubleValidator::~QDoubleValidator()
     By default, the \a pos parameter is not used by this validator.
 */
 
-#ifndef LLONG_MAX
-#   define LLONG_MAX Q_INT64_C(0x7fffffffffffffff)
-#endif
-
 QValidator::State QDoubleValidator::validate(QString & input, int &) const
 {
     Q_D(const QDoubleValidator);

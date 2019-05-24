@@ -46,21 +46,19 @@
 #include "qtextlist.h"
 #include "qtextengine_p.h"
 #include "qcssutil_p.h"
-
 #include "qabstracttextdocumentlayout_p.h"
 #include "qcssparser_p.h"
-
 #include <qpainter.h>
 #include <qmath.h>
 #include <qrect.h>
 #include <qpalette.h>
 #include <qdebug.h>
 #include <qvarlengtharray.h>
-#include <limits.h>
 #include <qstyle.h>
 #include <qbasictimer.h>
-#include "qfunctions_p.h"
 #include <qfontmetrics.h>
+
+#include <limits.h>
 
 // #define LAYOUT_DEBUG
 

@@ -61,7 +61,6 @@
 #include <qlibraryinfo.h>
 #include <qvarlengtharray.h>
 #include <qfactoryloader_p.h>
-#include <qfunctions_p.h>
 #include <qlocale_p.h>
 #include <qmutexpool_p.h>
 #include <qscopedpointer.h>

@@ -41,10 +41,6 @@
 
 #include "qhash.h"
 
-#ifdef truncate
-#undef truncate
-#endif
-
 #include <qbitarray.h>
 #include <qstring.h>
 #include <stdlib.h>

@@ -43,7 +43,6 @@
 #include <qendian.h>
 #include <qpainterpath.h>
 #include "qpdf_p.h"
-#include "qfunctions_p.h"
 
 #ifdef Q_WS_X11
 #include "qfontengine_x11_p.h"

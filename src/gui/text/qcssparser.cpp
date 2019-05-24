@@ -48,7 +48,6 @@
 #include <qfontmetrics.h>
 #include <qbrush.h>
 #include <qimagereader.h>
-#include "qfunctions_p.h"
 
 #ifndef QT_NO_CSSPARSER
 

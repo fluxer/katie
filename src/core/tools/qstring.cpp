@@ -58,7 +58,6 @@
 #include "qdebug.h"
 #include "qendian.h"
 #include "qmutex.h"
-#include "qfunctions_p.h"
 
 #include <limits.h>
 #include <string.h>
@@ -66,22 +65,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#ifdef truncate
-#undef truncate
-#endif
-
 #include "qchar.cpp"
 #include "qstringmatcher.cpp"
-
-#ifndef LLONG_MAX
-#define LLONG_MAX qint64_C(9223372036854775807)
-#endif
-#ifndef LLONG_MIN
-#define LLONG_MIN (-LLONG_MAX - qint64_C(1))
-#endif
-#ifndef ULLONG_MAX
-#define ULLONG_MAX quint64_C(18446744073709551615)
-#endif
 
 QT_BEGIN_NAMESPACE
 
