@@ -1048,8 +1048,12 @@ bool QLayout::activate()
     activateRecursiveHelper(this);
 
     QWidgetPrivate *md = mw->d_func();
-    uint explMin = md->extra ? md->extra->explicitMinSize : 0;
-    uint explMax = md->extra ? md->extra->explicitMaxSize : 0;
+    Qt::Orientations explMin = 0;
+    if (md->extra)
+        explMin = md->extra->explicitMinSize;
+    Qt::Orientations explMax = 0;
+    if (md->extra)
+        explMax = md->extra->explicitMaxSize;
 
     switch (d->constraint) {
     case SetFixedSize:

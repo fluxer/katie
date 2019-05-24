@@ -1081,8 +1081,8 @@ void QWidgetPrivate::setParent_sys(QWidget *parent, Qt::WindowFlags f)
         topData->frameStrut.setCoords(0, 0, 0, 0);
 
         // reparenting from top-level, make sure show() works again
-        topData->waitingForMapNotify = 0;
-        topData->validWMState = 0;
+        topData->waitingForMapNotify = false;
+        topData->validWMState = false;
     }
     data.fstrut_dirty = (!parent || (f & Qt::Window)); // toplevels get a dirty framestrut
 
@@ -1763,7 +1763,7 @@ void QWidgetPrivate::show_sys()
         invalidateBuffer(q->rect());
         q->setAttribute(Qt::WA_Mapped);
         if (QTLWExtra *tlwExtra = maybeTopData())
-            tlwExtra->waitingForMapNotify = 0;
+            tlwExtra->waitingForMapNotify = false;
         return;
     }
 
@@ -1980,7 +1980,7 @@ void QWidgetPrivate::show_sys()
         return;
     q->setAttribute(Qt::WA_Mapped);
     if (q->isWindow())
-        topData()->waitingForMapNotify = 1;
+        topData()->waitingForMapNotify = true;
 
     if (!q->isWindow()
         && (!q->autoFillBackground()
@@ -2727,10 +2727,10 @@ void QWidgetPrivate::createSysExtra()
 
 void QWidgetPrivate::createTLSysExtra()
 {
-    extra->topextra->spont_unmapped = 0;
-    extra->topextra->dnd = 0;
-    extra->topextra->validWMState = 0;
-    extra->topextra->waitingForMapNotify = 0;
+    extra->topextra->spont_unmapped = false;
+    extra->topextra->dnd = false;
+    extra->topextra->validWMState = false;
+    extra->topextra->waitingForMapNotify = false;
     extra->topextra->parentWinId = 0;
     extra->topextra->userTimeWindow = 0;
 #ifndef QT_NO_XSYNC

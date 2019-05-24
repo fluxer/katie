@@ -151,19 +151,19 @@ struct QTLWExtra {
     Qt::WindowFlags savedFlags; // Save widget flags while showing fullscreen
 
     // *************************** Cross-platform bit fields ****************************
-    uint opacity : 8;
-    uint posFromMove : 1;
-    uint sizeAdjusted : 1;
-    uint inTopLevelResize : 1;
-    uint inRepaint : 1;
-    uint embedded : 1;
+    uint opacity;
+    bool posFromMove;
+    bool sizeAdjusted;
+    bool inTopLevelResize;
+    bool inRepaint;
+    bool embedded;
 
     // *************************** Platform specific values (bit fields first) **********
 #if defined(Q_WS_X11) // <----------------------------------------------------------- X11
-    uint spont_unmapped: 1; // window was spontaneously unmapped
-    uint dnd : 1; // DND properties installed
-    uint validWMState : 1; // is WM_STATE valid?
-    uint waitingForMapNotify : 1; // show() has been called, haven't got the MapNotify yet
+    bool spont_unmapped; // window was spontaneously unmapped
+    bool dnd; // DND properties installed
+    bool validWMState; // is WM_STATE valid?
+    bool waitingForMapNotify; // show() has been called, haven't got the MapNotify yet
     WId parentWinId; // parent window Id (valid after reparenting)
     WId userTimeWindow; // window id that contains user-time timestamp when WM supports a _NET_WM_USER_TIME_WINDOW atom
     QPoint fullScreenOffset;
@@ -180,7 +180,6 @@ struct QWExtra {
     // *************************** Cross-platform variables *****************************
 
     // Regular pointers (keep them together to avoid gaps on 64 bits architectures).
-    void *glContext; // if the widget is hijacked by QGLWindowSurface
     QTLWExtra *topextra; // only useful for TLWs
 #ifndef QT_NO_GRAPHICSVIEW
     QGraphicsProxyWidget *proxyWidget; // if the widget is embedded
@@ -205,12 +204,12 @@ struct QWExtra {
     QSize staticContentsSize;
 
     // *************************** Cross-platform bit fields ****************************
-    uint explicitMinSize : 2;
-    uint explicitMaxSize : 2;
-    uint autoFillBackground : 1;
-    uint nativeChildrenForced : 1;
-    uint inRenderWithPainter : 1;
-    uint hasMask : 1;
+    Qt::Orientations explicitMinSize;
+    Qt::Orientations explicitMaxSize;
+    bool autoFillBackground;
+    bool nativeChildrenForced;
+    bool inRenderWithPainter;
+    bool hasMask;
 
     // *************************** Platform specific values (bit fields first) **********
 #if defined(Q_WS_X11) // <--------------------------------------------------------- X11
@@ -504,7 +503,7 @@ public:
 
         if (extra->nativeChildrenForced)
             return;
-        extra->nativeChildrenForced = 1;
+        extra->nativeChildrenForced = true;
 
         for (int i = 0; i < children.size(); ++i) {
             if (QWidget *child = qobject_cast<QWidget *>(children.at(i)))
@@ -621,14 +620,14 @@ public:
 
     // Bit fields.
     uint high_attributes[4]; // the low ones are in QWidget::widget_attributes
-    QPalette::ColorRole fg_role : 8;
-    QPalette::ColorRole bg_role : 8;
-    uint dirtyOpaqueChildren : 1;
-    uint isOpaque : 1;
-    uint inDirtyList : 1;
-    uint isScrolled : 1;
-    uint isMoved : 1;
-    uint inSetParent : 1;
+    QPalette::ColorRole fg_role;
+    QPalette::ColorRole bg_role;
+    bool dirtyOpaqueChildren;
+    bool isOpaque;
+    bool inDirtyList;
+    bool isScrolled;
+    bool isMoved;
+    bool inSetParent;
 
     // *************************** Platform specific ************************************
 #if defined(Q_WS_X11) // <----------------------------------------------------------- X11

@@ -221,12 +221,12 @@ QWidgetPrivate::QWidgetPrivate(int version)
       , size_policy(QSizePolicy::Preferred, QSizePolicy::Preferred)
       , fg_role(QPalette::NoRole)
       , bg_role(QPalette::NoRole)
-      , dirtyOpaqueChildren(1)
-      , isOpaque(0)
-      , inDirtyList(0)
-      , isScrolled(0)
-      , isMoved(0)
-      , inSetParent(0)
+      , dirtyOpaqueChildren(true)
+      , isOpaque(false)
+      , inDirtyList(false)
+      , isScrolled(false)
+      , isMoved(false)
+      , inSetParent(false)
 #if defined(Q_WS_X11)
       , picture(0)
 #endif
@@ -1075,8 +1075,8 @@ void QWidgetPrivate::init(QWidget *parentWidget, Qt::WindowFlags f)
     data.context_menu_policy = Qt::DefaultContextMenu;
     data.window_modality = Qt::NonModal;
 
-    data.is_closing = 0;
-    data.in_show = 0;
+    data.is_closing = false;
+    data.in_show = false;
     data.in_destructor = false;
 
     q->setAttribute(Qt::WA_QuitOnClose); // might be cleared in adjustQuitOnCloseAttribute()
@@ -1417,7 +1417,7 @@ void QWidgetPrivate::createTLExtra()
         x->sizeAdjusted = false;
         x->inTopLevelResize = false;
         x->inRepaint = false;
-        x->embedded = 0;
+        x->embedded = false;
 
         createTLSysExtra();
 #ifdef QWIDGET_EXTRA_DEBUG
@@ -1436,7 +1436,6 @@ void QWidgetPrivate::createExtra()
 {
     if (!extra) {                                // if not exists
         extra = new QWExtra;
-        extra->glContext = 0;
         extra->topextra = 0;
 #ifndef QT_NO_GRAPHICSVIEW
         extra->proxyWidget = 0;
@@ -1452,10 +1451,10 @@ void QWidgetPrivate::createExtra()
         extra->customDpiY = 0;
         extra->explicitMinSize = 0;
         extra->explicitMaxSize = 0;
-        extra->autoFillBackground = 0;
-        extra->nativeChildrenForced = 0;
-        extra->inRenderWithPainter = 0;
-        extra->hasMask = 0;
+        extra->autoFillBackground = false;
+        extra->nativeChildrenForced = false;
+        extra->inRenderWithPainter = false;
+        extra->hasMask = false;
         createSysExtra();
 #ifdef QWIDGET_EXTRA_DEBUG
         static int count = 0;
@@ -3421,7 +3420,11 @@ bool QWidgetPrivate::setMinimumSize_helper(int &minw, int &minh)
         return false;
     extra->minw = mw;
     extra->minh = mh;
-    extra->explicitMinSize = (mw ? Qt::Horizontal : 0) | (mh ? Qt::Vertical : 0);
+    extra->explicitMinSize = 0;
+    if (mw)
+        extra->explicitMinSize |= Qt::Horizontal;
+    if (mh)
+        extra->explicitMinSize |= Qt::Vertical;
     return true;
 }
 
@@ -3481,8 +3484,11 @@ bool QWidgetPrivate::setMaximumSize_helper(int &maxw, int &maxh)
         return false;
     extra->maxw = maxw;
     extra->maxh = maxh;
-    extra->explicitMaxSize = (maxw != QWIDGETSIZE_MAX ? Qt::Horizontal : 0) |
-                             (maxh != QWIDGETSIZE_MAX ? Qt::Vertical : 0);
+    extra->explicitMaxSize = 0;
+    if (maxw != QWIDGETSIZE_MAX)
+        extra->explicitMaxSize |= Qt::Horizontal;
+    if (maxh != QWIDGETSIZE_MAX)
+        extra->explicitMaxSize |= Qt::Vertical;
     return true;
 }
 
@@ -3604,7 +3610,9 @@ void QWidget::setMinimumWidth(int w)
 {
     Q_D(QWidget);
     d->createExtra();
-    uint expl = d->extra->explicitMinSize | (w ? Qt::Horizontal : 0);
+    Qt::Orientations expl = d->extra->explicitMinSize;
+    if (w)
+        expl |= Qt::Horizontal;
     setMinimumSize(w, minimumSize().height());
     d->extra->explicitMinSize = expl;
 }
@@ -3613,7 +3621,9 @@ void QWidget::setMinimumHeight(int h)
 {
     Q_D(QWidget);
     d->createExtra();
-    uint expl = d->extra->explicitMinSize | (h ? Qt::Vertical : 0);
+    Qt::Orientations expl = d->extra->explicitMinSize;
+    if (h)
+        expl |= Qt::Vertical;
     setMinimumSize(minimumSize().width(), h);
     d->extra->explicitMinSize = expl;
 }
@@ -3622,7 +3632,9 @@ void QWidget::setMaximumWidth(int w)
 {
     Q_D(QWidget);
     d->createExtra();
-    uint expl = d->extra->explicitMaxSize | (w == QWIDGETSIZE_MAX ? 0 : Qt::Horizontal);
+    Qt::Orientations expl = d->extra->explicitMaxSize;
+    if (w != QWIDGETSIZE_MAX)
+        expl |= Qt::Horizontal;
     setMaximumSize(w, maximumSize().height());
     d->extra->explicitMaxSize = expl;
 }
@@ -3631,7 +3643,9 @@ void QWidget::setMaximumHeight(int h)
 {
     Q_D(QWidget);
     d->createExtra();
-    uint expl = d->extra->explicitMaxSize | (h == QWIDGETSIZE_MAX ? 0 : Qt::Vertical);
+    Qt::Orientations expl = d->extra->explicitMaxSize;
+    if (h =! QWIDGETSIZE_MAX)
+        expl |= Qt::Vertical;
     setMaximumSize(maximumSize().width(), h);
     d->extra->explicitMaxSize = expl;
 }
@@ -3647,8 +3661,8 @@ void QWidget::setFixedWidth(int w)
 {
     Q_D(QWidget);
     d->createExtra();
-    uint explMin = d->extra->explicitMinSize | Qt::Horizontal;
-    uint explMax = d->extra->explicitMaxSize | Qt::Horizontal;
+    Qt::Orientations explMin = d->extra->explicitMinSize | Qt::Horizontal;
+    Qt::Orientations explMax = d->extra->explicitMaxSize | Qt::Horizontal;
     setMinimumSize(w, minimumSize().height());
     setMaximumSize(w, maximumSize().height());
     d->extra->explicitMinSize = explMin;
@@ -3667,8 +3681,8 @@ void QWidget::setFixedHeight(int h)
 {
     Q_D(QWidget);
     d->createExtra();
-    uint explMin = d->extra->explicitMinSize | Qt::Vertical;
-    uint explMax = d->extra->explicitMaxSize | Qt::Vertical;
+    Qt::Orientations explMin = d->extra->explicitMinSize | Qt::Vertical;
+    Qt::Orientations explMax = d->extra->explicitMaxSize | Qt::Vertical;
     setMinimumSize(minimumSize().width(), h);
     setMaximumSize(maximumSize().width(), h);
     d->extra->explicitMinSize = explMin;
@@ -6974,7 +6988,7 @@ bool QWidgetPrivate::close_helper(CloseMode mode)
         return true;
 
     Q_Q(QWidget);
-    data.is_closing = 1;
+    data.is_closing = true;
 
     QPointer<QWidget> that = q;
     QPointer<QWidget> parentWidget = q->parentWidget();
@@ -6987,7 +7001,7 @@ bool QWidgetPrivate::close_helper(CloseMode mode)
         else
             QApplication::sendEvent(q, &e);
         if (!that.isNull() && !e.isAccepted()) {
-            data.is_closing = 0;
+            data.is_closing = false;
             return false;
         }
     }
@@ -7016,7 +7030,7 @@ bool QWidgetPrivate::close_helper(CloseMode mode)
     }
 
     if (!that.isNull()) {
-        data.is_closing = 0;
+        data.is_closing = false;
         if (q->testAttribute(Qt::WA_DeleteOnClose)) {
             q->setAttribute(Qt::WA_DeleteOnClose, false);
             q->deleteLater();

@@ -97,13 +97,13 @@ public:
     Qt::FocusPolicy focus_policy;
     Qt::ContextMenuPolicy context_menu_policy;
     uint widget_attributes;
-    uint is_closing :1;
-    uint in_show : 1;
-    uint in_destructor : 1;
-    mutable uint fstrut_dirty : 1;
+    bool is_closing;
+    bool in_show;
+    bool in_destructor;
+    bool fstrut_dirty;
 
     QRect crect;
-    mutable QPalette pal;
+    QPalette pal;
     QFont fnt;
     QRect wrect;
 };
