@@ -778,7 +778,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
                         (unsigned char *) &curr_pid, 1);
 
         // when we create a toplevel widget, the frame strut should be dirty
-        data.fstrut_dirty = 1;
+        data.fstrut_dirty = true;
 
         // declare the widget's window role
         if (QTLWExtra *topData = maybeTopData()) {
@@ -797,7 +797,7 @@ void QWidgetPrivate::create_sys(WId window, bool initializeWindow, bool destroyO
     } else {
         // non-toplevel widgets don't have a frame, so no need to
         // update the strut
-        data.fstrut_dirty = 0;
+        data.fstrut_dirty = false;
     }
 
     if (initializeWindow && q->internalWinId()) {

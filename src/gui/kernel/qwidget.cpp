@@ -3450,7 +3450,7 @@ void QWidget::setMinimumSize(int minw, int minh)
         resize(qMax(minw,width()), qMax(minh,height()));
         setAttribute(Qt::WA_Resized, resized); //not a user resize
         if (maximized)
-            data->window_state = data->window_state | Qt::WindowMaximized;
+            data->window_state |= Qt::WindowMaximized;
     }
 #ifndef QT_NO_GRAPHICSVIEW
     if (d->extra) {
