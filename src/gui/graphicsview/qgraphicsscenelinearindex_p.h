@@ -99,10 +99,10 @@ private:
     QList<QGraphicsItem*> m_items;
 };
 
-#endif // QT_NO_GRAPHICSVIEW
-
 QT_END_NAMESPACE
 
 QT_END_HEADER
+
+#endif // QT_NO_GRAPHICSVIEW
 
 #endif // QGRAPHICSSCENELINEARINDEX_H
