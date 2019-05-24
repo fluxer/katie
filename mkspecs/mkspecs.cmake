@@ -1,6 +1,11 @@
-# KatieConfig overrides that
+# KatieConfig overrides those
 if(NOT KATIE_MKSPECS_DIR)
     set(KATIE_MKSPECS_DIR ${CMAKE_SOURCE_DIR}/mkspecs)
+endif()
+
+if(NOT KATIE_TYPE)
+    set(KATIE_TYPE SHARED)
+    katie_definition(-DQT_SHARED)
 endif()
 
 # TODO: more platforms/architectures support
@@ -52,12 +57,6 @@ if(NOT KATIE_ARCHITECTURE)
     else()
         message(FATAL_ERROR "Unknown CPU '${CMAKE_SYSTEM_PROCESSOR}'")
     endif()
-endif()
-
-# FIXME: Plan9/NaCL does not supporting dynamic libraries
-if(NOT KATIE_TYPE)
-    set(KATIE_TYPE SHARED)
-    katie_definition(-DQT_SHARED)
 endif()
 
 if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")

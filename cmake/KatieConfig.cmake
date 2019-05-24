@@ -12,6 +12,7 @@
 #  KATIE_<TOOL>                 - path to tool e.g. moc
 #  KATIE_<DATA>_PATH            - path to different data type files e.g. translations
 #  KATIE_MKSPECS_DIR            - directory to mkspecs
+#  KATIE_TYPE                   - build type, either SHARED or STATIC
 #
 # As well as some that are unilkely to be needed outside the project:
 #
@@ -58,6 +59,7 @@ if(NOT KATIE_FOUND)
     set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
     set(KATIE_TOOLS @KATIE_TOOLS@)
     set(KATIE_MKSPECS_DIR "${KATIE_CMAKE_DIR}/mkspecs")
+    set(KATIE_TYPE @KATIE_TYPE@)
 
     foreach(component ${KATIE_COMPONENTS})
         string(TOUPPER ${component} uppercomp)
