@@ -42,6 +42,8 @@
 #include <QList>
 #include <QTest>
 
+QT_USE_NAMESPACE
+
 static const int N = 1000;
 
 struct MyBase

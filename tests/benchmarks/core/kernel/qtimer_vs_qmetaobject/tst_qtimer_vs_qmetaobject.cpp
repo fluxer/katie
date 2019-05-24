@@ -44,6 +44,8 @@
 
 #define INVOKE_COUNT 10000
 
+QT_USE_NAMESPACE
+
 class qtimer_vs_qmetaobject : public QObject
 {
     Q_OBJECT

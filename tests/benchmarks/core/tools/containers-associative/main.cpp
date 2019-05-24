@@ -42,6 +42,8 @@
 
 #include <qtest.h>
 
+QT_USE_NAMESPACE
+
 class tst_associative_containers : public QObject
 {
     Q_OBJECT

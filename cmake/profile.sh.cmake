@@ -13,7 +13,7 @@ safe_path_append() {
     IFS=":"
     found=""
     for i in $2;do
-        # TODO: maybe check for match without trailing slash too?
+        # TODO: maybe check for match with and without trailing slash too?
         if [ "$i" = "$3" ];then
             found="yes"
         fi

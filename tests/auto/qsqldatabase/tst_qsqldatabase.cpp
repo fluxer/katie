@@ -54,6 +54,8 @@
 
 #define NODATABASE_SKIP "No database drivers are available in this Qt configuration"
 
+QT_USE_NAMESPACE
+
 #include "tst_databases.h"
 
 //TESTED_FILES=

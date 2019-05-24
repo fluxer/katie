@@ -45,6 +45,8 @@
 
 #define ITERATION_COUNT 1e5
 
+QT_USE_NAMESPACE
+
 class tst_qvariant : public QObject
 {
     Q_OBJECT

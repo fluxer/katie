@@ -49,6 +49,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <stdlib.h>
 
 // TODO: should check if feenableexcept is available
 #if defined(Q_OS_LINUX) && defined(__GLIBC__)
@@ -59,7 +60,7 @@
 #    include <fenv.h>
 #endif
 
-#include <stdlib.h>
+QT_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(qlonglong)
 Q_DECLARE_METATYPE(QDate)

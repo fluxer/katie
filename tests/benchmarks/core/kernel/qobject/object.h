@@ -43,6 +43,8 @@
 
 #include <qobject.h>
 
+QT_USE_NAMESPACE
+
 class Object : public QObject
 {
     Q_OBJECT

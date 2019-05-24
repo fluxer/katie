@@ -43,6 +43,8 @@
 #include <qtest.h>
 #include <qtesteventloop.h>
 
+QT_USE_NAMESPACE
+
 class PingPong : public QObject
 {
 public:

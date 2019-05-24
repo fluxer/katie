@@ -43,9 +43,11 @@
 #include <QTest>
 #include <QCache>
 #include <QContiguousCache>
-
 #include <QDebug>
+
 #include <stdio.h>
+
+QT_USE_NAMESPACE
 
 class tst_QContiguousCache : public QObject
 {

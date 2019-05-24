@@ -45,6 +45,7 @@
 #include <QTemporaryFile>
 #include <qtest.h>
 
+QT_USE_NAMESPACE
 
 class tst_qtemporaryfile : public QObject
 {

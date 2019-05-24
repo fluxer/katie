@@ -72,9 +72,7 @@ Totals: 4 passed, 0 failed, 0 skipped
 #include <QHash>
 #include <QString>
 #include <QStringList>
-
 #include <QTest>
-
 
 class tst_QHash : public QObject
 {

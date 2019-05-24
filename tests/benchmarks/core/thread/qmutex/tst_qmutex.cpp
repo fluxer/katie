@@ -43,10 +43,9 @@
 #include <QtTest/QtTest>
 
 #include <math.h>
+#include <pthread.h>
+#include <errno.h>
 
-#if defined(Q_OS_UNIX)
-#  include <pthread.h>
-#  include <errno.h>
 typedef pthread_mutex_t NativeMutexType;
 void NativeMutexInitialize(NativeMutexType *mutex)
 {
@@ -64,27 +63,8 @@ void NativeMutexUnlock(NativeMutexType *mutex)
 {
     pthread_mutex_unlock(mutex);
 }
-#elif defined(Q_OS_WIN)
-#  define _WIN32_WINNT 0x0400
-#  include <windows.h>
-typedef CRITICAL_SECTION NativeMutexType;
-void NativeMutexInitialize(NativeMutexType *mutex)
-{
-    InitializeCriticalSection(mutex);
-}
-void NativeMutexDestroy(NativeMutexType *mutex)
-{
-    DeleteCriticalSection(mutex);
-}
-void NativeMutexLock(NativeMutexType *mutex)
-{
-    EnterCriticalSection(mutex);
-}
-void NativeMutexUnlock(NativeMutexType *mutex)
-{
-    LeaveCriticalSection(mutex);
-}
-#endif
+
+QT_USE_NAMESPACE
 
 //TESTED_FILES=
 

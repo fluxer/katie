@@ -42,9 +42,11 @@
 
 #include <QtCore>
 #include <QVector>
+#include <qtest.h>
+
 #include <vector>
 
-#include <qtest.h>
+QT_USE_NAMESPACE
 
 template <typename T> // T is the item type
 class UseCases {

@@ -44,6 +44,8 @@
 #include <qtest.h>
 #include <QLine>
 
+QT_USE_NAMESPACE
+
 class tst_qline : public QObject
 {
     Q_OBJECT

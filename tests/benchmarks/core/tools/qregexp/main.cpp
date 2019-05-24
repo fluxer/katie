@@ -43,12 +43,12 @@
 #include <QRegExp>
 #include <QString>
 #include <QFile>
-
 #include <qtest.h>
-
 #include <QtScript>
 
 #define ZLIB_VERSION "1.2.3.4"
+
+QT_USE_NAMESPACE
 
 class tst_qregexp : public QObject
 {

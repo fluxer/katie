@@ -41,6 +41,8 @@
 
 #include <QString>
 
+QT_USE_NAMESPACE
+
 struct String : QString
 {
     String() {}

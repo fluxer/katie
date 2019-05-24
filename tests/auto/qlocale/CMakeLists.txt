@@ -1,6 +1,3 @@
-# TODO: fix them warnings
-add_definitions(-UQT_ASCII_CAST_WARNINGS)
-
 katie_test(tst_qlocale
     ${CMAKE_CURRENT_SOURCE_DIR}/tst_qlocale.cpp
 )

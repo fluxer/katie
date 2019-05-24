@@ -42,6 +42,8 @@
 #include <qtest.h>
 #include <QtCore/qmetatype.h>
 
+QT_USE_NAMESPACE
+
 //TESTED_FILES=
 
 class tst_QMetaType : public QObject

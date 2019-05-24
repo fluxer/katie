@@ -44,6 +44,7 @@
 
 #include <math.h>
 
+QT_USE_NAMESPACE
 
 class tst_QWaitCondition : public QObject
 {

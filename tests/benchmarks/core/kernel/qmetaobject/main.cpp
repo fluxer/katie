@@ -42,6 +42,8 @@
 #include <QtGui>
 #include <qtest.h>
 
+QT_USE_NAMESPACE
+
 class LotsOfSignals : public QObject
 {
     Q_OBJECT

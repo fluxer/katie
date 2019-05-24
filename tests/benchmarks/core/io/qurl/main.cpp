@@ -42,6 +42,8 @@
 #include <qurl.h>
 #include <qtest.h>
 
+QT_USE_NAMESPACE
+
 class tst_qurl: public QObject
 {
     Q_OBJECT

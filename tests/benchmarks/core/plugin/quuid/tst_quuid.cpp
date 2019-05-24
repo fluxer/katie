@@ -43,6 +43,8 @@
 #include <QtCore/QUuid>
 #include <QtTest/QtTest>
 
+QT_USE_NAMESPACE
+
 class tst_bench_QUuid : public QObject
 {
     Q_OBJECT

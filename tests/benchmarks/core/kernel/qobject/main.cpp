@@ -45,6 +45,8 @@
 #include <qcoreapplication.h>
 #include <qdatetime.h>
 
+QT_USE_NAMESPACE
+
 enum {
     CreationDeletionBenckmarkConstant = 34567,
     SignalsAndSlotsBenchmarkConstant = 456789

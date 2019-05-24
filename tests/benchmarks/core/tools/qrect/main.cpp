@@ -43,6 +43,8 @@
 #include <QDebug>
 #include <qtest.h>
 
+QT_USE_NAMESPACE
+
 class tst_qrect : public QObject
 {
     Q_OBJECT
