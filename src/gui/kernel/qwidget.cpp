@@ -3644,7 +3644,7 @@ void QWidget::setMaximumHeight(int h)
     Q_D(QWidget);
     d->createExtra();
     Qt::Orientations expl = d->extra->explicitMaxSize;
-    if (h =! QWIDGETSIZE_MAX)
+    if (h != QWIDGETSIZE_MAX)
         expl |= Qt::Vertical;
     setMaximumSize(maximumSize().width(), h);
     d->extra->explicitMaxSize = expl;
