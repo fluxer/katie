@@ -9326,13 +9326,15 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     }
 #endif
 
-    case Qt::WA_NoChildEventsForParent:
+    case Qt::WA_NoChildEventsForParent: {
         d->sendChildEvents = !on;
         break;
-    case Qt::WA_NoChildEventsFromChildren:
+    }
+    case Qt::WA_NoChildEventsFromChildren: {
         d->receiveChildEvents = !on;
         break;
-    case Qt::WA_ShowModal:
+    }
+    case Qt::WA_ShowModal: {
         if (!on) {
             if (isVisible())
                 QApplicationPrivate::leaveModal(this);
@@ -9360,14 +9362,13 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
             // hidden before changing modality.
         }
         break;
+    }
     case Qt::WA_MouseTracking: {
         QEvent e(QEvent::MouseTrackingChange);
         QApplication::sendEvent(this, &e);
-        break; }
-    case Qt::WA_NativeWindow: {
         break;
     }
-    case Qt::WA_PaintOnScreen:
+    case Qt::WA_PaintOnScreen: {
         d->updateIsOpaque();
 #if defined(Q_WS_X11)
         // Recreate the widget if it's already created as an alien widget and
@@ -9379,28 +9380,30 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         }
 #endif
         // fall through
-    case Qt::WA_OpaquePaintEvent:
+    }
+    case Qt::WA_OpaquePaintEvent: {
         d->updateIsOpaque();
         break;
+    }
     case Qt::WA_NoSystemBackground:
         d->updateIsOpaque();
         // fall through...
-    case Qt::WA_UpdatesDisabled:
+    case Qt::WA_UpdatesDisabled: {
         d->updateSystemBackground();
         break;
-    case Qt::WA_TransparentForMouseEvents: {
-        break;
     }
-    case Qt::WA_WindowPropagation:
+    case Qt::WA_WindowPropagation: {
         d->resolvePalette();
         d->resolveFont();
         d->resolveLocale();
         break;
+    }
 #ifdef Q_WS_X11
-    case Qt::WA_X11DoNotAcceptFocus:
+    case Qt::WA_X11DoNotAcceptFocus: {
         if (testAttribute(Qt::WA_WState_Created))
             d->updateX11AcceptFocus();
         break;
+    }
 #endif
     case Qt::WA_DontShowOnScreen: {
         if (on && isVisible()) {
@@ -9426,13 +9429,14 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
     case Qt::WA_X11NetWmWindowTypeToolTip:
     case Qt::WA_X11NetWmWindowTypeNotification:
     case Qt::WA_X11NetWmWindowTypeCombo:
-    case Qt::WA_X11NetWmWindowTypeDND:
+    case Qt::WA_X11NetWmWindowTypeDND: {
         if (testAttribute(Qt::WA_WState_Created))
             d->setNetWmWindowTypes();
         break;
+    }
 #endif
 
-    case Qt::WA_StaticContents:
+    case Qt::WA_StaticContents: {
         if (QWidgetBackingStore *bs = d->maybeBackingStore()) {
             if (on)
                 bs->addStaticWidget(this);
@@ -9440,18 +9444,18 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
                 bs->removeStaticWidget(this);
         }
         break;
-    case Qt::WA_TranslucentBackground:
+    }
+    case Qt::WA_TranslucentBackground: {
         if (on) {
             setAttribute(Qt::WA_NoSystemBackground);
             d->updateIsTranslucent();
         }
         break;
-    case Qt::WA_AcceptTouchEvents:
-        break;
+    }
     case Qt::WA_LockPortraitOrientation:
     case Qt::WA_LockLandscapeOrientation:
     case Qt::WA_AutoOrientation: {
-        const Qt::WidgetAttribute orientations[3] = {
+        static const Qt::WidgetAttribute orientations[3] = {
             Qt::WA_LockPortraitOrientation,
             Qt::WA_LockLandscapeOrientation,
             Qt::WA_AutoOrientation
