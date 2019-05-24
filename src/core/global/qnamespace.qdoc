@@ -750,10 +750,6 @@
 
     \value WA_AlwaysShowToolTips Enables tooltips for inactive windows.
 
-    \value WA_ContentsPropagated This flag is superfluous and
-    obsolete; it no longer has any effect. Since Qt 4.1, all widgets
-    that do not set WA_PaintOnScreen propagate their contents.
-
     \value WA_CustomWhatsThis Indicates that the widget wants to
     continue operating normally in "What's This?" mode. This is set by the
     widget's author.
