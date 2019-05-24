@@ -590,8 +590,7 @@ extern int qUnregisterGuiVariant();
 
 /*!
     Constructs an application object with \a argc command line arguments in
-    \a argv. If \a GUIenabled is true, a GUI application is constructed,
-    otherwise a non-GUI (console) application is created.
+    \a argv.
 
     \warning The data referred to by \a argc and \a argv must stay valid for
     the entire lifetime of the QApplication object. In addition, \a argc must
