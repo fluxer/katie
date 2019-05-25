@@ -469,6 +469,7 @@ classlist = {
     "QParallelAnimationGroup",
     "QPauseAnimation",
     "QPen",
+    "QPersistentModelIndex",
     "QPixmap",
     "QPixmapCache",
     "QPlainTextDocumentLayout",

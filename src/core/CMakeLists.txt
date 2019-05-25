@@ -219,6 +219,7 @@ set(CORE_PUBLIC_HEADERS
     QMutexLocker
     QScopedArrayPointer
     QJsonParseError
+    QPersistentModelIndex
     # obsolete
     QFlags
     Qt
