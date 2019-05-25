@@ -87,6 +87,7 @@
 #define QT_NO_XKB
 #define QT_NO_XIM
 #define QT_NO_IM
+#define QT_NO_INPUTMETHOD
 #define QT_NO_SOUND
 #define QT_NO_EGL
 #define QT_NO_OPENGL
@@ -202,7 +203,6 @@
 #cmakedefine QT_NO_IMAGE_HEURISTIC_MASK
 #cmakedefine QT_NO_INOTIFY
 #cmakedefine QT_NO_INPUTDIALOG
-#cmakedefine QT_NO_INPUTMETHOD
 #cmakedefine QT_NO_IPV6
 #cmakedefine QT_NO_IPV6IFNAME
 #cmakedefine QT_NO_ITEMVIEWS
