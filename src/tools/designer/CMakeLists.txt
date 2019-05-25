@@ -88,18 +88,18 @@ set_target_properties(designer PROPERTIES
 install(
     TARGETS designer
     RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
-    COMPONENT Devel
+    COMPONENT Tools
 )
 
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/designer.desktop
     DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
     RENAME designer${KATIE_TOOLS_SUFFIX}.desktop
-    COMPONENT Devel
+    COMPONENT Tools
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/designer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}
     RENAME designer${KATIE_TOOLS_SUFFIX}.png
-    COMPONENT Devel
+    COMPONENT Tools
 )

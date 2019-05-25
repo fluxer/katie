@@ -51,19 +51,19 @@ install(
     TARGETS qdbusviewer
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
-    COMPONENT Devel
+    COMPONENT Tools
 )
 
 install(
     PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/qdbusviewer.desktop
     DESTINATION ${KATIE_APPLICATIONS_RELATIVE}
     RENAME qdbusviewer${KATIE_TOOLS_SUFFIX}.desktop
-    COMPONENT Devel
+    COMPONENT Tools
 )
 
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/images/qdbusviewer.png
     DESTINATION ${KATIE_PIXMAPS_RELATIVE}
     RENAME qdbusviewer${KATIE_TOOLS_SUFFIX}.png
-    COMPONENT Devel
+    COMPONENT Tools
 )

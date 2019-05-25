@@ -68,7 +68,6 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     # adding the definitions to other components is simply redundant since
     # all components require the core component
     if("${FORTARGET}" STREQUAL "KtCore")
-        katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
         set(PACKAGE_FLAGS "${KATIE_DEFINITIONS}")
     endif()
     configure_file(
@@ -79,6 +78,7 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     install(
         FILES ${CMAKE_BINARY_DIR}/pkgconfig/${FORTARGET}.pc
         DESTINATION ${KATIE_PKGCONFIG_RELATIVE}
+        COMPONENT Devel
     )
 endmacro()
 
@@ -86,13 +86,24 @@ endmacro()
 # is passed to another function/macro it does not complain about inproper
 # number of arguments and (2) it joins the input which if quoted has semicolons
 # in it (if it is a list) that the sub-command (e.g. gcc) can not handle
-function(KATIE_FIXUP_STRING INSTR OUTSTR)
-    string(STRIP "${INSTR}" instrtrimmed)
+function(KATIE_STRING_WRAP INVAR OUTSTR)
+    string(STRIP "${INVAR}" instrtrimmed)
     if("${instrtrimmed}" STREQUAL "")
         set(${OUTSTR} " " PARENT_SCOPE)
     else()
-        string(REPLACE ";" " " modstring "${INSTR}")
+        string(REPLACE ";" " " modstring "${INVAR}")
         set(${OUTSTR} "${modstring}" PARENT_SCOPE)
+    endif()
+endfunction()
+
+# a function to convert string to list, opposite of katie_string_wrap()
+function(KATIE_STRING_UNWRAP INSTR OUTLST)
+    string(STRIP "${INSTR}" instrtrimmed)
+    if("${instrtrimmed}" STREQUAL "")
+        set(${OUTLST} " " PARENT_SCOPE)
+    else()
+        string(REPLACE " " ";${ARGN}" modstring "${INSTR}")
+        set(${OUTLST} ${modstring} PARENT_SCOPE)
     endif()
 endfunction()
 

@@ -39,7 +39,7 @@ install(
     TARGETS qdbus qdbuscpp2xml qdbusxml2cpp
     EXPORT KatieBinaryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     RUNTIME DESTINATION ${KATIE_BINARIES_RELATIVE}
-    COMPONENT Devel
+    COMPONENT Tools
 )
 
 install(

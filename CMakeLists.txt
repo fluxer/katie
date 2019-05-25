@@ -967,7 +967,7 @@ katie_generate_obsolete(qx11embedwidget.h QtGui qx11embed_x11.h)
 katie_generate_obsolete(customwidget.h QtDesigner ../QtUiTools/customwidget.h)
 katie_generate_obsolete(qdesignercustomwidgetinterface.h QtDesigner ../QtUiTools/customwidget.h)
 
-katie_fixup_string("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
+katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
 katie_git_checkout("${GIT_EXECUTABLE}" KATIE_GIT)
 
 configure_file(
@@ -1015,6 +1015,7 @@ install(
     NAMESPACE Katie::
     DESTINATION ${KATIE_CMAKE_RELATIVE}
     FILE KatieLibraryTargets.cmake
+    COMPONENT Runtime
 )
 
 install(
@@ -1022,21 +1023,44 @@ install(
     NAMESPACE Katie::
     DESTINATION ${KATIE_CMAKE_RELATIVE}
     FILE KatieBinaryTargets.cmake
+    COMPONENT Tools
 )
 
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.conf
     DESTINATION ${KATIE_LDCONF_RELATIVE}
+    COMPONENT Runtime
 )
+
 install(
     FILES ${CMAKE_BINARY_DIR}/katie-${KATIE_ARCHITECTURE}.sh
     DESTINATION ${KATIE_PROFILE_RELATIVE}
+    COMPONENT Runtime
 )
 
-# TODO: add custom targets for components?
-# add_custom_target(install-devel
-#     COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
-#     WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
-# )
+katie_string_unwrap("${KATIE_COMPONENTS}" KATIE_COMPONENTS "Kt")
+katie_string_unwrap("${KATIE_TOOLS}" KATIE_TOOLS)
+
+add_custom_target(install-devel
+    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Devel -P cmake_install.cmake
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+add_custom_target(install-runtime
+    DEPENDS ${KATIE_COMPONENTS}
+    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Runtime -P cmake_install.cmake
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+add_custom_target(install-tools
+    DEPENDS ${KATIE_TOOLS}
+    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Tools -P cmake_install.cmake
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
+
+add_custom_target(install-doc
+    COMMAND "${CMAKE_COMMAND}" -DCMAKE_INSTALL_COMPONENT=Doc -P cmake_install.cmake
+    WORKING_DIRECTORY "${CMAKE_BINARY_DIR}"
+)
 
 feature_summary(WHAT ALL FATAL_ON_MISSING_REQUIRED_PACKAGES) 
