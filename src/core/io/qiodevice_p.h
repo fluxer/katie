@@ -196,7 +196,7 @@ private:
     size_t capacity;
 };
 
-class QIODevicePrivate
+class Q_CORE_EXPORT QIODevicePrivate
 #ifndef QT_NO_QOBJECT
     : public QObjectPrivate
 #endif
