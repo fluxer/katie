@@ -61,7 +61,7 @@ void QGraphicsWidgetPrivate::init(QGraphicsItem *parentItem, Qt::WindowFlags wFl
     Q_Q(QGraphicsWidget);
 
     attributes = 0;
-    isWidget = 1; // QGraphicsItem::isWidget() returns true.
+    isWidget = true; // QGraphicsItem::isWidget() returns true.
     focusNext = focusPrev = q;
     focusPolicy = Qt::NoFocus;
 
