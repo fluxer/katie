@@ -374,21 +374,6 @@ Q_GUI_EXPORT QSize qSmartMinSize(const QSize &sizeHint, const QSize &minSizeHint
     return s.expandedTo(QSize(0,0));
 }
 
-Q_GUI_EXPORT QSize qSmartMinSize(const QWidgetItem *i)
-{
-    QWidget *w = ((QWidgetItem *)i)->widget();
-    return qSmartMinSize(w->sizeHint(), w->minimumSizeHint(),
-                            w->minimumSize(), w->maximumSize(),
-                            w->sizePolicy());
-}
-
-Q_GUI_EXPORT QSize qSmartMinSize(const QWidget *w)
-{
-    return qSmartMinSize(w->sizeHint(), w->minimumSizeHint(),
-                            w->minimumSize(), w->maximumSize(),
-                            w->sizePolicy());
-}
-
 Q_GUI_EXPORT QSize qSmartMaxSize(const QSize &sizeHint,
                                  const QSize &minSize, const QSize &maxSize,
                                  const QSizePolicy &sizePolicy, Qt::Alignment align)
@@ -410,20 +395,6 @@ Q_GUI_EXPORT QSize qSmartMaxSize(const QSize &sizeHint,
     if (align & Qt::AlignVertical_Mask)
         s.setHeight(QLAYOUTSIZE_MAX);
     return s;
-}
-
-Q_GUI_EXPORT QSize qSmartMaxSize(const QWidgetItem *i, Qt::Alignment align)
-{
-    QWidget *w = ((QWidgetItem*)i)->widget();
-
-    return qSmartMaxSize(w->sizeHint().expandedTo(w->minimumSizeHint()), w->minimumSize(), w->maximumSize(),
-                            w->sizePolicy(), align);
-}
-
-Q_GUI_EXPORT QSize qSmartMaxSize(const QWidget *w, Qt::Alignment align)
-{
-    return qSmartMaxSize(w->sizeHint().expandedTo(w->minimumSizeHint()), w->minimumSize(), w->maximumSize(),
-                            w->sizePolicy(), align);
 }
 
 Q_GUI_EXPORT int qSmartSpacing(const QLayout *layout, QStyle::PixelMetric pm)
