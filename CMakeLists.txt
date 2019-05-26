@@ -1014,7 +1014,7 @@ install(
     NAMESPACE Katie::
     DESTINATION ${KATIE_CMAKE_RELATIVE}
     FILE KatieLibraryTargets.cmake
-    COMPONENT Runtime
+    COMPONENT Devel
 )
 
 install(
@@ -1022,7 +1022,7 @@ install(
     NAMESPACE Katie::
     DESTINATION ${KATIE_CMAKE_RELATIVE}
     FILE KatieBinaryTargets.cmake
-    COMPONENT Tools
+    COMPONENT Devel
 )
 
 install(
