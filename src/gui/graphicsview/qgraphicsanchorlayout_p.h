@@ -55,12 +55,13 @@
 
 #include <QGraphicsWidget>
 #include <qobject_p.h>
-
 #include "qgraphicslayout_p.h"
 #include "qgraphicsanchorlayout.h"
 #include "qgraph_p.h"
 #include "qsimplex_p.h"
+
 #ifndef QT_NO_GRAPHICSVIEW
+
 QT_BEGIN_NAMESPACE
 
 /*
@@ -95,7 +96,7 @@ struct AnchorVertex {
 
     QGraphicsLayoutItem *m_item;
     Qt::AnchorPoint m_edge;
-    uint m_type : 1;
+    Type m_type;
 
     // Current distance from this vertex to the layout edge (Left or Top)
     // Value is calculated from the current anchors sizes.
@@ -127,8 +128,8 @@ struct AnchorData : public QSimplexVariable {
           sizeAtMinimum(0), sizeAtPreferred(0),
           sizeAtMaximum(0), item(0), graphicsAnchor(0),
           type(Normal), isLayoutAnchor(false),
-          isCenterAnchor(false), orientation(0),
-          dependency(Independent) {}
+          isCenterAnchor(false), dependency(Independent),
+          orientation(0) {}
     virtual ~AnchorData();
 
     virtual void updateChildrenSizes() {}
@@ -171,11 +172,11 @@ struct AnchorData : public QSimplexVariable {
     QGraphicsLayoutItem *item;
     QGraphicsAnchor *graphicsAnchor;
 
-    uint type : 2;            // either Normal, Sequential or Parallel
-    uint isLayoutAnchor : 1;  // if this anchor is an internal layout anchor
-    uint isCenterAnchor : 1;
-    uint orientation : 1;
-    uint dependency : 2;      // either Independent, Master or Slave
+    Type type;            // either Normal, Sequential or Parallel
+    bool isLayoutAnchor;  // if this anchor is an internal layout anchor
+    bool isCenterAnchor;
+    Dependency dependency;      // either Independent, Master or Slave
+    uint orientation;
 };
 
 #ifdef QT_DEBUG
@@ -351,10 +352,8 @@ public:
     QSizePolicy::Policy sizePolicy;
     qreal preferredSize;
 
-    uint hasSize : 1;         // if false, get size from style.
+    bool hasSize;         // if false, get size from style.
 };
-
-
 
 
 /*!
@@ -403,9 +402,9 @@ public:
 
     static Qt::AnchorPoint pickEdge(Qt::AnchorPoint edge, Orientation orientation)
     {
-        if (orientation == Vertical && int(edge) <= 2)
+        if (orientation == QGraphicsAnchorLayoutPrivate::Vertical && int(edge) <= 2)
             return (Qt::AnchorPoint)(edge + 3);
-        else if (orientation == Horizontal && int(edge) >= 3) {
+        else if (orientation == QGraphicsAnchorLayoutPrivate::Horizontal && int(edge) >= 3) {
             return (Qt::AnchorPoint)(edge - 3);
         }
         return edge;
@@ -579,8 +578,8 @@ public:
     bool lastCalculationUsedSimplex[2];
 #endif
 
-    uint calculateGraphCacheDirty : 1;
-    mutable uint styleInfoDirty : 1;
+    bool calculateGraphCacheDirty;
+    mutable bool styleInfoDirty;
     mutable QLayoutStyleInfo cachedStyleInfo;
 
     friend class QGraphicsAnchorPrivate;

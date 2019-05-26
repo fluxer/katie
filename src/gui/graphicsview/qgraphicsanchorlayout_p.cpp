@@ -43,6 +43,7 @@
 #include <QtGui/qapplication.h>
 #include <QtCore/qlinkedlist.h>
 #include <QtCore/qstack.h>
+#include <QtCore/qqueue.h>
 
 #ifdef QT_DEBUG
 #include <QtCore/qfile.h>

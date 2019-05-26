@@ -81,7 +81,7 @@ public:
 
     enum DeletionPolicy {
         KeepWhenStopped = 0,
-        DeleteWhenStopped
+        DeleteWhenStopped = 1
     };
 
     QAbstractAnimation(QObject *parent = Q_NULLPTR);

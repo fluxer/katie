@@ -54,7 +54,6 @@
 //
 
 #include <QtCore/QHash>
-#include <QtCore/QQueue>
 #include <QtCore/QString>
 #include <QtCore/QDebug>
 

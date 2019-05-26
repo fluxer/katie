@@ -3,6 +3,6 @@ set(KATIE_VERSION_MAJOR "@KATIE_MAJOR@")
 set(KATIE_VERSION_MINOR "@KATIE_MINOR@")
 set(KATIE_VERSION_PATCH "@KATIE_MICRO@")
 set(KATIE_VERSION "@KATIE_MAJOR@.@KATIE_MINOR@.@KATIE_MICRO@")
-# purely for convenience bug reports and the like
+# purely for convenience, bug reports and the like
 set(KATIE_VERSION_HEX "@KATIE_HEX@")
 set(KATIE_VERSION_GIT "@KATIE_GIT@")

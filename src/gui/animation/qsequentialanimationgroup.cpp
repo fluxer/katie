@@ -567,8 +567,7 @@ void QSequentialAnimationGroupPrivate::animationRemoved(int index, QAbstractAnim
     // duration of the previous animations up to the current animation
     currentTime = 0;
     for (int i = 0; i < currentAnimationIndex; ++i) {
-        const int current = animationActualTotalDuration(i);
-        currentTime += current;
+        currentTime += animationActualTotalDuration(i);
     }
 
     if (currentIndex != -1) {
