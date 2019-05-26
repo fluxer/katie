@@ -93,9 +93,3 @@ endif()
 if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
     include(${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/${KATIE_PLATFORM}.cmake)
 endif()
-
-# for distributions to override build specifications, do note that paths specified on the command
-# line during configuration override even that file
-if(EXISTS ${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/vendor.cmake)
-    include(${KATIE_MKSPECS_DIR}/${KATIE_PLATFORM}/vendor.cmake)
-endif()
