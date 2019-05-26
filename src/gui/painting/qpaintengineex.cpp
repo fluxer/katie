@@ -59,16 +59,6 @@ QT_BEGIN_NAMESPACE
  */
 QVectorPath::~QVectorPath()
 {
-    if (m_hints & ShouldUseCacheHint) {
-        CacheEntry *e = m_cache;
-        while (e) {
-            if (e->data)
-                e->cleanup(e->engine, e->data);
-            CacheEntry *n = e->next;
-            delete e;
-            e = n;
-        }
-    }
 }
 
 
@@ -106,24 +96,6 @@ QRectF QVectorPath::controlPointRect() const
     m_hints |= ControlPointRect;
     return QRectF(QPointF(m_cp_rect.x1, m_cp_rect.y1), QPointF(m_cp_rect.x2, m_cp_rect.y2));
 }
-
-
-QVectorPath::CacheEntry *QVectorPath::addCacheData(QPaintEngineEx *engine, void *data,
-                                                   qvectorpath_cache_cleanup cleanup) const{
-    Q_ASSERT(!lookupCacheData(engine));
-    if ((m_hints & IsCachedHint) == 0) {
-        m_cache = 0;
-        m_hints |= IsCachedHint;
-    }
-    CacheEntry *e = new CacheEntry;
-    e->engine = engine;
-    e->data = data;
-    e->cleanup = cleanup;
-    e->next = m_cache;
-    m_cache = e;
-    return m_cache;
-}
-
 
 const QVectorPath &qtVectorPathForPath(const QPainterPath &path)
 {

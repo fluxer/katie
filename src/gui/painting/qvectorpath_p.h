@@ -94,8 +94,6 @@ public:
         ArbitraryShapeHint      = AreaShapeMask | NonConvexShapeMask | CurvedShapeMask,
 
         // Other hints
-        IsCachedHint            = 0x0100, // Set if the cache hint is set
-        ShouldUseCacheHint      = 0x0200, // Set if the path should be cached when possible..
         ControlPointRect        = 0x0400, // Set if the control point rect has been calculated...
 
         // Shape rendering specifiers...
@@ -124,11 +122,9 @@ public:
     inline bool isConvex() const { return (m_hints & NonConvexShapeMask) == 0; }
     inline bool isCurved() const { return m_hints & CurvedShapeMask; }
 
-    inline bool isCacheable() const { return m_hints & ShouldUseCacheHint; }
     inline bool hasImplicitClose() const { return m_hints & ImplicitClose; }
     inline bool hasWindingFill() const { return m_hints & WindingFill; }
 
-    inline void makeCacheable() const { m_hints |= ShouldUseCacheHint; m_cache = 0; }
     inline uint hints() const { return m_hints; }
 
     inline const QPainterPath::ElementType *elements() const { return m_elements; }
@@ -140,26 +136,6 @@ public:
 
     static inline uint polygonFlags(QPaintEngine::PolygonDrawMode mode);
 
-    struct CacheEntry {
-        QPaintEngineEx *engine;
-        void *data;
-        qvectorpath_cache_cleanup cleanup;
-        CacheEntry *next;
-    };
-
-    CacheEntry *addCacheData(QPaintEngineEx *engine, void *data, qvectorpath_cache_cleanup cleanup) const;
-    inline CacheEntry *lookupCacheData(QPaintEngineEx *engine) const {
-        Q_ASSERT(m_hints & ShouldUseCacheHint);
-        CacheEntry *e = m_cache;
-        while (e) {
-            if (e->engine == engine)
-                return e;
-            e = e->next;
-        }
-        return 0;
-    }
-
-
 private:
     Q_DISABLE_COPY(QVectorPath)
 
@@ -169,8 +145,6 @@ private:
 
     mutable uint m_hints;
     mutable QRealRect m_cp_rect;
-
-    mutable CacheEntry *m_cache;
 };
 
 inline uint QVectorPath::polygonFlags(QPaintEngine::PolygonDrawMode mode) {
