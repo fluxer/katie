@@ -568,8 +568,7 @@ static bool removeWidgetRecursively(QLayoutItem *li, QWidget *w)
     if (!lay)
         return false;
     int i = 0;
-    QLayoutItem *child;
-    while ((child = lay->itemAt(i))) {
+    while (QLayoutItem *child = lay->itemAt(i)) {
         if (child->widget() == w) {
             delete lay->takeAt(i);
             lay->invalidate();
@@ -780,9 +779,9 @@ QLayout::~QLayout()
       This function may be called during the QObject destructor,
       when the parent no longer is a QWidget.
     */
-    if (d->topLevel && parent() && parent()->isWidgetType() &&
-         ((QWidget*)parent())->layout() == this)
-        ((QWidget*)parent())->d_func()->layout = 0;
+    QWidget *mw = static_cast<QWidget*>(parent());
+    if (d->topLevel && mw && mw->isWidgetType() && mw->layout() == this)
+        mw->d_func()->layout = Q_NULLPTR;
 }
 
 
@@ -989,9 +988,8 @@ void QLayout::activateRecursiveHelper(QLayoutItem *item)
     item->invalidate();
     QLayout *layout = item->layout();
     if (layout) {
-        QLayoutItem *child;
         int i=0;
-        while ((child = layout->itemAt(i++)))
+        while (QLayoutItem *child = layout->itemAt(i++))
             activateRecursiveHelper(child);
         layout->d_func()->activated = true;
     }
@@ -1298,8 +1296,7 @@ QRect QLayout::alignmentRect(const QRect &r) const
 void QLayout::removeWidget(QWidget *widget)
 {
     int i = 0;
-    QLayoutItem *child;
-    while ((child = itemAt(i))) {
+    while (QLayoutItem *child = itemAt(i)) {
         if (child->widget() == widget) {
             delete takeAt(i);
             invalidate();
@@ -1321,8 +1318,7 @@ void QLayout::removeWidget(QWidget *widget)
 void QLayout::removeItem(QLayoutItem *item)
 {
     int i = 0;
-    QLayoutItem *child;
-    while ((child = itemAt(i))) {
+    while (QLayoutItem *child = itemAt(i)) {
         if (child == item) {
             takeAt(i);
             invalidate();

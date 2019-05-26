@@ -88,9 +88,8 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
     bool allEmptyNonstretch = true;
     int pendingSpacing = -1;
     int spacerCount = 0;
-    int i;
 
-    for (i = start; i < start + count; i++) {
+    for (int i = start; i < start + count; i++) {
         QLayoutStruct *data = &chain[i];
 
         data->done = false;
@@ -131,7 +130,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
 
         QList<int> list;
 
-        for (i = start; i < start + count; i++)
+        for (int i = start; i < start + count; i++)
             list << chain.at(i).minimumSize;
 
         qSort(list);
@@ -162,7 +161,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
         int maxval = current - deficitPerItem;
 
         int rest = 0;
-        for (i = start; i < start + count; i++) {
+        for (int i = start; i < start + count; i++) {
             int maxv = maxval;
             rest += remainder;
             if (rest >= items) {
@@ -185,7 +184,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
         int overdraft = cHint - space_left;
 
         // first give to the fixed ones:
-        for (i = start; i < start + count; i++) {
+        for (int i = start; i < start + count; i++) {
             QLayoutStruct *data = &chain[i];
             if (!data->done
                  && data->minimumSize >= data->smartSizeHint()) {
@@ -202,7 +201,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
             Fixed64 fp_over = toFixed(overdraft);
             Fixed64 fp_w = 0;
 
-            for (i = start; i < start+count; i++) {
+            for (int i = start; i < start+count; i++) {
                 QLayoutStruct *data = &chain[i];
                 if (data->done)
                     continue;
@@ -228,7 +227,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
         int n = count;
         int space_left = space - sumSpacing;
         // first give to the fixed ones, and handle non-expansiveness
-        for (i = start; i < start + count; i++) {
+        for (int i = start; i < start + count; i++) {
             QLayoutStruct *data = &chain[i];
             if (!data->done
                 && (data->maximumSize <= data->smartSizeHint()
@@ -260,7 +259,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
             surplus = deficit = 0;
             Fixed64 fp_space = toFixed(space_left);
             Fixed64 fp_w = 0;
-            for (i = start; i < start + count; i++) {
+            for (int i = start; i < start + count; i++) {
                 QLayoutStruct *data = &chain[i];
                 if (data->done)
                     continue;
@@ -283,7 +282,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
             }
             if (deficit > 0 && surplus <= deficit) {
                 // give to the ones that have too little
-                for (i = start; i < start+count; i++) {
+                for (int i = start; i < start+count; i++) {
                     QLayoutStruct *data = &chain[i];
                     if (!data->done && data->size < data->smartSizeHint()) {
                         data->size = data->smartSizeHint();
@@ -298,7 +297,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
             }
             if (surplus > 0 && surplus >= deficit) {
                 // take from the ones that have too much
-                for (i = start; i < start + count; i++) {
+                for (int i = start; i < start + count; i++) {
                     QLayoutStruct *data = &chain[i];
                     if (!data->done && data->size > data->maximumSize) {
                         data->size = data->maximumSize;
@@ -324,7 +323,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
     */
     int extra = extraspace / (spacerCount + 2);
     int p = pos + extra;
-    for (i = start; i < start+count; i++) {
+    for (int i = start; i < start+count; i++) {
         QLayoutStruct *data = &chain[i];
         data->pos = p;
         p += data->size;
@@ -335,7 +334,7 @@ void qGeomCalc(QVector<QLayoutStruct> &chain, int start, int count,
 #ifdef QLAYOUT_EXTRA_DEBUG
     qDebug() << "qGeomCalc" << "start" << start <<  "count" << count <<  "pos" << pos
              <<  "space" << space <<  "spacer" << spacer;
-    for (i = start; i < start + count; ++i) {
+    for (int i = start; i < start + count; ++i) {
         qDebug() << i << ':' << chain[i].minimumSize << chain[i].smartSizeHint()
                  << chain[i].maximumSize << "stretch" << chain[i].stretch
                  << "empty" << chain[i].empty << "expansive" << chain[i].expansive
