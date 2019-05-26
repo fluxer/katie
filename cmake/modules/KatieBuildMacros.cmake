@@ -68,6 +68,7 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     # adding the definitions to other components is simply redundant since
     # all components require the core component
     if("${FORTARGET}" STREQUAL "KtCore")
+        katie_string_wrap("${KATIE_DEFINITIONS}" KATIE_DEFINITIONS)
         set(PACKAGE_FLAGS "${KATIE_DEFINITIONS}")
     endif()
     configure_file(
