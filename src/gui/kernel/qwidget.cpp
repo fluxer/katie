@@ -753,10 +753,9 @@ void QWidget::setAutoFillBackground(bool enabled)
     is no need to write double-buffering code in paintEvent() to avoid
     flicker.
 
-    Since Qt 4.1, the Qt::WA_ContentsPropagated widget attribute has been
-    deprecated. Instead, the contents of parent widgets are propagated by
-    default to each of their children as long as Qt::WA_PaintOnScreen is not
-    set. Custom widgets can be written to take advantage of this feature by
+    Since Qt 4.1, the contents of parent widgets are propagated by default
+    to each of their children as long as Qt::WA_PaintOnScreen is not set.
+    Custom widgets can be written to take advantage of this feature by
     updating irregular regions (to create non-rectangular child widgets), or
     painting with colors that have less than full alpha component. The
     following diagram shows how attributes and properties of a custom widget
@@ -8734,8 +8733,8 @@ QWidget *QWidgetPrivate::childAtRecursiveHelper(const QPoint &p, bool ignoreChil
 void QWidgetPrivate::updateGeometry_helper(bool forceUpdate)
 {
     Q_Q(QWidget);
-    QWidget *parent;
     if (forceUpdate || !extra || extra->minw != extra->maxw || extra->minh != extra->maxh) {
+        QWidget *parent;
         if (!q->isWindow() && !q->isHidden() && (parent = q->parentWidget())) {
             if (parent->d_func()->layout)
                 parent->d_func()->layout->invalidate();

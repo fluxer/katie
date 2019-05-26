@@ -765,27 +765,15 @@ void QPaintEngine::drawLines(const QLineF *lines, int lineCount)
 */
 void QPaintEngine::drawLines(const QLine *lines, int lineCount)
 {
-    struct PointF {
-        qreal x;
-        qreal y;
-    };
-    struct LineF {
-        PointF p1;
-        PointF p2;
-    };
-    Q_ASSERT(sizeof(PointF) == sizeof(QPointF));
-    Q_ASSERT(sizeof(LineF) == sizeof(QLineF));
-    LineF fl[256];
+    QLineF fl[256];
     while (lineCount) {
         int i = 0;
         while (i < lineCount && i < 256) {
-            fl[i].p1.x = lines[i].x1();
-            fl[i].p1.y = lines[i].y1();
-            fl[i].p2.x = lines[i].x2();
-            fl[i].p2.y = lines[i].y2();
+            fl[i].setP1(lines[i].p1());
+            fl[i].setP2(lines[i].p2());
             ++i;
         }
-        drawLines((QLineF *)(void *)fl, i);
+        drawLines(fl, i);
         lines += i;
         lineCount -= i;
     }
@@ -801,24 +789,14 @@ void QPaintEngine::drawLines(const QLine *lines, int lineCount)
 */
 void QPaintEngine::drawRects(const QRect *rects, int rectCount)
 {
-    struct RectF {
-        qreal x;
-        qreal y;
-        qreal w;
-        qreal h;
-    };
-    Q_ASSERT(sizeof(RectF) == sizeof(QRectF));
-    RectF fr[256];
+    QRectF fr[256];
     while (rectCount) {
         int i = 0;
         while (i < rectCount && i < 256) {
-            fr[i].x = rects[i].x();
-            fr[i].y = rects[i].y();
-            fr[i].w = rects[i].width();
-            fr[i].h = rects[i].height();
+            fr[i] = QRectF(rects[i]);
             ++i;
         }
-        drawRects((QRectF *)(void *)fr, i);
+        drawRects(fr, i);
         rects += i;
         rectCount -= i;
     }
