@@ -477,7 +477,6 @@ bool QX11PaintEngine::begin(QPaintDevice *pdev)
     d->has_clipping = false;
     d->has_complex_xform = false;
     d->has_scaling_xform = false;
-    d->has_non_scaling_xform = true;
     d->xform_scale = 1;
     d->has_custom_pen = false;
     d->matrix = QTransform();
@@ -645,7 +644,7 @@ void QX11PaintEngine::drawLines(const QLine *lines, int lineCount)
         || d->has_alpha_pen
         || d->has_custom_pen
         || (d->cpen.widthF() > 0 && d->has_complex_xform
-            && !d->has_non_scaling_xform)
+            && d->has_scaling_xform)
         || (d->render_hints & QPainter::Antialiasing)) {
         for (int i = 0; i < lineCount; ++i) {
             QPainterPath path(lines[i].p1());
@@ -684,7 +683,7 @@ void QX11PaintEngine::drawLines(const QLineF *lines, int lineCount)
         || d->has_alpha_pen
         || d->has_custom_pen
         || (d->cpen.widthF() > 0 && d->has_complex_xform
-            && !d->has_non_scaling_xform)
+            && d->has_scaling_xform)
         || (d->render_hints & QPainter::Antialiasing)) {
         for (int i = 0; i < lineCount; ++i) {
             QPainterPath path(lines[i].p1());
@@ -1444,7 +1443,7 @@ void QX11PaintEngine::drawEllipse(const QRect &rect)
     if (d->has_alpha_brush || d->has_alpha_pen || d->has_custom_pen || (d->render_hints & QPainter::Antialiasing)
         || d->has_alpha_texture || devclip.intersected(r) != r
         || (d->has_complex_xform
-            && !(d->has_non_scaling_xform && rect.width() == rect.height())))
+            && !(!d->has_scaling_xform && rect.width() == rect.height())))
     {
         QPainterPath path;
         path.addEllipse(rect);
@@ -1749,7 +1748,7 @@ void QX11PaintEngine::drawPath(const QPainterPath &path)
     if (d->has_pen
         && ((qt_x11Data->use_xrender && (d->has_alpha_pen || (d->render_hints & QPainter::Antialiasing)))
             || (!d->cpen.isCosmetic() && d->txop > QTransform::TxTranslate
-                && !d->has_non_scaling_xform)
+                && d->has_scaling_xform)
             || (d->cpen.style() == Qt::CustomDashLine))) {
         QPainterPathStroker stroker;
         if (d->cpen.style() == Qt::CustomDashLine) {
@@ -2018,7 +2017,6 @@ void QX11PaintEngine::updateMatrix(const QTransform &mtx)
     extern bool qt_scaleForTransform(const QTransform &transform, qreal *scale);
     bool scaling = qt_scaleForTransform(d->matrix, &d->xform_scale);
     d->has_scaling_xform = scaling && d->xform_scale != 1.0;
-    d->has_non_scaling_xform = scaling && d->xform_scale == 1.0;
 }
 
 /*
