@@ -57,11 +57,6 @@ QT_BEGIN_NAMESPACE
  * class QVectorPath
  *
  */
-QVectorPath::~QVectorPath()
-{
-}
-
-
 QRectF QVectorPath::controlPointRect() const
 {
     if (m_hints & ControlPointRect)

@@ -108,7 +108,6 @@ bool QRasterPixmapData::fromData(const uchar *buffer, uint len, const char *form
 void QRasterPixmapData::fromImage(const QImage &sourceImage,
                                   Qt::ImageConversionFlags flags)
 {
-    Q_UNUSED(flags);
     QImage image = sourceImage;
     createPixmapForImage(image, flags, /* inplace = */false);
 }
@@ -116,7 +115,6 @@ void QRasterPixmapData::fromImage(const QImage &sourceImage,
 void QRasterPixmapData::fromImageReader(QImageReader *imageReader,
                                         Qt::ImageConversionFlags flags)
 {
-    Q_UNUSED(flags);
     QImage image = imageReader->read();
     if (image.isNull())
         return;

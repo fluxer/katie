@@ -114,8 +114,6 @@ public:
     {
     }
 
-    ~QVectorPath();
-
     QRectF controlPointRect() const;
 
     inline Hint shape() const { return (Hint) (m_hints & ShapeMask); }
