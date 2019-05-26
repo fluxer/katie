@@ -278,9 +278,10 @@ inline QTransform &QTransform::operator*=(qreal num)
     affine._dx  *= num;
     affine._dy  *= num;
     m_33        *= num;
-    if (m_dirty < QTransform::TxScale)
+    if (m_dirty < QTransform::TxScale) {
         m_dirty = QTransform::TxScale;
-    updateType();
+        updateType();
+    }
     return *this;
 }
 inline QTransform &QTransform::operator/=(qreal div)
@@ -304,6 +305,7 @@ inline QTransform &QTransform::operator+=(qreal num)
     affine._dy  += num;
     m_33        += num;
     m_dirty     = QTransform::TxProject;
+    updateType();
     return *this;
 }
 inline QTransform &QTransform::operator-=(qreal num)
@@ -320,6 +322,7 @@ inline QTransform &QTransform::operator-=(qreal num)
     affine._dy  -= num;
     m_33        -= num;
     m_dirty     = QTransform::TxProject;
+    updateType();
     return *this;
 }
 
