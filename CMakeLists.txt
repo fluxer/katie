@@ -64,7 +64,6 @@ if(NOT CMAKE_VERSION VERSION_LESS "3.3.0")
     cmake_policy(SET CMP0063 NEW)
 endif()
 
-include(UseSWIG)
 include(CheckIncludeFile)
 include(CheckTypeSize)
 include(FeatureSummary)
