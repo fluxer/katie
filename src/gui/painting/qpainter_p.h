@@ -136,11 +136,11 @@ public:
     int vx, vy, vw, vh;         // viewport rectangle
     qreal opacity;
 
-    uint WxF:1;                 // World transformation
-    uint VxF:1;                 // View transformation
-    uint clipEnabled:1;
+    bool WxF;                 // World transformation
+    bool VxF;                 // View transformation
+    bool clipEnabled;
 
-    uint changeFlags;
+    QPaintEngine::DirtyFlags changeFlags;
     Qt::BGMode bgMode;
     QPainter *painter;
     Qt::LayoutDirection layoutDirection;

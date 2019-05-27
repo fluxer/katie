@@ -599,7 +599,7 @@ void QPainterPrivate::updateStateImpl(QPainterState *newState)
 
     // Upon restore, revert all changes since last save
     else if (engine->state != newState)
-        newState->dirtyFlags |= QPaintEngine::DirtyFlags(static_cast<QPainterState *>(engine->state)->changeFlags);
+        newState->dirtyFlags |= static_cast<QPainterState *>(engine->state)->changeFlags;
 
     // We need to store all changes made so that restore can deal with them
     else
@@ -5712,7 +5712,7 @@ void QPainter::drawTextItem(const QPointF &p, const QTextItem &_ti)
     if (pen().style() == Qt::NoPen)
         return;
 
-    const RenderHints oldRenderHints = d->state->renderHints;
+    const QPainter::RenderHints oldRenderHints = d->state->renderHints;
     if (!(d->state->renderHints & QPainter::Antialiasing) && d->state->matrix.type() >= QTransform::TxScale) {
         // draw antialias decoration (underline/overline/strikeout) with
         // transformed text
