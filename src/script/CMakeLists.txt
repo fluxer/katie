@@ -166,7 +166,6 @@ include_directories(
     ${CMAKE_CURRENT_BINARY_DIR}/api
     ${CMAKE_CURRENT_BINARY_DIR}/bridge
     ${CMAKE_CURRENT_BINARY_DIR}/parser
-    ${CMAKE_BINARY_DIR}/src/3rdparty/javascriptcore/wtf/qt
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler
