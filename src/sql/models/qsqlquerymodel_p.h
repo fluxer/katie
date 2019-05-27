@@ -77,7 +77,7 @@ public:
     mutable QSqlError error;
     QModelIndex bottom;
     QSqlRecord rec;
-    uint atEnd : 1;
+    bool atEnd;
     QVector<QHash<int, QVariant> > headers;
     QVarLengthArray<int, 56> colOffsets; // used to calculate indexInQuery of columns
 };

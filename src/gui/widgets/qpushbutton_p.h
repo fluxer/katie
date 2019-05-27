@@ -80,11 +80,11 @@ public:
     QDialog *dialogParent() const;
 
     QPointer<QMenu> menu;
-    uint autoDefault : 2;
-    uint defaultButton : 1;
-    uint flat : 1;
-    uint menuOpen : 1;
-    mutable uint lastAutoDefault : 1;
+    AutoDefaultValue autoDefault;
+    bool defaultButton;
+    bool flat;
+    bool menuOpen;
+    mutable bool lastAutoDefault;
 };
 
 QT_END_NAMESPACE

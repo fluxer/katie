@@ -73,7 +73,8 @@ class QMenuPrivate : public QWidgetPrivate
     Q_DECLARE_PUBLIC(QMenu)
 public:
     QMenuPrivate() : itemsDirty(0), maxIconWidth(0), tabWidth(0), ncols(0),
-                      collapsibleSeparators(true), activationRecursionGuard(false), hasHadMouse(0), aboutToHide(0), motions(0),
+                      collapsibleSeparators(true), activationRecursionGuard(false),
+                      hasHadMouse(false), aboutToHide(false), motions(0),
                       currentAction(0),
 #ifdef QT_KEYPAD_NAVIGATION
                       selectAction(0),
@@ -93,18 +94,19 @@ public:
     int scrollerHeight() const;
 
     //item calculations
-    mutable uint itemsDirty : 1;
-    mutable uint maxIconWidth, tabWidth;
+    mutable bool itemsDirty;
+    mutable uint maxIconWidth;
+    mutable uint tabWidth;
     QRect actionRect(QAction *) const;
 
     mutable QVector<QRect> actionRects;
-    mutable QHash<QAction *, QWidget *> widgetItems;
+    QHash<QAction *, QWidget *> widgetItems;
     void updateActionRects() const;
     void updateActionRects(const QRect &screen) const;
     QRect popupGeometry(const QWidget *widget) const;
     QRect popupGeometry(int screen = -1) const;
-    mutable uint ncols : 4; //4 bits is probably plenty
-    uint collapsibleSeparators : 1;
+    mutable int ncols;
+    bool collapsibleSeparators;
     QSize adjustMenuSizeForScreen(const QRect & screen);
     int getLastVisibleAction() const;
 
@@ -113,8 +115,8 @@ public:
     //selection
     static QMenu *mouseDown;
     QPoint mousePopupPos;
-    uint hasHadMouse : 1;
-    uint aboutToHide : 1;
+    bool hasHadMouse;
+    bool aboutToHide;
     int motions;
     QAction *currentAction;
 #ifdef QT_KEYPAD_NAVIGATION

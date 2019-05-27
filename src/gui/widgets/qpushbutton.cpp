@@ -342,7 +342,7 @@ void QPushButton::initStyleOption(QStyleOptionButton *option) const
 void QPushButton::setAutoDefault(bool enable)
 {
     Q_D(QPushButton);
-    uint state = enable ? QPushButtonPrivate::On : QPushButtonPrivate::Off;
+    QPushButtonPrivate::AutoDefaultValue state = enable ? QPushButtonPrivate::On : QPushButtonPrivate::Off;
     if (d->autoDefault != QPushButtonPrivate::Auto && d->autoDefault == state)
         return;
     d->autoDefault = state;
@@ -356,7 +356,7 @@ bool QPushButton::autoDefault() const
     Q_D(const QPushButton);
     if(d->autoDefault == QPushButtonPrivate::Auto)
         return ( d->dialogParent() != 0 );
-    return d->autoDefault;
+    return bool(d->autoDefault);
 }
 
 void QPushButton::setDefault(bool enable)
@@ -399,7 +399,6 @@ QSize QPushButton::sizeHint() const
 
     // calculate contents size...
 #ifndef QT_NO_ICON
-
     bool showButtonBoxIcons = qobject_cast<QDialogButtonBox*>(parentWidget())
                           && style()->styleHint(QStyle::SH_DialogButtonBox_ButtonsHaveIcons);
 
@@ -642,7 +641,7 @@ void QPushButton::setFlat(bool flat)
     if (d->flat == flat)
         return;
     d->flat = flat;
-	d->resetLayoutItemMargins();
+    d->resetLayoutItemMargins();
     d->sizeHint = QSize();
     update();
     updateGeometry();

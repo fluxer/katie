@@ -333,7 +333,7 @@ void QMenuPrivate::updateActionRects(const QRect &screen) const
 
         y += rect.height();
     }
-    itemsDirty = 0;
+    itemsDirty = false;
 }
 
 QSize QMenuPrivate::adjustMenuSizeForScreen(const QRect &screen)
@@ -1699,7 +1699,7 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
     Q_D(QMenu);
     if (d->scroll) { // reset scroll state from last popup
         if (d->scroll->scrollOffset)
-            d->itemsDirty = 1; // sizeHint will be incorrect if there is previous scroll
+            d->itemsDirty = true; // sizeHint will be incorrect if there is previous scroll
         d->scroll->scrollOffset = 0;
         d->scroll->scrollFlags = QMenuPrivate::QMenuScroller::ScrollNone;
     }
@@ -2227,7 +2227,7 @@ void QMenu::changeEvent(QEvent *e)
     Q_D(QMenu);
     if (e->type() == QEvent::StyleChange || e->type() == QEvent::FontChange ||
         e->type() == QEvent::LayoutDirectionChange) {
-        d->itemsDirty = 1;
+        d->itemsDirty = true;
         setMouseTracking(style()->styleHint(QStyle::SH_Menu_MouseTracking, 0, this));
         if (isVisible())
             resize(sizeHint());
@@ -2289,11 +2289,11 @@ QMenu::event(QEvent *e)
         if (style()->styleHint(QStyle::SH_Menu_Mask, &option, this, &menuMask)) {
             setMask(menuMask.region);
         }
-        d->itemsDirty = 1;
+        d->itemsDirty = true;
         d->updateActionRects();
         break; }
     case QEvent::Show:
-        d->mouseDown = 0;
+        d->mouseDown = Q_NULLPTR;
         d->updateActionRects();
         if (d->currentAction)
             d->popupAction(d->currentAction, 0, false);
@@ -2762,7 +2762,7 @@ QMenu::timerEvent(QTimerEvent *e)
 void QMenu::actionEvent(QActionEvent *e)
 {
     Q_D(QMenu);
-    d->itemsDirty = 1;
+    d->itemsDirty = true;
     setAttribute(Qt::WA_Resized, false);
     if (d->tornPopup)
         d->tornPopup->syncWithMenu(this, e);
@@ -2938,7 +2938,7 @@ void QMenu::setSeparatorsCollapsible(bool collapse)
         return;
 
     d->collapsibleSeparators = collapse;
-    d->itemsDirty = 1;
+    d->itemsDirty = true;
     if (isVisible()) {
         d->updateActionRects();
         update();
