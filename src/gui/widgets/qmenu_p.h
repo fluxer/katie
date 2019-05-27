@@ -79,8 +79,8 @@ public:
                       selectAction(0),
                       cancelAction(0),
 #endif
-                      scroll(0), eventLoop(0), tearoff(0), tornoff(0), tearoffHighlighted(0),
-                      hasCheckableItems(0), sloppyDelayTimer(0), sloppyAction(0), doChildEffects(false)
+                      scroll(0), eventLoop(0), tearoff(false), tornoff(false), tearoffHighlighted(false),
+                      hasCheckableItems(false), sloppyDelayTimer(0), sloppyAction(0), doChildEffects(false)
     { }
     ~QMenuPrivate()
     {
@@ -175,7 +175,9 @@ public:
     inline int indexOf(QAction *act) const { return q_func()->actions().indexOf(act); }
 
     //tear off support
-    uint tearoff : 1, tornoff : 1, tearoffHighlighted : 1;
+    bool tearoff;
+    bool tornoff;
+    bool tearoffHighlighted;
     QPointer<QTornOffMenu> tornPopup;
 
     mutable bool hasCheckableItems;

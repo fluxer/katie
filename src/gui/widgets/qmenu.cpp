@@ -86,7 +86,7 @@ class QTornOffMenu : public QMenu
         Q_DECLARE_PUBLIC(QMenu)
     public:
         QTornOffMenuPrivate(QMenu *p) : causedMenu(p) {
-            tornoff = 1;
+            tornoff = true;
             causedPopup.widget = 0;
             causedPopup.action = ((QTornOffMenu*)p)->d_func()->causedPopup.action;
             causedStack = ((QTornOffMenu*)p)->d_func()->calcCausedStack();
@@ -229,7 +229,7 @@ void QMenuPrivate::updateActionRects(const QRect &screen) const
         if (action->isSeparator() || !action->isVisible() || widgetItems.contains(action))
             continue;
         //..and some members
-        hasCheckableItems |= action->isCheckable();
+        hasCheckableItems = (!hasCheckableItems && action->isCheckable());
         QIcon is = action->icon();
         if (!is.isNull()) {
             maxIconWidth = qMax<uint>(maxIconWidth, icone + 4);
@@ -503,7 +503,7 @@ void QMenuPrivate::setFirstActionActive()
 void QMenuPrivate::setCurrentAction(QAction *action, int popup, SelectionReason reason, bool activateFirst)
 {
     Q_Q(QMenu);
-    tearoffHighlighted = 0;
+    tearoffHighlighted = false;
     // Reselect the currently active action in case mouse moved over other menu items when
     // moving from sub menu action to sub menu (QTBUG-20094).
     if (reason != SelectedFromKeyboard && action == currentAction && !(action && action->menu() && action->menu() != activeMenu)) {
@@ -908,7 +908,7 @@ bool QMenuPrivate::mouseEventTaken(QMouseEvent *e)
         q->update(tearRect);
         if (tearRect.contains(pos) && hasMouseMoved(e->globalPos())) {
             setCurrentAction(0);
-            tearoffHighlighted = 1;
+            tearoffHighlighted = true;
             if (e->type() == QEvent::MouseButtonRelease) {
                 if (!tornPopup)
                     tornPopup = new QTornOffMenu(q);
@@ -918,7 +918,7 @@ bool QMenuPrivate::mouseEventTaken(QMouseEvent *e)
             }
             return true;
         }
-        tearoffHighlighted = 0;
+        tearoffHighlighted = false;
     }
 
     if (q->frameGeometry().contains(e->globalPos())) //otherwise if the event is in our rect we want it..
@@ -1703,7 +1703,7 @@ void QMenu::popup(const QPoint &p, QAction *atAction)
         d->scroll->scrollOffset = 0;
         d->scroll->scrollFlags = QMenuPrivate::QMenuScroller::ScrollNone;
     }
-    d->tearoffHighlighted = 0;
+    d->tearoffHighlighted = false;
     d->motions = 0;
     d->doChildEffects = true;
     d->updateLayoutDirection();
@@ -2437,7 +2437,7 @@ void QMenu::keyPressEvent(QKeyEvent *e)
                             break;
                         }
                         if (!nextAction && d->tearoff)
-                            d->tearoffHighlighted = 1;
+                            d->tearoffHighlighted = true;
                     } else {
                         y += d->actionRects.at(i).height();
                         for(int next_i = i+1; true; next_i++) {
