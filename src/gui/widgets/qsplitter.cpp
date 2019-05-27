@@ -852,12 +852,9 @@ QSplitterLayoutStruct *QSplitterPrivate::insertWidget(int index, QWidget *w)
     if (sls) {
         list.move(i,index);
     } else {
-        QSplitterHandle *newHandle = 0;
         sls = new QSplitterLayoutStruct;
-        QString tmp = QLatin1String("qt_splithandle_");
-        tmp += w->objectName();
-        newHandle = q->createHandle();
-        newHandle->setObjectName(tmp);
+        QSplitterHandle *newHandle = q->createHandle();
+        newHandle->setObjectName(QLatin1String("qt_splithandle_") + w->objectName());
         sls->handle = newHandle;
         sls->widget = w;
         w->lower();
