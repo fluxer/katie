@@ -78,7 +78,7 @@ public:
     bool isRotating() const;
     bool isTranslating() const;
 
-    inline TransformationType type() const;
+    TransformationType type() const;
 
     inline qreal determinant() const;
     qreal det() const;
@@ -156,22 +156,21 @@ private:
                       qreal h31, qreal h32, qreal h33, bool)
         : affine(h11, h12, h21, h22, h31, h32, true)
         , m_13(h13), m_23(h23), m_33(h33)
-        , m_type(QTransform::TxNone)
-        , m_dirty(QTransform::TxProject) {}
+        , m_type(TxNone)
+        , m_dirty(TxProject) {}
     inline QTransform(bool)
         : affine(true)
         , m_13(0), m_23(0), m_33(1)
-        , m_type(QTransform::TxNone)
-        , m_dirty(QTransform::TxNone) {}
+        , m_type(TxNone)
+        , m_dirty(TxNone) {}
+    inline TransformationType inline_type() const;
     QMatrix affine;
     qreal   m_13;
     qreal   m_23;
     qreal   m_33;
 
-    TransformationType m_type;
-    TransformationType m_dirty;
-
-    void updateType();
+    mutable uint m_type : 5;
+    mutable uint m_dirty : 5;
 
     class Private;
     Private *d;
@@ -179,17 +178,20 @@ private:
 Q_DECLARE_TYPEINFO(QTransform, Q_MOVABLE_TYPE);
 
 /******* inlines *****/
-QTransform::TransformationType QTransform::type() const
+inline QTransform::TransformationType QTransform::inline_type() const
 {
-    return m_type;
+    if (m_dirty == TxNone)
+        return static_cast<TransformationType>(m_type);
+    return type();
 }
+
 inline bool QTransform::isAffine() const
 {
-    return type() < QTransform::TxProject;
+    return inline_type() < TxProject;
 }
 inline bool QTransform::isIdentity() const
 {
-    return type() == QTransform::TxNone;
+    return inline_type() == TxNone;
 }
 
 inline bool QTransform::isInvertible() const
@@ -199,16 +201,16 @@ inline bool QTransform::isInvertible() const
 
 inline bool QTransform::isScaling() const
 {
-    return type() >= QTransform::TxScale;
+    return type() >= TxScale;
 }
 inline bool QTransform::isRotating() const
 {
-    return type() >= QTransform::TxRotate;
+    return inline_type() >= TxRotate;
 }
 
 inline bool QTransform::isTranslating() const
 {
-    return type() >= QTransform::TxTranslate;
+    return inline_type() >= TxTranslate;
 }
 
 inline qreal QTransform::determinant() const
@@ -278,10 +280,8 @@ inline QTransform &QTransform::operator*=(qreal num)
     affine._dx  *= num;
     affine._dy  *= num;
     m_33        *= num;
-    if (m_dirty < QTransform::TxScale) {
-        m_dirty = QTransform::TxScale;
-        updateType();
-    }
+    if (m_dirty < TxScale)
+        m_dirty = TxScale;
     return *this;
 }
 inline QTransform &QTransform::operator/=(qreal div)
@@ -304,8 +304,7 @@ inline QTransform &QTransform::operator+=(qreal num)
     affine._dx  += num;
     affine._dy  += num;
     m_33        += num;
-    m_dirty     = QTransform::TxProject;
-    updateType();
+    m_dirty     = TxProject;
     return *this;
 }
 inline QTransform &QTransform::operator-=(qreal num)
@@ -321,8 +320,7 @@ inline QTransform &QTransform::operator-=(qreal num)
     affine._dx  -= num;
     affine._dy  -= num;
     m_33        -= num;
-    m_dirty     = QTransform::TxProject;
-    updateType();
+    m_dirty     = TxProject;
     return *this;
 }
 
