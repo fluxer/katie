@@ -43,13 +43,11 @@
 #define QFILEICONPROVIDER_H
 
 #include <QtCore/qfileinfo.h>
-#include <QtCore/qscopedpointer.h>
 #include <QtGui/qicon.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 #ifndef QT_NO_FILEICONPROVIDER
 
@@ -67,9 +65,8 @@ public:
 
 private:
     Q_DECLARE_PRIVATE(QFileIconProvider)
-    QScopedPointer<QFileIconProviderPrivate> d_ptr;
     Q_DISABLE_COPY(QFileIconProvider)
-    friend class QFileDialog;
+    QFileIconProviderPrivate* d_ptr;
 };
 
 #endif // QT_NO_FILEICONPROVIDER

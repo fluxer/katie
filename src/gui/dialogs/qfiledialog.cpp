@@ -223,11 +223,6 @@ Q_GUI_EXPORT _qt_filedialog_save_filename_hook qt_filedialog_save_filename_hook 
     was given a parent. This is no longer supported and does nothing in Qt 4.5, The
     static functions will always be an application modal dialog. If
     you want to use sheets, use QFileDialog::open() instead.
-
-    \value DontUseCustomDirectoryIcons Always use the default directory icon.
-    Some platforms allow the user to set a different icon. Custom icon lookup
-    cause a big performance impact over network or removable drives. Setting this
-    will affect the behavior of the icon provider. This enum value was added in Qt 4.8.6.
 */
 
 /*!
@@ -647,9 +642,6 @@ void QFileDialog::setOptions(Options options)
 
     if (changed & ShowDirsOnly)
         setFilter((options & ShowDirsOnly) ? filter() & ~QDir::Files : filter() | QDir::Files);
-
-    if (changed & DontUseCustomDirectoryIcons)
-        iconProvider()->d_ptr->setUseCustomDirectoryIcons(!(options & DontUseCustomDirectoryIcons));
 }
 
 QFileDialog::Options QFileDialog::options() const

@@ -48,36 +48,12 @@
 
 QT_BEGIN_NAMESPACE
 
-class QFileInfo;
-class QFileIconProvider;
-
 class QFileIconProviderPrivate
 {
-    Q_DECLARE_PUBLIC(QFileIconProvider)
-
 public:
     QFileIconProviderPrivate();
-    void setUseCustomDirectoryIcons(bool enable);
     QIcon getIcon(QStyle::StandardPixmap name) const;
-    QFileIconProvider * q_ptr;
     const QString homePath;
-
-private:
-    bool useCustomDirectoryIcons;
-    mutable QIcon file;
-    mutable QIcon fileLink;
-    mutable QIcon directory;
-    mutable QIcon directoryLink;
-    mutable QIcon harddisk;
-    mutable QIcon floppy;
-    mutable QIcon cdrom;
-    mutable QIcon ram;
-    mutable QIcon network;
-    mutable QIcon computer;
-    mutable QIcon desktop;
-    mutable QIcon trashcan;
-    mutable QIcon generic;
-    mutable QIcon home;
 };
 
 

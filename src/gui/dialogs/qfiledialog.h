@@ -90,8 +90,7 @@ public:
         DontConfirmOverwrite        = 0x00000002,
         DontUseSheet                = 0x00000004,
         ReadOnly                    = 0x00000008,
-        HideNameFilterDetails       = 0x00000010,
-        DontUseCustomDirectoryIcons = 0x00000020
+        HideNameFilterDetails       = 0x00000010
     };
     Q_DECLARE_FLAGS(Options, Option)
 
