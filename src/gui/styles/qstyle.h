@@ -320,7 +320,6 @@ public:
         SE_CheckBoxLayoutItem,
         SE_ComboBoxLayoutItem,
         SE_DateTimeEditLayoutItem,
-        SE_DialogButtonBoxLayoutItem, // ### remove
         SE_LabelLayoutItem,
         SE_ProgressBarLayoutItem,
         SE_PushButtonLayoutItem,

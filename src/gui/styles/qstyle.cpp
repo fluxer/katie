@@ -995,8 +995,6 @@ void QStyle::drawItemPixmap(QPainter *painter, const QRect &rect, int alignment,
 
     \value SE_TreeViewDisclosureItem Area for the actual disclosure item in a tree branch.
 
-    \value SE_DialogButtonBoxLayoutItem  Area that counts for the parent layout.
-
     \value SE_GroupBoxLayoutItem  Area that counts for the parent layout.
 
     \value SE_CustomBase  Base value for custom sub-elements.
