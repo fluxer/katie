@@ -57,7 +57,6 @@ static const char *designerPath = "/.designer";
 static const char *defaultGridKey = "defaultGrid";
 static const char *previewKey = "Preview";
 static const char *enabledKey = "Enabled";
-static const char *userDeviceSkinsKey= "UserDeviceSkins";
 static const char *zoomKey = "zoom";
 static const char *zoomEnabledKey = "zoomEnabled";
 static const char *deviceProfileIndexKey = "DeviceProfileIndex";
@@ -208,22 +207,6 @@ void QDesignerSharedSettings::setCustomPreviewConfigurationEnabled(bool enabled)
 {
     m_settings->beginGroup(QLatin1String(previewKey));
     m_settings->setValue(QLatin1String(enabledKey), enabled);
-    m_settings->endGroup();
-}
-
-QStringList QDesignerSharedSettings::userDeviceSkins() const
-{
-    m_settings->beginGroup(QLatin1String(previewKey));
-    QStringList userDeviceSkins
-            = m_settings->value(QLatin1String(userDeviceSkinsKey), QStringList()).toStringList();
-    m_settings->endGroup();
-    return userDeviceSkins;
-}
-
-void QDesignerSharedSettings::setUserDeviceSkins(const QStringList &userDeviceSkins)
-{
-    m_settings->beginGroup(QLatin1String(previewKey));
-    m_settings->setValue(QLatin1String(userDeviceSkinsKey), userDeviceSkins);
     m_settings->endGroup();
 }
 

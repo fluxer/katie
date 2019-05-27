@@ -106,9 +106,6 @@ public:
     bool isCustomPreviewConfigurationEnabled() const;
     void setCustomPreviewConfigurationEnabled(bool enabled);
 
-    QStringList userDeviceSkins() const;
-    void setUserDeviceSkins(const QStringList &userDeviceSkins);
-
     bool zoomEnabled() const;
     void setZoomEnabled(bool v);
 
