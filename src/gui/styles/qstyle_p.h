@@ -67,8 +67,7 @@ class QStylePrivate: public QObjectPrivate
     Q_DECLARE_PUBLIC(QStyle)
 public:
     inline QStylePrivate()
-        : layoutSpacingIndex(-1), proxyStyle(0) {}
-    mutable int layoutSpacingIndex;
+        : proxyStyle(0) {}
     QStyle *proxyStyle;
 };
 

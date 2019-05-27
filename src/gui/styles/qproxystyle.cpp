@@ -82,7 +82,7 @@ void QProxyStylePrivate::ensureBaseStyle() const
     if (baseStyle)
         return;
 
-    if (!baseStyle && !QApplicationPrivate::styleOverride.isEmpty()) {
+    if (!QApplicationPrivate::styleOverride.isEmpty()) {
         baseStyle = QStyleFactory::create(QApplicationPrivate::styleOverride);
         if (baseStyle) {
             // If baseStyle is an instance of the same proxyStyle
