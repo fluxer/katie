@@ -380,6 +380,9 @@ void QScrollArea::setWidgetResizable(bool resizable)
 {
     Q_D(QScrollArea);
     d->resizable = resizable;
+    if (d->widget && !d->widgetSize.isValid()) {
+        d->widgetSize = resizable ? d->widget->sizeHint() : d->widget->size();
+    }
     updateGeometry();
     d->updateScrollBars();
 }
@@ -394,8 +397,6 @@ QSize QScrollArea::sizeHint() const
     QSize sz(f, f);
     int h = fontMetrics().height();
     if (d->widget) {
-        if (!d->widgetSize.isValid())
-            d->widgetSize = d->resizable ? d->widget->sizeHint() : d->widget->size();
         sz += d->widgetSize;
     } else {
         sz += QSize(12 * h, 8 * h);

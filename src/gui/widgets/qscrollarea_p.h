@@ -69,7 +69,7 @@ public:
     void updateScrollBars();
     void updateWidgetPosition();
     QPointer<QWidget> widget;
-    mutable QSize widgetSize;
+    QSize widgetSize;
     bool resizable;
     Qt::Alignment alignment;
 };
