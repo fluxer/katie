@@ -65,8 +65,8 @@ class QSplitterLayoutStruct
 public:
     QRect rect;
     int sizer;
-    uint collapsed : 1;
-    uint collapsible : 2;
+    bool collapsed;
+    uint collapsible;
     QWidget *widget;
     QSplitterHandle *handle;
 
@@ -86,11 +86,11 @@ public:
                          childrenCollapsible(true), handleWidth(0), blockChildAdd(false) {}
 
     QPointer<QRubberBand> rubberBand;
-    mutable QList<QSplitterLayoutStruct *> list;
+    QList<QSplitterLayoutStruct *> list;
     Qt::Orientation orient;
-    bool opaque : 1;
-    bool firstShow : 1;
-    bool childrenCollapsible : 1;
+    bool opaque;
+    bool firstShow;
+    bool childrenCollapsible;
     int handleWidth;
     bool blockChildAdd;
 
@@ -138,9 +138,9 @@ public:
     QSplitter *s;
     Qt::Orientation orient;
     int mouseOffset;
-    bool opaq    : 1;
-    bool hover   : 1;
-    bool pressed : 1;
+    bool opaq;
+    bool hover;
+    bool pressed;
 };
 
 QT_END_NAMESPACE

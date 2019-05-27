@@ -680,7 +680,7 @@ int QSplitterPrivate::adjustPos(int pos, int index, int *farMin, int *min, int *
 bool QSplitterPrivate::collapsible(QSplitterLayoutStruct *s) const
 {
     if (s->collapsible != Default) {
-        return (bool)s->collapsible;
+        return bool(s->collapsible);
     } else {
         return childrenCollapsible;
     }
