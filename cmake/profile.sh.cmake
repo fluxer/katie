@@ -9,20 +9,13 @@ safe_path_append() {
     fi
 
     # else append to it if neccessary
-    oldIFS="$IFS"
-    IFS=":"
-    found=""
-    for i in $2;do
-        # TODO: maybe check for match with and without trailing slash too?
-        if [ "$i" = "$3" ];then
-            found="yes"
-        fi
-    done
-    IFS="$oldIFS"
-
-    if [ "$found" != "yes" ];then
-        export "$1"="$2:$3"
-    fi
+    noslash="$(echo "$2" | sed 's|/$||')"
+    case "$2" in
+        "$3"|*:"$3"|"$3":*|*:"$3":*) ;;
+        "$3/"|*:"$3/"|"$3/":*|*:"$3/":*) ;;
+        "$noslash"|*:"$noslash"|"$noslash":*|*:"$noslash":*) ;;
+        *) export "$1"="$2:$3" ;;
+    esac
 }
 
 safe_path_append PATH "$PATH" "@KATIE_BINARIES_FULL@"
