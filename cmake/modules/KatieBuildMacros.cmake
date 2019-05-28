@@ -64,7 +64,9 @@ macro(KATIE_GENERATE_PACKAGE FORTARGET REQUIRES)
     string(REPLACE "Kt" "Qt" PACKAGE_FAKE "${FORTARGET}")
     set(PACKAGE_NAME ${FORTARGET})
     set(PACKAGE_REQUIRES ${REQUIRES})
-    set(PACKAGE_FLAGS)
+    string(REPLACE "Kt" "" compname "${FORTARGET}")
+    string(TOUPPER ${compname} compname)
+    set(PACKAGE_FLAGS "-DQT_${compname}_LIB")
     # adding the definitions to other components is simply redundant since
     # all components require the core component
     if("${FORTARGET}" STREQUAL "KtCore")
