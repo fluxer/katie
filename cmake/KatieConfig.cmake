@@ -144,6 +144,9 @@ if(NOT KATIE_FOUND)
             find_package(X11 REQUIRED)
         endif()
 
+        set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_INCLUDE_COMPAT -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
+        set(QT_DEFINITIONS ${KATIE_DEFINITIONS})
+
         foreach(component ${KATIE_COMPONENTS})
             string(TOUPPER ${component} uppercomp)
             set(QT_QT${uppercomp}_FOUND ${KATIE_${uppercomp}_FOUND})
@@ -154,11 +157,9 @@ if(NOT KATIE_FOUND)
             set(QT4_QT${uppercomp}_LIBRARIES "${KATIE_${uppercomp}_LIBRARIES}")
             set(QT_QT${uppercomp}_INCLUDE_DIR "${KATIE_HEADERS_PATH}" "${KATIE_${uppercomp}_INCLUDES}")
             set(QT4_QT${uppercomp}_INCLUDE_DIR "${KATIE_HEADERS_PATH}" "${KATIE_${uppercomp}_INCLUDES}")
-            # TODO: component definitions
+            set(QT_QT${uppercomp}_DEFINITIONS "-DQT_${uppercomp}_LIB ${KATIE_DEFINITIONS}")
+            set(QT4_QT${uppercomp}_DEFINITIONS "-DQT_${uppercomp}_LIB ${KATIE_DEFINITIONS}")
         endforeach()
-
-        set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_INCLUDE_COMPAT -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
-        set(QT_DEFINITIONS ${KATIE_DEFINITIONS})
 
         # not much to be done about those since they are complex and many projects rely on them
         include(Qt4Macros)
