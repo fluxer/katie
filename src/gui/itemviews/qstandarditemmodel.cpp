@@ -2086,13 +2086,14 @@ QStandardItemModel::~QStandardItemModel()
 void QStandardItemModel::clear()
 {
     Q_D(QStandardItemModel);
+    beginResetModel();
     d->root.reset(new QStandardItem);
     d->root->d_func()->setModel(this);
     qDeleteAll(d->columnHeaderItems);
     d->columnHeaderItems.clear();
     qDeleteAll(d->rowHeaderItems);
     d->rowHeaderItems.clear();
-    reset();
+    endResetModel();
 }
 
 /*!
