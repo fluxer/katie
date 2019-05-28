@@ -2026,7 +2026,7 @@ QAction *QMenu::exec(const QPoint &p, QAction *action)
 
     \sa popup(), QWidget::mapToGlobal()
 */
-QAction *QMenu::exec(QList<QAction*> actions, const QPoint &pos, QAction *at, QWidget *parent)
+QAction *QMenu::exec(const QList<QAction*> &actions, const QPoint &pos, QAction *at, QWidget *parent)
 {
     QMenu menu(parent);
     menu.addActions(actions);

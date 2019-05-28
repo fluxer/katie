@@ -111,7 +111,7 @@ public:
     QAction *exec();
     QAction *exec(const QPoint &pos, QAction *at = Q_NULLPTR);
 
-    static QAction *exec(QList<QAction*> actions, const QPoint &pos,
+    static QAction *exec(const QList<QAction*> &actions, const QPoint &pos,
             QAction *at = Q_NULLPTR, QWidget *parent = Q_NULLPTR);
 
     QSize sizeHint() const;

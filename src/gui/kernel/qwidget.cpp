@@ -2724,7 +2724,7 @@ void QWidget::addAction(QAction *action)
 
     \sa removeAction(), QMenu, addAction()
 */
-void QWidget::addActions(QList<QAction*> actions)
+void QWidget::addActions(const QList<QAction*> &actions)
 {
     for(int i = 0; i < actions.count(); i++)
         insertAction(0, actions.at(i));
@@ -2773,7 +2773,7 @@ void QWidget::insertAction(QAction *before, QAction *action)
 
     \sa removeAction(), QMenu, insertAction(), contextMenuPolicy
 */
-void QWidget::insertActions(QAction *before, QList<QAction*> actions)
+void QWidget::insertActions(QAction *before, const QList<QAction*> &actions)
 {
     for(int i = 0; i < actions.count(); ++i)
         insertAction(before, actions.at(i));

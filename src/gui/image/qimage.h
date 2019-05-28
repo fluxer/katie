@@ -184,7 +184,7 @@ public:
         { setPixel(pt.x(), pt.y(), index_or_rgb); }
 
     QVector<QRgb> colorTable() const;
-    void setColorTable(const QVector<QRgb> colors);
+    void setColorTable(const QVector<QRgb> &colors);
 
     void fill(uint pixel);
     void fill(const QColor &color);

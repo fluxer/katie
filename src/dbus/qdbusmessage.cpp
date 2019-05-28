@@ -455,7 +455,7 @@ QDBusMessage QDBusMessage::createReply(const QVariantList &arguments) const
     Constructs a new DBus message representing an error reply message,
     with the given \a name and \a msg.
 */
-QDBusMessage QDBusMessage::createErrorReply(const QString name, const QString &msg) const
+QDBusMessage QDBusMessage::createErrorReply(const QString &name, const QString &msg) const
 {
     QDBusMessage reply = QDBusMessage::createError(name, msg);
     if (d_ptr->msg)

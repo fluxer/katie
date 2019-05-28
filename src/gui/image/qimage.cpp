@@ -1374,7 +1374,7 @@ int QImage::colorCount() const
     \sa colorTable(), setColor(), {QImage#Image Transformations}{Image
     Transformations}
 */
-void QImage::setColorTable(const QVector<QRgb> colors)
+void QImage::setColorTable(const QVector<QRgb> &colors)
 {
     if (!d)
         return;
