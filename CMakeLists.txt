@@ -497,19 +497,14 @@ if(ENABLE_TESTING)
 
     configure_file(
         ${CMAKE_SOURCE_DIR}/cmake/runtest.sh.cmake
-        ${CMAKE_BINARY_DIR}/runtest.sh
+        ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/runtest.sh
         @ONLY
     )
-    # FIXME: replace with something native (to CMake)
-    execute_process(
-        COMMAND chmod +x ${CMAKE_BINARY_DIR}/runtest.sh
-        RESULT_VARIABLE chmod_result
-        ERROR_VARIABLE chmod_output
-        OUTPUT_VARIABLE chmod_output
+    file(
+        COPY ${CMAKE_BINARY_DIR}/${CMAKE_FILES_DIRECTORY}/runtest.sh
+        DESTINATION ${CMAKE_BINARY_DIR}
+        FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
     )
-    if(NOT chmod_result STREQUAL "0")
-        message(FATAL_ERROR "${chmod_output} (${chmod_result})")
-    endif()
 endif()
 
 # optional packages
