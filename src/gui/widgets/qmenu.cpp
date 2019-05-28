@@ -229,7 +229,7 @@ void QMenuPrivate::updateActionRects(const QRect &screen) const
         if (action->isSeparator() || !action->isVisible() || widgetItems.contains(action))
             continue;
         //..and some members
-        hasCheckableItems = (!hasCheckableItems && action->isCheckable());
+        hasCheckableItems |= action->isCheckable();
         QIcon is = action->icon();
         if (!is.isNull()) {
             maxIconWidth = qMax<uint>(maxIconWidth, icone + 4);
