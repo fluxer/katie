@@ -54,13 +54,11 @@ QWidgetAnimator::QWidgetAnimator(QMainWindowLayout *layout) : m_mainWindowLayout
 void QWidgetAnimator::abort(QWidget *w)
 {
 #ifndef QT_NO_ANIMATION
-    AnimationMap::iterator it = m_animation_map.find(w);
-    if (it == m_animation_map.end())
-        return;
-    QPropertyAnimation *anim = *it;
-    m_animation_map.erase(it);
+    QMutexLocker locker(&m_mutex);
+    QPropertyAnimation *anim = m_animation_map.take(w);
     if (anim) {
         anim->stop();
+        anim->deleteLater();
     }
 #ifndef QT_NO_MAINWINDOW
     m_mainWindowLayout->animationFinished(w);
@@ -74,7 +72,7 @@ void QWidgetAnimator::abort(QWidget *w)
 void QWidgetAnimator::animationFinished()
 {
     QPropertyAnimation *anim = qobject_cast<QPropertyAnimation*>(sender());
-    abort(static_cast<QWidget*>(anim->targetObject()));
+    QWidgetAnimator::abort(static_cast<QWidget*>(anim->targetObject()));
 }
 #endif //QT_NO_ANIMATION
 
@@ -91,8 +89,9 @@ void QWidgetAnimator::animate(QWidget *widget, const QRect &_final_geometry, boo
         QRect(QPoint(-500 - widget->width(), -500 - widget->height()), widget->size());
 
 #ifndef QT_NO_ANIMATION
-    AnimationMap::const_iterator it = m_animation_map.constFind(widget);
-    if (it != m_animation_map.constEnd() && (*it)->endValue().toRect() == final_geometry)
+    QMutexLocker locker(&m_mutex);
+    QPropertyAnimation* it = m_animation_map.value(widget);
+    if (it && it->endValue().toRect() == final_geometry)
         return;
 
     QPropertyAnimation *anim = new QPropertyAnimation(widget, "geometry", widget);
@@ -100,7 +99,8 @@ void QWidgetAnimator::animate(QWidget *widget, const QRect &_final_geometry, boo
     anim->setEasingCurve(QEasingCurve::InOutQuad);
     anim->setEndValue(final_geometry);
     m_animation_map[widget] = anim;
-    connect(anim, SIGNAL(finished()), SLOT(animationFinished()));
+    locker.unlock();
+    connect(anim, SIGNAL(finished()), this, SLOT(animationFinished()));
     anim->start(QPropertyAnimation::DeleteWhenStopped);
 #else
     //we do it in one shot

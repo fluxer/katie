@@ -56,6 +56,7 @@
 #include <qobject.h>
 #include <qmap.h>
 #include <qpointer.h>
+#include <QMutex>
 
 QT_BEGIN_NAMESPACE
 
@@ -83,6 +84,7 @@ private:
     typedef QMap<QWidget*, QPointer<QPropertyAnimation> > AnimationMap;
     AnimationMap m_animation_map;
     QMainWindowLayout *m_mainWindowLayout;
+    QMutex m_mutex;
 };
 
 QT_END_NAMESPACE
