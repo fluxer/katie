@@ -226,7 +226,7 @@ struct QX11Data
     // true if Qt is compiled w/ RENDER support and RENDER is supported on the connected Display
     bool use_xrender;
     int xrender_major;
-    int xrender_version;
+    int xrender_minor;
 
     // true if Qt is compiled w/ XFIXES support and XFIXES is supported on the connected Display
     bool use_xfixes;

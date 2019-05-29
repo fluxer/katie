@@ -53,7 +53,6 @@
 #include "qdatetime.h"
 #include "qtextcodec.h"
 #include "qdatastream.h"
-#include "qbuffer.h"
 #include "qsocketnotifier.h"
 #include "qsessionmanager.h"
 #include "qclipboard.h"
@@ -886,8 +885,7 @@ static void qt_get_net_supported()
     qt_x11Data->net_supported_list = 0;
 
     if (e == Success && type == XA_ATOM && format == 32) {
-        QBuffer ts;
-        ts.open(QIODevice::WriteOnly);
+        QByteArray buffer;
 
         while (after > 0) {
             XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(),
@@ -895,7 +893,7 @@ static void qt_get_net_supported()
                                False, XA_ATOM, &type, &format, &nitems, &after, &data);
 
             if (type == XA_ATOM && format == 32) {
-                ts.write(reinterpret_cast<char *>(data), nitems * sizeof(long));
+                buffer.setRawData(reinterpret_cast<char *>(data), nitems * sizeof(long));
                 offset += nitems;
             } else
                 after = 0;
@@ -904,7 +902,6 @@ static void qt_get_net_supported()
         }
 
         // compute nitems
-        QByteArray buffer(ts.buffer());
         nitems = buffer.size() / sizeof(Atom);
         qt_x11Data->net_supported_list = new Atom[nitems + 1];
         Atom *a = (Atom *) buffer.data();
@@ -957,8 +954,7 @@ static void qt_get_net_virtual_roots()
         XFree(data);
 
     if (e == Success && type == XA_ATOM && format == 32) {
-        QBuffer ts;
-        ts.open(QIODevice::WriteOnly);
+        QByteArray buffer;
 
         while (after > 0) {
             XGetWindowProperty(qt_x11Data->display, QX11Info::appRootWindow(),
@@ -966,7 +962,7 @@ static void qt_get_net_virtual_roots()
                                False, XA_ATOM, &type, &format, &nitems, &after, &data);
 
             if (type == XA_ATOM && format == 32) {
-                ts.write(reinterpret_cast<char *>(data), nitems * 4);
+                buffer.setRawData(reinterpret_cast<char *>(data), nitems * 4);
                 offset += nitems;
             } else
                 after = 0;
@@ -975,7 +971,6 @@ static void qt_get_net_virtual_roots()
         }
 
         // compute nitems
-        QByteArray buffer(ts.buffer());
         nitems = buffer.size() / sizeof(Window);
         qt_x11Data->net_virtual_root_list = new Window[nitems + 1];
         Window *a = (Window *) buffer.data();
@@ -1139,7 +1134,7 @@ void qt_init(QApplicationPrivate *priv, int,
     // RENDER
     qt_x11Data->use_xrender = false;
     qt_x11Data->xrender_major = 0;
-    qt_x11Data->xrender_version = 0;
+    qt_x11Data->xrender_minor = 0;
 
     // XFIXES
     qt_x11Data->use_xfixes = false;
@@ -1378,13 +1373,7 @@ void qt_init(QApplicationPrivate *priv, int,
             XRenderQueryVersion(qt_x11Data->display, &major, &minor);
             if (qgetenv("QT_X11_NO_XRENDER").isNull()) {
                 qt_x11Data->use_xrender = (major >= 0 && minor >= 5);
-                qt_x11Data->xrender_version = major*100+minor;
-                // workaround for broken XServer on Ubuntu Breezy (6.8 compiled with 7.0
-                // protocol headers)
-                if (qt_x11Data->xrender_version == 10
-                    && VendorRelease(qt_x11Data->display) < 60900000
-                    && QByteArray(ServerVendor(qt_x11Data->display)).contains("X.Org"))
-                    qt_x11Data->xrender_version = 9;
+                qt_x11Data->xrender_minor = minor;
             }
         }
 #endif // QT_NO_XRENDER

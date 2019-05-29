@@ -407,7 +407,7 @@ static QPaintEngine::PaintEngineFeatures qt_decide_features()
         features |= QPaintEngine::PorterDuff;
         features |= QPaintEngine::MaskedBrush;
 #if 0
-        if (qt_x11Data->xrender_version > 10) {
+        if (qt_x11Data->xrender_minor > 10) {
             features |= QPaintEngine::LinearGradientFill;
             // ###
         }
