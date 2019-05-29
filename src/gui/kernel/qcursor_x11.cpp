@@ -39,13 +39,9 @@
 **
 ****************************************************************************/
 
-#include <qdebug.h>
-#include <qdatastream.h>
 #include <qbitmap.h>
 #include <qcursor.h>
-#include <qapplication_p.h>
 #include <qcursor_p.h>
-
 #include "qx11info_x11.h"
 #include <qpixmap_x11_p.h>
 #include <qt_x11_p.h>
@@ -193,7 +189,6 @@ void QCursor::setPos(int x, int y)
     // Need to check, since some X servers generate null mouse move
     // events, causing looping in applications which call setPos() on
     // every mouse move event.
-    //
     if (current == target)
         return;
 
@@ -215,13 +210,13 @@ void QCursorData::update()
         return;
 
     Display *dpy = qt_x11Data->display;
-    Window rootwin = QX11Info::appRootWindow();
 
+    // Non-standard X11 cursors are created from bitmaps
     if (cshape == Qt::BitmapCursor) {
 #ifndef QT_NO_XRENDER
         if (!pixmap.isNull() && qt_x11Data->use_xrender) {
             pixmap = qt_toX11Pixmap(pixmap);
-            hcurs = XRenderCreateCursor (qt_x11Data->display, pixmap.x11PictureHandle(), hx, hy);
+            hcurs = XRenderCreateCursor(qt_x11Data->display, pixmap.x11PictureHandle(), hx, hy);
         } else
 #endif
         {
@@ -258,17 +253,18 @@ void QCursorData::update()
 #ifndef QT_NO_XCURSOR
     // special case for non-standard dnd-* cursors
     switch (cshape) {
-    case Qt::DragCopyCursor:
-        hcurs = XcursorLibraryLoadCursor(dpy, "dnd-copy");
-        break;
-    case Qt::DragMoveCursor:
-        hcurs = XcursorLibraryLoadCursor(dpy, "dnd-move");
-        break;
-    case Qt::DragLinkCursor:
-        hcurs = XcursorLibraryLoadCursor(dpy, "dnd-link");
-        break;
-    default:
-        break;
+        case Qt::DragCopyCursor: {
+            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-copy");
+            break;
+        }
+        case Qt::DragMoveCursor: {
+            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-move");
+            break;
+        }
+        case Qt::DragLinkCursor: {
+            hcurs = XcursorLibraryLoadCursor(dpy, "dnd-link");
+            break;
+        }
     }
     if (!hcurs)
         hcurs = XcursorLibraryLoadCursor(dpy, cursorNames[cshape]);
@@ -277,85 +273,96 @@ void QCursorData::update()
 #endif // QT_NO_XCURSOR
 
     static const char cur_blank_bits[] = {
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+    };
 
-    // Non-standard X11 cursors are created from bitmaps
-
-    uint sh;
-    switch (cshape) {                        // map Q cursor to X cursor
-    case Qt::ArrowCursor:
-        sh = XC_left_ptr;
-        break;
-    case Qt::UpArrowCursor:
-        sh = XC_center_ptr;
-        break;
-    case Qt::CrossCursor:
-        sh = XC_crosshair;
-        break;
-    case Qt::WaitCursor:
-        sh = XC_watch;
-        break;
-    case Qt::IBeamCursor:
-        sh = XC_xterm;
-        break;
-    case Qt::SizeAllCursor:
-        sh = XC_fleur;
-        break;
-    case Qt::PointingHandCursor:
-        sh = XC_hand2;
-        break;
-    case Qt::SizeBDiagCursor:
-        sh = XC_top_right_corner;
-        break;
-    case Qt::SizeFDiagCursor:
-        sh = XC_bottom_right_corner;
-        break;
-    case Qt::BlankCursor:
-        XColor bg, fg;
-        bg.red   = 255 << 8;
-        bg.green = 255 << 8;
-        bg.blue  = 255 << 8;
-        fg.red   = 0;
-        fg.green = 0;
-        fg.blue  = 0;
-        pm  = XCreateBitmapFromData(dpy, rootwin, cur_blank_bits, 16, 16);
-        // reusing the pixmap as mask to create invisible cursor
-        hcurs = XCreatePixmapCursor(dpy, pm, pm, &fg, &bg, 8, 8);
-        return;
-        break;
-    case Qt::SizeVerCursor:
-    case Qt::SplitVCursor:
-        sh = XC_sb_v_double_arrow;
-        break;
-    case Qt::SizeHorCursor:
-    case Qt::SplitHCursor:
-        sh = XC_sb_h_double_arrow;
-        break;
-    case Qt::WhatsThisCursor:
-        sh = XC_question_arrow;
-        break;
-    case Qt::ForbiddenCursor:
-        sh = XC_circle;
-        break;
-    case Qt::BusyCursor:
-        sh = XC_watch;
-        break;
-    case Qt::DragCopyCursor:
-        sh = XC_tcross;
-        break;
-    case Qt::DragLinkCursor:
-        sh = XC_center_ptr;
-        break;
-    case Qt::DragMoveCursor:
-        sh = XC_top_left_arrow;
-        break;
-    default:
-        qWarning("QCursor::update: Invalid cursor shape %d", cshape);
-        return;
+    // Q cursor to X cursor
+    switch (cshape) {
+        case Qt::BlankCursor: {
+            XColor bg, fg;
+            bg.red   = 255 << 8;
+            bg.green = 255 << 8;
+            bg.blue  = 255 << 8;
+            fg.red   = 0;
+            fg.green = 0;
+            fg.blue  = 0;
+            pm  = XCreateBitmapFromData(dpy, QX11Info::appRootWindow(), cur_blank_bits, 16, 16);
+            // reusing the pixmap as mask to create invisible cursor
+            hcurs = XCreatePixmapCursor(dpy, pm, pm, &fg, &bg, 8, 8);
+            return;
+        }
+        case Qt::ArrowCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_left_ptr);
+            break;
+        }
+        case Qt::CrossCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_crosshair);
+            break;
+        }
+        case Qt::BusyCursor:
+        case Qt::WaitCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_watch);
+            break;
+        }
+        case Qt::IBeamCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_xterm);
+            break;
+        }
+        case Qt::SizeAllCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_fleur);
+            break;
+        }
+        case Qt::PointingHandCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_hand2);
+            break;
+        }
+        case Qt::SizeBDiagCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_top_right_corner);
+            break;
+        }
+        case Qt::SizeFDiagCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_bottom_right_corner);
+            break;
+        }
+        case Qt::SizeVerCursor:
+        case Qt::SplitVCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_sb_v_double_arrow);
+            break;
+        }
+        case Qt::SizeHorCursor:
+        case Qt::SplitHCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_sb_h_double_arrow);
+            break;
+        }
+        case Qt::WhatsThisCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_question_arrow);
+            break;
+        }
+        case Qt::ForbiddenCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_circle);
+            break;
+        }
+        case Qt::DragCopyCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_tcross);
+            break;
+        }
+        case Qt::UpArrowCursor:
+        case Qt::DragLinkCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_center_ptr);
+            break;
+        }
+        case Qt::DragMoveCursor: {
+            hcurs = XCreateFontCursor(dpy, XC_top_left_arrow);
+            break;
+        }
+        default: {
+            qWarning("QCursor::update: Invalid cursor shape %d", cshape);
+            return;
+        }
     }
-    hcurs = XCreateFontCursor(dpy, sh);
 
 #ifndef QT_NO_XFIXES
     if (qt_x11Data->use_xfixes)
