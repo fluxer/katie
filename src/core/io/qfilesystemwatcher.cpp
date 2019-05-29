@@ -48,7 +48,6 @@
 #include <qdebug.h>
 #include <qdir.h>
 #include <qfileinfo.h>
-#include <qmutex.h>
 #include <qset.h>
 #include <qtimer.h>
 
@@ -103,43 +102,30 @@ class QPollingFileSystemWatcherEngine : public QFileSystemWatcherEngine
         }
     };
 
-    mutable QMutex mutex;
     QHash<QString, FileInfo> files, directories;
 
 public:
     QPollingFileSystemWatcherEngine();
 
-    void run();
-
     QStringList addPaths(const QStringList &paths, QStringList *files, QStringList *directories);
     QStringList removePaths(const QStringList &paths, QStringList *files, QStringList *directories);
 
-    void stop();
-
 private Q_SLOTS:
     void timeout();
+
+private:
+    QTimer timer;
 };
 
 QPollingFileSystemWatcherEngine::QPollingFileSystemWatcherEngine()
+    : timer(this)
 {
-#ifndef QT_NO_THREAD
-    moveToThread(this);
-#endif
-}
-
-void QPollingFileSystemWatcherEngine::run()
-{
-    QTimer timer;
-    connect(&timer, SIGNAL(timeout()), SLOT(timeout()));
-    timer.start(PollingInterval);
-    (void) exec();
 }
 
 QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
                                                       QStringList *files,
                                                       QStringList *directories)
 {
-    QMutexLocker locker(&mutex);
     QStringList p = paths;
     QMutableListIterator<QString> it(p);
     while (it.hasNext()) {
@@ -160,7 +146,11 @@ QStringList QPollingFileSystemWatcherEngine::addPaths(const QStringList &paths,
         }
         it.remove();
     }
-    start();
+    if ((!this->files.isEmpty() ||
+         !this->directories.isEmpty()) &&
+        !timer.isActive()) {
+        timer.start(PollingInterval);
+    }
     return p;
 }
 
@@ -168,7 +158,6 @@ QStringList QPollingFileSystemWatcherEngine::removePaths(const QStringList &path
                                                          QStringList *files,
                                                          QStringList *directories)
 {
-    QMutexLocker locker(&mutex);
     QStringList p = paths;
     QMutableListIterator<QString> it(p);
     while (it.hasNext()) {
@@ -181,22 +170,15 @@ QStringList QPollingFileSystemWatcherEngine::removePaths(const QStringList &path
             it.remove();
         }
     }
-    if (this->files.isEmpty() && this->directories.isEmpty()) {
-        locker.unlock();
-        stop();
-        wait();
+    if (this->files.isEmpty() &&
+        this->directories.isEmpty()) {
+        timer.stop();
     }
     return p;
 }
 
-void QPollingFileSystemWatcherEngine::stop()
-{
-    quit();
-}
-
 void QPollingFileSystemWatcherEngine::timeout()
 {
-    QMutexLocker locker(&mutex);
     QMutableHashIterator<QString, FileInfo> fit(files);
     while (fit.hasNext()) {
         QHash<QString, FileInfo>::iterator x = fit.next();
@@ -421,20 +403,14 @@ QFileSystemWatcher::~QFileSystemWatcher()
 {
     Q_D(QFileSystemWatcher);
     if (d->native) {
-        d->native->stop();
-        d->native->wait();
         delete d->native;
         d->native = 0;
     }
     if (d->poller) {
-        d->poller->stop();
-        d->poller->wait();
         delete d->poller;
         d->poller = 0;
     }
     if (d->forced) {
-        d->forced->stop();
-        d->forced->wait();
         delete d->forced;
         d->forced = 0;
     }

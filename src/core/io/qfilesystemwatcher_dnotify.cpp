@@ -48,11 +48,13 @@
 #include <qsocketnotifier.h>
 #include <qcoreapplication.h>
 #include <qfileinfo.h>
+#include <qthread.h>
 #include <qtimer.h>
 #include <qwaitcondition.h>
 #include <qmutex.h>
-#include <dirent.h>
 #include <qdir.h>
+
+#include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>

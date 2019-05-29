@@ -77,33 +77,26 @@ QInotifyFileSystemWatcherEngine *QInotifyFileSystemWatcherEngine::create()
 
 QInotifyFileSystemWatcherEngine::QInotifyFileSystemWatcherEngine(int fd)
     : inotifyFd(fd)
+    , notifier(fd, QSocketNotifier::Read, this)
 {
     ::fcntl(inotifyFd, F_SETFD, FD_CLOEXEC);
 
-    moveToThread(this);
+    connect(&notifier, SIGNAL(activated(int)), SLOT(readFromInotify()));
 }
 
 QInotifyFileSystemWatcherEngine::~QInotifyFileSystemWatcherEngine()
 {
+    notifier.setEnabled(false);
     foreach (int id, pathToID)
         inotify_rm_watch(inotifyFd, id < 0 ? -id : id);
 
     ::close(inotifyFd);
 }
 
-void QInotifyFileSystemWatcherEngine::run()
-{
-    QSocketNotifier sn(inotifyFd, QSocketNotifier::Read, this);
-    connect(&sn, SIGNAL(activated(int)), SLOT(readFromInotify()));
-    (void) exec();
-}
-
 QStringList QInotifyFileSystemWatcherEngine::addPaths(const QStringList &paths,
                                                       QStringList *files,
                                                       QStringList *directories)
 {
-    QMutexLocker locker(&mutex);
-
     QStringList p = paths;
     QMutableListIterator<QString> it(p);
     while (it.hasNext()) {
@@ -151,8 +144,6 @@ QStringList QInotifyFileSystemWatcherEngine::addPaths(const QStringList &paths,
         idToPath.insert(id, path);
     }
 
-    start();
-
     return p;
 }
 
@@ -160,8 +151,6 @@ QStringList QInotifyFileSystemWatcherEngine::removePaths(const QStringList &path
                                                          QStringList *files,
                                                          QStringList *directories)
 {
-    QMutexLocker locker(&mutex);
-
     QStringList p = paths;
     QMutableListIterator<QString> it(p);
     while (it.hasNext()) {
@@ -186,15 +175,8 @@ QStringList QInotifyFileSystemWatcherEngine::removePaths(const QStringList &path
     return p;
 }
 
-void QInotifyFileSystemWatcherEngine::stop()
-{
-    quit();
-}
-
 void QInotifyFileSystemWatcherEngine::readFromInotify()
 {
-    QMutexLocker locker(&mutex);
-
     // qDebug() << "QInotifyFileSystemWatcherEngine::readFromInotify";
 
     int buffSize = 0;
