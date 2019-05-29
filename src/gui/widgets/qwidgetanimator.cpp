@@ -47,8 +47,14 @@
 
 QT_BEGIN_NAMESPACE
 
-QWidgetAnimator::QWidgetAnimator(QMainWindowLayout *layout) : m_mainWindowLayout(layout)
+QWidgetAnimator::QWidgetAnimator(QMainWindowLayout *layout)
+#ifndef QT_NO_MAINWINDOW
+    : m_mainWindowLayout(layout)
+#endif
 {
+#ifdef QT_NO_MAINWINDOW
+    Q_UNUSED(m_mainWindowLayout);
+#endif
 }
 
 void QWidgetAnimator::abort(QWidget *w)
@@ -60,6 +66,7 @@ void QWidgetAnimator::abort(QWidget *w)
         anim->stop();
         anim->deleteLater();
     }
+    locker.unlock();
 #ifndef QT_NO_MAINWINDOW
     m_mainWindowLayout->animationFinished(w);
 #endif
@@ -98,7 +105,7 @@ void QWidgetAnimator::animate(QWidget *widget, const QRect &_final_geometry, boo
     anim->setDuration(animate ? 200 : 0);
     anim->setEasingCurve(QEasingCurve::InOutQuad);
     anim->setEndValue(final_geometry);
-    m_animation_map[widget] = anim;
+    m_animation_map.insert(widget, anim);
     locker.unlock();
     connect(anim, SIGNAL(finished()), this, SLOT(animationFinished()));
     anim->start(QPropertyAnimation::DeleteWhenStopped);
