@@ -611,12 +611,8 @@ static QList<T> findChildrenHelper(const QObject *o)
     return result;
 }
 
-//pre4.3 tests the format that was used before 4.3
-bool QMainWindowLayoutState::checkFormat(QDataStream &stream, bool pre43)
+bool QMainWindowLayoutState::checkFormat(QDataStream &stream)
 {
-#ifdef QT_NO_TOOLBAR
-    Q_UNUSED(pre43);
-#endif
     while (!stream.atEnd()) {
         uchar marker;
         stream >> marker;
@@ -628,7 +624,7 @@ bool QMainWindowLayoutState::checkFormat(QDataStream &stream, bool pre43)
                 {
                     QList<QToolBar *> toolBars = findChildrenHelper<QToolBar*>(mainWindow);
                     if (!toolBarAreaLayout.restoreState(stream, toolBars, marker,
-                        pre43 /*testing 4.3 format*/, true /*testing*/)) {
+                        true /*testing*/)) {
                             return false;
                     }
                 }
@@ -669,13 +665,8 @@ bool QMainWindowLayoutState::restoreState(QDataStream &_stream,
     }
 
     QDataStream ds(copy);
-    const bool oldFormat = !checkFormat(ds, false);
-    if (oldFormat) {
-        //we should try with the old format
-        QDataStream ds2(copy);
-        if (!checkFormat(ds2, true)) {
-            return false; //format unknown
-        }
+    if (!checkFormat(ds)) {
+        return false; //format unknown
     }
 
     QDataStream stream(copy);
@@ -716,7 +707,7 @@ bool QMainWindowLayoutState::restoreState(QDataStream &_stream,
             case QToolBarAreaLayout::ToolBarStateMarkerEx:
                 {
                     QList<QToolBar *> toolBars = findChildrenHelper<QToolBar*>(mainWindow);
-                    if (!toolBarAreaLayout.restoreState(stream, toolBars, marker, oldFormat))
+                    if (!toolBarAreaLayout.restoreState(stream, toolBars, marker))
                         return false;
 
                     for (int i = 0; i < toolBars.size(); ++i) {
@@ -1474,7 +1465,7 @@ void QMainWindowLayout::animationFinished(QWidget *widget)
 #ifndef QT_NO_TOOLBAR
     if (QToolBar *tb = qobject_cast<QToolBar*>(widget)) {
         QToolBarLayout *tbl = qobject_cast<QToolBarLayout*>(tb->layout());
-        if (tbl->animating) {
+        if (tbl && tbl->animating) {
             tbl->animating = false;
             if (tbl->expanded)
                 tbl->layoutActions(tb->size());
@@ -1503,7 +1494,7 @@ void QMainWindowLayout::animationFinished(QWidget *widget)
 
 #ifndef QT_NO_DOCKWIDGET
 #ifndef QT_NO_TABBAR
-        if (qobject_cast<QDockWidget*>(widget) != 0) {
+        if (qobject_cast<QDockWidget*>(widget)) {
             // info() might return null if the widget is destroyed while
             // animating but before the animationFinished signal is received.
             if (QDockAreaLayoutInfo *info = layoutState.dockAreaLayout.info(widget))

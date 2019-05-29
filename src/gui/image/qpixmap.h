@@ -175,7 +175,6 @@ public:
 protected:
     int metric(PaintDeviceMetric) const;
 
-
 private:
     QExplicitlySharedDataPointer<QPixmapData> data;
 
