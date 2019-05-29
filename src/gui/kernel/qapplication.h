@@ -47,9 +47,6 @@
 #include <QtCore/qpoint.h>
 #include <QtCore/qsize.h>
 #include <QtGui/qcursor.h>
-#ifdef QT_INCLUDE_COMPAT
-# include <QtGui/qdesktopwidget.h>
-#endif
 
 QT_BEGIN_HEADER
 

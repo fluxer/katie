@@ -52,19 +52,9 @@
 #include <QtGui/qdrawutil.h>
 #include <QtGui/qbrush.h>
 
-#ifdef QT_INCLUDE_COMPAT
-#include <QtGui/qpolygon.h>
-#include <QtGui/qpen.h>
-#include <QtGui/qmatrix.h>
-#include <QtGui/qtransform.h>
-#include <QtGui/qfontinfo.h>
-#include <QtGui/qfontmetrics.h>
-#endif
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class QBrush;
 class QFontInfo;
