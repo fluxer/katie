@@ -52,11 +52,11 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QDeclarativeActionEvent;
 class QDeclarativeAbstractBinding;
 class QDeclarativeBinding;
 class QDeclarativeExpression;
+
 class Q_DECLARATIVE_PRIVATE_EXPORT QDeclarativeAction
 {
 public:
@@ -65,10 +65,10 @@ public:
     QDeclarativeAction(QObject *, const QString &,
                        QDeclarativeContext *, const QVariant &);
 
-    bool restore:1;
-    bool actionDone:1;
-    bool reverseEvent:1;
-    bool deletableToBinding:1;
+    bool restore;
+    bool actionDone;
+    bool reverseEvent;
+    bool deletableToBinding;
 
     QDeclarativeProperty property;
     QVariant fromValue;
@@ -114,6 +114,7 @@ public:
 class QDeclarativeStateGroup;
 class QDeclarativeState;
 class QDeclarativeStateOperationPrivate;
+
 class Q_DECLARATIVE_EXPORT QDeclarativeStateOperation : public QObject
 {
     Q_OBJECT
@@ -139,6 +140,7 @@ typedef QDeclarativeStateOperation::ActionList QDeclarativeStateActions;
 
 class QDeclarativeTransition;
 class QDeclarativeStatePrivate;
+
 class Q_DECLARATIVE_EXPORT QDeclarativeState : public QObject
 {
     Q_OBJECT
