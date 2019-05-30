@@ -83,6 +83,7 @@ install(
     TARGETS KtXml
     EXPORT KatieLibraryTargets ${INSTALL_TARGETS_DEFAULT_ARGS}
     DESTINATION ${KATIE_LIBRARIES_RELATIVE}
+    COMPONENT Runtime
 )
 
 install(

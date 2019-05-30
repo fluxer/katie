@@ -18,8 +18,10 @@ target_link_libraries(qmlfolderlistmodelplugin ${EXTRA_FOLDERLISTMODEL_LIBS})
 install(
     TARGETS qmlfolderlistmodelplugin
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/folderlistmodel
+    COMPONENT Runtime
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/folderlistmodel
+    COMPONENT Runtime
 )

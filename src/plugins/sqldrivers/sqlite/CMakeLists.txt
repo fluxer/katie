@@ -18,4 +18,5 @@ set_target_properties(qsqliteplugin PROPERTIES OUTPUT_NAME qsqlite)
 install(
     TARGETS qsqliteplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
+    COMPONENT Runtime
 )

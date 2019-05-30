@@ -26,4 +26,5 @@ set_target_properties(qtaccessiblewidgetsplugin PROPERTIES OUTPUT_NAME qtaccessi
 install(
     TARGETS qtaccessiblewidgetsplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/accessible
+    COMPONENT Runtime
 )

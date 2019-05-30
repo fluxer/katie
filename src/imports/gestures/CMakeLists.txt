@@ -18,8 +18,10 @@ target_link_libraries(qmlgesturesplugin ${EXTRA_GESTURES_LIBS})
 install(
     TARGETS qmlgesturesplugin
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/gestures
+    COMPONENT Runtime
 )
 install(
     FILES ${CMAKE_CURRENT_SOURCE_DIR}/qmldir
     DESTINATION ${KATIE_IMPORTS_RELATIVE}/Qt/labs/gestures
+    COMPONENT Runtime
 )

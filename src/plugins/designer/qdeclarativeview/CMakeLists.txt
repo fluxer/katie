@@ -16,4 +16,5 @@ target_compile_definitions(qdeclarativeviewplugin PRIVATE -DQDESIGNER_SDK_LIBRAR
 install(
     TARGETS qdeclarativeviewplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/designer
+    COMPONENT Runtime
 )

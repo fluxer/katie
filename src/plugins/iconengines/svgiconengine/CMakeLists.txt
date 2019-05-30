@@ -16,4 +16,5 @@ set_target_properties(qsvgiconplugin PROPERTIES OUTPUT_NAME qsvgicon)
 install(
     TARGETS qsvgiconplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/iconengines
+    COMPONENT Runtime
 )

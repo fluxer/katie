@@ -28,4 +28,5 @@ katie_setup_object(qnmbearerplugin sharedbearer)
 install(
     TARGETS qnmbearerplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/bearer
+    COMPONENT Runtime
 )

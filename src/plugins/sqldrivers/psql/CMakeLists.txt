@@ -18,4 +18,5 @@ set_target_properties(qsqlpsqlplugin PROPERTIES OUTPUT_NAME qsqlpsql)
 install(
     TARGETS qsqlpsqlplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
+    COMPONENT Runtime
 )

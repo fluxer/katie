@@ -16,4 +16,5 @@ set_target_properties(qicoplugin PROPERTIES OUTPUT_NAME qico)
 install(
     TARGETS qicoplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
+    COMPONENT Runtime
 )

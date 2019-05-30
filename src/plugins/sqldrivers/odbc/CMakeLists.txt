@@ -19,4 +19,5 @@ target_compile_definitions(qsqlodbcplugin PRIVATE -DUNICODE)
 install(
     TARGETS qsqlodbcplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/sqldrivers
+    COMPONENT Runtime
 )

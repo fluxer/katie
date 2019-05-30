@@ -12,4 +12,5 @@ set_target_properties(qmngplugin PROPERTIES OUTPUT_NAME qmng)
 install(
     TARGETS qmngplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
+    COMPONENT Runtime
 )

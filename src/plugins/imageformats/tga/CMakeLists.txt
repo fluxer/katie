@@ -18,4 +18,5 @@ set_target_properties(qtgaplugin PROPERTIES OUTPUT_NAME qtga)
 install(
     TARGETS qtgaplugin
     DESTINATION ${KATIE_PLUGINS_RELATIVE}/imageformats
+    COMPONENT Runtime
 )
