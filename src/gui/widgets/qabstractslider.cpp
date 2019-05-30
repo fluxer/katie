@@ -605,27 +605,27 @@ void QAbstractSlider::triggerAction(SliderAction action)
     Q_D(QAbstractSlider);
     d->blocktracking = true;
     switch (action) {
-    case SliderSingleStepAdd:
-        setSliderPosition(d->overflowSafeAdd(d->effectiveSingleStep()));
-        break;
-    case SliderSingleStepSub:
-        setSliderPosition(d->overflowSafeAdd(-d->effectiveSingleStep()));
-        break;
-    case SliderPageStepAdd:
-        setSliderPosition(d->overflowSafeAdd(d->pageStep));
-        break;
-    case SliderPageStepSub:
-        setSliderPosition(d->overflowSafeAdd(-d->pageStep));
-        break;
-    case SliderToMinimum:
-        setSliderPosition(d->minimum);
-        break;
-    case SliderToMaximum:
-        setSliderPosition(d->maximum);
-        break;
-    case SliderMove:
-    case SliderNoAction:
-        break;
+        case SliderSingleStepAdd:
+            setSliderPosition(d->overflowSafeAdd(d->effectiveSingleStep()));
+            break;
+        case SliderSingleStepSub:
+            setSliderPosition(d->overflowSafeAdd(-d->effectiveSingleStep()));
+            break;
+        case SliderPageStepAdd:
+            setSliderPosition(d->overflowSafeAdd(d->pageStep));
+            break;
+        case SliderPageStepSub:
+            setSliderPosition(d->overflowSafeAdd(-d->pageStep));
+            break;
+        case SliderToMinimum:
+            setSliderPosition(d->minimum);
+            break;
+        case SliderToMaximum:
+            setSliderPosition(d->maximum);
+            break;
+        case SliderMove:
+        case SliderNoAction:
+            break;
     };
     emit actionTriggered(action);
     d->blocktracking = false;

@@ -77,17 +77,17 @@ public:
     int singleStep;
 
     float offset_accumulated;
-    uint tracking : 1;
-    uint blocktracking :1;
-    uint pressed : 1;
-    uint invertedAppearance : 1;
-    uint invertedControls : 1;
+    bool tracking;
+    bool blocktracking;
+    bool pressed;
+    bool invertedAppearance;
+    bool invertedControls;
     Qt::Orientation orientation;
 
     QBasicTimer repeatActionTimer;
     int repeatActionTime;
     QAbstractSlider::SliderAction repeatAction;
-    
+
 #ifdef QT_KEYPAD_NAVIGATION
     int origValue;
 
