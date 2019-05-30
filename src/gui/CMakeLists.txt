@@ -405,6 +405,7 @@ set(GUI_PUBLIC_HEADERS
     QTextFrame
     QTextListFormat
     QTextCharFormat
+    QTextTableFormat
     QSpacerItem
     QVBoxLayout
     QHBoxLayout

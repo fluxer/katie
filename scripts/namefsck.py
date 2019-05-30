@@ -759,6 +759,7 @@ classlist = {
     "QTextTable",
     "QTextTableCell",
     "QTextTableCellFormat",
+    "QTextTableFormat",
     "QtGlobal",
     "QtGui",
     "QThread",
