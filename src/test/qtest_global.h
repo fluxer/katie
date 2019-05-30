@@ -48,14 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-#if (defined Q_CC_HPACC) && (defined __ia64)
-# ifdef Q_TEST_EXPORT
-#  undef Q_TEST_EXPORT
-# endif
-# define Q_TEST_EXPORT
-#endif
-
-
 namespace QTest
 {
     enum SkipMode { SkipSingle = 1, SkipAll = 2 };

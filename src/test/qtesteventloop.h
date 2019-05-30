@@ -43,7 +43,6 @@
 #define QTESTEVENTLOOP_H
 
 #include <QtTest/qtest_global.h>
-
 #include <QtCore/qcoreapplication.h>
 #include <QtCore/qeventloop.h>
 #include <QtCore/qobject.h>
@@ -52,7 +51,6 @@
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class Q_TEST_EXPORT QTestEventLoop : public QObject
 {

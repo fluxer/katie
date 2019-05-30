@@ -53,12 +53,12 @@
 // We mean it.
 //
 
-#include "QtCore/qglobal.h"
-#include <stdlib.h>
+#include "qglobal.h"
 #include <qtools_p.h>
 
-QT_BEGIN_NAMESPACE
+#include <stdlib.h>
 
+QT_BEGIN_NAMESPACE
 
 template <int N = 1>
 class QFragment

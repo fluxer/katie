@@ -43,14 +43,12 @@
 #define QTESTDATA_H
 
 #include <QtTest/qtest_global.h>
-
 #include <QtCore/qmetatype.h>
 #include <QtCore/qstring.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class QTestTable;
 class QTestDataPrivate;

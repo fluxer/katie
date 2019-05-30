@@ -42,17 +42,13 @@
 #ifndef QDBUSPENDINGCALL_H
 #define QDBUSPENDINGCALL_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qobject.h>
 #include <QtCore/qshareddata.h>
-
 #include <QtDBus/qdbusmessage.h>
-
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class QDBusConnection;
 class QDBusError;

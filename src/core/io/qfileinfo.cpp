@@ -41,7 +41,6 @@
 
 #include "qplatformdefs.h"
 #include "qfileinfo.h"
-#include "qglobal.h"
 #include "qdir.h"
 #include "qfileinfo_p.h"
 

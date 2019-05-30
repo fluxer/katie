@@ -53,7 +53,6 @@
 #include <QtTest/qtestmouse.h>
 #include <QtTest/qtesttouch.h>
 #include <QtTest/qtestkeyboard.h>
-
 #include <QtGui/qicon.h>
 #include <QtGui/qpixmap.h>
 

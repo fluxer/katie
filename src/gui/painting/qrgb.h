@@ -48,7 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 typedef unsigned int QRgb;                        // RGB triplet
 
 const QRgb  RGB_MASK    = 0x00ffffff;                // masks RGB values

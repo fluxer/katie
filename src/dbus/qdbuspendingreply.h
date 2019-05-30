@@ -42,15 +42,12 @@
 #ifndef QDBUSPENDINGREPLY_H
 #define QDBUSPENDINGREPLY_H
 
-#include <QtCore/qglobal.h>
 #include <QtDBus/qdbusargument.h>
 #include <QtDBus/qdbuspendingcall.h>
-
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class Q_DBUS_EXPORT QDBusPendingReplyData: public QDBusPendingCall
 {

@@ -53,7 +53,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QTextDocument;
 class QSyntaxHighlighterPrivate;
 class QTextCharFormat;

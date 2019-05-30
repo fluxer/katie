@@ -46,7 +46,6 @@
 #include <QtTest/qtestassert.h>
 #include <QtTest/qtestsystem.h>
 #include <QtTest/qtestspontaneevent.h>
-
 #include <QtCore/qmap.h>
 #include <QtGui/qevent.h>
 #include <QtGui/qwidget.h>
@@ -54,7 +53,6 @@
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 extern Q_GUI_EXPORT void qt_translateRawTouchEvent(QWidget *window,
                                                    QTouchEvent::DeviceType deviceType,

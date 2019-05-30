@@ -49,7 +49,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QIconEngine;
 
 struct Q_GUI_EXPORT QIconEngineFactoryInterface : public QFactoryInterface

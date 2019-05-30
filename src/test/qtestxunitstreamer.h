@@ -48,7 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QTestLogger;
 
 class QTestXunitStreamer: public QTestBasicStreamer

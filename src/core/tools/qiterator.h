@@ -48,7 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 #define Q_DECLARE_SEQUENTIAL_ITERATOR(C) \
 \
 template <class T> \

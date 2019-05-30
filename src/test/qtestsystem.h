@@ -50,7 +50,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 class QWidget;
 #ifdef Q_WS_X11
 extern void qt_x11_wait_for_window_manager(QWidget *w);

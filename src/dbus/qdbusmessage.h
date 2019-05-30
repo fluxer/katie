@@ -46,11 +46,9 @@
 #include <QtCore/qlist.h>
 #include <QtCore/qvariant.h>
 
-
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class QDBusMessagePrivate;
 class Q_DBUS_EXPORT QDBusMessage

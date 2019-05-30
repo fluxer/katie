@@ -53,8 +53,6 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
-
 #include <QVector>
 
 QT_BEGIN_NAMESPACE

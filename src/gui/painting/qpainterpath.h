@@ -42,17 +42,15 @@
 #ifndef QPAINTERPATH_H
 #define QPAINTERPATH_H
 
-#include <QtGui/qmatrix.h>
-#include <QtCore/qglobal.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qline.h>
 #include <QtCore/qvector.h>
 #include <QtCore/qscopedpointer.h>
+#include <QtGui/qmatrix.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class QFont;
 class QPainterPathPrivate;

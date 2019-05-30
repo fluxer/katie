@@ -49,7 +49,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 template <class ElementType>
 class QTestCoreElement: public QTestCoreList<ElementType>
 {

@@ -39,14 +39,13 @@
 **
 ****************************************************************************/
 
-#if !defined(QTESTMOUSE_H)
+#ifndef QTESTMOUSE_H
 #define QTESTMOUSE_H
 
 #include <QtTest/qtest_global.h>
 #include <QtTest/qtestassert.h>
 #include <QtTest/qtestsystem.h>
 #include <QtTest/qtestspontaneevent.h>
-
 #include <QtCore/qpoint.h>
 #include <QtCore/qstring.h>
 #include <QtGui/qapplication.h>
@@ -56,7 +55,6 @@
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 namespace QTest
 {

@@ -44,7 +44,6 @@
 
 #include <QtCore/qstring.h>
 
-
 QT_BEGIN_HEADER
 
 struct DBusError;
@@ -86,7 +85,7 @@ public:
         InvalidMember
     };
 
-    QDBusError(const DBusError *error = 0);
+    QDBusError(const DBusError *error = Q_NULLPTR);
     QDBusError(const QDBusMessage& msg);
     QDBusError(ErrorType error, const QString &message);
     QDBusError(const QDBusError &other);

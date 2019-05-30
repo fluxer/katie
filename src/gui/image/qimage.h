@@ -42,12 +42,12 @@
 #ifndef QIMAGE_H
 #define QIMAGE_H
 
-#include <QtGui/qtransform.h>
-#include <QtGui/qpaintdevice.h>
-#include <QtGui/qrgb.h>
 #include <QtCore/qbytearray.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qstring.h>
+#include <QtGui/qtransform.h>
+#include <QtGui/qpaintdevice.h>
+#include <QtGui/qrgb.h>
 
 QT_BEGIN_HEADER
 

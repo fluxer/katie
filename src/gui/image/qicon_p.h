@@ -53,14 +53,13 @@
 // We mean it.
 //
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qsize.h>
-#include <QtCore/qlist.h>
 #include <QtGui/qpixmap.h>
 #include <QtGui/qicon.h>
 #include <QtGui/qiconengine.h>
 
 #ifndef QT_NO_ICON
+
 QT_BEGIN_NAMESPACE
 
 class QIconPrivate

@@ -42,7 +42,6 @@
 #ifndef QACCESSIBLE_H
 #define QACCESSIBLE_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qobject.h>
 #include <QtCore/qrect.h>
 #include <QtCore/qset.h>
@@ -51,9 +50,9 @@
 #include <QtGui/qcolor.h>
 #include <QtGui/qevent.h>
 
-QT_BEGIN_HEADER
-
 #ifndef QT_NO_ACCESSIBILITY
+
+QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
@@ -455,8 +454,8 @@ QT_END_NAMESPACE
 #define QAccessibleInterface_iid "com.trolltech.Qt.QAccessibleInterface"
 Q_DECLARE_INTERFACE(QAccessibleInterface, QAccessibleInterface_iid)
 
-#endif // QT_NO_ACCESSIBILITY
-
 QT_END_HEADER
+
+#endif // QT_NO_ACCESSIBILITY
 
 #endif // QACCESSIBLE_H

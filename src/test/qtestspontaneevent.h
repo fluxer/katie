@@ -48,7 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
 #ifndef QTEST_NO_SIZEOF_CHECK
 template <int>
 class QEventSizeOfChecker
@@ -103,9 +102,9 @@ protected:
     QEvent::Type t;
 
 private:
-    bool posted : 1;
-    bool spont : 1;
-    bool m_accept : 1;
+    bool posted;
+    bool spont;
+    bool m_accept;
 };
 
 QT_END_NAMESPACE

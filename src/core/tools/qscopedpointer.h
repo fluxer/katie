@@ -45,6 +45,7 @@
 #include <QtCore/qglobal.h>
 
 QT_BEGIN_HEADER
+
 QT_BEGIN_NAMESPACE
 
 template <typename T>

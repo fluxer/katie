@@ -42,14 +42,12 @@
 #ifndef QICONENGINE_H
 #define QICONENGINE_H
 
-#include <QtCore/qglobal.h>
 #include <QtCore/qlist.h>
 #include <QtGui/qicon.h>
 
 QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
-
 
 class Q_GUI_EXPORT QIconEngine
 {

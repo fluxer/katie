@@ -54,11 +54,11 @@
 // We mean it.
 //
 
+#include <QtCore/QHash>
 #include <QtGui/QIcon>
 #include <QtGui/QIconEngine>
 #include <QtGui/QPixmapCache>
 #include <qicon_p.h>
-#include <QtCore/QHash>
 
 QT_BEGIN_NAMESPACE
 

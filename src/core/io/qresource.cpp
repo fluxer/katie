@@ -47,7 +47,6 @@
 #include "qmutex.h"
 #include "qdebug.h"
 #include "qlocale.h"
-#include "qglobal.h"
 #include "qvector.h"
 #include "qdatetime.h"
 #include "qbytearray.h"
