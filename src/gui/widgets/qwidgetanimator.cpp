@@ -87,15 +87,22 @@ void QWidgetAnimator::animate(QWidget *widget, const QRect &_final_geometry, boo
     if (r.right() < 0 || r.bottom() < 0)
         r = QRect();
 
-    animate = animate && !r.isNull() && !_final_geometry.isNull();
+#ifndef QT_NO_ANIMATION
+    bool animate_widget = animate && !r.isNull() && !_final_geometry.isNull();
+#else
+    bool animate_widget = false;
+#endif
 
     // might make the wigdet go away by sending it to negative space
     const QRect final_geometry = _final_geometry.isValid() || widget->isWindow() ? _final_geometry :
         QRect(QPoint(-500 - widget->width(), -500 - widget->height()), widget->size());
 
-    if (!animate) {
+    if (!animate_widget) {
+        // we do it in one shot
         widget->setGeometry(final_geometry);
+#ifndef QT_NO_MAINWINDOW
         m_mainWindowLayout->animationFinished(widget);
+#endif // QT_NO_MAINWINDOW
         return;
     }
 
@@ -111,13 +118,7 @@ void QWidgetAnimator::animate(QWidget *widget, const QRect &_final_geometry, boo
     m_animation_map.insert(widget, anim);
     connect(anim, SIGNAL(finished()), this, SLOT(animationFinished()));
     anim->start();
-#else
-    //we do it in one shot
-    widget->setGeometry(final_geometry);
-#ifndef QT_NO_MAINWINDOW
-    m_mainWindowLayout->animationFinished(widget);
-#endif //QT_NO_MAINWINDOW
-#endif //QT_NO_ANIMATION
+#endif // QT_NO_ANIMATION
 }
 
 bool QWidgetAnimator::animating() const
