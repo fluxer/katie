@@ -30,6 +30,16 @@ set(DBUS_PUBLIC_HEADERS
     QDBusVariant
 )
 
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtXml
+    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
+    ${DBUS_INCLUDES}
+)
+
 set(DBUS_HEADERS
     ${DBUS_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusargument.h
@@ -94,17 +104,6 @@ set(DBUS_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusservicewatcher.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusunixfiledescriptor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/qdbusvirtualobject.cpp
-)
-
-include_directories(
-    ${CMAKE_BINARY_DIR}/include
-    ${CMAKE_BINARY_DIR}/privateinclude
-    ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_BINARY_DIR}/include/QtXml
-    ${CMAKE_BINARY_DIR}/privateinclude/QtXml
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${DBUS_INCLUDES}
 )
 
 katie_generate_misc("${DBUS_HEADERS}" QtDBus)

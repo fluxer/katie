@@ -13,6 +13,7 @@ macro(KATIE_RESOURCES RESOURCES)
             if("${rscext}" STREQUAL ".ui")
                 set(rscout "${rscpath}/ui_${rscname}.h")
                 make_directory(${rscpath})
+                include_directories(${rscpath})
                 add_custom_command(
                     COMMAND ${KATIE_UIC} "${resource}" -o "${rscout}"
                     OUTPUT "${rscout}"
@@ -21,6 +22,7 @@ macro(KATIE_RESOURCES RESOURCES)
             elseif("${rscext}" STREQUAL ".qrc")
                 set(rscout "${rscpath}/qrc_${rscname}.cpp")
                 make_directory(${rscpath})
+                include_directories(${rscpath})
                 add_custom_command(
                     COMMAND ${KATIE_RCC} "${resource}" -o "${rscout}" -name "${rscname}"
                     OUTPUT "${rscout}"
@@ -43,6 +45,7 @@ macro(KATIE_RESOURCES RESOURCES)
                         set(mocargs ${mocargs} -I${incdir})
                     endforeach()
                     make_directory(${rscpath})
+                    include_directories(${rscpath})
                     add_custom_command(
                         COMMAND ${KATIE_MOC} -nw "${resource}" -o "${rscout}" ${mocargs}
                         OUTPUT "${rscout}"

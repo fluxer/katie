@@ -19,8 +19,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtScriptTools
     ${CMAKE_BINARY_DIR}/privateinclude/QtScriptTools
-    ${CMAKE_CURRENT_SOURCE_DIR}/debugging
-    ${CMAKE_CURRENT_BINARY_DIR}/debugging
 )
 
 set(SCRIPTTOOLS_HEADERS

@@ -53,10 +53,10 @@
 // We mean it.
 //
 
-#include "rewriter/textwriter_p.h"
-#include "parser/qdeclarativejslexer_p.h"
-#include "parser/qdeclarativejsparser_p.h"
-#include "parser/qdeclarativejsnodepool_p.h"
+#include "textwriter_p.h"
+#include "qdeclarativejslexer_p.h"
+#include "qdeclarativejsparser_p.h"
+#include "qdeclarativejsnodepool_p.h"
 
 QT_BEGIN_NAMESPACE
 

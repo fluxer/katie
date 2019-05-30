@@ -1,3 +1,7 @@
+add_definitions(
+    -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
+)
+
 # semi-bootstraped
 add_subdirectory(moc)
 

@@ -1,11 +1,13 @@
 set(GUI_HEADERS
     ${GUI_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyle_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylefactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyleoption.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstyleplugin.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcommonstylepixmaps_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcommonstyle.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/styles/qcommonstyle_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qstylehelper_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle.h
     ${CMAKE_CURRENT_SOURCE_DIR}/styles/qproxystyle_p.h

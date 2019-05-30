@@ -440,35 +440,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
     ${CMAKE_BINARY_DIR}/include/QtGui
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
-    ${CMAKE_CURRENT_SOURCE_DIR}/accessible
-    ${CMAKE_CURRENT_SOURCE_DIR}/animation
-    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs
-    ${CMAKE_CURRENT_SOURCE_DIR}/effects
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview
-    ${CMAKE_CURRENT_SOURCE_DIR}/image
-    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel
-    ${CMAKE_CURRENT_SOURCE_DIR}/math3d
-    ${CMAKE_CURRENT_SOURCE_DIR}/painting
-    ${CMAKE_CURRENT_SOURCE_DIR}/styles
-    ${CMAKE_CURRENT_SOURCE_DIR}/text
-    ${CMAKE_CURRENT_SOURCE_DIR}/util
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgets
-    ${CMAKE_CURRENT_BINARY_DIR}/accessible
-    ${CMAKE_CURRENT_BINARY_DIR}/animation
-    ${CMAKE_CURRENT_BINARY_DIR}/dialogs
-    ${CMAKE_CURRENT_BINARY_DIR}/effects
-    ${CMAKE_CURRENT_BINARY_DIR}/graphicsview
-    ${CMAKE_CURRENT_BINARY_DIR}/image
-    ${CMAKE_CURRENT_BINARY_DIR}/itemviews
-    ${CMAKE_CURRENT_BINARY_DIR}/kernel
-    ${CMAKE_CURRENT_BINARY_DIR}/math3d
-    ${CMAKE_CURRENT_BINARY_DIR}/painting
-    ${CMAKE_CURRENT_BINARY_DIR}/styles
-    ${CMAKE_CURRENT_BINARY_DIR}/text
-    ${CMAKE_CURRENT_BINARY_DIR}/util
-    ${CMAKE_CURRENT_BINARY_DIR}/widgets
-    ${CMAKE_SOURCE_DIR}/src/core/tools
     ${FREETYPE_INCLUDE_DIRS}
     ${X11_INCLUDE_DIR}
 )

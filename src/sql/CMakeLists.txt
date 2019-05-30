@@ -40,17 +40,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtSql
     ${CMAKE_BINARY_DIR}/privateinclude/QtSql
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel
-    ${CMAKE_CURRENT_SOURCE_DIR}/drivers
-    ${CMAKE_CURRENT_SOURCE_DIR}/models
-    ${CMAKE_CURRENT_BINARY_DIR}/kernel
-    ${CMAKE_CURRENT_BINARY_DIR}/drivers
-    ${CMAKE_CURRENT_BINARY_DIR}/models
-    ${CMAKE_CURRENT_BINARY_DIR}/drivers/ibase
-    ${CMAKE_CURRENT_BINARY_DIR}/drivers/mysql
-    ${CMAKE_CURRENT_BINARY_DIR}/drivers/odbc
-    ${CMAKE_CURRENT_BINARY_DIR}/drivers/psql
-    ${CMAKE_CURRENT_BINARY_DIR}/drivers/sqlite
 )
 
 katie_generate_misc("${SQL_HEADERS}" QtSql)

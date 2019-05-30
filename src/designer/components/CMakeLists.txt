@@ -40,28 +40,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
     ${CMAKE_BINARY_DIR}/include/QtDesignerComponents
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesignerComponents
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/buddyeditor
-    ${CMAKE_CURRENT_SOURCE_DIR}/formeditor
-    ${CMAKE_CURRENT_SOURCE_DIR}/objectinspector
-    ${CMAKE_CURRENT_SOURCE_DIR}/propertyeditor
-    ${CMAKE_CURRENT_SOURCE_DIR}/signalsloteditor
-    ${CMAKE_CURRENT_SOURCE_DIR}/tabordereditor
-    ${CMAKE_CURRENT_SOURCE_DIR}/taskmenu
-    ${CMAKE_CURRENT_SOURCE_DIR}/widgetbox
-    ${CMAKE_CURRENT_BINARY_DIR}/buddyeditor
-    ${CMAKE_CURRENT_BINARY_DIR}/formeditor
-    ${CMAKE_CURRENT_BINARY_DIR}/objectinspector
-    ${CMAKE_CURRENT_BINARY_DIR}/propertyeditor
-    ${CMAKE_CURRENT_BINARY_DIR}/signalsloteditor
-    ${CMAKE_CURRENT_BINARY_DIR}/tabordereditor
-    ${CMAKE_CURRENT_BINARY_DIR}/taskmenu
-    ${CMAKE_CURRENT_BINARY_DIR}/widgetbox
-    ${CMAKE_SOURCE_DIR}/src/designer/components
-    ${CMAKE_SOURCE_DIR}/src/designer/sdk
-    ${CMAKE_SOURCE_DIR}/src/designer/extension
-    ${CMAKE_SOURCE_DIR}/src/designer/shared
-    ${CMAKE_SOURCE_DIR}/src/designer
 )
 
 if(KATIE_TYPE STREQUAL SHARED)

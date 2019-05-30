@@ -62,7 +62,7 @@ struct ClassInfoEntry
     const char *header;
 };
 
-#include "shared/qclass_lib_map.h"
+#include "qclass_lib_map.h"
 
 namespace CPP {
 

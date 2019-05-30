@@ -48,20 +48,7 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtDeclarative
     ${CMAKE_BINARY_DIR}/privateinclude/QtDeclarative
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/util
-    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsitems
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/parser
-    ${CMAKE_CURRENT_SOURCE_DIR}/qml/rewriter
-    ${CMAKE_CURRENT_BINARY_DIR}/util
-    ${CMAKE_CURRENT_BINARY_DIR}/graphicsitems
-    ${CMAKE_CURRENT_BINARY_DIR}/qml
-    ${CMAKE_CURRENT_BINARY_DIR}/qml/parser
-    ${CMAKE_CURRENT_BINARY_DIR}/qml/rewriter
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
-    ${CMAKE_SOURCE_DIR}/src/gui/painting
-    ${CMAKE_SOURCE_DIR}/src/core/tools
 )
 
 katie_generate_misc("${DECLARATIVE_HEADERS}" QtDeclarative)

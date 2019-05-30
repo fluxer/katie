@@ -10,6 +10,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslayoutitem_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicslinearlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsproxywidget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsproxywidget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene_bsp_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/graphicsview/qgraphicsscene_p.h

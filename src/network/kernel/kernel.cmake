@@ -3,6 +3,7 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qauthenticator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostaddress_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qhostinfo_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qurlinfo.h

@@ -49,7 +49,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qvector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineoption.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qcommandlineparser.h
-
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qiterator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/qpair.h
 )

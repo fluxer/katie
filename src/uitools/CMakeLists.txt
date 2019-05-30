@@ -47,7 +47,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtScript
     ${CMAKE_BINARY_DIR}/include/QtUiTools
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
-    ${CMAKE_CURRENT_SOURCE_DIR}
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
 )

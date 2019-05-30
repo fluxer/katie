@@ -50,9 +50,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtGui
     ${CMAKE_BINARY_DIR}/include/QtSvg
     ${CMAKE_BINARY_DIR}/privateinclude/QtSvg
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_SOURCE_DIR}/src/core/tools
-    ${CMAKE_SOURCE_DIR}/src/gui/painting
     ${CMAKE_SOURCE_DIR}/src/3rdparty/harfbuzz/src
     ${ZLIB_INCLUDE_DIRS}
 )

@@ -22,6 +22,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocument_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtexthtmlparser_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qabstracttextdocumentlayout.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/text/qabstracttextdocumentlayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextdocumentlayout_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextcursor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/text/qtextcursor_p.h

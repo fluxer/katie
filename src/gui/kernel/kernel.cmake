@@ -8,6 +8,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qboxlayout.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qclipboard.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qcursor_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdesktopwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdrag.h
     ${CMAKE_CURRENT_SOURCE_DIR}/kernel/qdnd_p.h

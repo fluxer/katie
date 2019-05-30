@@ -61,16 +61,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtNetwork
     ${CMAKE_BINARY_DIR}/privateinclude/QtNetwork
-    ${CMAKE_CURRENT_SOURCE_DIR}/access
-    ${CMAKE_CURRENT_SOURCE_DIR}/bearer
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel
-    ${CMAKE_CURRENT_SOURCE_DIR}/socket
-    ${CMAKE_CURRENT_SOURCE_DIR}/ssl
-    ${CMAKE_CURRENT_BINARY_DIR}/access
-    ${CMAKE_CURRENT_BINARY_DIR}/bearer
-    ${CMAKE_CURRENT_BINARY_DIR}/kernel
-    ${CMAKE_CURRENT_BINARY_DIR}/socket
-    ${CMAKE_CURRENT_BINARY_DIR}/ssl
     ${OPENSSL_INCLUDE_DIR}
 )
 

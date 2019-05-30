@@ -34,11 +34,31 @@ set(SCRIPT_PUBLIC_HEADERS
     QScriptValueList
 )
 
+include_directories(
+    ${CMAKE_BINARY_DIR}/include
+    ${CMAKE_BINARY_DIR}/privateinclude
+    ${CMAKE_BINARY_DIR}/include/QtCore
+    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
+    ${CMAKE_BINARY_DIR}/include/QtScript
+    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/debugger
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/unicode
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode
+    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated
+    ${PCRE_INCLUDES}
+)
+
 set(SCRIPT_SOURCES
     ${SCRIPT_SOURCES}
-    # Generated files, simply list them for JavaScriptCore
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated/Grammar.cpp
-    # JSCore
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSCallbackConstructor.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSCallbackFunction.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API/JSCallbackObject.cpp
@@ -150,35 +170,6 @@ set(SCRIPT_SOURCES
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/Threading.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/TypeTraits.cpp
     ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode/UTF8.cpp
-)
-
-include_directories(
-    ${CMAKE_BINARY_DIR}/include
-    ${CMAKE_BINARY_DIR}/privateinclude
-    ${CMAKE_BINARY_DIR}/include/QtCore
-    ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_BINARY_DIR}/include/QtScript
-    ${CMAKE_BINARY_DIR}/privateinclude/QtScript
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/api
-    ${CMAKE_CURRENT_SOURCE_DIR}/bridge
-    ${CMAKE_CURRENT_SOURCE_DIR}/parser
-    ${CMAKE_CURRENT_BINARY_DIR}/api
-    ${CMAKE_CURRENT_BINARY_DIR}/bridge
-    ${CMAKE_CURRENT_BINARY_DIR}/parser
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/parser
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecompiler
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/debugger
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/runtime
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/wtf/unicode
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/unicode
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/interpreter
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/API
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/bytecode
-    ${CMAKE_SOURCE_DIR}/src/3rdparty/javascriptcore/generated
-    ${PCRE_INCLUDES}
 )
 
 katie_generate_misc("${SCRIPT_HEADERS}" QtScript)

@@ -103,13 +103,21 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtTest
     ${CMAKE_BINARY_DIR}/privateinclude/QtTest
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    # for fftw and valgrind
+    ${CMAKE_SOURCE_DIR}/src
 )
 
 katie_generate_misc("${TEST_HEADERS}" QtTest)
 katie_generate_public("${TEST_PUBLIC_HEADERS}" QtTest)
 katie_generate_package(KtTest "KtCore")
 katie_setup_target(KtTest ${TEST_SOURCES} ${TEST_HEADERS})
+
+# for 3rd party source
+if(HAVE_SYS_TIME_H)
+    add_definitions(-DTIME_WITH_SYS_TIME=1 -DHAVE_SYS_TIME_H)
+else()
+    add_definitions(-DTIME_WITH_SYS_TIME=0)
+endif()
 
 add_library(KtTest ${KATIE_TYPE} ${KtTest_SOURCES})
 target_link_libraries(KtTest ${EXTRA_TEST_LIBS})

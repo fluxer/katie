@@ -240,24 +240,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude
     ${CMAKE_BINARY_DIR}/include/QtCore
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
-    ${CMAKE_CURRENT_SOURCE_DIR}/codecs
-    ${CMAKE_CURRENT_SOURCE_DIR}/concurrent
-    ${CMAKE_CURRENT_SOURCE_DIR}/global
-    ${CMAKE_CURRENT_SOURCE_DIR}/io
-    ${CMAKE_CURRENT_SOURCE_DIR}/json
-    ${CMAKE_CURRENT_SOURCE_DIR}/kernel
-    ${CMAKE_CURRENT_SOURCE_DIR}/plugin
-    ${CMAKE_CURRENT_SOURCE_DIR}/thread
-    ${CMAKE_CURRENT_SOURCE_DIR}/tools
-    ${CMAKE_CURRENT_BINARY_DIR}/codecs
-    ${CMAKE_CURRENT_BINARY_DIR}/concurrent
-    ${CMAKE_CURRENT_BINARY_DIR}/global
-    ${CMAKE_CURRENT_BINARY_DIR}/io
-    ${CMAKE_CURRENT_BINARY_DIR}/json
-    ${CMAKE_CURRENT_BINARY_DIR}/kernel
-    ${CMAKE_CURRENT_BINARY_DIR}/plugin
-    ${CMAKE_CURRENT_BINARY_DIR}/thread
-    ${CMAKE_CURRENT_BINARY_DIR}/tools
     ${ZLIB_INCLUDE_DIRS}
     ${OPENSSL_INCLUDE_DIR}
 )

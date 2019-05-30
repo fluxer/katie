@@ -12,6 +12,7 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_command_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/morphmenu_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_command2_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_propertycommand_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_formbuilder_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/qdesigner_taskmenu_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/shared/formlayoutmenu_p.h

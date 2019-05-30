@@ -5,6 +5,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolor_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcolormap.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/painting/qcssutil_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qdrawutil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qgraphicssystem_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/painting/qmatrix.h

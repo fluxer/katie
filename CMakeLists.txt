@@ -187,7 +187,6 @@ add_feature_info(accessibility WITH_ACCESSIBILITY "build accessibility support")
 include(mkspecs/mkspecs.cmake)
 
 add_definitions(
-    -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
     -DQT_ASCII_CAST_WARNINGS
     -DQT_POSIX_IPC
     # -DQT_STRICT_ITERATORS
@@ -212,11 +211,6 @@ endif()
 
 # for 3rd party source used in test component
 check_include_file(sys/time.h HAVE_SYS_TIME_H)
-if(HAVE_SYS_TIME_H)
-    add_definitions(-DTIME_WITH_SYS_TIME=1 -DHAVE_SYS_TIME_H)
-else()
-    add_definitions(-DTIME_WITH_SYS_TIME=0)
-endif()
 
 # used in qconfig.h
 check_type_size(size_t QT_POINTER_SIZE)
@@ -483,9 +477,6 @@ if(PYTHONINTERP_FOUND)
 else()
     message(WARNING "\nUsing pre-generated classes map")
 endif()
-
-# various sources use #include <shared/blah.h>
-include_directories(${CMAKE_SOURCE_DIR}/src)
 
 if(ENABLE_TESTING)
     message(WARNING

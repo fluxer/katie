@@ -3,6 +3,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qabstractitemview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qheaderview_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qidentityproxymodel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qlistview.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qlistview_p.h
@@ -34,6 +35,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qstandarditemmodel_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qstringlistmodel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qtreewidgetitemiterator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qtreewidgetitemiterator_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qdatawidgetmapper.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qfileiconprovider.h
     ${CMAKE_CURRENT_SOURCE_DIR}/itemviews/qfileiconprovider_p.h

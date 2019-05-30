@@ -20,6 +20,7 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qdockwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qdockwidget_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qdockarealayout_p.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qeffects_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qfontcombobox.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qframe.h
     ${CMAKE_CURRENT_SOURCE_DIR}/widgets/qframe_p.h

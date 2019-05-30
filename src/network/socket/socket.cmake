@@ -6,6 +6,7 @@ set(NETWORK_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qabstractsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpsocket_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qudpsocket.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qtcpserver.h
     ${CMAKE_CURRENT_SOURCE_DIR}/socket/qlocalserver.h
