@@ -4304,9 +4304,8 @@ bool QImage::loadFromData(const char *data, int len, const char *format)
 
 QImage QImage::fromData(const char *data, int size, const char *format)
 {
-    QByteArray a = QByteArray::fromRawData(data, size);
     QBuffer b;
-    b.setData(a);
+    b.setData(data, size);
     b.open(QIODevice::ReadOnly);
     return QImageReader(&b, format).read();
 }
