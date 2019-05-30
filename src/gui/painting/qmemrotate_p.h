@@ -59,12 +59,10 @@ QT_BEGIN_NAMESPACE
 
 #define QT_ROTATION_CACHEDREAD 1
 #define QT_ROTATION_CACHEDWRITE 2
-#define QT_ROTATION_PACKING 3
-#define QT_ROTATION_TILED 4
 
 #ifndef QT_ROTATION_ALGORITHM
 #if Q_BYTE_ORDER == Q_LITTLE_ENDIAN
-#define QT_ROTATION_ALGORITHM QT_ROTATION_TILED
+#define QT_ROTATION_ALGORITHM QT_ROTATION_CACHEDWRITE
 #else
 #define QT_ROTATION_ALGORITHM QT_ROTATION_CACHEDREAD
 #endif
@@ -75,7 +73,7 @@ QT_BEGIN_NAMESPACE
     void qt_memrotate180(const srctype*, int, int, int, desttype*, int); \
     void qt_memrotate270(const srctype*, int, int, int, desttype*, int)
 
-void Q_GUI_EXPORT qt_memrotate90(const quint32*, int, int, int, quint32*, int);
+void qt_memrotate90(const quint32*, int, int, int, quint32*, int);
 void qt_memrotate180(const quint32*, int, int, int, quint32*, int);
 void qt_memrotate270(const quint32*, int, int, int, quint32*, int);
 
