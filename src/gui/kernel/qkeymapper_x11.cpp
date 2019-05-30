@@ -917,10 +917,9 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
     }
 
     // some XmbLookupString implementations don't return buffer overflow correctly,
-    // so we increase the input buffer to allow for long strings...
+    // so we use large input buffer to allow for long strings...
     // 256 chars * 2 bytes + 1 null-term == 513 bytes
-    QByteArray chars;
-    chars.resize(513);
+    QByteArray chars(513, Qt::Uninitialized);
 
     count = XLookupString(&xkeyevent, chars.data(), chars.size(), &keysym, 0);
 
