@@ -60,13 +60,11 @@ QWidgetAnimator::QWidgetAnimator(QMainWindowLayout *layout)
 void QWidgetAnimator::abort(QWidget *w)
 {
 #ifndef QT_NO_ANIMATION
-    QMutexLocker locker(&m_mutex);
     QPropertyAnimation *anim = m_animation_map.take(w);
     if (anim) {
         anim->stop();
         anim->deleteLater();
     }
-    locker.unlock();
 #ifndef QT_NO_MAINWINDOW
     m_mainWindowLayout->animationFinished(w);
 #endif
@@ -95,20 +93,24 @@ void QWidgetAnimator::animate(QWidget *widget, const QRect &_final_geometry, boo
     const QRect final_geometry = _final_geometry.isValid() || widget->isWindow() ? _final_geometry :
         QRect(QPoint(-500 - widget->width(), -500 - widget->height()), widget->size());
 
+    if (!animate) {
+        widget->setGeometry(final_geometry);
+        m_mainWindowLayout->animationFinished(widget);
+        return;
+    }
+
 #ifndef QT_NO_ANIMATION
-    QMutexLocker locker(&m_mutex);
-    QPropertyAnimation* it = m_animation_map.value(widget);
-    if (it && it->endValue().toRect() == final_geometry)
+    QPropertyAnimation* anim = m_animation_map.value(widget);
+    if (anim && anim->endValue().toRect() == final_geometry)
         return;
 
-    QPropertyAnimation *anim = new QPropertyAnimation(widget, "geometry", widget);
-    anim->setDuration(animate ? 200 : 0);
+    anim = new QPropertyAnimation(widget, "geometry", widget);
+    anim->setDuration(200);
     anim->setEasingCurve(QEasingCurve::InOutQuad);
     anim->setEndValue(final_geometry);
     m_animation_map.insert(widget, anim);
-    locker.unlock();
     connect(anim, SIGNAL(finished()), this, SLOT(animationFinished()));
-    anim->start(QPropertyAnimation::DeleteWhenStopped);
+    anim->start();
 #else
     //we do it in one shot
     widget->setGeometry(final_geometry);
