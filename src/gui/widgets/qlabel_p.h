@@ -101,14 +101,14 @@ public:
 #endif
     ushort align;
     short indent;
-    uint scaledcontents :1;
-    mutable uint textLayoutDirty : 1;
-    mutable uint textDirty : 1;
-    mutable uint isRichText : 1;
-    mutable uint isTextLabel : 1;
-    mutable uint hasShortcut : 1;
+    bool scaledcontents;
+    mutable bool textLayoutDirty;
+    mutable bool textDirty;
+    bool isRichText;
+    bool isTextLabel;
+    bool hasShortcut;
     Qt::TextFormat textformat;
-    mutable QTextControl *control;
+    QTextControl *control;
     mutable QTextCursor shortcutCursor;
     Qt::TextInteractionFlags textInteractionFlags;
 
@@ -120,7 +120,7 @@ public:
 
     void ensureTextPopulated() const;
     void ensureTextLayouted() const;
-    void ensureTextControl() const;
+    void ensureTextControl();
     void sendControlEvent(QEvent *e);
 
     void _q_linkHovered(const QString &link);
@@ -136,8 +136,8 @@ public:
     bool openExternalLinks;
 
 #ifndef QT_NO_CURSOR
-    uint validCursor : 1;
-    uint onAnchor : 1;
+    bool validCursor;
+    bool onAnchor;
     QCursor cursor;
 #endif
 

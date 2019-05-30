@@ -1329,7 +1329,7 @@ bool QLabel::hasScaledContents() const
 void QLabel::setScaledContents(bool enable)
 {
     Q_D(QLabel);
-    if ((bool)d->scaledcontents == enable)
+    if (d->scaledcontents == enable)
         return;
     d->scaledcontents = enable;
     if (!enable) {
@@ -1450,13 +1450,13 @@ void QLabelPrivate::ensureTextLayouted() const
     textLayoutDirty = false;
 }
 
-void QLabelPrivate::ensureTextControl() const
+void QLabelPrivate::ensureTextControl()
 {
-    Q_Q(const QLabel);
+    Q_Q(QLabel);
     if (!isTextLabel)
         return;
     if (!control) {
-        control = new QTextControl(const_cast<QLabel *>(q));
+        control = new QTextControl(q);
         control->document()->setUndoRedoEnabled(false);
         control->document()->setDefaultFont(q->font());
         control->setTextInteractionFlags(textInteractionFlags);
