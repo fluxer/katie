@@ -146,6 +146,7 @@ if(NOT KATIE_FOUND)
 
         set(KATIE_DEFINITIONS ${KATIE_DEFINITIONS} -DQT_NAMESPACE_COMPAT -DQT_FOREACH_COMPAT)
         set(QT_DEFINITIONS ${KATIE_DEFINITIONS})
+        set(QT4_DEFINITIONS ${KATIE_DEFINITIONS})
 
         foreach(component ${KATIE_COMPONENTS})
             string(TOUPPER ${component} uppercomp)
