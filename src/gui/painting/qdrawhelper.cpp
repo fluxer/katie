@@ -5151,9 +5151,6 @@ inline static void qt_bitmapblit_quint16(QRasterBuffer *rasterBuffer,
 uchar qt_pow_rgb_gamma[256];
 uchar qt_pow_rgb_invgamma[256];
 
-uint qt_pow_gamma[256];
-uchar qt_pow_invgamma[2048];
-
 static void qt_alphamapblit_quint16(QRasterBuffer *rasterBuffer,
                                     int x, int y, quint32 color,
                                     const uchar *map,
