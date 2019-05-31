@@ -79,7 +79,7 @@ struct QIconDirInfo
     short maxSize;
     short minSize;
     short threshold;
-    Type type : 4;
+    Type type;
 };
 
 class QIconLoaderEngineEntry
@@ -175,8 +175,8 @@ private:
     uint m_themeKey;
     bool m_supportsSvg;
 
-    mutable QString m_userTheme;
-    mutable QString m_systemTheme;
+    QString m_userTheme;
+    QString m_systemTheme;
     mutable QStringList m_iconDirs;
     mutable QHash <QString, QIconTheme> themeList;
 };
