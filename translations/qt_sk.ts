@@ -86,7 +86,7 @@ This indicates an inconsistency in the ui-file.</source>
 <context>
     <name>QAbstractSocket</name>
     <message>
-        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1784"/>
+        <location filename="../src/network/socket/qabstractsocket.cpp" line="+1782"/>
         <location filename="../src/network/access/qhttpnetworkconnection.cpp" line="+690"/>
         <source>Socket operation timed out</source>
         <translation>Prekročenie času pri práci so soketom</translation>
@@ -100,8 +100,8 @@ This indicates an inconsistency in the ui-file.</source>
     </message>
     <message>
         <location line="-684"/>
-        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+675"/>
-        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+648"/>
+        <location filename="../src/network/socket/qhttpsocketengine.cpp" line="+676"/>
+        <location filename="../src/network/socket/qsocks5socketengine.cpp" line="+649"/>
         <location line="+26"/>
         <source>Host not found</source>
         <translation>Hostiteľ nebol nájdený</translation>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Chyba kompatibility knižnice Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1906"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1904"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -505,7 +505,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativeAnimatedImage</name>
     <message>
-        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+104"/>
+        <location filename="../src/declarative/graphicsitems/qdeclarativeitemsmodule.cpp" line="+103"/>
         <source>Qt was built without support for QMovie</source>
         <translation>QT bolo zostavené bez podpory preQMovie</translation>
     </message>
@@ -1377,7 +1377,7 @@ Script: %3</source>
 <context>
     <name>QDeclarativePixmap</name>
     <message>
-        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+310"/>
+        <location filename="../src/declarative/util/qdeclarativepixmapcache.cpp" line="+309"/>
         <source>Error decoding: %1: %2</source>
         <translation>Chyba dekódovania: %1: %2</translation>
     </message>
@@ -1727,7 +1727,7 @@ Script: %3</source>
 <context>
     <name>QFile</name>
     <message>
-        <location filename="../src/core/io/qfile.cpp" line="+685"/>
+        <location filename="../src/core/io/qfile.cpp" line="+612"/>
         <location line="+154"/>
         <source>Destination file exists</source>
         <translation>Cieľový súbor existuje</translation>
@@ -1771,7 +1771,7 @@ Script: %3</source>
 <context>
     <name>QFileDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+518"/>
+        <location filename="../src/gui/dialogs/qfiledialog.cpp" line="+513"/>
         <source>Find Directory</source>
         <translation>Nájsť priečinok</translation>
     </message>
@@ -1787,12 +1787,12 @@ Script: %3</source>
     </message>
     <message>
         <location line="+15"/>
-        <location line="+515"/>
+        <location line="+512"/>
         <source>All Files (*)</source>
         <translation>Všetky súbory (*)</translation>
     </message>
     <message>
-        <location line="-505"/>
+        <location line="-502"/>
         <source>Show </source>
         <translation>Zobraziť</translation>
     </message>
@@ -1818,13 +1818,13 @@ Script: %3</source>
     </message>
     <message>
         <location line="+5"/>
-        <location line="+674"/>
+        <location line="+671"/>
         <source>Directory:</source>
         <translation>Priečinok:</translation>
     </message>
     <message>
-        <location line="-672"/>
-        <location line="+678"/>
+        <location line="-669"/>
+        <location line="+675"/>
         <source>File &amp;name:</source>
         <translation>&amp;Názov súboru:</translation>
     </message>
@@ -1916,7 +1916,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Môj počítač</translation>
     </message>
     <message>
-        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+227"/>
+        <location filename="../src/gui/itemviews/qfileiconprovider.cpp" line="+185"/>
         <source>Drive</source>
         <translation>Disková jednotka</translation>
     </message>
@@ -2414,7 +2414,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QFtp</name>
     <message>
-        <location filename="../src/network/access/qftp.cpp" line="+874"/>
+        <location filename="../src/network/access/qftp.cpp" line="+875"/>
         <source>Not connected</source>
         <translation>Nepripojené</translation>
     </message>
@@ -2444,7 +2444,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Dátové spojenie odmietnuté</translation>
     </message>
     <message>
-        <location line="+178"/>
+        <location line="+173"/>
         <source>Unknown error</source>
         <translation>Neznáma chyba</translation>
     </message>
@@ -2730,7 +2730,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../src/core/global/qglobal.cpp" line="+1452"/>
+        <location filename="../src/core/global/qglobal.cpp" line="+1428"/>
         <location filename="../src/core/kernel/qsystemerror.cpp" line="+58"/>
         <source>Permission denied</source>
         <translation>Prístup zamietnutý</translation>
@@ -2754,7 +2754,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Na zariadení už nie je voľné miesto</translation>
     </message>
     <message>
-        <location filename="../src/core/io/qiodevice.cpp" line="+1547"/>
+        <location filename="../src/core/io/qiodevice.cpp" line="+1553"/>
         <source>Unknown error</source>
         <translation>Neznáma chyba</translation>
     </message>
@@ -2762,7 +2762,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QInputDialog</name>
     <message>
-        <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+223"/>
+        <location filename="../src/gui/dialogs/qinputdialog.cpp" line="+217"/>
         <source>Enter a value:</source>
         <translation>Zadajte hodnotu:</translation>
     </message>
@@ -2875,7 +2875,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Neznáma chyba</translation>
     </message>
     <message>
-        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+209"/>
+        <location filename="../src/core/plugin/qlibrary_unix.cpp" line="+207"/>
         <source>Cannot load library %1: %2</source>
         <translation>Nie je možné načítať knižnicu %1: %2</translation>
     </message>
@@ -2893,7 +2893,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QLineEdit</name>
     <message>
-        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1866"/>
+        <location filename="../src/gui/widgets/qlineedit.cpp" line="+1863"/>
         <source>&amp;Undo</source>
         <translation>&amp;Späť</translation>
     </message>
@@ -3513,7 +3513,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QNetworkReply</name>
     <message>
-        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+428"/>
+        <location filename="../src/network/access/qhttpthreaddelegate.cpp" line="+426"/>
         <location line="+23"/>
         <source>Error downloading %1 - server replied: %2</source>
         <translation>Chyba pri sťahovaní %1 - server odpovedal: %2</translation>
@@ -4406,7 +4406,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QProcess</name>
     <message>
-        <location filename="../src/core/io/qprocess.cpp" line="+822"/>
+        <location filename="../src/core/io/qprocess.cpp" line="+823"/>
         <location line="+52"/>
         <source>Error reading from process</source>
         <translation>Chyba pri čítaní z procesu</translation>
@@ -4442,7 +4442,7 @@ Má sa prepísať?</translation>
         <translation>Chyba zdroja (fork failure): %1</translation>
     </message>
     <message>
-        <location line="+249"/>
+        <location line="+236"/>
         <location line="+52"/>
         <location line="+74"/>
         <location line="+66"/>
@@ -4477,7 +4477,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QRegExp</name>
     <message>
-        <location filename="../src/core/tools/qregexp.cpp" line="+66"/>
+        <location filename="../src/core/tools/qregexp.cpp" line="+65"/>
         <source>no error occurred</source>
         <translation>bez chyby</translation>
     </message>
@@ -5031,7 +5031,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QSharedMemory</name>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+242"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+238"/>
         <source>%1: unable to set key on lock</source>
         <translation>%1: nepodarilo sa nastaviť kľúč na uzamknutie</translation>
     </message>
@@ -5042,12 +5042,12 @@ Má sa prepísať?</translation>
     </message>
     <message>
         <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+174"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: nedá sa zamknúť</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+22"/>
+        <location filename="../src/core/kernel/qsharedmemory.cpp" line="+21"/>
         <source>%1: unable to unlock</source>
         <translation>%1: nedá sa odomknúť</translation>
     </message>
@@ -6701,7 +6701,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QTextControl</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1948"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+1936"/>
         <source>&amp;Undo</source>
         <translation>&amp;Späť</translation>
     </message>
@@ -6825,7 +6825,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QUnicodeControlCharacterMenu</name>
     <message>
-        <location filename="../src/gui/text/qtextcontrol.cpp" line="+904"/>
+        <location filename="../src/gui/text/qtextcontrol.cpp" line="+903"/>
         <source>LRM Left-to-right mark</source>
         <translation>LRM značka zľava-doprava</translation>
     </message>
@@ -6891,7 +6891,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5284"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5290"/>
         <source>*</source>
         <translation>*</translation>
     </message>
