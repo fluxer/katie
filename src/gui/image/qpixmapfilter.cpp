@@ -792,11 +792,11 @@ Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
         // assumes grayscale
         QImage dest(source.width() / 2, source.height() / 2, srcImage.format());
 
-        const uchar *src = reinterpret_cast<const uchar*>(const_cast<const QImage &>(srcImage).bits());
+        const uchar *src = srcImage.constBits();
         int sx = srcImage.bytesPerLine();
         int sx2 = sx << 1;
 
-        uchar *dst = reinterpret_cast<uchar*>(dest.bits());
+        uchar *dst = dest.bits();
         int dx = dest.bytesPerLine();
         int ww = dest.width();
         int hh = dest.height();
@@ -813,11 +813,11 @@ Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
     } else if (source.format() == QImage::Format_ARGB8565_Premultiplied) {
         QImage dest(source.width() / 2, source.height() / 2, srcImage.format());
 
-        const uchar *src = reinterpret_cast<const uchar*>(const_cast<const QImage &>(srcImage).bits());
+        const uchar *src = srcImage.constBits();
         int sx = srcImage.bytesPerLine();
         int sx2 = sx << 1;
 
-        uchar *dst = reinterpret_cast<uchar*>(dest.bits());
+        uchar *dst = dest.bits();
         int dx = dest.bytesPerLine();
         int ww = dest.width();
         int hh = dest.height();
@@ -849,7 +849,7 @@ Q_GUI_EXPORT QImage qt_halfScaled(const QImage &source)
 
     QImage dest(source.width() / 2, source.height() / 2, srcImage.format());
 
-    const quint32 *src = reinterpret_cast<const quint32*>(const_cast<const QImage &>(srcImage).bits());
+    const quint32 *src = reinterpret_cast<const quint32*>(srcImage.constBits());
     int sx = srcImage.bytesPerLine() >> 2;
     int sx2 = sx << 1;
 
