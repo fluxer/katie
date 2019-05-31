@@ -54,7 +54,7 @@ static inline void qt_memrotate90_cachedRead(const SRC *src, int w, int h,
     for (int y = 0; y < h; ++y) {
         for (int x = w - 1; x >= 0; --x) {
             DST *destline = reinterpret_cast<DST*>(d + (w - x - 1) * dstride);
-            destline[y] = qt_colorConvert<DST,SRC>(src[x], 0);
+            destline[y] = src[x];
         }
         s += sstride;
         src = reinterpret_cast<const SRC*>(s);
@@ -73,14 +73,12 @@ static inline void qt_memrotate270_cachedRead(const SRC *src, int w, int h,
         src = reinterpret_cast<const SRC*>(s);
         for (int x = 0; x < w; ++x) {
             DST *destline = reinterpret_cast<DST*>(d + x * dstride);
-            destline[h - y - 1] = qt_colorConvert<DST,SRC>(src[x], 0);
+            destline[h - y - 1] = src[x];
         }
         s -= sstride;
     }
 }
-#endif // QT_ROTATION_CACHEDREAD
-
-#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
+#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
 template <class DST, class SRC>
 static inline void qt_memrotate90_cachedWrite(const SRC *src, int w, int h,
                                               int sstride,
@@ -89,7 +87,7 @@ static inline void qt_memrotate90_cachedWrite(const SRC *src, int w, int h,
     for (int x = w - 1; x >= 0; --x) {
         DST *d = dest + (w - x - 1) * dstride;
         for (int y = 0; y < h; ++y) {
-            *d++ = qt_colorConvert<DST,SRC>(src[y * sstride + x], 0);
+            *d++ = src[y * sstride + x];
         }
     }
 
@@ -103,11 +101,11 @@ static inline void qt_memrotate270_cachedWrite(const SRC *src, int w, int h,
     for (int x = 0; x < w; ++x) {
         DST *d = dest + x * dstride;
         for (int y = h - 1; y >= 0; --y) {
-            *d++ = qt_colorConvert<DST,SRC>(src[y * sstride + x], 0);
+            *d++ = src[y * sstride + x];
         }
     }
 }
-#endif // QT_ROTATION_CACHEDWRITE
+#endif // QT_ROTATION_ALGORITHM
 
 template <class DST, class SRC>
 static inline void qt_memrotate90_template(const SRC *src,
@@ -133,7 +131,7 @@ static inline void qt_memrotate180_template(const SRC *src,
         DST *d = reinterpret_cast<DST*>((char *)(dest) + (h - y - 1) * dstride);
         src = reinterpret_cast<const SRC*>(s);
         for (int x = w - 1; x >= 0; --x) {
-            d[w - x - 1] = qt_colorConvert<DST,SRC>(src[x], 0);
+            d[w - x - 1] = src[x];
         }
         s -= sstride;
     }
