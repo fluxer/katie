@@ -228,12 +228,12 @@ static const int QTEXTSTREAM_BUFFERSIZE = 16384;
 #include "qbuffer.h"
 #include "qfile.h"
 #include "qnumeric.h"
+#include "qlocale_p.h"
 #ifndef QT_NO_TEXTCODEC
 #include "qtextcodec.h"
 #endif
-#include <locale.h>
-#include "qlocale_p.h"
 
+#include <locale.h>
 #include <stdlib.h>
 #include <limits.h>
 #include <new>

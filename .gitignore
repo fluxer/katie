@@ -18,6 +18,6 @@ bindings/*.log
 # build directories to ignore
 # ---------------------
 apidocs
-build
 minsize
+oldmake
 debug
