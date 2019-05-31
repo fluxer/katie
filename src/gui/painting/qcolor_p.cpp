@@ -281,7 +281,7 @@ inline bool operator<(const RGBData &data, const char *name)
 
 static bool get_named_rgb(const char *name_no_space, QRgb *rgb)
 {
-    QByteArray name = QByteArray(name_no_space).toLower();
+    QByteArray name = QByteArray::fromRawData(name_no_space, qstrlen(name_no_space)).toLower();
     const RGBData *r = qBinaryFind(rgbTbl, rgbTbl + rgbTblSize, name.constData());
     if (r != rgbTbl + rgbTblSize) {
         *rgb = r->value;
