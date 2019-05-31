@@ -152,17 +152,16 @@ function(KATIE_SETUP_TARGET FORTARGET)
         file(WRITE "${resourcesdep}" "enum { CompilersWorkaroundAlaAutomoc = 1 };\n")
     endif()
     set(targetresources)
+    set(rscpath "${CMAKE_CURRENT_BINARY_DIR}/${FORTARGET}_resources")
+    include_directories(${rscpath})
     foreach(tmpres ${ARGN})
         get_filename_component(resource ${tmpres} ABSOLUTE)
         get_filename_component(rscext ${resource} EXT)
         get_filename_component(rscname ${resource} NAME_WE)
-        get_filename_component(rscpath ${resource} PATH)
-        string(REPLACE "${CMAKE_SOURCE_DIR}" "${CMAKE_BINARY_DIR}" rscpath "${rscpath}")
         if("${rscext}" STREQUAL ".ui")
             set(rscout "${rscpath}/ui_${rscname}.h")
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
-            include_directories(${rscpath})
             add_custom_command(
                 COMMAND "${KATIE_UIC}" "${resource}" -o "${rscout}"
                 OUTPUT "${rscout}"
@@ -171,7 +170,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
             set(rscout "${rscpath}/qrc_${rscname}.cpp")
             set(targetresources ${targetresources} ${rscout})
             make_directory(${rscpath})
-            include_directories(${rscpath})
             add_custom_command(
                 COMMAND "${KATIE_RCC}" "${resource}" -o "${rscout}" -name "${rscname}"
                 OUTPUT "${rscout}"
@@ -192,7 +190,6 @@ function(KATIE_SETUP_TARGET FORTARGET)
                     set(mocargs ${mocargs} -I${incdir})
                 endforeach()
                 make_directory(${rscpath})
-                include_directories(${rscpath})
                 add_custom_command(
                     COMMAND "${KATIE_MOC}" -nw "${resource}" -o "${rscout}" ${mocargs}
                     OUTPUT "${rscout}"
