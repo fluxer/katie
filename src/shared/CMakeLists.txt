@@ -1,0 +1,4 @@
+add_subdirectory(findwidget)
+add_subdirectory(linguist)
+add_subdirectory(qtgradienteditor)
+add_subdirectory(qtpropertybrowser)

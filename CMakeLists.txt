@@ -578,10 +578,7 @@ if(NOT X11_SM_FOUND)
 endif()
 
 # semi-shared
-include(src/shared/linguist/linguist.cmake)
-include(src/shared/qtgradienteditor/qtgradienteditor.cmake)
-include(src/shared/qtpropertybrowser/qtpropertybrowser.cmake)
-include(src/shared/findwidget/findwidget.cmake)
+add_subdirectory(src/shared)
 
 # major components
 add_subdirectory(src/core)

@@ -1,6 +1,4 @@
 add_definitions(
-    ${SHAREDGRADIENDEDITOR_DEFINITIONS}
-    ${SHAREDPROPERTYBROWSER_DEFINITIONS}
     -DQT_SCRIPT_LIB
     -DKATIE_TOOLS_SUFFIX="${KATIE_TOOLS_SUFFIX}"
 )
@@ -61,9 +59,6 @@ set(DESIGNER_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesignerexportwidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components_global.h
     ${CMAKE_CURRENT_SOURCE_DIR}/qdesigner_components.h
-    ${SHAREDGRADIENDEDITOR_HEADERS}
-    ${SHAREDPROPERTYBROWSER_HEADERS}
-    ${SHAREDFINDWIDGET_HEADERS}
 )
 
 set(DESIGNER_SOURCES
@@ -86,9 +81,6 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtUiTools
     ${CMAKE_BINARY_DIR}/include/QtDesigner
     ${CMAKE_BINARY_DIR}/privateinclude/QtDesigner
-    ${SHAREDGRADIENDEDITOR_INCLUDES}
-    ${SHAREDPROPERTYBROWSER_INCLUDES}
-    ${SHAREDFINDWIDGET_INCLUDES}
     # for widgets.table
     ${CMAKE_SOURCE_DIR}/src/shared
     # for rcc.h

@@ -233,16 +233,27 @@ endfunction()
 
 # a macro to ensure that object targets are build with PIC if the target they
 # are going to be used in (like $<TARGET_OBJECTS:foo>) is build with PIC or
-# PIC has been enabled for all module/library/executable targets
+# PIC has been enabled for all module/library/executable targets. in addition
+# the macro will add the object include directories and definitions to the
+# target properties
 macro(KATIE_SETUP_OBJECT FORTARGET)
-    get_target_property(targets_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
-    if(CMAKE_POSITION_INDEPENDENT_CODE OR targets_pic)
+    get_target_property(target_pic ${FORTARGET} POSITION_INDEPENDENT_CODE)
+    if(CMAKE_POSITION_INDEPENDENT_CODE OR target_pic)
         foreach(objtarget ${ARGN})
             set_target_properties(${objtarget} PROPERTIES
                 POSITION_INDEPENDENT_CODE TRUE
             )
         endforeach()
     endif()
+
+    foreach(objtarget ${ARGN})
+        get_target_property(object_definitions ${objtarget} COMPILE_DEFINITIONS)
+        get_target_property(object_includes ${objtarget} INCLUDE_DIRECTORIES)
+        if(object_definitions)
+            target_compile_definitions(${FORTARGET} PRIVATE ${object_definitions})
+        endif()
+        target_include_directories(${FORTARGET} PRIVATE ${object_includes})
+    endforeach()
 endmacro()
 
 # a function to change full installation paths to relative so that CPack

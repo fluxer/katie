@@ -1,4 +1,4 @@
-add_definitions(${SHAREDLINGUIST_DEFINITIONS})
+# add_definitions()
 set(EXTRA_LUPDATE_LIBS KtCore KtXml)
 
 include_directories(
@@ -8,11 +8,9 @@ include_directories(
     ${CMAKE_BINARY_DIR}/privateinclude/QtCore
     ${CMAKE_BINARY_DIR}/include/QtXml
     ${CMAKE_BINARY_DIR}/privateinclude/QtXml
-    ${SHAREDLINGUIST_INCLUDES}
 )
 
 set(LUPDATE_SOURCES
-    ${LUPDATE_SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/lupdate.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/merge.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/cpp.cpp
@@ -21,9 +19,7 @@ set(LUPDATE_SOURCES
 )
 
 set(LUPDATE_HEADERS
-    ${LUPDATE_HEADERS}
     ${CMAKE_CURRENT_SOURCE_DIR}/lupdate.h
-    ${SHAREDLINGUIST_HEADERS}
 )
 
 katie_setup_target(lupdate ${LUPDATE_SOURCES} ${LUPDATE_HEADERS})
@@ -37,6 +33,8 @@ set_target_properties(lupdate PROPERTIES
     EXPORT_NAME lupdate
     OUTPUT_NAME lupdate${KATIE_TOOLS_SUFFIX}
 )
+
+katie_setup_object(lupdate sharedlinguist)
 
 install(
     TARGETS lupdate
