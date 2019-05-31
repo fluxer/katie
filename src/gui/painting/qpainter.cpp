@@ -3501,7 +3501,7 @@ void QPainter::setPen(Qt::PenStyle style)
                                    && d->state->pen.color() == QColor(Qt::black))))
         return;
 
-    // QPen(Qt::NoPen) is to avoid creating QPenData, including its brush (from the color)
+    // QPen(Qt::NoPen) is to avoid creating QPenPrivate, including its brush (from the color)
     // Note that this works well as long as QPen(Qt::NoPen) returns a black, zero-width pen
     d->state->pen = (style == Qt::NoPen) ? QPen(Qt::NoPen) : QPen(Qt::black, 0, style);
 

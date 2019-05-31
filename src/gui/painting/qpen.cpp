@@ -48,8 +48,6 @@
 
 QT_BEGIN_NAMESPACE
 
-typedef QPenPrivate QPenData;
-
 /*!
     \class QPen
     \ingroup painting
@@ -265,9 +263,9 @@ public:
 };
 #endif
 
-Q_GLOBAL_STATIC_WITH_ARGS(QPenData, defaultPenInstance,
+Q_GLOBAL_STATIC_WITH_ARGS(QPenPrivate, defaultPenInstance,
                           (Qt::black, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join))
-Q_GLOBAL_STATIC_WITH_ARGS(QPenData, nullPenInstance,
+Q_GLOBAL_STATIC_WITH_ARGS(QPenPrivate, nullPenInstance,
                           (Qt::black, 0, Qt::NoPen, qpen_default_cap, qpen_default_join))
 
 /*!
@@ -292,7 +290,7 @@ QPen::QPen(Qt::PenStyle style)
         d = nullPenInstance();
         d->ref.ref();
     } else {
-        d = new QPenData(Qt::black, 0, style, qpen_default_cap, qpen_default_join);
+        d = new QPenPrivate(Qt::black, 0, style, qpen_default_cap, qpen_default_join);
     }
 }
 
@@ -305,7 +303,7 @@ QPen::QPen(Qt::PenStyle style)
 
 QPen::QPen(const QColor &color)
 {
-    d = new QPenData(color, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join);
+    d = new QPenPrivate(color, 0, Qt::SolidLine, qpen_default_cap, qpen_default_join);
 }
 
 
@@ -320,7 +318,7 @@ QPen::QPen(const QColor &color)
 
 QPen::QPen(const QBrush &brush, qreal width, Qt::PenStyle s, Qt::PenCapStyle c, Qt::PenJoinStyle j)
 {
-    d = new QPenData(brush, width, s, c, j);
+    d = new QPenPrivate(brush, width, s, c, j);
 }
 
 /*!
@@ -361,7 +359,7 @@ void QPen::detach()
     if (d->ref == 1)
         return;
 
-    QPenData *x = new QPenData(*static_cast<QPenData *>(d));
+    QPenPrivate *x = new QPenPrivate(*d);
     if (!d->ref.deref())
         delete d;
     x->ref = 1;
@@ -430,9 +428,8 @@ void QPen::setStyle(Qt::PenStyle s)
         return;
     detach();
     d->style = s;
-    QPenData *dd = static_cast<QPenData *>(d);
-    dd->dashPattern.clear();
-    dd->dashOffset = 0;
+    d->dashPattern.clear();
+    d->dashOffset = 0;
 }
 
 /*!
@@ -442,32 +439,31 @@ void QPen::setStyle(Qt::PenStyle s)
  */
 QVector<qreal> QPen::dashPattern() const
 {
-    QPenData *dd = static_cast<QPenData *>(d);
     if (d->style == Qt::SolidLine || d->style == Qt::NoPen) {
         return QVector<qreal>();
-    } else if (dd->dashPattern.isEmpty()) {
+    } else if (d->dashPattern.isEmpty()) {
         const qreal space = 2;
         const qreal dot = 1;
         const qreal dash = 4;
 
         switch (d->style) {
         case Qt::DashLine:
-            dd->dashPattern << dash << space;
+            d->dashPattern << dash << space;
             break;
         case Qt::DotLine:
-            dd->dashPattern << dot << space;
+            d->dashPattern << dot << space;
             break;
         case Qt::DashDotLine:
-            dd->dashPattern << dash << space << dot << space;
+            d->dashPattern << dash << space << dot << space;
             break;
         case Qt::DashDotDotLine:
-            dd->dashPattern << dash << space << dot << space << dot << space;
+            d->dashPattern << dash << space << dot << space << dot << space;
             break;
         default:
             break;
         }
     }
-    return dd->dashPattern;
+    return d->dashPattern;
 }
 
 /*!
@@ -506,13 +502,12 @@ void QPen::setDashPattern(const QVector<qreal> &pattern)
         return;
     detach();
 
-    QPenData *dd = static_cast<QPenData *>(d);
-    dd->dashPattern = pattern;
+    d->dashPattern = pattern;
     d->style = Qt::CustomDashLine;
 
-    if ((dd->dashPattern.size() % 2) == 1) {
+    if ((d->dashPattern.size() % 2) == 1) {
         qWarning("QPen::setDashPattern: Pattern not of even length");
-        dd->dashPattern << 1;
+        d->dashPattern << 1;
     }
 }
 
@@ -524,8 +519,7 @@ void QPen::setDashPattern(const QVector<qreal> &pattern)
 */
 qreal QPen::dashOffset() const
 {
-    QPenData *dd = static_cast<QPenData *>(d);
-    return dd->dashOffset;
+    return d->dashOffset;
 }
 /*!
     Sets the dash offset (the starting point on the dash pattern) for this pen
@@ -547,13 +541,12 @@ qreal QPen::dashOffset() const
 */
 void QPen::setDashOffset(qreal offset)
 {
-    if (qFuzzyCompare(offset, static_cast<QPenData *>(d)->dashOffset))
+    if (qFuzzyCompare(offset, d->dashOffset))
         return;
     detach();
-    QPenData *dd = static_cast<QPenData *>(d);
-    dd->dashOffset = offset;
+    d->dashOffset = offset;
     if (d->style != Qt::CustomDashLine) {
-        dd->dashPattern = dashPattern();
+        d->dashPattern = dashPattern();
         d->style = Qt::CustomDashLine;
     }
 }
@@ -566,8 +559,7 @@ void QPen::setDashOffset(qreal offset)
 */
 qreal QPen::miterLimit() const
 {
-    const QPenData *dd = static_cast<QPenData *>(d);
-    return dd->miterLimit;
+    return d->miterLimit;
 }
 
 /*!
@@ -589,8 +581,7 @@ qreal QPen::miterLimit() const
 void QPen::setMiterLimit(qreal limit)
 {
     detach();
-    QPenData *dd = static_cast<QPenData *>(d);
-    dd->miterLimit = limit;
+    d->miterLimit = limit;
 }
 
 
@@ -798,8 +789,7 @@ bool QPen::isSolid() const
 
 bool QPen::isCosmetic() const
 {
-    QPenData *dd = static_cast<QPenData *>(d);
-    return (dd->cosmetic == true) || d->width == 0;
+    return (d->cosmetic == true) || d->width == 0;
 }
 
 
@@ -813,8 +803,7 @@ bool QPen::isCosmetic() const
 void QPen::setCosmetic(bool cosmetic)
 {
     detach();
-    QPenData *dd = static_cast<QPenData *>(d);
-    dd->cosmetic = cosmetic;
+    d->cosmetic = cosmetic;
 }
 
 
@@ -841,19 +830,17 @@ void QPen::setCosmetic(bool cosmetic)
 
 bool QPen::operator==(const QPen &p) const
 {
-    QPenData *dd = static_cast<QPenData *>(d);
-    QPenData *pdd = static_cast<QPenData *>(p.d);
     return (p.d == d)
         || (p.d->style == d->style
             && p.d->capStyle == d->capStyle
             && p.d->joinStyle == d->joinStyle
             && p.d->width == d->width
-            && pdd->miterLimit == dd->miterLimit
+            && p.d->miterLimit == d->miterLimit
             && (d->style != Qt::CustomDashLine
-                || (qFuzzyCompare(pdd->dashOffset, dd->dashOffset) &&
-                    pdd->dashPattern == dd->dashPattern))
+                || (qFuzzyCompare(p.d->dashOffset, d->dashOffset) &&
+                    p.d->dashPattern == d->dashPattern))
             && p.d->brush == d->brush
-            && pdd->cosmetic == dd->cosmetic);
+            && p.d->cosmetic == d->cosmetic);
 }
 
 
@@ -885,9 +872,8 @@ bool QPen::isDetached()
 
 QDataStream &operator<<(QDataStream &s, const QPen &p)
 {
-    QPenData *dd = static_cast<QPenData *>(p.d);
     s << (quint16)(p.style() | p.capStyle() | p.joinStyle());
-    s << (bool)(dd->cosmetic);
+    s << (bool)(p.d->cosmetic);
 
     s << double(p.widthF());
     s << p.brush();
@@ -946,16 +932,15 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
     s >> dashOffset;
 
     p.detach();
-    QPenData *dd = static_cast<QPenData *>(p.d);
-    dd->width = width;
-    dd->brush = brush;
-    dd->style = Qt::PenStyle(style & Qt::MPenStyle);
-    dd->capStyle = Qt::PenCapStyle(style & Qt::MPenCapStyle);
-    dd->joinStyle = Qt::PenJoinStyle(style & Qt::MPenJoinStyle);
-    dd->dashPattern = dashPattern;
-    dd->miterLimit = miterLimit;
-    dd->dashOffset = dashOffset;
-    dd->cosmetic = cosmetic;
+    p.d->width = width;
+    p.d->brush = brush;
+    p.d->style = Qt::PenStyle(style & Qt::MPenStyle);
+    p.d->capStyle = Qt::PenCapStyle(style & Qt::MPenCapStyle);
+    p.d->joinStyle = Qt::PenJoinStyle(style & Qt::MPenJoinStyle);
+    p.d->dashPattern = dashPattern;
+    p.d->miterLimit = miterLimit;
+    p.d->dashOffset = dashOffset;
+    p.d->cosmetic = cosmetic;
 
     return s;
 }
