@@ -109,9 +109,9 @@ protected:
 
 private:
     uint depth;
-    mutable uint visited;
+    uint visited;
     QVector<Node> nodes;
-    mutable QVector< QVector<int> > leaves; // the leaves are just indices into the items
+    QVector< QVector<int> > leaves; // the leaves are just indices into the items
 };
 
 QT_END_NAMESPACE

@@ -381,10 +381,10 @@ public:
     QComboBox::SizeAdjustPolicy sizeAdjustPolicy;
     int minimumContentsLength;
     QSize iconSize;
-    uint shownOnce : 1;
-    uint autoCompletion : 1;
-    uint duplicatesEnabled : 1;
-    uint frame : 1;
+    bool shownOnce;
+    bool autoCompletion;
+    bool duplicatesEnabled;
+    bool frame;
     int maxVisibleItems;
     int maxCount;
     int modelColumn;
