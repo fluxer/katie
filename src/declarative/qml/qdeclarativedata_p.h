@@ -100,11 +100,10 @@ public:
         if (!explicitIndestructibleSet) indestructible = false;
     }
 
-    quint32 ownMemory:1;
-    quint32 ownContext:1;
-    quint32 indestructible:1;
-    quint32 explicitIndestructibleSet:1;
-    quint32 dummy:28;
+    bool ownMemory;
+    bool ownContext;
+    bool indestructible;
+    bool explicitIndestructibleSet;
 
     // The context that created the C++ object
     QDeclarativeContextData *context; 
