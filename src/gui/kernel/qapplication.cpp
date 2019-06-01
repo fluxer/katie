@@ -430,22 +430,22 @@ void QApplicationPrivate::process_cmdline()
     if (!qt_is_gui_used || !argc)
         return;
 
-    int i, j;
-
-    j = 1;
-    for (i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
-        if (argv[i] && *argv[i] != '-') {
+    int j = 1;
+    for (int i=1; i<argc; i++) { // if you add anything here, modify QCoreApplication::arguments()
+        if (!argv[i]) {
+            continue;
+        }
+        if (*argv[i] != '-') {
             argv[j++] = argv[i];
             continue;
         }
-        QByteArray arg = argv[i];
         QString s;
-        if (arg.indexOf("-style=", 0) != -1) {
-            s = QString::fromLocal8Bit(arg.right(arg.length() - 7).toLower());
-        } else if (arg == "-style" && i < argc-1) {
+        if (qstrncmp(argv[i], "-style=", 7) == 0) {
+            s = QString::fromLocal8Bit(argv[i] + 7).toLower();
+        } else if (qstrcmp(argv[i], "-style") == 0 && i < argc - 1) {
             s = QString::fromLocal8Bit(argv[++i]).toLower();
 #ifndef QT_NO_SESSIONMANAGER
-        } else if (arg == "-session" && i < argc-1) {
+        } else if (qstrcmp(argv[i], "-session") == 0 && i < argc - 1) {
             ++i;
             if (argv[i] && *argv[i]) {
                 session_id = QString::fromLatin1(argv[i]);
@@ -458,19 +458,17 @@ void QApplicationPrivate::process_cmdline()
             }
 #endif
 #ifndef QT_NO_STYLE_STYLESHEET
-        } else if (arg == "-stylesheet" && i < argc -1) {
-            styleSheet = QLatin1String("file:///");
-            styleSheet.append(QString::fromLocal8Bit(argv[++i]));
-        } else if (arg.indexOf("-stylesheet=") != -1) {
-            styleSheet = QLatin1String("file:///");
-            styleSheet.append(QString::fromLocal8Bit(arg.right(arg.length() - 12)));
+        } else if (qstrcmp(argv[i], "-stylesheet") == 0 && i < argc - 1) {
+            styleSheet = QLatin1String("file:///") + QString::fromLocal8Bit(argv[++i]);
+        } else if (qstrncmp(argv[i], "-stylesheet=", 12) == 0) {
+            styleSheet = QLatin1String("file:///") + QString::fromLocal8Bit(argv[i] + 7);
 #endif
-        } else if (qstrcmp(arg, "-reverse") == 0) {
+        } else if (qstrcmp(argv[i], "-reverse") == 0) {
             force_reverse = true;
             QApplication::setLayoutDirection(Qt::RightToLeft);
-        } else if (qstrcmp(arg, "-widgetcount") == 0) {
+        } else if (qstrcmp(argv[i], "-widgetcount") == 0) {
             widgetCount = true;
-        } else if (arg == "-graphicssystem" && i < argc-1) {
+        } else if (qstrcmp(argv[i], "-graphicssystem") == 0 && i < argc - 1) {
             graphics_system_name = QString::fromLocal8Bit(argv[++i]);
         } else {
             argv[j++] = argv[i];
@@ -565,13 +563,6 @@ void QApplicationPrivate::process_cmdline()
             to a 2x3x1 cube is used.
         \o  -cmap, causes the application to install a private color map on an
             8-bit display.
-        \o  -im, sets the input method server (equivalent to setting the
-            XMODIFIERS environment variable)
-        \o  -inputstyle, defines how the input is inserted into the given
-            widget, e.g., \c onTheSpot makes the input appear directly in the
-            widget, while \c overTheSpot makes the input appear in a box
-            floating over the widget and is not inserted until the editing is
-            done.
     \endlist
 
     \section1 X11 Notes
