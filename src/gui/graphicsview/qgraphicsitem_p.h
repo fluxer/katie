@@ -82,13 +82,13 @@ public:
     typedef void (*ClearFunction)(QDeclarativeListProperty<T> *);
 
     QDeclarativeListProperty()
-        : object(0), data(0), append(0), count(0), at(0), clear(0), dummy1(0), dummy2(0) {}
+        : object(0), data(0), append(0), count(0), at(0), clear(0) {}
     QDeclarativeListProperty(QObject *o, QList<T *> &list)
         : object(o), data(&list), append(qlist_append), count(qlist_count), at(qlist_at),
-          clear(qlist_clear), dummy1(0), dummy2(0) {}
+          clear(qlist_clear) {}
     QDeclarativeListProperty(QObject *o, void *d, AppendFunction a, CountFunction c = 0, AtFunction t = 0,
                     ClearFunction r = 0)
-        : object(o), data(d), append(a), count(c), at(t), clear(r), dummy1(0), dummy2(0) {}
+        : object(o), data(d), append(a), count(c), at(t), clear(r) {}
 
     bool operator==(const QDeclarativeListProperty &o) const {
         return object == o.object &&
@@ -108,9 +108,6 @@ public:
     AtFunction at;
 
     ClearFunction clear;
-
-    void *dummy1;
-    void *dummy2;
 
 private:
     static void qlist_append(QDeclarativeListProperty *p, T *v) {
