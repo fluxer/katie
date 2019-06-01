@@ -439,7 +439,6 @@ void QApplicationPrivate::process_cmdline()
             continue;
         }
         QByteArray arg = argv[i];
-        arg = arg;
         QString s;
         if (arg.indexOf("-style=", 0) != -1) {
             s = QString::fromLocal8Bit(arg.right(arg.length() - 7).toLower());

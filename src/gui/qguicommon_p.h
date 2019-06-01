@@ -9,7 +9,7 @@
 
 QT_BEGIN_NAMESPACE
 
-static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
+inline static QColor mergedColors(const QColor &colorA, const QColor &colorB, int factor = 50)
 {
     const int maxFactor = 100;
     QColor tmp = colorA;
@@ -42,7 +42,7 @@ inline static bool verticalTabs(QTabBar::Shape shape)
 #endif // QT_NO_TABBAR
 
 #ifndef QT_NO_DOCKWIDGET
-static Qt::DockWidgetArea toDockWidgetArea(QInternal::DockPosition pos)
+inline static Qt::DockWidgetArea toDockWidgetArea(QInternal::DockPosition pos)
 {
     switch (pos) {
         case QInternal::LeftDock:   return Qt::LeftDockWidgetArea;
@@ -56,7 +56,7 @@ static Qt::DockWidgetArea toDockWidgetArea(QInternal::DockPosition pos)
 #endif
 
 #ifndef QT_NO_TABWIDGET
-static inline QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWidget::TabPosition position)
+inline static QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWidget::TabPosition position)
 {
     const bool rounded = (shape == QTabWidget::Rounded);
     if (position == QTabWidget::North)
@@ -72,7 +72,7 @@ static inline QTabBar::Shape tabBarShapeFrom(QTabWidget::TabShape shape, QTabWid
 #endif // QT_NO_TABWIDGET
 
 // Returns position of lowest set bit in 'v' as an integer (0-31), or -1
-static int lowest_bit(uint v)
+inline static int lowest_bit(uint v)
 {
     int i;
     ulong lb;

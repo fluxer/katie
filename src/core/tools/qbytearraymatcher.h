@@ -48,8 +48,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-class QByteArrayMatcherPrivate;
-
 class Q_CORE_EXPORT QByteArrayMatcher
 {
 public:
@@ -73,7 +71,6 @@ public:
     }
 
 private:
-    QByteArrayMatcherPrivate *d;
     QByteArray q_pattern;
     struct Data {
         uchar q_skiptable[256];

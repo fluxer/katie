@@ -706,9 +706,9 @@ QKeyEvent::QKeyEvent(Type type, int key, Qt::KeyboardModifiers modifiers, const 
 QKeyEvent::QKeyEvent(Type type, int key, Qt::KeyboardModifiers modifiers,
                      quint32 nativeScanCode, quint32 nativeVirtualKey, quint32 nativeModifiers,
                      const QString &text, bool autorep, int count)
-    : QInputEvent(type, modifiers), txt(text), k(key),
+    : QInputEvent(type, modifiers), txt(text), k(key), c(count),
       nScanCode(nativeScanCode), nVirtualKey(nativeVirtualKey), nModifiers(nativeModifiers),
-      c(count), autor(autorep)
+      autor(autorep)
 {
 }
 

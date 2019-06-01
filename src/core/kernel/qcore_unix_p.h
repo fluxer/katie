@@ -343,7 +343,7 @@ union qt_semun {
    Returns the difference between msecs and elapsed. If msecs is -1,
    however, -1 is returned.
 */
-static int qt_timeout_value(int msecs, int elapsed)
+inline static int qt_timeout_value(int msecs, int elapsed)
 {
     if (msecs == -1)
         return -1;

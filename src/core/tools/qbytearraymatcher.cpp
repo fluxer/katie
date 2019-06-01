@@ -117,7 +117,6 @@ static inline int bm_find(const uchar *cc, int l, int index, const uchar *puc, u
     Call setPattern() to give it a pattern to match.
 */
 QByteArrayMatcher::QByteArrayMatcher()
-    : d(0)
 {
     p.p = 0;
     p.l = 0;
@@ -130,7 +129,6 @@ QByteArrayMatcher::QByteArrayMatcher()
   the destructor does not delete \a pattern.
  */
 QByteArrayMatcher::QByteArrayMatcher(const char *pattern, int length)
-    : d(0)
 {
     p.p = reinterpret_cast<const uchar *>(pattern);
     p.l = length;
@@ -142,7 +140,7 @@ QByteArrayMatcher::QByteArrayMatcher(const char *pattern, int length)
     Call indexIn() to perform a search.
 */
 QByteArrayMatcher::QByteArrayMatcher(const QByteArray &pattern)
-    : d(0), q_pattern(pattern)
+    : q_pattern(pattern)
 {
     p.p = reinterpret_cast<const uchar *>(pattern.constData());
     p.l = pattern.size();
@@ -153,7 +151,6 @@ QByteArrayMatcher::QByteArrayMatcher(const QByteArray &pattern)
     Copies the \a other byte array matcher to this byte array matcher.
 */
 QByteArrayMatcher::QByteArrayMatcher(const QByteArrayMatcher &other)
-    : d(0)
 {
     operator=(other);
 }

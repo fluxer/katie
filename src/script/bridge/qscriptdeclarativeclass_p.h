@@ -71,8 +71,6 @@ public:
         ~Value();
 
         QScriptValue toScriptValue(QScriptEngine *) const;
-    private:
-        char dummy[8];
     };
 
     typedef void* Identifier;
