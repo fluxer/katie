@@ -69,20 +69,10 @@ QT_BEGIN_NAMESPACE
     void qt_memrotate180(const srctype*, int, int, int, desttype*, int); \
     void qt_memrotate270(const srctype*, int, int, int, desttype*, int)
 
-void qt_memrotate90(const quint32*, int, int, int, quint32*, int);
-void qt_memrotate180(const quint32*, int, int, int, quint32*, int);
-void qt_memrotate270(const quint32*, int, int, int, quint32*, int);
-
-QT_DECL_MEMROTATE(quint32, quint16);
-QT_DECL_MEMROTATE(quint16, quint32);
+QT_DECL_MEMROTATE(quint8, quint8);
 QT_DECL_MEMROTATE(quint16, quint16);
 QT_DECL_MEMROTATE(quint24, quint24);
-QT_DECL_MEMROTATE(quint32, quint24);
-QT_DECL_MEMROTATE(quint32, quint18);
-QT_DECL_MEMROTATE(quint32, quint8);
-QT_DECL_MEMROTATE(quint16, quint8);
-QT_DECL_MEMROTATE(qrgb444, quint8);
-QT_DECL_MEMROTATE(quint8, quint8);
+QT_DECL_MEMROTATE(quint32, quint32);
 
 #undef QT_DECL_MEMROTATE
 

@@ -165,34 +165,6 @@ inline void qt_memrotate90_template<quint24, quint24>(const quint24 *src,
 #endif
 }
 
-template <>
-inline void qt_memrotate90_template<quint24, quint32>(const quint32 *src,
-                                                             int srcWidth, int srcHeight, int srcStride,
-                                                             quint24 *dest, int dstStride)
-{
-#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-    qt_memrotate90_cachedRead<quint24,quint32>(src, srcWidth, srcHeight,
-                                               srcStride, dest, dstStride);
-#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-    qt_memrotate90_cachedWrite<quint24,quint32>(src, srcWidth, srcHeight,
-                                                srcStride, dest, dstStride);
-#endif
-}
-
-template <>
-inline void qt_memrotate90_template<quint18, quint32>(const quint32 *src,
-                                                             int srcWidth, int srcHeight, int srcStride,
-                                                             quint18 *dest, int dstStride)
-{
-#if QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDREAD
-    qt_memrotate90_cachedRead<quint18,quint32>(src, srcWidth, srcHeight,
-                                               srcStride, dest, dstStride);
-#elif QT_ROTATION_ALGORITHM == QT_ROTATION_CACHEDWRITE
-    qt_memrotate90_cachedWrite<quint18,quint32>(src, srcWidth, srcHeight,
-                                                srcStride, dest, dstStride);
-#endif
-}
-
 #define QT_IMPL_MEMROTATE(srctype, desttype)                        \
 void qt_memrotate90(const srctype *src, int w, int h, int sstride,  \
                     desttype *dest, int dstride)                    \
@@ -210,17 +182,10 @@ void qt_memrotate270(const srctype *src, int w, int h, int sstride, \
     qt_memrotate270_template(src, w, h, sstride, dest, dstride);    \
 }
 
-QT_IMPL_MEMROTATE(quint32, quint32)
-QT_IMPL_MEMROTATE(quint32, quint16)
-QT_IMPL_MEMROTATE(quint16, quint32)
+QT_IMPL_MEMROTATE(quint8, quint8)
 QT_IMPL_MEMROTATE(quint16, quint16)
 QT_IMPL_MEMROTATE(quint24, quint24)
-QT_IMPL_MEMROTATE(quint32, quint24)
-QT_IMPL_MEMROTATE(quint32, quint18)
-QT_IMPL_MEMROTATE(quint32, quint8)
-QT_IMPL_MEMROTATE(quint16, quint8)
-QT_IMPL_MEMROTATE(qrgb444, quint8)
-QT_IMPL_MEMROTATE(quint8, quint8)
+QT_IMPL_MEMROTATE(quint32, quint32)
 
 #undef QT_IMPL_MEMROTATE
 
