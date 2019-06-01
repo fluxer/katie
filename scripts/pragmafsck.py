@@ -2,7 +2,7 @@
 
 import sys, os, re
 
-regex = re.compile('(#ifndef (.*)_H\n#define .*$)', re.MULTILINE)
+regex = re.compile('(#ifndef (?:.*)_H\n#define .*$)', re.MULTILINE)
 
 cppfiles = []
 for root, dirs, files in os.walk(os.curdir):
@@ -16,7 +16,7 @@ for cpp in cppfiles:
         cppcontent = f.read()
     if '#pragma once' in cppcontent:
         continue
-    for match, guard in regex.findall(cppcontent):
+    for match in regex.findall(cppcontent):
         with open(cpp, 'w') as f:
             print('adding pragma once to: %s' % cpp)
             cppcontent = cppcontent.replace(match, '#pragma once\n\n%s' % match)

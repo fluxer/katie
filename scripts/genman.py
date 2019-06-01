@@ -15,18 +15,18 @@ if not pod2man:
     sys.stderr.write('Perl is not installed\n')
     sys.exit(1)
 
-sys.stdout.write('Generating man pages for Katie...\n')
+sys.stdout.write('Generating man pages...\n')
 for root, sdir, lfiles in os.walk('%s/../src/tools' % cwd):
     for sfile in lfiles:
         if sfile.endswith('.pod'):
-            ffile = '%s/%s' % (root, sfile)
-            ofile = ffile.replace('.pod', '.1')
+            ifile = '%s/%s' % (root, sfile)
+            ofile = ifile.replace('.pod', '.1')
             subprocess.check_call(
                 (pod2man,
                 '--release=Katie 4.9.0',
                 '--center=Katie Manual',
                 '--section=1',
                 '--utf8',
-                ffile,
+                ifile,
                 ofile)
             )
