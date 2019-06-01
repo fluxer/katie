@@ -18,7 +18,7 @@ static const char *SplitterPosition = "SplitterPosition";
 // We know that the parent of the sheet is the extension manager
 // whose parent is the core.
 
-static QDesignerFormEditorInterface *formEditorForObject(QObject *o) {
+inline static QDesignerFormEditorInterface *formEditorForObject(QObject *o) {
     do {
         if (QDesignerFormEditorInterface* core = qobject_cast<QDesignerFormEditorInterface*>(o))
             return core;
@@ -28,7 +28,7 @@ static QDesignerFormEditorInterface *formEditorForObject(QObject *o) {
     return 0;
 }
 
-static void recursiveUpdate(QWidget *w)
+inline static void recursiveUpdate(QWidget *w)
 {
     w->update();
 
