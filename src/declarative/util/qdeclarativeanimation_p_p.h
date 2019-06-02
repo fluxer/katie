@@ -303,8 +303,9 @@ class QDeclarativePropertyAnimationPrivate : public QDeclarativeAbstractAnimatio
     Q_DECLARE_PUBLIC(QDeclarativePropertyAnimation)
 public:
     QDeclarativePropertyAnimationPrivate()
-    : QDeclarativeAbstractAnimationPrivate(), target(0), fromSourced(false), fromIsDefined(false), toIsDefined(false),
-      rangeIsSet(false), defaultToInterpolatorType(0), interpolatorType(0), interpolator(0), va(0), actions(0) {}
+    : QDeclarativeAbstractAnimationPrivate(), target(0), fromSourced(false), fromIsDefined(false),
+    toIsDefined(false), rangeIsSet(false), defaultToInterpolatorType(false), interpolatorType(0),
+    interpolator(0), va(0), actions(0) {}
 
     void init();
 
@@ -319,10 +320,10 @@ public:
     QString defaultProperties;
 
     bool fromSourced;
-    bool fromIsDefined:1;
-    bool toIsDefined:1;
-    bool rangeIsSet:1;
-    bool defaultToInterpolatorType:1;
+    bool fromIsDefined;
+    bool toIsDefined;
+    bool rangeIsSet;
+    bool defaultToInterpolatorType;
     int interpolatorType;
     QVariantAnimation::Interpolator interpolator;
 

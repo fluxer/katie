@@ -440,8 +440,8 @@ void QVariantAnimation::registerInterpolator(QVariantAnimation::Interpolator fun
 #ifndef QT_NO_THREAD
         QMutexLocker locker(QMutexPool::globalInstanceGet(interpolators));
 #endif
-        if (int(interpolationType) >= interpolators->count())
-            interpolators->resize(int(interpolationType) + 1);
+        if (interpolationType >= interpolators->count())
+            interpolators->resize(interpolationType + 1);
         interpolators->replace(interpolationType, func);
     }
 }
@@ -457,34 +457,33 @@ QVariantAnimation::Interpolator QVariantAnimationPrivate::getInterpolator(int in
         if (ret) return ret;
     }
 
-    switch(interpolationType)
-    {
-    case QMetaType::Int:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<int>);
-    case QMetaType::UInt:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<uint>);
-    case QMetaType::Double:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<double>);
-    case QMetaType::Float:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<float>);
-    case QMetaType::QLine:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QLine>);
-    case QMetaType::QLineF:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QLineF>);
-    case QMetaType::QPoint:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QPoint>);
-    case QMetaType::QPointF:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QPointF>);
-    case QMetaType::QSize:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QSize>);
-    case QMetaType::QSizeF:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QSizeF>);
-    case QMetaType::QRect:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QRect>);
-    case QMetaType::QRectF:
-        return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QRectF>);
-    default:
-        return 0; //this type is not handled
+    switch(QMetaType::Type(interpolationType)) {
+        case QMetaType::Int:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<int>);
+        case QMetaType::UInt:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<uint>);
+        case QMetaType::Double:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<double>);
+        case QMetaType::Float:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<float>);
+        case QMetaType::QLine:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QLine>);
+        case QMetaType::QLineF:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QLineF>);
+        case QMetaType::QPoint:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QPoint>);
+        case QMetaType::QPointF:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QPointF>);
+        case QMetaType::QSize:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QSize>);
+        case QMetaType::QSizeF:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QSizeF>);
+        case QMetaType::QRect:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QRect>);
+        case QMetaType::QRectF:
+            return reinterpret_cast<QVariantAnimation::Interpolator>(_q_interpolateVariant<QRectF>);
+        default:
+            return 0; //this type is not handled
     }
 }
 

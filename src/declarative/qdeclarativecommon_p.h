@@ -18,7 +18,7 @@ struct StaticQtMetaObject : public QObject
         { return &static_cast<StaticQtMetaObject*> (0)->staticQtMetaObject; }
 };
 
-static inline int QMetaObject_methods(const QMetaObject *metaObject)
+inline static int QMetaObject_methods(const QMetaObject *metaObject)
 {
     struct Private
     {
@@ -32,7 +32,7 @@ static inline int QMetaObject_methods(const QMetaObject *metaObject)
     return reinterpret_cast<const Private *>(metaObject->d.data)->methodCount;
 }
 
-static int inline qRoundDouble(double d)
+inline static int qRoundDouble(const double d)
 {
     return d >= double(0.0) ? int(d + double(0.5)) : int(d - int(d-1) + double(0.5)) + int(d-1);
 }
