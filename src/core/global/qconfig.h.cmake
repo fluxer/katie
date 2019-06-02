@@ -113,6 +113,7 @@
 #cmakedefine QT_LARGEFILE_SUPPORT ${QT_LARGEFILE_SUPPORT}
 #cmakedefine QT_POINTER_SIZE ${QT_POINTER_SIZE}
 
+#cmakedefine QT_NO_USING_NAMESPACE
 #cmakedefine QT_NO_ACCESSIBILITY
 #cmakedefine QT_NO_ACTION
 #cmakedefine QT_NO_ACTIONS
