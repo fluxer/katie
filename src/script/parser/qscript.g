@@ -1,9 +1,8 @@
 ----------------------------------------------------------------------------
 --
 -- Copyright (C) 2015 The Qt Company Ltd.
--- Contact: http://www.qt.io/licensing/
 --
--- This file is part of the QtScript module of the Qt Toolkit.
+-- This file is part of the QtScript module of the Katie Toolkit.
 --
 -- $QT_BEGIN_LICENSE:LGPL-ONLY$
 -- GNU Lesser General Public License Usage
@@ -63,9 +62,8 @@
 /./****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
 **
-** This file is part of the QtScript module of the Qt Toolkit.
+** This file is part of the QtScript module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -120,9 +118,8 @@
 /:/****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
 **
-** This file is part of the QtScript module of the Qt Toolkit.
+** This file is part of the QtScript module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -165,7 +162,7 @@
 //  W A R N I N G
 //  -------------
 //
-// This file is not part of the Qt API.  It exists purely as an
+// This file is not part of the Katie API.  It exists purely as an
 // implementation detail.  This header file may change from version to
 // version without notice, or even be removed.
 //

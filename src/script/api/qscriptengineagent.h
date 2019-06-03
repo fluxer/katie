@@ -1,9 +1,9 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the QtScript module of the Qt Toolkit.
+** This file is part of the QtScript module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL-ONLY$
 ** GNU Lesser General Public License Usage

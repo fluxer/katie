@@ -1,9 +1,8 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
 **
-** This file is part of the QtGui module of the Qt Toolkit.
+** This file is part of the QtGui module of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -1478,41 +1477,30 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
 {
     QString translatedTextAboutQtCaption;
     translatedTextAboutQtCaption = QMessageBox::tr(
-        "<h3>About Qt</h3>"
-        "<p>This program uses Qt version %1.</p>"
+        "<h3>About Katie</h3>"
+        "<p>This program uses Katie version %1.</p>"
         ).arg(QLatin1String(QT_VERSION_STR));
     QString translatedTextAboutQtText;
     translatedTextAboutQtText = QMessageBox::tr(
-        "<p>Qt is a C++ toolkit for cross-platform application "
-        "development.</p>"
-        "<p>Qt provides single-source portability across all major desktop "
-        "operating systems. It is also available for embedded Linux and other "
-        "embedded and mobile operating systems.</p>"
-        "<p>Qt is available under three different licensing options designed "
+        "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p>"
+        "<p>Katie is available under two different licensing options designed "
         "to accommodate the needs of our various users.</p>"
-        "<p>Qt licensed under our commercial license agreement is appropriate "
-        "for development of proprietary/commercial software where you do not "
-        "want to share any source code with third parties or otherwise cannot "
-        "comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.</p>"
-        "<p>Qt licensed under the GNU LGPL version 3 is appropriate for the "
+        "<p>Katie licensed under the GNU LGPL version 3 is appropriate for the "
         "development of Qt&nbsp;applications provided you can comply with the terms "
         "and conditions of the GNU LGPL version 3.</p>"
-        "<p>Qt licensed under the GNU LGPL version 2.1 is appropriate for the "
-        "development of Qt&nbsp;applications provided you can comply with the terms "
+        "<p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
+        "development of applications provided you can comply with the terms "
         "and conditions of the GNU LGPL version 2.1.</p>"
-        "<p>Please see <a href=\"http://%2/\">%2</a> "
-        "for an overview of Qt licensing.</p>"
-        "<p>Copyright (C) %1 The Qt Company Ltd and other "
-        "contributors.</p>"
+        "<p>Copyright (C) %1 The Qt Company Ltd and other contributors."
+        "Copyright (C) %2 Ivailo Monev</p>"
         "<p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p>"
-        "<p>Qt is The Qt Company Ltd product developed as an open source "
-        "project. See <a href=\"http://%3/\">%3</a> for more information.</p>"
+        "<p>See <a href=\"http://%3/\">%3</a> for more information.</p>"
         ).arg(QLatin1String("2015"),
-              QLatin1String("qt.io/licensing"),
-              QLatin1String("qt.io"));
+              QLatin1String("2016-2019"),
+              QLatin1String("fluxer.github.io/katie"));
     QMessageBox *msgBox = new QMessageBox(parent);
     msgBox->setAttribute(Qt::WA_DeleteOnClose);
-    msgBox->setWindowTitle(title.isEmpty() ? tr("About Qt") : title);
+    msgBox->setWindowTitle(title.isEmpty() ? tr("About Katie") : title);
     msgBox->setText(translatedTextAboutQtCaption);
     msgBox->setInformativeText(translatedTextAboutQtText);
 

@@ -1,9 +1,9 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
+** Copyright (C) 2016-2019 Ivailo Monev
 **
-** This file is part of the utils of the Qt Toolkit.
+** This file is part of the utils of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:LGPL$
 ** Commercial License Usage
@@ -2647,21 +2647,13 @@ int main(int, char **)
         "/****************************************************************************\n"
         "**\n"
         "** Copyright (C) 2015 The Qt Company Ltd.\n"
-        "** Contact: http://www.qt.io/licensing/\n"
+        "** Copyright (C) 2016-2019 Ivailo Monev\n"
         "**\n"
-        "** This file is part of the QtCore module of the Qt Toolkit.\n"
+        "** This file is part of the QtCore module of the Katie Toolkit.\n"
         "**\n"
         "** $QT_BEGIN_LICENSE:LGPL$\n"
-        "** Commercial License Usage\n"
-        "** Licensees holding valid commercial Qt licenses may use this file in\n"
-        "** accordance with the commercial license agreement provided with the\n"
-        "** Software or, alternatively, in accordance with the terms contained in\n"
-        "** a written agreement between you and The Qt Company. For licensing terms\n"
-        "** and and conditions see http://www.qt.io/terms-conditions. For further\n"
-        "** information use the contact form at http://www.qt.io/contact-us.\n"
-        "**\n"
         "** GNU Lesser General Public License Usage\n"
-        "** Alternatively, this file may be used under the terms of the GNU Lesser\n"
+        "** This file may be used under the terms of the GNU Lesser\n"
         "** General Public License version 2.1 or version 3 as published by the Free\n"
         "** Software Foundation and appearing in the file LICENSE.LGPLv21 and\n"
         "** LICENSE.LGPLv3 included in the packaging of this file. Please review the\n"
@@ -2693,7 +2685,7 @@ int main(int, char **)
         "//  W A R N I N G\n"
         "//  -------------\n"
         "//\n"
-        "// This file is not part of the Qt API.  It exists for the convenience\n"
+        "// This file is not part of the Katie API.  It exists for the convenience\n"
         "// of internal files.  This header file may change from version to version\n"
         "// without notice, or even be removed.\n"
         "//\n"

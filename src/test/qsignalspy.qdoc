@@ -1,9 +1,8 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
-** Contact: http://www.qt.io/licensing/
 **
-** This file is part of the documentation of the Qt Toolkit.
+** This file is part of the documentation of the Katie Toolkit.
 **
 ** $QT_BEGIN_LICENSE:FDL$
 ** Commercial License Usage
