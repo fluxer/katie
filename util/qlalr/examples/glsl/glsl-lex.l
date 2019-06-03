@@ -3,6 +3,7 @@
 /****************************************************************************
 **
 ** Copyright (C) 2015 The Qt Company Ltd.
+** Copyright (C) 2016-2019 Ivailo Monev
 **
 ** This file is part of the QLALR tool of the Katie Toolkit.
 **
