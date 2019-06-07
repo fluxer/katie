@@ -163,14 +163,14 @@ struct QTextHtmlParserNode {
     QTextHTMLElements id;
     QTextCharFormat charFormat;
     QTextBlockFormat blockFormat;
-    uint cssFloat : 2;
-    uint hasOwnListStyle : 1;
-    uint hasCssListIndent : 1;
-    uint isEmptyParagraph : 1;
-    uint isTextFrame : 1;
-    uint isRootFrame : 1;
-    uint displayMode : 3; // QTextHtmlElement::DisplayMode
-    uint hasHref : 1;
+    QTextFrameFormat::Position cssFloat;
+    bool hasOwnListStyle;
+    bool hasCssListIndent;
+    bool isEmptyParagraph;
+    bool isTextFrame;
+    bool isRootFrame;
+    bool hasHref;
+    QTextHtmlElement::DisplayMode displayMode;
     QTextListFormat::Style listStyle;
     QString textListNumberPrefix;
     QString textListNumberSuffix;

@@ -480,7 +480,7 @@ QTextHtmlParserNode::QTextHtmlParserNode()
     : parent(0), id(Html_unknown),
       cssFloat(QTextFrameFormat::InFlow), hasOwnListStyle(false),
       hasCssListIndent(false), isEmptyParagraph(false), isTextFrame(false), isRootFrame(false),
-      displayMode(QTextHtmlElement::DisplayInline), hasHref(false),
+      hasHref(false), displayMode(QTextHtmlElement::DisplayInline),
       listStyle(QTextListFormat::ListStyleUndefined), imageWidth(-1), imageHeight(-1), tableBorder(0),
       tableCellRowSpan(1), tableCellColSpan(1), tableCellSpacing(2), tableCellPadding(0),
       borderBrush(Qt::darkGray), borderStyle(QTextFrameFormat::BorderStyle_Outset),
