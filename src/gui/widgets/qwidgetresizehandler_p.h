@@ -61,9 +61,9 @@ class Q_GUI_EXPORT QWidgetResizeHandler : public QObject
 
 public:
     enum Action {
-        Move        = 0x01,
-        Resize        = 0x02,
-        Any        = Move|Resize
+        Move = 0x01,
+        Resize = 0x02,
+        Any = Move | Resize
     };
 
     explicit QWidgetResizeHandler(QWidget *parent, QWidget *cw = 0);
@@ -110,12 +110,12 @@ private:
     int fw;
     int extrahei;
     int range;
-    uint buttonDown            :1;
-    uint moveResizeMode            :1;
-    uint activeForResize    :1;
-    uint sizeprotect            :1;
-    uint movingEnabled                    :1;
-    uint activeForMove            :1;
+    bool buttonDown;
+    bool moveResizeMode;
+    bool activeForResize;
+    bool sizeprotect;
+    bool movingEnabled;
+    bool activeForMove;
 
     void setMouseCursor(MousePosition m);
     bool isMove() const {

@@ -110,7 +110,7 @@ bool QWidgetResizeHandler::eventFilter(QObject *o, QEvent *ee)
         return false;
     }
 
-    QMouseEvent *e = (QMouseEvent*)ee;
+    QMouseEvent *e = static_cast<QMouseEvent*>(ee);
     switch (e->type()) {
     case QEvent::MouseButtonPress: {
         if (w->isMaximized())
@@ -182,11 +182,11 @@ bool QWidgetResizeHandler::eventFilter(QObject *o, QEvent *ee)
         }
     } break;
     case QEvent::KeyPress:
-        keyPressEvent((QKeyEvent*)e);
+        keyPressEvent(static_cast<QKeyEvent*>(ee));
         break;
     case QEvent::ShortcutOverride:
         if (buttonDown) {
-            ((QKeyEvent*)ee)->accept();
+            static_cast<QKeyEvent*>(ee)->accept();
             return true;
         }
         break;
@@ -479,12 +479,13 @@ void QWidgetResizeHandler::keyPressEvent(QKeyEvent * e)
     case Qt::Key_Space:
     case Qt::Key_Return:
     case Qt::Key_Enter:
-    case Qt::Key_Escape:
+    case Qt::Key_Escape: {
         moveResizeMode = false;
         widget->releaseMouse();
         widget->releaseKeyboard();
         buttonDown = false;
         break;
+    }
     default:
         return;
     }
