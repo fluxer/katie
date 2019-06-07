@@ -36,9 +36,9 @@
 
 #include "qdeclarativetext_p.h"
 #include "qdeclarativeimplicitsizeitem_p.h"
-
-#include <QGraphicsSceneEvent>
-#include <QValidator>
+#include "qgraphicssceneevent.h"
+#include "qvalidator.h"
+#include "qlineedit.h"
 
 #ifndef QT_NO_LINEEDIT
 
@@ -53,7 +53,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeTextInput : public QDeclarativeImplicitSizeP
 {
     Q_OBJECT
     Q_ENUMS(HAlignment)
-    Q_ENUMS(EchoMode)
     Q_ENUMS(SelectionMode)
 
     Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged)
@@ -78,7 +77,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeTextInput : public QDeclarativeImplicitSizeP
     Q_PROPERTY(QString inputMask READ inputMask WRITE setInputMask NOTIFY inputMaskChanged)
 
     Q_PROPERTY(bool acceptableInput READ hasAcceptableInput NOTIFY acceptableInputChanged)
-    Q_PROPERTY(EchoMode echoMode READ echoMode WRITE setEchoMode NOTIFY echoModeChanged)
+    Q_PROPERTY(QLineEdit::EchoMode echoMode READ echoMode WRITE setEchoMode NOTIFY echoModeChanged)
     Q_PROPERTY(bool activeFocusOnPress READ focusOnPress WRITE setFocusOnPress NOTIFY activeFocusOnPressChanged)
     Q_PROPERTY(QString passwordCharacter READ passwordCharacter WRITE setPasswordCharacter NOTIFY passwordCharacterChanged)
     Q_PROPERTY(QString displayText READ displayText NOTIFY displayTextChanged)
@@ -91,13 +90,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeTextInput : public QDeclarativeImplicitSizeP
 public:
     QDeclarativeTextInput(QDeclarativeItem* parent=0);
     ~QDeclarativeTextInput();
-
-    enum EchoMode {//To match QLineEdit::EchoMode
-        Normal,
-        NoEcho,
-        Password,
-        PasswordEchoOnEdit
-    };
 
     enum HAlignment {
         AlignLeft = Qt::AlignLeft,
@@ -171,8 +163,8 @@ public:
     QString inputMask() const;
     void setInputMask(const QString &im);
 
-    EchoMode echoMode() const;
-    void setEchoMode(EchoMode echo);
+    QLineEdit::EchoMode echoMode() const;
+    void setEchoMode(QLineEdit::EchoMode echo);
 
     QString passwordCharacter() const;
     void setPasswordCharacter(const QString &str);
@@ -223,7 +215,7 @@ Q_SIGNALS:
     void maximumLengthChanged(int maximumLength);
     void validatorChanged();
     void inputMaskChanged(const QString &inputMask);
-    void echoModeChanged(EchoMode echoMode);
+    void echoModeChanged(QLineEdit::EchoMode echoMode);
     void passwordCharacterChanged();
     void displayTextChanged();
     void activeFocusOnPressChanged(bool activeFocusOnPress);

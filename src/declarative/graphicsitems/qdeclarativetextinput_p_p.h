@@ -35,14 +35,10 @@
 #define QDECLARATIVETEXTINPUT_P_H
 
 #include "qdeclarativetextinput_p.h"
-
 #include "qdeclarativeimplicitsizeitem_p_p.h"
-
-#include <qdeclarative.h>
-
-#include <QPointer>
-
-#include <qlinecontrol_p.h>
+#include "qdeclarative.h"
+#include "qpointer.h"
+#include "qlinecontrol_p.h"
 
 //
 //  W A R N I N G

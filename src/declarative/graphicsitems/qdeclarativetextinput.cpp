@@ -865,18 +865,18 @@ bool QDeclarativeTextInput::hasAcceptableInput() const
     while editing, otherwise displays asterisks.
     \endlist
 */
-QDeclarativeTextInput::EchoMode QDeclarativeTextInput::echoMode() const
+QLineEdit::EchoMode QDeclarativeTextInput::echoMode() const
 {
     Q_D(const QDeclarativeTextInput);
-    return (QDeclarativeTextInput::EchoMode)d->control->echoMode();
+    return d->control->echoMode();
 }
 
-void QDeclarativeTextInput::setEchoMode(QDeclarativeTextInput::EchoMode echo)
+void QDeclarativeTextInput::setEchoMode(QLineEdit::EchoMode echo)
 {
     Q_D(QDeclarativeTextInput);
     if (echoMode() == echo)
         return;
-    d->control->setEchoMode((uint)echo);
+    d->control->setEchoMode(echo);
     q_textChanged();
     emit echoModeChanged(echoMode());
 }
@@ -1389,8 +1389,8 @@ void QDeclarativeTextInput::setPasswordCharacter(const QString &str)
     if(str.length() < 1)
         return;
     d->control->setPasswordCharacter(str.constData()[0]);
-    EchoMode echoMode_ = echoMode();
-    if (echoMode_ == Password || echoMode_ == PasswordEchoOnEdit) {
+    QLineEdit::EchoMode echoMode_ = echoMode();
+    if (echoMode_ == QLineEdit::Password || echoMode_ == QLineEdit::PasswordEchoOnEdit) {
         updateSize();
     }
     emit passwordCharacterChanged();
