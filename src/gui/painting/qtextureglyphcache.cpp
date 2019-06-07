@@ -408,7 +408,7 @@ void QImageTextureGlyphCache::fillTexture(const Coord &c, glyph_t g, QFixed subP
             uchar *dest = d + (c.y + y) *dbpl + c.x/8;
 
             if (y < mh) {
-                uchar *src = mask.scanLine(y);
+                const uchar *src = mask.scanLine(y);
                 for (int x = 0; x < c.w/8; ++x) {
                     if (x < (mw+7)/8)
                         dest[x] = src[x];
@@ -430,7 +430,7 @@ void QImageTextureGlyphCache::fillTexture(const Coord &c, glyph_t g, QFixed subP
             for (int y = 0; y < c.h; ++y) {
                 uchar *dest = d + (c.y + y) *dbpl + c.x;
                 if (y < mh) {
-                    uchar *src = (uchar *) mask.scanLine(y);
+                    const uchar *src = (const uchar *) mask.scanLine(y);
                     for (int x = 0; x < c.w; ++x) {
                         if (x < mw)
                             dest[x] = (src[x >> 3] & (1 << (7 - (x & 7)))) > 0 ? 255 : 0;
@@ -441,7 +441,7 @@ void QImageTextureGlyphCache::fillTexture(const Coord &c, glyph_t g, QFixed subP
             for (int y = 0; y < c.h; ++y) {
                 uchar *dest = d + (c.y + y) *dbpl + c.x;
                 if (y < mh) {
-                    uchar *src = (uchar *) mask.scanLine(y);
+                    const uchar *src = (const uchar *) mask.scanLine(y);
                     for (int x = 0; x < c.w; ++x) {
                         if (x < mw)
                             dest[x] = src[x];

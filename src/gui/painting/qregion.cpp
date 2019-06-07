@@ -3722,7 +3722,7 @@ QRegionPrivate *qt_bitmapToRegion(const QBitmap& bitmap)
     int x,
         y;
     for (y = 0; y < image.height(); ++y) {
-        uchar *line = image.scanLine(y);
+        const uchar *line = image.scanLine(y);
         int w = image.width();
         uchar all = zero;
         int prev1 = -1;

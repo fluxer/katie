@@ -1395,7 +1395,7 @@ void QWidgetPrivate::setWindowIcon_sys(bool forceReset)
                     memcpy(icon_data.data() + pos, image.scanLine(0), image.byteCount());
                 } else {
                     for (int y = 0; y < image.height(); ++y) {
-                        uint *scanLine = reinterpret_cast<uint *>(image.scanLine(y));
+                        const uint *scanLine = reinterpret_cast<const uint *>(image.scanLine(y));
                         for (int x = 0; x < image.width(); ++x)
                             icon_data[pos + y*image.width() + x] = scanLine[x];
                     }

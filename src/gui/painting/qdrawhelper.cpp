@@ -67,7 +67,7 @@ static const int buffer_size = 2048;
 
 static uint * QT_FASTCALL destFetchMono(uint *buffer, QRasterBuffer *rasterBuffer, int x, int y, int length)
 {
-    uchar *data = (uchar *)rasterBuffer->scanLine(y);
+    const uchar *data = (const uchar *)rasterBuffer->scanLine(y);
     uint *start = buffer;
     const uint *end = buffer + length;
     while (buffer < end) {
@@ -80,7 +80,7 @@ static uint * QT_FASTCALL destFetchMono(uint *buffer, QRasterBuffer *rasterBuffe
 
 static uint * QT_FASTCALL destFetchMonoLsb(uint *buffer, QRasterBuffer *rasterBuffer, int x, int y, int length)
 {
-    uchar *data = (uchar *)rasterBuffer->scanLine(y);
+    const uchar *data = (const uchar *)rasterBuffer->scanLine(y);
     uint *start = buffer;
     const uint *end = buffer + length;
     while (buffer < end) {
@@ -2754,7 +2754,7 @@ static void blend_untransformed_argb(int count, const QSpan *spans, void *userDa
                 length = image_width - sx;
             if (length > 0) {
                 const int coverage = (spans->coverage * data->texture.const_alpha) >> 8;
-                const uint *src = (uint *)data->texture.scanLine(sy) + sx;
+                const uint *src = (const uint *)data->texture.scanLine(sy) + sx;
                 uint *dest = ((uint *)data->rasterBuffer->scanLine(spans->y)) + x;
                 op.func(dest, src, length, coverage);
             }
@@ -3919,7 +3919,7 @@ void QT_FASTCALL blendUntransformed(int count, const QSpan *spans, void *userDat
                 length = image_width - sx;
             if (length > 0) {
                 DST *dest = ((DST*)data->rasterBuffer->scanLine(spans->y)) + x;
-                const SRC *src = (SRC*)data->texture.scanLine(sy) + sx;
+                const SRC *src = (const SRC*)data->texture.scanLine(sy) + sx;
                 if (modeSource && coverage == 255) {
                     qt_memconvert<DST, SRC>(dest, src, length);
                 } else if (sizeof(DST) == 3 && sizeof(SRC) == 3 && length >= 3 &&
@@ -4145,7 +4145,7 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
                 if (buffer_size < l)
                     l = buffer_size;
                 DST *dest = ((DST*)data->rasterBuffer->scanLine(spans->y)) + tx;
-                const SRC *src = (SRC*)data->texture.scanLine(sy) + sx;
+                const SRC *src = (const SRC*)data->texture.scanLine(sy) + sx;
 
                 qt_memconvert<DST, SRC>(dest, src, l);
                 length -= l;
@@ -4177,7 +4177,7 @@ static void blendTiled(int count, const QSpan *spans, void *userData)
                 if (buffer_size < l)
                     l = buffer_size;
                 DST *dest = ((DST*)data->rasterBuffer->scanLine(spans->y)) + x;
-                const SRC *src = (SRC*)data->texture.scanLine(sy) + sx;
+                const SRC *src = (const SRC*)data->texture.scanLine(sy) + sx;
                 if (sizeof(DST) == 3 && sizeof(SRC) == 3 && l >= 4 &&
                            (quintptr(dest) & 3) == (quintptr(src) & 3))
                 {
@@ -4324,8 +4324,8 @@ static void blendTransformedBilinear(int count, const QSpan *spans,
                     y2 = y1 + 1;
                 }
 
-                const SRC *src1 = (SRC*)data->texture.scanLine(y1);
-                const SRC *src2 = (SRC*)data->texture.scanLine(y2);
+                const SRC *src1 = (const SRC*)data->texture.scanLine(y1);
+                const SRC *src2 = (const SRC*)data->texture.scanLine(y2);
                 SRC tl = src1[x1];
                 const SRC tr = src1[x2];
                 SRC bl = src2[x1];
@@ -4534,7 +4534,7 @@ static void blendTransformed(int count, const QSpan *spans, void *userData)
                 {
                     *b = 0;
                 } else {
-                    *b = ((SRC*)data->texture.scanLine(py))[px];
+                    *b = ((const SRC*)data->texture.scanLine(py))[px];
                 }
                 ++b;
 
@@ -4750,7 +4750,7 @@ static void blendTransformedTiled(int count, const QSpan *spans, void *userData)
                 if (py < 0)
                     py += image_height;
 
-                *b = ((SRC*)data->texture.scanLine(py))[px];
+                *b = ((const SRC*)data->texture.scanLine(py))[px];
                 ++b;
 
                 x += fdx;
@@ -5359,10 +5359,8 @@ static void qt_alphargbblit_quint32(QRasterBuffer *rasterBuffer,
 template <class T>
 inline void qt_rectfill_template(QRasterBuffer *rasterBuffer,
                                  int x, int y, int width, int height,
-                                 quint32 color, T dummy = 0)
+                                 quint32 color)
 {
-    Q_UNUSED(dummy);
-
     qt_rectfill<T>(reinterpret_cast<T*>(rasterBuffer->buffer()),
                    qt_colorConvert<T, quint32p>(quint32p::fromRawData(color), 0),
                    x, y, width, height, rasterBuffer->bytesPerLine());

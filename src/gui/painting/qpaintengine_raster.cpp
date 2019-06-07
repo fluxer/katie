@@ -3040,7 +3040,7 @@ QImage QRasterBuffer::colorizeBitmap(const QImage &image, const QColor &color)
     int height = sourceImage.height();
     int width = sourceImage.width();
     for (int y=0; y<height; ++y) {
-        uchar *source = sourceImage.scanLine(y);
+        const uchar *source = sourceImage.scanLine(y);
         QRgb *target = reinterpret_cast<QRgb *>(dest.scanLine(y));
         if (!source || !target)
             QT_THROW(std::bad_alloc()); // we must have run out of memory
@@ -3518,40 +3518,15 @@ QImage QRasterBuffer::bufferImage() const
     QImage image(m_width, m_height, QImage::Format_ARGB32_Premultiplied);
 
     for (int y = 0; y < m_height; ++y) {
-        uint *span = (uint *)const_cast<QRasterBuffer *>(this)->scanLine(y);
+        const uint *span = (const uint *)this->scanLine(y);
 
         for (int x=0; x<m_width; ++x) {
-            uint argb = span[x];
-            image.setPixel(x, y, argb);
+            image.setPixel(x, y, span[x]);
         }
     }
     return image;
 }
 #endif
-
-
-void QRasterBuffer::flushToARGBImage(QImage *target) const
-{
-    int w = qMin(m_width, target->width());
-    int h = qMin(m_height, target->height());
-
-    for (int y=0; y<h; ++y) {
-        uint *sourceLine = (uint *)const_cast<QRasterBuffer *>(this)->scanLine(y);
-        QRgb *dest = (QRgb *) target->scanLine(y);
-        for (int x=0; x<w; ++x) {
-            QRgb pixel = sourceLine[x];
-            int alpha = qAlpha(pixel);
-            if (!alpha) {
-                dest[x] = 0;
-            } else {
-                dest[x] = (alpha << 24)
-                        | ((255*qRed(pixel)/alpha) << 16)
-                        | ((255*qGreen(pixel)/alpha) << 8)
-                        | ((255*qBlue(pixel)/alpha) << 0);
-            }
-        }
-    }
-}
 
 
 class QGradientCache

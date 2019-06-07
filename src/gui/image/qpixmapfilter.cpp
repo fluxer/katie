@@ -337,7 +337,7 @@ static void convolute(
     QRectF sbounded = srect.adjusted(-kernelWidth / 2, -kernelHeight / 2, (kernelWidth - 1) / 2, (kernelHeight - 1) / 2);
     QPoint srcStartPoint = sbounded.toAlignedRect().topLeft()+(targetRect.topLeft()-rect.topLeft());
 
-    const uint *sourceStart = (uint*)processImage.scanLine(0);
+    const uint *sourceStart = (const uint*)processImage.scanLine(0);
     uint *outputStart = (uint*)destImage->scanLine(0);
 
     int yk = srcStartPoint.y();
@@ -972,10 +972,10 @@ static void grayscale(const QImage &image, QImage &dest, const QRect& rect = QRe
         destRect.moveTo(QPoint(0, 0));
     }
 
-    unsigned int *data = (unsigned int *)image.bits();
     unsigned int *outData = (unsigned int *)dest.bits();
 
     if (dest.size() == image.size() && image.rect() == srcRect) {
+        const unsigned int *data = (const unsigned int *)image.bits();
         // a bit faster loop for grayscaling everything
         int pixels = dest.width() * dest.height();
         for (int i = 0; i < pixels; ++i) {
@@ -985,7 +985,7 @@ static void grayscale(const QImage &image, QImage &dest, const QRect& rect = QRe
     } else {
         int yd = destRect.top();
         for (int y = srcRect.top(); y <= srcRect.bottom() && y < image.height(); y++) {
-            data = (unsigned int*)image.scanLine(y);
+            const unsigned int *data = (const unsigned int*)image.scanLine(y);
             outData = (unsigned int*)dest.scanLine(yd++);
             int xd = destRect.left();
             for (int x = srcRect.left(); x <= srcRect.right() && x < image.width(); x++) {

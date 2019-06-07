@@ -1627,18 +1627,16 @@ QImage QX11PixmapData::toImage(const QXImageWrapper &xiWrapper, const QRect &rec
 
         int  r, g, b;
 
-        QRgb *dst;
-        uchar *src;
-        uint pixel;
         int bppc = xi->bits_per_pixel;
 
         if (bppc > 8 && xi->byte_order == LSBFirst)
             bppc++;
 
         for (int y = 0; y < xi->height; ++y) {
-            uchar* asrc = x11_mask ? alpha.scanLine(y) : 0;
-            dst = (QRgb *)image.scanLine(y);
-            src = (uchar *)xi->data + xi->bytes_per_line*y;
+            uint pixel;
+            const uchar* asrc = x11_mask ? alpha.scanLine(y) : 0;
+            QRgb *dst = (QRgb *)image.scanLine(y);
+            uchar *src = (uchar *)xi->data + xi->bytes_per_line*y;
             for (int x = 0; x < xi->width; x++) {
                 switch (bppc) {
                 case 8:
@@ -1735,7 +1733,7 @@ QImage QX11PixmapData::toImage(const QXImageWrapper &xiWrapper, const QRect &rec
 
         if (x11_mask) {                         // which pixels are used?
             for (int i = 0; i < xi->height; i++) {
-                uchar* asrc = alpha.scanLine(i);
+                const uchar* asrc = alpha.scanLine(i);
                 p = image.scanLine(i);
                 if (ale) {
                     for (int x = 0; x < xi->width; x++) {
@@ -1785,7 +1783,7 @@ QImage QX11PixmapData::toImage(const QXImageWrapper &xiWrapper, const QRect &rec
                 trans = image.scanLine(0)[0];
             }
             for (int i = 0; i < xi->height; i++) {
-                uchar* asrc = alpha.scanLine(i);
+                const uchar* asrc = alpha.scanLine(i);
                 p = image.scanLine(i);
                 if (ale) {
                     for (int x = 0; x < xi->width; x++) {

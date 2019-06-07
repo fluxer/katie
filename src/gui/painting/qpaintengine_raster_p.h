@@ -411,12 +411,11 @@ public:
     void resetBuffer(int val=0);
 
     uchar *scanLine(int y) { Q_ASSERT(y>=0); Q_ASSERT(y<m_height); return m_buffer + y * bytes_per_line; }
+    const uchar *scanLine(int y) const { Q_ASSERT(y>=0); Q_ASSERT(y<m_height); return m_buffer + y * bytes_per_line; }
 
 #ifndef QT_NO_DEBUG
     QImage bufferImage() const;
 #endif
-
-    void flushToARGBImage(QImage *image) const;
 
     int width() const { return m_width; }
     int height() const { return m_height; }
