@@ -986,7 +986,7 @@ int QFont::pixelSize() const
 */
 QFont::Style QFont::style() const
 {
-    return (QFont::Style)d->request.style;
+    return d->request.style;
 }
 
 
@@ -1385,13 +1385,12 @@ void QFont::setStretch(int factor)
         return;
     }
 
-    if ((resolve_mask & QFont::StretchResolved) &&
-         d->request.stretch == (uint)factor)
+    if ((resolve_mask & QFont::StretchResolved) && d->request.stretch == factor)
         return;
 
     detach();
 
-    d->request.stretch = (uint)factor;
+    d->request.stretch = factor;
     resolve_mask |= QFont::StretchResolved;
 }
 
@@ -1998,7 +1997,7 @@ bool QFont::fromString(const QString &descrip)
             setPixelSize(l[2].toInt());
         setStyleHint((StyleHint) l[3].toInt());
         setWeight(qMax(qMin(99, l[4].toInt()), 0));
-        setStyle((QFont::Style)l[5].toInt());
+        setStyle(static_cast<QFont::Style>(l[5].toInt()));
         setUnderline(l[6].toInt());
         setStrikeOut(l[7].toInt());
         setFixedPitch(l[8].toInt());
@@ -2034,8 +2033,7 @@ QDataStream &operator<<(QDataStream &s, const QFont &font)
 
     s << (quint8) font.d->request.styleHint;
     s << (quint8) font.d->request.styleStrategy;
-    s << (quint8) 0
-      << (quint8) font.d->request.weight
+    s << (quint8) font.d->request.weight
       << get_font_bits(s.version(), font.d.data());
     s << (quint16)font.d->request.stretch;
     s << get_extended_font_bits(font.d.data());
@@ -2058,7 +2056,7 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     font.d = new QFontPrivate;
     font.resolve_mask = QFont::AllPropertiesResolved;
 
-    quint8 styleHint, styleStrategy = QFont::PreferDefault, charSet, weight, bits;
+    quint8 styleHint, styleStrategy = QFont::PreferDefault, weight, bits;
 
     s >> font.d->request.family;
 
@@ -2071,12 +2069,11 @@ QDataStream &operator>>(QDataStream &s, QFont &font)
     s >> styleHint;
     s >> styleStrategy;
 
-    s >> charSet;
     s >> weight;
     s >> bits;
 
-    font.d->request.styleHint = styleHint;
-    font.d->request.styleStrategy = styleStrategy;
+    font.d->request.styleHint = QFont::StyleHint(styleHint);
+    font.d->request.styleStrategy = QFont::StyleStrategy(styleStrategy);
     font.d->request.weight = weight;
 
     set_font_bits(s.version(), bits, font.d.data());
@@ -2278,7 +2275,7 @@ QFont::Style QFontInfo::style() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-    return (QFont::Style)engine->fontDef.style;
+    return engine->fontDef.style;
 }
 
 /*!
@@ -2369,7 +2366,7 @@ QFont::StyleHint QFontInfo::styleHint() const
 {
     QFontEngine *engine = d->engineForScript(QUnicodeTables::Common);
     Q_ASSERT(engine != 0);
-    return (QFont::StyleHint) engine->fontDef.styleHint;
+    return engine->fontDef.styleHint;
 }
 
 /*!

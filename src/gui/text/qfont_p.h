@@ -63,7 +63,7 @@ struct QFontDef
     inline QFontDef()
         : pointSize(-1.0), pixelSize(-1),
           styleStrategy(QFont::PreferDefault), styleHint(QFont::AnyStyle),
-          weight(50), fixedPitch(false), style(QFont::StyleNormal), stretch(100),
+          fixedPitch(false), style(QFont::StyleNormal), weight(50), stretch(100),
           ignorePitch(true), hintingPreference(QFont::PreferDefaultHinting)
     {
     }
@@ -78,16 +78,16 @@ struct QFontDef
     qreal pointSize;
     qreal pixelSize;
 
-    uint styleStrategy : 16;
-    uint styleHint     : 8;
+    QFont::StyleStrategy styleStrategy;
+    QFont::StyleHint styleHint;
 
-    uint weight     :  7; // 0-99
-    uint fixedPitch :  1;
-    uint style      :  2;
-    uint stretch    : 12; // 0-400
+    bool fixedPitch;
+    QFont::Style style;
+    int weight; // 0-99
+    int stretch; // 0-4000
 
-    uint ignorePitch : 1;
-    uint hintingPreference : 2;
+    bool ignorePitch;
+    QFont::HintingPreference hintingPreference;
 
     bool exactMatch(const QFontDef &other) const;
     bool operator==(const QFontDef &other) const

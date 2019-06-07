@@ -1373,7 +1373,7 @@ QByteArray QFontSubset::toTruetype() const
     font.head.yMin = SHRT_MAX;
     font.head.yMax = SHRT_MIN;
     font.head.macStyle = (fontEngine->fontDef.weight > QFont::Normal) ? 1 : 0;
-    font.head.macStyle |= (fontEngine->fontDef.styleHint != QFont::StyleNormal) ? 1 : 0;
+    font.head.macStyle |= (fontEngine->fontDef.style != QFont::StyleNormal) ? 1 : 0;
 
     // hhea table
     font.hhea.ascender = qRound(properties.ascent);
