@@ -60,10 +60,10 @@ public:
 
     int ndigits;
     double val;
-    uint base : 2;
-    uint smallPoint : 1;
-    uint fill : 1;
-    uint shadow : 1;
+    QLCDNumber::Mode base;
+    bool smallPoint;
+    bool fill;
+    bool shadow;
     QString digitStr;
     QBitArray points;
 };
@@ -164,7 +164,7 @@ public:
 */
 
 
-static QString int2string(int num, int base, int ndigits, bool *oflow)
+static QString int2string(int num, QLCDNumber::Mode base, int ndigits, bool *oflow)
 {
     QString s;
     bool negative;
@@ -221,7 +221,7 @@ static QString int2string(int num, int base, int ndigits, bool *oflow)
 }
 
 
-static QString double2string(double num, int base, int ndigits, bool *oflow)
+static QString double2string(double num, QLCDNumber::Mode base, int ndigits, bool *oflow)
 {
     QString s;
     if (base != QLCDNumber::Dec) {
@@ -519,7 +519,7 @@ bool QLCDNumber::checkOverflow(double num) const
 QLCDNumber::Mode QLCDNumber::mode() const
 {
     Q_D(const QLCDNumber);
-    return (QLCDNumber::Mode) d->base;
+    return d->base;
 }
 
 void QLCDNumber::setMode(Mode m)
