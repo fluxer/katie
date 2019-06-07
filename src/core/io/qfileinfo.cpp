@@ -353,6 +353,23 @@ QFileInfo::~QFileInfo()
 }
 
 /*!
+    \internal
+*/
+QFileInfoPrivate* QFileInfo::d_func()
+{
+    return d_ptr.data();
+}
+
+/*!
+    \internal
+*/
+const QFileInfoPrivate* QFileInfo::d_func() const
+{
+    return d_ptr.constData();
+}
+
+
+/*!
     \fn bool QFileInfo::operator!=(const QFileInfo &fileinfo)
 
     Returns true if this QFileInfo object refers to a different file
@@ -376,16 +393,11 @@ QFileInfo::~QFileInfo()
     \warning This will not compare two different symbolic links
     pointing to the same file.
 
-    \warning Long and short file names that refer to the same file on Windows
-    are treated as if they referred to different files.
-
     \sa operator!=()
 */
 bool QFileInfo::operator==(const QFileInfo &fileinfo) const
 {
     Q_D(const QFileInfo);
-    // ### Qt 5: understand long and short file names on Windows
-    // ### (GetFullPathName()).
     if (fileinfo.d_ptr == d_ptr)
         return true;
     if (d->isDefaultConstructed || fileinfo.d_ptr->isDefaultConstructed)
@@ -622,8 +634,8 @@ bool QFileInfo::isRelative() const
 */
 bool QFileInfo::makeAbsolute()
 {
-    if (d_ptr.constData()->isDefaultConstructed
-            || !d_ptr.constData()->fileEntry.isRelative())
+    Q_D(const QFileInfo);
+    if (d->isDefaultConstructed || !d->fileEntry.isRelative())
         return false;
 
     setFile(absoluteFilePath());
@@ -1208,14 +1220,6 @@ QDateTime QFileInfo::lastRead() const
         return d->metaData.accessTime();
     }
     return d->getFileTime(QAbstractFileEngine::AccessTime);
-}
-
-/*! \internal
-    Detaches all internal data.
-*/
-void QFileInfo::detach()
-{
-    d_ptr.detach();
 }
 
 /*!
