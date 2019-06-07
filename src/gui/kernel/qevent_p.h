@@ -36,6 +36,7 @@
 
 #include <QtCore/qurl.h>
 #include <QtGui/qevent.h>
+#include <QtGui/qt_x11_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -49,20 +50,6 @@ QT_BEGIN_NAMESPACE
 //
 // We mean it.
 //
-
-// ### Qt 5: remove
-class QMouseEventEx : public QMouseEvent
-{
-public:
-    QMouseEventEx(Type type, const QPointF &pos, const QPoint &globalPos,
-                  Qt::MouseButton button, Qt::MouseButtons buttons,
-                  Qt::KeyboardModifiers modifiers);
-    ~QMouseEventEx();
-
-protected:
-    QPointF posF;
-    friend class QMouseEvent;
-};
 
 class QTouchEventTouchPointPrivate
 {
@@ -117,33 +104,19 @@ public:
     QPoint position;
     float angle;
 };
-
-class QGestureEventPrivate
-{
-public:
-    inline QGestureEventPrivate(const QList<QGesture *> &list)
-        : gestures(list), widget(0)
-    {
-    }
-
-    QList<QGesture *> gestures;
-    QWidget *widget;
-    QMap<Qt::GestureType, bool> accepted;
-    QMap<Qt::GestureType, QWidget *> targetWidgets;
-};
 #endif // QT_NO_GESTURES
 
-class QFileOpenEventPrivate
+
+#ifndef QT_NO_CLIPBOARD
+class Q_GUI_EXPORT QClipboardEvent : public QEvent
 {
 public:
-    inline QFileOpenEventPrivate(const QUrl &url)
-        : url(url)
-    {
-    }
-    ~QFileOpenEventPrivate();
+    QClipboardEvent(XEvent *event);
+    ~QClipboardEvent();
 
-    QUrl url;
+    XEvent* m_event;
 };
+#endif
 
 QT_END_NAMESPACE
 

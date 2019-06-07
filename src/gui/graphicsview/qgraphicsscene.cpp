@@ -3391,9 +3391,9 @@ bool QGraphicsScene::event(QEvent *event)
         d->dispatchHoverEvent(hoverEvent);
         break;
     }
-    case QEvent::Leave:
+    case QEvent::GraphicsSceneLeave:
         // hackieshly unpacking the viewport pointer from the leave event.
-        d->leaveScene(reinterpret_cast<QWidget *>(event->d));
+        d->leaveScene(static_cast<QGraphicsSceneEvent *>(event));
         break;
     case QEvent::GraphicsSceneHelp:
         helpEvent(static_cast<QGraphicsSceneHelpEvent *>(event));
@@ -3865,11 +3865,12 @@ bool QGraphicsScenePrivate::dispatchHoverEvent(QGraphicsSceneHoverEvent *hoverEv
     Handles all actions necessary to clean up the scene when the mouse leaves
     the view.
 */
-void QGraphicsScenePrivate::leaveScene(QWidget *viewport)
+void QGraphicsScenePrivate::leaveScene(QGraphicsSceneEvent *event)
 {
 #ifndef QT_NO_TOOLTIP
     QToolTip::hideText();
 #endif
+    QWidget *viewport = event->widget();
     QGraphicsView *view = qobject_cast<QGraphicsView *>(viewport->parent());
     // Send HoverLeave events to all existing hover items, topmost first.
     QGraphicsSceneHoverEvent hoverEvent;

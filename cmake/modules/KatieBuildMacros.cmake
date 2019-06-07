@@ -314,7 +314,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
     )
 endmacro()
 
-# a macro to add tests easily by setting them up with the assumptions they make
+# a macro to add tests that require GUI easily by setting them up with the assumptions they make
 macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
     katie_resources(${TESTSOURCES} ${ARGN})
 

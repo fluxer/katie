@@ -1006,7 +1006,7 @@ void QCoreApplication::postEvent(QObject *receiver, QEvent *event, int priority)
     if (event->type() == QEvent::DeferredDelete && data == QThreadData::current()) {
         // remember the current running eventloop for DeferredDelete
         // events posted in the receiver's thread
-        event->d = reinterpret_cast<QEventPrivate *>(quintptr(data->loopLevel));
+        event->looplevel = data->loopLevel;
     }
 
     // delete the event on exceptions to protect against memory leaks till the event is
@@ -1132,10 +1132,9 @@ void QCoreApplicationPrivate::sendPostedEvents(QObject *receiver, int event_type
             // (s.a. QEvent::DeferredDelete), and then only if the event loop that
             // posted the event has returned.
             const bool allowDeferredDelete =
-                (quintptr(pe.event->d) > unsigned(data->loopLevel)
-                 || (!quintptr(pe.event->d) && data->loopLevel > 0)
-                 || (event_type == QEvent::DeferredDelete
-                     && quintptr(pe.event->d) == unsigned(data->loopLevel)));
+                (pe.event->looplevel > data->loopLevel
+                 || (!pe.event->looplevel && data->loopLevel > 0)
+                 || (event_type == QEvent::DeferredDelete && pe.event->looplevel == data->loopLevel));
             if (!allowDeferredDelete) {
                 // cannot send deferred delete
                 if (!event_type && !receiver) {

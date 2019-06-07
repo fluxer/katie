@@ -2672,13 +2672,15 @@ bool QGraphicsView::viewportEvent(QEvent *event)
         return QAbstractScrollArea::viewportEvent(event);
 
     switch (event->type()) {
-    case QEvent::Enter:
+    case QEvent::Enter: {
         QApplication::sendEvent(d->scene, event);
         break;
-    case QEvent::WindowActivate:
+    }
+    case QEvent::WindowActivate: {
         QApplication::sendEvent(d->scene, event);
         break;
-    case QEvent::WindowDeactivate:
+    }
+    case QEvent::WindowDeactivate: {
         // ### This is a temporary fix for until we get proper mouse
         // grab events. mouseGrabberItem should be set to 0 if we lose
         // the mouse grab.
@@ -2687,20 +2689,23 @@ bool QGraphicsView::viewportEvent(QEvent *event)
             d->scene->d_func()->removePopup(d->scene->d_func()->popupWidgets.first());
         QApplication::sendEvent(d->scene, event);
         break;
-    case QEvent::Show:
+    }
+    case QEvent::Show: {
         if (d->scene && isActiveWindow()) {
             QEvent windowActivate(QEvent::WindowActivate);
             QApplication::sendEvent(d->scene, &windowActivate);
         }
         break;
-    case QEvent::Hide:
+    }
+    case QEvent::Hide: {
         // spontaneous event will generate a WindowDeactivate.
         if (!event->spontaneous() && d->scene && isActiveWindow()) {
             QEvent windowDeactivate(QEvent::WindowDeactivate);
             QApplication::sendEvent(d->scene, &windowDeactivate);
         }
         break;
-    case QEvent::Leave:
+    }
+    case QEvent::Leave: {
         // ### This is a temporary fix for until we get proper mouse grab
         // events. activeMouseGrabberItem should be set to 0 if we lose the
         // mouse grab.
@@ -2712,10 +2717,11 @@ bool QGraphicsView::viewportEvent(QEvent *event)
         }
         d->useLastMouseEvent = false;
         // a hack to pass a viewport pointer to the scene inside the leave event
-        Q_ASSERT(event->d == 0);
-        event->d = reinterpret_cast<QEventPrivate *>(viewport());
-        QApplication::sendEvent(d->scene, event);
+        QGraphicsSceneEvent leaveEvent(QEvent::GraphicsSceneLeave);
+        leaveEvent.setWidget(viewport());
+        QApplication::sendEvent(d->scene, &leaveEvent);
         break;
+    }
 #ifndef QT_NO_TOOLTIP
     case QEvent::ToolTip: {
         QHelpEvent *toolTip = static_cast<QHelpEvent *>(event);
@@ -2728,7 +2734,7 @@ bool QGraphicsView::viewportEvent(QEvent *event)
         return true;
     }
 #endif
-    case QEvent::Paint:
+    case QEvent::Paint: {
         // Reset full update
         d->fullUpdatePending = false;
         d->dirtyScrollOffset = QPoint();
@@ -2749,6 +2755,7 @@ bool QGraphicsView::viewportEvent(QEvent *event)
             }
         }
         break;
+    }
     case QEvent::TouchBegin:
     case QEvent::TouchUpdate:
     case QEvent::TouchEnd:

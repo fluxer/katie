@@ -174,7 +174,6 @@ bool FormWindowManager::eventFilter(QObject *o, QEvent *e)
     case QEvent::Clipboard:
     case QEvent::ContentsRectChange:
     case QEvent::DeferredDelete:
-    case QEvent::FileOpen:
     case QEvent::LanguageChange:
     case QEvent::MetaCall:
     case QEvent::ModifiedChange:
@@ -290,14 +289,14 @@ void FormWindowManager::removeFormWindow(QDesignerFormWindowInterface *w)
     m_formWindows.removeAt(idx);
     emit formWindowRemoved(formWindow);
 
-    if (formWindow == m_activeFormWindow)
+    if (formWindow == m_activeFormWindow) {
         setActiveFormWindow(0);
 
         if (m_formWindows.size() == 0 && m_core->widgetBox()) {
             // Make sure that widget box is enabled by default
             m_core->widgetBox()->setEnabled(true);
         }
-
+    }
 }
 
 void FormWindowManager::setActiveFormWindow(QDesignerFormWindowInterface *w)

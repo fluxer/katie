@@ -239,12 +239,6 @@ void QDesigner::initialize()
 bool QDesigner::event(QEvent *ev)
 {
     switch (ev->type()) {
-    case QEvent::FileOpen:
-        // Set it true first since, if it's a Qt 3 form, the messagebox from convert will fire the timer.
-        m_suppressNewFormShow = true;
-        if (!m_workbench->readInForm(static_cast<QFileOpenEvent *>(ev)->file()))
-            m_suppressNewFormShow = false;
-        return true;
     case QEvent::Close: {
         bool eaten = true;
         QCloseEvent *closeEvent = static_cast<QCloseEvent *>(ev);

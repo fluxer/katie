@@ -168,6 +168,13 @@ QMouseEvent::QMouseEvent(Type type, const QPoint &position, Qt::MouseButton butt
     g = QCursor::pos();
 }
 
+QMouseEvent::QMouseEvent(Type type, const QPointF &position, Qt::MouseButton button,
+                         Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers)
+    : QInputEvent(type, modifiers), p(position), b(button), mouseState(buttons)
+{
+    g = QCursor::pos();
+}
+
 /*!
     \internal
 */
@@ -200,55 +207,11 @@ QMouseEvent::QMouseEvent(Type type, const QPoint &pos, const QPoint &globalPos,
     : QInputEvent(type, modifiers), p(pos), g(globalPos), b(button), mouseState(buttons)
 {}
 
-/*!
-    \internal
-*/
-QMouseEvent *QMouseEvent::createExtendedMouseEvent(Type type, const QPointF &pos,
-                                                   const QPoint &globalPos, Qt::MouseButton button,
-                                                   Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers)
-{
-    return new QMouseEventEx(type, pos, globalPos, button, buttons, modifiers);
-}
-
-/*!
-    \fn bool QMouseEvent::hasExtendedInfo() const
-    \internal
-*/
-
-/*!
-    \since 4.4
-
-    Returns the position of the mouse cursor as a QPointF, relative to the
-    widget that received the event.
-
-    If you move the widget as a result of the mouse event, use the
-    global position returned by globalPos() to avoid a shaking
-    motion.
-
-    \sa x() y() pos() globalPos()
-*/
-QPointF QMouseEvent::posF() const
-{
-    return hasExtendedInfo() ? reinterpret_cast<const QMouseEventEx *>(this)->posF : QPointF(pos());
-}
-
-/*!
-    \internal
-*/
-QMouseEventEx::QMouseEventEx(Type type, const QPointF &pos, const QPoint &globalPos,
-                             Qt::MouseButton button, Qt::MouseButtons buttons,
-                             Qt::KeyboardModifiers modifiers)
-    : QMouseEvent(type, pos.toPoint(), globalPos, button, buttons, modifiers), posF(pos)
-{
-    d = reinterpret_cast<QEventPrivate *>(this);
-}
-
-/*!
-    \internal
-*/
-QMouseEventEx::~QMouseEventEx()
-{
-}
+QMouseEvent::QMouseEvent(Type type, const QPointF &pos, const QPointF &globalPos,
+                         Qt::MouseButton button, Qt::MouseButtons buttons,
+                         Qt::KeyboardModifiers modifiers)
+    : QInputEvent(type, modifiers), p(pos), g(globalPos), b(button), mouseState(buttons)
+{}
 
 /*!
     \fn const QPoint &QMouseEvent::pos() const
@@ -264,7 +227,34 @@ QMouseEventEx::~QMouseEventEx()
 */
 
 /*!
+    \fn const QPointF &QMouseEvent::posF() const
+    \since 4.4
+
+    Returns the position of the mouse cursor as a QPointF, relative to the
+    widget that received the event.
+
+    If you move the widget as a result of the mouse event, use the
+    global position returned by globalPos() to avoid a shaking
+    motion.
+
+    \sa x() y() pos() globalPos()
+*/
+
+/*!
     \fn const QPoint &QMouseEvent::globalPos() const
+
+    Returns the global position of the mouse cursor \e{at the time
+    of the event}. This is important on asynchronous window systems
+    like X11. Whenever you move your widgets around in response to
+    mouse events, globalPos() may differ a lot from the current
+    pointer position QCursor::pos(), and from
+    QWidget::mapToGlobal(pos()).
+
+    \sa globalX() globalY()
+*/
+
+/*!
+    \fn const QPointF &QMouseEvent::globalPosF() const
 
     Returns the global position of the mouse cursor \e{at the time
     of the event}. This is important on asynchronous window systems
@@ -446,6 +436,12 @@ QHoverEvent::QHoverEvent(Type type, const QPoint &pos, const QPoint &oldPos)
 {
 }
 
+QHoverEvent::QHoverEvent(Type type, const QPointF &pos, const QPointF &oldPos)
+    : QEvent(type), p(pos), op(oldPos)
+{
+}
+
+
 /*!
     \internal
 */
@@ -516,6 +512,14 @@ QWheelEvent::QWheelEvent(const QPoint &pos, int delta,
     g = QCursor::pos();
 }
 
+QWheelEvent::QWheelEvent(const QPointF &pos, int delta,
+                         Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers,
+                         Qt::Orientation orient)
+    : QInputEvent(Wheel, modifiers), p(pos), d(delta), mouseState(buttons), o(orient)
+{
+    g = QCursor::pos();
+}
+
 /*!
   \internal
 */
@@ -536,6 +540,12 @@ QWheelEvent::~QWheelEvent()
     \sa pos() globalPos() delta() state()
 */
 QWheelEvent::QWheelEvent(const QPoint &pos, const QPoint& globalPos, int delta,
+                         Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers,
+                         Qt::Orientation orient)
+    : QInputEvent(Wheel, modifiers), p(pos), g(globalPos), d(delta), mouseState(buttons), o(orient)
+{}
+
+QWheelEvent::QWheelEvent(const QPointF &pos, const QPointF& globalPos, int delta,
                          Qt::MouseButtons buttons, Qt::KeyboardModifiers modifiers,
                          Qt::Orientation orient)
     : QInputEvent(Wheel, modifiers), p(pos), g(globalPos), d(delta), mouseState(buttons), o(orient)
@@ -2087,97 +2097,6 @@ QShowEvent::~QShowEvent()
   Use QDropEvent::encodedData().
 */
 
-/*!
-    \class QFileOpenEvent
-    \brief The QFileOpenEvent class provides an event that will be
-    sent when there is a request to open a file or a URL.
-
-    \ingroup events
-
-    File open events will be sent to the QApplication::instance()
-    when the operating system requests that a file or URL should be opened.
-    This is a high-level event that can be caused by different user actions
-    depending on the user's desktop environment; for example, double
-    clicking on an file icon in the Finder on Mac OS X.
-
-    This event is only used to notify the application of a request.
-    It may be safely ignored.
-
-    \note This class is currently supported for Mac OS X only.
-*/
-
-QFileOpenEventPrivate::~QFileOpenEventPrivate()
-{
-}
-
-/*!
-    \internal
-
-    Constructs a file open event for the given \a file.
-*/
-QFileOpenEvent::QFileOpenEvent(const QString &file)
-    : QEvent(FileOpen), f(file)
-{
-    d = reinterpret_cast<QEventPrivate *>(new QFileOpenEventPrivate(QUrl::fromLocalFile(file)));
-}
-
-/*!
-    \internal
-
-    Constructs a file open event for the given \a url.
-*/
-QFileOpenEvent::QFileOpenEvent(const QUrl &url)
-    : QEvent(FileOpen)
-{
-    d = reinterpret_cast<QEventPrivate *>(new QFileOpenEventPrivate(url));
-    f = url.toLocalFile();
-}
-
-
-/*! \internal
-*/
-QFileOpenEvent::~QFileOpenEvent()
-{
-    delete reinterpret_cast<QFileOpenEventPrivate *>(d);
-}
-
-/*!
-    \fn QString QFileOpenEvent::file() const
-
-    Returns the file that is being opened.
-*/
-
-/*!
-    \fn QUrl QFileOpenEvent::url() const
-
-    Returns the url that is being opened.
-
-    \since 4.6
-*/
-QUrl QFileOpenEvent::url() const
-{
-    return reinterpret_cast<const QFileOpenEventPrivate *>(d)->url;
-}
-
-/*!
-    \fn bool QFileOpenEvent::openFile(QFile &file, QIODevice::OpenMode flags) const
-
-    Opens a QFile on the \a file referenced by this event in the mode specified
-    by \a flags. Returns true if successful; otherwise returns false.
-
-    This is necessary as some files cannot be opened by name, but require specific
-    information stored in this event.
-    For example, if this QFileOpenEvent contains a request to open a Symbian data caged file,
-    the QFile could only be opened from the Symbian RFile used in the construction of this event.
-
-    \since 4.8
-*/
-bool QFileOpenEvent::openFile(QFile &file, QIODevice::OpenMode flags) const
-{
-    file.setFileName(f);
-    return file.open(flags);
-}
-
 #ifndef QT_NO_TOOLBAR
 /*!
     \internal
@@ -2332,8 +2251,6 @@ static const char *eventClassName(QEvent::Type t)
         return "QEnterEvent";
     case QEvent::Close:
         return "QCloseEvent";
-    case QEvent::FileOpen:
-        return "QFileOpenEvent";
 #ifndef QT_NO_GESTURES
     case QEvent::NativeGesture:
         return "QNativeGestureEvent";
@@ -2368,6 +2285,7 @@ static const char *eventClassName(QEvent::Type t)
     case QEvent::GraphicsSceneHoverEnter:
     case QEvent::GraphicsSceneHoverMove:
     case QEvent::GraphicsSceneHoverLeave:
+    case QEvent::GraphicsSceneLeave:
     case QEvent::GraphicsSceneHelp:
     case QEvent::GraphicsSceneDragEnter:
     case QEvent::GraphicsSceneDragMove:
@@ -2583,10 +2501,9 @@ QDebug operator<<(QDebug dbg, const QEvent *e) {
     \sa QClipboard
 */
 
-QClipboardEvent::QClipboardEvent(QEventPrivate *data)
-    : QEvent(QEvent::Clipboard)
+QClipboardEvent::QClipboardEvent(XEvent *event)
+    : QEvent(QEvent::Clipboard), m_event(event)
 {
-    d = data;
 }
 
 QClipboardEvent::~QClipboardEvent()
@@ -2656,15 +2573,14 @@ QWindowStateChangeEvent::QWindowStateChangeEvent(Qt::WindowStates s)
 QWindowStateChangeEvent::QWindowStateChangeEvent(Qt::WindowStates s, bool isOverride)
     : QEvent(WindowStateChange), ostate(s)
 {
-    if (isOverride)
-        d = (QEventPrivate*)(this);
+    m_override = isOverride;
 }
 
 /*! \internal
  */
 bool QWindowStateChangeEvent::isOverride() const
 {
-    return (d != 0);
+    return m_override;
 }
 
 /*! \internal
@@ -3346,9 +3262,8 @@ QTouchEvent::TouchPoint &QTouchEvent::TouchPoint::operator=(const QTouchEvent::T
     Creates new QGestureEvent containing a list of \a gestures.
 */
 QGestureEvent::QGestureEvent(const QList<QGesture *> &gestures)
-    : QEvent(QEvent::Gesture)
+    : QEvent(QEvent::Gesture), m_gestures(gestures), m_widget(Q_NULLPTR)
 {
-    d = reinterpret_cast<QEventPrivate *>(new QGestureEventPrivate(gestures));
 }
 
 /*!
@@ -3356,7 +3271,6 @@ QGestureEvent::QGestureEvent(const QList<QGesture *> &gestures)
 */
 QGestureEvent::~QGestureEvent()
 {
-    delete reinterpret_cast<QGestureEventPrivate *>(d);
 }
 
 /*!
@@ -3364,7 +3278,7 @@ QGestureEvent::~QGestureEvent()
 */
 QList<QGesture *> QGestureEvent::gestures() const
 {
-    return d_func()->gestures;
+    return m_gestures;
 }
 
 /*!
@@ -3372,10 +3286,9 @@ QList<QGesture *> QGestureEvent::gestures() const
 */
 QGesture *QGestureEvent::gesture(Qt::GestureType type) const
 {
-    const QGestureEventPrivate *d = d_func();
-    for(int i = 0; i < d->gestures.size(); ++i)
-        if (d->gestures.at(i)->gestureType() == type)
-            return d->gestures.at(i);
+    for(int i = 0; i < m_gestures.size(); ++i)
+        if (m_gestures.at(i)->gestureType() == type)
+            return m_gestures.at(i);
     return 0;
 }
 
@@ -3385,7 +3298,7 @@ QGesture *QGestureEvent::gesture(Qt::GestureType type) const
 QList<QGesture *> QGestureEvent::activeGestures() const
 {
     QList<QGesture *> gestures;
-    foreach (QGesture *gesture, d_func()->gestures) {
+    foreach (QGesture *gesture, m_gestures) {
         if (gesture->state() != Qt::GestureCanceled)
             gestures.append(gesture);
     }
@@ -3398,7 +3311,7 @@ QList<QGesture *> QGestureEvent::activeGestures() const
 QList<QGesture *> QGestureEvent::canceledGestures() const
 {
     QList<QGesture *> gestures;
-    foreach (QGesture *gesture, d_func()->gestures) {
+    foreach (QGesture *gesture, m_gestures) {
         if (gesture->state() == Qt::GestureCanceled)
             gestures.append(gesture);
     }
@@ -3480,7 +3393,7 @@ bool QGestureEvent::isAccepted(QGesture *gesture) const
 void QGestureEvent::setAccepted(Qt::GestureType gestureType, bool value)
 {
     setAccepted(false);
-    d_func()->accepted[gestureType] = value;
+    m_accepted[gestureType] = value;
 }
 
 /*!
@@ -3517,7 +3430,7 @@ void QGestureEvent::ignore(Qt::GestureType gestureType)
 */
 bool QGestureEvent::isAccepted(Qt::GestureType gestureType) const
 {
-    return d_func()->accepted.value(gestureType, true);
+    return m_accepted.value(gestureType, true);
 }
 
 /*!
@@ -3527,7 +3440,7 @@ bool QGestureEvent::isAccepted(Qt::GestureType gestureType) const
 */
 void QGestureEvent::setWidget(QWidget *widget)
 {
-    d_func()->widget = widget;
+    m_widget = widget;
 }
 
 /*!
@@ -3535,7 +3448,7 @@ void QGestureEvent::setWidget(QWidget *widget)
 */
 QWidget *QGestureEvent::widget() const
 {
-    return d_func()->widget;
+    return m_widget;
 }
 
 #ifndef QT_NO_GRAPHICSVIEW
@@ -3561,22 +3474,6 @@ QPointF QGestureEvent::mapToGraphicsScene(const QPointF &gesturePoint) const
     return QPointF();
 }
 #endif //QT_NO_GRAPHICSVIEW
-
-/*!
-    \internal
-*/
-QGestureEventPrivate *QGestureEvent::d_func()
-{
-    return reinterpret_cast<QGestureEventPrivate *>(d);
-}
-
-/*!
-    \internal
-*/
-const QGestureEventPrivate *QGestureEvent::d_func() const
-{
-    return reinterpret_cast<const QGestureEventPrivate *>(d);
-}
 
 #ifdef Q_NO_USING_KEYWORD
 /*!

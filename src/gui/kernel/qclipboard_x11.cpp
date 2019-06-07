@@ -77,7 +77,8 @@
 #include "qelapsedtimer.h"
 #include "qvariant.h"
 #include "qdnd_p.h"
-#include <qwidget_p.h>
+#include "qwidget_p.h"
+#include "qevent_p.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -909,7 +910,7 @@ bool QClipboard::event(QEvent *e)
         return QObject::event(e);
     }
 
-    XEvent *xevent = (XEvent *)(((QClipboardEvent *)e)->data());
+    XEvent *xevent = static_cast<QClipboardEvent*>(e)->m_event;
     Display *dpy = qt_x11Data->display;
 
     if (!xevent) {

@@ -178,7 +178,6 @@ QT_BEGIN_NAMESPACE
     \value PaletteChange                    Palette of the widget changed.
     \value ParentAboutToChange              The widget parent is about to change.
     \value ParentChange                     The widget parent has changed.
-    \value PlatformPanel                    A platform specific panel has been requested.
     \value Polish                           The widget is polished.
     \value PolishRequest                    The widget should be polished.
     \value QueryWhatsThis                   The widget should accept the event if it has "What's This?" help.
@@ -189,8 +188,6 @@ QT_BEGIN_NAMESPACE
     \value Show                             Widget was shown on screen (QShowEvent).
     \value ShowToParent                     A child widget has been shown.
     \value SockAct                          Socket activated, used to implement QSocketNotifier.
-    \value StateMachineSignal               A signal delivered to a state machine (QStateMachine::SignalEvent).
-    \value StateMachineWrapped              The event is a wrapper for, i.e., contains, another event (QStateMachine::WrappedEvent).
     \value StatusTip                        A status tip is requested (QStatusTipEvent).
     \value StyleChange                      Widget's style has been changed.
     \value Timer                            Regular timer events (QTimerEvent).
@@ -261,7 +258,7 @@ QT_BEGIN_NAMESPACE
     Contructs an event object of type \a type.
 */
 QEvent::QEvent(Type type)
-    : d(0), t(type), posted(false), spont(false), m_accept(true)
+    : t(type), looplevel(0), posted(false), spont(false), m_accept(true)
 {}
 
 /*!

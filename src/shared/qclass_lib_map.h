@@ -415,10 +415,8 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QStatusTipEvent", "QtGui/qevent.h"},
     { "QWhatsThisClickedEvent", "QtGui/qevent.h"},
     { "QActionEvent", "QtGui/qevent.h"},
-    { "QFileOpenEvent", "QtGui/qevent.h"},
     { "QToolBarChangeEvent", "QtGui/qevent.h"},
     { "QShortcutEvent", "QtGui/qevent.h"},
-    { "QClipboardEvent", "QtGui/qevent.h"},
     { "QWindowStateChangeEvent", "QtGui/qevent.h"},
     { "QTouchEvent", "QtGui/qevent.h"},
     { "TouchPoint", "QtGui/qevent.h"},
@@ -696,6 +694,6 @@ static const ClassInfoEntry qclass_lib_map[] = {
     { "QFormBuilder", "QtUiTools/formbuilder.h"},
     { "QUiLoader", "QtUiTools/quiloader.h"},
 };
-static const int qclass_lib_count = 690;
+static const int qclass_lib_count = 688;
 
 #endif

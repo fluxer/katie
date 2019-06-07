@@ -192,7 +192,7 @@ public:
 
     bool dispatchHoverEvent(QGraphicsSceneHoverEvent *hoverEvent);
     bool itemAcceptsHoverEvents_helper(const QGraphicsItem *item) const;
-    void leaveScene(QWidget *viewport);
+    void leaveScene(QGraphicsSceneEvent *leaveEvent);
 
     void cloneDragDropEvent(QGraphicsSceneDragDropEvent *dest,
                            QGraphicsSceneDragDropEvent *source);

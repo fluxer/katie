@@ -41,8 +41,6 @@ QT_BEGIN_HEADER
 
 QT_BEGIN_NAMESPACE
 
-
-class QEventPrivate;
 class Q_CORE_EXPORT QEvent           // event base class
 {
     Q_GADGET
@@ -141,46 +139,44 @@ public:
         ActionAdded = 76,
         ActionRemoved = 77,
 
-        FileOpen = 78,                          // file open request
+        Shortcut = 78,                          // shortcut triggered
+        ShortcutOverride = 79,                  // shortcut override request
 
-        Shortcut = 79,                          // shortcut triggered
-        ShortcutOverride = 80,                  // shortcut override request
+        WhatsThisClicked = 80,
 
+        ToolBarChange = 81,                     // toolbar visibility toggled
 
-        WhatsThisClicked = 81,
+        ApplicationActivate = 82,               // application has been changed to active
+        ApplicationDeactivate = 83,             // application has been changed to inactive
 
-        ToolBarChange = 82,                     // toolbar visibility toggled
+        QueryWhatsThis = 84,                    // query what's this widget help
+        EnterWhatsThisMode = 85,
+        LeaveWhatsThisMode = 86,
 
-        ApplicationActivate = 83,               // application has been changed to active
-        ApplicationDeactivate = 84,             // application has been changed to inactive
+        ZOrderChange = 87,                      // child widget has had its z-order changed
 
-        QueryWhatsThis = 85,                    // query what's this widget help
-        EnterWhatsThisMode = 86,
-        LeaveWhatsThisMode = 87,
+        HoverEnter = 88,                        // mouse cursor enters a hover widget
+        HoverLeave = 89,                        // mouse cursor leaves a hover widget
+        HoverMove = 90,                         // mouse cursor move inside a hover widget
 
-        ZOrderChange = 88,                      // child widget has had its z-order changed
-
-        HoverEnter = 89,                        // mouse cursor enters a hover widget
-        HoverLeave = 90,                        // mouse cursor leaves a hover widget
-        HoverMove = 91,                         // mouse cursor move inside a hover widget
-
-        AccessibilityHelp = 92,                 // accessibility help text request
-        AccessibilityDescription = 93,          // accessibility description text request
+        AccessibilityHelp = 91,                 // accessibility help text request
+        AccessibilityDescription = 92,          // accessibility description text request
 
 #ifdef QT_KEYPAD_NAVIGATION
-        EnterEditFocus = 94,                    // enter edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
-        LeaveEditFocus = 95,                    // leave edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
+        EnterEditFocus = 93,                    // enter edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
+        LeaveEditFocus = 94,                    // leave edit mode in keypad navigation (Defined only with QT_KEYPAD_NAVIGATION)
 #endif
-        AcceptDropsChange = 96,
+        AcceptDropsChange = 95,
 
-        GraphicsSceneMouseMove = 97,            // GraphicsView
-        GraphicsSceneMousePress = 98,
-        GraphicsSceneMouseRelease = 99,
-        GraphicsSceneMouseDoubleClick = 100,
-        GraphicsSceneContextMenu = 101,
-        GraphicsSceneHoverEnter = 102,
-        GraphicsSceneHoverMove = 103,
-        GraphicsSceneHoverLeave = 104,
+        GraphicsSceneMouseMove = 94,            // GraphicsView
+        GraphicsSceneMousePress = 97,
+        GraphicsSceneMouseRelease = 98,
+        GraphicsSceneMouseDoubleClick = 99,
+        GraphicsSceneContextMenu = 100,
+        GraphicsSceneHoverEnter = 101,
+        GraphicsSceneHoverMove = 102,
+        GraphicsSceneHoverLeave = 103,
+        GraphicsSceneLeave = 104,               // internal
         GraphicsSceneHelp = 105,
         GraphicsSceneDragEnter = 106,
         GraphicsSceneDragMove = 107,
@@ -214,26 +210,21 @@ public:
         GrabKeyboard = 126,
         UngrabKeyboard = 127,
 
-        StateMachineSignal = 128,
-        StateMachineWrapped = 129,
-
-        TouchBegin = 130,
-        TouchUpdate = 131,
-        TouchEnd = 132,
+        TouchBegin = 128,
+        TouchUpdate = 129,
+        TouchEnd = 130,
 
 #ifndef QT_NO_GESTURES
-        NativeGesture = 133,                    // Internal for platform gesture support
+        NativeGesture = 131,                    // Internal for platform gesture support
 #endif
-        RequestSoftwareInputPanel = 134,
-        CloseSoftwareInputPanel = 135,
+        RequestSoftwareInputPanel = 132,
+        CloseSoftwareInputPanel = 133,
 
-        WinIdChange = 136,
+        WinIdChange = 134,
 #ifndef QT_NO_GESTURES
-        Gesture = 137,
-        GestureOverride = 138,
+        Gesture = 135,
+        GestureOverride = 136,
 #endif
-
-        PlatformPanel = 139,
 
         User = 1000,                            // first user event id
         MaxUser = 65535                         // last user event id
@@ -253,13 +244,13 @@ public:
     static int registerEventType(int hint = -1);
 
 protected:
-    QEventPrivate *d;
     Type t;
+    int looplevel;
 
 private:
-    bool posted : 1;
-    bool spont : 1;
-    bool m_accept : 1;
+    bool posted;
+    bool spont;
+    bool m_accept;
 
     friend class QCoreApplication;
     friend class QCoreApplicationPrivate;

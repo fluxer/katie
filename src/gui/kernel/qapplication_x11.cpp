@@ -2681,7 +2681,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
             qt_x11Data->xdndHandleSelectionRequest(req);
 
         } else if (qt_clipboard) {
-            QClipboardEvent e(reinterpret_cast<QEventPrivate*>(event));
+            QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
         break;
@@ -2693,7 +2693,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
             break;
 
         if (qt_clipboard && !qt_x11Data->use_xfixes) {
-            QClipboardEvent e(reinterpret_cast<QEventPrivate*>(event));
+            QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
         break;
@@ -2706,7 +2706,7 @@ int QApplication::x11ProcessEvent(XEvent* event)
             break;
 
         if (qt_clipboard) {
-            QClipboardEvent e(reinterpret_cast<QEventPrivate*>(event));
+            QClipboardEvent e(event);
             QApplication::sendSpontaneousEvent(qt_clipboard, &e);
         }
         break;
