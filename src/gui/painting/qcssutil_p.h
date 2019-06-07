@@ -70,7 +70,7 @@ extern void qNormalizeRadii(const QRect &br, const QSize *radii,
                             QSize *tlr, QSize *trr, QSize *blr, QSize *brr);
 
 QT_END_NAMESPACE
-        
+
 #endif //QT_NO_CSSPARSER
 
 #endif // QCSSUTIL_P_H

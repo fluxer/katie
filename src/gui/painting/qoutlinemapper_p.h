@@ -203,7 +203,7 @@ public:
     QRectF controlPointRect; // only valid after endOutline()
 
     QT_FT_Outline m_outline;
-    uint m_txop;
+    QTransform::TransformationType m_txop;
 
     int m_subpath_start;
 

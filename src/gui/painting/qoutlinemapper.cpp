@@ -199,7 +199,7 @@ void QOutlineMapper::endOutline()
             path = QTransform(m_m11, m_m12, m_m13, m_m21, m_m22, m_m23, m_dx, m_dy, m_m33).map(path);
             if (!(m_outline.flags & QT_FT_OUTLINE_EVEN_ODD_FILL))
                 path.setFillRule(Qt::WindingFill);
-            uint old_txop = m_txop;
+            QTransform::TransformationType old_txop = m_txop;
             m_txop = QTransform::TxNone;
             if (path.isEmpty())
                 m_valid = false;
@@ -376,7 +376,7 @@ void QOutlineMapper::clipElements(const QPointF *elements,
     QPainterPath clipPath;
     clipPath.addRect(m_clip_rect);
     QPainterPath clippedPath = path.intersected(clipPath);
-    uint old_txop = m_txop;
+    QTransform::TransformationType old_txop = m_txop;
     m_txop = QTransform::TxNone;
     if (clippedPath.isEmpty())
         m_valid = false;
