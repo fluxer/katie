@@ -292,8 +292,6 @@ public:
     void lower_sys();
     void stackUnder_sys(QWidget *);
 
-    void setFocus_sys();
-
     void updateFont(const QFont &);
     inline void setFont_helper(const QFont &font) {
         if (data.fnt == font && data.fnt.resolve() == font.resolve())
