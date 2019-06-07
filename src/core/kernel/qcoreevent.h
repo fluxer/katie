@@ -245,12 +245,12 @@ public:
 
 protected:
     Type t;
-    int looplevel;
 
 private:
     bool posted;
     bool spont;
     bool m_accept;
+    int looplevel;
 
     friend class QCoreApplication;
     friend class QCoreApplicationPrivate;
