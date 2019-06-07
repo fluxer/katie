@@ -64,13 +64,13 @@ public:
 #ifdef Q_WS_X11
     GC gc;
 #ifndef QT_NO_XSHM
-    uint needsSync : 1;
+    bool needsSync;
 #endif
 #ifndef QT_NO_XRENDER
-    uint translucentBackground : 1;
+    bool translucentBackground;
 #endif
 #endif
-    uint inSetGeometry : 1;
+    bool inSetGeometry;
 };
 
 QRasterWindowSurface::QRasterWindowSurface(QWidget *window, bool setDefaultSurface)
@@ -126,9 +126,8 @@ void QRasterWindowSurface::beginPaint(const QRegion &rgn)
     if (!qt_widget_private(window())->isOpaque && window()->testAttribute(Qt::WA_TranslucentBackground)) {
         QPainter p(d_ptr->image);
         p.setCompositionMode(QPainter::CompositionMode_Source);
-        const QVector<QRect> rects = rgn.rects();
-        for (QVector<QRect>::const_iterator it = rects.begin(); it != rects.end(); ++it) {
-            p.fillRect(*it, Qt::transparent);
+        foreach (const QRect r, rgn.rects()) {
+            p.fillRect(r, Qt::transparent);
         }
     }
 #else

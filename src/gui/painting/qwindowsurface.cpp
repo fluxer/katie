@@ -232,15 +232,13 @@ QImage* QWindowSurface::buffer(const QWidget *widget)
 */
 QPixmap QWindowSurface::grabWidget(const QWidget *widget, const QRect &rectangle) const
 {
-    QPixmap result;
-
     if (widget->window() != window())
-        return result;
+        return QPixmap();
 
     const QImage *img = const_cast<QWindowSurface *>(this)->buffer(widget->window());
 
     if (!img || img->isNull())
-        return result;
+        return QPixmap();
 
     QRect rect = rectangle.isEmpty() ? widget->rect() : (widget->rect() & rectangle);
 
@@ -248,15 +246,9 @@ QPixmap QWindowSurface::grabWidget(const QWidget *widget, const QRect &rectangle
     rect &= QRect(QPoint(), img->size());
 
     if (rect.isEmpty())
-        return result;
+        return QPixmap();
 
-    QImage subimg(img->scanLine(rect.y()) + rect.x() * img->depth() / 8,
-                  rect.width(), rect.height(),
-                  img->bytesPerLine(), img->format());
-    subimg.detach(); //### expensive -- maybe we should have a real SubImage that shares reference count
-
-    result = QPixmap::fromImage(subimg);
-    return result;
+    return QPixmap::fromImage(img->copy(rect));
 }
 
 /*!
@@ -298,17 +290,17 @@ QWindowSurface::WindowSurfaceFeatures QWindowSurface::features() const
 
 void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset)
 {
-    uchar *mem = const_cast<uchar*>(img->bits());
-
-    int lineskip = img->bytesPerLine();
-    int depth = img->depth() >> 3;
-
     const QRect imageRect(0, 0, img->width(), img->height());
     const QRect r = rect & imageRect & imageRect.translated(-offset);
     const QPoint p = rect.topLeft() + offset;
 
     if (r.isEmpty())
         return;
+
+    uchar *mem = const_cast<uchar*>(img->bits());
+
+    int lineskip = img->bytesPerLine();
+    int depth = img->depth() >> 3;
 
     const uchar *src;
     uchar *dest;
