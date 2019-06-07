@@ -7,7 +7,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qwaitcondition.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qatomic.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutex_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qmutexpool_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qorderedmutexlocker_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/thread/qreadwritelock_p.h

@@ -39,19 +39,11 @@
 **
 ****************************************************************************/
 
-#include "qplatformdefs.h"
 #include "qmutex.h"
-#include <qdebug.h>
 
 #ifndef QT_NO_THREAD
-#include "qmutex_p.h"
 
 QT_BEGIN_NAMESPACE
-
-QMutexPrivate::QMutexPrivate(QMutex::RecursionMode mode)
-    : recursive(mode == QMutex::Recursive)
-{
-}
 
 /*!
     \class QMutex
@@ -114,6 +106,8 @@ QMutexPrivate::QMutexPrivate(QMutex::RecursionMode mode)
 */
 
 /*!
+    \fn QMutex::QMutex(RecursionMode mode)
+
     Constructs a new mutex. The mutex is created in an unlocked state.
 
     If \a mode is QMutex::Recursive, a thread can lock the same mutex
@@ -123,19 +117,18 @@ QMutexPrivate::QMutexPrivate(QMutex::RecursionMode mode)
 
     \sa lock(), unlock()
 */
-QMutex::QMutex(RecursionMode mode)
-    : d(new QMutexPrivate(mode))
-{ }
 
 /*!
+    \fn QMutex::~QMutex()
+
     Destroys the mutex.
 
     \warning Destroying a locked mutex may result in undefined behavior.
 */
-QMutex::~QMutex()
-{ delete d; }
 
 /*!
+    \fn void QMutex::lock()
+
     Locks the mutex. If another thread has locked the mutex then this
     call will block until that thread has unlocked it.
 
@@ -147,16 +140,10 @@ QMutex::~QMutex()
 
     \sa unlock()
 */
-void QMutex::lock()
-{
-    if (d->recursive) {
-        d->mutex2.lock();
-    } else {
-        d->mutex1.lock();
-    }
-}
 
 /*!
+    \fn bool QMutex::tryLock()
+
     Attempts to lock the mutex. If the lock was obtained, this function
     returns true. If another thread has locked the mutex, this
     function returns false immediately.
@@ -173,15 +160,10 @@ void QMutex::lock()
 
     \sa lock(), unlock()
 */
-bool QMutex::tryLock()
-{
-    if (d->recursive) {
-        return d->mutex2.try_lock();
-    }
-    return d->mutex1.try_lock();
-}
 
-/*! \overload
+/*!
+    \fn bool QMutex::tryLock(int timeout)
+    \overload
 
     Attempts to lock the mutex. This function returns true if the lock
     was obtained; otherwise it returns false. If another thread has
@@ -204,30 +186,16 @@ bool QMutex::tryLock()
 
     \sa lock(), unlock()
 */
-bool QMutex::tryLock(int timeout)
-{
-    if (d->recursive) {
-        return d->mutex2.try_lock_for(std::chrono::milliseconds(timeout));
-    }
-    return d->mutex1.try_lock_for(std::chrono::milliseconds(timeout));
-}
-
 
 /*!
+    \fn void QMutex::unlock()
+
     Unlocks the mutex. Attempting to unlock a mutex in a different
     thread to the one that locked it results in an error. Unlocking a
     mutex that is not locked results in undefined behavior.
 
     \sa lock()
 */
-void QMutex::unlock()
-{
-    if (d->recursive) {
-        d->mutex2.unlock();
-    } else {
-        d->mutex1.unlock();
-    }
-}
 
 /*!
     \fn bool QMutex::locked()

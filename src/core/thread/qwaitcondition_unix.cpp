@@ -45,8 +45,6 @@
 #include "qreadwritelock.h"
 #include "qatomic.h"
 #include "qstring.h"
-
-#include "qmutex_p.h"
 #include "qreadwritelock_p.h"
 #include "qcorecommon_p.h"
 
@@ -139,9 +137,9 @@ void QWaitCondition::wakeAll()
 
 bool QWaitCondition::wait(QMutex *mutex, unsigned long time)
 {
-    if (! mutex)
+    if (!mutex)
         return false;
-    if (mutex->d->recursive) {
+    if (mutex->recursive) {
         qWarning("QWaitCondition: cannot wait on recursive mutexes");
         return false;
     }
