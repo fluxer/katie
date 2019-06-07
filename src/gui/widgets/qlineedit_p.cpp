@@ -210,7 +210,7 @@ QRect QLineEditPrivate::adjustedContentsRect() const
 void QLineEditPrivate::setCursorVisible(bool visible)
 {
     Q_Q(QLineEdit);
-    if ((bool)cursorVisible == visible)
+    if (cursorVisible == visible)
         return;
     cursorVisible = visible;
     if (control->inputMask().isEmpty())

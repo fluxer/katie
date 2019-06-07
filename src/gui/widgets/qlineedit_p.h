@@ -66,8 +66,8 @@ class QLineEditPrivate : public QWidgetPrivate
 public:
 
     QLineEditPrivate()
-        : control(0), frame(1), contextMenuEnabled(1), cursorVisible(0),
-        dragEnabled(0), clickCausedFocus(0), hscroll(0), vscroll(0),
+        : control(0), frame(true), contextMenuEnabled(true), cursorVisible(false),
+        dragEnabled(false), clickCausedFocus(false), hscroll(0), vscroll(0),
         alignment(Qt::AlignLeading | Qt::AlignVCenter),
         leftTextMargin(0), topTextMargin(0), rightTextMargin(0), bottomTextMargin(0)
     {
@@ -94,11 +94,11 @@ public:
 
     QPoint tripleClick;
     QBasicTimer tripleClickTimer;
-    uint frame : 1;
-    uint contextMenuEnabled : 1;
-    uint cursorVisible : 1;
-    uint dragEnabled : 1;
-    uint clickCausedFocus : 1;
+    bool frame;
+    bool contextMenuEnabled;
+    bool cursorVisible;
+    bool dragEnabled;
+    bool clickCausedFocus;
     int hscroll;
     int vscroll;
     uint alignment;
