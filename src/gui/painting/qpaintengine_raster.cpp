@@ -3975,7 +3975,7 @@ void QSpanData::adjustSpanMethods()
     }
 }
 
-void QSpanData::setupMatrix(const QTransform &matrix, int bilin)
+void QSpanData::setupMatrix(const QTransform &matrix, bool bilin)
 {
     QTransform delta;
     // make sure we round off correctly in qdrawhelper.cpp

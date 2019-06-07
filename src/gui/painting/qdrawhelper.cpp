@@ -803,7 +803,7 @@ static const uint * QT_FASTCALL qt_fetch_linear_gradient(uint *buffer, const Ope
     const uint *end = buffer + length;
     if (affine) {
         if (inc > qreal(-1e-5) && inc < qreal(1e-5)) {
-            QT_MEMFILL_UINT(buffer, length, qt_gradient_pixel_fixed(&data->gradient, int(t * FIXPT_SIZE)));
+            qt_memfill<quint32>(buffer, qt_gradient_pixel_fixed(&data->gradient, int(t * FIXPT_SIZE)), length);
         } else {
             if (t+inc*length < qreal(INT_MAX >> (FIXPT_BITS + 1)) &&
                 t+inc*length > qreal(INT_MIN >> (FIXPT_BITS + 1))) {
@@ -975,7 +975,7 @@ static const uint * QT_FASTCALL qt_fetch_conical_gradient(uint *buffer, const Op
 #define comp_func_Clear_impl(dest, length, const_alpha)\
 {\
     if (const_alpha == 255) {\
-        QT_MEMFILL_UINT(dest, length, 0);\
+        qt_memfill<quint32>(dest, 0, length);\
     } else {\
         int ialpha = 255 - const_alpha;\
         for (int i = 0; i < length; ++i) {\
@@ -1001,7 +1001,7 @@ void QT_FASTCALL comp_func_Clear(uint *dest, const uint *, int length, const uin
 void QT_FASTCALL comp_func_solid_Source(uint *dest, const int length, uint color, const uint const_alpha)
 {
     if (const_alpha == 255) {
-        QT_MEMFILL_UINT(dest, length, color);
+        qt_memfill<quint32>(dest, color, length);
     } else {
         int ialpha = 255 - const_alpha;
         color = BYTE_MUL(color, const_alpha);
@@ -1040,7 +1040,7 @@ void QT_FASTCALL comp_func_Destination(uint *, const uint *, int, uint)
 void QT_FASTCALL comp_func_solid_SourceOver(uint *dest, const int length, uint color, const uint const_alpha)
 {
     if ((const_alpha & qAlpha(color)) == 255) {
-        QT_MEMFILL_UINT(dest, length, color);
+        qt_memfill<quint32>(dest, color, length);
     } else {
         if (const_alpha != 255)
             color = BYTE_MUL(color, const_alpha);
@@ -4970,10 +4970,8 @@ template <class DST>
 inline void qt_bitmapblit_template(QRasterBuffer *rasterBuffer,
                                    int x, int y, quint32 color,
                                    const uchar *map,
-                                   int mapWidth, int mapHeight, int mapStride,
-                                   DST dummy = 0)
+                                   int mapWidth, int mapHeight, int mapStride)
 {
-    Q_UNUSED(dummy);
     const DST c = qt_colorConvert<DST, quint32>(color, 0);
     DST *dest = reinterpret_cast<DST*>(rasterBuffer->scanLine(y)) + x;
     const int destStride = rasterBuffer->bytesPerLine() / sizeof(DST);

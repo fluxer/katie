@@ -231,7 +231,7 @@ struct QGradientData
 
     uint* colorTable; //[GRADIENT_STOPTABLE_SIZE];
 
-    uint alphaColor : 1;
+    bool alphaColor;
 };
 
 struct QTextureData
@@ -260,7 +260,7 @@ struct QTextureData
 
 struct QSpanData
 {
-    QSpanData() : tempImage(0) {}
+    QSpanData() : tempImage(Q_NULLPTR) {}
     ~QSpanData() { delete tempImage; }
 
     QRasterBuffer *rasterBuffer;
@@ -291,7 +291,7 @@ struct QSpanData
 
     void init(QRasterBuffer *rb, const QRasterPaintEngine *pe);
     void setup(const QBrush &brush, int alpha, QPainter::CompositionMode compositionMode);
-    void setupMatrix(const QTransform &matrix, int bilinear);
+    void setupMatrix(const QTransform &matrix, bool bilinear);
     void initTexture(const QImage *image, int alpha, QTextureData::Type = QTextureData::Plain, const QRect &sourceRect = QRect());
     void adjustSpanMethods();
 };
@@ -524,7 +524,7 @@ static inline uint BYTE_MUL_RGB16_32(uint x, uint a) {
      | ((255*qBlue(p)) / qAlpha(p))))
 
 template <class DST, class SRC>
-inline DST qt_colorConvert(SRC color, DST dummy)
+inline DST qt_colorConvert(const SRC color, const DST dummy)
 {
     Q_UNUSED(dummy);
     return DST(color);
@@ -532,7 +532,7 @@ inline DST qt_colorConvert(SRC color, DST dummy)
 
 
 template <>
-inline quint32 qt_colorConvert(quint16 color, quint32 dummy)
+inline quint32 qt_colorConvert(const quint16 color, const quint32 dummy)
 {
     Q_UNUSED(dummy);
     const int r = (color & 0xf800);
@@ -546,7 +546,7 @@ inline quint32 qt_colorConvert(quint16 color, quint32 dummy)
 }
 
 template <>
-inline quint16 qt_colorConvert(quint32 color, quint16 dummy)
+inline quint16 qt_colorConvert(const quint32 color, const quint16 dummy)
 {
     Q_UNUSED(dummy);
     const int r = qRed(color) << 8;
@@ -1323,14 +1323,14 @@ quint32 qrgb888::rawValue() const
 }
 
 template <>
-inline qrgb888 qt_colorConvert(quint32 color, qrgb888 dummy)
+inline qrgb888 qt_colorConvert(const quint32 color, const qrgb888 dummy)
 {
     Q_UNUSED(dummy);
     return qrgb888(color);
 }
 
 template <>
-inline quint32 qt_colorConvert(qrgb888 color, quint32 dummy)
+inline quint32 qt_colorConvert(const qrgb888 color, const quint32 dummy)
 {
     Q_UNUSED(dummy);
     return quint32(color);
@@ -1347,7 +1347,7 @@ public:
         data[2] = qRed(v);
     }
 
-    inline operator quint32 ()
+    inline operator quint32 () const
     {
         return qRgb(data[2], data[1], data[0]);
     }
@@ -1364,7 +1364,7 @@ private:
 };
 
 template <>
-inline quint24 qt_colorConvert(quint32 color, quint24 dummy)
+inline quint24 qt_colorConvert(const quint32 color, const quint24 dummy)
 {
     Q_UNUSED(dummy);
     return quint24(color);
@@ -1398,7 +1398,7 @@ private:
 };
 
 template <>
-inline quint18 qt_colorConvert(quint32 color, quint18 dummy)
+inline quint18 qt_colorConvert(const quint32 color, const quint18 dummy)
 {
     Q_UNUSED(dummy);
     return quint18(color);
@@ -1571,7 +1571,7 @@ qrgb444 qrgb444::byte_mul(quint8 a) const
 }
 
 template <class T>
-inline void qt_memfill(T *dest, T value, int count)
+inline void qt_memfill(T *dest, const T value, int count)
 {
     if (!count)
         return;
@@ -1580,30 +1580,30 @@ inline void qt_memfill(T *dest, T value, int count)
 }
 
 template <class DST, class SRC>
-inline void qt_memfill(DST *dest, SRC color, int count)
+inline void qt_memfill(DST *dest, const SRC color, int count)
 {
     const DST c = qt_colorConvert<DST, SRC>(color, 0);
     while (count--)
         *dest++ = c;
 }
 
-template<> inline void qt_memfill(quint32 *dest, quint32 color, int count)
+template<> inline void qt_memfill(quint32 *dest, const quint32 color, int count)
 {
     qt_memfill<quint32,quint32>(dest, color, count);
 }
 
-template<> inline void qt_memfill(quint16 *dest, quint16 color, int count)
+template<> inline void qt_memfill(quint16 *dest, const quint16 color, int count)
 {
     qt_memfill<quint16,quint16>(dest, color, count);
 }
 
-template<> inline void qt_memfill(quint8 *dest, quint8 color, int count)
+template<> inline void qt_memfill(quint8 *dest, const quint8 color, int count)
 {
     memset(dest, color, count);
 }
 
 template <class T>
-inline void qt_rectfill(T *dest, T value,
+inline void qt_rectfill(T *dest, const T value,
                         int x, int y, int width, int height, int stride)
 {
     char *d = reinterpret_cast<char*>(dest + x) + y * stride;
@@ -1725,7 +1725,7 @@ inline void qt_rectcopy(T *dest, const T *src,
                         int dstStride, int srcStride)
 {
     char *d = (char*)(dest + x) + y * dstStride;
-    const char *s = (char*)(src);
+    const char *s = (const char*)(src);
     for (int i = 0; i < height; ++i) {
         ::memcpy(d, s, width * sizeof(T));
         d += dstStride;
@@ -1739,7 +1739,7 @@ inline void qt_rectconvert(DST *dest, const SRC *src,
                            int dstStride, int srcStride)
 {
     char *d = (char*)(dest + x) + y * dstStride;
-    const char *s = (char*)(src);
+    const char *s = (const char*)(src);
     for (int i = 0; i < height; ++i) {
         qt_memconvert<DST,SRC>((DST*)d, (const SRC*)s, width);
         d += dstStride;
@@ -1755,6 +1755,7 @@ inline void qt_rectconvert(DST *dest, const SRC *src,
     {                                                                   \
         qt_rectcopy(dest, src, x, y, width, height, dstStride, srcStride); \
     }
+
 QT_RECTCONVERT_TRIVIAL_IMPL(quint32)
 QT_RECTCONVERT_TRIVIAL_IMPL(qrgb888)
 QT_RECTCONVERT_TRIVIAL_IMPL(qargb6666)
@@ -1767,52 +1768,6 @@ QT_RECTCONVERT_TRIVIAL_IMPL(qrgb555)
 QT_RECTCONVERT_TRIVIAL_IMPL(qargb4444)
 QT_RECTCONVERT_TRIVIAL_IMPL(qrgb444)
 #undef QT_RECTCONVERT_TRIVIAL_IMPL
-
-#define QT_MEMFILL_UINT(dest, length, color)            \
-    qt_memfill<quint32>(dest, color, length);
-
-#define QT_MEMFILL_USHORT(dest, length, color) \
-    qt_memfill<quint16>(dest, color, length);
-
-#define QT_MEMCPY_REV_UINT(dest, src, length) \
-do {                                          \
-    /* Duff's device */                       \
-    uint *_d = (uint*)(dest) + length;         \
-    const uint *_s = (uint*)(src) + length;    \
-    int n = ((length) + 7) / 8;               \
-    switch ((length) & 0x07)                  \
-    {                                         \
-    case 0: do { *--_d = *--_s;                 \
-    case 7:      *--_d = *--_s;                 \
-    case 6:      *--_d = *--_s;                 \
-    case 5:      *--_d = *--_s;                 \
-    case 4:      *--_d = *--_s;                 \
-    case 3:      *--_d = *--_s;                 \
-    case 2:      *--_d = *--_s;                 \
-    case 1:      *--_d = *--_s;                 \
-    } while (--n > 0);                        \
-    }                                         \
-} while (0)
-
-#define QT_MEMCPY_USHORT(dest, src, length) \
-do {                                          \
-    /* Duff's device */                       \
-    ushort *_d = (ushort*)(dest);         \
-    const ushort *_s = (ushort*)(src);    \
-    int n = ((length) + 7) / 8;               \
-    switch ((length) & 0x07)                  \
-    {                                         \
-    case 0: do { *_d++ = *_s++;                 \
-    case 7:      *_d++ = *_s++;                 \
-    case 6:      *_d++ = *_s++;                 \
-    case 5:      *_d++ = *_s++;                 \
-    case 4:      *_d++ = *_s++;                 \
-    case 3:      *_d++ = *_s++;                 \
-    case 2:      *_d++ = *_s++;                 \
-    case 1:      *_d++ = *_s++;                 \
-    } while (--n > 0);                        \
-    }                                         \
-} while (0)
 
 static inline int qt_div_255(int x) { return (x + (x>>8) + 0x80) >> 8; }
 
