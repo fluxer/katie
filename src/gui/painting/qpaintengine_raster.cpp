@@ -3524,7 +3524,7 @@ private:
 
 public:
     inline const uint *getBuffer(const QGradient &gradient, int opacity) {
-        quint64 hash_val = opacity;
+        quint64 hash_val = opacity + gradient.interpolationMode();
 
         QGradientStops stops = gradient.stops();
         for (int i = 0; i < stops.size() && i <= 2; i++)
