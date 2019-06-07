@@ -1083,13 +1083,10 @@
     \omitvalue WA_DontShowOnScreen
     \omitvalue WA_InvalidSize
     \omitvalue WA_ForceUpdatesDisabled
-    \omitvalue WA_TintedBackground
-    \omitvalue WA_CanHostQMdiSubWindowTitleBar
     \omitvalue WA_AttributeCount
     \omitvalue WA_StyleSheet
     \omitvalue WA_X11BypassTransientForHint
     \omitvalue WA_SetWindowModality
-    \omitvalue WA_WState_WindowOpacitySet
     \omitvalue WA_WState_AcceptedTouchBeginEvent
     \omitvalue WA_NoX11EventCompression
 */

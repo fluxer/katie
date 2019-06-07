@@ -4828,13 +4828,6 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
 
                 if (!sharedPainter)
                     paintEngine->d_func()->systemClip = toBePainted.translated(offset);
-
-                if (!onScreen && !asRoot && !isOpaque && q->testAttribute(Qt::WA_TintedBackground)) {
-                    QPainter p(q);
-                    QColor tint = q->palette().window().color();
-                    tint.setAlphaF(qreal(.6));
-                    p.fillRect(toBePainted.boundingRect(), tint);
-                }
             }
 
 #if 0
@@ -9537,7 +9530,6 @@ void QWidget::setWindowOpacity(qreal opacity)
     opacity = qBound(qreal(0.0), opacity, qreal(1.0));
     QTLWExtra *extra = d->topData();
     extra->opacity = uint(opacity * 255);
-    setAttribute(Qt::WA_WState_WindowOpacitySet);
 
     if (!testAttribute(Qt::WA_WState_Created))
         return;

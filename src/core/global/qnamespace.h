@@ -322,56 +322,53 @@ public:
 
         WA_WindowPropagation = 56,
 
-        WA_TintedBackground = 57,
-        WA_AlwaysShowToolTips = 58,
-        WA_SetStyle = 59,
+        WA_AlwaysShowToolTips = 57,
+        WA_SetStyle = 58,
 
-        WA_SetLocale = 60,
+        WA_SetLocale = 59,
 
-        WA_LayoutUsesWidgetRect = 61,
-        WA_StyledBackground = 62, // internal
-        WA_CanHostQMdiSubWindowTitleBar = 63, // Internal
+        WA_LayoutUsesWidgetRect = 60,
+        WA_StyledBackground = 61, // internal
 
-        WA_StyleSheet = 64, // internal
+        WA_StyleSheet = 62, // internal
 
-        WA_ShowWithoutActivating = 65,
+        WA_ShowWithoutActivating = 63,
 
-        WA_X11BypassTransientForHint = 66,
+        WA_X11BypassTransientForHint = 64,
 
-        WA_NativeWindow = 67,
-        WA_DontCreateNativeAncestors = 68,
+        WA_NativeWindow = 65,
+        WA_DontCreateNativeAncestors = 66,
 
-        WA_DontShowOnScreen = 69,
+        WA_DontShowOnScreen = 67,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 70,
-        WA_X11NetWmWindowTypeDock = 71,
-        WA_X11NetWmWindowTypeToolBar = 72,
-        WA_X11NetWmWindowTypeMenu = 73,
-        WA_X11NetWmWindowTypeUtility = 74,
-        WA_X11NetWmWindowTypeSplash = 75,
-        WA_X11NetWmWindowTypeDialog = 76,
-        WA_X11NetWmWindowTypeDropDownMenu = 77,
-        WA_X11NetWmWindowTypePopupMenu = 78,
-        WA_X11NetWmWindowTypeToolTip = 79,
-        WA_X11NetWmWindowTypeNotification = 80,
-        WA_X11NetWmWindowTypeCombo = 81,
-        WA_X11NetWmWindowTypeDND = 82,
+        WA_X11NetWmWindowTypeDesktop = 68,
+        WA_X11NetWmWindowTypeDock = 69,
+        WA_X11NetWmWindowTypeToolBar = 70,
+        WA_X11NetWmWindowTypeMenu = 71,
+        WA_X11NetWmWindowTypeUtility = 72,
+        WA_X11NetWmWindowTypeSplash = 73,
+        WA_X11NetWmWindowTypeDialog = 74,
+        WA_X11NetWmWindowTypeDropDownMenu = 75,
+        WA_X11NetWmWindowTypePopupMenu = 76,
+        WA_X11NetWmWindowTypeToolTip = 77,
+        WA_X11NetWmWindowTypeNotification = 78,
+        WA_X11NetWmWindowTypeCombo = 79,
+        WA_X11NetWmWindowTypeDND = 80,
 
-        WA_SetWindowModality = 83,
-        WA_WState_WindowOpacitySet = 84, // internal
-        WA_TranslucentBackground = 85,
+        WA_SetWindowModality = 81,
+        WA_TranslucentBackground = 82,
 
-        WA_AcceptTouchEvents = 86,
-        WA_WState_AcceptedTouchBeginEvent = 87,
-        WA_TouchPadAcceptSingleTouchEvents = 88,
+        WA_AcceptTouchEvents = 83,
+        WA_WState_AcceptedTouchBeginEvent = 84,
+        WA_TouchPadAcceptSingleTouchEvents = 85,
 
-        WA_LockPortraitOrientation = 89,
-        WA_LockLandscapeOrientation = 90,
-        WA_AutoOrientation = 91,
+        WA_LockPortraitOrientation = 86,
+        WA_LockLandscapeOrientation = 87,
+        WA_AutoOrientation = 88,
 
-        WA_X11DoNotAcceptFocus = 92,
-        WA_NoX11EventCompression = 93,
+        WA_X11DoNotAcceptFocus = 89,
+        WA_NoX11EventCompression = 90,
 
         // Add new attributes before this line
         WA_AttributeCount
