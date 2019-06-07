@@ -371,6 +371,7 @@ public:
         WA_AutoOrientation = 91,
 
         WA_X11DoNotAcceptFocus = 92,
+        WA_NoX11EventCompression = 93,
 
         // Add new attributes before this line
         WA_AttributeCount

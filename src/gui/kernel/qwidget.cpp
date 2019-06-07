@@ -9398,6 +9398,12 @@ void QWidget::setAttribute(Qt::WidgetAttribute attribute, bool on)
         break;
     }
 #ifdef Q_WS_X11
+    case Qt::WA_NoX11EventCompression: {
+        if (!d->extra)
+            d->createExtra();
+        d->extra->compress_events = on;
+        break;
+    }
     case Qt::WA_X11DoNotAcceptFocus: {
         if (testAttribute(Qt::WA_WState_Created))
             d->updateX11AcceptFocus();
