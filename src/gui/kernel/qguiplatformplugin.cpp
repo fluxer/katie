@@ -137,7 +137,7 @@ QPalette QGuiPlatformPlugin::palette()
 }
 
 /*!
-    Returns the icon theme name for QIcon::fromTheme.
+    Returns the icon theme name for \p QIcon::fromTheme.
 */
 QString QGuiPlatformPlugin::systemIconThemeName()
 {

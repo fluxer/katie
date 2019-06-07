@@ -1752,11 +1752,6 @@ void QImage::fill(const QColor &color)
 
 }
 
-
-
-
-
-
 /*!
     Inverts all pixel values in the image.
 

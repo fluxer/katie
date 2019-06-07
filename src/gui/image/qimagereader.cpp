@@ -653,8 +653,7 @@ QImageReader::QImageReader(QIODevice *device, const QByteArray &format)
 QImageReader::QImageReader(const QString &fileName, const QByteArray &format)
     : d(new QImageReaderPrivate())
 {
-    QFile *file = new QFile(fileName);
-    d->device = file;
+    d->device = new QFile(fileName);
     d->deleteDevice = true;
     d->format = format;
 }
