@@ -169,6 +169,7 @@ VersionDialog::VersionDialog(QWidget *parent)
 
     lbl->setText(tr("%1"
                     "<br/>Copyright (C) 2015 The Qt Company Ltd."
+                    "<br/>Copyright (C) 2016-2019 Ivailo Monev"
                     ).arg(version));
 
     lbl->setWordWrap(true);

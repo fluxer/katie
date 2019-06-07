@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     aboutAction->setMenuRole(QAction::AboutRole);
     QObject::connect(aboutAction, SIGNAL(triggered()), sessionBusViewer, SLOT(about()));
 
-    QAction *aboutQtAction = helpMenu->addAction(QObject::tr("About &Qt"));
+    QAction *aboutQtAction = helpMenu->addAction(QObject::tr("About &Katie"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     QObject::connect(aboutQtAction, SIGNAL(triggered()), &app, SLOT(aboutQt()));
 

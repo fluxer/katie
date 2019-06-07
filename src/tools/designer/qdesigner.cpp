@@ -198,13 +198,6 @@ void QDesigner::initialize()
     installTranslator(translator);
     installTranslator(qtTranslator);
 
-    if (QLibraryInfo::licensedProducts() == QLatin1String("Console")) {
-        QMessageBox::information(0, tr("Qt Designer"),
-                tr("This application cannot be used for the Console edition of Qt"));
-        QMetaObject::invokeMethod(this, "quit", Qt::QueuedConnection);
-        return;
-    }
-
     m_workbench = new QDesignerWorkbench();
 
     emit initialized();

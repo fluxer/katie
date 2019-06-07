@@ -753,7 +753,9 @@ void MainWindow::helpAbout()
     QMessageBox box(this);
     box.setText(tr("<h3>%1</h3>"
                    "<br/>Version %2"
-                   "<br/><br/>Copyright (C) 2015 The Qt Company Ltd.")
+                   "<br/><br/>Copyright (C) 2015 The Qt Company Ltd."
+                   "<br/><br/>Copyright (C) 2016-2019 Ivailo Monev"
+                    )
                    .arg(tr("Qt Configuration")).arg(QLatin1String(QT_VERSION_STR)));
     box.setWindowTitle(tr("Qt Configuration"));
     box.setIcon(QMessageBox::NoIcon);

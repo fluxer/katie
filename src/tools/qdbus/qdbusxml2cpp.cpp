@@ -65,6 +65,7 @@
 #define PROGRAMNAME     "qdbusxml2cpp"
 #define PROGRAMVERSION  "0.7"
 #define PROGRAMCOPYRIGHT "Copyright (C) 2015 The Qt Company Ltd."
+#define PROGRAMCOPYRIGHT2 "Copyright (C) 2016-2019 Ivailo Monev"
 
 #define ANNOTATION_NO_WAIT      "org.freedesktop.DBus.Method.NoReply"
 
@@ -297,6 +298,7 @@ static QTextStream &writeHeader(QTextStream &ts, bool changesWillBeLost)
        << " * Command line was: " << commandLine << endl
        << " *" << endl
        << " * " PROGRAMNAME " is " PROGRAMCOPYRIGHT << endl
+       << " *                 " PROGRAMCOPYRIGHT2 << endl
        << " *" << endl
        << " * This is an auto-generated file." << endl;
 

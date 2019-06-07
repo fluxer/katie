@@ -492,7 +492,8 @@ void QDBusViewer::about()
     box.setText(QString::fromLatin1("<center><img src=\":/trolltech/qdbusviewer/images/qdbusviewer.png\">"
                 "<h3>%1</h3>"
                 "<p>Version %2</p></center>"
-                "<p>Copyright (C) 2015 The Qt Company Ltd.</p>")
+                "<p>Copyright (C) 2015 The Qt Company Ltd.</p>"
+                "<p>Copyright (C) 2016-2019 Ivailo Monev</p>")
             .arg(tr("D-Bus Viewer")).arg(QLatin1String(QT_VERSION_STR)));
     box.setWindowTitle(tr("D-Bus Viewer"));
     box.exec();

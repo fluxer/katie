@@ -1069,10 +1069,10 @@
   </action>
   <action name="helpAboutQtAction">
    <property name="text">
-    <string>About &amp;Qt</string>
+    <string>About &amp;Katie</string>
    </property>
    <property name="iconText">
-    <string>About Qt</string>
+    <string>About Katie</string>
    </property>
   </action>
  </widget>

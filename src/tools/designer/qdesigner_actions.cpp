@@ -454,7 +454,7 @@ QActionGroup *QDesignerActions::createHelpActions()
     connect(aboutDesignerAction, SIGNAL(triggered()), this, SLOT(aboutDesigner()));
     helpActions->addAction(aboutDesignerAction);
 
-    QAction *aboutQtAction = new QAction(tr("About Qt"), this);
+    QAction *aboutQtAction = new QAction(tr("About Katie"), this);
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     aboutQtAction->setObjectName(QLatin1String("__qt_about_qt_action"));
     connect(aboutQtAction, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
