@@ -2966,30 +2966,6 @@ void QRasterPaintEnginePrivate::initializeRasterizer(QSpanData *data)
 
 void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
                                           ProcessSpans callback,
-                                          QSpanData *spanData)
-{
-    if (!callback || !outline)
-        return;
-
-    Q_Q(QRasterPaintEngine);
-    QRasterPaintEngineState *s = q->state();
-
-    if (!s->flags.antialiased) {
-        initializeRasterizer(spanData);
-
-        const Qt::FillRule fillRule = outline->flags == QT_FT_OUTLINE_NONE
-                                      ? Qt::WindingFill
-                                      : Qt::OddEvenFill;
-
-        rasterizer->rasterize(outline, fillRule);
-        return;
-    }
-
-    rasterize(outline, callback, (void *)spanData);
-}
-
-void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
-                                          ProcessSpans callback,
                                           void *userData)
 {
     if (!callback || !outline)
@@ -3020,7 +2996,6 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
 
     QT_FT_Raster_Params rasterParams;
     rasterParams.source = outline;
-    rasterParams.black_spans = 0;
     rasterParams.user = userData;
     rasterParams.clip_box = clip_box;
     rasterParams.gray_spans = callback;
