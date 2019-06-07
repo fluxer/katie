@@ -299,76 +299,75 @@ public:
         WA_ForceUpdatesDisabled = 37,
 
         WA_WState_Created = 38,
-        WA_WState_CompressKeys = 39,
-        WA_WState_InPaintEvent = 40,
-        WA_WState_Reparented = 41,
-        WA_WState_ConfigPending = 42,
-        WA_WState_Polished = 43,
-        WA_WState_DND = 44, // ## deprecated
-        WA_WState_OwnSizePolicy = 45,
-        WA_WState_ExplicitShowHide = 46,
+        WA_WState_InPaintEvent = 39,
+        WA_WState_Reparented = 40,
+        WA_WState_ConfigPending = 41,
+        WA_WState_Polished = 42,
+        WA_WState_DND = 43, // ## deprecated
+        WA_WState_OwnSizePolicy = 44,
+        WA_WState_ExplicitShowHide = 45,
 
-        WA_ShowModal = 47, // ## deprecated
-        WA_MouseNoMask = 48,
-        WA_GroupLeader = 49, // ## deprecated
-        WA_NoMousePropagation = 50, // ## for now, might go away.
-        WA_Hover = 51,
-        WA_QuitOnClose = 52,
+        WA_ShowModal = 46, // ## deprecated
+        WA_MouseNoMask = 47,
+        WA_GroupLeader = 48, // ## deprecated
+        WA_NoMousePropagation = 49, // ## for now, might go away.
+        WA_Hover = 50,
+        WA_QuitOnClose = 51,
 
-        WA_KeyboardFocusChange = 53,
+        WA_KeyboardFocusChange = 52,
 
-        WA_AcceptDrops = 54,
-        WA_DropSiteRegistered = 55, // internal
+        WA_AcceptDrops = 53,
+        WA_DropSiteRegistered = 54, // internal
 
-        WA_WindowPropagation = 56,
+        WA_WindowPropagation = 55,
 
-        WA_AlwaysShowToolTips = 57,
-        WA_SetStyle = 58,
+        WA_AlwaysShowToolTips = 56,
+        WA_SetStyle = 57,
 
-        WA_SetLocale = 59,
+        WA_SetLocale = 58,
 
-        WA_LayoutUsesWidgetRect = 60,
-        WA_StyledBackground = 61, // internal
+        WA_LayoutUsesWidgetRect = 59,
+        WA_StyledBackground = 60, // internal
 
-        WA_StyleSheet = 62, // internal
+        WA_StyleSheet = 61, // internal
 
-        WA_ShowWithoutActivating = 63,
+        WA_ShowWithoutActivating = 62,
 
-        WA_X11BypassTransientForHint = 64,
+        WA_X11BypassTransientForHint = 63,
 
-        WA_NativeWindow = 65,
-        WA_DontCreateNativeAncestors = 66,
+        WA_NativeWindow = 64,
+        WA_DontCreateNativeAncestors = 65,
 
-        WA_DontShowOnScreen = 67,
+        WA_DontShowOnScreen = 66,
 
         // window types from http://standards.freedesktop.org/wm-spec/
-        WA_X11NetWmWindowTypeDesktop = 68,
-        WA_X11NetWmWindowTypeDock = 69,
-        WA_X11NetWmWindowTypeToolBar = 70,
-        WA_X11NetWmWindowTypeMenu = 71,
-        WA_X11NetWmWindowTypeUtility = 72,
-        WA_X11NetWmWindowTypeSplash = 73,
-        WA_X11NetWmWindowTypeDialog = 74,
-        WA_X11NetWmWindowTypeDropDownMenu = 75,
-        WA_X11NetWmWindowTypePopupMenu = 76,
-        WA_X11NetWmWindowTypeToolTip = 77,
-        WA_X11NetWmWindowTypeNotification = 78,
-        WA_X11NetWmWindowTypeCombo = 79,
-        WA_X11NetWmWindowTypeDND = 80,
+        WA_X11NetWmWindowTypeDesktop = 67,
+        WA_X11NetWmWindowTypeDock = 68,
+        WA_X11NetWmWindowTypeToolBar = 69,
+        WA_X11NetWmWindowTypeMenu = 70,
+        WA_X11NetWmWindowTypeUtility = 71,
+        WA_X11NetWmWindowTypeSplash = 72,
+        WA_X11NetWmWindowTypeDialog = 73,
+        WA_X11NetWmWindowTypeDropDownMenu = 74,
+        WA_X11NetWmWindowTypePopupMenu = 75,
+        WA_X11NetWmWindowTypeToolTip = 76,
+        WA_X11NetWmWindowTypeNotification = 77,
+        WA_X11NetWmWindowTypeCombo = 78,
+        WA_X11NetWmWindowTypeDND = 79,
 
-        WA_SetWindowModality = 81,
-        WA_TranslucentBackground = 82,
+        WA_SetWindowModality = 80,
+        WA_TranslucentBackground = 81,
 
-        WA_AcceptTouchEvents = 83,
-        WA_WState_AcceptedTouchBeginEvent = 84,
-        WA_TouchPadAcceptSingleTouchEvents = 85,
+        WA_AcceptTouchEvents = 82,
+        WA_WState_AcceptedTouchBeginEvent = 83,
+        WA_TouchPadAcceptSingleTouchEvents = 84,
 
-        WA_LockPortraitOrientation = 86,
-        WA_LockLandscapeOrientation = 87,
-        WA_AutoOrientation = 88,
+        WA_LockPortraitOrientation = 85,
+        WA_LockLandscapeOrientation = 86,
+        WA_AutoOrientation = 87,
 
-        WA_X11DoNotAcceptFocus = 89,
-        WA_NoX11EventCompression = 90,
+        WA_X11DoNotAcceptFocus = 88,
+        WA_NoX11EventCompression = 89,
 
         // Add new attributes before this line
         WA_AttributeCount
