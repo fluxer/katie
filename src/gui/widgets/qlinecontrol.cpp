@@ -475,7 +475,7 @@ void QLineControl::draw(QPainter *painter, const QPoint &offset, const QRect &cl
         int cursor = m_cursor;
         if (m_preeditCursor != -1)
             cursor += m_preeditCursor;
-        if (!m_hideCursor && (!m_blinkPeriod || m_blinkStatus))
+        if (!m_blinkPeriod || m_blinkStatus)
             m_textLayout.drawCursor(painter, offset, cursor, m_cursorWidth);
     }
 }
@@ -537,8 +537,6 @@ bool QLineControl::finishChange(int validateFromState, bool update, bool edited)
         }
 #endif
         if (validateFromState >= 0 && wasValidInput && !m_validInput) {
-            if (m_transactions.count())
-                return false;
             internalUndo(validateFromState);
             m_history.resize(m_undoState);
             if (m_modifiedState > m_undoState)
@@ -1277,10 +1275,10 @@ void QLineControl::setCursorBlinkPeriod(int msec)
     }
     if (msec) {
         m_blinkTimer = startTimer(msec / 2);
-        m_blinkStatus = 1;
+        m_blinkStatus = true;
     } else {
         m_blinkTimer = 0;
-        if (m_blinkStatus == 1)
+        if (m_blinkStatus == true)
             emit updateNeeded(inputMask().isEmpty() ? cursorRect() : QRect());
     }
     m_blinkPeriod = msec;
@@ -1292,7 +1290,7 @@ void QLineControl::resetCursorBlinkTimer()
         return;
     killTimer(m_blinkTimer);
     m_blinkTimer = startTimer(m_blinkPeriod / 2);
-    m_blinkStatus = 1;
+    m_blinkStatus = true;
 }
 
 void QLineControl::timerEvent(QTimerEvent *event)

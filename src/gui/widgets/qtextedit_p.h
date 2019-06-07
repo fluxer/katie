@@ -108,11 +108,10 @@ public:
     int lineWrapColumnOrWidth;
     QTextOption::WrapMode wordWrap;
 
-    uint ignoreAutomaticScrollbarAdjustment : 1;
-    uint preferRichText : 1;
-    uint showCursorOnInitialShow : 1;
-    uint inDrag : 1;
-    uint clickCausedFocus : 1;
+    bool ignoreAutomaticScrollbarAdjustment;
+    bool showCursorOnInitialShow;
+    bool inDrag;
+    bool clickCausedFocus;
 
     QString anchorToScrollToWhenVisible;
 

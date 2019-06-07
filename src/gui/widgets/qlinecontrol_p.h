@@ -72,9 +72,9 @@ class Q_GUI_EXPORT QLineControl : public QObject
 public:
     QLineControl(const QString &txt = QString())
         : m_cursor(0), m_preeditCursor(0), m_cursorWidth(0), m_layoutDirection(Qt::LayoutDirectionAuto),
-        m_hideCursor(false), m_separator(0), m_readOnly(0),
-        m_dragEnabled(0), m_echoMode(0), m_textDirty(0), m_selDirty(0),
-        m_validInput(1), m_blinkStatus(0), m_blinkPeriod(0), m_blinkTimer(0), m_deleteAllTimer(0),
+        m_echoMode(QLineEdit::Normal), m_separator(false), m_readOnly(false),
+        m_textDirty(false), m_selDirty(false),  m_validInput(true), m_blinkStatus(false),
+        m_blinkPeriod(0), m_blinkTimer(0), m_deleteAllTimer(0),
         m_ascent(0), m_maxLength(32767), m_lastCursorPos(-1),
         m_tripleClickTimer(0), m_maskData(0), m_modifiedState(0), m_undoState(0),
         m_selstart(0), m_selend(0), m_passwordEchoEditing(false)
@@ -215,8 +215,8 @@ public:
     void redo() { internalRedo(); finishChange(); }
     void selectWordAtPos(int);
 
-    uint echoMode() const { return m_echoMode; }
-    void setEchoMode(uint mode)
+    QLineEdit::EchoMode echoMode() const { return m_echoMode; }
+    void setEchoMode(QLineEdit::EchoMode mode)
     {
         cancelPasswordEchoTimer();
         m_echoMode = mode;
@@ -267,7 +267,7 @@ public:
         if (m_passwordEchoTimer != 0)
             return true;
 #endif
-        return m_passwordEchoEditing ;
+        return m_passwordEchoEditing;
     }
 
     QChar passwordCharacter() const { return m_passwordCharacter; }
@@ -339,22 +339,19 @@ private:
     int m_preeditCursor;
     int m_cursorWidth;
     Qt::LayoutDirection m_layoutDirection;
-    uint m_hideCursor : 1; // used to hide the m_cursor inside preedit areas
-    uint m_separator : 1;
-    uint m_readOnly : 1;
-    uint m_dragEnabled : 1;
-    uint m_echoMode : 2;
-    uint m_textDirty : 1;
-    uint m_selDirty : 1;
-    uint m_validInput : 1;
-    uint m_blinkStatus : 1;
+    QLineEdit::EchoMode m_echoMode;
+    bool m_separator;
+    bool m_readOnly;
+    bool m_textDirty;
+    bool m_selDirty;
+    bool m_validInput;
+    bool m_blinkStatus;
     int m_blinkPeriod; // 0 for non-blinking cursor
     int m_blinkTimer;
     int m_deleteAllTimer;
     int m_ascent;
     int m_maxLength;
     int m_lastCursorPos;
-    QList<int> m_transactions;
     QPoint m_tripleClick;
     int m_tripleClickTimer;
     QString m_cancelText;

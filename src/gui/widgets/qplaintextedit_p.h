@@ -136,11 +136,11 @@ public:
     QPlainTextEdit::LineWrapMode lineWrap;
     QTextOption::WrapMode wordWrap;
 
-    uint showCursorOnInitialShow : 1;
-    uint backgroundVisible : 1;
-    uint centerOnScroll : 1;
-    uint inDrag : 1;
-    uint clickCausedFocus : 1;
+    bool showCursorOnInitialShow;
+    bool backgroundVisible;
+    bool centerOnScroll;
+    bool inDrag;
+    bool clickCausedFocus;
 
     int topLine;
     qreal topLineFracture; // for non-int sized fonts

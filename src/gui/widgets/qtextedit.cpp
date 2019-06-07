@@ -101,10 +101,9 @@ QTextEditPrivate::QTextEditPrivate()
     : control(0),
       autoFormatting(QTextEdit::AutoNone), tabChangesFocus(false),
       lineWrap(QTextEdit::WidgetWidth), lineWrapColumnOrWidth(0),
-      wordWrap(QTextOption::WrapAtWordBoundaryOrAnywhere), clickCausedFocus(0)
+      wordWrap(QTextOption::WrapAtWordBoundaryOrAnywhere), clickCausedFocus(false)
 {
     ignoreAutomaticScrollbarAdjustment = false;
-    preferRichText = false;
     showCursorOnInitialShow = true;
     inDrag = false;
 }
@@ -1079,7 +1078,6 @@ void QTextEdit::setPlainText(const QString &text)
 {
     Q_D(QTextEdit);
     d->control->setPlainText(text);
-    d->preferRichText = false;
 }
 
 /*!
@@ -1117,7 +1115,6 @@ void QTextEdit::setHtml(const QString &text)
 {
     Q_D(QTextEdit);
     d->control->setHtml(text);
-    d->preferRichText = true;
 }
 #endif
 
@@ -1522,7 +1519,7 @@ void QTextEdit::mouseReleaseEvent(QMouseEvent *e)
     }
     if (!isReadOnly() && rect().contains(e->pos()))
         d->handleSoftwareInputPanel(e->button(), d->clickCausedFocus);
-    d->clickCausedFocus = 0;
+    d->clickCausedFocus = false;
 }
 
 /*! \reimp
@@ -1625,7 +1622,7 @@ void QTextEdit::focusInEvent(QFocusEvent *e)
 {
     Q_D(QTextEdit);
     if (e->reason() == Qt::MouseFocusReason) {
-        d->clickCausedFocus = 1;
+        d->clickCausedFocus = true;
     }
     QAbstractScrollArea::focusInEvent(e);
     d->sendControlEvent(e);
