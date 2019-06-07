@@ -232,10 +232,10 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
                                                 bool ignoresFormatAndExtension)
 {
     if (!autoDetectImageFormat && format.isEmpty())
-        return 0;
+        return Q_NULLPTR;
 
     QByteArray form = format.toLower();
-    QImageIOHandler *handler = 0;
+    QImageIOHandler *handler = Q_NULLPTR;
 
 #ifndef QT_NO_LIBRARY
     // check if we have plugins that support the image format
@@ -259,7 +259,8 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 #ifdef QIMAGEREADER_DEBUG
             qDebug() << "QImageReader::createReadHandler: device is a file:" << file->fileName();
 #endif
-            if (!(suffix = QFileInfo(file->fileName()).suffix().toLower().toLatin1()).isEmpty()) {
+            suffix = QFileInfo(file->fileName()).suffix().toLower().toLatin1();
+            if (!suffix.isEmpty()) {
                 int index = keys.indexOf(QString::fromLatin1(suffix));
                 if (index != -1) {
 #ifdef QIMAGEREADER_DEBUG
@@ -415,7 +416,6 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
             }
         }
 
-        QByteArray subType;
         int numFormats = _qt_NumFormats;
         while (device && numFormats >= 0) {
             const _qt_BuiltInFormatStruct *formatStruct = &_qt_BuiltInFormats[currentFormat];
@@ -423,65 +423,76 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
             const qint64 pos = device->pos();
             switch (formatStruct->type) {
 #ifndef QT_NO_IMAGEFORMAT_PNG
-            case _qt_PngFormat:
-                if (QPngHandler::canRead(device))
-                    handler = new QPngHandler;
-                break;
+                case _qt_PngFormat: {
+                    if (QPngHandler::canRead(device))
+                        handler = new QPngHandler;
+                    break;
+                }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_JPEG
-            case _qt_JpgFormat:
-                if (QJpegHandler::canRead(device))
-                    handler = new QJpegHandler;
-                break;
+                case _qt_JpgFormat: {
+                    if (QJpegHandler::canRead(device))
+                        handler = new QJpegHandler;
+                    break;
+                }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_MNG
-            case _qt_MngFormat:
-                if (QMngHandler::canRead(device))
-                    handler = new QMngHandler;
-                break;
+                case _qt_MngFormat: {
+                    if (QMngHandler::canRead(device))
+                        handler = new QMngHandler;
+                    break;
+                }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_TIFF
-            case _qt_TifFormat:
-                if (QTiffHandler::canRead(device))
-                    handler = new QTiffHandler;
-                break;
+                case _qt_TifFormat: {
+                    if (QTiffHandler::canRead(device))
+                        handler = new QTiffHandler;
+                    break;
+                }
 #endif
 #ifdef QT_BUILTIN_GIF_READER
-            case _qt_GifFormat:
-                if (QGifHandler::canRead(device))
-                    handler = new QGifHandler;
-                break;
+                case _qt_GifFormat: {
+                    if (QGifHandler::canRead(device))
+                        handler = new QGifHandler;
+                    break;
+                }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_BMP
-            case _qt_BmpFormat:
-                if (QBmpHandler::canRead(device))
-                    handler = new QBmpHandler;
-                break;
+                case _qt_BmpFormat: {
+                    if (QBmpHandler::canRead(device))
+                        handler = new QBmpHandler;
+                    break;
+                }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XPM
-            case _qt_XpmFormat:
-                if (QXpmHandler::canRead(device))
-                    handler = new QXpmHandler;
-                break;
+                case _qt_XpmFormat: {
+                    if (QXpmHandler::canRead(device))
+                        handler = new QXpmHandler;
+                    break;
+                }
 #endif
 #ifndef QT_NO_IMAGEFORMAT_PPM
-            case _qt_PbmFormat:
-            case _qt_PgmFormat:
-            case _qt_PpmFormat:
-                if (QPpmHandler::canRead(device, &subType)) {
-                    handler = new QPpmHandler;
-                    handler->setOption(QImageIOHandler::SubType, subType);
+                case _qt_PbmFormat:
+                case _qt_PgmFormat:
+                case _qt_PpmFormat: {
+                    QByteArray subType;
+                    if (QPpmHandler::canRead(device, &subType)) {
+                        handler = new QPpmHandler;
+                        handler->setOption(QImageIOHandler::SubType, subType);
+                    }
+                    break;
                 }
-                break;
 #endif
 #ifndef QT_NO_IMAGEFORMAT_XBM
-            case _qt_XbmFormat:
-                if (QXbmHandler::canRead(device))
-                    handler = new QXbmHandler;
-                break;
+                case _qt_XbmFormat: {
+                    if (QXbmHandler::canRead(device))
+                        handler = new QXbmHandler;
+                    break;
+                }
 #endif
-            default:
-                break;
+                default: {
+                    break;
+                }
             }
             if (!device->isSequential())
                 device->seek(pos);
@@ -517,7 +528,7 @@ static QImageIOHandler *createReadHandlerHelper(QIODevice *device,
 class QImageReaderPrivate
 {
 public:
-    QImageReaderPrivate(QImageReader *qq);
+    QImageReaderPrivate();
     ~QImageReaderPrivate();
 
     // device
@@ -538,14 +549,12 @@ public:
     // error
     QImageReader::ImageReaderError imageReaderError;
     QString errorString;
-
-    QImageReader *q;
 };
 
 /*!
     \internal
 */
-QImageReaderPrivate::QImageReaderPrivate(QImageReader *qq)
+QImageReaderPrivate::QImageReaderPrivate()
     : autoDetectImageFormat(true), ignoresFormatAndExtension(false)
 {
     device = 0;
@@ -553,8 +562,6 @@ QImageReaderPrivate::QImageReaderPrivate(QImageReader *qq)
     handler = 0;
     quality = -1;
     imageReaderError = QImageReader::UnknownError;
-
-    q = qq;
 }
 
 /*!
@@ -622,7 +629,7 @@ bool QImageReaderPrivate::initHandler()
     call setDevice() or setFileName().
 */
 QImageReader::QImageReader()
-    : d(new QImageReaderPrivate(this))
+    : d(new QImageReaderPrivate())
 {
 }
 
@@ -631,7 +638,7 @@ QImageReader::QImageReader()
     image format \a format.
 */
 QImageReader::QImageReader(QIODevice *device, const QByteArray &format)
-    : d(new QImageReaderPrivate(this))
+    : d(new QImageReaderPrivate())
 {
     d->device = device;
     d->format = format;
@@ -644,7 +651,7 @@ QImageReader::QImageReader(QIODevice *device, const QByteArray &format)
     \sa setFileName()
 */
 QImageReader::QImageReader(const QString &fileName, const QByteArray &format)
-    : d(new QImageReaderPrivate(this))
+    : d(new QImageReaderPrivate())
 {
     QFile *file = new QFile(fileName);
     d->device = file;
