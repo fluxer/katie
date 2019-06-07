@@ -1469,20 +1469,15 @@ void QMessageBox::about(QWidget *parent, const QString &title, const QString &te
 
     QApplication provides this functionality as a slot.
 
-    On Mac OS X, the about box is popped up as a modeless window; on
-    other platforms, it is currently application modal.
-
     \sa QApplication::aboutQt()
 */
 void QMessageBox::aboutQt(QWidget *parent, const QString &title)
 {
-    QString translatedTextAboutQtCaption;
-    translatedTextAboutQtCaption = QMessageBox::tr(
+    QString translatedTextAboutQtCaption = QMessageBox::tr(
         "<h3>About Katie</h3>"
         "<p>This program uses Katie version %1.</p>"
         ).arg(QLatin1String(QT_VERSION_STR));
-    QString translatedTextAboutQtText;
-    translatedTextAboutQtText = QMessageBox::tr(
+    QString translatedTextAboutQtText = QMessageBox::tr(
         "<p>Katie is a C++ toolkit derived from the Qt 4.8 framework.</p>"
         "<p>Katie is available under two different licensing options designed "
         "to accommodate the needs of our various users.</p>"
@@ -1492,8 +1487,8 @@ void QMessageBox::aboutQt(QWidget *parent, const QString &title)
         "<p>Katie licensed under the GNU LGPL version 2.1 is appropriate for the "
         "development of applications provided you can comply with the terms "
         "and conditions of the GNU LGPL version 2.1.</p>"
-        "<p>Copyright (C) %1 The Qt Company Ltd and other contributors."
-        "Copyright (C) %2 Ivailo Monev</p>"
+        "<p>Copyright (C) %1 The Qt Company Ltd and other contributors.</p>"
+        "<p>Copyright (C) %2 Ivailo Monev</p>"
         "<p>Qt and the Qt logo are trademarks of The Qt Company Ltd.</p>"
         "<p>See <a href=\"http://%3/\">%3</a> for more information.</p>"
         ).arg(QLatin1String("2015"),
