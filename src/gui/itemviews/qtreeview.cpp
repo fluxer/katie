@@ -1789,9 +1789,9 @@ void QTreeView::drawBranches(QPainter *painter, const QRect &rect,
         } else {
             int successor = item + viewItem.total + 1;
             while (successor < d->viewItems.size()
-                   && d->viewItems.at(successor).level >= uint(level)) {
+                   && d->viewItems.at(successor).level >= level) {
                 const QTreeViewItem &successorItem = d->viewItems.at(successor);
-                if (successorItem.level == uint(level)) {
+                if (successorItem.level == level) {
                     moreSiblings = true;
                     break;
                 }
@@ -2614,7 +2614,7 @@ void QTreeView::expandToDepth(int depth)
     d->interruptDelayedItemsLayout();
     d->layout(-1);
     for (int i = 0; i < d->viewItems.count(); ++i) {
-        if (d->viewItems.at(i).level <= (uint)depth) {
+        if (d->viewItems.at(i).level <= depth) {
             d->viewItems[i].expanded = true;
             d->layout(i);
             d->storeExpanded(d->viewItems.at(i).index);
@@ -3119,7 +3119,7 @@ void QTreeViewPrivate::layout(int i, bool recursiveExpanding, bool afterIsUninit
         }
         viewItems.resize(count);
         afterIsUninitialized = true;
-    } else if (viewItems[i].total != (uint)count) {
+    } else if (viewItems[i].total != count) {
         if (!afterIsUninitialized)
             insertViewItems(i + 1, count, QTreeViewItem()); // expand
         else if (count > 0)
