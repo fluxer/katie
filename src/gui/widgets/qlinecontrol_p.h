@@ -379,11 +379,19 @@ private:
     MaskInputData *m_maskData;
 
     // undo/redo handling
-    enum CommandType { Separator, Insert, Remove, Delete, RemoveSelection, DeleteSelection, SetSelection };
+    enum CommandType {
+        Separator,
+        Insert,
+        Remove,
+        Delete,
+        RemoveSelection,
+        DeleteSelection,
+        SetSelection
+    };
     struct Command {
         inline Command() {}
         inline Command(CommandType t, int p, QChar c, int ss, int se) : type(t),uc(c),pos(p),selStart(ss),selEnd(se) {}
-        uint type : 4;
+        CommandType type;
         QChar uc;
         int pos, selStart, selEnd;
     };

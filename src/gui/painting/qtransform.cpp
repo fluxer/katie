@@ -1398,12 +1398,11 @@ QPolygonF QTransform::map(const QPolygonF &a) const
         return mapProjective(*this, a);
 
     int size = a.size();
-    int i;
     QPolygonF p(size);
     const QPointF *da = a.constData();
     QPointF *dp = p.data();
 
-    for(i = 0; i < size; ++i) {
+    for(int i = 0; i < size; ++i) {
         MAP(da[i].xp, da[i].yp, dp[i].xp, dp[i].yp);
     }
     return p;
@@ -1428,12 +1427,11 @@ QPolygon QTransform::map(const QPolygon &a) const
         return mapProjective(*this, QPolygonF(a)).toPolygon();
 
     int size = a.size();
-    int i;
     QPolygon p(size);
     const QPoint *da = a.constData();
     QPoint *dp = p.data();
 
-    for(i = 0; i < size; ++i) {
+    for(int i = 0; i < size; ++i) {
         qreal nx = 0, ny = 0;
         MAP(da[i].xp, da[i].yp, nx, ny);
         dp[i].xp = qRound(nx);
