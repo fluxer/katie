@@ -93,7 +93,7 @@ static inline bool checkPixelSize(const QImage::Format format)
 
 
 #define QIMAGE_SANITYCHECK_MEMORY(image) \
-    if ((image).isNull()) { \
+    if (Q_UNLIKELY((image).isNull())) { \
         qWarning("QImage: out of memory, returning null image"); \
         return QImage(); \
     }

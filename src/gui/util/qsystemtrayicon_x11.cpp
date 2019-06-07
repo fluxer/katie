@@ -127,15 +127,15 @@ bool QSystemTrayIconSys::sysTrayTracker(void *message, long *result)
     Display *display = QX11Info::display();
     XEvent *ev = (XEvent *)message;
     if  (ev->type == DestroyNotify && ev->xany.window == sysTrayWindow) {
-	sysTrayWindow = locateSystemTray();
+        sysTrayWindow = locateSystemTray();
         memset(&sysTrayVisual, 0, sizeof(sysTrayVisual));
         for (int i = 0; i < trayIcons.count(); i++) {
             if (sysTrayWindow == XNone) {
-	        QBalloonTip::hideBalloon();
+                QBalloonTip::hideBalloon();
                 trayIcons[i]->hide(); // still no luck
                 trayIcons[i]->destroy();
                 trayIcons[i]->create();
-	    } else
+            } else
                 trayIcons[i]->addToTray(); // add it to the new tray
         }
         retval = true;
@@ -143,9 +143,9 @@ bool QSystemTrayIconSys::sysTrayTracker(void *message, long *result)
         static Atom manager_atom = XInternAtom(display, "MANAGER", False);
         XClientMessageEvent *cm = (XClientMessageEvent *)message;
         if ((cm->message_type == manager_atom) && ((Atom)cm->data.l[1] == sysTraySelection)) {
-	    sysTrayWindow = cm->data.l[2];
+            sysTrayWindow = cm->data.l[2];
             memset(&sysTrayVisual, 0, sizeof(sysTrayVisual));
-	    XSelectInput(display, sysTrayWindow, StructureNotifyMask);
+            XSelectInput(display, sysTrayWindow, StructureNotifyMask);
             for (int i = 0; i < trayIcons.count(); i++) {
                 trayIcons[i]->addToTray();
             }
@@ -175,8 +175,8 @@ QSystemTrayIconSys::QSystemTrayIconSys(QSystemTrayIcon *q)
     Display *display = QX11Info::display();
     if (!eventFilterAdded) {
         oldEventFilter = qApp->setEventFilter(sysTrayTracker);
-	eventFilterAdded = true;
-	Window root = QX11Info::appRootWindow();
+        eventFilterAdded = true;
+        Window root = QX11Info::appRootWindow();
         XWindowAttributes attr;
         XGetWindowAttributes(display, root, &attr);
         if ((attr.your_event_mask & StructureNotifyMask) != StructureNotifyMask) {
@@ -186,8 +186,8 @@ QSystemTrayIconSys::QSystemTrayIconSys(QSystemTrayIcon *q)
     }
     if (trayIcons.isEmpty()) {
         sysTrayWindow = locateSystemTray();
-	if (sysTrayWindow != XNone)
-	    XSelectInput(display, sysTrayWindow, StructureNotifyMask); // track tray events
+        if (sysTrayWindow != XNone)
+            XSelectInput(display, sysTrayWindow, StructureNotifyMask); // track tray events
     }
     trayIcons.append(this);
     setMouseTracking(true);
@@ -341,7 +341,7 @@ void QSystemTrayIconPrivate::install_sys()
 QRect QSystemTrayIconPrivate::geometry_sys() const
 {
     if (!sys)
-	return QRect();
+        return QRect();
     return QRect(sys->mapToGlobal(QPoint(0, 0)), sys->size());
 }
 
