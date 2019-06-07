@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
-import sys, os, re
+import os, re
+
+regex = re.compile('(#include [<|"](?:.*)[>|"])')
 
 cppfiles = []
 for root, dirs, files in os.walk(os.curdir):
@@ -14,7 +16,7 @@ for cpp in cppfiles:
     with open(cpp, 'r') as f:
         cppcontent = f.read()
         includes = []
-        for match in re.findall('(#include [<|"](?:.*)[>|"])', cppcontent):
+        for match in regex.findall(cppcontent):
             if match in includes:
                 print('multiple inclusions of: %s, in %s' % (match, cpp))
                 continue

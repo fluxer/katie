@@ -54,7 +54,6 @@ class Q_AUTOTEST_EXPORT QDeclarativeTextEdit : public QDeclarativeImplicitSizePa
     Q_OBJECT
     Q_ENUMS(VAlignment)
     Q_ENUMS(HAlignment)
-    Q_ENUMS(TextFormat)
     Q_ENUMS(WrapMode)
     Q_ENUMS(SelectionMode)
 
@@ -69,7 +68,7 @@ class Q_AUTOTEST_EXPORT QDeclarativeTextEdit : public QDeclarativeImplicitSizePa
     Q_PROPERTY(int lineCount READ lineCount NOTIFY lineCountChanged REVISION 1)
     Q_PROPERTY(qreal paintedWidth READ paintedWidth NOTIFY paintedSizeChanged)
     Q_PROPERTY(qreal paintedHeight READ paintedHeight NOTIFY paintedSizeChanged)
-    Q_PROPERTY(TextFormat textFormat READ textFormat WRITE setTextFormat NOTIFY textFormatChanged)
+    Q_PROPERTY(Qt::TextFormat textFormat READ textFormat WRITE setTextFormat NOTIFY textFormatChanged)
     Q_PROPERTY(bool readOnly READ isReadOnly WRITE setReadOnly NOTIFY readOnlyChanged)
     Q_PROPERTY(bool cursorVisible READ isCursorVisible WRITE setCursorVisible NOTIFY cursorVisibleChanged)
     Q_PROPERTY(int cursorPosition READ cursorPosition WRITE setCursorPosition NOTIFY cursorPositionChanged)
@@ -102,12 +101,6 @@ public:
         AlignVCenter = Qt::AlignVCenter
     };
 
-    enum TextFormat {
-        PlainText = Qt::PlainText,
-        RichText = Qt::RichText,
-        AutoText = Qt::AutoText
-    };
-
     enum WrapMode { NoWrap = QTextOption::NoWrap,
                     WordWrap = QTextOption::WordWrap,
                     WrapAnywhere = QTextOption::WrapAnywhere,
@@ -126,8 +119,8 @@ public:
     QString text() const;
     void setText(const QString &);
 
-    TextFormat textFormat() const;
-    void setTextFormat(TextFormat format);
+    Qt::TextFormat textFormat() const;
+    void setTextFormat(Qt::TextFormat format);
 
     QFont font() const;
     void setFont(const QFont &font);
@@ -224,7 +217,7 @@ Q_SIGNALS:
     void verticalAlignmentChanged(VAlignment alignment);
     void wrapModeChanged();
     void lineCountChanged();
-    void textFormatChanged(TextFormat textFormat);
+    void textFormatChanged(Qt::TextFormat textFormat);
     void readOnlyChanged(bool isReadOnly);
     void cursorVisibleChanged(bool isCursorVisible);
     void cursorDelegateChanged();

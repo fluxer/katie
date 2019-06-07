@@ -367,7 +367,6 @@ for cpp in cppfiles:
             inc1 = '%s/%s' % (key, key2)
             inc2 = key2
             replacement = '#include <%s/%s>' % (key, incmap[key][key2])
-            # print(inc1, inc2, replacement)
             for match in re.findall('(#include [<|"](?:%s|%s)[>|"])' % (inc1, inc2), cppcontent):
                 with open(cpp, 'w') as f:
                     if replacement in replaced:

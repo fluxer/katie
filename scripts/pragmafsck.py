@@ -1,23 +1,23 @@
 #!/usr/bin/python
 
-import sys, os, re
+import os, re
 
 regex = re.compile('(#ifndef (?:.*)_H\n#define .*$)', re.MULTILINE)
 
-cppfiles = []
+hppfiles = []
 for root, dirs, files in os.walk(os.curdir):
     for f in files:
         if f.endswith(('.hpp', '.h')):
-            cppfiles.append('%s/%s' % (root, f))
+            hppfiles.append('%s/%s' % (root, f))
 
-for cpp in cppfiles:
-    cpp = os.path.realpath(cpp)
-    with open(cpp, 'r') as f:
+for hpp in hppfiles:
+    hpp = os.path.realpath(hpp)
+    with open(hpp, 'r') as f:
         cppcontent = f.read()
     if '#pragma once' in cppcontent:
         continue
     for match in regex.findall(cppcontent):
-        with open(cpp, 'w') as f:
-            print('adding pragma once to: %s' % cpp)
+        with open(hpp, 'w') as f:
+            print('adding pragma once to: %s' % hpp)
             cppcontent = cppcontent.replace(match, '#pragma once\n\n%s' % match)
             f.write(cppcontent)

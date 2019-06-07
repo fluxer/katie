@@ -61,10 +61,10 @@ class QDeclarativeTextEditPrivate : public QDeclarativeImplicitSizePaintedItemPr
 public:
     QDeclarativeTextEditPrivate()
       : color("black"), hAlign(QDeclarativeTextEdit::AlignLeft), vAlign(QDeclarativeTextEdit::AlignTop),
-      imgDirty(true), dirty(false), richText(false), cursorVisible(false), focusOnPress(true),
+      dirty(false), richText(false), cursorVisible(false), focusOnPress(true),
       showInputPanelOnFocus(true), clickCausedFocus(false), persistentSelection(true), requireImplicitWidth(false),
       hAlignImplicit(true), rightToLeftText(false), textMargin(0.0), lastSelectionStart(0), lastSelectionEnd(0),
-      cursorComponent(0), cursor(0), format(QDeclarativeTextEdit::AutoText), document(0), wrapMode(QDeclarativeTextEdit::NoWrap),
+      cursorComponent(0), cursor(0), format(Qt::AutoText), document(0), wrapMode(QDeclarativeTextEdit::NoWrap),
       mouseSelectionMode(QDeclarativeTextEdit::SelectCharacters), lineCount(0), selectByMouse(false), canPaste(false),
       yoff(0)
     {
@@ -87,29 +87,24 @@ public:
     QColor  color;
     QColor  selectionColor;
     QColor  selectedTextColor;
-    QString style;
-    QColor  styleColor;
-    QPixmap imgCache;
-    QPixmap imgStyleCache;
     QDeclarativeTextEdit::HAlignment hAlign;
     QDeclarativeTextEdit::VAlignment vAlign;
-    bool imgDirty : 1;
-    bool dirty : 1;
-    bool richText : 1;
-    bool cursorVisible : 1;
-    bool focusOnPress : 1;
-    bool showInputPanelOnFocus : 1;
-    bool clickCausedFocus : 1;
-    bool persistentSelection : 1;
-    bool requireImplicitWidth:1;
-    bool hAlignImplicit:1;
-    bool rightToLeftText:1;
+    bool dirty;
+    bool richText;
+    bool cursorVisible;
+    bool focusOnPress;
+    bool showInputPanelOnFocus;
+    bool clickCausedFocus;
+    bool persistentSelection;
+    bool requireImplicitWidth;
+    bool hAlignImplicit;
+    bool rightToLeftText;
     qreal textMargin;
     int lastSelectionStart;
     int lastSelectionEnd;
     QDeclarativeComponent* cursorComponent;
     QDeclarativeItem* cursor;
-    QDeclarativeTextEdit::TextFormat format;
+    Qt::TextFormat format;
     QTextDocument *document;
     QTextControl *control;
     QDeclarativeTextEdit::WrapMode wrapMode;

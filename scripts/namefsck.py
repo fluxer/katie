@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import sys, os, re
+import os, re
 
 # generated via find /usr/include/katie/ -name 'Q*' -printf '    "%f",\n' | sort -u
 classlist = {

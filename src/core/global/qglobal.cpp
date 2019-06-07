@@ -464,11 +464,11 @@ QT_BEGIN_NAMESPACE
 
     The <QtGlobal> header file provides a range of macros (Q_CC_*)
     that are defined if the application is compiled using the
-    specified platforms. For example, the Q_CC_SUN macro is defined if
-    the application is compiled using Forte Developer, or Sun Studio
-    C++.  The header file also declares a range of macros (Q_OS_*)
-    that are defined for the specified platforms. For example,
-    Q_OS_WIN32 which is defined for Microsoft Windows.
+    specified platforms. For example, the Q_CC_GNU macro is defined
+    if the application is compiled using GNU Compiler Collection.
+    The header file also declares a range of macros (Q_OS_*) that
+    are defined for the specified platforms. For example, Q_OS_WIN32
+    which is defined for Microsoft Windows.
 
     The purpose of these macros is to enable programmers to add
     compiler or platform specific code to their application.

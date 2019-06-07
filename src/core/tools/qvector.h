@@ -74,11 +74,7 @@ class QVector
     typedef QVectorTypedData<T> Data;
     union {
         QVectorData *d;
-#if defined(Q_CC_SUN) && (__SUNPRO_CC <= 0x550)
-        QVectorTypedData<T> *p;
-#else
         Data *p;
-#endif
     };
 
 public:

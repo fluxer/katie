@@ -250,7 +250,7 @@ void QDeclarativeTextEdit::setText(const QString &text)
     if (QDeclarativeTextEdit::text() == text)
         return;
 
-    d->richText = d->format == RichText || (d->format == AutoText && Qt::mightBeRichText(text));
+    d->richText = d->format == Qt::RichText || (d->format == Qt::AutoText && Qt::mightBeRichText(text));
     if (d->richText) {
 #ifndef QT_NO_TEXTHTMLPARSER
         d->control->setHtml(text);
@@ -264,17 +264,17 @@ void QDeclarativeTextEdit::setText(const QString &text)
 }
 
 /*!
-    \qmlproperty enumeration TextEdit::textFormat
+    \qmlproperty enumeration Qt::textFormat
 
     The way the text property should be displayed.
 
     \list
-    \o TextEdit.AutoText
-    \o TextEdit.PlainText
-    \o TextEdit.RichText
+    \o Qt.AutoText
+    \o Qt.PlainText
+    \o Qt.RichText
     \endlist
 
-    The default is TextEdit.AutoText.  If the text format is TextEdit.AutoText the text edit
+    The default is Qt.AutoText.  If the text format is Qt.AutoText the text edit
     will automatically determine whether the text should be treated as
     rich text.  This determination is made using Qt::mightBeRichText().
 
@@ -289,12 +289,12 @@ Column {
     }
     TextEdit {
         font.pointSize: 24
-        textFormat: TextEdit.RichText
+        textFormat: Qt.RichText
         text: "<b>Hello</b> <i>World!</i>"
     }
     TextEdit {
         font.pointSize: 24
-        textFormat: TextEdit.PlainText
+        textFormat: Qt.PlainText
         text: "<b>Hello</b> <i>World!</i>"
     }
 }
@@ -302,19 +302,19 @@ Column {
     \o \image declarative-textformat.png
     \endtable
 */
-QDeclarativeTextEdit::TextFormat QDeclarativeTextEdit::textFormat() const
+Qt::TextFormat QDeclarativeTextEdit::textFormat() const
 {
     Q_D(const QDeclarativeTextEdit);
     return d->format;
 }
 
-void QDeclarativeTextEdit::setTextFormat(TextFormat format)
+void QDeclarativeTextEdit::setTextFormat(Qt::TextFormat format)
 {
     Q_D(QDeclarativeTextEdit);
     if (format == d->format)
         return;
     bool wasRich = d->richText;
-    d->richText = format == RichText || (format == AutoText && Qt::mightBeRichText(d->text));
+    d->richText = format == Qt::RichText || (format == Qt::AutoText && Qt::mightBeRichText(d->text));
 
     if (wasRich && !d->richText) {
         d->control->setPlainText(d->text);
@@ -328,7 +328,7 @@ void QDeclarativeTextEdit::setTextFormat(TextFormat format)
         updateSize();
     }
     d->format = format;
-    d->control->setAcceptRichText(d->format != PlainText);
+    d->control->setAcceptRichText(d->format != Qt::PlainText);
     emit textFormatChanged(d->format);
 }
 
