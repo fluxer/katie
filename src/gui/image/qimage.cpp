@@ -1819,17 +1819,6 @@ void QImage::invertPixels(InvertMode mode)
     instead.
 */
 
-// Windows defines these
-#if defined(write)
-# undef write
-#endif
-#if defined(close)
-# undef close
-#endif
-#if defined(read)
-# undef read
-#endif
-
 /*!
     \since 4.6
     Resizes the color table to contain \a colorCount entries.
@@ -4007,10 +3996,6 @@ QImage QImage::mirrored(bool horizontal, bool vertical) const
     // Create result image, copy colormap
     QImage result(d->width, d->height, d->format);
     QIMAGE_SANITYCHECK_MEMORY(result);
-
-    // check if we ran out of of memory..
-    if (!result.d)
-        return QImage();
 
     result.d->colortable = d->colortable;
     result.d->has_alpha_clut = d->has_alpha_clut;
