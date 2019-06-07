@@ -79,12 +79,11 @@ static void interactive(QScriptEngine *eng)
     QString code;
 
     forever {
-        QString line;
 
         printf("%s", prompt);
         fflush(stdout);
 
-        line = qin.readLine();
+        QString line = qin.readLine();
         if (line.isNull())
             break;
 

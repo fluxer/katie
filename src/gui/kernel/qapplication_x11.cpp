@@ -392,8 +392,7 @@ extern "C" {
 
 static Bool qt_xfixes_scanner(Display*, XEvent *event, XPointer arg)
 {
-    qt_xfixes_selection_event_data *data =
-        reinterpret_cast<qt_xfixes_selection_event_data*>(arg);
+    qt_xfixes_selection_event_data *data = reinterpret_cast<qt_xfixes_selection_event_data*>(arg);
     if (event->type == qt_x11Data->xfixes_eventbase + XFixesSelectionNotify) {
         XFixesSelectionNotifyEvent *xfixes_event = reinterpret_cast<XFixesSelectionNotifyEvent*>(event);
         if (xfixes_event->selection == data->selection)
@@ -633,8 +632,7 @@ extern "C" {
 
 static Bool qt_sync_request_scanner(Display*, XEvent *event, XPointer arg)
 {
-    qt_sync_request_event_data *data =
-        reinterpret_cast<qt_sync_request_event_data*>(arg);
+    qt_sync_request_event_data *data = reinterpret_cast<qt_sync_request_event_data*>(arg);
     if (event->type == ClientMessage &&
         event->xany.window == data->window &&
         event->xclient.message_type == ATOM(WM_PROTOCOLS) &&
