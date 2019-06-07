@@ -1573,9 +1573,6 @@ qrgb444 qrgb444::byte_mul(quint8 a) const
 template <class T>
 inline void qt_memfill(T *dest, const T value, int count)
 {
-    if (!count)
-        return;
-
     memset(dest, value, count);
 }
 
@@ -1589,17 +1586,20 @@ inline void qt_memfill(DST *dest, const SRC color, int count)
 
 template<> inline void qt_memfill(quint32 *dest, const quint32 color, int count)
 {
-    qt_memfill<quint32,quint32>(dest, color, count);
+    while (count--)
+        *dest++ = color;
 }
 
 template<> inline void qt_memfill(quint16 *dest, const quint16 color, int count)
 {
-    qt_memfill<quint16,quint16>(dest, color, count);
+    while (count--)
+        *dest++ = color;
 }
 
 template<> inline void qt_memfill(quint8 *dest, const quint8 color, int count)
 {
-    memset(dest, color, count);
+    while (count--)
+        *dest++ = color;
 }
 
 template <class T>
