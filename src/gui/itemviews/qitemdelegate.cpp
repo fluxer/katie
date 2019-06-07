@@ -765,7 +765,6 @@ void QItemDelegate::drawFocus(QPainter *painter,
                               const QStyleOptionViewItem &option,
                               const QRect &rect) const
 {
-    Q_D(const QItemDelegate);
     if ((option.state & QStyle::State_HasFocus) == 0 || !rect.isValid())
         return;
     QStyleOptionFocusRect o;
@@ -791,7 +790,6 @@ void QItemDelegate::drawCheck(QPainter *painter,
                               const QStyleOptionViewItem &option,
                               const QRect &rect, Qt::CheckState state) const
 {
-    Q_D(const QItemDelegate);
     if (!rect.isValid())
         return;
 
@@ -856,7 +854,6 @@ void QItemDelegate::doLayout(const QStyleOptionViewItem &option,
                              bool hint) const
 {
     Q_ASSERT(checkRect && pixmapRect && textRect);
-    Q_D(const QItemDelegate);
     QStyle *style = option.widget ? option.widget->style() : QApplication::style();
     const bool hasCheck = checkRect->isValid();
     const bool hasPixmap = pixmapRect->isValid();
@@ -1110,7 +1107,6 @@ QRect QItemDelegate::check(const QStyleOptionViewItem &option,
                            const QRect &bounding, const QVariant &value) const
 {
     if (value.isValid()) {
-        Q_D(const QItemDelegate);
         QStyleOptionButton opt;
         opt.QStyleOption::operator=(option);
         opt.rect = bounding;

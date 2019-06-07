@@ -54,7 +54,6 @@
 
 QT_BEGIN_NAMESPACE
 
-namespace {
 class PageItem : public QGraphicsItem
 {
 public:
@@ -169,8 +168,6 @@ protected:
         emit resized();
     }
 };
-
-} // anonymous namespace
 
 class QPrintPreviewWidgetPrivate : public QWidgetPrivate
 {
