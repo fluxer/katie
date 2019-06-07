@@ -261,7 +261,6 @@ public:
 
     void rasterizeLine_dashed(QLineF line, qreal width,
                               int *dashIndex, qreal *dashOffset, bool *inDash);
-    void rasterize(QT_FT_Outline *outline, ProcessSpans callback, QSpanData *spanData);
     void rasterize(QT_FT_Outline *outline, ProcessSpans callback, void *userData);
     void updateMatrixData(QSpanData *spanData, const QBrush &brush, const QTransform &brushMatrix);
 

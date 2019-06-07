@@ -402,12 +402,10 @@ QT_FT_BEGIN_HEADER
   /*                                                                       */
   typedef struct  QT_FT_Raster_Params_
   {
-    void*                   source;
+    QT_FT_Outline*                   source;
     QT_FT_SpanFunc             gray_spans;
-    QT_FT_SpanFunc             black_spans;
     void*                   user;
     QT_FT_BBox                 clip_box;
-    int                     skip_spans;
 
   } QT_FT_Raster_Params;
 

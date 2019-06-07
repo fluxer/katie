@@ -3024,7 +3024,6 @@ void QRasterPaintEnginePrivate::rasterize(QT_FT_Outline *outline,
     rasterParams.user = userData;
     rasterParams.clip_box = clip_box;
     rasterParams.gray_spans = callback;
-    rasterParams.skip_spans = 0;
     gray_raster_render(&rasterParams);
 }
 

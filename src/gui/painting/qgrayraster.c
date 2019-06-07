@@ -246,7 +246,7 @@
     TPos    last_ey;
 
     QT_FT_Vector   bez_stack[32 * 3 + 1];
-    int         lev_stack[32];
+    int            lev_stack[32];
 
     QT_FT_Outline  outline;
     QT_FT_BBox     clip_box;
@@ -270,7 +270,6 @@
     PCell*     ycells;
     int        ycount;
 
-    int        skip_spans;
   } TWorker, *PWorker;
 
 
@@ -902,15 +901,12 @@
 
       if ( ras.num_gray_spans >= QT_FT_MAX_GRAY_SPANS )
       {
-        if ( ras.render_span && ras.num_gray_spans > ras.skip_spans )
+        if ( ras.render_span )
         {
-          int skip = ras.skip_spans > 0 ? ras.skip_spans : 0;
-          ras.render_span( ras.num_gray_spans - skip,
-                           ras.gray_spans + skip,
+          ras.render_span( ras.num_gray_spans,
+                           ras.gray_spans,
                            ras.render_span_data );
         }
-
-        ras.skip_spans -= ras.num_gray_spans;
 
         /* ras.render_span( span->y, ras.gray_spans, count ); */
 
@@ -1119,7 +1115,6 @@
     int volatile     n, num_bands;
     TPos volatile    min, max, max_y;
     QT_FT_BBox*      clip;
-    int              skip;
     int              yindex;
 
     ras.num_gray_spans = 0;
@@ -1326,15 +1321,12 @@
       }
     }
 
-    if ( ras.render_span && ras.num_gray_spans > ras.skip_spans )
+    if ( ras.render_span )
     {
-        skip = ras.skip_spans > 0 ? ras.skip_spans : 0;
-        ras.render_span( ras.num_gray_spans - skip,
-                         ras.gray_spans + skip,
+        ras.render_span( ras.num_gray_spans,
+                         ras.gray_spans,
                          ras.render_span_data );
     }
-
-    ras.skip_spans -= ras.num_gray_spans;
 
     if ( ras.band_shoot > 8 && ras.band_size > 16 )
       ras.band_size = ras.band_size / 2;
@@ -1361,15 +1353,12 @@
 
   int gray_raster_render( const QT_FT_Raster_Params*  params )
   {
-    const QT_FT_Outline*  outline    = (const QT_FT_Outline*)params->source;
+    const QT_FT_Outline*  outline    = params->source;
     PWorker            worker;
 
 
     if ( !raster.buffer || !raster.buffer_size )
       return ErrRaster_Invalid_Argument;
-
-    if ( raster.worker )
-      raster.worker->skip_spans = params->skip_spans;
 
     /* return immediately if the outline is empty */
     if ( !outline || outline->n_points == 0 || outline->n_contours <= 0 )
@@ -1402,7 +1391,7 @@
     ras.outline   = *outline;
     ras.band_size = raster.band_size;
 
-    ras.render_span      = (QT_FT_SpanFunc)params->gray_spans;
+    ras.render_span      = params->gray_spans;
     ras.render_span_data = params->user;
 
     return gray_convert_glyph( worker );
