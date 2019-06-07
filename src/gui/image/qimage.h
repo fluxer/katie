@@ -245,6 +245,7 @@ private:
 public:
     typedef QImageData * DataPtr;
     inline DataPtr &data_ptr() { return d; }
+    inline const DataPtr &data_ptr() const { return d; }
 };
 
 Q_DECLARE_SHARED(QImage)
