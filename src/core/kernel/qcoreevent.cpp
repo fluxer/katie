@@ -258,7 +258,7 @@ QT_BEGIN_NAMESPACE
     Contructs an event object of type \a type.
 */
 QEvent::QEvent(Type type)
-    : t(type), looplevel(0), posted(false), spont(false), m_accept(true)
+    : t(type), posted(false), spont(false), m_accept(true), looplevel(0)
 {}
 
 /*!
