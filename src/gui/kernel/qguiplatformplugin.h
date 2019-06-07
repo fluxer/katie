@@ -64,40 +64,44 @@ class Q_GUI_EXPORT QGuiPlatformPlugin : public QObject, public QGuiPlatformPlugi
     Q_OBJECT
     Q_INTERFACES(QGuiPlatformPluginInterface:QFactoryInterface)
     public:
+        enum PlatformHint {
+            PH_ToolButtonStyle,
+            PH_ToolBarIconSize,
+            PH_ItemView_ActivateItemOnSingleClick
+        };
+
         explicit QGuiPlatformPlugin(QObject *parent = Q_NULLPTR);
         ~QGuiPlatformPlugin();
 
-        virtual QStringList keys() const {  return QStringList() << QLatin1String("default");  };
+        virtual QStringList keys() const;
 
         virtual QString styleName();
         virtual QPalette palette();
         virtual QString systemIconThemeName();
         virtual QStringList iconThemeSearchPaths();
-        virtual QIcon systemIcon(const QString &);
-        virtual QIcon fileSystemIcon(const QFileInfo &);
+        virtual QIcon systemIcon(const QString &name);
+        virtual QIcon fileSystemIcon(const QFileInfo &name);
 
-        enum PlatformHint { PH_ToolButtonStyle, PH_ToolBarIconSize, PH_ItemView_ActivateItemOnSingleClick };
         virtual int platformHint(PlatformHint hint);
 
+        virtual void fileDialogDelete(QFileDialog *);
+        virtual bool fileDialogSetVisible(QFileDialog *, bool);
+        virtual QDialog::DialogCode fileDialogResultCode(QFileDialog *);
+        virtual void fileDialogSetDirectory(QFileDialog *, const QString &);
+        virtual QString fileDialogDirectory(const QFileDialog *) const;
+        virtual void fileDialogSelectFile(QFileDialog *, const QString &);
+        virtual QStringList fileDialogSelectedFiles(const QFileDialog *) const;
+        virtual void fileDialogSetFilter(QFileDialog *);
+        virtual void fileDialogSetNameFilters(QFileDialog *, const QStringList &);
+        virtual void fileDialogSelectNameFilter(QFileDialog *, const QString &);
+        virtual QString fileDialogSelectedNameFilter(const QFileDialog *) const;
 
-        virtual void fileDialogDelete(QFileDialog *) {}
-        virtual bool fileDialogSetVisible(QFileDialog *, bool) { return false; }
-        virtual QDialog::DialogCode fileDialogResultCode(QFileDialog *) { return QDialog::Rejected; }
-        virtual void fileDialogSetDirectory(QFileDialog *, const QString &) {}
-        virtual QString fileDialogDirectory(const QFileDialog *) const { return QString(); }
-        virtual void fileDialogSelectFile(QFileDialog *, const QString &) {}
-        virtual QStringList fileDialogSelectedFiles(const QFileDialog *) const { return QStringList(); }
-        virtual void fileDialogSetFilter(QFileDialog *) {}
-        virtual void fileDialogSetNameFilters(QFileDialog *, const QStringList &) {}
-        virtual void fileDialogSelectNameFilter(QFileDialog *, const QString &) {}
-        virtual QString fileDialogSelectedNameFilter(const QFileDialog *) const { return QString(); }
-
-        virtual void colorDialogDelete(QColorDialog *) {}
-        virtual bool colorDialogSetVisible(QColorDialog *, bool) { return false; }
-        virtual void colorDialogSetCurrentColor(QColorDialog *, const QColor &) {}
+        virtual void colorDialogDelete(QColorDialog *);
+        virtual bool colorDialogSetVisible(QColorDialog *, bool);
+        virtual void colorDialogSetCurrentColor(QColorDialog *, const QColor &);
 };
 
-//internal
+// internal
 QGuiPlatformPlugin *qt_guiPlatformPlugin();
 
 QT_END_NAMESPACE

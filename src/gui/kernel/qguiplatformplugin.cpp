@@ -56,9 +56,6 @@ QT_BEGIN_NAMESPACE
 /*! \internal
     Return (an construct if necesseray) the Gui Platform plugin.
 
-    The plugin key to be loaded is inside the QT_PLATFORM_PLUGIN environment variable.
-    If it is not set, it will be the DESKTOP_SESSION on X11.
-
     If no plugin can be loaded, the default one is returned.
  */
 QGuiPlatformPlugin *qt_guiPlatformPlugin()
@@ -88,40 +85,69 @@ QGuiPlatformPlugin *qt_guiPlatformPlugin()
 }
 
 
-/* \class QPlatformPlugin
-    QGuiPlatformPlugin can be used to integrate Qt applications in a platform built on top of Qt.
-    The application developer should not know or use the plugin, it is only used by Qt internaly.
+/*!
+    \class QGuiPlatformPlugin
+    \brief The QGuiPlatformPlugin provides abstraction between several other
+    classes and the platform defaults
 
-    But full platform that are built on top of Qt may provide a plugin so 3rd party Qt application
-    running in the platform are integrated.
+    Applications that are built on top of Qt may provide a plugin so 3rd party
+    Qt application running in the platform are integrated and behaviour is
+    consistent across all applications. The plugin to be loaded can be
+    specified with QT_PLATFORM_PLUGIN environment variable. If it is not set,
+    DESKTOP_SESSION will be used as fallback on X11.
+
+    \sa QIcon, QFileIconProvider, QStyle
  */
 
-/*
+/*!
     The constructor can be used to install hooks in Qt
  */
-QGuiPlatformPlugin::QGuiPlatformPlugin(QObject *parent) : QObject(parent) {}
-QGuiPlatformPlugin::~QGuiPlatformPlugin() {}
+QGuiPlatformPlugin::QGuiPlatformPlugin(QObject *parent)
+    : QObject(parent)
+{
+}
 
+QGuiPlatformPlugin::~QGuiPlatformPlugin()
+{
+}
 
-/* return the string key to be used by default the application */
+/*!
+    Retuns the plugin keys, reimplementations should return keys other than
+    the default
+*/
+QStringList QGuiPlatformPlugin::keys() const
+{
+    return QStringList() << QLatin1String("default");
+};
+
+/*!
+    Returns the style string key to be used by application
+*/
 QString QGuiPlatformPlugin::styleName()
 {
     return QLatin1String("cleanlooks");
 }
 
-/* return an additional default palette  (only work on X11) */
+/*
+    returns an additional palette (only work on X11)
+*/
 QPalette QGuiPlatformPlugin::palette()
 {
     return QPalette();
 }
 
-/* the default icon theme name for QIcon::fromTheme. */
+/*!
+    Returns the icon theme name for QIcon::fromTheme.
+*/
 QString QGuiPlatformPlugin::systemIconThemeName()
 {
     return QString::fromLatin1("hicolor");
 }
 
-
+/*!
+    Returns list of system icon theme search paths. The environment
+    variable XDG_DATA_DIRS affects the behaviour of the result
+*/
 QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
 {
     QStringList paths;
@@ -145,19 +171,27 @@ QStringList QGuiPlatformPlugin::iconThemeSearchPaths()
     return paths;
 }
 
-/* backend for QIcon::fromTheme,  null icon means default */
+/*!
+    Returns system icon. If the icon returned is null (default) the
+    result from \p QIcon::fromTheme will be used instead
+*/
 QIcon QGuiPlatformPlugin::systemIcon(const QString &)
 {
     return QIcon();
 }
 
-/* backend for QFileIconProvider,  null icon means default */
+/*!
+    Returns file icon. If the icon returned is null (default) the
+    result from \p QFileIconProvider will be used instead
+*/
 QIcon QGuiPlatformPlugin::fileSystemIcon(const QFileInfo &)
 {
     return QIcon();
 }
 
-/* Like QStyle::styleHint */
+/*!
+    Like QStyle::styleHint
+*/
 int QGuiPlatformPlugin::platformHint(PlatformHint hint)
 {
     int ret = 0;
@@ -175,8 +209,68 @@ int QGuiPlatformPlugin::platformHint(PlatformHint hint)
     return ret;
 }
 
+void QGuiPlatformPlugin::fileDialogDelete(QFileDialog *)
+{
+}
+
+bool QGuiPlatformPlugin::fileDialogSetVisible(QFileDialog *, bool)
+{
+    return false;
+}
+
+QDialog::DialogCode QGuiPlatformPlugin::fileDialogResultCode(QFileDialog *)
+{
+    return QDialog::Rejected;
+}
+
+void QGuiPlatformPlugin::fileDialogSetDirectory(QFileDialog *, const QString &)
+{
+}
+
+QString QGuiPlatformPlugin::fileDialogDirectory(const QFileDialog *) const
+{
+    return QString();
+}
+
+void QGuiPlatformPlugin::fileDialogSelectFile(QFileDialog *, const QString &)
+{
+}
+
+QStringList QGuiPlatformPlugin::fileDialogSelectedFiles(const QFileDialog *) const
+{
+    return QStringList();
+}
+
+void QGuiPlatformPlugin::fileDialogSetFilter(QFileDialog *)
+{
+}
+
+void QGuiPlatformPlugin::fileDialogSetNameFilters(QFileDialog *, const QStringList &)
+{
+}
+
+void QGuiPlatformPlugin::fileDialogSelectNameFilter(QFileDialog *, const QString &)
+{
+}
+
+QString QGuiPlatformPlugin::fileDialogSelectedNameFilter(const QFileDialog *) const
+{
+    return QString();
+}
+
+void QGuiPlatformPlugin::colorDialogDelete(QColorDialog *)
+{
+}
+
+bool QGuiPlatformPlugin::colorDialogSetVisible(QColorDialog *, bool)
+{
+    return false;
+}
+
+void QGuiPlatformPlugin::colorDialogSetCurrentColor(QColorDialog *, const QColor &)
+{
+}
 
 QT_END_NAMESPACE
-
 
 #include "moc_qguiplatformplugin.h"
