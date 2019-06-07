@@ -48,7 +48,7 @@
 #include <qrasterdefs_p.h>
 #include <qpainterpath.h>
 #include <qdebug.h>
-#include <qhash.h>
+#include <qcache.h>
 #include <qlabel.h>
 #include <qbitmap.h>
 #include <qmath.h>
@@ -3506,6 +3506,10 @@ QImage QRasterBuffer::bufferImage() const
 
 class QGradientCache
 {
+public:
+    QGradientCache();
+
+private:
     struct CacheInfo
     {
         inline CacheInfo(QGradientStops s, int op, QGradient::InterpolationMode mode) :
@@ -3516,52 +3520,44 @@ class QGradientCache
         QGradient::InterpolationMode interpolationMode;
     };
 
-    typedef QMultiHash<quint64, CacheInfo> QGradientColorTableHash;
+    typedef QCache<quint64, CacheInfo> QGradientColorTableHash;
 
 public:
     inline const uint *getBuffer(const QGradient &gradient, int opacity) {
-        quint64 hash_val = 0;
+        quint64 hash_val = opacity;
 
         QGradientStops stops = gradient.stops();
         for (int i = 0; i < stops.size() && i <= 2; i++)
             hash_val += stops[i].second.rgba();
 
         QMutexLocker lock(&mutex);
-        QGradientColorTableHash::const_iterator it = cache.constFind(hash_val);
+        CacheInfo* match = cache.object(hash_val);
 
-        if (it == cache.constEnd())
+        if (!match)
             return addCacheElement(hash_val, gradient, opacity);
-        else {
-            do {
-                const CacheInfo &cache_info = it.value();
-                if (cache_info.stops == stops && cache_info.opacity == opacity && cache_info.interpolationMode == gradient.interpolationMode())
-                    return cache_info.buffer;
-                ++it;
-            } while (it != cache.constEnd() && it.key() == hash_val);
-            // an exact match for these stops and opacity was not found, create new cache
-            return addCacheElement(hash_val, gradient, opacity);
-        }
+        return match->buffer;
     }
 
     inline int paletteSize() const { return GRADIENT_STOPTABLE_SIZE; }
 protected:
-    inline int maxCacheSize() const { return 60; }
     inline void generateGradientColorTable(const QGradient& g,
                                            uint *colorTable,
                                            int size, int opacity) const;
     uint *addCacheElement(quint64 hash_val, const QGradient &gradient, int opacity) {
-        if (cache.size() == maxCacheSize()) {
-            // may remove more than 1, but OK
-            cache.erase(cache.begin() + (qrand() % maxCacheSize()));
-        }
-        CacheInfo cache_entry(gradient.stops(), opacity, gradient.interpolationMode());
-        generateGradientColorTable(gradient, cache_entry.buffer, paletteSize(), opacity);
-        return cache.insert(hash_val, cache_entry).value().buffer;
+        CacheInfo *cache_entry = new  CacheInfo(gradient.stops(), opacity, gradient.interpolationMode());
+        generateGradientColorTable(gradient, cache_entry->buffer, paletteSize(), opacity);
+        cache.insert(hash_val, cache_entry);
+        return cache_entry->buffer;
     }
 
     QGradientColorTableHash cache;
     QMutex mutex;
 };
+
+QGradientCache::QGradientCache()
+{
+    cache.setMaxCost(60);
+}
 
 void QGradientCache::generateGradientColorTable(const QGradient& gradient, uint *colorTable, int size, int opacity) const
 {
