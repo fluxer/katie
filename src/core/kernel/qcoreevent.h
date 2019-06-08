@@ -168,7 +168,7 @@ public:
 #endif
         AcceptDropsChange = 95,
 
-        GraphicsSceneMouseMove = 94,            // GraphicsView
+        GraphicsSceneMouseMove = 96,            // GraphicsView
         GraphicsSceneMousePress = 97,
         GraphicsSceneMouseRelease = 98,
         GraphicsSceneMouseDoubleClick = 99,
