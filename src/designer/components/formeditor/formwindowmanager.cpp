@@ -880,7 +880,7 @@ void FormWindowManager::slotUpdateActions()
         if (!item)
             break;
 
-        QLayout *widgetLayout = LayoutInfo::internalLayout(widget);
+        QLayout *widgetLayout = widget->layout();
         QLayout *managedLayout = LayoutInfo::managedLayout(m_core, widgetLayout);
         // We don't touch a layout createds by a custom widget
         if (widgetLayout && !managedLayout)

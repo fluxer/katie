@@ -91,7 +91,6 @@ public:
 
     static QLayout *managedLayout(const QDesignerFormEditorInterface *core, const QWidget *widget);
     static QLayout *managedLayout(const QDesignerFormEditorInterface *core, QLayout *layout);
-    static QLayout *internalLayout(const QWidget *widget);
 
     // Is it a a dummy grid placeholder created by Designer?
     static bool isEmptyItem(QLayoutItem *item);

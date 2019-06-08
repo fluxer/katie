@@ -406,7 +406,7 @@ QLayout* QDesignerPropertySheetPrivate::layout(QDesignerPropertySheetExtension *
         return 0;
 
     QWidget *widget = qobject_cast<QWidget*>(m_object);
-    QLayout *widgetLayout = qdesigner_internal::LayoutInfo::internalLayout(widget);
+    QLayout *widgetLayout = widget->layout();
     if (!widgetLayout) {
         m_lastLayout = 0;
         m_lastLayoutPropertySheet = 0;
@@ -493,9 +493,6 @@ QDesignerPropertySheet::ObjectType QDesignerPropertySheet::objectTypeFromObject(
 
     if (qobject_cast<const QLabel*>(o))
         return ObjectLabel;
-
-    if (o->inherits("Q3GroupBox"))
-        return ObjectQ3GroupBox;
 
     return ObjectNone;
 }
@@ -1247,38 +1244,14 @@ bool QDesignerPropertySheet::reset(int index)
            // special margins
             int value = -1;
             switch (d->m_objectType) {
-            case ObjectQ3GroupBox: {
-                const QWidget *w = qobject_cast<const QWidget *>(d->m_object);
-                switch (pType) {
-                case PropertyLayoutLeftMargin:
-                    value = w->style()->pixelMetric(QStyle::PM_LayoutLeftMargin);
-                    break;
-                case PropertyLayoutTopMargin:
-                    value = w->style()->pixelMetric(QStyle::PM_LayoutTopMargin);
-                    break;
-                case PropertyLayoutRightMargin:
-                    value = w->style()->pixelMetric(QStyle::PM_LayoutRightMargin);
-                    break;
-                case PropertyLayoutBottomMargin:
-                    value = w->style()->pixelMetric(QStyle::PM_LayoutBottomMargin);
-                    break;
-                case PropertyLayoutSpacing:
-                case PropertyLayoutHorizontalSpacing:
-                case PropertyLayoutVerticalSpacing:
-                    value = -1;
-                    break;
-                default:
-                    break;
-                }
-            }
-                break;
-            case ObjectLayoutWidget:
+            case ObjectLayoutWidget: {
                 if (pType == PropertyLayoutLeftMargin ||
                         pType == PropertyLayoutTopMargin ||
                         pType == PropertyLayoutRightMargin ||
                         pType == PropertyLayoutBottomMargin)
                     value = 0;
                 break;
+            }
             default:
                 break;
             }
