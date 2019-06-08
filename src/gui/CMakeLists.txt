@@ -115,7 +115,6 @@ set(GUI_PUBLIC_HEADERS
     QGroupBox
     QHeaderView
     QIcon
-    QIconDragEvent
     QIconEngine
     QIconEngineFactoryInterface
     QIconEngineFactoryInterfaceV2
@@ -296,7 +295,6 @@ set(GUI_PUBLIC_HEADERS
     QTextTableCellFormat
     QTileRules
     QToolBar
-    QToolBarChangeEvent
     QToolBox
     QToolButton
     QToolTip

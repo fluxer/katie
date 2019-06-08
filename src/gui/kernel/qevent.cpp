@@ -1169,37 +1169,6 @@ QCloseEvent::~QCloseEvent()
 }
 
 /*!
-   \class QIconDragEvent
-   \brief The QIconDragEvent class indicates that a main icon drag has begun.
-
-   \ingroup events
-
-   Icon drag events are sent to widgets when the main icon of a window
-   has been dragged away. On Mac OS X, this happens when the proxy
-   icon of a window is dragged off the title bar.
-
-   It is normal to begin using drag and drop in response to this
-   event.
-
-   \sa {Drag and Drop}, QMimeData, QDrag
-*/
-
-/*!
-    Constructs an icon drag event object with the accept flag set to
-    false.
-
-    \sa accept()
-*/
-QIconDragEvent::QIconDragEvent()
-    : QEvent(IconDrag)
-{ ignore(); }
-
-/*! \internal */
-QIconDragEvent::~QIconDragEvent()
-{
-}
-
-/*!
     \class QContextMenuEvent
     \brief The QContextMenuEvent class contains parameters that describe a context menu event.
 
@@ -2096,53 +2065,6 @@ QShowEvent::~QShowEvent()
   The encoded data is in \a f.
   Use QDropEvent::encodedData().
 */
-
-#ifndef QT_NO_TOOLBAR
-/*!
-    \internal
-    \class QToolBarChangeEvent
-    \brief The QToolBarChangeEvent class provides an event that is
-    sent whenever a the toolbar button is clicked on Mac OS X.
-
-    \ingroup events
-
-    The QToolBarChangeEvent is sent when the toolbar button is clicked. On Mac
-    OS X, this is the long oblong button on the right side of the window
-    title bar. The default implementation is to toggle the appearance (hidden or
-    shown) of the associated toolbars for the window.
-*/
-
-/*!
-    \internal
-
-    Construct a QToolBarChangeEvent given the current button state in \a state.
-*/
-QToolBarChangeEvent::QToolBarChangeEvent(bool t)
-    : QEvent(ToolBarChange), tog(t)
-{}
-
-/*! \internal
-*/
-QToolBarChangeEvent::~QToolBarChangeEvent()
-{
-}
-
-/*!
-    \fn bool QToolBarChangeEvent::toggle() const
-    \internal
-*/
-
-/*
-    \fn Qt::ButtonState QToolBarChangeEvent::state() const
-
-    Returns the keyboard modifier flags at the time of the event.
-
-    The returned value is a selection of the following values,
-    combined using the OR operator:
-    Qt::ShiftButton, Qt::ControlButton, Qt::MetaButton, and Qt::AltButton.
-*/
-
-#endif // QT_NO_TOOLBAR
 
 #ifndef QT_NO_SHORTCUT
 

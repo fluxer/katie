@@ -862,7 +862,7 @@ void QClipboard::connectNotify(const char *)
 bool QClipboard::event(QEvent *e)
 {
     if (e->type() == QEvent::Timer) {
-        QTimerEvent *te = (QTimerEvent *) e;
+        QTimerEvent *te = static_cast<QTimerEvent *>(e);
 
         if (waiting_for_data) // should never happen
             return false;
@@ -929,9 +929,9 @@ bool QClipboard::event(QEvent *e)
                           ATOM(_QT_SELECTION), ownerId, qt_x11Data->time);
         XSync(dpy, false);
 
-        XEvent event;
+        XEvent waitevent;
         // waiting until the clipboard manager fetches the content.
-        if (!qt_x11Data->clipboardWaitForEvent(ownerId, SelectionNotify, &event, 10000, true)) {
+        if (!qt_x11Data->clipboardWaitForEvent(ownerId, SelectionNotify, &waitevent, 10000, true)) {
             qWarning("QClipboard: Unable to receive an event from the "
                      "clipboard manager in a reasonable time");
         }

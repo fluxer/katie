@@ -269,14 +269,6 @@ public:
 };
 
 
-class Q_GUI_EXPORT QIconDragEvent : public QEvent
-{
-public:
-    QIconDragEvent();
-    ~QIconDragEvent();
-};
-
-
 class Q_GUI_EXPORT QShowEvent : public QEvent
 {
 public:
@@ -469,19 +461,6 @@ public:
 
     inline QAction *action() const { return act; }
     inline QAction *before() const { return bef; }
-};
-#endif
-
-#ifndef QT_NO_TOOLBAR
-class Q_GUI_EXPORT QToolBarChangeEvent : public QEvent
-{
-public:
-    QToolBarChangeEvent(bool t);
-    ~QToolBarChangeEvent();
-
-    inline bool toggle() const { return tog; }
-private:
-    bool tog;
 };
 #endif
 

@@ -7585,7 +7585,6 @@ bool QWidget::event(QEvent *event)
             d->resolvePalette();
         break;
 
-    case QEvent::ToolBarChange:
     case QEvent::ActivationChange:
     case QEvent::EnabledChange:
     case QEvent::FontChange:
@@ -7795,7 +7794,7 @@ bool QWidget::event(QEvent *event)
   The state being changed in this event can be retrieved through the \a event
   supplied.
 
-  Change events include: QEvent::ToolBarChange,
+  Change events include:
   QEvent::ActivationChange, QEvent::EnabledChange, QEvent::FontChange,
   QEvent::StyleChange, QEvent::PaletteChange,
   QEvent::WindowTitleChange, QEvent::IconTextChange,

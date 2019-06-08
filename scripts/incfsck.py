@@ -180,7 +180,6 @@ incmap = {
         'QHelpEvent': 'qevent.h',
         'QHideEvent': 'qevent.h',
         'QHoverEvent': 'qevent.h',
-        'QIconDragEvent': 'qevent.h',
         'QIconEngineFactoryInterface': 'qiconengineplugin.h',
         'QIconEngineFactoryInterfaceV2': 'qiconengineplugin.h',
         'QIconEnginePluginV2': 'qiconengineplugin.h',

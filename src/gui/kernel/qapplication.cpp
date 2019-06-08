@@ -3250,7 +3250,6 @@ bool QApplication::notify(QObject *receiver, QEvent *e)
         case QEvent::AccessibilityPrepare:
         case QEvent::LocaleChange:
         case QEvent::Style:
-        case QEvent::IconDrag:
         case QEvent::StyleChange:
         case QEvent::AccessibilityHelp:
         case QEvent::AccessibilityDescription:

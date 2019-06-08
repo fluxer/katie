@@ -176,7 +176,6 @@ public:
     bool toolBarBreak(QToolBar *toolBar) const;
     void getStyleOptionInfo(QStyleOptionToolBar *option, QToolBar *toolBar) const;
     void removeToolBar(QToolBar *toolbar);
-    void toggleToolBarsVisible();
     void moveToolBar(QToolBar *toolbar, int pos);
 #endif
 

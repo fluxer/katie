@@ -1362,13 +1362,6 @@ bool QMainWindow::event(QEvent *event)
 
 #endif
 
-#ifndef QT_NO_TOOLBAR
-        case QEvent::ToolBarChange: {
-            d->layout->toggleToolBarsVisible();
-            return true;
-        }
-#endif
-
 #ifndef QT_NO_STATUSTIP
         case QEvent::StatusTip:
 #ifndef QT_NO_STATUSBAR

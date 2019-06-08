@@ -124,7 +124,6 @@ QT_BEGIN_NAMESPACE
     \value Enter                            Mouse enters widget's boundaries.
     \value EnterEditFocus                   An editor widget gains focus for editing.
     \value EnterWhatsThisMode               Send to toplevel widgets when the application enters "What's This?" mode.
-    \value FileOpen                         File open request (QFileOpenEvent).
     \value FocusIn                          Widget gains keyboard focus (QFocusEvent).
     \value FocusOut                         Widget loses keyboard focus (QFocusEvent).
     \value FontChange                       Widget's font has changed.
@@ -143,15 +142,14 @@ QT_BEGIN_NAMESPACE
     \value GraphicsSceneMouseMove           Move mouse in a graphics scene (QGraphicsSceneMouseEvent).
     \value GraphicsSceneMousePress          Mouse press in a graphics scene (QGraphicsSceneMouseEvent).
     \value GraphicsSceneMouseRelease        Mouse release in a graphics scene (QGraphicsSceneMouseEvent).
-    \value GraphicsSceneMove          Widget was moved (QGraphicsSceneMoveEvent).
-    \value GraphicsSceneResize          Widget was resized (QGraphicsSceneResizeEvent).
+    \value GraphicsSceneMove                Graphics scene was moved (QGraphicsSceneMoveEvent).
+    \value GraphicsSceneResize              Graphics scene was resized (QGraphicsSceneResizeEvent).
     \value GraphicsSceneWheel               Mouse wheel rolled in a graphics scene (QGraphicsSceneWheelEvent).
     \value Hide                             Widget was hidden (QHideEvent).
     \value HideToParent                     A child widget has been hidden.
     \value HoverEnter                       The mouse cursor enters a hover widget (QHoverEvent).
     \value HoverLeave                       The mouse cursor leaves a hover widget (QHoverEvent).
     \value HoverMove                        The mouse cursor moves inside a hover widget (QHoverEvent).
-    \value IconDrag                         The main icon of a window has been dragged away (QIconDragEvent).
     \value IconTextChange                   Widget's icon text has been changed.
     \value KeyPress                         Key press (QKeyEvent).
     \value KeyRelease                       Key release (QKeyEvent).
@@ -191,7 +189,6 @@ QT_BEGIN_NAMESPACE
     \value StatusTip                        A status tip is requested (QStatusTipEvent).
     \value StyleChange                      Widget's style has been changed.
     \value Timer                            Regular timer events (QTimerEvent).
-    \value ToolBarChange                    The toolbar button is toggled on Mac OS X.
     \value ToolTip                          A tooltip was requested (QHelpEvent).
     \value ToolTipChange                    The widget's tooltip has changed.
     \value UngrabKeyboard                   Item loses keyboard grab (QGraphicsItem only).
@@ -233,7 +230,6 @@ QT_BEGIN_NAMESPACE
     \omitvalue AccelAvailable
     \omitvalue AccelOverride
     \omitvalue AcceptDropsChange
-    \omitvalue CaptionChange
     \omitvalue ChildInsertedRequest
     \omitvalue ChildInserted
     \omitvalue Create
@@ -247,8 +243,6 @@ QT_BEGIN_NAMESPACE
     \omitvalue Speech
     \omitvalue Style
     \omitvalue ThreadChange
-    \omitvalue ApplicationActivated
-    \omitvalue ApplicationDeactivated
     \omitvalue NetworkReplyUpdated
     \omitvalue FutureCallOut
     \omitvalue NativeGesture

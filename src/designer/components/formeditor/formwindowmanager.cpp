@@ -187,7 +187,6 @@ bool FormWindowManager::eventFilter(QObject *o, QEvent *e)
     case QEvent::StatusTip:
     case QEvent::StyleChange:
     case QEvent::Timer:
-    case QEvent::ToolBarChange:
     case QEvent::ToolTip:
     case QEvent::WhatsThis:
     case QEvent::WhatsThisClicked:
