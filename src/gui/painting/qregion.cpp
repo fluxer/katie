@@ -671,13 +671,12 @@ bool QRegion::intersects(const QRegion &region) const
     if (rectCount() == 1 && region.rectCount() == 1)
         return true;
 
-    const QVector<QRect> myRects = rects();
-    const QVector<QRect> otherRects = region.rects();
-
-    for (QVector<QRect>::const_iterator i1 = myRects.constBegin(); i1 < myRects.constEnd(); ++i1)
-        for (QVector<QRect>::const_iterator i2 = otherRects.constBegin(); i2 < otherRects.constEnd(); ++i2)
-            if (rect_intersects(*i1, *i2))
+    foreach (const QRect i1, rects()) {
+        foreach (const QRect i2, region.rects()) {
+            if (rect_intersects(i1, i2))
                 return true;
+        }
+    }
     return false;
 }
 
@@ -942,8 +941,8 @@ struct Segment
         }
     }
 
-    int horizontal : 1;
-    bool added : 1;
+    bool horizontal;
+    bool added;
 
     QPoint point;
     Segment *prev;
@@ -4280,10 +4279,10 @@ bool QRegion::intersects(const QRect &rect) const
     if (d->qt_rgn->numRects == 1)
         return true;
 
-    const QVector<QRect> myRects = rects();
-    for (QVector<QRect>::const_iterator it = myRects.constBegin(); it < myRects.constEnd(); ++it)
-        if (rect_intersects(r, *it))
+    foreach (const QRect it, rects()) {
+        if (rect_intersects(r, it))
             return true;
+    }
     return false;
 }
 #endif
