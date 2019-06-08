@@ -550,7 +550,6 @@ void QPainterPath::detach_helper()
 void QPainterPath::ensureData_helper()
 {
     QPainterPathPrivate *data = new QPainterPathData;
-    data->elements.reserve(16);
     QPainterPath::Element e = { 0, 0, QPainterPath::MoveToElement };
     data->elements << e;
     d_ptr.reset(data);
@@ -995,7 +994,7 @@ void QPainterPath::addRect(const QRectF &r)
 
     bool first = d_func()->elements.size() < 2;
 
-    d_func()->elements.reserve(d_func()->elements.size() + 5);
+    d_func()->elements.reserve(d_func()->elements.size() + 4);
     moveTo(r.x(), r.y());
 
     Element l1 = { r.x() + r.width(), r.y(), LineToElement };
@@ -1079,7 +1078,7 @@ void QPainterPath::addEllipse(const QRectF &boundingRect)
 
     Q_D(QPainterPath);
     bool first = d_func()->elements.size() < 2;
-    d->elements.reserve(d->elements.size() + 13);
+    d->elements.reserve(d->elements.size() + 12);
 
     QPointF pts[12];
     int point_count;
@@ -1257,7 +1256,7 @@ void QPainterPath::addRegion(const QRegion &region)
     detach();
 
     QVector<QRect> rects = region.rects();
-    d_func()->elements.reserve(rects.size() * 5);
+    d_func()->elements.reserve(d_func()->elements.size() + rects.size());
     for (int i=0; i<rects.size(); ++i)
         addRect(rects.at(i));
 }
@@ -1529,7 +1528,6 @@ QList<QPolygonF> QPainterPath::toSubpathPolygons(const QTransform &matrix) const
             if (current.size() > 1)
                 flatCurves += current;
             current.clear();
-            current.reserve(16);
             current += QPointF(e.x, e.y) * matrix;
             break;
         case QPainterPath::LineToElement:
