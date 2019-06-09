@@ -310,7 +310,7 @@ macro(KATIE_TEST TESTNAME TESTSOURCES)
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}
+        COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME} -tickcounter
     )
 endmacro()
 
@@ -333,7 +333,7 @@ macro(KATIE_GUI_TEST TESTNAME TESTSOURCES)
 
     add_test(
         NAME ${TESTNAME}
-        COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}
+        COMMAND ${CMAKE_BINARY_DIR}/runtest.sh ${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME} -tickcounter
     )
 endmacro()
 

@@ -7,5 +7,10 @@ export QTDIR="@CMAKE_SOURCE_DIR@"
 export QT_PLUGIN_PATH="@CMAKE_BINARY_DIR@/plugins"
 export QML_IMPORT_PATH="@CMAKE_BINARY_DIR@/imports"
 
-cd "$(dirname "$1")"
-exec "./$(basename "$1")"
+bin="$1"
+shift
+
+export CTEST_OUTPUT_ON_FAILURE=1
+
+cd "$(dirname "$bin")"
+exec "./$(basename "$bin")" $@
