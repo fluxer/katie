@@ -1862,7 +1862,7 @@ QByteArray &QByteArray::replace(int pos, int len, const QByteArray &after)
 */
 QByteArray &QByteArray::replace(int pos, int len, const char *after)
 {
-    return replace(pos,len,after,qstrlen(after));
+    return replace(pos,len, after, qstrlen(after));
 }
 
 /*! \fn QByteArray &QByteArray::replace(int pos, int len, const char *after, int alen)
@@ -1904,11 +1904,7 @@ QByteArray &QByteArray::replace(const QByteArray &before, const QByteArray &afte
     if (isNull() || before.d == after.d)
         return *this;
 
-    QByteArray aft = after;
-    if (after.d == d)
-        aft.detach();
-    
-    return replace(before.constData(), before.size(), aft.constData(), aft.size());
+    return replace(before.constData(), before.size(), after.constData(), after.size());
 }
 
 /*!
@@ -1921,11 +1917,7 @@ QByteArray &QByteArray::replace(const QByteArray &before, const QByteArray &afte
 
 QByteArray &QByteArray::replace(const char *c, const QByteArray &after)
 {
-    QByteArray aft = after;
-    if (after.d == d)
-        aft.detach();
-    
-    return replace(c, qstrlen(c), aft.constData(), aft.size());
+    return replace(c, qstrlen(c), after.constData(), after.size());
 }
 
 /*!
