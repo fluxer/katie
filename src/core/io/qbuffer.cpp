@@ -60,7 +60,7 @@ public:
 
     QByteArray *buf;
     QByteArray defaultBuf;
-    int ioIndex;
+    qint64 ioIndex;
 
     virtual qint64 peek(char *data, qint64 maxSize);
     virtual QByteArray peek(qint64 maxSize);
@@ -372,10 +372,10 @@ bool QBuffer::seek(const qint64 pos)
             return false;
         }
     } else if (pos > d->buf->size() || pos < 0) {
-        qWarning("QBuffer::seek: Invalid pos: %d", int(pos));
+        qWarning("QBuffer::seek: Invalid pos: %d", pos);
         return false;
     }
-    d->ioIndex = int(pos);
+    d->ioIndex = pos;
     return QIODevice::seek(pos);
 }
 
@@ -388,7 +388,7 @@ bool QBuffer::canReadLine() const
         return false;
 
     Q_D(const QBuffer);
-    return d->buf->indexOf('\n', int(pos())) != -1 || QIODevice::canReadLine();
+    return d->buf->indexOf('\n', pos()) != -1 || QIODevice::canReadLine();
 }
 
 /*!
@@ -397,10 +397,10 @@ bool QBuffer::canReadLine() const
 qint64 QBuffer::readData(char *data, qint64 len)
 {
     Q_D(QBuffer);
-    if ((len = qMin(len, qint64(d->buf->size()) - d->ioIndex)) <= 0)
+    if ((len = qMin(len, d->buf->size() - d->ioIndex)) <= 0)
         return qint64(0);
     memcpy(data, d->buf->constData() + d->ioIndex, len);
-    d->ioIndex += int(len);
+    d->ioIndex += len;
     return len;
 }
 
@@ -410,9 +410,9 @@ qint64 QBuffer::readData(char *data, qint64 len)
 qint64 QBuffer::writeData(const char *data, qint64 len)
 {
     Q_D(QBuffer);
-    const int extraBytes = d->ioIndex + len - d->buf->size();
+    const qint64 extraBytes = d->ioIndex + len - d->buf->size();
     if (extraBytes > 0) { // overflow
-        const int newSize = d->buf->size() + extraBytes;
+        const qint64 newSize = d->buf->size() + extraBytes;
         d->buf->resize(newSize);
         if (d->buf->size() != newSize) { // could not resize
             qWarning("QBuffer::writeData: Memory allocation error");
@@ -420,8 +420,8 @@ qint64 QBuffer::writeData(const char *data, qint64 len)
         }
     }
 
-    memcpy(d->buf->data() + d->ioIndex, data, int(len));
-    d->ioIndex += int(len);
+    memcpy(d->buf->data() + d->ioIndex, data, len);
+    d->ioIndex += len;
 
 #ifndef QT_NO_QOBJECT
     d->writtenSinceLastEmit += len;
