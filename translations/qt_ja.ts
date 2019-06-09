@@ -180,7 +180,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>メインウィンドウをアクティブにする</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+230"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>実行可能ファイル &apos;%1&apos; には Qt %2 が必要です。Qt %3 が見つかりました。</translation>
     </message>
@@ -190,7 +190,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>互換性のないQtライブラリエラー</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1904"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1891"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -2079,7 +2079,7 @@ Do you want to delete it anyway?</source>
         <translation>&lt;b&gt;ファイル名 &quot;%1&quot; は使用できません。&lt;/b&gt;&lt;p&gt;名前を短くしたり、アクセント記号などを削除して再度試してください。</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+252"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+244"/>
         <source>Computer</source>
         <translation>コンピュータ</translation>
     </message>
@@ -2362,7 +2362,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QFormBuilder</name>
     <message>
-        <location filename="../src/uitools/properties_p.h" line="+129"/>
+        <location filename="../src/uitools/properties_p.h" line="+121"/>
         <source>The enumeration-value &apos;%1&apos; is invalid. The default value &apos;%2&apos; will be used instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2530,7 +2530,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QHostInfo</name>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+109"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+101"/>
         <source>Unknown error</source>
         <translation>未知のエラー</translation>
     </message>
@@ -3246,17 +3246,7 @@ Do you want to delete it anyway?</source>
 <context>
     <name>QMessageBox</name>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+1485"/>
-        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+30"/>
-        <source>About Qt</source>
-        <translation>Qt について</translation>
-    </message>
-    <message>
-        <location line="-1390"/>
+        <location filename="../src/gui/dialogs/qmessagebox.cpp" line="+125"/>
         <source>Show Details...</source>
         <translation>詳細を表示...</translation>
     </message>
@@ -3266,9 +3256,19 @@ Do you want to delete it anyway?</source>
         <translation>詳細を隠す...</translation>
     </message>
     <message>
-        <location line="+1355"/>
-        <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;Qt について&lt;/h3&gt;&lt;p&gt;このプログラムは Qt バージョン %1 を使用しています。&lt;/p&gt;</translation>
+        <location line="+1351"/>
+        <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>&lt;p&gt;Katie is a C++ toolkit derived from the Qt 4.8 framework.&lt;/p&gt;&lt;p&gt;Katie is available under two different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Katie licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Katie licensed under the GNU LGPL version 2.1 is appropriate for the development of applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Copyright (C) %2 Ivailo Monev&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>About Katie</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5045,7 +5045,7 @@ Please choose a different file name.</source>
         <translation>%1: 0より小さいサイズの共有メモリは作成できません</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+137"/>
         <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: ロックできません</translation>
@@ -6897,7 +6897,7 @@ Please choose a different file name.</source>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5290"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
         <source>*</source>
         <translation>*</translation>
     </message>

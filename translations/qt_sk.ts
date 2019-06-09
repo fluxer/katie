@@ -178,7 +178,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Aktivuje hlavné okno programu</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qmessagebox.h" line="+238"/>
+        <location filename="../src/gui/dialogs/qmessagebox.h" line="+230"/>
         <source>Executable &apos;%1&apos; requires Qt %2, found Qt %3.</source>
         <translation>Program &apos;%1&apos; vyžaduje Qt %2, nájdené Qt %3.</translation>
     </message>
@@ -188,7 +188,7 @@ This indicates an inconsistency in the ui-file.</source>
         <translation>Chyba kompatibility knižnice Qt</translation>
     </message>
     <message>
-        <location filename="../src/gui/kernel/qapplication.cpp" line="+1904"/>
+        <location filename="../src/gui/kernel/qapplication.cpp" line="+1891"/>
         <source>QT_LAYOUT_DIRECTION</source>
         <comment>Translate this string to the string &apos;LTR&apos; in left-to-right languages or to &apos;RTL&apos; in right-to-left languages (such as Hebrew and Arabic) to get proper widget layout.</comment>
         <translation>LTR</translation>
@@ -2077,7 +2077,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Dátum úpravy</translation>
     </message>
     <message>
-        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+252"/>
+        <location filename="../src/gui/dialogs/qfilesystemmodel_p.h" line="+244"/>
         <source>Computer</source>
         <translation>Počítač</translation>
     </message>
@@ -2360,7 +2360,7 @@ Chcete ho aj tak zmazať?</translation>
 <context>
     <name>QFormBuilder</name>
     <message>
-        <location filename="../src/uitools/properties_p.h" line="+129"/>
+        <location filename="../src/uitools/properties_p.h" line="+121"/>
         <source>The enumeration-value &apos;%1&apos; is invalid. The default value &apos;%2&apos; will be used instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2533,7 +2533,7 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Nezadaný názov hostiteľa</translation>
     </message>
     <message>
-        <location filename="../src/network/kernel/qhostinfo_p.h" line="+109"/>
+        <location filename="../src/network/kernel/qhostinfo_p.h" line="+101"/>
         <source>Unknown error</source>
         <translation>Neznáma chyba</translation>
     </message>
@@ -3253,19 +3253,19 @@ Chcete ho aj tak zmazať?</translation>
         <translation>Skryť detaily…</translation>
     </message>
     <message>
-        <location line="+1355"/>
-        <source>&lt;h3&gt;About Qt&lt;/h3&gt;&lt;p&gt;This program uses Qt version %1.&lt;/p&gt;</source>
-        <translation>&lt;h3&gt;O Qt&lt;/h3&gt;&lt;p&gt;Tento program používa Qt verziu %1.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>&lt;p&gt;Qt is a C++ toolkit for cross-platform application development.&lt;/p&gt;&lt;p&gt;Qt provides single-source portability across all major desktop operating systems. It is also available for embedded Linux and other embedded and mobile operating systems.&lt;/p&gt;&lt;p&gt;Qt is available under three different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Qt licensed under our commercial license agreement is appropriate for development of proprietary/commercial software where you do not want to share any source code with third parties or otherwise cannot comply with the terms of the GNU LGPL version 3 or GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Qt licensed under the GNU LGPL version 2.1 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Please see &lt;a href=&quot;http://%2/&quot;&gt;%2&lt;/a&gt; for an overview of Qt licensing.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;Qt is The Qt Company Ltd product developed as an open source project. See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <location line="+1351"/>
+        <source>&lt;h3&gt;About Katie&lt;/h3&gt;&lt;p&gt;This program uses Katie version %1.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
-        <source>About Qt</source>
-        <translation>O Qt</translation>
+        <location line="+4"/>
+        <source>&lt;p&gt;Katie is a C++ toolkit derived from the Qt 4.8 framework.&lt;/p&gt;&lt;p&gt;Katie is available under two different licensing options designed to accommodate the needs of our various users.&lt;/p&gt;&lt;p&gt;Katie licensed under the GNU LGPL version 3 is appropriate for the development of Qt&amp;nbsp;applications provided you can comply with the terms and conditions of the GNU LGPL version 3.&lt;/p&gt;&lt;p&gt;Katie licensed under the GNU LGPL version 2.1 is appropriate for the development of applications provided you can comply with the terms and conditions of the GNU LGPL version 2.1.&lt;/p&gt;&lt;p&gt;Copyright (C) %1 The Qt Company Ltd and other contributors.&lt;/p&gt;&lt;p&gt;Copyright (C) %2 Ivailo Monev&lt;/p&gt;&lt;p&gt;Qt and the Qt logo are trademarks of The Qt Company Ltd.&lt;/p&gt;&lt;p&gt;See &lt;a href=&quot;http://%3/&quot;&gt;%3&lt;/a&gt; for more information.&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>About Katie</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5041,7 +5041,7 @@ Má sa prepísať?</translation>
         <translation>%1: vytvorená veľkosť je menšia než 0</translation>
     </message>
     <message>
-        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+145"/>
+        <location filename="../src/core/kernel/qsharedmemory_p.h" line="+137"/>
         <location filename="../src/core/kernel/qsharedmemory.cpp" line="+173"/>
         <source>%1: unable to lock</source>
         <translation>%1: nedá sa zamknúť</translation>
@@ -6891,7 +6891,7 @@ Má sa prepísať?</translation>
 <context>
     <name>QWidget</name>
     <message>
-        <location filename="../src/gui/kernel/qwidget.cpp" line="+5290"/>
+        <location filename="../src/gui/kernel/qwidget.cpp" line="+5283"/>
         <source>*</source>
         <translation>*</translation>
     </message>

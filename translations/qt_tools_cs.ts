@@ -843,7 +843,7 @@ Options:
     </message>
     <message>
         <location filename="../src/tools/qtconfig/mainwindow.ui"/>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+757"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="+759"/>
         <location line="+1"/>
         <location line="+7"/>
         <source>Qt Configuration</source>
@@ -1175,17 +1175,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location/>
-        <source>About &amp;Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location/>
-        <source>About Qt</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-690"/>
+        <location filename="../src/tools/qtconfig/mainwindow.cpp" line="-692"/>
         <source>&lt;p&gt;&lt;b&gt;&lt;font size+=2&gt;Appearance&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p&gt;Use this tab to customize the appearance of your Qt applications.&lt;/p&gt;&lt;p&gt;You can select the default GUI Style from the drop down list and customize the colors.&lt;/p&gt;&lt;p&gt;Any GUI Style plugins in your plugin path will automatically be added to the list of built-in Qt styles. (See the Library Paths tab for information on adding new plugin paths.)&lt;/p&gt;&lt;p&gt;When you choose 3-D Effects and Window Background colors, the Qt Configuration program will automatically generate a palette for you. To customize colors further, press the Tune Palette button to open the advanced palette editor.&lt;p&gt;The Preview Window shows what the selected Style and colors look like.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1241,17 +1231,27 @@ Options:
     </message>
     <message>
         <location line="+15"/>
-        <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;br/&gt;Version %2&lt;br/&gt;&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.</source>
+        <source>&lt;h3&gt;%1&lt;/h3&gt;&lt;br/&gt;Version %2&lt;br/&gt;&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;br/&gt;&lt;br/&gt;Copyright (C) 2016-2019 Ivailo Monev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+32"/>
         <source>Save Changes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Save changes to settings?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/tools/qtconfig/mainwindow.ui"/>
+        <source>About &amp;Katie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location/>
+        <source>About Katie</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1728,7 +1728,7 @@ Options:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+122"/>
         <location line="+1"/>
         <source>D-Bus Viewer</source>
         <translation type="unfinished"></translation>
@@ -1739,16 +1739,6 @@ Options:
     <message>
         <location filename="../src/tools/designer/qdesigner.cpp" line="+132"/>
         <source>%1 - warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+70"/>
-        <source>Qt Designer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>This application cannot be used for the Console edition of Qt</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1874,7 +1864,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <location line="-565"/>
-        <source>About Qt</source>
+        <source>About Katie</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2260,7 +2250,7 @@ Would you like to retry?</source>
     </message>
     <message>
         <location line="+4"/>
-        <source>About &amp;Qt</source>
+        <source>About &amp;Katie</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2516,7 +2506,7 @@ Do you want overwrite the template?</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>%1&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.</source>
+        <source>%1&lt;br/&gt;Copyright (C) 2015 The Qt Company Ltd.&lt;br/&gt;Copyright (C) 2016-2019 Ivailo Monev</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
