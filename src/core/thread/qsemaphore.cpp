@@ -44,8 +44,6 @@
 #ifndef QT_NO_THREAD
 #include "qmutex.h"
 #include "qwaitcondition.h"
-#include "qelapsedtimer.h"
-#include "qdatetime.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -220,12 +218,8 @@ bool QSemaphore::tryAcquire(int n, int timeout)
         while (n > d->avail)
             d->cond.wait(locker.mutex());
     } else {
-        QElapsedTimer timer;
-        timer.start();
         while (n > d->avail) {
-            const qint64 elapsed = timer.elapsed();
-            if (timeout - elapsed <= 0
-                || !d->cond.wait(locker.mutex(), timeout - elapsed))
+            if (!d->cond.wait(locker.mutex(), timeout))
                 return false;
         }
     }
