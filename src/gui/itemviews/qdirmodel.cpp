@@ -78,8 +78,8 @@ public:
         QDirNode *parent;
         QFileInfo info;
         QIcon icon; // cache the icon
-        mutable QVector<QDirNode> children;
-        mutable bool populated; // have we read the children
+        QVector<QDirNode> children;
+        bool populated; // have we read the children
         mutable bool stat;
     };
 
@@ -114,7 +114,7 @@ public:
 
     inline QDirNode *node(const QModelIndex &index) const;
     inline void populate(QDirNode *parent) const;
-    inline void clear(QDirNode *parent) const;
+    inline void clear(QDirNode *parent);
 
     void invalidate();
 
@@ -163,7 +163,7 @@ void QDirModelPrivate::populate(QDirNode *parent) const
     parent->populated = true;
 }
 
-void QDirModelPrivate::clear(QDirNode *parent) const
+void QDirModelPrivate::clear(QDirNode *parent)
 {
      Q_ASSERT(parent);
      parent->children.clear();
@@ -1119,7 +1119,7 @@ void QDirModelPrivate::init()
 QDirModelPrivate::QDirNode *QDirModelPrivate::node(int row, QDirNode *parent) const
 {
     if (row < 0)
-	return 0;
+        return 0;
 
     bool isDir = !parent || parent->info.isDir();
     QDirNode *p = (parent ? parent : &root);
