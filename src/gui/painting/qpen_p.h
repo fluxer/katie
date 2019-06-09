@@ -59,7 +59,7 @@ public:
     Qt::PenStyle style;
     Qt::PenCapStyle capStyle;
     Qt::PenJoinStyle joinStyle;
-    mutable QVector<qreal> dashPattern;
+    QVector<qreal> dashPattern;
     qreal dashOffset;
     qreal miterLimit;
     bool cosmetic;

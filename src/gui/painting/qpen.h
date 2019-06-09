@@ -109,7 +109,7 @@ private:
     friend Q_GUI_EXPORT QDataStream &operator<<(QDataStream &, const QPen &);
 
     void detach();
-    class QPenPrivate *d;
+    QPenPrivate *d;
 
 public:
     typedef QPenPrivate * DataPtr;

@@ -228,8 +228,7 @@ QT_BEGIN_NAMESPACE
 */
 inline QPenPrivate::QPenPrivate(const QBrush &_brush, qreal _width, Qt::PenStyle penStyle,
                                 Qt::PenCapStyle _capStyle, Qt::PenJoinStyle _joinStyle)
-    : dashOffset(0), miterLimit(2),
-      cosmetic(false)
+    : dashOffset(0), miterLimit(2), cosmetic(false)
 {
     ref = 1;
     width = _width;
@@ -428,8 +427,33 @@ void QPen::setStyle(Qt::PenStyle s)
         return;
     detach();
     d->style = s;
-    d->dashPattern.clear();
     d->dashOffset = 0;
+
+    static const qreal space = 2;
+    static const qreal dot = 1;
+    static const qreal dash = 4;
+
+    switch (d->style) {
+        case Qt::DashLine: {
+            d->dashPattern << dash << space;
+            break;
+        }
+        case Qt::DotLine: {
+            d->dashPattern << dot << space;
+            break;
+        }
+        case Qt::DashDotLine: {
+            d->dashPattern << dash << space << dot << space;
+            break;
+        }
+        case Qt::DashDotDotLine: {
+            d->dashPattern << dash << space << dot << space << dot << space;
+            break;
+        }
+        default: {
+            break;
+        }
+    }
 }
 
 /*!
@@ -441,27 +465,6 @@ QVector<qreal> QPen::dashPattern() const
 {
     if (d->style == Qt::SolidLine || d->style == Qt::NoPen) {
         return QVector<qreal>();
-    } else if (d->dashPattern.isEmpty()) {
-        const qreal space = 2;
-        const qreal dot = 1;
-        const qreal dash = 4;
-
-        switch (d->style) {
-        case Qt::DashLine:
-            d->dashPattern << dash << space;
-            break;
-        case Qt::DotLine:
-            d->dashPattern << dot << space;
-            break;
-        case Qt::DashDotLine:
-            d->dashPattern << dash << space << dot << space;
-            break;
-        case Qt::DashDotDotLine:
-            d->dashPattern << dash << space << dot << space << dot << space;
-            break;
-        default:
-            break;
-        }
     }
     return d->dashPattern;
 }
@@ -505,7 +508,7 @@ void QPen::setDashPattern(const QVector<qreal> &pattern)
     d->dashPattern = pattern;
     d->style = Qt::CustomDashLine;
 
-    if ((d->dashPattern.size() % 2) == 1) {
+    if (Q_UNLIKELY((d->dashPattern.size() % 2) == 1)) {
         qWarning("QPen::setDashPattern: Pattern not of even length");
         d->dashPattern << 1;
     }
@@ -627,7 +630,7 @@ qreal QPen::widthF() const
 */
 void QPen::setWidth(int width)
 {
-    if (width < 0)
+    if (Q_UNLIKELY(width < 0))
         qWarning("QPen::setWidth: Setting a pen width with a negative value is not defined");
     if ((qreal)width == d->width)
         return;
@@ -651,7 +654,7 @@ void QPen::setWidth(int width)
 
 void QPen::setWidthF(qreal width)
 {
-    if (width < 0.f)
+    if (Q_UNLIKELY(width < 0.f))
         qWarning("QPen::setWidthF: Setting a pen width with a negative value is not defined");
     if (qAbs(d->width - width) < 0.00000001f)
         return;
@@ -950,7 +953,7 @@ QDataStream &operator>>(QDataStream &s, QPen &p)
 QDebug operator<<(QDebug dbg, const QPen &p)
 {
 #ifndef Q_BROKEN_DEBUG_STREAM
-    const char *PEN_STYLES[] = {
+    static const char *PEN_STYLES[] = {
         "NoPen",
         "SolidLine",
         "DashLine",
