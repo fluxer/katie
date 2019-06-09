@@ -409,31 +409,6 @@ void QRasterPaintEngine::updateMatrix(const QTransform &matrix)
     QRasterPaintEngineState *s = state();
     // FALCON: get rid of this line, see drawImage call below.
     s->matrix = matrix;
-    QTransform::TransformationType txop = s->matrix.type();
-
-    switch (txop) {
-
-    case QTransform::TxNone:
-        s->flags.int_xform = true;
-        break;
-
-    case QTransform::TxTranslate:
-        s->flags.int_xform = qreal(int(s->matrix.dx())) == s->matrix.dx()
-                            && qreal(int(s->matrix.dy())) == s->matrix.dy();
-        break;
-
-    case QTransform::TxScale:
-        s->flags.int_xform = qreal(int(s->matrix.dx())) == s->matrix.dx()
-                            && qreal(int(s->matrix.dy())) == s->matrix.dy()
-                            && qreal(int(s->matrix.m11())) == s->matrix.m11()
-                            && qreal(int(s->matrix.m22())) == s->matrix.m22();
-        break;
-
-    default: // shear / perspective...
-        s->flags.int_xform = false;
-        break;
-    }
-
     s->flags.tx_noshear = qt_scaleForTransform(s->matrix, &s->txscale);
 
     ensureOutlineMapper();
@@ -462,7 +437,6 @@ QRasterPaintEngineState::QRasterPaintEngineState()
     flags.antialiased = false;
     flags.bilinear = false;
     flags.fast_text = true;
-    flags.int_xform = true;
     flags.tx_noshear = true;
 
     clip = 0;
@@ -484,7 +458,7 @@ QRasterPaintEngineState::QRasterPaintEngineState(QRasterPaintEngineState &s)
     , txscale(s.txscale)
     , clip(s.clip)
     , dirty(s.dirty)
-    , flag_bits(s.flag_bits)
+    , flags(s.flags)
 {
     brushData.tempImage = 0;
     penData.tempImage = 0;

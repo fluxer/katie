@@ -74,11 +74,11 @@ public:
     QPen lastPen;
     QSpanData penData;
     QStrokerOps *stroker;
-    uint strokeFlags;
+    QPaintEngine::DirtyFlags strokeFlags;
 
     QBrush lastBrush;
     QSpanData brushData;
-    uint fillFlags;
+    QPaintEngine::DirtyFlags fillFlags;
 
     int intOpacity;
 
@@ -91,22 +91,18 @@ public:
 //     QPainter::RenderHints hints;
 //     QPainter::CompositionMode compositionMode;
 
-    uint dirty;
+    QPaintEngine::DirtyFlags dirty;
 
     struct Flags {
-        uint has_clip_ownership : 1;        // should delete the clip member..
-        uint non_complex_pen : 1;           // can use rasterizer, rather than stroker
-        uint antialiased : 1;
-        uint bilinear : 1;
-        uint fast_text : 1;
-        uint int_xform : 1;
-        uint tx_noshear : 1;
+        bool has_clip_ownership;        // should delete the clip member..
+        bool non_complex_pen;           // can use rasterizer, rather than stroker
+        bool antialiased;
+        bool bilinear;
+        bool fast_text;
+        bool tx_noshear;
     };
 
-    union {
-        Flags flags;
-        uint flag_bits;
-    };
+    Flags flags;
 };
 
 
