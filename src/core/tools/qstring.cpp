@@ -1600,8 +1600,7 @@ QString &QString::remove(QChar ch, Qt::CaseSensitivity cs)
 */
 QString &QString::replace(int pos, int len, const QString &after)
 {
-    QString copy = after;
-    return replace(pos, len, copy.constData(), copy.length());
+    return replace(pos, len, after.constData(), after.length());
 }
 
 /*!
