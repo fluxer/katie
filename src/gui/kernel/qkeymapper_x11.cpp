@@ -602,7 +602,7 @@ static const unsigned int KeyTbl[] = {
     XK_dead_horn,               Qt::Key_Dead_Horn,
 
     // Special keys from X.org - This include multimedia keys,
-	// wireless/bluetooth/uwb keys, special launcher keys, etc.
+    // wireless/bluetooth/uwb keys, special launcher keys, etc.
     XF86XK_Back,                Qt::Key_Back,
     XF86XK_Forward,             Qt::Key_Forward,
     XF86XK_Stop,                Qt::Key_Stop,
@@ -622,7 +622,7 @@ static const unsigned int KeyTbl[] = {
     XF86XK_AudioRecord,         Qt::Key_MediaRecord,
     XF86XK_Mail,                Qt::Key_LaunchMail,
     XF86XK_MyComputer,          Qt::Key_Launch0,  // ### Qt 5: remap properly
-    XF86XK_Calculator,          Qt::Key_Launch1,
+    XF86XK_Calculator,          Qt::Key_Calculator,
     XF86XK_Memo,                Qt::Key_Memo,
     XF86XK_ToDoList,            Qt::Key_ToDoList,
     XF86XK_Calendar,            Qt::Key_Calendar,
@@ -720,22 +720,23 @@ static const unsigned int KeyTbl[] = {
     XF86XK_Bluetooth,           Qt::Key_Bluetooth,
     XF86XK_Suspend,             Qt::Key_Suspend,
     XF86XK_Hibernate,           Qt::Key_Hibernate,
-    XF86XK_Launch0,             Qt::Key_Launch2, // ### Qt 5: remap properly
-    XF86XK_Launch1,             Qt::Key_Launch3,
-    XF86XK_Launch2,             Qt::Key_Launch4,
-    XF86XK_Launch3,             Qt::Key_Launch5,
-    XF86XK_Launch4,             Qt::Key_Launch6,
-    XF86XK_Launch5,             Qt::Key_Launch7,
-    XF86XK_Launch6,             Qt::Key_Launch8,
-    XF86XK_Launch7,             Qt::Key_Launch9,
-    XF86XK_Launch8,             Qt::Key_LaunchA,
-    XF86XK_Launch9,             Qt::Key_LaunchB,
-    XF86XK_LaunchA,             Qt::Key_LaunchC,
-    XF86XK_LaunchB,             Qt::Key_LaunchD,
-    XF86XK_LaunchC,             Qt::Key_LaunchE,
-    XF86XK_LaunchD,             Qt::Key_LaunchF,
-    XF86XK_LaunchE,             Qt::Key_LaunchG,
-    XF86XK_LaunchF,             Qt::Key_LaunchH,
+    XF86XK_Launch0,             Qt::Key_Launch0,
+    XF86XK_Launch1,             Qt::Key_Launch1,
+    XF86XK_Launch2,             Qt::Key_Launch2,
+    XF86XK_Launch3,             Qt::Key_Launch3,
+    XF86XK_Launch4,             Qt::Key_Launch4,
+    XF86XK_Launch5,             Qt::Key_Launch5,
+    XF86XK_Launch6,             Qt::Key_Launch6,
+    XF86XK_Launch7,             Qt::Key_Launch7,
+    XF86XK_Launch8,             Qt::Key_Launch8,
+    XF86XK_Launch9,             Qt::Key_Launch9,
+    XF86XK_LaunchA,             Qt::Key_LaunchA,
+    XF86XK_LaunchB,             Qt::Key_LaunchB,
+    XF86XK_LaunchC,             Qt::Key_LaunchC,
+    XF86XK_LaunchD,             Qt::Key_LaunchD,
+    XF86XK_LaunchE,             Qt::Key_LaunchE,
+    XF86XK_LaunchF,             Qt::Key_LaunchF,
+    // XF86XK_LaunchH,             Qt::Key_LaunchH,
 
     0,                          0
 };
@@ -908,11 +909,11 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
             code = directionKeyEvent;
             text = QString();
             directionKeyEvent = 0;
-	    lastWinId = 0;
+            lastWinId = 0;
             return true;
         } else {
             directionKeyEvent = 0;
-	    lastWinId = 0;
+            lastWinId = 0;
         }
     }
 
@@ -935,12 +936,12 @@ bool QKeyMapperPrivate::translateKeyEventInternal(QWidget *keyWidget,
     if (statefulTranslation && qt_use_rtl_extensions && type == QEvent::KeyPress) {
         if (keysym == XK_Control_L || keysym == XK_Control_R
             || keysym == XK_Shift_L || keysym == XK_Shift_R) {
-	    if (!directionKeyEvent) {
-		directionKeyEvent = keysym;
-		// This code exists in order to check that
-		// the event is occurred in the same widget.
-		lastWinId = keyWidget->internalWinId();
-	    }
+            if (!directionKeyEvent) {
+                directionKeyEvent = keysym;
+                // This code exists in order to check that
+                // the event is occurred in the same widget.
+                lastWinId = keyWidget->internalWinId();
+            }
         } else {
             // this can no longer be a direction-changing accel.
             // if any other key was pressed.

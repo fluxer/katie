@@ -175,10 +175,6 @@ QPixmap QDragManager::dragCursor(Qt::DropAction action) const
         return QApplicationPrivate::instance()->getPixmapCursor(Qt::DragCopyCursor);
     else if (action == Qt::LinkAction)
         return QApplicationPrivate::instance()->getPixmapCursor(Qt::DragLinkCursor);
-#ifdef Q_WS_WIN
-    else if (action == Qt::IgnoreAction)
-        return QApplicationPrivate::instance()->getPixmapCursor(Qt::ForbiddenCursor);
-#endif
     return QPixmap();
 }
 
