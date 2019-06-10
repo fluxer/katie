@@ -5650,7 +5650,7 @@ static inline uint qt_intensity(uint r, uint g, uint b)
 }
 
 // in qpixmapfilter.cpp
-extern void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect = QRect());
+extern Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect = QRect());
 
 /*! \reimp */
 QPixmap QCommonStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap &pixmap,
