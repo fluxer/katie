@@ -1932,22 +1932,6 @@ QByteArray &QByteArray::replace(const char *before, int bsize, const char *after
     if (isNull() || (before == after && bsize == asize))
         return *this;
 
-    // protect against before or after being part of this
-    const char *a = after;
-    const char *b = before;
-    if (after >= d->data && after < d->data + d->size) {
-        char *copy = (char *)malloc(asize);
-        Q_CHECK_PTR(copy);
-        memcpy(copy, after, asize);
-        a = copy;
-    }
-    if (before >= d->data && before < d->data + d->size) {
-        char *copy = (char *)malloc(bsize);
-        Q_CHECK_PTR(copy);
-        memcpy(copy, before, bsize);
-        b = copy;
-    }
-    
     QByteArrayMatcher matcher(before, bsize);
     int index = 0;
     int len = d->size;
@@ -2032,12 +2016,6 @@ QByteArray &QByteArray::replace(const char *before, int bsize, const char *after
             }
         }
     }
-
-    if (a != after)
-        ::free((char *)a);
-    if (b != before)
-        ::free((char *)b);
-    
     
     return *this;
 }
