@@ -1732,8 +1732,7 @@ static inline QByteArray &qbytearray_insert(QByteArray *ba,
 
 QByteArray &QByteArray::insert(int i, const QByteArray &ba)
 {
-    QByteArray copy(ba);
-    return qbytearray_insert(this, i, copy.d->data, copy.d->size);
+    return qbytearray_insert(this, i, ba.d->data, ba.d->size);
 }
 
 /*!
@@ -1844,10 +1843,9 @@ QByteArray &QByteArray::replace(int pos, int len, const QByteArray &after)
         memmove(d->data + pos, after.d->data, len*sizeof(char));
         return *this;
     } else {
-        QByteArray copy(after);
         // ### optimize me
         remove(pos, len);
-        return insert(pos, copy);
+        return insert(pos, after);
     }
 }
 
@@ -3889,7 +3887,7 @@ QByteArray QByteArray::fromRawData(const char *data, int size)
 
     \sa fromRawData(), data(), constData()
 */
-QByteArray &QByteArray::setRawData(const char *data, uint size)
+QByteArray &QByteArray::setRawData(const char *data, int size)
 {
     if (d->ref != 1 || d->alloc) {
         *this = fromRawData(data, size);
