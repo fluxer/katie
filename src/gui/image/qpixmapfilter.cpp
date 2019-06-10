@@ -960,7 +960,7 @@ void QPixmapBlurFilter::draw(QPainter *painter, const QPointF &p, const QPixmap 
 // grayscales the image to dest (could be same). If rect isn't defined
 // destination image size is used to determine the dimension of grayscaling
 // process.
-static void grayscale(const QImage &image, QImage &dest, const QRect& rect = QRect())
+Q_GUI_EXPORT void qt_grayscale(const QImage &image, QImage &dest, const QRect& rect = QRect())
 {
     QRect destRect = rect;
     QRect srcRect = rect;
@@ -1135,7 +1135,7 @@ void QPixmapColorizeFilter::draw(QPainter *painter, const QPointF &dest, const Q
 
     // do colorizing
     QPainter destPainter(&destImage);
-    grayscale(srcImage, destImage, srcImage.rect());
+    qt_grayscale(srcImage, destImage, srcImage.rect());
     destPainter.setCompositionMode(QPainter::CompositionMode_Screen);
     destPainter.fillRect(srcImage.rect(), d->color);
     destPainter.end();
