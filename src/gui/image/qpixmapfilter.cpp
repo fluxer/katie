@@ -1022,8 +1022,8 @@ class QPixmapColorizeFilterPrivate : public QPixmapFilterPrivate
 public:
     QColor color;
     qreal strength;
-    quint32 opaque;
-    quint32 alphaBlend ;
+    bool opaque;
+    bool alphaBlend;
 };
 
 /*!

@@ -55,7 +55,6 @@ QT_BEGIN_HEADER
 QT_BEGIN_NAMESPACE
 
 class QPainter;
-class QPixmapData;
 
 class QPixmapFilterPrivate;
 
