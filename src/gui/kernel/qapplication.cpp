@@ -792,7 +792,7 @@ QApplication::~QApplication()
 #ifndef QT_NO_CLIPBOARD
     // flush clipboard contents
     if (qt_clipboard) {
-        QEvent event(QEvent::Clipboard);
+        QClipboardEvent event(Q_NULLPTR);
         QApplication::sendEvent(qt_clipboard, &event);
     }
 #endif
