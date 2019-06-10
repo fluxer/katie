@@ -61,7 +61,8 @@ class QLibraryPrivate
 public:
     void *pHnd;
 
-    QString fileName, qualifiedFileName;
+    QString fileName;
+    QString qualifiedFileName;
     QString fullVersion;
 
     bool load();
@@ -94,7 +95,11 @@ private:
     QAtomicInt libraryRefCount;
     QAtomicInt libraryUnloadCount;
 
-    enum {IsAPlugin, IsNotAPlugin, MightBeAPlugin } pluginState;
+    enum {
+        IsAPlugin,
+        IsNotAPlugin,
+        MightBeAPlugin
+    } pluginState;
 };
 
 QT_END_NAMESPACE

@@ -251,12 +251,12 @@ QScriptValue QScriptDeclarativeClass::function(const QScriptValue &v, const Iden
     QScript::APIShim shim(d->engine);
     JSC::ExecState *exec = d->engine->currentFrame;
     JSC::JSObject *object = d->jscValue.getObject();
-    JSC::PropertySlot slot(const_cast<JSC::JSObject*>(object));
+    JSC::PropertySlot slot(object);
     JSC::JSValue result;
 
     JSC::Identifier id(exec, (JSC::UString::Rep *)name);
 
-    if (const_cast<JSC::JSObject*>(object)->getOwnPropertySlot(exec, id, slot)) {
+    if (object->getOwnPropertySlot(exec, id, slot)) {
         result = slot.getValue(exec, id);
         if (QScript::isFunction(result))
             return d->engine->scriptValueFromJSCValue(result);
@@ -275,12 +275,12 @@ QScriptValue QScriptDeclarativeClass::property(const QScriptValue &v, const Iden
     QScript::APIShim shim(d->engine);
     JSC::ExecState *exec = d->engine->currentFrame;
     JSC::JSObject *object = d->jscValue.getObject();
-    JSC::PropertySlot slot(const_cast<JSC::JSObject*>(object));
+    JSC::PropertySlot slot(object);
     JSC::JSValue result;
 
     JSC::Identifier id(exec, (JSC::UString::Rep *)name);
 
-    if (const_cast<JSC::JSObject*>(object)->getOwnPropertySlot(exec, id, slot)) {
+    if (object->getOwnPropertySlot(exec, id, slot)) {
         result = slot.getValue(exec, id);
         return d->engine->scriptValueFromJSCValue(result);
     }
@@ -299,12 +299,12 @@ QScriptDeclarativeClass::functionValue(const QScriptValue &v, const Identifier &
     QScript::APIShim shim(d->engine);
     JSC::ExecState *exec = d->engine->currentFrame;
     JSC::JSObject *object = d->jscValue.getObject();
-    JSC::PropertySlot slot(const_cast<JSC::JSObject*>(object));
+    JSC::PropertySlot slot(object);
     JSC::JSValue result;
 
     JSC::Identifier id(exec, (JSC::UString::Rep *)name);
 
-    if (const_cast<JSC::JSObject*>(object)->getOwnPropertySlot(exec, id, slot)) {
+    if (object->getOwnPropertySlot(exec, id, slot)) {
         result = slot.getValue(exec, id);
         if (QScript::isFunction(result))
             return jscToValue(result);
@@ -324,12 +324,12 @@ QScriptDeclarativeClass::propertyValue(const QScriptValue &v, const Identifier &
     QScript::APIShim shim(d->engine);
     JSC::ExecState *exec = d->engine->currentFrame;
     JSC::JSObject *object = d->jscValue.getObject();
-    JSC::PropertySlot slot(const_cast<JSC::JSObject*>(object));
+    JSC::PropertySlot slot(object);
     JSC::JSValue result;
 
     JSC::Identifier id(exec, (JSC::UString::Rep *)name);
 
-    if (const_cast<JSC::JSObject*>(object)->getOwnPropertySlot(exec, id, slot)) {
+    if (object->getOwnPropertySlot(exec, id, slot)) {
         result = slot.getValue(exec, id);
         return jscToValue(result);
     }

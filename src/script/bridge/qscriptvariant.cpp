@@ -79,28 +79,22 @@ static JSC::JSValue QT_FASTCALL variantProtoFuncValueOf(JSC::ExecState *exec, JS
         return throwError(exec, JSC::TypeError);
     const QVariant &v = static_cast<QVariantDelegate*>(delegate)->value();
     switch (v.type()) {
-    case QVariant::Invalid:
-        return JSC::jsUndefined();
-    case QVariant::String:
-        return JSC::jsString(exec, v.toString());
-
-    case QVariant::Int:
-        return JSC::jsNumber(exec, v.toInt());
-
-    case QVariant::Bool:
-        return JSC::jsBoolean(v.toBool());
-
-    case QVariant::Double:
-        return JSC::jsNumber(exec, v.toDouble());
-
-//    case QVariant::Char:
-//        return JSC::jsNumber(exec, v.toChar().unicode());
-
-    case QVariant::UInt:
-        return JSC::jsNumber(exec, v.toUInt());
-
-    default:
-        ;
+        case QVariant::Invalid:
+            return JSC::jsUndefined();
+        case QVariant::String:
+            return JSC::jsString(exec, v.toString());
+        case QVariant::Int:
+            return JSC::jsNumber(exec, v.toInt());
+        case QVariant::Bool:
+            return JSC::jsBoolean(v.toBool());
+        case QVariant::Double:
+            return JSC::jsNumber(exec, v.toDouble());
+    //    case QVariant::Char:
+    //        return JSC::jsNumber(exec, v.toChar().unicode());
+        case QVariant::UInt:
+            return JSC::jsNumber(exec, v.toUInt());
+        default:
+            ;
     }
     return thisValue;
 }
