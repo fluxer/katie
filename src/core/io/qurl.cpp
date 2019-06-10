@@ -320,7 +320,7 @@ public:
 
     QByteArray mergePaths(const QByteArray &relativePath) const;
 
-    void queryItem(int pos, int *value, int *end);
+    void queryItem(int pos, int *value, int *end) const;
 
     enum ParseOptions {
         ParseAndSet,
@@ -379,7 +379,7 @@ public:
     const QByteArray & normalized() const;
 
     mutable QUrlErrorInfo errorInfo;
-    QString createErrorString();
+    QString createErrorString() const;
 };
 
 
@@ -3706,7 +3706,7 @@ QByteArray QUrlPrivate::mergePaths(const QByteArray &relativePath) const
     return newPath;
 }
 
-void QUrlPrivate::queryItem(int pos, int *value, int *end)
+void QUrlPrivate::queryItem(int pos, int *value, int *end) const
 {
     *end = query.indexOf(pairDelimiter, pos);
     if (*end == -1)
@@ -4141,7 +4141,7 @@ const QByteArray &QUrlPrivate::normalized() const
     return encodedNormalized;
 }
 
-QString QUrlPrivate::createErrorString()
+QString QUrlPrivate::createErrorString() const
 {
     if (isValid && isHostValid)
         return QString();
