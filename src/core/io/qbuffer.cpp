@@ -352,7 +352,7 @@ bool QBuffer::open(OpenMode flags)
 qint64 QBuffer::size() const
 {
     Q_D(const QBuffer);
-    return qint64(d->buf->size());
+    return d->buf->size();
 }
 
 /*!
@@ -372,7 +372,7 @@ bool QBuffer::seek(const qint64 pos)
             return false;
         }
     } else if (pos > d->buf->size() || pos < 0) {
-        qWarning("QBuffer::seek: Invalid pos: %d", pos);
+        qWarning("QBuffer::seek: Invalid pos: %lld", pos);
         return false;
     }
     d->ioIndex = pos;
