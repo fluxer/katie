@@ -472,7 +472,6 @@ inline bool operator>=(const QByteArray &a1, const char *a2)
 { return qstrcmp(a1, a2) >= 0; }
 inline bool operator>=(const char *a1, const QByteArray &a2)
 { return qstrcmp(a1, a2) >= 0; }
-#if !defined(QT_USE_QSTRINGBUILDER)
 inline const QByteArray operator+(const QByteArray &a1, const QByteArray &a2)
 { return QByteArray(a1) += a2; }
 inline const QByteArray operator+(const QByteArray &a1, const char *a2)
@@ -483,7 +482,6 @@ inline const QByteArray operator+(const char *a1, const QByteArray &a2)
 { return QByteArray(a1) += a2; }
 inline const QByteArray operator+(char a1, const QByteArray &a2)
 { return QByteArray(&a1, 1) += a2; }
-#endif // QT_USE_QSTRINGBUILDER
 inline bool QByteArray::contains(const char *c) const
 { return indexOf(c) != -1; }
 inline QByteArray &QByteArray::replace(char before, const char *c)
@@ -530,9 +528,5 @@ Q_DECLARE_SHARED(QByteArray)
 QT_END_NAMESPACE
 
 QT_END_HEADER
-
-#ifdef QT_USE_QSTRINGBUILDER
-#include <QtCore/qstring.h>
-#endif
 
 #endif // QBYTEARRAY_H
