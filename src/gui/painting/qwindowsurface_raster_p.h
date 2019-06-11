@@ -75,7 +75,7 @@ private:
 #if defined(Q_WS_X11) && !defined(QT_NO_XSHM)
     void syncX();
 #endif
-    void prepareBuffer(QImage::Format format, QWidget *widget);
+    void prepareBuffer(QImage::Format format);
     Q_DECLARE_PRIVATE(QRasterWindowSurface)
     QScopedPointer<QRasterWindowSurfacePrivate> d_ptr;
 };

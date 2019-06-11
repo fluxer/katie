@@ -123,7 +123,7 @@ void QRasterPixmapData::fromImageReader(QImageReader *imageReader,
 }
 
 // from qwindowsurface.cpp
-extern void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset);
+extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset);
 
 void QRasterPixmapData::copy(const QPixmapData *data, const QRect &rect)
 {

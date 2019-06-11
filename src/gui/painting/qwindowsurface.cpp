@@ -185,7 +185,7 @@ bool QWindowSurface::scroll(const QRegion &area, int dx, int dy)
 
 /*!
     Returns a QImage pointer which represents the actual buffer the \a widget
-    is drawn into or 0 if this is unavailable.
+    is drawn into or null if this is unavailable.
 
     You must call beginPaint() before you call this function and the returned
     pointer is only valid until endPaint() is called.
@@ -193,11 +193,11 @@ bool QWindowSurface::scroll(const QRegion &area, int dx, int dy)
 QImage* QWindowSurface::buffer(const QWidget *widget)
 {
     if (widget->window() != window())
-        return 0;
+        return Q_NULLPTR;
 
     QPaintDevice *pdev = paintDevice();
     if (!pdev || pdev->devType() != QInternal::Image)
-        return 0;
+        return Q_NULLPTR;
 
     const QPoint off = offset(widget);
     QImage *img = static_cast<QImage*>(pdev);
@@ -206,11 +206,9 @@ QImage* QWindowSurface::buffer(const QWidget *widget)
     rect &= QRect(QPoint(), img->size());
 
     if (rect.isEmpty())
-        return 0;
+        return Q_NULLPTR;
 
-    img = new QImage(img->scanLine(rect.y()) + rect.x() * img->depth() / 8,
-                     rect.width(), rect.height(),
-                     img->bytesPerLine(), img->format());
+    img = new QImage(img->copy(rect));
     d_ptr->bufferImages.append(img);
 
     return img;
@@ -257,8 +255,7 @@ QPixmap QWindowSurface::grabWidget(const QWidget *widget, const QRect &rectangle
  */
 QPoint QWindowSurface::offset(const QWidget *widget) const
 {
-    QWidget *window = d_ptr->window;
-    return widget->mapTo(window, QPoint());
+    return widget->mapTo(d_ptr->window, QPoint());
 }
 
 /*!
@@ -288,7 +285,7 @@ QWindowSurface::WindowSurfaceFeatures QWindowSurface::features() const
     return PartialUpdates | PreservedContents;
 }
 
-void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset)
+void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset)
 {
     const QRect imageRect(0, 0, img->width(), img->height());
     const QRect r = rect & imageRect & imageRect.translated(-offset);
@@ -297,7 +294,7 @@ void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &of
     if (r.isEmpty())
         return;
 
-    uchar *mem = const_cast<uchar*>(img->bits());
+    uchar *mem = img->bits();
 
     int lineskip = img->bytesPerLine();
     int depth = img->depth() >> 3;

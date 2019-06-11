@@ -199,16 +199,16 @@ void QRasterWindowSurface::setGeometry(const QRect &rect)
     if (d->image == 0 || d->image->width() < rect.width() || d->image->height() < rect.height()) {
 #if defined(Q_WS_X11) && !defined(QT_NO_XRENDER)
         if (d_ptr->translucentBackground)
-            prepareBuffer(QImage::Format_ARGB32_Premultiplied, window());
+            prepareBuffer(QImage::Format_ARGB32_Premultiplied);
         else
 #endif
-            prepareBuffer(QImage::systemFormat(), window());
+            prepareBuffer(QImage::systemFormat());
     }
     d->inSetGeometry = false;
 }
 
 // from qwindowsurface.cpp
-extern void qt_scrollRectInImage(const QImage *img, const QRect &rect, const QPoint &offset);
+extern void qt_scrollRectInImage(QImage *img, const QRect &rect, const QPoint &offset);
 
 bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
 {
@@ -221,9 +221,10 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
     syncX();
 #endif
 
-    const QVector<QRect> rects = area.rects();
-    for (int i = 0; i < rects.size(); ++i)
-        qt_scrollRectInImage(d->image, rects.at(i), QPoint(dx, dy));
+    const QPoint point = QPoint(dx, dy);
+    foreach (const QRect rect, area.rects()) {
+        qt_scrollRectInImage(d->image, rect, point);
+    }
 
     return true;
 }
@@ -233,7 +234,7 @@ QWindowSurface::WindowSurfaceFeatures QRasterWindowSurface::features() const
     return QWindowSurface::AllFeatures;
 }
 
-void QRasterWindowSurface::prepareBuffer(QImage::Format format, QWidget *widget)
+void QRasterWindowSurface::prepareBuffer(QImage::Format format)
 {
     Q_D(QRasterWindowSurface);
 

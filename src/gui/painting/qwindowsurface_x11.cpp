@@ -98,13 +98,13 @@ void QX11WindowSurface::beginPaint(const QRegion &rgn)
             static_cast<QX11PixmapData *>(d_ptr->device.data_ptr().data())->convertToARGB32();
         ::Picture src = qt_x11Data->getSolidFill(d_ptr->device.x11Info().screen(), Qt::transparent);
         ::Picture dst = d_ptr->device.x11PictureHandle();
-        const QVector<QRect> rects = rgn.rects();
         const int w = d_ptr->device.width();
         const int h = d_ptr->device.height();
-        for (QVector<QRect>::const_iterator it = rects.begin(); it != rects.end(); ++it)
+        foreach (const QRect rect, rgn.rects()) {
             XRenderComposite(qt_x11Data->display, PictOpSrc, src, 0, dst,
-                             0, 0, w, h, it->x(), it->y(),
-                             it->width(), it->height());
+                             0, 0, w, h, rect.x(), rect.y(),
+                             rect.width(), rect.height());
+        }
     }
 #endif
 }
