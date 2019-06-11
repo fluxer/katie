@@ -277,7 +277,10 @@ static inline bool isSupportedSvgExtension(const QString &)
 QSvgSwitch::QSvgSwitch(QSvgNode *parent)
     : QSvgStructureNode(parent)
 {
-    init();
+    QLocale locale;
+    m_systemLanguage = locale.name().replace(QLatin1Char('_'), QLatin1Char('-'));
+    int idx = m_systemLanguage.indexOf(QLatin1Char('-'));
+    m_systemLanguagePrefix = m_systemLanguage.mid(0, idx);
 }
 
 void QSvgSwitch::draw(QPainter *p, QSvgExtraStates &states)
@@ -347,14 +350,6 @@ void QSvgSwitch::draw(QPainter *p, QSvgExtraStates &states)
 QSvgNode::Type QSvgSwitch::type() const
 {
     return SWITCH;
-}
-
-void QSvgSwitch::init()
-{
-    QLocale locale;
-    m_systemLanguage = locale.name().replace(QLatin1Char('_'), QLatin1Char('-'));
-    int idx = m_systemLanguage.indexOf(QLatin1Char('-'));
-    m_systemLanguagePrefix = m_systemLanguage.mid(0, idx);
 }
 
 QRectF QSvgStructureNode::bounds(QPainter *p, QSvgExtraStates &states) const

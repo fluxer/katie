@@ -71,8 +71,6 @@ public:
     QList<QSvgNode*> renderers() const { return m_renderers; }
 protected:
     QList<QSvgNode*>          m_renderers;
-    QHash<QString, QSvgNode*> m_scope;
-    QList<QSvgStructureNode*> m_linkedScopes;
 };
 
 class QSvgG : public QSvgStructureNode
@@ -97,8 +95,6 @@ public:
     QSvgSwitch(QSvgNode *parent);
     virtual void draw(QPainter *p, QSvgExtraStates &states);
     Type type() const;
-private:
-    void init();
 private:
     QString m_systemLanguage;
     QString m_systemLanguagePrefix;
