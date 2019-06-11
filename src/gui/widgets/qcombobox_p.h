@@ -50,7 +50,7 @@
 #ifndef QT_NO_COMBOBOX
 #include "QtGui/qabstractslider.h"
 #include "QtGui/qapplication.h"
-#include "QtGui/qitemdelegate.h"
+#include "QtGui/qstyleditemdelegate.h"
 #include "QtGui/qstandarditemmodel.h"
 #include "QtGui/qlineedit.h"
 #include "QtGui/qlistview.h"
@@ -93,29 +93,6 @@ protected:
         if (combo)
             option.font = combo->font();
         return option;
-    }
-
-    void paintEvent(QPaintEvent *e)
-    {
-        if (combo) {
-            QStyleOptionComboBox opt;
-            opt.initFrom(combo);
-            opt.editable = combo->isEditable();
-            if (combo->style()->styleHint(QStyle::SH_ComboBox_Popup, &opt, combo)) {
-                //we paint the empty menu area to avoid having blank space that can happen when scrolling
-                QStyleOptionMenuItem menuOpt;
-                menuOpt.initFrom(this);
-                menuOpt.palette = palette();
-                menuOpt.state = QStyle::State_None;
-                menuOpt.checkType = QStyleOptionMenuItem::NotCheckable;
-                menuOpt.menuRect = e->rect();
-                menuOpt.maxIconWidth = 0;
-                menuOpt.tabWidth = 0;
-                QPainter p(viewport());
-                combo->style()->drawControl(QStyle::CE_MenuEmptyArea, &menuOpt, &p, this);
-            }
-        }
-        QListView::paintEvent(e);
     }
 
 private:
@@ -274,13 +251,10 @@ private:
     QComboBox *mCombo;
 };
 
-// Note that this class is intentionally not using QStyledItemDelegate 
-// Vista does not use the new theme for combo boxes and there might 
-// be other side effects from using the new class
-class QComboBoxDelegate : public QItemDelegate
+class QComboBoxDelegate : public QStyledItemDelegate
 { Q_OBJECT
 public:
-    QComboBoxDelegate(QObject *parent, QComboBox *cmb) : QItemDelegate(parent), mCombo(cmb) {}
+    QComboBoxDelegate(QObject *parent, QComboBox *cmb) : QStyledItemDelegate(parent), mCombo(cmb) {}
 
     static bool isSeparator(const QModelIndex &index) {
         return index.data(Qt::AccessibleDescriptionRole).toString() == QLatin1String("separator");
@@ -304,7 +278,7 @@ protected:
             opt.rect = rect;
             mCombo->style()->drawPrimitive(QStyle::PE_IndicatorToolBarSeparator, &opt, painter, mCombo);
         } else {
-            QItemDelegate::paint(painter, option, index);
+            QStyledItemDelegate::paint(painter, option, index);
         }
     }
 
@@ -314,7 +288,7 @@ protected:
             int pm = mCombo->style()->pixelMetric(QStyle::PM_DefaultFrameWidth, 0, mCombo);
             return QSize(pm, pm);
         }
-        return QItemDelegate::sizeHint(option, index);
+        return QStyledItemDelegate::sizeHint(option, index);
     }
 private:
     QComboBox *mCombo;
