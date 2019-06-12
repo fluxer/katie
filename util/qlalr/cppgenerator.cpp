@@ -52,6 +52,7 @@ QString CppGenerator::copyrightHeader() const
     "/****************************************************************************\n"
     "**\n"
     "** Copyright (C) 2015 The Qt Company Ltd.\n"
+    "** Copyright (C) 2016-2019 Ivailo Monev\n"
     "**\n"
     "** This file is part of the QtCore module of the Katie Toolkit.\n"
     "**\n"

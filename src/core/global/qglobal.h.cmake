@@ -238,7 +238,7 @@ QT_USE_NAMESPACE
 #elif defined(__svr4__) && defined(i386) /* Open UNIX 8 + GCC */
 #  define Q_OS_UNIXWARE
 #else
-#  error "Qt has not been ported to this OS - talk to qt-bugs@trolltech.com"
+#  error "Katie has not been ported to this OS"
 #endif
 
 #if !defined(Q_OS_UNIX)
@@ -297,7 +297,7 @@ QT_USE_NAMESPACE
 #  endif
 
 #else
-#  error "Qt has not been tested with this compiler"
+#  error "Katie has not been tested with this compiler"
 #endif
 
 /*
