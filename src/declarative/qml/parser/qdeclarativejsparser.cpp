@@ -160,7 +160,7 @@ bool Parser::parse(int startToken)
         state_stack[tos] = action;
 
     _Lcheck_token:
-        if (yytoken == -1 && -TERMINAL_COUNT != action_index[action]) {
+        if (yytoken == -1 && -TERMINAL_COUNT != QDeclarativeJSGrammar_action_index[action]) {
             yyprevlloc = yylloc;
 
             if (first_token == last_token) {
@@ -187,7 +187,7 @@ bool Parser::parse(int startToken)
             }
         } else if (action < 0) {
           const int r = -action - 1;
-          tos -= rhs[r];
+          tos -= QDeclarativeJSGrammar_rhs[r];
 
           switch (r) {
 
@@ -536,25 +536,25 @@ case 64: {
 }   break;
 
 case 66: {
-    QString s = QLatin1String(QDeclarativeJSGrammar::spell[T_PROPERTY]);
+    QString s = QLatin1String(QDeclarativeJSGrammar_spell[T_PROPERTY]);
     sym(1).sval = driver->intern(s.constData(), s.length());
     break;
 }
 
 case 67: {
-    QString s = QLatin1String(QDeclarativeJSGrammar::spell[T_SIGNAL]);
+    QString s = QLatin1String(QDeclarativeJSGrammar_spell[T_SIGNAL]);
     sym(1).sval = driver->intern(s.constData(), s.length());
     break;
 }
 
 case 68: {
-    QString s = QLatin1String(QDeclarativeJSGrammar::spell[T_READONLY]);
+    QString s = QLatin1String(QDeclarativeJSGrammar_spell[T_READONLY]);
     sym(1).sval = driver->intern(s.constData(), s.length());
     break;
 }
 
 case 69: {
-    QString s = QLatin1String(QDeclarativeJSGrammar::spell[T_ON]);
+    QString s = QLatin1String(QDeclarativeJSGrammar_spell[T_ON]);
     sym(1).sval = driver->intern(s.constData(), s.length());
     break;
 }
@@ -1775,7 +1775,7 @@ case 344: {
 } break;
 
             } // switch
-            action = nt_action(state_stack[tos], lhs[r] - TERMINAL_COUNT);
+            action = nt_action(state_stack[tos], QDeclarativeJSGrammar_lhs[r] - TERMINAL_COUNT);
         } // if
     } while (action != 0);
 
@@ -1824,7 +1824,7 @@ case 344: {
             if (token < 0 || token >= TERMINAL_COUNT)
                 msg = qApp->translate("QDeclarativeParser", "Syntax error");
             else
-                msg = qApp->translate("QDeclarativeParser", "Unexpected token `%1'").arg(QLatin1String(spell[token]));
+                msg = qApp->translate("QDeclarativeParser", "Unexpected token `%1'").arg(QLatin1String(QDeclarativeJSGrammar_spell[token]));
             diagnostic_messages.append(DiagnosticMessage(DiagnosticMessage::Error, token_buffer[0].loc, msg));
 
             action = errorState;
@@ -1853,7 +1853,7 @@ case 344: {
             int token = tokens[tk];
             int a = t_action(errorState, token);
             if (a > 0 && t_action(a, yytoken)) {
-                const QString msg = qApp->translate("QDeclarativeParser", "Expected token `%1'").arg(QLatin1String(spell[token]));
+                const QString msg = qApp->translate("QDeclarativeParser", "Expected token `%1'").arg(QLatin1String(QDeclarativeJSGrammar_spell[token]));
                 diagnostic_messages.append(DiagnosticMessage(DiagnosticMessage::Error, token_buffer[0].loc, msg));
 
                 yytoken = token;
@@ -1877,7 +1877,7 @@ case 344: {
 
             int a = t_action(errorState, tk);
             if (a > 0 && t_action(a, yytoken)) {
-                const QString msg = qApp->translate("QDeclarativeParser", "Expected token `%1'").arg(QLatin1String(spell[tk]));
+                const QString msg = qApp->translate("QDeclarativeParser", "Expected token `%1'").arg(QLatin1String(QDeclarativeJSGrammar_spell[tk]));
                 diagnostic_messages.append(DiagnosticMessage(DiagnosticMessage::Error, token_buffer[0].loc, msg));
 
                 yytoken = tk;

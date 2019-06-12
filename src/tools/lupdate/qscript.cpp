@@ -58,137 +58,7 @@
 #  undef ERROR
 #endif
 
-class QScriptGrammar
-{
-public:
-  enum VariousConstants {
-    EOF_SYMBOL = 0,
-    T_AND = 1,
-    T_AND_AND = 2,
-    T_AND_EQ = 3,
-    T_AUTOMATIC_SEMICOLON = 62,
-    T_BREAK = 4,
-    T_CASE = 5,
-    T_CATCH = 6,
-    T_COLON = 7,
-    T_COMMA = 8,
-    T_CONST = 81,
-    T_CONTINUE = 9,
-    T_DEBUGGER = 82,
-    T_DEFAULT = 10,
-    T_DELETE = 11,
-    T_DIVIDE_ = 12,
-    T_DIVIDE_EQ = 13,
-    T_DO = 14,
-    T_DOT = 15,
-    T_ELSE = 16,
-    T_EQ = 17,
-    T_EQ_EQ = 18,
-    T_EQ_EQ_EQ = 19,
-    T_FALSE = 80,
-    T_FINALLY = 20,
-    T_FOR = 21,
-    T_FUNCTION = 22,
-    T_GE = 23,
-    T_GT = 24,
-    T_GT_GT = 25,
-    T_GT_GT_EQ = 26,
-    T_GT_GT_GT = 27,
-    T_GT_GT_GT_EQ = 28,
-    T_IDENTIFIER = 29,
-    T_IF = 30,
-    T_IN = 31,
-    T_INSTANCEOF = 32,
-    T_LBRACE = 33,
-    T_LBRACKET = 34,
-    T_LE = 35,
-    T_LPAREN = 36,
-    T_LT = 37,
-    T_LT_LT = 38,
-    T_LT_LT_EQ = 39,
-    T_MINUS = 40,
-    T_MINUS_EQ = 41,
-    T_MINUS_MINUS = 42,
-    T_NEW = 43,
-    T_NOT = 44,
-    T_NOT_EQ = 45,
-    T_NOT_EQ_EQ = 46,
-    T_NULL = 78,
-    T_NUMERIC_LITERAL = 47,
-    T_OR = 48,
-    T_OR_EQ = 49,
-    T_OR_OR = 50,
-    T_PLUS = 51,
-    T_PLUS_EQ = 52,
-    T_PLUS_PLUS = 53,
-    T_QUESTION = 54,
-    T_RBRACE = 55,
-    T_RBRACKET = 56,
-    T_REMAINDER = 57,
-    T_REMAINDER_EQ = 58,
-    T_RESERVED_WORD = 83,
-    T_RETURN = 59,
-    T_RPAREN = 60,
-    T_SEMICOLON = 61,
-    T_STAR = 63,
-    T_STAR_EQ = 64,
-    T_STRING_LITERAL = 65,
-    T_SWITCH = 66,
-    T_THIS = 67,
-    T_THROW = 68,
-    T_TILDE = 69,
-    T_TRUE = 79,
-    T_TRY = 70,
-    T_TYPEOF = 71,
-    T_VAR = 72,
-    T_VOID = 73,
-    T_WHILE = 74,
-    T_WITH = 75,
-    T_XOR = 76,
-    T_XOR_EQ = 77,
-
-    ACCEPT_STATE = 236,
-    RULE_COUNT = 267,
-    STATE_COUNT = 465,
-    TERMINAL_COUNT = 84,
-    NON_TERMINAL_COUNT = 88,
-
-    GOTO_INDEX_OFFSET = 465,
-    GOTO_INFO_OFFSET = 1373,
-    GOTO_CHECK_OFFSET = 1373
-  };
-
-  static const char  *const    spell [];
-  static const short             lhs [];
-  static const short             rhs [];
-  static const short    goto_default [];
-  static const short  action_default [];
-  static const short    action_index [];
-  static const short     action_info [];
-  static const short    action_check [];
-
-  static inline int nt_action (int state, int nt)
-  {
-    const int yyn = action_index [GOTO_INDEX_OFFSET + state] + nt;
-    if (yyn < 0 || action_check [GOTO_CHECK_OFFSET + yyn] != nt)
-      return goto_default [nt];
-
-    return action_info [GOTO_INFO_OFFSET + yyn];
-  }
-
-  static inline int t_action (int state, int token)
-  {
-    const int yyn = action_index [state] + token;
-
-    if (yyn < 0 || action_check [yyn] != token)
-      return - action_default [state];
-
-    return action_info [yyn];
-  }
-};
-
-
-const char *const QScriptGrammar::spell [] = {
+static const char *const QScriptGrammar_spell [] = {
   "end of file", "&", "&&", "&=", "break", "case", "catch", ":", ";", "continue", 
   "default", "delete", "/", "/=", "do", ".", "else", "=", "==", "===", 
   "finally", "for", "function", ">=", ">", ">>", ">>=", ">>>", ">>>=", "identifier", 
@@ -199,7 +69,7 @@ const char *const QScriptGrammar::spell [] = {
   "try", "typeof", "var", "void", "while", "with", "^", "^=", "null", "true", 
   "false", "const", "debugger", "reserved word"};
 
-const short QScriptGrammar::lhs [] = {
+static const short QScriptGrammar_lhs [] = {
   85, 85, 85, 85, 85, 85, 85, 85, 85, 85, 
   85, 85, 85, 85, 87, 87, 91, 91, 86, 86, 
   92, 92, 93, 93, 93, 93, 94, 94, 94, 94, 
@@ -228,7 +98,7 @@ const short QScriptGrammar::lhs [] = {
   167, 167, 164, 164, 165, 165, 168, 84, 169, 169, 
   170, 170, 166, 166, 88, 88, 171};
 
-const short QScriptGrammar::rhs [] = {
+static const short QScriptGrammar_rhs [] = {
   1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 
   3, 5, 3, 3, 2, 4, 1, 2, 0, 1, 
   3, 5, 1, 1, 1, 1, 1, 1, 1, 1, 
@@ -257,7 +127,7 @@ const short QScriptGrammar::rhs [] = {
   1, 3, 0, 1, 0, 1, 1, 1, 1, 2, 
   1, 1, 0, 1, 0, 1, 2};
 
-const short QScriptGrammar::action_default [] = {
+static const short QScriptGrammar_action_default [] = {
   0, 97, 164, 128, 136, 132, 172, 179, 76, 148, 
   178, 186, 174, 124, 0, 175, 262, 61, 176, 177, 
   182, 77, 140, 144, 65, 94, 75, 80, 60, 0, 
@@ -306,7 +176,7 @@ const short QScriptGrammar::action_default [] = {
   89, 86, 84, 88, 203, 196, 0, 204, 200, 0, 
   202, 192, 0, 193, 197};
 
-const short QScriptGrammar::goto_default [] = {
+static const short QScriptGrammar_goto_default [] = {
   29, 28, 436, 434, 113, 14, 2, 435, 112, 111, 
   114, 193, 24, 17, 189, 26, 8, 200, 21, 27, 
   77, 25, 1, 32, 30, 267, 13, 261, 3, 257, 
@@ -317,7 +187,7 @@ const short QScriptGrammar::goto_default [] = {
   457, 321, 392, 396, 399, 395, 394, 414, 415, 16, 
   100, 107, 96, 99, 106, 108, 33, 0};
 
-const short QScriptGrammar::action_index [] = {
+static const short QScriptGrammar_action_index [] = {
   1209, 57, -84, 12, -39, -43, -84, -84, 108, -84, 
   -84, -84, -84, 195, 194, -84, -84, -84, -84, -84, 
   -84, 333, 35, 86, 176, 166, -84, -84, -84, 6, 
@@ -414,7 +284,7 @@ const short QScriptGrammar::action_index [] = {
   -88, -88, -88, -88, -88, -88, -88, -88, -88, 28, 
   -88, -88, -53, -88, -88};
 
-const short QScriptGrammar::action_info [] = {
+static const short QScriptGrammar_action_info [] = {
   302, -194, 382, 197, 310, 270, 236, 459, 290, 185, 
   292, 346, 304, 157, 292, 318, 338, 101, 340, 331, 
   341, 294, 343, -32, 299, 329, 316, 290, 270, 454, 
@@ -587,7 +457,7 @@ const short QScriptGrammar::action_info [] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0};
 
-const short QScriptGrammar::action_check [] = {
+static const short QScriptGrammar_action_check [] = {
   61, 29, 55, 8, 2, 1, 0, 17, 48, 48, 
   76, 36, 60, 1, 76, 29, 36, 29, 60, 60, 
   33, 8, 55, 7, 61, 61, 7, 48, 1, 29, 
@@ -759,6 +629,126 @@ const short QScriptGrammar::action_check [] = {
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
   -1, -1, -1, -1, -1, -1, -1, -1};
+
+class QScriptGrammar
+{
+public:
+  enum VariousConstants {
+    EOF_SYMBOL = 0,
+    T_AND = 1,
+    T_AND_AND = 2,
+    T_AND_EQ = 3,
+    T_AUTOMATIC_SEMICOLON = 62,
+    T_BREAK = 4,
+    T_CASE = 5,
+    T_CATCH = 6,
+    T_COLON = 7,
+    T_COMMA = 8,
+    T_CONST = 81,
+    T_CONTINUE = 9,
+    T_DEBUGGER = 82,
+    T_DEFAULT = 10,
+    T_DELETE = 11,
+    T_DIVIDE_ = 12,
+    T_DIVIDE_EQ = 13,
+    T_DO = 14,
+    T_DOT = 15,
+    T_ELSE = 16,
+    T_EQ = 17,
+    T_EQ_EQ = 18,
+    T_EQ_EQ_EQ = 19,
+    T_FALSE = 80,
+    T_FINALLY = 20,
+    T_FOR = 21,
+    T_FUNCTION = 22,
+    T_GE = 23,
+    T_GT = 24,
+    T_GT_GT = 25,
+    T_GT_GT_EQ = 26,
+    T_GT_GT_GT = 27,
+    T_GT_GT_GT_EQ = 28,
+    T_IDENTIFIER = 29,
+    T_IF = 30,
+    T_IN = 31,
+    T_INSTANCEOF = 32,
+    T_LBRACE = 33,
+    T_LBRACKET = 34,
+    T_LE = 35,
+    T_LPAREN = 36,
+    T_LT = 37,
+    T_LT_LT = 38,
+    T_LT_LT_EQ = 39,
+    T_MINUS = 40,
+    T_MINUS_EQ = 41,
+    T_MINUS_MINUS = 42,
+    T_NEW = 43,
+    T_NOT = 44,
+    T_NOT_EQ = 45,
+    T_NOT_EQ_EQ = 46,
+    T_NULL = 78,
+    T_NUMERIC_LITERAL = 47,
+    T_OR = 48,
+    T_OR_EQ = 49,
+    T_OR_OR = 50,
+    T_PLUS = 51,
+    T_PLUS_EQ = 52,
+    T_PLUS_PLUS = 53,
+    T_QUESTION = 54,
+    T_RBRACE = 55,
+    T_RBRACKET = 56,
+    T_REMAINDER = 57,
+    T_REMAINDER_EQ = 58,
+    T_RESERVED_WORD = 83,
+    T_RETURN = 59,
+    T_RPAREN = 60,
+    T_SEMICOLON = 61,
+    T_STAR = 63,
+    T_STAR_EQ = 64,
+    T_STRING_LITERAL = 65,
+    T_SWITCH = 66,
+    T_THIS = 67,
+    T_THROW = 68,
+    T_TILDE = 69,
+    T_TRUE = 79,
+    T_TRY = 70,
+    T_TYPEOF = 71,
+    T_VAR = 72,
+    T_VOID = 73,
+    T_WHILE = 74,
+    T_WITH = 75,
+    T_XOR = 76,
+    T_XOR_EQ = 77,
+
+    ACCEPT_STATE = 236,
+    RULE_COUNT = 267,
+    STATE_COUNT = 465,
+    TERMINAL_COUNT = 84,
+    NON_TERMINAL_COUNT = 88,
+
+    GOTO_INDEX_OFFSET = 465,
+    GOTO_INFO_OFFSET = 1373,
+    GOTO_CHECK_OFFSET = 1373
+  };
+
+  static inline int nt_action (int state, int nt)
+  {
+    const int yyn = QScriptGrammar_action_index[GOTO_INDEX_OFFSET + state] + nt;
+    if (yyn < 0 || QScriptGrammar_action_check[GOTO_CHECK_OFFSET + yyn] != nt)
+      return QScriptGrammar_goto_default[nt];
+
+    return QScriptGrammar_action_info[GOTO_INFO_OFFSET + yyn];
+  }
+
+  static inline int t_action (int state, int token)
+  {
+    const int yyn = QScriptGrammar_action_index[state] + token;
+
+    if (yyn < 0 || QScriptGrammar_action_check[yyn] != token)
+      return - QScriptGrammar_action_default[state];
+
+    return QScriptGrammar_action_info[yyn];
+  }
+};
 
 
 #define Q_SCRIPT_REGEXPLITERAL_RULE1 7
@@ -2225,7 +2215,7 @@ bool QScriptParser::parse()
   while (true)
     {
       const int state = state_stack [tos];
-      if (yytoken == -1 && - TERMINAL_COUNT != action_index [state])
+      if (yytoken == -1 && - TERMINAL_COUNT != QScriptGrammar_action_index[state])
         {
           if (saved_yytoken == -1)
             {
@@ -2259,7 +2249,7 @@ bool QScriptParser::parse()
         {
           int r = - act - 1;
 
-          tos -= rhs [r];
+          tos -= QScriptGrammar_rhs[r];
           act = state_stack [tos++];
 
           switch (r) {
@@ -2401,12 +2391,12 @@ case 94: {
 
           } // switch
 
-          state_stack [tos] = nt_action (act, lhs [r] - TERMINAL_COUNT);
+          state_stack [tos] = nt_action (act, QScriptGrammar_lhs[r] - TERMINAL_COUNT);
 
-          if (rhs[r] > 1) {
-              location_stack[tos - 1].endLine = location_stack[tos + rhs[r] - 2].endLine;
-              location_stack[tos - 1].endColumn = location_stack[tos + rhs[r] - 2].endColumn;
-              location_stack[tos] = location_stack[tos + rhs[r] - 1];
+          if (QScriptGrammar_rhs[r] > 1) {
+              location_stack[tos - 1].endLine = location_stack[tos + QScriptGrammar_rhs[r] - 2].endLine;
+              location_stack[tos - 1].endColumn = location_stack[tos + QScriptGrammar_rhs[r] - 2].endColumn;
+              location_stack[tos] = location_stack[tos + QScriptGrammar_rhs[r] - 1];
           }
         }
 
@@ -2437,7 +2427,7 @@ case 94: {
                 continue;
               else if (k < 0)
                 ++reduces;
-              else if (spell [tk])
+              else if (QScriptGrammar_spell[tk])
                 {
                   if (shifts < 3)
                     expected_tokens [shifts] = tk;
@@ -2463,7 +2453,7 @@ case 94: {
 
                   first = false;
                   error_message += QLatin1String("`");
-                  error_message += QLatin1String (spell [expected_tokens [s]]);
+                  error_message += QLatin1String(QScriptGrammar_spell[expected_tokens[s]]);
                   error_message += QLatin1String("'");
                 }
             }

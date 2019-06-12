@@ -71,7 +71,7 @@ SyntaxChecker::Result SyntaxChecker::checkSyntax(const QString &code)
   while (true)
     {
       const int state = state_stack [tos];
-      if (yytoken == -1 && - TERMINAL_COUNT != action_index [state])
+      if (yytoken == -1 && - TERMINAL_COUNT != QScriptGrammar_action_index[state])
         {
           if (saved_yytoken == -1)
             yytoken = lexer.lex();
@@ -102,7 +102,7 @@ SyntaxChecker::Result SyntaxChecker::checkSyntax(const QString &code)
         {
           int r = - act - 1;
 
-          tos -= rhs [r];
+          tos -= QScriptGrammar_rhs [r];
           act = state_stack [tos++];
 
           if ((r == Q_SCRIPT_REGEXPLITERAL_RULE1)
@@ -115,7 +115,7 @@ SyntaxChecker::Result SyntaxChecker::checkSyntax(const QString &code)
               }
           }
 
-          state_stack [tos] = nt_action (act, lhs [r] - TERMINAL_COUNT);
+          state_stack [tos] = nt_action (act, QScriptGrammar_lhs [r] - TERMINAL_COUNT);
         }
 
       else
@@ -145,10 +145,10 @@ SyntaxChecker::Result SyntaxChecker::checkSyntax(const QString &code)
                 continue;
               else if (k < 0)
                 ++reduces;
-              else if (spell [tk])
+              else if (QScriptGrammar_spell[tk])
                 {
                   if (shifts < 3)
-                    expected_tokens [shifts] = tk;
+                    expected_tokens[shifts] = tk;
                   ++shifts;
                 }
             }
@@ -167,7 +167,7 @@ SyntaxChecker::Result SyntaxChecker::checkSyntax(const QString &code)
 
                   first = false;
                   error_message += QLatin1Char('`');
-                  error_message += QLatin1String (spell [expected_tokens [s]]);
+                  error_message += QLatin1String (QScriptGrammar_spell[expected_tokens [s]]);
                   error_message += QLatin1Char('\'');
                 }
             }

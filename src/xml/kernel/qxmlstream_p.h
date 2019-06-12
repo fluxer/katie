@@ -58,110 +58,7 @@
 #  undef ERROR
 #endif
 
-class QXmlStreamReader_Table
-{
-public:
-  enum VariousConstants {
-    EOF_SYMBOL = 0,
-    AMPERSAND = 5,
-    ANY = 41,
-    ATTLIST = 31,
-    BANG = 25,
-    CDATA = 47,
-    CDATA_START = 28,
-    COLON = 17,
-    COMMA = 19,
-    DASH = 20,
-    DBLQUOTE = 8,
-    DIGIT = 27,
-    DOCTYPE = 29,
-    DOT = 23,
-    ELEMENT = 30,
-    EMPTY = 40,
-    ENTITIES = 51,
-    ENTITY = 32,
-    ENTITY_DONE = 45,
-    EQ = 14,
-    ERROR = 43,
-    FIXED = 39,
-    HASH = 6,
-    ID = 48,
-    IDREF = 49,
-    IDREFS = 50,
-    IMPLIED = 38,
-    LANGLE = 3,
-    LBRACK = 9,
-    LETTER = 26,
-    LPAREN = 11,
-    NDATA = 36,
-    NMTOKEN = 52,
-    NMTOKENS = 53,
-    NOTATION = 33,
-    NOTOKEN = 1,
-    PARSE_ENTITY = 44,
-    PCDATA = 42,
-    PERCENT = 15,
-    PIPE = 13,
-    PLUS = 21,
-    PUBLIC = 35,
-    QUESTIONMARK = 24,
-    QUOTE = 7,
-    RANGLE = 4,
-    RBRACK = 10,
-    REQUIRED = 37,
-    RPAREN = 12,
-    SEMICOLON = 18,
-    SHIFT_THERE = 56,
-    SLASH = 16,
-    SPACE = 2,
-    STAR = 22,
-    SYSTEM = 34,
-    UNRESOLVED_ENTITY = 46,
-    VERSION = 55,
-    XML = 54,
-
-    ACCEPT_STATE = 416,
-    RULE_COUNT = 270,
-    STATE_COUNT = 427,
-    TERMINAL_COUNT = 57,
-    NON_TERMINAL_COUNT = 84,
-
-    GOTO_INDEX_OFFSET = 427,
-    GOTO_INFO_OFFSET = 1030,
-    GOTO_CHECK_OFFSET = 1030
-  };
-
-  static const char  *const    spell [];
-  static const short             lhs [];
-  static const short             rhs [];
-  static const short    goto_default [];
-  static const short  action_default [];
-  static const short    action_index [];
-  static const short     action_info [];
-  static const short    action_check [];
-
-  static inline int nt_action (int state, int nt)
-  {
-    const int yyn = action_index [GOTO_INDEX_OFFSET + state] + nt;
-    if (yyn < 0 || action_check [GOTO_CHECK_OFFSET + yyn] != nt)
-      return goto_default [nt];
-
-    return action_info [GOTO_INFO_OFFSET + yyn];
-  }
-
-  static inline int t_action (int state, int token)
-  {
-    const int yyn = action_index [state] + token;
-
-    if (yyn < 0 || action_check [yyn] != token)
-      return - action_default [state];
-
-    return action_info [yyn];
-  }
-};
-
-
-const char *const QXmlStreamReader_Table::spell [] = {
+static const char *const QXmlStreamReader_spell [] = {
   "end of file", 0, " ", "<", ">", "&", "#", "\'", "\"", "[", 
   "]", "(", ")", "|", "=", "%", "/", ":", ";", ",", 
   "-", "+", "*", ".", "?", "!", "[a-zA-Z]", "[0-9]", "[CDATA[", "DOCTYPE", 
@@ -169,7 +66,7 @@ const char *const QXmlStreamReader_Table::spell [] = {
   "EMPTY", "ANY", "PCDATA", 0, 0, 0, 0, "CDATA", "ID", "IDREF", 
   "IDREFS", "ENTITIES", "NMTOKEN", "NMTOKENS", "<?xml", "version", 0};
 
-const short QXmlStreamReader_Table::lhs [] = {
+static const short QXmlStreamReader_lhs [] = {
   57, 57, 59, 59, 59, 59, 59, 59, 59, 59, 
   67, 68, 64, 72, 72, 72, 75, 66, 66, 66, 
   66, 79, 78, 80, 80, 80, 80, 80, 80, 80, 
@@ -198,7 +95,7 @@ const short QXmlStreamReader_Table::lhs [] = {
   58, 58, 58, 58, 58, 58, 58, 58, 58, 74, 
   69, 69, 77, 111, 102, 102, 102, 102, 102, 140};
 
-const short QXmlStreamReader_Table::rhs [] = {
+static const short QXmlStreamReader_rhs [] = {
   2, 1, 4, 2, 2, 2, 2, 2, 2, 0, 
   1, 1, 9, 2, 4, 0, 4, 4, 6, 6, 
   4, 1, 3, 1, 1, 1, 2, 2, 2, 0, 
@@ -227,7 +124,7 @@ const short QXmlStreamReader_Table::rhs [] = {
   4, 2, 2, 2, 2, 2, 2, 2, 0, 1, 
   0, 1, 1, 1, 1, 1, 1, 1, 1, 2};
 
-const short QXmlStreamReader_Table::action_default [] = {
+static const short QXmlStreamReader_action_default [] = {
   10, 259, 0, 2, 1, 0, 125, 117, 119, 120, 
   127, 129, 123, 11, 114, 108, 0, 109, 128, 111, 
   115, 113, 121, 124, 126, 107, 110, 112, 118, 116, 
@@ -272,7 +169,7 @@ const short QXmlStreamReader_Table::action_default [] = {
   261, 0, 231, 0, 0, 13, 270, 9, 5, 8, 
   4, 0, 7, 259, 6, 0, 3};
 
-const short QXmlStreamReader_Table::goto_default [] = {
+static const short QXmlStreamReader_goto_default [] = {
   2, 4, 3, 49, 388, 43, 37, 52, 47, 41, 
   249, 53, 127, 84, 393, 81, 85, 126, 42, 46, 
   169, 130, 131, 146, 145, 149, 138, 136, 140, 147, 
@@ -283,7 +180,7 @@ const short QXmlStreamReader_Table::goto_default [] = {
   264, 252, 251, 250, 339, 326, 325, 329, 398, 399, 
   50, 51, 59, 0};
 
-const short QXmlStreamReader_Table::action_index [] = {
+static const short QXmlStreamReader_action_index [] = {
   -39, -57, 7, 112, 918, 40, -57, -57, -57, -57, 
   -57, -57, -57, -57, -57, -57, 113, -57, -57, -57, 
   -57, -57, -57, -57, -57, -57, -57, -57, -57, -57, 
@@ -372,7 +269,7 @@ const short QXmlStreamReader_Table::action_index [] = {
   10, 22, 73, -84, -84, -84, -84, -84, -84, -84, 
   -84, -84, -84, 11, -84, 98, -84};
 
-const short QXmlStreamReader_Table::action_info [] = {
+static const short QXmlStreamReader_action_info [] = {
   70, 65, 410, 414, 415, 1, 55, 416, 392, 65, 
   397, 63, 374, 73, 385, 373, 65, 377, 408, 332, 
   65, 65, 351, 55, 182, 133, 405, 270, 189, 216, 
@@ -506,7 +403,7 @@ const short QXmlStreamReader_Table::action_info [] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0};
 
-const short QXmlStreamReader_Table::action_check [] = {
+static const short QXmlStreamReader_action_check [] = {
   2, 26, 14, 24, 4, 44, 26, 0, 4, 26, 
   4, 18, 4, 4, 4, 4, 26, 4, 55, 18, 
   26, 26, 20, 26, 19, 4, 14, 4, 13, 4, 
@@ -640,6 +537,99 @@ const short QXmlStreamReader_Table::action_check [] = {
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
   -1, -1, -1, -1, -1, -1, -1, -1};
 
+
+class QXmlStreamReader_Table
+{
+public:
+  enum VariousConstants {
+    EOF_SYMBOL = 0,
+    AMPERSAND = 5,
+    ANY = 41,
+    ATTLIST = 31,
+    BANG = 25,
+    CDATA = 47,
+    CDATA_START = 28,
+    COLON = 17,
+    COMMA = 19,
+    DASH = 20,
+    DBLQUOTE = 8,
+    DIGIT = 27,
+    DOCTYPE = 29,
+    DOT = 23,
+    ELEMENT = 30,
+    EMPTY = 40,
+    ENTITIES = 51,
+    ENTITY = 32,
+    ENTITY_DONE = 45,
+    EQ = 14,
+    ERROR = 43,
+    FIXED = 39,
+    HASH = 6,
+    ID = 48,
+    IDREF = 49,
+    IDREFS = 50,
+    IMPLIED = 38,
+    LANGLE = 3,
+    LBRACK = 9,
+    LETTER = 26,
+    LPAREN = 11,
+    NDATA = 36,
+    NMTOKEN = 52,
+    NMTOKENS = 53,
+    NOTATION = 33,
+    NOTOKEN = 1,
+    PARSE_ENTITY = 44,
+    PCDATA = 42,
+    PERCENT = 15,
+    PIPE = 13,
+    PLUS = 21,
+    PUBLIC = 35,
+    QUESTIONMARK = 24,
+    QUOTE = 7,
+    RANGLE = 4,
+    RBRACK = 10,
+    REQUIRED = 37,
+    RPAREN = 12,
+    SEMICOLON = 18,
+    SHIFT_THERE = 56,
+    SLASH = 16,
+    SPACE = 2,
+    STAR = 22,
+    SYSTEM = 34,
+    UNRESOLVED_ENTITY = 46,
+    VERSION = 55,
+    XML = 54,
+
+    ACCEPT_STATE = 416,
+    RULE_COUNT = 270,
+    STATE_COUNT = 427,
+    TERMINAL_COUNT = 57,
+    NON_TERMINAL_COUNT = 84,
+
+    GOTO_INDEX_OFFSET = 427,
+    GOTO_INFO_OFFSET = 1030,
+    GOTO_CHECK_OFFSET = 1030
+  };
+
+  static inline int nt_action (int state, int nt)
+  {
+    const int yyn = QXmlStreamReader_action_index[GOTO_INDEX_OFFSET + state] + nt;
+    if (yyn < 0 || QXmlStreamReader_action_check[GOTO_CHECK_OFFSET + yyn] != nt)
+      return QXmlStreamReader_goto_default [nt];
+
+    return QXmlStreamReader_action_info[GOTO_INFO_OFFSET + yyn];
+  }
+
+  static inline int t_action (int state, int token)
+  {
+    const int yyn = QXmlStreamReader_action_index[state] + token;
+
+    if (yyn < 0 || QXmlStreamReader_action_check[yyn] != token)
+      return - QXmlStreamReader_action_default[state];
+
+    return QXmlStreamReader_action_info[yyn];
+  }
+};
 
 template <typename T> class QXmlStreamSimpleStack {
     T *data;
@@ -980,7 +970,6 @@ public:
     bool scanAfterDefaultDecl();
     bool scanAttType();
 
-
     // scan optimization functions. Not strictly necessary but LALR is
     // not very well suited for scanning fast
     int fastScanLiteralContent();
@@ -988,7 +977,6 @@ public:
     int fastScanContentCharList();
     int fastScanName(int *prefix = Q_NULLPTR);
     inline int fastScanNMTOKEN();
-
 
     bool parse();
     inline void consumeRule(int);
@@ -1103,7 +1091,7 @@ bool QXmlStreamReaderPrivate::parse()
     act = state_stack[tos];
 
     forever {
-        if (token == -1 && - TERMINAL_COUNT != action_index[act]) {
+        if (token == -1 && - TERMINAL_COUNT != QXmlStreamReader_action_index[act]) {
             uint cu = getChar();
             token = NOTOKEN;
             token_char = cu;
@@ -1262,11 +1250,11 @@ bool QXmlStreamReaderPrivate::parse()
 
 #if defined (QLALR_DEBUG)
             int ridx = rule_index[r];
-            printf ("%3d) %s ::=", r + 1, spell[rule_info[ridx]]);
+            printf ("%3d) %s ::=", r + 1, QXmlStreamReader_spell[rule_info[ridx]]);
             ++ridx;
-            for (int i = ridx; i < ridx + rhs[r]; ++i) {
+            for (int i = ridx; i < ridx + QXmlStreamReader_rhs[r]; ++i) {
                 int symbol = rule_info[i];
-                if (const char *name = spell[symbol])
+                if (const char *name = QXmlStreamReader_spell[symbol])
                     printf (" %s", name);
                 else
                     printf (" #%d", symbol);
@@ -1274,7 +1262,7 @@ bool QXmlStreamReaderPrivate::parse()
             printf ("\n");
 #endif
 
-            tos -= rhs[r];
+            tos -= QXmlStreamReader_rhs[r];
             act = state_stack[tos++];
         ResumeReduction:
             switch (r) {
@@ -1304,7 +1292,7 @@ bool QXmlStreamReaderPrivate::parse()
         break;
 
         case 11:
-            if (!scanString(spell[VERSION], VERSION, false) && atEnd) {
+            if (!scanString(QXmlStreamReader_spell[VERSION], VERSION, false) && atEnd) {
                 resume(11);
                 return false;
             }
@@ -1356,8 +1344,8 @@ bool QXmlStreamReaderPrivate::parse()
         break;
 
         case 37:
-            if (!scanString(spell[EMPTY], EMPTY, false)
-                && !scanString(spell[ANY], ANY, false)
+            if (!scanString(QXmlStreamReader_spell[EMPTY], EMPTY, false)
+                && !scanString(QXmlStreamReader_spell[ANY], ANY, false)
                 && atEnd) {
                 resume(37);
                 return false;
@@ -1365,7 +1353,7 @@ bool QXmlStreamReaderPrivate::parse()
         break;
 
         case 43:
-            if (!scanString(spell[PCDATA], PCDATA, false) && atEnd) {
+            if (!scanString(QXmlStreamReader_spell[PCDATA], PCDATA, false) && atEnd) {
                 resume(43);
                 return false;
             }
@@ -1948,7 +1936,7 @@ bool QXmlStreamReaderPrivate::parse()
     default:
         ;
     } // switch
-            act = state_stack[tos] = nt_action (act, lhs[r] - TERMINAL_COUNT);
+            act = state_stack[tos] = nt_action (act, QXmlStreamReader_lhs[r] - TERMINAL_COUNT);
             if (type != QXmlStreamReader::NoToken)
                 return true;
         } else {

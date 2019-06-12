@@ -215,7 +215,6 @@ public:
         ProcessingInstruction
     };
 
-
     QXmlStreamReader();
     QXmlStreamReader(QIODevice *device);
     QXmlStreamReader(const QByteArray &data);
@@ -229,7 +228,6 @@ public:
     void addData(const QString &data);
     void addData(const char *data);
     void clear();
-
 
     bool atEnd() const;
     TokenType readNext();
@@ -292,7 +290,6 @@ public:
     QStringRef dtdPublicId() const;
     QStringRef dtdSystemId() const;
 
-
     enum Error {
         NoError,
         UnexpectedElementError,
@@ -353,8 +350,8 @@ public:
 
     void writeAttribute(const QString &qualifiedName, const QString &value);
     void writeAttribute(const QString &namespaceUri, const QString &name, const QString &value);
-    void writeAttribute(const QXmlStreamAttribute& attribute);
-    void writeAttributes(const QXmlStreamAttributes& attributes);
+    void writeAttribute(const QXmlStreamAttribute &attribute);
+    void writeAttributes(const QXmlStreamAttributes &attributes);
 
     void writeCDATA(const QString &text);
     void writeCharacters(const QString &text);

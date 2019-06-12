@@ -1033,17 +1033,17 @@ bool QXmlStreamReaderPrivate::scanAfterLangleBang()
 {
     switch (peekChar()) {
     case '[':
-        return scanString(spell[CDATA_START], CDATA_START, false);
+        return scanString(QXmlStreamReader_spell[CDATA_START], CDATA_START, false);
     case 'D':
-        return scanString(spell[DOCTYPE], DOCTYPE);
+        return scanString(QXmlStreamReader_spell[DOCTYPE], DOCTYPE);
     case 'A':
-        return scanString(spell[ATTLIST], ATTLIST);
+        return scanString(QXmlStreamReader_spell[ATTLIST], ATTLIST);
     case 'N':
-        return scanString(spell[NOTATION], NOTATION);
+        return scanString(QXmlStreamReader_spell[NOTATION], NOTATION);
     case 'E':
-        if (scanString(spell[ELEMENT], ELEMENT))
+        if (scanString(QXmlStreamReader_spell[ELEMENT], ELEMENT))
             return true;
-        return scanString(spell[ENTITY], ENTITY);
+        return scanString(QXmlStreamReader_spell[ENTITY], ENTITY);
 
     default:
         ;
@@ -1055,9 +1055,9 @@ bool QXmlStreamReaderPrivate::scanPublicOrSystem()
 {
     switch (peekChar()) {
     case 'S':
-        return scanString(spell[SYSTEM], SYSTEM);
+        return scanString(QXmlStreamReader_spell[SYSTEM], SYSTEM);
     case 'P':
-        return scanString(spell[PUBLIC], PUBLIC);
+        return scanString(QXmlStreamReader_spell[PUBLIC], PUBLIC);
     default:
         ;
     }
@@ -1067,7 +1067,7 @@ bool QXmlStreamReaderPrivate::scanPublicOrSystem()
 bool QXmlStreamReaderPrivate::scanNData()
 {
     if (fastScanSpace()) {
-        if (scanString(spell[NDATA], NDATA))
+        if (scanString(QXmlStreamReader_spell[NDATA], NDATA))
             return true;
         putChar(' ');
     }
@@ -1078,11 +1078,11 @@ bool QXmlStreamReaderPrivate::scanAfterDefaultDecl()
 {
     switch (peekChar()) {
     case 'R':
-        return scanString(spell[REQUIRED], REQUIRED, false);
+        return scanString(QXmlStreamReader_spell[REQUIRED], REQUIRED, false);
     case 'I':
-        return scanString(spell[IMPLIED], IMPLIED, false);
+        return scanString(QXmlStreamReader_spell[IMPLIED], IMPLIED, false);
     case 'F':
-        return scanString(spell[FIXED], FIXED, false);
+        return scanString(QXmlStreamReader_spell[FIXED], FIXED, false);
     default:
         ;
     }
@@ -1093,23 +1093,23 @@ bool QXmlStreamReaderPrivate::scanAttType()
 {
     switch (peekChar()) {
     case 'C':
-        return scanString(spell[CDATA], CDATA);
+        return scanString(QXmlStreamReader_spell[CDATA], CDATA);
     case 'I':
-        if (scanString(spell[ID], ID))
+        if (scanString(QXmlStreamReader_spell[ID], ID))
             return true;
-        if (scanString(spell[IDREF], IDREF))
+        if (scanString(QXmlStreamReader_spell[IDREF], IDREF))
             return true;
-        return scanString(spell[IDREFS], IDREFS);
+        return scanString(QXmlStreamReader_spell[IDREFS], IDREFS);
     case 'E':
-        if (scanString(spell[ENTITY], ENTITY))
+        if (scanString(QXmlStreamReader_spell[ENTITY], ENTITY))
             return true;
-        return scanString(spell[ENTITIES], ENTITIES);
+        return scanString(QXmlStreamReader_spell[ENTITIES], ENTITIES);
     case 'N':
-        if (scanString(spell[NOTATION], NOTATION))
+        if (scanString(QXmlStreamReader_spell[NOTATION], NOTATION))
             return true;
-        if (scanString(spell[NMTOKEN], NMTOKEN))
+        if (scanString(QXmlStreamReader_spell[NMTOKEN], NMTOKEN))
             return true;
-        return scanString(spell[NMTOKENS], NMTOKENS);
+        return scanString(QXmlStreamReader_spell[NMTOKENS], NMTOKENS);
     default:
         ;
     }
@@ -1692,7 +1692,7 @@ bool QXmlStreamReaderPrivate::checkStartDocument()
 {
     hasCheckedStartDocument = true;
 
-    if (scanString(spell[XML], XML))
+    if (scanString(QXmlStreamReader_spell[XML], XML))
         return true;
 
     type = QXmlStreamReader::StartDocument;
@@ -1804,7 +1804,7 @@ void QXmlStreamReaderPrivate::parseError()
             int k = t_action(ers, tk);
             if (k <= 0)
                 continue;
-            if (spell[tk]) {
+            if (QXmlStreamReader_spell[tk]) {
                 if (nexpected < nmax)
                     expected[nexpected++] = tk;
             }
@@ -1824,15 +1824,15 @@ void QXmlStreamReaderPrivate::parseError()
 
             first = false;
             error_message += QLatin1String("\'");
-            error_message += QLatin1String (spell [expected[s]]);
+            error_message += QLatin1String (QXmlStreamReader_spell [expected[s]]);
             error_message += QLatin1String("\'");
         }
         error_message += QXmlStream::tr(", but got \'");
-        error_message += QLatin1String(spell [token]);
+        error_message += QLatin1String(QXmlStreamReader_spell [token]);
         error_message += QLatin1String("\'");
     } else {
         error_message += QXmlStream::tr("Unexpected \'");
-        error_message += QLatin1String(spell [token]);
+        error_message += QLatin1String(QXmlStreamReader_spell [token]);
         error_message += QLatin1String("\'");
     }
     error_message += QLatin1Char('.');
