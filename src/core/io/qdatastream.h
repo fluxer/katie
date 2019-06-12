@@ -56,13 +56,7 @@ class Q_CORE_EXPORT QDataStream
 {
 public:
     enum Version {
-        Qt_4_0 = 6,
-        Qt_4_1 = Qt_4_0,
-        Qt_4_2 = Qt_4_1,
-        Qt_4_3 = Qt_4_2,
-        Qt_4_4 = Qt_4_3,
-        Qt_4_5 = Qt_4_4,
-        Qt_4_6 = Qt_4_5,
+        Qt_4_6 = 12,
         Qt_4_7 = Qt_4_6,
         Qt_4_8 = Qt_4_7,
         Qt_4_9 = Qt_4_8,
@@ -111,8 +105,8 @@ public:
     ByteOrder byteOrder() const;
     void setByteOrder(ByteOrder);
 
-    int version() const;
-    void setVersion(int);
+    Version version() const;
+    void setVersion(Version);
 
     QDataStream &operator>>(qint8 &i);
     QDataStream &operator>>(quint8 &i);
@@ -159,7 +153,7 @@ private:
     bool owndev;
     bool noswap;
     ByteOrder byteorder;
-    int ver;
+    Version ver;
     DataStatus q_status;
 };
 
@@ -174,10 +168,10 @@ inline QIODevice *QDataStream::device() const
 inline QDataStream::ByteOrder QDataStream::byteOrder() const
 { return byteorder; }
 
-inline int QDataStream::version() const
+inline QDataStream::Version QDataStream::version() const
 { return ver; }
 
-inline void QDataStream::setVersion(int v)
+inline void QDataStream::setVersion(QDataStream::Version v)
 { ver = v; }
 
 inline QDataStream &QDataStream::operator>>(quint8 &i)
@@ -252,7 +246,7 @@ template <typename T>
 QDataStream& operator<<(QDataStream& s, const QLinkedList<T>& l)
 {
     s << quint32(l.size());
-    typename QLinkedList<T>::ConstIterator it = l.constBegin();
+    typename QLinkedList<T>::const_iterator it = l.constBegin();
     for(; it != l.constEnd(); ++it)
         s << *it;
     return s;
@@ -302,11 +296,8 @@ template <typename T>
 QDataStream& operator<<(QDataStream &out, const QSet<T> &set)
 {
     out << quint32(set.size());
-    typename QSet<T>::const_iterator i = set.constBegin();
-    while (i != set.constEnd()) {
-        out << *i;
-        ++i;
-    }
+    for (typename QSet<T>::const_iterator it = set.begin(); it != set.end(); ++it)
+        out << *it;
     return out;
 }
 
@@ -341,8 +332,8 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QHash<Key, T>& hash)
 {
     out << quint32(hash.size());
-    typename QHash<Key, T>::ConstIterator it = hash.end();
-    typename QHash<Key, T>::ConstIterator begin = hash.begin();
+    typename QHash<Key, T>::const_iterator it = hash.end();
+    typename QHash<Key, T>::const_iterator begin = hash.begin();
     while (it != begin) {
         --it;
         out << it.key() << it.value();
@@ -382,8 +373,8 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QMap<Key, T> &map)
 {
     out << quint32(map.size());
-    typename QMap<Key, T>::ConstIterator it = map.end();
-    typename QMap<Key, T>::ConstIterator begin = map.begin();
+    typename QMap<Key, T>::const_iterator it = map.end();
+    typename QMap<Key, T>::const_iterator begin = map.begin();
     while (it != begin) {
         --it;
         out << it.key() << it.value();

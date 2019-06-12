@@ -293,12 +293,11 @@ void QRegion::detach()
     If \a ver is non-0, uses the format version \a ver on reading the
     byte array.
 */
-void QRegion::exec(const QByteArray &buffer, int ver, QDataStream::ByteOrder byteOrder)
+void QRegion::exec(const QByteArray &buffer, QDataStream::Version ver, QDataStream::ByteOrder byteOrder)
 {
     QByteArray copy = buffer;
     QDataStream s(&copy, QIODevice::ReadOnly);
-    if (ver)
-        s.setVersion(ver);
+    s.setVersion(ver);
     s.setByteOrder(byteOrder);
     QRegion rgn;
 #ifndef QT_NO_DEBUG

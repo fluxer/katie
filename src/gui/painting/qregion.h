@@ -146,7 +146,7 @@ private:
     friend struct QRegionPrivate;
 
 #ifndef QT_NO_DATASTREAM
-    void exec(const QByteArray &ba, int ver = 0, QDataStream::ByteOrder byteOrder = QDataStream::BigEndian);
+    void exec(const QByteArray &ba, QDataStream::Version ver = QDataStream::Qt_Default, QDataStream::ByteOrder byteOrder = QDataStream::BigEndian);
 #endif
     struct QRegionData {
         QAtomicInt ref;

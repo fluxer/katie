@@ -544,7 +544,7 @@ void QDataStream::setByteOrder(ByteOrder bo)
 */
 
 /*!
-    \fn void QDataStream::setVersion(int v)
+    \fn void QDataStream::setVersion(Version v)
 
     Sets the version number of the data serialization format to \a v.
 
@@ -566,17 +566,6 @@ void QDataStream::setByteOrder(ByteOrder bo)
     \row \i Qt 4.8                  \i 12
     \row \i Qt 4.7                  \i 12
     \row \i Qt 4.6                  \i 12
-    \row \i Qt 4.5                  \i 11
-    \row \i Qt 4.4                  \i 10
-    \row \i Qt 4.3                  \i 9
-    \row \i Qt 4.2                  \i 8
-    \row \i Qt 4.0, 4.1             \i 7
-    \row \i Qt 3.3                  \i 6
-    \row \i Qt 3.1, 3.2             \i 5
-    \row \i Qt 3.0                  \i 4
-    \row \i Qt 2.1, 2.2, 2.3        \i 3
-    \row \i Qt 2.0                  \i 2
-    \row \i Qt 1.x                  \i 1
     \endtable
 
     The \l Version enum provides symbolic constants for the different
@@ -697,18 +686,12 @@ QDataStream &QDataStream::operator>>(qint64 &i)
 {
     i = qint64(0);
     CHECK_STREAM_PRECOND(*this)
-    if (version() < 6) {
-        quint32 i1, i2;
-        *this >> i2 >> i1;
-        i = ((quint64)i1 << 32) + i2;
+    if (dev->read((char *)&i, 8) != 8) {
+        i = qint64(0);
+        setStatus(ReadPastEnd);
     } else {
-        if (dev->read((char *)&i, 8) != 8) {
-            i = qint64(0);
-            setStatus(ReadPastEnd);
-        } else {
-            if (!noswap) {
-                i = qbswap(i);
-            }
+        if (!noswap) {
+            i = qbswap(i);
         }
     }
     return *this;
