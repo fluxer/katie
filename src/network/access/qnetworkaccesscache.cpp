@@ -54,13 +54,11 @@ enum ExpiryTimeEnum {
     ExpiryTime = 120
 };
 
-namespace {
-    struct Receiver
-    {
-        QPointer<QObject> object;
-        const char *member;
-    };
-}
+struct Receiver
+{
+    QPointer<QObject> object;
+    const char *member;
+};
 
 // idea copied from qcache.h
 struct QNetworkAccessCache::Node
