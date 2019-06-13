@@ -79,10 +79,10 @@ public:
     mutable QSizeF cachedConstraint;
     mutable QSizeF cachedSizeHintsWithConstraints[Qt::NSizeHints];
 
-    mutable quint32 sizeHintCacheDirty : 1;
-    mutable quint32 sizeHintWithConstraintCacheDirty : 1;
-    quint32 isLayout : 1;
-    quint32 ownedByLayout : 1;
+    mutable bool sizeHintCacheDirty;
+    mutable bool sizeHintWithConstraintCacheDirty;
+    bool isLayout;
+    bool ownedByLayout;
 
     QGraphicsLayoutItem *q_ptr;
     QRectF geom;
