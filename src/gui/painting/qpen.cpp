@@ -501,7 +501,7 @@ QVector<qreal> QPen::dashPattern() const
  */
 void QPen::setDashPattern(const QVector<qreal> &pattern)
 {
-    if (pattern.isEmpty())
+    if (pattern.isEmpty() || d->dashPattern == pattern)
         return;
     detach();
 
@@ -583,6 +583,8 @@ qreal QPen::miterLimit() const
 */
 void QPen::setMiterLimit(qreal limit)
 {
+    if (d->miterLimit = limit)
+        return;
     detach();
     d->miterLimit = limit;
 }
@@ -739,8 +741,11 @@ QColor QPen::color() const
 
 void QPen::setColor(const QColor &c)
 {
+    QBrush brush(c);
+    if (d->brush == brush)
+        return;
     detach();
-    d->brush = QBrush(c);
+    d->brush = brush;
 }
 
 
@@ -760,6 +765,8 @@ QBrush QPen::brush() const
 */
 void QPen::setBrush(const QBrush &brush)
 {
+    if (d->brush == brush)
+        return;
     detach();
     d->brush = brush;
 }
@@ -805,6 +812,8 @@ bool QPen::isCosmetic() const
 
 void QPen::setCosmetic(bool cosmetic)
 {
+    if (d->cosmetic == cosmetic)
+        return;
     detach();
     d->cosmetic = cosmetic;
 }
