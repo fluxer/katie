@@ -88,7 +88,7 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
     Q_ASSERT(windowSurface);
     Q_ASSERT(tlw);
 
-#if !defined(QT_NO_PAINT_DEBUG)
+#if !defined(QT_NO_DEBUG)
     static int flushUpdate = qgetenv("QT_FLUSH_UPDATE").toInt();
     if (flushUpdate > 0)
         QWidgetBackingStore::showYellowThing(widget, region, flushUpdate * 10, false);
@@ -115,7 +115,7 @@ static inline void qt_flush(QWidget *widget, const QRegion &region, QWindowSurfa
         windowSurface->flush(widget, region, tlwOffset);
 }
 
-#ifndef QT_NO_PAINT_DEBUG
+#ifndef QT_NO_DEBUG
 void QWidgetBackingStore::showYellowThing(QWidget *widget, const QRegion &toBePainted, int msec, bool unclipped)
 {
     QRegion paintRegion = toBePainted;
@@ -213,7 +213,7 @@ void QWidgetBackingStore::unflushPaint(QWidget *widget, const QRegion &rgn)
     const QPoint offset = widget->mapTo(tlw, QPoint());
     qt_flush(widget, rgn, tlwExtra->backingStore->windowSurface, tlw, offset);
 }
-#endif // QT_NO_PAINT_DEBUG
+#endif // QT_NO_DEBUG
 
 /*
     Moves the whole rect by (dx, dy) in widget's coordinate system.
@@ -245,16 +245,16 @@ void QWidgetBackingStore::releaseBuffer()
     The \a toClean region might be clipped by the window surface.
 */
 void QWidgetBackingStore::beginPaint(QRegion &toClean, QWidget *widget, QWindowSurface *windowSurface,
-                                     BeginPaintInfo *returnInfo, bool toCleanIsInTopLevelCoordinates)
+                                     BeginPaintInfo *returnInfo)
 {
     Q_UNUSED(widget);
-    Q_UNUSED(toCleanIsInTopLevelCoordinates);
 
     // Always flush repainted areas.
     dirtyOnScreen += toClean;
 
-#ifdef QT_NO_PAINT_DEBUG
+#ifdef QT_NO_DEBUG
     windowSurface->beginPaint(toClean);
+    Q_UNUSED(returnInfo);
 #else
     returnInfo->wasFlushed = QWidgetBackingStore::flushPaint(tlw, toClean);
     // Avoid deadlock with QT_FLUSH_PAINT: the server will wait for
@@ -264,14 +264,12 @@ void QWidgetBackingStore::beginPaint(QRegion &toClean, QWidget *widget, QWindowS
     if (!returnInfo->wasFlushed)
         windowSurface->beginPaint(toClean);
 #endif
-
-    Q_UNUSED(returnInfo);
 }
 
 void QWidgetBackingStore::endPaint(const QRegion &cleaned, QWindowSurface *windowSurface,
         BeginPaintInfo *beginPaintInfo)
 {
-#ifndef QT_NO_PAINT_DEBUG
+#ifndef QT_NO_DEBUG
     if (!beginPaintInfo->wasFlushed)
         windowSurface->endPaint(cleaned);
     else
@@ -644,9 +642,9 @@ void QWidgetBackingStore::removeDirtyWidget(QWidget *w)
     resetWidget(w);
 
     QWidgetPrivate *wd = w->d_func();
-    const int n = wd->children.count();
-    for (int i = 0; i < n; ++i) {
-        if (QWidget *child = qobject_cast<QWidget*>(wd->children.at(i)))
+    foreach (QObject *objchild, wd->children) {
+        QWidget *child = qobject_cast<QWidget*>(objchild);
+        if (child)
             removeDirtyWidget(child);
     }
 }
@@ -656,13 +654,10 @@ void QWidgetBackingStore::updateLists(QWidget *cur)
     if (!cur)
         return;
 
-    QList<QObject*> children = cur->children();
-    for (int i = 0; i < children.size(); ++i) {
-        QWidget *child = qobject_cast<QWidget*>(children.at(i));
-        if (!child)
-            continue;
-
-        updateLists(child);
+    foreach (QObject *objchild, cur->children()) {
+        QWidget *child = qobject_cast<QWidget*>(objchild);
+        if (child)
+            updateLists(child);
     }
 
     if (cur->testAttribute(Qt::WA_StaticContents))
@@ -1373,13 +1368,13 @@ void QWidgetPrivate::repaint_sys(const QRegion &rgn)
     if (toBePainted.isEmpty())
         return; // Nothing to repaint.
 
-#ifndef QT_NO_PAINT_DEBUG
+#ifndef QT_NO_DEBUG
     bool flushed = QWidgetBackingStore::flushPaint(q, toBePainted);
 #endif
 
     drawWidget(q, toBePainted, QPoint(), QWidgetPrivate::DrawAsRoot | QWidgetPrivate::DrawPaintOnScreen, 0);
 
-#ifndef QT_NO_PAINT_DEBUG
+#ifndef QT_NO_DEBUG
     if (flushed)
         QWidgetBackingStore::unflushPaint(q, toBePainted);
 #endif

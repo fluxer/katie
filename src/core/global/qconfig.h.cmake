@@ -224,7 +224,6 @@
 #cmakedefine QT_NO_NETWORKPROXY
 #cmakedefine QT_NO_NIS
 #cmakedefine QT_NO_NSL
-#cmakedefine QT_NO_PAINT_DEBUG
 #cmakedefine QT_NO_PDF
 #cmakedefine QT_NO_PLUGIN_CHECK
 #cmakedefine QT_NO_PRINTDIALOG

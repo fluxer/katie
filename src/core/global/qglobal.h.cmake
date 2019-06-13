@@ -771,10 +771,6 @@ Q_CORE_EXPORT void qt_assert(const char *assertion, const char *file, int line);
 #  endif
 #endif
 
-#if defined(QT_NO_DEBUG) && !defined(QT_PAINT_DEBUG)
-#define QT_NO_PAINT_DEBUG
-#endif
-
 Q_CORE_EXPORT void qt_assert_x(const char *where, const char *what, const char *file, int line);
 
 #if !defined(Q_ASSERT_X)

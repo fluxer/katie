@@ -110,7 +110,7 @@ private:
     void releaseBuffer();
 
     void beginPaint(QRegion &toClean, QWidget *widget, QWindowSurface *windowSurface,
-                    BeginPaintInfo *returnInfo, bool toCleanIsInTopLevelCoordinates = true);
+                    BeginPaintInfo *returnInfo);
     void endPaint(const QRegion &cleaned, QWindowSurface *windowSurface, BeginPaintInfo *beginPaintInfo);
 
     QRegion dirtyRegion(QWidget *widget = 0) const;

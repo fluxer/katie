@@ -4807,7 +4807,7 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
             q->setAttribute(Qt::WA_WState_InPaintEvent);
 
             //clip away the new area
-#ifndef QT_NO_PAINT_DEBUG
+#ifndef QT_NO_DEBUG
             bool flushed = QWidgetBackingStore::flushPaint(q, toBePainted);
 #endif
             QPaintEngine *paintEngine = pdev->paintEngine();
@@ -4855,7 +4855,7 @@ void QWidgetPrivate::drawWidget(QPaintDevice *pdev, const QRegion &rgn, const QP
             if (q->paintingActive() && !q->testAttribute(Qt::WA_PaintOutsidePaintEvent))
                 qWarning("QWidget::repaint: It is dangerous to leave painters active on a widget outside of the PaintEvent");
 
-#ifndef QT_NO_PAINT_DEBUG
+#ifndef QT_NO_DEBUG
             if (flushed)
                 QWidgetBackingStore::unflushPaint(q, toBePainted);
 #endif
