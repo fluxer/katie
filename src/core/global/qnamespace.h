@@ -1402,12 +1402,6 @@ public:
         CustomRaster      = 5
     };
 
-    enum RelayoutType {
-        RelayoutNormal,
-        RelayoutDragging,
-        RelayoutDropped
-    };
-
     enum Callback {
         ConnectCallback,
         DisconnectCallback,
