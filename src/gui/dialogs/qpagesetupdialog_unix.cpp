@@ -47,18 +47,18 @@
 #include "qpainter.h"
 #include "qprintdialog.h"
 #include "qdialogbuttonbox.h"
-#include <ui_qpagesetupwidget.h>
-
-#include <QtGui/qprinter.h>
+#include <qprinter.h>
 #include <qabstractpagesetupdialog_p.h>
 #include <qprinter_p.h>
+#include "qpagesetupdialog_p.h"
+
+#include <ui_qpagesetupwidget.h>
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
 #  include <qcups_p.h>
 #  include <cups/cups.h>
 #  include <qpdf_p.h>
 #endif
-
 
 QT_BEGIN_NAMESPACE
 
@@ -212,21 +212,6 @@ private:
     // all these are in points
     qreal m_left, m_top, m_right, m_bottom;
     QSizeF m_size;
-};
-
-
-class QPageSetupDialogPrivate : public QAbstractPageSetupDialogPrivate
-{
-    Q_DECLARE_PUBLIC(QPageSetupDialog)
-
-public:
-    ~QPageSetupDialogPrivate();
-    void init();
-
-    QPageSetupWidget *widget;
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
-    QCUPSSupport *cups;
-#endif
 };
 
 QPageSetupDialogPrivate::~QPageSetupDialogPrivate()

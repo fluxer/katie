@@ -45,6 +45,7 @@
 
 #include "qabstractprintdialog_p.h"
 #include "qprintdialog.h"
+#include "qprintdialog_p.h"
 #include "qfiledialog.h"
 #include "qcompleter.h"
 #include <QtCore/qdir.h>
@@ -53,8 +54,7 @@
 #include <QtGui/qfilesystemmodel.h>
 #include <QtGui/qstyleditemdelegate.h>
 #include <QtGui/qprinter.h>
-
-#include <QtGui/qdialogbuttonbox.h>
+#include <qprinterinfo_unix_p.h>
 
 #include "ui_qprintpropertieswidget.h"
 #include "ui_qprintsettingsoutput.h"
@@ -65,8 +65,6 @@
 #  include <cups/cups.h>
 #  include <qpdf_p.h>
 #endif
-
-#include <qprinterinfo_unix_p.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -161,41 +159,6 @@ private:
     Q_PRIVATE_SLOT(d, void _q_btnBrowseClicked())
     Q_PRIVATE_SLOT(d, void _q_btnPropertiesClicked())
 };
-
-class QPrintDialogPrivate : public QAbstractPrintDialogPrivate
-{
-    Q_DECLARE_PUBLIC(QPrintDialog)
-    Q_DECLARE_TR_FUNCTIONS(QPrintDialog)
-public:
-    QPrintDialogPrivate();
-    ~QPrintDialogPrivate();
-
-    void init();
-    /// copy printer properties to the widget
-    void applyPrinterProperties(QPrinter *p);
-
-#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
-    void selectPrinter(QCUPSSupport *cups);
-#endif
-
-    void _q_chbPrintLastFirstToggled(bool);
-#ifndef QT_NO_MESSAGEBOX
-    void _q_checkFields();
-#endif
-    void _q_collapseOrExpandDialog();
-
-    void setupPrinter();
-    void updateWidgets();
-
-    virtual void setTabs(const QList<QWidget*> &tabs);
-
-    Ui::QPrintSettingsOutput options;
-    QUnixPrintWidget *top;
-    QWidget *bottom;
-    QDialogButtonBox *buttons;
-    QPushButton *collapseButton;
-};
-
 
 #if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
 class QOptionTreeItem

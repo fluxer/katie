@@ -40,6 +40,7 @@
 ****************************************************************************/
 
 #include <qabstractpagesetupdialog_p.h>
+#include <qpagesetupdialog_p.h>
 
 #ifndef QT_NO_PRINTDIALOG
 
@@ -93,11 +94,6 @@ QT_BEGIN_NAMESPACE
     Returns the printer that was passed to the QPageSetupDialog
     constructor.
 */
-
-// hack
-class QPageSetupDialogPrivate : public QAbstractPageSetupDialogPrivate
-{
-};
 
 /*!
     \enum QPageSetupDialog::PageSetupDialogOption

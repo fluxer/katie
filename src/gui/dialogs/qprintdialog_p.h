@@ -1,0 +1,82 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 The Qt Company Ltd.
+** Copyright (C) 2016-2019 Ivailo Monev
+**
+** This file is part of the QtGui module of the Katie Toolkit.
+**
+** $QT_BEGIN_LICENSE:LGPL$
+** GNU Lesser General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU Lesser
+** General Public License version 2.1 or version 3 as published by the Free
+** Software Foundation and appearing in the file LICENSE.LGPLv21 and
+** LICENSE.LGPLv3 included in the packaging of this file. Please review the
+** following information to ensure the GNU Lesser General Public License
+** requirements will be met: https://www.gnu.org/licenses/lgpl.html and
+** http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+**
+** As a special exception, The Qt Company gives you certain additional
+** rights. These rights are described in The Qt Company LGPL Exception
+** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+**
+** GNU General Public License Usage
+** Alternatively, this file may be used under the terms of the GNU
+** General Public License version 3.0 as published by the Free Software
+** Foundation and appearing in the file LICENSE.GPL included in the
+** packaging of this file.  Please review the following information to
+** ensure the GNU General Public License version 3.0 requirements will be
+** met: http://www.gnu.org/copyleft/gpl.html.
+**
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
+#ifndef QPRINTDIALOG_P_H
+#define QPRINTDIALOG_P_H
+
+#include "qdialogbuttonbox.h"
+#include "qabstractpagesetupdialog_p.h"
+#include "ui_qprintsettingsoutput.h"
+
+QT_BEGIN_NAMESPACE
+
+class QUnixPrintWidget;
+class QCUPSSupport;
+
+class QPrintDialogPrivate : public QAbstractPrintDialogPrivate
+{
+    Q_DECLARE_PUBLIC(QPrintDialog)
+    Q_DECLARE_TR_FUNCTIONS(QPrintDialog)
+public:
+    QPrintDialogPrivate();
+    ~QPrintDialogPrivate();
+
+    void init();
+    /// copy printer properties to the widget
+    void applyPrinterProperties(QPrinter *p);
+
+#if !defined(QT_NO_CUPS) && !defined(QT_NO_LIBRARY)
+    void selectPrinter(QCUPSSupport *cups);
+#endif
+
+    void _q_chbPrintLastFirstToggled(bool);
+#ifndef QT_NO_MESSAGEBOX
+    void _q_checkFields();
+#endif
+    void _q_collapseOrExpandDialog();
+
+    void setupPrinter();
+    void updateWidgets();
+
+    virtual void setTabs(const QList<QWidget*> &tabs);
+
+    Ui::QPrintSettingsOutput options;
+    QUnixPrintWidget *top;
+    QWidget *bottom;
+    QDialogButtonBox *buttons;
+    QPushButton *collapseButton;
+};
+
+QT_END_NAMESPACE
+
+#endif // QPRINTDIALOG_P_H

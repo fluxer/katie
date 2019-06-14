@@ -17,7 +17,9 @@ set(GUI_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qinputdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qmessagebox.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qpagesetupdialog_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprintdialog_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qprogressdialog.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qsidebar_p.h
     ${CMAKE_CURRENT_SOURCE_DIR}/dialogs/qfilesystemmodel.h

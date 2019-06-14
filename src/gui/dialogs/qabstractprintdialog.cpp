@@ -42,17 +42,13 @@
 #include "qabstractprintdialog_p.h"
 #include "qcoreapplication.h"
 #include "qprintdialog.h"
+#include "qprintdialog_p.h"
 #include "qprinter.h"
 #include "qprinter_p.h"
 
 #ifndef QT_NO_PRINTDIALOG
 
 QT_BEGIN_NAMESPACE
-
-// hack
-class QPrintDialogPrivate : public QAbstractPrintDialogPrivate
-{
-};
 
 /*!
     \class QAbstractPrintDialog
