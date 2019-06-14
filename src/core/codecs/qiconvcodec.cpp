@@ -127,21 +127,9 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
     int remainingCount = 0;
     char *remainingBuffer = 0;
     IconvState *temporaryState = 0;
-    IconvState **pstate = 0;
+    IconvState *&state = (qt_locale_initialized && toUnicodeState) ? toUnicodeState : temporaryState;
 
-    if (!convState) {
-        if (!qt_locale_initialized || !toUnicodeState) {
-            // we're running after the toUnicodeState has been deleted
-            // or before the QCoreApplication initialization
-            // bad programmer, no cookie for you
-            pstate = &temporaryState;
-        } else {
-            // stateless conversion -- use thread-local data
-            pstate = &toUnicodeState;
-        }
-    }
-
-    if (!*pstate) {
+    if (!state) {
         // first time, create the state
         iconv_t cd = QIconvCodec::createIconv_t(UTF16, 0);
         if (cd == reinterpret_cast<iconv_t>(-1)) {
@@ -153,10 +141,9 @@ QString QIconvCodec::convertToUnicode(const char* chars, int len, ConverterState
             return QString::fromLatin1(chars, len);
         }
 
-        *pstate = new IconvState(cd);
+        state = new IconvState(cd);
     }
 
-    IconvState *state = *pstate;
     size_t inBytesLeft = len;
     // best case assumption, each byte is converted into one UTF-16 character, plus 2 bytes for the BOM
     char *inBytes = const_cast<char *>(chars);
