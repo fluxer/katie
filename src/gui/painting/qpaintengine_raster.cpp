@@ -311,8 +311,7 @@ bool QRasterPaintEngine::begin(QPaintDevice *device)
     // Make sure QPaintEngine::paintDevice() returns the proper device.
     d->pdev = d->device;
 
-    Q_ASSERT(d->device->devType() == QInternal::Image
-             || d->device->devType() == QInternal::CustomRaster);
+    Q_ASSERT(d->device->devType() == QInternal::Image);
 
     d->systemStateChanged();
 

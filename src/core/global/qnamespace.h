@@ -1398,8 +1398,7 @@ public:
         Widget            = 1,
         Pixmap            = 2,
         Image             = 3,
-        Printer           = 4,
-        CustomRaster      = 5
+        Printer           = 4
     };
 
     enum Callback {
