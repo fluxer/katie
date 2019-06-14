@@ -221,10 +221,7 @@ bool QRasterWindowSurface::scroll(const QRegion &area, int dx, int dy)
     syncX();
 #endif
 
-    const QPoint point = QPoint(dx, dy);
-    foreach (const QRect rect, area.rects()) {
-        qt_scrollRectInImage(d->image, rect, point);
-    }
+    qt_scrollRectInImage(d->image, area.boundingRect(), QPoint(dx, dy));
 
     return true;
 }
