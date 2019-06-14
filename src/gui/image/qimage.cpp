@@ -1167,9 +1167,11 @@ QImage QImage::copy(const QRect& r) const
         if (image.d->nbytes != d->nbytes) {
             int bpl = qMin(bytesPerLine(), image.bytesPerLine());
             for (int i = 0; i < height(); i++)
-                memcpy(image.scanLine(i), scanLine(i), bpl);
-        } else
-            memcpy(image.bits(), bits(), d->nbytes);
+                memcpy(image.scanLine(i), constScanLine(i), bpl);
+        } else {
+            // using bits() to detach
+            memcpy(image.bits(), d->data, d->nbytes);
+        }
         image.d->colortable = d->colortable;
         image.d->dpmx = d->dpmx;
         image.d->dpmy = d->dpmy;
@@ -1204,8 +1206,6 @@ QImage QImage::copy(const QRect& r) const
             y = 0;
         }
     }
-
-    image.d->colortable = d->colortable;
 
     int pixels_to_copy = qMax(w - dx, 0);
     if (x > d->width)
@@ -1260,9 +1260,10 @@ QImage QImage::copy(const QRect& r) const
         }
     }
 
-    image.d->dpmx = dotsPerMeterX();
-    image.d->dpmy = dotsPerMeterY();
-    image.d->offset = offset();
+    image.d->colortable = d->colortable;
+    image.d->dpmx = d->dpmx;
+    image.d->dpmy = d->dpmy;
+    image.d->offset = d->offset;
     image.d->has_alpha_clut = d->has_alpha_clut;
     return image;
 }
@@ -4049,8 +4050,8 @@ QImage QImage::rgbSwapped() const
         QIMAGE_SANITYCHECK_MEMORY(res);
         for (int i = 0; i < d->height; i++) {
             uint *q = (uint*)res.scanLine(i);
-            uint *p = (uint*)constScanLine(i);
-            uint *end = p + d->width;
+            const uint *p = (const uint*)constScanLine(i);
+            const uint *end = p + d->width;
             while (p < end) {
                 *q = ((*p << 16) & 0xff0000) | ((*p >> 16) & 0xff) | (*p & 0xff00ff00);
                 p++;
