@@ -16,9 +16,10 @@
 #
 # As well as some that are unilkely to be needed outside the project:
 #
-#  KATIE_TOOLS_SUFFIX           - tools suffix used when the project was build
+#  KATIE_TOOLS_SUFFIX           - tools suffix set when the project was build
 #  KATIE_COMPONENTS             - components that were build
 #  KATIE_TOOLS                  - tools that were build
+#  KATIE_KEY                    - build key, used in plugins verification check
 
 # avoiding use of return()
 if(NOT KATIE_FOUND)
@@ -40,7 +41,6 @@ if(NOT KATIE_FOUND)
     set(KATIE_CMAKE_PATH "@KATIE_CMAKE_FULL@")
     set(KATIE_APPLICATIONS_PATH "@KATIE_APPLICATIONS_FULL@")
     set(KATIE_PIXMAPS_PATH "@KATIE_PIXMAPS_FULL@")
-    set(KATIE_TOOLS_SUFFIX "@KATIE_TOOLS_SUFFIX@")
 
     # Compute paths
     get_filename_component(KATIE_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" DIRECTORY)
@@ -58,8 +58,10 @@ if(NOT KATIE_FOUND)
     set(KATIE_LIBRARIES)
     set(KATIE_COMPONENTS @KATIE_COMPONENTS@)
     set(KATIE_TOOLS @KATIE_TOOLS@)
+    set(KATIE_TOOLS_SUFFIX "@KATIE_TOOLS_SUFFIX@")
     set(KATIE_MKSPECS_DIR "${KATIE_CMAKE_DIR}/mkspecs")
     set(KATIE_TYPE @KATIE_TYPE@)
+    set(KATIE_KEY "@KATIE_KEY@")
 
     foreach(component ${KATIE_COMPONENTS})
         string(TOUPPER ${component} uppercomp)
