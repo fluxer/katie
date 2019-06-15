@@ -252,43 +252,20 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     }
 
     bool star = false;
+    bool isconst = false;
     while (t != e) {
         char c = *t++;
         star = star || c == '*';
+        if (is_space(c) || (isconst && c == '&'))
+            continue;
         result += c;
-        if (c == '<') {
-            //template recursion
-            const char* tt = t;
-            int templdepth = 1;
-            while (t != e) {
-                c = *t++;
-                if (c == '<')
-                    ++templdepth;
-                if (c == '>')
-                    --templdepth;
-                if (templdepth == 0 || (templdepth == 1 && c == ',')) {
-                    result += normalizeTypeInternal(tt, t-1, false);
-                    result += c;
-                    if (templdepth == 0) {
-                        if (*t == '>')
-                            result += ' '; // avoid >>
-                        break;
-                    }
-                    tt = t;
-                }
-            }
-        }
 
         // cv qualifers can appear after the type as well
         if (!is_ident_char(c) && t != e && (e - t >= 5 && strncmp("const", t, 5) == 0)
             && (e - t == 5 || !is_ident_char(t[5]))) {
             t += 5;
-            while (t != e && is_space(*t))
-                ++t;
-            if (adjustConst && t != e && *t == '&') {
-                // treat const ref as value
-                ++t;
-            } else if (adjustConst && !star) {
+            isconst = true;
+            if (adjustConst && !star) {
                 // treat const as value
             } else if (!star) {
                 // move const to the front (but not if const comes after a *)
