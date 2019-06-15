@@ -984,12 +984,6 @@ public:
         KeepAspectRatioByExpanding
     };
 
-    // This is for Q3TextEdit only, actually.
-    enum AnchorAttribute {
-        AnchorName,
-        AnchorHref
-    };
-
     enum DockWidgetArea {
         LeftDockWidgetArea = 0x1,
         RightDockWidgetArea = 0x2,
