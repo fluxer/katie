@@ -247,10 +247,11 @@ void QPixmapData::setSerialNumber(int serNo)
 
 QImage QPixmapData::toImage(const QRect &rect) const
 {
-    if (rect.contains(QRect(0, 0, w, h)))
-        return toImage();
-    else
-        return toImage().copy(rect);
+    QImage image = toImage();
+    if (rect.isNull())
+        return image;
+
+    return image.copy(rect);
 }
 
 QImage* QPixmapData::buffer()
