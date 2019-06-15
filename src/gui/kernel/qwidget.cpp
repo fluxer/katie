@@ -902,7 +902,6 @@ QRegion qt_dirtyRegion(QWidget *widget)
   \i Qt::WA_WState_InPaintEvent Currently processing a paint event.
   \i Qt::WA_WState_Reparented The widget has been reparented.
   \i Qt::WA_WState_ConfigPending A configuration (resize/move) event is pending.
-  \i Qt::WA_WState_DND (Deprecated) The widget supports drag and drop, see setAcceptDrops().
   \endlist
 */
 

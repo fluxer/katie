@@ -765,9 +765,6 @@
     \value WA_DontShowOnScreen Indicates that the widget is hidden or is
     not a part of the viewable Desktop.
 
-    \omitvalue WA_DropSiteRegistered
-    \omitvalue WA_ForceAcceptDrops
-
     \value WA_ForceDisabled Indicates that the widget is
     explicitly disabled, i.e. it will remain disabled even when all
     its ancestors are set to the enabled state. This implies
@@ -1063,10 +1060,10 @@
     \value WA_AutoOrientation Causes the widget to change orientation whenever the
     display changes orientation with respect to the user.
 
+    \omitvalue WA_DropSiteRegistered
     \omitvalue WA_SetLayoutDirection
     \omitvalue WA_WState_ConfigPending
     \omitvalue WA_WState_Created
-    \omitvalue WA_WState_DND
     \omitvalue WA_WState_ExplicitShowHide
     \omitvalue WA_WState_Hidden
     \omitvalue WA_WState_InPaintEvent
@@ -1079,7 +1076,6 @@
     \omitvalue WA_LaidOut
     \omitvalue WA_GrabbedShortcut
     \omitvalue WA_DontShowOnScreen
-    \omitvalue WA_InvalidSize
     \omitvalue WA_ForceUpdatesDisabled
     \omitvalue WA_AttributeCount
     \omitvalue WA_StyleSheet
