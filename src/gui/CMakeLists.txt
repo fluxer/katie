@@ -324,6 +324,7 @@ set(GUI_PUBLIC_HEADERS
     QMessageBox
     QWidgetAction
     QWidgetData
+    QWidgetItemV2
     QWidgetMapper
     QWidgetSet
     QWindowsStyle

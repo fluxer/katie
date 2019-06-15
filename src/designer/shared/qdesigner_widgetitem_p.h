@@ -71,7 +71,7 @@ namespace qdesigner_internal {
 // and destroyed slots as Designer will for example re-create grid layouts to
 // shrink them.
 
-class QDESIGNER_SHARED_EXPORT QDesignerWidgetItem : public QObject, public QWidgetItem  {
+class QDESIGNER_SHARED_EXPORT QDesignerWidgetItem : public QObject, public QWidgetItemV2  {
     Q_DISABLE_COPY(QDesignerWidgetItem)
     Q_OBJECT
 public:

@@ -189,7 +189,7 @@ QWidgetItem *QLayoutPrivate::createWidgetItem(const QLayout *layout, QWidget *wi
     if (widgetItemFactoryMethod)
         if (QWidgetItem *wi = (*widgetItemFactoryMethod)(layout, widget))
             return wi;
-    return new QWidgetItem(widget);
+    return new QWidgetItemV2(widget);
 }
 
 QSpacerItem *QLayoutPrivate::createSpacerItem(const QLayout *layout, int w, int h, QSizePolicy::Policy hPolicy, QSizePolicy::Policy vPolicy)
@@ -199,8 +199,6 @@ QSpacerItem *QLayoutPrivate::createSpacerItem(const QLayout *layout, int w, int 
             return si;
     return new QSpacerItem(w, h,  hPolicy, vPolicy);
 }
-
-
 
 /*!
     \fn void QLayout::addItem(QLayoutItem *item)

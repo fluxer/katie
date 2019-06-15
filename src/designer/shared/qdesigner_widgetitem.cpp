@@ -115,7 +115,7 @@ namespace qdesigner_internal {
 
 // ------------------ QDesignerWidgetItem
 QDesignerWidgetItem::QDesignerWidgetItem(const QLayout *containingLayout, QWidget *w, Qt::Orientations o) :
-    QWidgetItem(w),
+    QWidgetItemV2(w),
     m_orientations(o),
     m_nonLaidOutMinSize(w->minimumSizeHint()),
     m_nonLaidOutSizeHint(w->sizeHint()),
@@ -146,7 +146,7 @@ void QDesignerWidgetItem::expand(QSize *s) const
 QSize QDesignerWidgetItem::minimumSize() const
 {
     // Just track the size in case we are laid-out or stretched.
-    const QSize baseMinSize = QWidgetItem::minimumSize();
+    const QSize baseMinSize = QWidgetItemV2::minimumSize();
     QWidget * w = constWidget();
     if (w->layout() || subjectToStretch(containingLayout(), w)) {
         m_nonLaidOutMinSize = baseMinSize;
@@ -162,7 +162,7 @@ QSize QDesignerWidgetItem::minimumSize() const
 QSize QDesignerWidgetItem::sizeHint()    const
 {
     // Just track the size in case we are laid-out or stretched.
-    const QSize baseSizeHint = QWidgetItem::sizeHint();
+    const QSize baseSizeHint = QWidgetItemV2::sizeHint();
     QWidget * w = constWidget();
     if (w->layout() || subjectToStretch(containingLayout(), w)) {
         m_nonLaidOutSizeHint = baseSizeHint;

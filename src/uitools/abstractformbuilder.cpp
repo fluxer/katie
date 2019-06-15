@@ -879,7 +879,7 @@ QLayoutItem *QAbstractFormBuilder::create(DomLayoutItem *ui_layoutItem, QLayout 
     case DomLayoutItem::Widget: {
         if (QWidget *w = create(ui_layoutItem->elementWidget(), parentWidget)) {
 #ifdef QFORMINTERNAL_NAMESPACE // uilib
-            QWidgetItem *item = new QWidgetItem(w);
+            QWidgetItem *item = new QWidgetItemV2(w);
 #else                         // Within Designer: Use factory method that returns special items that refuse to shrink to 0,0
             QWidgetItem *item = QLayoutPrivate::createWidgetItem(layout, w);
 #endif
