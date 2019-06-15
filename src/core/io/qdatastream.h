@@ -271,7 +271,7 @@ template<typename T>
 QDataStream& operator<<(QDataStream& s, const QVector<T>& v)
 {
     s << quint32(v.size());
-    for (typename QVector<T>::const_iterator it = v.begin(); it != v.end(); ++it)
+    for (typename QVector<T>::const_iterator it = v.constBegin(); it != v.constEnd(); ++it)
         s << *it;
     return s;
 }
@@ -296,7 +296,7 @@ template <typename T>
 QDataStream& operator<<(QDataStream &out, const QSet<T> &set)
 {
     out << quint32(set.size());
-    for (typename QSet<T>::const_iterator it = set.begin(); it != set.end(); ++it)
+    for (typename QSet<T>::const_iterator it = set.constBegin(); it != set.constEnd(); ++it)
         out << *it;
     return out;
 }
@@ -332,8 +332,8 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QHash<Key, T>& hash)
 {
     out << quint32(hash.size());
-    typename QHash<Key, T>::const_iterator it = hash.end();
-    typename QHash<Key, T>::const_iterator begin = hash.begin();
+    typename QHash<Key, T>::const_iterator it = hash.constEnd();
+    typename QHash<Key, T>::const_iterator begin = hash.constBegin();
     while (it != begin) {
         --it;
         out << it.key() << it.value();
@@ -373,8 +373,8 @@ template <class Key, class T>
 Q_OUTOFLINE_TEMPLATE QDataStream &operator<<(QDataStream &out, const QMap<Key, T> &map)
 {
     out << quint32(map.size());
-    typename QMap<Key, T>::const_iterator it = map.end();
-    typename QMap<Key, T>::const_iterator begin = map.begin();
+    typename QMap<Key, T>::const_iterator it = map.constEnd();
+    typename QMap<Key, T>::const_iterator begin = map.constBegin();
     while (it != begin) {
         --it;
         out << it.key() << it.value();
