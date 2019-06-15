@@ -64,54 +64,66 @@ QSvgNode::~QSvgNode()
 void QSvgNode::appendStyleProperty(QSvgStyleProperty *prop, const QString &id)
 {
     //qDebug()<<"appending "<<prop->type()<< " ("<< id <<") "<<"to "<<this<<this->type();
-    QSvgTinyDocument *doc;
     switch (prop->type()) {
-    case QSvgStyleProperty::QUALITY:
-        m_style.quality = static_cast<QSvgQualityStyle*>(prop);
-        break;
-    case QSvgStyleProperty::FILL:
-        m_style.fill = static_cast<QSvgFillStyle*>(prop);
-        break;
-    case QSvgStyleProperty::VIEWPORT_FILL:
-        m_style.viewportFill = static_cast<QSvgViewportFillStyle*>(prop);
-        break;
-    case QSvgStyleProperty::FONT:
-        m_style.font = static_cast<QSvgFontStyle*>(prop);
-        break;
-    case QSvgStyleProperty::STROKE:
-        m_style.stroke = static_cast<QSvgStrokeStyle*>(prop);
-        break;
-    case QSvgStyleProperty::SOLID_COLOR:
-        m_style.solidColor = static_cast<QSvgSolidColorStyle*>(prop);
-        doc = document();
-        if (doc && !id.isEmpty())
-            doc->addNamedStyle(id, m_style.solidColor);
-        break;
-    case QSvgStyleProperty::GRADIENT:
-        m_style.gradient = static_cast<QSvgGradientStyle*>(prop);
-        doc = document();
-        if (doc && !id.isEmpty())
-            doc->addNamedStyle(id, m_style.gradient);
-        break;
-    case QSvgStyleProperty::TRANSFORM:
-        m_style.transform = static_cast<QSvgTransformStyle*>(prop);
-        break;
-    case QSvgStyleProperty::ANIMATE_COLOR:
-        m_style.animateColor = static_cast<QSvgAnimateColor*>(prop);
-        break;
-    case QSvgStyleProperty::ANIMATE_TRANSFORM:
-        m_style.animateTransforms.append(
-            static_cast<QSvgAnimateTransform*>(prop));
-        break;
-    case QSvgStyleProperty::OPACITY:
-        m_style.opacity = static_cast<QSvgOpacityStyle*>(prop);
-        break;
-    case QSvgStyleProperty::COMP_OP:
-        m_style.compop = static_cast<QSvgCompOpStyle*>(prop);
-        break;
-    default:
-        qDebug("QSvgNode: Trying to append unknown property!");
-        break;
+        case QSvgStyleProperty::QUALITY: {
+            m_style.quality = static_cast<QSvgQualityStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::FILL: {
+            m_style.fill = static_cast<QSvgFillStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::VIEWPORT_FILL: {
+            m_style.viewportFill = static_cast<QSvgViewportFillStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::FONT: {
+            m_style.font = static_cast<QSvgFontStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::STROKE: {
+            m_style.stroke = static_cast<QSvgStrokeStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::SOLID_COLOR: {
+            m_style.solidColor = static_cast<QSvgSolidColorStyle*>(prop);
+            QSvgTinyDocument *doc = document();
+            if (doc && !id.isEmpty())
+                doc->addNamedStyle(id, m_style.solidColor);
+            break;
+        }
+        case QSvgStyleProperty::GRADIENT: {
+            m_style.gradient = static_cast<QSvgGradientStyle*>(prop);
+            QSvgTinyDocument *doc = document();
+            if (doc && !id.isEmpty())
+                doc->addNamedStyle(id, m_style.gradient);
+            break;
+        }
+        case QSvgStyleProperty::TRANSFORM: {
+            m_style.transform = static_cast<QSvgTransformStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::ANIMATE_COLOR: {
+            m_style.animateColor = static_cast<QSvgAnimateColor*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::ANIMATE_TRANSFORM: {
+            m_style.animateTransforms.append(
+                static_cast<QSvgAnimateTransform*>(prop));
+            break;
+        }
+        case QSvgStyleProperty::OPACITY: {
+            m_style.opacity = static_cast<QSvgOpacityStyle*>(prop);
+            break;
+        }
+        case QSvgStyleProperty::COMP_OP: {
+            m_style.compop = static_cast<QSvgCompOpStyle*>(prop);
+            break;
+        }
+        default: {
+            qDebug("QSvgNode: Trying to append unknown property!");
+            break;
+        }
     }
 }
 
@@ -232,14 +244,11 @@ QRectF QSvgNode::transformedBounds() const
 
 QSvgTinyDocument * QSvgNode::document() const
 {
-    QSvgTinyDocument *doc = 0;
     QSvgNode *node = const_cast<QSvgNode*>(this);
     while (node && node->type() != QSvgNode::DOC) {
         node = node->parent();
     }
-    doc = static_cast<QSvgTinyDocument*>(node);
-
-    return doc;
+    return static_cast<QSvgTinyDocument*>(node);
 }
 
 void QSvgNode::setRequiredFeatures(const QStringList &lst)
