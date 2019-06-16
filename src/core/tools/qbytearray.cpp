@@ -112,7 +112,7 @@ int qAllocMore(int alloc, int extra)
 char *qstrdup(const char *src)
 {
     if (!src)
-        return 0;
+        return Q_NULLPTR;
     char *dst = new char[strlen(src) + 1];
     return qstrcpy(dst, src);
 }
@@ -132,7 +132,7 @@ char *qstrdup(const char *src)
 char *qstrcpy(char *dst, const char *src)
 {
     if (!src)
-        return 0;
+        return Q_NULLPTR;
     return strcpy(dst, src);
 }
 
@@ -158,7 +158,7 @@ char *qstrcpy(char *dst, const char *src)
 char *qstrncpy(char *dst, const char *src, uint len)
 {
     if (!src || !dst)
-        return 0;
+        return Q_NULLPTR;
     strncpy(dst, src, len);
     if (len > 0)
         dst[len-1] = '\0';
@@ -305,26 +305,7 @@ int qstrnicmp(const char *str1, const char *str2, uint len)
  */
 int qstrcmp(const QByteArray &str1, const char *str2)
 {
-    if (!str2)
-        return str1.isEmpty() ? 0 : +1;
-
-    const char *str1data = str1.constData();
-    const char *str1end = str1data + str1.length();
-    for ( ; str1data < str1end && *str2; ++str1data, ++str2) {
-        int diff = int(uchar(*str1data)) - uchar(*str2);
-        if (diff)
-            // found a difference
-            return diff;
-    }
-
-    // Why did we stop?
-    if (*str2 != '\0')
-        // not the null, so we stopped because str1 is shorter
-        return -1;
-    if (str1data < str1end)
-        // we haven't reached the end, so str1 must be longer
-        return +1;
-    return 0;
+    return qstrcmp(str1.constData(), str2);
 }
 
 /*!
@@ -332,15 +313,7 @@ int qstrcmp(const QByteArray &str1, const char *str2)
  */
 int qstrcmp(const QByteArray &str1, const QByteArray &str2)
 {
-    int l1 = str1.length();
-    int l2 = str2.length();
-    int ret = memcmp(str1.constData(), str2.constData(), qMin(l1, l2));
-    if (ret != 0)
-        return ret;
-
-    // they matched qMin(l1, l2) bytes
-    // so the longer one is lexically after the shorter one
-    return l1 - l2;
+    return qstrcmp(str1.constData(), str2.constData());
 }
 
 // the CRC table below is created by the following piece of code
