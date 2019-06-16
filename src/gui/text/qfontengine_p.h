@@ -214,12 +214,12 @@ public:
 
     QAtomicInt ref;
     QFontDef fontDef;
-    uint cache_cost; // amount of mem used in kb by the font
+    int cache_cost; // amount of mem used in kb by the font
     int cache_count;
-    uint fsType : 16;
+    int fsType;
     bool symbol;
     mutable HB_FontRec hbFont;
-    mutable HB_Face hbFace;
+    HB_Face hbFace;
 #if defined(Q_WS_X11)
     struct KernPair {
         uint left_right;

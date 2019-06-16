@@ -173,7 +173,7 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
              && (i + 5 >= len || !is_ident_char(t[i + 5]))
              && !is_ident_char(t[i-1])
              ) {
-            constbuf = QByteArray(t, len);
+            constbuf = QByteArray::fromRawData(t, len);
             if (is_space(t[i-1]))
                 constbuf.remove(i-1, 6);
             else

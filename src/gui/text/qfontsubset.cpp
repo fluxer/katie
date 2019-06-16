@@ -1650,7 +1650,7 @@ QByteArray QFontSubset::toType1() const
         s << "<<\n";
         if(!psname.isEmpty())
             s << "/FontName /" << psname << '\n';
-        s << "/FontInfo <</FsType " << (int)fontEngine->fsType << ">>\n"
+        s << "/FontInfo <</FsType " << fontEngine->fsType << ">>\n"
             "/FontType 1\n"
             "/PaintType 0\n"
             "/FontMatrix [.001 0 0 .001 0 0]\n"

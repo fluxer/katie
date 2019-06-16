@@ -100,17 +100,6 @@ bool qt_get_hex_rgb(const char *name, QRgb *rgb)
     return true;
 }
 
-bool qt_get_hex_rgb(const QChar *str, int len, QRgb *rgb)
-{
-    if (len > 13)
-        return false;
-    char tmp[16];
-    for(int i = 0; i < len; ++i)
-        tmp[i] = str[i].toLatin1();
-    tmp[len] = 0;
-    return qt_get_hex_rgb(tmp, rgb);
-}
-
 #ifndef QT_NO_COLORNAMES
 
 /*
@@ -305,21 +294,6 @@ bool qt_get_named_rgb(const char *name, QRgb* rgb)
 
     return get_named_rgb(name_no_space, rgb);
 }
-
-bool qt_get_named_rgb(const QChar *name, int len, QRgb *rgb)
-{
-    if(len > 255)
-        return false;
-    char name_no_space[256];
-    int pos = 0;
-    for(int i = 0; i < len; i++) {
-        if(name[i] != QLatin1Char('\t') && name[i] != QLatin1Char(' '))
-            name_no_space[pos++] = name[i].toLatin1();
-    }
-    name_no_space[pos] = 0;
-    return get_named_rgb(name_no_space, rgb);
-}
-
 
 uint qt_get_rgb_val(const char *name)
 {

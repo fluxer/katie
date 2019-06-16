@@ -539,7 +539,7 @@ bool QColor::setNamedColor(const QString &name)
 
     if (name.startsWith(QLatin1Char('#'))) {
         QRgb rgb;
-        if (qt_get_hex_rgb(name.constData(), name.length(), &rgb)) {
+        if (qt_get_hex_rgb(name.toLatin1(), &rgb)) {
             setRgb(rgb);
             return true;
         } else {
@@ -550,7 +550,7 @@ bool QColor::setNamedColor(const QString &name)
 
 #ifndef QT_NO_COLORNAMES
     QRgb rgb;
-    if (qt_get_named_rgb(name.constData(), name.length(), &rgb)) {
+    if (qt_get_named_rgb(name.toLatin1(), &rgb)) {
         setRgba(rgb);
         return true;
     } else
