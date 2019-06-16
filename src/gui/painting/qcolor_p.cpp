@@ -108,7 +108,7 @@ bool qt_get_hex_rgb(const char *name, QRgb *rgb)
 #define RGBCOLOR(r,g,b) (0xff000000 | (r << 16) |  (g << 8) | b)
 static const struct RGBData {
     const char *name;
-    uint  value;
+    const uint value;
 } rgbTbl[] = {
     { "aliceblue", RGBCOLOR(240, 248, 255) },
     { "antiquewhite", RGBCOLOR(250, 235, 215) },
@@ -305,9 +305,11 @@ uint qt_get_rgb_val(const char *name)
 QStringList qt_get_colornames()
 {
     int i = 0;
-    QStringList lst;
-    for (i = 0; i < rgbTblSize; i++)
-        lst << QLatin1String(rgbTbl[i].name);
+    static QStringList lst;
+    if (lst.isEmpty()) {
+        for (i = 0; i < rgbTblSize; i++)
+            lst << QLatin1String(rgbTbl[i].name);
+    }
     return lst;
 }
 
