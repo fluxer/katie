@@ -370,7 +370,6 @@ static const quint16 crc_tbl[16] = {
     \note This function is a 16-bit cache conserving (16 entry table)
     implementation of the CRC-16-CCITT algorithm.
 */
-
 quint16 qChecksum(const char *data, uint len)
 {
     quint16 crc = 0xffff;

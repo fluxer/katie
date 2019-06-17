@@ -51,6 +51,10 @@
 #  include <QtCore/qobject_p.h>
 #endif
 
+#ifndef QT_NO_COMPRESS
+#  include <zlib.h>
+#endif
+
 QT_BEGIN_NAMESPACE
 
 enum PropertyFlags  {
@@ -170,18 +174,28 @@ static const optionalkeywords optional[] = {
 };
 static const int optionalkeywordssize = 3;
 
-typedef QHash<quint16, QByteArray> QNormalizedTypeHash;
+#ifndef QT_NO_COMPRESS
+static inline quint32 qCRC32(const char *data, uint len)
+{
+    quint32 crc_32 = ::crc32(0, 0, 0);
+    return ::crc32(crc_32, reinterpret_cast<const uchar *>(data), len);
+}
+
+typedef QHash<quint32, QByteArray> QNormalizedTypeHash;
 Q_GLOBAL_STATIC(QNormalizedTypeHash, qGlobalNormalizedTypeHash);
+#endif
 
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
 {
     int len = e - t;
-    quint16 cachekey = qChecksum(t, len);
+#ifndef QT_NO_COMPRESS
+    quint32 cachekey = qCRC32(t, len);
     QByteArray cached = qGlobalNormalizedTypeHash()->value(cachekey);
     if (!cached.isEmpty()) {
         return cached;
     }
+#endif
 
     /*
       Convert 'char const *' into 'const char *'. Start at index 1,
@@ -258,7 +272,9 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e)
         result += *t++;
     }
 
+#ifndef QT_NO_COMPRESS
     qGlobalNormalizedTypeHash()->insert(cachekey, result);
+#endif
 
     return result;
 }
