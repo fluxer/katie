@@ -159,6 +159,17 @@ static inline bool is_space(char s)
 }
 #endif
 
+struct optionalkeywords {
+    const char *keyword;
+    const int len;
+};
+static const optionalkeywords optional[] = {
+    { "struct ", 7 },
+    { "class ", 6 },
+    { "enum ", 5 }
+};
+static const int optionalkeywordssize = 3;
+
 // This code is shared with moc.cpp
 static inline QByteArray normalizeTypeInternal(const char *t, const char *e, bool adjustConst = true)
 {
@@ -169,10 +180,9 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     */
     QByteArray constbuf;
     for (int i = 1; i < len; i++) {
-        if ( strncmp(t + i, "const", 5) == 0
-             && (i + 5 >= len || !is_ident_char(t[i + 5]))
-             && !is_ident_char(t[i-1])
-             ) {
+        if (strncmp(t + i, "const", 5) == 0
+            && (i + 5 >= len || !is_ident_char(t[i + 5]))
+            && !is_ident_char(t[i-1])) {
             constbuf = QByteArray::fromRawData(t, len);
             if (is_space(t[i-1]))
                 constbuf.remove(i-1, 6);
@@ -190,24 +200,19 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
         if (t[i] == '&' || t[i] == '*' ||t[i] == '<')
             break;
     }
+
+    // convert const reference to value and const value to value
     if (adjustConst && e > t + 6 && strncmp("const ", t, 6) == 0) {
-        if (*(e-1) == '&') { // treat const reference as value
+        if (*(e-1) == '&') {
             t += 6;
             --e;
-        } else if (is_ident_char(*(e-1)) || *(e-1) == '>') { // treat const value as value
+        } else if (is_ident_char(*(e-1)) || *(e-1) == '>') {
             t += 6;
         }
     }
+
     QByteArray result;
     result.reserve(len);
-
-#if 1
-    // consume initial 'const '
-    if (strncmp("const ", t, 6) == 0) {
-        t+= 6;
-        result += "const ";
-    }
-#endif
 
     // some type substitutions for 'unsigned x'
     if (strncmp("unsigned", t, 8) == 0) {
@@ -233,48 +238,17 @@ static inline QByteArray normalizeTypeInternal(const char *t, const char *e, boo
     } else {
         // discard 'struct', 'class', and 'enum'; they are optional
         // and we don't want them in the normalized signature
-        struct {
-            const char *keyword;
-            int len;
-        } optional[] = {
-            { "struct ", 7 },
-            { "class ", 6 },
-            { "enum ", 5 },
-            { Q_NULLPTR, 0 }
-        };
-        int i = 0;
-        do {
+        for (int i = 0; i < optionalkeywordssize; i++) {
             if (strncmp(optional[i].keyword, t, optional[i].len) == 0) {
                 t += optional[i].len;
                 break;
             }
-        } while (optional[++i].keyword != Q_NULLPTR);
+        }
     }
 
-    bool star = false;
-    bool isconst = false;
     while (t != e) {
         char c = *t++;
-        star = star || c == '*';
-        if (is_space(c) || (isconst && c == '&'))
-            continue;
         result += c;
-
-        // cv qualifers can appear after the type as well
-        if (!is_ident_char(c) && t != e && (e - t >= 5 && strncmp("const", t, 5) == 0)
-            && (e - t == 5 || !is_ident_char(t[5]))) {
-            t += 5;
-            isconst = true;
-            if (adjustConst && !star) {
-                // treat const as value
-            } else if (!star) {
-                // move const to the front (but not if const comes after a *)
-                result.prepend("const ");
-            } else {
-                // keep const after a *
-                result += "const";
-            }
-        }
     }
 
     return result;

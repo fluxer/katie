@@ -284,7 +284,6 @@ bool Moc::parseEnum(EnumDef *def)
 
 void Moc::parseFunctionArguments(FunctionDef *def)
 {
-    Q_UNUSED(def);
     while (hasNext()) {
         ArgumentDef  arg;
         arg.type = parseType();

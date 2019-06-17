@@ -910,7 +910,17 @@ static void qRemoveWhitespace(const char *s, char *d)
 static char *qNormalizeType(char *d, QByteArray &result)
 {
     const char *t = d;
-    while (*d && (*d != ',' && *d != ')')) {
+    int templdepth = 0;
+    while (*d) {
+        char c = *d;
+        if (c == '<') {
+            ++templdepth;
+        } else if (c == '>') {
+            --templdepth;
+        }
+        if ((templdepth == 0 && c == ',') || c == ')') {
+            break;
+        }
         ++d;
     }
     if (strncmp("void", t, d - t) != 0)
@@ -1280,8 +1290,19 @@ QList<QByteArray> QMetaMethod::parameterNames() const
         --names;
         do {
             const char *begin = ++names;
-            while (*names && *names != ',')
+            int templdepth = 0;
+            while (*names) {
+                char c = *names;
+                if (c == '<') {
+                    ++templdepth;
+                } else if (c == '>') {
+                    --templdepth;
+                }
+                if (templdepth == 0 && c == ',') {
+                    break;
+                }
                 ++names;
+            }
             list += QByteArray(begin, names - begin);
         } while (*names);
     }
@@ -1549,8 +1570,19 @@ bool QMetaMethod::invoke(QObject *object,
             --names;
             do {
                 ++names;
-                while (*names && *names != ',')
+                int templdepth = 0;
+                while (*names) {
+                    char c = *names;
+                    if (c == '<') {
+                        ++templdepth;
+                    } else if (c == '>') {
+                        --templdepth;
+                    }
+                    if (templdepth == 0 && c == ',') {
+                        break;
+                    }
                     ++names;
+                }
                 ++metaMethodArgumentCount;
             } while (*names);
         }
