@@ -615,7 +615,7 @@ QStringList QColor::colorNames()
 */
 void QColor::getHsvF(qreal *h, qreal *s, qreal *v, qreal *a) const
 {
-        if (!h || !s || !v)
+    if (!h || !s || !v)
         return;
 
     if (cspec != Invalid && cspec != Hsv) {
