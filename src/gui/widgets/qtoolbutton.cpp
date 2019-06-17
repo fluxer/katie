@@ -698,7 +698,7 @@ void QToolButton::showMenu()
         return;
 
     d->menuButtonDown = true;
-    repaint();
+    update();
     d->popupTimer.stop();
     d->popupTimerDone();
 }
@@ -811,7 +811,7 @@ void QToolButtonPrivate::_q_updateButtonDown()
     if (q->isDown())
         q->setDown(false);
     else
-        q->repaint();
+        q->update();
 }
 
 void QToolButtonPrivate::_q_menuTriggered(QAction *action)

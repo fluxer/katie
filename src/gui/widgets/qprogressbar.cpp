@@ -255,7 +255,7 @@ void QProgressBar::reset()
     d->value = d->minimum - 1;
     if (d->minimum == INT_MIN)
         d->value = INT_MIN;
-    repaint();
+    update();
 }
 
 /*!
@@ -366,7 +366,7 @@ void QProgressBar::setTextVisible(bool visible)
     Q_D(QProgressBar);
     if (d->textVisible != visible) {
         d->textVisible = visible;
-        repaint();
+        update();
     }
 }
 
@@ -383,7 +383,7 @@ void QProgressBar::setAlignment(Qt::Alignment alignment)
 {
     if (d_func()->alignment != alignment) {
         d_func()->alignment = alignment;
-        repaint();
+        update();
     }
 }
 
